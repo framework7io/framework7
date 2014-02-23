@@ -9,18 +9,18 @@ Framework7 is on early development stage, so many things may be changed and sort
 
 ## Getting Started
   * Clone/download this repo
-  * You can start build your App from changing Kitchen Sink for your needs, or to start from a clean template from `dist/` folder
+  * Start building your App from changing Kitchen Sink, or from a clean template from `dist/` folder
 
 ## Server
 
-Because Framework7 uses Ajax for navigation between pages you will need server. So to make it work you should put dist folder (or Kitchen Sink) on a server. Or as an option to use Grunt's server. Just run:
+Because Framework7 uses Ajax for navigation between pages you will need a server. So to make it work you should put dist folder (or Kitchen Sink) on a server. Or, as an option, you may use Grunt's server. Just run:
 
 ```
 $ grunt server
 ```
 
-Kitchen Sink will be available on `http://localhost:3000/kitchen-sink/`
-Dist - on `http://localhost:3000/dist/`
+  * Kitchen Sink will be available on `http://localhost:3000/kitchen-sink/`
+  * Dist - on `http://localhost:3000/dist/`
 
 ## Kitchen Sink
 
@@ -58,6 +58,10 @@ $ grunt dist
 ```
 
 Distributable version will available in `dist/` folder.
+
+## Contributing
+
+All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at Gruntfile.js for concat files order)
 
 ## Docs
 
