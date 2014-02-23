@@ -234,6 +234,7 @@ module.exports = function (grunt) {
         'concat:css_build',
         'concat:css_dist',
         'jshint',
+        'copy:build',
         'jade:build',
         'copy:dist',
         'uglify'

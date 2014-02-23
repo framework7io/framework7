@@ -1,4 +1,4 @@
-// Initialize yout app
+// Initialize your app
 var myApp = new Framework7();
 
 // Add view
