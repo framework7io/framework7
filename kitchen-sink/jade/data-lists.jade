@@ -1,0 +1,176 @@
+.navbar
+  .navbar-inner
+    .left
+      a(href="index.html").back.link
+        i.icon-back-blue 
+        span Back
+    .center.sliding Data Lists
+    .right
+      a(href="#").open-panel.link
+        i.icon-bars-blue
+.pages.navbar-through
+  .page(data-page="data-lists")
+    .page-content
+      .content-block 
+        p Framwork7 allows you to be flexible with data list. You can make them as navigation menus, you can use there icons, inputs, and any elements inside of the list, and even make them nested:
+      .content-block-title Data list, with icons
+      .list-block
+        ul
+          li
+            .icons
+              i.icon-f7
+            .inner 
+              .text Ivan Petrov
+              .after CEO
+          li
+            .icons
+              i.icon-f7
+            .inner 
+              .text John Doe
+              .after Cleaner
+                
+          li
+            .icons
+              i.icon-f7
+            .inner 
+              .text Jenna Smith
+      .content-block-title Links list, with icons
+      .list-block
+        ul
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+              .inner 
+                .text Ivan Petrov
+                .after CEO
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+              .inner 
+                .text John Doe
+                .after Cleaner
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+              .inner 
+                .text Jenna Smith
+      .content-block-title Links list, no icons
+      .list-block
+        ul
+          li
+            a(href="#") 
+              .inner 
+                .text Ivan Petrov
+          li
+            a(href="#") 
+              .inner 
+                .text John Doe
+          li
+            a(href="#") 
+              .inner 
+                .text Jenna Smith
+      .content-block-title Mixed and nested
+      .list-block
+        ul
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+              .inner 
+                .text Ivan Petrov
+                .after CEO
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+                i.icon-f7
+              .inner 
+                .text Two icons here
+          li
+              .inner 
+                .text No icons here
+            ul
+              li
+                a(href="#") 
+                  .icons
+                    i.icon-f7
+                  .inner 
+                    .text Ivan Petrov
+                    .after CEO
+              li
+                a(href="#") 
+                  .icons
+                    i.icon-f7
+                    i.icon-f7
+                  .inner 
+                    .text Two icons here
+              li
+                  .inner 
+                    .text No icons here
+              li
+                a(href="#") 
+                  .icons
+                    i.icon-f7
+                  .inner 
+                    .text Ultra long text goes here, no, it is really really long
+              li
+                  .icons
+                    i.icon-f7
+                  .inner 
+                    .text With switch
+                    .after
+                      label.switch
+                        input(type="checkbox")
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+              .inner 
+                .text Ultra long text goes here, no, it is really really long
+          li
+            .icons
+              i.icon-f7
+            .inner 
+              .text With switch
+              .after
+                label.switch
+                  input(type="checkbox")
+
+      .content-block-title Mixed, inset
+      .list-block.inset
+        ul
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+              .inner 
+                .text Ivan Petrov
+                .after CEO
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+                i.icon-f7
+              .inner 
+                .text Two icons here
+          li
+            a(href="#") 
+              .icons
+                i.icon-f7
+              .inner 
+                .text Ultra long text goes here, no, it is really really long
+          li
+            .icons
+              i.icon-f7
+            .inner 
+              .text With switch
+              .after
+                label.switch
+                  input(type="checkbox")
+          
+        .list-block-label
+          p Here comes some useful information about list above
+          

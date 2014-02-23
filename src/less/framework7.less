@@ -1,0 +1,74 @@
+/*=============
+  Framework 7
+=============*/
+@import url('mixins.less');
+html,body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: 14px;
+    line-height: 1.35;
+    width: 100%;
+    -webkit-text-size-adjust:100%;
+    background: #fff;
+    overflow: hidden;
+}
+
+* { 
+    -webkit-tap-highlight-color: rgba(0,0,0,0); 
+    -webkit-touch-callout:none;
+}
+a, input, textarea, select {
+    outline: 0;
+}
+@blue:#007aff;
+@red: #fc3e39;
+a {
+    text-decoration: none;
+    color: @blue;
+}
+p {
+    margin: 1em 0px;
+}
+
+/* === Grid === */
+@import url('grid.less');
+
+/* === Views === */
+@import url('views.less');
+
+/* === Pages === */
+@import url('pages.less');
+
+/* === Toolbars === */
+@import url('toolbars.less');
+
+/* === Relation between toolbar/navbar types and pages === */
+@import url('toolbars-pages.less');
+
+/* === Icons === */
+@import url('icons.less');
+
+/* === Content Block === */
+@import url('content-block.less');
+
+/* === Lists === */
+@import url('lists.less');
+
+/* === Forms === */
+@import url('forms.less');
+
+/* === Modals === */
+@import url('modals.less');
+
+/* === Panels === */
+@import url('panels.less');
+
+/* === Tabs === */
+@import url('tabs.less');

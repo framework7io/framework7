@@ -1,0 +1,194 @@
+@modalBgColor:#e8e8e8;
+@modalActiveBgColor:#d4d4d4;
+@modalDuration:400ms;
+@actionsModalDuration:300ms;
+@actionModalButtonBg: #f3f3f3;
+@actionModalActiveButtonBg:#dcdcdc;
+.modal-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    .transition(@modalDuration);
+    &.modal-overlay-visible {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+.modal {
+    width: 270px;
+    position: absolute;
+    z-index: 11000;
+    left: 50%;
+    margin-left: -135px;
+    margin-top: 0;
+    top: 50%;
+    text-align: center;
+    border-radius: 7px;
+    opacity: 0;
+    .transform(translate3d(0%,0%,0) scale(1.185));
+    -webkit-transition-property: -webkit-transform, opacity;
+    -moz-transition-property: -moz-transform, opacity;
+    -ms-transition-property: -ms-transform, opacity;
+    -o-transition-property: -o-transform, opacity;
+    transition-property: transform, opacity;
+    &.modal-in {
+        opacity: 1;
+        .transition(@modalDuration);
+        .transform(translate3d(0%,0%,0) scale(1));
+    }
+    &.modal-out {
+        opacity: 0;
+        z-index: 11000-1;
+        .transition(@modalDuration);
+        .transform(translate3d(0%,0%,0) scale(0.815));
+    }
+}
+.modal-inner {
+    padding: 15px;
+    border-bottom: 1px solid #b5b5b5;
+    border-radius: 7px 7px 0 0;
+    background: @modalBgColor;
+}
+.modal-title {
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    +.modal-text {
+        margin-top: 5px;
+    }
+}
+.modal-buttons {
+    height: 44px;
+    overflow: hidden;
+    .flexbox();
+    .justify-content(center);
+}
+.modal-button {
+    width: 100%;
+    padding: 0 5px;
+    height: 44px;
+    font-size: 17px;
+    line-height: 44px;
+    text-align: center;
+    color: @blue;
+    background: @modalBgColor;
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+    .border-box();
+    border-right: 1px solid #b5b5b5;
+    &:first-child {
+        border-radius: 0px 0px 0px 7px;
+    }
+    &:last-child {
+        border-right: none;
+        border-radius: 0px 0px 7px 0px;
+    }
+    &:first-child:last-child {
+        border-radius: 0px 0px 7px 7px;
+    }
+    &.modal-button-bold {
+        font-weight: 500;
+    }
+    &:active {
+        background: @modalActiveBgColor;
+    }
+}
+.modal-no-buttons {
+    .modal-inner {
+        border-radius: 7px;
+        border-bottom: none;
+    }
+    .modal-buttons {
+        display: none;
+    }
+}
+
+.actions-modal {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 11000;
+    width: 100%;
+    .transform(translate3d(0%,100%,0));
+    &.modal-in {
+        .transition(@actionsModalDuration);
+        .transform(translate3d(0%,0%,0));
+    }
+    &.modal-out {
+        z-index: 11000-1;
+        .transition(@actionsModalDuration);
+        .transform(translate3d(0%,100%,0));
+    }
+}
+.actions-modal-group {
+    margin: 8px;
+}
+.actions-modal-button {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    color: @blue;
+    font-weight: normal;
+    line-height: 44px;
+    margin: 0;
+    cursor: pointer;
+    background: @actionModalButtonBg;
+    .border-box();
+    display: block;
+    border-bottom: 1px solid #d2d2d6;
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    b {
+        font-weight: 500;
+    }
+    &.actions-modal-button-bold {
+        font-weight: 500;
+    }
+    &.actions-modal-button-red {
+        color: @red;
+    }
+    &:first-child {
+        border-radius: 4px 4px 0 0;
+    }
+    &:last-child {
+        border: none;
+        border-radius: 0 0 4px 4px;
+    }
+    &:first-child:last-child {
+        border-radius: 4px;
+    }
+    &:active {
+        background: @actionModalActiveButtonBg;
+    }
+}
+input.modal-prompt-input {
+    .border-box();
+    height: 30px;
+    background: #fff;
+    margin: 0;
+    margin-top: 15px;
+    padding: 0 5px;
+    border: 1px solid #a0a0a0;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 14px;
+    font-family: inherit;
+    display: block;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+}

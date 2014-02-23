@@ -1,0 +1,148 @@
+doctype
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
+    title Framework7
+    link(rel="stylesheet", href="../build/css/framework7.css")
+    link(rel="stylesheet", href="css/kitchen-sink.css")
+  body
+    .panel-overlay
+    .panel.panel-left.panel-reveal
+      .content-block-title Left Panel
+      .content-block
+        p This is a side panel. You can close it by clicking outsite or on this link: 
+          a(href="#").close-panel close me
+          | . You can put here anything, even another isolated view like in 
+          a(href="#", data-panel="right").open-panel Right Panel
+      .content-block-title Framework7 Kitchen Sink
+      .list-block
+        ul
+          li
+            a(href="modals.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Modals
+          li
+            a(href="transitions.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Transitions And Effects
+          li
+            a(href="panels.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Side Panels
+          li
+            a(href="data-lists.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Data Lists
+          
+          li
+            a(href="forms.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Forms
+      .content-block
+        p Long text block goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sem urna, gravida non scelerisque id, fringilla ac velit. Phasellus elementum a ipsum at ornare. Mauris sagittis rhoncus euismod. Integer convallis augue eu lacus ultrices, in dictum elit consequat. Nulla faucibus massa id felis egestas eleifend. Proin consequat dignissim magna ut scelerisque. Vestibulum ac lorem semper, posuere sapien nec, pharetra massa. Nulla a tellus facilisis, sollicitudin quam porta, aliquam lorem. Fusce dignissim eros ac diam molestie, ut ultrices lorem tristique. Ut facilisis augue ac nisi egestas malesuada. Nunc posuere tortor quis eleifend mollis. Aliquam erat volutpat. Donec feugiat elit tellus, nec convallis orci elementum in. Sed urna mi, vestibulum id tempus id, pretium et ante. Pellentesque eget sollicitudin ligula. Phasellus pellentesque velit eu porta suscipit.
+    .panel.panel-right.panel-cover
+      .view.view-right
+        .navbar
+          .navbar-inner
+            .left
+            .center.sliding Right Panel
+            .right
+        .pages.navbar-through
+          .page(data-page="panel-right1")
+            .page-content 
+              .content-block
+                p This is a right side panel. You can close it by clicking outsite or on this link: 
+                  a(href="#").close-panel close me
+                  | . You can put here anything, even another isolated view, try it:
+              .list-block
+                ul
+                  li
+                    a(href="panel-right2.html") 
+                      .inner 
+                        .text Right panel page 2
+                  li
+                    a(href="panel-right3.html") 
+                      .inner 
+                        .text Right panel page 3
+
+    .views
+      .view.view-main
+        .navbar
+          .navbar-inner
+            //- .left
+            .center.sliding Framework7
+            .right
+              a(href="#").open-panel.link
+                i.icon-bars-blue
+        .toolbar
+          .toolbar-inner
+            a(href="#").link Dummy 1
+            a(href="#").link Dummy 2
+        .pages.navbar-through.toolbar-through
+          .page(data-page="index")
+            .page-content
+              
+              .content-block-title Welcome To Framework7
+              .content-block
+                p 
+                  a(href="about.html").button Read About Framework7
+              
+              .content-block-title Framework7 Kitchen Sink
+              .list-block
+                ul
+                  li
+                    a(href="modals.html") 
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Modals
+                  li
+                    a(href="transitions.html")
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Transitions And Effects
+                  li
+                    a(href="tabs.html")
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Tabs
+                  li
+                    a(href="panels.html")
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Side Panels
+                  li
+                    a(href="data-lists.html")
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Data Lists
+                  li
+                    a(href="forms.html")
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Forms
+              .content-block-title Core Features
+              .content-block
+                p 
+                  a(href="core-features.html").button Read About Core Features
+
+    script(type="text/javascript", src="../build/js/framework7.js")
+    script(type="text/javascript", src="js/kitchen-sink.js")

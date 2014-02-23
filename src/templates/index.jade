@@ -1,0 +1,72 @@
+doctype
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
+    title My App
+    // Path to Framework7 Library CSS
+    link(rel="stylesheet", href="css/framework7.css")
+    // Path to your custom app styles
+    link(rel="stylesheet", href="css/my-app.css")
+  body
+    // Panels overlay
+    .panel-overlay
+    // Left panel with reveal effect
+    .panel.panel-left.panel-reveal
+      .content-block
+        p Left panel content goes here
+    // Right panel with cover effect
+    .panel.panel-right.panel-cover
+      .content-block
+        p Right panel content goes here
+
+    // Views
+    .views
+      // Your main view, should have "view-main" class
+      .view.view-main
+        // Top Navbar
+        .navbar
+          .navbar-inner
+            .left
+              a(href="#").link Left Link
+            .center.sliding Awesome App
+            .right
+              a(href="#").link Right Link
+        // Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes
+        .pages.navbar-through.toolbar-through
+          // Page, data-page contains page name
+          .page(data-page="index")
+            // Scrollable page content
+            .page-content
+              .content-block-title Welcome To Your Awesome App
+              .content-block
+                .content-block-inner
+                  p Couple of worlds here because your app is so awesome ;)
+                  p Hey look! You already have two panels, here comes your 
+                    a(href="#").open-panel Left panel
+                    |  and your favorite 
+                    a(href="#" , data-panel="right").open-panel Right panel
+                    |  is also here!
+              .content-block-title What about simple navigation?
+              .list-block
+                ul
+                  li
+                    a(href="page1.html") 
+                      .inner 
+                        .text Page 1
+                  li
+                    a(href="page2.html") 
+                      .inner 
+                        .text Page 2
+        // Bottom Toolbar
+        .toolbar
+          .toolbar-inner
+            a(href="#").link Link 1
+            a(href="#").link Link 2
+
+    // Path to Framework7 Library JS
+    script(type="text/javascript", src="js/framework7.js")
+    // Path to your app js
+    script(type="text/javascript", src="js/my-app.js")

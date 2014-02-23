@@ -1,0 +1,21 @@
+.navbar
+  .navbar-inner
+    .left
+      a(href="index.html").back.link
+        i.icon-back-blue 
+        span Back
+    .center.sliding Side Panels Opa Opa
+    .right
+      a(href="#").open-panel.link
+        i.icon-bars-blue
+.pages.navbar-through
+  .page(data-page="panels")
+    .page-content
+      .content-block
+        p Framework7 comes with 2 panels (on left and on right), both are optional. With two different layouts/effects - cover above the content (like left panel here) and below the content (like right panel). You can put absolutely anything inside: data lists, forms, custom content, and even other isolated app view (like in right panel now) with it own dynamic toolbar. Checkout panels
+      .content-block
+        .grid-2
+          .col
+            a(href="#").button.open-panel Left Panel
+          .col
+            a(href="#", data-panel="right").button.open-panel Right Panel
