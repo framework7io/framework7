@@ -111,21 +111,21 @@
 @-webkit-keyframes navbarElementSlideRC {
     from {
         opacity: 0;
-        .translate3d(@navbarOffset);
+        -webkit-transform: translate3d(@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
+        -webkit-transform: translate3d(0%,0,0);
     }
 }
 @-webkit-keyframes navbarElementSlideCR {
     from {
         opacity: 1;
-        .translate3d(0%);
+        -webkit-transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(@navbarOffset);
+        -webkit-transform: translate3d(@navbarOffset,0,0);
     }
 }
 @-moz-keyframes navbarElementFadeIn {
@@ -139,49 +139,21 @@
 @-moz-keyframes navbarElementSlideRC {
     from {
         opacity: 0;
-        .translate3d(@navbarOffset);
+        -moz-transform: translate3d(@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
+        -moz-transform: translate3d(0%,0,0);
     }
 }
 @-moz-keyframes navbarElementSlideCR {
     from {
         opacity: 1;
-        .translate3d(0%);
+        -moz-transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(@navbarOffset);
-    }
-}
-@-ms-keyframes navbarElementFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-@-ms-keyframes navbarElementSlideRC {
-    from {
-        opacity: 0;
-        .translate3d(@navbarOffset);
-    }
-    to {
-        opacity: 1;
-        .translate3d(0%);
-    }
-}
-@-ms-keyframes navbarElementSlideCR {
-    from {
-        opacity: 1;
-        .translate3d(0%);
-    }
-    to {
-        opacity: 0;
-        .translate3d(@navbarOffset);
+        -moz-transform: translate3d(@navbarOffset,0,0);
     }
 }
 @-o-keyframes navbarElementFadeIn {
@@ -195,21 +167,21 @@
 @-o-keyframes navbarElementSlideRC {
     from {
         opacity: 0;
-        .translate3d(@navbarOffset);
+        -o-transform: translate3d(@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
+        -o-transform: translate3d(0%,0,0);
     }
 }
 @-o-keyframes navbarElementSlideCR {
     from {
         opacity: 1;
-        .translate3d(0%);
+        -o-transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(@navbarOffset);
+        -o-transform: translate3d(@navbarOffset,0,0);
     }
 }
 @keyframes navbarElementFadeIn {
@@ -223,21 +195,21 @@
 @keyframes navbarElementSlideRC {
     from {
         opacity: 0;
-        .translate3d(@navbarOffset);
+        transform: translate3d(@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
+        transform: translate3d(0%,0,0);
     }
 }
 @keyframes navbarElementSlideCR {
     from {
         opacity: 1;
-        .translate3d(0%);
+        transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(@navbarOffset);
+        transform: translate3d(@navbarOffset,0,0);
     }
 }
 .navbar-from-center-to-left {
@@ -285,21 +257,21 @@
 @-webkit-keyframes navbarElementSlideCL {
     from {
         opacity: 1;
-        .translate3d(0%);
+        -webkit-transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        -webkit-transform: translate3d(-@navbarOffset,0,0);
     }
 }
 @-webkit-keyframes navbarElementSlideLC {
     from {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        -webkit-transform: translate3d(-@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
+        -webkit-transform: translate3d(0%,0,0);
     }
 }
 @-moz-keyframes navbarElementFadeOut {
@@ -313,49 +285,21 @@
 @-moz-keyframes navbarElementSlideCL {
     from {
         opacity: 1;
-        .translate3d(0%);
+        -moz-transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        -moz-transform: translate3d(-@navbarOffset,0,0);
     }
 }
 @-moz-keyframes navbarElementSlideLC {
     from {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        -moz-transform: translate3d(-@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
-    }
-}
-@-ms-keyframes navbarElementFadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-@-ms-keyframes navbarElementSlideCL {
-    from {
-        opacity: 1;
-        .translate3d(0%);
-    }
-    to {
-        opacity: 0;
-        .translate3d(-@navbarOffset);
-    }
-}
-@-ms-keyframes navbarElementSlideLC {
-    from {
-        opacity: 0;
-        .translate3d(-@navbarOffset);
-    }
-    to {
-        opacity: 1;
-        .translate3d(0%);
+        -moz-transform: translate3d(0%,0,0);
     }
 }
 @-o-keyframes navbarElementFadeOut {
@@ -369,21 +313,21 @@
 @-o-keyframes navbarElementSlideCL {
     from {
         opacity: 1;
-        .translate3d(0%);
+        -o-transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        -o-transform: translate3d(-@navbarOffset,0,0);
     }
 }
 @-o-keyframes navbarElementSlideLC {
     from {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        -o-transform: translate3d(-@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
+        -o-transform: translate3d(0%,0,0);
     }
 }
 @keyframes navbarElementFadeOut {
@@ -397,20 +341,20 @@
 @keyframes navbarElementSlideCL {
     from {
         opacity: 1;
-        .translate3d(0%);
+        transform: translate3d(0%,0,0);
     }
     to {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        transform: translate3d(-@navbarOffset,0,0);
     }
 }
 @keyframes navbarElementSlideLC {
     from {
         opacity: 0;
-        .translate3d(-@navbarOffset);
+        transform: translate3d(-@navbarOffset,0,0);
     }
     to {
         opacity: 1;
-        .translate3d(0%);
+        transform: translate3d(0%,0,0);
     }
 }
