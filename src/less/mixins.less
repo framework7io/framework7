@@ -19,6 +19,13 @@
     -o-transform: @t;
     transform: @t;
 }
+.transform-origin(@to) {
+    -webkit-transform-origin: @to;
+    -moz-transform-origin: @to;
+    -ms-transform-origin: @to;
+    -o-transform-origin: @to;
+    transform-origin: @to;
+}
 .translate3d(@x:0, @y:0, @z:0) {
     -webkit-transform: translate3d(@x,@y,@z);
     -moz-transform: translate3d(@x,@y,@z);

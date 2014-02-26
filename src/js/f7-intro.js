@@ -45,7 +45,8 @@ window.Framework7 = function (params) {
         modalButtonCancel: 'Cancel',
         modalTitle: 'Framework7',
         modalCloseByOutside: false,
-        modalActionsCloseByOutside: true
+        modalActionsCloseByOutside: true,
+        modalPreloaderText: 'Loading... '
     };
 
     // Extend defaults with parameters

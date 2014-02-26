@@ -144,7 +144,7 @@ module.exports = function (grunt) {
                 }
             },
             kitchen: {
-                files: ['kitchen-sink/jade/*, kitchen-sink/less/*'],
+                files: ['kitchen-sink/jade/**, kitchen-sink/less/**'],
                 tasks: ['jade:kitchen', 'less:kitchen'],
                 options: {
                     livereload: true

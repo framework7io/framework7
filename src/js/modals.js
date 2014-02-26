@@ -84,13 +84,14 @@ app.prompt = function (text, callbackOk, callbackCancel) {
         ]
     });
 };
-app.showAjaxLoader = function () {
+app.showPreloader = function (text) {
     return app.modal({
-        text: 'Loading...',
-        afterText: '<span class="ajax-loader"></span>'
+        title: text || app.params.modalPreloaderText,
+        text:' ',
+        afterText: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
     });
 };
-app.hideAjaxLoader = function () {
+app.hidePreloader = function () {
     app.closeModal();
 };
 // Action Sheet

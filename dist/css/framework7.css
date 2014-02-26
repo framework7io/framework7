@@ -1,5 +1,5 @@
 /*
- * Framework7 0.3.0
+ * Framework7 0.3.2
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: February 23, 2014
+ * Released on: February 26, 2014
 */
 /*=============
   Framework 7
@@ -2122,6 +2122,9 @@ i.icon-bars-blue {
 .modal-title + .modal-text {
   margin-top: 5px;
 }
+.modal-title + .preloader {
+  margin-top: 5px;
+}
 .modal-buttons {
   height: 44px;
   overflow: hidden;
@@ -2386,7 +2389,7 @@ body.with-panel-right-reveal .views {
   transform: translate3d(-260px, 0, 0);
 }
 body.with-panel-right-reveal .panel-overlay {
-  margin-right: 260px;
+  margin-left: -260px;
 }
 body.with-panel-right-cover .panel-right {
   -webkit-transform: translate3d(-260px, 0, 0);
@@ -2413,4 +2416,251 @@ body.panel-closing .views {
 }
 .tabs .tab.active {
   display: block;
+}
+/* === Preloader === */
+.preloader {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  position: relative;
+}
+.preloader span {
+  width: 7.14285714%;
+  height: 28.57142857%;
+  background: #575f6c;
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -3.57142857%;
+  top: 0;
+  -webkit-transform-origin: 50% 175%;
+  -moz-transform-origin: 50% 175%;
+  -ms-transform-origin: 50% 175%;
+  -o-transform-origin: 50% 175%;
+  transform-origin: 50% 175%;
+  opacity: 0;
+}
+.modal .preloader {
+  width: 34px;
+  height: 34px;
+}
+.preloader span:nth-child(1) {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 0ms forwards, preloaderStickPulsate 600ms 300ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 0ms forwards, preloaderStickPulsate 600ms 300ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 0ms forwards, preloaderStickPulsate 600ms 300ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 0ms forwards, preloaderStickPulsate 600ms 300ms infinite;
+  animation: preloaderStickFadeIn 100ms 0ms forwards, preloaderStickPulsate 600ms 300ms infinite;
+}
+.preloader span:nth-child(2) {
+  -webkit-transform: rotate(30deg);
+  -moz-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -o-transform: rotate(30deg);
+  transform: rotate(30deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 50ms forwards, preloaderStickPulsate 600ms 350ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 50ms forwards, preloaderStickPulsate 600ms 350ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 50ms forwards, preloaderStickPulsate 600ms 350ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 50ms forwards, preloaderStickPulsate 600ms 350ms infinite;
+  animation: preloaderStickFadeIn 100ms 50ms forwards, preloaderStickPulsate 600ms 350ms infinite;
+}
+.preloader span:nth-child(3) {
+  -webkit-transform: rotate(60deg);
+  -moz-transform: rotate(60deg);
+  -ms-transform: rotate(60deg);
+  -o-transform: rotate(60deg);
+  transform: rotate(60deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 100ms forwards, preloaderStickPulsate 600ms 400ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 100ms forwards, preloaderStickPulsate 600ms 400ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 100ms forwards, preloaderStickPulsate 600ms 400ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 100ms forwards, preloaderStickPulsate 600ms 400ms infinite;
+  animation: preloaderStickFadeIn 100ms 100ms forwards, preloaderStickPulsate 600ms 400ms infinite;
+}
+.preloader span:nth-child(4) {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 150ms forwards, preloaderStickPulsate 600ms 450ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 150ms forwards, preloaderStickPulsate 600ms 450ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 150ms forwards, preloaderStickPulsate 600ms 450ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 150ms forwards, preloaderStickPulsate 600ms 450ms infinite;
+  animation: preloaderStickFadeIn 100ms 150ms forwards, preloaderStickPulsate 600ms 450ms infinite;
+}
+.preloader span:nth-child(5) {
+  -webkit-transform: rotate(120deg);
+  -moz-transform: rotate(120deg);
+  -ms-transform: rotate(120deg);
+  -o-transform: rotate(120deg);
+  transform: rotate(120deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 200ms forwards, preloaderStickPulsate 600ms 500ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 200ms forwards, preloaderStickPulsate 600ms 500ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 200ms forwards, preloaderStickPulsate 600ms 500ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 200ms forwards, preloaderStickPulsate 600ms 500ms infinite;
+  animation: preloaderStickFadeIn 100ms 200ms forwards, preloaderStickPulsate 600ms 500ms infinite;
+}
+.preloader span:nth-child(6) {
+  -webkit-transform: rotate(150deg);
+  -moz-transform: rotate(150deg);
+  -ms-transform: rotate(150deg);
+  -o-transform: rotate(150deg);
+  transform: rotate(150deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 250ms forwards, preloaderStickPulsate 600ms 550ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 250ms forwards, preloaderStickPulsate 600ms 550ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 250ms forwards, preloaderStickPulsate 600ms 550ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 250ms forwards, preloaderStickPulsate 600ms 550ms infinite;
+  animation: preloaderStickFadeIn 100ms 250ms forwards, preloaderStickPulsate 600ms 550ms infinite;
+}
+.preloader span:nth-child(7) {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 300ms forwards, preloaderStickPulsate 600ms 600ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 300ms forwards, preloaderStickPulsate 600ms 600ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 300ms forwards, preloaderStickPulsate 600ms 600ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 300ms forwards, preloaderStickPulsate 600ms 600ms infinite;
+  animation: preloaderStickFadeIn 100ms 300ms forwards, preloaderStickPulsate 600ms 600ms infinite;
+}
+.preloader span:nth-child(8) {
+  -webkit-transform: rotate(210deg);
+  -moz-transform: rotate(210deg);
+  -ms-transform: rotate(210deg);
+  -o-transform: rotate(210deg);
+  transform: rotate(210deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 350ms forwards, preloaderStickPulsate 600ms 650ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 350ms forwards, preloaderStickPulsate 600ms 650ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 350ms forwards, preloaderStickPulsate 600ms 650ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 350ms forwards, preloaderStickPulsate 600ms 650ms infinite;
+  animation: preloaderStickFadeIn 100ms 350ms forwards, preloaderStickPulsate 600ms 650ms infinite;
+}
+.preloader span:nth-child(9) {
+  -webkit-transform: rotate(240deg);
+  -moz-transform: rotate(240deg);
+  -ms-transform: rotate(240deg);
+  -o-transform: rotate(240deg);
+  transform: rotate(240deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 400ms forwards, preloaderStickPulsate 600ms 700ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 400ms forwards, preloaderStickPulsate 600ms 700ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 400ms forwards, preloaderStickPulsate 600ms 700ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 400ms forwards, preloaderStickPulsate 600ms 700ms infinite;
+  animation: preloaderStickFadeIn 100ms 400ms forwards, preloaderStickPulsate 600ms 700ms infinite;
+}
+.preloader span:nth-child(10) {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 450ms forwards, preloaderStickPulsate 600ms 750ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 450ms forwards, preloaderStickPulsate 600ms 750ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 450ms forwards, preloaderStickPulsate 600ms 750ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 450ms forwards, preloaderStickPulsate 600ms 750ms infinite;
+  animation: preloaderStickFadeIn 100ms 450ms forwards, preloaderStickPulsate 600ms 750ms infinite;
+}
+.preloader span:nth-child(11) {
+  -webkit-transform: rotate(300deg);
+  -moz-transform: rotate(300deg);
+  -ms-transform: rotate(300deg);
+  -o-transform: rotate(300deg);
+  transform: rotate(300deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 500ms forwards, preloaderStickPulsate 600ms 800ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 500ms forwards, preloaderStickPulsate 600ms 800ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 500ms forwards, preloaderStickPulsate 600ms 800ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 500ms forwards, preloaderStickPulsate 600ms 800ms infinite;
+  animation: preloaderStickFadeIn 100ms 500ms forwards, preloaderStickPulsate 600ms 800ms infinite;
+}
+.preloader span:nth-child(12) {
+  -webkit-transform: rotate(330deg);
+  -moz-transform: rotate(330deg);
+  -ms-transform: rotate(330deg);
+  -o-transform: rotate(330deg);
+  transform: rotate(330deg);
+  -webkit-animation: preloaderStickFadeIn 100ms 550ms forwards, preloaderStickPulsate 600ms 850ms infinite;
+  -moz-animation: preloaderStickFadeIn 100ms 550ms forwards, preloaderStickPulsate 600ms 850ms infinite;
+  -ms-animation: preloaderStickFadeIn 100ms 550ms forwards, preloaderStickPulsate 600ms 850ms infinite;
+  -o-animation: preloaderStickFadeIn 100ms 550ms forwards, preloaderStickPulsate 600ms 850ms infinite;
+  animation: preloaderStickFadeIn 100ms 550ms forwards, preloaderStickPulsate 600ms 850ms infinite;
+}
+@-webkit-keyframes preloaderStickFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes preloaderStickPulsate {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes preloaderStickFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes preloaderStickPulsate {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes preloaderStickFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes preloaderStickPulsate {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes preloaderStickFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes preloaderStickPulsate {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
