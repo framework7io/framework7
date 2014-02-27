@@ -23,88 +23,56 @@
 .preloader-loop(@i) when (@i < 13){
     .preloader span:nth-child(@{i}) {
         @deg: (@i - 1) * 30deg;
-        @delay1: (@i - 1) * 50ms;
-        @delay2: @delay1 + 300ms;
+        @duration: 900ms;
+        @delay: (@i - 1) * (@duration/12);
         .transform(rotate(@deg));
-        .animation(~"preloaderStickFadeIn 100ms @{delay1} forwards, preloaderStickPulsate 600ms @{delay2} infinite");
+        .animation(~"preloaderStickPulsate @{duration} @{delay} infinite");
     }
     .preloader-loop(@i + 1);
 }
 .preloader-loop(1);
 
-@-webkit-keyframes preloaderStickFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
 @-webkit-keyframes preloaderStickPulsate {
-    from {
+    0% {
         opacity: 1;
     }
-    50% {
+    90% {
         opacity: 0;
     }
-    to {
-        opacity: 1;
-    }
-}
-@-moz-keyframes preloaderStickFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
+    100% {
         opacity: 1;
     }
 }
 @-moz-keyframes preloaderStickPulsate {
-    from {
+    0% {
         opacity: 1;
     }
-    50% {
+    90% {
         opacity: 0;
     }
-    to {
-        opacity: 1;
-    }
-}
-@-o-keyframes preloaderStickFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
+    100% {
         opacity: 1;
     }
 }
 @-o-keyframes preloaderStickPulsate {
-    from {
+    0% {
         opacity: 1;
     }
-    50% {
+    90% {
         opacity: 0;
     }
-    to {
-        opacity: 1;
-    }
-}
-@keyframes preloaderStickFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
+    100% {
         opacity: 1;
     }
 }
 @keyframes preloaderStickPulsate {
-    from {
+    0% {
         opacity: 1;
     }
-    50% {
+    90% {
         opacity: 0;
     }
-    to {
+    100% {
         opacity: 1;
     }
 }
