@@ -1,9 +1,9 @@
 /*======================================================
-************   Navbars   ************
+************   Navbars && Toolbars   ************
 ======================================================*/
 app.sizeNavbars = function(viewContainer){
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner') : $('.navbar .navbar-inner');
-    $('.navbar .navbar-inner').each(function(){
+    navbarInner.each(function(){
         var tt = $(this),
             left = tt.find('.left'),
             right = tt.find('.right'),
@@ -12,19 +12,19 @@ app.sizeNavbars = function(viewContainer){
             rightWidth = right.outerWidth(true),
             centerWidth = center.outerWidth(true),
             navbarWidth = tt.width(),
-            noLeft = left.length===0,
-            noRight = right.length===0,
-            currLeft = (navbarWidth - rightWidth - centerWidth + leftWidth)/2,
+            noLeft = left.length === 0,
+            noRight = right.length === 0,
+            currLeft = (navbarWidth - rightWidth - centerWidth + leftWidth) / 2,
             diff;
         if (noRight) {
             currLeft = navbarWidth - centerWidth;
         }
         if (noLeft) {
-            currLeft = 0;   
+            currLeft = 0;
         }
-        var requiredLeft = (navbarWidth-centerWidth)/2;
+        var requiredLeft = (navbarWidth - centerWidth) / 2;
         if (navbarWidth - leftWidth - rightWidth > centerWidth) {
-            if (requiredLeft<leftWidth) {
+            if (requiredLeft < leftWidth) {
                 requiredLeft = leftWidth;
             }
             if (requiredLeft + centerWidth > navbarWidth - rightWidth) {
@@ -35,6 +35,6 @@ app.sizeNavbars = function(viewContainer){
         else {
             diff = 0;
         }
-        tt.find('.center').css({left: diff+'px'});
+        tt.find('.center').css({left: diff + 'px'});
     });
 };
