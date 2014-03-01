@@ -1,26 +1,29 @@
 /*======================================================
 ************   Navbars && Toolbars   ************
 ======================================================*/
-app.sizeNavbars = function(viewContainer){
+app.sizeNavbars = function(viewContainer) {
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner') : $('.navbar .navbar-inner');
-    navbarInner.each(function(){
+    navbarInner.each(function() {
         var tt = $(this),
             left = tt.find('.left'),
             right = tt.find('.right'),
             center = tt.find('.center'),
-            leftWidth = left.outerWidth(true),
-            rightWidth = right.outerWidth(true),
-            centerWidth = center.outerWidth(true),
-            navbarWidth = tt.width(),
             noLeft = left.length === 0,
             noRight = right.length === 0,
-            currLeft = (navbarWidth - rightWidth - centerWidth + leftWidth) / 2,
-            diff;
+            leftWidth = noLeft ? 0 : left.outerWidth(true),
+            rightWidth = noRight ? 0 : right.outerWidth(true),
+            centerWidth = center.outerWidth(true),
+            navbarWidth = tt.width(),
+            currLeft, diff;
+
         if (noRight) {
             currLeft = navbarWidth - centerWidth;
         }
         if (noLeft) {
             currLeft = 0;
+        }
+        if (!noLeft && !noRight) {
+            currLeft = (navbarWidth - rightWidth - centerWidth + leftWidth) / 2;
         }
         var requiredLeft = (navbarWidth - centerWidth) / 2;
         if (navbarWidth - leftWidth - rightWidth > centerWidth) {
@@ -35,6 +38,19 @@ app.sizeNavbars = function(viewContainer){
         else {
             diff = 0;
         }
-        tt.find('.center').css({left: diff + 'px'});
+        center.css({left: diff + 'px'});
+        if (center.hasClass('sliding')) {
+            center.attr('data-left', -(currLeft + diff));
+            center.attr('data-right', navbarWidth - currLeft - diff - centerWidth);
+        }
+        if (!noLeft && left.hasClass('sliding')) {
+            left.attr('data-left', -leftWidth);
+            left.attr('data-right', (navbarWidth - left.outerWidth())/2);
+        }
+        if (!noRight && right.hasClass('sliding')) {
+            right.attr('data-left', -(navbarWidth - right.outerWidth())/2);
+            right.attr('data-right', rightWidth);
+        }
+        
     });
 };

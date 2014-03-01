@@ -64,7 +64,7 @@ Dom.prototype = {
             for (var i=0; i<this.length; i++) {
                 this[i].value = value;
             }
-            return this;   
+            return this;
         }
     },
     // Transforms
@@ -97,9 +97,9 @@ Dom.prototype = {
         var events = eventName.split(' ');
         var i,j;
         for (i=0; i<this.length; i++) {
-            if (arguments.length==2 || targetSelector===false) {
+            if (arguments.length===2 || targetSelector===false) {
                 // Usual events
-                if (arguments.length==2) listener = arguments[1];
+                if (arguments.length===2) listener = arguments[1];
                 for (j=0; j<events.length; j++) {
                     this[i].addEventListener(events[j], listener, false);
                 }
@@ -117,7 +117,7 @@ Dom.prototype = {
     tap: function(targetSelector, listener) {
         var dom = this;
         var isTouched, isMoved, touchesStart = {}, touchStartTime, deltaX, deltaY;
-        if (arguments.length==1) {
+        if (arguments.length===1) {
             listener = arguments[0];
             targetSelector = false;
         }
@@ -143,10 +143,10 @@ Dom.prototype = {
                     listener.call(this, e);
                 }
                 isTouched = isMoved = false;
-            });   
+            });
         }
         else {
-            dom.on('click', targetSelector, listener);   
+            dom.on('click', targetSelector, listener);
         }
     },
     off: function (event, listener) {
@@ -166,6 +166,7 @@ Dom.prototype = {
         var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
             i, j, dom = this;
         function fireCallBack(e) {
+            /*jshint validthis:true */
             callback.call(this,e);
             for (i=0; i<events.length; i++) {
                 dom.off(events[i], fireCallBack);
@@ -205,7 +206,7 @@ Dom.prototype = {
         if (this.length>0) {
             if (margins)
                 return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
-            else 
+            else
                 return this[0].offsetWidth;
         }
         else return null;
@@ -222,7 +223,7 @@ Dom.prototype = {
         if (this.length>0) {
             if (margins)
                 return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
-            else 
+            else
                 return this[0].offsetHeight;
         }
         else return null;
@@ -256,7 +257,7 @@ Dom.prototype = {
         }
     },
     css: function(props) {
-        if (typeof props == 'string') {
+        if (typeof props === 'string') {
             if (this[0]) return window.getComputedStyle(this[0], null).getPropertyValue(props);
         }
         else {
@@ -306,7 +307,7 @@ Dom.prototype = {
     },
     append: function (newChild) {
         for (var i=0; i<this.length; i++) {
-            if (typeof newChild == 'string') {
+            if (typeof newChild === 'string') {
                 this[i].innerHTML += newChild;
             }
             else {
@@ -317,7 +318,7 @@ Dom.prototype = {
     },
     prepend: function (newChild) {
         for (var i=0; i<this.length; i++) {
-            if (typeof newChild == 'string') {
+            if (typeof newChild === 'string') {
                 this[i].innerHTML = newChild + this[i].innerHTML;
             }
             else {
@@ -329,7 +330,7 @@ Dom.prototype = {
     insertBefore: function(selector) {
         var before = $(selector);
         for (var i=0; i<this.length; i++) {
-            if (before.length==1) {
+            if (before.length===1) {
                 before[0].parentNode.insertBefore(this[i], before[0]);
             }
             else if (before.length>1){
@@ -379,10 +380,10 @@ Dom.prototype = {
 
             for (var j=0; j<childNodes.length; j++) {
                 if (!selector) {
-                    if (childNodes[j].nodeType==1) children.push(childNodes[j]);
+                    if (childNodes[j].nodeType===1) children.push(childNodes[j]);
                 }
                 else {
-                    if (childNodes[j].nodeType==1 && $(childNodes[j]).is(selector)) children.push(childNodes[j]);
+                    if (childNodes[j].nodeType===1 && $(childNodes[j]).is(selector)) children.push(childNodes[j]);
                 }
             }
         }
@@ -390,7 +391,7 @@ Dom.prototype = {
     },
     remove: function () {
         for (var i=0; i<this.length; i++) {
-            this[i].parentNode.removeChild(this[i]);   
+            this[i].parentNode.removeChild(this[i]);
         }
         return this;
     },
@@ -400,14 +401,14 @@ var $ = function(selector, context) {
     var arr = [], i=0;
     if (selector) {
         // String
-        if (typeof selector=='string') {
+        if (typeof selector==='string') {
             var els = (context||document).querySelectorAll(selector);
             for (i=0; i<els.length; i++) {
                 arr.push(els[i]);
             }
         }
         // Node/element
-        else if (selector.nodeType || selector == window || selector == document) {
+        else if (selector.nodeType || selector === window || selector === document) {
             arr.push(selector);
         }
         //Array of elements or instance of Dom
@@ -436,10 +437,10 @@ $.isArray = function(arr) {
 $.unique = function(arr) {
     var unique = [];
     for (var i=0; i<arr.length; i++) {
-        if (unique.indexOf(arr[i]) == -1) unique.push(arr[i]);
+        if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
     }
     return unique;
 };
-$.supportTouch = (function(){ 
-    return !!(("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch);
+$.supportTouch = (function(){
+    return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 })();

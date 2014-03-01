@@ -1,5 +1,6 @@
 {
   "node"         : true,
+  "browser"      : true,
   "esnext"       : true,
   "bitwise"      : false,
   "curly"        : false,
@@ -15,10 +16,13 @@
   "smarttabs"    : true,
   "quotmark"     : "single",
   "indent"       : 4,
-  "white"        : true,
+  "white"        : false,
   "globals":{
     "document": true,
     "window": true,
-    "$":true
+    "$":true,
+    "Event":true,
+    "DocumentTouch":true,
+    "app":true
   }
 }

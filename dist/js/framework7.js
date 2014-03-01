@@ -1,5 +1,5 @@
 /*
- * Framework7 0.3.2
+ * Framework7 0.3.5
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: February 26, 2014
+ * Released on: March 1, 2014
 */
 (function () {
 
@@ -121,15 +121,15 @@
         app.initViewEvents = function(view){
             // Swipe Back to previous page
             var viewContainer = $(view.container),
-                isTouched = false, 
+                isTouched = false,
                 isMoved = false,
-                touchesStart={}, 
-                isScrolling, 
-                activePage, 
-                previousPage, 
-                viewContainerWidth, 
-                touchesDiff, 
-                allowViewTouchMove = true, 
+                touchesStart={},
+                isScrolling,
+                activePage,
+                previousPage,
+                viewContainerWidth,
+                touchesDiff,
+                allowViewTouchMove = true,
                 touchStartTime,
                 activeNavbar,
                 previousNavbar,
@@ -143,17 +143,17 @@
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
-                touchesStart.x = e.type=='touchstart' ? e.targetTouches[0].pageX : e.pageX;
-                touchesStart.y = e.type=='touchstart' ? e.targetTouches[0].pageY : e.pageY;                
+                touchesStart.x = e.type==='touchstart' ? e.targetTouches[0].pageX : e.pageX;
+                touchesStart.y = e.type==='touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = (new Date()).getTime();
             });
             viewContainer.on(app.touchEvents.move, function(e){
                 if (!isTouched) return;
                 
-                var pageX = e.type=='touchmove' ? e.targetTouches[0].pageX : e.pageX;
-                var pageY = e.type=='touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                var pageX = e.type==='touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                var pageY = e.type==='touchmove' ? e.targetTouches[0].pageY : e.pageY;
                 if ( typeof isScrolling === 'undefined') {
-                  isScrolling = !!( isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs( pageX - touchesStart.x ) );
+                    isScrolling = !!( isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs( pageX - touchesStart.x ) );
                 }
                 if (isScrolling ) {
                     isTouched = false;
@@ -165,7 +165,7 @@
                     // Calc values during first move fired
                     viewContainerWidth = viewContainer.width();
                     activePage = $(e.target).is('.page') ? $(e.target) : $(e.target).parents('.page');
-                    previousPage = viewContainer.find('.page-on-left');  
+                    previousPage = viewContainer.find('.page-on-left');
                     if (touchesStart.x - viewContainer.offset().left > app.params.swipeBackPageActiveArea) cancel = true;
                     if (previousPage.length===0 || activePage.length===0) cancel = true;
                     if (cancel) {
@@ -190,22 +190,22 @@
                 activePage.transform('translate3d('+touchesDiff+'px,0,0)');
                 activePage[0].style.boxShadow = '0px 0px 8px rgba(0,0,0,'+(0.6-0.6*percentage)+')';
                 previousPage.transform('translate3d('+(touchesDiff/5 - viewContainerWidth/5) +'px,0,0)');
-                previousPage[0].style.opacity = 0.8 + 0.2*percentage;  
+                previousPage[0].style.opacity = 0.8 + 0.2*percentage;
         
                 // Dynamic Navbars Animation
                 if (view.params.dynamicNavbar) {
                     for (i=0; i<activeNavElements.length; i++) {
-                        el = activeNavElements[i];
-                        el.style.opacity = 1 - percentage;
-                        if (el.className.indexOf('sliding')>=0) {
-                            $(el).transform('translate3d('+(percentage*100)+'%,0,0)');
+                        el = $(activeNavElements[i]);
+                        el[0].style.opacity = (1 - percentage*1.3);
+                        if (el[0].className.indexOf('sliding')>=0) {
+                            el.transform('translate3d('+( percentage * el.attr('data-right') )+'px,0,0)');
                         }
                     }
                     for (i=0; i<previousNavElements.length; i++) {
-                        el = previousNavElements[i];
-                        el.style.opacity = percentage;
-                        if (el.className.indexOf('sliding')>=0) {
-                            $(el).transform('translate3d('+(-100 + percentage*100)+'%,0,0)');
+                        el = $(previousNavElements[i]);
+                        el[0].style.opacity = percentage*1.3 - 0.3;
+                        if (el[0].className.indexOf('sliding')>=0) {
+                            el.transform('translate3d('+( el.attr('data-left') * (1-percentage) )+'px,0,0)');
                         }
                     }
                 }
@@ -213,11 +213,11 @@
             });
             viewContainer.on(app.touchEvents.end, function(e){
                 if (!isTouched || !isMoved) {
-                    isTouched = false; 
+                    isTouched = false;
                     isMoved = false;
                     return;
                 }
-                isTouched = false; 
+                isTouched = false;
                 isMoved = false;
                 var timeDiff = (new Date()).getTime() - touchStartTime;
                 var pageChanged = false;
@@ -238,8 +238,15 @@
                 // Add transitioning class for transition-duration
                 $([activePage[0], previousPage[0]]).transform('').css({opacity:'', boxShadow:''}).addClass('page-transitioning');
                 if (view.params.dynamicNavbar) {
-                    activeNavElements.transform('').css({opacity:''}).addClass('page-transitioning');
-                    previousNavElements.transform('').css({opacity:''}).addClass('page-transitioning');
+                    activeNavElements.css({opacity:''})
+                    .each(function(){
+                        var translate = pageChanged ? $(this).attr('data-right') : 0;
+                        $(this).transform('translate3d('+translate+'px,0,0)');
+                    }).addClass('page-transitioning');
+                    previousNavElements.transform('').css({opacity:''}).each(function(){
+                        var translate = pageChanged ? 0 : $(this).attr('data-left');
+                        $(this).transform('translate3d('+translate+'px,0,0)');
+                    }).addClass('page-transitioning');
                 }
                 allowViewTouchMove = false;
                 app.allowPageChange = false;
@@ -256,32 +263,35 @@
             });
         };
         /*======================================================
-        ************   Navbars   ************
+        ************   Navbars && Toolbars   ************
         ======================================================*/
-        app.sizeNavbars = function(viewContainer){
+        app.sizeNavbars = function(viewContainer) {
             var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner') : $('.navbar .navbar-inner');
-            $('.navbar .navbar-inner').each(function(){
+            navbarInner.each(function() {
                 var tt = $(this),
                     left = tt.find('.left'),
                     right = tt.find('.right'),
                     center = tt.find('.center'),
-                    leftWidth = left.outerWidth(true),
-                    rightWidth = right.outerWidth(true),
+                    noLeft = left.length === 0,
+                    noRight = right.length === 0,
+                    leftWidth = noLeft ? 0 : left.outerWidth(true),
+                    rightWidth = noRight ? 0 : right.outerWidth(true),
                     centerWidth = center.outerWidth(true),
                     navbarWidth = tt.width(),
-                    noLeft = left.length===0,
-                    noRight = right.length===0,
-                    currLeft = (navbarWidth - rightWidth - centerWidth + leftWidth)/2,
-                    diff;
+                    currLeft, diff;
+        
                 if (noRight) {
                     currLeft = navbarWidth - centerWidth;
                 }
                 if (noLeft) {
-                    currLeft = 0;   
+                    currLeft = 0;
                 }
-                var requiredLeft = (navbarWidth-centerWidth)/2;
+                if (!noLeft && !noRight) {
+                    currLeft = (navbarWidth - rightWidth - centerWidth + leftWidth) / 2;
+                }
+                var requiredLeft = (navbarWidth - centerWidth) / 2;
                 if (navbarWidth - leftWidth - rightWidth > centerWidth) {
-                    if (requiredLeft<leftWidth) {
+                    if (requiredLeft < leftWidth) {
                         requiredLeft = leftWidth;
                     }
                     if (requiredLeft + centerWidth > navbarWidth - rightWidth) {
@@ -292,7 +302,20 @@
                 else {
                     diff = 0;
                 }
-                tt.find('.center').css({left: diff+'px'});
+                center.css({left: diff + 'px'});
+                if (center.hasClass('sliding')) {
+                    center.attr('data-left', -(currLeft + diff));
+                    center.attr('data-right', navbarWidth - currLeft - diff - centerWidth);
+                }
+                if (!noLeft && left.hasClass('sliding')) {
+                    left.attr('data-left', -leftWidth);
+                    left.attr('data-right', (navbarWidth - left.outerWidth())/2);
+                }
+                if (!noRight && right.hasClass('sliding')) {
+                    right.attr('data-left', -(navbarWidth - right.outerWidth())/2);
+                    right.attr('data-right', rightWidth);
+                }
+                
             });
         };
         /*======================================================
@@ -303,7 +326,7 @@
         app.removeFromCache = function(url) {
             var index = false;
             for (var i=0; i<app.cache.length; i++) {
-                if (app.cache[i].url == url) index = i;
+                if (app.cache[i].url === url) index = i;
             }
             if (index!==false) app.cache.splice(index,1);
         };
@@ -314,7 +337,7 @@
             if (app.params.cache) {
                 // Check is the url cached
                 for (var i=0; i<app.cache.length; i++) {
-                    if (app.cache[i].url == url) {
+                    if (app.cache[i].url === url) {
                         // Check expiration
                         if ( (new Date()).getTime() - app.cache[i].time < app.params.cacheDuration ) {
                             // Load from cache
@@ -328,7 +351,7 @@
             xhr.open('GET', url, true);
             xhr.onload = function(e) {
                 if (callback) {
-                    if (this.status == 200) {
+                    if (this.status === 200) {
                         callback(this.responseText, false);
                         if (app.params.cache) {
                             app.removeFromCache(url);
@@ -369,7 +392,7 @@
                 app.params.onBeforePageInit(pageData);
             }
             if (view.params.onBeforePageInit) {
-                view.params.onBeforePageInit(pageData);   
+                view.params.onBeforePageInit(pageData);
             }
             app.initPage(pageContainer);
             // Init Callback
@@ -377,7 +400,7 @@
                 app.params.onPageInit(pageData);
             }
             if (view.params.onPageInit) {
-                view.params.onPageInit(pageData);   
+                view.params.onPageInit(pageData);
             }
         };
         app.pageReadyCallback = function(view, pageContainer, url, position) {
@@ -395,7 +418,7 @@
                 app.params.onPageReady(pageData);
             }
             if (view.params.onPageReady) {
-                view.params.onPageReady(pageData);   
+                view.params.onPageReady(pageData);
             }
         };
         // Init Page Events and Manipulations
@@ -479,11 +502,18 @@
                 // Append Old Page and add classes for animation
                 $(view.pagesContainer).append(newPage[0]);
         
-                // Force reLayout
-                var clientLeft = newPage[0].clientLeft;
-        
                 // Page Init Events
                 app.pageInitCallback(view, newPage[0], url, 'right');
+        
+                
+                if (dynamicNavbar) {
+                    newNavbarInner.find('.sliding').each(function(){
+                        $(this).transform('translate3d('+($(this).attr('data-right'))+'px,0,0)');
+                    });
+                }
+        
+                // Force reLayout
+                var clientLeft = newPage[0].clientLeft;
                 
                 newPage.addClass('page-from-right-to-center');
                 oldPage.addClass('page-from-center-to-left').removeClass('page-on-center');
@@ -491,7 +521,13 @@
                 // Dynamic navbar animation
                 if (dynamicNavbar) {
                     newNavbarInner.removeClass('navbar-on-right').addClass('navbar-from-right-to-center');
+                    newNavbarInner.find('.sliding').each(function(){
+                        $(this).transform('translate3d(0px,0,0)');
+                    });
                     oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-left');
+                    oldNavbarInner.find('.sliding').each(function(){
+                        $(this).transform('translate3d('+($(this).attr('data-left'))+'px,0,0)');
+                    });
                 }
         
                 newPage.animationEnd(function(e){
@@ -544,7 +580,14 @@
                 // Dynamic navbar animation
                 if (dynamicNavbar) {
                     newNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
+                    newNavbarInner.find('.sliding').each(function(){
+                        $(this).transform('translate3d(0px,0,0)');
+                    });
+        
                     oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
+                    oldNavbarInner.find('.sliding').each(function(){
+                        $(this).transform('translate3d('+($(this).attr('data-right'))+'px,0,0)');
+                    });
                 }
                 
                 newPage.animationEnd(function(){
@@ -606,6 +649,7 @@
                             oldNavbarInner = navbar.find('.navbar-inner');
                         }
                         navbar.prepend(newNavbarInner[0]);
+        
                     }
                     // Prepend new Page and add classes for animation
                     $(view.pagesContainer).prepend(newPage[0]);
@@ -613,6 +657,12 @@
                     // Page Init Events
                     app.pageInitCallback(view, newPage[0], url, 'left');
         
+                    if (dynamicNavbar) {
+                        newNavbarInner.find('.sliding').each(function(){
+                            $(this).transform('translate3d('+($(this).attr('data-left'))+'px,0,0)');
+                        });
+                    }
+                    
                     // Exit if we need only to preload page
                     if (preloadOnly) {
                         newPage.addClass('page-on-left');
@@ -629,7 +679,13 @@
                     // Dynamic navbar animation
                     if (dynamicNavbar) {
                         newNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
+                        newNavbarInner.find('.sliding').each(function(){
+                            $(this).transform('translate3d(0px,0,0)');
+                        });
                         oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
+                        oldNavbarInner.find('.sliding').each(function(){
+                            $(this).transform('translate3d('+($(this).attr('data-right'))+'px,0,0)');
+                        });
                     }
         
                     newPage.animationEnd(function(){
@@ -862,10 +918,10 @@
             var clientLeft = panel[0].clientLeft;
             
             // Transition End;
-            var transitionEndTarget = effect == 'reveal' ? $('.views') : panel;
+            var transitionEndTarget = effect === 'reveal' ? $('.views') : panel;
             var openedTriggered = false;
             transitionEndTarget.transitionEnd(function(e){
-                if($(e.target).is(transitionEndTarget)){ 
+                if($(e.target).is(transitionEndTarget)){
                     if (!openedTriggered) panel.trigger('opened');
                 }
                 app.allowPanelOpen = true;
@@ -874,7 +930,7 @@
                 if (!openedTriggered) panel.trigger('opened');
             }, app.params.panelsAnimationDuration);
         
-            $('body').addClass('with-panel-'+panelPosition+'-'+effect);    
+            $('body').addClass('with-panel-'+panelPosition+'-'+effect);
             return true;
         };
         app.closePanel = function(){
@@ -883,14 +939,14 @@
             var effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
             var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
             activePanel.removeClass('active');
-            var transitionEndTarget = effect == 'reveal' ? $('.views') : activePanel;
+            var transitionEndTarget = effect === 'reveal' ? $('.views') : activePanel;
             activePanel.trigger('close');
             transitionEndTarget.transitionEnd(function(){
                 activePanel.css({display:''});
                 activePanel.trigger('closed');
                 $('body').removeClass('panel-closing');
             });
-            $('body').addClass('panel-closing').removeClass('with-panel-'+panelPosition+'-'+effect);    
+            $('body').addClass('panel-closing').removeClass('with-panel-'+panelPosition+'-'+effect);
         };
         /*======================================================
         ************   Slider   ************
@@ -920,18 +976,18 @@
                     if (isTouched) return;
                     e.stopPropagation();
                     isTouched = true;
-                    touches.startX = touches.currentX = e.type=='touchmove' ? e.targetTouches[0].pageX : e.pageX;
-                    touches.startY = touches.currentY = e.type=='touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                    touches.startX = touches.currentX = e.type==='touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                    touches.startY = touches.currentY = e.type==='touchmove' ? e.targetTouches[0].pageY : e.pageY;
                     sliderWidth = slider.width();
                     startValue = value = slider.attr('data-value')*1 || 0;
                     isScrolling = undefined;
                 });
                 handle.on(app.touchEvents.move, function(e){
                     if (!isTouched) return;
-                    touches.currentX = e.type=='touchmove' ? e.targetTouches[0].pageX : e.pageX;
-                    touches.currentY = e.type=='touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                    touches.currentX = e.type==='touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                    touches.currentY = e.type==='touchmove' ? e.targetTouches[0].pageY : e.pageY;
                     if ( typeof isScrolling === 'undefined') {
-                      isScrolling = !!( isScrolling || Math.abs(touches.currentY - touches.startY) > Math.abs( touches.currentX - touches.startX ) );
+                        isScrolling = !!( isScrolling || Math.abs(touches.currentY - touches.startY) > Math.abs( touches.currentX - touches.startX ) );
                     }
                     if (isScrolling) {
                         isTouched = false;
@@ -991,12 +1047,12 @@
                 // Open Panel
                 if (clicked.hasClass('open-panel')) {
                     // e.preventDefault();
-                    if ($('.panel').length==1) {
+                    if ($('.panel').length===1) {
                         if ($('.panel').hasClass('panel-left')) app.openPanel('left');
                         else app.openPanel('right');
                     }
                     else {
-                        if (clicked.attr('data-panel')=='right') app.openPanel('right');
+                        if (clicked.attr('data-panel')==='right') app.openPanel('right');
                         else app.openPanel('left');
                     }
                 }
@@ -1053,7 +1109,7 @@
         };
         /*======================================================
         ************   App Resize Actions   ************
-        ======================================================*/ 
+        ======================================================*/
         app.onResize = function(){
             app.sizeNavbars();
             // Something else could be here
@@ -1144,7 +1200,7 @@
                 for (var i=0; i<this.length; i++) {
                     this[i].value = value;
                 }
-                return this;   
+                return this;
             }
         },
         // Transforms
@@ -1177,9 +1233,9 @@
             var events = eventName.split(' ');
             var i,j;
             for (i=0; i<this.length; i++) {
-                if (arguments.length==2 || targetSelector===false) {
+                if (arguments.length===2 || targetSelector===false) {
                     // Usual events
-                    if (arguments.length==2) listener = arguments[1];
+                    if (arguments.length===2) listener = arguments[1];
                     for (j=0; j<events.length; j++) {
                         this[i].addEventListener(events[j], listener, false);
                     }
@@ -1197,7 +1253,7 @@
         tap: function(targetSelector, listener) {
             var dom = this;
             var isTouched, isMoved, touchesStart = {}, touchStartTime, deltaX, deltaY;
-            if (arguments.length==1) {
+            if (arguments.length===1) {
                 listener = arguments[0];
                 targetSelector = false;
             }
@@ -1223,10 +1279,10 @@
                         listener.call(this, e);
                     }
                     isTouched = isMoved = false;
-                });   
+                });
             }
             else {
-                dom.on('click', targetSelector, listener);   
+                dom.on('click', targetSelector, listener);
             }
         },
         off: function (event, listener) {
@@ -1246,6 +1302,7 @@
             var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
                 i, j, dom = this;
             function fireCallBack(e) {
+                /*jshint validthis:true */
                 callback.call(this,e);
                 for (i=0; i<events.length; i++) {
                     dom.off(events[i], fireCallBack);
@@ -1285,7 +1342,7 @@
             if (this.length>0) {
                 if (margins)
                     return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
-                else 
+                else
                     return this[0].offsetWidth;
             }
             else return null;
@@ -1302,7 +1359,7 @@
             if (this.length>0) {
                 if (margins)
                     return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
-                else 
+                else
                     return this[0].offsetHeight;
             }
             else return null;
@@ -1336,7 +1393,7 @@
             }
         },
         css: function(props) {
-            if (typeof props == 'string') {
+            if (typeof props === 'string') {
                 if (this[0]) return window.getComputedStyle(this[0], null).getPropertyValue(props);
             }
             else {
@@ -1386,7 +1443,7 @@
         },
         append: function (newChild) {
             for (var i=0; i<this.length; i++) {
-                if (typeof newChild == 'string') {
+                if (typeof newChild === 'string') {
                     this[i].innerHTML += newChild;
                 }
                 else {
@@ -1397,7 +1454,7 @@
         },
         prepend: function (newChild) {
             for (var i=0; i<this.length; i++) {
-                if (typeof newChild == 'string') {
+                if (typeof newChild === 'string') {
                     this[i].innerHTML = newChild + this[i].innerHTML;
                 }
                 else {
@@ -1409,7 +1466,7 @@
         insertBefore: function(selector) {
             var before = $(selector);
             for (var i=0; i<this.length; i++) {
-                if (before.length==1) {
+                if (before.length===1) {
                     before[0].parentNode.insertBefore(this[i], before[0]);
                 }
                 else if (before.length>1){
@@ -1459,10 +1516,10 @@
     
                 for (var j=0; j<childNodes.length; j++) {
                     if (!selector) {
-                        if (childNodes[j].nodeType==1) children.push(childNodes[j]);
+                        if (childNodes[j].nodeType===1) children.push(childNodes[j]);
                     }
                     else {
-                        if (childNodes[j].nodeType==1 && $(childNodes[j]).is(selector)) children.push(childNodes[j]);
+                        if (childNodes[j].nodeType===1 && $(childNodes[j]).is(selector)) children.push(childNodes[j]);
                     }
                 }
             }
@@ -1470,7 +1527,7 @@
         },
         remove: function () {
             for (var i=0; i<this.length; i++) {
-                this[i].parentNode.removeChild(this[i]);   
+                this[i].parentNode.removeChild(this[i]);
             }
             return this;
         },
@@ -1480,14 +1537,14 @@
         var arr = [], i=0;
         if (selector) {
             // String
-            if (typeof selector=='string') {
+            if (typeof selector==='string') {
                 var els = (context||document).querySelectorAll(selector);
                 for (i=0; i<els.length; i++) {
                     arr.push(els[i]);
                 }
             }
             // Node/element
-            else if (selector.nodeType || selector == window || selector == document) {
+            else if (selector.nodeType || selector === window || selector === document) {
                 arr.push(selector);
             }
             //Array of elements or instance of Dom
@@ -1516,11 +1573,11 @@
     $.unique = function(arr) {
         var unique = [];
         for (var i=0; i<arr.length; i++) {
-            if (unique.indexOf(arr[i]) == -1) unique.push(arr[i]);
+            if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
         }
         return unique;
     };
-    $.supportTouch = (function(){ 
-        return !!(("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch);
+    $.supportTouch = (function(){
+        return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
     })();
 })();

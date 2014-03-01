@@ -11,12 +11,12 @@ app.initClickEvents = function () {
         // Open Panel
         if (clicked.hasClass('open-panel')) {
             // e.preventDefault();
-            if ($('.panel').length==1) {
+            if ($('.panel').length===1) {
                 if ($('.panel').hasClass('panel-left')) app.openPanel('left');
                 else app.openPanel('right');
             }
             else {
-                if (clicked.attr('data-panel')=='right') app.openPanel('right');
+                if (clicked.attr('data-panel')==='right') app.openPanel('right');
                 else app.openPanel('left');
             }
         }

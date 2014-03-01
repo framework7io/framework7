@@ -26,18 +26,18 @@ app.initSliders = function(pageContainer) {
             if (isTouched) return;
             e.stopPropagation();
             isTouched = true;
-            touches.startX = touches.currentX = e.type=='touchmove' ? e.targetTouches[0].pageX : e.pageX;
-            touches.startY = touches.currentY = e.type=='touchmove' ? e.targetTouches[0].pageY : e.pageY;
+            touches.startX = touches.currentX = e.type==='touchmove' ? e.targetTouches[0].pageX : e.pageX;
+            touches.startY = touches.currentY = e.type==='touchmove' ? e.targetTouches[0].pageY : e.pageY;
             sliderWidth = slider.width();
             startValue = value = slider.attr('data-value')*1 || 0;
             isScrolling = undefined;
         });
         handle.on(app.touchEvents.move, function(e){
             if (!isTouched) return;
-            touches.currentX = e.type=='touchmove' ? e.targetTouches[0].pageX : e.pageX;
-            touches.currentY = e.type=='touchmove' ? e.targetTouches[0].pageY : e.pageY;
+            touches.currentX = e.type==='touchmove' ? e.targetTouches[0].pageX : e.pageX;
+            touches.currentY = e.type==='touchmove' ? e.targetTouches[0].pageY : e.pageY;
             if ( typeof isScrolling === 'undefined') {
-              isScrolling = !!( isScrolling || Math.abs(touches.currentY - touches.startY) > Math.abs( touches.currentX - touches.startX ) );
+                isScrolling = !!( isScrolling || Math.abs(touches.currentY - touches.startY) > Math.abs( touches.currentX - touches.startX ) );
             }
             if (isScrolling) {
                 isTouched = false;

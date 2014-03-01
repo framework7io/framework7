@@ -19,7 +19,7 @@ app.pageInitCallback = function(view, pageContainer, url, position) {
         app.params.onBeforePageInit(pageData);
     }
     if (view.params.onBeforePageInit) {
-        view.params.onBeforePageInit(pageData);   
+        view.params.onBeforePageInit(pageData);
     }
     app.initPage(pageContainer);
     // Init Callback
@@ -27,7 +27,7 @@ app.pageInitCallback = function(view, pageContainer, url, position) {
         app.params.onPageInit(pageData);
     }
     if (view.params.onPageInit) {
-        view.params.onPageInit(pageData);   
+        view.params.onPageInit(pageData);
     }
 };
 app.pageReadyCallback = function(view, pageContainer, url, position) {
@@ -45,7 +45,7 @@ app.pageReadyCallback = function(view, pageContainer, url, position) {
         app.params.onPageReady(pageData);
     }
     if (view.params.onPageReady) {
-        view.params.onPageReady(pageData);   
+        view.params.onPageReady(pageData);
     }
 };
 // Init Page Events and Manipulations
@@ -129,11 +129,18 @@ app.loadPage = function (view, url) {
         // Append Old Page and add classes for animation
         $(view.pagesContainer).append(newPage[0]);
 
-        // Force reLayout
-        var clientLeft = newPage[0].clientLeft;
-
         // Page Init Events
         app.pageInitCallback(view, newPage[0], url, 'right');
+
+        
+        if (dynamicNavbar) {
+            newNavbarInner.find('.sliding').each(function(){
+                $(this).transform('translate3d('+($(this).attr('data-right'))+'px,0,0)');
+            });
+        }
+
+        // Force reLayout
+        var clientLeft = newPage[0].clientLeft;
         
         newPage.addClass('page-from-right-to-center');
         oldPage.addClass('page-from-center-to-left').removeClass('page-on-center');
@@ -141,7 +148,13 @@ app.loadPage = function (view, url) {
         // Dynamic navbar animation
         if (dynamicNavbar) {
             newNavbarInner.removeClass('navbar-on-right').addClass('navbar-from-right-to-center');
+            newNavbarInner.find('.sliding').each(function(){
+                $(this).transform('translate3d(0px,0,0)');
+            });
             oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-left');
+            oldNavbarInner.find('.sliding').each(function(){
+                $(this).transform('translate3d('+($(this).attr('data-left'))+'px,0,0)');
+            });
         }
 
         newPage.animationEnd(function(e){
@@ -194,7 +207,14 @@ app.goBack = function (view, url, preloadOnly) {
         // Dynamic navbar animation
         if (dynamicNavbar) {
             newNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
+            newNavbarInner.find('.sliding').each(function(){
+                $(this).transform('translate3d(0px,0,0)');
+            });
+
             oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
+            oldNavbarInner.find('.sliding').each(function(){
+                $(this).transform('translate3d('+($(this).attr('data-right'))+'px,0,0)');
+            });
         }
         
         newPage.animationEnd(function(){
@@ -256,6 +276,7 @@ app.goBack = function (view, url, preloadOnly) {
                     oldNavbarInner = navbar.find('.navbar-inner');
                 }
                 navbar.prepend(newNavbarInner[0]);
+
             }
             // Prepend new Page and add classes for animation
             $(view.pagesContainer).prepend(newPage[0]);
@@ -263,6 +284,12 @@ app.goBack = function (view, url, preloadOnly) {
             // Page Init Events
             app.pageInitCallback(view, newPage[0], url, 'left');
 
+            if (dynamicNavbar) {
+                newNavbarInner.find('.sliding').each(function(){
+                    $(this).transform('translate3d('+($(this).attr('data-left'))+'px,0,0)');
+                });
+            }
+            
             // Exit if we need only to preload page
             if (preloadOnly) {
                 newPage.addClass('page-on-left');
@@ -279,7 +306,13 @@ app.goBack = function (view, url, preloadOnly) {
             // Dynamic navbar animation
             if (dynamicNavbar) {
                 newNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
+                newNavbarInner.find('.sliding').each(function(){
+                    $(this).transform('translate3d(0px,0,0)');
+                });
                 oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
+                oldNavbarInner.find('.sliding').each(function(){
+                    $(this).transform('translate3d('+($(this).attr('data-right'))+'px,0,0)');
+                });
             }
 
             newPage.animationEnd(function(){
