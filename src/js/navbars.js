@@ -54,3 +54,24 @@ app.sizeNavbars = function(viewContainer) {
         
     });
 };
+app.hideNavbar = function(viewContainer) {
+    $(viewContainer).addClass('hidden-navbar');
+    return true;
+};
+app.showNavbar = function(viewContainer) {
+    var vc = $(viewContainer);
+    vc.addClass('hiding-navbar').removeClass('hidden-navbar').find('.navbar').transitionEnd(function(){
+        vc.removeClass('hiding-navbar');
+    });
+    return true;
+};
+app.hidePageNavbar = function(viewContainer) {
+    $(viewContainer).addClass('page-hidden-navbar');
+    return true;
+};
+app.showPageNavbar = function(viewContainer) {
+    var vc = $(viewContainer);
+    vc.addClass('page-hiding-navbar').removeClass('page-hidden-navbar').find('.navbar').transitionEnd(function(){
+        vc.removeClass('page-hiding-navbar');
+    });
+};

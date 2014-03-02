@@ -18,6 +18,18 @@ app.addView = function (viewSelector, viewParams) {
         },
         goBack: function(url) {
             app.goBack(view, url);
+        },
+        hideNavbar: function() {
+            app.hideNavbar(container);
+        },
+        hidePageNavbar: function() {
+            app.hidePageNavbar(container);
+        },
+        showNavbar: function() {
+            app.showNavbar(container);
+        },
+        showPageNavbar: function() {
+            app.showPageNavbar(container);
         }
     };
     // Store to history main view's url
@@ -57,6 +69,7 @@ app.initViewEvents = function(view){
         activeNavElements,
         previousNavElements,
         i,
+        dynamicNavbar,
         el;
 
     viewContainer.on(app.touchEvents.start, function(e){
@@ -67,6 +80,7 @@ app.initViewEvents = function(view){
         touchesStart.x = e.type==='touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type==='touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
+        dynamicNavbar = view.params.dynamicNavbar && viewContainer.find('.navbar-inner').length>1;
     });
     viewContainer.on(app.touchEvents.move, function(e){
         if (!isTouched) return;
@@ -93,7 +107,7 @@ app.initViewEvents = function(view){
                 isTouched = false;
                 return;
             }
-            if (view.params.dynamicNavbar) {
+            if (dynamicNavbar) {
                 activeNavbar = viewContainer.find('.navbar-on-center');
                 previousNavbar = viewContainer.find('.navbar-on-left');
                 activeNavElements = activeNavbar.find('.left, .center, .right');
@@ -114,7 +128,7 @@ app.initViewEvents = function(view){
         previousPage[0].style.opacity = 0.8 + 0.2*percentage;
 
         // Dynamic Navbars Animation
-        if (view.params.dynamicNavbar) {
+        if (dynamicNavbar) {
             for (i=0; i<activeNavElements.length; i++) {
                 el = $(activeNavElements[i]);
                 el[0].style.opacity = (1 - percentage*1.3);
@@ -149,7 +163,7 @@ app.initViewEvents = function(view){
             ) {
             activePage.removeClass('page-on-center').addClass('page-on-right');
             previousPage.removeClass('page-on-left').addClass('page-on-center');
-            if (view.params.dynamicNavbar) {
+            if (dynamicNavbar) {
                 activeNavbar.removeClass('navbar-on-center').addClass('navbar-on-right');
                 previousNavbar.removeClass('navbar-on-left').addClass('navbar-on-center');
             }
@@ -158,7 +172,7 @@ app.initViewEvents = function(view){
         // Reset custom styles
         // Add transitioning class for transition-duration
         $([activePage[0], previousPage[0]]).transform('').css({opacity:'', boxShadow:''}).addClass('page-transitioning');
-        if (view.params.dynamicNavbar) {
+        if (dynamicNavbar) {
             activeNavElements.css({opacity:''})
             .each(function(){
                 var translate = pageChanged ? $(this).attr('data-right') : 0;
@@ -171,9 +185,25 @@ app.initViewEvents = function(view){
         }
         allowViewTouchMove = false;
         app.allowPageChange = false;
+
+        if (pageChanged) {
+            // Update View's URL
+            var url = view.history[view.history.length-2];
+            view.url = url;
+            // Hide/show navbar dynamically
+            if (previousPage.hasClass('no-navbar') && !activePage.hasClass('no-navbar')) {
+                view.hidePageNavbar();
+            }
+            if (!previousPage.hasClass('no-navbar') && activePage.hasClass('no-navbar')) {
+                view.showPageNavbar();
+            }
+            // Page before animation callback
+            app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position:'left'});
+        }
+
         activePage.transitionEnd(function(){
             $([activePage[0], previousPage[0]]).removeClass('page-transitioning');
-            if (view.params.dynamicNavbar) {
+            if (dynamicNavbar) {
                 activeNavElements.removeClass('page-transitioning');
                 previousNavElements.removeClass('page-transitioning');
             }

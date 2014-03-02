@@ -153,6 +153,14 @@ app.loadPage = function (view, url) {
         // Force reLayout
         var clientLeft = newPage[0].clientLeft;
 
+        // Hide/show navbar dynamically
+        if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
+            view.hidePageNavbar();
+        }
+        if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
+            view.showPageNavbar();
+        }
+
         // Before Anim Callback
         app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
         
@@ -217,6 +225,15 @@ app.goBack = function (view, url, preloadOnly) {
             oldNavbarInner = $(inners[1]);
         }
 
+        // Hide/show navbar dynamically
+        if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
+            view.hidePageNavbar();
+        }
+        if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
+            view.showPageNavbar();
+        }
+
+        // Page before animation callback
         app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
 
         // Add classes for animation
@@ -321,6 +338,14 @@ app.goBack = function (view, url, preloadOnly) {
 
             // Force reLayout
             var clientLeft = newPage[0].clientLeft;
+
+            // Hide/show navbar dynamically
+            if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
+                view.hidePageNavbar();
+            }
+            if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
+                view.showPageNavbar();
+            }
 
             // Before Anim Callback
             app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});

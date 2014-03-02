@@ -19,3 +19,32 @@
 .page.toolbar-fixed, .toolbar-fixed .page {
     padding-bottom: 44px;
 }
+
+.hidden-navbar, .hiding-navbar {
+    .navbar, .page {
+        .transition(400ms);
+    }
+}
+.hidden-navbar {
+    .navbar {
+        .translate3d(0,-44px,0);
+    }
+    .page {
+        padding-top: 0;
+    }
+}
+.page-hidden-navbar {
+    .navbar {
+        .transition(400ms);
+        .translate3d(0,-44px,0);
+    }
+}
+.page-hiding-navbar {
+    .navbar {
+        .transition(400ms);
+        .translate3d(0,0px,0);
+    }
+}
+.page.no-navbar {
+    padding-top: 0;
+}
