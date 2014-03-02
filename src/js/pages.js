@@ -30,22 +30,31 @@ app.pageInitCallback = function(view, pageContainer, url, position) {
         view.params.onPageInit(pageData);
     }
 };
-app.pageReadyCallback = function(view, pageContainer, url, position) {
+app.pageAnimCallbacks = function(callback, view, params) {
     // Page Data
     var pageData = {
-        container: pageContainer,
-        url: url,
-        query: $.parseUrlQuery(url||''),
-        name: $(pageContainer).attr('data-page'),
+        container: params.pageContainer,
+        url: params.url,
+        query: $.parseUrlQuery(params.url||''),
+        name: $(params.pageContainer).attr('data-page'),
         view: view,
-        from: position
+        from: params.position
     };
-    // Ready Callback
-    if (app.params.onPageReady) {
-        app.params.onPageReady(pageData);
+    if (callback === 'after') {
+        if (app.params.onPageAfterAnimation) {
+            app.params.onPageAfterAnimation(pageData);
+        }
+        if (view.params.onPageAfterAnimation) {
+            view.params.onPageAfterAnimation(pageData);
+        }
     }
-    if (view.params.onPageReady) {
-        view.params.onPageReady(pageData);
+    if (callback === 'before') {
+        if (app.params.onPageBeforeAnimation) {
+            app.params.onPageBeforeAnimation(pageData);
+        }
+        if (view.params.onPageBeforeAnimation) {
+            view.params.onPageBeforeAnimation(pageData);
+        }
     }
 };
 // Init Page Events and Manipulations
@@ -63,6 +72,7 @@ app.allowPageChange = true;
 app._tempDomElement = document.createElement('div');
 app.loadPage = function (view, url) {
     if (!app.allowPageChange) return false;
+    if (view.url === url) return false;
     app.allowPageChange = false;
     if (app.xhr) {
         app.xhr.abort();
@@ -91,6 +101,7 @@ app.loadPage = function (view, url) {
         newPage.addClass('page-on-right');
 
         // Update View history
+        view.url = url;
         view.history.push(url);
 
         // Find old page (should be the last one) and remove older pages
@@ -141,6 +152,9 @@ app.loadPage = function (view, url) {
 
         // Force reLayout
         var clientLeft = newPage[0].clientLeft;
+
+        // Before Anim Callback
+        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
         
         newPage.addClass('page-from-right-to-center');
         oldPage.addClass('page-from-center-to-left').removeClass('page-on-center');
@@ -165,7 +179,7 @@ app.loadPage = function (view, url) {
                 newNavbarInner.toggleClass('navbar-from-right-to-center navbar-on-center');
                 oldNavbarInner.toggleClass('navbar-from-center-to-left navbar-on-left');
             }
-            app.pageReadyCallback(view, newPage[0], url, 'right');
+            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'right'});
         });
 
     });
@@ -187,6 +201,9 @@ app.goBack = function (view, url, preloadOnly) {
             app.allowPageChange = true;
             return;
         }
+        // Update View's URL
+        view.url = view.history[view.history.length-2];
+
         // Define old and new pages
         newPage = $(pagesInView[pagesInView.length-2]);
         oldPage = $(pagesInView[pagesInView.length-1]);
@@ -199,6 +216,8 @@ app.goBack = function (view, url, preloadOnly) {
             newNavbarInner = $(inners[0]);
             oldNavbarInner = $(inners[1]);
         }
+
+        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
 
         // Add classes for animation
         newPage.removeClass('page-on-left').addClass('page-from-left-to-center');
@@ -219,7 +238,7 @@ app.goBack = function (view, url, preloadOnly) {
         
         newPage.animationEnd(function(){
             app.afterGoBack(view, oldPage[0], newPage[0]);
-            app.pageReadyCallback(view, newPage[0], url, 'left');
+            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'left'});
         });
     }
     else {
@@ -297,8 +316,14 @@ app.goBack = function (view, url, preloadOnly) {
                 return;
             }
 
+            // Update View's URL
+            view.url = url;
+
             // Force reLayout
             var clientLeft = newPage[0].clientLeft;
+
+            // Before Anim Callback
+            app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
 
             newPage.addClass('page-from-left-to-center');
             oldPage.removeClass('page-on-center').addClass('page-from-center-to-right');
@@ -317,7 +342,7 @@ app.goBack = function (view, url, preloadOnly) {
 
             newPage.animationEnd(function(){
                 app.afterGoBack(view, oldPage[0], newPage[0]);
-                app.pageReadyCallback(view, newPage[0], url, 'left');
+                app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'left'});
             });
 
         });

@@ -3,7 +3,11 @@ var myApp = new Framework7({
         // Do something on page init
         // console.log(page);
     },
-    onPageReady: function(page) {
+    onPageAfterAnimation: function(page) {
+        // Do something on page before animation start
+        // console.log(page);
+    },
+    onPageBeforeAnimation: function(page) {
         // Do something on page ready(centered)
         // console.log(page);
     }

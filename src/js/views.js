@@ -10,6 +10,7 @@ app.addView = function (viewSelector, viewParams) {
         selector: viewSelector,
         params: viewParams || {},
         history: [],
+        url: '',
         pagesContainer: $('.pages', container)[0],
         main: $(container).hasClass('view-main'),
         loadPage: function (url) {
@@ -21,7 +22,8 @@ app.addView = function (viewSelector, viewParams) {
     };
     // Store to history main view's url
     if (view.main) {
-        view.history.push(document.location.href);
+        view.url = document.location.href;
+        view.history.push(view.url);
     }
     // Store View in element for easy access
     container.f7View = view;
