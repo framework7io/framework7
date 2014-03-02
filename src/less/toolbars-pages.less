@@ -4,19 +4,19 @@
     }
 }
 .navbar-through {
-    .page {
+    .page-content {
         padding-top: 44px;
     }
 }
 .toolbar-through {
-    .page {
+    .page-content {
         padding-bottom: 44px;
     }
 }
-.page.navbar-fixed, .navbar-fixed .page {
+.navbar-fixed .page-content {
     padding-top: 44px;
 }
-.page.toolbar-fixed, .toolbar-fixed .page {
+.toolbar-fixed .page-content {
     padding-bottom: 44px;
 }
 
@@ -29,14 +29,15 @@
     .navbar {
         .translate3d(0,-44px,0);
     }
-    .page {
+    .page-content {
         padding-top: 0;
     }
 }
+// Page Hidden Navbar
 .page-hidden-navbar {
     .navbar {
         .transition(400ms);
-        .translate3d(0,-44px,0);
+        .translate3d(0,-100%,0);
     }
 }
 .page-hiding-navbar {
@@ -45,6 +46,22 @@
         .translate3d(0,0px,0);
     }
 }
-.page.no-navbar {
+.page.no-navbar .page-content {
     padding-top: 0;
+}
+// Page Hidden Toolbar
+.page-hidden-toolbar {
+    .toolbar {
+        .transition(400ms);
+        .translate3d(0,100%,0);
+    }
+}
+.page-hiding-toolbar {
+    .toolbar {
+        .transition(400ms);
+        .translate3d(0,0px,0);
+    }
+}
+.page.no-toolbar .page-content {
+    padding-bottom: 0;
 }

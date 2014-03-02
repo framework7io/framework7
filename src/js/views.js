@@ -22,14 +22,20 @@ app.addView = function (viewSelector, viewParams) {
         hideNavbar: function() {
             app.hideNavbar(container);
         },
-        hidePageNavbar: function() {
-            app.hidePageNavbar(container);
-        },
         showNavbar: function() {
             app.showNavbar(container);
         },
+        hidePageNavbar: function() {
+            app.hidePageNavbar(container);
+        },
         showPageNavbar: function() {
             app.showPageNavbar(container);
+        },
+        hidePageToolbar: function() {
+            app.hidePageToolbar(container);
+        },
+        showPageToolbar: function() {
+            app.showPageToolbar(container);
         }
     };
     // Store to history main view's url
@@ -190,15 +196,9 @@ app.initViewEvents = function(view){
             // Update View's URL
             var url = view.history[view.history.length-2];
             view.url = url;
-            // Hide/show navbar dynamically
-            if (previousPage.hasClass('no-navbar') && !activePage.hasClass('no-navbar')) {
-                view.hidePageNavbar();
-            }
-            if (!previousPage.hasClass('no-navbar') && activePage.hasClass('no-navbar')) {
-                view.showPageNavbar();
-            }
+            
             // Page before animation callback
-            app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position:'left'});
+            app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position:'left', newPage: previousPage, oldPage: activePage});
         }
 
         activePage.transitionEnd(function(){

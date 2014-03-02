@@ -75,3 +75,13 @@ app.showPageNavbar = function(viewContainer) {
         vc.removeClass('page-hiding-navbar');
     });
 };
+app.hidePageToolbar = function(viewContainer) {
+    $(viewContainer).addClass('page-hidden-toolbar');
+    return true;
+};
+app.showPageToolbar = function(viewContainer) {
+    var vc = $(viewContainer);
+    vc.addClass('page-hiding-toolbar').removeClass('page-hidden-toolbar').find('.toolbar').transitionEnd(function(){
+        vc.removeClass('page-hiding-toolbar');
+    });
+};

@@ -40,7 +40,11 @@ app.pageAnimCallbacks = function(callback, view, params) {
         view: view,
         from: params.position
     };
+    var oldPage = params.oldPage,
+        newPage = params.newPage;
+
     if (callback === 'after') {
+
         if (app.params.onPageAfterAnimation) {
             app.params.onPageAfterAnimation(pageData);
         }
@@ -49,6 +53,20 @@ app.pageAnimCallbacks = function(callback, view, params) {
         }
     }
     if (callback === 'before') {
+        // Hide/show navbar dynamically
+        if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
+            view.hidePageNavbar();
+        }
+        if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
+            view.showPageNavbar();
+        }
+        // Hide/show navbar toolbar
+        if (newPage.hasClass('no-toolbar') && !oldPage.hasClass('no-toolbar')) {
+            view.hidePageToolbar();
+        }
+        if (!newPage.hasClass('no-toolbar') && oldPage.hasClass('no-toolbar')) {
+            view.showPageToolbar();
+        }
         if (app.params.onPageBeforeAnimation) {
             app.params.onPageBeforeAnimation(pageData);
         }
@@ -125,15 +143,20 @@ app.loadPage = function (view, url) {
             if (newNavbarInner.length===0 || newNavbarInner>1) {
                 dynamicNavbar = false;
             }
-        }
-        if (dynamicNavbar) {
             navbar = viewContainer.find('.navbar');
-            newNavbarInner.addClass('navbar-on-right');
             oldNavbarInner = navbar.find('.navbar-inner');
-            if (oldNavbarInner.length>1) {
-                $(oldNavbarInner[0]).remove();
+            if (oldNavbarInner.length>0) {
+                for (i=0; i<oldNavbarInner.length-1; i++) {
+                    $(oldNavbarInner[i]).remove();
+                }
+                if (newNavbarInner.length===0 && oldNavbarInner.length===1) {
+                    $(oldNavbarInner[0]).remove();
+                }
                 oldNavbarInner = navbar.find('.navbar-inner');
             }
+        }
+        if (dynamicNavbar) {
+            newNavbarInner.addClass('navbar-on-right');
             navbar.append(newNavbarInner[0]);
         }
 
@@ -142,27 +165,17 @@ app.loadPage = function (view, url) {
 
         // Page Init Events
         app.pageInitCallback(view, newPage[0], url, 'right');
-
         
         if (dynamicNavbar) {
             newNavbarInner.find('.sliding').each(function(){
                 $(this).transform('translate3d('+($(this).attr('data-right'))+'px,0,0)');
             });
         }
-
         // Force reLayout
         var clientLeft = newPage[0].clientLeft;
 
-        // Hide/show navbar dynamically
-        if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
-            view.hidePageNavbar();
-        }
-        if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
-            view.showPageNavbar();
-        }
-
         // Before Anim Callback
-        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
+        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left', oldPage: oldPage, newPage: newPage});
         
         newPage.addClass('page-from-right-to-center');
         oldPage.addClass('page-from-center-to-left').removeClass('page-on-center');
@@ -187,7 +200,7 @@ app.loadPage = function (view, url) {
                 newNavbarInner.toggleClass('navbar-from-right-to-center navbar-on-center');
                 oldNavbarInner.toggleClass('navbar-from-center-to-left navbar-on-left');
             }
-            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'right'});
+            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'right', oldPage: oldPage, newPage: newPage});
         });
 
     });
@@ -225,16 +238,8 @@ app.goBack = function (view, url, preloadOnly) {
             oldNavbarInner = $(inners[1]);
         }
 
-        // Hide/show navbar dynamically
-        if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
-            view.hidePageNavbar();
-        }
-        if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
-            view.showPageNavbar();
-        }
-
         // Page before animation callback
-        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
+        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left', oldPage: oldPage, newPage: newPage});
 
         // Add classes for animation
         newPage.removeClass('page-on-left').addClass('page-from-left-to-center');
@@ -255,7 +260,7 @@ app.goBack = function (view, url, preloadOnly) {
         
         newPage.animationEnd(function(){
             app.afterGoBack(view, oldPage[0], newPage[0]);
-            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'left'});
+            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'left', oldPage: oldPage, newPage: newPage});
         });
     }
     else {
@@ -305,14 +310,13 @@ app.goBack = function (view, url, preloadOnly) {
 
             if (dynamicNavbar) {
                 navbar = viewContainer.find('.navbar');
-                newNavbarInner.addClass('navbar-on-left');
                 oldNavbarInner = navbar.find('.navbar-inner');
+                newNavbarInner.addClass(oldNavbarInner.length>0 ? 'navbar-on-left' : 'navbar-on-center');
                 if (oldNavbarInner.length>1) {
                     $(oldNavbarInner[0]).remove();
                     oldNavbarInner = navbar.find('.navbar-inner');
                 }
                 navbar.prepend(newNavbarInner[0]);
-
             }
             // Prepend new Page and add classes for animation
             $(view.pagesContainer).prepend(newPage[0]);
@@ -320,7 +324,7 @@ app.goBack = function (view, url, preloadOnly) {
             // Page Init Events
             app.pageInitCallback(view, newPage[0], url, 'left');
 
-            if (dynamicNavbar) {
+            if (dynamicNavbar && newNavbarInner.hasClass('navbar-on-left')) {
                 newNavbarInner.find('.sliding').each(function(){
                     $(this).transform('translate3d('+($(this).attr('data-left'))+'px,0,0)');
                 });
@@ -339,16 +343,8 @@ app.goBack = function (view, url, preloadOnly) {
             // Force reLayout
             var clientLeft = newPage[0].clientLeft;
 
-            // Hide/show navbar dynamically
-            if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
-                view.hidePageNavbar();
-            }
-            if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
-                view.showPageNavbar();
-            }
-
             // Before Anim Callback
-            app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left'});
+            app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position:'left', oldPage: oldPage, newPage: newPage});
 
             newPage.addClass('page-from-left-to-center');
             oldPage.removeClass('page-on-center').addClass('page-from-center-to-right');
@@ -367,7 +363,7 @@ app.goBack = function (view, url, preloadOnly) {
 
             newPage.animationEnd(function(){
                 app.afterGoBack(view, oldPage[0], newPage[0]);
-                app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'left'});
+                app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position:'left', oldPage: oldPage, newPage: newPage});
             });
 
         });
