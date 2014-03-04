@@ -160,33 +160,88 @@ app.popover = function (modal, target) {
     target = $(target);
 
     modal.show();
-    var modalWidth =  modal.width();
-    var modalHeight =  modal.height() + 13; // 13 - height of angle
 
-    var targetWidth = target.outerWidth();
-    var targetHeight = target.outerHeight();
-    var targetOffset = target.offset();
-    var targetParentPage = target.parents('.page');
-    if (targetParentPage.length > 0) {
-        targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
+    function sizePopover() {
+        modal.css({left: '', top: ''});
+        var modalWidth =  modal.width();
+        var modalHeight =  modal.height(); // 13 - height of angle
+        var modalAngle = modal.find('.popover-angle');
+        var modalAngleSize = modalAngle.width() / 2;
+        modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
+
+        var targetWidth = target.outerWidth();
+        var targetHeight = target.outerHeight();
+        var targetOffset = target.offset();
+        var targetParentPage = target.parents('.page');
+        if (targetParentPage.length > 0) {
+            targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
+        }
+
+        var windowHeight = $(window).height();
+        var windowWidth = $(window).width();
+
+        var modalTop = 0;
+        var modalLeft = 0;
+        var diff = 0;
+        // Top Position
+        var modalPosition = 'top';
+
+        if ((modalHeight + modalAngleSize) < targetOffset.top) {
+            // On top
+            modalTop = targetOffset.top - modalHeight - modalAngleSize;
+        }
+        else if ((modalHeight + modalAngleSize) < windowHeight - targetOffset.top - targetHeight) {
+            // On bottom
+            modalPosition = 'bottom';
+            modalTop = targetOffset.top + targetHeight + modalAngleSize;
+        }
+        else {
+            // On middle
+            modalPosition = 'middle';
+            modalTop = targetHeight / 2 + targetOffset.top - modalHeight / 2;
+            diff = modalTop;
+            if (modalTop < 0) {
+                modalTop = 5;
+            }
+            else if (modalTop + modalHeight > windowHeight) {
+                modalTop = windowHeight - modalHeight - 5;
+            }
+            diff = diff - modalTop;
+        }
+        // Horizontal Position
+        if (modalPosition === 'top' || modalPosition === 'bottom') {
+            modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
+            diff = modalLeft;
+            if (modalLeft < 5) modalLeft = 5;
+            if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+            if (modalPosition === 'top') modalAngle.addClass('on-bottom');
+            if (modalPosition === 'bottom') modalAngle.addClass('on-top');
+            diff = diff - modalLeft;
+            modalAngle.css({left: (modalWidth / 2 - modalAngleSize + diff) + 'px'});
+        }
+        else if (modalPosition === 'middle') {
+            modalLeft = targetOffset.left - modalWidth - modalAngleSize;
+            modalAngle.addClass('on-right');
+            if (modalLeft < 5) {
+                modalLeft = targetOffset.left + targetWidth + modalAngleSize;
+                modalAngle.removeClass('on-right').addClass('on-left');
+            }
+            if (modalLeft + modalWidth > windowWidth) {
+                modalLeft = windowWidth - modalWidth - 5;
+                modalAngle.removeClass('on-right').addClass('on-left');
+            }
+            modalAngle.css({top: (modalHeight / 2 - modalAngleSize + diff) + 'px'});
+        }
+
+        // Apply Styles
+        modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
     }
+    sizePopover();
 
-    var windowHeight = $(window).height();
-    var windowWidth = $(window).width();
-
-    var modalTop = 0;
-    var modalLeft = 0;
-    // On top
-    var position = 'top';
-    if (modalHeight < targetOffset.top) {
-        modalTop = targetOffset.top - modalHeight;
+    if (!modal[0].f7PopoverResizeInitialized) {
+        $(window).on('resize', sizePopover);
+        modal[0].f7PopoverResizeInitialized = true;
     }
-
-    // Horizontal Position
-    modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
-
-    // Apply Styles
-    modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
 
     app.openModal(modal);
     return modal[0];
@@ -215,6 +270,9 @@ app.closeModal = function (modal) {
     modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
         modal.trigger('closed');
         if (!modal.hasClass('popover')) modal.remove();
+        else {
+            modal.removeClass('modal-in modal-out').css({display: ''});
+        }
     });
     return true;
 };

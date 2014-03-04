@@ -161,6 +161,7 @@ Dom.prototype = {
             e.detail = eventData;
             this[i].dispatchEvent(e);
         }
+        return this;
     },
     transitionEnd: function (callback) {
         var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
@@ -177,6 +178,7 @@ Dom.prototype = {
                 dom.on(events[i], fireCallBack);
             }
         }
+        return this;
     },
     animationEnd: function (callback) {
         var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
@@ -192,6 +194,7 @@ Dom.prototype = {
                 dom.on(events[i], fireCallBack);
             }
         }
+        return this;
     },
     // Sizing/Styles
     width: function () {
@@ -262,11 +265,13 @@ Dom.prototype = {
         for (var i = 0; i < this.length; i++) {
             this[i].style.display = 'none';
         }
+        return this;
     },
     show: function () {
         for (var i = 0; i < this.length; i++) {
             this[i].style.display = 'block';
         }
+        return this;
     },
     css: function (props) {
         if (typeof props === 'string') {
