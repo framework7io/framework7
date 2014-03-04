@@ -195,12 +195,18 @@ Dom.prototype = {
     },
     // Sizing/Styles
     width: function () {
-        if (this.length > 0) {
-            return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+        if (this[0] === window) {
+            return window.innerWidth;
         }
         else {
-            return null;
+            if (this.length > 0) {
+                return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+            }
+            else {
+                return null;
+            }
         }
+            
     },
     outerWidth: function (margins) {
         if (this.length > 0) {
@@ -212,12 +218,18 @@ Dom.prototype = {
         else return null;
     },
     height: function () {
-        if (this.length > 0) {
-            return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
+        if (this[0] === window) {
+            return window.innerHeight;
         }
         else {
-            return null;
+            if (this.length > 0) {
+                return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
+            }
+            else {
+                return null;
+            }
         }
+            
     },
     outerHeight: function (margins) {
         if (this.length > 0) {

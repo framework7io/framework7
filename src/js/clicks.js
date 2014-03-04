@@ -34,6 +34,7 @@ app.initClickEvents = function () {
                 app.closeModal();
             if ($('.actions-modal.modal-in').length > 0 && app.params.modalActionsCloseByOutside)
                 app.closeModal();
+            if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
         }
         // Tabs
         if (clicked.hasClass('tab-link')) {

@@ -155,6 +155,42 @@ app.actions = function (params) {
     app.openModal(modal);
     return modal[0];
 };
+app.popover = function (modal, target) {
+    modal = $(modal);
+    target = $(target);
+
+    modal.show();
+    var modalWidth =  modal.width();
+    var modalHeight =  modal.height() + 13; // 13 - height of angle
+
+    var targetWidth = target.outerWidth();
+    var targetHeight = target.outerHeight();
+    var targetOffset = target.offset();
+    var targetParentPage = target.parents('.page');
+    if (targetParentPage.length > 0) {
+        targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
+    }
+
+    var windowHeight = $(window).height();
+    var windowWidth = $(window).width();
+
+    var modalTop = 0;
+    var modalLeft = 0;
+    // On top
+    var position = 'top';
+    if (modalHeight < targetOffset.top) {
+        modalTop = targetOffset.top - modalHeight;
+    }
+
+    // Horizontal Position
+    modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
+
+    // Apply Styles
+    modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
+
+    app.openModal(modal);
+    return modal[0];
+};
 app.openModal = function (modal) {
     modal = $(modal);
     if ($('.modal-overlay').length === 0) {
@@ -162,7 +198,8 @@ app.openModal = function (modal) {
         overlay.className = 'modal-overlay';
         $('body').append(overlay);
     }
-    if (!modal.hasClass('actions-modal')) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
+    if (!(modal.hasClass('actions-modal') || modal.hasClass('popover'))) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
+
     //Make sure that styles are applied, trigger relayout;
     var clientLeft = modal[0].clientLeft;
 
@@ -177,7 +214,7 @@ app.closeModal = function (modal) {
     modal.trigger('close');
     modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
         modal.trigger('closed');
-        modal.remove();
+        if (!modal.hasClass('popover')) modal.remove();
     });
     return true;
 };

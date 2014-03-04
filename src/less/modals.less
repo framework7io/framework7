@@ -4,6 +4,7 @@
 @actionsModalDuration:300ms;
 @actionModalButtonBg: #f3f3f3;
 @actionModalActiveButtonBg:#dcdcdc;
+@popoverDuration:400ms;
 .modal-overlay {
     position: absolute;
     left: 0;
@@ -194,4 +195,46 @@ input.modal-prompt-input {
     -moz-appearance: none;
     -ms-appearance: none;
     appearance: none;
+}
+.popover {
+    width: 320px;
+    background: #f7f7f8;
+    z-index: 11000;
+    margin: 0;
+    top: 0;
+    opacity: 0;
+    left: 0;
+    border-radius: 7px;
+    position: absolute;
+    display: none;
+    .transform(none);
+    -webkit-transition-property: -webkit-transform, opacity;
+    -moz-transition-property: -moz-transform, opacity;
+    -ms-transition-property: -ms-transform, opacity;
+    -o-transition-property: -o-transform, opacity;
+    transition-property: transform, opacity;
+    &.modal-in {
+        opacity: 1;
+        .transition(@popoverDuration);
+    }
+}
+.popover-inner {
+    .scrollable();
+    .list-block {
+        margin: 0;
+        ul {
+            border: none;
+            background: none;
+        }
+        li:first-child a{
+            border-radius: 7px 7px 0 0;
+        }
+        li:last-child a{
+            border-radius: 0 0 7px 7px;
+        }
+        li:first-child:last-child a {
+            border-radius: 7px;
+        }
+    }
+
 }
