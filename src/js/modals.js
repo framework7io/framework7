@@ -12,7 +12,7 @@ app.modal = function (params) {
         buttons: [{
             text:'Cancel',
             bold: true,
-            onClick: function(){},
+            onClick: function (){},
             close:false
         }]
     }
@@ -59,7 +59,7 @@ app.alert = function (text, title) {
         buttons: [ {text: app.params.modalButtonOk, bold: true} ]
     });
 };
-app.confirm = function(text, callbackOk, callbackCancel) {
+app.confirm = function (text, callbackOk, callbackCancel) {
     return app.modal({
         text: text || '',
         title: app.params.modalTitle || '',
@@ -75,10 +75,10 @@ app.prompt = function (text, callbackOk, callbackCancel) {
         title: app.params.modalTitle || '',
         afterText: '<input type="text" class="modal-prompt-input">',
         buttons: [
-            {text: app.params.modalButtonCancel, onClick: function(modal){
+            {text: app.params.modalButtonCancel, onClick: function (modal) {
                 if (callbackCancel) callbackCancel($(modal).find('.modal-prompt-input').val());
             }},
-            {text: app.params.modalButtonOk, bold:true, onClick: function(modal){
+            {text: app.params.modalButtonOk, bold: true, onClick: function (modal) {
                 if (callbackOk) callbackOk($(modal).find('.modal-prompt-input').val());
             }}
         ]
@@ -87,7 +87,7 @@ app.prompt = function (text, callbackOk, callbackCancel) {
 app.showPreloader = function (text) {
     return app.modal({
         title: text || app.params.modalPreloaderText,
-        text:' ',
+        text: ' ',
         afterText: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
     });
 };
@@ -95,7 +95,7 @@ app.hidePreloader = function () {
     app.closeModal();
 };
 // Action Sheet
-app.actions = function(params) {
+app.actions = function (params) {
     params = params || [];
     /*Example of @params
     [
@@ -104,13 +104,13 @@ app.actions = function(params) {
                 text: 'Button 1',
                 red: false,
                 bold: false,
-                onClick: function() { ... }
+                onClick: function () { ... }
             },
             {
                 text: '<a href="#" class="open-panel">Open panel</a>',
                 red: false,
                 bold: false,
-                onClick: function() { ... }  
+                onClick: function () { ... }  
             }
             ... more buttons in this group
         ],

@@ -132,7 +132,7 @@ module.exports = function (grunt) {
                 reporter: require('jshint-stylish')
             },
             gruntfile: {
-                src: ['Gruntfile.js','build/js/framework7.js']
+                src: ['Gruntfile.js', 'build/js/framework7.js']
             }
         },
         watch: {

@@ -1,5 +1,5 @@
 /*
- * Framework7 0.3.5
+ * Framework7 0.3.8
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 1, 2014
+ * Released on: March 4, 2014
 */
 /*=============
   Framework 7
@@ -669,19 +669,71 @@ p {
 .view > .toolbar {
   position: absolute;
 }
-.navbar-through .page {
+.navbar-through .page-content {
   padding-top: 44px;
 }
-.toolbar-through .page {
+.toolbar-through .page-content {
   padding-bottom: 44px;
 }
-.page.navbar-fixed,
-.navbar-fixed .page {
+.navbar-fixed .page-content {
   padding-top: 44px;
 }
-.page.toolbar-fixed,
-.toolbar-fixed .page {
+.toolbar-fixed .page-content {
   padding-bottom: 44px;
+}
+.hidden-navbar .navbar {
+  -webkit-transition-duration: 400ms;
+  -moz-transition-duration: 400ms;
+  -ms-transition-duration: 400ms;
+  -o-transition-duration: 400ms;
+  transition-duration: 400ms;
+  -webkit-transform: translate3d(0, -100%, 0);
+  -moz-transform: translate3d(0, -100%, 0);
+  -ms-transform: translate3d(0, -100%, 0);
+  -o-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
+.hiding-navbar .navbar {
+  -webkit-transition-duration: 400ms;
+  -moz-transition-duration: 400ms;
+  -ms-transition-duration: 400ms;
+  -o-transition-duration: 400ms;
+  transition-duration: 400ms;
+  -webkit-transform: translate3d(0, 0px, 0);
+  -moz-transform: translate3d(0, 0px, 0);
+  -ms-transform: translate3d(0, 0px, 0);
+  -o-transform: translate3d(0, 0px, 0);
+  transform: translate3d(0, 0px, 0);
+}
+.page.no-navbar .page-content {
+  padding-top: 0;
+}
+.hidden-toolbar .toolbar {
+  -webkit-transition-duration: 400ms;
+  -moz-transition-duration: 400ms;
+  -ms-transition-duration: 400ms;
+  -o-transition-duration: 400ms;
+  transition-duration: 400ms;
+  -webkit-transform: translate3d(0, 100%, 0);
+  -moz-transform: translate3d(0, 100%, 0);
+  -ms-transform: translate3d(0, 100%, 0);
+  -o-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+}
+.hiding-toolbar .toolbar {
+  -webkit-transition-duration: 400ms;
+  -moz-transition-duration: 400ms;
+  -ms-transition-duration: 400ms;
+  -o-transition-duration: 400ms;
+  transition-duration: 400ms;
+  -webkit-transform: translate3d(0, 0px, 0);
+  -moz-transform: translate3d(0, 0px, 0);
+  -ms-transform: translate3d(0, 0px, 0);
+  -o-transform: translate3d(0, 0px, 0);
+  transform: translate3d(0, 0px, 0);
+}
+.page.no-toolbar .page-content {
+  padding-bottom: 0;
 }
 /* === Icons === */
 i {

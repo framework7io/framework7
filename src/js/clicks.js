@@ -2,7 +2,7 @@
 ************   Handle clicks and make them fast (on tap);   ************
 ===============================================================================*/
 app.initClickEvents = function () {
-    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay', function(e){
+    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay', function (e) {
         var clicked = $(this);
         // External
         if (clicked.hasClass('external')) {
@@ -11,12 +11,12 @@ app.initClickEvents = function () {
         // Open Panel
         if (clicked.hasClass('open-panel')) {
             // e.preventDefault();
-            if ($('.panel').length===1) {
+            if ($('.panel').length === 1) {
                 if ($('.panel').hasClass('panel-left')) app.openPanel('left');
                 else app.openPanel('right');
             }
             else {
-                if (clicked.attr('data-panel')==='right') app.openPanel('right');
+                if (clicked.attr('data-panel') === 'right') app.openPanel('right');
                 else app.openPanel('left');
             }
         }
@@ -30,9 +30,9 @@ app.initClickEvents = function () {
         }
         // Close Modal
         if (clicked.hasClass('modal-overlay')) {
-            if ($('.modal.modal-in').length>0 && app.params.modalCloseByOutside)
+            if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
                 app.closeModal();
-            if ($('.actions-modal.modal-in').length>0 && app.params.modalActionsCloseByOutside)
+            if ($('.actions-modal.modal-in').length > 0 && app.params.modalActionsCloseByOutside)
                 app.closeModal();
         }
         // Tabs
@@ -47,7 +47,7 @@ app.initClickEvents = function () {
         }
         // Load Page
         var url = $(this).attr('href');
-        var validUrl = url && url.length>0 && url.indexOf('#')!==0;
+        var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
         if (validUrl || clicked.hasClass('back')) {
             var view;
             if (clicked.attr('data-view')) {
@@ -57,7 +57,7 @@ app.initClickEvents = function () {
                 view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
             }
             if (!view) {
-                for (var i=0; i<app.views.length; i++) {
+                for (var i = 0; i < app.views.length; i++) {
                     if (app.views[i].main) view = app.views[i];
                 }
             }
@@ -67,7 +67,7 @@ app.initClickEvents = function () {
         }
     });
     //Disable clicks
-    $(document).on('click', 'a', function(e){
+    $(document).on('click', 'a', function (e) {
         if (!$(this).hasClass('external')) e.preventDefault();
     });
 };

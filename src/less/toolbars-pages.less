@@ -19,28 +19,14 @@
 .toolbar-fixed .page-content {
     padding-bottom: 44px;
 }
-
-.hidden-navbar, .hiding-navbar {
-    .navbar, .page {
-        .transition(400ms);
-    }
-}
-.hidden-navbar {
-    .navbar {
-        .translate3d(0,-44px,0);
-    }
-    .page-content {
-        padding-top: 0;
-    }
-}
 // Page Hidden Navbar
-.page-hidden-navbar {
+.hidden-navbar {
     .navbar {
         .transition(400ms);
         .translate3d(0,-100%,0);
     }
 }
-.page-hiding-navbar {
+.hiding-navbar {
     .navbar {
         .transition(400ms);
         .translate3d(0,0px,0);
@@ -50,13 +36,13 @@
     padding-top: 0;
 }
 // Page Hidden Toolbar
-.page-hidden-toolbar {
+.hidden-toolbar {
     .toolbar {
         .transition(400ms);
         .translate3d(0,100%,0);
     }
 }
-.page-hiding-toolbar {
+.hiding-toolbar {
     .toolbar {
         .transition(400ms);
         .translate3d(0,0px,0);

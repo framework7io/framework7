@@ -1,9 +1,9 @@
 /*======================================================
 ************   Navbars && Toolbars   ************
 ======================================================*/
-app.sizeNavbars = function(viewContainer) {
+app.sizeNavbars = function (viewContainer) {
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner') : $('.navbar .navbar-inner');
-    navbarInner.each(function() {
+    navbarInner.each(function () {
         var tt = $(this),
             left = tt.find('.left'),
             right = tt.find('.right'),
@@ -40,48 +40,38 @@ app.sizeNavbars = function(viewContainer) {
         }
         center.css({left: diff + 'px'});
         if (center.hasClass('sliding')) {
-            center.attr('data-left', -(currLeft + diff));
-            center.attr('data-right', navbarWidth - currLeft - diff - centerWidth);
+            center[0].f7NavbarLeftOffset = -(currLeft + diff);
+            center[0].f7NavbarRightOffset = navbarWidth - currLeft - diff - centerWidth;
         }
         if (!noLeft && left.hasClass('sliding')) {
-            left.attr('data-left', -leftWidth);
-            left.attr('data-right', (navbarWidth - left.outerWidth())/2);
+            left[0].f7NavbarLeftOffset = -leftWidth;
+            left[0].f7NavbarRightOffset = (navbarWidth - left.outerWidth()) / 2;
         }
         if (!noRight && right.hasClass('sliding')) {
-            right.attr('data-left', -(navbarWidth - right.outerWidth())/2);
-            right.attr('data-right', rightWidth);
+            right[0].f7NavbarLeftOffset = -(navbarWidth - right.outerWidth()) / 2;
+            right[0].f7NavbarRightOffset = rightWidth;
         }
         
     });
 };
-app.hideNavbar = function(viewContainer) {
+app.hideNavbar = function (viewContainer) {
     $(viewContainer).addClass('hidden-navbar');
     return true;
 };
-app.showNavbar = function(viewContainer) {
+app.showNavbar = function (viewContainer) {
     var vc = $(viewContainer);
-    vc.addClass('hiding-navbar').removeClass('hidden-navbar').find('.navbar').transitionEnd(function(){
+    vc.addClass('hiding-navbar').removeClass('hidden-navbar').find('.navbar').transitionEnd(function () {
         vc.removeClass('hiding-navbar');
     });
     return true;
 };
-app.hidePageNavbar = function(viewContainer) {
-    $(viewContainer).addClass('page-hidden-navbar');
+app.hideToolbar = function (viewContainer) {
+    $(viewContainer).addClass('hidden-toolbar');
     return true;
 };
-app.showPageNavbar = function(viewContainer) {
+app.showToolbar = function (viewContainer) {
     var vc = $(viewContainer);
-    vc.addClass('page-hiding-navbar').removeClass('page-hidden-navbar').find('.navbar').transitionEnd(function(){
-        vc.removeClass('page-hiding-navbar');
-    });
-};
-app.hidePageToolbar = function(viewContainer) {
-    $(viewContainer).addClass('page-hidden-toolbar');
-    return true;
-};
-app.showPageToolbar = function(viewContainer) {
-    var vc = $(viewContainer);
-    vc.addClass('page-hiding-toolbar').removeClass('page-hidden-toolbar').find('.toolbar').transitionEnd(function(){
-        vc.removeClass('page-hiding-toolbar');
+    vc.addClass('hiding-toolbar').removeClass('hidden-toolbar').find('.toolbar').transitionEnd(function () {
+        vc.removeClass('hiding-toolbar');
     });
 };

@@ -16,7 +16,7 @@
   "smarttabs"    : true,
   "quotmark"     : "single",
   "indent"       : 4,
-  "white"        : false,
+  "white"        : true,
   "globals":{
     "document": true,
     "window": true,
