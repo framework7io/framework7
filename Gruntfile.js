@@ -61,7 +61,7 @@ module.exports = function (grunt) {
             kitchen: {
                 options: {
                     paths: ['kitchen-sink/less/'],
-                    cleancss: true
+                    cleancss: false
                 },
                 files: {
                     'kitchen-sink/css/kitchen-sink.css' : 'kitchen-sink/less/kitchen-sink.less'

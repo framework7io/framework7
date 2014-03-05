@@ -1,5 +1,5 @@
 /*
- * Framework7 0.3.8
+ * Framework7 0.4.0
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 4, 2014
+ * Released on: March 5, 2014
 */
 (function () {
 
@@ -966,6 +966,98 @@
             app.openModal(modal);
             return modal[0];
         };
+        app.popover = function (modal, target) {
+            modal = $(modal);
+            target = $(target);
+            if (modal.length === 0 || target.length === 0) return false;
+        
+            modal.show();
+        
+            function sizePopover() {
+                modal.css({left: '', top: ''});
+                var modalWidth =  modal.width();
+                var modalHeight =  modal.height(); // 13 - height of angle
+                var modalAngle = modal.find('.popover-angle');
+                var modalAngleSize = modalAngle.width() / 2;
+                modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
+        
+                var targetWidth = target.outerWidth();
+                var targetHeight = target.outerHeight();
+                var targetOffset = target.offset();
+                var targetParentPage = target.parents('.page');
+                if (targetParentPage.length > 0) {
+                    targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
+                }
+        
+                var windowHeight = $(window).height();
+                var windowWidth = $(window).width();
+        
+                var modalTop = 0;
+                var modalLeft = 0;
+                var diff = 0;
+                // Top Position
+                var modalPosition = 'top';
+        
+                if ((modalHeight + modalAngleSize) < targetOffset.top) {
+                    // On top
+                    modalTop = targetOffset.top - modalHeight - modalAngleSize;
+                }
+                else if ((modalHeight + modalAngleSize) < windowHeight - targetOffset.top - targetHeight) {
+                    // On bottom
+                    modalPosition = 'bottom';
+                    modalTop = targetOffset.top + targetHeight + modalAngleSize;
+                }
+                else {
+                    // On middle
+                    modalPosition = 'middle';
+                    modalTop = targetHeight / 2 + targetOffset.top - modalHeight / 2;
+                    diff = modalTop;
+                    if (modalTop < 0) {
+                        modalTop = 5;
+                    }
+                    else if (modalTop + modalHeight > windowHeight) {
+                        modalTop = windowHeight - modalHeight - 5;
+                    }
+                    diff = diff - modalTop;
+                }
+                // Horizontal Position
+                if (modalPosition === 'top' || modalPosition === 'bottom') {
+                    modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
+                    diff = modalLeft;
+                    if (modalLeft < 5) modalLeft = 5;
+                    if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+                    if (modalPosition === 'top') modalAngle.addClass('on-bottom');
+                    if (modalPosition === 'bottom') modalAngle.addClass('on-top');
+                    diff = diff - modalLeft;
+                    modalAngle.css({left: (modalWidth / 2 - modalAngleSize + diff) + 'px'});
+                }
+                else if (modalPosition === 'middle') {
+                    modalLeft = targetOffset.left - modalWidth - modalAngleSize;
+                    modalAngle.addClass('on-right');
+                    if (modalLeft < 5) {
+                        modalLeft = targetOffset.left + targetWidth + modalAngleSize;
+                        modalAngle.removeClass('on-right').addClass('on-left');
+                    }
+                    if (modalLeft + modalWidth > windowWidth) {
+                        modalLeft = windowWidth - modalWidth - 5;
+                        modalAngle.removeClass('on-right').addClass('on-left');
+                    }
+                    modalAngle.css({top: (modalHeight / 2 - modalAngleSize + diff) + 'px'});
+                }
+        
+                // Apply Styles
+                modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
+            }
+            sizePopover();
+        
+            $(window).on('resize', sizePopover);
+            modal.on('close', function () {
+                $(window).off('resize', sizePopover);
+            });
+        
+            app.openModal(modal);
+            return modal[0];
+        };
         app.openModal = function (modal) {
             modal = $(modal);
             if ($('.modal-overlay').length === 0) {
@@ -973,7 +1065,8 @@
                 overlay.className = 'modal-overlay';
                 $('body').append(overlay);
             }
-            if (!modal.hasClass('actions-modal')) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
+            var isPopover = modal.hasClass('popover');
+            if (!isPopover) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
             //Make sure that styles are applied, trigger relayout;
             var clientLeft = modal[0].clientLeft;
         
@@ -986,10 +1079,15 @@
             modal = $(modal || '.modal-in');
             $('.modal-overlay').removeClass('modal-overlay-visible');
             modal.trigger('close');
-            modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
-                modal.trigger('closed');
-                modal.remove();
-            });
+            if (!modal.hasClass('popover')) {
+                modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
+                    modal.trigger('closed');
+                    modal.remove();
+                });
+            }
+            else {
+                modal.removeClass('modal-in modal-out').trigger('closed').hide();
+            }
             return true;
         };
         /*======================================================
@@ -1133,6 +1231,7 @@
         app.initClickEvents = function () {
             $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay', function (e) {
                 var clicked = $(this);
+                var url = clicked.attr('href');
                 // External
                 if (clicked.hasClass('external')) {
                     return;
@@ -1157,12 +1256,25 @@
                 if (clicked.hasClass('panel-overlay') && app.params.panelsCloseByOutside) {
                     app.closePanel();
                 }
+                // Popover
+                if (clicked.hasClass('open-popover')) {
+                    var popover;
+                    if (clicked.attr('data-popover')) {
+                        popover = clicked.attr('data-popover');
+                    }
+                    else if (url.indexOf('#') === 0 && url.length > 1) {
+                        popover = url;
+                    }
+                    else popover = '.popover';
+                    app.popover(popover, clicked);
+                }
                 // Close Modal
                 if (clicked.hasClass('modal-overlay')) {
                     if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
                         app.closeModal();
                     if ($('.actions-modal.modal-in').length > 0 && app.params.modalActionsCloseByOutside)
                         app.closeModal();
+                    if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
                 }
                 // Tabs
                 if (clicked.hasClass('tab-link')) {
@@ -1175,7 +1287,6 @@
                     }
                 }
                 // Load Page
-                var url = $(this).attr('href');
                 var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
                 if (validUrl || clicked.hasClass('back')) {
                     var view;
@@ -1390,6 +1501,7 @@
                 e.detail = eventData;
                 this[i].dispatchEvent(e);
             }
+            return this;
         },
         transitionEnd: function (callback) {
             var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
@@ -1406,6 +1518,7 @@
                     dom.on(events[i], fireCallBack);
                 }
             }
+            return this;
         },
         animationEnd: function (callback) {
             var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
@@ -1421,15 +1534,22 @@
                     dom.on(events[i], fireCallBack);
                 }
             }
+            return this;
         },
         // Sizing/Styles
         width: function () {
-            if (this.length > 0) {
-                return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+            if (this[0] === window) {
+                return window.innerWidth;
             }
             else {
-                return null;
+                if (this.length > 0) {
+                    return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+                }
+                else {
+                    return null;
+                }
             }
+                
         },
         outerWidth: function (margins) {
             if (this.length > 0) {
@@ -1441,12 +1561,18 @@
             else return null;
         },
         height: function () {
-            if (this.length > 0) {
-                return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
+            if (this[0] === window) {
+                return window.innerHeight;
             }
             else {
-                return null;
+                if (this.length > 0) {
+                    return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
+                }
+                else {
+                    return null;
+                }
             }
+                
         },
         outerHeight: function (margins) {
             if (this.length > 0) {
@@ -1479,11 +1605,13 @@
             for (var i = 0; i < this.length; i++) {
                 this[i].style.display = 'none';
             }
+            return this;
         },
         show: function () {
             for (var i = 0; i < this.length; i++) {
                 this[i].style.display = 'block';
             }
+            return this;
         },
         css: function (props) {
             if (typeof props === 'string') {

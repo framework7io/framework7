@@ -1,36 +1,24 @@
-.grid-4 {
-    overflow: hidden;
-    clear: both;
-    .col {
+.row {
+    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col {
+        padding-left: 15px;
+        padding-right: 15px;
+        .border-box();
         float: left;
-        margin-left: 2.5%;
-        width: 23.125%;
     }
-    .col:first-child {
-        margin-left: 0;
-    }
+    .clearfix();
 }
-.grid-3 {
-    clear: both;
-    overflow: hidden;
-    .col {
-        float: left;
-        margin-left: 2.5%;
-        width: 31.66666666666667%;
+.column-loop(@i) when (@i < 13){
+    .row .col-@{i} {
+        width: 100%/12*@i;
     }
-    .col:first-child {
-        margin-left: 0;
-    }
+    .column-loop(@i + 1);
 }
-.grid-2 {
-    clear: both;
-    overflow: hidden;
-    .col {
-        float: left;
-        margin-left: 2.5%;
-        width: 48.75%;
-    }
-    .col:first-child {
-        margin-left: 0;
-    }
+.column-loop(1);
+
+.content-block .row {
+    margin-left: -15px;
+    margin-right: -15px;
 }
+
+
+

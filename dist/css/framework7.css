@@ -1,5 +1,5 @@
 /*
- * Framework7 0.3.8
+ * Framework7 0.4.0
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 4, 2014
+ * Released on: March 5, 2014
 */
 /*=============
   Framework 7
@@ -51,41 +51,75 @@ p {
   margin: 1em 0px;
 }
 /* === Grid === */
-.grid-4 {
-  overflow: hidden;
+.row .col-1,
+.row .col-2,
+.row .col-3,
+.row .col-4,
+.row .col-5,
+.row .col-6,
+.row .col-7,
+.row .col-8,
+.row .col-9,
+.row .col-10,
+.row .col-11,
+.row .col-12,
+.row .col {
+  padding-left: 15px;
+  padding-right: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+}
+.row:before,
+.row:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.row:after {
   clear: both;
 }
-.grid-4 .col {
-  float: left;
-  margin-left: 2.5%;
-  width: 23.125%;
+.row .col-1 {
+  width: 8.33333333%;
 }
-.grid-4 .col:first-child {
-  margin-left: 0;
+.row .col-2 {
+  width: 16.66666667%;
 }
-.grid-3 {
-  clear: both;
-  overflow: hidden;
+.row .col-3 {
+  width: 25%;
 }
-.grid-3 .col {
-  float: left;
-  margin-left: 2.5%;
-  width: 31.66666666666667%;
+.row .col-4 {
+  width: 33.33333333%;
 }
-.grid-3 .col:first-child {
-  margin-left: 0;
+.row .col-5 {
+  width: 41.66666667%;
 }
-.grid-2 {
-  clear: both;
-  overflow: hidden;
+.row .col-6 {
+  width: 50%;
 }
-.grid-2 .col {
-  float: left;
-  margin-left: 2.5%;
-  width: 48.75%;
+.row .col-7 {
+  width: 58.33333333%;
 }
-.grid-2 .col:first-child {
-  margin-left: 0;
+.row .col-8 {
+  width: 66.66666667%;
+}
+.row .col-9 {
+  width: 75%;
+}
+.row .col-10 {
+  width: 83.33333333%;
+}
+.row .col-11 {
+  width: 91.66666667%;
+}
+.row .col-12 {
+  width: 100%;
+}
+.content-block .row {
+  margin-left: -15px;
+  margin-right: -15px;
 }
 /* === Views === */
 .views,
@@ -387,7 +421,6 @@ p {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background: #f7f7f8;
   font-size: 17px;
   position: relative;
   margin: 0;
@@ -440,6 +473,7 @@ p {
 .navbar {
   left: 0;
   top: 0;
+  background: #f7f7f8;
   border-bottom: 1px solid #c4c4c4;
 }
 .navbar .center {
@@ -490,6 +524,7 @@ p {
 .toolbar {
   left: 0;
   bottom: 0;
+  background: #f7f7f8;
   border-top: 1px solid #c4c4c4;
 }
 .toolbar a {
@@ -797,7 +832,7 @@ i.icon-bars-blue {
   font-size: 17px;
 }
 .list-block ul {
-  background: #fff;
+  background: #ffffff;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -816,7 +851,7 @@ i.icon-bars-blue {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  line-height: 44px;
+  line-height: 43px;
   padding-left: 15px;
   display: -webkit-box;
   display: -moz-box;
@@ -1022,10 +1057,6 @@ i.icon-bars-blue {
   font-size: 14px;
   color: #8f8f94;
 }
-.list-block .content-block-title {
-  margin-left: 15px;
-  margin-right: 15px;
-}
 /* === Forms === */
 .list-block input[type="text"],
 .list-block input[type="password"],
@@ -1050,7 +1081,7 @@ i.icon-bars-blue {
   padding: 0px 0 0px 5px;
   margin: 0;
   width: 100%;
-  height: 44px;
+  height: 43px;
   color: #000;
   font-size: 17px;
   font-family: inherit;
@@ -1613,6 +1644,102 @@ input.modal-prompt-input {
   -moz-appearance: none;
   -ms-appearance: none;
   appearance: none;
+}
+.popover {
+  width: 320px;
+  background: #f7f7f8;
+  z-index: 11000;
+  margin: 0;
+  top: 0;
+  opacity: 1;
+  left: 0;
+  border-radius: 7px;
+  position: absolute;
+  display: none;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+  -webkit-transition-property: -webkit-transform, opacity;
+  -moz-transition-property: -moz-transform, opacity;
+  -ms-transition-property: -ms-transform, opacity;
+  -o-transition-property: -o-transform, opacity;
+  transition-property: transform, opacity;
+}
+.popover-angle {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  left: -26px;
+  top: 0px;
+  z-index: 100;
+  overflow: hidden;
+}
+.popover-angle:after {
+  content: ' ';
+  background: #f7f7f8;
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  left: 0px;
+  top: 0;
+  border-radius: 3px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.popover-angle.on-left {
+  left: -26px;
+}
+.popover-angle.on-left:after {
+  left: 19px;
+  top: 0;
+}
+.popover-angle.on-right {
+  left: 100%;
+}
+.popover-angle.on-right:after {
+  left: -19px;
+  top: 0;
+}
+.popover-angle.on-top {
+  left: 0;
+  top: -26px;
+}
+.popover-angle.on-top:after {
+  left: 0px;
+  top: 19px;
+}
+.popover-angle.on-bottom {
+  left: 0;
+  top: 100%;
+}
+.popover-angle.on-bottom:after {
+  left: 0px;
+  top: -19px;
+}
+.popover-inner {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.popover-inner .list-block {
+  margin: 0;
+}
+.popover-inner .list-block ul {
+  border: none;
+  background: none;
+}
+.popover-inner .list-block li:first-child a {
+  border-radius: 7px 7px 0 0;
+}
+.popover-inner .list-block li:last-child a {
+  border-radius: 0 0 7px 7px;
+}
+.popover-inner .list-block li:first-child:last-child a {
+  border-radius: 7px;
 }
 /* === Panels === */
 .panel-overlay {

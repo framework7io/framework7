@@ -9,17 +9,6 @@ html
     link(rel="stylesheet", href="../build/css/framework7.css")
     link(rel="stylesheet", href="css/kitchen-sink.css")
   body
-    .popover
-      .popover-angle
-      .popover-inner
-        .list-block
-          ul
-            li
-              a(href="#").list-button Popover Link 1
-            li
-              a(href="#").list-button Popover Link 2
-            li
-              a(href="#").list-button Popover Link 3
     .panel-overlay
     .panel.panel-left.panel-cover
       .content-block-title Left Panel
@@ -38,11 +27,23 @@ html
               .inner 
                 .text Modals
           li
+            a(href="popover.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Popover
+          li
             a(href="transitions.html").close-panel
               .icons
                 i.icon-f7
               .inner 
                 .text Transitions And Effects
+          li
+            a(href="tabs.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Tabs
           li
             a(href="panels.html").close-panel
               .icons
@@ -55,13 +56,24 @@ html
                 i.icon-f7
               .inner 
                 .text Data Lists
-          
           li
             a(href="forms.html").close-panel
               .icons
                 i.icon-f7
               .inner 
                 .text Forms
+          li
+            a(href="deep-navbar.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Deep Dynamic Navbar
+          li
+            a(href="hide-navbar-toolbar.html").close-panel
+              .icons
+                i.icon-f7
+              .inner 
+                .text Hide Navbar & Toolbar
       .content-block
         p Long text block goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sem urna, gravida non scelerisque id, fringilla ac velit. Phasellus elementum a ipsum at ornare. Mauris sagittis rhoncus euismod. Integer convallis augue eu lacus ultrices, in dictum elit consequat. Nulla faucibus massa id felis egestas eleifend. Proin consequat dignissim magna ut scelerisque. Vestibulum ac lorem semper, posuere sapien nec, pharetra massa. Nulla a tellus facilisis, sollicitudin quam porta, aliquam lorem. Fusce dignissim eros ac diam molestie, ut ultrices lorem tristique. Ut facilisis augue ac nisi egestas malesuada. Nunc posuere tortor quis eleifend mollis. Aliquam erat volutpat. Donec feugiat elit tellus, nec convallis orci elementum in. Sed urna mi, vestibulum id tempus id, pretium et ante. Pellentesque eget sollicitudin ligula. Phasellus pellentesque velit eu porta suscipit.
     .panel.panel-right.panel-reveal
@@ -100,8 +112,8 @@ html
                 i.icon-bars-blue
         .toolbar
           .toolbar-inner
-            a(href="#").link Dummy 1
-            a(href="#").link Dummy 2
+            a(href="#").link Dummy Link
+            a(href="#").open-popover.link Menu
         .pages.navbar-through.toolbar-through
           .page(data-page="index")
             .page-content
@@ -120,6 +132,12 @@ html
                         i.icon-f7
                       .inner 
                         .text Modals
+                  li
+                    a(href="popover.html") 
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Popover
                   li
                     a(href="transitions.html")
                       .icons
@@ -151,6 +169,12 @@ html
                       .inner 
                         .text Forms
                   li
+                    a(href="deep-navbar.html")
+                      .icons
+                        i.icon-f7
+                      .inner 
+                        .text Deep Dynamic Navbar
+                  li
                     a(href="hide-navbar-toolbar.html")
                       .icons
                         i.icon-f7
@@ -160,5 +184,26 @@ html
               .content-block
                 p 
                   a(href="core-features.html").button Read About Core Features
+    .popover
+      .popover-angle
+      .popover-inner
+        .list-block
+          ul
+            li
+              a(href="modals.html").list-button Modals
+            li
+              a(href="popover.html").list-button Popover
+            li
+              a(href="tabs.html").list-button Tabs
+            li
+              a(href="panels.html").list-button Side Panels
+            li
+              a(href="data-lists.html").list-button Data Lists
+            li
+              a(href="forms.html").list-button Forms
+            li
+              a(href="deep-navbar.html").list-button Deep Dynamic Navbar
+            li
+              a(href="hide-navbar-toolbar.html").list-button Hide Navbar & Toolbar     
     script(type="text/javascript", src="../build/js/framework7.js")
     script(type="text/javascript", src="js/kitchen-sink.js")

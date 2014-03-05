@@ -239,10 +239,10 @@ app.popover = function (modal, target) {
     }
     sizePopover();
 
-    if (!modal[0].f7PopoverResizeInitialized) {
-        $(window).on('resize', sizePopover);
-        modal[0].f7PopoverResizeInitialized = true;
-    }
+    $(window).on('resize', sizePopover);
+    modal.on('close', function () {
+        $(window).off('resize', sizePopover);
+    });
 
     app.openModal(modal);
     return modal[0];
@@ -275,8 +275,7 @@ app.closeModal = function (modal) {
         });
     }
     else {
-        modal.trigger('closed');
-        modal.hide();
+        modal.removeClass('modal-in modal-out').trigger('closed').hide();
     }
     return true;
 };
