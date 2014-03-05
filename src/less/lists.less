@@ -1,19 +1,21 @@
+@listBlockBorderColor: #c8c7cc;
+@listBlockBg: #fff;
 .list-block {
     margin: 35px 0;
     font-size: 17px;
     ul {
-        background: #fff;
+        background: @listBlockBg;
         list-style: none;
         padding: 0;
         margin: 0;
-        border-top: 1px solid #c8c7cc;
-        border-bottom: 1px solid #c8c7cc;
+        border-top: 1px solid @listBlockBorderColor;
+        border-bottom: 1px solid @listBlockBorderColor;
         ul {
             border-top: none;
             border-bottom: none;
             padding-left: 45px;
             li:last-child .inner {
-                border-bottom: 1px solid #c8c7cc;
+                border-bottom: 1px solid @listBlockBorderColor;
             }
         }
     }
@@ -44,7 +46,7 @@
     }
     .inner {
         padding-right: 15px;
-        border-bottom: 1px solid #c8c7cc;
+        border-bottom: 1px solid @listBlockBorderColor;
         width: 100%;
         white-space: nowrap;
         min-height: 44px;
@@ -103,7 +105,7 @@
         text-align: center;
         color: @blue;
         display: block;
-        border-bottom: 1px solid #c8c7cc;
+        border-bottom: 1px solid @listBlockBorderColor;
         &.red {
             color: @red;
         }
@@ -148,9 +150,5 @@
         padding: 0 15px;
         font-size: 14px;
         color: #8f8f94;
-    }
-    .content-block-title {
-        margin-left: 15px;
-        margin-right: 15px;
     }
 }

@@ -1,10 +1,12 @@
 @modalBgColor:#e8e8e8;
-@modalActiveBgColor:#d4d4d4;
+@modalButonColor : @blue;
+@modalButonBg: @modalBgColor;
+@modalButonActiveBg:#d4d4d4;
 @modalDuration:400ms;
 @actionsModalDuration:300ms;
-@actionModalButtonBg: #f3f3f3;
-@actionModalActiveButtonBg:#dcdcdc;
-@popoverDuration:400ms;
+@actionsModalButtonBg: #f3f3f3;
+@actionsModalActiveButtonBg:#dcdcdc;
+@popoverBg: #f7f7f8;
 .modal-overlay {
     position: absolute;
     left: 0;
@@ -80,8 +82,8 @@
     font-size: 17px;
     line-height: 44px;
     text-align: center;
-    color: @blue;
-    background: @modalBgColor;
+    color: @modalButonColor;
+    background: @modalButonBg;
     display: block;
     position: relative;
     white-space: nowrap;
@@ -104,7 +106,7 @@
         font-weight: 500;
     }
     &:active {
-        background: @modalActiveBgColor;
+        background: @modalButonActiveBg;
     }
 }
 .modal-no-buttons {
@@ -146,7 +148,7 @@
     line-height: 44px;
     margin: 0;
     cursor: pointer;
-    background: @actionModalButtonBg;
+    background: @actionsModalButtonBg;
     .border-box();
     display: block;
     border-bottom: 1px solid #d2d2d6;
@@ -174,7 +176,7 @@
         border-radius: 4px;
     }
     &:active {
-        background: @actionModalActiveButtonBg;
+        background: @actionsModalActiveButtonBg;
     }
 }
 input.modal-prompt-input {
@@ -198,11 +200,11 @@ input.modal-prompt-input {
 }
 .popover {
     width: 320px;
-    background: #f7f7f8;
+    background:@popoverBg;
     z-index: 11000;
     margin: 0;
     top: 0;
-    opacity: 0;
+    opacity: 1;
     left: 0;
     border-radius: 7px;
     position: absolute;
@@ -213,14 +215,6 @@ input.modal-prompt-input {
     -ms-transition-property: -ms-transform, opacity;
     -o-transition-property: -o-transform, opacity;
     transition-property: transform, opacity;
-    &.modal-in {
-        opacity: 1;
-        .transition(@popoverDuration);
-    }
-    &.modal-out {
-        opacity: 0;
-        .transition(@popoverDuration);   
-    }
 }
 .popover-angle {
     width: 26px;

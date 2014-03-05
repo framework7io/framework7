@@ -1,3 +1,9 @@
+@navbarBg : #f7f7f8;
+@navbarBorderColor: #c4c4c4;
+@toolbarBg: @navbarBg;
+@toolbarBorderColor: @navbarBorderColor;
+@navbarLinksColor: @blue;
+
 .navbar-inner, .toolbar-inner {
     .full-size();
     padding: 0 15px;
@@ -10,7 +16,6 @@
     height: 44px;
     width: 100%;
     .border-box();
-    background: #f7f7f8;
     font-size: 17px;
     position: relative;
     margin: 0;
@@ -21,7 +26,7 @@
     a.link {
         line-height: 44px;
         height: 44px;
-        color: @blue;
+        color: @navbarLinksColor;
         text-decoration: none;
         .flexbox();
         .justify-content(flex-start);
@@ -39,7 +44,8 @@
 .navbar {
     left: 0;
     top: 0;
-    border-bottom: 1px solid #c4c4c4;
+    background: @navbarBg;
+    border-bottom: 1px solid @navbarBorderColor;
     .center {
         font-size: 17px;
         font-weight: 500;
@@ -72,7 +78,8 @@
 .toolbar {
     left: 0;
     bottom: 0;
-    border-top: 1px solid #c4c4c4;
+    background: @toolbarBg;
+    border-top: 1px solid @toolbarBorderColor;
     a {
         .flex-shrink(1);
         position: relative;

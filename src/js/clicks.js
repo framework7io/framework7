@@ -4,6 +4,7 @@
 app.initClickEvents = function () {
     $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay', function (e) {
         var clicked = $(this);
+        var url = clicked.attr('href');
         // External
         if (clicked.hasClass('external')) {
             return;
@@ -28,6 +29,18 @@ app.initClickEvents = function () {
         if (clicked.hasClass('panel-overlay') && app.params.panelsCloseByOutside) {
             app.closePanel();
         }
+        // Popover
+        if (clicked.hasClass('open-popover')) {
+            var popover;
+            if (clicked.attr('data-popover')) {
+                popover = clicked.attr('data-popover');
+            }
+            else if (url.indexOf('#') === 0 && url.length > 1) {
+                popover = url;
+            }
+            else popover = '.popover';
+            app.popover(popover, clicked);
+        }
         // Close Modal
         if (clicked.hasClass('modal-overlay')) {
             if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
@@ -47,7 +60,6 @@ app.initClickEvents = function () {
             }
         }
         // Load Page
-        var url = $(this).attr('href');
         var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
         if (validUrl || clicked.hasClass('back')) {
             var view;

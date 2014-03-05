@@ -158,6 +158,7 @@ app.actions = function (params) {
 app.popover = function (modal, target) {
     modal = $(modal);
     target = $(target);
+    if (modal.length === 0 || target.length === 0) return false;
 
     modal.show();
 
@@ -253,8 +254,8 @@ app.openModal = function (modal) {
         overlay.className = 'modal-overlay';
         $('body').append(overlay);
     }
-    if (!(modal.hasClass('actions-modal') || modal.hasClass('popover'))) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
-
+    var isPopover = modal.hasClass('popover');
+    if (!isPopover) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
     //Make sure that styles are applied, trigger relayout;
     var clientLeft = modal[0].clientLeft;
 
@@ -267,12 +268,15 @@ app.closeModal = function (modal) {
     modal = $(modal || '.modal-in');
     $('.modal-overlay').removeClass('modal-overlay-visible');
     modal.trigger('close');
-    modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
+    if (!modal.hasClass('popover')) {
+        modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
+            modal.trigger('closed');
+            modal.remove();
+        });
+    }
+    else {
         modal.trigger('closed');
-        if (!modal.hasClass('popover')) modal.remove();
-        else {
-            modal.removeClass('modal-in modal-out').css({display: ''});
-        }
-    });
+        modal.hide();
+    }
     return true;
 };
