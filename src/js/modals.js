@@ -256,8 +256,12 @@ app.openModal = function (modal) {
     }
     var isPopover = modal.hasClass('popover');
     if (!isPopover) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
+    
     //Make sure that styles are applied, trigger relayout;
     var clientLeft = modal[0].clientLeft;
+
+    // Trugger open event
+    modal.trigger('open');
 
     // Classes for transition in
     $('.modal-overlay').addClass('modal-overlay-visible');

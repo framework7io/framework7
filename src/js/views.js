@@ -175,11 +175,11 @@ app.initViewEvents = function (view) {
         if (dynamicNavbar) {
             activeNavElements.css({opacity: ''})
             .each(function () {
-                var translate = pageChanged ? $(this).attr('data-right') : 0;
+                var translate = pageChanged ? this.f7NavbarRightOffset : 0;
                 $(this).transform('translate3d(' + translate + 'px,0,0)');
             }).addClass('page-transitioning');
             previousNavElements.transform('').css({opacity: ''}).each(function () {
-                var translate = pageChanged ? 0 : $(this).attr('data-left');
+                var translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
                 $(this).transform('translate3d(' + translate + 'px,0,0)');
             }).addClass('page-transitioning');
         }

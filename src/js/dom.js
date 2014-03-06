@@ -1,7 +1,7 @@
 /*===========================
 jQuery-like DOM library
 ===========================*/
-var Dom = function (arr) {
+var Dom7 = function (arr) {
     var _this = this, i = 0;
     // Create array-like object
     for (i = 0; i < arr.length; i++) {
@@ -11,7 +11,7 @@ var Dom = function (arr) {
     // Return collection with methods
     return this;
 };
-Dom.prototype = {
+Dom7.prototype = {
     // Classes and attriutes
     addClass: function (className) {
         var classes = className.split(' ');
@@ -388,7 +388,7 @@ Dom.prototype = {
                 foundElements.push(found[j]);
             }
         }
-        return new Dom(foundElements);
+        return new Dom7(foundElements);
     },
     children: function (selector) {
         var children = [];
@@ -404,7 +404,7 @@ Dom.prototype = {
                 }
             }
         }
-        return new Dom($.unique(children));
+        return new Dom7($.unique(children));
     },
     remove: function () {
         for (var i = 0; i < this.length; i++) {
@@ -435,7 +435,7 @@ var $ = function (selector, context) {
             }
         }
     }
-    return new Dom(arr);
+    return new Dom7(arr);
 };
 $.parseUrlQuery = function (url) {
     var query = {}, i, params, param;
@@ -461,3 +461,4 @@ $.unique = function (arr) {
 $.supportTouch = (function () {
     return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 })();
+$.fn = Dom7.prototype;

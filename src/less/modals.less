@@ -204,17 +204,21 @@ input.modal-prompt-input {
     z-index: 11000;
     margin: 0;
     top: 0;
-    opacity: 1;
+    opacity: 0;
     left: 0;
     border-radius: 7px;
     position: absolute;
     display: none;
     .transform(none);
-    -webkit-transition-property: -webkit-transform, opacity;
-    -moz-transition-property: -moz-transform, opacity;
-    -ms-transition-property: -ms-transform, opacity;
-    -o-transition-property: -o-transform, opacity;
-    transition-property: transform, opacity;
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    -ms-transition-property: opacity;
+    -o-transition-property: opacity;
+    transition-property: opacity;
+    &.modal-in {
+        .transition(@actionsModalDuration);
+        opacity: 1;
+    }
 }
 .popover-angle {
     width: 26px;
