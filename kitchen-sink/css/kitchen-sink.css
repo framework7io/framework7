@@ -111,3 +111,27 @@ i.icon-about {
 .ks-grid .row:last-child {
   margin-bottom: 0;
 }
+.ks-preloaders {
+  text-align: center;
+}
+.ks-preloader-big {
+  width: 42px;
+  height: 42px;
+}
+.ks-preloader-big span {
+  background: red;
+}
+.ks-preloader-small {
+  width: 20px;
+  height: 20px;
+}
+.ks-preloader-small span {
+  background: blue;
+}
+.ks-preloader-xsmall {
+  width: 12px;
+  height: 12px;
+}
+.ks-preloader-xsmall span {
+  background: green;
+}

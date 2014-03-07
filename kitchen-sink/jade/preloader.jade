@@ -1,0 +1,37 @@
+.navbar
+  .navbar-inner
+    .left
+      a(href="index.html").back.link 
+        i.icon-back-blue 
+        span Back
+    .center.sliding Preloader
+    .right
+      a(href="#").link.open-panel
+        i.icon-bars-blue
+.pages.navbar-through
+  .page(data-page="panels")
+    .page-content
+      .content-block
+        p What about preloader (ajax loader)? Framework 7 has nice one. F7 preloader is made with pure CSS so you can resize it and change its color with ease. Its HTML is pretty easy, it is just a .preloader element with 12 spans in it. Heare are examples:
+      .content-block.row.ks-preloaders
+        .col-25 Default:<br>
+          span.preloader
+            - for (var i=0; i<12; i++)
+              span
+        .col-25 Big:<br>
+          span.preloader.ks-preloader-big
+            - for (var i=0; i<12; i++)
+              span
+        .col-25 Small:<br>
+          span.preloader.ks-preloader-small
+            - for (var i=0; i<12; i++)
+              span
+        .col-25 X-Small:<br>
+          span.preloader.ks-preloader-xsmall
+            - for (var i=0; i<12; i++)
+              span
+      .content-block
+        p With <b>app.showPreloader()</b> you can call modal window with preloader:
+        a(href="#").button.demo-preloader Open preloader modal
+        p With <b>app.showPreloader('My text...')</b> you can call it with custom title:
+        a(href="#").button.demo-preloader-custom Open custom preloader

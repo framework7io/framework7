@@ -84,11 +84,10 @@ app.prompt = function (text, callbackOk, callbackCancel) {
         ]
     });
 };
-app.showPreloader = function (text) {
+app.showPreloader = function (title) {
     return app.modal({
-        title: text || app.params.modalPreloaderText,
-        text: ' ',
-        afterText: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
+        title: title || app.params.modalPreloaderTitle,
+        text: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
     });
 };
 app.hidePreloader = function () {

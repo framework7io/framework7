@@ -46,7 +46,7 @@ window.Framework7 = function (params) {
         modalTitle: 'Framework7',
         modalCloseByOutside: false,
         modalActionsCloseByOutside: true,
-        modalPreloaderText: 'Loading... '
+        modalPreloaderTitle: 'Loading... '
     };
 
     // Extend defaults with parameters

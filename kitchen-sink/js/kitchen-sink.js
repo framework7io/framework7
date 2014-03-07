@@ -74,3 +74,17 @@ $$(document).tap('.demo-actions', function () {
 $$('.popover a').tap(function () {
     myApp.closeModal('.popover');
 });
+
+// Preloader Demo
+$$(document).tap('.demo-preloader', function () {
+    myApp.showPreloader();
+    setTimeout(function () {
+        myApp.hidePreloader();
+    }, 2000);
+});
+$$(document).tap('.demo-preloader-custom', function () {
+    myApp.showPreloader('My text...');
+    setTimeout(function () {
+        myApp.hidePreloader();
+    }, 2000);
+});
