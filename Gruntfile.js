@@ -39,6 +39,11 @@ module.exports = function (grunt) {
                 }
             }
         },
+        open: {
+            kitchen: {
+                path: 'http://localhost:3000/kitchen-sink'
+            }
+        },
         less: {
             build: {
                 options: {
@@ -250,6 +255,7 @@ module.exports = function (grunt) {
     // Server
     this.registerTask('server', 'Run server', [
         'connect',
+        'open',
         'watch'
     ]);
 

@@ -1,24 +1,35 @@
 .row {
-    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col {
-        padding-left: 15px;
-        padding-right: 15px;
-        .border-box();
-        float: left;
-    }
     .clearfix();
-}
-.column-loop(@i) when (@i < 13){
-    .row .col-@{i} {
-        width: 100%/12*@i;
+    > [class*="col-"] {
+        float: left;
+        margin-left: 15px;
+        .border-box();
+        &:first-child{
+            margin-left: 0;
+        }
+        .no-gutter& {
+            margin-left: 0;
+        }
     }
-    .column-loop(@i + 1);
 }
-.column-loop(1);
-
-.content-block .row {
-    margin-left: -15px;
-    margin-right: -15px;
+@cols: 5, 10, 15, 20, 25, 100/3, 50, 100*(2/3), 75, 80, 85, 90, 95, 100;
+.row {
+    .-(@i: length(@cols)) when (@i > 0) {
+        @divider: e(extract(@cols, @i));
+        @className: `Math.floor(@{divider})`;
+        @n: `100/parseFloat(@{divider})`;
+        @n-1: @n - 1;
+        .col-@{className} {
+            width: ~"@{divider}%";
+            width: ~"-webkit-calc( (100% - 15px*@{n-1}) / @{n})";   
+            width: ~"-moz-calc( (100% - 15px*@{n-1}) / @{n})";   
+            width: ~"calc( (100% - 15px*@{n-1}) / @{n})";   
+        }
+        &.no-gutter {
+            .col-@{className} {
+                width: ~"@{divider}%";
+            }
+        }
+        .-((@i - 1));
+    } .-;
 }
-
-
-

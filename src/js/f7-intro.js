@@ -25,7 +25,7 @@ window.Framework7 = function (params) {
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
         swipeBackPage: true,
-        swipeBackPageThreshold: 30,
+        swipeBackPageThreshold: 0,
         swipeBackPageActiveArea: 30,
         // Panels
         panelsCloseByOutside: true,

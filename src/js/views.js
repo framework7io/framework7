@@ -178,6 +178,7 @@ app.initViewEvents = function (view) {
                 var translate = pageChanged ? this.f7NavbarRightOffset : 0;
                 $(this).transform('translate3d(' + translate + 'px,0,0)');
             }).addClass('page-transitioning');
+
             previousNavElements.transform('').css({opacity: ''}).each(function () {
                 var translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
                 $(this).transform('translate3d(' + translate + 'px,0,0)');
@@ -199,7 +200,9 @@ app.initViewEvents = function (view) {
             $([activePage[0], previousPage[0]]).removeClass('page-transitioning');
             if (dynamicNavbar) {
                 activeNavElements.removeClass('page-transitioning');
+                activeNavElements.transform('').css({opacity: ''});
                 previousNavElements.removeClass('page-transitioning');
+                previousNavElements.transform('').css({opacity: ''});
             }
             allowViewTouchMove = true;
             app.allowPageChange = true;

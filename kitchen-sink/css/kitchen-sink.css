@@ -98,3 +98,16 @@ i.icon-about {
 .popover {
   width: 280px;
 }
+.ks-grid div[class*="col-"] {
+  background: #fff;
+  text-align: center;
+  color: #000;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+.ks-grid .row {
+  margin-bottom: 15px;
+}
+.ks-grid .row:last-child {
+  margin-bottom: 0;
+}
