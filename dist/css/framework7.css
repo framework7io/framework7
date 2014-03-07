@@ -1020,6 +1020,7 @@ i.icon-form-url {
   box-sizing: border-box;
   line-height: 43px;
   padding-left: 15px;
+  position: relative;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -1141,7 +1142,6 @@ i.icon-form-url {
 }
 .list-block a {
   margin-left: -15px;
-  display: block;
   padding-left: 15px;
   text-decoration: none;
   color: #000;
