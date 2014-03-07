@@ -1,5 +1,5 @@
 /*
- * Framework7 0.4.0
+ * Framework7 0.4.5
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 5, 2014
+ * Released on: March 7, 2014
 */
 (function () {
 
@@ -41,7 +41,7 @@
             cacheDuration: 1000 * 60 * 10, // Ten minutes 
             preloadPreviousPage: true,
             swipeBackPage: true,
-            swipeBackPageThreshold: 30,
+            swipeBackPageThreshold: 0,
             swipeBackPageActiveArea: 30,
             // Panels
             panelsCloseByOutside: true,
@@ -62,7 +62,7 @@
             modalTitle: 'Framework7',
             modalCloseByOutside: false,
             modalActionsCloseByOutside: true,
-            modalPreloaderText: 'Loading... '
+            modalPreloaderTitle: 'Loading... '
         };
     
         // Extend defaults with parameters
@@ -256,11 +256,12 @@
                 if (dynamicNavbar) {
                     activeNavElements.css({opacity: ''})
                     .each(function () {
-                        var translate = pageChanged ? $(this).attr('data-right') : 0;
+                        var translate = pageChanged ? this.f7NavbarRightOffset : 0;
                         $(this).transform('translate3d(' + translate + 'px,0,0)');
                     }).addClass('page-transitioning');
+        
                     previousNavElements.transform('').css({opacity: ''}).each(function () {
-                        var translate = pageChanged ? 0 : $(this).attr('data-left');
+                        var translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
                         $(this).transform('translate3d(' + translate + 'px,0,0)');
                     }).addClass('page-transitioning');
                 }
@@ -280,7 +281,9 @@
                     $([activePage[0], previousPage[0]]).removeClass('page-transitioning');
                     if (dynamicNavbar) {
                         activeNavElements.removeClass('page-transitioning');
+                        activeNavElements.transform('').css({opacity: ''});
                         previousNavElements.removeClass('page-transitioning');
+                        previousNavElements.transform('').css({opacity: ''});
                     }
                     allowViewTouchMove = true;
                     app.allowPageChange = true;
@@ -895,11 +898,10 @@
                 ]
             });
         };
-        app.showPreloader = function (text) {
+        app.showPreloader = function (title) {
             return app.modal({
-                title: text || app.params.modalPreloaderText,
-                text: ' ',
-                afterText: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
+                title: title || app.params.modalPreloaderTitle,
+                text: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
             });
         };
         app.hidePreloader = function () {
@@ -1067,8 +1069,12 @@
             }
             var isPopover = modal.hasClass('popover');
             if (!isPopover) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
+            
             //Make sure that styles are applied, trigger relayout;
             var clientLeft = modal[0].clientLeft;
+        
+            // Trugger open event
+            modal.trigger('open');
         
             // Classes for transition in
             $('.modal-overlay').addClass('modal-overlay-visible');
@@ -1341,7 +1347,7 @@
     /*===========================
     jQuery-like DOM library
     ===========================*/
-    var Dom = function (arr) {
+    var Dom7 = function (arr) {
         var _this = this, i = 0;
         // Create array-like object
         for (i = 0; i < arr.length; i++) {
@@ -1351,7 +1357,7 @@
         // Return collection with methods
         return this;
     };
-    Dom.prototype = {
+    Dom7.prototype = {
         // Classes and attriutes
         addClass: function (className) {
             var classes = className.split(' ');
@@ -1728,7 +1734,7 @@
                     foundElements.push(found[j]);
                 }
             }
-            return new Dom(foundElements);
+            return new Dom7(foundElements);
         },
         children: function (selector) {
             var children = [];
@@ -1744,7 +1750,7 @@
                     }
                 }
             }
-            return new Dom($.unique(children));
+            return new Dom7($.unique(children));
         },
         remove: function () {
             for (var i = 0; i < this.length; i++) {
@@ -1775,7 +1781,7 @@
                 }
             }
         }
-        return new Dom(arr);
+        return new Dom7(arr);
     };
     $.parseUrlQuery = function (url) {
         var query = {}, i, params, param;
@@ -1801,4 +1807,5 @@
     $.supportTouch = (function () {
         return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
     })();
+    $.fn = Dom7.prototype;
 })();

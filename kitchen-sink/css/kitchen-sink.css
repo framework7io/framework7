@@ -50,51 +50,6 @@
 .panel-right .list-block a:active {
   background: #000;
 }
-i.icon-f7 {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-f7.png);
-}
-i.icon-name {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-name.png);
-}
-i.icon-password {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-password.png);
-}
-i.icon-email {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-email.png);
-}
-i.icon-birthday {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-birthday.png);
-}
-i.icon-tel {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-tel.png);
-}
-i.icon-gender {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-gender.png);
-}
-i.icon-toggle {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-toggle.png);
-}
-i.icon-about {
-  width: 29px;
-  height: 29px;
-  background-image: url(../img/i-about.png);
-}
 .popover {
   width: 280px;
 }
