@@ -88,3 +88,8 @@ $$(document).tap('.demo-preloader-custom', function () {
         myApp.hidePreloader();
     }, 2000);
 });
+
+// Swipeouts delete callback
+$$(document).on('deleted', '.demo-remove-callback', function () {
+    myApp.alert('Thanks, item removed!');
+});

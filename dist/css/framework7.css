@@ -1,5 +1,5 @@
 /*
- * Framework7 0.4.5
+ * Framework7 0.5.0
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 7, 2014
+ * Released on: March 8, 2014
 */
 /*=============
   Framework 7
@@ -977,7 +977,7 @@ i.icon-form-url {
   overflow: hidden;
   margin: 0;
   white-space: nowrap;
-  text-overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 14px;
   text-transform: uppercase;
   line-height: 1;
@@ -1021,6 +1021,12 @@ i.icon-form-url {
   line-height: 43px;
   padding-left: 15px;
   position: relative;
+}
+.list-block li,
+.list-block li > a,
+.list-block .swipeout-content,
+.list-block .inner,
+.list-block .icons {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -1035,20 +1041,59 @@ i.icon-form-url {
   -ms-align-items: center;
   align-items: center;
 }
+.list-block li > a,
+.list-block .swipeout-content {
+  margin-left: -15px;
+  padding-left: 15px;
+  width: 100%;
+}
+.list-block li > a {
+  text-decoration: none;
+  color: #000;
+  -webkit-transition-duration: 300ms;
+  -moz-transition-duration: 300ms;
+  -ms-transition-duration: 300ms;
+  -o-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.list-block li > a .inner {
+  padding-right: 35px;
+  background: url(../img/i-right-grey.png) no-repeat -webkit-calc(100% - 15px) center;
+  background-size: 8px auto;
+}
+.list-block li > a:active {
+  -webkit-transition-duration: 0ms;
+  -moz-transition-duration: 0ms;
+  -ms-transition-duration: 0ms;
+  -o-transition-duration: 0ms;
+  transition-duration: 0ms;
+  background: #d9d9d9;
+}
+.list-block li > a:active .inner {
+  border-bottom: 1px solid transparent !important;
+}
+.list-block li > a.list-button {
+  padding: 0 15px;
+  text-align: center;
+  color: #007aff;
+  display: block;
+  border-bottom: 1px solid #c8c7cc;
+}
+.list-block li > a.list-button.red {
+  color: #fc3e39;
+}
+.list-block li:last-child .inner,
+.list-block li:last-child > a.list-button {
+  border-bottom: 1px solid transparent;
+}
+.list-block li:last-child .swipeout-actions-wrap {
+  border-bottom: none;
+}
 .list-block .icons {
   -webkit-flex-shrink: 0;
   -moz-flex-shrink: 0;
   -ms-flex-shrink: 0;
   flex-shrink: 0;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  align-items: center;
   -webkit-flex-wrap: nowrap;
   -moz-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
@@ -1074,19 +1119,6 @@ i.icon-form-url {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  -ms-justify-content: space-between;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  align-items: center;
 }
 .list-block .inner .text {
   display: block;
@@ -1140,61 +1172,6 @@ i.icon-form-url {
   -ms-align-items: flex-start;
   align-items: flex-start;
 }
-.list-block a {
-  margin-left: -15px;
-  padding-left: 15px;
-  text-decoration: none;
-  color: #000;
-  width: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  -ms-justify-content: space-between;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  align-items: center;
-  -webkit-transition-duration: 300ms;
-  -moz-transition-duration: 300ms;
-  -ms-transition-duration: 300ms;
-  -o-transition-duration: 300ms;
-  transition-duration: 300ms;
-}
-.list-block a .inner {
-  padding-right: 35px;
-  background: url(../img/i-right-grey.png) no-repeat -webkit-calc(100% - 15px) center;
-  background-size: 8px auto;
-}
-.list-block a.list-button {
-  padding: 0 15px;
-  text-align: center;
-  color: #007aff;
-  display: block;
-  border-bottom: 1px solid #c8c7cc;
-}
-.list-block a.list-button.red {
-  color: #fc3e39;
-}
-.list-block a:active {
-  -webkit-transition-duration: 0ms;
-  -moz-transition-duration: 0ms;
-  -ms-transition-duration: 0ms;
-  -o-transition-duration: 0ms;
-  transition-duration: 0ms;
-  background: #d9d9d9;
-}
-.list-block a:active .inner {
-  border-bottom: 1px solid transparent !important;
-}
-.list-block li:last-child .inner,
-.list-block li:last-child a.list-button {
-  border-bottom: 1px solid transparent;
-}
 .list-block.inset {
   margin-left: 15px;
   margin-right: 15px;
@@ -1209,13 +1186,13 @@ i.icon-form-url {
   border-top: none;
   border-bottom: none;
 }
-.list-block.inset li:first-child a {
+.list-block.inset li:first-child > a {
   border-radius: 7px 7px 0 0;
 }
-.list-block.inset li:last-child a {
+.list-block.inset li:last-child > a {
   border-radius: 0 0 7px 7px;
 }
-.list-block.inset li:first-child:last-child a {
+.list-block.inset li:first-child:last-child > a {
   border-radius: 7px;
 }
 .list-block .list-block-label {
@@ -1223,6 +1200,73 @@ i.icon-form-url {
   padding: 0 15px;
   font-size: 14px;
   color: #8f8f94;
+}
+.list-block .swipeout.deleting {
+  overflow: hidden;
+  -webkit-transition-duration: 300ms;
+  -moz-transition-duration: 300ms;
+  -ms-transition-duration: 300ms;
+  -o-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.list-block .swipeout.deleting .swipeout-content {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  -o-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+.list-block .swipeout.transitioning .swipeout-content {
+  -webkit-transition-duration: 300ms;
+  -moz-transition-duration: 300ms;
+  -ms-transition-duration: 300ms;
+  -o-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.list-block .swipeout-content {
+  position: relative;
+  z-index: 10;
+  background: #fff;
+}
+.list-block .swipeout-actions-wrap {
+  border-bottom: 1px solid #c8c7cc;
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.list-block .swipeout-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+.list-block .swipeout-actions a {
+  padding: 0 30px;
+  color: #fff;
+  background: #c7c7cc;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+.list-block .swipeout-actions a.swipeout-delete {
+  background: #fc3e39;
 }
 /* === Forms === */
 .list-block input[type="text"],

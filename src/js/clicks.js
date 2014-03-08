@@ -2,7 +2,7 @@
 ************   Handle clicks and make them fast (on tap);   ************
 ===============================================================================*/
 app.initClickEvents = function () {
-    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay', function (e) {
+    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete', function (e) {
         var clicked = $(this);
         var url = clicked.attr('href');
         // External
@@ -58,6 +58,18 @@ app.initClickEvents = function () {
                 clicked.parent().find('.active').removeClass('active');
                 clicked.addClass('active');
             }
+        }
+        // Swipeout Delete
+        if (clicked.hasClass('swipeout-delete')) {
+            if (clicked.attr('data-confirm')) {
+                var modal = app.confirm(clicked.attr('data-confirm'), function () {
+                    app.deleteSwipeOutList(clicked.parents('.swipeout'));
+                });
+            }
+            else {
+                app.deleteSwipeOutList(clicked.parents('.swipeout'));
+            }
+                
         }
         // Load Page
         var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;

@@ -105,6 +105,7 @@ module.exports = function (grunt) {
                     'src/js/panels.js',
                     'src/js/sliders.js',
                     'src/js/clicks.js',
+                    'src/js/swipeout.js',
                     'src/js/resize.js',
                     'src/js/init.js',
                     'src/js/f7-outro.js',
