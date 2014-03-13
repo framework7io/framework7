@@ -52,6 +52,7 @@ app.addView = function (viewSelector, viewParams) {
 
 // Live Events on view links
 app.initViewEvents = function (view) {
+    if (!app.params.swipeBackPage) return;
     // Swipe Back to previous page
     var viewContainer = $(view.container),
         isTouched = false,
@@ -123,9 +124,9 @@ app.initViewEvents = function (view) {
 
         // Transform pages
         activePage.transform('translate3d(' + touchesDiff + 'px,0,0)');
-        activePage[0].style.boxShadow = '0px 0px 8px rgba(0,0,0,' + (0.6 - 0.6 * percentage) + ')';
+        if (app.params.swipeBackPageBoxShadow) activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
         previousPage.transform('translate3d(' + (touchesDiff / 5 - viewContainerWidth / 5) + 'px,0,0)');
-        previousPage[0].style.opacity = 0.8 + 0.2 * percentage;
+        previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
 
         // Dynamic Navbars Animation
         if (dynamicNavbar) {

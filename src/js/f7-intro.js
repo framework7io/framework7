@@ -27,6 +27,7 @@ window.Framework7 = function (params) {
         swipeBackPage: true,
         swipeBackPageThreshold: 0,
         swipeBackPageActiveArea: 30,
+        swipeBackPageBoxShadow: true,
         // Panels
         panelsCloseByOutside: true,
         panelsVisibleZIndex: 6000,
