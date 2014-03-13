@@ -36,18 +36,19 @@
         padding-left: 15px;
         width: 100%;
     }
-    li > a {
+    li > a{
         text-decoration: none;
         color: #000;
+        background: url(../img/i-right-grey.png) no-repeat -webkit-calc(~"100% - 15px") center;
+        background-size: 8px auto;
         .transition(300ms);
         .inner {
             padding-right: 35px;
-            background: url(../img/i-right-grey.png) no-repeat -webkit-calc(~"100% - 15px") center;
-            background-size: 8px auto;
+            
         }
         &:active {
             .transition(0ms);
-            background: #d9d9d9;
+            background-color: #d9d9d9;
             .inner {
                 border-bottom: 1px solid transparent !important;
             }
