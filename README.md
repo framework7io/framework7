@@ -66,6 +66,3 @@ All changes should be commited to `src/` files. Framework7 uses LESS for CSS com
 ## Docs
 
 Coming soon...
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nolimits4web/framework7/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
