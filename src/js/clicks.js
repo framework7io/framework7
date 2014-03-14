@@ -72,6 +72,9 @@ app.initClickEvents = function () {
                 
         }
         // Load Page
+        if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks)) {
+            return;
+        }
         var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
         if (validUrl || clicked.hasClass('back')) {
             var view;

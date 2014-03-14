@@ -28,6 +28,8 @@ window.Framework7 = function (params) {
         swipeBackPageThreshold: 0,
         swipeBackPageActiveArea: 30,
         swipeBackPageBoxShadow: true,
+        // Ajax
+        ajaxLinks: false, // or CSS selector
         // Panels
         panelsCloseByOutside: true,
         panelsVisibleZIndex: 6000,
