@@ -49,6 +49,7 @@ window.Framework7 = function (params) {
         modalTitle: 'Framework7',
         modalCloseByOutside: false,
         modalActionsCloseByOutside: true,
+        modalPopupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... '
     };
 

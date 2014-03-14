@@ -2,7 +2,7 @@
 ************   Handle clicks and make them fast (on tap);   ************
 ===============================================================================*/
 app.initClickEvents = function () {
-    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete', function (e) {
+    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover', function (e) {
         var clicked = $(this);
         var url = clicked.attr('href');
         // External
@@ -35,17 +35,28 @@ app.initClickEvents = function () {
             if (clicked.attr('data-popover')) {
                 popover = clicked.attr('data-popover');
             }
-            else if (url.indexOf('#') === 0 && url.length > 1) {
-                popover = url;
-            }
             else popover = '.popover';
             app.popover(popover, clicked);
+        }
+        // Popup
+        var popup;
+        if (clicked.hasClass('open-popup')) {
+            if (clicked.attr('data-popup')) {
+                popup = clicked.attr('data-popup');
+            }
+            else popup = '.popup';
+            app.popup(popup);
+        }
+        if (clicked.hasClass('close-popup')) {
+            app.closeModal('.popup.modal-in');
         }
         // Close Modal
         if (clicked.hasClass('modal-overlay')) {
             if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
                 app.closeModal();
             if ($('.actions-modal.modal-in').length > 0 && app.params.modalActionsCloseByOutside)
+                app.closeModal();
+            if ($('.popup.modal-in').length > 0 && app.params.modalPopupCloseByOutside)
                 app.closeModal();
             if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
         }

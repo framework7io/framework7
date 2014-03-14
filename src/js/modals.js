@@ -246,6 +246,16 @@ app.popover = function (modal, target) {
     app.openModal(modal);
     return modal[0];
 };
+app.popup = function (modal) {
+    modal = $(modal);
+    if (modal.length === 0) return false;
+    modal.show();
+    if (modal.find('.view').length > 0) {
+        app.sizeNavbars(modal.find('.view')[0]);
+    }
+    app.openModal(modal);
+    return modal[0];
+};
 app.openModal = function (modal) {
     modal = $(modal);
     if ($('.modal-overlay').length === 0) {
@@ -254,7 +264,8 @@ app.openModal = function (modal) {
         $('body').append(overlay);
     }
     var isPopover = modal.hasClass('popover');
-    if (!isPopover) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
+    var isPopup = modal.hasClass('popup');
+    if (!isPopover && !isPopup) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
     
     //Make sure that styles are applied, trigger relayout;
     var clientLeft = modal[0].clientLeft;
@@ -271,10 +282,13 @@ app.closeModal = function (modal) {
     modal = $(modal || '.modal-in');
     $('.modal-overlay').removeClass('modal-overlay-visible');
     modal.trigger('close');
-    if (!modal.hasClass('popover')) {
+    var isPopover = modal.hasClass('popover');
+    var isPopup = modal.hasClass('popup');
+    if (!isPopover) {
         modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
             modal.trigger('closed');
-            modal.remove();
+            if (!isPopup) modal.remove();
+            if (isPopup) modal.removeClass('modal-out').hide();
         });
     }
     else {

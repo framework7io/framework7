@@ -7,7 +7,8 @@
 @actionsModalDuration:300ms;
 @actionsModalButtonBg: #f3f3f3;
 @actionsModalActiveButtonBg:#dcdcdc;
-@popoverBg: #f7f7f8;
+@popoverBg: rgba(255,255,255,0.95);
+@popupDuration: 400ms;
 .modal-overlay {
     position: absolute;
     left: 0;
@@ -286,5 +287,47 @@ input.modal-prompt-input {
             border-radius: 7px;
         }
     }
+}
 
+.popup {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11000;
+    background: #fff;
+    .border-box();
+    display: none;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -ms-transition-property: -ms-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+    .translate3d(0,100%,0);
+    &.modal-in, &.modal-out {
+        .transition(@popupDuration);
+    }
+    &.modal-in {
+        .translate3d(0,0%,0);
+    }
+    &.modal-out {
+        .translate3d(0,100%,0);
+    }
+    // iPad Modal
+    @media all and (min-width:630px) and (min-height:630px) {
+        width: 630px;
+        height: 630px;
+        left: 50%;
+        top: 50%;
+        margin-left: -315px;
+        margin-top: -315px;
+        .translate3d(0,1024px,0);
+        &.modal-in {
+            .translate3d(0,0,0);
+        }
+        &.modal-out {
+            .translate3d(0,1024px,0);
+        }
+    }
 }
