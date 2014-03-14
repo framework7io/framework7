@@ -84,6 +84,7 @@ app.initPage = function (pageContainer) {
     // Size navbars on page load
     app.sizeNavbars($(pageContainer).parents('.view')[0]);
     app.initSliders(pageContainer);
+    app.initMessages(pageContainer);
 };
 // Load Page
 app.allowPageChange = true;
