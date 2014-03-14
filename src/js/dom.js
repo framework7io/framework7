@@ -356,6 +356,20 @@ Dom7.prototype = {
             }
         }
     },
+    next: function () {
+        if (this.length > 0) {
+            if (this[0].nextElementSibling) return new Dom7([this[0].nextElementSibling]);
+            else return new Dom7([]);
+        }
+        else return new Dom7([]);
+    },
+    prev: function () {
+        if (this.length > 0) {
+            if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
+            else return new Dom7([]);
+        }
+        else return new Dom7([]);
+    },
     parent: function () {
         var parents = [];
         for (var i = 0; i < this.length; i++) {
