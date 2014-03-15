@@ -1,5 +1,5 @@
 /*
- * Framework7 0.5.0
+ * Framework7 0.5.2
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 8, 2014
+ * Released on: March 15, 2014
 */
 (function () {
 
@@ -43,6 +43,9 @@
             swipeBackPage: true,
             swipeBackPageThreshold: 0,
             swipeBackPageActiveArea: 30,
+            swipeBackPageBoxShadow: true,
+            // Ajax
+            ajaxLinks: false, // or CSS selector
             // Panels
             panelsCloseByOutside: true,
             panelsVisibleZIndex: 6000,
@@ -62,6 +65,7 @@
             modalTitle: 'Framework7',
             modalCloseByOutside: false,
             modalActionsCloseByOutside: true,
+            modalPopupCloseByOutside: true,
             modalPreloaderTitle: 'Loading... '
         };
     
@@ -79,6 +83,10 @@
             move: $.supportTouch ? 'touchmove' : 'mousemove',
             end: $.supportTouch ? 'touchend' : 'mouseup'
         };
+    
+        // RequestAnimationFrame Polyfill
+        if (!window.requestAnimationFrame) window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    
         /*======================================================
         ************   Views   ************
         ======================================================*/
@@ -133,6 +141,7 @@
         
         // Live Events on view links
         app.initViewEvents = function (view) {
+            if (!app.params.swipeBackPage) return;
             // Swipe Back to previous page
             var viewContainer = $(view.container),
                 isTouched = false,
@@ -204,9 +213,9 @@
         
                 // Transform pages
                 activePage.transform('translate3d(' + touchesDiff + 'px,0,0)');
-                activePage[0].style.boxShadow = '0px 0px 8px rgba(0,0,0,' + (0.6 - 0.6 * percentage) + ')';
+                if (app.params.swipeBackPageBoxShadow) activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
                 previousPage.transform('translate3d(' + (touchesDiff / 5 - viewContainerWidth / 5) + 'px,0,0)');
-                previousPage[0].style.opacity = 0.8 + 0.2 * percentage;
+                previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
         
                 // Dynamic Navbars Animation
                 if (dynamicNavbar) {
@@ -507,6 +516,7 @@
             // Size navbars on page load
             app.sizeNavbars($(pageContainer).parents('.view')[0]);
             app.initSliders(pageContainer);
+            app.initMessages(pageContainer);
         };
         // Load Page
         app.allowPageChange = true;
@@ -1060,6 +1070,16 @@
             app.openModal(modal);
             return modal[0];
         };
+        app.popup = function (modal) {
+            modal = $(modal);
+            if (modal.length === 0) return false;
+            modal.show();
+            if (modal.find('.view').length > 0) {
+                app.sizeNavbars(modal.find('.view')[0]);
+            }
+            app.openModal(modal);
+            return modal[0];
+        };
         app.openModal = function (modal) {
             modal = $(modal);
             if ($('.modal-overlay').length === 0) {
@@ -1068,7 +1088,8 @@
                 $('body').append(overlay);
             }
             var isPopover = modal.hasClass('popover');
-            if (!isPopover) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
+            var isPopup = modal.hasClass('popup');
+            if (!isPopover && !isPopup) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
             
             //Make sure that styles are applied, trigger relayout;
             var clientLeft = modal[0].clientLeft;
@@ -1085,10 +1106,13 @@
             modal = $(modal || '.modal-in');
             $('.modal-overlay').removeClass('modal-overlay-visible');
             modal.trigger('close');
-            if (!modal.hasClass('popover')) {
+            var isPopover = modal.hasClass('popover');
+            var isPopup = modal.hasClass('popup');
+            if (!isPopover) {
                 modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
                     modal.trigger('closed');
-                    modal.remove();
+                    if (!isPopup) modal.remove();
+                    if (isPopup) modal.removeClass('modal-out').hide();
                 });
             }
             else {
@@ -1231,103 +1255,76 @@
             handle.css({left: perc * 100 + '%'}).transform('translate3d(-' + perc * 100 + '%,0,0)');
             range.css({width: perc * 100 + '%'});
         };
-        /*===============================================================================
-        ************   Handle clicks and make them fast (on tap);   ************
-        ===============================================================================*/
-        app.initClickEvents = function () {
-            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete', function (e) {
-                var clicked = $(this);
-                var url = clicked.attr('href');
-                // External
-                if (clicked.hasClass('external')) {
-                    return;
-                }
-                // Open Panel
-                if (clicked.hasClass('open-panel')) {
-                    // e.preventDefault();
-                    if ($('.panel').length === 1) {
-                        if ($('.panel').hasClass('panel-left')) app.openPanel('left');
-                        else app.openPanel('right');
-                    }
-                    else {
-                        if (clicked.attr('data-panel') === 'right') app.openPanel('right');
-                        else app.openPanel('left');
-                    }
-                }
-                // Close Panel
-                if (clicked.hasClass('close-panel')) {
-                    app.closePanel();
-                }
+        /*======================================================
+        ************   Messages   ************
+        ======================================================*/
+        app.initMessages = function (pageContainer) {
+            var page = $(pageContainer);
+            var messages = page.find('.messages');
+            if (messages.length === 0) return;
+            var pageContent = page.find('.page-content');
+            pageContent[0].scrollTop = messages.height() - pageContent.height();
+            app.updateMessagesAngles(messages);
+        };
+        app.addMessage = function (props) {
+            props = props || {};
+            /*
+            {
+                text : 'Message text',
+                day : 'Mon',
+                time : '14:42',
+                type : 'sent' // or 'received'
+            }
+            */
+            if (!props.text || props.length === 0) return false;
+            var messagesContent = $('.messages-content');
+            if (messagesContent.length === 0) return false;
+            var messages = messagesContent.find('.messages');
         
-                if (clicked.hasClass('panel-overlay') && app.params.panelsCloseByOutside) {
-                    app.closePanel();
+            var html = '';
+            if (props.day) {
+                html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
+            }
+            var isPic = props.text.indexOf('<img') >= 0;
+            var messageClass = 'message' + ' message-' + props.type + (isPic ? ' message-pic' : '') + ' message-appear';
+            html += '<div class="' + messageClass + '">' + props.text + '</div>';
+            messages.append(html);
+            app.updateMessagesAngles(messages);
+            app.scrollMessagesContainer(messagesContent);
+        };
+        app.updateMessagesAngles = function (messages) {
+            messages.find('.message-sent').each(function () {
+                var message = $(this);
+                if (!message.next().hasClass('message-sent') && !message.hasClass('message-pic')) {
+                    message.addClass('message-last');
                 }
-                // Popover
-                if (clicked.hasClass('open-popover')) {
-                    var popover;
-                    if (clicked.attr('data-popover')) {
-                        popover = clicked.attr('data-popover');
-                    }
-                    else if (url.indexOf('#') === 0 && url.length > 1) {
-                        popover = url;
-                    }
-                    else popover = '.popover';
-                    app.popover(popover, clicked);
-                }
-                // Close Modal
-                if (clicked.hasClass('modal-overlay')) {
-                    if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
-                        app.closeModal();
-                    if ($('.actions-modal.modal-in').length > 0 && app.params.modalActionsCloseByOutside)
-                        app.closeModal();
-                    if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
-                }
-                // Tabs
-                if (clicked.hasClass('tab-link')) {
-                    var newTab = $(clicked.attr('href'));
-                    var oldTab = newTab.parent().find('.tab.active').removeClass('active');
-                    newTab.addClass('active');
-                    if (clicked.parent().hasClass('buttons-row')) {
-                        clicked.parent().find('.active').removeClass('active');
-                        clicked.addClass('active');
-                    }
-                }
-                // Swipeout Delete
-                if (clicked.hasClass('swipeout-delete')) {
-                    if (clicked.attr('data-confirm')) {
-                        var modal = app.confirm(clicked.attr('data-confirm'), function () {
-                            app.deleteSwipeOutList(clicked.parents('.swipeout'));
-                        });
-                    }
-                    else {
-                        app.deleteSwipeOutList(clicked.parents('.swipeout'));
-                    }
-                        
-                }
-                // Load Page
-                var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
-                if (validUrl || clicked.hasClass('back')) {
-                    var view;
-                    if (clicked.attr('data-view')) {
-                        view = $(clicked.attr('data-view'))[0].f7View;
-                    }
-                    else {
-                        view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
-                    }
-                    if (!view) {
-                        for (var i = 0; i < app.views.length; i++) {
-                            if (app.views[i].main) view = app.views[i];
-                        }
-                    }
-                    if (!view) return;
-                    if (clicked.hasClass('back')) view.goBack(clicked.attr('href'));
-                    else view.loadPage(clicked.attr('href'));
-                }
+                else message.removeClass('message-last');
             });
-            //Disable clicks
-            $(document).on('click', 'a', function (e) {
-                if (!$(this).hasClass('external')) e.preventDefault();
+            messages.find('.message-received').each(function () {
+                var message = $(this);
+                if (!message.next().hasClass('message-received') && !message.hasClass('message-pic')) {
+                    message.addClass('message-last');
+                }
+                else message.removeClass('message-last');
             });
+        };
+        app.scrollMessagesContainer = function (messagesContent) {
+            messagesContent = $(messagesContent || '.messages-content');
+            if (messagesContent.length === 0) return;
+            var messages = messagesContent.find('.messages');
+            var currentScroll = messagesContent[0].scrollTop;
+            var newScroll = messages.height() - messagesContent.height();
+            var step = (newScroll - currentScroll) / 12;
+            function animScroll() {
+                if (messagesContent[0].scrollTop < newScroll) {
+                    messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
+                    window.requestAnimationFrame(animScroll);
+                }
+                else {
+                    messagesContent[0].scrollTop = newScroll;
+                }
+            }
+            window.requestAnimationFrame(animScroll);
         };
         app.openedSwipeOutEl = undefined;
         app.allowSwipeOut = true;
@@ -1484,6 +1481,118 @@
                 el.remove();
             });
             el.find('.swipeout-content').transform('translate3d(-100%,0,0)');
+        };
+        /*===============================================================================
+        ************   Handle clicks and make them fast (on tap);   ************
+        ===============================================================================*/
+        app.initClickEvents = function () {
+            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover', function (e) {
+                var clicked = $(this);
+                var url = clicked.attr('href');
+                // External
+                if (clicked.hasClass('external')) {
+                    return;
+                }
+                // Open Panel
+                if (clicked.hasClass('open-panel')) {
+                    // e.preventDefault();
+                    if ($('.panel').length === 1) {
+                        if ($('.panel').hasClass('panel-left')) app.openPanel('left');
+                        else app.openPanel('right');
+                    }
+                    else {
+                        if (clicked.attr('data-panel') === 'right') app.openPanel('right');
+                        else app.openPanel('left');
+                    }
+                }
+                // Close Panel
+                if (clicked.hasClass('close-panel')) {
+                    app.closePanel();
+                }
+        
+                if (clicked.hasClass('panel-overlay') && app.params.panelsCloseByOutside) {
+                    app.closePanel();
+                }
+                // Popover
+                if (clicked.hasClass('open-popover')) {
+                    var popover;
+                    if (clicked.attr('data-popover')) {
+                        popover = clicked.attr('data-popover');
+                    }
+                    else popover = '.popover';
+                    app.popover(popover, clicked);
+                }
+                // Popup
+                var popup;
+                if (clicked.hasClass('open-popup')) {
+                    if (clicked.attr('data-popup')) {
+                        popup = clicked.attr('data-popup');
+                    }
+                    else popup = '.popup';
+                    app.popup(popup);
+                }
+                if (clicked.hasClass('close-popup')) {
+                    app.closeModal('.popup.modal-in');
+                }
+                // Close Modal
+                if (clicked.hasClass('modal-overlay')) {
+                    if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
+                        app.closeModal();
+                    if ($('.actions-modal.modal-in').length > 0 && app.params.modalActionsCloseByOutside)
+                        app.closeModal();
+                    if ($('.popup.modal-in').length > 0 && app.params.modalPopupCloseByOutside)
+                        app.closeModal();
+                    if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
+                }
+                // Tabs
+                if (clicked.hasClass('tab-link')) {
+                    var newTab = $(clicked.attr('href'));
+                    var oldTab = newTab.parent().find('.tab.active').removeClass('active');
+                    newTab.addClass('active');
+                    if (clicked.parent().hasClass('buttons-row')) {
+                        clicked.parent().find('.active').removeClass('active');
+                        clicked.addClass('active');
+                    }
+                }
+                // Swipeout Delete
+                if (clicked.hasClass('swipeout-delete')) {
+                    if (clicked.attr('data-confirm')) {
+                        var modal = app.confirm(clicked.attr('data-confirm'), function () {
+                            app.deleteSwipeOutList(clicked.parents('.swipeout'));
+                        });
+                    }
+                    else {
+                        app.deleteSwipeOutList(clicked.parents('.swipeout'));
+                    }
+                        
+                }
+                // Load Page
+                if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks)) {
+                    return;
+                }
+                var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
+                if (validUrl || clicked.hasClass('back')) {
+                    var view;
+                    if (clicked.attr('data-view')) {
+                        view = $(clicked.attr('data-view'))[0].f7View;
+                    }
+                    else {
+                        view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
+                    }
+                    if (!view) {
+                        for (var i = 0; i < app.views.length; i++) {
+                            if (app.views[i].main) view = app.views[i];
+                        }
+                    }
+                    if (!view) return;
+                    if (clicked.hasClass('back')) view.goBack(clicked.attr('href'));
+                    else view.loadPage(clicked.attr('href'));
+                }
+            });
+            //Disable clicks
+            $(document).on('click', 'a', function (e) {
+                if (!$(this).hasClass('external')) e.preventDefault();
+            });
         };
         /*======================================================
         ************   App Resize Actions   ************
@@ -1839,7 +1948,11 @@
         append: function (newChild) {
             for (var i = 0; i < this.length; i++) {
                 if (typeof newChild === 'string') {
-                    this[i].innerHTML += newChild;
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = newChild;
+                    while (tempDiv.firstChild) {
+                        this[i].appendChild(tempDiv.firstChild);
+                    }
                 }
                 else {
                     this[i].appendChild(newChild);
@@ -1870,6 +1983,20 @@
                     }
                 }
             }
+        },
+        next: function () {
+            if (this.length > 0) {
+                if (this[0].nextElementSibling) return new Dom7([this[0].nextElementSibling]);
+                else return new Dom7([]);
+            }
+            else return new Dom7([]);
+        },
+        prev: function () {
+            if (this.length > 0) {
+                if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
+                else return new Dom7([]);
+            }
+            else return new Dom7([]);
         },
         parent: function () {
             var parents = [];
