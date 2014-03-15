@@ -67,3 +67,6 @@ window.Framework7 = function (params) {
         move: $.supportTouch ? 'touchmove' : 'mousemove',
         end: $.supportTouch ? 'touchend' : 'mouseup'
     };
+
+    // RequestAnimationFrame Polyfill
+    if (!window.requestAnimationFrame) window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
