@@ -324,7 +324,11 @@ Dom7.prototype = {
     append: function (newChild) {
         for (var i = 0; i < this.length; i++) {
             if (typeof newChild === 'string') {
-                this[i].innerHTML += newChild;
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = newChild;
+                while (tempDiv.firstChild) {
+                    this[i].appendChild(tempDiv.firstChild);
+                }
             }
             else {
                 this[i].appendChild(newChild);
