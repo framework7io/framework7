@@ -1,0 +1,38 @@
+.navbar
+  .navbar-inner
+    .left
+      a(href="index.html").back.link
+        i.icon-back-blue 
+        span Back
+    .center.sliding Messages
+    .right
+      a(href="#").link.open-panel
+        i.icon-bars-blue
+.pages.navbar-through
+  .page(data-page="messages").no-toolbar.toolbar-fixed
+    .toolbar
+      form.ks-messages-form
+        .toolbar-inner
+          input(type="text", placeholder="Message").ks-messages-input
+          a(href="#").link.ks-send-message Send
+    .page-content.messages-content
+      .messages
+        .messages-date Sunday, Feb 9, 
+          span 12:58
+        .message.message-sent Hello
+        .message.message-sent How are you?
+        .message.message-received Hi
+        .message.message-received I am fine, thanks! And how are you?
+        .message.message-sent I am great!
+        .message.message-sent What do you think about my new logo?
+        .messages-date Wednesday, Feb 12, 
+          span 19:33
+        .message.message-sent Hey? Any thoughts about my new logo?
+        .messages-date Thursday, Feb 13, 
+          span 11:20
+        .message.message-sent Alo...
+        .message.message-sent Are you there?
+        .message.message-received Hi, i am here
+        .message.message-received Your logo is great
+        .message.message-received Leave me alone!
+        .message.message-sent :(

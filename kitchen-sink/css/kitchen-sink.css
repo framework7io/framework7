@@ -90,3 +90,41 @@
 .ks-preloader-xsmall span {
   background: green;
 }
+.page[data-page="messages"] .page-content {
+  padding-bottom: 44px;
+}
+.page[data-page="messages"] .toolbar {
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+.page[data-page="messages"] .ks-messages-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #c8c8cd;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: none;
+  display: block;
+  padding: 0px 8px 0px;
+  margin: 0;
+  width: 100%;
+  height: 28px;
+  color: #000;
+  font-size: 17px;
+  margin-right: 15px;
+  font-family: inherit;
+}
+.page[data-page="messages"] .ks-send-message {
+  -webkit-flex-shrink: 0;
+  -moz-flex-shrink: 0;
+  -ms-flex-shrink: 0;
+  flex-shrink: 0;
+}

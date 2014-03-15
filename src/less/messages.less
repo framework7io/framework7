@@ -46,6 +46,12 @@
             border-radius: 18px;
         }
     }
+    &.message-last {
+        max-width: ~"-webkit-calc(60% + 6px)";
+        max-width: ~"-moz-calc(60% + 6px)";
+        max-width: ~"-ms-calc(60% + 6px)";
+        max-width: ~"calc(60% + 6px)";
+    }
 }
 .message-last {
     &:before {
@@ -65,7 +71,7 @@
     color: #fff;
     margin-right: 15px;
     .align-self(flex-end);
-    +.sent {
+    +.message-sent {
         margin-top: -9px;
     }
     &:before {
@@ -91,7 +97,7 @@
     color: #000000;
     margin-left: 15px;
     .align-self(flex-start);
-    +.received {
+    +.message-received {
         margin-top: -9px;
     }
     &:before {
@@ -107,5 +113,16 @@
         background-position: 6px top, left bottom;
         -webkit-background-size: 21px 17px, 22px 9px;
         background-size: 21px 17px, 22px 9px;
+    }
+}
+.message-appear {
+    .animation(messageAppear 400ms);
+}
+@-webkit-keyframes messageAppear {
+    from {
+        -webkit-transform: translate3d(0,100%,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0%,0);   
     }
 }

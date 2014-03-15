@@ -93,3 +93,43 @@ $$(document).tap('.demo-preloader-custom', function () {
 $$(document).on('deleted', '.demo-remove-callback', function () {
     myApp.alert('Thanks, item removed!');
 });
+
+// Send Message
+var conversationStarted = false;
+var answers = [
+    'Yes!',
+    'No',
+    'Hm...',
+    'I am not sure',
+    'And what about you?',
+    'May be ;)',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus tincidunt erat, a convallis leo rhoncus vitae.'
+];
+var answerTimeout;
+$$(document).on('submit', '.ks-messages-form', function (e) {
+    e.preventDefault();
+    var input = $$(this).find('.ks-messages-input');
+    var messageText = input.val();
+    if (messageText.length === 0) return;
+    // Empty input
+    input.val('');
+    // Add Message
+    myApp.addMessage({
+        text: messageText,
+        type: 'sent',
+        day: !conversationStarted ? 'Today' : false,
+        time: !conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
+    });
+    conversationStarted = true;
+    // Add answer after timeout
+    if (answerTimeout) clearTimeout(answerTimeout);
+    answerTimeout = setTimeout(function () {
+        myApp.addMessage({
+            text: answers[Math.floor(Math.random() * answers.length)],
+            type: 'received'
+        });
+    }, 2000);
+});
+$$(document).tap('.ks-send-message', function () {
+    $$('.ks-messages-form').trigger('submit');
+});
