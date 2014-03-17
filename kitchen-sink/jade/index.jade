@@ -21,84 +21,97 @@ html
       .list-block
         ul
           li
-            a(href="modals.html").close-panel 
-              .icons
-                i.icon-f7
-              .inner 
-                .text Modals
+            a(href="modals.html").close-panel.item-link 
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Modals
           li
-            a(href="popover.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Popover
+            a(href="popover.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Popover
           
           li
-            a(href="tabs.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Tabs
+            a(href="tabs.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Tabs
           li
-            a(href="panels.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Side Panels
+            a(href="panels.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Side Panels
           li
-            a(href="data-lists.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Data Lists
+            a(href="data-lists.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Data Lists
           li
-            a(href="swipe-delete.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Swipe To Delete
+            a(href="swipe-delete.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Swipe To Delete
           li
-            a(href="forms.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Forms
+            a(href="forms.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Forms
           li
-            a(href="messages.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Messages
+            a(href="messages.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Messages
           li
-            a(href="grid.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Grid
+            a(href="grid.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Grid
           li
-            a(href="preloader.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Preloader
+            a(href="preloader.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Preloader
           li
-            a(href="deep-navbar.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Deep Dynamic Navbar
+            a(href="deep-navbar.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Deep Dynamic Navbar
           li
-            a(href="hide-navbar-toolbar.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Hide Navbar & Toolbar
+            a(href="hide-navbar-toolbar.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Hide Navbar & Toolbar
           li
-            a(href="transitions.html").close-panel
-              .icons
-                i.icon-f7
-              .inner 
-                .text Transitions And Effects
+            a(href="transitions.html").close-panel.item-link
+              .item-content
+                .item-media
+                  i.icon-f7
+                .item-inner 
+                  .item-title Transitions And Effects
       .content-block
         p Long text block goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sem urna, gravida non scelerisque id, fringilla ac velit. Phasellus elementum a ipsum at ornare. Mauris sagittis rhoncus euismod. Integer convallis augue eu lacus ultrices, in dictum elit consequat. Nulla faucibus massa id felis egestas eleifend. Proin consequat dignissim magna ut scelerisque. Vestibulum ac lorem semper, posuere sapien nec, pharetra massa. Nulla a tellus facilisis, sollicitudin quam porta, aliquam lorem. Fusce dignissim eros ac diam molestie, ut ultrices lorem tristique. Ut facilisis augue ac nisi egestas malesuada. Nunc posuere tortor quis eleifend mollis. Aliquam erat volutpat. Donec feugiat elit tellus, nec convallis orci elementum in. Sed urna mi, vestibulum id tempus id, pretium et ante. Pellentesque eget sollicitudin ligula. Phasellus pellentesque velit eu porta suscipit.
     .panel.panel-right.panel-reveal
@@ -118,13 +131,15 @@ html
               .list-block
                 ul
                   li
-                    a(href="panel-right2.html") 
-                      .inner 
-                        .text Right panel page 2
+                    a(href="panel-right2.html").item-link 
+                      .item-content
+                        .item-inner 
+                          .item-title Right panel page 2
                   li
-                    a(href="panel-right3.html") 
-                      .inner 
-                        .text Right panel page 3
+                    a(href="panel-right3.html").item-link
+                      .item-content
+                        .item-inner 
+                          .item-title Right panel page 3
 
     .views
       .view.view-main
@@ -138,98 +153,115 @@ html
         .toolbar
           .toolbar-inner
             a(href="#").link Dummy Link
-            a(href="#").open-popover.link Menu
+            a(href="#", data-popover=".popover-menu").open-popover.link Menu
         .pages.navbar-through.toolbar-through
           .page(data-page="index")
             .page-content
-              
               .content-block-title Welcome To Framework7
               .content-block
                 p 
                   a(href="about.html").button Read About Framework7
-              
               .content-block-title Framework7 Kitchen Sink
               .list-block
                 ul
                   li
-                    a(href="modals.html") 
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Modals
+                    a(href="modals.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Modals
                   li
-                    a(href="popover.html") 
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Popover
-                  
+                    a(href="popover.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Popover
                   li
-                    a(href="tabs.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Tabs
+                    a(href="tabs.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Tabs
                   li
-                    a(href="panels.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Side Panels
+                    a(href="panels.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Side Panels
                   li
-                    a(href="data-lists.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Data Lists
+                    a(href="data-lists.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Data Lists
                   li
-                    a(href="swipe-delete.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Swipe To Delete
+                    a(href="media-lists.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Media Lists
                   li
-                    a(href="forms.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Forms
+                    a(href="swipe-delete.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Swipe To Delete
                   li
-                    a(href="messages.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Messages
+                    a(href="forms.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Forms
                   li
-                    a(href="grid.html") 
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Grid
+                    a(href="messages.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Messages
                   li
-                    a(href="preloader.html") 
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Preloader
+                    a(href="grid.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Grid
                   li
-                    a(href="deep-navbar.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Deep Dynamic Navbar
+                    a(href="preloader.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Preloader
                   li
-                    a(href="hide-navbar-toolbar.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Hide Navbar & Toolbar
+                    a(href="deep-navbar.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Deep Dynamic Navbar
                   li
-                    a(href="transitions.html")
-                      .icons
-                        i.icon-f7
-                      .inner 
-                        .text Transitions And Effects
+                    a(href="hide-navbar-toolbar.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Hide Navbar & Toolbar
+                  li
+                    a(href="transitions.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon-f7
+                        .item-inner 
+                          .item-title Transitions And Effects
               .content-block-title Core Features
               .content-block
                 p 
@@ -249,26 +281,51 @@ html
               p Duis ut mauris sollicitudin, venenatis nisi sed, luctus ligula. Phasellus blandit nisl ut lorem semper pharetra. Nullam tortor nibh, suscipit in consequat vel, feugiat sed quam. Nam risus libero, auctor vel tristique ac, malesuada ut ante. Sed molestie, est in eleifend sagittis, leo tortor ullamcorper erat, at vulputate eros sapien nec libero. Mauris dapibus laoreet nibh quis bibendum. Fusce dolor sem, suscipit in iaculis id, pharetra at urna. Pellentesque tempor congue massa quis faucibus. Vestibulum nunc eros, convallis blandit dui sit amet, gravida adipiscing libero.
               p Morbi posuere ipsum nisl, accumsan tincidunt nibh lobortis sit amet. Proin felis lorem, dictum vel nulla quis, lobortis dignissim nunc. Pellentesque dapibus urna ut imperdiet mattis. Proin purus diam, accumsan ut mollis ac, vulputate nec metus. Etiam at risus neque. Fusce tincidunt, risus in faucibus lobortis, diam mi blandit nunc, quis molestie dolor tellus ac enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum turpis a velit vestibulum pharetra. Vivamus blandit dapibus cursus. Aenean lorem augue, vehicula in eleifend ut, imperdiet quis felis.
               p Duis non erat vel lacus consectetur ultricies. Sed non velit dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel varius mi, a tristique ante. Vivamus eget nibh ac elit tempor bibendum sit amet vitae velit. Proin sit amet dapibus nunc, non porta tellus. Fusce interdum vulputate imperdiet. Sed faucibus metus at pharetra fringilla. Fusce mattis orci et massa congue, eget dapibus ante rhoncus. Morbi semper sed tellus vel dignissim. Cras vestibulum, sapien in suscipit tincidunt, lectus mi sodales purus, at egestas ligula dui vel erat. Etiam cursus neque eu lectus eleifend accumsan vitae non leo. Aliquam scelerisque nisl sed lacus suscipit, ac consectetur sapien volutpat. Etiam nulla diam, accumsan ut enim vel, hendrerit venenatis sem. Vestibulum convallis justo vitae pharetra consequat. Mauris sollicitudin ac quam non congue.
-    .popover
+    .popover.popover-menu
       .popover-angle
       .popover-inner
         .list-block
           ul
             li
-              a(href="modals.html").list-button Modals
+              a(href="modals.html").list-button.item-link Modals
             li
-              a(href="popover.html").list-button Popover
+              a(href="popover.html").list-button.item-link Popover
             li
-              a(href="tabs.html").list-button Tabs
+              a(href="tabs.html").list-button.item-link Tabs
             li
-              a(href="panels.html").list-button Side Panels
+              a(href="panels.html").list-button.item-link Side Panels
             li
-              a(href="data-lists.html").list-button Data Lists
+              a(href="data-lists.html").list-button.item-link Data Lists
             li
-              a(href="forms.html").list-button Forms
+              a(href="forms.html").list-button.item-link Forms
+    .popover.popover-music
+      .popover-angle
+      .popover-inner
+        .list-block.media-list
+          ul
             li
-              a(href="deep-navbar.html").list-button Deep Dynamic Navbar
+              a(href="#").item-link.item-content
+                .item-media
+                  img(src="http://hhhhold.com/88/d/jpg?13", width="44")
+                .item-inner
+                  .item-title-row
+                    .item-title Yellow Submarine
+                  .item-subtitle Beatles
             li
-              a(href="hide-navbar-toolbar.html").list-button Hide Navbar & Toolbar     
+              a(href="#").item-link.item-content
+                .item-media
+                  img(src="http://hhhhold.com/88/d/jpg?23", width="44")
+                .item-inner
+                  .item-title-row
+                    .item-title Don't Stop Me Now
+                  .item-subtitle Queen
+            li
+              a(href="#").item-link.item-content
+                .item-media
+                  img(src="http://hhhhold.com/88/d/jpg?33", width="44")
+                .item-inner
+                  .item-title-row
+                    .item-title Billie Jean
+                  .item-subtitle Michael Jackson
     script(type="text/javascript", src="../build/js/framework7.js")
     script(type="text/javascript", src="js/kitchen-sink.js")

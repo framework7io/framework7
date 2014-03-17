@@ -42,7 +42,7 @@ app.initSwipeOutList = function () {
         if (!isMoved) {
             swipeOutEl = $(this);
             swipeOutContent = swipeOutEl.find('.swipeout-content');
-            swipeOutActions = swipeOutEl.find('.swipeout-actions');
+            swipeOutActions = swipeOutEl.find('.swipeout-actions-inner');
             swipeOutActionsWidth = swipeOutActions.width();
             opened = swipeOutEl.hasClass('opened');
             swipeOutEl.removeClass('transitioning');
@@ -118,7 +118,7 @@ app.openSwipeOutList = function (el) {
     if (el.length === 0) return;
     if (el.length > 1) el = $(el[0]);
     el.trigger('open').addClass('transitioning opened');
-    var swipeOutActions = el.find('.swipeout-actions');
+    var swipeOutActions = el.find('.swipeout-actions-inner');
     el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
     });

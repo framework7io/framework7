@@ -10,7 +10,7 @@
   background: none;
 }
 .panel-left .list-block ul,
-.panel-left .list-block .inner {
+.panel-left .list-block .item-inner {
   border-color: rgba(255, 255, 255, 0.1);
 }
 .panel-left .list-block a {
@@ -41,7 +41,7 @@
   background: none;
 }
 .panel-right .list-block ul,
-.panel-right .list-block .inner {
+.panel-right .list-block .item-inner {
   border-color: rgba(255, 255, 255, 0.1);
 }
 .panel-right .list-block a {

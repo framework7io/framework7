@@ -2,7 +2,7 @@ doctype
 html
   head
     meta(charset="utf-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     title My App
@@ -53,13 +53,15 @@ html
               .list-block
                 ul
                   li
-                    a(href="page1.html") 
-                      .inner 
-                        .text Page 1
+                    a(href="page1.html").item-link
+                      .item-content
+                        .item-inner 
+                          .item-title Page 1
                   li
-                    a(href="page2.html") 
-                      .inner 
-                        .text Page 2
+                    a(href="page2.html").item-link
+                      .item-content 
+                        .item-inner
+                          .item-title Page 2
         // Bottom Toolbar
         .toolbar
           .toolbar-inner
