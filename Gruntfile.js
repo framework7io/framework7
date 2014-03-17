@@ -103,7 +103,6 @@ module.exports = function (grunt) {
                     'src/js/pages.js',
                     'src/js/modals.js',
                     'src/js/panels.js',
-                    'src/js/sliders.js',
                     'src/js/messages.js',
                     'src/js/swipeout.js',
                     'src/js/clicks.js',

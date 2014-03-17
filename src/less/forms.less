@@ -268,28 +268,74 @@
 
 
 // Slider
-.slider {
-    position: relative;
-    height: 2px;
-    background: #b7b8b7;
+.range-slider {
     width: 100%;
-    margin: 13px 0;
+    position: relative;
+    overflow: hidden;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: -1px;
     .align-self(center);
-    .slider-range {
-        background: @blue;
-        height: 2px;
-        width: 150px;
+    input[type="range"] {
+        position: relative;
+        height: 28px;
+        width: 100%;
+        margin: 4px 0 5px 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #b7b8b7), color-stop(100%, #b7b8b7));
+        background: linear-gradient(to right, #b7b8b7 0%, #b7b8b7 100%);
+        background-position: center;
+        background-size: 100% 2px;
+        background-repeat: no-repeat;
+        outline: 0;
     }
-    .slider-handle {
+    input[type="range"]:after {
+        height: 2px;
+        background: #fff;
+        content:' ';
+        width: 5px;
+        top: 50%;
+        margin-top: -1px;
+        left: -5px;
+        z-index: 1;
+        position: absolute;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;   
+        border: none;
+        height: 28px;
+        width: 28px;
+        position: relative;
+        background: none;
+    }
+    input[type="range"]::-webkit-slider-thumb:after {
         height: 28px;
         width: 28px;
         border-radius: 28px;
         background: #fff;
+        z-index: 10;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: ' ';
+    }
+
+    input[type="range"]::-webkit-slider-thumb:before {
         position: absolute;
         top: 50%;
-        margin-top: -14px;
-        z-index: 2;
-        left: 0px;
-        box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+        right: 100%;
+        width: 2000px;
+        height: 2px;
+        margin-top: -1px;
+        z-index: 1;
+        background: @blue;
+        content: ' ';
     }
 }
