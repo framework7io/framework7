@@ -19,6 +19,7 @@ app.addMessage = function (props) {
         type : 'sent' // or 'received'
     }
     */
+    props.type = props.type || 'sent';
     if (!props.text || props.length === 0) return false;
     var messagesContent = $('.messages-content');
     if (messagesContent.length === 0) return false;
