@@ -21,6 +21,7 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
     if (view.params.onBeforePageInit) {
         view.params.onBeforePageInit(pageData);
     }
+    $(document).trigger('beforePageInit', {page: pageData});
     app.initPage(pageContainer);
     // Init Callback
     if (app.params.onPageInit) {
@@ -29,6 +30,7 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
     if (view.params.onPageInit) {
         view.params.onPageInit(pageData);
     }
+    $(document).trigger('pageInit', {page: pageData});
 };
 app.pageAnimCallbacks = function (callback, view, params) {
     // Page Data
@@ -44,13 +46,14 @@ app.pageAnimCallbacks = function (callback, view, params) {
         newPage = params.newPage;
 
     if (callback === 'after') {
-
         if (app.params.onPageAfterAnimation) {
             app.params.onPageAfterAnimation(pageData);
         }
         if (view.params.onPageAfterAnimation) {
             view.params.onPageAfterAnimation(pageData);
         }
+        $(document).trigger('pageAfterAnimation', {page: pageData});
+
     }
     if (callback === 'before') {
         // Hide/show navbar dynamically
@@ -67,12 +70,14 @@ app.pageAnimCallbacks = function (callback, view, params) {
         if (!newPage.hasClass('no-toolbar') && oldPage.hasClass('no-toolbar')) {
             view.showToolbar();
         }
+        // Callbacks
         if (app.params.onPageBeforeAnimation) {
             app.params.onPageBeforeAnimation(pageData);
         }
         if (view.params.onPageBeforeAnimation) {
             view.params.onPageBeforeAnimation(pageData);
         }
+        $(document).trigger('pageBeforeAnimation', {page: pageData});
     }
 };
 // Init Page Events and Manipulations
