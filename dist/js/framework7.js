@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 15, 2014
+ * Released on: March 18, 2014
 */
 (function () {
 
@@ -27,11 +27,11 @@
     
         // Anim Frame
         app._animFrame = function (callback) {
-            if (window.requestAnimationFrame) window.requestAnimationFrame(callback);
-            else if (window.webkitRequestAnimationFrame) window.webkitRequestAnimationFrame(callback);
-            else if (window.mozRequestAnimationFrame) window.mozRequestAnimationFrame(callback);
+            if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
+            else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
+            else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
             else {
-                window.setTimeout(callback, 1000 / 60);
+                return window.setTimeout(callback, 1000 / 60);
             }
         };
     
@@ -83,10 +83,7 @@
             move: $.supportTouch ? 'touchmove' : 'mousemove',
             end: $.supportTouch ? 'touchend' : 'mouseup'
         };
-    
-        // RequestAnimationFrame Polyfill
-        if (!window.requestAnimationFrame) window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-    
+        
         /*======================================================
         ************   Views   ************
         ======================================================*/
@@ -410,7 +407,7 @@
             xhr.open('GET', url, true);
             xhr.onload = function (e) {
                 if (callback) {
-                    if (this.status === 200) {
+                    if (this.status === 200 || this.status === 0) {
                         callback(this.responseText, false);
                         if (app.params.cache) {
                             app.removeFromCache(url);
@@ -453,6 +450,7 @@
             if (view.params.onBeforePageInit) {
                 view.params.onBeforePageInit(pageData);
             }
+            $(document).trigger('beforePageInit', {page: pageData});
             app.initPage(pageContainer);
             // Init Callback
             if (app.params.onPageInit) {
@@ -461,6 +459,7 @@
             if (view.params.onPageInit) {
                 view.params.onPageInit(pageData);
             }
+            $(document).trigger('pageInit', {page: pageData});
         };
         app.pageAnimCallbacks = function (callback, view, params) {
             // Page Data
@@ -476,13 +475,14 @@
                 newPage = params.newPage;
         
             if (callback === 'after') {
-        
                 if (app.params.onPageAfterAnimation) {
                     app.params.onPageAfterAnimation(pageData);
                 }
                 if (view.params.onPageAfterAnimation) {
                     view.params.onPageAfterAnimation(pageData);
                 }
+                $(document).trigger('pageAfterAnimation', {page: pageData});
+        
             }
             if (callback === 'before') {
                 // Hide/show navbar dynamically
@@ -499,12 +499,14 @@
                 if (!newPage.hasClass('no-toolbar') && oldPage.hasClass('no-toolbar')) {
                     view.showToolbar();
                 }
+                // Callbacks
                 if (app.params.onPageBeforeAnimation) {
                     app.params.onPageBeforeAnimation(pageData);
                 }
                 if (view.params.onPageBeforeAnimation) {
                     view.params.onPageBeforeAnimation(pageData);
                 }
+                $(document).trigger('pageBeforeAnimation', {page: pageData});
             }
         };
         // Init Page Events and Manipulations
@@ -515,7 +517,7 @@
             });
             // Size navbars on page load
             app.sizeNavbars($(pageContainer).parents('.view')[0]);
-            app.initSliders(pageContainer);
+            // Init messages
             app.initMessages(pageContainer);
         };
         // Load Page
@@ -825,7 +827,7 @@
         /*======================================================
         ************   Modals   ************
         ======================================================*/
-        app._modalTemlateTempDiv = document.createElement('div');
+        var _modalTemplateTempDiv = document.createElement('div');
         app.modal = function (params) {
             params = params || {};
             /* @params example
@@ -860,9 +862,9 @@
                             .replace(/{{afterText}}/g, params.afterText || '')
                             .replace(/{{buttons}}/g, buttonsHTML)
                             .replace(/{{noButtons}}/g, !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '');
-            app._modalTemlateTempDiv.innerHTML = modalHTML;
+            _modalTemplateTempDiv.innerHTML = modalHTML;
         
-            var modal = $(app._modalTemlateTempDiv).children();
+            var modal = $(_modalTemplateTempDiv).children();
         
             $('body').append(modal[0]);
             
@@ -927,13 +929,15 @@
                         text: 'Button 1',
                         red: false,
                         bold: false,
-                        onClick: function () { ... }
+                        onClick: function () { ... },
+                        label: false // or true
                     },
                     {
                         text: '<a href="#" class="open-panel">Open panel</a>',
                         red: false,
                         bold: false,
                         onClick: function () { ... }  
+                        label: false // or true
                     }
                     ... more buttons in this group
                 ],
@@ -950,7 +954,7 @@
                 for (var j = 0; j < params[i].length; j++) {
                     if (j === 0) buttonsHTML += '<div class="actions-modal-group">';
                     var button = params[i][j];
-                    var buttonClass = 'actions-modal-button';
+                    var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
                     if (button.bold) buttonClass += ' actions-modal-button-bold';
                     if (button.red) buttonClass += ' actions-modal-button-red';
                     buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
@@ -959,8 +963,8 @@
             }
             var modalHTML = actionsTemplate.replace(/{{buttons}}/g, buttonsHTML);
         
-            app._modalTemlateTempDiv.innerHTML = modalHTML;
-            var modal = $(app._modalTemlateTempDiv).children();
+            _modalTemplateTempDiv.innerHTML = modalHTML;
+            var modal = $(_modalTemplateTempDiv).children();
             $('body').append(modal[0]);
         
             var groups = modal.find('.actions-modal-group');
@@ -1170,92 +1174,6 @@
             $('body').addClass('panel-closing').removeClass('with-panel-' + panelPosition + '-' + effect);
         };
         /*======================================================
-        ************   Slider   ************
-        ======================================================*/
-        app.initSliders = function (pageContainer) {
-            $(pageContainer).find('.slider').each(function () {
-                var slider = $(this),
-                    isTouched = false,
-                    isMoved = false,
-                    isScrolling,
-                    minValue = slider.attr('data-min') * 1 || 0,
-                    maxValue = slider.attr('data-max') * 1 || 0,
-                    value = slider.attr('data-value') * 1 || 0,
-                    startValue = value,
-                    sliderWidth,
-                    handle = slider.find('.slider-handle'),
-                    range = slider.find('.slider-range'),
-                    touches = {};
-                // Set Handle/Range Position/Width
-                var perc = (startValue - minValue) / (maxValue - minValue);
-                if (perc < 0) perc = 0;
-                if (perc > 1) perc = 1;
-                handle.css({left: perc * 100 + '%'}).transform('translate3d(-' + perc * 100 + '%,0,0)');
-                range.css({width: perc * 100 + '%'});
-                // Handle Events
-                handle.on(app.touchEvents.start, function (e) {
-                    if (isTouched) return;
-                    e.stopPropagation();
-                    isTouched = true;
-                    touches.startX = touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-                    touches.startY = touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-                    sliderWidth = slider.width();
-                    startValue = value = slider.attr('data-value') * 1 || 0;
-                    isScrolling = undefined;
-                });
-                handle.on(app.touchEvents.move, function (e) {
-                    if (!isTouched) return;
-                    touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-                    touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-                    if (typeof isScrolling === 'undefined') {
-                        isScrolling = !!(isScrolling || Math.abs(touches.currentY - touches.startY) > Math.abs(touches.currentX - touches.startX));
-                    }
-                    if (isScrolling) {
-                        isTouched = false;
-                        return;
-                    }
-                    e.stopPropagation();
-                    e.preventDefault();
-                    isMoved = true;
-                    var diff = touches.currentX - touches.startX;
-        
-                    var perc = diff / sliderWidth + (startValue - minValue) / (maxValue - minValue);
-                    if (perc < 0) perc = 0;
-                    if (perc > 1) perc = 1;
-                    value = (maxValue - minValue) * perc + minValue;
-                    slider.attr('data-value', value);
-                    
-                    handle.css({left: perc * 100 + '%'}).transform('translate3d(-' + perc * 100 + '%,0,0)');
-                    range.css({width: perc * 100 + '%'});
-                    slider.trigger('change', {values: [value]});
-                });
-                handle.on(app.touchEvents.end, function (e) {
-                    if (!isTouched || !isMoved) {
-                        isTouched = isMoved = false;
-                        return;
-                    }
-        
-                    isTouched = isMoved = false;
-                });
-            });
-        };
-        app.setSliderValue = function (sliderContainer, value) {
-            var slider = $(sliderContainer),
-                minValue = slider.attr('data-min') * 1 || 0,
-                maxValue = slider.attr('data-max') * 1 || 0,
-                handle = slider.find('.slider-handle'),
-                range = slider.find('.slider-range');
-            if (value > maxValue) value = maxValue;
-            if (value < minValue) value = minValue;
-            slider.attr('data-value', value);
-            // Set Handle/Range Position/Width
-            var perc = (value - minValue) / (maxValue - minValue);
-            if (perc < 0) perc = 0;
-            if (perc > 1) perc = 1;
-            handle.css({left: perc * 100 + '%'}).transform('translate3d(-' + perc * 100 + '%,0,0)');
-            range.css({width: perc * 100 + '%'});
-        };
-        /*======================================================
         ************   Messages   ************
         ======================================================*/
         app.initMessages = function (pageContainer) {
@@ -1276,6 +1194,7 @@
                 type : 'sent' // or 'received'
             }
             */
+            props.type = props.type || 'sent';
             if (!props.text || props.length === 0) return false;
             var messagesContent = $('.messages-content');
             if (messagesContent.length === 0) return false;
@@ -1318,13 +1237,13 @@
             function animScroll() {
                 if (messagesContent[0].scrollTop < newScroll) {
                     messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
-                    window.requestAnimationFrame(animScroll);
+                    app._animFrame(animScroll);
                 }
                 else {
                     messagesContent[0].scrollTop = newScroll;
                 }
             }
-            window.requestAnimationFrame(animScroll);
+            app._animFrame(animScroll);
         };
         app.openedSwipeOutEl = undefined;
         app.allowSwipeOut = true;
@@ -1370,7 +1289,7 @@
                 if (!isMoved) {
                     swipeOutEl = $(this);
                     swipeOutContent = swipeOutEl.find('.swipeout-content');
-                    swipeOutActions = swipeOutEl.find('.swipeout-actions');
+                    swipeOutActions = swipeOutEl.find('.swipeout-actions-inner');
                     swipeOutActionsWidth = swipeOutActions.width();
                     opened = swipeOutEl.hasClass('opened');
                     swipeOutEl.removeClass('transitioning');
@@ -1446,7 +1365,7 @@
             if (el.length === 0) return;
             if (el.length > 1) el = $(el[0]);
             el.trigger('open').addClass('transitioning opened');
-            var swipeOutActions = el.find('.swipeout-actions');
+            var swipeOutActions = el.find('.swipeout-actions-inner');
             el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
                 el.trigger('opened');
             });
@@ -1781,7 +1700,7 @@
         },
         trigger: function (eventName, eventData) {
             for (var i = 0; i < this.length; i++) {
-                var e = new CustomEvent(eventName, {detail: eventData, bubbles: true});
+                var e = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
                 this[i].dispatchEvent(e);
             }
             return this;
