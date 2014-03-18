@@ -1,7 +1,7 @@
 /*======================================================
 ************   Modals   ************
 ======================================================*/
-app._modalTemlateTempDiv = document.createElement('div');
+var _modalTemplateTempDiv = document.createElement('div');
 app.modal = function (params) {
     params = params || {};
     /* @params example
@@ -36,9 +36,9 @@ app.modal = function (params) {
                     .replace(/{{afterText}}/g, params.afterText || '')
                     .replace(/{{buttons}}/g, buttonsHTML)
                     .replace(/{{noButtons}}/g, !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '');
-    app._modalTemlateTempDiv.innerHTML = modalHTML;
+    _modalTemplateTempDiv.innerHTML = modalHTML;
 
-    var modal = $(app._modalTemlateTempDiv).children();
+    var modal = $(_modalTemplateTempDiv).children();
 
     $('body').append(modal[0]);
     
@@ -137,8 +137,8 @@ app.actions = function (params) {
     }
     var modalHTML = actionsTemplate.replace(/{{buttons}}/g, buttonsHTML);
 
-    app._modalTemlateTempDiv.innerHTML = modalHTML;
-    var modal = $(app._modalTemlateTempDiv).children();
+    _modalTemplateTempDiv.innerHTML = modalHTML;
+    var modal = $(_modalTemplateTempDiv).children();
     $('body').append(modal[0]);
 
     var groups = modal.find('.actions-modal-group');

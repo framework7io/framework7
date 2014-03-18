@@ -88,6 +88,7 @@ app.initPage = function (pageContainer) {
     });
     // Size navbars on page load
     app.sizeNavbars($(pageContainer).parents('.view')[0]);
+    // Init messages
     app.initMessages(pageContainer);
 };
 // Load Page
