@@ -103,13 +103,15 @@ app.actions = function (params) {
                 text: 'Button 1',
                 red: false,
                 bold: false,
-                onClick: function () { ... }
+                onClick: function () { ... },
+                label: false // or true
             },
             {
                 text: '<a href="#" class="open-panel">Open panel</a>',
                 red: false,
                 bold: false,
                 onClick: function () { ... }  
+                label: false // or true
             }
             ... more buttons in this group
         ],
@@ -126,7 +128,7 @@ app.actions = function (params) {
         for (var j = 0; j < params[i].length; j++) {
             if (j === 0) buttonsHTML += '<div class="actions-modal-group">';
             var button = params[i][j];
-            var buttonClass = 'actions-modal-button';
+            var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
             if (button.bold) buttonClass += ' actions-modal-button-bold';
             if (button.red) buttonClass += ' actions-modal-button-red';
             buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';

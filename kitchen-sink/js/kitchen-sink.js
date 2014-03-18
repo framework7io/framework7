@@ -45,6 +45,11 @@ $$(document).tap('.demo-actions', function () {
     myApp.actions([
         // First buttons group
         [
+            // Group Label
+            {
+                text: 'Here comes some optional description or warning for actions below',
+                label: true
+            },
             // First button
             {
                 text: 'Alert',
