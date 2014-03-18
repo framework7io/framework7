@@ -31,7 +31,7 @@ app.get = function (url, callback) {
     xhr.open('GET', url, true);
     xhr.onload = function (e) {
         if (callback) {
-            if (this.status === 200) {
+            if (this.status === 200 || this.status === 0) {
                 callback(this.responseText, false);
                 if (app.params.cache) {
                     app.removeFromCache(url);
