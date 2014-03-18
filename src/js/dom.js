@@ -157,7 +157,7 @@ Dom7.prototype = {
     },
     trigger: function (eventName, eventData) {
         for (var i = 0; i < this.length; i++) {
-            var e = new CustomEvent(eventName, {detail: eventData, bubbles: true});
+            var e = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
             this[i].dispatchEvent(e);
         }
         return this;
