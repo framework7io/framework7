@@ -5,6 +5,8 @@ app.init = function () {
     // Init Click events
     app.initClickEvents();
     app.initSwipeOutList();
+    // Detect statusbar
+    app.detectStatusBar();
     // Init each page callbacks
     $('.page').each(function () {
         app.initPage(this);
