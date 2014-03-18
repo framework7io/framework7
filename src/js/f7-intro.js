@@ -11,11 +11,11 @@ window.Framework7 = function (params) {
 
     // Anim Frame
     app._animFrame = function (callback) {
-        if (window.requestAnimationFrame) window.requestAnimationFrame(callback);
-        else if (window.webkitRequestAnimationFrame) window.webkitRequestAnimationFrame(callback);
-        else if (window.mozRequestAnimationFrame) window.mozRequestAnimationFrame(callback);
+        if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
+        else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
+        else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
         else {
-            window.setTimeout(callback, 1000 / 60);
+            return window.setTimeout(callback, 1000 / 60);
         }
     };
 
@@ -67,6 +67,4 @@ window.Framework7 = function (params) {
         move: $.supportTouch ? 'touchmove' : 'mousemove',
         end: $.supportTouch ? 'touchend' : 'mouseup'
     };
-
-    // RequestAnimationFrame Polyfill
-    if (!window.requestAnimationFrame) window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    

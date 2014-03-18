@@ -62,11 +62,11 @@ app.scrollMessagesContainer = function (messagesContent) {
     function animScroll() {
         if (messagesContent[0].scrollTop < newScroll) {
             messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
-            window.requestAnimationFrame(animScroll);
+            app._animFrame(animScroll);
         }
         else {
             messagesContent[0].scrollTop = newScroll;
         }
     }
-    window.requestAnimationFrame(animScroll);
+    app._animFrame(animScroll);
 };
