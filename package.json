@@ -1,6 +1,6 @@
 {
   "name": "Framework7",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Full Featured HTML Framework For Building iOS7 Apps",
   "main": "dist/",
   "repository": {
@@ -31,7 +31,7 @@
     "jshint": "~0.9",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "~0.7.2",
-    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-less": "~0.9.0",
     "grunt-contrib-jade": "~0.9.0",
     "grunt-contrib-watch": "~0.5.3",
