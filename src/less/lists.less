@@ -62,12 +62,17 @@
     }
     
     .item-media {
+        .flexbox();
         .flex-shrink(0);
         .flex-wrap(nowrap);
         .border-box();
+        .align-items(center);
         padding-top: 7px;
         padding-bottom: 8px;
         i + i {
+            margin-left: 5px;
+        }
+        i + img {
             margin-left: 5px;
         }
     }
@@ -137,7 +142,7 @@
             display: block;
             border-bottom: 1px solid @listBlockBorderColor;
             line-height: 43px;
-            &.red {
+            &.button-red {
                 color: @red;
             }
         }
@@ -253,7 +258,6 @@
         .item-media {
             padding-top: 9px;
             padding-bottom: 10px;
-            .align-self(flex-start);
             img {
                 display: block;
             }

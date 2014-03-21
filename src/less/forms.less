@@ -233,12 +233,31 @@
     &:active {
         background: rgba(red(@blue), green(@blue), blue(@blue), .15);
     }
-    &.round {
+    &.button-round {
         border-radius: 27px;
     }
     &.active {
         background: @blue;
         color: #fff;
+    }
+    &.button-big {
+        font-size: 17px;
+        height: 44px;
+        line-height: 42px;
+    }
+    &.button-submit, &.button-cancel {
+        color: #fff;
+        &:active {
+            opacity: 0.6;
+        }
+    }
+    &.button-submit {
+        border-color: #4cd964;
+        background: #4cd964;
+    }
+    &.button-cancel {
+        border-color: #ff3b30;
+        background: #ff3b30;
     }
 }
 .buttons-row {
@@ -258,10 +277,10 @@
     .button:last-child {
         border-radius: 0 5px 5px 0;
     }
-    .button.round:first-child {
+    .button.button-round:first-child {
         border-radius: 27px 0 0 27px;
     }
-    .button.round:last-child {
+    .button.button-round:last-child {
         border-radius: 0 27px 27px 0;
     }
 }
@@ -337,5 +356,57 @@
         z-index: 1;
         background: @blue;
         content: ' ';
+    }
+}
+
+// Checkboxes
+label.label-checkbox {
+    cursor: pointer;
+    i.icon-form-checkbox {
+        width: 29px;
+        height: 29px;
+        position: relative;
+        &:after {
+            content:' ';
+            position: absolute;
+            left: 50%;
+            margin-left: -11px;
+            top: 50%;
+            margin-top: -11px;
+            width: 22px;
+            height: 22px;
+            border-radius: 22px;
+            border: 1px solid #c7c7cc;
+            .border-box();
+        }
+    }
+    input[type="checkbox"], input[type="radio"] {
+        display: none;
+        &:checked + .item-media{
+            i.icon-form-checkbox:after {
+                border: none;
+                background: @blue url(../img/i-form-checkbox-white.png) no-repeat center;
+                -webkit-background-size: auto 9px;
+                background-size: auto 9px;
+            }
+        }
+    }
+}
+label.label-radio {
+    cursor: pointer;
+    i.icon-form-radio {
+        width: 29px;
+        height: 29px;
+        position: relative;
+    }
+    input[type="checkbox"], input[type="radio"] {
+        display: none;
+        &:checked + .item-media{
+            i.icon-form-radio {
+                background: url(../img/i-form-radio-blue.png) no-repeat center;
+                -webkit-background-size: auto 10px;
+                background-size: auto 10px;
+            }
+        }
     }
 }
