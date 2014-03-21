@@ -10,6 +10,13 @@ var myApp = new Framework7({
     onPageBeforeAnimation: function (page) {
         // Do something on page ready(centered)
         // console.log(page);
+    },
+    // Hide/show preloader on ajax request when loading page 
+    onAjaxStart: function () {
+        myApp.showPreloader();
+    },
+    onAjaxComplete: function () {
+        myApp.hidePreloader();
     }
 });
 // Expose Internal DOM library

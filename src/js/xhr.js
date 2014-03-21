@@ -30,6 +30,9 @@ app.get = function (url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.onload = function (e) {
+        if (app.params.onAjaxComplete) {
+            app.params.onAjaxComplete();
+        }
         if (callback) {
             if (this.status === 200 || this.status === 0) {
                 callback(this.responseText, false);
@@ -47,6 +50,9 @@ app.get = function (url, callback) {
             }
         }
     };
+    if (app.params.onAjaxStart) {
+        app.params.onAjaxStart();
+    }
     xhr.send();
     app.xhr = xhr;
     return xhr;
