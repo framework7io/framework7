@@ -374,10 +374,15 @@ Dom7.prototype = {
         }
         else return new Dom7([]);
     },
-    parent: function () {
+    parent: function (selector) {
         var parents = [];
         for (var i = 0; i < this.length; i++) {
-            parents.push(this[i].parentNode);
+            if (selector) {
+                if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
+            }
+            else {
+                parents.push(this[i].parentNode);
+            }
         }
         return $($.unique(parents));
     },
