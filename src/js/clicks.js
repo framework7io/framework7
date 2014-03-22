@@ -2,7 +2,7 @@
 ************   Handle clicks and make them fast (on tap);   ************
 ===============================================================================*/
 app.initClickEvents = function () {
-    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio', function (e) {
+    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', function (e) {
         var clicked = $(this);
         var url = clicked.attr('href');
         // External
@@ -71,6 +71,12 @@ app.initClickEvents = function () {
             }
             input.trigger('change');
             return;
+        }
+        if ($.supportTouch) {
+            if (clicked.parent().hasClass('label-switch')) {
+                clicked[0].checked = !clicked[0].checked;
+                clicked.trigger('change');
+            }
         }
         
         // Tabs
