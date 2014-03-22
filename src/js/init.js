@@ -4,6 +4,7 @@
 app.init = function () {
     // Init Click events
     app.initClickEvents();
+    // Init Swipeouts events
     app.initSwipeOutList();
     // Detect statusbar
     app.detectStatusBar();
