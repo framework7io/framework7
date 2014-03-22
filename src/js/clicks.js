@@ -69,8 +69,10 @@ app.initClickEvents = function () {
             if (input.attr('type') === 'radio') {
                 clicked.find('input')[0].checked = true;
             }
+            input.trigger('change');
             return;
         }
+        
         // Tabs
         if (clicked.hasClass('tab-link')) {
             var newTab = $(clicked.attr('href'));
@@ -117,7 +119,7 @@ app.initClickEvents = function () {
         }
     });
     //Disable clicks
-    $(document).on('click', 'a', function (e) {
+    $(document).on('click', 'a, .label-checkbox, .label-radio', function (e) {
         if (!$(this).hasClass('external')) e.preventDefault();
     });
 };
