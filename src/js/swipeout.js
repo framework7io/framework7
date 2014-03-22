@@ -1,3 +1,6 @@
+/*===============================================================================
+************   Swipeout Actions (Swipe to delete)   ************
+===============================================================================*/
 app.openedSwipeOutEl = undefined;
 app.allowSwipeOut = true;
 app.initSwipeOutList = function () {
