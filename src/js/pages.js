@@ -82,10 +82,6 @@ app.pageAnimCallbacks = function (callback, view, params) {
 };
 // Init Page Events and Manipulations
 app.initPage = function (pageContainer) {
-    // Prevent Togglers from bubbling AnimationEnd events
-    $(pageContainer).find('.switch').on('webkitAnimationEnd OAnimationEnd MSAnimationEnd animationend', function (e) {
-        e.stopPropagation();
-    });
     // Size navbars on page load
     app.sizeNavbars($(pageContainer).parents('.view')[0]);
     // Init messages
