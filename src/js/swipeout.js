@@ -47,7 +47,7 @@ app.initSwipeOutList = function () {
             swipeOutContent = swipeOutEl.find('.swipeout-content');
             swipeOutActions = swipeOutEl.find('.swipeout-actions-inner');
             swipeOutActionsWidth = swipeOutActions.width();
-            opened = swipeOutEl.hasClass('opened');
+            opened = swipeOutEl.hasClass('swipeout-opened');
             swipeOutEl.removeClass('transitioning');
         }
         isMoved = true;
@@ -100,13 +100,13 @@ app.initSwipeOutList = function () {
         if (action === 'open') {
             app.openedSwipeOutEl = swipeOutEl;
             swipeOutEl.trigger('open');
-            swipeOutEl.addClass('opened transitioning');
+            swipeOutEl.addClass('swipeout-opened transitioning');
             swipeOutContent.transform('translate3d(' + -swipeOutActionsWidth + 'px,0,0)');
         }
         else {
             swipeOutEl.trigger('close');
             app.openedSwipeOutEl = undefined;
-            swipeOutEl.addClass('transitioning').removeClass('opened');
+            swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
             swipeOutContent.transform('translate3d(' + 0 + 'px,0,0)');
         }
         swipeOutContent.transitionEnd(function () {
@@ -120,7 +120,7 @@ app.openSwipeOutList = function (el) {
     if (!el.hasClass('swipeout')) return;
     if (el.length === 0) return;
     if (el.length > 1) el = $(el[0]);
-    el.trigger('open').addClass('transitioning opened');
+    el.trigger('open').addClass('transitioning swipeout-opened');
     var swipeOutActions = el.find('.swipeout-actions-inner');
     el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
@@ -132,7 +132,7 @@ app.closeSwipeOutList = function (el) {
     if (el.length === 0) return;
     app.allowSwipeOut = false;
     el.trigger('close');
-    el.removeClass('opened')
+    el.removeClass('swipeout-opened')
         .addClass('transitioning')
     .find('.swipeout-content')
         .transform('translate3d(' + 0 + 'px,0,0)')
