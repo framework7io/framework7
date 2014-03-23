@@ -1,5 +1,5 @@
 /*
- * Framework7 0.5.4
+ * Framework7 0.5.6
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 20, 2014
+ * Released on: March 23, 2014
 */
 (function () {
 
@@ -160,7 +160,7 @@
                 el;
         
             viewContainer.on(app.touchEvents.start, function (e) {
-                if (!allowViewTouchMove || !app.params.swipeBackPage) return;
+                if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.openedSwipeOutEl) return;
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
@@ -171,7 +171,6 @@
             });
             viewContainer.on(app.touchEvents.move, function (e) {
                 if (!isTouched) return;
-                
                 var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
                 var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
                 if (typeof isScrolling === 'undefined') {
@@ -406,6 +405,9 @@
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
             xhr.onload = function (e) {
+                if (app.params.onAjaxComplete) {
+                    app.params.onAjaxComplete();
+                }
                 if (callback) {
                     if (this.status === 200 || this.status === 0) {
                         callback(this.responseText, false);
@@ -423,6 +425,9 @@
                     }
                 }
             };
+            if (app.params.onAjaxStart) {
+                app.params.onAjaxStart();
+            }
             xhr.send();
             app.xhr = xhr;
             return xhr;
@@ -511,10 +516,6 @@
         };
         // Init Page Events and Manipulations
         app.initPage = function (pageContainer) {
-            // Prevent Togglers from bubbling AnimationEnd events
-            $(pageContainer).find('.switch').on('webkitAnimationEnd OAnimationEnd MSAnimationEnd animationend', function (e) {
-                e.stopPropagation();
-            });
             // Size navbars on page load
             app.sizeNavbars($(pageContainer).parents('.view')[0]);
             // Init messages
@@ -1214,14 +1215,14 @@
         app.updateMessagesAngles = function (messages) {
             messages.find('.message-sent').each(function () {
                 var message = $(this);
-                if (!message.next().hasClass('message-sent') && !message.hasClass('message-pic')) {
+                if (!message.next().hasClass('message-sent')) {
                     message.addClass('message-last');
                 }
                 else message.removeClass('message-last');
             });
             messages.find('.message-received').each(function () {
                 var message = $(this);
-                if (!message.next().hasClass('message-received') && !message.hasClass('message-pic')) {
+                if (!message.next().hasClass('message-received')) {
                     message.addClass('message-last');
                 }
                 else message.removeClass('message-last');
@@ -1245,6 +1246,9 @@
             }
             app._animFrame(animScroll);
         };
+        /*===============================================================================
+        ************   Swipeout Actions (Swipe to delete)   ************
+        ===============================================================================*/
         app.openedSwipeOutEl = undefined;
         app.allowSwipeOut = true;
         app.initSwipeOutList = function () {
@@ -1291,7 +1295,7 @@
                     swipeOutContent = swipeOutEl.find('.swipeout-content');
                     swipeOutActions = swipeOutEl.find('.swipeout-actions-inner');
                     swipeOutActionsWidth = swipeOutActions.width();
-                    opened = swipeOutEl.hasClass('opened');
+                    opened = swipeOutEl.hasClass('swipeout-opened');
                     swipeOutEl.removeClass('transitioning');
                 }
                 isMoved = true;
@@ -1344,13 +1348,13 @@
                 if (action === 'open') {
                     app.openedSwipeOutEl = swipeOutEl;
                     swipeOutEl.trigger('open');
-                    swipeOutEl.addClass('opened transitioning');
+                    swipeOutEl.addClass('swipeout-opened transitioning');
                     swipeOutContent.transform('translate3d(' + -swipeOutActionsWidth + 'px,0,0)');
                 }
                 else {
                     swipeOutEl.trigger('close');
                     app.openedSwipeOutEl = undefined;
-                    swipeOutEl.addClass('transitioning').removeClass('opened');
+                    swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
                     swipeOutContent.transform('translate3d(' + 0 + 'px,0,0)');
                 }
                 swipeOutContent.transitionEnd(function () {
@@ -1364,7 +1368,7 @@
             if (!el.hasClass('swipeout')) return;
             if (el.length === 0) return;
             if (el.length > 1) el = $(el[0]);
-            el.trigger('open').addClass('transitioning opened');
+            el.trigger('open').addClass('transitioning swipeout-opened');
             var swipeOutActions = el.find('.swipeout-actions-inner');
             el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
                 el.trigger('opened');
@@ -1376,7 +1380,7 @@
             if (el.length === 0) return;
             app.allowSwipeOut = false;
             el.trigger('close');
-            el.removeClass('opened')
+            el.removeClass('swipeout-opened')
                 .addClass('transitioning')
             .find('.swipeout-content')
                 .transform('translate3d(' + 0 + 'px,0,0)')
@@ -1405,7 +1409,7 @@
         ************   Handle clicks and make them fast (on tap);   ************
         ===============================================================================*/
         app.initClickEvents = function () {
-            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover', function (e) {
+            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', function (e) {
                 var clicked = $(this);
                 var url = clicked.attr('href');
                 // External
@@ -1414,7 +1418,6 @@
                 }
                 // Open Panel
                 if (clicked.hasClass('open-panel')) {
-                    // e.preventDefault();
                     if ($('.panel').length === 1) {
                         if ($('.panel').hasClass('panel-left')) app.openPanel('left');
                         else app.openPanel('right');
@@ -1463,6 +1466,26 @@
                         app.closeModal();
                     if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
                 }
+                // Radios/checkboxes
+                if (clicked.hasClass('label-checkbox') || clicked.hasClass('label-radio')) {
+                    var input = clicked.find('input');
+                    if (input.attr('type') === 'checkbox') {
+                        if (input[0].checked === true) input[0].checked = false;
+                        else input[0].checked = true;
+                    }
+                    if (input.attr('type') === 'radio') {
+                        clicked.find('input')[0].checked = true;
+                    }
+                    input.trigger('change');
+                    return;
+                }
+                if ($.supportTouch) {
+                    if (clicked.parent().hasClass('label-switch')) {
+                        clicked[0].checked = !clicked[0].checked;
+                        clicked.trigger('change');
+                    }
+                }
+                
                 // Tabs
                 if (clicked.hasClass('tab-link')) {
                     var newTab = $(clicked.attr('href'));
@@ -1509,7 +1532,7 @@
                 }
             });
             //Disable clicks
-            $(document).on('click', 'a', function (e) {
+            $(document).on('click', 'a, .label-checkbox, .label-radio', function (e) {
                 if (!$(this).hasClass('external')) e.preventDefault();
             });
         };
@@ -1549,6 +1572,7 @@
         app.init = function () {
             // Init Click events
             app.initClickEvents();
+            // Init Swipeouts events
             app.initSwipeOutList();
             // Detect statusbar
             app.detectStatusBar();
@@ -1942,10 +1966,15 @@
             }
             else return new Dom7([]);
         },
-        parent: function () {
+        parent: function (selector) {
             var parents = [];
             for (var i = 0; i < this.length; i++) {
-                parents.push(this[i].parentNode);
+                if (selector) {
+                    if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
+                }
+                else {
+                    parents.push(this[i].parentNode);
+                }
             }
             return $($.unique(parents));
         },
