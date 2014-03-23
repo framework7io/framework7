@@ -1,70 +1,46 @@
 /* === Preloader === */
-.preloader {
-    width: 28px;
-    height: 28px;
+.preloader:after {
     display: inline-block;
-    position: relative;
-    span {
-        width: 2/28*100%; //Should be 2 pixels
-        height: 8/28*100%; //Should be 8 pixels
-        min-width: 1px;
-        min-height: 1px;
-        background: #575f6c;
-        display: block;
-        position: absolute;
-        left: 50%;
-        margin-left: -1/28*100%; // Should be -1px
-        top: 0;
-        .transform-origin(50% 14/8*100%); //Should be 50% 14px
-        opacity: 0;
-    }
+    content: "";
+    width: 20px;
+    height: 20px;
+    // Note: Firefox requires '#' to be encoded as '%23' with data URIs
+    background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='%238c8c8c' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='%23l' opacity='.27'/><use xlink:href='%23l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='%23l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='%23l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='%23l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='%23l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='%23l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='%23l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
+    background-position: 50%;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    -webkit-transform-origin: 50%;
+    transform-origin: 50%;
+    -webkit-animation: spin 1s step-end infinite;
+    animation: spin 1s step-end infinite;
 }
-.modal .preloader {
+.dark .preloader:after, .dark.preloader:after {
+    background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='%23fff' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='%23l' opacity='.27'/><use xlink:href='%23l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='%23l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='%23l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='%23l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='%23l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='%23l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='%23l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
+}
+.modal .preloader:after {
     width: 34px;
     height: 34px;
+    background-size: 34px;
 }
-.preloader-loop(@i) when (@i < 13){
-    .preloader span:nth-child(@{i}) {
-        @deg: (@i - 1) * 30deg;
-        @duration: 900ms;
-        @delay: (@i - 1) * (@duration/12);
-        .transform(rotate(@deg));
-        .animation(~"preloaderStickPulsate @{duration} @{delay} infinite");
-    }
-    .preloader-loop(@i + 1);
-}
-.preloader-loop(1);
-
-@-webkit-keyframes preloaderStickPulsate {
-    0% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
+@-webkit-keyframes spin {
+    .preloader-loop(0);
+    .preloader-loop(@i) when (@i <= 12) {
+        @j: ((@i * (1/12)) * 100%);
+        @{j} {
+            @deg: (@i) * 30deg;
+            -webkit-transform: rotate(@deg);
+        }
+        .preloader-loop(@i + 1);
     }
 }
-@-moz-keyframes preloaderStickPulsate {
-    0% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-@keyframes preloaderStickPulsate {
-    0% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
+@keyframes spin {
+    .preloader-loop(0);
+    .preloader-loop(@i) when (@i <= 12) {
+        @j: ((@i * (1/12)) * 100%);
+        @{j} {
+            @deg: (@i) * 30deg;
+            transform: rotate(@deg);
+        }
+        .preloader-loop(@i + 1);
     }
 }
