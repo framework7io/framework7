@@ -74,10 +74,7 @@ app.initViewEvents = function (view) {
         el;
 
     viewContainer.on(app.touchEvents.start, function (e) {
-        if (!allowViewTouchMove || !app.params.swipeBackPage) return;
-        if (app.openedSwipeOutEl) {
-            return;
-        }
+        if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.openedSwipeOutEl) return;
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -88,7 +85,6 @@ app.initViewEvents = function (view) {
     });
     viewContainer.on(app.touchEvents.move, function (e) {
         if (!isTouched) return;
-        
         var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
         if (typeof isScrolling === 'undefined') {
