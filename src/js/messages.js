@@ -39,14 +39,14 @@ app.addMessage = function (props) {
 app.updateMessagesAngles = function (messages) {
     messages.find('.message-sent').each(function () {
         var message = $(this);
-        if (!message.next().hasClass('message-sent') && !message.hasClass('message-pic')) {
+        if (!message.next().hasClass('message-sent')) {
             message.addClass('message-last');
         }
         else message.removeClass('message-last');
     });
     messages.find('.message-received').each(function () {
         var message = $(this);
-        if (!message.next().hasClass('message-received') && !message.hasClass('message-pic')) {
+        if (!message.next().hasClass('message-received')) {
             message.addClass('message-last');
         }
         else message.removeClass('message-last');
