@@ -75,7 +75,9 @@ app.initViewEvents = function (view) {
 
     viewContainer.on(app.touchEvents.start, function (e) {
         if (!allowViewTouchMove || !app.params.swipeBackPage) return;
-        if ($(e.target).hasClass('swipeout opened') || $(e.target).parents('.swipeout.opened').length > 0) return;
+        if (app.openedSwipeOutEl) {
+            return;
+        }
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
