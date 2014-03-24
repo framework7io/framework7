@@ -36,7 +36,7 @@
     text-align: center;
     border-radius: 7px;
     opacity: 0;
-    .transform(translate3d(0%,0%,0) scale(1.185));
+    .transform(translate3d(0,0,0) scale(1.185));
     -webkit-transition-property: -webkit-transform, opacity;
     -moz-transition-property: -moz-transform, opacity;
     -ms-transition-property: -ms-transform, opacity;
@@ -45,13 +45,13 @@
     &.modal-in {
         opacity: 1;
         .transition(@modalDuration);
-        .transform(translate3d(0%,0%,0) scale(1));
+        .transform(translate3d(0,0,0) scale(1));
     }
     &.modal-out {
         opacity: 0;
         z-index: 11000-1;
         .transition(@modalDuration);
-        .transform(translate3d(0%,0%,0) scale(0.815));
+        .transform(translate3d(0,0,0) scale(0.815));
     }
 }
 .modal-inner {
@@ -92,14 +92,14 @@
     .border-box();
     border-right: 1px solid #b5b5b5;
     &:first-child {
-        border-radius: 0px 0px 0px 7px;
+        border-radius: 0 0 0 7px;
     }
     &:last-child {
         border-right: none;
-        border-radius: 0px 0px 7px 0px;
+        border-radius: 0 0 7px 0;
     }
     &:first-child:last-child {
-        border-radius: 0px 0px 7px 7px;
+        border-radius: 0 0 7px 7px;
     }
     &.modal-button-bold {
         font-weight: 500;
@@ -124,15 +124,15 @@
     bottom: 0;
     z-index: 11000;
     width: 100%;
-    .transform(translate3d(0%,100%,0));
+    .transform(translate3d(0,100%,0));
     &.modal-in {
         .transition(@actionsModalDuration);
-        .transform(translate3d(0%,0%,0));
+        .transform(translate3d(0,0,0));
     }
     &.modal-out {
         z-index: 11000-1;
         .transition(@actionsModalDuration);
-        .transform(translate3d(0%,100%,0));
+        .transform(translate3d(0,100%,0));
     }
 }
 .actions-modal-group {
@@ -203,7 +203,7 @@ input.modal-prompt-input {
     font-size: 14px;
     font-family: inherit;
     display: block;
-    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+    box-shadow: 0 0 0 rgba(0,0,0,0);
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
@@ -236,7 +236,7 @@ input.modal-prompt-input {
     height: 26px;
     position: absolute;
     left: -26px;
-    top: 0px;
+    top: 0;
     z-index: 100;
     overflow: hidden;
     &:after {
@@ -245,7 +245,7 @@ input.modal-prompt-input {
         width: 26px;
         height: 26px;
         position: absolute;
-        left: 0px;
+        left: 0;
         top: 0;
         border-radius: 3px;
         .transform(rotate(45deg));
@@ -268,7 +268,7 @@ input.modal-prompt-input {
         left: 0;
         top: -26px;
         &:after {
-            left: 0px;
+            left: 0;
             top: 19px;
         }
     }
@@ -276,7 +276,7 @@ input.modal-prompt-input {
         left: 0;
         top: 100%;
         &:after {
-            left: 0px;
+            left: 0;
             top: -19px;
         }
     }
@@ -322,7 +322,7 @@ input.modal-prompt-input {
         .transition(@popupDuration);
     }
     &.modal-in {
-        .translate3d(0,0%,0);
+        .translate3d(0,0,0);
     }
     &.modal-out {
         .translate3d(0,100%,0);
