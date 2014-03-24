@@ -10,8 +10,8 @@
     padding: 0 15px;
     .border-box();
     .flexbox();
-    .justify-content(space-between);
-    .align-items(center);
+    .justify-content-space-between();
+    .align-items-center();
 }
 .navbar, .toolbar {
     height: 44px;
@@ -30,8 +30,8 @@
         color: @navbarLinksColor;
         text-decoration: none;
         .flexbox();
-        .justify-content(flex-start);
-        .align-items(center);
+        .justify-content-start();
+        .align-items-center();
         .transition(300ms);
         &:active{
             opacity: 0.3;
@@ -62,8 +62,8 @@
     .left, .right {
         .flex-shrink(0);
         .flexbox();
-        .justify-content(flex-start);
-        .align-items(center);
+        .justify-content-start();
+        .align-items-center();
         .translate3d(0,0,0);
 
         a+a {
