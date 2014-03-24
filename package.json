@@ -40,5 +40,8 @@
     "grunt-open": "~0.2.3",
     "jshint-stylish": "~0.1.5",
     "time-grunt": "~0.2.8"
+  },
+  "scripts": {
+    "test": "grunt test"
   }
 }
