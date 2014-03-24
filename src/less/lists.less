@@ -122,11 +122,12 @@
         display: block;
         color: inherit;
         .item-inner {
-            background: url(../img/i-right-grey.png) no-repeat -webkit-calc(~"100% - 15px") center;
-            background: url(../img/i-right-grey.png) no-repeat -moz-calc(~"100% - 15px") center;
-            background: url(../img/i-right-grey.png) no-repeat calc(~"100% - 15px") center;
             padding-right: 35px;
-            background-size: 8px auto;
+            background: no-repeat -webkit-calc(~"100% - 15px") center;
+            background: no-repeat -moz-calc(~"100% - 15px") center;
+            background: no-repeat calc(~"100% - 15px") center;
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='%23c7c7cc'/></svg>");
+            background-size: 10px 20px;
         }
         &:active {
             .transition(0ms);
@@ -251,9 +252,10 @@
             padding-right: 15px;
         }
         .item-link .item-title-row {
-            background: url(../img/i-right-grey.png) no-repeat right center;
             padding-right: 20px;
-            background-size: 8px auto;
+            background: no-repeat right center;
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='%23c7c7cc'/></svg>");
+            background-size: 10px 20px;
         }
         .item-media {
             padding-top: 9px;
