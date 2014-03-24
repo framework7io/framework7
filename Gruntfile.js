@@ -224,6 +224,14 @@ module.exports = function (grunt) {
     this.registerTask('default', ['build']);
 
     // Build a new version of the library
+    this.registerTask('test', 'Test of <%= pkg.name %>', [
+        'concat:js',
+        'less:build',
+        'concat:css_build',
+        'jshint',
+    ]);
+    
+    // Build a new version of the library
     this.registerTask('build', 'Builds a development version of <%= pkg.name %>', [
         'concat:js',
         'less:build',
