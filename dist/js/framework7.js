@@ -1,5 +1,5 @@
 /*
- * Framework7 0.5.6
+ * Framework7 0.5.7
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 23, 2014
+ * Released on: March 24, 2014
 */
 (function () {
 
