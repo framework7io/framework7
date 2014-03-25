@@ -86,8 +86,10 @@
         padding-top: 8px;
         padding-bottom: 7px;
         min-height: 44px;
+
         .border-box();
         .flexbox();
+        -webkit-box-flex:1;
         .justify-content(space-between);
         .align-items(center);
     }
@@ -98,6 +100,7 @@
         position: relative;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 100%;
         &.label {
             width: 35%;
             .flex-shrink(0);
@@ -108,6 +111,7 @@
         margin-top: -8px;
         margin-bottom: -7px;
         .flex-shrink(1);
+        -webkit-box-flex:1;
     }
     .item-after {
         white-space: nowrap;

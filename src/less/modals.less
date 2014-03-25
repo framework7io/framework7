@@ -91,6 +91,7 @@
     cursor: pointer;
     .border-box();
     border-right: 1px solid #b5b5b5;
+    -webkit-box-flex:1;
     &:first-child {
         border-radius: 0 0 0 7px;
     }
@@ -241,7 +242,7 @@ input.modal-prompt-input {
     overflow: hidden;
     &:after {
         content:' ';
-        background: #f7f7f8;
+        background: @popoverBg;
         width: 26px;
         height: 26px;
         position: absolute;
