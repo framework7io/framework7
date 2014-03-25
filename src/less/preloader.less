@@ -3,6 +3,10 @@
     display: inline-block;
     width: 20px;
     height: 20px;
+    -webkit-transform-origin: 50%;
+    transform-origin: 50%;
+    -webkit-animation: spin 1s step-end infinite;
+    animation: spin 1s step-end infinite;
 }
 .preloader:after {
     display: block;
@@ -14,12 +18,9 @@
     background-position: 50%;
     background-size: 100%;
     background-repeat: no-repeat;
-    -webkit-transform-origin: 50%;
-    transform-origin: 50%;
-    -webkit-animation: spin 1s step-end infinite;
-    animation: spin 1s step-end infinite;
+    
 }
-.dark .preloader:after, .preloader.dark:after {
+.preloader-white:after {
     background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='%23fff' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='%23l' opacity='.27'/><use xlink:href='%23l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='%23l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='%23l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='%23l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='%23l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='%23l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='%23l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
 }
 .modal .preloader {

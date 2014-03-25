@@ -14,18 +14,14 @@
       .content-block
         p How about an activity indicator? Framework 7 has a nice one. The F7 preloader is made with SVG and animated with CSS so it can be easily resized. Two options are available: the default is for a light background and another on a dark background. The HTML is pretty easy, just add a .preloader class to any element. For the dark background option, also add a .dark class. Here are some examples:
       .content-block.row.ks-preloaders
-        //- <div class="col-25">Default:<br><span class="preloader"></span></div>
-        //- <div class="col-25" style="background-color: #333;">Dark:<br><span class="dark preloader"></span></div>
-        //- <div class="col-25">Big:<br><span class="preloader ks-preloader-big"></span></div>
-        //- <div class="col-25" style="background-color: #333;">Dark:<br><span class="dark preloader ks-preloader-big"></span></div>
         .col-25 Default:<br>
           span.preloader
         .col-25(style="background-color: #333;") Dark:<br>
-          span.preloader.dark
+          span.preloader.preloader-white
         .col-25 Big:<br>
           span.preloader.ks-preloader-big
         .col-25(style="background-color: #333;") Dark:<br>
-          span.preloader.dark.ks-preloader-big
+          span.preloader.preloader-white.ks-preloader-big
       .content-block
         p With <b>app.showPreloader()</b> you can call modal window with preloader:
         a(href="#").button.demo-preloader Open preloader modal
