@@ -1,5 +1,5 @@
 /*
- * Framework7 0.5.7
+ * Framework7 0.6.0
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 24, 2014
+ * Released on: March 25, 2014
 */
 (function () {
 
@@ -914,11 +914,17 @@
         app.showPreloader = function (title) {
             return app.modal({
                 title: title || app.params.modalPreloaderTitle,
-                text: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
+                text: '<div class="preloader"></div>'
             });
         };
         app.hidePreloader = function () {
             app.closeModal();
+        };
+        app.showIndicator = function () {
+            $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white"></span></div>');
+        };
+        app.hideIndicator = function () {
+            $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
         };
         // Action Sheet
         app.actions = function (params) {
