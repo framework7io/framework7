@@ -87,11 +87,17 @@ app.prompt = function (text, callbackOk, callbackCancel) {
 app.showPreloader = function (title) {
     return app.modal({
         title: title || app.params.modalPreloaderTitle,
-        text: '<div class="preloader"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>'
+        text: '<div class="preloader"></div>'
     });
 };
 app.hidePreloader = function () {
     app.closeModal();
+};
+app.showIndicator = function () {
+    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white"></span></div>');
+};
+app.hideIndicator = function () {
+    $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
 };
 // Action Sheet
 app.actions = function (params) {

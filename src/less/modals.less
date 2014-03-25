@@ -9,7 +9,7 @@
 @actionsModalActiveButtonBg:#dcdcdc;
 @popoverBg: rgba(255,255,255,0.95);
 @popupDuration: 400ms;
-.modal-overlay {
+.modal-overlay, .preloader-indicator-overlay {
     position: absolute;
     left: 0;
     top: 0;
@@ -118,7 +118,7 @@
         display: none;
     }
 }
-
+// Action sheet
 .actions-modal {
     position: absolute;
     left: 0;
@@ -191,6 +191,7 @@
     .justify-content(center);
     .align-items(center);
 }
+// Prompt
 input.modal-prompt-input {
     .border-box();
     height: 30px;
@@ -210,6 +211,7 @@ input.modal-prompt-input {
     -ms-appearance: none;
     appearance: none;
 }
+// Popover
 .popover {
     width: 320px;
     background:@popoverBg;
@@ -301,7 +303,7 @@ input.modal-prompt-input {
         }
     }
 }
-
+// Popup
 .popup {
     position: absolute;
     left: 0;
@@ -343,5 +345,28 @@ input.modal-prompt-input {
         &.modal-out {
             .translate3d(0,1024px,0);
         }
+    }
+}
+
+//Preloaders modals
+.preloader-indicator-overlay {
+    visibility: visible;
+    opacity: 0;
+    background: none;
+}
+.preloader-indicator-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 8px;
+    margin-left: -29px;
+    margin-top: -29px;
+    background: rgba(0,0,0,0.8);
+    z-index: 11000;
+    border-radius: 5px;
+    .preloader {
+        display: block;
+        width: 42px;
+        height: 42px;
     }
 }

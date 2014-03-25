@@ -81,6 +81,12 @@ $$('.popover a').tap(function () {
 });
 
 // Preloader Demo
+$$(document).tap('.demo-indicator', function () {
+    myApp.showIndicator();
+    setTimeout(function () {
+        myApp.hideIndicator();
+    }, 2000);
+});
 $$(document).tap('.demo-preloader', function () {
     myApp.showPreloader();
     setTimeout(function () {
