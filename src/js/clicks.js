@@ -93,11 +93,11 @@ app.initClickEvents = function () {
         if (clicked.hasClass('swipeout-delete')) {
             if (clicked.attr('data-confirm')) {
                 var modal = app.confirm(clicked.attr('data-confirm'), function () {
-                    app.deleteSwipeOutList(clicked.parents('.swipeout'));
+                    app.swipeoutDelete(clicked.parents('.swipeout'));
                 });
             }
             else {
-                app.deleteSwipeOutList(clicked.parents('.swipeout'));
+                app.swipeoutDelete(clicked.parents('.swipeout'));
             }
                 
         }

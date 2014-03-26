@@ -1,26 +1,26 @@
 /*===============================================================================
 ************   Swipeout Actions (Swipe to delete)   ************
 ===============================================================================*/
-app.openedSwipeOutEl = undefined;
-app.allowSwipeOut = true;
-app.initSwipeOutList = function () {
+app.swipeoutOpenedEl = undefined;
+app.allowSwipeout = true;
+app.initSwipeout = function () {
     var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, swipeOutActions, swipeOutActionsWidth, translate, opened;
     $(document).on(app.touchEvents.start, function (e) {
-        if (app.openedSwipeOutEl) {
+        if (app.swipeoutOpenedEl) {
             var target = $(e.target);
             if (!(
-                app.openedSwipeOutEl.is(target[0]) ||
-                target.parents('.swipeout').is(app.openedSwipeOutEl) ||
+                app.swipeoutOpenedEl.is(target[0]) ||
+                target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
                 target.hasClass('modal-in') ||
                 target.parents('.modal-in').length > 0 ||
                 target.hasClass('modal-overlay')
                 )) {
-                app.closeSwipeOutList(app.openedSwipeOutEl);
+                app.swipeoutClose(app.swipeoutOpenedEl);
             }
         }
     });
     $(document).on(app.touchEvents.start, '.list-block li.swipeout', function (e) {
-        if (!app.allowSwipeOut) return;
+        if (!app.allowSwipeout) return;
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -72,7 +72,7 @@ app.initSwipeOutList = function () {
         isTouched = false;
         isMoved = false;
         var timeDiff = (new Date()).getTime() - touchStartTime;
-        if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeOut = false;
+        if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeout = false;
         
         var action;
         if (opened) {
@@ -98,24 +98,24 @@ app.initSwipeOutList = function () {
             }
         }
         if (action === 'open') {
-            app.openedSwipeOutEl = swipeOutEl;
+            app.swipeoutOpenedEl = swipeOutEl;
             swipeOutEl.trigger('open');
             swipeOutEl.addClass('swipeout-opened transitioning');
             swipeOutContent.transform('translate3d(' + -swipeOutActionsWidth + 'px,0,0)');
         }
         else {
             swipeOutEl.trigger('close');
-            app.openedSwipeOutEl = undefined;
+            app.swipeoutOpenedEl = undefined;
             swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
             swipeOutContent.transform('translate3d(' + 0 + 'px,0,0)');
         }
         swipeOutContent.transitionEnd(function () {
-            app.allowSwipeOut = true;
+            app.allowSwipeout = true;
             swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
         });
     });
 };
-app.openSwipeOutList = function (el) {
+app.swipeoutOpen = function (el) {
     el = $(el);
     if (!el.hasClass('swipeout')) return;
     if (el.length === 0) return;
@@ -125,12 +125,12 @@ app.openSwipeOutList = function (el) {
     el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
     });
-    app.openedSwipeOutEl = el;
+    app.swipeoutOpenedEl = el;
 };
-app.closeSwipeOutList = function (el) {
+app.swipeoutClose = function (el) {
     el = $(el);
     if (el.length === 0) return;
-    app.allowSwipeOut = false;
+    app.allowSwipeout = false;
     el.trigger('close');
     el.removeClass('swipeout-opened')
         .addClass('transitioning')
@@ -138,16 +138,16 @@ app.closeSwipeOutList = function (el) {
         .transform('translate3d(' + 0 + 'px,0,0)')
         .transitionEnd(function () {
             el.trigger('closed');
-            app.allowSwipeOut = true;
+            app.allowSwipeout = true;
         });
 
-    if (app.openedSwipeOutEl[0] === el[0]) app.openedSwipeOutEl = undefined;
+    if (app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
 };
-app.deleteSwipeOutList = function (el) {
+app.swipeoutDelete = function (el) {
     el = $(el);
     if (el.length === 0) return;
     if (el.length > 1) el = $(el[0]);
-    app.openedSwipeOutEl = undefined;
+    app.swipeoutOpenedEl = undefined;
     el.trigger('delete');
     el.css({height: el.outerHeight() + 'px'});
     var clientLeft = el[0].clientLeft;

@@ -74,7 +74,7 @@ app.initViewEvents = function (view) {
         el;
 
     viewContainer.on(app.touchEvents.start, function (e) {
-        if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.openedSwipeOutEl) return;
+        if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
