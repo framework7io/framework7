@@ -150,13 +150,15 @@ app.actions = function (params) {
     var groups = modal.find('.actions-modal-group');
     groups.each(function (index, el) {
         var groupIndex = index;
-        $(el).find('.actions-modal-button').each(function (index, el) {
+        $(el).children().each(function (index, el) {
             var buttonIndex = index;
             var buttonParams = params[groupIndex][buttonIndex];
-            $(el).tap(function (e) {
-                if (buttonParams.close !== false) app.closeModal(modal);
-                if (buttonParams.onClick) buttonParams.onClick(modal, e);
-            });
+            if ($(el).hasClass('actions-modal-button')) {
+                $(el).tap(function (e) {
+                    if (buttonParams.close !== false) app.closeModal(modal);
+                    if (buttonParams.onClick) buttonParams.onClick(modal, e);
+                });
+            }
         });
     });
     app.openModal(modal);
