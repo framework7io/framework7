@@ -81,7 +81,7 @@ module.exports = function (grunt) {
                     if (filename.indexOf('.js') >= 0) {
                         var addIndent = '        ';
                         filename = filename.replace('src/js/', '');
-                        if (filename === 'intro.js' || filename === 'outro.js') {
+                        if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
                             addIndent = '';
                         }
                         if (filename === 'f7-intro.js' || filename === 'f7-outro.js' || filename === 'dom.js') addIndent = '    ';
@@ -95,7 +95,7 @@ module.exports = function (grunt) {
             },
             js: {
                 src: [
-                    'src/js/intro.js',
+                    'src/js/wrap-start.js',
                     'src/js/f7-intro.js',
                     'src/js/views.js',
                     'src/js/navbars.js',
@@ -111,7 +111,7 @@ module.exports = function (grunt) {
                     'src/js/init.js',
                     'src/js/f7-outro.js',
                     'src/js/dom.js',
-                    'src/js/outro.js'
+                    'src/js/wrap-end.js'
                 ],
                 dest: 'build/js/<%= framework7.filename %>.js'
             },
