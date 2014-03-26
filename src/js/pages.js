@@ -15,13 +15,13 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
         from: position
     };
     // Before Init Callback
-    if (app.params.onBeforePageInit) {
-        app.params.onBeforePageInit(pageData);
+    if (app.params.onPageBeforeInit) {
+        app.params.onPageBeforeInit(pageData);
     }
-    if (view.params.onBeforePageInit) {
-        view.params.onBeforePageInit(pageData);
+    if (view.params.onPageBeforeInit) {
+        view.params.onPageBeforeInit(pageData);
     }
-    $(document).trigger('beforePageInit', {page: pageData});
+    $(document).trigger('pageBeforeInit', {page: pageData});
     app.initPage(pageContainer);
     // Init Callback
     if (app.params.onPageInit) {
