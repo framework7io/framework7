@@ -32,7 +32,7 @@ app.get = function (url, callback) {
     xhr.onload = function (e) {
         if (app.params.onAjaxComplete) {
             app.params.onAjaxComplete(xhr);
-            $(document).trigger('ajaxComplete');
+            $(document).trigger('ajaxComplete', {xhr: xhr});
         }
         if (callback) {
             if (this.status === 200 || this.status === 0) {
@@ -53,7 +53,7 @@ app.get = function (url, callback) {
     };
     if (app.params.onAjaxStart) {
         app.params.onAjaxStart(xhr);
-        $(document).trigger('ajaxStart');
+        $(document).trigger('ajaxStart', {xhr: xhr});
     }
     app.xhr = xhr;
     xhr.send();
