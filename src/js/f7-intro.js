@@ -3,8 +3,6 @@
 Framework 7
 ===========================*/
 window.Framework7 = function (params) {
-    // CSS ":active" pseudo selector fix
-    document.addEventListener('touchstart', function () {}, true);
 
     // App
     var app = this;
