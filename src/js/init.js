@@ -8,6 +8,8 @@ app.init = function () {
     app.initSwipeout();
     // Detect statusbar
     app.detectStatusBar();
+    // Init Pull To Refresh
+    app.initPullToRefresh();
     // Init each page callbacks
     $('.page').each(function () {
         app.initPage(this);

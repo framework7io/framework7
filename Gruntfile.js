@@ -105,6 +105,7 @@ module.exports = function (grunt) {
                     'src/js/panels.js',
                     'src/js/messages.js',
                     'src/js/swipeout.js',
+                    'src/js/pull-to-refresh.js',
                     'src/js/clicks.js',
                     'src/js/resize.js',
                     'src/js/statusbar.js',
