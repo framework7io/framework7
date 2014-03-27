@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.0
+ * Framework7 0.6.2
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 25, 2014
+ * Released on: March 27, 2014
 */
 (function () {
 
@@ -19,8 +19,6 @@
     Framework 7
     ===========================*/
     window.Framework7 = function (params) {
-        // CSS ":active" pseudo selector fix
-        document.addEventListener('touchstart', function () {}, true);
     
         // App
         var app = this;
@@ -160,7 +158,7 @@
                 el;
         
             viewContainer.on(app.touchEvents.start, function (e) {
-                if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.openedSwipeOutEl) return;
+                if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
@@ -406,7 +404,8 @@
             xhr.open('GET', url, true);
             xhr.onload = function (e) {
                 if (app.params.onAjaxComplete) {
-                    app.params.onAjaxComplete();
+                    app.params.onAjaxComplete(xhr);
+                    $(document).trigger('ajaxComplete', {xhr: xhr});
                 }
                 if (callback) {
                     if (this.status === 200 || this.status === 0) {
@@ -426,10 +425,11 @@
                 }
             };
             if (app.params.onAjaxStart) {
-                app.params.onAjaxStart();
+                app.params.onAjaxStart(xhr);
+                $(document).trigger('ajaxStart', {xhr: xhr});
             }
-            xhr.send();
             app.xhr = xhr;
+            xhr.send();
             return xhr;
         };
         /*======================================================
@@ -449,13 +449,13 @@
                 from: position
             };
             // Before Init Callback
-            if (app.params.onBeforePageInit) {
-                app.params.onBeforePageInit(pageData);
+            if (app.params.onPageBeforeInit) {
+                app.params.onPageBeforeInit(pageData);
             }
-            if (view.params.onBeforePageInit) {
-                view.params.onBeforePageInit(pageData);
+            if (view.params.onPageBeforeInit) {
+                view.params.onPageBeforeInit(pageData);
             }
-            $(document).trigger('beforePageInit', {page: pageData});
+            $(document).trigger('pageBeforeInit', {page: pageData});
             app.initPage(pageContainer);
             // Init Callback
             if (app.params.onPageInit) {
@@ -977,13 +977,15 @@
             var groups = modal.find('.actions-modal-group');
             groups.each(function (index, el) {
                 var groupIndex = index;
-                $(el).find('.actions-modal-button').each(function (index, el) {
+                $(el).children().each(function (index, el) {
                     var buttonIndex = index;
                     var buttonParams = params[groupIndex][buttonIndex];
-                    $(el).tap(function (e) {
-                        if (buttonParams.close !== false) app.closeModal(modal);
-                        if (buttonParams.onClick) buttonParams.onClick(modal, e);
-                    });
+                    if ($(el).hasClass('actions-modal-button')) {
+                        $(el).tap(function (e) {
+                            if (buttonParams.close !== false) app.closeModal(modal);
+                            if (buttonParams.onClick) buttonParams.onClick(modal, e);
+                        });
+                    }
                 });
             });
             app.openModal(modal);
@@ -1255,26 +1257,26 @@
         /*===============================================================================
         ************   Swipeout Actions (Swipe to delete)   ************
         ===============================================================================*/
-        app.openedSwipeOutEl = undefined;
-        app.allowSwipeOut = true;
-        app.initSwipeOutList = function () {
+        app.swipeoutOpenedEl = undefined;
+        app.allowSwipeout = true;
+        app.initSwipeout = function () {
             var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, swipeOutActions, swipeOutActionsWidth, translate, opened;
             $(document).on(app.touchEvents.start, function (e) {
-                if (app.openedSwipeOutEl) {
+                if (app.swipeoutOpenedEl) {
                     var target = $(e.target);
                     if (!(
-                        app.openedSwipeOutEl.is(target[0]) ||
-                        target.parents('.swipeout').is(app.openedSwipeOutEl) ||
+                        app.swipeoutOpenedEl.is(target[0]) ||
+                        target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
                         target.hasClass('modal-in') ||
                         target.parents('.modal-in').length > 0 ||
                         target.hasClass('modal-overlay')
                         )) {
-                        app.closeSwipeOutList(app.openedSwipeOutEl);
+                        app.swipeoutClose(app.swipeoutOpenedEl);
                     }
                 }
             });
             $(document).on(app.touchEvents.start, '.list-block li.swipeout', function (e) {
-                if (!app.allowSwipeOut) return;
+                if (!app.allowSwipeout) return;
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
@@ -1326,7 +1328,7 @@
                 isTouched = false;
                 isMoved = false;
                 var timeDiff = (new Date()).getTime() - touchStartTime;
-                if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeOut = false;
+                if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeout = false;
                 
                 var action;
                 if (opened) {
@@ -1352,24 +1354,24 @@
                     }
                 }
                 if (action === 'open') {
-                    app.openedSwipeOutEl = swipeOutEl;
+                    app.swipeoutOpenedEl = swipeOutEl;
                     swipeOutEl.trigger('open');
                     swipeOutEl.addClass('swipeout-opened transitioning');
                     swipeOutContent.transform('translate3d(' + -swipeOutActionsWidth + 'px,0,0)');
                 }
                 else {
                     swipeOutEl.trigger('close');
-                    app.openedSwipeOutEl = undefined;
+                    app.swipeoutOpenedEl = undefined;
                     swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
                     swipeOutContent.transform('translate3d(' + 0 + 'px,0,0)');
                 }
                 swipeOutContent.transitionEnd(function () {
-                    app.allowSwipeOut = true;
+                    app.allowSwipeout = true;
                     swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
                 });
             });
         };
-        app.openSwipeOutList = function (el) {
+        app.swipeoutOpen = function (el) {
             el = $(el);
             if (!el.hasClass('swipeout')) return;
             if (el.length === 0) return;
@@ -1379,12 +1381,12 @@
             el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
                 el.trigger('opened');
             });
-            app.openedSwipeOutEl = el;
+            app.swipeoutOpenedEl = el;
         };
-        app.closeSwipeOutList = function (el) {
+        app.swipeoutClose = function (el) {
             el = $(el);
             if (el.length === 0) return;
-            app.allowSwipeOut = false;
+            app.allowSwipeout = false;
             el.trigger('close');
             el.removeClass('swipeout-opened')
                 .addClass('transitioning')
@@ -1392,16 +1394,16 @@
                 .transform('translate3d(' + 0 + 'px,0,0)')
                 .transitionEnd(function () {
                     el.trigger('closed');
-                    app.allowSwipeOut = true;
+                    app.allowSwipeout = true;
                 });
         
-            if (app.openedSwipeOutEl[0] === el[0]) app.openedSwipeOutEl = undefined;
+            if (app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
         };
-        app.deleteSwipeOutList = function (el) {
+        app.swipeoutDelete = function (el) {
             el = $(el);
             if (el.length === 0) return;
             if (el.length > 1) el = $(el[0]);
-            app.openedSwipeOutEl = undefined;
+            app.swipeoutOpenedEl = undefined;
             el.trigger('delete');
             el.css({height: el.outerHeight() + 'px'});
             var clientLeft = el[0].clientLeft;
@@ -1410,6 +1412,93 @@
                 el.remove();
             });
             el.find('.swipeout-content').transform('translate3d(-100%,0,0)');
+        };
+        /*======================================================
+        ************   Pull To Refresh   ************
+        ======================================================*/
+        app.initPullToRefresh = function () {
+            var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
+            $(document).on(app.touchEvents.start, '.pull-to-refresh-content', function (e) {
+                if (isTouched) return;
+                isMoved = false;
+                isTouched = true;
+                isScrolling = undefined;
+                touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+                touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                touchStartTime = (new Date()).getTime();
+            });
+            $(document).on(app.touchEvents.move, '.pull-to-refresh-content', function (e) {
+                if (!isTouched) return;
+                var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                if (typeof isScrolling === 'undefined') {
+                    isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+                }
+                if (!isScrolling) {
+                    isTouched = false;
+                    return;
+                }
+                if (!isMoved) {
+                    container = $(this);
+                    container.removeClass('transitioning');
+                    startTranslate = container.hasClass('refreshing') ? 44 : 0;
+                    if (container[0].scrollHeight === container[0].offsetHeight) {
+                        useTranslate = true;
+                    }
+                    else {
+                        useTranslate = false;
+                    }
+                }
+                isMoved = true;
+                touchesDiff = pageY - touchesStart.y;
+                if (touchesDiff > 0 && container[0].scrollTop <= 0 || container[0].scrollTop < 0) {
+                    if (useTranslate) {
+                        e.preventDefault();
+                        container.transform('translate3d(0,' + (Math.pow(touchesDiff, 0.85) + startTranslate) + 'px,0)');
+                    }
+                    if ((useTranslate && Math.pow(touchesDiff, 0.85) > 44) || (!useTranslate && touchesDiff >= 88)) {
+                        refresh = true;
+                        container.addClass('pull-up');
+                    }
+                    else {
+                        refresh = false;
+                        container.removeClass('pull-up');
+                    }
+                }
+                else {
+                    container.removeClass('pull-up');
+                    refresh = false;
+                    return;
+                }
+            });
+            $(document).on(app.touchEvents.end, '.pull-to-refresh-content', function (e) {
+                if (!isTouched || !isMoved) {
+                    isTouched = false;
+                    isMoved = false;
+                    return;
+                }
+                container.transform('');
+                container.addClass('transitioning');
+                if (refresh) {
+                    container.addClass('refreshing');
+                    container.trigger('refresh', {
+                        done: function () {
+                            app.pullToRefreshDone(container);
+                        }
+                    });
+                }
+                isTouched = false;
+                isMoved = false;
+            });
+        };
+        
+        app.pullToRefreshDone = function (container) {
+            container = $(container);
+            if (container.length === 0) container = $('.pull-to-refresh-content.refreshing');
+            container.removeClass('refreshing').addClass('transitioning');
+            container.transitionEnd(function () {
+                container.removeClass('transitioning pull-up');
+            });
         };
         /*===============================================================================
         ************   Handle clicks and make them fast (on tap);   ************
@@ -1506,11 +1595,11 @@
                 if (clicked.hasClass('swipeout-delete')) {
                     if (clicked.attr('data-confirm')) {
                         var modal = app.confirm(clicked.attr('data-confirm'), function () {
-                            app.deleteSwipeOutList(clicked.parents('.swipeout'));
+                            app.swipeoutDelete(clicked.parents('.swipeout'));
                         });
                     }
                     else {
-                        app.deleteSwipeOutList(clicked.parents('.swipeout'));
+                        app.swipeoutDelete(clicked.parents('.swipeout'));
                     }
                         
                 }
@@ -1579,9 +1668,11 @@
             // Init Click events
             app.initClickEvents();
             // Init Swipeouts events
-            app.initSwipeOutList();
+            app.initSwipeout();
             // Detect statusbar
             app.detectStatusBar();
+            // Init Pull To Refresh
+            app.initPullToRefresh();
             // Init each page callbacks
             $('.page').each(function () {
                 app.initPage(this);
@@ -1723,19 +1814,12 @@
                 dom.on('touchstart', targetSelector, function (e) {
                     isTouched = true;
                     isMoved = false;
-                    // touchesStart.x = e.targetTouches[0].pageX;
-                    // touchesStart.y = e.targetTouches[0].pageY;
-                    // deltaX = deltaY = 0;
-                    // touchStartTime = (new Date()).getTime();
                 });
                 dom.on('touchmove', targetSelector, function (e) {
-                    if (!isTouched) return;
+                    if (!isTouched || isMoved) return;
                     isMoved = true;
-                    // deltaX = e.targetTouches[0].pageX - touchesStart.x;
-                    // deltaY = e.targetTouches[0].pageY - touchesStart.y;
                 });
                 dom.on('touchend', targetSelector, function (e) {
-                    // var timeDiff = (new Date()).getTime() - touchStartTime;
                     e.preventDefault(); // - to prevent Safari's Ghost click
                     if (isTouched && !isMoved) {
                         listener.call(this, e);
@@ -1755,8 +1839,16 @@
         },
         trigger: function (eventName, eventData) {
             for (var i = 0; i < this.length; i++) {
-                var e = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
-                this[i].dispatchEvent(e);
+                var evt;
+                try {
+                    evt = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
+                }
+                catch (e) {
+                    evt = document.createEvent('Event');
+                    evt.initEvent(eventName, true, true);
+                    evt.detail = eventData;
+                }
+                this[i].dispatchEvent(evt);
             }
             return this;
         },
@@ -1908,7 +2000,6 @@
             if (typeof selector === 'string') compareWith = document.querySelectorAll(selector);
             else if (selector.nodeType) compareWith = [selector];
             else compareWith = selector;
-            var match = false;
             for (var i = 0; i < compareWith.length; i++) {
                 if (compareWith[i] === this[0]) return true;
             }
@@ -1937,7 +2028,11 @@
         prepend: function (newChild) {
             for (var i = 0; i < this.length; i++) {
                 if (typeof newChild === 'string') {
-                    this[i].innerHTML = newChild + this[i].innerHTML;
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = newChild;
+                    while (tempDiv.firstChild) {
+                        this[i].insertBefore(tempDiv.firstChild, this[i].childNodes[0]);
+                    }
                 }
                 else {
                     this[i].insertBefore(newChild, this[i].childNodes[0]);

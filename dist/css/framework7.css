@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.0
+ * Framework7 0.6.2
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 25, 2014
+ * Released on: March 27, 2014
 */
 /*=============
   Framework 7
@@ -20,6 +20,7 @@ body {
   position: relative;
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }
 body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -257,8 +258,8 @@ p {
   -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   opacity: 1;
-  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 .page-on-left {
   opacity: 0.9;
@@ -277,8 +278,8 @@ p {
   transform: translate3d(0, 0, 0);
 }
 .page-on-right {
-  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: none;
+  box-shadow: none;
   opacity: 1;
   -webkit-transform: translate3d(100%, 0, 0);
   -ms-transform: translate3d(100%, 0, 0);
@@ -306,8 +307,8 @@ p {
 }
 @-webkit-keyframes pageFromRightToCenter {
   from {
-    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    -webkit-box-shadow: none;
+    box-shadow: none;
     -webkit-transform: translate3d(100%, 0, 0);
   }
   to {
@@ -323,15 +324,15 @@ p {
     -webkit-transform: translate3d(0, 0, 0);
   }
   to {
-    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    -webkit-box-shadow: none;
+    box-shadow: none;
     -webkit-transform: translate3d(100%, 0, 0);
   }
 }
 @keyframes pageFromRightToCenter {
   from {
-    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    -webkit-box-shadow: none;
+    box-shadow: none;
     transform: translate3d(100%, 0, 0);
   }
   to {
@@ -347,8 +348,8 @@ p {
     transform: translate3d(0, 0, 0);
   }
   to {
-    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    -webkit-box-shadow: none;
+    box-shadow: none;
     transform: translate3d(100%, 0, 0);
   }
 }
@@ -931,6 +932,7 @@ i.icon.icon-form-url {
   display: -webkit-flex;
   display: flex;
   -webkit-box-flex: 1;
+  -ms-flex: 1;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
@@ -961,10 +963,11 @@ i.icon.icon-form-url {
   width: 100%;
   margin-top: -8px;
   margin-bottom: -7px;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
-  -webkit-box-flex: 1;
 }
 .list-block .item-after {
   white-space: nowrap;
@@ -1367,6 +1370,7 @@ i.icon.icon-form-url {
   border-left-width: 0;
   width: 100%;
   -webkit-box-flex: 1;
+  -ms-flex: 1;
 }
 .buttons-row .button:first-child {
   border-radius: 5px 0 0 5px;
@@ -1627,6 +1631,7 @@ label.label-radio:active .item-inner {
   box-sizing: border-box;
   border-right: 1px solid #b5b5b5;
   -webkit-box-flex: 1;
+  -ms-flex: 1;
 }
 .modal-button:first-child {
   border-radius: 0 0 0 7px;
@@ -2296,4 +2301,61 @@ body.with-statusbar-overlay .panel {
   100% {
     transform: rotate(360deg);
   }
+}
+/* === Pull To Refresh === */
+.pull-to-refresh-layer {
+  position: absolute;
+  position: relative;
+  margin-top: -44px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 44px;
+}
+.pull-to-refresh-layer .preloader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  opacity: 0;
+}
+.pull-to-refresh-layer .pull-to-refresh-arrow {
+  width: 13px;
+  height: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -6px;
+  margin-top: -10px;
+  background: no-repeat center;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 40'><polygon points='9,22 9,0 17,0 17,22 26,22 13.5,40 0,22' fill='%238c8c8c'/></svg>");
+  background-size: 13px 20px;
+  z-index: 10;
+  opacity: 1;
+  -webkit-transform: rotate(0deg) translate3d(0, 0, 0);
+  -ms-transform: rotate(0deg) translate3d(0, 0, 0);
+  transform: rotate(0deg) translate3d(0, 0, 0);
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.pull-to-refresh-content.refreshing {
+  -webkit-transform: translate3d(0, 44px, 0);
+  -ms-transform: translate3d(0, 44px, 0);
+  transform: translate3d(0, 44px, 0);
+}
+.pull-to-refresh-content.refreshing .pull-to-refresh-arrow {
+  opacity: 0;
+}
+.pull-to-refresh-content.refreshing .preloader {
+  opacity: 1;
+}
+.pull-to-refresh-content.pull-up .pull-to-refresh-arrow {
+  -webkit-transform: rotate(180deg) translate3d(0, 0, 0);
+  -ms-transform: rotate(180deg) translate3d(0, 0, 0);
+  transform: rotate(180deg) translate3d(0, 0, 0);
+}
+.pull-to-refresh-content.transitioning {
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
 }
