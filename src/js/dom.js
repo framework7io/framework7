@@ -125,19 +125,12 @@ Dom7.prototype = {
             dom.on('touchstart', targetSelector, function (e) {
                 isTouched = true;
                 isMoved = false;
-                // touchesStart.x = e.targetTouches[0].pageX;
-                // touchesStart.y = e.targetTouches[0].pageY;
-                // deltaX = deltaY = 0;
-                // touchStartTime = (new Date()).getTime();
             });
             dom.on('touchmove', targetSelector, function (e) {
-                if (!isTouched) return;
+                if (!isTouched || isMoved) return;
                 isMoved = true;
-                // deltaX = e.targetTouches[0].pageX - touchesStart.x;
-                // deltaY = e.targetTouches[0].pageY - touchesStart.y;
             });
             dom.on('touchend', targetSelector, function (e) {
-                // var timeDiff = (new Date()).getTime() - touchStartTime;
                 e.preventDefault(); // - to prevent Safari's Ghost click
                 if (isTouched && !isMoved) {
                     listener.call(this, e);
@@ -157,8 +150,16 @@ Dom7.prototype = {
     },
     trigger: function (eventName, eventData) {
         for (var i = 0; i < this.length; i++) {
-            var e = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
-            this[i].dispatchEvent(e);
+            var evt;
+            try {
+                evt = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
+            }
+            catch (e) {
+                evt = document.createEvent('Event');
+                evt.initEvent(eventName, true, true);
+                evt.detail = eventData;
+            }
+            this[i].dispatchEvent(evt);
         }
         return this;
     },
@@ -310,7 +311,6 @@ Dom7.prototype = {
         if (typeof selector === 'string') compareWith = document.querySelectorAll(selector);
         else if (selector.nodeType) compareWith = [selector];
         else compareWith = selector;
-        var match = false;
         for (var i = 0; i < compareWith.length; i++) {
             if (compareWith[i] === this[0]) return true;
         }
@@ -339,7 +339,11 @@ Dom7.prototype = {
     prepend: function (newChild) {
         for (var i = 0; i < this.length; i++) {
             if (typeof newChild === 'string') {
-                this[i].innerHTML = newChild + this[i].innerHTML;
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = newChild;
+                while (tempDiv.firstChild) {
+                    this[i].insertBefore(tempDiv.firstChild, this[i].childNodes[0]);
+                }
             }
             else {
                 this[i].insertBefore(newChild, this[i].childNodes[0]);
