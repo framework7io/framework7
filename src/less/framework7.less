@@ -20,6 +20,12 @@ body {
     background: #fff;
     overflow: hidden;
 }
+// Temporary fix for iPad in Safari in Lanscape mode
+@media all and (width:1024px) and (height:691px){
+    html {
+        height: ~"-webkit-calc(100% - 20px)";
+    }
+}
 
 * { 
     -webkit-tap-highlight-color: rgba(0,0,0,0); 
