@@ -62,8 +62,8 @@ app.initPullToRefresh = function () {
             isMoved = false;
             return;
         }
-        container.transform('');
         container.addClass('transitioning');
+        container.transform('');
         if (refresh) {
             container.addClass('refreshing');
             container.trigger('refresh', {
