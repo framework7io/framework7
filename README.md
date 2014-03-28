@@ -63,6 +63,10 @@ Distributable version will available in `dist/` folder.
 
 All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at Gruntfile.js for concat files order)
 
+## Forum
+
+If you have questions about Framework7 or want to help others you are welcome to special forum at http://www.idangero.us/framework7/forum/
+
 ## Docs
 
 Coming soon...
