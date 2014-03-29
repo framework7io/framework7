@@ -295,7 +295,7 @@ app.closeModal = function (modal) {
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
     if (!isPopover) {
-        modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
+        modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
             modal.trigger('closed');
             if (!isPopup) modal.remove();
             if (isPopup) modal.removeClass('modal-out').hide();
