@@ -306,6 +306,19 @@ Dom7.prototype = {
             return this;
         }
     },
+    text: function (text) {
+        if (typeof text === 'undefined') {
+            if (this[0]) {
+                return this[0].textContent.trim();
+            }
+            else return null;
+        }
+        else {
+            for (var i = 0; i < this.length; i++) {
+                this[0].textContent = text;
+            }
+        }
+    },
     is: function (selector) {
         var compareWith;
         if (typeof selector === 'string') compareWith = document.querySelectorAll(selector);
@@ -341,8 +354,8 @@ Dom7.prototype = {
             if (typeof newChild === 'string') {
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = newChild;
-                while (tempDiv.firstChild) {
-                    this[i].insertBefore(tempDiv.firstChild, this[i].childNodes[0]);
+                for (var j = tempDiv.childNodes.length - 1; j >= 0; j--) {
+                    this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
                 }
             }
             else {
@@ -434,7 +447,7 @@ Dom7.prototype = {
     },
     remove: function () {
         for (var i = 0; i < this.length; i++) {
-            this[i].parentNode.removeChild(this[i]);
+            if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
         }
         return this;
     },
@@ -483,6 +496,9 @@ $.unique = function (arr) {
         if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
     }
     return unique;
+};
+$.trim = function (str) {
+    return str.trim();
 };
 $.supportTouch = (function () {
     return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
