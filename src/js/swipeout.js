@@ -19,7 +19,9 @@ app.initSwipeout = function () {
             }
         }
     });
-    $(document).on(app.touchEvents.start, '.list-block li.swipeout', function (e) {
+    
+
+    function handleTouchStart(e) {
         if (!app.allowSwipeout) return;
         isMoved = false;
         isTouched = true;
@@ -28,10 +30,9 @@ app.initSwipeout = function () {
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
 
-    });
-    $(document).on(app.touchEvents.move, '.list-block li.swipeout', function (e) {
+    }
+    function handleTouchMove(e) {
         if (!isTouched) return;
-        
         var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
         if (typeof isScrolling === 'undefined') {
@@ -43,6 +44,7 @@ app.initSwipeout = function () {
         }
 
         if (!isMoved) {
+            /*jshint validthis:true */
             swipeOutEl = $(this);
             swipeOutContent = swipeOutEl.find('.swipeout-content');
             swipeOutActions = swipeOutEl.find('.swipeout-actions-inner');
@@ -62,8 +64,8 @@ app.initSwipeout = function () {
         
         swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
 
-    });
-    $(document).on(app.touchEvents.end, '.list-block li.swipeout', function (e) {
+    }
+    function handleTouchEnd(e) {
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -113,7 +115,10 @@ app.initSwipeout = function () {
             app.allowSwipeout = true;
             swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
         });
-    });
+    }
+    $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
+    $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
+    $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
 };
 app.swipeoutOpen = function (el) {
     el = $(el);

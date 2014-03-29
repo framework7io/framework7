@@ -2,7 +2,8 @@
 ************   Handle clicks and make them fast (on tap);   ************
 ===============================================================================*/
 app.initClickEvents = function () {
-    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', function (e) {
+    function handleTap(e) {
+        /*jshint validthis:true */
         var clicked = $(this);
         var url = clicked.attr('href');
         // External
@@ -123,9 +124,13 @@ app.initClickEvents = function () {
             if (clicked.hasClass('back')) view.goBack(clicked.attr('href'));
             else view.loadPage(clicked.attr('href'));
         }
-    });
+    }
+    $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', handleTap);
+    
     //Disable clicks
-    $(document).on('click', 'a, .label-checkbox, .label-radio', function (e) {
+    function handleClick(e) {
+        /*jshint validthis:true */
         if (!$(this).hasClass('external')) e.preventDefault();
-    });
+    }
+    $(document).on('click', 'a, .label-checkbox, .label-radio', handleClick);
 };

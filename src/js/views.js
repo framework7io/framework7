@@ -73,7 +73,7 @@ app.initViewEvents = function (view) {
         dynamicNavbar,
         el;
 
-    viewContainer.on(app.touchEvents.start, function (e) {
+    function handleTouchStart(e) {
         if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
         isMoved = false;
         isTouched = true;
@@ -82,8 +82,9 @@ app.initViewEvents = function (view) {
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
         dynamicNavbar = view.params.dynamicNavbar && viewContainer.find('.navbar-inner').length > 1;
-    });
-    viewContainer.on(app.touchEvents.move, function (e) {
+    }
+    
+    function handleTouchMove(e) {
         if (!isTouched) return;
         var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -145,8 +146,8 @@ app.initViewEvents = function (view) {
             }
         }
 
-    });
-    viewContainer.on(app.touchEvents.end, function (e) {
+    }
+    function handleTouchEnd(e) {
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -208,5 +209,9 @@ app.initViewEvents = function (view) {
             app.allowPageChange = true;
             if (pageChanged) app.afterGoBack(view, activePage, previousPage);
         });
-    });
+    }
+
+    viewContainer.on(app.touchEvents.start, handleTouchStart);
+    viewContainer.on(app.touchEvents.move, handleTouchMove);
+    viewContainer.on(app.touchEvents.end, handleTouchEnd);
 };

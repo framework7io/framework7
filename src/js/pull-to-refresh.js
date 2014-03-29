@@ -3,7 +3,7 @@
 ======================================================*/
 app.initPullToRefresh = function () {
     var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
-    $(document).on(app.touchEvents.start, '.pull-to-refresh-content', function (e) {
+    function handleTouchStart(e) {
         if (isTouched) return;
         isMoved = false;
         isTouched = true;
@@ -11,8 +11,9 @@ app.initPullToRefresh = function () {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
-    });
-    $(document).on(app.touchEvents.move, '.pull-to-refresh-content', function (e) {
+    }
+    
+    function handleTouchMove(e) {
         if (!isTouched) return;
         var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -24,6 +25,7 @@ app.initPullToRefresh = function () {
             return;
         }
         if (!isMoved) {
+            /*jshint validthis:true */
             container = $(this);
             container.removeClass('transitioning');
             startTranslate = container.hasClass('refreshing') ? 44 : 0;
@@ -55,8 +57,8 @@ app.initPullToRefresh = function () {
             refresh = false;
             return;
         }
-    });
-    $(document).on(app.touchEvents.end, '.pull-to-refresh-content', function (e) {
+    }
+    function handleTouchEnd(e) {
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -74,7 +76,10 @@ app.initPullToRefresh = function () {
         }
         isTouched = false;
         isMoved = false;
-    });
+    }
+    $(document).on(app.touchEvents.start, '.pull-to-refresh-content', handleTouchStart);
+    $(document).on(app.touchEvents.move, '.pull-to-refresh-content', handleTouchMove);
+    $(document).on(app.touchEvents.end, '.pull-to-refresh-content', handleTouchEnd);
 };
 
 app.pullToRefreshDone = function (container) {

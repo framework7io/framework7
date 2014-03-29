@@ -121,22 +121,26 @@ Dom7.prototype = {
             listener = arguments[0];
             targetSelector = false;
         }
+        function handleTouchStart(e) {
+            isTouched = true;
+            isMoved = false;
+        }
+        function handleTouchMove(e) {
+            if (!isTouched || isMoved) return;
+            isMoved = true;
+        }
+        function handleTouchEnd(e) {
+            e.preventDefault(); // - to prevent Safari's Ghost click
+            if (isTouched && !isMoved) {
+                /*jshint validthis:true */
+                listener.call(this, e);
+            }
+            isTouched = isMoved = false;
+        }
         if ($.supportTouch) {
-            dom.on('touchstart', targetSelector, function (e) {
-                isTouched = true;
-                isMoved = false;
-            });
-            dom.on('touchmove', targetSelector, function (e) {
-                if (!isTouched || isMoved) return;
-                isMoved = true;
-            });
-            dom.on('touchend', targetSelector, function (e) {
-                e.preventDefault(); // - to prevent Safari's Ghost click
-                if (isTouched && !isMoved) {
-                    listener.call(this, e);
-                }
-                isTouched = isMoved = false;
-            });
+            dom.on('touchstart', targetSelector, handleTouchStart);
+            dom.on('touchmove', targetSelector, handleTouchEnd);
+            dom.on('touchend', targetSelector, handleTouchEnd);
         }
         else {
             dom.on('click', targetSelector, listener);
