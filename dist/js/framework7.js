@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.3
+ * Framework7 0.6.4
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -157,7 +157,7 @@
                 dynamicNavbar,
                 el;
         
-            viewContainer.on(app.touchEvents.start, function (e) {
+            function handleTouchStart(e) {
                 if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
                 isMoved = false;
                 isTouched = true;
@@ -166,8 +166,9 @@
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = (new Date()).getTime();
                 dynamicNavbar = view.params.dynamicNavbar && viewContainer.find('.navbar-inner').length > 1;
-            });
-            viewContainer.on(app.touchEvents.move, function (e) {
+            }
+            
+            function handleTouchMove(e) {
                 if (!isTouched) return;
                 var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
                 var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -229,8 +230,8 @@
                     }
                 }
         
-            });
-            viewContainer.on(app.touchEvents.end, function (e) {
+            }
+            function handleTouchEnd(e) {
                 if (!isTouched || !isMoved) {
                     isTouched = false;
                     isMoved = false;
@@ -292,7 +293,11 @@
                     app.allowPageChange = true;
                     if (pageChanged) app.afterGoBack(view, activePage, previousPage);
                 });
-            });
+            }
+        
+            viewContainer.on(app.touchEvents.start, handleTouchStart);
+            viewContainer.on(app.touchEvents.move, handleTouchMove);
+            viewContainer.on(app.touchEvents.end, handleTouchEnd);
         };
         /*======================================================
         ************   Navbars && Toolbars   ************
@@ -1275,7 +1280,9 @@
                     }
                 }
             });
-            $(document).on(app.touchEvents.start, '.list-block li.swipeout', function (e) {
+            
+        
+            function handleTouchStart(e) {
                 if (!app.allowSwipeout) return;
                 isMoved = false;
                 isTouched = true;
@@ -1284,10 +1291,9 @@
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = (new Date()).getTime();
         
-            });
-            $(document).on(app.touchEvents.move, '.list-block li.swipeout', function (e) {
+            }
+            function handleTouchMove(e) {
                 if (!isTouched) return;
-                
                 var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
                 var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
                 if (typeof isScrolling === 'undefined') {
@@ -1299,6 +1305,7 @@
                 }
         
                 if (!isMoved) {
+                    /*jshint validthis:true */
                     swipeOutEl = $(this);
                     swipeOutContent = swipeOutEl.find('.swipeout-content');
                     swipeOutActions = swipeOutEl.find('.swipeout-actions-inner');
@@ -1318,8 +1325,8 @@
                 
                 swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
         
-            });
-            $(document).on(app.touchEvents.end, '.list-block li.swipeout', function (e) {
+            }
+            function handleTouchEnd(e) {
                 if (!isTouched || !isMoved) {
                     isTouched = false;
                     isMoved = false;
@@ -1369,7 +1376,10 @@
                     app.allowSwipeout = true;
                     swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
                 });
-            });
+            }
+            $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
+            $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
+            $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
         };
         app.swipeoutOpen = function (el) {
             el = $(el);
@@ -1418,7 +1428,7 @@
         ======================================================*/
         app.initPullToRefresh = function () {
             var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
-            $(document).on(app.touchEvents.start, '.pull-to-refresh-content', function (e) {
+            function handleTouchStart(e) {
                 if (isTouched) return;
                 isMoved = false;
                 isTouched = true;
@@ -1426,8 +1436,9 @@
                 touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = (new Date()).getTime();
-            });
-            $(document).on(app.touchEvents.move, '.pull-to-refresh-content', function (e) {
+            }
+            
+            function handleTouchMove(e) {
                 if (!isTouched) return;
                 var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
                 var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -1439,6 +1450,7 @@
                     return;
                 }
                 if (!isMoved) {
+                    /*jshint validthis:true */
                     container = $(this);
                     container.removeClass('transitioning');
                     startTranslate = container.hasClass('refreshing') ? 44 : 0;
@@ -1470,8 +1482,8 @@
                     refresh = false;
                     return;
                 }
-            });
-            $(document).on(app.touchEvents.end, '.pull-to-refresh-content', function (e) {
+            }
+            function handleTouchEnd(e) {
                 if (!isTouched || !isMoved) {
                     isTouched = false;
                     isMoved = false;
@@ -1489,7 +1501,10 @@
                 }
                 isTouched = false;
                 isMoved = false;
-            });
+            }
+            $(document).on(app.touchEvents.start, '.pull-to-refresh-content', handleTouchStart);
+            $(document).on(app.touchEvents.move, '.pull-to-refresh-content', handleTouchMove);
+            $(document).on(app.touchEvents.end, '.pull-to-refresh-content', handleTouchEnd);
         };
         
         app.pullToRefreshDone = function (container) {
@@ -1504,7 +1519,8 @@
         ************   Handle clicks and make them fast (on tap);   ************
         ===============================================================================*/
         app.initClickEvents = function () {
-            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', function (e) {
+            function handleTap(e) {
+                /*jshint validthis:true */
                 var clicked = $(this);
                 var url = clicked.attr('href');
                 // External
@@ -1625,11 +1641,15 @@
                     if (clicked.hasClass('back')) view.goBack(clicked.attr('href'));
                     else view.loadPage(clicked.attr('href'));
                 }
-            });
+            }
+            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', handleTap);
+            
             //Disable clicks
-            $(document).on('click', 'a, .label-checkbox, .label-radio', function (e) {
+            function handleClick(e) {
+                /*jshint validthis:true */
                 if (!$(this).hasClass('external')) e.preventDefault();
-            });
+            }
+            $(document).on('click', 'a, .label-checkbox, .label-radio', handleClick);
         };
         /*======================================================
         ************   App Resize Actions   ************
@@ -1699,12 +1719,13 @@
         
                 
             // Minimal UI
-            var osVersionArr = device.osVersion.split('.');
-            device.minimalUi = !device.webview &&
-                                device.os === 'ios' &&
-                                (ipod || iphone) &&
-                                (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
-                                $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
+            if (device.os && device.os === 'ios') {
+                var osVersionArr = device.osVersion.split('.');
+                device.minimalUi = !device.webview &&
+                                    (ipod || iphone) &&
+                                    (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
+                                    $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
+            }
         
             // Add html classes
             if (device.os) {
@@ -1870,22 +1891,26 @@
                 listener = arguments[0];
                 targetSelector = false;
             }
+            function handleTouchStart(e) {
+                isTouched = true;
+                isMoved = false;
+            }
+            function handleTouchMove(e) {
+                if (!isTouched || isMoved) return;
+                isMoved = true;
+            }
+            function handleTouchEnd(e) {
+                e.preventDefault(); // - to prevent Safari's Ghost click
+                if (isTouched && !isMoved) {
+                    /*jshint validthis:true */
+                    listener.call(this, e);
+                }
+                isTouched = isMoved = false;
+            }
             if ($.supportTouch) {
-                dom.on('touchstart', targetSelector, function (e) {
-                    isTouched = true;
-                    isMoved = false;
-                });
-                dom.on('touchmove', targetSelector, function (e) {
-                    if (!isTouched || isMoved) return;
-                    isMoved = true;
-                });
-                dom.on('touchend', targetSelector, function (e) {
-                    e.preventDefault(); // - to prevent Safari's Ghost click
-                    if (isTouched && !isMoved) {
-                        listener.call(this, e);
-                    }
-                    isTouched = isMoved = false;
-                });
+                dom.on('touchstart', targetSelector, handleTouchStart);
+                dom.on('touchmove', targetSelector, handleTouchMove);
+                dom.on('touchend', targetSelector, handleTouchEnd);
             }
             else {
                 dom.on('click', targetSelector, listener);
