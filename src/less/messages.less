@@ -81,6 +81,12 @@
     -webkit-animation: messageAppear 400ms;
     animation: messageAppear 400ms;
 }
+html.ios-6 {
+    .message, .message.message-pic img {
+        -webkit-mask-box-image:none;
+        border-radius: 16px;
+    }
+}
 @-webkit-keyframes messageAppear {
     from {
         -webkit-transform: translate3d(0,100%,0);
