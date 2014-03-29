@@ -109,6 +109,7 @@ module.exports = function (grunt) {
                     'src/js/clicks.js',
                     'src/js/resize.js',
                     'src/js/statusbar.js',
+                    'src/js/device.js',
                     'src/js/init.js',
                     'src/js/f7-outro.js',
                     'src/js/dom.js',

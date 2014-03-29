@@ -2,20 +2,22 @@
 ************   App Init   ************
 ======================================================*/
 app.init = function () {
+    if (app.getDeviceInfo) app.getDeviceInfo();
     // Init Click events
-    app.initClickEvents();
+    if (app.initClickEvents) app.initClickEvents();
     // Init Swipeouts events
-    app.initSwipeout();
+    if (app.initSwipeout) app.initSwipeout();
     // Detect statusbar
-    app.detectStatusBar();
+    if (app.detectStatusBar) app.detectStatusBar();
     // Init Pull To Refresh
-    app.initPullToRefresh();
+    if (app.initPullToRefresh) app.initPullToRefresh();
     // Init each page callbacks
     $('.page').each(function () {
         app.initPage(this);
     });
-    // App resize events
-    $(window).on('resize', app.onResize);
+    // Init resize events
+    if (app.initResize) app.initResize();
+    
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
 };
