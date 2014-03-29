@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nolimits4web/Framework7.svg?branch=master)](https://travis-ci.org/nolimits4web/Framework7)
+
 Framework7
 ==========
 
