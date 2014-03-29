@@ -20,10 +20,15 @@ body {
     background: #fff;
     overflow: hidden;
 }
-// Temporary fix for iPad in Safari in Lanscape mode
-@media all and (width:1024px) and (height:691px){
-    html {
-        height: ~"-webkit-calc(100% - 20px)";
+// Fix for iPad in Safari in Lanscape mode
+@media all and (width:1024px) and (height:691px) and (orientation:landscape) {
+    html, body {
+        height: 671px;
+    }
+}
+@media all and (width:1024px) and (height:692px) and (orientation:landscape) {
+    html, body {
+        height: 672px;
     }
 }
 
