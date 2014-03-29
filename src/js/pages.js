@@ -83,9 +83,9 @@ app.pageAnimCallbacks = function (callback, view, params) {
 // Init Page Events and Manipulations
 app.initPage = function (pageContainer) {
     // Size navbars on page load
-    app.sizeNavbars($(pageContainer).parents('.view')[0]);
+    if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.view')[0]);
     // Init messages
-    app.initMessages(pageContainer);
+    if (app.initMessages) app.initMessages(pageContainer);
 };
 // Load Page
 app.allowPageChange = true;
