@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.2
+ * Framework7 0.6.3
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 27, 2014
+ * Released on: March 29, 2014
 */
 (function () {
 
@@ -517,9 +517,9 @@
         // Init Page Events and Manipulations
         app.initPage = function (pageContainer) {
             // Size navbars on page load
-            app.sizeNavbars($(pageContainer).parents('.view')[0]);
+            if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.view')[0]);
             // Init messages
-            app.initMessages(pageContainer);
+            if (app.initMessages) app.initMessages(pageContainer);
         };
         // Load Page
         app.allowPageChange = true;
@@ -1122,7 +1122,7 @@
             var isPopover = modal.hasClass('popover');
             var isPopup = modal.hasClass('popup');
             if (!isPopover) {
-                modal.toggleClass('modal-in modal-out').transitionEnd(function (e) {
+                modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
                     modal.trigger('closed');
                     if (!isPopup) modal.remove();
                     if (isPopup) modal.removeClass('modal-out').hide();
@@ -1477,8 +1477,8 @@
                     isMoved = false;
                     return;
                 }
-                container.transform('');
                 container.addClass('transitioning');
+                container.transform('');
                 if (refresh) {
                     container.addClass('refreshing');
                     container.trigger('refresh', {
@@ -1634,9 +1634,17 @@
         /*======================================================
         ************   App Resize Actions   ************
         ======================================================*/
-        app.onResize = function () {
-            app.sizeNavbars();
-            // Something else could be here
+        app.initResize = function () {
+            $(window).on('resize', app.resize);
+            $(window).on('orientationchange', app.orientationchange);
+        };
+        app.resize = function () {
+            if (app.sizeNavbars) app.sizeNavbars();
+        };
+        app.orientationchange = function () {
+            if (app.device && app.device.minimalUi) {
+                if (window.orientation === 90 || window.orientation === -90) document.body.scrollTop = 0;
+            }
         };
         /*=====================================================================================
         ************   Detect that app in fullscreen mode or chopped by statusbar  ************
@@ -1661,24 +1669,76 @@
                 $('body').removeClass('with-statusbar-overlay');
             }
         };
+        /*===========================
+        Device/OS Detection
+        ===========================*/
+        app.getDeviceInfo = function () {
+            var device = {};
+            var ua = navigator.userAgent;
+        
+            var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
+            var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+            var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
+            var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+        
+            // Android
+            if (android) {
+                device.os = 'android';
+                device.osVersion = android[2];
+            }
+            if (ipad || iphone || ipod) {
+                device.os = 'ios';
+            }
+            // iOS
+            if (iphone && !ipod) device.osVersion = iphone[2].replace(/_/g, '.');
+            if (ipad) device.osVersion = ipad[2].replace(/_/g, '.');
+            if (ipod) device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+        
+            // Webview
+            device.webview = !!navigator.standalone;
+        
+                
+            // Minimal UI
+            var osVersionArr = device.osVersion.split('.');
+            device.minimalUi = !device.webview &&
+                                device.os === 'ios' &&
+                                (ipod || iphone) &&
+                                (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
+                                $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
+        
+            // Add html classes
+            if (device.os) {
+                var className = device.os +
+                                ' ' +
+                                device.os + '-' + device.osVersion.replace(/\./g, '-') +
+                                ' ' +
+                                device.os + '-' + device.osVersion.split('.')[0];
+                $('html').addClass(className);
+            }
+        
+            // Export to app
+            app.device = device;
+        };
         /*======================================================
         ************   App Init   ************
         ======================================================*/
         app.init = function () {
+            if (app.getDeviceInfo) app.getDeviceInfo();
             // Init Click events
-            app.initClickEvents();
+            if (app.initClickEvents) app.initClickEvents();
             // Init Swipeouts events
-            app.initSwipeout();
+            if (app.initSwipeout) app.initSwipeout();
             // Detect statusbar
-            app.detectStatusBar();
+            if (app.detectStatusBar) app.detectStatusBar();
             // Init Pull To Refresh
-            app.initPullToRefresh();
+            if (app.initPullToRefresh) app.initPullToRefresh();
             // Init each page callbacks
             $('.page').each(function () {
                 app.initPage(this);
             });
-            // App resize events
-            $(window).on('resize', app.onResize);
+            // Init resize events
+            if (app.initResize) app.initResize();
+            
             // App Init callback
             if (app.params.onAppInit) app.params.onAppInit();
         };
@@ -1995,6 +2055,19 @@
                 return this;
             }
         },
+        text: function (text) {
+            if (typeof text === 'undefined') {
+                if (this[0]) {
+                    return this[0].textContent.trim();
+                }
+                else return null;
+            }
+            else {
+                for (var i = 0; i < this.length; i++) {
+                    this[0].textContent = text;
+                }
+            }
+        },
         is: function (selector) {
             var compareWith;
             if (typeof selector === 'string') compareWith = document.querySelectorAll(selector);
@@ -2030,8 +2103,8 @@
                 if (typeof newChild === 'string') {
                     var tempDiv = document.createElement('div');
                     tempDiv.innerHTML = newChild;
-                    while (tempDiv.firstChild) {
-                        this[i].insertBefore(tempDiv.firstChild, this[i].childNodes[0]);
+                    for (var j = tempDiv.childNodes.length - 1; j >= 0; j--) {
+                        this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
                     }
                 }
                 else {
@@ -2123,7 +2196,7 @@
         },
         remove: function () {
             for (var i = 0; i < this.length; i++) {
-                this[i].parentNode.removeChild(this[i]);
+                if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
             }
             return this;
         },
@@ -2172,6 +2245,9 @@
             if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
         }
         return unique;
+    };
+    $.trim = function (str) {
+        return str.trim();
     };
     $.supportTouch = (function () {
         return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);

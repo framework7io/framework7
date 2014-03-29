@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.2
+ * Framework7 0.6.3
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 27, 2014
+ * Released on: March 29, 2014
 */
 /*=============
   Framework 7
@@ -33,6 +33,18 @@ body {
   -webkit-text-size-adjust: 100%;
   background: #fff;
   overflow: hidden;
+}
+@media all and (width: 1024px) and (height: 691px) and (orientation: landscape) {
+  html,
+  body {
+    height: 671px;
+  }
+}
+@media all and (width: 1024px) and (height: 692px) and (orientation: landscape) {
+  html,
+  body {
+    height: 672px;
+  }
 }
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -2152,6 +2164,11 @@ body.panel-closing .views {
   -webkit-animation: messageAppear 400ms;
   animation: messageAppear 400ms;
 }
+html.ios-6 .message,
+html.ios-6 .message.message-pic img {
+  -webkit-mask-box-image: none;
+  border-radius: 16px;
+}
 @-webkit-keyframes messageAppear {
   from {
     -webkit-transform: translate3d(0, 100%, 0);
@@ -2318,7 +2335,7 @@ body.with-statusbar-overlay .panel {
   top: 50%;
   margin-left: -10px;
   margin-top: -10px;
-  opacity: 0;
+  visibility: hidden;
 }
 .pull-to-refresh-layer .pull-to-refresh-arrow {
   width: 13px;
@@ -2332,12 +2349,15 @@ body.with-statusbar-overlay .panel {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 40'><polygon points='9,22 9,0 17,0 17,22 26,22 13.5,40 0,22' fill='%238c8c8c'/></svg>");
   background-size: 13px 20px;
   z-index: 10;
-  opacity: 1;
   -webkit-transform: rotate(0deg) translate3d(0, 0, 0);
   -ms-transform: rotate(0deg) translate3d(0, 0, 0);
   transform: rotate(0deg) translate3d(0, 0, 0);
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
+}
+.pull-to-refresh-content.transitioning {
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
 }
 .pull-to-refresh-content.refreshing {
   -webkit-transform: translate3d(0, 44px, 0);
@@ -2345,17 +2365,15 @@ body.with-statusbar-overlay .panel {
   transform: translate3d(0, 44px, 0);
 }
 .pull-to-refresh-content.refreshing .pull-to-refresh-arrow {
-  opacity: 0;
+  visibility: hidden;
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .pull-to-refresh-content.refreshing .preloader {
-  opacity: 1;
+  visibility: visible;
 }
 .pull-to-refresh-content.pull-up .pull-to-refresh-arrow {
   -webkit-transform: rotate(180deg) translate3d(0, 0, 0);
   -ms-transform: rotate(180deg) translate3d(0, 0, 0);
   transform: rotate(180deg) translate3d(0, 0, 0);
-}
-.pull-to-refresh-content.transitioning {
-  -webkit-transition-duration: 400ms;
-  transition-duration: 400ms;
 }
