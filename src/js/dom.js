@@ -139,7 +139,7 @@ Dom7.prototype = {
         }
         if ($.supportTouch) {
             dom.on('touchstart', targetSelector, handleTouchStart);
-            dom.on('touchmove', targetSelector, handleTouchEnd);
+            dom.on('touchmove', targetSelector, handleTouchMove);
             dom.on('touchend', targetSelector, handleTouchEnd);
         }
         else {
