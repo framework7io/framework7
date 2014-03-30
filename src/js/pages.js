@@ -96,7 +96,7 @@ function _load(view, url, content) {
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
 
     // Parse DOM to find new page
-    if (url) {
+    if (url || (typeof content === 'string')) {
         app._tempDomElement.innerHTML = content;
     } else {
         if ('length' in content && content.length > 1) {
@@ -119,10 +119,6 @@ function _load(view, url, content) {
         return;
     }
     newPage.addClass('page-on-right');
-
-    // Update View history
-    view.url = url;
-    view.history.push(url);
 
     // Find old page (should be the last one) and remove older pages
     pagesInView = viewContainer.find('.page');
@@ -162,8 +158,15 @@ function _load(view, url, content) {
         navbar.append(newNavbarInner[0]);
     }
 
-    // save contents areas into view's cache
-    if (!url) view.contentCache.push({ nav: oldNavbarInner, page: oldPage });
+    // save content areas into view's cache
+    if (!url) {
+        url = '#content-' + Math.floor(Math.random() * 10000) + 1;
+        view.contentCache[url] = { nav: newNavbarInner, page: newPage };
+    }
+
+    // Update View history
+    view.url = url;
+    view.history.push(url);
     
     // Append Old Page and add classes for animation
     $(view.pagesContainer).append(newPage[0]);
@@ -391,25 +394,21 @@ app.goBack = function (view, url, preloadOnly) {
         if (view.history.length > 1) {
             url = view.history[view.history.length - 2];
         }
-        if (view.contentCache.length > 0)
-            view.contentCache.pop();
         if (!url) {
             app.allowPageChange = true;
             return;
         }
-        var _cache;
-        if (view.contentCache.length > 1) {
-            _cache = view.contentCache[view.contentCache.length - 1];
-        } else {
-            _cache = view.contentCache[0];
-        }
+        
+        // Check current url is in cache?
+        if (url in view.contentCache) {
+            var _cache = view.contentCache[url];
 
-        if (_cache) {
             app._tempDomElement = document.createElement('div');
             $(app._tempDomElement).append(_cache.nav[0]).append(_cache.page[0]);
             _preload();
             return;
         }
+
         app.get(url, function (data, error) {
             if (error) {
                 app.allowPageChange = true;
@@ -437,6 +436,11 @@ app.afterGoBack = function (view, oldPage, newPage) {
     }
     // Update View's Hitory
     view.history.pop();
+    // Check current page is content based only
+    if (view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
+        view.contentCache[view.url] = null;
+        delete view.contentCache[view.url];
+    }
     // Preload previous page
     if (app.params.preloadPreviousPage) {
         app.goBack(view, false, true);
