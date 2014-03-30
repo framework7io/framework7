@@ -137,3 +137,47 @@
         transform: translate3d(0,0,0);
     }
 }
+// Disable Box shadow animation on Android
+html.android {
+    .page {
+        box-shadow: none !important;
+    }
+    .page-from-right-to-center {
+        .animation(pageFromRightToCenterDegrade @pageDuration forwards);
+    }
+    .page-from-center-to-right {
+        .animation(pageFromCenterToRightDegrade @pageDuration forwards);
+    }
+}
+@-webkit-keyframes pageFromRightToCenterDegrade {
+    from {
+        -webkit-transform: translate3d(100%,0,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@-webkit-keyframes pageFromCenterToRightDegrade {
+    from {
+        -webkit-transform: translate3d(0,0,0);
+    }
+    to {
+        -webkit-transform: translate3d(100%,0,0);
+    }
+}
+@keyframes pageFromRightToCenterDegrade {
+    from {
+        transform: translate3d(100%,0,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
+}
+@keyframes pageFromCenterToRightDegrade {
+    from {
+        transform: translate3d(0,0,0);
+    }
+    to {
+        transform: translate3d(100%,0,0);
+    }
+}
