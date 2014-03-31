@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.4
+ * Framework7 0.6.5
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 29, 2014
+ * Released on: March 31, 2014
 */
 /*=============
   Framework 7
@@ -413,6 +413,49 @@ p {
     transform: translate3d(0, 0, 0);
   }
 }
+html.android .page {
+  box-shadow: none !important;
+}
+html.android .page-from-right-to-center {
+  -webkit-animation: pageFromRightToCenterDegrade 400ms forwards;
+  animation: pageFromRightToCenterDegrade 400ms forwards;
+}
+html.android .page-from-center-to-right {
+  -webkit-animation: pageFromCenterToRightDegrade 400ms forwards;
+  animation: pageFromCenterToRightDegrade 400ms forwards;
+}
+@-webkit-keyframes pageFromRightToCenterDegrade {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+@-webkit-keyframes pageFromCenterToRightDegrade {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(100%, 0, 0);
+  }
+}
+@keyframes pageFromRightToCenterDegrade {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes pageFromCenterToRightDegrade {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
 /* === Toolbars === */
 .navbar-inner,
 .toolbar-inner {
@@ -422,6 +465,7 @@ p {
   width: 100%;
   height: 100%;
   padding: 0 15px;
+  padding: 0 8px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -460,6 +504,7 @@ p {
   height: 44px;
   color: #007aff;
   text-decoration: none;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -485,7 +530,16 @@ p {
 .toolbar a.link i + span,
 .navbar a.link i + i,
 .toolbar a.link i + i {
-  margin-left: 4px;
+  margin-left: 7px;
+}
+.navbar a.link.icon-only,
+.toolbar a.link.icon-only {
+  min-width: 44px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  margin: 0;
 }
 .navbar i.icon,
 .toolbar i.icon {
@@ -564,10 +618,6 @@ p {
   animation: navbarElementFadeIn 400ms forwards;
 }
 .navbar-from-right-to-center .sliding {
-  -webkit-transition-duration: 400ms;
-  transition-duration: 400ms;
-  -webkit-animation: none;
-  animation: none;
   opacity: 1;
 }
 .navbar-from-center-to-right .left,
@@ -577,10 +627,6 @@ p {
   animation: navbarElementFadeOut 400ms forwards;
 }
 .navbar-from-center-to-right .sliding {
-  -webkit-transition-duration: 400ms;
-  transition-duration: 400ms;
-  -webkit-animation: none;
-  animation: none;
   opacity: 0;
 }
 @-webkit-keyframes navbarElementFadeIn {
@@ -606,10 +652,6 @@ p {
   animation: navbarElementFadeOut 400ms forwards;
 }
 .navbar-from-center-to-left .sliding {
-  -webkit-transition-duration: 400ms;
-  transition-duration: 400ms;
-  -webkit-animation: none;
-  animation: none;
   opacity: 0;
 }
 .navbar-from-left-to-center .left,
@@ -619,10 +661,6 @@ p {
   animation: navbarElementFadeIn 400ms forwards;
 }
 .navbar-from-left-to-center .sliding {
-  -webkit-transition-duration: 400ms;
-  transition-duration: 400ms;
-  -webkit-animation: none;
-  animation: none;
   opacity: 1;
 }
 .navbar-on-left .left,
@@ -656,6 +694,22 @@ p {
   to {
     opacity: 0;
   }
+}
+.navbar-from-right-to-center .left.sliding .back.link .icon,
+.navbar-from-center-to-right .left.sliding .back.link .icon,
+.navbar-from-center-to-left .left.sliding .back.link .icon,
+.navbar-from-left-to-center .left.sliding .back.link .icon {
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+}
+.navbar-from-right-to-center .sliding,
+.navbar-from-center-to-right .sliding,
+.navbar-from-center-to-left .sliding,
+.navbar-from-left-to-center .sliding {
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+  -webkit-animation: none;
+  animation: none;
 }
 /* === Relation between toolbar/navbar types and pages === */
 .page > .navbar,
@@ -719,19 +773,22 @@ i.icon {
   background-repeat: no-repeat;
 }
 i.icon.icon-back-blue {
-  width: 18px;
-  height: 24px;
+  width: 12px;
+  height: 20px;
   background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 90 120' xmlns='http://www.w3.org/2000/svg'><path d='m63.75 11.25 10 10-40 40 40 40-10 10-50-50z' fill='%23007aff'/></svg>");
+  background-size: 18px auto;
 }
 i.icon.icon-back-white {
-  width: 18px;
-  height: 24px;
+  width: 12px;
+  height: 20px;
   background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 90 120' xmlns='http://www.w3.org/2000/svg'><path d='m63.75 11.25 10 10-40 40 40 40-10 10-50-50z' fill='%23fff'/></svg>");
+  background-size: 18px auto;
 }
 i.icon.icon-back-black {
-  width: 18px;
-  height: 24px;
+  width: 12px;
+  height: 20px;
   background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 90 120' xmlns='http://www.w3.org/2000/svg'><path d='m63.75 11.25 10 10-40 40 40 40-10 10-50-50z' fill='%23000'/></svg>");
+  background-size: 18px auto;
 }
 i.icon.icon-bars-blue {
   width: 24px;
