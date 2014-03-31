@@ -10,9 +10,13 @@ app.addView = function (viewSelector, viewParams) {
         selector: viewSelector,
         params: viewParams || {},
         history: [],
+        contentCache: {},
         url: '',
         pagesContainer: $('.pages', container)[0],
         main: $(container).hasClass('view-main'),
+        loadContent: function (content) {
+            app.loadContent(view, content);
+        },
         loadPage: function (url) {
             app.loadPage(view, url);
         },
