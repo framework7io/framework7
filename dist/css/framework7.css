@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.5
+ * Framework7 0.6.6
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 31, 2014
+ * Released on: April 1, 2014
 */
 /*=============
   Framework 7
@@ -1236,6 +1236,29 @@ i.icon.icon-form-url {
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
   justify-content: space-between;
+}
+.contacts-content {
+  background: #fff;
+}
+.contacts-block {
+  margin: 0;
+}
+.contacts-block .contacts-group-title {
+  position: -webkit-sticky;
+  top: 0px;
+  z-index: 10;
+  padding-left: 15px;
+  background: #f7f7f7;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 22px;
+  height: 22px;
+}
+.contacts-block ul {
+  border-top: none;
+}
+.contacts-block:last-child ul {
+  border-bottom: none;
 }
 /* === Forms === */
 .list-block input[type="text"],

@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.5
+ * Framework7 0.6.6
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: March 31, 2014
+ * Released on: April 1, 2014
 */
 (function () {
 
@@ -213,7 +213,11 @@
                 // Transform pages
                 activePage.transform('translate3d(' + touchesDiff + 'px,0,0)');
                 if (app.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
-                previousPage.transform('translate3d(' + (touchesDiff / 5 - viewContainerWidth / 5) + 'px,0,0)');
+        
+                var pageTranslate = (touchesDiff / 5 - viewContainerWidth / 5);
+                if (app.device.pixelRatio === 1) pageTranslate = Math.round(pageTranslate);
+        
+                previousPage.transform('translate3d(' + pageTranslate + 'px,0,0)');
                 previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
         
                 // Dynamic Navbars Animation
@@ -222,14 +226,18 @@
                         el = $(activeNavElements[i]);
                         el[0].style.opacity = (1 - percentage * 1.3);
                         if (el[0].className.indexOf('sliding') >= 0) {
-                            el.transform('translate3d(' + (percentage * el[0].f7NavbarRightOffset) + 'px,0,0)');
+                            var activeNavTranslate = percentage * el[0].f7NavbarRightOffset;
+                            if (app.device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
+                            el.transform('translate3d(' + activeNavTranslate + 'px,0,0)');
                         }
                     }
                     for (i = 0; i < previousNavElements.length; i++) {
                         el = $(previousNavElements[i]);
                         el[0].style.opacity = percentage * 1.3 - 0.3;
                         if (el[0].className.indexOf('sliding') >= 0) {
-                            el.transform('translate3d(' + (el[0].f7NavbarLeftOffset * (1 - percentage)) + 'px,0,0)');
+                            var previousNavTranslate = el[0].f7NavbarLeftOffset * (1 - percentage);
+                            if (app.device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
+                            el.transform('translate3d(' + previousNavTranslate + 'px,0,0)');
                         }
                     }
                 }
@@ -1787,6 +1795,9 @@
                                     (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
                                     $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
             }
+        
+            // Pixel Ratio
+            device.pixelRatio = window.devicePixelRatio || 1;
         
             // Add html classes
             if (device.os) {
