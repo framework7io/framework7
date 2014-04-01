@@ -77,7 +77,7 @@ app.initViewEvents = function (view) {
         dynamicNavbar,
         el;
 
-    function handleTouchStart(e) {
+    function handleTouchStart(e, target) {
         if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
         isMoved = false;
         isTouched = true;
@@ -88,7 +88,7 @@ app.initViewEvents = function (view) {
         dynamicNavbar = view.params.dynamicNavbar && viewContainer.find('.navbar-inner').length > 1;
     }
     
-    function handleTouchMove(e) {
+    function handleTouchMove(e, target) {
         if (!isTouched) return;
         var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -104,8 +104,8 @@ app.initViewEvents = function (view) {
             var cancel = false;
             // Calc values during first move fired
             viewContainerWidth = viewContainer.width();
-            activePage = $(e.target).is('.page') ? $(e.target) : $(e.target).parents('.page');
-            previousPage = viewContainer.find('.page-on-left');
+            activePage = $(target || e.target).is('.page') ? $(target || e.target) : $(target || e.target).parents('.page');
+            previousPage = viewContainer.find('.page-on-left:not(.cached)');
             if (touchesStart.x - viewContainer.offset().left > app.params.swipeBackPageActiveArea) cancel = true;
             if (previousPage.length === 0 || activePage.length === 0) cancel = true;
             if (cancel) {
@@ -113,8 +113,8 @@ app.initViewEvents = function (view) {
                 return;
             }
             if (dynamicNavbar) {
-                activeNavbar = viewContainer.find('.navbar-on-center');
-                previousNavbar = viewContainer.find('.navbar-on-left');
+                activeNavbar = viewContainer.find('.navbar-on-center:not(.cached)');
+                previousNavbar = viewContainer.find('.navbar-on-left:not(.cached)');
                 activeNavElements = activeNavbar.find('.left, .center, .right');
                 previousNavElements = previousNavbar.find('.left, .center, .right');
             }
@@ -151,7 +151,7 @@ app.initViewEvents = function (view) {
         }
 
     }
-    function handleTouchEnd(e) {
+    function handleTouchEnd(e, target) {
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -218,4 +218,16 @@ app.initViewEvents = function (view) {
     viewContainer.on(app.touchEvents.start, handleTouchStart);
     viewContainer.on(app.touchEvents.move, handleTouchMove);
     viewContainer.on(app.touchEvents.end, handleTouchEnd);
+     
+    view.attachSubEvents = function (page, el) {
+        $(el).on(app.touchEvents.start, function (e) {
+            return handleTouchStart.apply(page, [e, page]);
+        });
+        $(el).on(app.touchEvents.move, function (e) {
+            return handleTouchMove.apply(page, [e, page]);
+        });
+        $(el).on(app.touchEvents.end, function (e, page) {
+            return handleTouchEnd.apply(page, [e, page]);
+        });
+    };
 };
