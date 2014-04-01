@@ -36,6 +36,9 @@ app.getDeviceInfo = function () {
                             $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
     }
 
+    // Pixel Ratio
+    device.pixelRatio = window.devicePixelRatio || 1;
+
     // Add html classes
     if (device.os) {
         var className = device.os +

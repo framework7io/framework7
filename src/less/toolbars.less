@@ -103,30 +103,22 @@
 }
 
 @toolbarDuration: 400ms;
+
 .navbar-from-right-to-center {
     .left, .right, .center {
         .animation(navbarElementFadeIn @toolbarDuration forwards);
     }
     .sliding {
-        .transition(@toolbarDuration);
-        .animation(none);
         opacity: 1;
     }
-    .left.sliding .back.link .icon {
-        .transition(@toolbarDuration);
-    }
+    
 }
 .navbar-from-center-to-right {
     .left, .right, .center {
         .animation(navbarElementFadeOut @toolbarDuration forwards);
     }
     .sliding {
-        .transition(@toolbarDuration);
-        .animation(none);
         opacity: 0;
-    }
-    .left.sliding .back.link .icon {
-        .transition(@toolbarDuration);
     }
 }
 @-webkit-keyframes navbarElementFadeIn {
@@ -150,12 +142,7 @@
         .animation(navbarElementFadeOut @toolbarDuration forwards);
     }
     .sliding {
-        .transition(@toolbarDuration);
-        .animation(none);
         opacity: 0;
-    }
-    .left.sliding .back.link .icon {
-        .transition(@toolbarDuration);
     }
 }
 .navbar-from-left-to-center {
@@ -163,12 +150,7 @@
         .animation(navbarElementFadeIn @toolbarDuration forwards);
     }
     .sliding {
-        .transition(@toolbarDuration);
-        .animation(none);
         opacity: 1;
-    }
-    .left.sliding .back.link .icon {
-        .transition(@toolbarDuration);
     }
 }
 .navbar-on-left {
@@ -201,5 +183,14 @@
     }
     to {
         opacity: 0;
+    }
+}
+.navbar-from-right-to-center, .navbar-from-center-to-right, .navbar-from-center-to-left, .navbar-from-left-to-center {
+    .left.sliding .back.link .icon {
+        .transition(@toolbarDuration);
+    }
+    .sliding {
+        .transition(@toolbarDuration);
+        .animation(none);
     }
 }
