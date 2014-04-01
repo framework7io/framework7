@@ -104,8 +104,10 @@ function _load(view, url, content) {
             for (var ci = 0; ci < content.length; ci++) {
                 $(app._tempDomElement).append(content[ci]);
             }
-        } else
+        } else {
+            app._tempDomElement.innerHTML = '';
             $(app._tempDomElement).append(content[0]);
+        }
     }
     
     if (view.params.subEvents) {

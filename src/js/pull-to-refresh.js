@@ -29,7 +29,7 @@ app.initPullToRefresh = function () {
             container = $(this);
             container.removeClass('transitioning');
             startTranslate = container.hasClass('refreshing') ? 44 : 0;
-            if (container[0].scrollHeight === container[0].offsetHeight) {
+            if (container[0].scrollHeight === container[0].offsetHeight || app.device.os !== 'ios') {
                 useTranslate = true;
             }
             else {
