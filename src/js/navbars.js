@@ -2,7 +2,7 @@
 ************   Navbars && Toolbars   ************
 ======================================================*/
 app.sizeNavbars = function (viewContainer) {
-    var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner') : $('.navbar .navbar-inner');
+    var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
     navbarInner.each(function () {
         var tt = $(this),
             left = tt.find('.left'),
