@@ -112,8 +112,6 @@ function _load(view, url, content) {
         $(app._tempDomElement).find('.page').each(function () {
             var page = this;
             $(page).find('iframe').on('load', function () {
-                console.log('subEvents', this.contentWindow.document);
-
                 view.attachSubEvents(page, this.contentWindow.document);
             });
         });
