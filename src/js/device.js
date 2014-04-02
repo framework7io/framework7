@@ -36,6 +36,27 @@ app.getDeviceInfo = function () {
                             $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
     }
 
+    // Check for status bar and fullscreen app mode
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    device.statusBar = false;
+    if (
+        // iPhone 5
+        (windowWidth === 320 && windowHeight === 568) ||
+        (windowWidth === 568 && windowHeight === 320) ||
+        // iPhone 4
+        (windowWidth === 320 && windowHeight === 480) ||
+        (windowWidth === 480 && windowHeight === 320) ||
+        // iPad
+        (windowWidth === 768 && windowHeight === 1024) ||
+        (windowWidth === 1024 && windowHeight === 768)
+    ) {
+        device.statusBar = true;
+    }
+    else {
+        device.statusBar = false;
+    }
+
     // Pixel Ratio
     device.pixelRatio = window.devicePixelRatio || 1;
 
@@ -47,6 +68,12 @@ app.getDeviceInfo = function () {
                         ' ' +
                         device.os + '-' + device.osVersion.split('.')[0];
         $('html').addClass(className);
+    }
+    if (device.statusBar) {
+        $('html').addClass('with-statusbar-overlay');
+    }
+    else {
+        $('html').removeClass('with-statusbar-overlay');
     }
 
     // Export to app

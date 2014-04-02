@@ -7,8 +7,6 @@ app.init = function () {
     if (app.initClickEvents) app.initClickEvents();
     // Init Swipeouts events
     if (app.initSwipeout) app.initSwipeout();
-    // Detect statusbar
-    if (app.detectStatusBar) app.detectStatusBar();
     // Init Pull To Refresh
     if (app.initPullToRefresh) app.initPullToRefresh();
     // Init each page callbacks
