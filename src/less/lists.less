@@ -1,6 +1,8 @@
 /* === Lists === */
 @listBlockBorderColor: #c8c7cc;
 @listBlockBg: #fff;
+@dividerBg: #F7F7F7;
+@dividerColor: #8e8e93;
 .list-block {
     margin: 35px 0;
     font-size: 17px;
@@ -274,5 +276,17 @@
             .flexbox();
             .justify-content(space-between);
         }
+    }
+    .item-divider {
+        background: @dividerBg;
+        border-top: 1px solid @listBlockBorderColor;
+        margin-top: -1px;
+        padding: 4px 15px;
+        white-space: nowrap;
+        position: relative;
+        max-height: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        color: @dividerColor;
     }
 }

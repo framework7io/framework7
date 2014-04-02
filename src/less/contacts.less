@@ -5,15 +5,22 @@
 .contacts-block {
     margin: 0;
     .contacts-group-title {
+        position: relative;
         position: -webkit-sticky;
+        position: -moz-sticky;
+        position: sticky;
         top: 0px;
         z-index: 10;
-        padding-left: 15px;
+        padding: 0 15px;
         background: #f7f7f7;
         font-size: 17px;
         font-weight: 500;
         line-height: 22px;
         height: 22px;
+        overflow: hidden;
+        max-height: 100%;
+        white-space: nowrap;
+        text-overflow:ellipsis;
     }
     ul {
         border-top: none;
