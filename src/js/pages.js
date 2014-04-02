@@ -439,7 +439,7 @@ app.afterGoBack = function (view, oldPage, newPage) {
     // Update View's Hitory
     view.history.pop();
     // Check current page is content based only
-    if (view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
+    if (view.url && view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
         view.contentCache[view.url] = null;
         delete view.contentCache[view.url];
     }
