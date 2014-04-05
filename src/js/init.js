@@ -6,9 +6,9 @@ app.init = function () {
     // Init Click events
     if (app.initClickEvents) app.initClickEvents();
     // Init Swipeouts events
-    if (app.initSwipeout) app.initSwipeout();
+    if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
     // Init Pull To Refresh
-    if (app.initPullToRefresh) app.initPullToRefresh();
+    if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
     // Init each page callbacks
     $('.page').each(function () {
         app.initPage(this);
@@ -19,4 +19,4 @@ app.init = function () {
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
 };
-app.init();
+if (app.params.init) app.init();
