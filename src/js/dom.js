@@ -480,6 +480,7 @@ var $ = function (selector, context) {
     }
     return new Dom7(arr);
 };
+// Utilites
 $.parseUrlQuery = function (url) {
     var query = {}, i, params, param;
     if (url.indexOf('?') >= 0) url = url.split('?')[1];
