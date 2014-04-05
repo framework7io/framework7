@@ -85,8 +85,9 @@ app.initClickEvents = function () {
             var newTab = $(clicked.attr('href'));
             var oldTab = newTab.parent().find('.tab.active').removeClass('active');
             newTab.addClass('active');
-            if (clicked.parent().hasClass('buttons-row')) {
-                clicked.parent().find('.active').removeClass('active');
+            var clickedParent = clicked.parent();
+            if (clickedParent.hasClass('buttons-row') || clicked.parents('.tabbar').length > 0) {
+                clickedParent.find('.active').removeClass('active');
                 clicked.addClass('active');
             }
         }
