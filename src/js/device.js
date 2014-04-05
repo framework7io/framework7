@@ -24,8 +24,7 @@ app.getDeviceInfo = function () {
     if (ipod) device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
 
     // Webview
-    device.webview = !!navigator.standalone;
-
+    device.webview = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
         
     // Minimal UI
     if (device.os && device.os === 'ios') {
@@ -41,6 +40,7 @@ app.getDeviceInfo = function () {
     var windowHeight = $(window).height();
     device.statusBar = false;
     if (
+        device.webview &&
         // iPhone 5
         (windowWidth === 320 && windowHeight === 568) ||
         (windowWidth === 568 && windowHeight === 320) ||
