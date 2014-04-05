@@ -57,12 +57,27 @@ app.initSwipeout = function () {
         e.preventDefault();
         touchesDiff = pageX - touchesStart.x;
         translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
+
         if (translate > 0) translate = 0;
         if (translate < -swipeOutActionsWidth) {
             translate = -swipeOutActionsWidth - Math.pow(-translate - swipeOutActionsWidth, 0.8);
         }
-        
-        swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
+
+        if (app.params.swipeoutNoFollow) {
+            if (touchesDiff < 0 && !opened) {
+                app.swipeoutOpen(swipeOutEl);
+                isTouched = false;
+                isMoved = false;
+                return;
+            }
+            if (touchesDiff > 0 && opened) {
+                app.swipeoutClose(swipeOutEl);
+                isTouched = false;
+                isMoved = false;
+                return;
+            }
+        }
+        else swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
 
     }
     function handleTouchEnd(e) {

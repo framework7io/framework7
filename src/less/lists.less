@@ -1,6 +1,8 @@
 /* === Lists === */
 @listBlockBorderColor: #c8c7cc;
 @listBlockBg: #fff;
+@dividerBg: #F7F7F7;
+@dividerColor: #8e8e93;
 .list-block {
     margin: 35px 0;
     font-size: 17px;
@@ -274,5 +276,32 @@
             .flexbox();
             .justify-content(space-between);
         }
+    }
+    .list-group:nth-child(n+2) {
+        ul {
+            border-top: none;
+        }
+    }
+    .item-divider, .list-group-title {
+        background: @dividerBg;
+        border-top: 1px solid @listBlockBorderColor;
+        margin-top: -1px;
+        padding: 4px 15px;
+        white-space: nowrap;
+        position: relative;
+        max-width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        color: @dividerColor;
+    }
+    .list-group-title {
+        position: relative;
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: sticky;
+        top: 0px;
+        z-index: 10;
+        margin-top: 0;
+        border-top: none;
     }
 }

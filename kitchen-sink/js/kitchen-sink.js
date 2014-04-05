@@ -81,7 +81,7 @@ $$(document).on('pageInit', function (e) {
         });
     }
     // Action sheet, we use it on two pages
-    if (page.name === 'swipe-delete' || page.name === 'modals') {
+    if (page.name === 'swipe-delete' || page.name === 'modals' || page.name === 'media-lists') {
         $$('.demo-actions').tap(function () {
             myApp.actions([
                 // First buttons group

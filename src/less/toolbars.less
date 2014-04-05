@@ -4,10 +4,11 @@
 @toolbarBg: @navbarBg;
 @toolbarBorderColor: @navbarBorderColor;
 @navbarLinksColor: @blue;
+@tabbarLinksColor: #929292;
+@tabbarActiveLinksColor: @blue;
 
 .navbar-inner, .toolbar-inner {
     .full-size();
-    padding: 0 15px;
     padding: 0 8px;
     .border-box();
     .flexbox();
@@ -43,9 +44,11 @@
             margin-left: 7px;
         }
     }
-    a.link.icon-only {
+    a.icon-only {
         min-width: 44px;
+        .flexbox();
         .justify-content(center);
+        .align-items(center);
         margin: 0;
     }
     i.icon {
@@ -102,6 +105,68 @@
     }
 }
 
+// Tabbar
+.tabbar {
+    color: @tabbarLinksColor;
+    z-index: 5001;
+    a {
+        color: @tabbarLinksColor;
+    }
+    a.active {
+        color: @tabbarActiveLinksColor;
+    }
+    a.tab-link {
+        width: 100%;
+        .border-box();
+        .flexbox();
+        .justify-content(space-between);
+        .align-items(center);
+        overflow: visible;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+}
+.tabbar-labels {
+    height: 50px;
+    a.tab-link {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        height: 100%;
+    }
+    span.tabbar-label {
+        line-height: 1;
+        display: block;
+        letter-spacing: 0.01em;
+        font-size: 10px;
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+@media all and (min-width:768px) {
+    .tabbar {
+        .toolbar-inner {
+            .justify-content(center);
+        }
+        a.tab-link {
+            width: auto;
+            min-width: 105px;
+        }
+    }
+    .tabbar-labels {
+        height: 55px;
+        span.tabbar-label {
+            font-size: 14px;
+        }
+    }
+}
+
+// Bars animations
 @toolbarDuration: 400ms;
 
 .navbar-from-right-to-center {

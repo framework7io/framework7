@@ -22,17 +22,23 @@ window.Framework7 = function (params) {
         cache: true,
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
+        // Swipe Back
         swipeBackPage: true,
         swipeBackPageThreshold: 0,
         swipeBackPageActiveArea: 30,
         swipeBackPageBoxShadow: true,
         // Ajax
         ajaxLinks: false, // or CSS selector
+        // Pull To Refresh
+        pullToRefresh: true,
+        // Swipeout
+        swipeout: true,
+        swipeoutNoFollow: false,
         // Panels
         panelsCloseByOutside: true,
         panelsVisibleZIndex: 6000,
         panelsAnimationDuration: 400,
-        // panelsOpenBySwipe: true,
+        // Modals
         modalTemplate: '<div class="modal {{noButtons}}">' +
                             '<div class="modal-inner">' +
                                 '{{if title}}<div class="modal-title">{{title}}</div>{{/if title}}' +
@@ -48,7 +54,9 @@ window.Framework7 = function (params) {
         modalCloseByOutside: false,
         modalActionsCloseByOutside: true,
         modalPopupCloseByOutside: true,
-        modalPreloaderTitle: 'Loading... '
+        modalPreloaderTitle: 'Loading... ',
+        // Auto init
+        init: true
     };
 
     // Extend defaults with parameters
