@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.6
+ * Framework7 0.6.8
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 1, 2014
+ * Released on: April 5, 2014
 */
 /*=============
   Framework 7
@@ -464,7 +464,6 @@ html.android .page-from-center-to-right {
   top: 0;
   width: 100%;
   height: 100%;
-  padding: 0 15px;
   padding: 0 8px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -532,13 +531,21 @@ html.android .page-from-center-to-right {
 .toolbar a.link i + i {
   margin-left: 7px;
 }
-.navbar a.link.icon-only,
-.toolbar a.link.icon-only {
+.navbar a.icon-only,
+.toolbar a.icon-only {
   min-width: 44px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   -webkit-justify-content: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
   margin: 0;
 }
 .navbar i.icon,
@@ -610,6 +617,77 @@ html.android .page-from-center-to-right {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.tabbar {
+  color: #929292;
+  z-index: 5001;
+}
+.tabbar a {
+  color: #929292;
+}
+.tabbar a.active {
+  color: #007aff;
+}
+.tabbar a.tab-link {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  overflow: visible;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+.tabbar-labels {
+  height: 50px;
+}
+.tabbar-labels a.tab-link {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  height: 100%;
+}
+.tabbar-labels span.tabbar-label {
+  line-height: 1;
+  display: block;
+  letter-spacing: 0.01em;
+  font-size: 10px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media all and (min-width: 768px) {
+  .tabbar .toolbar-inner {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+  .tabbar a.tab-link {
+    width: auto;
+    min-width: 105px;
+  }
+  .tabbar-labels {
+    height: 55px;
+  }
+  .tabbar-labels span.tabbar-label {
+    font-size: 14px;
+  }
 }
 .navbar-from-right-to-center .left,
 .navbar-from-right-to-center .right,
@@ -714,8 +792,10 @@ html.android .page-from-center-to-right {
 /* === Relation between toolbar/navbar types and pages === */
 .page > .navbar,
 .view > .navbar,
+.views > .navbar,
 .page > .toolbar,
-.view > .toolbar {
+.view > .toolbar,
+.views > .toolbar {
   position: absolute;
 }
 .navbar-through .page-content {
@@ -771,39 +851,38 @@ i.icon {
   background-size: 100% auto;
   background-position: center;
   background-repeat: no-repeat;
+  font-style: normal;
+  position: relative;
 }
 i.icon.icon-back-blue {
   width: 12px;
   height: 20px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 90 120' xmlns='http://www.w3.org/2000/svg'><path d='m63.75 11.25 10 10-40 40 40 40-10 10-50-50z' fill='%23007aff'/></svg>");
-  background-size: 18px auto;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23007aff'/></svg>");
 }
 i.icon.icon-back-white {
   width: 12px;
   height: 20px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 90 120' xmlns='http://www.w3.org/2000/svg'><path d='m63.75 11.25 10 10-40 40 40 40-10 10-50-50z' fill='%23fff'/></svg>");
-  background-size: 18px auto;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23fff'/></svg>");
 }
 i.icon.icon-back-black {
   width: 12px;
   height: 20px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 90 120' xmlns='http://www.w3.org/2000/svg'><path d='m63.75 11.25 10 10-40 40 40 40-10 10-50-50z' fill='%23000'/></svg>");
-  background-size: 18px auto;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23000'/></svg>");
 }
 i.icon.icon-bars-blue {
-  width: 24px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g fill='%23007aff'><path id='d' d='m5 27.5h10v10h-10z'/><path id='l' d='m25 30v5h85v-5z'/><use xlink:href='%23d' transform='translate(0,27.5)'/><use xlink:href='%23l' transform='translate(0,27.5)'/><use xlink:href='%23d' transform='translate(0,55)'/><use xlink:href='%23l' transform='translate(0,55)'/></g></svg>");
+  width: 21px;
+  height: 13px;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26' fill='%23007aff'><rect width='4' height='4'/><rect x='8' y='1' width='34' height='2'/><rect y='11' width='4' height='4'/><rect x='8' y='12' width='34' height='2'/><rect y='22' width='4' height='4'/><rect x='8' y='23' width='34' height='2'/></svg>");
 }
 i.icon.icon-bars-white {
-  width: 24px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g fill='%23fff'><path id='d' d='m5 27.5h10v10h-10z'/><path id='l' d='m25 30v5h85v-5z'/><use xlink:href='%23d' transform='translate(0,27.5)'/><use xlink:href='%23l' transform='translate(0,27.5)'/><use xlink:href='%23d' transform='translate(0,55)'/><use xlink:href='%23l' transform='translate(0,55)'/></g></svg>");
+  width: 21px;
+  height: 13px;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26' fill='%23fff'><rect width='4' height='4'/><rect x='8' y='1' width='34' height='2'/><rect y='11' width='4' height='4'/><rect x='8' y='12' width='34' height='2'/><rect y='22' width='4' height='4'/><rect x='8' y='23' width='34' height='2'/></svg>");
 }
 i.icon.icon-bars-black {
-  width: 24px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><g fill='%23000'><path id='d' d='m5 27.5h10v10h-10z'/><path id='l' d='m25 30v5h85v-5z'/><use xlink:href='%23d' transform='translate(0,27.5)'/><use xlink:href='%23l' transform='translate(0,27.5)'/><use xlink:href='%23d' transform='translate(0,55)'/><use xlink:href='%23l' transform='translate(0,55)'/></g></svg>");
+  width: 21px;
+  height: 13px;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26' fill='%23000'><rect width='4' height='4'/><rect x='8' y='1' width='34' height='2'/><rect y='11' width='4' height='4'/><rect x='8' y='12' width='34' height='2'/><rect y='22' width='4' height='4'/><rect x='8' y='23' width='34' height='2'/></svg>");
 }
 i.icon.icon-f7 {
   width: 29px;
@@ -867,6 +946,29 @@ i.icon.icon-form-url {
   background: #ddd;
   border-radius: 20px;
   padding: 1px 7px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.badge.badge-red {
+  background: #ff3b30;
+  color: #fff;
+}
+.badge.badge-green {
+  background: #4cd964;
+  color: #fff;
+}
+.badge.badge-black {
+  background: #000;
+  color: #fff;
+}
+.icon .badge {
+  position: absolute;
+  left: 100%;
+  margin-left: -10px;
+  top: -2px;
+  font-size: 10px;
+  padding: 1px 5px;
 }
 /* === Content Block === */
 .content-block {
@@ -1237,27 +1339,51 @@ i.icon.icon-form-url {
   -webkit-justify-content: space-between;
   justify-content: space-between;
 }
+.list-block .list-group:nth-child(n+2) ul {
+  border-top: none;
+}
+.list-block .item-divider,
+.list-block .list-group-title {
+  background: #f7f7f7;
+  border-top: 1px solid #c8c7cc;
+  margin-top: -1px;
+  padding: 4px 15px;
+  white-space: nowrap;
+  position: relative;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #8e8e93;
+}
+.list-block .list-group-title {
+  position: relative;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+  margin-top: 0;
+  border-top: none;
+}
+/* === Contacts === */
 .contacts-content {
   background: #fff;
 }
 .contacts-block {
   margin: 0;
 }
-.contacts-block .contacts-group-title {
-  position: -webkit-sticky;
-  top: 0px;
-  z-index: 10;
-  padding-left: 15px;
+.contacts-block .list-group-title {
+  padding: 0 15px;
   background: #f7f7f7;
-  font-size: 17px;
+  color: #000;
   font-weight: 500;
   line-height: 22px;
   height: 22px;
 }
-.contacts-block ul {
+.contacts-block .list-group:first-child ul {
   border-top: none;
 }
-.contacts-block:last-child ul {
+.contacts-block .list-group:last-child ul {
   border-bottom: none;
 }
 /* === Forms === */
@@ -2266,16 +2392,16 @@ html.ios-6 .message.message-pic img {
   }
 }
 /* === Statusbar overlay === */
-body.with-statusbar-overlay {
+html.with-statusbar-overlay body {
   padding-top: 20px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-body.with-statusbar-overlay .statusbar-overlay {
+html.with-statusbar-overlay body .statusbar-overlay {
   display: block;
 }
-body.with-statusbar-overlay .panel {
+html.with-statusbar-overlay body .panel {
   padding-top: 20px;
 }
 .statusbar-overlay {

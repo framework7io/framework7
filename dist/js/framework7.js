@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.6
+ * Framework7 0.6.8
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 1, 2014
+ * Released on: April 5, 2014
 */
 (function () {
 
@@ -38,17 +38,23 @@
             cache: true,
             cacheDuration: 1000 * 60 * 10, // Ten minutes 
             preloadPreviousPage: true,
+            // Swipe Back
             swipeBackPage: true,
             swipeBackPageThreshold: 0,
             swipeBackPageActiveArea: 30,
             swipeBackPageBoxShadow: true,
             // Ajax
             ajaxLinks: false, // or CSS selector
+            // Pull To Refresh
+            pullToRefresh: true,
+            // Swipeout
+            swipeout: true,
+            swipeoutNoFollow: false,
             // Panels
             panelsCloseByOutside: true,
             panelsVisibleZIndex: 6000,
             panelsAnimationDuration: 400,
-            // panelsOpenBySwipe: true,
+            // Modals
             modalTemplate: '<div class="modal {{noButtons}}">' +
                                 '<div class="modal-inner">' +
                                     '{{if title}}<div class="modal-title">{{title}}</div>{{/if title}}' +
@@ -64,7 +70,9 @@
             modalCloseByOutside: false,
             modalActionsCloseByOutside: true,
             modalPopupCloseByOutside: true,
-            modalPreloaderTitle: 'Loading... '
+            modalPreloaderTitle: 'Loading... ',
+            // Auto init
+            init: true
         };
     
         // Extend defaults with parameters
@@ -890,7 +898,7 @@
             // Update View's Hitory
             view.history.pop();
             // Check current page is content based only
-            if (view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
+            if (view.url && view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
                 view.contentCache[view.url] = null;
                 delete view.contentCache[view.url];
             }
@@ -1387,12 +1395,27 @@
                 e.preventDefault();
                 touchesDiff = pageX - touchesStart.x;
                 translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
+        
                 if (translate > 0) translate = 0;
                 if (translate < -swipeOutActionsWidth) {
                     translate = -swipeOutActionsWidth - Math.pow(-translate - swipeOutActionsWidth, 0.8);
                 }
-                
-                swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
+        
+                if (app.params.swipeoutNoFollow) {
+                    if (touchesDiff < 0 && !opened) {
+                        app.swipeoutOpen(swipeOutEl);
+                        isTouched = false;
+                        isMoved = false;
+                        return;
+                    }
+                    if (touchesDiff > 0 && opened) {
+                        app.swipeoutClose(swipeOutEl);
+                        isTouched = false;
+                        isMoved = false;
+                        return;
+                    }
+                }
+                else swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
         
             }
             function handleTouchEnd(e) {
@@ -1671,8 +1694,9 @@
                     var newTab = $(clicked.attr('href'));
                     var oldTab = newTab.parent().find('.tab.active').removeClass('active');
                     newTab.addClass('active');
-                    if (clicked.parent().hasClass('buttons-row')) {
-                        clicked.parent().find('.active').removeClass('active');
+                    var clickedParent = clicked.parent();
+                    if (clickedParent.hasClass('buttons-row') || clicked.parents('.tabbar').length > 0) {
+                        clickedParent.find('.active').removeClass('active');
                         clicked.addClass('active');
                     }
                 }
@@ -1735,29 +1759,6 @@
                 if (window.orientation === 90 || window.orientation === -90) document.body.scrollTop = 0;
             }
         };
-        /*=====================================================================================
-        ************   Detect that app in fullscreen mode or chopped by statusbar  ************
-        =====================================================================================*/
-        app.detectStatusBar = function () {
-            var width = $(window).width();
-            var height = $(window).height();
-            if (
-                // iPhone 5
-                (width === 320 && height === 568) ||
-                (width === 568 && height === 320) ||
-                // iPhone 4
-                (width === 320 && height === 480) ||
-                (width === 480 && height === 320) ||
-                // iPad
-                (width === 768 && height === 1024) ||
-                (width === 1024 && height === 768)
-            ) {
-                $('body').addClass('with-statusbar-overlay');
-            }
-            else {
-                $('body').removeClass('with-statusbar-overlay');
-            }
-        };
         /*===========================
         Device/OS Detection
         ===========================*/
@@ -1796,6 +1797,27 @@
                                     $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
             }
         
+            // Check for status bar and fullscreen app mode
+            var windowWidth = $(window).width();
+            var windowHeight = $(window).height();
+            device.statusBar = false;
+            if (
+                // iPhone 5
+                (windowWidth === 320 && windowHeight === 568) ||
+                (windowWidth === 568 && windowHeight === 320) ||
+                // iPhone 4
+                (windowWidth === 320 && windowHeight === 480) ||
+                (windowWidth === 480 && windowHeight === 320) ||
+                // iPad
+                (windowWidth === 768 && windowHeight === 1024) ||
+                (windowWidth === 1024 && windowHeight === 768)
+            ) {
+                device.statusBar = true;
+            }
+            else {
+                device.statusBar = false;
+            }
+        
             // Pixel Ratio
             device.pixelRatio = window.devicePixelRatio || 1;
         
@@ -1807,6 +1829,12 @@
                                 ' ' +
                                 device.os + '-' + device.osVersion.split('.')[0];
                 $('html').addClass(className);
+            }
+            if (device.statusBar) {
+                $('html').addClass('with-statusbar-overlay');
+            }
+            else {
+                $('html').removeClass('with-statusbar-overlay');
             }
         
             // Export to app
@@ -1820,11 +1848,9 @@
             // Init Click events
             if (app.initClickEvents) app.initClickEvents();
             // Init Swipeouts events
-            if (app.initSwipeout) app.initSwipeout();
-            // Detect statusbar
-            if (app.detectStatusBar) app.detectStatusBar();
+            if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
             // Init Pull To Refresh
-            if (app.initPullToRefresh) app.initPullToRefresh();
+            if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
             // Init each page callbacks
             $('.page').each(function () {
                 app.initPage(this);
@@ -1835,7 +1861,7 @@
             // App Init callback
             if (app.params.onAppInit) app.params.onAppInit();
         };
-        app.init();
+        if (app.params.init) app.init();
         //Return instance        
         return app;
     };
@@ -2322,6 +2348,7 @@
         }
         return new Dom7(arr);
     };
+    // Utilites
     $.parseUrlQuery = function (url) {
         var query = {}, i, params, param;
         if (url.indexOf('?') >= 0) url = url.split('?')[1];
