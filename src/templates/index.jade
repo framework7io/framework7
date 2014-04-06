@@ -7,9 +7,9 @@ html
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     title My App
     // Path to Framework7 Library CSS
-    link(rel="stylesheet", href="css/framework7.css")
+    link(rel="stylesheet", href=cssDir+"/framework7.css")
     // Path to your custom app styles
-    link(rel="stylesheet", href="css/my-app.css")
+    link(rel="stylesheet", href=cssDir+"/my-app.css")
   body
     // Panels overlay
     .panel-overlay
@@ -69,6 +69,6 @@ html
             a(href="#").link Link 2
 
     // Path to Framework7 Library JS
-    script(type="text/javascript", src="js/framework7.js")
+    script(type="text/javascript", src=jsDir+"/framework7.js")
     // Path to your app js
-    script(type="text/javascript", src="js/my-app.js")
+    script(type="text/javascript", src=jsDir+"/my-app.js")
