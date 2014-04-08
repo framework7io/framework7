@@ -18,7 +18,7 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
     if (app.params.onPageBeforeInit) {
         app.params.onPageBeforeInit(pageData);
     }
-    if (view.params.onPageBeforeInit) {
+    if (view && view.params.onPageBeforeInit) {
         view.params.onPageBeforeInit(pageData);
     }
     $(document).trigger('pageBeforeInit', {page: pageData});
@@ -27,7 +27,7 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
     if (app.params.onPageInit) {
         app.params.onPageInit(pageData);
     }
-    if (view.params.onPageInit) {
+    if (view && view.params.onPageInit) {
         view.params.onPageInit(pageData);
     }
     $(document).trigger('pageInit', {page: pageData});
@@ -56,6 +56,9 @@ app.pageAnimCallbacks = function (callback, view, params) {
 
     }
     if (callback === 'before') {
+        // Add data-page on view
+        $(view.container).attr('data-page', pageData.name);
+
         // Hide/show navbar dynamically
         if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
             view.hideNavbar();
