@@ -44,7 +44,7 @@ app.modal = function (params) {
     
     // Add events on buttons
     modal.find('.modal-button').each(function (index, el) {
-        $(el).tap(function (e) {
+        $(el).on('click', function (e) {
             if (params.buttons[index].close !== false) app.closeModal(modal);
             if (params.buttons[index].onClick) params.buttons[index].onClick(modal, e);
         });
@@ -154,7 +154,7 @@ app.actions = function (params) {
             var buttonIndex = index;
             var buttonParams = params[groupIndex][buttonIndex];
             if ($(el).hasClass('actions-modal-button')) {
-                $(el).tap(function (e) {
+                $(el).on('click', function (e) {
                     if (buttonParams.close !== false) app.closeModal(modal);
                     if (buttonParams.onClick) buttonParams.onClick(modal, e);
                 });
@@ -177,7 +177,6 @@ app.popover = function (modal, target, removeOnClose) {
         else return false; //nothing found
     }
     modal = $(modal);
-    console.log(target);
     target = $(target);
     if (modal.length === 0 || target.length === 0) return false;
     if (modal.find('.popover-angle').length === 0) {

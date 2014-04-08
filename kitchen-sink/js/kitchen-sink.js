@@ -36,15 +36,15 @@ $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
     // Handle Modals Page event when it is init
     if (page.name === 'modals') {
-        $$('.demo-alert').tap(function () {
+        $$('.demo-alert').on('click', function () {
             myApp.alert('Hello!');
         });
-        $$('.demo-confirm').tap(function () {
+        $$('.demo-confirm').on('click', function () {
             myApp.confirm('Are you feel good today?', function () {
                 myApp.alert('Great!');
             });
         });
-        $$('.demo-prompt').tap(function () {
+        $$('.demo-prompt').on('click', function () {
             myApp.prompt('What is your name?', function (data) {
                 // @data contains input value
                 myApp.confirm('Are you sure that your name is ' + data + '?', function () {
@@ -55,19 +55,19 @@ $$(document).on('pageInit', function (e) {
     }
     //Preloader page events
     if (page.name === 'preloader') {
-        $$('.demo-indicator').tap(function () {
+        $$('.demo-indicator').on('click', function () {
             myApp.showIndicator();
             setTimeout(function () {
                 myApp.hideIndicator();
             }, 2000);
         });
-        $$('.demo-preloader').tap(function () {
+        $$('.demo-preloader').on('click', function () {
             myApp.showPreloader();
             setTimeout(function () {
                 myApp.hidePreloader();
             }, 2000);
         });
-        $$('.demo-preloader-custom').tap(function () {
+        $$('.demo-preloader-custom').on('click', function () {
             myApp.showPreloader('My text...');
             setTimeout(function () {
                 myApp.hidePreloader();
@@ -82,7 +82,7 @@ $$(document).on('pageInit', function (e) {
     }
     // Action sheet, we use it on two pages
     if (page.name === 'swipe-delete' || page.name === 'modals' || page.name === 'media-lists') {
-        $$('.demo-actions').tap(function () {
+        $$('.demo-actions').on('click', function () {
             myApp.actions([
                 // First buttons group
                 [
@@ -154,7 +154,7 @@ $$(document).on('pageInit', function (e) {
                 });
             }, 2000);
         });
-        $$('.ks-send-message').tap(function () {
+        $$('.ks-send-message').on('click', function () {
             $$('.ks-messages-form').trigger('submit');
         });
     }
@@ -191,7 +191,7 @@ $$(document).on('pageInit', function (e) {
 });
 
 // Required for demo popover
-$$('.popover a').tap(function () {
+$$('.popover a').on('click', function () {
     myApp.closeModal('.popover');
 });
 
@@ -234,4 +234,4 @@ function createContentPage() {
     );
     return;
 }
-$$(document).tap('.ks-generate-page', createContentPage);
+$$(document).on('click', '.ks-generate-page', createContentPage);
