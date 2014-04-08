@@ -11,7 +11,14 @@ app.init = function () {
     if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
     // Init each page callbacks
     $('.page').each(function () {
-        app.initPage(this);
+        var pageContainer = $(this);
+        var viewContainer = pageContainer.parents('.view');
+        var view = viewContainer[0].f7View || false;
+        var url = view && view.url ? view.url : false;
+        if (viewContainer) {
+            viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
+        }
+        app.pageInitCallback(view, this, url, 'center');
     });
     // Init resize events
     if (app.initResize) app.initResize();
