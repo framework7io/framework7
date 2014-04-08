@@ -509,3 +509,5 @@ $.supportTouch = (function () {
     return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 })();
 $.fn = Dom7.prototype;
+// Export Selectors engine to global Framework7
+Framework7.$ = $;

@@ -5,13 +5,14 @@ app.views = [];
 app.addView = function (viewSelector, viewParams) {
     if (!viewSelector) return;
     var container = $(viewSelector)[0];
+    var startUrl = container.getAttribute('data-url') || viewParams.startUrl;
     var view = {
         container: container,
         selector: viewSelector,
         params: viewParams || {},
         history: [],
         contentCache: {},
-        url: '',
+        url: startUrl || '',
         pagesContainer: $('.pages', container)[0],
         main: $(container).hasClass('view-main'),
         loadContent: function (content) {
@@ -38,7 +39,10 @@ app.addView = function (viewSelector, viewParams) {
     };
     // Store to history main view's url
     if (view.main) {
-        view.url = document.location.href;
+        view.url = startUrl || document.location.href;
+        view.history.push(view.url);
+    }
+    else if (startUrl) {
         view.history.push(view.url);
     }
     // Store View in element for easy access

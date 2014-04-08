@@ -19,9 +19,20 @@ app.getDeviceInfo = function () {
         device.os = 'ios';
     }
     // iOS
-    if (iphone && !ipod) device.osVersion = iphone[2].replace(/_/g, '.');
-    if (ipad) device.osVersion = ipad[2].replace(/_/g, '.');
-    if (ipod) device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+    device.iphone = false;
+    device.ipad = false;
+    if (iphone && !ipod) {
+        device.osVersion = iphone[2].replace(/_/g, '.');
+        device.iphone = true;
+    }
+    if (ipad) {
+        device.osVersion = ipad[2].replace(/_/g, '.');
+        device.ipad = true;
+    }
+    if (ipod) {
+        device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+        device.iphone = true;
+    }
 
     // Webview
     device.webview = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
