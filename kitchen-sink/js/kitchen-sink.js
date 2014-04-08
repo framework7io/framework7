@@ -18,7 +18,7 @@ var myApp = new Framework7({
 });
 
 // Expose Internal DOM library
-var $$ = myApp.$;
+var $$ = Framework7.$;
 
 // Add main view
 var mainView = myApp.addView('.view-main', {
