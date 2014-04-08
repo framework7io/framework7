@@ -22,6 +22,8 @@ window.Framework7 = function (params) {
         cache: true,
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
+        // Fast clicks
+        fastClicks : true,
         // Swipe Back
         swipeBackPage: true,
         swipeBackPageThreshold: 0,
