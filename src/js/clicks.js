@@ -115,6 +115,9 @@ app.initClickEvents = function () {
             }
             else {
                 view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
+                if (view && view.params.linksView) {
+                    view = $(view.params.linksView)[0].f7View;
+                }
             }
             if (!view) {
                 for (var i = 0; i < app.views.length; i++) {
