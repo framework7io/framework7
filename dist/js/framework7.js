@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.8
+ * Framework7 0.7.0
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 5, 2014
+ * Released on: April 9, 2014
 */
 (function () {
 
@@ -38,6 +38,8 @@
             cache: true,
             cacheDuration: 1000 * 60 * 10, // Ten minutes 
             preloadPreviousPage: true,
+            // Fast clicks
+            fastClicks : true,
             // Swipe Back
             swipeBackPage: true,
             swipeBackPageThreshold: 0,
@@ -97,13 +99,14 @@
         app.addView = function (viewSelector, viewParams) {
             if (!viewSelector) return;
             var container = $(viewSelector)[0];
+            var startUrl = container.getAttribute('data-url') || viewParams.startUrl;
             var view = {
                 container: container,
                 selector: viewSelector,
                 params: viewParams || {},
                 history: [],
                 contentCache: {},
-                url: '',
+                url: startUrl || '',
                 pagesContainer: $('.pages', container)[0],
                 main: $(container).hasClass('view-main'),
                 loadContent: function (content) {
@@ -130,7 +133,10 @@
             };
             // Store to history main view's url
             if (view.main) {
-                view.url = document.location.href;
+                view.url = startUrl || document.location.href;
+                view.history.push(view.url);
+            }
+            else if (startUrl) {
                 view.history.push(view.url);
             }
             // Store View in element for easy access
@@ -169,7 +175,7 @@
                 dynamicNavbar,
                 el;
         
-            function handleTouchStart(e) {
+            function handleTouchStart(e, target) {
                 if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
                 isMoved = false;
                 isTouched = true;
@@ -180,7 +186,7 @@
                 dynamicNavbar = view.params.dynamicNavbar && viewContainer.find('.navbar-inner').length > 1;
             }
             
-            function handleTouchMove(e) {
+            function handleTouchMove(e, target) {
                 if (!isTouched) return;
                 var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
                 var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -196,8 +202,8 @@
                     var cancel = false;
                     // Calc values during first move fired
                     viewContainerWidth = viewContainer.width();
-                    activePage = $(e.target).is('.page') ? $(e.target) : $(e.target).parents('.page');
-                    previousPage = viewContainer.find('.page-on-left');
+                    activePage = $(target || e.target).is('.page') ? $(target || e.target) : $(target || e.target).parents('.page');
+                    previousPage = viewContainer.find('.page-on-left:not(.cached)');
                     if (touchesStart.x - viewContainer.offset().left > app.params.swipeBackPageActiveArea) cancel = true;
                     if (previousPage.length === 0 || activePage.length === 0) cancel = true;
                     if (cancel) {
@@ -205,8 +211,8 @@
                         return;
                     }
                     if (dynamicNavbar) {
-                        activeNavbar = viewContainer.find('.navbar-on-center');
-                        previousNavbar = viewContainer.find('.navbar-on-left');
+                        activeNavbar = viewContainer.find('.navbar-on-center:not(.cached)');
+                        previousNavbar = viewContainer.find('.navbar-on-left:not(.cached)');
                         activeNavElements = activeNavbar.find('.left, .center, .right');
                         previousNavElements = previousNavbar.find('.left, .center, .right');
                     }
@@ -251,7 +257,7 @@
                 }
         
             }
-            function handleTouchEnd(e) {
+            function handleTouchEnd(e, target) {
                 if (!isTouched || !isMoved) {
                     isTouched = false;
                     isMoved = false;
@@ -318,12 +324,24 @@
             viewContainer.on(app.touchEvents.start, handleTouchStart);
             viewContainer.on(app.touchEvents.move, handleTouchMove);
             viewContainer.on(app.touchEvents.end, handleTouchEnd);
+             
+            view.attachSubEvents = function (page, el) {
+                $(el).on(app.touchEvents.start, function (e) {
+                    return handleTouchStart.apply(page, [e, page]);
+                });
+                $(el).on(app.touchEvents.move, function (e) {
+                    return handleTouchMove.apply(page, [e, page]);
+                });
+                $(el).on(app.touchEvents.end, function (e, page) {
+                    return handleTouchEnd.apply(page, [e, page]);
+                });
+            };
         };
         /*======================================================
         ************   Navbars && Toolbars   ************
         ======================================================*/
         app.sizeNavbars = function (viewContainer) {
-            var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner') : $('.navbar .navbar-inner');
+            var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
             navbarInner.each(function () {
                 var tt = $(this),
                     left = tt.find('.left'),
@@ -430,8 +448,8 @@
             xhr.onload = function (e) {
                 if (app.params.onAjaxComplete) {
                     app.params.onAjaxComplete(xhr);
-                    $(document).trigger('ajaxComplete', {xhr: xhr});
                 }
+                $(document).trigger('ajaxComplete', {xhr: xhr});
                 if (callback) {
                     if (this.status === 200 || this.status === 0) {
                         callback(this.responseText, false);
@@ -451,8 +469,8 @@
             };
             if (app.params.onAjaxStart) {
                 app.params.onAjaxStart(xhr);
-                $(document).trigger('ajaxStart', {xhr: xhr});
             }
+            $(document).trigger('ajaxStart', {xhr: xhr});
             app.xhr = xhr;
             xhr.send();
             return xhr;
@@ -477,7 +495,7 @@
             if (app.params.onPageBeforeInit) {
                 app.params.onPageBeforeInit(pageData);
             }
-            if (view.params.onPageBeforeInit) {
+            if (view && view.params.onPageBeforeInit) {
                 view.params.onPageBeforeInit(pageData);
             }
             $(document).trigger('pageBeforeInit', {page: pageData});
@@ -486,7 +504,7 @@
             if (app.params.onPageInit) {
                 app.params.onPageInit(pageData);
             }
-            if (view.params.onPageInit) {
+            if (view && view.params.onPageInit) {
                 view.params.onPageInit(pageData);
             }
             $(document).trigger('pageInit', {page: pageData});
@@ -515,6 +533,9 @@
         
             }
             if (callback === 'before') {
+                // Add data-page on view
+                $(view.container).attr('data-page', pageData.name);
+        
                 // Hide/show navbar dynamically
                 if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
                     view.hideNavbar();
@@ -568,6 +589,15 @@
                     $(app._tempDomElement).append(content);
                 }
             }
+            
+            if (view.params.subEvents) {
+                $(app._tempDomElement).find('.page').each(function () {
+                    var page = this;
+                    $(page).find('iframe').on('load', function () {
+                        view.attachSubEvents(page, this.contentWindow.document);
+                    });
+                });
+            }
         
             newPage = $('.page', app._tempDomElement);
             if (newPage.length > 1) {
@@ -582,14 +612,21 @@
             newPage.addClass('page-on-right');
         
             // Find old page (should be the last one) and remove older pages
-            pagesInView = viewContainer.find('.page');
+            pagesInView = viewContainer.find('.page:not(.cached)');
             if (pagesInView.length > 1) {
                 for (i = 0; i < pagesInView.length - 2; i++) {
-                    $(pagesInView[i]).remove();
+                    if (!view.params.domCache)
+                        $(pagesInView[i]).remove();
+                    else
+                        $(pagesInView[i]).addClass('cached');
                 }
-                $(pagesInView[i]).remove();
+                if (!view.params.domCache)
+                    $(pagesInView[i]).remove();
+                else
+                    $(pagesInView[i]).addClass('cached');
             }
-            oldPage = viewContainer.find('.page');
+            
+            oldPage = viewContainer.find('.page:not(.cached)');
         
             // Dynamic navbar
             if (view.params.dynamicNavbar) {
@@ -603,15 +640,21 @@
                     dynamicNavbar = false;
                 }
                 navbar = viewContainer.find('.navbar');
-                oldNavbarInner = navbar.find('.navbar-inner');
+                oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
                 if (oldNavbarInner.length > 0) {
                     for (i = 0; i < oldNavbarInner.length - 1; i++) {
-                        $(oldNavbarInner[i]).remove();
+                        if (!view.params.domCache)
+                            $(oldNavbarInner[i]).remove();
+                        else
+                            $(oldNavbarInner[i]).addClass('cached');
                     }
                     if (newNavbarInner.length === 0 && oldNavbarInner.length === 1) {
-                        $(oldNavbarInner[0]).remove();
+                        if (!view.params.domCache)
+                            $(oldNavbarInner[0]).remove();
+                        else
+                            $(oldNavbarInner[0]).addClass('cached');
                     }
-                    oldNavbarInner = navbar.find('.navbar-inner');
+                    oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
                 }
             }
             if (dynamicNavbar) {
@@ -621,8 +664,14 @@
         
             // save content areas into view's cache
             if (!url) {
-                url = '#content-' + Math.floor(Math.random() * 10000) + 1;
-                view.contentCache[url] = { nav: newNavbarInner, page: newPage };
+                url = '#content-' + view.history.length;
+        
+                if (!view.params.domCache) {
+                    if (view.history.length === 1) {
+                        view.contentCache[view.history[0]] = { nav: oldNavbarInner, page: oldPage };
+                    }
+                    view.contentCache[url] = { nav: newNavbarInner, page: newPage };
+                }
             }
         
             // Update View history
@@ -820,7 +869,7 @@
                 if (view.params.dynamicNavbar) {
                     dynamicNavbar = true;
                     // Find navbar
-                    var inners = viewContainer.find('.navbar-inner');
+                    var inners = viewContainer.find('.navbar-inner:not(.cached)');
                     newNavbarInner = $(inners[0]);
                     oldNavbarInner = $(inners[1]);
                 }
@@ -861,7 +910,7 @@
                 }
                 
                 // Check current url is in cache?
-                if (url in view.contentCache) {
+                if (!view.params.domCache && (url in view.contentCache)) {
                     var _cache = view.contentCache[url];
         
                     app._tempDomElement = document.createElement('div');
@@ -891,19 +940,28 @@
             app.allowPageChange = true;
             // Updated dynamic navbar
             if (view.params.dynamicNavbar) {
-                var inners = $(view.container).find('.navbar-inner');
+                var inners = $(view.container).find('.navbar-inner:not(.cached)');
                 var oldNavbar = $(inners[1]).remove();
                 var newNavbar = $(inners[0]).removeClass('navbar-on-left navbar-from-left-to-center').addClass('navbar-on-center');
+        
+                if (app.params.preloadPreviousPage && view.params.domCache) {
+                    var cachedNavs = $(view.container).find('.navbar-inner.cached');
+                    $(cachedNavs[cachedNavs.length - 1]).removeClass('cached');
+                }
             }
-            // Update View's Hitory
+            // Update View's History
             view.history.pop();
             // Check current page is content based only
-            if (view.url && view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
+            if (!view.params.domCache && view.url && view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
                 view.contentCache[view.url] = null;
                 delete view.contentCache[view.url];
             }
             // Preload previous page
             if (app.params.preloadPreviousPage) {
+                if (view.params.domCache) {
+                    var cachedPages = $(view.container).find('.page.cached');
+                    $(cachedPages[cachedPages.length - 1]).removeClass('cached');
+                }
                 app.goBack(view, false, true);
             }
         };
@@ -953,7 +1011,7 @@
             
             // Add events on buttons
             modal.find('.modal-button').each(function (index, el) {
-                $(el).tap(function (e) {
+                $(el).on('click', function (e) {
                     if (params.buttons[index].close !== false) app.closeModal(modal);
                     if (params.buttons[index].onClick) params.buttons[index].onClick(modal, e);
                 });
@@ -1063,7 +1121,7 @@
                     var buttonIndex = index;
                     var buttonParams = params[groupIndex][buttonIndex];
                     if ($(el).hasClass('actions-modal-button')) {
-                        $(el).tap(function (e) {
+                        $(el).on('click', function (e) {
                             if (buttonParams.close !== false) app.closeModal(modal);
                             if (buttonParams.onClick) buttonParams.onClick(modal, e);
                         });
@@ -1073,11 +1131,24 @@
             app.openModal(modal);
             return modal[0];
         };
-        app.popover = function (modal, target) {
+        app.popover = function (modal, target, removeOnClose) {
+            if (typeof removeOnClose === 'undefined') removeOnClose = true;
+            if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
+                var _modal = document.createElement('div');
+                _modal.innerHTML = modal;
+                if (_modal.childNodes.length > 0) {
+                    modal = _modal.childNodes[0];
+                    if (removeOnClose) modal.classList.add('remove-on-close');
+                    $('body').append(modal);
+                }
+                else return false; //nothing found
+            }
             modal = $(modal);
             target = $(target);
             if (modal.length === 0 || target.length === 0) return false;
-        
+            if (modal.find('.popover-angle').length === 0) {
+                modal.append('<div class="popover-angle"></div>');
+            }
             modal.show();
         
             function sizePopover() {
@@ -1165,7 +1236,18 @@
             app.openModal(modal);
             return modal[0];
         };
-        app.popup = function (modal) {
+        app.popup = function (modal, removeOnClose) {
+            if (typeof removeOnClose === 'undefined') removeOnClose = true;
+            if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
+                var _modal = document.createElement('div');
+                _modal.innerHTML = modal;
+                if (_modal.childNodes.length > 0) {
+                    modal = _modal.childNodes[0];
+                    if (removeOnClose) modal.classList.add('remove-on-close');
+                    $('body').append(modal);
+                }
+                else return false; //nothing found
+            }
             modal = $(modal);
             if (modal.length === 0) return false;
             modal.show();
@@ -1203,15 +1285,18 @@
             modal.trigger('close');
             var isPopover = modal.hasClass('popover');
             var isPopup = modal.hasClass('popup');
+            var removeOnClose = modal.hasClass('remove-on-close');
             if (!isPopover) {
                 modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
                     modal.trigger('closed');
                     if (!isPopup) modal.remove();
                     if (isPopup) modal.removeClass('modal-out').hide();
+                    if (removeOnClose) modal.remove();
                 });
             }
             else {
                 modal.removeClass('modal-in modal-out').trigger('closed').hide();
+                if (removeOnClose) modal.remove();
             }
             return true;
         };
@@ -1608,16 +1693,108 @@
             });
         };
         /*===============================================================================
+        ************   Fast Clicks   ************
+        ************   Impressed by https://github.com/ftlabs/fastclick   ************
+        ===============================================================================*/
+        app.initFastClicks = function () {
+            if (!$.supportTouch) return;
+            var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent;
+        
+            function targetNeedsFocus(el) {
+                var tag = el.nodeName.toLowerCase();
+                var skipInputs = ('button checkbox file image radio submit').split(' ');
+                if (el.disabled || el.readOnly) return false;
+                if (tag === 'textarea') return true;
+                if (tag === 'select') {
+                    if (app.device.os === 'android') return false;
+                    else return true;
+                }
+                if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
+            }
+            function handleTouchStart(e) {
+                if (e.targetTouches.length > 1) {
+                    return true;
+                }
+                if (app.device.os === 'ios') {
+                    var selection = window.getSelection();
+                    if (selection.rangeCount && !selection.isCollapsed) {
+                        activeSelection = true;
+                        return true;
+                    }
+                }
+                
+                trackClick = true;
+                targetElement = e.target;
+                touchStartTime = (new Date()).getTime();
+                touchStartX = e.targetTouches[0].pageX;
+                touchStartY = e.targetTouches[0].pageY;
+        
+                // Detect scroll parent
+                if (app.device.os === 'ios') {
+                    scrollParent = undefined;
+                    $(targetElement).parents().each(function () {
+                        var parent = this;
+                        if (parent.scrollHeight > parent.offsetHeight && !scrollParent) {
+                            scrollParent = parent;
+                            scrollParent.f7ScrollTop = scrollParent.scrollTop;
+                        }
+                    });
+                }
+            }
+            function handleTouchMove(e) {
+                if (!trackClick) return;
+                trackClick = false;
+                targetElement = null;
+            }
+            function handleTouchEnd(e) {
+                if (!trackClick) {
+                    if (!activeSelection) e.preventDefault();
+                    return true;
+                }
+                var touchEndTime = (new Date()).getTime();
+                if (touchEndTime - touchStartTime > 200) return true;
+        
+                e.preventDefault();
+        
+                trackClick = false;
+                if (app.device.os === 'ios' && scrollParent) {
+                    if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
+                        return false;
+                    }
+                }
+        
+                // Trigger focus where required
+                if (targetNeedsFocus(targetElement)) targetElement.focus();
+        
+                // Trigger click
+                var touch = e.changedTouches[0];
+                var evt = document.createEvent('MouseEvents');
+                var eventType = 'click';
+                if (app.device.os === 'android' && targetElement.nodeName.toLowerCase() === 'select') {
+                    eventType = 'mousedown';
+                }
+                evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+                
+                targetElement.dispatchEvent(evt);
+            }
+            $(document).on('touchstart', handleTouchStart);
+            $(document).on('touchmove', handleTouchMove);
+            $(document).on('touchend', handleTouchEnd);
+        };
+        /*===============================================================================
         ************   Handle clicks and make them fast (on tap);   ************
         ===============================================================================*/
         app.initClickEvents = function () {
-            function handleTap(e) {
+            function handleClicks(e) {
                 /*jshint validthis:true */
                 var clicked = $(this);
                 var url = clicked.attr('href');
                 // External
                 if (clicked.hasClass('external')) {
                     return;
+                }
+                else if (clicked[0].nodeName.toLowerCase() === 'a') {
+                    e.preventDefault();
                 }
                 // Open Panel
                 if (clicked.hasClass('open-panel')) {
@@ -1669,25 +1846,6 @@
                         app.closeModal();
                     if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
                 }
-                // Radios/checkboxes
-                if (clicked.hasClass('label-checkbox') || clicked.hasClass('label-radio')) {
-                    var input = clicked.find('input');
-                    if (input.attr('type') === 'checkbox') {
-                        if (input[0].checked === true) input[0].checked = false;
-                        else input[0].checked = true;
-                    }
-                    if (input.attr('type') === 'radio') {
-                        clicked.find('input')[0].checked = true;
-                    }
-                    input.trigger('change');
-                    return;
-                }
-                if ($.supportTouch) {
-                    if (clicked.parent().hasClass('label-switch')) {
-                        clicked[0].checked = !clicked[0].checked;
-                        clicked.trigger('change');
-                    }
-                }
                 
                 // Tabs
                 if (clicked.hasClass('tab-link')) {
@@ -1724,6 +1882,9 @@
                     }
                     else {
                         view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
+                        if (view && view.params.linksView) {
+                            view = $(view.params.linksView)[0].f7View;
+                        }
                     }
                     if (!view) {
                         for (var i = 0; i < app.views.length; i++) {
@@ -1735,14 +1896,7 @@
                     else view.loadPage(clicked.attr('href'));
                 }
             }
-            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', handleTap);
-            
-            //Disable clicks
-            function handleClick(e) {
-                /*jshint validthis:true */
-                if (!$(this).hasClass('external')) e.preventDefault();
-            }
-            $(document).on('click', 'a, .label-checkbox, .label-radio', handleClick);
+            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover', handleClicks);
         };
         /*======================================================
         ************   App Resize Actions   ************
@@ -1780,13 +1934,23 @@
                 device.os = 'ios';
             }
             // iOS
-            if (iphone && !ipod) device.osVersion = iphone[2].replace(/_/g, '.');
-            if (ipad) device.osVersion = ipad[2].replace(/_/g, '.');
-            if (ipod) device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+            device.iphone = false;
+            device.ipad = false;
+            if (iphone && !ipod) {
+                device.osVersion = iphone[2].replace(/_/g, '.');
+                device.iphone = true;
+            }
+            if (ipad) {
+                device.osVersion = ipad[2].replace(/_/g, '.');
+                device.ipad = true;
+            }
+            if (ipod) {
+                device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+                device.iphone = true;
+            }
         
             // Webview
-            device.webview = !!navigator.standalone;
-        
+            device.webview = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
                 
             // Minimal UI
             if (device.os && device.os === 'ios') {
@@ -1802,6 +1966,7 @@
             var windowHeight = $(window).height();
             device.statusBar = false;
             if (
+                device.webview &&
                 // iPhone 5
                 (windowWidth === 320 && windowHeight === 568) ||
                 (windowWidth === 568 && windowHeight === 320) ||
@@ -1846,6 +2011,7 @@
         app.init = function () {
             if (app.getDeviceInfo) app.getDeviceInfo();
             // Init Click events
+            if (app.initFastClicks && app.params.fastClicks) app.initFastClicks();
             if (app.initClickEvents) app.initClickEvents();
             // Init Swipeouts events
             if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
@@ -1853,7 +2019,14 @@
             if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
             // Init each page callbacks
             $('.page').each(function () {
-                app.initPage(this);
+                var pageContainer = $(this);
+                var viewContainer = pageContainer.parents('.view');
+                var view = viewContainer[0].f7View || false;
+                var url = view && view.url ? view.url : false;
+                if (viewContainer) {
+                    viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
+                }
+                app.pageInitCallback(view, this, url, 'center');
             });
             // Init resize events
             if (app.initResize) app.initResize();
@@ -1981,38 +2154,6 @@
             }
     
             return this;
-        },
-        tap: function (targetSelector, listener) {
-            var dom = this;
-            var isTouched, isMoved, touchesStart = {}, touchStartTime, deltaX, deltaY;
-            if (arguments.length === 1) {
-                listener = arguments[0];
-                targetSelector = false;
-            }
-            function handleTouchStart(e) {
-                isTouched = true;
-                isMoved = false;
-            }
-            function handleTouchMove(e) {
-                if (!isTouched || isMoved) return;
-                isMoved = true;
-            }
-            function handleTouchEnd(e) {
-                e.preventDefault(); // - to prevent Safari's Ghost click
-                if (isTouched && !isMoved) {
-                    /*jshint validthis:true */
-                    listener.call(this, e);
-                }
-                isTouched = isMoved = false;
-            }
-            if ($.supportTouch) {
-                dom.on('touchstart', targetSelector, handleTouchStart);
-                dom.on('touchmove', targetSelector, handleTouchMove);
-                dom.on('touchend', targetSelector, handleTouchEnd);
-            }
-            else {
-                dom.on('click', targetSelector, listener);
-            }
         },
         off: function (event, listener) {
             for (var i = 0; i < this.length; i++) {
@@ -2377,4 +2518,6 @@
         return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
     })();
     $.fn = Dom7.prototype;
+    // Export Selectors engine to global Framework7
+    Framework7.$ = $;
 })();
