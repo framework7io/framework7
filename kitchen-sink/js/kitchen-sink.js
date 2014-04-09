@@ -30,7 +30,14 @@ var rightView = myApp.addView('.view-right', {
     // Enable Dynamic Navbar for this view
     dynamicNavbar: true
 });
-
+// Show/hide preloader for remote ajax loaded pages
+// Probably should be removed on a production/local app
+$$(document).on('ajaxStart', function () {
+    myApp.showIndicator();
+});
+$$(document).on('ajaxComplete', function () {
+    myApp.hideIndicator();
+});
 // Events for specific pages when it initialized
 $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
