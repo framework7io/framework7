@@ -7,10 +7,13 @@ app.initFastClicks = function () {
 
     function targetNeedsFocus(el) {
         var tag = el.nodeName.toLowerCase();
-        var tags = ['textarea', 'select'];
         var skipInputs = ('button checkbox file image radio submit').split(' ');
         if (el.disabled || el.readOnly) return false;
-        if (tag === 'textarea' || tag === 'select') return true;
+        if (tag === 'textarea') return true;
+        if (tag === 'select') {
+            if (app.device.os === 'android') return false;
+            else return true;
+        }
         if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
     }
     function handleTouchStart(e) {
@@ -53,6 +56,9 @@ app.initFastClicks = function () {
             if (!activeSelection) e.preventDefault();
             return true;
         }
+        var touchEndTime = (new Date()).getTime();
+        if (touchEndTime - touchStartTime > 200) return true;
+
         e.preventDefault();
 
         trackClick = false;
@@ -68,7 +74,11 @@ app.initFastClicks = function () {
         // Trigger click
         var touch = e.changedTouches[0];
         var evt = document.createEvent('MouseEvents');
-        evt.initMouseEvent('click', true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+        var eventType = 'click';
+        if (app.device.os === 'android' && targetElement.nodeName.toLowerCase() === 'select') {
+            eventType = 'mousedown';
+        }
+        evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
         
         targetElement.dispatchEvent(evt);
     }

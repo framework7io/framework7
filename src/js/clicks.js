@@ -10,7 +10,7 @@ app.initClickEvents = function () {
         if (clicked.hasClass('external')) {
             return;
         }
-        else if (clicked.is('a')) {
+        else if (clicked[0].nodeName.toLowerCase() === 'a') {
             e.preventDefault();
         }
         // Open Panel
