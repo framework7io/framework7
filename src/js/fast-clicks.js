@@ -3,7 +3,7 @@
 ===============================================================================*/
 app.initFastClicks = function () {
     if (!$.supportTouch) return;
-    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection;
+    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent;
 
     function targetNeedsFocus(el) {
         var tag = el.nodeName.toLowerCase();
@@ -24,12 +24,24 @@ app.initFastClicks = function () {
                 return true;
             }
         }
+        
         trackClick = true;
         targetElement = e.target;
         touchStartTime = (new Date()).getTime();
         touchStartX = e.targetTouches[0].pageX;
         touchStartY = e.targetTouches[0].pageY;
-        
+
+        // Detect scroll parent
+        if (app.device.os === 'ios') {
+            scrollParent = undefined;
+            $(targetElement).parents().each(function () {
+                var parent = this;
+                if (parent.scrollHeight > parent.offsetHeight && !scrollParent) {
+                    scrollParent = parent;
+                    scrollParent.f7ScrollTop = scrollParent.scrollTop;
+                }
+            });
+        }
     }
     function handleTouchMove(e) {
         if (!trackClick) return;
@@ -43,8 +55,12 @@ app.initFastClicks = function () {
         }
         e.preventDefault();
 
-        var touchEndTime = (new Date()).getTime();
         trackClick = false;
+        if (app.device.os === 'ios' && scrollParent) {
+            if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
+                return false;
+            }
+        }
 
         // Trigger focus where required
         if (targetNeedsFocus(targetElement)) targetElement.focus();
@@ -55,14 +71,8 @@ app.initFastClicks = function () {
         evt.initMouseEvent('click', true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
         
         targetElement.dispatchEvent(evt);
-        // $(targetElement).trigger('click');
-    }
-    function handleClick(e) {
-        
     }
     $(document).on('touchstart', handleTouchStart);
     $(document).on('touchmove', handleTouchMove);
     $(document).on('touchend', handleTouchEnd);
-    $(document).on('click', handleClick);
-    
 };
