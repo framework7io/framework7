@@ -72,6 +72,18 @@ module.exports = function (grunt) {
                     'kitchen-sink/css/kitchen-sink.css' : 'kitchen-sink/less/kitchen-sink.less'
                 }
             },
+            examples: {
+                options: {
+                    cleancss: false
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'examples/tab-bar/less/',
+                    src: ['*.less'],
+                    dest: 'examples/tab-bar/css/',
+                    ext: '.css'
+                }]
+            },
         },
         concat: {
             options: {
@@ -158,6 +170,13 @@ module.exports = function (grunt) {
                 options: {
                     livereload: true
                 }
+            },
+            examples: {
+                files: ['examples/tab-bar/jade/**', 'examples/tab-bar/less/**'],
+                tasks: ['jade:examples', 'less:examples'],
+                options: {
+                    livereload: true
+                }
             }
         },
         jade: {
@@ -182,6 +201,18 @@ module.exports = function (grunt) {
                     cwd: 'kitchen-sink/jade/',
                     src: ['*.jade'],
                     dest: 'kitchen-sink/',
+                    ext: '.html'
+                }]
+            },
+            examples: {
+                options: {
+                    pretty: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'examples/tab-bar/jade/',
+                    src: ['*.jade'],
+                    dest: 'examples/tab-bar/',
                     ext: '.html'
                 }]
             }
@@ -262,6 +293,10 @@ module.exports = function (grunt) {
         'build',
         'jade:kitchen',
         'less:kitchen'
+    ]);
+    this.registerTask('examples', 'Compile examples less and jade files', [
+        'jade:examples',
+        'less:examples'
     ]);
 
     // Server
