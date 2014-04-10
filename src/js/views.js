@@ -4,7 +4,11 @@
 app.views = [];
 app.addView = function (viewSelector, viewParams) {
     if (!viewSelector) return;
-    var container = $(viewSelector)[0];
+    var $container = $(viewSelector);
+    if ($container.length === 0) return;
+    
+    var container = $container[0];
+    if (typeof viewParams === 'undefined') viewParams = {};
     var startUrl = container.getAttribute('data-url') || viewParams.startUrl;
     var view = {
         container: container,
@@ -12,7 +16,7 @@ app.addView = function (viewSelector, viewParams) {
         params: viewParams || {},
         history: [],
         contentCache: {},
-        url: startUrl || '',
+        url: container.getAttribute('data-url') || viewParams.startUrl,
         pagesContainer: $('.pages', container)[0],
         main: $(container).hasClass('view-main'),
         loadContent: function (content) {
