@@ -90,6 +90,13 @@ module.exports = function (grunt) {
                         src: ['*.less'],
                         dest: 'examples/split-view/css/',
                         ext: '.css'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view-panel/less/',
+                        src: ['*.less'],
+                        dest: 'examples/split-view-panel/css/',
+                        ext: '.css'
                     }
                 ]
             },
@@ -183,7 +190,8 @@ module.exports = function (grunt) {
             examples: {
                 files: [
                     'examples/tab-bar/jade/**', 'examples/tab-bar/less/**',
-                    'examples/split-view/jade/**', 'examples/split-view/less/**'
+                    'examples/split-view/jade/**', 'examples/split-view/less/**',
+                    'examples/split-view-panel/jade/**', 'examples/split-view-panel/less/**'
                 ],
                 tasks: ['jade:examples', 'less:examples'],
                 options: {
@@ -233,6 +241,13 @@ module.exports = function (grunt) {
                         cwd: 'examples/split-view/jade/',
                         src: ['*.jade'],
                         dest: 'examples/split-view/',
+                        ext: '.html'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view-panel/jade/',
+                        src: ['*.jade'],
+                        dest: 'examples/split-view-panel/',
                         ext: '.html'
                     },
                     
