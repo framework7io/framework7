@@ -74,6 +74,13 @@ app.initClickEvents = function () {
                 clickedParent.find('.active').removeClass('active');
                 clicked.addClass('active');
             }
+            if (newTab.find('.navbar').length > 0) {
+                // Find tab's view
+                var viewContainer;
+                if (newTab.hasClass('view')) viewContainer = newTab[0];
+                else viewContainer = newTab.parents('.view')[0];
+                app.sizeNavbars(viewContainer);
+            }
         }
         // Swipeout Delete
         if (clicked.hasClass('swipeout-delete')) {
