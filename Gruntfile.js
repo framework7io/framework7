@@ -76,13 +76,22 @@ module.exports = function (grunt) {
                 options: {
                     cleancss: false
                 },
-                files: [{
-                    expand: true,
-                    cwd: 'examples/tab-bar/less/',
-                    src: ['*.less'],
-                    dest: 'examples/tab-bar/css/',
-                    ext: '.css'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'examples/tab-bar/less/',
+                        src: ['*.less'],
+                        dest: 'examples/tab-bar/css/',
+                        ext: '.css'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view/less/',
+                        src: ['*.less'],
+                        dest: 'examples/split-view/css/',
+                        ext: '.css'
+                    }
+                ]
             },
         },
         concat: {
@@ -172,7 +181,10 @@ module.exports = function (grunt) {
                 }
             },
             examples: {
-                files: ['examples/tab-bar/jade/**', 'examples/tab-bar/less/**'],
+                files: [
+                    'examples/tab-bar/jade/**', 'examples/tab-bar/less/**',
+                    'examples/split-view/jade/**', 'examples/split-view/less/**'
+                ],
                 tasks: ['jade:examples', 'less:examples'],
                 options: {
                     livereload: true
@@ -208,13 +220,23 @@ module.exports = function (grunt) {
                 options: {
                     pretty: true
                 },
-                files: [{
-                    expand: true,
-                    cwd: 'examples/tab-bar/jade/',
-                    src: ['*.jade'],
-                    dest: 'examples/tab-bar/',
-                    ext: '.html'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'examples/tab-bar/jade/',
+                        src: ['*.jade'],
+                        dest: 'examples/tab-bar/',
+                        ext: '.html'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view/jade/',
+                        src: ['*.jade'],
+                        dest: 'examples/split-view/',
+                        ext: '.html'
+                    },
+                    
+                ]
             }
         },
         copy: {
