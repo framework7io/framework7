@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.0
+ * Framework7 0.7.1
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 9, 2014
+ * Released on: April 10, 2014
 */
 (function () {
 
@@ -98,7 +98,11 @@
         app.views = [];
         app.addView = function (viewSelector, viewParams) {
             if (!viewSelector) return;
-            var container = $(viewSelector)[0];
+            var $container = $(viewSelector);
+            if ($container.length === 0) return;
+            
+            var container = $container[0];
+            if (typeof viewParams === 'undefined') viewParams = {};
             var startUrl = container.getAttribute('data-url') || viewParams.startUrl;
             var view = {
                 container: container,
@@ -106,7 +110,7 @@
                 params: viewParams || {},
                 history: [],
                 contentCache: {},
-                url: startUrl || '',
+                url: container.getAttribute('data-url') || viewParams.startUrl,
                 pagesContainer: $('.pages', container)[0],
                 main: $(container).hasClass('view-main'),
                 loadContent: function (content) {
@@ -1850,12 +1854,21 @@
                 // Tabs
                 if (clicked.hasClass('tab-link')) {
                     var newTab = $(clicked.attr('href'));
+                    if (newTab.length === 0) return;
                     var oldTab = newTab.parent().find('.tab.active').removeClass('active');
                     newTab.addClass('active');
+                    newTab.trigger('show');
                     var clickedParent = clicked.parent();
                     if (clickedParent.hasClass('buttons-row') || clicked.parents('.tabbar').length > 0) {
                         clickedParent.find('.active').removeClass('active');
                         clicked.addClass('active');
+                    }
+                    if (newTab.find('.navbar').length > 0) {
+                        // Find tab's view
+                        var viewContainer;
+                        if (newTab.hasClass('view')) viewContainer = newTab[0];
+                        else viewContainer = newTab.parents('.view')[0];
+                        app.sizeNavbars(viewContainer);
                     }
                 }
                 // Swipeout Delete
@@ -1967,16 +1980,19 @@
             device.statusBar = false;
             if (
                 device.webview &&
-                // iPhone 5
-                (windowWidth === 320 && windowHeight === 568) ||
-                (windowWidth === 568 && windowHeight === 320) ||
-                // iPhone 4
-                (windowWidth === 320 && windowHeight === 480) ||
-                (windowWidth === 480 && windowHeight === 320) ||
-                // iPad
-                (windowWidth === 768 && windowHeight === 1024) ||
-                (windowWidth === 1024 && windowHeight === 768)
+                (
+                    // iPhone 5
+                    (windowWidth === 320 && windowHeight === 568) ||
+                    (windowWidth === 568 && windowHeight === 320) ||
+                    // iPhone 4
+                    (windowWidth === 320 && windowHeight === 480) ||
+                    (windowWidth === 480 && windowHeight === 320) ||
+                    // iPad
+                    (windowWidth === 768 && windowHeight === 1024) ||
+                    (windowWidth === 1024 && windowHeight === 768)
+                )
             ) {
+                console.log(device.webview);
                 device.statusBar = true;
             }
             else {
