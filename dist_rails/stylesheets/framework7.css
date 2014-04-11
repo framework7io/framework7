@@ -1727,10 +1727,10 @@ label.label-radio input[type="radio"] ~ .item-inner {
 }
 label.label-radio input[type="checkbox"]:checked ~ .item-inner,
 label.label-radio input[type="radio"]:checked ~ .item-inner {
-  background: url("../assets/i-form-radio-blue.png") no-repeat -webkit-calc(100% - 15px center;
-  background: url("../assets/i-form-radio-blue.png") no-repeat -moz-calc(100% - 15px center;
-  background: url("../assets/i-form-radio-blue.png") no-repeat -ms-calc(100% - 15px center;
-  background: url("../assets/i-form-radio-blue.png") no-repeat calc(100% - 15px center;
+  background: url("../assets/i-form-radio-blue.png") no-repeat -webkit-calc(100% - 15px) center;
+  background: url("../assets/i-form-radio-blue.png") no-repeat -moz-calc(100% - 15px) center;
+  background: url("../assets/i-form-radio-blue.png") no-repeat -ms-calc(100% - 15px) center;
+  background: url("../assets/i-form-radio-blue.png") no-repeat calc(100% - 15px) center;
   -webkit-background-size: auto 10px;
   background-size: auto 10px;
 }
