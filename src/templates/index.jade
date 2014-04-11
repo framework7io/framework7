@@ -29,39 +29,49 @@ html
         // Top Navbar
         .navbar
           .navbar-inner
-            .left
-              a(href="#").link Left Link
+            // We have home navbar without left link
             .center.sliding Awesome App
             .right
-              a(href="#").link Right Link
+              // Right link contains only icon - additional "icon-only" class
+              a(href="#").link.icon-only.open-panel 
+                i.icon.icon-bars-blue
         // Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes
         .pages.navbar-through.toolbar-through
           // Page, data-page contains page name
           .page(data-page="index")
             // Scrollable page content
             .page-content
-              .content-block-title Welcome To Your Awesome App
+              .content-block-title Welcome To My Awesome App
               .content-block
                 .content-block-inner
-                  p Couple of worlds here because your app is so awesome ;)
-                  p Hey look! You already have two panels, here comes your 
-                    a(href="#").open-panel Left panel
-                    |  and your favorite 
-                    a(href="#" , data-panel="right").open-panel Right panel
-                    |  is also here!
+                  p Couple of worlds here because my app is so awesome!
+                  p Duis sed erat ac eros ultrices pharetra id ut tellus. Praesent rhoncus enim ornare ipsum aliquet ultricies. Pellentesque sodales erat quis elementum sagittis.
+              
               .content-block-title What about simple navigation?
               .list-block
                 ul
                   li
-                    a(href="page1.html").item-link
+                    a(href="about.html").item-link
                       .item-content
                         .item-inner 
-                          .item-title Page 1
+                          .item-title About
                   li
-                    a(href="page2.html").item-link
+                    a(href="services.html").item-link
                       .item-content 
                         .item-inner
-                          .item-title Page 2
+                          .item-title Services
+                  li
+                    a(href="form.html").item-link
+                      .item-content 
+                        .item-inner
+                          .item-title Form
+              .content-block-title Side panels
+              .content-block
+                .row
+                  .col-50
+                    a(href="#", data-panel="left").button.open-panel Left Panel
+                  .col-50
+                    a(href="#", data-panel="right").button.open-panel Right Panel
         // Bottom Toolbar
         .toolbar
           .toolbar-inner
