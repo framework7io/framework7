@@ -64,7 +64,6 @@ app.getDeviceInfo = function () {
             (windowWidth === 1024 && windowHeight === 768)
         )
     ) {
-        console.log(device.webview);
         device.statusBar = true;
     }
     else {
