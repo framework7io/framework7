@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.8
+ * Framework7 0.7.1
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -2156,6 +2156,10 @@ input.modal-prompt-input {
     transform: translate3d(0, 1024px, 0);
   }
 }
+.modal .preloader {
+  width: 34px;
+  height: 34px;
+}
 .preloader-indicator-overlay {
   visibility: visible;
   opacity: 0;
@@ -2166,16 +2170,16 @@ input.modal-prompt-input {
   left: 50%;
   top: 50%;
   padding: 8px;
-  margin-left: -29px;
-  margin-top: -29px;
+  margin-left: -25px;
+  margin-top: -25px;
   background: rgba(0, 0, 0, 0.8);
   z-index: 11000;
   border-radius: 5px;
 }
 .preloader-indicator-modal .preloader {
   display: block;
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
 }
 /* === Panels === */
 .panel-overlay {
@@ -2441,10 +2445,6 @@ html.with-statusbar-overlay body .panel {
 }
 .preloader-white:after {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='%23fff' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='%23l' opacity='.27'/><use xlink:href='%23l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='%23l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='%23l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='%23l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='%23l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='%23l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='%23l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
-}
-.modal .preloader {
-  width: 34px;
-  height: 34px;
 }
 @-webkit-keyframes spin {
   0% {

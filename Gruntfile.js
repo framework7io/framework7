@@ -96,6 +96,34 @@ module.exports = function (grunt) {
                     'kitchen-sink/css/kitchen-sink.css' : 'kitchen-sink/less/kitchen-sink.less'
                 }
             },
+            examples: {
+                options: {
+                    cleancss: false
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'examples/tab-bar/less/',
+                        src: ['*.less'],
+                        dest: 'examples/tab-bar/css/',
+                        ext: '.css'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view/less/',
+                        src: ['*.less'],
+                        dest: 'examples/split-view/css/',
+                        ext: '.css'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view-panel/less/',
+                        src: ['*.less'],
+                        dest: 'examples/split-view-panel/css/',
+                        ext: '.css'
+                    }
+                ]
+            },
         },
         concat: {
             options: {
@@ -130,6 +158,7 @@ module.exports = function (grunt) {
                     'src/js/messages.js',
                     'src/js/swipeout.js',
                     'src/js/pull-to-refresh.js',
+                    'src/js/fast-clicks.js',
                     'src/js/clicks.js',
                     'src/js/resize.js',
                     'src/js/device.js',
@@ -161,6 +190,7 @@ module.exports = function (grunt) {
                     'src/js/messages.js',
                     'src/js/swipeout.js',
                     'src/js/pull-to-refresh.js',
+                    'src/js/fast-clicks.js',
                     'src/js/clicks.js',
                     'src/js/resize.js',
                     'src/js/device.js',
@@ -225,6 +255,17 @@ module.exports = function (grunt) {
                 options: {
                     livereload: true
                 }
+            },
+            examples: {
+                files: [
+                    'examples/tab-bar/jade/**', 'examples/tab-bar/less/**',
+                    'examples/split-view/jade/**', 'examples/split-view/less/**',
+                    'examples/split-view-panel/jade/**', 'examples/split-view-panel/less/**'
+                ],
+                tasks: ['jade:examples', 'less:examples'],
+                options: {
+                    livereload: true
+                }
             }
         },
         jade: {
@@ -277,6 +318,35 @@ module.exports = function (grunt) {
                     dest: 'kitchen-sink/',
                     ext: '.html'
                 }]
+            },
+            examples: {
+                options: {
+                    pretty: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'examples/tab-bar/jade/',
+                        src: ['*.jade'],
+                        dest: 'examples/tab-bar/',
+                        ext: '.html'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view/jade/',
+                        src: ['*.jade'],
+                        dest: 'examples/split-view/',
+                        ext: '.html'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/split-view-panel/jade/',
+                        src: ['*.jade'],
+                        dest: 'examples/split-view-panel/',
+                        ext: '.html'
+                    },
+                    
+                ]
             }
         },
         copy: {
@@ -400,6 +470,10 @@ module.exports = function (grunt) {
         'build',
         'jade:kitchen',
         'less:kitchen'
+    ]);
+    this.registerTask('examples', 'Compile examples less and jade files', [
+        'jade:examples',
+        'less:examples'
     ]);
 
     // Server

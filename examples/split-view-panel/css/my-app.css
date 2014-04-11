@@ -1,0 +1,56 @@
+/* Your app custom files in this file */
+.view-left {
+  border-right: 1px solid #b2b2b2;
+}
+/* This will fix flicker navbar in left panel view */
+.panel-left .page-content {
+  padding: 0;
+}
+.panel-left .page {
+  margin-top: 44px;
+  padding-bottom: 44px;
+}
+.panel-left .navbar {
+  position: relative;
+  margin-bottom: -44px;
+}
+/* Because we have panels-overlay inside of .views we need to fix its open position for right panel */
+body.with-panel-right-reveal .panel-overlay {
+  margin-left: 0;
+}
+/* iPad Vertical */
+@media (min-width: 569px) {
+  .panel.panel-left.panel-cover {
+    width: 320px;
+    left: -320px;
+  }
+  body.with-panel-left-cover .panel-left {
+    -webkit-transform: translate3d(320px, 0, 0);
+    -ms-transform: translate3d(320px, 0, 0);
+    transform: translate3d(320px, 0, 0);
+  }
+}
+/* iPad Horizontal */
+@media (min-width: 769px) {
+  body .panel.panel-left.panel-cover {
+    left: 0;
+    width: 320px;
+    display: block;
+  }
+  body.with-panel-left-cover .panel-left {
+    -webkit-transform: translate3d(0px, 0, 0);
+    -ms-transform: translate3d(0px, 0, 0);
+    transform: translate3d(0px, 0, 0);
+  }
+  .view-main {
+    float: right;
+    width: -webkit-calc(100% - 320px);
+    width: -moz-calc(100% - 320px);
+    width: -ms-calc(100% - 320px);
+    width: calc(100% - 320px);
+  }
+  /* Let's hide panel-opener when left panel is visible */
+  .view-main .navbar .open-panel {
+    display: none;
+  }
+}

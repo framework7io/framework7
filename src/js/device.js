@@ -52,16 +52,19 @@ app.getDeviceInfo = function () {
     device.statusBar = false;
     if (
         device.webview &&
-        // iPhone 5
-        (windowWidth === 320 && windowHeight === 568) ||
-        (windowWidth === 568 && windowHeight === 320) ||
-        // iPhone 4
-        (windowWidth === 320 && windowHeight === 480) ||
-        (windowWidth === 480 && windowHeight === 320) ||
-        // iPad
-        (windowWidth === 768 && windowHeight === 1024) ||
-        (windowWidth === 1024 && windowHeight === 768)
+        (
+            // iPhone 5
+            (windowWidth === 320 && windowHeight === 568) ||
+            (windowWidth === 568 && windowHeight === 320) ||
+            // iPhone 4
+            (windowWidth === 320 && windowHeight === 480) ||
+            (windowWidth === 480 && windowHeight === 320) ||
+            // iPad
+            (windowWidth === 768 && windowHeight === 1024) ||
+            (windowWidth === 1024 && windowHeight === 768)
+        )
     ) {
+        console.log(device.webview);
         device.statusBar = true;
     }
     else {

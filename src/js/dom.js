@@ -114,38 +114,6 @@ Dom7.prototype = {
 
         return this;
     },
-    tap: function (targetSelector, listener) {
-        var dom = this;
-        var isTouched, isMoved, touchesStart = {}, touchStartTime, deltaX, deltaY;
-        if (arguments.length === 1) {
-            listener = arguments[0];
-            targetSelector = false;
-        }
-        function handleTouchStart(e) {
-            isTouched = true;
-            isMoved = false;
-        }
-        function handleTouchMove(e) {
-            if (!isTouched || isMoved) return;
-            isMoved = true;
-        }
-        function handleTouchEnd(e) {
-            e.preventDefault(); // - to prevent Safari's Ghost click
-            if (isTouched && !isMoved) {
-                /*jshint validthis:true */
-                listener.call(this, e);
-            }
-            isTouched = isMoved = false;
-        }
-        if ($.supportTouch) {
-            dom.on('touchstart', targetSelector, handleTouchStart);
-            dom.on('touchmove', targetSelector, handleTouchMove);
-            dom.on('touchend', targetSelector, handleTouchEnd);
-        }
-        else {
-            dom.on('click', targetSelector, listener);
-        }
-    },
     off: function (event, listener) {
         for (var i = 0; i < this.length; i++) {
             this[i].removeEventListener(event, listener, false);

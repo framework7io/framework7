@@ -32,8 +32,8 @@ app.get = function (url, callback) {
     xhr.onload = function (e) {
         if (app.params.onAjaxComplete) {
             app.params.onAjaxComplete(xhr);
-            $(document).trigger('ajaxComplete', {xhr: xhr});
         }
+        $(document).trigger('ajaxComplete', {xhr: xhr});
         if (callback) {
             if (this.status === 200 || this.status === 0) {
                 callback(this.responseText, false);
@@ -53,8 +53,8 @@ app.get = function (url, callback) {
     };
     if (app.params.onAjaxStart) {
         app.params.onAjaxStart(xhr);
-        $(document).trigger('ajaxStart', {xhr: xhr});
     }
+    $(document).trigger('ajaxStart', {xhr: xhr});
     app.xhr = xhr;
     xhr.send();
     return xhr;

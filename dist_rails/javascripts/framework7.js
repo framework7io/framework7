@@ -1,5 +1,5 @@
 /*
- * Framework7 0.6.8
+ * Framework7 0.7.1
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -38,6 +38,8 @@
             cache: true,
             cacheDuration: 1000 * 60 * 10, // Ten minutes 
             preloadPreviousPage: true,
+            // Fast clicks
+            fastClicks : true,
             // Swipe Back
             swipeBackPage: true,
             swipeBackPageThreshold: 0,
@@ -96,7 +98,11 @@
         app.views = [];
         app.addView = function (viewSelector, viewParams) {
             if (!viewSelector) return;
-            var container = $(viewSelector)[0];
+            var $container = $(viewSelector);
+            if ($container.length === 0) return;
+            
+            var container = $container[0];
+            if (typeof viewParams === 'undefined') viewParams = {};
             var startUrl = container.getAttribute('data-url') || viewParams.startUrl;
             var view = {
                 container: container,
@@ -104,7 +110,7 @@
                 params: viewParams || {},
                 history: [],
                 contentCache: {},
-                url: startUrl || '',
+                url: container.getAttribute('data-url') || viewParams.startUrl,
                 pagesContainer: $('.pages', container)[0],
                 main: $(container).hasClass('view-main'),
                 loadContent: function (content) {
@@ -446,8 +452,8 @@
             xhr.onload = function (e) {
                 if (app.params.onAjaxComplete) {
                     app.params.onAjaxComplete(xhr);
-                    $(document).trigger('ajaxComplete', {xhr: xhr});
                 }
+                $(document).trigger('ajaxComplete', {xhr: xhr});
                 if (callback) {
                     if (this.status === 200 || this.status === 0) {
                         callback(this.responseText, false);
@@ -467,8 +473,8 @@
             };
             if (app.params.onAjaxStart) {
                 app.params.onAjaxStart(xhr);
-                $(document).trigger('ajaxStart', {xhr: xhr});
             }
+            $(document).trigger('ajaxStart', {xhr: xhr});
             app.xhr = xhr;
             xhr.send();
             return xhr;
@@ -1009,7 +1015,7 @@
             
             // Add events on buttons
             modal.find('.modal-button').each(function (index, el) {
-                $(el).tap(function (e) {
+                $(el).on('click', function (e) {
                     if (params.buttons[index].close !== false) app.closeModal(modal);
                     if (params.buttons[index].onClick) params.buttons[index].onClick(modal, e);
                 });
@@ -1119,7 +1125,7 @@
                     var buttonIndex = index;
                     var buttonParams = params[groupIndex][buttonIndex];
                     if ($(el).hasClass('actions-modal-button')) {
-                        $(el).tap(function (e) {
+                        $(el).on('click', function (e) {
                             if (buttonParams.close !== false) app.closeModal(modal);
                             if (buttonParams.onClick) buttonParams.onClick(modal, e);
                         });
@@ -1142,7 +1148,6 @@
                 else return false; //nothing found
             }
             modal = $(modal);
-            console.log(target);
             target = $(target);
             if (modal.length === 0 || target.length === 0) return false;
             if (modal.find('.popover-angle').length === 0) {
@@ -1692,16 +1697,108 @@
             });
         };
         /*===============================================================================
+        ************   Fast Clicks   ************
+        ************   Impressed by https://github.com/ftlabs/fastclick   ************
+        ===============================================================================*/
+        app.initFastClicks = function () {
+            if (!$.supportTouch) return;
+            var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent;
+        
+            function targetNeedsFocus(el) {
+                var tag = el.nodeName.toLowerCase();
+                var skipInputs = ('button checkbox file image radio submit').split(' ');
+                if (el.disabled || el.readOnly) return false;
+                if (tag === 'textarea') return true;
+                if (tag === 'select') {
+                    if (app.device.os === 'android') return false;
+                    else return true;
+                }
+                if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
+            }
+            function handleTouchStart(e) {
+                if (e.targetTouches.length > 1) {
+                    return true;
+                }
+                if (app.device.os === 'ios') {
+                    var selection = window.getSelection();
+                    if (selection.rangeCount && !selection.isCollapsed) {
+                        activeSelection = true;
+                        return true;
+                    }
+                }
+                
+                trackClick = true;
+                targetElement = e.target;
+                touchStartTime = (new Date()).getTime();
+                touchStartX = e.targetTouches[0].pageX;
+                touchStartY = e.targetTouches[0].pageY;
+        
+                // Detect scroll parent
+                if (app.device.os === 'ios') {
+                    scrollParent = undefined;
+                    $(targetElement).parents().each(function () {
+                        var parent = this;
+                        if (parent.scrollHeight > parent.offsetHeight && !scrollParent) {
+                            scrollParent = parent;
+                            scrollParent.f7ScrollTop = scrollParent.scrollTop;
+                        }
+                    });
+                }
+            }
+            function handleTouchMove(e) {
+                if (!trackClick) return;
+                trackClick = false;
+                targetElement = null;
+            }
+            function handleTouchEnd(e) {
+                if (!trackClick) {
+                    if (!activeSelection) e.preventDefault();
+                    return true;
+                }
+                var touchEndTime = (new Date()).getTime();
+                if (touchEndTime - touchStartTime > 200) return true;
+        
+                e.preventDefault();
+        
+                trackClick = false;
+                if (app.device.os === 'ios' && scrollParent) {
+                    if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
+                        return false;
+                    }
+                }
+        
+                // Trigger focus where required
+                if (targetNeedsFocus(targetElement)) targetElement.focus();
+        
+                // Trigger click
+                var touch = e.changedTouches[0];
+                var evt = document.createEvent('MouseEvents');
+                var eventType = 'click';
+                if (app.device.os === 'android' && targetElement.nodeName.toLowerCase() === 'select') {
+                    eventType = 'mousedown';
+                }
+                evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+                
+                targetElement.dispatchEvent(evt);
+            }
+            $(document).on('touchstart', handleTouchStart);
+            $(document).on('touchmove', handleTouchMove);
+            $(document).on('touchend', handleTouchEnd);
+        };
+        /*===============================================================================
         ************   Handle clicks and make them fast (on tap);   ************
         ===============================================================================*/
         app.initClickEvents = function () {
-            function handleTap(e) {
+            function handleClicks(e) {
                 /*jshint validthis:true */
                 var clicked = $(this);
                 var url = clicked.attr('href');
                 // External
                 if (clicked.hasClass('external')) {
                     return;
+                }
+                else if (clicked[0].nodeName.toLowerCase() === 'a') {
+                    e.preventDefault();
                 }
                 // Open Panel
                 if (clicked.hasClass('open-panel')) {
@@ -1753,35 +1850,25 @@
                         app.closeModal();
                     if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
                 }
-                // Radios/checkboxes
-                if (clicked.hasClass('label-checkbox') || clicked.hasClass('label-radio')) {
-                    var input = clicked.find('input');
-                    if (input.attr('type') === 'checkbox') {
-                        if (input[0].checked === true) input[0].checked = false;
-                        else input[0].checked = true;
-                    }
-                    if (input.attr('type') === 'radio') {
-                        clicked.find('input')[0].checked = true;
-                    }
-                    input.trigger('change');
-                    return;
-                }
-                if ($.supportTouch) {
-                    if (clicked.parent().hasClass('label-switch')) {
-                        clicked[0].checked = !clicked[0].checked;
-                        clicked.trigger('change');
-                    }
-                }
                 
                 // Tabs
                 if (clicked.hasClass('tab-link')) {
                     var newTab = $(clicked.attr('href'));
+                    if (newTab.length === 0) return;
                     var oldTab = newTab.parent().find('.tab.active').removeClass('active');
                     newTab.addClass('active');
+                    newTab.trigger('show');
                     var clickedParent = clicked.parent();
                     if (clickedParent.hasClass('buttons-row') || clicked.parents('.tabbar').length > 0) {
                         clickedParent.find('.active').removeClass('active');
                         clicked.addClass('active');
+                    }
+                    if (newTab.find('.navbar').length > 0) {
+                        // Find tab's view
+                        var viewContainer;
+                        if (newTab.hasClass('view')) viewContainer = newTab[0];
+                        else viewContainer = newTab.parents('.view')[0];
+                        app.sizeNavbars(viewContainer);
                     }
                 }
                 // Swipeout Delete
@@ -1822,14 +1909,7 @@
                     else view.loadPage(clicked.attr('href'));
                 }
             }
-            $(document).tap('a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .label-checkbox, .label-radio, .label-switch, .label-switch input', handleTap);
-            
-            //Disable clicks
-            function handleClick(e) {
-                /*jshint validthis:true */
-                if (!$(this).hasClass('external')) e.preventDefault();
-            }
-            $(document).on('click', 'a, .label-checkbox, .label-radio', handleClick);
+            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover', handleClicks);
         };
         /*======================================================
         ************   App Resize Actions   ************
@@ -1900,16 +1980,19 @@
             device.statusBar = false;
             if (
                 device.webview &&
-                // iPhone 5
-                (windowWidth === 320 && windowHeight === 568) ||
-                (windowWidth === 568 && windowHeight === 320) ||
-                // iPhone 4
-                (windowWidth === 320 && windowHeight === 480) ||
-                (windowWidth === 480 && windowHeight === 320) ||
-                // iPad
-                (windowWidth === 768 && windowHeight === 1024) ||
-                (windowWidth === 1024 && windowHeight === 768)
+                (
+                    // iPhone 5
+                    (windowWidth === 320 && windowHeight === 568) ||
+                    (windowWidth === 568 && windowHeight === 320) ||
+                    // iPhone 4
+                    (windowWidth === 320 && windowHeight === 480) ||
+                    (windowWidth === 480 && windowHeight === 320) ||
+                    // iPad
+                    (windowWidth === 768 && windowHeight === 1024) ||
+                    (windowWidth === 1024 && windowHeight === 768)
+                )
             ) {
+                console.log(device.webview);
                 device.statusBar = true;
             }
             else {
@@ -1944,6 +2027,7 @@
         app.init = function () {
             if (app.getDeviceInfo) app.getDeviceInfo();
             // Init Click events
+            if (app.initFastClicks && app.params.fastClicks) app.initFastClicks();
             if (app.initClickEvents) app.initClickEvents();
             // Init Swipeouts events
             if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
@@ -2086,38 +2170,6 @@
             }
     
             return this;
-        },
-        tap: function (targetSelector, listener) {
-            var dom = this;
-            var isTouched, isMoved, touchesStart = {}, touchStartTime, deltaX, deltaY;
-            if (arguments.length === 1) {
-                listener = arguments[0];
-                targetSelector = false;
-            }
-            function handleTouchStart(e) {
-                isTouched = true;
-                isMoved = false;
-            }
-            function handleTouchMove(e) {
-                if (!isTouched || isMoved) return;
-                isMoved = true;
-            }
-            function handleTouchEnd(e) {
-                e.preventDefault(); // - to prevent Safari's Ghost click
-                if (isTouched && !isMoved) {
-                    /*jshint validthis:true */
-                    listener.call(this, e);
-                }
-                isTouched = isMoved = false;
-            }
-            if ($.supportTouch) {
-                dom.on('touchstart', targetSelector, handleTouchStart);
-                dom.on('touchmove', targetSelector, handleTouchMove);
-                dom.on('touchend', targetSelector, handleTouchEnd);
-            }
-            else {
-                dom.on('click', targetSelector, listener);
-            }
         },
         off: function (event, listener) {
             for (var i = 0; i < this.length; i++) {
