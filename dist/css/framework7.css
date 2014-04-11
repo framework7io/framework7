@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.1
+ * Framework7 0.7.2
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -1542,6 +1542,12 @@ i.icon.icon-form-url {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+input[type="submit"].button,
+input[type="button"].button {
+  width: 100%;
 }
 .button:active {
   background: rgba(0, 122, 255, 0.15);
@@ -1727,10 +1733,11 @@ label.label-radio input[type="radio"] ~ .item-inner {
 }
 label.label-radio input[type="checkbox"]:checked ~ .item-inner,
 label.label-radio input[type="radio"]:checked ~ .item-inner {
-  background: url("../img/i-form-radio-blue.png") no-repeat -webkit-calc(100% - 15px) center;
-  background: url("../img/i-form-radio-blue.png") no-repeat -moz-calc(100% - 15px) center;
-  background: url("../img/i-form-radio-blue.png") no-repeat -ms-calc(100% - 15px) center;
-  background: url("../img/i-form-radio-blue.png") no-repeat calc(100% - 15px) center;
+  background: url("../img/i-form-radio-blue.png") no-repeat center;
+  background-position: -webkit-calc(100% - 15px) center;
+  background-position: -moz-calc(100% - 15px) center;
+  background-position: -ms-calc(100% - 15px) center;
+  background-position: calc(100% - 15px) center;
   -webkit-background-size: auto 10px;
   background-size: auto 10px;
 }
@@ -2195,9 +2202,8 @@ input.modal-prompt-input {
 }
 .panel {
   z-index: 1000;
-  background: rgba(0, 0, 0, 0);
   display: none;
-  background: #fff;
+  background: #111;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;

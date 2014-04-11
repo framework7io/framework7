@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.1
+ * Framework7 0.7.2
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -1992,7 +1992,6 @@
                     (windowWidth === 1024 && windowHeight === 768)
                 )
             ) {
-                console.log(device.webview);
                 device.statusBar = true;
             }
             else {
