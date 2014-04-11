@@ -126,6 +126,11 @@
     overflow: hidden;
     text-overflow:ellipsis;
     font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    input[type="submit"]&, input[type="button"]&{
+        width: 100%;
+    }
 
     &:active {
         background: rgba(red(@blue), green(@blue), blue(@blue), .15);
