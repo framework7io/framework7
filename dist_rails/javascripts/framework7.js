@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 6, 2014
+ * Released on: April 11, 2014
 */
 (function () {
 
@@ -97,13 +97,14 @@
         app.addView = function (viewSelector, viewParams) {
             if (!viewSelector) return;
             var container = $(viewSelector)[0];
+            var startUrl = container.getAttribute('data-url') || viewParams.startUrl;
             var view = {
                 container: container,
                 selector: viewSelector,
                 params: viewParams || {},
                 history: [],
                 contentCache: {},
-                url: '',
+                url: startUrl || '',
                 pagesContainer: $('.pages', container)[0],
                 main: $(container).hasClass('view-main'),
                 loadContent: function (content) {
@@ -130,7 +131,10 @@
             };
             // Store to history main view's url
             if (view.main) {
-                view.url = document.location.href;
+                view.url = startUrl || document.location.href;
+                view.history.push(view.url);
+            }
+            else if (startUrl) {
                 view.history.push(view.url);
             }
             // Store View in element for easy access
@@ -489,7 +493,7 @@
             if (app.params.onPageBeforeInit) {
                 app.params.onPageBeforeInit(pageData);
             }
-            if (view.params.onPageBeforeInit) {
+            if (view && view.params.onPageBeforeInit) {
                 view.params.onPageBeforeInit(pageData);
             }
             $(document).trigger('pageBeforeInit', {page: pageData});
@@ -498,7 +502,7 @@
             if (app.params.onPageInit) {
                 app.params.onPageInit(pageData);
             }
-            if (view.params.onPageInit) {
+            if (view && view.params.onPageInit) {
                 view.params.onPageInit(pageData);
             }
             $(document).trigger('pageInit', {page: pageData});
@@ -527,6 +531,9 @@
         
             }
             if (callback === 'before') {
+                // Add data-page on view
+                $(view.container).attr('data-page', pageData.name);
+        
                 // Hide/show navbar dynamically
                 if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
                     view.hideNavbar();
@@ -1122,11 +1129,25 @@
             app.openModal(modal);
             return modal[0];
         };
-        app.popover = function (modal, target) {
+        app.popover = function (modal, target, removeOnClose) {
+            if (typeof removeOnClose === 'undefined') removeOnClose = true;
+            if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
+                var _modal = document.createElement('div');
+                _modal.innerHTML = modal;
+                if (_modal.childNodes.length > 0) {
+                    modal = _modal.childNodes[0];
+                    if (removeOnClose) modal.classList.add('remove-on-close');
+                    $('body').append(modal);
+                }
+                else return false; //nothing found
+            }
             modal = $(modal);
+            console.log(target);
             target = $(target);
             if (modal.length === 0 || target.length === 0) return false;
-        
+            if (modal.find('.popover-angle').length === 0) {
+                modal.append('<div class="popover-angle"></div>');
+            }
             modal.show();
         
             function sizePopover() {
@@ -1214,7 +1235,18 @@
             app.openModal(modal);
             return modal[0];
         };
-        app.popup = function (modal) {
+        app.popup = function (modal, removeOnClose) {
+            if (typeof removeOnClose === 'undefined') removeOnClose = true;
+            if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
+                var _modal = document.createElement('div');
+                _modal.innerHTML = modal;
+                if (_modal.childNodes.length > 0) {
+                    modal = _modal.childNodes[0];
+                    if (removeOnClose) modal.classList.add('remove-on-close');
+                    $('body').append(modal);
+                }
+                else return false; //nothing found
+            }
             modal = $(modal);
             if (modal.length === 0) return false;
             modal.show();
@@ -1252,15 +1284,18 @@
             modal.trigger('close');
             var isPopover = modal.hasClass('popover');
             var isPopup = modal.hasClass('popup');
+            var removeOnClose = modal.hasClass('remove-on-close');
             if (!isPopover) {
                 modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
                     modal.trigger('closed');
                     if (!isPopup) modal.remove();
                     if (isPopup) modal.removeClass('modal-out').hide();
+                    if (removeOnClose) modal.remove();
                 });
             }
             else {
                 modal.removeClass('modal-in modal-out').trigger('closed').hide();
+                if (removeOnClose) modal.remove();
             }
             return true;
         };
@@ -1773,6 +1808,9 @@
                     }
                     else {
                         view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
+                        if (view && view.params.linksView) {
+                            view = $(view.params.linksView)[0].f7View;
+                        }
                     }
                     if (!view) {
                         for (var i = 0; i < app.views.length; i++) {
@@ -1829,9 +1867,20 @@
                 device.os = 'ios';
             }
             // iOS
-            if (iphone && !ipod) device.osVersion = iphone[2].replace(/_/g, '.');
-            if (ipad) device.osVersion = ipad[2].replace(/_/g, '.');
-            if (ipod) device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+            device.iphone = false;
+            device.ipad = false;
+            if (iphone && !ipod) {
+                device.osVersion = iphone[2].replace(/_/g, '.');
+                device.iphone = true;
+            }
+            if (ipad) {
+                device.osVersion = ipad[2].replace(/_/g, '.');
+                device.ipad = true;
+            }
+            if (ipod) {
+                device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+                device.iphone = true;
+            }
         
             // Webview
             device.webview = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
@@ -1902,7 +1951,14 @@
             if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
             // Init each page callbacks
             $('.page').each(function () {
-                app.initPage(this);
+                var pageContainer = $(this);
+                var viewContainer = pageContainer.parents('.view');
+                var view = viewContainer[0].f7View || false;
+                var url = view && view.url ? view.url : false;
+                if (viewContainer) {
+                    viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
+                }
+                app.pageInitCallback(view, this, url, 'center');
             });
             // Init resize events
             if (app.initResize) app.initResize();
@@ -2426,4 +2482,6 @@
         return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
     })();
     $.fn = Dom7.prototype;
+    // Export Selectors engine to global Framework7
+    Framework7.$ = $;
 })();
