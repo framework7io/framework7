@@ -225,7 +225,7 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         -ms-appearance: none;
-        appearance: none;   
+        appearance: none;
         border: none;
         height: 28px;
         width: 28px;
@@ -284,7 +284,7 @@ label.label-checkbox {
         &:checked + .item-media{
             i.icon-form-checkbox:after {
                 border: none;
-                background: @blue url(../img/i-form-checkbox-white.png) no-repeat center;
+                background: @blue url("@{imgBaseUrl}/i-form-checkbox-white.png") no-repeat center;
                 -webkit-background-size: auto 9px;
                 background-size: auto 9px;
             }
@@ -299,10 +299,10 @@ label.label-radio {
             padding-right: 35px;
         }
         &:checked ~ .item-inner{
-            background: url(../img/i-form-radio-blue.png) no-repeat ~"-webkit-calc(100% - 15px)" center;
-            background: url(../img/i-form-radio-blue.png) no-repeat ~"-moz-calc(100% - 15px)" center;
-            background: url(../img/i-form-radio-blue.png) no-repeat ~"-ms-calc(100% - 15px)" center;
-            background: url(../img/i-form-radio-blue.png) no-repeat ~"calc(100% - 15px)" center;
+            background: url("@{imgBaseUrl}/i-form-radio-blue.png") no-repeat ~"-webkit-calc(100% - 15px" center;
+            background: url("@{imgBaseUrl}/i-form-radio-blue.png") no-repeat ~"-moz-calc(100% - 15px" center;
+            background: url("@{imgBaseUrl}/i-form-radio-blue.png") no-repeat ~"-ms-calc(100% - 15px" center;
+            background: url("@{imgBaseUrl}/i-form-radio-blue.png") no-repeat ~"calc(100% - 15px" center;
             -webkit-background-size: auto 10px;
             background-size: auto 10px;
         }
