@@ -1,7 +1,7 @@
 {
   "name": "Framework7",
   "version": "0.7.4",
-  "description": "Full Featured HTML Framework For Building iOS7 Apps",
+  "description": "Full Featured HTML Framework For Building iOS 7 Apps",
   "main": "dist/",
   "repository": {
     "type": "git",
