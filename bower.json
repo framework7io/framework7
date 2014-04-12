@@ -20,7 +20,9 @@
   "ignore": [
     ".*",
     "build",
-    "Gruntfile",
+    "build_rails",
+    "kitchen-sink/",
+    "Gruntfile.js",
     "src",
     "node_modules",
     "package.json"
