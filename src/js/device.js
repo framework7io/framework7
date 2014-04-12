@@ -14,9 +14,11 @@ app.getDeviceInfo = function () {
     if (android) {
         device.os = 'android';
         device.osVersion = android[2];
+        device.android = true;
     }
     if (ipad || iphone || ipod) {
         device.os = 'ios';
+        device.ios = true;
     }
     // iOS
     device.iphone = false;
