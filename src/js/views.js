@@ -128,7 +128,6 @@ app.initViewEvents = function (view) {
                     activeNavBackIcon = activeNavbar.find('.left.sliding .back .icon');
                     previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
                 }
-                console.log(activeNavBackIcon);
             }
         }
         isMoved = true;
