@@ -2,23 +2,23 @@
 ************   Views   ************
 ======================================================*/
 app.views = [];
-app.addView = function (viewSelector, viewParams) {
-    if (!viewSelector) return;
-    var $container = $(viewSelector);
+app.addView = function (selector, params) {
+    if (!selector) return;
+    var $container = $(selector);
     if ($container.length === 0) return;
     
     var container = $container[0];
-    if (typeof viewParams === 'undefined') viewParams = {};
-    var startUrl = container.getAttribute('data-url') || viewParams.startUrl;
+    if (typeof params === 'undefined') params = {};
+
     var view = {
         container: container,
-        selector: viewSelector,
-        params: viewParams || {},
+        selector: selector,
+        params: params || {},
         history: [],
         contentCache: {},
-        url: container.getAttribute('data-url') || viewParams.startUrl,
+        url: container.getAttribute('data-url') || document.location.href,
         pagesContainer: $('.pages', container)[0],
-        main: $(container).hasClass('view-main'),
+        main: $container.hasClass('view-main'),
         loadContent: function (content) {
             app.loadContent(view, content);
         },
@@ -42,13 +42,10 @@ app.addView = function (viewSelector, viewParams) {
         }
     };
     // Store to history main view's url
-    if (view.main) {
-        view.url = startUrl || document.location.href;
+    if (view.url) {
         view.history.push(view.url);
     }
-    else if (startUrl) {
-        view.history.push(view.url);
-    }
+
     // Store View in element for easy access
     container.f7View = view;
 
