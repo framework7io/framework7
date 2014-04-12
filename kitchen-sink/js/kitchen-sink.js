@@ -1,21 +1,4 @@
-var myApp = new Framework7({
-    onBeforePageInit: function (page) {
-        // Do something when page just added to DOM
-        // console.log(page);
-    },
-    onPageInit: function (page) {
-        // Do something on page init
-        // console.log(page);
-    },
-    onPageAfterAnimation: function (page) {
-        // Do something on page before animation start
-        // console.log(page);
-    },
-    onPageBeforeAnimation: function (page) {
-        // Do something on page ready(centered)
-        // console.log(page);
-    }
-});
+var myApp = new Framework7();
 
 // Expose Internal DOM library
 var $$ = Framework7.$;
