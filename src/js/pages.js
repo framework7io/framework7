@@ -83,6 +83,7 @@ app.pageAnimCallbacks = function (callback, view, params) {
         $(document).trigger('pageBeforeAnimation', {page: pageData});
     }
 };
+
 // Init Page Events and Manipulations
 app.initPage = function (pageContainer) {
     // Size navbars on page load
@@ -90,29 +91,89 @@ app.initPage = function (pageContainer) {
     // Init messages
     if (app.initMessages) app.initMessages(pageContainer);
 };
+
 // Load Page
 app.allowPageChange = true;
 app._tempDomElement = document.createElement('div');
 
+// Search required element in parsed content in related view
+function _findElement(selector, container, view) {
+    container = $(container);
+    var found = container.find(selector);
+    if (found.length > 1) {
+        if (typeof view.selector === 'string') {
+            // Search in related view
+            found = container.find(view.selector + ' ' + selector);
+        }
+        if (found.length > 1) {
+            // Search in main view
+            found = container.find('.view-main ' + selector);
+        }
+    }
+    if (found.length === 1) return found;
+    else {
+        return undefined;
+    }
+}
+
+// Set pages classess for animation
+function _animatePages(leftPage, rightPage, direction, view) {
+    // Loading new page
+    if (direction === 'to-left') {
+        leftPage.removeClass('page-on-center').addClass('page-from-center-to-left');
+        rightPage.addClass('page-from-right-to-center');
+    }
+    // Go back
+    if (direction === 'to-right') {
+        leftPage.removeClass('page-on-left').addClass('page-from-left-to-center');
+        rightPage.removeClass('page-on-center').addClass('page-from-center-to-right');
+    }
+}
+
+// Set navbars classess for animation
+function _animateNavbars(leftNavbarInner, rightNavbarInner, direction, view) {
+    // Loading new page
+    if (direction === 'to-left') {
+        rightNavbarInner.removeClass('navbar-on-right').addClass('navbar-from-right-to-center');
+        rightNavbarInner.find('.sliding').transform('translate3d(0px,0,0)');
+
+        leftNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-left');
+        leftNavbarInner.find('.sliding').each(function () {
+            $(this).transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
+        });
+    }
+    // Go back
+    if (direction === 'to-right') {
+        leftNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
+        leftNavbarInner.find('.sliding').transform('translate3d(0px,0,0)');
+
+        rightNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
+        rightNavbarInner.find('.sliding').each(function () {
+            $(this).transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
+        });
+    }
+}
 function _load(view, url, content) {
     var viewContainer = $(view.container),
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
 
-    // Parse DOM to find new page
+    // Clear temp div
+    app._tempDomElement.innerHTML = '';
+
+    // Parse DOM
     if (url || (typeof content === 'string')) {
         app._tempDomElement.innerHTML = content;
     } else {
         if ('length' in content && content.length > 1) {
-            app._tempDomElement = document.createElement('div');
             for (var ci = 0; ci < content.length; ci++) {
                 $(app._tempDomElement).append(content[ci]);
             }
         } else {
-            app._tempDomElement.innerHTML = '';
             $(app._tempDomElement).append(content);
         }
     }
     
+    // Subevents for iframes
     if (view.params.subEvents) {
         $(app._tempDomElement).find('.page').each(function () {
             var page = this;
@@ -122,16 +183,15 @@ function _load(view, url, content) {
         });
     }
 
-    newPage = $('.page', app._tempDomElement);
-    if (newPage.length > 1) {
-        newPage = $(app._tempDomElement).find('.view-main .page');
-    }
+    // Find new page
+    newPage = _findElement('.page', app._tempDomElement, view);
 
-    // If pages not found or there are still more than one, exit
-    if (newPage.length === 0 || newPage.length > 1) {
+    // If page not found exit
+    if (!newPage) {
         app.allowPageChange = true;
         return;
     }
+
     newPage.addClass('page-on-right');
 
     // Find old page (should be the last one) and remove older pages
@@ -155,11 +215,8 @@ function _load(view, url, content) {
     if (view.params.dynamicNavbar) {
         dynamicNavbar = true;
         // Find navbar
-        newNavbarInner = $('.navbar-inner', app._tempDomElement);
-        if (newNavbarInner.length > 1) {
-            newNavbarInner = $('.view-main .navbar-inner', app._tempDomElement);
-        }
-        if (newNavbarInner.length === 0 || newNavbarInner > 1) {
+        newNavbarInner = _findElement('.navbar-inner', app._tempDomElement, view);
+        if (!newNavbarInner) {
             dynamicNavbar = false;
         }
         navbar = viewContainer.find('.navbar');
@@ -171,7 +228,7 @@ function _load(view, url, content) {
                 else
                     $(oldNavbarInner[i]).addClass('cached');
             }
-            if (newNavbarInner.length === 0 && oldNavbarInner.length === 1) {
+            if (!newNavbarInner && oldNavbarInner.length === 1) {
                 if (!view.params.domCache)
                     $(oldNavbarInner[0]).remove();
                 else
@@ -217,29 +274,22 @@ function _load(view, url, content) {
 
     // Before Anim Callback
     app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
-    
-    newPage.addClass('page-from-right-to-center');
-    oldPage.addClass('page-from-center-to-left').removeClass('page-on-center');
+
+    // Set pages before animation
+    _animatePages(oldPage, newPage, 'to-left', view);
 
     // Dynamic navbar animation
     if (dynamicNavbar) {
-        newNavbarInner.removeClass('navbar-on-right').addClass('navbar-from-right-to-center');
-        newNavbarInner.find('.sliding').each(function () {
-            $(this).transform('translate3d(0px,0,0)');
-        });
-        oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-left');
-        oldNavbarInner.find('.sliding').each(function () {
-            $(this).transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
-        });
+        _animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
     }
 
     newPage.animationEnd(function (e) {
         app.allowPageChange = true;
-        newPage.toggleClass('page-from-right-to-center page-on-center page-on-right');
-        oldPage.toggleClass('page-from-center-to-left page-on-left');
+        newPage.removeClass('page-from-right-to-center page-on-right').addClass('page-on-center');
+        oldPage.removeClass('page-from-center-to-left').addClass('page-on-left');
         if (dynamicNavbar) {
-            newNavbarInner.toggleClass('navbar-from-right-to-center navbar-on-center');
-            oldNavbarInner.toggleClass('navbar-from-center-to-left navbar-on-left');
+            newNavbarInner.removeClass('navbar-from-right-to-center').addClass('navbar-on-center');
+            oldNavbarInner.removeClass('navbar-from-center-to-left').addClass('navbar-on-left');
         }
         app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
     });
@@ -254,7 +304,6 @@ app.loadContent = function (view, content) {
 
     _load(view, null, content);
 
-    app.allowPageChange = true;
 };
 app.loadPage = function (view, url) {
     if (!app.allowPageChange) return false;
@@ -285,15 +334,28 @@ app.goBack = function (view, url, preloadOnly) {
     var viewContainer = $(view.container),
         pagesInView = viewContainer.find('.page'),
         oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+    function _animate() {
+        // Page before animation callback
+        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
 
-    function _preload() {
-        newPage = $('.page', app._tempDomElement);
-        if (newPage.length > 1) {
-            newPage = $(app._tempDomElement).find('.view-main .page');
+        // Set pages before animation
+        _animatePages(newPage, oldPage, 'to-right', view);
+
+        // Dynamic navbar animation
+        if (dynamicNavbar) {
+            _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
         }
+        
+        newPage.animationEnd(function () {
+            app.afterGoBack(view, oldPage[0], newPage[0]);
+            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
+        });
+    }
+    function _preload() {
+        newPage = _findElement('.page', app._tempDomElement, view);
 
         // If pages not found or there are still more than one, exit
-        if (newPage.length === 0 || newPage.length > 1) {
+        if (!newPage) {
             app.allowPageChange = true;
             return;
         }
@@ -306,11 +368,8 @@ app.goBack = function (view, url, preloadOnly) {
         if (view.params.dynamicNavbar) {
             dynamicNavbar = true;
             // Find navbar
-            newNavbarInner = $('.navbar-inner', app._tempDomElement);
-            if (newNavbarInner.length > 1) {
-                newNavbarInner = $('.view-main .navbar-inner', app._tempDomElement);
-            }
-            if (newNavbarInner.length === 0 || newNavbarInner > 1) {
+            newNavbarInner = _findElement('.navbar-inner', app._tempDomElement, view);
+            if (!newNavbarInner) {
                 dynamicNavbar = false;
             }
             
@@ -351,28 +410,7 @@ app.goBack = function (view, url, preloadOnly) {
         // Force reLayout
         var clientLeft = newPage[0].clientLeft;
 
-        // Before Anim Callback
-        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
-
-        newPage.addClass('page-from-left-to-center');
-        oldPage.removeClass('page-on-center').addClass('page-from-center-to-right');
-
-        // Dynamic navbar animation
-        if (dynamicNavbar) {
-            newNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
-            newNavbarInner.find('.sliding').each(function () {
-                $(this).transform('translate3d(0px,0,0)');
-            });
-            oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
-            oldNavbarInner.find('.sliding').each(function () {
-                $(this).transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
-            });
-        }
-
-        newPage.animationEnd(function () {
-            app.afterGoBack(view, oldPage[0], newPage[0]);
-            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
-        });
+        _animate();
     }
 
     if (pagesInView.length > 1) {
@@ -396,31 +434,7 @@ app.goBack = function (view, url, preloadOnly) {
             newNavbarInner = $(inners[0]);
             oldNavbarInner = $(inners[1]);
         }
-
-        // Page before animation callback
-        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
-
-        // Add classes for animation
-        newPage.removeClass('page-on-left').addClass('page-from-left-to-center');
-        oldPage.removeClass('page-on-center').addClass('page-from-center-to-right');
-
-        // Dynamic navbar animation
-        if (dynamicNavbar) {
-            newNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
-            newNavbarInner.find('.sliding').each(function () {
-                $(this).transform('translate3d(0px,0,0)');
-            });
-
-            oldNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
-            oldNavbarInner.find('.sliding').each(function () {
-                $(this).transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
-            });
-        }
-        
-        newPage.animationEnd(function () {
-            app.afterGoBack(view, oldPage[0], newPage[0]);
-            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
-        });
+        _animate();
     }
     else {
         if (url && url.indexOf('#') === 0) url = undefined;
@@ -436,7 +450,7 @@ app.goBack = function (view, url, preloadOnly) {
         if (!view.params.domCache && (url in view.contentCache)) {
             var _cache = view.contentCache[url];
 
-            app._tempDomElement = document.createElement('div');
+            app._tempDomElement.innerHTML = '';
             $(app._tempDomElement).append(_cache.nav[0]).append(_cache.page[0]);
             _preload();
             return;
@@ -447,9 +461,7 @@ app.goBack = function (view, url, preloadOnly) {
                 app.allowPageChange = true;
                 return;
             }
-            // Parse DOM to find new page
             app._tempDomElement.innerHTML = data;
-            
             _preload();
         });
     }
