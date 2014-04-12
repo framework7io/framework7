@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.2
+ * Framework7 0.7.4
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 11, 2014
+ * Released on: April 12, 2014
 */
 /*=============
   Framework 7
@@ -1755,6 +1755,9 @@ label.label-radio:active {
 label.label-checkbox:active .item-inner,
 label.label-radio:active .item-inner {
   border-bottom: 1px solid transparent;
+}
+.smart-select select {
+  display: none;
 }
 /* === Modals === */
 .modal-overlay,

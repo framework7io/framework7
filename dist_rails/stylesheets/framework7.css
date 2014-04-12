@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.2
+ * Framework7 0.7.4
  * Full Featured HTML Framework For Building iOS7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 11, 2014
+ * Released on: April 12, 2014
 */
 /*=============
   Framework 7
@@ -890,57 +890,57 @@ i.icon.icon-bars-black {
 i.icon.icon-f7 {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-f7.png");
+  background-image: url("../images/i-f7.png");
 }
 i.icon.icon-form-name {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-name.png");
+  background-image: url("../images/i-form-name.png");
 }
 i.icon.icon-form-password {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-password.png");
+  background-image: url("../images/i-form-password.png");
 }
 i.icon.icon-form-email {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-email.png");
+  background-image: url("../images/i-form-email.png");
 }
 i.icon.icon-form-calendar {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-calendar.png");
+  background-image: url("../images/i-form-calendar.png");
 }
 i.icon.icon-form-tel {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-tel.png");
+  background-image: url("../images/i-form-tel.png");
 }
 i.icon.icon-form-gender {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-gender.png");
+  background-image: url("../images/i-form-gender.png");
 }
 i.icon.icon-form-toggle {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-toggle.png");
+  background-image: url("../images/i-form-toggle.png");
 }
 i.icon.icon-form-comment {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-comment.png");
+  background-image: url("../images/i-form-comment.png");
 }
 i.icon.icon-form-settings {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-settings.png");
+  background-image: url("../images/i-form-settings.png");
 }
 i.icon.icon-form-url {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-form-url.png");
+  background-image: url("../images/i-form-url.png");
 }
 .badge {
   font-size: 13px;
@@ -1716,7 +1716,7 @@ label.label-checkbox input[type="radio"] {
 label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox:after,
 label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox:after {
   border: none;
-  background: #007aff url("../img/i-form-checkbox-white.png") no-repeat center;
+  background: #007aff url("../images/i-form-checkbox-white.png") no-repeat center;
   -webkit-background-size: auto 9px;
   background-size: auto 9px;
 }
@@ -1733,7 +1733,7 @@ label.label-radio input[type="radio"] ~ .item-inner {
 }
 label.label-radio input[type="checkbox"]:checked ~ .item-inner,
 label.label-radio input[type="radio"]:checked ~ .item-inner {
-  background: url("../img/i-form-radio-blue.png") no-repeat center;
+  background: url("../images/i-form-radio-blue.png") no-repeat center;
   background-position: -webkit-calc(100% - 15px) center;
   background-position: -moz-calc(100% - 15px) center;
   background-position: -ms-calc(100% - 15px) center;
@@ -1755,6 +1755,9 @@ label.label-radio:active {
 label.label-checkbox:active .item-inner,
 label.label-radio:active .item-inner {
   border-bottom: 1px solid transparent;
+}
+.smart-select select {
+  display: none;
 }
 /* === Modals === */
 .modal-overlay,
