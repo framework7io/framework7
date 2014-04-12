@@ -306,6 +306,16 @@ Dom7.prototype = {
             if (this[i] === el) return i;
         }
     },
+    index: function () {
+        if (this[0]) {
+            var child = this[0];
+            var i = 0;
+            while ((child = child.previousSibling) != null)
+                i++;
+            return i;
+        }
+        else return undefined;
+    },
     append: function (newChild) {
         for (var i = 0; i < this.length; i++) {
             if (typeof newChild === 'string') {
