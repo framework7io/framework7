@@ -3,7 +3,7 @@
 ======================================================*/
 app.allowPanelOpen = true;
 app.openPanel = function (panelPosition) {
-    // @panelPosition - string with panel position "left", "right", "top"
+    // @panelPosition - string with panel position "left", "right"
     if (!app.allowPanelOpen) return false;
     var panel = $('.panel-' + panelPosition);
     if (panel.length === 0 || panel.hasClass('active')) return false;
@@ -12,6 +12,9 @@ app.openPanel = function (panelPosition) {
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open');
+    if (panel.find('.view').length > 0) {
+        if (app.sizeNavbars) app.sizeNavbars(panel.find('.view')[0]);
+    }
 
     // Trigger reLayout
     var clientLeft = panel[0].clientLeft;
