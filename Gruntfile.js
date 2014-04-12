@@ -68,7 +68,7 @@ module.exports = function (grunt) {
                     paths: ['less'],
                     cleancss: false,
                     modifyVars: {
-                        imgBaseUrl: '"../assets"'
+                        imgBaseUrl: '"../images"'
                     }
                 },
                 files: {
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
                     paths: ['less'],
                     cleancss: true,
                     modifyVars: {
-                        imgBaseUrl: '"../assets"'
+                        imgBaseUrl: '"../images"'
                     }
                 },
                 files: {
