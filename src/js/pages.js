@@ -15,22 +15,10 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
         from: position
     };
     // Before Init Callback
-    if (app.params.onPageBeforeInit) {
-        app.params.onPageBeforeInit(pageData);
-    }
-    if (view && view.params.onPageBeforeInit) {
-        view.params.onPageBeforeInit(pageData);
-    }
-    $(document).trigger('pageBeforeInit', {page: pageData});
+    $(pageData.container).trigger('pageBeforeInit', {page: pageData});
     app.initPage(pageContainer);
     // Init Callback
-    if (app.params.onPageInit) {
-        app.params.onPageInit(pageData);
-    }
-    if (view && view.params.onPageInit) {
-        view.params.onPageInit(pageData);
-    }
-    $(document).trigger('pageInit', {page: pageData});
+    $(pageData.container).trigger('pageInit', {page: pageData});
 };
 app.pageAnimCallbacks = function (callback, view, params) {
     // Page Data
@@ -46,13 +34,7 @@ app.pageAnimCallbacks = function (callback, view, params) {
         newPage = params.newPage;
 
     if (callback === 'after') {
-        if (app.params.onPageAfterAnimation) {
-            app.params.onPageAfterAnimation(pageData);
-        }
-        if (view.params.onPageAfterAnimation) {
-            view.params.onPageAfterAnimation(pageData);
-        }
-        $(document).trigger('pageAfterAnimation', {page: pageData});
+        $(pageData.container).trigger('pageAfterAnimation', {page: pageData});
 
     }
     if (callback === 'before') {
@@ -74,13 +56,7 @@ app.pageAnimCallbacks = function (callback, view, params) {
             view.showToolbar();
         }
         // Callbacks
-        if (app.params.onPageBeforeAnimation) {
-            app.params.onPageBeforeAnimation(pageData);
-        }
-        if (view.params.onPageBeforeAnimation) {
-            view.params.onPageBeforeAnimation(pageData);
-        }
-        $(document).trigger('pageBeforeAnimation', {page: pageData});
+        $(pageData.container).trigger('pageBeforeAnimation', {page: pageData});
     }
 };
 
@@ -90,6 +66,8 @@ app.initPage = function (pageContainer) {
     if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.view')[0]);
     // Init messages
     if (app.initMessages) app.initMessages(pageContainer);
+    // Init smart select
+    if (app.initSmartSelects) app.initSmartSelects(pageContainer);
 };
 
 // Load Page
