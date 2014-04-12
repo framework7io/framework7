@@ -1,0 +1,54 @@
+.navbar
+  .navbar-inner
+    .left
+      a(href="forms.html").back.link
+        i.icon.icon-back-blue 
+        span Back
+    .center.sliding Smart Selects
+    .right
+      a(href="#").link.open-panel.icon-only
+        i.icon.icon-bars-blue
+.pages.navbar-through
+  .page(data-page="form-selects")
+    .page-content
+      .content-block Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
+      .list-block
+        ul
+          li
+            a(href="#").item-link.smart-select
+              select(name="fruits")
+                option(value="apple", selected=true) Apple
+                option(value="pineapple") Pineapple
+                option(value="pear") Pear
+                option(value="orange") Orange
+                option(value="melon") Melon
+                option(value="peach") Peach
+                option(value="banana") Banana
+              .item-content
+                .item-inner
+                  .item-title Fruit
+          li
+            a(href="#").item-link.smart-select
+              select(name="car")
+                option(value="mercedes") Mercedes
+                option(value="bmw") BMW
+                option(value="volvo") Volvo
+                option(value="vw", selected=true) Volkswagen
+                option(value="toyota") Toyota
+                option(value="cadillac") Cadillac
+                option(value="nissan") Nissan
+                option(value="mazda") Mazda
+                option(value="ford") Ford
+                option(value="chrysler") Chrysler
+                option(value="dodge") Dodge
+              .item-content
+                .item-inner
+                  .item-title Car
+          li
+            a(href="#").item-link.smart-select
+              select(name="mac-windows")
+                option(value="mac", selected=true) Mac
+                option(value="windows") Windows
+              .item-content
+                .item-inner
+                  .item-title Mac or Windows
