@@ -6,13 +6,20 @@ app.initClickEvents = function () {
         /*jshint validthis:true */
         var clicked = $(this);
         var url = clicked.attr('href');
-        // External
-        if (clicked.hasClass('external')) {
-            return;
+        if (clicked[0].nodeName.toLowerCase() === 'a') {
+            // External
+            if (clicked.hasClass('external')) {
+                return;
+            }
+            else {
+                e.preventDefault();
+            }
         }
-        else if (clicked[0].nodeName.toLowerCase() === 'a') {
-            e.preventDefault();
+        // Smart Select
+        if (clicked.hasClass('smart-select')) {
+            if (app.smartSelectOpen) app.smartSelectOpen(clicked);
         }
+        
         // Open Panel
         if (clicked.hasClass('open-panel')) {
             if ($('.panel').length === 1) {
@@ -122,5 +129,5 @@ app.initClickEvents = function () {
             else view.loadPage(clicked.attr('href'));
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select', handleClicks);
 };
