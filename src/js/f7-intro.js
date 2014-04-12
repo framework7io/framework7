@@ -24,6 +24,8 @@ window.Framework7 = function (params) {
         preloadPreviousPage: true,
         // Fast clicks
         fastClicks : true,
+        // 
+        animateNavBackIcon: false,
         // Swipe Back
         swipeBackPage: true,
         swipeBackPageThreshold: 0,

@@ -135,21 +135,52 @@ function _animateNavbars(leftNavbarInner, rightNavbarInner, direction, view) {
     // Loading new page
     if (direction === 'to-left') {
         rightNavbarInner.removeClass('navbar-on-right').addClass('navbar-from-right-to-center');
-        rightNavbarInner.find('.sliding').transform('translate3d(0px,0,0)');
+        rightNavbarInner.find('.sliding').each(function () {
+            var sliding = $(this);
+            sliding.transform('translate3d(0px,0,0)');
+            if (app.params.animateNavBackIcon) {
+                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                    sliding.find('.back .icon').transform('translate3d(0px,0,0)');
+                }
+            }
+        });
 
         leftNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-left');
         leftNavbarInner.find('.sliding').each(function () {
-            $(this).transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
+            var sliding = $(this);
+            if (app.params.animateNavBackIcon) {
+                if (sliding.hasClass('center') && rightNavbarInner.find('.sliding.left .back .icon').length > 0) {
+                    this.f7NavbarLeftOffset += rightNavbarInner.find('.sliding.left .back span')[0].offsetLeft;
+                }
+                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                    sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarLeftOffset) + 'px,0,0)');
+                }
+            }
+            sliding.transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
         });
     }
     // Go back
     if (direction === 'to-right') {
         leftNavbarInner.removeClass('navbar-on-left').addClass('navbar-from-left-to-center');
-        leftNavbarInner.find('.sliding').transform('translate3d(0px,0,0)');
+        leftNavbarInner.find('.sliding').each(function () {
+            var sliding = $(this);
+            sliding.transform('translate3d(0px,0,0)');
+            if (app.params.animateNavBackIcon) {
+                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                    sliding.find('.back .icon').transform('translate3d(0px,0,0)');
+                }
+            }
+        });
 
         rightNavbarInner.removeClass('navbar-on-center').addClass('navbar-from-center-to-right');
         rightNavbarInner.find('.sliding').each(function () {
-            $(this).transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
+            var sliding = $(this);
+            if (app.params.animateNavBackIcon) {
+                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                    sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarRightOffset) + 'px,0,0)');
+                }
+            }
+            sliding.transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
         });
     }
 }
@@ -266,7 +297,13 @@ function _load(view, url, content) {
     
     if (dynamicNavbar) {
         newNavbarInner.find('.sliding').each(function () {
-            $(this).transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
+            var sliding = $(this);
+            sliding.transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
+            if (app.params.animateNavBackIcon) {
+                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                    sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarRightOffset) + 'px,0,0)');
+                }
+            }
         });
     }
     // Force reLayout
@@ -393,7 +430,16 @@ app.goBack = function (view, url, preloadOnly) {
 
         if (dynamicNavbar && newNavbarInner.hasClass('navbar-on-left')) {
             newNavbarInner.find('.sliding').each(function () {
-                $(this).transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
+                var sliding = $(this);
+                if (app.params.animateNavBackIcon) {
+                    if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                        sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarLeftOffset) + 'px,0,0)');
+                    }
+                    if (sliding.hasClass('center') && oldNavbarInner.find('.left .back .icon').length > 0) {
+                        this.f7NavbarLeftOffset += oldNavbarInner.find('.left .back span')[0].offsetLeft;
+                    }
+                }
+                sliding.transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
             });
         }
 
