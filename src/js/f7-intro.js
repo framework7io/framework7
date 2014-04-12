@@ -38,6 +38,8 @@ window.Framework7 = function (params) {
         // Swipeout
         swipeout: true,
         swipeoutNoFollow: false,
+        // Smart Select Back link template
+        smartSelectBackTemplate: '<div class="left"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>',
         // Panels
         panelsCloseByOutside: true,
         panelsVisibleZIndex: 6000,
