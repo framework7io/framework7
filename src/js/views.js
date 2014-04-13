@@ -106,7 +106,7 @@ app.initViewEvents = function (view) {
             isTouched = false;
             return;
         }
-
+        e.f7PreventPanelSwipe = true;
         if (!isMoved) {
             var cancel = false;
             // Calc values during first move fired

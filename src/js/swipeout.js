@@ -29,7 +29,6 @@ app.initSwipeout = function () {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
-
     }
     function handleTouchMove(e) {
         if (!isTouched) return;
@@ -55,6 +54,7 @@ app.initSwipeout = function () {
         isMoved = true;
 
         e.preventDefault();
+        e.f7PreventPanelSwipe = true;
         touchesDiff = pageX - touchesStart.x;
         translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
 
