@@ -10,6 +10,8 @@ app.init = function () {
     if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
     // Init Pull To Refresh
     if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
+    // Init Swipe Panels
+    if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
     // Init each page callbacks
     $('.page').each(function () {
         var pageContainer = $(this);
