@@ -41,6 +41,9 @@ window.Framework7 = function (params) {
         // Smart Select Back link template
         smartSelectBackTemplate: '<div class="left"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>',
         // Panels
+        swipePanel: false, // or 'left' or 'right'
+        swipePanelNoFollow: false,
+        swipePanelThreshold: 0,
         panelsCloseByOutside: true,
         panelsVisibleZIndex: 6000,
         panelsAnimationDuration: 400,
