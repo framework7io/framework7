@@ -79,4 +79,7 @@ window.Framework7 = function (params) {
         move: $.supportTouch ? 'touchmove' : 'mousemove',
         end: $.supportTouch ? 'touchend' : 'mouseup'
     };
+
+    // Link to local storage
+    app.ls = localStorage;
     
