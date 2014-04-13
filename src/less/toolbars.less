@@ -13,7 +13,7 @@
     .border-box();
     .flexbox();
     .justify-content(space-between);
-    .align-items(center);
+    .align-items(stretch);
 }
 .navbar, .toolbar {
     height: 44px;
@@ -70,7 +70,8 @@
         text-overflow:ellipsis;
         white-space: nowrap;
         .flex-shrink(10);
-        line-height: 43px;
+        .flexbox();
+        .align-items(center);
     }
     .left, .right {
         .flex-shrink(0);
