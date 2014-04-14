@@ -140,13 +140,12 @@ app.initFormsStorage = function (pageContainer) {
         if (formData) app.formFromJSON(this, formData);
     });
     // Update forms data on inputs change
-    forms.on('change', function () {
-        var formId = this.getAttribute('id');
+    forms.on('change submit', function () {
+        var formId = this.id;
         if (!formId) return;
-        var form = this;
         var formJSON = app.formToJSON(this);
         if (!formJSON) return;
         app.formStoreData(formId, formJSON);
-
+        $(this).trigger('store', {data: formJSON});
     });
 };
