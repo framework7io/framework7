@@ -124,6 +124,20 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            apps: {
+                options: {
+                    cleancss: false
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'apps/weather7/less/',
+                        src: ['*.less'],
+                        dest: 'apps/weather7/css/',
+                        ext: '.css'
+                    },
+                ]
+            },
         },
         concat: {
             options: {
@@ -270,6 +284,15 @@ module.exports = function (grunt) {
                 options: {
                     livereload: true
                 }
+            },
+            apps: {
+                files: [
+                    'apps/weather7/jade/**', 'apps/weather7/less/**',
+                ],
+                tasks: ['jade:apps', 'less:apps'],
+                options: {
+                    livereload: true
+                }
             }
         },
         jade: {
@@ -350,6 +373,20 @@ module.exports = function (grunt) {
                         ext: '.html'
                     },
                     
+                ]
+            },
+            apps: {
+                options: {
+                    pretty: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'apps/weather7/jade/',
+                        src: ['*.jade'],
+                        dest: 'apps/weather7/',
+                        ext: '.html'
+                    },
                 ]
             }
         },
@@ -478,6 +515,10 @@ module.exports = function (grunt) {
     this.registerTask('examples', 'Compile examples less and jade files', [
         'jade:examples',
         'less:examples'
+    ]);
+    this.registerTask('apps', 'Compile apps less and jade files', [
+        'jade:apps',
+        'less:apps'
     ]);
 
     // Server
