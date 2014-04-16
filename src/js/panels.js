@@ -22,16 +22,22 @@ app.openPanel = function (panelPosition) {
     // Transition End;
     var transitionEndTarget = effect === 'reveal' ? $('.views') : panel;
     var openedTriggered = false;
-    transitionEndTarget.transitionEnd(function (e) {
-        if ($(e.target).is(transitionEndTarget)) {
-            if (!openedTriggered) panel.trigger('opened');
-        }
-        app.allowPanelOpen = true;
-    });
-
-    setTimeout(function () {
-        if (!openedTriggered) panel.trigger('opened');
-    }, app.params.panelsAnimationDuration);
+    
+    function panelTransitionEnd() {
+        transitionEndTarget.transitionEnd(function (e) {
+            if ($(e.target).is(transitionEndTarget)) {
+                if (panel.hasClass('active')) {
+                    panel.trigger('opened');
+                }
+                else {
+                    panel.trigger('closed');
+                }
+                app.allowPanelOpen = true;
+            }
+            else panelTransitionEnd();
+        });
+    }
+    panelTransitionEnd();
 
     $('body').addClass('with-panel-' + panelPosition + '-' + effect);
     return true;
