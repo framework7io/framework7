@@ -168,6 +168,11 @@ function _load(view, url, content) {
     var viewContainer = $(view.container),
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
 
+    // Preprocess content
+    if (app.params.processContent) {
+        content = app.params.processContent(content, url);
+    }
+
     // Clear temp div
     app._tempDomElement.innerHTML = '';
 
@@ -475,7 +480,6 @@ app.goBack = function (view, url, preloadOnly) {
         // Check current url is in cache?
         if (!view.params.domCache && (url in view.contentCache)) {
             var _cache = view.contentCache[url];
-
             app._tempDomElement.innerHTML = '';
             $(app._tempDomElement).append(_cache.nav[0]).append(_cache.page[0]);
             _preload();
@@ -486,6 +490,9 @@ app.goBack = function (view, url, preloadOnly) {
             if (error) {
                 app.allowPageChange = true;
                 return;
+            }
+            if (app.params.processContent) {
+                data = app.params.processContent(data, url);
             }
             app._tempDomElement.innerHTML = data;
             _preload();
