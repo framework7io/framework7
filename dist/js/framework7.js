@@ -1,6 +1,6 @@
 /*
  * Framework7 0.7.4
- * Full Featured HTML Framework For Building iOS7 Apps
+ * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
  *
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 12, 2014
+ * Released on: April 17, 2014
 */
 (function () {
 
@@ -57,9 +57,11 @@
             // Smart Select Back link template
             smartSelectBackTemplate: '<div class="left"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>',
             // Panels
+            swipePanel: false, // or 'left' or 'right'
+            swipePanelNoFollow: false,
+            swipePanelThreshold: 0,
             panelsCloseByOutside: true,
             panelsVisibleZIndex: 6000,
-            panelsAnimationDuration: 400,
             // Modals
             modalTemplate: '<div class="modal {{noButtons}}">' +
                                 '<div class="modal-inner">' +
@@ -95,6 +97,9 @@
             move: $.supportTouch ? 'touchmove' : 'mousemove',
             end: $.supportTouch ? 'touchend' : 'mouseup'
         };
+    
+        // Link to local storage
+        app.ls = localStorage;
         
         /*======================================================
         ************   Views   ************
@@ -114,7 +119,7 @@
                 params: params || {},
                 history: [],
                 contentCache: {},
-                url: container.getAttribute('data-url') || document.location.href,
+                url: $container.attr('data-url') || document.location.href,
                 pagesContainer: $('.pages', container)[0],
                 main: $container.hasClass('view-main'),
                 loadContent: function (content) {
@@ -204,7 +209,7 @@
                     isTouched = false;
                     return;
                 }
-        
+                e.f7PreventPanelSwipe = true;
                 if (!isMoved) {
                     var cancel = false;
                     // Calc values during first move fired
@@ -354,10 +359,10 @@
                 activePage.transitionEnd(function () {
                     $([activePage[0], previousPage[0]]).removeClass('page-transitioning');
                     if (dynamicNavbar) {
-                        activeNavElements.removeClass('page-transitioning').transform('').css({opacity: ''});
-                        previousNavElements.removeClass('page-transitioning').transform('').css({opacity: ''});
-                        if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('page-transitioning').transform('');
-                        if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning').transform('');
+                        activeNavElements.removeClass('page-transitioning').css({opacity: ''});
+                        previousNavElements.removeClass('page-transitioning').css({opacity: ''});
+                        if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('page-transitioning');
+                        if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning');
                     }
                     allowViewTouchMove = true;
                     app.allowPageChange = true;
@@ -587,6 +592,8 @@
             if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.view')[0]);
             // Init messages
             if (app.initMessages) app.initMessages(pageContainer);
+            // Init forms storage
+            if (app.initFormsStorage) app.initFormsStorage(pageContainer);
             // Init smart select
             if (app.initSmartSelects) app.initSmartSelects(pageContainer);
         };
@@ -686,6 +693,11 @@
         function _load(view, url, content) {
             var viewContainer = $(view.container),
                 newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+        
+            // Preprocess content
+            if (app.params.preprocess) {
+                content = app.params.preprocess(content, url);
+            }
         
             // Clear temp div
             app._tempDomElement.innerHTML = '';
@@ -994,7 +1006,6 @@
                 // Check current url is in cache?
                 if (!view.params.domCache && (url in view.contentCache)) {
                     var _cache = view.contentCache[url];
-        
                     app._tempDomElement.innerHTML = '';
                     $(app._tempDomElement).append(_cache.nav[0]).append(_cache.page[0]);
                     _preload();
@@ -1005,6 +1016,9 @@
                     if (error) {
                         app.allowPageChange = true;
                         return;
+                    }
+                    if (app.params.preprocess) {
+                        data = app.params.preprocess(data, url);
                     }
                     app._tempDomElement.innerHTML = data;
                     _preload();
@@ -1356,7 +1370,10 @@
         
             // Classes for transition in
             $('.modal-overlay').addClass('modal-overlay-visible');
-            $(modal).addClass('modal-in');
+            modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
+                if (modal.hasClass('modal-out')) modal.trigger('closed');
+                else modal.trigger('opened');
+            });
             return true;
         };
         app.closeModal = function (modal) {
@@ -1368,7 +1385,8 @@
             var removeOnClose = modal.hasClass('remove-on-close');
             if (!isPopover) {
                 modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
-                    modal.trigger('closed');
+                    if (modal.hasClass('modal-out')) modal.trigger('closed');
+                    else modal.trigger('opened');
                     if (!isPopup) modal.remove();
                     if (isPopup) modal.removeClass('modal-out').hide();
                     if (removeOnClose) modal.remove();
@@ -1404,15 +1422,22 @@
             // Transition End;
             var transitionEndTarget = effect === 'reveal' ? $('.views') : panel;
             var openedTriggered = false;
-            transitionEndTarget.transitionEnd(function (e) {
-                if ($(e.target).is(transitionEndTarget)) {
-                    if (!openedTriggered) panel.trigger('opened');
-                }
-                app.allowPanelOpen = true;
-            });
-            setTimeout(function () {
-                if (!openedTriggered) panel.trigger('opened');
-            }, app.params.panelsAnimationDuration);
+            
+            function panelTransitionEnd() {
+                transitionEndTarget.transitionEnd(function (e) {
+                    if ($(e.target).is(transitionEndTarget)) {
+                        if (panel.hasClass('active')) {
+                            panel.trigger('opened');
+                        }
+                        else {
+                            panel.trigger('closed');
+                        }
+                        app.allowPanelOpen = true;
+                    }
+                    else panelTransitionEnd();
+                });
+            }
+            panelTransitionEnd();
         
             $('body').addClass('with-panel-' + panelPosition + '-' + effect);
             return true;
@@ -1425,12 +1450,225 @@
             activePanel.removeClass('active');
             var transitionEndTarget = effect === 'reveal' ? $('.views') : activePanel;
             activePanel.trigger('close');
+            app.allowPanelOpen = false;
+        
             transitionEndTarget.transitionEnd(function () {
+                if (activePanel.hasClass('active')) return;
                 activePanel.css({display: ''});
                 activePanel.trigger('closed');
                 $('body').removeClass('panel-closing');
+                app.allowPanelOpen = true;
             });
+        
             $('body').addClass('panel-closing').removeClass('with-panel-' + panelPosition + '-' + effect);
+        };
+        /*======================================================
+        ************   Swipe panels   ************
+        ======================================================*/
+        app.initSwipePanels = function () {
+            if (!app.params.swipePanel) return;
+            var panel = $('.panel.panel-' + app.params.swipePanel);
+            if (panel.length === 0) return;
+        
+            var panelOverlay = $('.panel-overlay');
+            var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction, side;
+            var views = $('.views');
+            side = app.params.swipePanel;
+        
+            function handleTouchStart(e) {
+                if (!app.allowPanelOpen) return;
+                isMoved = false;
+                isTouched = true;
+                isScrolling = undefined;
+                touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+                touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                touchStartTime = (new Date()).getTime();
+                direction = undefined;
+            }
+            function handleTouchMove(e) {
+                if (!isTouched) return;
+                if (e.f7PreventPanelSwipe) return;
+                var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                if (typeof isScrolling === 'undefined') {
+                    isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+                }
+                if (isScrolling) {
+                    isTouched = false;
+                    return;
+                }
+                if (!direction) {
+                    if (pageX > touchesStart.x) {
+                        direction = 'to-right';
+                    }
+                    else {
+                        direction = 'to-left';
+                    }
+        
+                    if (
+                        side === 'left' &&
+                        (
+                            direction === 'to-left' && !panel.hasClass('active')
+                        ) ||
+                        side === 'right' &&
+                        (
+                            direction === 'to-right' && !panel.hasClass('active')
+                        )
+                    )
+                    {
+                        isTouched = false;
+                        return;
+                    }
+                }
+        
+                if (app.params.swipePanelNoFollow) {
+                    var timeDiff = (new Date()).getTime() - touchStartTime;
+                    if (timeDiff < 300) {
+                        if (direction === 'to-left') {
+                            if (side === 'right') app.openPanel(side);
+                            if (side === 'left' && panel.hasClass('active')) app.closePanel();
+                        }
+                        if (direction === 'to-right') {
+                            if (side === 'left') app.openPanel(side);
+                            if (side === 'right' && panel.hasClass('active')) app.closePanel();
+                        }
+                    }
+                    isTouched = false;
+                    isMoved = false;
+                    return;
+                }
+        
+                if (!isMoved) {
+                    effect = panel.hasClass('panel-cover') ? 'cover' : 'reveal';
+                    panel.show();
+                    panelOverlay.show();
+                    opened = panel.hasClass('active');
+                    panelWidth = panel.width();
+                    panel.transition(0);
+                    if (panel.find('.view').length > 0) {
+                        if (app.sizeNavbars) app.sizeNavbars(panel.find('.view')[0]);
+                    }
+                }
+        
+                isMoved = true;
+        
+                e.preventDefault();
+                var threshold = opened ? 0 : -app.params.swipePanelThreshold;
+                if (side === 'right') threshold = -threshold;
+                
+                touchesDiff = pageX - touchesStart.x + threshold;
+        
+                if (side === 'right') {
+                    translate = touchesDiff  - (opened ? panelWidth : 0);
+                    if (translate > 0) translate = 0;
+                    if (translate < -panelWidth) {
+                        translate = -panelWidth;
+                    }
+                }
+                else {
+                    translate = touchesDiff  + (opened ? panelWidth : 0);
+                    if (translate < 0) translate = 0;
+                    if (translate > panelWidth) {
+                        translate = panelWidth;
+                    }
+                }
+                    
+                if (effect === 'reveal') {
+                    views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+                    panelOverlay.transform('translate3d(' + translate + 'px,0,0)');
+                }
+                else {
+                    panel.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+                }
+        
+            }
+            function handleTouchEnd(e) {
+                if (!isTouched || !isMoved) {
+                    isTouched = false;
+                    isMoved = false;
+                    return;
+                }
+                isTouched = false;
+                isMoved = false;
+                var timeDiff = (new Date()).getTime() - touchStartTime;
+                var action;
+                var edge = (translate === 0 || Math.abs(translate) === panelWidth);
+        
+                if (!opened) {
+                    if (translate === 0) {
+                        action = 'reset';
+                    }
+                    else if (
+                        timeDiff < 300 && Math.abs(translate) > 0 ||
+                        timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2)
+                    ) {
+                        action = 'swap';
+                    }
+                    else {
+                        action = 'reset';
+                    }
+                }
+                else {
+                    if (translate === -panelWidth) {
+                        action = 'reset';
+                    }
+                    else if (
+                        timeDiff < 300 && Math.abs(translate) > 0 ||
+                        timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
+                    ) {
+                        action = 'swap';
+                    }
+                    else {
+                        action = 'reset';
+                    }
+                }
+                    
+                panelOverlay.css({display: ''}).transform('');
+                panel.transition('').transform('');
+                if (action === 'swap') {
+                    app.allowPanelOpen = true;
+                    if (opened) {
+                        app.closePanel();
+                        if (edge) {
+                            panel.css({display: ''});
+                            $('body').removeClass('panel-closing');
+                        }
+                    }
+                    else {
+                        app.openPanel(side);
+                    }
+                    if (edge) app.allowPanelOpen = true;
+                }
+                if (action === 'reset') {
+                    if (opened) {
+                        app.allowPanelOpen = true;
+                        app.openPanel(side);
+                    }
+                    else {
+                        app.closePanel();
+                        if (edge) {
+                            app.allowPanelOpen = true;
+                            panel.css({display: ''});
+                        }
+                        else {
+                            var target = effect === 'reveal' ? views : panel;
+                            $('body').addClass('panel-closing');
+                            target.transitionEnd(function () {
+                                app.allowPanelOpen = true;
+                                panel.css({display: ''});
+                                $('body').removeClass('panel-closing');
+                            });
+                        }
+                    }
+                }
+                if (effect === 'reveal') {
+                    views.transition('');
+                    views.transform('');
+                }
+            }
+            $(document).on(app.touchEvents.start, handleTouchStart);
+            $(document).on(app.touchEvents.move, handleTouchMove);
+            $(document).on(app.touchEvents.end, handleTouchEnd);
         };
         /*======================================================
         ************   Messages   ************
@@ -1535,7 +1773,6 @@
                 touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 touchStartTime = (new Date()).getTime();
-        
             }
             function handleTouchMove(e) {
                 if (!isTouched) return;
@@ -1561,6 +1798,7 @@
                 isMoved = true;
         
                 e.preventDefault();
+                e.f7PreventPanelSwipe = true;
                 touchesDiff = pageX - touchesStart.x;
                 translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
         
@@ -2233,6 +2471,157 @@
             // Export to app
             app.device = device;
         };
+        /*===============================================================================
+        ************   Store and parse forms data   ************
+        ===============================================================================*/
+        app.formsData = {};
+        app.formStoreData = function (formId, formJSON) {
+            // Store form data in app.formsData
+            app.formsData[formId] = formJSON;
+        
+            // Store form data in local storage also
+            app.ls['f7form-' + formId] = JSON.stringify(formJSON);
+        };
+        app.formDeleteData = function (formId) {
+            // Delete form data from app.formsData
+            if (app.formsData[formId]) {
+                app.formsData[formId] = '';
+                delete app.formsData[formId];
+            }
+        
+            // Delete form data from local storage also
+            if (app.ls['f7form-' + formId]) {
+                app.ls['f7form-' + formId] = '';
+                delete app.ls['f7form-' + formId];
+            }
+        };
+        app.formGetData = function (formId) {
+            // First of all check in local storage
+            if (app.ls['f7form-' + formId]) {
+                return JSON.parse(app.ls['f7form-' + formId]);
+            }
+            // Try to get it from formsData obj
+            else if (app.formsData[formId]) return app.formsData[formId];
+        };
+        app.formToJSON = function (form) {
+            form = $(form);
+            if (form.length !== 1) return false;
+        
+            // Form data
+            var formData = {};
+        
+            // Skip input types
+            var skipTypes = ['submit', 'image', 'button', 'file'];
+            var skipNames = [];
+            form.find('input, select, textarea').each(function () {
+                var input = $(this);
+                var name = input.attr('name');
+                var type = input.attr('type');
+                var tag = this.nodeName.toLowerCase();
+                if (skipTypes.indexOf(type) >= 0) return;
+                if (skipNames.indexOf(name) >= 0 || !name) return;
+                if (tag === 'select' && input.attr('multiple')) {
+                    skipNames.push(name);
+                    formData[name] = [];
+                    form.find('select[name="' + name + '"] option').each(function () {
+                        if (this.selected) formData[name].push(this.value);
+                    });
+                }
+                else {
+                    switch (type) {
+                        case 'checkbox' :
+                            skipNames.push(name);
+                            formData[name] = [];
+                            form.find('input[name="' + name + '"]').each(function () {
+                                if (this.checked) formData[name].push(this.value);
+                            });
+                            break;
+                        case 'radio' :
+                            skipNames.push(name);
+                            form.find('input[name="' + name + '"]').each(function () {
+                                if (this.checked) formData[name] = this.value;
+                            });
+                            break;
+                        default :
+                            formData[name] = input.val();
+                            break;
+                    }
+                }
+                    
+            });
+        
+            return formData;
+        };
+        app.formFromJSON = function (form, formData) {
+            form = $(form);
+            if (form.length !== 1) return false;
+        
+            // Skip input types
+            var skipTypes = ['submit', 'image', 'button', 'file'];
+            var skipNames = [];
+        
+            form.find('input, select, textarea').each(function () {
+                var input = $(this);
+                var name = input.attr('name');
+                var type = input.attr('type');
+                var tag = this.nodeName.toLowerCase();
+                if (!formData[name]) return;
+                if (skipTypes.indexOf(type) >= 0) return;
+                if (skipNames.indexOf(name) >= 0 || !name) return;
+                if (tag === 'select' && input.attr('multiple')) {
+                    skipNames.push(name);
+                    form.find('select[name="' + name + '"] option').each(function () {
+                        if (formData[name].indexOf(this.value) >= 0) this.selected = true;
+                        else this.selected = false;
+                    });
+                }
+                else {
+                    switch (type) {
+                        case 'checkbox' :
+                            skipNames.push(name);
+                            form.find('input[name="' + name + '"]').each(function () {
+                                if (formData[name].indexOf(this.value) >= 0) this.checked = true;
+                                else this.checked = false;
+                            });
+                            break;
+                        case 'radio' :
+                            skipNames.push(name);
+                            form.find('input[name="' + name + '"]').each(function () {
+                                if (formData[name] === this.value) this.checked = true;
+                                else this.checked = false;
+                            });
+                            break;
+                        default :
+                            input.val(formData[name]);
+                            break;
+                    }
+                }
+                    
+            });
+        };
+        app.initFormsStorage = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            if (pageContainer.length === 0) return;
+        
+            var forms = pageContainer.find('form.store-data');
+        
+            // Parse forms data and fill form if there is such data
+            forms.each(function () {
+                var id = this.getAttribute('id');
+                if (!id) return;
+                var formData = app.formGetData(id);
+                if (formData) app.formFromJSON(this, formData);
+            });
+            // Update forms data on inputs change
+            forms.on('change submit', function () {
+                var formId = this.id;
+                if (!formId) return;
+                var formJSON = app.formToJSON(this);
+                if (!formJSON) return;
+                app.formStoreData(formId, formJSON);
+                $(this).trigger('store', {data: formJSON});
+            });
+        };
         /*======================================================
         ************   App Init   ************
         ======================================================*/
@@ -2245,6 +2634,8 @@
             if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
             // Init Pull To Refresh
             if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
+            // Init Swipe Panels
+            if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
             // Init each page callbacks
             $('.page').each(function () {
                 var pageContainer = $(this);
@@ -2345,9 +2736,12 @@
             return this;
         },
         transition: function (duration) {
+            if (typeof duration !== 'string') {
+                duration = duration + 'ms';
+            }
             for (var i = 0; i < this.length; i++) {
                 var elStyle = this[i].style;
-                elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration + 'ms';
+                elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration;
             }
             return this;
         },
