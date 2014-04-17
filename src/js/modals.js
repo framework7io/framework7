@@ -309,7 +309,10 @@ app.openModal = function (modal) {
 
     // Classes for transition in
     $('.modal-overlay').addClass('modal-overlay-visible');
-    $(modal).addClass('modal-in');
+    modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
+        if (modal.hasClass('modal-out')) modal.trigger('closed');
+        else modal.trigger('opened');
+    });
     return true;
 };
 app.closeModal = function (modal) {
@@ -321,7 +324,8 @@ app.closeModal = function (modal) {
     var removeOnClose = modal.hasClass('remove-on-close');
     if (!isPopover) {
         modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
-            modal.trigger('closed');
+            if (modal.hasClass('modal-out')) modal.trigger('closed');
+            else modal.trigger('opened');
             if (!isPopup) modal.remove();
             if (isPopup) modal.removeClass('modal-out').hide();
             if (removeOnClose) modal.remove();
