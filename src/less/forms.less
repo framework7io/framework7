@@ -52,57 +52,64 @@
     cursor: pointer;
     .align-self(center);
     input[type="checkbox"] {
-        width: 52px;
-        border-radius: 16px;
-        .border-box();
-        height: 32px;
-        background: #e5e5e5;
-        z-index: 0;
-        margin: 0;
-        padding: 0;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        -ms-appearance: none;
-        appearance: none;
-        border:none;
-        cursor: pointer;
-        position: relative;
-        .transition(300ms);
-        &:before {
-            content:' ';
-            position: absolute;
-            left: 2px;
-            top: 2px;
-            width: 48px;
+        display: none;
+    }
+    input[type="checkbox"] {
+        &+ .checkbox {
+            width: 52px; 
             border-radius: 16px;
             .border-box();
-            height: 28px;
-            background: #fff;
-            z-index: 1;
+            height: 32px;
+            background: #e5e5e5;
+            z-index: 0;
+            margin: 0;
+            padding: 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            border:none;
+            cursor: pointer;
+            position: relative;
             .transition(300ms);
-            .transform(scale(1));
-        }
-        &:after {
-            content:' ';
-            height: 28px;
-            width: 28px;
-            border-radius: 28px;
-            background: #fff;
-            position: absolute;
-            z-index: 2;
-            top: 2px;
-            left: 2px;
-            .box-shadow(0 2px 5px rgba(0,0,0,0.4));
-            .translate3d(0,0,0);
-            .transition(300ms);
-        }
-        &:checked {
-            background: #4cd964;
             &:before {
-                .transform(scale(0));
+                content:' ';
+                position: absolute;
+                left: 2px;
+                top: 2px;
+                width: 48px;
+                border-radius: 16px;
+                .border-box();
+                height: 28px;
+                background: #fff;
+                z-index: 1;
+                .transition(300ms);
+                .transform(scale(1));
             }
             &:after {
-                .translate3d(20px,0,0);
+                content:' ';
+                height: 28px;
+                width: 28px;
+                border-radius: 28px;
+                background: #fff;
+                position: absolute;
+                z-index: 2;
+                top: 2px;
+                left: 2px;
+                .box-shadow(0 2px 5px rgba(0,0,0,0.4));
+                .translate3d(0,0,0);
+                .transition(300ms);
+            }
+        }
+        &:checked {
+            &+ .checkbox {
+                background: #4cd964;
+                &:before {
+                    .transform(scale(0));
+                }
+                &:after {
+                    left: 22px;
+                }
             }
         }
     }
