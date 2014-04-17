@@ -16,7 +16,7 @@ app.addView = function (selector, params) {
         params: params || {},
         history: [],
         contentCache: {},
-        url: container.getAttribute('data-url') || document.location.href,
+        url: $container.attr('data-url') || document.location.href,
         pagesContainer: $('.pages', container)[0],
         main: $container.hasClass('view-main'),
         loadContent: function (content) {
@@ -256,10 +256,10 @@ app.initViewEvents = function (view) {
         activePage.transitionEnd(function () {
             $([activePage[0], previousPage[0]]).removeClass('page-transitioning');
             if (dynamicNavbar) {
-                activeNavElements.removeClass('page-transitioning').transform('').css({opacity: ''});
-                previousNavElements.removeClass('page-transitioning').transform('').css({opacity: ''});
-                if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('page-transitioning').transform('');
-                if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning').transform('');
+                activeNavElements.removeClass('page-transitioning').css({opacity: ''});
+                previousNavElements.removeClass('page-transitioning').css({opacity: ''});
+                if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('page-transitioning');
+                if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning');
             }
             allowViewTouchMove = true;
             app.allowPageChange = true;
