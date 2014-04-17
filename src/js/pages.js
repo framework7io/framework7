@@ -169,8 +169,8 @@ function _load(view, url, content) {
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
 
     // Preprocess content
-    if (app.params.processContent) {
-        content = app.params.processContent(content, url);
+    if (app.params.preprocess) {
+        content = app.params.preprocess(content, url);
     }
 
     // Clear temp div
@@ -491,8 +491,8 @@ app.goBack = function (view, url, preloadOnly) {
                 app.allowPageChange = true;
                 return;
             }
-            if (app.params.processContent) {
-                data = app.params.processContent(data, url);
+            if (app.params.preprocess) {
+                data = app.params.preprocess(data, url);
             }
             app._tempDomElement.innerHTML = data;
             _preload();
