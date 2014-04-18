@@ -14,6 +14,7 @@ app.sizeNavbars = function (viewContainer) {
             rightWidth = noRight ? 0 : right.outerWidth(true),
             centerWidth = center.outerWidth(true),
             navbarWidth = tt.width(),
+            onLeft = tt.hasClass('navbar-on-left'),
             currLeft, diff;
 
         if (noRight) {
@@ -42,14 +43,17 @@ app.sizeNavbars = function (viewContainer) {
         if (center.hasClass('sliding')) {
             center[0].f7NavbarLeftOffset = -(currLeft + diff);
             center[0].f7NavbarRightOffset = navbarWidth - currLeft - diff - centerWidth;
+            if (onLeft) center.transform('translate3d(' + center[0].f7NavbarLeftOffset + 'px, 0, 0)');
         }
         if (!noLeft && left.hasClass('sliding')) {
             left[0].f7NavbarLeftOffset = -leftWidth;
             left[0].f7NavbarRightOffset = (navbarWidth - left.outerWidth()) / 2;
+            if (onLeft) left.transform('translate3d(' + left[0].f7NavbarLeftOffset + 'px, 0, 0)');
         }
         if (!noRight && right.hasClass('sliding')) {
             right[0].f7NavbarLeftOffset = -(navbarWidth - right.outerWidth()) / 2;
             right[0].f7NavbarRightOffset = rightWidth;
+            if (onLeft) right.transform('translate3d(' + right[0].f7NavbarLeftOffset + 'px, 0, 0)');
         }
         
     });
