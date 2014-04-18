@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.4
+ * Framework7 0.7.5
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 13, 2014
+ * Released on: April 18, 2014
 */
 /*=============
   Framework 7
@@ -479,10 +479,10 @@ html.android .page-from-center-to-right {
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
   justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  align-items: stretch;
 }
 .navbar,
 .toolbar {
@@ -570,10 +570,18 @@ html.android .page-from-center-to-right {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 44px;
   -webkit-flex-shrink: 10;
   -ms-flex: 0 10 auto;
   flex-shrink: 10;
-  line-height: 43px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
 }
 .navbar .left,
 .navbar .right {
@@ -1453,6 +1461,9 @@ i.icon.icon-form-url {
   align-self: center;
 }
 .label-switch input[type="checkbox"] {
+  display: none;
+}
+.label-switch input[type="checkbox"] + .checkbox {
   width: 52px;
   border-radius: 16px;
   -webkit-box-sizing: border-box;
@@ -1473,7 +1484,7 @@ i.icon.icon-form-url {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
-.label-switch input[type="checkbox"]:before {
+.label-switch input[type="checkbox"] + .checkbox:before {
   content: ' ';
   position: absolute;
   left: 2px;
@@ -1492,7 +1503,7 @@ i.icon.icon-form-url {
   -ms-transform: scale(1);
   transform: scale(1);
 }
-.label-switch input[type="checkbox"]:after {
+.label-switch input[type="checkbox"] + .checkbox:after {
   content: ' ';
   height: 28px;
   width: 28px;
@@ -1510,18 +1521,16 @@ i.icon.icon-form-url {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
-.label-switch input[type="checkbox"]:checked {
+.label-switch input[type="checkbox"]:checked + .checkbox {
   background: #4cd964;
 }
-.label-switch input[type="checkbox"]:checked:before {
+.label-switch input[type="checkbox"]:checked + .checkbox:before {
   -webkit-transform: scale(0);
   -ms-transform: scale(0);
   transform: scale(0);
 }
-.label-switch input[type="checkbox"]:checked:after {
-  -webkit-transform: translate3d(20px, 0, 0);
-  -ms-transform: translate3d(20px, 0, 0);
-  transform: translate3d(20px, 0, 0);
+.label-switch input[type="checkbox"]:checked + .checkbox:after {
+  left: 22px;
 }
 .button {
   border: 1px solid #007aff;
