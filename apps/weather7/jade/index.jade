@@ -1,0 +1,99 @@
+doctype
+html.with-statusbar-overlay(manifest="manifest.php")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
+    title Weather7
+    link(rel="stylesheet", href="../../dist/css/framework7.min.css")
+    link(rel="stylesheet", href="css/weather7.css")
+    // Favicon
+    link(href="img/icon-57.png", rel="shortcut icon")
+    | 
+    <!-- iOS 7 iPad (retina) -->
+    <link href="img/icon-152.png" sizes="152x152" rel="apple-touch-icon">
+    <!-- iOS 6 iPad (retina) -->
+    <link href="img/icon-144.png" sizes="144x144" rel="apple-touch-icon">
+    <!-- iOS 7 iPhone (retina) -->
+    <link href="img/icon-120.png" sizes="120x120" rel="apple-touch-icon">
+    <!-- iOS 6 iPhone (retina) -->
+    <link href="img/icon-114.png" sizes="114x114" rel="apple-touch-icon">
+    <!-- iOS 7 iPad -->
+    <link href="img/icon-76.png" sizes="76x76" rel="apple-touch-icon">
+    <!-- iOS 6 iPad -->
+    <link href="img/icon-72.png" sizes="72x72" rel="apple-touch-icon">
+    <!-- iOS 6 iPhone -->
+    <link href="img/icon-57.png" sizes="57x57" rel="apple-touch-icon">
+  body
+    // Statusbar overlay
+    .statusbar-overlay
+    // Main views
+    .views
+      .view.view-main.navbar-through
+        .navbar
+          .navbar-inner
+            .center.sliding
+              span.navbar-logo
+            .right
+              a(href="#").open-popup.link.icon-only
+                i.icon.icon-plus +
+        .pages
+          .page(data-page="index")
+            .page-content
+              .list-block.places-list
+                ul
+                .list-block-label
+                  img(src="img/yahoo-logo.png", height="20")
+    // Search popup
+    .popup
+      .view.navbar-fixed
+        .navbar
+          .navbar-inner
+            .left
+              input(type="text", placeholder="Search city...")
+              .preloader.preloader-white
+            .right
+              a(href="#").link.close-popup Cancel
+        .pages
+          .page
+            .page-content
+              ul.search-results
+    // Templates
+    script(id="search-item-template", type="template")   
+      li.close-popup(data-woeid="{{woeid}}", data-city="{{city}}", data-country="{{country}}")
+        | {{city}} 
+        span {{province}}, {{country}}
+
+    script(id="weather-item-template", type="template")       
+      li.swipeout(data-woeid="{{woeid}}")
+        .swipeout-content
+          a(href="#", data-woeid="{{woeid}}").item-content.item-link
+            .item-inner
+              .item-title
+                .city {{city}}
+                .country {{country}}
+              .item-after {{temp}}
+        .swipeout-actions
+          .swipeout-actions-inner
+            a(href="#").swipeout-delete Delete
+    script(id="details-template", type="template")
+      .navbar
+        .navbar-inner
+          .left.sliding
+            a(href="index.html").back.link
+              span.navbar-logo
+      .pages.navbar-through
+        .page(data-page="detail")
+          .page-content
+            .detail-city {{city}}
+            .detail-condition {{condition}}
+            .detail-temp {{temp}}
+            .list-block.forecast-list
+              ul 
+                {{forecast}}
+
+    // Path to Framework7 Library JS
+    script(type="text/javascript", src="../../dist/js/framework7.min.js")
+    // Path to your app js
+    script(type="text/javascript", src="js/weather7.js")

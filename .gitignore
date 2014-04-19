@@ -1,5 +1,4 @@
 .DS_Store
-apps
 node_modules
 build
 build_rails
