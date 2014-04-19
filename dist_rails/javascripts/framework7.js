@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.5
+ * Framework7 0.7.6
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 18, 2014
+ * Released on: April 19, 2014
 */
 (function () {
 
@@ -2983,6 +2983,20 @@
             }
             else return undefined;
         },
+        eq: function (index) {
+            if (typeof index === 'undefined') return this;
+            var length = this.length;
+            var returnIndex;
+            if (index > length - 1) {
+                return new Dom7([]);
+            }
+            if (index < 0) {
+                returnIndex = length + index;
+                if (returnIndex < 0) return new Dom7([]);
+                else return new Dom7([this[returnIndex]]);
+            }
+            return new Dom7([this[index]]);
+        },
         append: function (newChild) {
             for (var i = 0; i < this.length; i++) {
                 if (typeof newChild === 'string') {
@@ -3100,8 +3114,9 @@
             }
             return this;
         },
-        
     };
+    
+    // Selector 
     var $ = function (selector, context) {
         var arr = [], i = 0;
         if (selector) {
@@ -3125,6 +3140,28 @@
         }
         return new Dom7(arr);
     };
+    // Shortcuts
+    (function () {
+        var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
+        var notTrigger = ('resize scroll').split(' ');
+        function createMethod(name) {
+            Dom7.prototype[name] = function (handler) {
+                var i;
+                if (typeof handler === 'undefined') {
+                    for (i = 0; i < this.length; i++) {
+                        if (notTrigger.indexOf(name) < 0) this[i][name]();
+                    }
+                    return this;
+                }
+                else {
+                    return this.on(name, handler);
+                }
+            };
+        }
+        for (var i = 0; i < shortcuts.length; i++) {
+            createMethod(shortcuts[i]);
+        }
+    })();
     // Utilites
     $.parseUrlQuery = function (url) {
         var query = {}, i, params, param;

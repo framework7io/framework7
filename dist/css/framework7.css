@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.5
+ * Framework7 0.7.6
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 18, 2014
+ * Released on: April 19, 2014
 */
 /*=============
   Framework 7
@@ -479,10 +479,10 @@ html.android .page-from-center-to-right {
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
   justify-content: space-between;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  -webkit-align-items: stretch;
-  align-items: stretch;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
 }
 .navbar,
 .toolbar {
