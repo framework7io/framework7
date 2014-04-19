@@ -24,6 +24,7 @@
     "kitchen-sink/",
     "Gruntfile.js",
     "src",
+    "apps",
     "node_modules",
     "package.json"
   ]
