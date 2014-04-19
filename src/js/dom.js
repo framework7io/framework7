@@ -319,6 +319,20 @@ Dom7.prototype = {
         }
         else return undefined;
     },
+    eq: function (index) {
+        if (typeof index === 'undefined') return this;
+        var length = this.length;
+        var returnIndex;
+        if (index > length - 1) {
+            return new Dom7([]);
+        }
+        if (index < 0) {
+            returnIndex = length + index;
+            if (returnIndex < 0) return new Dom7([]);
+            else return new Dom7([this[returnIndex]]);
+        }
+        return new Dom7([this[index]]);
+    },
     append: function (newChild) {
         for (var i = 0; i < this.length; i++) {
             if (typeof newChild === 'string') {
