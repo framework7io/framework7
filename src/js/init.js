@@ -3,15 +3,20 @@
 ======================================================*/
 app.init = function () {
     if (app.getDeviceInfo) app.getDeviceInfo();
+
     // Init Click events
     if (app.initFastClicks && app.params.fastClicks) app.initFastClicks();
     if (app.initClickEvents) app.initClickEvents();
+
     // Init Swipeouts events
     if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
+
     // Init Pull To Refresh
     if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
+
     // Init Swipe Panels
     if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
+
     // Init each page callbacks
     $('.page').each(function () {
         var pageContainer = $(this);
@@ -23,8 +28,12 @@ app.init = function () {
         }
         app.pageInitCallback(view, this, url, 'center');
     });
+    
     // Init resize events
     if (app.initResize) app.initResize();
+
+    // Init push state
+    if (app.initPushState && app.params.pushState) app.initPushState();
     
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
