@@ -22,9 +22,11 @@ window.Framework7 = function (params) {
         cache: true,
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
+        // Push State
+        pushState: false,
         // Fast clicks
         fastClicks : true,
-        // 
+        // Animate Nav Back Icon
         animateNavBackIcon: false,
         // Swipe Back
         swipeBackPage: true,
