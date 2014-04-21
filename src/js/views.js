@@ -9,24 +9,28 @@ app.addView = function (selector, params) {
     
     var container = $container[0];
     if (typeof params === 'undefined') params = {};
-
+    var docLocation = document.location.href;
+    var viewURL = docLocation;
+    if (app.params.pushState) {
+        if (viewURL.indexOf('#/') >= 0 && viewURL.indexOf('#/#') < 0) viewURL = viewURL.split('#/')[0];
+    }
     var view = {
         container: container,
         selector: selector,
         params: params || {},
         history: [],
         contentCache: {},
-        url: $container.attr('data-url') || document.location.href,
+        url: $container.attr('data-url') || viewURL,
         pagesContainer: $('.pages', container)[0],
         main: $container.hasClass('view-main'),
-        loadContent: function (content) {
-            app.loadContent(view, content);
+        loadContent: function (content, pushState) {
+            app.loadContent(view, content, pushState);
         },
-        loadPage: function (url) {
-            app.loadPage(view, url);
+        loadPage: function (url, pushState) {
+            app.loadPage(view, url, pushState);
         },
-        goBack: function (url) {
-            app.goBack(view, url);
+        goBack: function (url, pushState) {
+            app.goBack(view, url, undefined, pushState);
         },
         hideNavbar: function () {
             app.hideNavbar(container);
@@ -55,6 +59,13 @@ app.addView = function (selector, params) {
     // Init View's events
     app.initViewEvents(view);
 
+    // Push State on load
+    // if (app.params.pushState && view.main) {
+    //     if (docLocation.indexOf('#/') >= 0 && docLocation.indexOf('#/#') < 0) {
+    //         view.loadPage(docLocation.split('#/')[1]);
+    //     }
+    // }
+    
     // Return view object
     return view;
 };
@@ -263,7 +274,10 @@ app.initViewEvents = function (view) {
             }
             allowViewTouchMove = true;
             app.allowPageChange = true;
-            if (pageChanged) app.afterGoBack(view, activePage, previousPage);
+            if (pageChanged) {
+                if (app.params.pushState) history.back();
+                app.afterGoBack(view, activePage, previousPage);
+            }
         });
     }
 

@@ -314,20 +314,24 @@ function _load(view, url, content) {
             oldNavbarInner.removeClass('navbar-from-center-to-left').addClass('navbar-on-left');
         }
         app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
+        if (app.params.pushState) app.pushStateClearQueue();
     });
 }
-app.loadContent = function (view, content) {
+app.loadContent = function (view, content, pushState) {
     if (!app.allowPageChange) return false;
     app.allowPageChange = false;
     if (app.xhr) {
         app.xhr.abort();
         app.xhr = false;
     }
-
+    if (app.params.pushState)  {
+        if (typeof pushState === 'undefined') pushState = true;
+        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', '#/#content-' + view.history.length);
+    }
     _load(view, null, content);
 
 };
-app.loadPage = function (view, url) {
+app.loadPage = function (view, url, pushState) {
     if (!app.allowPageChange) return false;
     if (view.url === url) return false;
     app.allowPageChange = false;
@@ -340,17 +344,27 @@ app.loadPage = function (view, url) {
             app.allowPageChange = true;
             return;
         }
+        if (app.params.pushState)  {
+            if (typeof pushState === 'undefined') pushState = true;
+            if (pushState) history.pushState({url: url}, '', '#/' + url);
+        }
 
         _load(view, url, data);
 
     });
 };
-app.goBack = function (view, url, preloadOnly) {
+app.goBack = function (view, url, preloadOnly, pushState) {
     if (!app.allowPageChange) return false;
     app.allowPageChange = false;
     if (app.xhr) {
         app.xhr.abort();
         app.xhr = false;
+    }
+    if (app.params.pushState)  {
+        if (typeof pushState === 'undefined') pushState = true;
+        if (!preloadOnly && history.state && pushState) {
+            history.back();
+        }
     }
 
     var viewContainer = $(view.container),
@@ -519,11 +533,15 @@ app.afterGoBack = function (view, oldPage, newPage) {
     }
     // Update View's History
     view.history.pop();
+    
     // Check current page is content based only
     if (!view.params.domCache && view.url && view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
         view.contentCache[view.url] = null;
         delete view.contentCache[view.url];
     }
+    
+    if (app.params.pushState) app.pushStateClearQueue();
+
     // Preload previous page
     if (app.params.preloadPreviousPage) {
         if (view.params.domCache) {
@@ -532,4 +550,5 @@ app.afterGoBack = function (view, oldPage, newPage) {
         }
         app.goBack(view, false, true);
     }
+
 };
