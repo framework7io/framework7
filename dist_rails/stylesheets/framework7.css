@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.6
+ * Framework7 0.7.7
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 19, 2014
+ * Released on: April 24, 2014
 */
 /*=============
   Framework 7
@@ -1442,8 +1442,9 @@ i.icon.icon-form-url {
 .list-block textarea {
   height: 100px;
   resize: none;
-  line-height: 1.5;
-  padding-top: 10px;
+  line-height: 1.4;
+  padding-top: 8px;
+  padding-bottom: 7px;
 }
 .label-switch {
   display: inline-block;
