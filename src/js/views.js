@@ -23,14 +23,14 @@ app.addView = function (selector, params) {
         url: $container.attr('data-url') || viewURL,
         pagesContainer: $('.pages', container)[0],
         main: $container.hasClass('view-main'),
-        loadContent: function (content, pushState) {
-            app.loadContent(view, content, pushState);
+        loadContent: function (content) {
+            app.loadContent(view, content);
         },
-        loadPage: function (url, pushState) {
-            app.loadPage(view, url, pushState);
+        loadPage: function (url) {
+            app.loadPage(view, url);
         },
-        goBack: function (url, pushState) {
-            app.goBack(view, url, undefined, pushState);
+        goBack: function (url) {
+            app.goBack(view, url, undefined);
         },
         hideNavbar: function () {
             app.hideNavbar(container);
@@ -60,11 +60,11 @@ app.addView = function (selector, params) {
     app.initViewEvents(view);
 
     // Push State on load
-    // if (app.params.pushState && view.main) {
-    //     if (docLocation.indexOf('#/') >= 0 && docLocation.indexOf('#/#') < 0) {
-    //         view.loadPage(docLocation.split('#/')[1]);
-    //     }
-    // }
+    if (app.params.pushState && view.main) {
+        if (docLocation.indexOf('#/') >= 0 && docLocation.indexOf('#/#') < 0) {
+            app.loadPage(view, docLocation.split('#/')[1], false);
+        }
+    }
     
     // Return view object
     return view;

@@ -6,17 +6,25 @@ app.pushStateClearQueue = function () {
     if (app.pushStateQueue.length === 0) return;
     var queue = app.pushStateQueue.pop();
     if (queue.action === 'goBack') {
-        queue.view.goBack(undefined, false);
+        app.goBack(queue.view, undefined, false, false);
     }
     if (queue.action === 'loadPage') {
-        queue.view.loadPage(queue.stateUrl, false);
+        app.loadPage(queue.view, queue.stateUrl, false);
     }
     if (queue.action === 'loadContent') {
-        queue.view.loadContent(queue.stateContent, false);
+        app.loadContent(queue.view, queue.stateContent, false);
     }
 };
+
 app.initPushState = function () {
+    var blockPopstate = true;
+    $(window).on('load', function () {
+        setTimeout(function () {
+            blockPopstate = false;
+        }, 0);
+    });
     $(window).on('popstate', function (e) {
+        if (blockPopstate) return;
         var mainView;
         for (var i = 0; i < app.views.length; i++) {
             if (app.views[i].main) mainView = app.views[i];
