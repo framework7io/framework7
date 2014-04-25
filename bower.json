@@ -8,7 +8,7 @@
   "version": "0.7.7",
   "author": "Vladimir Kharlampidi",
   "homepage": "http://www.idangero.us/framework7",
-  "keywords": ["mobile", "framework", "ios7", "iphone", "ipad"],
+  "keywords": ["mobile", "framework", "ios 7", "ios7", "ios8", "ios 8", "iphone", "ipad", "apple", "phonegap", "native", "touch", "appstore", "app", "f7"],
   "scripts": [
     "dist/js/framework7.js"
   ],
