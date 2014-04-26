@@ -10,6 +10,32 @@ module.exports = function (grunt) {
         filename: 'framework7'
     };
 
+    // List of js files to concatenate
+    var jsFilesList = [
+        'src/js/wrap-start.js',
+        'src/js/f7-intro.js',
+        'src/js/views.js',
+        'src/js/navbars.js',
+        'src/js/xhr.js',
+        'src/js/pages.js',
+        'src/js/modals.js',
+        'src/js/panels.js',
+        'src/js/messages.js',
+        'src/js/swipeout.js',
+        'src/js/smart-select.js',
+        'src/js/pull-to-refresh.js',
+        'src/js/fast-clicks.js',
+        'src/js/clicks.js',
+        'src/js/resize.js',
+        'src/js/device.js',
+        'src/js/forms-handler.js',
+        'src/js/push-state.js',
+        'src/js/init.js',
+        'src/js/f7-outro.js',
+        'src/js/dom.js',
+        'src/js/wrap-end.js'
+    ];
+
     // Project configuration.
     grunt.initConfig({
         framework7: framework7,
@@ -136,6 +162,13 @@ module.exports = function (grunt) {
                         dest: 'apps/weather7/css/',
                         ext: '.css'
                     },
+                    {
+                        expand: true,
+                        cwd: 'apps/todo7/less/',
+                        src: ['*.less'],
+                        dest: 'apps/todo7/css/',
+                        ext: '.css'
+                    },
                 ]
             },
         },
@@ -160,30 +193,7 @@ module.exports = function (grunt) {
                 }
             },
             js: {
-                src: [
-                    'src/js/wrap-start.js',
-                    'src/js/f7-intro.js',
-                    'src/js/views.js',
-                    'src/js/navbars.js',
-                    'src/js/xhr.js',
-                    'src/js/pages.js',
-                    'src/js/modals.js',
-                    'src/js/panels.js',
-                    'src/js/messages.js',
-                    'src/js/swipeout.js',
-                    'src/js/smart-select.js',
-                    'src/js/pull-to-refresh.js',
-                    'src/js/fast-clicks.js',
-                    'src/js/clicks.js',
-                    'src/js/resize.js',
-                    'src/js/device.js',
-                    'src/js/forms-handler.js',
-                    'src/js/push-state.js',
-                    'src/js/init.js',
-                    'src/js/f7-outro.js',
-                    'src/js/dom.js',
-                    'src/js/wrap-end.js'
-                ],
+                src: jsFilesList,
                 dest: 'build/js/<%= framework7.filename %>.js'
             },
             css_build: {
@@ -195,30 +205,7 @@ module.exports = function (grunt) {
                 dest: 'dist/css/<%= framework7.filename %>.min.css'
             },
             js_rails: {
-                src: [
-                    'src/js/wrap-start.js',
-                    'src/js/f7-intro.js',
-                    'src/js/views.js',
-                    'src/js/navbars.js',
-                    'src/js/xhr.js',
-                    'src/js/pages.js',
-                    'src/js/modals.js',
-                    'src/js/panels.js',
-                    'src/js/messages.js',
-                    'src/js/swipeout.js',
-                    'src/js/smart-select.js',
-                    'src/js/pull-to-refresh.js',
-                    'src/js/fast-clicks.js',
-                    'src/js/clicks.js',
-                    'src/js/resize.js',
-                    'src/js/device.js',
-                    'src/js/forms-handler.js',
-                    'src/js/push-state.js',
-                    'src/js/init.js',
-                    'src/js/f7-outro.js',
-                    'src/js/dom.js',
-                    'src/js/wrap-end.js'
-                ],
+                src: jsFilesList,
                 dest: 'build_rails/javascripts/<%= framework7.filename %>.js'
             },
             css_build_rails: {
@@ -290,6 +277,7 @@ module.exports = function (grunt) {
             apps: {
                 files: [
                     'apps/weather7/jade/**', 'apps/weather7/less/**',
+                    'apps/todo7/jade/**', 'apps/todo7/less/**',
                 ],
                 tasks: ['jade:apps', 'less:apps'],
                 options: {
@@ -387,6 +375,13 @@ module.exports = function (grunt) {
                         cwd: 'apps/weather7/jade/',
                         src: ['*.jade'],
                         dest: 'apps/weather7/',
+                        ext: '.html'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'apps/todo7/jade/',
+                        src: ['*.jade'],
+                        dest: 'apps/todo7/',
                         ext: '.html'
                     },
                 ]
