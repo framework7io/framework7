@@ -55,7 +55,7 @@ app.modal = function (params) {
 app.alert = function (text, title) {
     return app.modal({
         text: text || '',
-        title: title || app.params.modalTitle,
+        title: typeof title === 'undefined' ? app.params.modalTitle : title,
         buttons: [ {text: app.params.modalButtonOk, bold: true} ]
     });
 };
