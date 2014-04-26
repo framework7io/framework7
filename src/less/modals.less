@@ -304,6 +304,7 @@ input.modal-prompt-input {
         }
     }
 }
+
 // Popup
 .popup {
     position: absolute;
@@ -345,6 +346,16 @@ input.modal-prompt-input {
         }
         &.modal-out {
             .translate3d(0,1024px,0);
+        }
+    }
+    // iPhone with statusbar overlay
+    @media all and (max-width:629px) and (max-height:629px) {
+        html.with-statusbar-overlay & {
+            height: ~"-webkit-calc(100% - 20px)";
+            height: ~"-moz-calc(100% - 20px)";
+            height: ~"-ms-calc(100% - 20px)";
+            height: ~"calc(100% - 20px)";
+            top: 20px;
         }
     }
 }
