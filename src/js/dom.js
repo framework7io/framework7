@@ -55,6 +55,27 @@ Dom7.prototype = {
             return this;
         }
     },
+    data: function (key, value) {
+        if (typeof value === 'undefined') {
+            // Get value
+            if (this[0]) {
+                var dataKey = this[0].getAttribute('data-' + key);
+                if (dataKey) return dataKey;
+                else if (this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
+                else return undefined;
+            }
+            else return undefined;
+        }
+        else {
+            // Set value
+            for (var i = 0; i < this.length; i++) {
+                var el = this[i];
+                if (!el.f7ElementDataStorage) el.f7ElementDataStorage = {};
+                el.f7ElementDataStorage[key] = value;
+            }
+            return this;
+        }
+    },
     val: function (value) {
         if (typeof value === 'undefined') {
             if (this[0]) return this[0].value;
