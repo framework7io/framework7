@@ -223,6 +223,7 @@ body.with-popup .statusbar-overlay {
 }
 .modal-button {
   background: #cc0442;
+  border-right-color: #9a0332;
   color: #fff;
 }
 .modal-button:active {
