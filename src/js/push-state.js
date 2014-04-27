@@ -23,7 +23,7 @@ app.initPushState = function () {
             blockPopstate = false;
         }, 0);
     });
-    $(window).on('popstate', function (e) {
+    function handlePopState(e) {
         if (blockPopstate) return;
         var mainView;
         for (var i = 0; i < app.views.length; i++) {
@@ -78,5 +78,6 @@ app.initPushState = function () {
                 }
             }
         }
-    });
+    }
+    $(window).on('popstate', handlePopState);
 };
