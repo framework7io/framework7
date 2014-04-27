@@ -18,12 +18,11 @@ $$('.popup').on('open', function () {
     $$('body').addClass('with-popup');
 });
 $$('.popup').on('opened', function () {
-    popup.find('input[name="title"]').focus();
+    $$(this).find('input[name="title"]').focus();
 });
 $$('.popup').on('close', function () {
     $$('body').removeClass('with-popup');
-    var popup = $$(this);
-    popup.find('input[name="title"]').blur().val('');
+    $$(this).find('input[name="title"]').blur().val('');
 });
 
 // Popup colors
