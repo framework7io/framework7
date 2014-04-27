@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.7
+ * Framework7 0.7.8
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 24, 2014
+ * Released on: April 27, 2014
 */
 (function () {
 
@@ -1155,7 +1155,7 @@
         app.alert = function (text, title) {
             return app.modal({
                 text: text || '',
-                title: title || app.params.modalTitle,
+                title: typeof title === 'undefined' ? app.params.modalTitle : title,
                 buttons: [ {text: app.params.modalButtonOk, bold: true} ]
             });
         };
@@ -2206,8 +2206,10 @@
                         activeSelection = true;
                         return true;
                     }
+                    else {
+                        activeSelection = false;
+                    }
                 }
-                
                 trackClick = true;
                 targetElement = e.target;
                 touchStartTime = (new Date()).getTime();
@@ -2236,9 +2238,15 @@
                     if (!activeSelection) e.preventDefault();
                     return true;
                 }
-                var touchEndTime = (new Date()).getTime();
-                if (touchEndTime - touchStartTime > 200) return true;
         
+                if (!activeSelection) {
+                    e.preventDefault();
+                }
+        
+                var touchEndTime = (new Date()).getTime();
+                if (touchEndTime - touchStartTime > 200) {
+                    return true;
+                }
                 e.preventDefault();
         
                 trackClick = false;
@@ -2686,7 +2694,7 @@
                     blockPopstate = false;
                 }, 0);
             });
-            $(window).on('popstate', function (e) {
+            function handlePopState(e) {
                 if (blockPopstate) return;
                 var mainView;
                 for (var i = 0; i < app.views.length; i++) {
@@ -2705,7 +2713,7 @@
                     if (mainView.history.indexOf(stateUrl) >= 0) {
                         // Go Back
                         if (app.allowPageChange) {
-                            mainView.goBack(undefined, false);
+                            app.goBack(mainView, undefined, false, false);
                         }
                         else {
                             app.pushStateQueue.push({
@@ -2717,7 +2725,7 @@
                     else if (stateUrl && !stateContent) {
                         // Load Page
                         if (app.allowPageChange) {
-                            mainView.loadPage(stateUrl, false);
+                            app.loadPage(mainView, stateUrl, false);
                         }
                         else {
                             app.pushStateQueue.push({
@@ -2730,7 +2738,7 @@
                     else if (stateContent) {
                         // Load Page
                         if (app.allowPageChange) {
-                            mainView.loadContent(stateContent, false);
+                            app.loadContent(mainView, stateContent, false);
                         }
                         else {
                             app.pushStateQueue.push({
@@ -2741,7 +2749,8 @@
                         }
                     }
                 }
-            });
+            }
+            $(window).on('popstate', handlePopState);
         };
         /*======================================================
         ************   App Init   ************
@@ -2841,6 +2850,27 @@
             else {
                 for (var i = 0; i < this.length; i++) {
                     this[i].setAttribute(attr, value);
+                }
+                return this;
+            }
+        },
+        data: function (key, value) {
+            if (typeof value === 'undefined') {
+                // Get value
+                if (this[0]) {
+                    var dataKey = this[0].getAttribute('data-' + key);
+                    if (dataKey) return dataKey;
+                    else if (this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
+                    else return undefined;
+                }
+                else return undefined;
+            }
+            else {
+                // Set value
+                for (var i = 0; i < this.length; i++) {
+                    var el = this[i];
+                    if (!el.f7ElementDataStorage) el.f7ElementDataStorage = {};
+                    el.f7ElementDataStorage[key] = value;
                 }
                 return this;
             }
