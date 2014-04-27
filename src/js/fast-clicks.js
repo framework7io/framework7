@@ -27,8 +27,10 @@ app.initFastClicks = function () {
                 activeSelection = true;
                 return true;
             }
+            else {
+                activeSelection = false;
+            }
         }
-        
         trackClick = true;
         targetElement = e.target;
         touchStartTime = (new Date()).getTime();
@@ -57,9 +59,15 @@ app.initFastClicks = function () {
             if (!activeSelection) e.preventDefault();
             return true;
         }
-        var touchEndTime = (new Date()).getTime();
-        if (touchEndTime - touchStartTime > 200) return true;
 
+        if (!activeSelection) {
+            e.preventDefault();
+        }
+
+        var touchEndTime = (new Date()).getTime();
+        if (touchEndTime - touchStartTime > 200) {
+            return true;
+        }
         e.preventDefault();
 
         trackClick = false;
