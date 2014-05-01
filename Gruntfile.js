@@ -22,6 +22,7 @@ module.exports = function (grunt) {
         'src/js/panels.js',
         'src/js/messages.js',
         'src/js/swipeout.js',
+        'src/js/sortable.js',
         'src/js/smart-select.js',
         'src/js/pull-to-refresh.js',
         'src/js/fast-clicks.js',
