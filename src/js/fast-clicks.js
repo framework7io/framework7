@@ -4,7 +4,7 @@
 ===============================================================================*/
 app.initFastClicks = function () {
     if (!$.supportTouch) return;
-    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, cancelNextClick;
+    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent;
 
     function targetNeedsFocus(el) {
         var tag = el.nodeName.toLowerCase();
@@ -67,9 +67,7 @@ app.initFastClicks = function () {
 
         var touchEndTime = (new Date()).getTime();
 
-        cancelNextClick = true;
         if (touchEndTime - touchStartTime > 200) {
-            cancelNextClick = false;
             return true;
         }
 
@@ -93,31 +91,12 @@ app.initFastClicks = function () {
             eventType = 'mousedown';
         }
         evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-        evt.forwardedTouchEvent = true;
         targetElement.dispatchEvent(evt);
+            
+        return false;
     }
-    function handleClick(e) {
-        if (!targetElement) {
-            return true;
-        }
-
-        if (e.forwardedTouchEvent) {
-            return true;
-        }
-
-        if (!e.cancelable) {
-            return true;
-        }
-
-        if (cancelNextClick) {
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            return false;
-        }
-    }
+    
     $(document).on('touchstart', handleTouchStart);
     $(document).on('touchmove', handleTouchMove);
     $(document).on('touchend', handleTouchEnd);
-    $(document).on('click', handleClick);
-
 };
