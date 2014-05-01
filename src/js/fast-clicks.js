@@ -4,7 +4,7 @@
 ===============================================================================*/
 app.initFastClicks = function () {
     if (!$.supportTouch) return;
-    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent;
+    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
 
     function targetNeedsFocus(el) {
         var tag = el.nodeName.toLowerCase();
@@ -17,7 +17,15 @@ app.initFastClicks = function () {
         }
         if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
     }
+    function targetNeedsPrevent(el) {
+        el = $(el);
+        if (el.is('label') || el.parents('label').length > 0) {
+            return false;
+        }
+        return true;
+    }
     function handleTouchStart(e) {
+        isMoved = false;
         if (e.targetTouches.length > 1) {
             return true;
         }
@@ -48,11 +56,15 @@ app.initFastClicks = function () {
                 }
             });
         }
+        if ((e.timeStamp - lastClickTime) < 200) {
+            e.preventDefault();
+        }
     }
     function handleTouchMove(e) {
         if (!trackClick) return;
         trackClick = false;
         targetElement = null;
+        isMoved = true;
     }
     function handleTouchEnd(e) {
         if (!trackClick) {
@@ -64,23 +76,25 @@ app.initFastClicks = function () {
             e.preventDefault();
         }
 
-        var touchEndTime = (new Date()).getTime();
-        if (touchEndTime - touchStartTime > 200) {
+        if ((e.timeStamp - lastClickTime) < 200) {
             return true;
         }
-        e.preventDefault();
+
+        lastClickTime = e.timeStamp;
+        touchStartTime = 0;
 
         trackClick = false;
+
         if (app.device.os === 'ios' && scrollParent) {
             if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
                 return false;
             }
         }
 
-        // Trigger focus where required
+        // Trigger focus when required
         if (targetNeedsFocus(targetElement)) targetElement.focus();
 
-        // Trigger click
+        e.preventDefault();
         var touch = e.changedTouches[0];
         var evt = document.createEvent('MouseEvents');
         var eventType = 'click';
@@ -88,10 +102,75 @@ app.initFastClicks = function () {
             eventType = 'mousedown';
         }
         evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-        
+        evt.forwardedTouchEvent = true;
         targetElement.dispatchEvent(evt);
+
+        return false;
+
+        
     }
+    function handleTouchCancel(e) {
+        trackClick = false;
+        targetElement = null;
+    }
+
+    function onMouse(e) {
+        if (!targetElement) {
+            return true;
+        }
+        if (e.forwardedTouchEvent) {
+            return true;
+        }
+        if (!e.cancelable) {
+            return true;
+        }
+        e.stopImmediatePropagation();
+        e.stopPropagation();
+        e.preventDefault();
+
+        return false;
+
+    }
+    function handleClick(e) {
+        var allowClick = false;
+
+        if (trackClick) {
+            targetElement = null;
+            trackClick = false;
+            return true;
+        }
+
+        if (e.target.type === 'submit' && e.detail === 0) {
+            return true;
+        }
+
+        if (!targetElement) {
+            allowClick =  true;
+        }
+        if (e.forwardedTouchEvent) {
+            allowClick =  true;
+        }
+        if (!e.cancelable) {
+            allowClick =  true;
+        }
+
+        if (!allowClick) {
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+            if (targetElement) {
+                if (targetNeedsPrevent(targetElement) || isMoved) e.preventDefault();
+            }
+            else {
+                e.preventDefault();
+            }
+            targetElement = null;
+        }
+
+        return allowClick;
+    }
+    document.addEventListener('click', handleClick, true);
     $(document).on('touchstart', handleTouchStart);
     $(document).on('touchmove', handleTouchMove);
     $(document).on('touchend', handleTouchEnd);
+    $(document).on('touchcancel', handleTouchCancel);
 };
