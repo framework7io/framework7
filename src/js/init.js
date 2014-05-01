@@ -20,7 +20,7 @@ app.init = function () {
     // Init each page callbacks
     $('.page').each(function () {
         var pageContainer = $(this);
-        var viewContainer = pageContainer.parents('.view');
+        var viewContainer = pageContainer.parents('.' + app.params.viewClass);
         var view = viewContainer[0].f7View || false;
         var url = view && view.url ? view.url : false;
         if (viewContainer) {

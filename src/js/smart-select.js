@@ -38,7 +38,7 @@ app.smartSelectOpen = function (smartSelect) {
     if (smartSelect.length === 0) return;
 
     // Find related view
-    var view = smartSelect.parents('.view');
+    var view = smartSelect.parents('.' + app.params.viewClass);
     if (view.length === 0) return;
     view = view[0].f7View;
     if (!view) return;

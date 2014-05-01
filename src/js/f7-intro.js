@@ -66,7 +66,11 @@ window.Framework7 = function (params) {
         modalPopupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
         // Auto init
-        init: true
+        init: true,
+        // Name space
+        viewClass: 'view',
+        viewMainClass: 'view-main',
+        viewsClass: 'views',
     };
 
     // Extend defaults with parameters

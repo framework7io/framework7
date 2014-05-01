@@ -12,15 +12,15 @@ app.openPanel = function (panelPosition) {
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open');
-    if (panel.find('.view').length > 0) {
-        if (app.sizeNavbars) app.sizeNavbars(panel.find('.view')[0]);
+    if (panel.find('.' + app.params.viewClass).length > 0) {
+        if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
     }
 
     // Trigger reLayout
     var clientLeft = panel[0].clientLeft;
     
     // Transition End;
-    var transitionEndTarget = effect === 'reveal' ? $('.views') : panel;
+    var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
     var openedTriggered = false;
     
     function panelTransitionEnd() {
@@ -48,7 +48,7 @@ app.closePanel = function () {
     var effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
     activePanel.removeClass('active');
-    var transitionEndTarget = effect === 'reveal' ? $('.views') : activePanel;
+    var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
     activePanel.trigger('close');
     app.allowPanelOpen = false;
 
@@ -72,7 +72,7 @@ app.initSwipePanels = function () {
 
     var panelOverlay = $('.panel-overlay');
     var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction, side;
-    var views = $('.views');
+    var views = $('.' + app.params.viewsClass);
     side = app.params.swipePanel;
 
     function handleTouchStart(e) {
@@ -145,8 +145,8 @@ app.initSwipePanels = function () {
             opened = panel.hasClass('active');
             panelWidth = panel.width();
             panel.transition(0);
-            if (panel.find('.view').length > 0) {
-                if (app.sizeNavbars) app.sizeNavbars(panel.find('.view')[0]);
+            if (panel.find('.' + app.params.viewClass).length > 0) {
+                if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
             }
         }
 

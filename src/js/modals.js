@@ -284,8 +284,8 @@ app.popup = function (modal, removeOnClose) {
     modal = $(modal);
     if (modal.length === 0) return false;
     modal.show();
-    if (modal.find('.view').length > 0) {
-        app.sizeNavbars(modal.find('.view')[0]);
+    if (modal.find('.' + app.params.viewClass).length > 0) {
+        app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
     }
     app.openModal(modal);
     return modal[0];

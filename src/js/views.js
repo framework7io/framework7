@@ -22,7 +22,7 @@ app.addView = function (selector, params) {
         contentCache: {},
         url: $container.attr('data-url') || viewURL,
         pagesContainer: $('.pages', container)[0],
-        main: $container.hasClass('view-main'),
+        main: $container.hasClass(app.params.viewMainClass),
         loadContent: function (content) {
             app.loadContent(view, content);
         },
