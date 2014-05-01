@@ -302,7 +302,10 @@ function _load(view, url, content) {
 
     // Dynamic navbar animation
     if (dynamicNavbar) {
-        _animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
+        setTimeout(function () {
+            _animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
+        }, 0);
+            
     }
 
     newPage.animationEnd(function (e) {
@@ -379,7 +382,9 @@ app.goBack = function (view, url, preloadOnly, pushState) {
 
         // Dynamic navbar animation
         if (dynamicNavbar) {
-            _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
+            setTimeout(function () {
+                _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
+            }, 0);
         }
         
         newPage.animationEnd(function () {
