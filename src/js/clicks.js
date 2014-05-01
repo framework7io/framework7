@@ -103,6 +103,11 @@ app.initClickEvents = function () {
             }
                 
         }
+        // Sortable
+        if (clicked.hasClass('sortable-toggle')) {
+            var sortable = clicked.data('sortable');
+            app.sortableToggle(sortable);
+        }
         // Load Page
         if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks)) {
             return;
@@ -129,5 +134,5 @@ app.initClickEvents = function () {
             else view.loadPage(clicked.attr('href'));
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .sortable-toggle', handleClicks);
 };
