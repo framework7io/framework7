@@ -87,9 +87,11 @@ app.initSortable = function () {
         sortableContainer.removeClass('sortable-sorting');
         if (insertAfter) {
             sortingEl.insertAfter(insertAfter);
+            sortingEl.trigger('sort');
         }
         if (insertBefore) {
             sortingEl.insertBefore(insertBefore);
+            sortingEl.trigger('sort');
         }
         insertAfter = insertBefore = undefined;
         isTouched = false;
