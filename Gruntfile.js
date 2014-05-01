@@ -27,12 +27,12 @@ module.exports = function (grunt) {
         'src/js/fast-clicks.js',
         'src/js/clicks.js',
         'src/js/resize.js',
-        'src/js/device.js',
         'src/js/forms-handler.js',
         'src/js/push-state.js',
         'src/js/init.js',
         'src/js/f7-outro.js',
         'src/js/dom.js',
+        'src/js/device-proto.js',
         'src/js/wrap-end.js'
     ];
 
@@ -183,7 +183,7 @@ module.exports = function (grunt) {
                         if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
                             addIndent = '';
                         }
-                        if (filename === 'f7-intro.js' || filename === 'f7-outro.js' || filename === 'dom.js') addIndent = '    ';
+                        if (filename === 'f7-intro.js' || filename === 'f7-outro.js' || filename === 'dom.js' || filename === 'device-proto.js') addIndent = '    ';
                         src = grunt.util.normalizelf(src);
                         return src.split(grunt.util.linefeed).map(function (line) {
                             return addIndent + line;

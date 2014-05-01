@@ -1,7 +1,7 @@
 /*===========================
 Device/OS Detection
 ===========================*/
-app.getDeviceInfo = function () {
+Framework7.prototype.device = (function () {
     var device = {};
     var ua = navigator.userAgent;
 
@@ -10,6 +10,8 @@ app.getDeviceInfo = function () {
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
 
+    device.ios = device.android = device.iphone = device.ipad = false;
+    
     // Android
     if (android) {
         device.os = 'android';
@@ -21,8 +23,6 @@ app.getDeviceInfo = function () {
         device.ios = true;
     }
     // iOS
-    device.iphone = false;
-    device.ipad = false;
     if (iphone && !ipod) {
         device.osVersion = iphone[2].replace(/_/g, '.');
         device.iphone = true;
@@ -37,12 +37,12 @@ app.getDeviceInfo = function () {
     }
 
     // Webview
-    device.webview = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
+    device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
         
     // Minimal UI
     if (device.os && device.os === 'ios') {
         var osVersionArr = device.osVersion.split('.');
-        device.minimalUi = !device.webview &&
+        device.minimalUi = !device.webView &&
                             (ipod || iphone) &&
                             (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
                             $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
@@ -53,7 +53,7 @@ app.getDeviceInfo = function () {
     var windowHeight = $(window).height();
     device.statusBar = false;
     if (
-        device.webview &&
+        device.webView &&
         (
             // iPhone 5
             (windowWidth === 320 && windowHeight === 568) ||
@@ -91,6 +91,6 @@ app.getDeviceInfo = function () {
         $('html').removeClass('with-statusbar-overlay');
     }
 
-    // Export to app
-    app.device = device;
-};
+    // Export object
+    return device;
+})();
