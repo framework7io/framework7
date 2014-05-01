@@ -1,4 +1,7 @@
-var myApp = new Framework7();
+var myApp = new Framework7({
+    modalTitle: 'Framework7',
+    animateNavBackIcon: true
+});
 
 // Expose Internal DOM library
 var $$ = Framework7.$;
