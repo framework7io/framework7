@@ -13,6 +13,7 @@
         margin: 0;
         border-top: 1px solid @listBlockBorderColor;
         border-bottom: 1px solid @listBlockBorderColor;
+        position: relative;
         ul {
             border-top: none;
             border-bottom: none;
@@ -303,5 +304,57 @@
         z-index: 10;
         margin-top: 0;
         border-top: none;
+    }
+
+    // Sortable
+    .sortable-handler {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: ~"-webkit-calc(100% - 1px)";
+        height: ~"-moz-calc(100% - 1px)";
+        height: ~"-ms-calc(100% - 1px)";
+        height: ~"calc(100% - 1px)";
+        z-index: 10;
+        background-repeat: no-repeat;
+        background-size: 18px 12px;
+        background-position: center;
+        width: 35px;
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' fill='%23c7c7cc'><path d='M0,2V0h22v2H0z'/><path d='M0,7V5h22v2H0z'/><path d='M0,12v-2h22v2H0z'/></svg>");
+        opacity: 0;
+        visibility: hidden;
+        cursor: pointer;
+        .transition(300ms);
+    }
+    &.sortable {
+        .item-inner {
+            .transition(300ms);       
+        }
+    }
+    &.sortable-opened {
+        .sortable-handler {
+            visibility: visible;
+            opacity: 1;
+        }
+        .item-inner {
+            padding-right: 35px;
+        }
+        .item-link .item-inner {
+            background-image: none;
+        }
+    }
+    &.sortable-sorting {
+        li {
+            .transition(300ms);
+        }
+    }
+    li.sorting {
+        z-index: 50;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.6);
+        .transition(0ms);
+        .item-inner {
+            border-bottom: none;
+        }
     }
 }
