@@ -18,7 +18,6 @@ app.initFastClicks = function () {
         if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
     }
     function handleTouchStart(e) {
-
         if (e.targetTouches.length > 1) {
             return true;
         }
@@ -66,11 +65,9 @@ app.initFastClicks = function () {
         }
 
         var touchEndTime = (new Date()).getTime();
-
         if (touchEndTime - touchStartTime > 200) {
             return true;
         }
-
         e.preventDefault();
 
         trackClick = false;
@@ -91,11 +88,9 @@ app.initFastClicks = function () {
             eventType = 'mousedown';
         }
         evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+        
         targetElement.dispatchEvent(evt);
-            
-        return false;
     }
-    
     $(document).on('touchstart', handleTouchStart);
     $(document).on('touchmove', handleTouchMove);
     $(document).on('touchend', handleTouchEnd);
