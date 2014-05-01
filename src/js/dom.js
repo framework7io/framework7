@@ -61,7 +61,7 @@ Dom7.prototype = {
             if (this[0]) {
                 var dataKey = this[0].getAttribute('data-' + key);
                 if (dataKey) return dataKey;
-                else if (this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
+                else if (this[0].f7ElementDataStorage && this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
                 else return undefined;
             }
             else return undefined;
@@ -393,6 +393,19 @@ Dom7.prototype = {
             else if (before.length > 1) {
                 for (var j = 0; j < before.length; j++) {
                     before[j].parentNode.insertBefore(this[i].cloneNode(true), before[j]);
+                }
+            }
+        }
+    },
+    insertAfter: function (selector) {
+        var after = $(selector);
+        for (var i = 0; i < this.length; i++) {
+            if (after.length === 1) {
+                after[0].parentNode.insertBefore(this[i], after[0].nextSibling);
+            }
+            else if (after.length > 1) {
+                for (var j = 0; j < after.length; j++) {
+                    after[j].parentNode.insertBefore(this[i].cloneNode(true), after[j].nextSibling);
                 }
             }
         }
