@@ -293,7 +293,7 @@ Dom7.prototype = {
     },
     html: function (html) {
         if (typeof html === 'undefined') {
-            return this[0].innerHTML;
+            return this[0] ? this[0].innerHTML : undefined;
         }
         else {
             for (var i = 0; i < this.length; i++) {
@@ -548,5 +548,6 @@ $.supportTouch = (function () {
     return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 })();
 $.fn = Dom7.prototype;
+
 // Export Selectors engine to global Framework7
 Framework7.$ = $;
