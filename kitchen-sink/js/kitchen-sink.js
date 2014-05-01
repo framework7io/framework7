@@ -21,6 +21,7 @@ $$(document).on('ajaxStart', function () {
 $$(document).on('ajaxComplete', function () {
     myApp.hideIndicator();
 });
+
 // Events for specific pages when it initialized
 $$(document).on('pageInit', function (e) {
     var page = e.detail.page;
@@ -175,6 +176,15 @@ $$(document).on('pageInit', function (e) {
                 // When loading done, we need to "close" it
                 myApp.pullToRefreshDone();
             }, 2000);
+        });
+    }
+    // Sortable toggler
+    if (page.name === 'sortable-list') {
+        $$('.list-block.sortable').on('open', function () {
+            $$('.sortable-toggle').text('Done');
+        });
+        $$('.list-block.sortable').on('close', function () {
+            $$('.sortable-toggle').text('Edit');
         });
     }
 
