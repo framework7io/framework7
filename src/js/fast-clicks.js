@@ -4,7 +4,7 @@
 ===============================================================================*/
 app.initFastClicks = function () {
     if (!$.supportTouch) return;
-    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent;
+    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, cancelNextClick;
 
     function targetNeedsFocus(el) {
         var tag = el.nodeName.toLowerCase();
@@ -18,6 +18,7 @@ app.initFastClicks = function () {
         if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
     }
     function handleTouchStart(e) {
+
         if (e.targetTouches.length > 1) {
             return true;
         }
@@ -65,9 +66,13 @@ app.initFastClicks = function () {
         }
 
         var touchEndTime = (new Date()).getTime();
+
+        cancelNextClick = true;
         if (touchEndTime - touchStartTime > 200) {
+            cancelNextClick = false;
             return true;
         }
+
         e.preventDefault();
 
         trackClick = false;
@@ -88,10 +93,31 @@ app.initFastClicks = function () {
             eventType = 'mousedown';
         }
         evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-        
+        evt.forwardedTouchEvent = true;
         targetElement.dispatchEvent(evt);
+    }
+    function handleClick(e) {
+        if (!targetElement) {
+            return true;
+        }
+
+        if (e.forwardedTouchEvent) {
+            return true;
+        }
+
+        if (!e.cancelable) {
+            return true;
+        }
+
+        if (cancelNextClick) {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+        }
     }
     $(document).on('touchstart', handleTouchStart);
     $(document).on('touchmove', handleTouchMove);
     $(document).on('touchend', handleTouchEnd);
+    $(document).on('click', handleClick);
+
 };
