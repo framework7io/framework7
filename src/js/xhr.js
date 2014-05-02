@@ -14,7 +14,7 @@ app.removeFromCache = function (url) {
 // XHR
 app.xhr = false;
 app.get = function (url, callback) {
-    if (app.params.cache) {
+    if (app.params.cache && url.indexOf('nocache') < 0) {
         // Check is the url cached
         for (var i = 0; i < app.cache.length; i++) {
             if (app.cache[i].url === url) {
