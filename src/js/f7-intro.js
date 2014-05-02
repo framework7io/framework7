@@ -37,6 +37,8 @@ window.Framework7 = function (params) {
         ajaxLinks: false, // or CSS selector
         // Pull To Refresh
         pullToRefresh: true,
+        // Sortable
+        sortable: true,
         // Swipeout
         swipeout: true,
         swipeoutNoFollow: false,
@@ -44,6 +46,7 @@ window.Framework7 = function (params) {
         smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>',
         // Panels
         swipePanel: false, // or 'left' or 'right'
+        swipePanelActiveArea: 0,
         swipePanelNoFollow: false,
         swipePanelThreshold: 0,
         panelsCloseByOutside: true,
