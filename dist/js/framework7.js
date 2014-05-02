@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.8
+ * Framework7 0.8.0
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 27, 2014
+ * Released on: May 2, 2014
 */
 (function () {
 
@@ -53,13 +53,16 @@
             ajaxLinks: false, // or CSS selector
             // Pull To Refresh
             pullToRefresh: true,
+            // Sortable
+            sortable: true,
             // Swipeout
             swipeout: true,
             swipeoutNoFollow: false,
             // Smart Select Back link template
-            smartSelectBackTemplate: '<div class="left"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>',
+            smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>',
             // Panels
             swipePanel: false, // or 'left' or 'right'
+            swipePanelActiveArea: 0,
             swipePanelNoFollow: false,
             swipePanelThreshold: 0,
             panelsCloseByOutside: true,
@@ -82,7 +85,11 @@
             modalPopupCloseByOutside: true,
             modalPreloaderTitle: 'Loading... ',
             // Auto init
-            init: true
+            init: true,
+            // Name space
+            viewClass: 'view',
+            viewMainClass: 'view-main',
+            viewsClass: 'views',
         };
     
         // Extend defaults with parameters
@@ -127,7 +134,7 @@
                 contentCache: {},
                 url: $container.attr('data-url') || viewURL,
                 pagesContainer: $('.pages', container)[0],
-                main: $container.hasClass('view-main'),
+                main: $container.hasClass(app.params.viewMainClass),
                 loadContent: function (content) {
                     app.loadContent(view, content);
                 },
@@ -499,7 +506,7 @@
         // XHR
         app.xhr = false;
         app.get = function (url, callback) {
-            if (app.params.cache) {
+            if (app.params.cache && url.indexOf('nocache') < 0) {
                 // Check is the url cached
                 for (var i = 0; i < app.cache.length; i++) {
                     if (app.cache[i].url === url) {
@@ -609,7 +616,7 @@
         // Init Page Events and Manipulations
         app.initPage = function (pageContainer) {
             // Size navbars on page load
-            if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.view')[0]);
+            if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
             // Init messages
             if (app.initMessages) app.initMessages(pageContainer);
             // Init forms storage
@@ -633,7 +640,7 @@
                 }
                 if (found.length > 1) {
                     // Search in main view
-                    found = container.find('.view-main ' + selector);
+                    found = container.find('.' + app.params.viewMainClass + ' ' + selector);
                 }
             }
             if (found.length === 1) return found;
@@ -848,7 +855,10 @@
         
             // Dynamic navbar animation
             if (dynamicNavbar) {
-                _animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
+                setTimeout(function () {
+                    _animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
+                }, 0);
+                    
             }
         
             newPage.animationEnd(function (e) {
@@ -925,7 +935,9 @@
         
                 // Dynamic navbar animation
                 if (dynamicNavbar) {
-                    _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
+                    setTimeout(function () {
+                        _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
+                    }, 0);
                 }
                 
                 newPage.animationEnd(function () {
@@ -1384,8 +1396,8 @@
             modal = $(modal);
             if (modal.length === 0) return false;
             modal.show();
-            if (modal.find('.view').length > 0) {
-                app.sizeNavbars(modal.find('.view')[0]);
+            if (modal.find('.' + app.params.viewClass).length > 0) {
+                app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
             }
             app.openModal(modal);
             return modal[0];
@@ -1451,15 +1463,15 @@
             var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
             panel.css({display: 'block'}).addClass('active');
             panel.trigger('open');
-            if (panel.find('.view').length > 0) {
-                if (app.sizeNavbars) app.sizeNavbars(panel.find('.view')[0]);
+            if (panel.find('.' + app.params.viewClass).length > 0) {
+                if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
             }
         
             // Trigger reLayout
             var clientLeft = panel[0].clientLeft;
             
             // Transition End;
-            var transitionEndTarget = effect === 'reveal' ? $('.views') : panel;
+            var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
             var openedTriggered = false;
             
             function panelTransitionEnd() {
@@ -1487,7 +1499,7 @@
             var effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
             var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
             activePanel.removeClass('active');
-            var transitionEndTarget = effect === 'reveal' ? $('.views') : activePanel;
+            var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
             activePanel.trigger('close');
             app.allowPanelOpen = false;
         
@@ -1511,16 +1523,25 @@
         
             var panelOverlay = $('.panel-overlay');
             var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction, side;
-            var views = $('.views');
+            var views = $('.' + app.params.viewsClass);
             side = app.params.swipePanel;
         
             function handleTouchStart(e) {
                 if (!app.allowPanelOpen) return;
+                touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+                touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                if (app.params.swipePanelActiveArea) {
+                    if (app.params.swipePanel === 'left') {
+                        if (touchesStart.x > app.params.swipePanelActiveArea) return;
+                    }
+                    if (app.params.swipePanel === 'right') {
+                        if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) return;
+                    }
+                }
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
-                touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-                touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                
                 touchStartTime = (new Date()).getTime();
                 direction = undefined;
             }
@@ -1584,8 +1605,8 @@
                     opened = panel.hasClass('active');
                     panelWidth = panel.width();
                     panel.transition(0);
-                    if (panel.find('.view').length > 0) {
-                        if (app.sizeNavbars) app.sizeNavbars(panel.find('.view')[0]);
+                    if (panel.find('.' + app.params.viewClass).length > 0) {
+                        if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
                     }
                 }
         
@@ -1826,6 +1847,7 @@
                 }
         
                 if (!isMoved) {
+                    if ($('.list-block.sortable-opened').length > 0) return;
                     /*jshint validthis:true */
                     swipeOutEl = $(this);
                     swipeOutContent = swipeOutEl.find('.swipeout-content');
@@ -1961,6 +1983,121 @@
             el.find('.swipeout-content').transform('translate3d(-100%,0,0)');
         };
         /*===============================================================================
+        ************   Sortable   ************
+        ===============================================================================*/
+        app.sortableToggle = function (sortableContainer) {
+            sortableContainer = $(sortableContainer);
+            if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
+            sortableContainer.toggleClass('sortable-opened');
+            if (sortableContainer.hasClass('sortable-opened')) {
+                sortableContainer.trigger('open');
+            }
+            else {
+                sortableContainer.trigger('close');
+            }
+            return sortableContainer;
+        };
+        app.sortableOpen = function (sortableContainer) {
+            sortableContainer = $(sortableContainer);
+            if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
+            sortableContainer.addClass('sortable-opened');
+            sortableContainer.trigger('open');
+            return sortableContainer;
+        };
+        app.sortableClose = function (sortableContainer) {
+            sortableContainer = $(sortableContainer);
+            if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
+            sortableContainer.removeClass('sortable-opened');
+            sortableContainer.trigger('close');
+            return sortableContainer;
+        };
+        app.initSortable = function () {
+            var isTouched, isMoved, touchStartY, touchesDiff, sortingEl, sortingItems, minTop, maxTop, insertAfter, insertBefore, sortableContainer;
+            
+            function handleTouchStart(e) {
+                isMoved = false;
+                isTouched = true;
+                touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                /*jshint validthis:true */
+                sortingEl = $(this).parent();
+                sortingItems = sortingEl.parent().find('li');
+                sortableContainer = sortingEl.parents('.sortable');
+                e.preventDefault();
+                app.allowsPanelOpen = app.allowSwipeout = false;
+            }
+            function handleTouchMove(e) {
+                if (!isTouched || !sortingEl) return;
+                var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                if (!isMoved) {
+                    sortingEl.addClass('sorting');
+                    sortableContainer.addClass('sortable-sorting');
+                    minTop = sortingEl[0].offsetTop;
+                    maxTop = sortingEl.parent().height() - sortingEl[0].offsetTop - sortingEl.height();
+                    
+                }
+                isMoved = true;
+        
+                e.preventDefault();
+                e.f7PreventPanelSwipe = true;
+                touchesDiff = pageY - touchStartY;
+                var translate = touchesDiff;
+                if (translate < -minTop) translate = -minTop;
+                if (translate > maxTop) translate = maxTop;
+                sortingEl.transform('translate3d(0,' + translate + 'px,0)');
+        
+                insertBefore = insertAfter = undefined;
+        
+                sortingItems.each(function () {
+                    var currentEl = $(this);
+                    if (currentEl[0] === sortingEl[0]) return;
+                    var currentElOffset = currentEl[0].offsetTop;
+                    var currentElHeight = currentEl.height();
+                    var sortingElOffset = sortingEl[0].offsetTop + translate;
+        
+                    if ((sortingElOffset >= currentElOffset - currentElHeight / 2) && sortingEl.index() < currentEl.index()) {
+                        currentEl.transform('translate3d(0,-100%,0)');
+                        insertAfter = currentEl;
+                        insertBefore = undefined;
+                    }
+                    else if ((sortingElOffset <= currentElOffset + currentElHeight / 2) && sortingEl.index() > currentEl.index()) {
+                        $(this).transform('translate3d(0,100%,0)');
+                        insertAfter = undefined;
+                        if (!insertBefore) insertBefore = currentEl;
+                    }
+                    else {
+                        $(this).transform('translate3d(0, 0%,0)');
+                    }
+                });
+            }
+            function handleTouchEnd(e) {
+                app.allowsPanelOpen = app.allowSwipeout = true;
+                if (!isTouched || !isMoved) {
+                    isTouched = false;
+                    isMoved = false;
+                    return;
+                }
+                e.preventDefault();
+                sortingItems.transform('');
+                sortingEl.removeClass('sorting');
+                sortableContainer.removeClass('sortable-sorting');
+                if (insertAfter) {
+                    sortingEl.insertAfter(insertAfter);
+                    sortingEl.trigger('sort');
+                }
+                if (insertBefore) {
+                    sortingEl.insertBefore(insertBefore);
+                    sortingEl.trigger('sort');
+                }
+                insertAfter = insertBefore = undefined;
+                isTouched = false;
+                isMoved = false;
+            }
+            $(document).on(app.touchEvents.start, '.list-block.sortable .sortable-handler', handleTouchStart);
+            $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
+            $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
+        };
+        /*===============================================================================
         ************   Smart Select   ************
         ===============================================================================*/
         app.initSmartSelects = function (pageContainer) {
@@ -2000,7 +2137,7 @@
             if (smartSelect.length === 0) return;
         
             // Find related view
-            var view = smartSelect.parents('.view');
+            var view = smartSelect.parents('.' + app.params.viewClass);
             if (view.length === 0) return;
             view = view[0].f7View;
             if (!view) return;
@@ -2183,7 +2320,7 @@
         ===============================================================================*/
         app.initFastClicks = function () {
             if (!$.supportTouch) return;
-            var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent;
+            var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
         
             function targetNeedsFocus(el) {
                 var tag = el.nodeName.toLowerCase();
@@ -2196,7 +2333,15 @@
                 }
                 if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
             }
+            function targetNeedsPrevent(el) {
+                el = $(el);
+                if (el.is('label') || el.parents('label').length > 0) {
+                    return false;
+                }
+                return true;
+            }
             function handleTouchStart(e) {
+                isMoved = false;
                 if (e.targetTouches.length > 1) {
                     return true;
                 }
@@ -2227,11 +2372,15 @@
                         }
                     });
                 }
+                if ((e.timeStamp - lastClickTime) < 200) {
+                    e.preventDefault();
+                }
             }
             function handleTouchMove(e) {
                 if (!trackClick) return;
                 trackClick = false;
                 targetElement = null;
+                isMoved = true;
             }
             function handleTouchEnd(e) {
                 if (!trackClick) {
@@ -2243,23 +2392,25 @@
                     e.preventDefault();
                 }
         
-                var touchEndTime = (new Date()).getTime();
-                if (touchEndTime - touchStartTime > 200) {
+                if ((e.timeStamp - lastClickTime) < 200) {
                     return true;
                 }
-                e.preventDefault();
+        
+                lastClickTime = e.timeStamp;
+                touchStartTime = 0;
         
                 trackClick = false;
+        
                 if (app.device.os === 'ios' && scrollParent) {
                     if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
                         return false;
                     }
                 }
         
-                // Trigger focus where required
+                // Trigger focus when required
                 if (targetNeedsFocus(targetElement)) targetElement.focus();
         
-                // Trigger click
+                e.preventDefault();
                 var touch = e.changedTouches[0];
                 var evt = document.createEvent('MouseEvents');
                 var eventType = 'click';
@@ -2267,12 +2418,77 @@
                     eventType = 'mousedown';
                 }
                 evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-                
+                evt.forwardedTouchEvent = true;
                 targetElement.dispatchEvent(evt);
+        
+                return false;
+        
+                
             }
+            function handleTouchCancel(e) {
+                trackClick = false;
+                targetElement = null;
+            }
+        
+            function onMouse(e) {
+                if (!targetElement) {
+                    return true;
+                }
+                if (e.forwardedTouchEvent) {
+                    return true;
+                }
+                if (!e.cancelable) {
+                    return true;
+                }
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+                e.preventDefault();
+        
+                return false;
+        
+            }
+            function handleClick(e) {
+                var allowClick = false;
+        
+                if (trackClick) {
+                    targetElement = null;
+                    trackClick = false;
+                    return true;
+                }
+        
+                if (e.target.type === 'submit' && e.detail === 0) {
+                    return true;
+                }
+        
+                if (!targetElement) {
+                    allowClick =  true;
+                }
+                if (e.forwardedTouchEvent) {
+                    allowClick =  true;
+                }
+                if (!e.cancelable) {
+                    allowClick =  true;
+                }
+        
+                if (!allowClick) {
+                    e.stopImmediatePropagation();
+                    e.stopPropagation();
+                    if (targetElement) {
+                        if (targetNeedsPrevent(targetElement) || isMoved) e.preventDefault();
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                    targetElement = null;
+                }
+        
+                return allowClick;
+            }
+            document.addEventListener('click', handleClick, true);
             $(document).on('touchstart', handleTouchStart);
             $(document).on('touchmove', handleTouchMove);
             $(document).on('touchend', handleTouchEnd);
+            $(document).on('touchcancel', handleTouchCancel);
         };
         /*===============================================================================
         ************   Handle clicks and make them fast (on tap);   ************
@@ -2362,8 +2578,8 @@
                     if (newTab.find('.navbar').length > 0) {
                         // Find tab's view
                         var viewContainer;
-                        if (newTab.hasClass('view')) viewContainer = newTab[0];
-                        else viewContainer = newTab.parents('.view')[0];
+                        if (newTab.hasClass(app.params.viewClass)) viewContainer = newTab[0];
+                        else viewContainer = newTab.parents('.' + app.params.viewClass)[0];
                         app.sizeNavbars(viewContainer);
                     }
                 }
@@ -2379,6 +2595,11 @@
                     }
                         
                 }
+                // Sortable
+                if (clicked.hasClass('sortable-toggle')) {
+                    var sortable = clicked.data('sortable');
+                    app.sortableToggle(sortable);
+                }
                 // Load Page
                 if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks)) {
                     return;
@@ -2390,7 +2611,7 @@
                         view = $(clicked.attr('data-view'))[0].f7View;
                     }
                     else {
-                        view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
+                        view = clicked.parents('.' + app.params.viewClass)[0] && clicked.parents('.' + app.params.viewClass)[0].f7View;
                         if (view && view.params.linksView) {
                             view = $(view.params.linksView)[0].f7View;
                         }
@@ -2405,118 +2626,34 @@
                     else view.loadPage(clicked.attr('href'));
                 }
             }
-            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select', handleClicks);
+            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .sortable-toggle', handleClicks);
         };
         /*======================================================
         ************   App Resize Actions   ************
         ======================================================*/
+        // Prevent iPad horizontal body scrolling when soft keyboard is opened
+        function _fixIpadBodyScrolLeft() {
+            if (app.device.ipad) {
+                document.body.scrollLeft = 0;
+                setTimeout(function () {
+                    document.body.scrollLeft = 0;
+                }, 0);
+            }
+        }
         app.initResize = function () {
             $(window).on('resize', app.resize);
             $(window).on('orientationchange', app.orientationchange);
         };
         app.resize = function () {
             if (app.sizeNavbars) app.sizeNavbars();
+            _fixIpadBodyScrolLeft();
+            
         };
         app.orientationchange = function () {
             if (app.device && app.device.minimalUi) {
                 if (window.orientation === 90 || window.orientation === -90) document.body.scrollTop = 0;
             }
-        };
-        /*===========================
-        Device/OS Detection
-        ===========================*/
-        app.getDeviceInfo = function () {
-            var device = {};
-            var ua = navigator.userAgent;
-        
-            var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
-            var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
-            var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
-            var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
-        
-            // Android
-            if (android) {
-                device.os = 'android';
-                device.osVersion = android[2];
-                device.android = true;
-            }
-            if (ipad || iphone || ipod) {
-                device.os = 'ios';
-                device.ios = true;
-            }
-            // iOS
-            device.iphone = false;
-            device.ipad = false;
-            if (iphone && !ipod) {
-                device.osVersion = iphone[2].replace(/_/g, '.');
-                device.iphone = true;
-            }
-            if (ipad) {
-                device.osVersion = ipad[2].replace(/_/g, '.');
-                device.ipad = true;
-            }
-            if (ipod) {
-                device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
-                device.iphone = true;
-            }
-        
-            // Webview
-            device.webview = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
-                
-            // Minimal UI
-            if (device.os && device.os === 'ios') {
-                var osVersionArr = device.osVersion.split('.');
-                device.minimalUi = !device.webview &&
-                                    (ipod || iphone) &&
-                                    (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
-                                    $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
-            }
-        
-            // Check for status bar and fullscreen app mode
-            var windowWidth = $(window).width();
-            var windowHeight = $(window).height();
-            device.statusBar = false;
-            if (
-                device.webview &&
-                (
-                    // iPhone 5
-                    (windowWidth === 320 && windowHeight === 568) ||
-                    (windowWidth === 568 && windowHeight === 320) ||
-                    // iPhone 4
-                    (windowWidth === 320 && windowHeight === 480) ||
-                    (windowWidth === 480 && windowHeight === 320) ||
-                    // iPad
-                    (windowWidth === 768 && windowHeight === 1024) ||
-                    (windowWidth === 1024 && windowHeight === 768)
-                )
-            ) {
-                device.statusBar = true;
-            }
-            else {
-                device.statusBar = false;
-            }
-        
-            // Pixel Ratio
-            device.pixelRatio = window.devicePixelRatio || 1;
-        
-            // Add html classes
-            if (device.os) {
-                var className = device.os +
-                                ' ' +
-                                device.os + '-' + device.osVersion.replace(/\./g, '-') +
-                                ' ' +
-                                device.os + '-' + device.osVersion.split('.')[0];
-                $('html').addClass(className);
-            }
-            if (device.statusBar) {
-                $('html').addClass('with-statusbar-overlay');
-            }
-            else {
-                $('html').removeClass('with-statusbar-overlay');
-            }
-        
-            // Export to app
-            app.device = device;
+            _fixIpadBodyScrolLeft();
         };
         /*===============================================================================
         ************   Store and parse forms data   ************
@@ -2762,19 +2899,10 @@
             if (app.initFastClicks && app.params.fastClicks) app.initFastClicks();
             if (app.initClickEvents) app.initClickEvents();
         
-            // Init Swipeouts events
-            if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
-        
-            // Init Pull To Refresh
-            if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
-        
-            // Init Swipe Panels
-            if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
-        
             // Init each page callbacks
             $('.page').each(function () {
                 var pageContainer = $(this);
-                var viewContainer = pageContainer.parents('.view');
+                var viewContainer = pageContainer.parents('.' + app.params.viewClass);
                 var view = viewContainer[0].f7View || false;
                 var url = view && view.url ? view.url : false;
                 if (viewContainer) {
@@ -2788,6 +2916,18 @@
         
             // Init push state
             if (app.initPushState && app.params.pushState) app.initPushState();
+        
+            // Init Swipeouts events
+            if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
+        
+            // Init Sortable events
+            if (app.initSortable && app.params.sortable) app.initSortable();
+        
+            // Init Pull To Refresh
+            if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
+        
+            // Init Swipe Panels
+            if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
             
             // App Init callback
             if (app.params.onAppInit) app.params.onAppInit();
@@ -2860,7 +3000,7 @@
                 if (this[0]) {
                     var dataKey = this[0].getAttribute('data-' + key);
                     if (dataKey) return dataKey;
-                    else if (this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
+                    else if (this[0].f7ElementDataStorage && this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
                     else return undefined;
                 }
                 else return undefined;
@@ -3068,19 +3208,28 @@
             }
             return this;
         },
-        css: function (props) {
-            if (typeof props === 'string') {
-                if (this[0]) return window.getComputedStyle(this[0], null).getPropertyValue(props);
-            }
-            else {
-                for (var i = 0; i < this.length; i++) {
-                    for (var prop in props) {
-                        this[i].style[prop] = props[prop];
+        css: function (props, value) {
+            var i;
+            if (arguments.length === 1) {
+                if (typeof props === 'string') {
+                    if (this[0]) return window.getComputedStyle(this[0], null).getPropertyValue(props);
+                }
+                else {
+                    for (i = 0; i < this.length; i++) {
+                        for (var prop in props) {
+                            this[i].style[prop] = props[prop];
+                        }
                     }
+                    return this;
+                }
+            }
+            if (arguments.length === 2 && typeof props === 'string') {
+                for (i = 0; i < this.length; i++) {
+                    this[i].style[props] = value;
                 }
                 return this;
             }
-            
+            return this;
         },
         
         //Dom manipulation
@@ -3092,7 +3241,7 @@
         },
         html: function (html) {
             if (typeof html === 'undefined') {
-                return this[0].innerHTML;
+                return this[0] ? this[0].innerHTML : undefined;
             }
             else {
                 for (var i = 0; i < this.length; i++) {
@@ -3192,6 +3341,19 @@
                 else if (before.length > 1) {
                     for (var j = 0; j < before.length; j++) {
                         before[j].parentNode.insertBefore(this[i].cloneNode(true), before[j]);
+                    }
+                }
+            }
+        },
+        insertAfter: function (selector) {
+            var after = $(selector);
+            for (var i = 0; i < this.length; i++) {
+                if (after.length === 1) {
+                    after[0].parentNode.insertBefore(this[i], after[0].nextSibling);
+                }
+                else if (after.length > 1) {
+                    for (var j = 0; j < after.length; j++) {
+                        after[j].parentNode.insertBefore(this[i].cloneNode(true), after[j].nextSibling);
                     }
                 }
             }
@@ -3347,6 +3509,104 @@
         return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
     })();
     $.fn = Dom7.prototype;
+    
     // Export Selectors engine to global Framework7
     Framework7.$ = $;
+    
+    /*===========================
+    Device/OS Detection
+    ===========================*/
+    Framework7.prototype.device = (function () {
+        var device = {};
+        var ua = navigator.userAgent;
+    
+        var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
+        var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+        var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
+        var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+    
+        device.ios = device.android = device.iphone = device.ipad = false;
+        
+        // Android
+        if (android) {
+            device.os = 'android';
+            device.osVersion = android[2];
+            device.android = true;
+        }
+        if (ipad || iphone || ipod) {
+            device.os = 'ios';
+            device.ios = true;
+        }
+        // iOS
+        if (iphone && !ipod) {
+            device.osVersion = iphone[2].replace(/_/g, '.');
+            device.iphone = true;
+        }
+        if (ipad) {
+            device.osVersion = ipad[2].replace(/_/g, '.');
+            device.ipad = true;
+        }
+        if (ipod) {
+            device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+            device.iphone = true;
+        }
+    
+        // Webview
+        device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
+            
+        // Minimal UI
+        if (device.os && device.os === 'ios') {
+            var osVersionArr = device.osVersion.split('.');
+            device.minimalUi = !device.webView &&
+                                (ipod || iphone) &&
+                                (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
+                                $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
+        }
+    
+        // Check for status bar and fullscreen app mode
+        var windowWidth = $(window).width();
+        var windowHeight = $(window).height();
+        device.statusBar = false;
+        if (
+            device.webView &&
+            (
+                // iPhone 5
+                (windowWidth === 320 && windowHeight === 568) ||
+                (windowWidth === 568 && windowHeight === 320) ||
+                // iPhone 4
+                (windowWidth === 320 && windowHeight === 480) ||
+                (windowWidth === 480 && windowHeight === 320) ||
+                // iPad
+                (windowWidth === 768 && windowHeight === 1024) ||
+                (windowWidth === 1024 && windowHeight === 768)
+            )
+        ) {
+            device.statusBar = true;
+        }
+        else {
+            device.statusBar = false;
+        }
+    
+        // Pixel Ratio
+        device.pixelRatio = window.devicePixelRatio || 1;
+    
+        // Add html classes
+        if (device.os) {
+            var className = device.os +
+                            ' ' +
+                            device.os + '-' + device.osVersion.replace(/\./g, '-') +
+                            ' ' +
+                            device.os + '-' + device.osVersion.split('.')[0];
+            $('html').addClass(className);
+        }
+        if (device.statusBar) {
+            $('html').addClass('with-statusbar-overlay');
+        }
+        else {
+            $('html').removeClass('with-statusbar-overlay');
+        }
+    
+        // Export object
+        return device;
+    })();
 })();

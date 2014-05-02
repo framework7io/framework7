@@ -1,5 +1,5 @@
 /*
- * Framework7 0.7.8
+ * Framework7 0.8.0
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: April 27, 2014
+ * Released on: May 2, 2014
 */
 /*=============
   Framework 7
@@ -1020,6 +1020,7 @@ i.icon.icon-form-url {
   margin: 0;
   border-top: 1px solid #c8c7cc;
   border-bottom: 1px solid #c8c7cc;
+  position: relative;
 }
 .list-block ul ul {
   border-top: none;
@@ -1375,6 +1376,56 @@ i.icon.icon-form-url {
   z-index: 10;
   margin-top: 0;
   border-top: none;
+}
+.list-block .sortable-handler {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: -webkit-calc(100% - 1px);
+  height: -moz-calc(100% - 1px);
+  height: -ms-calc(100% - 1px);
+  height: calc(100% - 1px);
+  z-index: 10;
+  background-repeat: no-repeat;
+  background-size: 18px 12px;
+  background-position: center;
+  width: 35px;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' fill='%23c7c7cc'><path d='M0,2V0h22v2H0z'/><path d='M0,7V5h22v2H0z'/><path d='M0,12v-2h22v2H0z'/></svg>");
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.list-block.sortable .item-inner {
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.list-block.sortable-opened .sortable-handler {
+  visibility: visible;
+  opacity: 1;
+}
+.list-block.sortable-opened .item-inner,
+.list-block.sortable-opened .item-link .item-inner {
+  padding-right: 35px;
+}
+.list-block.sortable-opened .item-link .item-inner,
+.list-block.sortable-opened .item-link .item-title-row {
+  background-image: none;
+}
+.list-block.sortable-sorting li {
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.list-block li.sorting {
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
+.list-block li.sorting .item-inner {
+  border-bottom: none;
 }
 /* === Contacts === */
 .contacts-content {
