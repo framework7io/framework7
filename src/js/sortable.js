@@ -4,18 +4,28 @@
 app.sortableToggle = function (sortableContainer) {
     sortableContainer = $(sortableContainer);
     if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
-    if (sortableContainer.length === 0) return;
     sortableContainer.toggleClass('sortable-opened');
     if (sortableContainer.hasClass('sortable-opened')) {
-        app.allowSwipeout = app.allowPanelOpen = false;
         sortableContainer.trigger('open');
-        return true;
     }
     else {
-        app.allowSwipeout = app.allowPanelOpen = true;
         sortableContainer.trigger('close');
-        return false;
     }
+    return sortableContainer;
+};
+app.sortableOpen = function (sortableContainer) {
+    sortableContainer = $(sortableContainer);
+    if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
+    sortableContainer.addClass('sortable-opened');
+    sortableContainer.trigger('open');
+    return sortableContainer;
+};
+app.sortableClose = function (sortableContainer) {
+    sortableContainer = $(sortableContainer);
+    if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
+    sortableContainer.removeClass('sortable-opened');
+    sortableContainer.trigger('close');
+    return sortableContainer;
 };
 app.initSortable = function () {
     var isTouched, isMoved, touchStartY, touchesDiff, sortingEl, sortingItems, minTop, maxTop, insertAfter, insertBefore, sortableContainer;
@@ -29,6 +39,7 @@ app.initSortable = function () {
         sortingItems = sortingEl.parent().find('li');
         sortableContainer = sortingEl.parents('.sortable');
         e.preventDefault();
+        app.allowsPanelOpen = app.allowSwipeout = false;
     }
     function handleTouchMove(e) {
         if (!isTouched || !sortingEl) return;
@@ -76,6 +87,7 @@ app.initSortable = function () {
         });
     }
     function handleTouchEnd(e) {
+        app.allowsPanelOpen = app.allowSwipeout = true;
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -101,4 +113,3 @@ app.initSortable = function () {
     $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
     $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
 };
-app.initSortable();
