@@ -43,6 +43,7 @@ app.initSwipeout = function () {
         }
 
         if (!isMoved) {
+            if ($('.list-block.sortable-opened').length > 0) return;
             /*jshint validthis:true */
             swipeOutEl = $(this);
             swipeOutContent = swipeOutEl.find('.swipeout-content');
