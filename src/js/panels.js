@@ -77,11 +77,20 @@ app.initSwipePanels = function () {
 
     function handleTouchStart(e) {
         if (!app.allowPanelOpen) return;
+        touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        if (app.params.swipePanelActiveArea) {
+            if (app.params.swipePanel === 'left') {
+                if (touchesStart.x > app.params.swipePanelActiveArea) return;
+            }
+            if (app.params.swipePanel === 'right') {
+                if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) return;
+            }
+        }
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
-        touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-        touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        
         touchStartTime = (new Date()).getTime();
         direction = undefined;
     }
