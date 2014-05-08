@@ -26,6 +26,7 @@ $.ajax = function (options) {
         if (typeof options.data === 'string') {
             // Should be key=value string
             if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];
+            else stringData = options.data;
         }
         else {
             // Should be key=value object
