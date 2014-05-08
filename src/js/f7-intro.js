@@ -86,9 +86,9 @@ window.Framework7 = function (params) {
 
     // Touch events
     app.touchEvents = {
-        start: $.supportTouch ? 'touchstart' : 'mousedown',
-        move: $.supportTouch ? 'touchmove' : 'mousemove',
-        end: $.supportTouch ? 'touchend' : 'mouseup'
+        start: app.support.touch ? 'touchstart' : 'mousedown',
+        move: app.support.touch ? 'touchmove' : 'mousemove',
+        end: app.support.touch ? 'touchend' : 'mouseup'
     };
 
     // Link to local storage
