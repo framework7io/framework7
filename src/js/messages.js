@@ -6,7 +6,7 @@ app.initMessages = function (pageContainer) {
     var messages = page.find('.messages');
     if (messages.length === 0) return;
     var pageContent = page.find('.page-content');
-    pageContent[0].scrollTop = messages.height() - pageContent.height();
+    if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = messages.height() - pageContent.height();
     app.updateMessagesAngles(messages);
 };
 app.addMessage = function (props) {
@@ -24,7 +24,7 @@ app.addMessage = function (props) {
     var messagesContent = $('.messages-content');
     if (messagesContent.length === 0) return false;
     var messages = messagesContent.find('.messages');
-
+    var newOnTop = messages.hasClass('new-messages-first');
     var html = '';
     if (props.day) {
         html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
@@ -32,7 +32,8 @@ app.addMessage = function (props) {
     var isPic = props.text.indexOf('<img') >= 0;
     var messageClass = 'message' + ' message-' + props.type + (isPic ? ' message-pic' : '') + ' message-appear';
     html += '<div class="' + messageClass + '">' + props.text + '</div>';
-    messages.append(html);
+    if (newOnTop) messages.prepend(html);
+    else messages.append(html);
     app.updateMessagesAngles(messages);
     app.scrollMessagesContainer(messagesContent);
 };
@@ -56,11 +57,17 @@ app.scrollMessagesContainer = function (messagesContent) {
     messagesContent = $(messagesContent || '.messages-content');
     if (messagesContent.length === 0) return;
     var messages = messagesContent.find('.messages');
+    var newOnTop = messages.hasClass('new-messages-first');
     var currentScroll = messagesContent[0].scrollTop;
-    var newScroll = messages.height() - messagesContent.height();
+    var newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
+    if (newScroll === currentScroll) return;
     var step = (newScroll - currentScroll) / 12;
     function animScroll() {
-        if (messagesContent[0].scrollTop < newScroll) {
+        if (messagesContent[0].scrollTop > newScroll && newOnTop) {
+            messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
+            app._animFrame(animScroll);
+        }
+        else if (messagesContent[0].scrollTop < newScroll && !newOnTop) {
             messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
             app._animFrame(animScroll);
         }
