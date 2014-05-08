@@ -19,6 +19,7 @@
   "white"        : true,
   "globals":{
     "document": true,
+    "Document": true,
     "window": true,
     "$":true,
     "Framework7":true,
