@@ -27,35 +27,33 @@ app.get = function (url, callback) {
             }
         }
     }
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.onload = function (e) {
-        if (app.params.onAjaxComplete) {
-            app.params.onAjaxComplete(xhr);
-        }
-        $(document).trigger('ajaxComplete', {xhr: xhr});
-        if (callback) {
-            if (this.status === 200 || this.status === 0) {
-                callback(this.responseText, false);
+
+    app.xhr = $.ajax({
+        url: url,
+        method: 'GET',
+        start: app.params.onAjaxStart,
+        complete: function (xhr) {
+            if (xhr.status === 200 || xhr.status === 0) {
+                callback(xhr.responseText, false);
                 if (app.params.cache) {
                     app.removeFromCache(url);
                     app.cache.push({
                         url: url,
                         time: (new Date()).getTime(),
-                        data: this.responseText
+                        data: xhr.responseText
                     });
                 }
             }
             else {
-                callback(this.responseText, true);
+                callback(xhr.responseText, true);
             }
+            if (app.params.onAjaxComplete) app.params.onAjaxComplete(xhr);
+        },
+        error: function (xhr) {
+            callback(xhr.responseText, true);
+            if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
         }
-    };
-    if (app.params.onAjaxStart) {
-        app.params.onAjaxStart(xhr);
-    }
-    $(document).trigger('ajaxStart', {xhr: xhr});
-    app.xhr = xhr;
-    xhr.send();
-    return xhr;
+    });
+
+    return app.xhr;
 };
