@@ -31,6 +31,9 @@
     min-height: 35px;
     max-width: 60%;
     border-radius: 16px;
+    &:first-child {
+        margin-top: 10px;
+    }
     &.message-pic {
         padding: 0;
         background: none;
@@ -78,8 +81,12 @@
     }
 }
 .message-appear {
-    -webkit-animation: messageAppear 400ms;
-    animation: messageAppear 400ms;
+    -webkit-animation: messageAppearFromBottom 400ms;
+    animation: messageAppearFromBottom 400ms;
+}
+.new-messages-first .message-appear {
+    -webkit-animation: messageAppearFromTop 400ms;
+    animation: messageAppearFromTop 400ms;   
 }
 html.ios-6 {
     .message, .message.message-pic img {
@@ -87,7 +94,7 @@ html.ios-6 {
         border-radius: 16px;
     }
 }
-@-webkit-keyframes messageAppear {
+@-webkit-keyframes messageAppearFromBottom {
     from {
         -webkit-transform: translate3d(0,100%,0);
     }
@@ -95,9 +102,25 @@ html.ios-6 {
         -webkit-transform: translate3d(0,0,0);
     }
 }
-@keyframes messageAppear {
+@keyframes messageAppearFromBottom {
     from {
         transform: translate3d(0,100%,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
+}
+@-webkit-keyframes messageAppearFromTop {
+    from {
+        -webkit-transform: translate3d(0,-100%,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@keyframes messageAppearFromTop {
+    from {
+        transform: translate3d(0,-100%,0);
     }
     to {
         transform: translate3d(0,0,0);
