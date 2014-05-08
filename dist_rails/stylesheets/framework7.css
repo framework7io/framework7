@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.0
+ * Framework7 0.8.2
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 2, 2014
+ * Released on: May 8, 2014
 */
 /*=============
   Framework 7
@@ -1595,6 +1595,10 @@ i.icon.icon-form-url {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
   padding: 0 10px;
   margin: 0;
   height: 29px;
@@ -2407,6 +2411,9 @@ body.panel-closing .views {
   max-width: 60%;
   border-radius: 16px;
 }
+.message:first-child {
+  margin-top: 10px;
+}
 .message.message-pic {
   padding: 0;
   background: none;
@@ -2453,15 +2460,19 @@ body.panel-closing .views {
   border-radius: 16px 16px 16px 0;
 }
 .message-appear {
-  -webkit-animation: messageAppear 400ms;
-  animation: messageAppear 400ms;
+  -webkit-animation: messageAppearFromBottom 400ms;
+  animation: messageAppearFromBottom 400ms;
+}
+.new-messages-first .message-appear {
+  -webkit-animation: messageAppearFromTop 400ms;
+  animation: messageAppearFromTop 400ms;
 }
 html.ios-6 .message,
 html.ios-6 .message.message-pic img {
   -webkit-mask-box-image: none;
   border-radius: 16px;
 }
-@-webkit-keyframes messageAppear {
+@-webkit-keyframes messageAppearFromBottom {
   from {
     -webkit-transform: translate3d(0, 100%, 0);
   }
@@ -2469,9 +2480,25 @@ html.ios-6 .message.message-pic img {
     -webkit-transform: translate3d(0, 0, 0);
   }
 }
-@keyframes messageAppear {
+@keyframes messageAppearFromBottom {
   from {
     transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@-webkit-keyframes messageAppearFromTop {
+  from {
+    -webkit-transform: translate3d(0, -100%, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes messageAppearFromTop {
+  from {
+    transform: translate3d(0, -100%, 0);
   }
   to {
     transform: translate3d(0, 0, 0);

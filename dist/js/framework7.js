@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.0
+ * Framework7 0.8.2
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 2, 2014
+ * Released on: May 8, 2014
 */
 (function () {
 
@@ -36,6 +36,7 @@
         // Default Parameters
         app.params = {
             cache: true,
+            cacheIgnoreList: [],
             cacheDuration: 1000 * 60 * 10, // Ten minutes 
             preloadPreviousPage: true,
             // Push State
@@ -102,9 +103,9 @@
     
         // Touch events
         app.touchEvents = {
-            start: $.supportTouch ? 'touchstart' : 'mousedown',
-            move: $.supportTouch ? 'touchmove' : 'mousemove',
-            end: $.supportTouch ? 'touchend' : 'mouseup'
+            start: app.support.touch ? 'touchstart' : 'mousedown',
+            move: app.support.touch ? 'touchmove' : 'mousemove',
+            end: app.support.touch ? 'touchend' : 'mouseup'
         };
     
         // Link to local storage
@@ -409,6 +410,7 @@
                 });
             };
         };
+        
         /*======================================================
         ************   Navbars && Toolbars   ************
         ======================================================*/
@@ -490,6 +492,7 @@
                 vc.removeClass('hiding-toolbar');
             });
         };
+        
         /*======================================================
         ************   XHR   ************
         ======================================================*/
@@ -506,7 +509,7 @@
         // XHR
         app.xhr = false;
         app.get = function (url, callback) {
-            if (app.params.cache && url.indexOf('nocache') < 0) {
+            if (app.params.cache && url.indexOf('nocache') < 0 && app.params.cacheIgnoreList.indexOf(url) < 0) {
                 // Check is the url cached
                 for (var i = 0; i < app.cache.length; i++) {
                     if (app.cache[i].url === url) {
@@ -519,38 +522,37 @@
                     }
                 }
             }
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.onload = function (e) {
-                if (app.params.onAjaxComplete) {
-                    app.params.onAjaxComplete(xhr);
-                }
-                $(document).trigger('ajaxComplete', {xhr: xhr});
-                if (callback) {
-                    if (this.status === 200 || this.status === 0) {
-                        callback(this.responseText, false);
+        
+            app.xhr = $.ajax({
+                url: url,
+                method: 'GET',
+                start: app.params.onAjaxStart,
+                complete: function (xhr) {
+                    if (xhr.status === 200 || xhr.status === 0) {
+                        callback(xhr.responseText, false);
                         if (app.params.cache) {
                             app.removeFromCache(url);
                             app.cache.push({
                                 url: url,
                                 time: (new Date()).getTime(),
-                                data: this.responseText
+                                data: xhr.responseText
                             });
                         }
                     }
                     else {
-                        callback(this.responseText, true);
+                        callback(xhr.responseText, true);
                     }
+                    if (app.params.onAjaxComplete) app.params.onAjaxComplete(xhr);
+                },
+                error: function (xhr) {
+                    callback(xhr.responseText, true);
+                    if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
                 }
-            };
-            if (app.params.onAjaxStart) {
-                app.params.onAjaxStart(xhr);
-            }
-            $(document).trigger('ajaxStart', {xhr: xhr});
-            app.xhr = xhr;
-            xhr.send();
-            return xhr;
+            });
+        
+            return app.xhr;
         };
+        
         /*======================================================
         ************   Pages   ************
         ======================================================*/
@@ -1110,6 +1112,7 @@
             }
         
         };
+        
         /*======================================================
         ************   Modals   ************
         ======================================================*/
@@ -1449,6 +1452,7 @@
             }
             return true;
         };
+        
         /*======================================================
         ************   Panels   ************
         ======================================================*/
@@ -1730,6 +1734,7 @@
             $(document).on(app.touchEvents.move, handleTouchMove);
             $(document).on(app.touchEvents.end, handleTouchEnd);
         };
+        
         /*======================================================
         ************   Messages   ************
         ======================================================*/
@@ -1738,7 +1743,7 @@
             var messages = page.find('.messages');
             if (messages.length === 0) return;
             var pageContent = page.find('.page-content');
-            pageContent[0].scrollTop = messages.height() - pageContent.height();
+            if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = messages.height() - pageContent.height();
             app.updateMessagesAngles(messages);
         };
         app.addMessage = function (props) {
@@ -1756,7 +1761,7 @@
             var messagesContent = $('.messages-content');
             if (messagesContent.length === 0) return false;
             var messages = messagesContent.find('.messages');
-        
+            var newOnTop = messages.hasClass('new-messages-first');
             var html = '';
             if (props.day) {
                 html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
@@ -1764,7 +1769,8 @@
             var isPic = props.text.indexOf('<img') >= 0;
             var messageClass = 'message' + ' message-' + props.type + (isPic ? ' message-pic' : '') + ' message-appear';
             html += '<div class="' + messageClass + '">' + props.text + '</div>';
-            messages.append(html);
+            if (newOnTop) messages.prepend(html);
+            else messages.append(html);
             app.updateMessagesAngles(messages);
             app.scrollMessagesContainer(messagesContent);
         };
@@ -1788,11 +1794,17 @@
             messagesContent = $(messagesContent || '.messages-content');
             if (messagesContent.length === 0) return;
             var messages = messagesContent.find('.messages');
+            var newOnTop = messages.hasClass('new-messages-first');
             var currentScroll = messagesContent[0].scrollTop;
-            var newScroll = messages.height() - messagesContent.height();
+            var newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
+            if (newScroll === currentScroll) return;
             var step = (newScroll - currentScroll) / 12;
             function animScroll() {
-                if (messagesContent[0].scrollTop < newScroll) {
+                if (messagesContent[0].scrollTop > newScroll && newOnTop) {
+                    messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
+                    app._animFrame(animScroll);
+                }
+                else if (messagesContent[0].scrollTop < newScroll && !newOnTop) {
                     messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
                     app._animFrame(animScroll);
                 }
@@ -1802,6 +1814,7 @@
             }
             app._animFrame(animScroll);
         };
+        
         /*===============================================================================
         ************   Swipeout Actions (Swipe to delete)   ************
         ===============================================================================*/
@@ -1982,6 +1995,7 @@
             });
             el.find('.swipeout-content').transform('translate3d(-100%,0,0)');
         };
+        
         /*===============================================================================
         ************   Sortable   ************
         ===============================================================================*/
@@ -2097,6 +2111,7 @@
             $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
             $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
         };
+        
         /*===============================================================================
         ************   Smart Select   ************
         ===============================================================================*/
@@ -2314,12 +2329,13 @@
                 container.removeClass('transitioning pull-up');
             });
         };
+        
         /*===============================================================================
         ************   Fast Clicks   ************
-        ************   Impressed by https://github.com/ftlabs/fastclick   ************
+        ************   Inspired by https://github.com/ftlabs/fastclick   ************
         ===============================================================================*/
         app.initFastClicks = function () {
-            if (!$.supportTouch) return;
+            if (!app.support.touch) return;
             var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
         
             function targetNeedsFocus(el) {
@@ -2490,6 +2506,7 @@
             $(document).on('touchend', handleTouchEnd);
             $(document).on('touchcancel', handleTouchCancel);
         };
+        
         /*===============================================================================
         ************   Handle clicks and make them fast (on tap);   ************
         ===============================================================================*/
@@ -2597,8 +2614,13 @@
                 }
                 // Sortable
                 if (clicked.hasClass('sortable-toggle')) {
-                    var sortable = clicked.data('sortable');
-                    app.sortableToggle(sortable);
+                    app.sortableToggle(clicked.data('sortable'));
+                }
+                if (clicked.hasClass('sortable-open')) {
+                    app.sortableOpen(clicked.data('sortable'));
+                }
+                if (clicked.hasClass('sortable-close')) {
+                    app.sortableClose(clicked.data('sortable'));
                 }
                 // Load Page
                 if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks)) {
@@ -2626,8 +2648,9 @@
                     else view.loadPage(clicked.attr('href'));
                 }
             }
-            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .sortable-toggle', handleClicks);
+            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .sortable-toggle, .sortable-open, .sortable-close', handleClicks);
         };
+        
         /*======================================================
         ************   App Resize Actions   ************
         ======================================================*/
@@ -2655,6 +2678,7 @@
             }
             _fixIpadBodyScrolLeft();
         };
+        
         /*===============================================================================
         ************   Store and parse forms data   ************
         ===============================================================================*/
@@ -2806,6 +2830,35 @@
                 $(this).trigger('store', {data: formJSON});
             });
         };
+        
+        // Ajax submit on forms
+        $(document).on('submit change', 'form.ajax-submit, form.ajax-submit-onchange', function (e) {
+            var form = $(this);
+            if (e.type === 'change' && !form.hasClass('ajax-submit-onchange')) return;
+            if (e.type === 'submit') e.preventDefault();
+            
+            var method = form.attr('method') || 'GET';
+            var contentType = form.attr('enctype');
+        
+            var url = form.attr('action');
+            if (!url) return;
+        
+            var data;
+            if (method === 'POST') data = new FormData(form[0]);
+            else data = $.serializeObject(app.formToJSON(form[0]));
+        
+            $.ajax({
+                method: method,
+                url: url,
+                contentType: contentType,
+                data: data,
+                success: function (data) {
+                    form.trigger('submitted', {data: data});
+                }
+            });
+        });
+        
+        
         /*======================================================
         ************   Handle Browser's History   ************
         ======================================================*/
@@ -2889,6 +2942,7 @@
             }
             $(window).on('popstate', handlePopState);
         };
+        
         /*======================================================
         ************   App Init   ************
         ======================================================*/
@@ -2933,6 +2987,7 @@
             if (app.params.onAppInit) app.params.onAppInit();
         };
         if (app.params.init) app.init();
+        
         //Return instance        
         return app;
     };
@@ -3433,6 +3488,28 @@
             return this;
         },
     };
+    // Shortcuts
+    (function () {
+        var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
+        var notTrigger = ('resize scroll').split(' ');
+        function createMethod(name) {
+            Dom7.prototype[name] = function (handler) {
+                var i;
+                if (typeof handler === 'undefined') {
+                    for (i = 0; i < this.length; i++) {
+                        if (notTrigger.indexOf(name) < 0) this[i][name]();
+                    }
+                    return this;
+                }
+                else {
+                    return this.on(name, handler);
+                }
+            };
+        }
+        for (var i = 0; i < shortcuts.length; i++) {
+            createMethod(shortcuts[i]);
+        }
+    })();
     
     // Selector 
     var $ = function (selector, context) {
@@ -3458,29 +3535,8 @@
         }
         return new Dom7(arr);
     };
-    // Shortcuts
-    (function () {
-        var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
-        var notTrigger = ('resize scroll').split(' ');
-        function createMethod(name) {
-            Dom7.prototype[name] = function (handler) {
-                var i;
-                if (typeof handler === 'undefined') {
-                    for (i = 0; i < this.length; i++) {
-                        if (notTrigger.indexOf(name) < 0) this[i][name]();
-                    }
-                    return this;
-                }
-                else {
-                    return this.on(name, handler);
-                }
-            };
-        }
-        for (var i = 0; i < shortcuts.length; i++) {
-            createMethod(shortcuts[i]);
-        }
-    })();
-    // Utilites
+    
+    // DOM Library Utilites
     $.parseUrlQuery = function (url) {
         var query = {}, i, params, param;
         if (url.indexOf('?') >= 0) url = url.split('?')[1];
@@ -3505,13 +3561,239 @@
     $.trim = function (str) {
         return str.trim();
     };
-    $.supportTouch = (function () {
-        return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
-    })();
+    $.serializeObject = function (obj) {
+        if (typeof obj === 'string') return obj;
+        var resultArray = [];
+        var separator = '&';
+        for (var prop in obj) {
+            if ($.isArray(obj[prop])) {
+                var toPush = [];
+                for (var i = 0; i < obj[prop].length; i ++) {
+                    toPush.push(prop + '=' + obj[prop][i]);
+                }
+                resultArray.push(toPush.join(separator));
+            }
+            else {
+                // Should be string
+                resultArray.push(prop + '=' + obj[prop]);
+            }
+        }
+    
+        return resultArray.join(separator);
+    };
     $.fn = Dom7.prototype;
+    
+    // Ajax
+    $.ajax = function (options) {
+        var defaults = {
+            method: 'GET',
+            data: false,
+            crossDomain: true,
+            async: true,
+            cache: true,
+            user: '',
+            password: '',
+            headers: {},
+            statusCode: {},
+            processData: true,
+            dataType: 'text',
+            contentType: 'application/x-www-form-urlencoded'
+        };
+    
+        // Merge options and defaults
+        for (var prop in defaults) {
+            if (!(prop in options)) options[prop] = defaults[prop];
+        }
+    
+        // Data to modify GET URL
+        if ((options.method === 'GET' || options.method === 'HEAD') && options.data) {
+            var stringData;
+            if (typeof options.data === 'string') {
+                // Should be key=value string
+                if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];
+                else stringData = options.data;
+            }
+            else {
+                // Should be key=value object
+                stringData = $.serializeObject(options.data);
+            }
+            if (options.url.indexOf('?') >= 0) options.url += '&' + stringData;
+            else options.url += '?' + stringData;
+        }
+        // JSONP
+        if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
+            
+            var callbackName = 'f7jsonp_' + Date.now();
+            var requestURL;
+            var callbackSplit = options.url.split('callback=');
+            if (callbackSplit[1].indexOf('&') >= 0) {
+                var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
+                requestURL = callbackSplit[0] + 'callback=' + callbackName + (addVars.length > 0 ? '&' + addVars : '');
+            }
+            else {
+                requestURL = callbackSplit[0] + 'callback=' + callbackName;
+            }
+    
+            // Create script
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = requestURL;
+    
+            // Handler
+            window[callbackName] = function (data) {
+                if (options.success) options.success(data);
+                script.parentNode.removeChild(script);
+                script = null;
+                delete window[callbackName];
+            };
+            document.querySelector('head').appendChild(script);
+    
+            return;
+        }
+    
+        // Cache for GET/HEAD requests
+        if (options.method === 'GET' || options.method === 'HEAD') {
+            if (options.cache === false) options.url += ('_nocache=' + Date.now());
+        }
+    
+        // Create XHR
+        var xhr = new XMLHttpRequest();
+    
+        // Open XHR
+        xhr.open(options.method, options.url, options.async, options.user, options.password);
+    
+        // Create POST Data
+        var postData = null;
+        
+        if ((options.method === 'POST' || options.method === 'PUT') && options.data) {
+            if (options.processData) {
+                var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
+                // Post Data
+                if (postDataInstances.indexOf(options.data.constructor) >= 0) {
+                    postData = options.data;
+                }
+                else {
+                    // POST Headers
+                    var boundary = '---------------------------' + Date.now().toString(16);
+    
+                    if (options.contentType === 'multipart\/form-data') {
+                        xhr.setRequestHeader('Content-Type', 'multipart\/form-data; boundary=' + boundary);
+                    }
+                    else {
+                        xhr.setRequestHeader('Content-Type', options.contentType);
+                    }
+                    postData = '';
+                    var _data = $.serializeObject(options.data);
+                    if (options.contentType === 'multipart\/form-data') {
+                        boundary = '---------------------------' + Date.now().toString(16);
+                        _data = _data.split('&');
+                        var _newData = [];
+                        for (var i = 0; i < _data.length; i++) {
+                            _newData.push('Content-Disposition: form-data; name="' + _data[i].split('=')[0] + '"\r\n\r\n' + _data[i].split('=')[1] + '\r\n');
+                        }
+                        postData = '--' + boundary + '\r\n' + _newData.join('--' + boundary + '\r\n') + '--' + boundary + '--\r\n';
+                    }
+                    else {
+                        postData = options.contentType === 'application/x-www-form-urlencoded' ? _data : _data.replace(/&/g, '\r\n');
+                    }
+                }
+            }
+            else {
+                postData = options.data;
+            }
+                
+        }
+    
+        // Additional headers
+        if (options.headers) {
+            for (var header in options.headers) {
+                xhr.setRequestHeader(header, options.headers[header]);
+            }
+        }
+    
+        // Handle XHR
+        xhr.onload = function (e) {
+            if (xhr.status === 200 || xhr.status === 0) {
+                $(document).trigger('ajaxSuccess', {xhr: xhr});
+                if (options.success) {
+                    var responseData = xhr.responseText;
+    
+                    if (options.dataType === 'json') responseData = JSON.parse(responseData);
+                    options.success(responseData, xhr.status, xhr);
+                }
+            }
+            if (options.statusCode) {
+                if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
+            }
+            if (options.complete) {
+                options.complete(xhr);
+            }
+            $(document).trigger('ajaxComplete', {xhr: xhr});
+        };
+        if (options.error) {
+    
+        }
+        xhr.onerror = function (e) {
+            $(document).trigger('ajaxError', {xhr: xhr});
+            if (options.error) options.error(xhr);
+        };
+    
+        // Ajax start callback
+        if (options.start) options.start(xhr);
+    
+        // Send XHR
+        $(document).trigger('ajaxStart', {xhr: xhr});
+        xhr.send(postData);
+    
+        // Return XHR object
+        return xhr;
+    };
+    
+    $.get = function (url, data, success) {
+        var options = {
+            url: url,
+            method: 'GET',
+            data: typeof data === 'function' ? undefined : data,
+            success: typeof data === 'function' ? data : success
+        };
+        return $.ajax(options);
+    };
+    
+    $.post = function (url, data, success) {
+        var options = {
+            url: url,
+            method: 'POST',
+            data: typeof data === 'function' ? undefined : data,
+            success: typeof data === 'function' ? data : success
+        };
+        return $.ajax(options);
+    };
+    
+    $.getJSON = function (url, data, success) {
+        var options = {
+            url: url,
+            method: 'GET',
+            data: typeof data === 'function' ? undefined : data,
+            success: typeof data === 'function' ? data : success,
+            dataType: 'json'
+        };
+        return $.ajax(options);
+    };
     
     // Export Selectors engine to global Framework7
     Framework7.$ = $;
+    
+    /*===========================
+    Features Support Detection
+    ===========================*/
+    Framework7.prototype.support = (function () {
+        var support = {
+            touch: !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)
+        };
+    
+        // Export object
+        return support;
+    })();
     
     /*===========================
     Device/OS Detection
@@ -3609,4 +3891,5 @@
         // Export object
         return device;
     })();
+    
 })();
