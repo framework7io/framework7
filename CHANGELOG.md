@@ -1,5 +1,15 @@
 # Change Log
 
+## Framework7 v0.8.2 - Updated on May 8, 2014
+
+*  Automatically submit forms using Ajax with additional "ajax-submit" and "ajax-submit-onchange" classes on form
+*  New Ajax DOM lib methods $.ajax(), $.get(), $.post(), $.getJSON()
+*  New DOM lib util $.serializeObject(obj)
+*  Ability to use Messages with new messages on top
+*  "cacheIgnoreList" app parameter to add array of URLs that should not be cached
+*  New app.support object with features detection
+*  Fix for submit button on iOS
+
 ## Framework7 v0.8.0 - Updated on May 2, 2014
 
   * Sortable lists
