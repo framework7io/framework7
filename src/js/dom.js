@@ -494,6 +494,28 @@ Dom7.prototype = {
         return this;
     },
 };
+// Shortcuts
+(function () {
+    var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
+    var notTrigger = ('resize scroll').split(' ');
+    function createMethod(name) {
+        Dom7.prototype[name] = function (handler) {
+            var i;
+            if (typeof handler === 'undefined') {
+                for (i = 0; i < this.length; i++) {
+                    if (notTrigger.indexOf(name) < 0) this[i][name]();
+                }
+                return this;
+            }
+            else {
+                return this.on(name, handler);
+            }
+        };
+    }
+    for (var i = 0; i < shortcuts.length; i++) {
+        createMethod(shortcuts[i]);
+    }
+})();
 
 // Selector 
 var $ = function (selector, context) {
@@ -519,57 +541,3 @@ var $ = function (selector, context) {
     }
     return new Dom7(arr);
 };
-// Shortcuts
-(function () {
-    var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
-    var notTrigger = ('resize scroll').split(' ');
-    function createMethod(name) {
-        Dom7.prototype[name] = function (handler) {
-            var i;
-            if (typeof handler === 'undefined') {
-                for (i = 0; i < this.length; i++) {
-                    if (notTrigger.indexOf(name) < 0) this[i][name]();
-                }
-                return this;
-            }
-            else {
-                return this.on(name, handler);
-            }
-        };
-    }
-    for (var i = 0; i < shortcuts.length; i++) {
-        createMethod(shortcuts[i]);
-    }
-})();
-// Utilites
-$.parseUrlQuery = function (url) {
-    var query = {}, i, params, param;
-    if (url.indexOf('?') >= 0) url = url.split('?')[1];
-    params = url.split('&');
-    for (i = 0; i < params.length; i++) {
-        param = params[i].split('=');
-        query[param[0]] = param[1];
-    }
-    return query;
-};
-$.isArray = function (arr) {
-    if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
-    else return false;
-};
-$.unique = function (arr) {
-    var unique = [];
-    for (var i = 0; i < arr.length; i++) {
-        if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
-    }
-    return unique;
-};
-$.trim = function (str) {
-    return str.trim();
-};
-$.supportTouch = (function () {
-    return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
-})();
-$.fn = Dom7.prototype;
-
-// Export Selectors engine to global Framework7
-Framework7.$ = $;
