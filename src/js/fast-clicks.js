@@ -1,6 +1,6 @@
 /*===============================================================================
 ************   Fast Clicks   ************
-************   Impressed by https://github.com/ftlabs/fastclick   ************
+************   Inspired by https://github.com/ftlabs/fastclick   ************
 ===============================================================================*/
 app.initFastClicks = function () {
     if (!$.supportTouch) return;
