@@ -36,6 +36,7 @@ module.exports = function (grunt) {
         'src/js/dom-utils.js',
         'src/js/dom-ajax.js',
         'src/js/dom-export.js',
+        'src/js/proto-support.js',
         'src/js/proto-device.js',
         'src/js/wrap-end.js'
     ];
@@ -187,7 +188,7 @@ module.exports = function (grunt) {
                         if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
                             addIndent = '';
                         }
-                        if (filename === 'f7-intro.js' || filename === 'f7-outro.js' || filename.indexOf('dom') >= 0 || filename === 'proto-device.js') addIndent = '    ';
+                        if (filename === 'f7-intro.js' || filename === 'f7-outro.js' || filename.indexOf('dom') >= 0 || filename.indexOf('proto') >= 0) addIndent = '    ';
                         src = grunt.util.normalizelf(src);
                         return src.split(grunt.util.linefeed).map(function (line) {
                             return addIndent + line;
