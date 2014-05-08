@@ -20,6 +20,7 @@ window.Framework7 = function (params) {
     // Default Parameters
     app.params = {
         cache: true,
+        cacheSkip: [],
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
         // Push State
