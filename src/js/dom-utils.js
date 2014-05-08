@@ -23,7 +23,24 @@ $.unique = function (arr) {
 $.trim = function (str) {
     return str.trim();
 };
-$.supportTouch = (function () {
-    return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
-})();
+$.serializeObject = function (obj) {
+    if (typeof obj === 'string') return obj;
+    var resultArray = [];
+    var separator = '&';
+    for (var prop in obj) {
+        if ($.isArray(obj[prop])) {
+            var toPush = [];
+            for (var i = 0; i < obj[prop].length; i ++) {
+                toPush.push(prop + '=' + obj[prop][i]);
+            }
+            resultArray.push(toPush.join(separator));
+        }
+        else {
+            // Should be string
+            resultArray.push(prop + '=' + obj[prop]);
+        }
+    }
+
+    return resultArray.join(separator);
+};
 $.fn = Dom7.prototype;
