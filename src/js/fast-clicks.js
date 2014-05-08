@@ -3,7 +3,7 @@
 ************   Inspired by https://github.com/ftlabs/fastclick   ************
 ===============================================================================*/
 app.initFastClicks = function () {
-    if (!$.supportTouch) return;
+    if (!app.support.touch) return;
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
 
     function targetNeedsFocus(el) {
