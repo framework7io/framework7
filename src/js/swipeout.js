@@ -3,7 +3,7 @@
 ===============================================================================*/
 app.swipeoutOpenedEl = undefined;
 app.allowSwipeout = true;
-app.initSwipeout = function () {
+app.initSwipeout = function (swipeoutEl) {
     var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, swipeOutActions, swipeOutActionsWidth, translate, opened;
     $(document).on(app.touchEvents.start, function (e) {
         if (app.swipeoutOpenedEl) {
@@ -132,9 +132,17 @@ app.initSwipeout = function () {
             swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
         });
     }
-    $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
-    $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
-    $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
+    if (swipeoutEl) {
+        $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
+        $(swipeoutEl).on(app.touchEvents.move, handleTouchMove);
+        $(swipeoutEl).on(app.touchEvents.end, handleTouchEnd);
+    }
+    else {
+        $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
+        $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
+        $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
+    }
+        
 };
 app.swipeoutOpen = function (el) {
     el = $(el);
