@@ -66,7 +66,6 @@ app.closePanel = function () {
 ************   Swipe panels   ************
 ======================================================*/
 app.initSwipePanels = function () {
-    if (!app.params.swipePanel) return;
     var panel = $('.panel.panel-' + app.params.swipePanel);
     if (panel.length === 0) return;
 
