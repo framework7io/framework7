@@ -52,27 +52,41 @@ app.modal = function (params) {
     app.openModal(modal);
     return modal[0];
 };
-app.alert = function (text, title) {
+app.alert = function (text, title, callbackOk) {
+    if (typeof title === 'function') {
+        callbackOk = arguments[1];
+        title = undefined;
+    }
     return app.modal({
         text: text || '',
         title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        buttons: [ {text: app.params.modalButtonOk, bold: true} ]
+        buttons: [ {text: app.params.modalButtonOk, bold: true, onClick: callbackOk} ]
     });
 };
-app.confirm = function (text, callbackOk, callbackCancel) {
+app.confirm = function (text, title, callbackOk, callbackCancel) {
+    if (typeof title === 'function') {
+        callbackCancel = arguments[2];
+        callbackOk = arguments[1];
+        title = undefined;
+    }
     return app.modal({
         text: text || '',
-        title: app.params.modalTitle || '',
+        title: typeof title === 'undefined' ? app.params.modalTitle : title,
         buttons: [
             {text: app.params.modalButtonCancel, onClick: callbackCancel},
             {text: app.params.modalButtonOk, bold: true, onClick: callbackOk}
         ]
     });
 };
-app.prompt = function (text, callbackOk, callbackCancel) {
+app.prompt = function (text, title, callbackOk, callbackCancel) {
+    if (typeof title === 'function') {
+        callbackCancel = arguments[2];
+        callbackOk = arguments[1];
+        title = undefined;
+    }
     return app.modal({
         text: text || '',
-        title: app.params.modalTitle || '',
+        title: typeof title === 'undefined' ? app.params.modalTitle : title,
         afterText: '<input type="text" class="modal-prompt-input">',
         buttons: [
             {text: app.params.modalButtonCancel, onClick: function (modal) {
