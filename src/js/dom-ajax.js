@@ -3,7 +3,6 @@ $.ajax = function (options) {
     var defaults = {
         method: 'GET',
         data: false,
-        crossDomain: true,
         async: true,
         cache: true,
         user: '',
@@ -18,6 +17,11 @@ $.ajax = function (options) {
     // Merge options and defaults
     for (var prop in defaults) {
         if (!(prop in options)) options[prop] = defaults[prop];
+    }
+
+    // Default URL
+    if (!options.url) {
+        options.url = window.location.toString();
     }
 
     // Data to modify GET URL
@@ -126,6 +130,15 @@ $.ajax = function (options) {
         }
     }
 
+    // Check for crossDomain
+    if (typeof options.crossDomain === 'undefined') {
+        options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+    }
+
+    if (!options.crossDomain) {
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    }
+
     // Handle XHR
     xhr.onload = function (e) {
         if (xhr.status === 200 || xhr.status === 0) {
@@ -163,34 +176,21 @@ $.ajax = function (options) {
     // Return XHR object
     return xhr;
 };
-
-$.get = function (url, data, success) {
-    var options = {
-        url: url,
-        method: 'GET',
-        data: typeof data === 'function' ? undefined : data,
-        success: typeof data === 'function' ? data : success
-    };
-    return $.ajax(options);
-};
-
-$.post = function (url, data, success) {
-    var options = {
-        url: url,
-        method: 'POST',
-        data: typeof data === 'function' ? undefined : data,
-        success: typeof data === 'function' ? data : success
-    };
-    return $.ajax(options);
-};
-
-$.getJSON = function (url, data, success) {
-    var options = {
-        url: url,
-        method: 'GET',
-        data: typeof data === 'function' ? undefined : data,
-        success: typeof data === 'function' ? data : success,
-        dataType: 'json'
-    };
-    return $.ajax(options);
-};
+// Shrotcuts
+(function () {
+    var methods = ('get post getJSON').split(' ');
+    function createMethod(method) {
+        $[method] = function (url, data, success) {
+            return $.ajax({
+                url: url,
+                method: method === 'post' ? 'POST' : 'GET',
+                data: typeof data === 'function' ? undefined : data,
+                success: typeof data === 'function' ? data : success,
+                dataType: method === 'getJSON' ? 'json' : undefined
+            });
+        };
+    }
+    for (var i = 0; i < methods.length; i++) {
+        createMethod(methods[i]);
+    }
+})();
