@@ -70,6 +70,8 @@ app.initPage = function (pageContainer) {
     if (app.initFormsStorage) app.initFormsStorage(pageContainer);
     // Init smart select
     if (app.initSmartSelects) app.initSmartSelects(pageContainer);
+    // Init slider
+    if (app.initPageSlider) app.initPageSlider(pageContainer);
 };
 
 // Load Page
