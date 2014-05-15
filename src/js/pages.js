@@ -20,6 +20,17 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
     // Init Callback
     $(pageData.container).trigger('pageInit', {page: pageData});
 };
+app.pageRemoveCallback = function (view, pageContainer, position) {
+    // Page Data
+    var pageData = {
+        container: pageContainer,
+        name: $(pageContainer).attr('data-page'),
+        view: view,
+        from: position
+    };
+    // Before Init Callback
+    $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
+};
 app.pageAnimCallbacks = function (callback, view, params) {
     // Page Data
     var pageData = {
@@ -71,7 +82,7 @@ app.initPage = function (pageContainer) {
     // Init smart select
     if (app.initSmartSelects) app.initSmartSelects(pageContainer);
     // Init slider
-    if (app.initPageSlider) app.initPageSlider(pageContainer);
+    if (app.initSlider) app.initSlider(pageContainer);
 };
 
 // Load Page
@@ -216,15 +227,21 @@ function _load(view, url, content) {
     pagesInView = viewContainer.find('.page:not(.cached)');
     if (pagesInView.length > 1) {
         for (i = 0; i < pagesInView.length - 2; i++) {
-            if (!view.params.domCache)
+            if (!view.params.domCache) {
+                app.pageRemoveCallback(view, pagesInView[i], 'left');
                 $(pagesInView[i]).remove();
-            else
+            }
+            else {
                 $(pagesInView[i]).addClass('cached');
+            }
         }
-        if (!view.params.domCache)
+        if (!view.params.domCache) {
+            app.pageRemoveCallback(view, pagesInView[i], 'left');
             $(pagesInView[i]).remove();
-        else
+        }
+        else {
             $(pagesInView[i]).addClass('cached');
+        }
     }
     
     oldPage = viewContainer.find('.page:not(.cached)');
@@ -524,6 +541,7 @@ app.afterGoBack = function (view, oldPage, newPage) {
     // Remove old page and set classes on new one
     oldPage = $(oldPage);
     newPage = $(newPage);
+    app.pageRemoveCallback(view, oldPage[0], 'right');
     oldPage.remove();
     newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
     app.allowPageChange = true;
