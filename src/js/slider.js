@@ -146,7 +146,7 @@ var Slider = function (container, options) {
             if (animating) {
                 currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y');
                 var slidesDiff = s.onSlideChangeEnd();
-                currentTranslate += slidesDiff * s.size / s.options.slidesPerView;
+                currentTranslate += slidesDiff * (s.size + s.options.spaceBetween) / s.options.slidesPerView;
                 s.wrapper.transition(0);
                 var currTranslateX = isH ? currentTranslate : 0;
                 var currTranslateY = isH ? 0 : currentTranslate;
@@ -342,7 +342,7 @@ var Slider = function (container, options) {
 app.slider = function (container, options) {
     return new Slider(container, options);
 };
-app.initPageSlider = function (pageContainer) {
+app.initSlider = function (pageContainer) {
     var page = $(pageContainer);
     var sliders = page.find('.slider-init');
     if (sliders.length === 0) return;
