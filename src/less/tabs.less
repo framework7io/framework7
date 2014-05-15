@@ -7,3 +7,17 @@
         display: block;
     }
 }
+.tabs-animated-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    .tabs {
+        .flexbox();
+        .transition(300ms);
+    }
+    .tab {
+        width: 100%;
+        display: block;
+        .flex-shrink(0);
+    }
+}
