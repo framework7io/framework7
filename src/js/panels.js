@@ -221,7 +221,7 @@ app.initSwipePanels = function () {
                 action = 'reset';
             }
             else if (
-                timeDiff < 300 && Math.abs(translate) > 0 ||
+                timeDiff < 300 && Math.abs(translate) >= 0 ||
                 timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
             ) {
                 action = 'swap';
@@ -230,7 +230,7 @@ app.initSwipePanels = function () {
                 action = 'reset';
             }
         }
-            
+
         panelOverlay.css({display: ''}).transform('');
         panel.transition('').transform('');
         if (action === 'swap') {
