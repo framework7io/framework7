@@ -120,6 +120,7 @@ var Slider = function (container, options) {
         s.height = s.container[0].offsetHeight;
         e.preventDefault();
         allowClick = true;
+        s.updateSize();
     };
     s.onTouchMove = function (e) {
         
