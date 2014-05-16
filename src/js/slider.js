@@ -8,7 +8,7 @@ var Slider = function (container, options) {
         speed: 300,
         slidesPerView: 1,
         direction: 'horizontal',
-        pagination: '.slider-pagination',
+        pagination: '',
         paginationHide: true,
         slideClass: 'slider-slide',
         slideActiveClass: 'slider-slide-active',
@@ -107,7 +107,8 @@ var Slider = function (container, options) {
     };
 
     var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, animating = false, currentTranslate;
-    var lastClickTime = Date.now(), clickTimeout, allowClick = true;
+    var lastClickTime = Date.now(), clickTimeout;
+    s.allowClick = true;
 
     s.onTouchStart = function (e) {
         isTouched = true;
@@ -119,12 +120,12 @@ var Slider = function (container, options) {
         s.width = s.container[0].offsetWidth;
         s.height = s.container[0].offsetHeight;
         e.preventDefault();
-        allowClick = true;
+        s.allowClick = true;
         s.updateSize();
     };
     s.onTouchMove = function (e) {
         
-        allowClick = false;
+        s.allowClick = false;
         if (!isTouched) return;
         if (e.targetTouches && e.targetTouches.length > 1) return;
         
@@ -169,27 +170,27 @@ var Slider = function (container, options) {
     s.onTouchEnd = function (e) {
         var touchEndTime = Date.now();
         var timeDiff = touchEndTime - touchStartTime;
-        if (allowClick) {
+        if (s.allowClick) {
             if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
                 clickTimeout = setTimeout(function () {
                     if (s.options.paginationHide && s.paginationContainer) {
                         s.paginationContainer.toggleClass('slider-pagination-hidden');
                     }
-                    if (s.options.onClick) s.options.onClick();
+                    if (s.options.onClick) s.options.onClick(e);
                 }, 300);
                 
             }
-            if (timeDiff < 300 && (touchEndTime - lastClickTime) < 300 && s.options.zoom) {
+            if (timeDiff < 300 && (touchEndTime - lastClickTime) < 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
                 if (s.options.onDoubleTap) {
-                    s.options.onDoubleTap();
+                    s.options.onDoubleTap(e);
                 }
             }
         }
 
         lastClickTime = Date.now();
-        allowClick = true;
+        s.allowClick = true;
 
         if (!isTouched || !isMoved) {
             isTouched = isMoved = false;
@@ -274,7 +275,7 @@ var Slider = function (container, options) {
     };
     s.onSlideChangeStart = function () {
         s.updateClasses();
-        if (s.options.onSlideChangeStart) s.options.onSlideChangeStart();
+        if (s.options.onSlideChangeStart) s.options.onSlideChangeStart(s);
     };
     s.onSlideChangeEnd = function () {
         animating = false;
@@ -291,7 +292,7 @@ var Slider = function (container, options) {
                 marginTop: -s.options.spaceBetween * s.activeSlideIndex / s.options.slidesPerView + 'px'
             });
         }
-        if (s.options.onSlideChangeEnd) s.options.onSlideChangeEnd();
+        if (s.options.onSlideChangeEnd) s.options.onSlideChangeEnd(s);
             
         // Return slides diff
         return (s.activeSlideIndex - s.previousSlideIndex);
