@@ -71,4 +71,4 @@ If you have questions about Framework7 or want to help others you are welcome to
 
 ## Docs
 
-Coming soon...
+Documentation available at http://idangero.us/framework7/docs/
