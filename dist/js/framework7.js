@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.2
+ * Framework7 0.8.4
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 8, 2014
+ * Released on: May 17, 2014
 */
 (function () {
 
@@ -36,7 +36,7 @@
         // Default Parameters
         app.params = {
             cache: true,
-            cacheIgnoreList: [],
+            cacheIgnore: [],
             cacheDuration: 1000 * 60 * 10, // Ten minutes 
             preloadPreviousPage: true,
             // Push State
@@ -51,7 +51,7 @@
             swipeBackPageActiveArea: 30,
             swipeBackPageBoxShadow: true,
             // Ajax
-            ajaxLinks: false, // or CSS selector
+            ajaxLinks: undefined, // or CSS selector
             // Pull To Refresh
             pullToRefresh: true,
             // Sortable
@@ -125,7 +125,7 @@
             var docLocation = document.location.href;
             var viewURL = docLocation;
             if (app.params.pushState) {
-                if (viewURL.indexOf('#/') >= 0 && viewURL.indexOf('#/#') < 0) viewURL = viewURL.split('#/')[0];
+                if (viewURL.indexOf('#!/') >= 0 && viewURL.indexOf('#!/#') < 0) viewURL = viewURL.split('#!/')[0];
             }
             var view = {
                 container: container,
@@ -174,8 +174,8 @@
         
             // Push State on load
             if (app.params.pushState && view.main) {
-                if (docLocation.indexOf('#/') >= 0 && docLocation.indexOf('#/#') < 0) {
-                    app.loadPage(view, docLocation.split('#/')[1], false);
+                if (docLocation.indexOf('#!/') >= 0 && docLocation.indexOf('#!/#') < 0) {
+                    app.loadPage(view, docLocation.split('#!/')[1], false);
                 }
             }
             
@@ -509,7 +509,7 @@
         // XHR
         app.xhr = false;
         app.get = function (url, callback) {
-            if (app.params.cache && url.indexOf('nocache') < 0 && app.params.cacheIgnoreList.indexOf(url) < 0) {
+            if (app.params.cache && url.indexOf('nocache') < 0 && app.params.cacheIgnore.indexOf(url) < 0) {
                 // Check is the url cached
                 for (var i = 0; i < app.cache.length; i++) {
                     if (app.cache[i].url === url) {
@@ -575,6 +575,17 @@
             // Init Callback
             $(pageData.container).trigger('pageInit', {page: pageData});
         };
+        app.pageRemoveCallback = function (view, pageContainer, position) {
+            // Page Data
+            var pageData = {
+                container: pageContainer,
+                name: $(pageContainer).attr('data-page'),
+                view: view,
+                from: position
+            };
+            // Before Init Callback
+            $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
+        };
         app.pageAnimCallbacks = function (callback, view, params) {
             // Page Data
             var pageData = {
@@ -625,6 +636,8 @@
             if (app.initFormsStorage) app.initFormsStorage(pageContainer);
             // Init smart select
             if (app.initSmartSelects) app.initSmartSelects(pageContainer);
+            // Init slider
+            if (app.initSlider) app.initSlider(pageContainer);
         };
         
         // Load Page
@@ -769,15 +782,21 @@
             pagesInView = viewContainer.find('.page:not(.cached)');
             if (pagesInView.length > 1) {
                 for (i = 0; i < pagesInView.length - 2; i++) {
-                    if (!view.params.domCache)
+                    if (!view.params.domCache) {
+                        app.pageRemoveCallback(view, pagesInView[i], 'left');
                         $(pagesInView[i]).remove();
-                    else
+                    }
+                    else {
                         $(pagesInView[i]).addClass('cached');
+                    }
                 }
-                if (!view.params.domCache)
+                if (!view.params.domCache) {
+                    app.pageRemoveCallback(view, pagesInView[i], 'left');
                     $(pagesInView[i]).remove();
-                else
+                }
+                else {
                     $(pagesInView[i]).addClass('cached');
+                }
             }
             
             oldPage = viewContainer.find('.page:not(.cached)');
@@ -884,7 +903,7 @@
             }
             if (app.params.pushState)  {
                 if (typeof pushState === 'undefined') pushState = true;
-                if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', '#/#content-' + view.history.length);
+                if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', '#!/#content-' + view.history.length);
             }
             _load(view, null, content);
         
@@ -904,7 +923,7 @@
                 }
                 if (app.params.pushState)  {
                     if (typeof pushState === 'undefined') pushState = true;
-                    if (pushState) history.pushState({url: url}, '', '#/' + url);
+                    if (pushState) history.pushState({url: url}, '', '#!/' + url);
                 }
         
                 _load(view, url, data);
@@ -1077,6 +1096,7 @@
             // Remove old page and set classes on new one
             oldPage = $(oldPage);
             newPage = $(newPage);
+            app.pageRemoveCallback(view, oldPage[0], 'right');
             oldPage.remove();
             newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
             app.allowPageChange = true;
@@ -1167,27 +1187,41 @@
             app.openModal(modal);
             return modal[0];
         };
-        app.alert = function (text, title) {
+        app.alert = function (text, title, callbackOk) {
+            if (typeof title === 'function') {
+                callbackOk = arguments[1];
+                title = undefined;
+            }
             return app.modal({
                 text: text || '',
                 title: typeof title === 'undefined' ? app.params.modalTitle : title,
-                buttons: [ {text: app.params.modalButtonOk, bold: true} ]
+                buttons: [ {text: app.params.modalButtonOk, bold: true, onClick: callbackOk} ]
             });
         };
-        app.confirm = function (text, callbackOk, callbackCancel) {
+        app.confirm = function (text, title, callbackOk, callbackCancel) {
+            if (typeof title === 'function') {
+                callbackCancel = arguments[2];
+                callbackOk = arguments[1];
+                title = undefined;
+            }
             return app.modal({
                 text: text || '',
-                title: app.params.modalTitle || '',
+                title: typeof title === 'undefined' ? app.params.modalTitle : title,
                 buttons: [
                     {text: app.params.modalButtonCancel, onClick: callbackCancel},
                     {text: app.params.modalButtonOk, bold: true, onClick: callbackOk}
                 ]
             });
         };
-        app.prompt = function (text, callbackOk, callbackCancel) {
+        app.prompt = function (text, title, callbackOk, callbackCancel) {
+            if (typeof title === 'function') {
+                callbackCancel = arguments[2];
+                callbackOk = arguments[1];
+                title = undefined;
+            }
             return app.modal({
                 text: text || '',
-                title: app.params.modalTitle || '',
+                title: typeof title === 'undefined' ? app.params.modalTitle : title,
                 afterText: '<input type="text" class="modal-prompt-input">',
                 buttons: [
                     {text: app.params.modalButtonCancel, onClick: function (modal) {
@@ -1521,7 +1555,6 @@
         ************   Swipe panels   ************
         ======================================================*/
         app.initSwipePanels = function () {
-            if (!app.params.swipePanel) return;
             var panel = $('.panel.panel-' + app.params.swipePanel);
             if (panel.length === 0) return;
         
@@ -1532,6 +1565,7 @@
         
             function handleTouchStart(e) {
                 if (!app.allowPanelOpen) return;
+                if ($('.modal-in, .photo-browser-in').length > 0) return;
                 touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
                 if (app.params.swipePanelActiveArea) {
@@ -1677,7 +1711,7 @@
                         action = 'reset';
                     }
                     else if (
-                        timeDiff < 300 && Math.abs(translate) > 0 ||
+                        timeDiff < 300 && Math.abs(translate) >= 0 ||
                         timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
                     ) {
                         action = 'swap';
@@ -1686,7 +1720,7 @@
                         action = 'reset';
                     }
                 }
-                    
+        
                 panelOverlay.css({display: ''}).transform('');
                 panel.transition('').transform('');
                 if (action === 'swap') {
@@ -1820,7 +1854,7 @@
         ===============================================================================*/
         app.swipeoutOpenedEl = undefined;
         app.allowSwipeout = true;
-        app.initSwipeout = function () {
+        app.initSwipeout = function (swipeoutEl) {
             var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, swipeOutActions, swipeOutActionsWidth, translate, opened;
             $(document).on(app.touchEvents.start, function (e) {
                 if (app.swipeoutOpenedEl) {
@@ -1949,9 +1983,17 @@
                     swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
                 });
             }
-            $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
-            $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
-            $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
+            if (swipeoutEl) {
+                $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
+                $(swipeoutEl).on(app.touchEvents.move, handleTouchMove);
+                $(swipeoutEl).on(app.touchEvents.end, handleTouchEnd);
+            }
+            else {
+                $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
+                $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
+                $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
+            }
+                
         };
         app.swipeoutOpen = function (el) {
             el = $(el);
@@ -2515,7 +2557,8 @@
                 /*jshint validthis:true */
                 var clicked = $(this);
                 var url = clicked.attr('href');
-                if (clicked[0].nodeName.toLowerCase() === 'a') {
+                var isLink = clicked[0].nodeName.toLowerCase() === 'a';
+                if (isLink) {
                     // External
                     if (clicked.hasClass('external')) {
                         return;
@@ -2584,9 +2627,14 @@
                 if (clicked.hasClass('tab-link')) {
                     var newTab = $(clicked.attr('href'));
                     if (newTab.length === 0) return;
+                    if (newTab.parents('.tabs-animated-wrap').length > 0) {
+                        newTab.parent().transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
+                    }
                     var oldTab = newTab.parent().find('.tab.active').removeClass('active');
                     newTab.addClass('active');
                     newTab.trigger('show');
+                        
+                    
                     var clickedParent = clicked.parent();
                     if (clickedParent.hasClass('buttons-row') || clicked.parents('.tabbar').length > 0) {
                         clickedParent.find('.active').removeClass('active');
@@ -2623,7 +2671,7 @@
                     app.sortableClose(clicked.data('sortable'));
                 }
                 // Load Page
-                if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks)) {
+                if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks) || !isLink) {
                     return;
                 }
                 var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
@@ -2812,7 +2860,8 @@
             if (pageContainer.length === 0) return;
         
             var forms = pageContainer.find('form.store-data');
-        
+            if (forms.length === 0) return;
+            
             // Parse forms data and fill form if there is such data
             forms.each(function () {
                 var id = this.getAttribute('id');
@@ -2821,14 +2870,24 @@
                 if (formData) app.formFromJSON(this, formData);
             });
             // Update forms data on inputs change
-            forms.on('change submit', function () {
-                var formId = this.id;
+            function storeForm() {
+                /*jshint validthis:true */
+                var form = $(this);
+                var formId = form[0].id;
                 if (!formId) return;
-                var formJSON = app.formToJSON(this);
+                var formJSON = app.formToJSON(form);
                 if (!formJSON) return;
                 app.formStoreData(formId, formJSON);
-                $(this).trigger('store', {data: formJSON});
-            });
+                form.trigger('store', {data: formJSON});
+            }
+            forms.on('change submit', storeForm);
+        
+            // Detach Listeners
+            function pageBeforeRemove() {
+                forms.off('change submit', storeForm);
+                pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+            }
+            pageContainer.on('pageBeforeRemove', pageBeforeRemove);
         };
         
         // Ajax submit on forms
@@ -2918,7 +2977,7 @@
                             app.loadPage(mainView, stateUrl, false);
                         }
                         else {
-                            app.pushStateQueue.push({
+                            app.pushStateQueue.unshift({
                                 action: 'loadPage',
                                 stateUrl: stateUrl,
                                 view: mainView
@@ -2931,7 +2990,7 @@
                             app.loadContent(mainView, stateContent, false);
                         }
                         else {
-                            app.pushStateQueue.push({
+                            app.pushStateQueue.unshift({
                                 action: 'loadContent',
                                 stateContent: stateContent,
                                 view: mainView
@@ -2941,6 +3000,790 @@
                 }
             }
             $(window).on('popstate', handlePopState);
+        };
+        
+        /*======================================================
+        ************   Slider   ************
+        ======================================================*/
+        var Slider = function (container, options) {
+            var defaults = {
+                initialSlide: 0,
+                spaceBetween: 0,
+                speed: 300,
+                slidesPerView: 1,
+                direction: 'horizontal',
+                pagination: '',
+                paginationHide: true,
+                slideClass: 'slider-slide',
+                slideActiveClass: 'slider-slide-active',
+                slideNextClass: 'slider-slide-next',
+                slidePrevClass: 'slider-slide-prev',
+                wrapperClass: 'slider-wrapper',
+                bulletClass: 'slider-pagination-bullet',
+                bulletActiveClass: 'slider-pagination-active'
+            };
+            options = options || {};
+            for (var def in defaults) {
+                if (typeof options[def] === 'undefined') {
+                    options[def] = defaults[def];
+                }
+            }
+        
+            var s = this;
+            s.options = options;
+            s.container = $(container);
+            if (s.container.length === 0) return;
+        
+            if (s.options.direction === 'vertical') {
+                s.container.addClass('slider-container-vertical');
+            }
+        
+            s.wrapper = s.container.children('.' + s.options.wrapperClass);
+        
+            if (s.options.pagination) {
+                s.paginationContainer = $(s.options.pagination);
+            }
+            
+            s.activeSlideIndex = s.previousSlideIndex = s.options.initialSlide || 0;
+        
+            var isH = s.options.direction === 'horizontal';
+        
+            s.updateSlides = function () {
+                s.slides = s.wrapper.children('.' + s.options.slideClass);
+        
+                if (s.options.spaceBetween !== 0) {
+                    if (isH) s.slides.css({marginRight: s.options.spaceBetween + 'px'});
+                    else s.slides.css({marginBottom: s.options.spaceBetween + 'px'});
+                }
+                if (s.options.slidesPerView > 1) {
+                    var sizeValue = '(100% - ' + (s.options.slidesPerView - 1) * options.spaceBetween + 'px)/' + s.options.slidesPerView;
+                    if (isH) {
+                        s.slides.css('width', '-webkit-calc(' + sizeValue + ')');
+                        s.slides.css('width', '-moz-calc(' + sizeValue + ')');
+                        s.slides.css('width', 'calc(' + sizeValue + ')');
+                    }
+                    else {
+                        s.slides.css('height', '-webkit-calc(' + sizeValue + ')');
+                        s.slides.css('height', '-moz-calc(' + sizeValue + ')');
+                        s.slides.css('height', 'calc(' + sizeValue + ')');
+                    }
+                }
+            };
+        
+            s.updatePagination = function () {
+                if (s.paginationContainer && s.paginationContainer.length > 0) {
+                    var bulletsHTML = '';
+                    for (var i = 0; i < s.slides.length - s.options.slidesPerView + 1; i++) {
+                        bulletsHTML += '<span class="' + s.options.bulletClass + '"></span>';
+                    }
+                    s.paginationContainer.html(bulletsHTML);
+                    s.bullets = s.paginationContainer.find('.' + s.options.bulletClass);
+                }
+            };
+        
+            s.updateSize = function () {
+                s.width = s.container[0].offsetWidth;
+                s.height = s.container[0].offsetHeight;
+                s.size = isH ? s.width : s.height;
+            };
+        
+            s.attachEvents = function (detach) {
+                var action = detach ? 'off' : 'on';
+                // Slide between photos
+                s.container[action](app.touchEvents.start, s.onTouchStart);
+                s.container[action](app.touchEvents.move, s.onTouchMove);
+                s.container[action](app.touchEvents.end, s.onTouchEnd);
+                $(window)[action]('resize', s.onResize);
+        
+                // Next, Prev, Index
+                if (s.options.nextButton) $(s.options.nextButton)[action]('click', s.onClickNext);
+                if (s.options.prevButton) $(s.options.prevButton)[action]('click', s.onClickPrev);
+                if (s.options.indexButton) $(s.options.indexButton)[action]('click', s.onClickIndex);
+            };
+            s.detachEvents = function () {
+                s.attachEvents(true);
+            };
+        
+            s.onResize = function () {
+                s.updateSize();
+                s.slideTo(s.activeSlideIndex, 0, false);
+            };
+        
+            var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate, animating = false;
+            var lastClickTime = Date.now(), clickTimeout;
+            s.allowClick = true;
+        
+            s.onTouchStart = function (e) {
+                isTouched = true;
+                isMoved = false;
+                isScrolling = undefined;
+                touchesStart.x = touchesCurrent.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+                touchesStart.y = touchesCurrent.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                touchStartTime = Date.now();
+                s.allowClick = true;
+                s.updateSize();
+                if (s.options.onTouchStart) s.options.onTouchStart(s, e);
+                if (e.type === 'mousedown') e.preventDefault();
+            };
+            s.onTouchMove = function (e) {
+                if (s.options.onTouchMove) s.options.onTouchMove(s, e);
+                s.allowClick = false;
+                if (!isTouched) return;
+                if (e.targetTouches && e.targetTouches.length > 1) return;
+                
+                touchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                touchesCurrent.y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        
+                if (typeof isScrolling === 'undefined') {
+                    isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
+                }
+                if ((isH && isScrolling) || (!isH && !isScrolling))  {
+                    isTouched = false;
+                    return;
+                }
+                if (s.options.onSliderMove) s.options.onSliderMove(s, e);
+        
+                e.preventDefault();
+                e.stopPropagation();
+        
+                if (!isMoved) {
+                    currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y');
+                    s.wrapper.transition(0);
+                    if (animating) s.onSlideChangeEnd();
+                }
+                isMoved = true;
+                var diff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+                if ((diff > 0 && s.activeSlideIndex === 0)) diff = Math.pow(diff, 0.85);
+                else if (diff < 0 && s.activeSlideIndex === s.slides.length - s.options.slidesPerView) diff = -Math.pow(-diff, 0.85);
+                
+                var translateX = isH ? diff + currentTranslate: 0, translateY = isH ? 0 : diff + currentTranslate;
+                s.wrapper.transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
+            };
+            s.onTouchEnd = function (e) {
+                if (s.options.onTouchEnd) s.options.onTouchEnd(s, e);
+                var touchEndTime = Date.now();
+                var timeDiff = touchEndTime - touchStartTime;
+                if (s.allowClick) {
+                    if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
+                        if (clickTimeout) clearTimeout(clickTimeout);
+                        clickTimeout = setTimeout(function () {
+                            if (s.options.paginationHide && s.paginationContainer) {
+                                s.paginationContainer.toggleClass('slider-pagination-hidden');
+                            }
+                            if (s.options.onClick) s.options.onClick(s, e);
+                        }, 300);
+                        
+                    }
+                    if (timeDiff < 300 && (touchEndTime - lastClickTime) < 300) {
+                        if (clickTimeout) clearTimeout(clickTimeout);
+                        if (s.options.onDoubleTap) {
+                            s.options.onDoubleTap(s, e);
+                        }
+                    }
+                }
+        
+                lastClickTime = Date.now();
+                s.allowClick = true;
+        
+                if (!isTouched || !isMoved) {
+                    isTouched = isMoved = false;
+                    return;
+                }
+                isTouched = isMoved = false;
+                var touchesDiff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+        
+                if (touchesDiff === 0) {
+                    return;
+                }
+                var skipSlides = 1;
+                var slideSize = s.size / s.options.slidesPerView;
+                if (s.options.slidesPerView > 1) {
+                    skipSlides = Math.abs((Math.abs(touchesDiff) + slideSize / 2) / slideSize);
+                }
+        
+                if (timeDiff > 300) {
+                    // Long touches
+                    if (touchesDiff <= -slideSize / 2) {
+                        s.slideTo(s.activeSlideIndex + Math.floor(skipSlides));
+                    }
+                    else if (touchesDiff > slideSize / 2) {
+                        s.slideTo(s.activeSlideIndex - Math.floor(skipSlides));
+                    }
+                    else {
+                        s.slideReset();
+                    }
+                }
+                else {
+                    if (Math.abs(touchesDiff) < 10) {
+                        s.slideReset();
+                    }
+                    else {
+                        if (touchesDiff < 0) {
+                            s.slideTo(s.activeSlideIndex + Math.round(skipSlides));
+                        }
+                        else {
+                            s.slideTo(s.activeSlideIndex - Math.round(skipSlides));
+                        }
+                    }
+                        
+                }
+            };
+        
+            s.slideTo = function (index, speed, runCallbacks) {
+                if (typeof index === 'undefined') index = 0;
+                if (index < 0) index = 0;
+                if (index > s.slides.length - s.options.slidesPerView) index = s.slides.length - s.options.slidesPerView;
+        
+                var translate = - (s.size + s.options.spaceBetween) * index / s.options.slidesPerView;
+        
+                if (typeof speed === 'undefined') speed = s.options.speed;
+                s.previousSlideIndex = s.activeSlideIndex;
+                s.activeSlideIndex = index;
+                s.isFirst = s.activeSlideIndex === 0;
+                s.isLast = s.activeSlideIndex === s.slides.length - s.options.slidesPerView;
+                s.onSlideChangeStart();
+                var translateX = isH ? translate : 0, translateY = isH ? 0 : translate;
+                if (speed === 0) {
+                    s.wrapper
+                        .transition(0)
+                        .transform('translate3d(' + translateX + 'px,' + translateY + 'px,0)');
+                    if (runCallbacks !== false) s.onSlideChangeEnd();
+                }
+                else {
+                    animating = true;
+                    s.wrapper
+                        .transition(speed)
+                        .transform('translate3d(' + translateX + 'px,' + translateY + 'px,0)')
+                        .transitionEnd(function () {
+                            if (runCallbacks !== false) s.onSlideChangeEnd();
+                        });
+                }
+            };
+            s.updateClasses = function () {
+                s.slides.removeClass(s.options.slideActiveClass + ' ' + s.options.slideNextClass + ' ' + s.options.slidePrevClass);
+                var activeSlide = s.slides.eq(s.activeSlideIndex);
+                activeSlide.addClass(s.options.slideActiveClass);
+                activeSlide.next().addClass(s.options.slideNextClass);
+                activeSlide.prev().addClass(s.options.slidePrevClass);
+        
+                if (s.bullets && s.bullets.length > 0) {
+                    s.bullets.removeClass(s.options.bulletActiveClass);
+                    s.bullets.eq(s.activeSlideIndex).addClass(s.options.bulletActiveClass);
+                }
+            };
+            s.onSlideChangeStart = function () {
+                s.updateClasses();
+                if (s.options.onSlideChangeStart) s.options.onSlideChangeStart(s);
+            };
+            s.onSlideChangeEnd = function () {
+                animating = false;
+                s.wrapper.transition(0);
+                if (s.options.onSlideChangeEnd) s.options.onSlideChangeEnd(s);
+            };
+            s.slideNext = function () {
+                s.slideTo(s.activeSlideIndex + 1);
+            };
+            s.slidePrev = function () {
+                s.slideTo(s.activeSlideIndex - 1);
+            };
+            s.slideReset = function () {
+                s.slideTo(s.activeSlideIndex);
+            };
+        
+            // Clicks
+            s.onClickNext = function (e) {
+                e.preventDefault();
+                s.slideNext();
+            };
+            s.onClickPrev = function (e) {
+                e.preventDefault();
+                s.slidePrev();
+            };
+            s.onClickIndex = function (e) {
+                e.preventDefault();
+                s.slideTo($(this).index());
+            };
+        
+            // init
+            s.init = function () {
+                s.updateSlides();
+                s.updatePagination();
+                s.updateSize();
+                s.slideTo(s.options.initialSlide, 0);
+                s.attachEvents();
+            };
+        
+            // Destroy
+            s.destroy = function () {
+                s.detachEvents();
+                if (s.options.onDestroy) s.options.onDestroy();
+                s = undefined;
+            };
+        
+            s.init();
+        
+            return s;
+        };
+        app.slider = function (container, options) {
+            return new Slider(container, options);
+        };
+        app.initSlider = function (pageContainer) {
+            var page = $(pageContainer);
+            var sliders = page.find('.slider-init');
+            if (sliders.length === 0) return;
+            function destroySliderOnRemove(slider) {
+                function destroySlider() {
+                    slider.destroy();
+                    page.off('pageBeforeRemove', destroySlider);
+                }
+                page.on('pageBeforeRemove', destroySlider);
+            }
+            for (var i = 0; i < sliders.length; i++) {
+                var slider = sliders.eq(i);
+                var options;
+                if (slider.data('slider')) {
+                    options = JSON.parse(slider.data('slider'));
+                }
+                else {
+                    options = {
+                        initialSlide: parseInt(slider.data('initialSlide'), 10) || undefined,
+                        spaceBetween: parseInt(slider.data('spaceBetween'), 10) || undefined,
+                        speed: parseInt(slider.data('speed'), 10) || undefined,
+                        slidesPerView: slider.data('slidesPerView'),
+                        direction: slider.data('direction'),
+                        pagination: slider.data('pagination'),
+                        paginationHide: slider.data('paginationHide') && (slider.data('paginationHide') === 'true' ? true : false),
+                        slideClass: slider.data('slideClass'),
+                        slideActiveClass: slider.data('slideActiveClass'),
+                        slideNextClass: slider.data('slideNextClass'),
+                        slidePrevClass: slider.data('slidePrevClass'),
+                        wrapperClass: slider.data('wrapperClass'),
+                        bulletClass: slider.data('bulletClass'),
+                        bulletActiveClass: slider.data('bulletActiveClass'),
+                        nextButton: slider.data('nextButton'),
+                        prevButton: slider.data('prevButton'),
+                        indexButton: slider.data('indexButton')
+                    };
+                }
+                var _slider = app.slider(slider[0], options);
+                slider[0].slider = _slider;
+                destroySliderOnRemove(_slider);
+            }
+        };
+        
+        /*======================================================
+        ************   Photo Browser   ************
+        ======================================================*/
+        var PhotoBrowser = function (options) {
+            var pb = this, i;
+        
+            var defaults = {
+                photos : [],
+                initialSlide: 0,
+                spaceBetween: 20,
+                speed: 300,
+                zoom: true,
+                maxZoom: 3,
+                minZoom: 1,
+                exposition: true,
+                type: 'standalone',
+                navbar: true,
+                toolbar: true,
+                theme: 'light',
+                backLinkText: 'Close'
+            };
+            
+            options = options || {};
+            for (var def in defaults) {
+                if (typeof options[def] === 'undefined') {
+                    options[def] = defaults[def];
+                }
+            }
+        
+            pb.options = options;
+            
+            function findView() {
+                var view;
+                for (i = 0; i < app.views.length; i ++) {
+                    if (app.views[i].main) view = app.views[i];
+                }
+                return view;
+            }
+        
+            var iconColor = pb.options.theme === 'dark' ? 'white' : 'blue';
+        
+            var navbarTemplate = pb.options.navbarTemplate ||
+                                '<div class="navbar">' +
+                                    '<div class="navbar-inner">' +
+                                        '<div class="left sliding"><a href="#" class="link ' + (pb.options.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.options.backLinkText + '</span></a></div>' +
+                                        '<div class="center sliding"><span><span class="photo-browser-current"></span> of <span class="photo-browser-total"></span></span></div>' +
+                                        '<div class="right"></div>' +
+                                    '</div>' +
+                                '</div>';
+        
+            var toolbarTemplate = pb.options.toolbarTemplate ||
+                                '<div class="toolbar tabbar">' +
+                                    '<div class="toolbar-inner">' +
+                                        '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev-' + iconColor + '"></i></a>' +
+                                        '<a href="#" class="link photo-browser-next"><i class="icon icon-next-' + iconColor + '"></i></a>' +
+                                    '</div>' +
+                                '</div>';
+        
+            var template = pb.options.template ||
+                            '<div class="photo-browser photo-browser-' + pb.options.theme + '">' +
+                                '<div class="view navbar-fixed toolbar-fixed">' +
+                                    '{{navbar}}' +
+                                    '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
+                                        '<div class="photo-browser-slider-container slider-container">' +
+                                            '<div class="photo-browser-slider-wrapper slider-wrapper">' +
+                                                '{{photos}}' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '{{toolbar}}' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>';
+        
+            var photoTemplate = pb.options.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
+        
+            var photosHtml = '';
+            for (i = 0; i < pb.options.photos.length; i ++) {
+                photosHtml += photoTemplate.replace(/{{url}}/g, pb.options.photos[i]);
+            }
+        
+            var htmlTemplate = template
+                                .replace('{{navbar}}', (pb.options.navbar ? navbarTemplate : ''))
+                                .replace('{{noNavbar}}', (pb.options.navbar ? '' : 'no-navbar'))
+                                .replace('{{photos}}', photosHtml)
+                                .replace('{{toolbar}}', (pb.options.toolbar ? toolbarTemplate : ''));
+        
+            pb.activeSlideIndex = pb.options.initialSlide;
+            pb.openIndex = pb.activeSlideIndex;
+            pb.opened = false;
+        
+            pb.open = function (index) {
+                if (typeof index === 'undefined') index = pb.activeSlideIndex;
+                if (pb.opened && pb.slider) {
+                    pb.slider.slideTo(index);
+                    return;
+                }
+                pb.opened = true;
+                pb.openIndex = index;
+                if (pb.options.type === 'standalone') {
+                    $('body').append(htmlTemplate);
+                }
+                if (pb.options.type === 'popup') {
+                    pb.popup = app.popup('<div class="popup photo-browser-popup">' + htmlTemplate + '</div>');
+                    $(pb.popup).on('closed', pb.onPopupClose);
+                }
+                if (pb.options.type === 'page') {
+                    $(document).on('pageBeforeInit', pb.onPageBeforeInit);
+                    $(document).on('pageBeforeRemove', pb.onPageBeforeRemove);
+                    if (!pb.options.view) pb.options.view = findView();
+                    pb.options.view.loadContent(htmlTemplate);
+                    return;
+                }
+                pb.layout(pb.openIndex);
+        
+            };
+            pb.close = function () {
+                pb.opened = false;
+                if (!pb.sliderContainer || pb.sliderContainer.length === 0) {
+                    return;
+                }
+                // Detach events
+                pb.attachEvents(true);
+                // Delete from DOM
+                if (pb.options.type === 'standalone') {
+                    pb.container.removeClass('photo-browser-in').addClass('photo-browser-out').animationEnd(function () {
+                        pb.container.remove();
+                    });
+                }
+                // Destroy slider
+                pb.slider.destroy();
+                // Delete references
+                pb.slider = pb.sliderContainer = pb.sliderWrapper = pb.slides = gestureSlide = gestureImg = gestureImgWrap = undefined;
+            };
+        
+            pb.onPopupClose = function (e) {
+                pb.close();
+                $(pb.popup).off('pageBeforeInit', pb.onPopupClose);
+            };
+            pb.onPageBeforeInit = function (e) {
+                if (e.detail.page.name === 'photo-browser-slides') {
+                    pb.layout(pb.openIndex);
+                }
+                $(document).off('pageBeforeInit', pb.onPageBeforeInit);
+            };
+            pb.onPageBeforeRemove = function (e) {
+                if (e.detail.page.name === 'photo-browser-slides') {
+                    pb.close();
+                }
+                $(document).off('pageBeforeRemove', pb.onPageBeforeRemove);
+            };
+        
+            pb.layout = function (index) {
+                if (pb.options.type === 'page') {
+                    pb.container = $('.photo-browser-slider-container').parents('.view');
+                }
+                else {
+                    pb.container = $('.photo-browser');
+                }
+                if (pb.options.type === 'standalone') {
+                    pb.container.addClass('photo-browser-in');
+                    app.sizeNavbars(pb.container);
+                }
+                pb.sliderContainer = pb.container.find('.photo-browser-slider-container');
+                pb.sliderWrapper = pb.container.find('.photo-browser-slider-wrapper');
+                pb.slides = pb.container.find('.photo-browser-slide');
+                
+                pb.slider = app.slider(pb.sliderContainer, {
+                    nextButton: pb.options.nextButton || '.photo-browser-next',
+                    prevButton: pb.options.prevButton || '.photo-browser-prev',
+                    indexButton: pb.options.indexButton,
+                    initialSlide: index,
+                    spaceBetween: pb.options.spaceBetween,
+                    speed: pb.options.speed,
+                    onClick: function (slider, e) {
+                        if (pb.options.exposition) pb.toggleExposition();
+                    },
+                    onDoubleTap: function (slider, e) {
+                        pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
+                    },
+                    onSlideChangeStart: function (slider) {
+                        pb.activeSlideIndex = slider.activeSlideIndex;
+                        pb.container.find('.photo-browser-current').text(slider.activeSlideIndex + 1);
+                        pb.container.find('.photo-browser-total').text(slider.slides.length);
+                        if (slider.isFirst) {
+                            $('.photo-browser-prev').addClass('photo-browser-link-inactive');
+                            $('.photo-browser-next').removeClass('photo-browser-link-inactive');
+                        }
+                        else if (slider.isLast) {
+                            $('.photo-browser-next').addClass('photo-browser-link-inactive');
+                            $('.photo-browser-prev').removeClass('photo-browser-link-inactive');
+                        }
+                        else {
+                            $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
+                        }
+                        if (pb.options.onSlideChangeStart) pb.options.onSlideChangeStart(slider);
+                    },
+                    onSlideChangeEnd: function (slider) {
+                        // Reset zoom
+                        if (pb.options.zoom && gestureSlide && slider.previousSlideIndex !== slider.activeSlideIndex) {
+                            gestureImg.transform('translate3d(0,0,0) scale(1)');
+                            gestureImgWrap.transform('translate3d(0,0,0)');
+                            gestureSlide = gestureImg = gestureImgWrap = undefined;
+                            scale = currentScale = 1;
+                        }
+                        if (pb.options.onSlideChangeEnd) pb.options.onSlideChangeEnd(slider);
+                    }
+                });
+        
+                pb.attachEvents();
+        
+                
+        
+            };
+            pb.attachEvents = function (detach) {
+                var action = detach ? 'off' : 'on';
+                // Slide between photos
+        
+                if (pb.options.zoom) {
+                    // Scale image
+                    pb.slides[action]('gesturestart', pb.onSlideGestureStart);
+                    pb.slides[action]('gesturechange', pb.onSlideGestureChange);
+                    pb.slides[action]('gestureend', pb.onSlideGestureEnd);
+        
+                    // Move image
+                    pb.slides[action](app.touchEvents.start, pb.onSlideTouchStart);
+                    pb.slides[action](app.touchEvents.move, pb.onSlideTouchMove);
+                    pb.slides[action](app.touchEvents.end, pb.onSlideTouchEnd);
+                }
+                pb.container.find('.photo-browser-close-link')[action]('click', pb.close);
+            };
+        
+            var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, animating = false, currentTranslate;
+            var allowClick = true;
+        
+            // Expose
+            pb.exposed = false;
+            pb.toggleExposition = function () {
+                if (pb.container) pb.container.toggleClass('photo-browser-exposed');
+                pb.exposed = !pb.exposed;
+            };
+            pb.expositionOn = function () {
+                if (pb.container) pb.container.addClass('photo-browser-exposed');
+                pb.exposed = true;
+            };
+            pb.expositionOff = function () {
+                if (pb.container) pb.container.removeClass('photo-browser-exposed');
+                pb.exposed = false;
+            };
+            
+            // Gestures
+            var gestureSlide, gestureImg, gestureImgWrap, scale = 1, currentScale = 1, isScaling = false;
+            pb.onSlideGestureStart = function (e) {
+                if (!gestureSlide) {
+                    gestureSlide = $(this);
+                    gestureImg = gestureSlide.find('img');
+                    gestureImgWrap = gestureImg.parent();
+                }
+                gestureImg.transition(0);
+                isScaling = true;
+            };
+            pb.onSlideGestureChange = function (e) {
+                scale = e.scale * currentScale;
+                if (scale > pb.options.maxZoom) {
+                    scale = pb.options.maxZoom - 1 + Math.pow((scale - pb.options.maxZoom + 1), 0.5);
+                }
+                if (scale < pb.options.minZoom) {
+                    scale =  pb.options.minZoom + 1 - Math.pow((pb.options.minZoom - scale + 1), 0.5);
+                }
+                gestureImg.transform('translate3d(0,0,0) scale(' + scale + ')');
+            };
+            pb.onSlideGestureEnd = function (e) {
+                scale = Math.max(Math.min(scale, pb.options.maxZoom), pb.options.minZoom);
+                gestureImg.transition(pb.options.speed).transform('translate3d(0,0,0) scale(' + scale + ')');
+                currentScale = scale;
+                isScaling = false;
+                if (scale === 1) gestureSlide = undefined;
+            };
+            pb.toggleZoom = function () {
+                if (!gestureSlide) {
+                    gestureSlide = pb.slides.eq(pb.slider.activeSlideIndex);
+                    gestureImg = gestureSlide.find('img');
+                    gestureImgWrap = gestureImg.parent();
+                }
+                gestureImgWrap.transition(300).transform('translate3d(0,0,0)');
+                if (scale && scale !== 1) {
+                    scale = currentScale = 1;
+                    gestureImg.transition(300).transform('translate3d(0,0,0) scale(1)');
+                    gestureSlide = undefined;
+                }
+                else {
+                    scale = currentScale = pb.options.maxZoom;
+                    gestureImg.transition(300).transform('translate3d(0,0,0) scale(' + scale + ')');
+                }
+            };
+        
+            var imageIsTouched, imageIsMoved, imageCurrentX, imageCurrentY, imageMinX, imageMinY, imageMaxX, imageMaxY, imageWidth, imageHeight, imageTouchesStart = {}, imageTouchesCurrent = {}, imageStartX, imageStartY, velocityPrevPositionX, velocityPrevTime, velocityX, velocityPrevPositionY, velocityY;
+        
+            pb.onSlideTouchStart = function (e) {
+                if (imageIsTouched) return;
+                imageIsTouched = true;
+                imageTouchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+                imageTouchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+            };
+            pb.onSlideTouchMove = function (e) {
+                pb.slider.allowClick = false;
+                if (!imageIsTouched || !gestureSlide) return;
+        
+                if (!imageIsMoved) {
+                    imageWidth = gestureImg[0].offsetWidth;
+                    imageHeight = gestureImg[0].offsetHeight;
+                    imageStartX = $.getTranslate(gestureImgWrap[0], 'x') || 0;
+                    imageStartY = $.getTranslate(gestureImgWrap[0], 'y') || 0;
+                    gestureImgWrap.transition(0);
+                }
+                // Define if we need image drag
+                var scaledWidth = imageWidth * scale;
+                var scaledHeight = imageHeight * scale;
+        
+                if (scaledWidth < pb.slider.width && scaledHeight < pb.slider.height) return;
+        
+                imageMinX = Math.min((pb.slider.width / 2 - scaledWidth / 2), 0);
+                imageMaxX = -imageMinX;
+                imageMinY = Math.min((pb.slider.height / 2 - scaledHeight / 2), 0);
+                imageMaxY = -imageMinY;
+                
+                imageTouchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+                imageTouchesCurrent.y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        
+                if (!imageIsMoved && !isScaling) {
+                    if (
+                        (Math.floor(imageMinX) === Math.floor(imageStartX) && imageTouchesCurrent.x < imageTouchesStart.x) ||
+                        (Math.floor(imageMaxX) === Math.floor(imageStartX) && imageTouchesCurrent.x > imageTouchesStart.x)
+                        ) {
+                        imageIsTouched = false;
+                        return;
+                    }
+                }
+                
+                e.stopPropagation();
+                imageIsMoved = true;
+                imageCurrentX = imageTouchesCurrent.x - imageTouchesStart.x + imageStartX;
+                imageCurrentY = imageTouchesCurrent.y - imageTouchesStart.y + imageStartY;
+                
+                
+                if (imageCurrentX < imageMinX) {
+                    imageCurrentX =  imageMinX + 1 - Math.pow((imageMinX - imageCurrentX + 1), 0.8);
+                }
+                if (imageCurrentX > imageMaxX) {
+                    imageCurrentX = imageMaxX - 1 + Math.pow((imageCurrentX - imageMaxX + 1), 0.8);
+                }
+                
+                if (imageCurrentY < imageMinY) {
+                    imageCurrentY =  imageMinY + 1 - Math.pow((imageMinY - imageCurrentY + 1), 0.8);
+                }
+                if (imageCurrentY > imageMaxY) {
+                    imageCurrentY = imageMaxY - 1 + Math.pow((imageCurrentY - imageMaxY + 1), 0.8);
+                }
+        
+                //Velocity
+                if (!velocityPrevPositionX) velocityPrevPositionX = imageTouchesCurrent.x;
+                if (!velocityPrevPositionY) velocityPrevPositionY = imageTouchesCurrent.y;
+                if (!velocityPrevTime) velocityPrevTime = Date.now();
+                velocityX = (imageTouchesCurrent.x - velocityPrevPositionX) / (Date.now() - velocityPrevTime) / 2;
+                velocityY = (imageTouchesCurrent.y - velocityPrevPositionY) / (Date.now() - velocityPrevTime) / 2;
+                if (Math.abs(imageTouchesCurrent.x - velocityPrevPositionX) < 2) velocityX = 0;
+                if (Math.abs(imageTouchesCurrent.y - velocityPrevPositionY) < 2) velocityY = 0;
+                velocityPrevPositionX = imageTouchesCurrent.x;
+                velocityPrevPositionY = imageTouchesCurrent.y;
+                velocityPrevTime = Date.now();
+        
+                gestureImgWrap.transform('translate3d(' + imageCurrentX + 'px, ' + imageCurrentY + 'px,0)');
+            };
+            pb.onSlideTouchEnd = function (e) {
+                if (!imageIsTouched || !imageIsMoved) {
+                    imageIsTouched = false;
+                    imageIsMoved = false;
+                    return;
+                }
+                imageIsTouched = false;
+                imageIsMoved = false;
+                var momentumDurationX = 300;
+                var momentumDurationY = 300;
+                var momentumDistanceX = velocityX * momentumDurationX;
+                var newPositionX = imageCurrentX + momentumDistanceX;
+                var momentumDistanceY = velocityY * momentumDurationY;
+                var newPositionY = imageCurrentY + momentumDistanceY;
+        
+                //Fix duration
+                if (velocityX !== 0) momentumDurationX = Math.abs((newPositionX - imageCurrentX) / velocityX);
+                if (velocityY !== 0) momentumDurationY = Math.abs((newPositionY - imageCurrentY) / velocityY);
+                var momentumDuration = Math.max(momentumDurationX, momentumDurationY);
+        
+                imageCurrentX = newPositionX;
+                imageCurrentY = newPositionY;
+        
+                // Define if we need image drag
+                var scaledWidth = imageWidth * scale;
+                var scaledHeight = imageHeight * scale;
+                imageMinX = Math.min((pb.slider.width / 2 - scaledWidth / 2), 0);
+                imageMaxX = -imageMinX;
+                imageMinY = Math.min((pb.slider.height / 2 - scaledHeight / 2), 0);
+                imageMaxY = -imageMinY;
+                imageCurrentX = Math.max(Math.min(imageCurrentX, imageMaxX), imageMinX);
+                imageCurrentY = Math.max(Math.min(imageCurrentY, imageMaxY), imageMinY);
+        
+                gestureImgWrap.transition(momentumDuration).transform('translate3d(' + imageCurrentX + 'px, ' + imageCurrentY + 'px,0)');
+            };
+        
+            return pb;
+        };
+        
+        app.photoBrowser = function (options) {
+            return new PhotoBrowser(options);
         };
         
         /*======================================================
@@ -3337,8 +4180,9 @@
             if (this[0]) {
                 var child = this[0];
                 var i = 0;
-                while ((child = child.previousSibling) != null)
-                    i++;
+                while ((child = child.previousSibling) != null) {
+                    if (child.nodeType === 1) i++;
+                }
                 return i;
             }
             else return undefined;
@@ -3581,6 +4425,52 @@
     
         return resultArray.join(separator);
     };
+    
+    $.getTranslate = function (el, axis) {
+        var matrix, curTransform, curStyle, transformMatrix;
+    
+        // automatic axis detection
+        if (typeof axis === 'undefined') {
+            axis = 'x';
+        }
+    
+        curStyle = window.getComputedStyle(el, null);
+        if (window.WebKitCSSMatrix) {
+            // Some old versions of Webkit choke when 'none' is passed; pass
+            // empty string instead in this case
+            transformMatrix = new WebKitCSSMatrix(curStyle.webkitTransform === 'none' ? '' : curStyle.webkitTransform);
+        }
+        else {
+            transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform  || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
+            matrix = transformMatrix.toString().split(',');
+        }
+    
+        if (axis === 'x') {
+            //Latest Chrome and webkits Fix
+            if (window.WebKitCSSMatrix)
+                curTransform = transformMatrix.m41;
+            //Crazy IE10 Matrix
+            else if (matrix.length === 16)
+                curTransform = parseFloat(matrix[12]);
+            //Normal Browsers
+            else
+                curTransform = parseFloat(matrix[4]);
+        }
+        if (axis === 'y') {
+            //Latest Chrome and webkits Fix
+            if (window.WebKitCSSMatrix)
+                curTransform = transformMatrix.m42;
+            //Crazy IE10 Matrix
+            else if (matrix.length === 16)
+                curTransform = parseFloat(matrix[13]);
+            //Normal Browsers
+            else
+                curTransform = parseFloat(matrix[5]);
+        }
+        
+        return curTransform || 0;
+    };
+    
     $.fn = Dom7.prototype;
     
     // Ajax
@@ -3588,7 +4478,6 @@
         var defaults = {
             method: 'GET',
             data: false,
-            crossDomain: true,
             async: true,
             cache: true,
             user: '',
@@ -3603,6 +4492,11 @@
         // Merge options and defaults
         for (var prop in defaults) {
             if (!(prop in options)) options[prop] = defaults[prop];
+        }
+    
+        // Default URL
+        if (!options.url) {
+            options.url = window.location.toString();
         }
     
         // Data to modify GET URL
@@ -3711,6 +4605,15 @@
             }
         }
     
+        // Check for crossDomain
+        if (typeof options.crossDomain === 'undefined') {
+            options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+        }
+    
+        if (!options.crossDomain) {
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        }
+    
         // Handle XHR
         xhr.onload = function (e) {
             if (xhr.status === 200 || xhr.status === 0) {
@@ -3748,37 +4651,24 @@
         // Return XHR object
         return xhr;
     };
-    
-    $.get = function (url, data, success) {
-        var options = {
-            url: url,
-            method: 'GET',
-            data: typeof data === 'function' ? undefined : data,
-            success: typeof data === 'function' ? data : success
-        };
-        return $.ajax(options);
-    };
-    
-    $.post = function (url, data, success) {
-        var options = {
-            url: url,
-            method: 'POST',
-            data: typeof data === 'function' ? undefined : data,
-            success: typeof data === 'function' ? data : success
-        };
-        return $.ajax(options);
-    };
-    
-    $.getJSON = function (url, data, success) {
-        var options = {
-            url: url,
-            method: 'GET',
-            data: typeof data === 'function' ? undefined : data,
-            success: typeof data === 'function' ? data : success,
-            dataType: 'json'
-        };
-        return $.ajax(options);
-    };
+    // Shrotcuts
+    (function () {
+        var methods = ('get post getJSON').split(' ');
+        function createMethod(method) {
+            $[method] = function (url, data, success) {
+                return $.ajax({
+                    url: url,
+                    method: method === 'post' ? 'POST' : 'GET',
+                    data: typeof data === 'function' ? undefined : data,
+                    success: typeof data === 'function' ? data : success,
+                    dataType: method === 'getJSON' ? 'json' : undefined
+                });
+            };
+        }
+        for (var i = 0; i < methods.length; i++) {
+            createMethod(methods[i]);
+        }
+    })();
     
     // Export Selectors engine to global Framework7
     Framework7.$ = $;

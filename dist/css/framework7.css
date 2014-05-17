@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.2
+ * Framework7 0.8.4
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 8, 2014
+ * Released on: May 17, 2014
 */
 /*=============
   Framework 7
@@ -531,7 +531,11 @@ html.android .page-from-center-to-right {
 .navbar a.link i + span,
 .toolbar a.link i + span,
 .navbar a.link i + i,
-.toolbar a.link i + i {
+.toolbar a.link i + i,
+.navbar a.link span + i,
+.toolbar a.link span + i,
+.navbar a.link span + span,
+.toolbar a.link span + span {
   margin-left: 7px;
 }
 .navbar a.icon-only,
@@ -639,7 +643,9 @@ html.android .page-from-center-to-right {
 .tabbar a.active {
   color: #007aff;
 }
-.tabbar a.tab-link {
+.tabbar a.tab-link,
+.tabbar a.link {
+  height: 100%;
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -648,10 +654,10 @@ html.android .page-from-center-to-right {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   -webkit-align-items: center;
@@ -668,10 +674,15 @@ html.android .page-from-center-to-right {
 .tabbar-labels {
   height: 50px;
 }
-.tabbar-labels a.tab-link {
+.tabbar-labels a.tab-link,
+.tabbar-labels a.link {
   padding-top: 4px;
   padding-bottom: 4px;
   height: 100%;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
 }
 .tabbar-labels span.tabbar-label {
   line-height: 1;
@@ -689,7 +700,8 @@ html.android .page-from-center-to-right {
     -webkit-justify-content: center;
     justify-content: center;
   }
-  .tabbar a.tab-link {
+  .tabbar a.tab-link,
+  .tabbar a.link {
     width: auto;
     min-width: 105px;
   }
@@ -949,6 +961,25 @@ i.icon.icon-form-url {
   width: 29px;
   height: 29px;
   background-image: url("../img/i-form-url.png");
+}
+i.icon.icon-next-blue,
+i.icon.icon-prev-blue,
+i.icon.icon-next-white,
+i.icon.icon-prev-white {
+  width: 15px;
+  height: 15px;
+}
+i.icon.icon-next-blue {
+  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23007aff' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
+}
+i.icon.icon-prev-blue {
+  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23007aff' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
+}
+i.icon.icon-next-white {
+  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23ffffff' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
+}
+i.icon.icon-prev-white {
+  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23ffffff' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
 }
 .badge {
   font-size: 13px;
@@ -2372,6 +2403,27 @@ body.panel-closing .views {
 .tabs .tab.active {
   display: block;
 }
+.tabs-animated-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.tabs-animated-wrap .tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  height: 100%;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.tabs-animated-wrap .tab {
+  width: 100%;
+  display: block;
+  -webkit-flex-shrink: 0;
+  -ms-flex: 0 0 auto;
+  flex-shrink: 0;
+}
 /* === Messages === */
 .messages-content {
   background: #fff;
@@ -2691,4 +2743,272 @@ html.with-statusbar-overlay body .panel {
   -webkit-transform: rotate(180deg) translate3d(0, 0, 0);
   -ms-transform: rotate(180deg) translate3d(0, 0, 0);
   transform: rotate(180deg) translate3d(0, 0, 0);
+}
+/* === Slider === */
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.slider-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+}
+.slider-container-vertical .slider-wrapper {
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+.slider-slide {
+  -webkit-flex-shrink: 0;
+  -ms-flex: 0 0 auto;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+}
+.slider-pagination {
+  position: absolute;
+  z-index: 10;
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  left: 0;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+  opacity: 1;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  transition-property: opacity;
+}
+.slider-pagination.slider-pagination-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.slider-container-vertical .slider-pagination {
+  right: 10px;
+  left: auto;
+  top: 50%;
+  bottom: auto;
+  width: auto;
+  height: auto;
+  -webkit-transform: translate3d(0, -50%, 0);
+  -ms-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+.slider-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 100%;
+  background: #000;
+  opacity: 0.2;
+  margin: 0 5px;
+}
+.slider-container-vertical .slider-pagination-bullet {
+  display: block;
+  margin: 5px 0;
+}
+.slider-pagination-active {
+  opacity: 1;
+  background: #007aff;
+}
+/* === Photo Browser === */
+.photo-browser {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9000;
+}
+body > .photo-browser {
+  opacity: 0;
+  display: none;
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+body > .photo-browser.photo-browser-in {
+  display: block;
+  -webkit-animation: photoBrowserIn 400ms forwards;
+  animation: photoBrowserIn 400ms forwards;
+}
+body > .photo-browser.photo-browser-out {
+  display: block;
+  -webkit-animation: photoBrowserOut 400ms forwards;
+  animation: photoBrowserOut 400ms forwards;
+}
+html.with-statusbar-overlay body > .photo-browser {
+  height: -webkit-calc(100% - 20px);
+  height: -moz-calc(100% - 20px);
+  height: -ms-calc(100% - 20px);
+  height: calc(100% - 20px);
+  top: 20px;
+}
+.popup > .photo-browser .navbar,
+body > .photo-browser .navbar,
+.popup > .photo-browser .toolbar,
+body > .photo-browser .toolbar {
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.photo-browser .navbar,
+.view[data-page="photo-browser-slides"] .navbar,
+.photo-browser .toolbar,
+.view[data-page="photo-browser-slides"] .toolbar {
+  background: rgba(247, 247, 247, 0.95);
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+}
+.view[data-page="photo-browser-slides"] .page[data-page="photo-browser-slides"] .navbar,
+.view[data-page="photo-browser-slides"] .page[data-page="photo-browser-slides"] .toolbar {
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.photo-browser-exposed .navbar,
+.photo-browser-exposed .toolbar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.photo-browser-exposed .photo-browser-slider-container {
+  background: #000;
+}
+.photo-browser-slider-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+}
+.photo-browser-slider-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+.photo-browser-link-inactive {
+  opacity: 0.3;
+}
+.photo-browser-slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex: 0 0 auto;
+  flex-shrink: 0;
+}
+.photo-browser-slide span {
+  width: 100%;
+  text-align: center;
+  display: none;
+}
+.photo-browser-slide img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: none;
+}
+.photo-browser-slide.slider-slide-active span,
+.photo-browser-slide.slider-slide-next span,
+.photo-browser-slide.slider-slide-prev span {
+  display: block;
+}
+.photo-browser-slide.slider-slide-active img,
+.photo-browser-slide.slider-slide-next img,
+.photo-browser-slide.slider-slide-prev img {
+  display: inline;
+}
+.photo-browser-dark .navbar,
+.photo-browser-dark .toolbar {
+  background: rgba(30, 30, 30, 0.8);
+  border: none;
+  color: #fff;
+}
+.photo-browser-dark .navbar a,
+.photo-browser-dark .toolbar a {
+  color: #fff;
+}
+.photo-browser-dark .photo-browser-slider-container {
+  background: #000;
+}
+@-webkit-keyframes photoBrowserIn {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+@keyframes photoBrowserIn {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes photoBrowserOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
+}
+@keyframes photoBrowserOut {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.5);
+    opacity: 0;
+  }
 }
