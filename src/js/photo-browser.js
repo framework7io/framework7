@@ -156,7 +156,10 @@ var PhotoBrowser = function (options) {
         else {
             pb.container = $('.photo-browser');
         }
-        
+        if (pb.options.type === 'standalone') {
+            pb.container.addClass('photo-browser-in');
+            app.sizeNavbars(pb.container);
+        }
         pb.sliderContainer = pb.container.find('.photo-browser-slider-container');
         pb.sliderWrapper = pb.container.find('.photo-browser-slider-wrapper');
         pb.slides = pb.container.find('.photo-browser-slide');
@@ -205,10 +208,7 @@ var PhotoBrowser = function (options) {
 
         pb.attachEvents();
 
-        if (pb.options.type === 'standalone') {
-            pb.container.addClass('photo-browser-in');
-            app.sizeNavbars(pb.container);
-        }
+        
 
     };
     pb.attachEvents = function (detach) {
