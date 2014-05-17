@@ -96,30 +96,6 @@ module.exports = function (grunt) {
                     'dist/css/framework7.min.css' : ['src/less/framework7.less']
                 }
             },
-            build_rails: {
-                options: {
-                    paths: ['less'],
-                    cleancss: false,
-                    modifyVars: {
-                        imgBaseUrl: '"../assets"'
-                    }
-                },
-                files: {
-                    'build_rails/stylesheets/framework7.css' : ['src/less/framework7.less']
-                }
-            },
-            dist_rails: {
-                options: {
-                    paths: ['less'],
-                    cleancss: true,
-                    modifyVars: {
-                        imgBaseUrl: '"../assets"'
-                    }
-                },
-                files: {
-                    'dist_rails/stylesheets/framework7.min.css' : ['src/less/framework7.less']
-                }
-            },
             kitchen: {
                 options: {
                     paths: ['kitchen-sink/less/'],
@@ -211,18 +187,6 @@ module.exports = function (grunt) {
                 src: ['dist/css/<%= framework7.filename %>.min.css'],
                 dest: 'dist/css/<%= framework7.filename %>.min.css'
             },
-            js_rails: {
-                src: jsFilesList,
-                dest: 'build_rails/javascripts/<%= framework7.filename %>.js'
-            },
-            css_build_rails: {
-                src: ['build_rails/stylesheets/<%= framework7.filename %>.css'],
-                dest: 'build_rails/stylesheets/<%= framework7.filename %>.css'
-            },
-            css_dist_rails: {
-                src: ['dist_rails/stylesheets/<%= framework7.filename %>.min.css'],
-                dest: 'dist_rails/stylesheets/<%= framework7.filename %>.min.css'
-            }
         },
         uglify: {
             options: {
@@ -232,10 +196,6 @@ module.exports = function (grunt) {
                 src: ['dist/js/<%= framework7.filename %>.js'],
                 dest: 'dist/js/<%= framework7.filename %>.min.js',
             },
-            rails: {
-                src: ['dist_rails/javascripts/<%= framework7.filename %>.js'],
-                dest: 'dist_rails/javascripts/<%= framework7.filename %>.min.js',
-            }
         },
         jshint: {
             options: {
@@ -246,15 +206,7 @@ module.exports = function (grunt) {
                 src: ['Gruntfile.js', 'build/js/framework7.js']
             }
         },
-        jshint_rails: {
-            options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-            },
-            gruntfile: {
-                src: ['Gruntfile.js', 'build_rails/javascripts/framework7.js']
-            }
-        },
+        
         watch: {
             build: {
                 files: ['src/**'],
@@ -296,38 +248,12 @@ module.exports = function (grunt) {
             build: {
                 options: {
                     pretty: true,
-                    data: function () {
-                        return {
-                            cssDir: 'css',
-                            jsDir: 'js',
-                            imgDir: 'img'
-                        };
-                    }
                 },
                 files: [{
                     expand: true,
                     cwd: 'src/templates/',
                     src: ['*.jade'],
                     dest: 'build/',
-                    ext: '.html'
-                }]
-            },
-            build_rails: {
-                options: {
-                    pretty: true,
-                    data: function () {
-                        return {
-                            cssDir: 'stylesheets',
-                            jsDir: 'javascripts',
-                            imgDir: 'images'
-                        };
-                    }
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'src/templates/',
-                    src: ['*.jade'],
-                    dest: 'build_rails/',
                     ext: '.html'
                 }]
             },
@@ -427,38 +353,6 @@ module.exports = function (grunt) {
                     }
                 ]
             },
-            build_rails: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'src/img',
-                        src: ['**'],
-                        dest: 'build_rails/images'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'src/my-app/',
-                        src: ['my-app.css'],
-                        dest: 'build_rails/stylesheets/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'src/my-app/',
-                        src: ['my-app.js'],
-                        dest: 'build_rails/javascripts/'
-                    }
-                ]
-            },
-            dist_rails: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'build_rails/',
-                        src: ['**'],
-                        dest: 'dist_rails/'
-                    }
-                ]
-            }
         },
     });
 
@@ -497,18 +391,6 @@ module.exports = function (grunt) {
         'uglify:dist'
     ]);
 
-    // Build a new rails asset pipeline compatible version of the library
-    this.registerTask('rails', 'Builds a rails version of <%= pkg.name %>', [
-        'concat:js_rails',
-        'less:build_rails',
-        'less:dist_rails',
-        'concat:css_build_rails',
-        'concat:css_dist_rails',
-        'copy:build_rails',
-        'jade:build_rails',
-        'copy:dist_rails',
-        'uglify:rails'
-    ]);
 
     // Kitchen Sink
     this.registerTask('kitchen', 'Builds a kithcen sink', [
