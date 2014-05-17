@@ -1,0 +1,18 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back-blue 
+        span Back
+    .center.sliding Slider Vertical
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars-blue
+.pages.navbar-through
+  .page(data-page="slider-vertical")
+    .page-content
+      .slider-container.slider-init.ks-demo-slider(data-direction="vertical", data-pagination=".slider-pagination")
+        .slider-pagination
+        .slider-wrapper
+          - for (var i = 1; i < 11; i++)
+            .slider-slide Slide #{i}

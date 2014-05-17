@@ -1,0 +1,23 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back-blue 
+        span Back
+    .center.sliding Custom Controls
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars-blue
+.pages.navbar-through
+  .page(data-page="slider-custom").no-toolbar
+    .page-content
+      .ks-slider-custom
+        .slider-container.slider-init(data-pagination=".slider-pagination", data-spaceBetween="0", data-nextButton=".slider-next-button", data-prevButton=".slider-prev-button", data-indexButton=".slider-pagination-bullet", data-paginationHide="false")
+          .slider-pagination
+          .slider-wrapper
+            - for (var i = 1; i < 8; i++)
+              .slider-slide(style="background-image:url(http://hhhhold.com/1024x1024/d/jpg?#{i})")
+        a(href="#").slider-prev-button 
+          i.icon.icon-prev-blue
+        a(href="#").slider-next-button
+          i.icon.icon-next-blue

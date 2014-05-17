@@ -1,0 +1,32 @@
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="left sliding"><a href="index.html" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>
+    <div class="center sliding">Nested Sliders</div>
+    <div class="right"><a href="#" class="open-panel link icon-only"><i class="icon icon-bars-blue"></i></a></div>
+  </div>
+</div>
+<div class="pages navbar-through">
+  <div data-page="slider-nested" class="page">
+    <div class="page-content">
+      <div data-pagination=".slider-pagination-h" data-paginationHide="false" class="slider-container slider-init ks-demo-slider">
+        <div class="slider-pagination slider-pagination-h"></div>
+        <div class="slider-wrapper">
+          <div class="slider-slide">Horizontal Slide 1</div>
+          <div class="slider-slide">
+            <div data-pagination=".slider-pagination-v" data-direction="vertical" data-paginationHide="false" class="slider-container slider-init ks-demo-slider">
+              <div class="slider-pagination slider-pagination-v"></div>
+              <div class="slider-wrapper">
+                <div class="slider-slide">Vertical Slide 1</div>
+                <div class="slider-slide">Vertical Slide 2</div>
+                <div class="slider-slide">Vertical Slide 3</div>
+              </div>
+            </div>
+          </div>
+          <div class="slider-slide">Horizontal Slide 3</div>
+          <div class="slider-slide">Horizontal Slide 4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
