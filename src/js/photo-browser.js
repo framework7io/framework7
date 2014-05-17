@@ -171,10 +171,10 @@ var PhotoBrowser = function (options) {
             initialSlide: index,
             spaceBetween: pb.options.spaceBetween,
             speed: pb.options.speed,
-            onClick: function (e) {
+            onClick: function (slider, e) {
                 if (pb.options.exposition) pb.toggleExposition();
             },
-            onDoubleTap: function (e) {
+            onDoubleTap: function (slider, e) {
                 pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
             },
             onSlideChangeStart: function (slider) {
