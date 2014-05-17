@@ -107,7 +107,7 @@ var Slider = function (container, options) {
         s.slideTo(s.activeSlideIndex, 0, false);
     };
 
-    var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate;
+    var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate, animating = false;
     var lastClickTime = Date.now(), clickTimeout;
     s.allowClick = true;
 
@@ -121,10 +121,10 @@ var Slider = function (container, options) {
         e.preventDefault();
         s.allowClick = true;
         s.updateSize();
-
+        if (s.options.onTouchStart) s.options.onTouchStart(s);
     };
     s.onTouchMove = function (e) {
-        
+        if (s.options.onTouchMove) s.options.onTouchMove(s);
         s.allowClick = false;
         if (!isTouched) return;
         if (e.targetTouches && e.targetTouches.length > 1) return;
@@ -140,6 +140,7 @@ var Slider = function (container, options) {
             isTouched = false;
             return;
         }
+        if (s.options.onSliderMove) s.options.onSliderMove(s);
 
         e.preventDefault();
         e.stopPropagation();
@@ -147,7 +148,7 @@ var Slider = function (container, options) {
         if (!isMoved) {
             currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y');
             s.wrapper.transition(0);
-            s.onSlideChangeEnd();
+            if (animating) s.onSlideChangeEnd();
         }
         isMoved = true;
         var diff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
@@ -158,6 +159,7 @@ var Slider = function (container, options) {
         s.wrapper.transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
     };
     s.onTouchEnd = function (e) {
+        if (s.options.onTouchEnd) s.options.onTouchEnd(s);
         var touchEndTime = Date.now();
         var timeDiff = touchEndTime - touchStartTime;
         if (s.allowClick) {
@@ -247,6 +249,7 @@ var Slider = function (container, options) {
             if (runCallbacks !== false) s.onSlideChangeEnd();
         }
         else {
+            animating = true;
             s.wrapper
                 .transition(speed)
                 .transform('translate3d(' + translateX + 'px,' + translateY + 'px,0)')
@@ -272,6 +275,7 @@ var Slider = function (container, options) {
         if (s.options.onSlideChangeStart) s.options.onSlideChangeStart(s);
     };
     s.onSlideChangeEnd = function () {
+        animating = false;
         s.wrapper.transition(0);
         if (s.options.onSlideChangeEnd) s.options.onSlideChangeEnd(s);
     };
