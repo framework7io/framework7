@@ -35,7 +35,7 @@ window.Framework7 = function (params) {
         swipeBackPageActiveArea: 30,
         swipeBackPageBoxShadow: true,
         // Ajax
-        ajaxLinks: false, // or CSS selector
+        ajaxLinks: undefined, // or CSS selector
         // Pull To Refresh
         pullToRefresh: true,
         // Sortable
