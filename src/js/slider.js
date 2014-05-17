@@ -80,8 +80,8 @@ var Slider = function (container, options) {
     };
 
     s.updateSize = function () {
-        s.width = s.container.width();
-        s.height = s.container.height();
+        s.width = s.container[0].offsetWidth;
+        s.height = s.container[0].offsetHeight;
         s.size = isH ? s.width : s.height;
     };
 
@@ -104,9 +104,10 @@ var Slider = function (container, options) {
 
     s.onResize = function () {
         s.updateSize();
+        s.slideTo(s.activeSlideIndex, 0, false);
     };
 
-    var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, animating = false, currentTranslate;
+    var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate;
     var lastClickTime = Date.now(), clickTimeout;
     s.allowClick = true;
 
@@ -117,11 +118,10 @@ var Slider = function (container, options) {
         touchesStart.x = touchesCurrent.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = touchesCurrent.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = Date.now();
-        s.width = s.container[0].offsetWidth;
-        s.height = s.container[0].offsetHeight;
         e.preventDefault();
         s.allowClick = true;
         s.updateSize();
+
     };
     s.onTouchMove = function (e) {
         
@@ -145,26 +145,16 @@ var Slider = function (container, options) {
         e.stopPropagation();
 
         if (!isMoved) {
-            if (animating) {
-                currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y');
-                var slidesDiff = s.onSlideChangeEnd();
-                currentTranslate += slidesDiff * (s.size + s.options.spaceBetween) / s.options.slidesPerView;
-                s.wrapper.transition(0);
-                var currTranslateX = isH ? currentTranslate : 0;
-                var currTranslateY = isH ? 0 : currentTranslate;
-                s.wrapper.transform('translate3d(' + currTranslateX + 'px,' + currTranslateY + 'px,0)');
-            }
-            else {
-                currentTranslate = 0;
-            }
+            currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y');
+            s.wrapper.transition(0);
+            s.onSlideChangeEnd();
         }
-        
         isMoved = true;
-        var diff = isH ? touchesCurrent.x - touchesStart.x  + currentTranslate : touchesCurrent.y - touchesStart.y  + currentTranslate;
+        var diff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
         if ((diff > 0 && s.activeSlideIndex === 0)) diff = Math.pow(diff, 0.85);
         else if (diff < 0 && s.activeSlideIndex === s.slides.length - s.options.slidesPerView) diff = -Math.pow(-diff, 0.85);
         
-        var translateX = isH ? diff : 0, translateY = isH ? 0 : diff;
+        var translateX = isH ? diff + currentTranslate: 0, translateY = isH ? 0 : diff + currentTranslate;
         s.wrapper.transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
     };
     s.onTouchEnd = function (e) {
@@ -236,12 +226,12 @@ var Slider = function (container, options) {
         }
     };
 
-    s.slideTo = function (index, speed) {
-        if (animating) return;
+    s.slideTo = function (index, speed, runCallbacks) {
         if (typeof index === 'undefined') index = 0;
         if (index < 0) index = 0;
         if (index > s.slides.length - s.options.slidesPerView) index = s.slides.length - s.options.slidesPerView;
-        var translate = (-index + s.activeSlideIndex) * (s.size + s.options.spaceBetween) / s.options.slidesPerView;
+
+        var translate = - (s.size + s.options.spaceBetween) * index / s.options.slidesPerView;
 
         if (typeof speed === 'undefined') speed = s.options.speed;
         s.previousSlideIndex = s.activeSlideIndex;
@@ -251,15 +241,17 @@ var Slider = function (container, options) {
         s.onSlideChangeStart();
         var translateX = isH ? translate : 0, translateY = isH ? 0 : translate;
         if (speed === 0) {
-            s.onSlideChangeEnd();
+            s.wrapper
+                .transition(0)
+                .transform('translate3d(' + translateX + 'px,' + translateY + 'px,0)');
+            if (runCallbacks !== false) s.onSlideChangeEnd();
         }
         else {
-            animating = true;
             s.wrapper
                 .transition(speed)
                 .transform('translate3d(' + translateX + 'px,' + translateY + 'px,0)')
                 .transitionEnd(function () {
-                    s.onSlideChangeEnd();
+                    if (runCallbacks !== false) s.onSlideChangeEnd();
                 });
         }
     };
@@ -280,24 +272,8 @@ var Slider = function (container, options) {
         if (s.options.onSlideChangeStart) s.options.onSlideChangeStart(s);
     };
     s.onSlideChangeEnd = function () {
-        animating = false;
-        s.wrapper.transition(0).transform('');
-        if (isH) {
-            s.wrapper.css({
-                left: -100 * s.activeSlideIndex / s.options.slidesPerView + '%',
-                marginLeft: -s.options.spaceBetween * s.activeSlideIndex / s.options.slidesPerView + 'px'
-            });
-        }
-        else {
-            s.wrapper.css({
-                top: -100 * s.activeSlideIndex / s.options.slidesPerView + '%',
-                marginTop: -s.options.spaceBetween * s.activeSlideIndex / s.options.slidesPerView + 'px'
-            });
-        }
+        s.wrapper.transition(0);
         if (s.options.onSlideChangeEnd) s.options.onSlideChangeEnd(s);
-            
-        // Return slides diff
-        return (s.activeSlideIndex - s.previousSlideIndex);
     };
     s.slideNext = function () {
         s.slideTo(s.activeSlideIndex + 1);
