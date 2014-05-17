@@ -1,5 +1,19 @@
 # Change Log
 
+## Framework7 v0.8.4 - Updated on May 17, 2014
+
+*  New Slider component
+*  New Photo Browser component
+*  New arguments for predefined Modals (Alert, Confirm, Prompt) - myApp.alert(text, title, callbackOk, callbackCancel) 
+*  "X-Requested-With: XMLHttpRequest" header for non crossdomain Ajax requests
+*  "cacheIgnoreList" app parameter renamed to "cacheIgnore"
+*  New transitional/animated Tabs
+*  New "pageBeforeRemove" Page callback
+*  Fixed swipe-panels when swiping during opened Modal/Overlay
+*  Removed Rails distributive
+*  New $.getTranslate(el, axis) DOM7 helper
+*  Lot of minor fixes and improvements
+
 ## Framework7 v0.8.2 - Updated on May 8, 2014
 
 *  Automatically submit forms using Ajax with additional "ajax-submit" and "ajax-submit-onchange" classes on form
