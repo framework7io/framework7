@@ -131,7 +131,8 @@ app.initFormsStorage = function (pageContainer) {
     if (pageContainer.length === 0) return;
 
     var forms = pageContainer.find('form.store-data');
-
+    if (forms.length === 0) return;
+    
     // Parse forms data and fill form if there is such data
     forms.each(function () {
         var id = this.getAttribute('id');
@@ -140,14 +141,24 @@ app.initFormsStorage = function (pageContainer) {
         if (formData) app.formFromJSON(this, formData);
     });
     // Update forms data on inputs change
-    forms.on('change submit', function () {
-        var formId = this.id;
+    function storeForm() {
+        /*jshint validthis:true */
+        var form = $(this);
+        var formId = form[0].id;
         if (!formId) return;
-        var formJSON = app.formToJSON(this);
+        var formJSON = app.formToJSON(form);
         if (!formJSON) return;
         app.formStoreData(formId, formJSON);
-        $(this).trigger('store', {data: formJSON});
-    });
+        form.trigger('store', {data: formJSON});
+    }
+    forms.on('change submit', storeForm);
+
+    // Detach Listeners
+    function pageBeforeRemove() {
+        forms.off('change submit', storeForm);
+        pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+    }
+    pageContainer.on('pageBeforeRemove', pageBeforeRemove);
 };
 
 // Ajax submit on forms
