@@ -348,7 +348,7 @@ app.loadContent = function (view, content, pushState) {
     }
     if (app.params.pushState)  {
         if (typeof pushState === 'undefined') pushState = true;
-        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', '#/#content-' + view.history.length);
+        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', '#!/#content-' + view.history.length);
     }
     _load(view, null, content);
 
@@ -368,7 +368,7 @@ app.loadPage = function (view, url, pushState) {
         }
         if (app.params.pushState)  {
             if (typeof pushState === 'undefined') pushState = true;
-            if (pushState) history.pushState({url: url}, '', '#/' + url);
+            if (pushState) history.pushState({url: url}, '', '#!/' + url);
         }
 
         _load(view, url, data);

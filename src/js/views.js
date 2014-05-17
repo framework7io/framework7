@@ -12,7 +12,7 @@ app.addView = function (selector, params) {
     var docLocation = document.location.href;
     var viewURL = docLocation;
     if (app.params.pushState) {
-        if (viewURL.indexOf('#/') >= 0 && viewURL.indexOf('#/#') < 0) viewURL = viewURL.split('#/')[0];
+        if (viewURL.indexOf('#!/') >= 0 && viewURL.indexOf('#!/#') < 0) viewURL = viewURL.split('#!/')[0];
     }
     var view = {
         container: container,
@@ -61,8 +61,8 @@ app.addView = function (selector, params) {
 
     // Push State on load
     if (app.params.pushState && view.main) {
-        if (docLocation.indexOf('#/') >= 0 && docLocation.indexOf('#/#') < 0) {
-            app.loadPage(view, docLocation.split('#/')[1], false);
+        if (docLocation.indexOf('#!/') >= 0 && docLocation.indexOf('#!/#') < 0) {
+            app.loadPage(view, docLocation.split('#!/')[1], false);
         }
     }
     
