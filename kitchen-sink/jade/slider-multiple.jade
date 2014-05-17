@@ -39,3 +39,10 @@
         .slider-wrapper
           - for (var i = 1; i < 6; i++)
             .slider-slide Slide #{i}
+
+      .content-block-title Slow speed
+      .slider-container.slider-init.ks-carousel-slider(data-speed="900", data-pagination=".slider-pagination-c5", data-spaceBetween="50")
+        .slider-pagination.slider-pagination-c5
+        .slider-wrapper
+          - for (var i = 1; i < 11; i++)
+            .slider-slide Slide #{i}
