@@ -39,6 +39,7 @@
         .transition(400ms);
     }
 }
+
 .view[data-page="photo-browser-slides"] .page[data-page="photo-browser-slides"]{
     .navbar, .toolbar {
         .transform(translate3d(0,0,0));
@@ -73,6 +74,9 @@
     padding: 0;
     .flexbox();
 }
+.photo-browser-link-inactive {
+    opacity: 0.3;
+}
 .photo-browser-slide {
     width: 100%;
     height: 100%;
@@ -103,6 +107,22 @@
         }
     }
 }
+
+.photo-browser-dark {
+    .navbar, .toolbar {
+        background: rgba(30,30,30,0.8);
+        border: none;
+        color:#fff;
+        a {
+            color:#fff;
+        }
+    }
+    .photo-browser-slider-container {
+        background: #000;
+    }
+
+}
+
 @-webkit-keyframes photoBrowserIn {
     0% {
         -webkit-transform: translate3d(0,0,0) scale(0.5);
