@@ -6,7 +6,8 @@ app.initClickEvents = function () {
         /*jshint validthis:true */
         var clicked = $(this);
         var url = clicked.attr('href');
-        if (clicked[0].nodeName.toLowerCase() === 'a') {
+        var isLink = clicked[0].nodeName.toLowerCase() === 'a';
+        if (isLink) {
             // External
             if (clicked.hasClass('external')) {
                 return;
@@ -119,7 +120,7 @@ app.initClickEvents = function () {
             app.sortableClose(clicked.data('sortable'));
         }
         // Load Page
-        if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks)) {
+        if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks) || !isLink) {
             return;
         }
         var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
