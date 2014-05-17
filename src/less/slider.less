@@ -36,6 +36,9 @@
     text-align: center;
     .transition(300ms);
     opacity: 1;
+    -webkit-transition-property: opacity;
+    -moz-transition-property: opacity;
+    transition-property: opacity;
     &.slider-pagination-hidden {
         opacity: 0;
         pointer-events:none;
