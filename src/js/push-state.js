@@ -57,7 +57,7 @@ app.initPushState = function () {
                     app.loadPage(mainView, stateUrl, false);
                 }
                 else {
-                    app.pushStateQueue.push({
+                    app.pushStateQueue.unshift({
                         action: 'loadPage',
                         stateUrl: stateUrl,
                         view: mainView
@@ -70,7 +70,7 @@ app.initPushState = function () {
                     app.loadContent(mainView, stateContent, false);
                 }
                 else {
-                    app.pushStateQueue.push({
+                    app.pushStateQueue.unshift({
                         action: 'loadContent',
                         stateContent: stateContent,
                         view: mainView
