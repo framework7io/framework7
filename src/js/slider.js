@@ -246,6 +246,8 @@ var Slider = function (container, options) {
         if (typeof speed === 'undefined') speed = s.options.speed;
         s.previousSlideIndex = s.activeSlideIndex;
         s.activeSlideIndex = index;
+        s.isFirst = s.activeSlideIndex === 0;
+        s.isLast = s.activeSlideIndex === s.slides.length - s.options.slidesPerView;
         s.onSlideChangeStart();
         var translateX = isH ? translate : 0, translateY = isH ? 0 : translate;
         if (speed === 0) {
