@@ -16,6 +16,7 @@ var rightView = myApp.addView('.view-right', {
     // Enable Dynamic Navbar for this view
     dynamicNavbar: true
 });
+
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
 $$(document).on('ajaxStart', function () {
@@ -23,6 +24,36 @@ $$(document).on('ajaxStart', function () {
 });
 $$(document).on('ajaxComplete', function () {
     myApp.hideIndicator();
+});
+
+// Demo Photo Browsers
+var photoBrowserPhotos = [
+    'img/beach.jpg',
+    'img/cat.jpg',
+    'img/lock.jpg',
+    'img/monkey.jpg',
+    'img/mountains.jpg'
+];
+var photoBrowserStandalone = myApp.photoBrowser({
+    photos: photoBrowserPhotos
+});
+var photoBrowserPopup = myApp.photoBrowser({
+    photos: photoBrowserPhotos,
+    type: 'popup'
+});
+var photoBrowserPage = myApp.photoBrowser({
+    photos: photoBrowserPhotos,
+    type: 'page',
+    backLinkText: 'Back'
+});
+var photoBrowserDark = myApp.photoBrowser({
+    photos: photoBrowserPhotos,
+    theme: 'dark'
+});
+var photoBrowserPopupDark = myApp.photoBrowser({
+    photos: photoBrowserPhotos,
+    theme: 'dark',
+    type: 'popup'
 });
 
 // Events for specific pages when it initialized
@@ -188,6 +219,25 @@ $$(document).on('pageInit', function (e) {
         });
         $$('.list-block.sortable').on('close', function () {
             $$('.sortable-toggle').text('Edit');
+        });
+    }
+
+    // Photo Browser Examples
+    if (page.name === 'photo-browser') {
+        $$('.ks-pb-standalone').on('click', function () {
+            photoBrowserStandalone.open();
+        });
+        $$('.ks-pb-popup').on('click', function () {
+            photoBrowserPopup.open();
+        });
+        $$('.ks-pb-page').on('click', function () {
+            photoBrowserPage.open();
+        });
+        $$('.ks-pb-popup-dark').on('click', function () {
+            photoBrowserPopupDark.open();
+        });
+        $$('.ks-pb-standalone-dark').on('click', function () {
+            photoBrowserDark.open();
         });
     }
 
