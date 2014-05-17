@@ -76,6 +76,7 @@ app.initSwipePanels = function () {
 
     function handleTouchStart(e) {
         if (!app.allowPanelOpen) return;
+        if ($('.modal-in, .photo-browser-in').length > 0) return;
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         if (app.params.swipePanelActiveArea) {
