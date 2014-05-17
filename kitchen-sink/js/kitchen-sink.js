@@ -29,7 +29,7 @@ $$(document).on('ajaxComplete', function () {
 // Demo Photo Browsers
 var photoBrowserPhotos = [
     'img/beach.jpg',
-    'img/cat.jpg',
+    'http://placekitten.com/1024/1024',
     'img/lock.jpg',
     'img/monkey.jpg',
     'img/mountains.jpg'
