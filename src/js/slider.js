@@ -119,6 +119,7 @@ var Slider = function (container, options) {
         s.allowClick = true;
         s.updateSize();
         if (s.options.onTouchStart) s.options.onTouchStart(s);
+        if (e.type === 'mousedown') e.preventDefault();
     };
     s.onTouchMove = function (e) {
         if (s.options.onTouchMove) s.options.onTouchMove(s);
