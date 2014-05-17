@@ -12,10 +12,12 @@ var PhotoBrowser = function (options) {
         zoom: true,
         maxZoom: 3,
         minZoom: 1,
-        expose: true,
+        exposition: true,
         type: 'standalone',
         navbar: true,
         toolbar: true,
+        theme: 'light',
+        backLinkText: 'Close'
     };
     
     options = options || {};
@@ -27,32 +29,35 @@ var PhotoBrowser = function (options) {
 
     pb.options = options;
     
-    if (pb.options.type === 'page' && !pb.options.view) {
+    function findView() {
+        var view;
         for (i = 0; i < app.views.length; i ++) {
-            if (app.views[i].main) pb.options.view = app.views[i];
+            if (app.views[i].main) view = app.views[i];
         }
-        if (!pb.options.view) return pb;
+        return view;
     }
+
+    var iconColor = pb.options.theme === 'dark' ? 'white' : 'blue';
 
     var navbarTemplate = pb.options.navbarTemplate ||
                         '<div class="navbar">' +
                             '<div class="navbar-inner">' +
-                                '<div class="left sliding"><a href="#" class="back link close-popup photo-browser-close-link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>' +
+                                '<div class="left sliding"><a href="#" class="link ' + (pb.options.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.options.backLinkText + '</span></a></div>' +
                                 '<div class="center sliding"><span><span class="photo-browser-current"></span> of <span class="photo-browser-total"></span></span></div>' +
                                 '<div class="right"></div>' +
                             '</div>' +
                         '</div>';
 
     var toolbarTemplate = pb.options.toolbarTemplate ||
-                        '<div class="toolbar">' +
+                        '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev">Prev</a>' +
-                                '<a href="#" class="link photo-browser-next">Next</a>' +
+                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-photo-browser-prev-' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-next"><i class="icon icon-photo-browser-next-' + iconColor + '"></i></a>' +
                             '</div>' +
                         '</div>';
 
     var template = pb.options.template ||
-                    '<div class="photo-browser">' +
+                    '<div class="photo-browser photo-browser-' + pb.options.theme + '">' +
                         '<div class="view navbar-fixed toolbar-fixed">' +
                             '{{navbar}}' +
                             '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
@@ -66,9 +71,11 @@ var PhotoBrowser = function (options) {
                         '</div>' +
                     '</div>';
 
+    var photoTemplate = pb.options.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
+
     var photosHtml = '';
     for (i = 0; i < pb.options.photos.length; i ++) {
-        photosHtml += '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="' + pb.options.photos[i] + '"></span></div>';
+        photosHtml += photoTemplate.replace(/{{url}}/g, pb.options.photos[i]);
     }
 
     var htmlTemplate = template
@@ -99,13 +106,14 @@ var PhotoBrowser = function (options) {
         if (pb.options.type === 'page') {
             $(document).on('pageBeforeInit', pb.onPageBeforeInit);
             $(document).on('pageBeforeRemove', pb.onPageBeforeRemove);
+            if (!pb.options.view) pb.options.view = findView();
             pb.options.view.loadContent(htmlTemplate);
             return;
         }
         pb.layout(pb.openIndex);
 
     };
-    pb.destroy = function () {
+    pb.close = function () {
         pb.opened = false;
         if (!pb.sliderContainer || pb.sliderContainer.length === 0) {
             return;
@@ -125,7 +133,7 @@ var PhotoBrowser = function (options) {
     };
 
     pb.onPopupClose = function (e) {
-        pb.destroy();
+        pb.close();
         $(pb.popup).off('pageBeforeInit', pb.onPopupClose);
     };
     pb.onPageBeforeInit = function (e) {
@@ -136,7 +144,7 @@ var PhotoBrowser = function (options) {
     };
     pb.onPageBeforeRemove = function (e) {
         if (e.detail.page.name === 'photo-browser-slides') {
-            pb.destroy();
+            pb.close();
         }
         $(document).off('pageBeforeRemove', pb.onPageBeforeRemove);
     };
@@ -148,23 +156,20 @@ var PhotoBrowser = function (options) {
         else {
             pb.container = $('.photo-browser');
         }
-        if (pb.options.type === 'standalone') {
-            pb.container.addClass('photo-browser-in');
-            app.sizeNavbars(pb.container);
-        }
+        
         pb.sliderContainer = pb.container.find('.photo-browser-slider-container');
         pb.sliderWrapper = pb.container.find('.photo-browser-slider-wrapper');
         pb.slides = pb.container.find('.photo-browser-slide');
         
-
         pb.slider = app.slider(pb.sliderContainer, {
-            nextButton: '.photo-browser-next',
-            prevButton: '.photo-browser-prev',
+            nextButton: pb.options.nextButton || '.photo-browser-next',
+            prevButton: pb.options.prevButton || '.photo-browser-prev',
+            indexButton: pb.options.indexButton,
             initialSlide: index,
             spaceBetween: pb.options.spaceBetween,
             speed: pb.options.speed,
             onClick: function (e) {
-                if (pb.options.expose) pb.container.toggleClass('photo-browser-exposed');
+                if (pb.options.exposition) pb.toggleExposition();
             },
             onDoubleTap: function (e) {
                 pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
@@ -173,6 +178,18 @@ var PhotoBrowser = function (options) {
                 pb.activeSlideIndex = slider.activeSlideIndex;
                 pb.container.find('.photo-browser-current').text(slider.activeSlideIndex + 1);
                 pb.container.find('.photo-browser-total').text(slider.slides.length);
+                if (slider.isFirst) {
+                    $('.photo-browser-prev').addClass('photo-browser-link-inactive');
+                    $('.photo-browser-next').removeClass('photo-browser-link-inactive');
+                }
+                else if (slider.isLast) {
+                    $('.photo-browser-next').addClass('photo-browser-link-inactive');
+                    $('.photo-browser-prev').removeClass('photo-browser-link-inactive');
+                }
+                else {
+                    $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
+                }
+                if (pb.options.onSlideChangeStart) pb.options.onSlideChangeStart(slider);
             },
             onSlideChangeEnd: function (slider) {
                 // Reset zoom
@@ -182,10 +199,17 @@ var PhotoBrowser = function (options) {
                     gestureSlide = gestureImg = gestureImgWrap = undefined;
                     scale = currentScale = 1;
                 }
+                if (pb.options.onSlideChangeEnd) pb.options.onSlideChangeEnd(slider);
             }
         });
 
         pb.attachEvents();
+
+        if (pb.options.type === 'standalone') {
+            pb.container.addClass('photo-browser-in');
+            app.sizeNavbars(pb.container);
+        }
+
     };
     pb.attachEvents = function (detach) {
         var action = detach ? 'off' : 'on';
@@ -202,12 +226,26 @@ var PhotoBrowser = function (options) {
             pb.slides[action](app.touchEvents.move, pb.onSlideTouchMove);
             pb.slides[action](app.touchEvents.end, pb.onSlideTouchEnd);
         }
-        pb.container.find('.photo-browser-close-link')[action]('click', pb.destroy);
+        pb.container.find('.photo-browser-close-link')[action]('click', pb.close);
     };
 
     var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, animating = false, currentTranslate;
     var allowClick = true;
 
+    // Expose
+    pb.exposed = false;
+    pb.toggleExposition = function () {
+        if (pb.container) pb.container.toggleClass('photo-browser-exposed');
+        pb.exposed = !pb.exposed;
+    };
+    pb.expositionOn = function () {
+        if (pb.container) pb.container.addClass('photo-browser-exposed');
+        pb.exposed = true;
+    };
+    pb.expositionOff = function () {
+        if (pb.container) pb.container.removeClass('photo-browser-exposed');
+        pb.exposed = false;
+    };
     
     // Gestures
     var gestureSlide, gestureImg, gestureImgWrap, scale = 1, currentScale = 1, isScaling = false;
