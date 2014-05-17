@@ -118,11 +118,11 @@ var Slider = function (container, options) {
         touchStartTime = Date.now();
         s.allowClick = true;
         s.updateSize();
-        if (s.options.onTouchStart) s.options.onTouchStart(s);
+        if (s.options.onTouchStart) s.options.onTouchStart(s, e);
         if (e.type === 'mousedown') e.preventDefault();
     };
     s.onTouchMove = function (e) {
-        if (s.options.onTouchMove) s.options.onTouchMove(s);
+        if (s.options.onTouchMove) s.options.onTouchMove(s, e);
         s.allowClick = false;
         if (!isTouched) return;
         if (e.targetTouches && e.targetTouches.length > 1) return;
@@ -137,7 +137,7 @@ var Slider = function (container, options) {
             isTouched = false;
             return;
         }
-        if (s.options.onSliderMove) s.options.onSliderMove(s);
+        if (s.options.onSliderMove) s.options.onSliderMove(s, e);
 
         e.preventDefault();
         e.stopPropagation();
@@ -156,7 +156,7 @@ var Slider = function (container, options) {
         s.wrapper.transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
     };
     s.onTouchEnd = function (e) {
-        if (s.options.onTouchEnd) s.options.onTouchEnd(s);
+        if (s.options.onTouchEnd) s.options.onTouchEnd(s, e);
         var touchEndTime = Date.now();
         var timeDiff = touchEndTime - touchStartTime;
         if (s.allowClick) {
@@ -166,14 +166,14 @@ var Slider = function (container, options) {
                     if (s.options.paginationHide && s.paginationContainer) {
                         s.paginationContainer.toggleClass('slider-pagination-hidden');
                     }
-                    if (s.options.onClick) s.options.onClick(e);
+                    if (s.options.onClick) s.options.onClick(s, e);
                 }, 300);
                 
             }
             if (timeDiff < 300 && (touchEndTime - lastClickTime) < 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
                 if (s.options.onDoubleTap) {
-                    s.options.onDoubleTap(e);
+                    s.options.onDoubleTap(s, e);
                 }
             }
         }
