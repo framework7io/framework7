@@ -34,7 +34,7 @@ var Slider = function (container, options) {
         s.container.addClass('slider-container-vertical');
     }
 
-    s.wrapper = s.container.find('.' + s.options.wrapperClass);
+    s.wrapper = s.container.children('.' + s.options.wrapperClass);
 
     if (s.options.pagination) {
         s.paginationContainer = $(s.options.pagination);
@@ -64,8 +64,6 @@ var Slider = function (container, options) {
                 s.slides.css('height', 'calc(' + sizeValue + ')');
             }
         }
-
-        
     };
 
     s.updatePagination = function () {
@@ -118,7 +116,6 @@ var Slider = function (container, options) {
         touchesStart.x = touchesCurrent.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = touchesCurrent.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = Date.now();
-        e.preventDefault();
         s.allowClick = true;
         s.updateSize();
         if (s.options.onTouchStart) s.options.onTouchStart(s);
@@ -135,7 +132,6 @@ var Slider = function (container, options) {
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
         }
-
         if ((isH && isScrolling) || (!isH && !isScrolling))  {
             isTouched = false;
             return;
