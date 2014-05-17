@@ -51,8 +51,8 @@ var PhotoBrowser = function (options) {
     var toolbarTemplate = pb.options.toolbarTemplate ||
                         '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-photo-browser-prev-' + iconColor + '"></i></a>' +
-                                '<a href="#" class="link photo-browser-next"><i class="icon icon-photo-browser-next-' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev-' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next-' + iconColor + '"></i></a>' +
                             '</div>' +
                         '</div>';
 
