@@ -3,7 +3,6 @@
 ======================================================*/
 app.allowPanelOpen = true;
 app.openPanel = function (panelPosition) {
-    // @panelPosition - string with panel position "left", "right"
     if (!app.allowPanelOpen) return false;
     var panel = $('.panel-' + panelPosition);
     if (panel.length === 0 || panel.hasClass('active')) return false;
@@ -225,15 +224,13 @@ app.initSwipePanels = function () {
                 timeDiff < 300 && Math.abs(translate) >= 0 ||
                 timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
             ) {
-                action = 'swap';
+                if (side === 'left' && translate === panelWidth) action = 'reset';
+                else action = 'swap';
             }
             else {
                 action = 'reset';
             }
         }
-
-        panelOverlay.css({display: ''}).transform('');
-        panel.transition('').transform('');
         if (action === 'swap') {
             app.allowPanelOpen = true;
             if (opened) {
@@ -274,6 +271,8 @@ app.initSwipePanels = function () {
             views.transition('');
             views.transform('');
         }
+        panel.transition('').transform('');
+        panelOverlay.css({display: ''}).transform('');
     }
     $(document).on(app.touchEvents.start, handleTouchStart);
     $(document).on(app.touchEvents.move, handleTouchMove);
