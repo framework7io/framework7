@@ -325,13 +325,27 @@ Dom7.prototype = {
         }
     },
     is: function (selector) {
-        var compareWith;
-        if (typeof selector === 'string') compareWith = document.querySelectorAll(selector);
-        else if (selector.nodeType) compareWith = [selector];
-        else compareWith = selector;
-        for (var i = 0; i < compareWith.length; i++) {
-            if (compareWith[i] === this[0]) return true;
+        if (!this[0]) return false;
+
+        if (typeof selector === 'string') {
+            var el = this[0];
+            if (el === document) return selector === document;
+            if (el === window) return selector === window;
+
+            if (el.matches) return el.matches(selector);
+            else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
+            else if (el.mozMatchesSelector) return el.mozMatchesSelector(selector);
+            else if (el.msMatchesSelector) return el.msMatchesSelector(selector);
+            else {
+                var compareWith = $(selector);
+                for (var i = 0; i < compareWith.length; i++) {
+                    if (compareWith[i] === this[0]) return true;
+                }
+                return false;
+            }
         }
+        else if (selector === document) return this[0] === document;
+        else if (selector === window) return this[0] === window;
         return false;
     },
     indexOf: function (el) {
