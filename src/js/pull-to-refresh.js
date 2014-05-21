@@ -1,7 +1,13 @@
 /*======================================================
 ************   Pull To Refresh   ************
 ======================================================*/
-app.initPullToRefresh = function () {
+app.initPullToRefresh = function (pageContainer) {
+    var eventsTarget = $(pageContainer);
+    if (!eventsTarget.hasClass('pull-to-refresh-content')) {
+        eventsTarget = eventsTarget.find('.pull-to-refresh-content');
+    }
+    if (eventsTarget.length === 0) return;
+
     var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
     function handleTouchStart(e) {
         if (isTouched) return;
@@ -77,9 +83,24 @@ app.initPullToRefresh = function () {
         isTouched = false;
         isMoved = false;
     }
-    $(document).on(app.touchEvents.start, '.pull-to-refresh-content', handleTouchStart);
-    $(document).on(app.touchEvents.move, '.pull-to-refresh-content', handleTouchMove);
-    $(document).on(app.touchEvents.end, '.pull-to-refresh-content', handleTouchEnd);
+
+    // Attach Events
+    eventsTarget.on(app.touchEvents.start, handleTouchStart);
+    eventsTarget.on(app.touchEvents.move, handleTouchMove);
+    eventsTarget.on(app.touchEvents.end, handleTouchEnd);
+
+    // Detach Events on page remove
+    var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
+    if (page.length === 0) return;
+    function detachEvents() {
+        eventsTarget.off(app.touchEvents.start, handleTouchStart);
+        eventsTarget.off(app.touchEvents.move, handleTouchMove);
+        eventsTarget.off(app.touchEvents.end, handleTouchEnd);
+
+        page.off('pageBeforeRemove', detachEvents);
+    }
+    page.on('pageBeforeRemove', detachEvents);
+
 };
 
 app.pullToRefreshDone = function (container) {
