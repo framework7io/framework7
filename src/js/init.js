@@ -26,16 +26,13 @@ app.init = function () {
     // Init push state
     if (app.initPushState && app.params.pushState) app.initPushState();
 
-    // Init Swipeouts events
+    // Init Live Swipeouts events
     if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
 
-    // Init Sortable events
+    // Init Live Sortable events
     if (app.initSortable && app.params.sortable) app.initSortable();
 
-    // Init Pull To Refresh
-    if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
-
-    // Init Swipe Panels
+    // Init Live Swipe Panels
     if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
     
     // App Init callback
