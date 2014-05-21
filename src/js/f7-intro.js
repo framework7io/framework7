@@ -7,6 +7,9 @@ window.Framework7 = function (params) {
     // App
     var app = this;
 
+    // Version
+    app.version = '0.8.5';
+
     // Anim Frame
     app._animFrame = function (callback) {
         if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
