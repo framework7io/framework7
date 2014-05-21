@@ -83,6 +83,8 @@ app.initPage = function (pageContainer) {
     if (app.initSmartSelects) app.initSmartSelects(pageContainer);
     // Init slider
     if (app.initSlider) app.initSlider(pageContainer);
+    // Init slider
+    if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
 };
 
 // Load Page
