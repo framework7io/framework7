@@ -36,8 +36,6 @@ window.Framework7 = function (params) {
         swipeBackPageBoxShadow: true,
         // Ajax
         ajaxLinks: undefined, // or CSS selector
-        // Pull To Refresh
-        pullToRefresh: true,
         // Sortable
         sortable: true,
         // Swipeout
