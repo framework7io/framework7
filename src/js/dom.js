@@ -326,7 +326,7 @@ Dom7.prototype = {
     },
     is: function (selector) {
         if (!this[0]) return false;
-
+        var compareWith, i;
         if (typeof selector === 'string') {
             var el = this[0];
             if (el === document) return selector === document;
@@ -337,8 +337,8 @@ Dom7.prototype = {
             else if (el.mozMatchesSelector) return el.mozMatchesSelector(selector);
             else if (el.msMatchesSelector) return el.msMatchesSelector(selector);
             else {
-                var compareWith = $(selector);
-                for (var i = 0; i < compareWith.length; i++) {
+                compareWith = $(selector);
+                for (i = 0; i < compareWith.length; i++) {
                     if (compareWith[i] === this[0]) return true;
                 }
                 return false;
@@ -346,7 +346,17 @@ Dom7.prototype = {
         }
         else if (selector === document) return this[0] === document;
         else if (selector === window) return this[0] === window;
-        return false;
+        else {
+            if (selector.nodeType || selector instanceof Dom7) {
+                compareWith = selector.nodeType ? [selector] : selector;
+                for (i = 0; i < compareWith.length; i++) {
+                    if (compareWith[i] === this[0]) return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        
     },
     indexOf: function (el) {
         for (var i = 0; i < this.length; i++) {
