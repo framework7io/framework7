@@ -76,10 +76,12 @@ app.initClickEvents = function () {
         if (clicked.hasClass('tab-link')) {
             var newTab = $(clicked.attr('href'));
             if (newTab.length === 0) return;
-            if (newTab.parents('.tabs-animated-wrap').length > 0) {
-                newTab.parent().transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
+            var tabs = newTab.parent();
+            var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
+            if (isAnimatedTabs) {
+                tabs.transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
             }
-            var oldTab = newTab.parent().find('.tab.active').removeClass('active');
+            var oldTab = tabs.children('.tab.active').removeClass('active');
             newTab.addClass('active');
             newTab.trigger('show');
                 
@@ -89,7 +91,7 @@ app.initClickEvents = function () {
                 clickedParent.find('.active').removeClass('active');
                 clicked.addClass('active');
             }
-            if (newTab.find('.navbar').length > 0) {
+            if (!isAnimatedTabs && newTab.find('.navbar').length > 0) {
                 // Find tab's view
                 var viewContainer;
                 if (newTab.hasClass(app.params.viewClass)) viewContainer = newTab[0];
