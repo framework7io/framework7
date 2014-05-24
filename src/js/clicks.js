@@ -102,9 +102,18 @@ app.initClickEvents = function () {
         // Swipeout Delete
         if (clicked.hasClass('swipeout-delete')) {
             if (clicked.attr('data-confirm')) {
-                var modal = app.confirm(clicked.attr('data-confirm'), function () {
-                    app.swipeoutDelete(clicked.parents('.swipeout'));
-                });
+                var text = clicked.attr('data-confirm');
+                var title = clicked.attr('data-confirm-title');
+                if (title) {
+                    app.confirm(text, title, function () {
+                        app.swipeoutDelete(clicked.parents('.swipeout'));
+                    });
+                }
+                else {
+                    app.confirm(text, function () {
+                        app.swipeoutDelete(clicked.parents('.swipeout'));
+                    });
+                }
             }
             else {
                 app.swipeoutDelete(clicked.parents('.swipeout'));
