@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.4
+ * Framework7 0.8.5
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 17, 2014
+ * Released on: May 24, 2014
 */
 /*=============
   Framework 7
@@ -2407,8 +2407,9 @@ body.panel-closing .views {
   position: relative;
   width: 100%;
   overflow: hidden;
+  height: 100%;
 }
-.tabs-animated-wrap .tabs {
+.tabs-animated-wrap > .tabs {
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -2417,7 +2418,7 @@ body.panel-closing .views {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
-.tabs-animated-wrap .tab {
+.tabs-animated-wrap > .tabs > .tab {
   width: 100%;
   display: block;
   -webkit-flex-shrink: 0;

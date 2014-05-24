@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.4
+ * Framework7 0.8.5
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: May 17, 2014
+ * Released on: May 24, 2014
 */
 (function () {
 
@@ -22,6 +22,9 @@
     
         // App
         var app = this;
+    
+        // Version
+        app.version = '0.8.5';
     
         // Anim Frame
         app._animFrame = function (callback) {
@@ -52,8 +55,6 @@
             swipeBackPageBoxShadow: true,
             // Ajax
             ajaxLinks: undefined, // or CSS selector
-            // Pull To Refresh
-            pullToRefresh: true,
             // Sortable
             sortable: true,
             // Swipeout
@@ -638,6 +639,8 @@
             if (app.initSmartSelects) app.initSmartSelects(pageContainer);
             // Init slider
             if (app.initSlider) app.initSlider(pageContainer);
+            // Init slider
+            if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
         };
         
         // Load Page
@@ -1414,6 +1417,10 @@
             modal.on('close', function () {
                 $(window).off('resize', sizePopover);
             });
+            
+            if (modal.find('.' + app.params.viewClass).length > 0) {
+                app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
+            }
         
             app.openModal(modal);
             return modal[0];
@@ -1492,7 +1499,6 @@
         ======================================================*/
         app.allowPanelOpen = true;
         app.openPanel = function (panelPosition) {
-            // @panelPosition - string with panel position "left", "right"
             if (!app.allowPanelOpen) return false;
             var panel = $('.panel-' + panelPosition);
             if (panel.length === 0 || panel.hasClass('active')) return false;
@@ -1714,15 +1720,13 @@
                         timeDiff < 300 && Math.abs(translate) >= 0 ||
                         timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
                     ) {
-                        action = 'swap';
+                        if (side === 'left' && translate === panelWidth) action = 'reset';
+                        else action = 'swap';
                     }
                     else {
                         action = 'reset';
                     }
                 }
-        
-                panelOverlay.css({display: ''}).transform('');
-                panel.transition('').transform('');
                 if (action === 'swap') {
                     app.allowPanelOpen = true;
                     if (opened) {
@@ -1763,6 +1767,8 @@
                     views.transition('');
                     views.transform('');
                 }
+                panel.transition('').transform('');
+                panelOverlay.css({display: ''}).transform('');
             }
             $(document).on(app.touchEvents.start, handleTouchStart);
             $(document).on(app.touchEvents.move, handleTouchMove);
@@ -1978,10 +1984,24 @@
                     swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
                     swipeOutContent.transform('translate3d(' + 0 + 'px,0,0)');
                 }
-                swipeOutContent.transitionEnd(function () {
+                if (translate <= -swipeOutActionsWidth) {
+                    if (!opened) {
+                        swipeOutEl.trigger('opened');
+                    }
                     app.allowSwipeout = true;
-                    swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
-                });
+                }
+                else if (translate >= 0) {
+                    if (opened) {
+                        swipeOutEl.trigger('closed');
+                    }
+                    app.allowSwipeout = true;
+                }
+                else {
+                    swipeOutContent.transitionEnd(function () {
+                        app.allowSwipeout = true;
+                        swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
+                    });
+                }
             }
             if (swipeoutEl) {
                 $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
@@ -2282,7 +2302,13 @@
         /*======================================================
         ************   Pull To Refresh   ************
         ======================================================*/
-        app.initPullToRefresh = function () {
+        app.initPullToRefresh = function (pageContainer) {
+            var eventsTarget = $(pageContainer);
+            if (!eventsTarget.hasClass('pull-to-refresh-content')) {
+                eventsTarget = eventsTarget.find('.pull-to-refresh-content');
+            }
+            if (eventsTarget.length === 0) return;
+        
             var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
             function handleTouchStart(e) {
                 if (isTouched) return;
@@ -2358,9 +2384,24 @@
                 isTouched = false;
                 isMoved = false;
             }
-            $(document).on(app.touchEvents.start, '.pull-to-refresh-content', handleTouchStart);
-            $(document).on(app.touchEvents.move, '.pull-to-refresh-content', handleTouchMove);
-            $(document).on(app.touchEvents.end, '.pull-to-refresh-content', handleTouchEnd);
+        
+            // Attach Events
+            eventsTarget.on(app.touchEvents.start, handleTouchStart);
+            eventsTarget.on(app.touchEvents.move, handleTouchMove);
+            eventsTarget.on(app.touchEvents.end, handleTouchEnd);
+        
+            // Detach Events on page remove
+            var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
+            if (page.length === 0) return;
+            function detachEvents() {
+                eventsTarget.off(app.touchEvents.start, handleTouchStart);
+                eventsTarget.off(app.touchEvents.move, handleTouchMove);
+                eventsTarget.off(app.touchEvents.end, handleTouchEnd);
+        
+                page.off('pageBeforeRemove', detachEvents);
+            }
+            page.on('pageBeforeRemove', detachEvents);
+        
         };
         
         app.pullToRefreshDone = function (container) {
@@ -2394,7 +2435,14 @@
             function targetNeedsPrevent(el) {
                 el = $(el);
                 if (el.is('label') || el.parents('label').length > 0) {
-                    return false;
+                    if (app.device.os === 'android') {
+                        var osv = app.device.osVersion.split('.');
+                        if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4)) {
+                            return false;
+                        }
+                        else return true;
+                    }
+                    else return false;
                 }
                 return true;
             }
@@ -2627,10 +2675,12 @@
                 if (clicked.hasClass('tab-link')) {
                     var newTab = $(clicked.attr('href'));
                     if (newTab.length === 0) return;
-                    if (newTab.parents('.tabs-animated-wrap').length > 0) {
-                        newTab.parent().transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
+                    var tabs = newTab.parent();
+                    var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
+                    if (isAnimatedTabs) {
+                        tabs.transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
                     }
-                    var oldTab = newTab.parent().find('.tab.active').removeClass('active');
+                    var oldTab = tabs.children('.tab.active').removeClass('active');
                     newTab.addClass('active');
                     newTab.trigger('show');
                         
@@ -2640,7 +2690,7 @@
                         clickedParent.find('.active').removeClass('active');
                         clicked.addClass('active');
                     }
-                    if (newTab.find('.navbar').length > 0) {
+                    if (!isAnimatedTabs && newTab.find('.navbar').length > 0) {
                         // Find tab's view
                         var viewContainer;
                         if (newTab.hasClass(app.params.viewClass)) viewContainer = newTab[0];
@@ -2661,13 +2711,13 @@
                         
                 }
                 // Sortable
-                if (clicked.hasClass('sortable-toggle')) {
+                if (clicked.hasClass('toggle-sortable')) {
                     app.sortableToggle(clicked.data('sortable'));
                 }
-                if (clicked.hasClass('sortable-open')) {
+                if (clicked.hasClass('open-sortable')) {
                     app.sortableOpen(clicked.data('sortable'));
                 }
-                if (clicked.hasClass('sortable-close')) {
+                if (clicked.hasClass('close-sortable')) {
                     app.sortableClose(clicked.data('sortable'));
                 }
                 // Load Page
@@ -2696,7 +2746,7 @@
                     else view.loadPage(clicked.attr('href'));
                 }
             }
-            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .sortable-toggle, .sortable-open, .sortable-close', handleClicks);
+            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .toggle-sortable, .open-sortable, .close-sortable', handleClicks);
         };
         
         /*======================================================
@@ -3814,16 +3864,13 @@
             // Init push state
             if (app.initPushState && app.params.pushState) app.initPushState();
         
-            // Init Swipeouts events
+            // Init Live Swipeouts events
             if (app.initSwipeout && app.params.swipeout) app.initSwipeout();
         
-            // Init Sortable events
+            // Init Live Sortable events
             if (app.initSortable && app.params.sortable) app.initSortable();
         
-            // Init Pull To Refresh
-            if (app.initPullToRefresh && app.params.pullToRefresh) app.initPullToRefresh();
-        
-            // Init Swipe Panels
+            // Init Live Swipe Panels
             if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
             
             // App Init callback
@@ -4162,14 +4209,38 @@
             }
         },
         is: function (selector) {
-            var compareWith;
-            if (typeof selector === 'string') compareWith = document.querySelectorAll(selector);
-            else if (selector.nodeType) compareWith = [selector];
-            else compareWith = selector;
-            for (var i = 0; i < compareWith.length; i++) {
-                if (compareWith[i] === this[0]) return true;
+            if (!this[0]) return false;
+            var compareWith, i;
+            if (typeof selector === 'string') {
+                var el = this[0];
+                if (el === document) return selector === document;
+                if (el === window) return selector === window;
+    
+                if (el.matches) return el.matches(selector);
+                else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
+                else if (el.mozMatchesSelector) return el.mozMatchesSelector(selector);
+                else if (el.msMatchesSelector) return el.msMatchesSelector(selector);
+                else {
+                    compareWith = $(selector);
+                    for (i = 0; i < compareWith.length; i++) {
+                        if (compareWith[i] === this[0]) return true;
+                    }
+                    return false;
+                }
             }
-            return false;
+            else if (selector === document) return this[0] === document;
+            else if (selector === window) return this[0] === window;
+            else {
+                if (selector.nodeType || selector instanceof Dom7) {
+                    compareWith = selector.nodeType ? [selector] : selector;
+                    for (i = 0; i < compareWith.length; i++) {
+                        if (compareWith[i] === this[0]) return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            
         },
         indexOf: function (el) {
             for (var i = 0; i < this.length; i++) {
