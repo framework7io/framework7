@@ -215,10 +215,10 @@ $$(document).on('pageInit', function (e) {
     // Sortable toggler
     if (page.name === 'sortable-list') {
         $$('.list-block.sortable').on('open', function () {
-            $$('.sortable-toggle').text('Done');
+            $$('.toggle-sortable').text('Done');
         });
         $$('.list-block.sortable').on('close', function () {
-            $$('.sortable-toggle').text('Edit');
+            $$('.toggle-sortable').text('Edit');
         });
     }
 
