@@ -1,5 +1,9 @@
 # Change Log
 
+## Framework7 v0.8.5 - Updated on May 24, 2014
+
+* Many minor fixes 
+
 ## Framework7 v0.8.4 - Updated on May 17, 2014
 
 *  New Slider component
