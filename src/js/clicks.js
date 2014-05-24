@@ -112,13 +112,13 @@ app.initClickEvents = function () {
                 
         }
         // Sortable
-        if (clicked.hasClass('sortable-toggle')) {
+        if (clicked.hasClass('toggle-sortable')) {
             app.sortableToggle(clicked.data('sortable'));
         }
-        if (clicked.hasClass('sortable-open')) {
+        if (clicked.hasClass('open-sortable')) {
             app.sortableOpen(clicked.data('sortable'));
         }
-        if (clicked.hasClass('sortable-close')) {
+        if (clicked.hasClass('close-sortable')) {
             app.sortableClose(clicked.data('sortable'));
         }
         // Load Page
@@ -147,5 +147,5 @@ app.initClickEvents = function () {
             else view.loadPage(clicked.attr('href'));
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .sortable-toggle, .sortable-open, .sortable-close', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .toggle-sortable, .open-sortable, .close-sortable', handleClicks);
 };
