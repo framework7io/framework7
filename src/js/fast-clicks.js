@@ -20,7 +20,14 @@ app.initFastClicks = function () {
     function targetNeedsPrevent(el) {
         el = $(el);
         if (el.is('label') || el.parents('label').length > 0) {
-            return false;
+            if (app.device.os === 'android') {
+                var osv = app.device.osVersion.split('.');
+                if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4)) {
+                    return false;
+                }
+                else return true;
+            }
+            else return false;
         }
         return true;
     }
