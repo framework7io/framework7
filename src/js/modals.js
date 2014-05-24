@@ -279,6 +279,10 @@ app.popover = function (modal, target, removeOnClose) {
     modal.on('close', function () {
         $(window).off('resize', sizePopover);
     });
+    
+    if (modal.find('.' + app.params.viewClass).length > 0) {
+        app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
+    }
 
     app.openModal(modal);
     return modal[0];
