@@ -127,10 +127,24 @@ app.initSwipeout = function (swipeoutEl) {
             swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
             swipeOutContent.transform('translate3d(' + 0 + 'px,0,0)');
         }
-        swipeOutContent.transitionEnd(function () {
+        if (translate <= -swipeOutActionsWidth) {
+            if (!opened) {
+                swipeOutEl.trigger('opened');
+            }
             app.allowSwipeout = true;
-            swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
-        });
+        }
+        else if (translate >= 0) {
+            if (opened) {
+                swipeOutEl.trigger('closed');
+            }
+            app.allowSwipeout = true;
+        }
+        else {
+            swipeOutContent.transitionEnd(function () {
+                app.allowSwipeout = true;
+                swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
+            });
+        }
     }
     if (swipeoutEl) {
         $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
