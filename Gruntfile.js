@@ -25,6 +25,7 @@ module.exports = function (grunt) {
         'src/js/sortable.js',
         'src/js/smart-select.js',
         'src/js/pull-to-refresh.js',
+        'src/js/infinite-scroll.js',
         'src/js/tabs.js',
         'src/js/fast-clicks.js',
         'src/js/clicks.js',
