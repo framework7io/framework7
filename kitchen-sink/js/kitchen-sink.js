@@ -240,7 +240,34 @@ $$(document).on('pageInit', function (e) {
             photoBrowserDark.open();
         });
     }
-
+    // Infinite Scroll
+    if (page.name === 'infinite-scroll') {
+        // Loading trigger
+        var loading = false;
+        // Last loaded index, we need to pass it to script
+        var lastLoadedIndex = $$('.infinite-scroll .list-block li').length;
+        // Attach 'infinite' event handler
+        $$('.infinite-scroll').on('infinite', function () {
+            // Exit, if loading in progress
+            if (loading) return;
+            // Set loading trigger
+            loading = true;
+            // Request some file with data
+            $$.get('infinite-scroll-load.php', {leftIndex: lastLoadedIndex + 1}, function (data) {
+                loading = false;
+                if (data === '') {
+                    // Nothing more to load, detach infinite scroll events to prevent unnecessary loadings
+                    myApp.detachInfiniteScroll($$('.infinite-scroll'));
+                }
+                else {
+                    // Append loaded elements to list block
+                    $$('.infinite-scroll .list-block ul').append(data);
+                    // Update last loaded index
+                    lastLoadedIndex = $$('.infinite-scroll .list-block li').length;
+                }
+            });
+        });
+    }
 });
 
 // Required for demo popover
