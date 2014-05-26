@@ -3,6 +3,7 @@
 =============================================================================== */
 app.showTab = function (tab, tabLink) {
     var newTab = $(tab);
+    if (newTab.hasClass('active')) return false;
     if (newTab.length === 0) return false;
     var tabs = newTab.parent('.tabs');
     if (tabs.length === 0) return false;
@@ -39,4 +40,6 @@ app.showTab = function (tab, tabLink) {
 
     tabLink.parent().find('.active').removeClass('active');
     tabLink.addClass('active');
+    
+    return true;
 };
