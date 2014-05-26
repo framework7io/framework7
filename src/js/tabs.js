@@ -17,6 +17,8 @@ app.showTab = function (tab, tabLink) {
     tabs.children('.tab.active').removeClass('active');
     // Add active class to new tab
     newTab.addClass('active');
+    // Trigger 'show' event on new tab
+    newTab.trigger('show');
 
     // Update navbars in new tab
     if (!isAnimatedTabs && newTab.find('.navbar').length > 0) {
