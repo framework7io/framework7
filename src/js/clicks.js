@@ -74,30 +74,7 @@ app.initClickEvents = function () {
         
         // Tabs
         if (clicked.hasClass('tab-link')) {
-            var newTab = $(clicked.attr('href'));
-            if (newTab.length === 0) return;
-            var tabs = newTab.parent();
-            var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
-            if (isAnimatedTabs) {
-                tabs.transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
-            }
-            var oldTab = tabs.children('.tab.active').removeClass('active');
-            newTab.addClass('active');
-            newTab.trigger('show');
-                
-            
-            var clickedParent = clicked.parent();
-            if (clickedParent.hasClass('buttons-row') || clicked.parents('.tabbar').length > 0) {
-                clickedParent.find('.active').removeClass('active');
-                clicked.addClass('active');
-            }
-            if (!isAnimatedTabs && newTab.find('.navbar').length > 0) {
-                // Find tab's view
-                var viewContainer;
-                if (newTab.hasClass(app.params.viewClass)) viewContainer = newTab[0];
-                else viewContainer = newTab.parents('.' + app.params.viewClass)[0];
-                app.sizeNavbars(viewContainer);
-            }
+            app.showTab(clicked.attr('href'), clicked);
         }
         // Swipeout Delete
         if (clicked.hasClass('swipeout-delete')) {
