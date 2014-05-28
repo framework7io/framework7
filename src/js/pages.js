@@ -280,6 +280,9 @@ function _load(view, url, content) {
     if (dynamicNavbar) {
         newNavbarInner.addClass('navbar-on-right');
         navbar.append(newNavbarInner[0]);
+
+        // Navbar Init Events
+        app.navbarInitCallback(view, newPage[0], navbar, newNavbarInner[0], url, 'right');
     }
 
     // save content areas into view's cache
