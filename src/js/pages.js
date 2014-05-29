@@ -207,16 +207,6 @@ function _load(view, url, content) {
         }
     }
     
-    // Subevents for iframes
-    if (view.params.subEvents) {
-        $(app._tempDomElement).find('.page').each(function () {
-            var page = this;
-            $(page).find('iframe').on('load', function () {
-                view.attachSubEvents(page, this.contentWindow.document);
-            });
-        });
-    }
-
     // Find new page
     newPage = _findElement('.page', app._tempDomElement, view);
 
