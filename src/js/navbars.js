@@ -1,6 +1,25 @@
 /*======================================================
 ************   Navbars && Toolbars   ************
 ======================================================*/
+// On Navbar Init Callback
+app.navbarInitCallback = function (view, pageContainer, navbar, navbarInnerContainer, url, position) {
+    var eventData = {
+        navbar: {
+            container: navbar[0],
+            innerContainer: navbarInnerContainer
+        },
+        page: {
+            url: url,
+            query: $.parseUrlQuery(url || ''),
+            container: pageContainer,
+            name: $(pageContainer).attr('data-page'),
+            view: view,
+            from: position
+        }
+    };
+    // Navbar Init Callback
+    $(navbarInnerContainer).trigger('navbarInit', eventData);
+};
 app.sizeNavbars = function (viewContainer) {
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
     navbarInner.each(function () {
