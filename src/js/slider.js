@@ -29,6 +29,7 @@ var Slider = function (container, options) {
     s.options = options;
     s.container = $(container);
     if (s.container.length === 0) return;
+    s.container[0].f7Slider = s;
 
     if (s.options.direction === 'vertical') {
         s.container.addClass('slider-container-vertical');
@@ -362,7 +363,6 @@ app.initSlider = function (pageContainer) {
             };
         }
         var _slider = app.slider(slider[0], options);
-        slider[0].slider = _slider;
         destroySliderOnRemove(_slider);
     }
 };
