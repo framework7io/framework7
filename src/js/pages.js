@@ -282,7 +282,7 @@ function _load(view, url, content) {
         navbar.append(newNavbarInner[0]);
 
         // Navbar Init Events
-        app.navbarInitCallback(view, newPage[0], navbar, newNavbarInner[0], url, 'right');
+        app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
     }
 
     // save content areas into view's cache
@@ -452,6 +452,9 @@ app.goBack = function (view, url, preloadOnly, pushState) {
                 oldNavbarInner = navbar.find('.navbar-inner');
             }
             navbar.prepend(newNavbarInner[0]);
+            
+            // Navbar Init Events
+            app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'left');
         }
         // Prepend new Page and add classes for animation
         $(view.pagesContainer).prepend(newPage[0]);

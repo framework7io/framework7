@@ -5,7 +5,7 @@
 app.navbarInitCallback = function (view, pageContainer, navbar, navbarInnerContainer, url, position) {
     var eventData = {
         navbar: {
-            container: navbar[0],
+            container: navbar,
             innerContainer: navbarInnerContainer
         },
         page: {
