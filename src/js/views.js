@@ -10,8 +10,7 @@ var View = function (selector, params) {
         swipeBackPage: app.params.swipeBackPage,
         swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
         swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
-        swipeBackPageThreshold: app.params.swipeBackPageThreshold,
-        animateNavBackIcon: app.params.animateNavBackIcon
+        swipeBackPageThreshold: app.params.swipeBackPageThreshold
     };
 
     params = params || {};
@@ -120,7 +119,7 @@ var View = function (selector, params) {
                 previousNavbar = container.find('.navbar-on-left:not(.cached)');
                 activeNavElements = activeNavbar.find('.left, .center, .right');
                 previousNavElements = previousNavbar.find('.left, .center, .right');
-                if (view.params.animateNavBackIcon) {
+                if (app.params.animateNavBackIcon) {
                     activeNavBackIcon = activeNavbar.find('.left.sliding .back .icon');
                     previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
                 }
@@ -153,7 +152,7 @@ var View = function (selector, params) {
                     var activeNavTranslate = percentage * el[0].f7NavbarRightOffset;
                     if (app.device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
                     el.transform('translate3d(' + activeNavTranslate + 'px,0,0)');
-                    if (view.params.animateNavBackIcon) {
+                    if (app.params.animateNavBackIcon) {
                         if (el[0].className.indexOf('left') >= 0 && activeNavBackIcon.length > 0) {
                             activeNavBackIcon.transform('translate3d(' + -activeNavTranslate + 'px,0,0)');
                         }
@@ -167,7 +166,7 @@ var View = function (selector, params) {
                     var previousNavTranslate = el[0].f7NavbarLeftOffset * (1 - percentage);
                     if (app.device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
                     el.transform('translate3d(' + previousNavTranslate + 'px,0,0)');
-                    if (view.params.animateNavBackIcon) {
+                    if (app.params.animateNavBackIcon) {
                         if (el[0].className.indexOf('left') >= 0 && previousNavBackIcon.length > 0) {
                             previousNavBackIcon.transform('translate3d(' + -previousNavTranslate + 'px,0,0)');
                         }
@@ -219,7 +218,7 @@ var View = function (selector, params) {
                 var translate = pageChanged ? this.f7NavbarRightOffset : 0;
                 var sliding = $(this);
                 sliding.transform('translate3d(' + translate + 'px,0,0)');
-                if (view.params.animateNavBackIcon) {
+                if (app.params.animateNavBackIcon) {
                     if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
                         activeNavBackIcon.addClass('page-transitioning').transform('translate3d(' + -translate + 'px,0,0)');
                     }
@@ -231,7 +230,7 @@ var View = function (selector, params) {
                 var translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
                 var sliding = $(this);
                 sliding.transform('translate3d(' + translate + 'px,0,0)');
-                if (view.params.animateNavBackIcon) {
+                if (app.params.animateNavBackIcon) {
                     if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
                         previousNavBackIcon.addClass('page-transitioning').transform('translate3d(' + -translate + 'px,0,0)');
                     }
