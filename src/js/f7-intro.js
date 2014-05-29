@@ -8,7 +8,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '0.8.5';
+    app.version = '0.8.6';
 
     // Anim Frame
     app._animFrame = function (callback) {
@@ -67,8 +67,8 @@ window.Framework7 = function (params) {
         modalButtonCancel: 'Cancel',
         modalTitle: 'Framework7',
         modalCloseByOutside: false,
-        modalActionsCloseByOutside: true,
-        modalPopupCloseByOutside: true,
+        actionsCloseByOutside: true,
+        popupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
         // Auto init
         init: true,
