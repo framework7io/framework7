@@ -10,20 +10,19 @@ for (var plugin in app.plugins) {
     }
 }
 // Plugin Hooks
-app.pluginHook = function (hook, args) {
-    if (!args) args = {};
+app.pluginHook = function (hook) {
     for (var i = 0; i < _plugins.length; i++) {
         if (_plugins[i].hooks && hook in _plugins[i].hooks) {
-            _plugins[i].hooks[hook](args);
+            _plugins[i].hooks[hook](arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
         }
     }
 };
 // Prevented by plugin
-app.pluginPrevent = function (action, args) {
+app.pluginPrevent = function (action) {
     var prevent = false;
     for (var i = 0; i < _plugins.length; i++) {
         if (_plugins[i].prevents && action in _plugins[i].prevents) {
-            if (_plugins[i].prevents[action](args)) prevent = true;
+            if (_plugins[i].prevents[action](arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])) prevent = true;
         }
     }
     return prevent;
@@ -38,3 +37,4 @@ app.pluginProcess = function (process, data) {
     }
     return processed;
 };
+
