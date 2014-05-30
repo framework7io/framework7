@@ -65,9 +65,9 @@ app.initClickEvents = function () {
         if (clicked.hasClass('modal-overlay')) {
             if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
                 app.closeModal();
-            if ($('.actions-modal.modal-in').length > 0 && app.params.modalActionsCloseByOutside)
+            if ($('.actions-modal.modal-in').length > 0 && app.params.actionsCloseByOutside)
                 app.closeModal();
-            if ($('.popup.modal-in').length > 0 && app.params.modalPopupCloseByOutside)
+            if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside)
                 app.closeModal();
             if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
         }
