@@ -8,7 +8,6 @@ var Slider = function (container, params) {
         speed: 300,
         slidesPerView: 1,
         direction: 'horizontal',
-        pagination: undefined,
         paginationHide: true,
         slideClass: 'slider-slide',
         slideActiveClass: 'slider-slide-active',
@@ -177,6 +176,7 @@ var Slider = function (container, params) {
                     s.params.onDoubleTap(s, e);
                 }
             }
+            if (s.params.onTap) s.params.onTap(s, e);
         }
 
         lastClickTime = Date.now();
