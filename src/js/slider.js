@@ -8,7 +8,7 @@ var Slider = function (container, params) {
         speed: 300,
         slidesPerView: 1,
         direction: 'horizontal',
-        pagination: '',
+        pagination: undefined,
         paginationHide: true,
         slideClass: 'slider-slide',
         slideActiveClass: 'slider-slide-active',
