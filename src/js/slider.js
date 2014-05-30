@@ -15,7 +15,8 @@ var Slider = function (container, params) {
         slidePrevClass: 'slider-slide-prev',
         wrapperClass: 'slider-wrapper',
         bulletClass: 'slider-pagination-bullet',
-        bulletActiveClass: 'slider-pagination-active'
+        bulletActiveClass: 'slider-pagination-active',
+        preventClicks: true
     };
     params = params || {};
     for (var def in defaults) {
@@ -95,6 +96,9 @@ var Slider = function (container, params) {
         if (s.params.nextButton) $(s.params.nextButton)[action]('click', s.onClickNext);
         if (s.params.prevButton) $(s.params.prevButton)[action]('click', s.onClickPrev);
         if (s.params.indexButton) $(s.params.indexButton)[action]('click', s.onClickIndex);
+
+        // Prevent Links
+        if (s.params.preventClicks) s.container[action]('click', s.onClick);
     };
     s.detachEvents = function () {
         s.attachEvents(true);
@@ -109,6 +113,11 @@ var Slider = function (container, params) {
     var lastClickTime = Date.now(), clickTimeout;
     s.allowClick = true;
 
+    s.onClick = function (e) {
+        if (s.params.preventClicks && !s.allowClick) {
+            e.preventDefault();
+        }
+    };
     s.onTouchStart = function (e) {
         isTouched = true;
         isMoved = false;
@@ -180,7 +189,6 @@ var Slider = function (container, params) {
         }
 
         lastClickTime = Date.now();
-        s.allowClick = true;
 
         if (!isTouched || !isMoved) {
             isTouched = isMoved = false;
@@ -188,6 +196,15 @@ var Slider = function (container, params) {
         }
         isTouched = isMoved = false;
         var touchesDiff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+        
+        //Release links clicks
+        if (Math.abs(touchesDiff) < 5 && (timeDiff) < 300 && s.allowClick === false) {
+            s.allowClick = true;
+        }
+        setTimeout(function () {
+            s.allowClick = true;
+        }, 100);
+        
 
         if (touchesDiff === 0) {
             return;
