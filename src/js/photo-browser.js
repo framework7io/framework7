@@ -171,11 +171,17 @@ var PhotoBrowser = function (params) {
             initialSlide: index,
             spaceBetween: pb.params.spaceBetween,
             speed: pb.params.speed,
+            onTap: function (slider, e) {
+                if (pb.params.exposition) pb.toggleExposition();
+                if (pb.params.onTap) pb.params.onTap(slider, e);
+            },
             onClick: function (slider, e) {
                 if (pb.params.exposition) pb.toggleExposition();
+                if (pb.params.onClick) pb.params.onClick(slider, e);
             },
             onDoubleTap: function (slider, e) {
                 pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
+                if (pb.params.onDoubleTap) pb.params.onDoubleTap(slider, e);
             },
             onSlideChangeStart: function (slider) {
                 pb.activeSlideIndex = slider.activeSlideIndex;
