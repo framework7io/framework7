@@ -9,7 +9,7 @@ function handleInfiniteScroll() {
     var height = inf.offsetHeight;
     var distance = inf.getAttribute('data-distance');
     if (!distance) distance = 50;
-    if (distance.indexOf('%') >= 0) {
+    if (typeof distance === 'string' && distance.indexOf('%') >= 0) {
         distance = parseInt(distance, 10) / 100 * height;
     }
     if (distance > height) distance = height;
