@@ -172,7 +172,6 @@ var PhotoBrowser = function (params) {
             spaceBetween: pb.params.spaceBetween,
             speed: pb.params.speed,
             onTap: function (slider, e) {
-                if (pb.params.exposition) pb.toggleExposition();
                 if (pb.params.onTap) pb.params.onTap(slider, e);
             },
             onClick: function (slider, e) {
