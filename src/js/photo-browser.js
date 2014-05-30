@@ -1,7 +1,7 @@
 /*======================================================
 ************   Photo Browser   ************
 ======================================================*/
-var PhotoBrowser = function (options) {
+var PhotoBrowser = function (params) {
     var pb = this, i;
 
     var defaults = {
@@ -20,14 +20,14 @@ var PhotoBrowser = function (options) {
         backLinkText: 'Close'
     };
     
-    options = options || {};
+    params = params || {};
     for (var def in defaults) {
-        if (typeof options[def] === 'undefined') {
-            options[def] = defaults[def];
+        if (typeof params[def] === 'undefined') {
+            params[def] = defaults[def];
         }
     }
 
-    pb.options = options;
+    pb.params = params;
     
     function findView() {
         var view;
@@ -37,18 +37,18 @@ var PhotoBrowser = function (options) {
         return view;
     }
 
-    var iconColor = pb.options.theme === 'dark' ? 'white' : 'blue';
+    var iconColor = pb.params.theme === 'dark' ? 'white' : 'blue';
 
-    var navbarTemplate = pb.options.navbarTemplate ||
+    var navbarTemplate = pb.params.navbarTemplate ||
                         '<div class="navbar">' +
                             '<div class="navbar-inner">' +
-                                '<div class="left sliding"><a href="#" class="link ' + (pb.options.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.options.backLinkText + '</span></a></div>' +
+                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
                                 '<div class="center sliding"><span><span class="photo-browser-current"></span> of <span class="photo-browser-total"></span></span></div>' +
                                 '<div class="right"></div>' +
                             '</div>' +
                         '</div>';
 
-    var toolbarTemplate = pb.options.toolbarTemplate ||
+    var toolbarTemplate = pb.params.toolbarTemplate ||
                         '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
                                 '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev-' + iconColor + '"></i></a>' +
@@ -56,8 +56,8 @@ var PhotoBrowser = function (options) {
                             '</div>' +
                         '</div>';
 
-    var template = pb.options.template ||
-                    '<div class="photo-browser photo-browser-' + pb.options.theme + '">' +
+    var template = pb.params.template ||
+                    '<div class="photo-browser photo-browser-' + pb.params.theme + '">' +
                         '<div class="view navbar-fixed toolbar-fixed">' +
                             '{{navbar}}' +
                             '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
@@ -71,20 +71,20 @@ var PhotoBrowser = function (options) {
                         '</div>' +
                     '</div>';
 
-    var photoTemplate = pb.options.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
+    var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
 
     var photosHtml = '';
-    for (i = 0; i < pb.options.photos.length; i ++) {
-        photosHtml += photoTemplate.replace(/{{url}}/g, pb.options.photos[i]);
+    for (i = 0; i < pb.params.photos.length; i ++) {
+        photosHtml += photoTemplate.replace(/{{url}}/g, pb.params.photos[i]);
     }
 
     var htmlTemplate = template
-                        .replace('{{navbar}}', (pb.options.navbar ? navbarTemplate : ''))
-                        .replace('{{noNavbar}}', (pb.options.navbar ? '' : 'no-navbar'))
+                        .replace('{{navbar}}', (pb.params.navbar ? navbarTemplate : ''))
+                        .replace('{{noNavbar}}', (pb.params.navbar ? '' : 'no-navbar'))
                         .replace('{{photos}}', photosHtml)
-                        .replace('{{toolbar}}', (pb.options.toolbar ? toolbarTemplate : ''));
+                        .replace('{{toolbar}}', (pb.params.toolbar ? toolbarTemplate : ''));
 
-    pb.activeSlideIndex = pb.options.initialSlide;
+    pb.activeSlideIndex = pb.params.initialSlide;
     pb.openIndex = pb.activeSlideIndex;
     pb.opened = false;
 
@@ -96,18 +96,18 @@ var PhotoBrowser = function (options) {
         }
         pb.opened = true;
         pb.openIndex = index;
-        if (pb.options.type === 'standalone') {
+        if (pb.params.type === 'standalone') {
             $('body').append(htmlTemplate);
         }
-        if (pb.options.type === 'popup') {
+        if (pb.params.type === 'popup') {
             pb.popup = app.popup('<div class="popup photo-browser-popup">' + htmlTemplate + '</div>');
             $(pb.popup).on('closed', pb.onPopupClose);
         }
-        if (pb.options.type === 'page') {
+        if (pb.params.type === 'page') {
             $(document).on('pageBeforeInit', pb.onPageBeforeInit);
             $(document).on('pageBeforeRemove', pb.onPageBeforeRemove);
-            if (!pb.options.view) pb.options.view = findView();
-            pb.options.view.loadContent(htmlTemplate);
+            if (!pb.params.view) pb.params.view = findView();
+            pb.params.view.loadContent(htmlTemplate);
             return;
         }
         pb.layout(pb.openIndex);
@@ -121,7 +121,7 @@ var PhotoBrowser = function (options) {
         // Detach events
         pb.attachEvents(true);
         // Delete from DOM
-        if (pb.options.type === 'standalone') {
+        if (pb.params.type === 'standalone') {
             pb.container.removeClass('photo-browser-in').addClass('photo-browser-out').animationEnd(function () {
                 pb.container.remove();
             });
@@ -150,13 +150,13 @@ var PhotoBrowser = function (options) {
     };
 
     pb.layout = function (index) {
-        if (pb.options.type === 'page') {
+        if (pb.params.type === 'page') {
             pb.container = $('.photo-browser-slider-container').parents('.view');
         }
         else {
             pb.container = $('.photo-browser');
         }
-        if (pb.options.type === 'standalone') {
+        if (pb.params.type === 'standalone') {
             pb.container.addClass('photo-browser-in');
             app.sizeNavbars(pb.container);
         }
@@ -165,14 +165,14 @@ var PhotoBrowser = function (options) {
         pb.slides = pb.container.find('.photo-browser-slide');
         
         pb.slider = app.slider(pb.sliderContainer, {
-            nextButton: pb.options.nextButton || '.photo-browser-next',
-            prevButton: pb.options.prevButton || '.photo-browser-prev',
-            indexButton: pb.options.indexButton,
+            nextButton: pb.params.nextButton || '.photo-browser-next',
+            prevButton: pb.params.prevButton || '.photo-browser-prev',
+            indexButton: pb.params.indexButton,
             initialSlide: index,
-            spaceBetween: pb.options.spaceBetween,
-            speed: pb.options.speed,
+            spaceBetween: pb.params.spaceBetween,
+            speed: pb.params.speed,
             onClick: function (slider, e) {
-                if (pb.options.exposition) pb.toggleExposition();
+                if (pb.params.exposition) pb.toggleExposition();
             },
             onDoubleTap: function (slider, e) {
                 pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
@@ -192,17 +192,17 @@ var PhotoBrowser = function (options) {
                 else {
                     $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
-                if (pb.options.onSlideChangeStart) pb.options.onSlideChangeStart(slider);
+                if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(slider);
             },
             onSlideChangeEnd: function (slider) {
                 // Reset zoom
-                if (pb.options.zoom && gestureSlide && slider.previousSlideIndex !== slider.activeSlideIndex) {
+                if (pb.params.zoom && gestureSlide && slider.previousSlideIndex !== slider.activeSlideIndex) {
                     gestureImg.transform('translate3d(0,0,0) scale(1)');
                     gestureImgWrap.transform('translate3d(0,0,0)');
                     gestureSlide = gestureImg = gestureImgWrap = undefined;
                     scale = currentScale = 1;
                 }
-                if (pb.options.onSlideChangeEnd) pb.options.onSlideChangeEnd(slider);
+                if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(slider);
             }
         });
 
@@ -215,7 +215,7 @@ var PhotoBrowser = function (options) {
         var action = detach ? 'off' : 'on';
         // Slide between photos
 
-        if (pb.options.zoom) {
+        if (pb.params.zoom) {
             // Scale image
             pb.slides[action]('gesturestart', pb.onSlideGestureStart);
             pb.slides[action]('gesturechange', pb.onSlideGestureChange);
@@ -260,17 +260,17 @@ var PhotoBrowser = function (options) {
     };
     pb.onSlideGestureChange = function (e) {
         scale = e.scale * currentScale;
-        if (scale > pb.options.maxZoom) {
-            scale = pb.options.maxZoom - 1 + Math.pow((scale - pb.options.maxZoom + 1), 0.5);
+        if (scale > pb.params.maxZoom) {
+            scale = pb.params.maxZoom - 1 + Math.pow((scale - pb.params.maxZoom + 1), 0.5);
         }
-        if (scale < pb.options.minZoom) {
-            scale =  pb.options.minZoom + 1 - Math.pow((pb.options.minZoom - scale + 1), 0.5);
+        if (scale < pb.params.minZoom) {
+            scale =  pb.params.minZoom + 1 - Math.pow((pb.params.minZoom - scale + 1), 0.5);
         }
         gestureImg.transform('translate3d(0,0,0) scale(' + scale + ')');
     };
     pb.onSlideGestureEnd = function (e) {
-        scale = Math.max(Math.min(scale, pb.options.maxZoom), pb.options.minZoom);
-        gestureImg.transition(pb.options.speed).transform('translate3d(0,0,0) scale(' + scale + ')');
+        scale = Math.max(Math.min(scale, pb.params.maxZoom), pb.params.minZoom);
+        gestureImg.transition(pb.params.speed).transform('translate3d(0,0,0) scale(' + scale + ')');
         currentScale = scale;
         isScaling = false;
         if (scale === 1) gestureSlide = undefined;
@@ -288,7 +288,7 @@ var PhotoBrowser = function (options) {
             gestureSlide = undefined;
         }
         else {
-            scale = currentScale = pb.options.maxZoom;
+            scale = currentScale = pb.params.maxZoom;
             gestureImg.transition(300).transform('translate3d(0,0,0) scale(' + scale + ')');
         }
     };
@@ -409,6 +409,6 @@ var PhotoBrowser = function (options) {
     return pb;
 };
 
-app.photoBrowser = function (options) {
-    return new PhotoBrowser(options);
+app.photoBrowser = function (params) {
+    return new PhotoBrowser(params);
 };
