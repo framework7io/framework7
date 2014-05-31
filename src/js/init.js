@@ -2,10 +2,12 @@
 ************   App Init   ************
 ======================================================*/
 app.init = function () {
-    // Init Device
-    if (app.getDeviceInfo) app.getDeviceInfo();
     // Init Plugins
     if (app.initPlugins) app.initPlugins();
+    
+    // Init Device
+    if (app.getDeviceInfo) app.getDeviceInfo();
+    
     // Init Click events
     if (app.initFastClicks && app.params.fastClicks) app.initFastClicks();
     if (app.initClickEvents) app.initClickEvents();
