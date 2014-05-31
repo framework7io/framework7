@@ -322,6 +322,9 @@ var View = function (selector, params) {
         view = undefined;
     };
 
+    // Plugin hook
+    app.pluginHook('addView', view);
+    
     // Return view
     return view;
 };
