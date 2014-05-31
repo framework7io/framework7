@@ -14,7 +14,6 @@ module.exports = function (grunt) {
     var jsFilesList = [
         'src/js/wrap-start.js',
         'src/js/f7-intro.js',
-        'src/js/plugins.js',
         'src/js/views.js',
         'src/js/navbars.js',
         'src/js/xhr.js',
@@ -35,6 +34,7 @@ module.exports = function (grunt) {
         'src/js/push-state.js',
         'src/js/slider.js',
         'src/js/photo-browser.js',
+        'src/js/plugins.js',
         'src/js/init.js',
         'src/js/f7-outro.js',
         'src/js/dom.js',
