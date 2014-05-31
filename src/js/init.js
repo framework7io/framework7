@@ -2,8 +2,10 @@
 ************   App Init   ************
 ======================================================*/
 app.init = function () {
+    // Init Device
     if (app.getDeviceInfo) app.getDeviceInfo();
-
+    // Init Plugins
+    if (app.initPlugins) app.initPlugins();
     // Init Click events
     if (app.initFastClicks && app.params.fastClicks) app.initFastClicks();
     if (app.initClickEvents) app.initClickEvents();
@@ -37,5 +39,8 @@ app.init = function () {
     
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
+
+    // Plugin app init hook
+    app.pluginHook('appInit');
 };
 if (app.params.init) app.init();
