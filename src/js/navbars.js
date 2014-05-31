@@ -3,20 +3,26 @@
 ======================================================*/
 // On Navbar Init Callback
 app.navbarInitCallback = function (view, pageContainer, navbar, navbarInnerContainer, url, position) {
-    var eventData = {
-        navbar: {
-            container: navbar,
-            innerContainer: navbarInnerContainer
-        },
-        page: {
-            url: url,
-            query: $.parseUrlQuery(url || ''),
-            container: pageContainer,
-            name: $(pageContainer).attr('data-page'),
-            view: view,
-            from: position
-        }
+    var _navbar = {
+        container: navbar,
+        innerContainer: navbarInnerContainer
     };
+    var _page = {
+        url: url,
+        query: $.parseUrlQuery(url || ''),
+        container: pageContainer,
+        name: $(pageContainer).attr('data-page'),
+        view: view,
+        from: position
+    };
+    var eventData = {
+        navbar: _navbar,
+        page: _page
+    };
+
+    // Plugin hook
+    app.pluginHook('navbarInit', _navbar, _page);
+    
     // Navbar Init Callback
     $(navbarInnerContainer).trigger('navbarInit', eventData);
 };
