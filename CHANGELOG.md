@@ -1,5 +1,16 @@
 # Change Log
 
+## Framework7 v0.8.6 - Updated on May 31, 2014
+
+* New Infinite Scroll component
+* New Plugins API
+* Slider: prevent links clicks during swipe
+* Swipeout: new "swipeout" callback which returns opened progress
+* Views: swipeBackPage App parameters could be overwrited for View
+* Views: totally reworked to Classes
+* Navbar: dynamic navbars now triggers 'navbarInit' event when added to DOM
+* Tabs: new method app.showTab(tab) to switch tabs programmatically
+
 ## Framework7 v0.8.5 - Updated on May 24, 2014
 
 * Many minor fixes 
