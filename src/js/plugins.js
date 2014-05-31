@@ -2,13 +2,13 @@
 ************   Plugins API   ************
 =======================================*/
 var _plugins = [];
-// Initialize plugins
-for (var plugin in app.plugins) {
-    if (app.params[plugin]) {
+app.initPlugins = function () {
+    // Initialize plugins
+    for (var plugin in app.plugins) {
         var p = app.plugins[plugin](app, app.params[plugin]);
         if (p) _plugins.push(p);
     }
-}
+};
 // Plugin Hooks
 app.pluginHook = function (hook) {
     for (var i = 0; i < _plugins.length; i++) {
