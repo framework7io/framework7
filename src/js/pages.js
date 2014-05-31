@@ -14,10 +14,15 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
         view: view,
         from: position
     };
-    // Before Init Callback
+    // Before Init Callbacks
+    app.pluginHook('pageBeforeInit', pageData);
     $(pageData.container).trigger('pageBeforeInit', {page: pageData});
+
+    // Init page
     app.initPage(pageContainer);
+
     // Init Callback
+    app.pluginHook('pageInit', pageData);
     $(pageData.container).trigger('pageInit', {page: pageData});
 };
 app.pageRemoveCallback = function (view, pageContainer, position) {
@@ -45,6 +50,7 @@ app.pageAnimCallbacks = function (callback, view, params) {
         newPage = params.newPage;
 
     if (callback === 'after') {
+        app.pluginHook('pageAfterAnimation', pageData);
         $(pageData.container).trigger('pageAfterAnimation', {page: pageData});
 
     }
@@ -67,6 +73,7 @@ app.pageAnimCallbacks = function (callback, view, params) {
             view.showToolbar();
         }
         // Callbacks
+        app.pluginHook('pageBeforeAnimation', pageData);
         $(pageData.container).trigger('pageBeforeAnimation', {page: pageData});
     }
 };
@@ -185,6 +192,9 @@ function _animateNavbars(leftNavbarInner, rightNavbarInner, direction, view) {
 function _load(view, url, content) {
     var viewContainer = $(view.container),
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+
+    // Plugin hook
+    app.pluginHook('loadPage', view, url, content);
 
     // Preprocess content
     if (app.params.preprocess) {
@@ -380,6 +390,8 @@ app.goBack = function (view, url, preloadOnly, pushState) {
         app.xhr.abort();
         app.xhr = false;
     }
+    app.pluginHook('goBack', view, url, preloadOnly);
+
     if (app.params.pushState)  {
         if (typeof pushState === 'undefined') pushState = true;
         if (!preloadOnly && history.state && pushState) {
