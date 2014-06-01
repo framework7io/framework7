@@ -2,80 +2,64 @@
 ************   Views   ************
 ======================================================*/
 app.views = [];
-app.addView = function (selector, params) {
-    if (!selector) return;
-    var $container = $(selector);
-    if ($container.length === 0) return;
+var View = function (selector, params) {
+    var defaults = {
+        dynamicNavbar: false,
+        domCache: false,
+        linksView: undefined,
+        swipeBackPage: app.params.swipeBackPage,
+        swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
+        swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
+        swipeBackPageThreshold: app.params.swipeBackPageThreshold
+    };
+
+    params = params || {};
+    for (var def in defaults) {
+        if (typeof params[def] === 'undefined') {
+            params[def] = defaults[def];
+        }
+    }
+    // View
+    var view = this;
+    view.params = params;
+
+    // Selector
+    view.selector = selector;
+
+    // Container
+    var container = $(selector);
+    view.container = container[0];
     
-    var container = $container[0];
-    if (typeof params === 'undefined') params = {};
+    // Location
     var docLocation = document.location.href;
+
+    // History
+    view.history = [];
     var viewURL = docLocation;
     if (app.params.pushState) {
         if (viewURL.indexOf('#!/') >= 0 && viewURL.indexOf('#!/#') < 0) viewURL = viewURL.split('#!/')[0];
     }
-    var view = {
-        container: container,
-        selector: selector,
-        params: params || {},
-        history: [],
-        contentCache: {},
-        url: $container.attr('data-url') || viewURL,
-        pagesContainer: $('.pages', container)[0],
-        main: $container.hasClass(app.params.viewMainClass),
-        loadContent: function (content) {
-            app.loadContent(view, content);
-        },
-        loadPage: function (url) {
-            app.loadPage(view, url);
-        },
-        goBack: function (url) {
-            app.goBack(view, url, undefined);
-        },
-        hideNavbar: function () {
-            app.hideNavbar(container);
-        },
-        showNavbar: function () {
-            app.showNavbar(container);
-        },
-        hideToolbar: function () {
-            app.hideToolbar(container);
-        },
-        showToolbar: function () {
-            app.showToolbar(container);
-        }
-    };
+    view.url = container.attr('data-url') || viewURL;
+
     // Store to history main view's url
     if (view.url) {
         view.history.push(view.url);
     }
 
+    // Content cache
+    view.contentCache = {};
+
     // Store View in element for easy access
-    container.f7View = view;
+    container[0].f7View = view;
 
-    // Add view to app
-    app.views.push(view);
+    // Pages
+    view.pagesContainer = container.find('.pages')[0];
 
-    // Init View's events
-    app.initViewEvents(view);
+    // Is main
+    view.main = container.hasClass(app.params.viewMainClass);
 
-    // Push State on load
-    if (app.params.pushState && view.main) {
-        if (docLocation.indexOf('#!/') >= 0 && docLocation.indexOf('#!/#') < 0) {
-            app.loadPage(view, docLocation.split('#!/')[1], false);
-        }
-    }
-    
-    // Return view object
-    return view;
-};
-
-// Live Events on view links
-app.initViewEvents = function (view) {
-    if (!app.params.swipeBackPage) return;
-    // Swipe Back to previous page
-    var viewContainer = $(view.container),
-        isTouched = false,
+    // Touch events
+    var isTouched = false,
         isMoved = false,
         touchesStart = {},
         isScrolling,
@@ -91,22 +75,21 @@ app.initViewEvents = function (view) {
         previousNavElements,
         activeNavBackIcon,
         previousNavBackIcon,
-        i,
         dynamicNavbar,
         el;
 
-    function handleTouchStart(e, target) {
-        if (!allowViewTouchMove || !app.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
+    view.handleTouchStart = function (e) {
+        if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
-        dynamicNavbar = view.params.dynamicNavbar && viewContainer.find('.navbar-inner').length > 1;
-    }
-    
-    function handleTouchMove(e, target) {
+        dynamicNavbar = view.params.dynamicNavbar && container.find('.navbar-inner').length > 1;
+    };
+
+    view.handleTouchMove = function (e) {
         if (!isTouched) return;
         var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -121,18 +104,19 @@ app.initViewEvents = function (view) {
         if (!isMoved) {
             var cancel = false;
             // Calc values during first move fired
-            viewContainerWidth = viewContainer.width();
-            activePage = $(target || e.target).is('.page') ? $(target || e.target) : $(target || e.target).parents('.page');
-            previousPage = viewContainer.find('.page-on-left:not(.cached)');
-            if (touchesStart.x - viewContainer.offset().left > app.params.swipeBackPageActiveArea) cancel = true;
+            viewContainerWidth = container.width();
+            var target = $(e.target);
+            activePage = target.is('.page') ? target : target.parents('.page');
+            previousPage = container.find('.page-on-left:not(.cached)');
+            if (touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea) cancel = true;
             if (previousPage.length === 0 || activePage.length === 0) cancel = true;
             if (cancel) {
                 isTouched = false;
                 return;
             }
             if (dynamicNavbar) {
-                activeNavbar = viewContainer.find('.navbar-on-center:not(.cached)');
-                previousNavbar = viewContainer.find('.navbar-on-left:not(.cached)');
+                activeNavbar = container.find('.navbar-on-center:not(.cached)');
+                previousNavbar = container.find('.navbar-on-left:not(.cached)');
                 activeNavElements = activeNavbar.find('.left, .center, .right');
                 previousNavElements = previousNavbar.find('.left, .center, .right');
                 if (app.params.animateNavBackIcon) {
@@ -144,13 +128,13 @@ app.initViewEvents = function (view) {
         isMoved = true;
 
         e.preventDefault();
-        touchesDiff = pageX - touchesStart.x - app.params.swipeBackPageThreshold;
+        touchesDiff = pageX - touchesStart.x - view.params.swipeBackPageThreshold;
         if (touchesDiff < 0) touchesDiff = 0;
         var percentage = touchesDiff / viewContainerWidth;
 
         // Transform pages
         activePage.transform('translate3d(' + touchesDiff + 'px,0,0)');
-        if (app.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
+        if (view.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
 
         var pageTranslate = (touchesDiff / 5 - viewContainerWidth / 5);
         if (app.device.pixelRatio === 1) pageTranslate = Math.round(pageTranslate);
@@ -160,6 +144,7 @@ app.initViewEvents = function (view) {
 
         // Dynamic Navbars Animation
         if (dynamicNavbar) {
+            var i;
             for (i = 0; i < activeNavElements.length; i++) {
                 el = $(activeNavElements[i]);
                 el[0].style.opacity = (1 - percentage * 1.3);
@@ -189,9 +174,9 @@ app.initViewEvents = function (view) {
                 }
             }
         }
+    };
 
-    }
-    function handleTouchEnd(e, target) {
+    view.handleTouchEnd = function (e) {
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -279,21 +264,71 @@ app.initViewEvents = function (view) {
                 app.afterGoBack(view, activePage, previousPage);
             }
         });
+    };
+    view.attachEvents = function (detach) {
+        var action = detach ? 'off' : 'on';
+        container[action](app.touchEvents.start, view.handleTouchStart);
+        container[action](app.touchEvents.move, view.handleTouchMove);
+        container[action](app.touchEvents.end, view.handleTouchEnd);
+    };
+    view.detachEvents = function () {
+        view.attachEvents(true);
+    };
+
+    // Init
+    if (view.params.swipeBackPage) {
+        view.attachEvents();
     }
 
-    viewContainer.on(app.touchEvents.start, handleTouchStart);
-    viewContainer.on(app.touchEvents.move, handleTouchMove);
-    viewContainer.on(app.touchEvents.end, handleTouchEnd);
-     
-    view.attachSubEvents = function (page, el) {
-        $(el).on(app.touchEvents.start, function (e) {
-            return handleTouchStart.apply(page, [e, page]);
-        });
-        $(el).on(app.touchEvents.move, function (e) {
-            return handleTouchMove.apply(page, [e, page]);
-        });
-        $(el).on(app.touchEvents.end, function (e, page) {
-            return handleTouchEnd.apply(page, [e, page]);
-        });
+    // Add view to app
+    app.views.push(view);
+    if (view.main) app.mainView = view;
+
+    // Load methods
+    view.loadPage = function (url) {
+        return app.loadPage(view, url);
     };
+    view.loadContent = function (content) {
+        return app.loadContent(view, content);
+    };
+    view.goBack = function (url) {
+        return app.goBack(view, url, undefined);
+    };
+
+    // Bars methods
+    view.hideNavbar = function () {
+        return app.hideNavbar(container);
+    };
+    view.showNavbar = function () {
+        return app.showNavbar(container);
+    };
+    view.hideToolbar = function () {
+        return app.hideToolbar(container);
+    };
+    view.showToolbar = function () {
+        return app.showToolbar(container);
+    };
+
+    // Push State on load
+    if (app.params.pushState && view.main) {
+        if (docLocation.indexOf('#!/') >= 0 && docLocation.indexOf('#!/#') < 0) {
+            app.loadPage(view, docLocation.split('#!/')[1], false);
+        }
+    }
+
+    // Destroy
+    view.destroy = function () {
+        view.detachEvents();
+        view = undefined;
+    };
+
+    // Plugin hook
+    app.pluginHook('addView', view);
+    
+    // Return view
+    return view;
+};
+
+app.addView = function (selector, params) {
+    return new View(selector, params);
 };

@@ -78,7 +78,10 @@ app.initSwipeout = function (swipeoutEl) {
                 return;
             }
         }
-        else swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
+        else {
+            swipeOutEl.trigger('swipeout', {progress: Math.abs(translate / swipeOutActionsWidth)});
+            swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
+        }
 
     }
     function handleTouchEnd(e) {

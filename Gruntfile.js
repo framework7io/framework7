@@ -34,6 +34,7 @@ module.exports = function (grunt) {
         'src/js/push-state.js',
         'src/js/slider.js',
         'src/js/photo-browser.js',
+        'src/js/plugins.js',
         'src/js/init.js',
         'src/js/f7-outro.js',
         'src/js/dom.js',
@@ -42,6 +43,7 @@ module.exports = function (grunt) {
         'src/js/dom-export.js',
         'src/js/proto-support.js',
         'src/js/proto-device.js',
+        'src/js/proto-plugins.js',
         'src/js/wrap-end.js'
     ];
 
