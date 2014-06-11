@@ -13,7 +13,7 @@
     -webkit-transition-property: -webkit-transform;
     -moz-transition-property: -moz-transform;
     transition-property: transform;
-    .slider-container-vertical & {
+    .slider-container-vertical > & {
         -webkit-box-orient: vertical;
         -moz-box-orient: vertical;
         -ms-flex-direction: column;
@@ -43,7 +43,7 @@
         opacity: 0;
         pointer-events:none;
     }
-    .slider-container-vertical & {
+    .slider-container-vertical > & {
         right: 10px;
         left: auto;
         top: 50%;
@@ -51,6 +51,10 @@
         width: auto;
         height: auto;
         .translate3d(0,-50%,0);
+        .slider-pagination-bullet {
+            display: block;
+            margin: 5px 0;
+        }
     }
 }
 .slider-pagination-bullet {
@@ -61,10 +65,6 @@
     background: #000;
     opacity: 0.2;
     margin: 0 5px;
-    .slider-container-vertical & {
-        display: block;
-        margin: 5px 0;
-    }
 }
 .slider-pagination-active {
     opacity: 1;
