@@ -34,6 +34,9 @@ var Slider = function (container, params) {
     if (s.params.direction === 'vertical') {
         s.container.addClass('slider-container-vertical');
     }
+    else {
+        s.container.addClass('slider-container-horizontal');
+    }
 
     s.wrapper = s.container.children('.' + s.params.wrapperClass);
 
