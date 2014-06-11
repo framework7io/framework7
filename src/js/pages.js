@@ -34,6 +34,7 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
         from: position
     };
     // Before Init Callback
+    app.pluginHook('pageBeforeRemove', pageData);
     $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
 };
 app.pageAnimCallbacks = function (callback, view, params) {
