@@ -79,9 +79,15 @@ Framework7.prototype.device = (function () {
     if (device.os) {
         var className = device.os +
                         ' ' +
-                        device.os + '-' + device.osVersion.replace(/\./g, '-') +
+                        device.os + '-' + device.osVersion.split('.')[0] +
                         ' ' +
-                        device.os + '-' + device.osVersion.split('.')[0];
+                        device.os + '-' + device.osVersion.replace(/\./g, '-');
+        if (device.os === 'ios') {
+            var major = parseInt(device.osVersion.split('.')[0], 10);
+            for (var i = major - 1; i >= 6; i--) {
+                className += ' ' + 'ios-gt-' + i;
+            }
+        }
         $('html').addClass(className);
     }
     if (device.statusBar) {
