@@ -86,10 +86,13 @@ app.smartSelectOpen = function (smartSelect) {
     if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
     // Page Layout
     var pageName = 'smart-select-' + radiosName;
+
+    var noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
+    var noNavbar = smartSelect.parents('.page').hasClass('no-navbar') ? 'no-navbar' : '';
     var pageHTML =
         (navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
-        '  <div data-page="' + pageName + '" class="page">' +
+        '  <div data-page="' + pageName + '" class="page ' + noNavbar + ' ' + noToolbar + '">' +
              (navbarLayout === 'fixed' ? navbarHTML : '') +
         '    <div class="page-content">' +
                (navbarLayout === 'static' ? navbarHTML : '') +
