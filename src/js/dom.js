@@ -46,7 +46,8 @@ Dom7.prototype = {
     },
     attr: function (attr, value) {
         if (typeof value === 'undefined') {
-            return this[0].getAttribute(attr);
+            if (this[0]) return this[0].getAttribute(attr);
+            else return undefined;
         }
         else {
             for (var i = 0; i < this.length; i++) {
@@ -451,12 +452,36 @@ Dom7.prototype = {
         }
         else return new Dom7([]);
     },
+    nextAll: function (selector) {
+        var nextEls = [];
+        var el = this[0];
+        if (!el) return new Dom7([]);
+        while (el.nextElementSibling) {
+            var next = el.nextElementSibling;
+            if (selector && $(next).is(selector)) nextEls.push(next);
+            else nextEls.push(next);
+            el = next;
+        }
+        return new Dom7(nextEls);
+    },
     prev: function () {
         if (this.length > 0) {
             if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
             else return new Dom7([]);
         }
         else return new Dom7([]);
+    },
+    prevAll: function (selector) {
+        var prevEls = [];
+        var el = this[0];
+        if (!el) return new Dom7([]);
+        while (el.previousElementSibling) {
+            var prev = el.previousElementSibling;
+            if (selector && $(prev).is(selector)) prevEls.push(prev);
+            else prevEls.push(prev);
+            el = prev;
+        }
+        return new Dom7(prevEls);
     },
     parent: function (selector) {
         var parents = [];
