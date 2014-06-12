@@ -76,6 +76,9 @@ window.Framework7 = function (params) {
         viewClass: 'view',
         viewMainClass: 'view-main',
         viewsClass: 'views',
+        // Notifications defaults
+        notificationCloseOnClick: false,
+        notificationCloseIcon: true
     };
 
     // Extend defaults with parameters
