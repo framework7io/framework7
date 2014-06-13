@@ -95,7 +95,8 @@ app.initPage = function (pageContainer) {
     if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
     // Init infinite scroll
     if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
-
+    // Init searchbar
+    if (app.initSearchbar) app.initSearchbar(pageContainer);
 };
 
 // Load Page

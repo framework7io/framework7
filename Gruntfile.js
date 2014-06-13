@@ -16,6 +16,7 @@ module.exports = function (grunt) {
         'src/js/f7-intro.js',
         'src/js/views.js',
         'src/js/navbars.js',
+        'src/js/searchbar.js',
         'src/js/xhr.js',
         'src/js/pages.js',
         'src/js/modals.js',
