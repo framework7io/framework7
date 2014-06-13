@@ -139,9 +139,12 @@ Dom7.prototype = {
 
         return this;
     },
-    off: function (event, listener) {
-        for (var i = 0; i < this.length; i++) {
-            this[i].removeEventListener(event, listener, false);
+    off: function (eventName, listener) {
+        var events = eventName.split(' ');
+        for (var i = 0; i < events.length; i++) {
+            for (var j = 0; j < this.length; j++) {
+                this[j].removeEventListener(events[i], listener, false);
+            }
         }
         return this;
     },
