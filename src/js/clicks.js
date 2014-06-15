@@ -67,11 +67,14 @@ app.initClickEvents = function () {
                 app.closeModal();
             if ($('.actions-modal.modal-in').length > 0 && app.params.actionsCloseByOutside)
                 app.closeModal();
-            if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside)
-                app.closeModal();
+            
             if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
         }
-        
+        if (clicked.hasClass('popup-overlay')) {
+            if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside)
+                app.closeModal('.popup.modal-in');
+        }
+
         // Tabs
         if (clicked.hasClass('tab-link')) {
             app.showTab(clicked.attr('href'), clicked);
@@ -133,5 +136,5 @@ app.initClickEvents = function () {
             else view.loadPage(clicked.attr('href'));
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .toggle-sortable, .open-sortable, .close-sortable', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .toggle-sortable, .open-sortable, .close-sortable', handleClicks);
 };

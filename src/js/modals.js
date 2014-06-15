@@ -105,7 +105,7 @@ app.showPreloader = function (title) {
     });
 };
 app.hidePreloader = function () {
-    app.closeModal();
+    app.closeModal('.modal.modal-in');
 };
 app.showIndicator = function () {
     $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white"></span></div>');
@@ -116,28 +116,7 @@ app.hideIndicator = function () {
 // Action Sheet
 app.actions = function (params) {
     params = params || [];
-    /*Example of @params
-    [
-        [
-            {
-                text: 'Button 1',
-                red: false,
-                bold: false,
-                onClick: function () { ... },
-                label: false // or true
-            },
-            {
-                text: '<a href="#" class="open-panel">Open panel</a>',
-                red: false,
-                bold: false,
-                onClick: function () { ... }  
-                label: false // or true
-            }
-            ... more buttons in this group
-        ],
-        ... more groups
-    ]
-    */
+    
     if (params.length > 0 && !$.isArray(params[0])) {
         params = [params];
     }
@@ -310,15 +289,20 @@ app.popup = function (modal, removeOnClose) {
 };
 app.openModal = function (modal) {
     modal = $(modal);
-    if ($('.modal-overlay').length === 0) {
-        var overlay = document.createElement('div');
-        overlay.className = 'modal-overlay';
-        $('body').append(overlay);
-    }
+
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
-    if (!isPopover && !isPopup) modal.css({marginTop: -modal.outerHeight() / 2 + 'px'});
-    
+    if (!isPopover && !isPopup) modal.css({marginTop: - Math.round(modal.outerHeight() / 2) + 'px'});
+
+    if ($('.modal-overlay').length === 0 && !isPopup) {
+        $('body').append('<div class="modal-overlay"></div>');
+    }
+    if ($('.popup-overlay').length === 0 && isPopup) {
+        $('body').append('<div class="popup-overlay"></div>');
+    }
+    var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
+
+
     //Make sure that styles are applied, trigger relayout;
     var clientLeft = modal[0].clientLeft;
 
@@ -326,7 +310,7 @@ app.openModal = function (modal) {
     modal.trigger('open');
 
     // Classes for transition in
-    $('.modal-overlay').addClass('modal-overlay-visible');
+    overlay.addClass('modal-overlay-visible');
     modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
         if (modal.hasClass('modal-out')) modal.trigger('closed');
         else modal.trigger('opened');
@@ -335,11 +319,16 @@ app.openModal = function (modal) {
 };
 app.closeModal = function (modal) {
     modal = $(modal || '.modal-in');
-    $('.modal-overlay').removeClass('modal-overlay-visible');
-    modal.trigger('close');
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
     var removeOnClose = modal.hasClass('remove-on-close');
+
+    var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
+    overlay.removeClass('modal-overlay-visible');
+
+    modal.trigger('close');
+    
+
     if (!isPopover) {
         modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
             if (modal.hasClass('modal-out')) modal.trigger('closed');

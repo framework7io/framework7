@@ -9,7 +9,7 @@
 @actionsModalActiveButtonBg:#dcdcdc;
 @popoverBg: rgba(255,255,255,0.95);
 @popupDuration: 400ms;
-.modal-overlay, .preloader-indicator-overlay {
+.modal-overlay, .preloader-indicator-overlay, .popup-overlay {
     position: absolute;
     left: 0;
     top: 0;
@@ -24,6 +24,9 @@
         visibility: visible;
         opacity: 1;
     }
+}
+.popup-overlay {
+    z-index: 9990;
 }
 .modal {
     width: 270px;
@@ -312,7 +315,7 @@ input.modal-prompt-input {
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 11000;
+    z-index: 9999;
     background: #fff;
     .border-box();
     display: none;
