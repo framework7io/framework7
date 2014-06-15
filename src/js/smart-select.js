@@ -58,7 +58,8 @@ app.smartSelectOpen = function (smartSelect) {
     var pageTitle = smartSelect.find('.item-title').text();
 
     // Generate dynamic page layout
-    var radiosName = 'radio-' + (new Date()).getTime();
+    var id = (new Date()).getTime();
+    var radiosName = 'radio-' + id;
     var radiosHTML = '';
     for (var j = 0; j < values.length; j++) {
         var checked = values[j].selected ? 'checked' : '';
@@ -89,14 +90,33 @@ app.smartSelectOpen = function (smartSelect) {
 
     var noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
     var noNavbar = smartSelect.parents('.page').hasClass('no-navbar') ? 'no-navbar' : '';
+
+    var useSearchbar = typeof smartSelect.data('searchbar') === 'undefined' ? app.params.smartSelectSearchbar : (smartSelect.data('searchbar') === 'true' ? true : false);
+    var searchbarPlaceholder, searchbarCancel;
+        
+    if (useSearchbar) {
+        searchbarPlaceholder = smartSelect.data('searchbar-placeholder') || 'Search';
+        searchbarCancel = smartSelect.data('searchbar-cancel') || 'Cancel';
+    }
+
+    var searchbarHTML =   '<form class="searchbar" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
+                            '<div class="searchbar-input">' +
+                                '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
+                                '<a href="#" class="searchbar-clear"></a>' +
+                            '</div>' +
+                            '<a href="#" class="searchbar-cancel">' + searchbarCancel + '</a>' +
+                          '</form>' +
+                          '<div class="searchbar-overlay"></div>';
+
     var pageHTML =
         (navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
         '  <div data-page="' + pageName + '" class="page ' + noNavbar + ' ' + noToolbar + '">' +
              (navbarLayout === 'fixed' ? navbarHTML : '') +
+             (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
                (navbarLayout === 'static' ? navbarHTML : '') +
-        '      <div class="list-block">' +
+        '      <div class="list-block smart-select-list-' + id + '">' +
         '        <ul>' +
                     radiosHTML +
         '        </ul>' +
