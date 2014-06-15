@@ -19,7 +19,7 @@ app.initSearchbar = function (pageContainer) {
     cancel.css('margin-right', - cancel.width() + 'px');
 
     // Handlers
-    function handleCancelClick() {
+    function disableSearchbar() {
         input.val('').trigger('change');
         searchbar.removeClass('searchbar-active searchbar-not-empty');
         if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
@@ -33,13 +33,8 @@ app.initSearchbar = function (pageContainer) {
         }
     }
 
-    // Searchbar overlay
-    function handleOverlayClick() {
-        cancel.click();
-    }
-
     // Activate
-    function handleInputFocus() {
+    function enableSearchbar() {
         if (app.device.ios) {
             setTimeout(function () {
                 if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
@@ -53,12 +48,12 @@ app.initSearchbar = function (pageContainer) {
     }
 
     // Clear
-    function handleClearClick() {
+    function clearSearchbar() {
         input.val('').trigger('change');
     }
 
     // Change
-    function handleInputKey() {
+    function searchValue() {
         setTimeout(function () {
             var value = input.val().trim();
             if (value.length === 0) {
@@ -73,13 +68,19 @@ app.initSearchbar = function (pageContainer) {
         }, 0);
     }
 
+    //Prevent submit
+    function preventSubmit(e) {
+        e.preventDefault();
+    }
+
     function attachEvents(destroy) {
         var method = destroy ? 'off' : 'on';
-        cancel[method]('click', handleCancelClick);
-        searchbarOverlay[method]('click', handleOverlayClick);
-        input[method]('focus', handleInputFocus);
-        input[method]('change keydown keypress keyup', handleInputKey);
-        clear[method]('click', handleClearClick);
+        searchbar[method]('submit', preventSubmit);
+        cancel[method]('click', disableSearchbar);
+        searchbarOverlay[method]('click', disableSearchbar);
+        input[method]('focus', enableSearchbar);
+        input[method]('change keydown keypress keyup', searchValue);
+        clear[method]('click', clearSearchbar);
     }
     function detachEvents() {
         attachEvents(true);
@@ -90,10 +91,10 @@ app.initSearchbar = function (pageContainer) {
     attachEvents();
 
     // Search
-    function search(value) {
-        var values = value.trim().toLowerCase().split(' ');
+    function search(query) {
+        var values = query.trim().toLowerCase().split(' ');
         searchList.find('li').css('display', '');
-        var foundItems = 0;
+        var foundItems = [];
         searchList.find('li').each(function (index, el) {
             el = $(el);
             var compareWith = el.find(searchIn).text().trim().toLowerCase();
@@ -101,10 +102,17 @@ app.initSearchbar = function (pageContainer) {
             for (var i = 0; i < values.length; i++) {
                 if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
             }
-            if (wordsMatch !== values.length) el.hide();
-            else foundItems ++;
+            if (wordsMatch !== values.length) {
+                el.hide();
+            }
+            else {
+                foundItems.push(el[0]);
+            }
         });
-        if (foundItems === 0) {
+
+        searchList.trigger('search', {query: query, foundItems: foundItems});
+
+        if (foundItems.length === 0) {
             notFound.show();
             found.hide();
         }
