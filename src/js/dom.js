@@ -33,7 +33,7 @@ Dom7.prototype = {
     },
     hasClass: function (className) {
         if (!this[0]) return false;
-        else return this[0].className.indexOf(className) >= 0;
+        else return this[0].classList.contains(className);
     },
     toggleClass: function (className) {
         var classes = className.split(' ');
