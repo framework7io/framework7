@@ -1,5 +1,17 @@
 # Change Log
 
+## Framework7 v0.8.7 - Updated on June 15, 2014
+
+* New Notifications component
+* New Search Bar component
+* Slider: autoplay feature; fixed styles for nested sliders
+* Dom7: fixed .off method to remove multiple events; new .nextAll and .prevAll methods
+* Device API: new "gt-" (greater than) iOS version classes on HTML element
+* Smart Select: now inherits no-navbar/toolbar props from page; now available with Search Bar
+* Pluigns API: new 'pageBeforeRemove' plugin hook
+* Separate overlays for Modals (modal, action sheet, popover) and Popups
+* Reset styles for "input[type=number]"
+
 ## Framework7 v0.8.6 - Updated on May 31, 2014
 
 * New Infinite Scroll component
