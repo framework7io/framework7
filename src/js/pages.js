@@ -198,20 +198,7 @@ function _load(view, url, content) {
     // Plugin hook
     app.pluginHook('loadPage', view, url, content);
 
-    // Preprocess content
-    //Modified by Greg Keys, added callback
-    if (app.params.preprocess) {
-        content = app.params.preprocess(content, url, callback);
-        //this should handle backwards compatibility
-        //@NOTE if using loadPage from within preprocess it may be necessary to set myApp.allowPageChange = true;
-        if(typeof content !== 'undefined'){
-            callback(content);
-        }
-    }else{//we need to call the callback function if there is no preprocessing
-        callback(content);
-    }
-
-    function callback(content){
+    function next(content) {
         app._tempDomElement.innerHTML = '';
 
         // Parse DOM
@@ -356,6 +343,19 @@ function _load(view, url, content) {
             app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
             if (app.params.pushState) app.pushStateClearQueue();
         });
+    }
+
+    // Preprocess content
+    //Modified by Greg Keys, added callback
+    if (app.params.preprocess) {
+        content = app.params.preprocess(content, url, next);
+        //this should handle backwards compatibility
+        //@NOTE if using loadPage from within preprocess it may be necessary to set myApp.allowPageChange = true;
+        if (typeof content !== 'undefined') {
+            next(content);
+        }
+    } else {//we need to call the callback function if there is no preprocessing
+        next(content);
     }
 }
 app.loadContent = function (view, content, pushState) {
@@ -553,19 +553,20 @@ app.goBack = function (view, url, preloadOnly, pushState) {
                 app.allowPageChange = true;
                 return;
             }
-            //Modified by Greg Keys, added callback
-            if (app.params.preprocess) {
-                data = app.params.preprocess(data, url, callback);
-                if(typeof data !== 'undefined'){
-                    callback(data);
-                }
-            }else{
-                callback(data);
-            }
 
-            function callback(data){
+            function next(data) {
                 app._tempDomElement.innerHTML = data;
                 _preload();
+            }
+
+            //Modified by Greg Keys, added callback
+            if (app.params.preprocess) {
+                data = app.params.preprocess(data, url, next);
+                if (typeof data !== 'undefined') {
+                    next(data);
+                }
+            } else {
+                next(data);
             }
         });
     }
