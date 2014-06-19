@@ -8,6 +8,7 @@ $.ajax = function (options) {
         user: '',
         password: '',
         headers: {},
+        xhrFields: {},
         statusCode: {},
         processData: true,
         dataType: 'text',
@@ -137,6 +138,12 @@ $.ajax = function (options) {
 
     if (!options.crossDomain) {
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    }
+
+    if (options.xhrFields) {
+        for (var field in options.xhrFields) {
+            xhr[field] = options.xhrFields[field];
+        }
     }
 
     // Handle XHR
