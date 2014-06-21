@@ -191,52 +191,45 @@ function _animateNavbars(leftNavbarInner, rightNavbarInner, direction, view) {
         });
     }
 }
-function _load(view, url, content) {
+function _load(view, url, content, animatePages) {
     var viewContainer = $(view.container),
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+
+    if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
 
     // Plugin hook
     app.pluginHook('loadPage', view, url, content);
 
-    function next(content) {
-        app._tempDomElement.innerHTML = '';
+    app._tempDomElement.innerHTML = '';
 
-        // Parse DOM
-        if (url || (typeof content === 'string')) {
-            app._tempDomElement.innerHTML = content;
+    // Parse DOM
+    if (url || (typeof content === 'string')) {
+        app._tempDomElement.innerHTML = content;
+    } else {
+        if ('length' in content && content.length > 1) {
+            for (var ci = 0; ci < content.length; ci++) {
+                $(app._tempDomElement).append(content[ci]);
+            }
         } else {
-            if ('length' in content && content.length > 1) {
-                for (var ci = 0; ci < content.length; ci++) {
-                    $(app._tempDomElement).append(content[ci]);
-                }
-            } else {
-                $(app._tempDomElement).append(content);
-            }
+            $(app._tempDomElement).append(content);
         }
+    }
 
-        // Find new page
-        newPage = _findElement('.page', app._tempDomElement, view);
+    // Find new page
+    newPage = _findElement('.page', app._tempDomElement, view);
 
-        // If page not found exit
-        if (!newPage) {
-            app.allowPageChange = true;
-            return;
-        }
+    // If page not found exit
+    if (!newPage) {
+        app.allowPageChange = true;
+        return;
+    }
 
-        newPage.addClass('page-on-right');
+    newPage.addClass('page-on-right');
 
-        // Find old page (should be the last one) and remove older pages
-        pagesInView = viewContainer.find('.page:not(.cached)');
-        if (pagesInView.length > 1) {
-            for (i = 0; i < pagesInView.length - 2; i++) {
-                if (!view.params.domCache) {
-                    app.pageRemoveCallback(view, pagesInView[i], 'left');
-                    $(pagesInView[i]).remove();
-                }
-                else {
-                    $(pagesInView[i]).addClass('cached');
-                }
-            }
+    // Find old page (should be the last one) and remove older pages
+    pagesInView = viewContainer.find('.page:not(.cached)');
+    if (pagesInView.length > 1) {
+        for (i = 0; i < pagesInView.length - 2; i++) {
             if (!view.params.domCache) {
                 app.pageRemoveCallback(view, pagesInView[i], 'left');
                 $(pagesInView[i]).remove();
@@ -245,82 +238,103 @@ function _load(view, url, content) {
                 $(pagesInView[i]).addClass('cached');
             }
         }
+        if (!view.params.domCache) {
+            app.pageRemoveCallback(view, pagesInView[i], 'left');
+            $(pagesInView[i]).remove();
+        }
+        else {
+            $(pagesInView[i]).addClass('cached');
+        }
+    }
 
-        oldPage = viewContainer.find('.page:not(.cached)');
+    oldPage = viewContainer.find('.page:not(.cached)');
 
-        // Dynamic navbar
-        if (view.params.dynamicNavbar) {
-            dynamicNavbar = true;
-            // Find navbar
-            newNavbarInner = _findElement('.navbar-inner', app._tempDomElement, view);
-            if (!newNavbarInner) {
-                dynamicNavbar = false;
+    // Dynamic navbar
+    if (view.params.dynamicNavbar) {
+        dynamicNavbar = true;
+        // Find navbar
+        newNavbarInner = _findElement('.navbar-inner', app._tempDomElement, view);
+        if (!newNavbarInner) {
+            dynamicNavbar = false;
+        }
+        navbar = viewContainer.find('.navbar');
+        oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
+        if (oldNavbarInner.length > 0) {
+            for (i = 0; i < oldNavbarInner.length - 1; i++) {
+                if (!view.params.domCache)
+                    $(oldNavbarInner[i]).remove();
+                else
+                    $(oldNavbarInner[i]).addClass('cached');
             }
-            navbar = viewContainer.find('.navbar');
+            if (!newNavbarInner && oldNavbarInner.length === 1) {
+                if (!view.params.domCache)
+                    $(oldNavbarInner[0]).remove();
+                else
+                    $(oldNavbarInner[0]).addClass('cached');
+            }
             oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
-            if (oldNavbarInner.length > 0) {
-                for (i = 0; i < oldNavbarInner.length - 1; i++) {
-                    if (!view.params.domCache)
-                        $(oldNavbarInner[i]).remove();
-                    else
-                        $(oldNavbarInner[i]).addClass('cached');
-                }
-                if (!newNavbarInner && oldNavbarInner.length === 1) {
-                    if (!view.params.domCache)
-                        $(oldNavbarInner[0]).remove();
-                    else
-                        $(oldNavbarInner[0]).addClass('cached');
-                }
-                oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
+        }
+    }
+    if (dynamicNavbar) {
+        newNavbarInner.addClass('navbar-on-right');
+        navbar.append(newNavbarInner[0]);
+
+        // Navbar Init Events
+        app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
+    }
+
+    // save content areas into view's cache
+    if (!url) {
+        url = '#content-' + view.history.length;
+
+        if (!view.params.domCache) {
+            if (view.history.length === 1) {
+                view.contentCache[view.history[0]] = { nav: oldNavbarInner, page: oldPage };
             }
+            view.contentCache[url] = { nav: newNavbarInner, page: newPage };
         }
-        if (dynamicNavbar) {
-            newNavbarInner.addClass('navbar-on-right');
-            navbar.append(newNavbarInner[0]);
+    }
 
-            // Navbar Init Events
-            app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
-        }
+    // Update View history
+    view.url = url;
+    view.history.push(url);
 
-        // save content areas into view's cache
-        if (!url) {
-            url = '#content-' + view.history.length;
+    // Append Old Page and add classes for animation
+    $(view.pagesContainer).append(newPage[0]);
 
-            if (!view.params.domCache) {
-                if (view.history.length === 1) {
-                    view.contentCache[view.history[0]] = { nav: oldNavbarInner, page: oldPage };
+    // Page Init Events
+    app.pageInitCallback(view, newPage[0], url, 'right');
+
+    if (dynamicNavbar && animatePages) {
+        newNavbarInner.find('.sliding').each(function () {
+            var sliding = $(this);
+            sliding.transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
+            if (app.params.animateNavBackIcon) {
+                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                    sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarRightOffset) + 'px,0,0)');
                 }
-                view.contentCache[url] = { nav: newNavbarInner, page: newPage };
             }
-        }
+        });
+    }
+    // Force reLayout
+    var clientLeft = newPage[0].clientLeft;
 
-        // Update View history
-        view.url = url;
-        view.history.push(url);
+    // Before Anim Callback
+    app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
 
-        // Append Old Page and add classes for animation
-        $(view.pagesContainer).append(newPage[0]);
-
-        // Page Init Events
-        app.pageInitCallback(view, newPage[0], url, 'right');
-
+    function afterAnimation() {
+        app.allowPageChange = true;
+        newPage.removeClass('page-from-right-to-center page-on-right').addClass('page-on-center');
+        oldPage.removeClass('page-from-center-to-left page-on-center').addClass('page-on-left');
         if (dynamicNavbar) {
-            newNavbarInner.find('.sliding').each(function () {
-                var sliding = $(this);
-                sliding.transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
-                if (app.params.animateNavBackIcon) {
-                    if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
-                        sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarRightOffset) + 'px,0,0)');
-                    }
-                }
-            });
+            newNavbarInner.removeClass('navbar-from-right-to-center navbar-on-right').addClass('navbar-on-center');
+            oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center').addClass('navbar-on-left');
         }
-        // Force reLayout
-        var clientLeft = newPage[0].clientLeft;
+        app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
+        if (app.params.pushState) app.pushStateClearQueue();
+    }
 
-        // Before Anim Callback
-        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
-
+    if (animatePages) {
         // Set pages before animation
         _animatePages(oldPage, newPage, 'to-left', view);
 
@@ -331,20 +345,15 @@ function _load(view, url, content) {
             }, 0);
 
         }
-
         newPage.animationEnd(function (e) {
-            app.allowPageChange = true;
-            newPage.removeClass('page-from-right-to-center page-on-right').addClass('page-on-center');
-            oldPage.removeClass('page-from-center-to-left').addClass('page-on-left');
-            if (dynamicNavbar) {
-                newNavbarInner.removeClass('navbar-from-right-to-center').addClass('navbar-on-center');
-                oldNavbarInner.removeClass('navbar-from-center-to-left').addClass('navbar-on-left');
-            }
-            app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
-            if (app.params.pushState) app.pushStateClearQueue();
+            afterAnimation();
         });
     }
-
+    else {
+        afterAnimation();
+    }
+}
+function preprocess(content, url, next) {
     // Preprocess content
     //Modified by Greg Keys, added callback
     if (app.params.preprocess) {
@@ -358,7 +367,7 @@ function _load(view, url, content) {
         next(content);
     }
 }
-app.loadContent = function (view, content, pushState) {
+app.loadContent = function (view, content, animatePages, pushState) {
     if (!app.allowPageChange) return false;
     app.allowPageChange = false;
     if (app.xhr) {
@@ -367,12 +376,13 @@ app.loadContent = function (view, content, pushState) {
     }
     if (app.params.pushState)  {
         if (typeof pushState === 'undefined') pushState = true;
-        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', '#!/#content-' + view.history.length);
+        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', app.params.pushStateSeparator + '#content-' + view.history.length);
     }
-    _load(view, null, content);
-
+    preprocess(content, null, function (content) {
+        _load(view, null, content, animatePages);
+    });
 };
-app.loadPage = function (view, url, pushState) {
+app.loadPage = function (view, url, animatePages, pushState) {
     if (!app.allowPageChange) return false;
     if (view.url === url) return false;
     app.allowPageChange = false;
@@ -387,15 +397,17 @@ app.loadPage = function (view, url, pushState) {
         }
         if (app.params.pushState)  {
             if (typeof pushState === 'undefined') pushState = true;
-            if (pushState) history.pushState({url: url}, '', '#!/' + url);
+            if (pushState) history.pushState({url: url}, '', app.params.pushStateSeparator + url);
         }
-
-        _load(view, url, data);
-
+        
+        preprocess(data, null, function (data) {
+            _load(view, url, data, animatePages);
+        });
     });
 };
-app.goBack = function (view, url, preloadOnly, pushState) {
+app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
     if (!app.allowPageChange) return false;
+
     app.allowPageChange = false;
     if (app.xhr) {
         app.xhr.abort();
@@ -413,24 +425,37 @@ app.goBack = function (view, url, preloadOnly, pushState) {
     var viewContainer = $(view.container),
         pagesInView = viewContainer.find('.page'),
         oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+
+    if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
+
     function _animate() {
         // Page before animation callback
         app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
 
-        // Set pages before animation
-        _animatePages(newPage, oldPage, 'to-right', view);
-
-        // Dynamic navbar animation
-        if (dynamicNavbar) {
-            setTimeout(function () {
-                _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
-            }, 0);
-        }
-        
-        newPage.animationEnd(function () {
+        function afterAnimation() {
             app.afterGoBack(view, oldPage[0], newPage[0]);
             app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
-        });
+        }
+
+        if (animatePages) {
+            // Set pages before animation
+            _animatePages(newPage, oldPage, 'to-right', view);
+
+            // Dynamic navbar animation
+            if (dynamicNavbar) {
+                setTimeout(function () {
+                    _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
+                }, 0);
+            }
+            
+            newPage.animationEnd(function () {
+                afterAnimation();
+            });
+        }
+        else {
+            newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
+            afterAnimation();
+        }
     }
     function _preload() {
         newPage = _findElement('.page', app._tempDomElement, view);
@@ -475,7 +500,7 @@ app.goBack = function (view, url, preloadOnly, pushState) {
         // Page Init Events
         app.pageInitCallback(view, newPage[0], url, 'left');
 
-        if (dynamicNavbar && newNavbarInner.hasClass('navbar-on-left')) {
+        if (dynamicNavbar && newNavbarInner.hasClass('navbar-on-left') && animatePages) {
             newNavbarInner.find('.sliding').each(function () {
                 var sliding = $(this);
                 if (app.params.animateNavBackIcon) {
@@ -553,21 +578,10 @@ app.goBack = function (view, url, preloadOnly, pushState) {
                 app.allowPageChange = true;
                 return;
             }
-
-            function next(data) {
+            preprocess(data, null, function (data) {
                 app._tempDomElement.innerHTML = data;
                 _preload();
-            }
-
-            //Modified by Greg Keys, added callback
-            if (app.params.preprocess) {
-                data = app.params.preprocess(data, url, next);
-                if (typeof data !== 'undefined') {
-                    next(data);
-                }
-            } else {
-                next(data);
-            }
+            });
         });
     }
 };
@@ -607,7 +621,7 @@ app.afterGoBack = function (view, oldPage, newPage) {
             var cachedPages = $(view.container).find('.page.cached');
             $(cachedPages[cachedPages.length - 1]).removeClass('cached');
         }
-        app.goBack(view, false, true);
+        app.goBack(view, false, undefined, true);
     }
 
 };

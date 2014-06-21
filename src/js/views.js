@@ -10,7 +10,8 @@ var View = function (selector, params) {
         swipeBackPage: app.params.swipeBackPage,
         swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
         swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
-        swipeBackPageThreshold: app.params.swipeBackPageThreshold
+        swipeBackPageThreshold: app.params.swipeBackPageThreshold,
+        animatePages: app.params.animatePages
     };
 
     params = params || {};
@@ -285,14 +286,14 @@ var View = function (selector, params) {
     if (view.main) app.mainView = view;
 
     // Load methods
-    view.loadPage = function (url) {
-        return app.loadPage(view, url);
+    view.loadPage = function (url, animatePages) {
+        return app.loadPage(view, url, animatePages);
     };
-    view.loadContent = function (content) {
-        return app.loadContent(view, content);
+    view.loadContent = function (content, animatePages) {
+        return app.loadContent(view, content, animatePages);
     };
-    view.goBack = function (url) {
-        return app.goBack(view, url, undefined);
+    view.goBack = function (url, animatePages) {
+        return app.goBack(view, url, animatePages);
     };
 
     // Bars methods
@@ -311,8 +312,11 @@ var View = function (selector, params) {
 
     // Push State on load
     if (app.params.pushState && view.main) {
-        if (docLocation.indexOf('#!/') >= 0 && docLocation.indexOf('#!/#') < 0) {
-            app.loadPage(view, docLocation.split('#!/')[1], false);
+        var pushStateSeparator = app.params.pushStateSeparator;
+        if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
+            var pushStateAnimatePages;
+            if (app.params.pushStateNoAnimation === true) pushStateAnimatePages = false;
+            app.loadPage(view, docLocation.split(pushStateSeparator)[1], pushStateAnimatePages, false);
         }
     }
 

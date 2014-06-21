@@ -5,14 +5,16 @@ app.pushStateQueue = [];
 app.pushStateClearQueue = function () {
     if (app.pushStateQueue.length === 0) return;
     var queue = app.pushStateQueue.pop();
+    var animatePages;
+    if (app.params.pushStateNoAnimation === true) animatePages = false;
     if (queue.action === 'goBack') {
-        app.goBack(queue.view, undefined, false, false);
+        app.goBack(queue.view, undefined, animatePages, false, false);
     }
     if (queue.action === 'loadPage') {
-        app.loadPage(queue.view, queue.stateUrl, false);
+        app.loadPage(queue.view, queue.stateUrl, animatePages, false);
     }
     if (queue.action === 'loadContent') {
-        app.loadContent(queue.view, queue.stateContent, false);
+        app.loadContent(queue.view, queue.stateContent, animatePages, false);
     }
 };
 
@@ -38,11 +40,13 @@ app.initPushState = function () {
         }
         var stateUrl = state && state.url || undefined;
         var stateContent = state && state.content || undefined;
+        var animatePages;
+        if (app.params.pushStateNoAnimation === true) animatePages = false;
         if (stateUrl !== mainView.url) {
             if (mainView.history.indexOf(stateUrl) >= 0) {
                 // Go Back
                 if (app.allowPageChange) {
-                    app.goBack(mainView, undefined, false, false);
+                    app.goBack(mainView, undefined, animatePages, false, false);
                 }
                 else {
                     app.pushStateQueue.push({
@@ -54,7 +58,7 @@ app.initPushState = function () {
             else if (stateUrl && !stateContent) {
                 // Load Page
                 if (app.allowPageChange) {
-                    app.loadPage(mainView, stateUrl, false);
+                    app.loadPage(mainView, stateUrl, animatePages, false);
                 }
                 else {
                     app.pushStateQueue.unshift({
@@ -67,7 +71,7 @@ app.initPushState = function () {
             else if (stateContent) {
                 // Load Page
                 if (app.allowPageChange) {
-                    app.loadContent(mainView, stateContent, false);
+                    app.loadContent(mainView, stateContent, animatePages, false);
                 }
                 else {
                     app.pushStateQueue.unshift({
