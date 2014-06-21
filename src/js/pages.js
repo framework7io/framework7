@@ -354,8 +354,14 @@ function _load(view, url, content, animatePages) {
     }
 }
 function preprocess(content, url, next) {
-    // Preprocess content
     //Modified by Greg Keys, added callback
+    
+    // Plugin hook
+    app.pluginHook('preprocess', content, url, next);
+    
+    // Preprocess by plugin
+    content = app.pluginProcess('preprocess', content);
+
     if (app.params.preprocess) {
         content = app.params.preprocess(content, url, next);
         //this should handle backwards compatibility
