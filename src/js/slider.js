@@ -17,6 +17,7 @@ var Slider = function (container, params) {
         bulletClass: 'slider-pagination-bullet',
         bulletActiveClass: 'slider-pagination-active',
         preventClicks: true,
+        preventClicksPropagation: true,
         autoplay: false,
         autoplayDisableOnInteraction: true
     };
@@ -121,6 +122,7 @@ var Slider = function (container, params) {
     s.onClick = function (e) {
         if (s.params.preventClicks && !s.allowClick) {
             e.preventDefault();
+            if (s.params.preventClicksPropagation) e.stopPropagation();
         }
     };
     s.onTouchStart = function (e) {
