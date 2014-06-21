@@ -32,7 +32,7 @@ app.pluginProcess = function (action, data) {
     var processed = data;
     for (var i = 0; i < _plugins.length; i++) {
         if (_plugins[i].preprocess && process in _plugins[i].preprocess) {
-            processed = _plugins[i].preprocess[process](data);
+            processed = _plugins[i].preprocess[process](data, arguments[2], arguments[3], arguments[4], arguments[5], arguments[6]);
         }
     }
     return processed;
