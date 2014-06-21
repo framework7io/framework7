@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.7
+ * Framework7 0.8.8
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: June 15, 2014
+ * Released on: June 21, 2014
 */
 /*=============
   Framework 7
@@ -1423,6 +1423,9 @@ i.icon.icon-prev-white {
   position: relative;
   z-index: 10;
   background: #fff;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .list-block .swipeout-actions {
   border-bottom: 1px solid #c8c7cc;
@@ -3191,12 +3194,6 @@ body > .photo-browser .toolbar {
   -webkit-perspective: 1200px;
   perspective: 1200px;
 }
-.notifications > ul {
-  -webkit-transform-style: preserve3d;
-  transform-style: preserve3d;
-  -webkit-transition-duration: 450ms;
-  transition-duration: 450ms;
-}
 .notifications ul {
   border: none;
   background: none;
@@ -3204,6 +3201,9 @@ body > .photo-browser .toolbar {
 }
 .with-statusbar-overlay .notifications {
   padding-top: 20px;
+  -webkit-transform: translate3d(0, -20px, 0);
+  -ms-transform: translate3d(0, -20px, 0);
+  transform: translate3d(0, -20px, 0);
 }
 .notifications .item-content {
   -webkit-box-align: start;
@@ -3264,8 +3264,14 @@ body > .photo-browser .toolbar {
   margin: 0 auto;
   -webkit-transition-duration: 450ms;
   transition-duration: 450ms;
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   opacity: 1;
 }
 .notifications .notification-hidden {
   opacity: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
