@@ -7,14 +7,9 @@ app.initClickEvents = function () {
         var clicked = $(this);
         var url = clicked.attr('href');
         var isLink = clicked[0].nodeName.toLowerCase() === 'a';
-        if (isLink) {
-            // External
-            if (clicked.hasClass('external')) {
-                return;
-            }
-            else {
-                e.preventDefault();
-            }
+        // External
+        if (isLink && clicked.hasClass('external')) {
+            return;
         }
         // Smart Select
         if (clicked.hasClass('smart-select')) {
@@ -113,6 +108,9 @@ app.initClickEvents = function () {
         // Load Page
         if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks) || !isLink) {
             return;
+        }
+        if (isLink) {
+            e.preventDefault();
         }
         var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
         if (validUrl || clicked.hasClass('back')) {
