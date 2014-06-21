@@ -1,4 +1,5 @@
 /* === Notifications === */
+@notificationsDuration: 450ms;
 .notifications {
     position: absolute;
     left: 0;
@@ -14,15 +15,11 @@
     max-height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    .transition(450ms);
+    .transition(@notificationsDuration);
     background: rgba(0,0,0,0.85);
     -webkit-perspective:1200px;
     perspective:1200px;
-    > ul {
-        -webkit-transform-style: preserve3d;
-        transform-style: preserve3d;
-        .transition(450ms);
-    }
+    
     ul {
         border: none;
         background: none;
@@ -30,6 +27,7 @@
     }
     .with-statusbar-overlay & {
         padding-top: 20px;
+        .translate3d(0, -20px, 0);
     }
     
     .item-content {
@@ -85,10 +83,12 @@
     .notification-item {
         max-width: 568px;
         margin: 0 auto;
-        .transition(450ms);
+        .transition(@notificationsDuration);
+        .translate3d(0,0,0);
         opacity: 1;
     }
     .notification-hidden {
         opacity: 0;
+        .translate3d(0,0,0);
     }
 }

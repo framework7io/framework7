@@ -4,21 +4,7 @@
 var _tempNotificationElement;
 app.addNotification = function (params) {
     if (!params) return;
-    /*
-    {
-        title, //string
-        subtitle, //string
-        message, //string
-        media, //string
-        hold, //number
-        onClose, //func
-        onClick, //func
-        closeOnClick: true,//boolean
-        custom, //string
-        closeIcon: true //boolean
-        additionalClass, //string
-    }
-    */
+    
     if (typeof params.media === 'undefined') params.media = app.params.notificationMedia;
     if (typeof params.title === 'undefined') params.title = app.params.notificationTitle;
     if (typeof params.subtitle === 'undefined') params.subtitle = app.params.notificationSubtitle;
@@ -82,17 +68,14 @@ app.addNotification = function (params) {
     container.show();
     
     var itemHeight = item.height();
-    if (container[0].offsetHeight === container[0].scrollHeight) {
-        container.transform('translate3d(0, -' + itemHeight + 'px,0)').transition(0);
-    }
-    else {
-        list.transform('translate3d(0, -' + itemHeight + 'px,0)').transition(0);
-    }
+    item.css('marginTop', -itemHeight + 'px');
+    item.transition(0);
 
     var clientLeft = item[0].clientLeft;
+    item.transition('');
+    item.css('marginTop', '0px');
 
-    container.transform('translate3d(0, 0,0)').transition('');
-    list.transform('translate3d(0, 0,0)').transition('');
+    container.transform('translate3d(0, 0,0)');
     item.removeClass('notification-hidden');
 
     return item[0];
@@ -100,16 +83,24 @@ app.addNotification = function (params) {
 app.closeNotification = function (item) {
     item = $(item);
     if (item.length === 0) return;
+    if (item.hasClass('notification-item-removing')) return;
     var container = $('.notifications');
 
     var itemHeight = item.height();
     item.css('height', itemHeight + 'px').transition(0);
     var clientLeft = item[0].clientLeft;
 
-    item.css('height', '0px').transition('');
+    item.css('height', '0px').transition('').addClass('notification-item-removing');
     if (item.data('f7NotificationOnClose')) item.data('f7NotificationOnClose')();
+
+    if (container.find('.notification-item:not(.notification-item-removing)').length === 0) {
+        container.transform('');
+    }
+
     item.addClass('notification-hidden').transitionEnd(function () {
         item.remove();
-        if (container.find('.notification-item').length === 0) container.hide();
+        if (container.find('.notification-item').length === 0) {
+            container.hide();
+        }
     });
 };
