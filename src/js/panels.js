@@ -180,15 +180,15 @@ app.initSwipePanels = function () {
                 translate = panelWidth;
             }
         }
-            
         if (effect === 'reveal') {
             views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
             panelOverlay.transform('translate3d(' + translate + 'px,0,0)');
+            app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
         else {
             panel.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+            app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
-
     }
     function handleTouchEnd(e) {
         if (!isTouched || !isMoved) {
