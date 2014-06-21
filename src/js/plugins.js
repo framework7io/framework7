@@ -28,11 +28,11 @@ app.pluginPrevent = function (action) {
     return prevent;
 };
 // Preprocess content by plugin
-app.pluginProcess = function (process, data) {
+app.pluginProcess = function (action, data) {
     var processed = data;
     for (var i = 0; i < _plugins.length; i++) {
-        if (_plugins[i].process && process in _plugins[i].prevents) {
-            processed = _plugins[i].prevents[process](processed);
+        if (_plugins[i].preprocess && process in _plugins[i].preprocess) {
+            processed = _plugins[i].preprocess[process](data);
         }
     }
     return processed;
