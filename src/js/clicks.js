@@ -130,8 +130,10 @@ app.initClickEvents = function () {
                 }
             }
             if (!view) return;
-            if (clicked.hasClass('back')) view.goBack(clicked.attr('href'));
-            else view.loadPage(clicked.attr('href'));
+            var animatePages;
+            if (clicked.hasClass('no-animation')) animatePages = false;
+            if (clicked.hasClass('back')) view.goBack(clicked.attr('href'), animatePages);
+            else view.loadPage(clicked.attr('href'), animatePages);
         }
     }
     $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .toggle-sortable, .open-sortable, .close-sortable', handleClicks);
