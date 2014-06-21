@@ -8,7 +8,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '0.8.7';
+    app.version = '0.8.8';
 
     // Anim Frame
     app._animFrame = function (callback) {
@@ -28,6 +28,8 @@ window.Framework7 = function (params) {
         preloadPreviousPage: true,
         // Push State
         pushState: false,
+        pushStateNoAnimation: false,
+        pushStateSeparator: '#!/',
         // Fast clicks
         fastClicks : true,
         // Animate Nav Back Icon
@@ -79,7 +81,10 @@ window.Framework7 = function (params) {
         viewsClass: 'views',
         // Notifications defaults
         notificationCloseOnClick: false,
-        notificationCloseIcon: true
+        notificationCloseIcon: true,
+        // Animate Pages
+        animatePages: true
+
     };
 
     // Extend defaults with parameters
