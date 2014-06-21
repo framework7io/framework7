@@ -1637,6 +1637,7 @@ i.icon.icon-prev-white {
 .list-block input[type="tel"],
 .list-block input[type="url"],
 .list-block input[type="date"],
+.list-block input[type="datetime-local"],
 .list-block input[type="number"],
 .list-block select,
 .list-block textarea {
@@ -1661,7 +1662,8 @@ i.icon.icon-prev-white {
   font-size: 17px;
   font-family: inherit;
 }
-.list-block input[type="date"] {
+.list-block input[type="date"],
+.list-block input[type="datetime-local"] {
   line-height: 44px;
 }
 .list-block select {

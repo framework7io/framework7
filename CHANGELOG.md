@@ -10,6 +10,7 @@
   * Preprocess now has new parameter - next(content) callback function to continue page loading from asynchronous thread
   * Plugins API: new "swipePanelSetTransform" plugins hook; now it is possible to preprocess content by plugin
   * Push State: new "pushStateNoAnimation" and "pushStateSeparator" app parameters
+  * Reset styles for "input[type=datetime-local]"
 
 ## Framework7 v0.8.7 - Updated on June 15, 2014
 
