@@ -56,8 +56,8 @@ app.initSwipeout = function (swipeoutEl) {
 
         e.preventDefault();
         e.f7PreventPanelSwipe = true;
+        if (app.rtl) e.f7PreventSwipeBack = true;
         touchesDiff = pageX - touchesStart.x;
-        if (app.rtl) touchesDiff = -touchesDiff;
         translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
 
         if (translate > 0) translate = 0;
@@ -80,7 +80,6 @@ app.initSwipeout = function (swipeoutEl) {
             }
         }
         else {
-            if (app.rtl) translate = -translate;
             swipeOutEl.trigger('swipeout', {progress: Math.abs(translate / swipeOutActionsWidth)});
             swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
         }
@@ -96,7 +95,6 @@ app.initSwipeout = function (swipeoutEl) {
         isMoved = false;
         var timeDiff = (new Date()).getTime() - touchStartTime;
         if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeout = false;
-        if (app.rtl) translate = -translate;
         var action;
         if (opened) {
             if (
@@ -124,7 +122,7 @@ app.initSwipeout = function (swipeoutEl) {
             app.swipeoutOpenedEl = swipeOutEl;
             swipeOutEl.trigger('open');
             swipeOutEl.addClass('swipeout-opened transitioning');
-            var newTranslate = app.rtl ? swipeOutActionsWidth : -swipeOutActionsWidth;
+            var newTranslate = -swipeOutActionsWidth;
             swipeOutContent.transform('translate3d(' + newTranslate + 'px,0,0)');
         }
         else {
@@ -171,7 +169,7 @@ app.swipeoutOpen = function (el) {
     if (el.length > 1) el = $(el[0]);
     el.trigger('open').addClass('transitioning swipeout-opened');
     var swipeOutActions = el.find('.swipeout-actions-inner');
-    var translate = app.rtl ? swipeOutActions.width() : -swipeOutActions.width();
+    var translate = -swipeOutActions.width();
     el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
     });
@@ -205,6 +203,6 @@ app.swipeoutDelete = function (el) {
         el.trigger('deleted');
         el.remove();
     });
-    var translate = app.rtl ? '100%' : '-100%';
+    var translate = '-100%';
     el.find('.swipeout-content').transform('translate3d(' + translate + ',0,0)');
 };
