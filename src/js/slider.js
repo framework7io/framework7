@@ -51,11 +51,14 @@ var Slider = function (container, params) {
 
     var isH = s.params.direction === 'horizontal';
 
+    var inverter = isH ? (app.rtl ? -1 : 1) : 1;
+
     s.updateSlides = function () {
         s.slides = s.wrapper.children('.' + s.params.slideClass);
 
         if (s.params.spaceBetween !== 0) {
-            if (isH) s.slides.css({marginRight: s.params.spaceBetween + 'px'});
+            var marginProp = app.rtl ? 'margin-left' : 'margin-right';
+            if (isH) s.slides.css(marginProp, s.params.spaceBetween + 'px');
             else s.slides.css({marginBottom: s.params.spaceBetween + 'px'});
         }
         if (s.params.slidesPerView > 1) {
@@ -159,7 +162,7 @@ var Slider = function (container, params) {
         e.stopPropagation();
 
         if (!isMoved) {
-            currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y');
+            currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y') * inverter;
             s.wrapper.transition(0);
             if (animating) s.onSlideChangeEnd();
             if (params.autoplay && autoplay) {
@@ -170,11 +173,13 @@ var Slider = function (container, params) {
             }
         }
         isMoved = true;
-        var diff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+        var diff = isH ? (touchesCurrent.x - touchesStart.x) * inverter : touchesCurrent.y - touchesStart.y;
+
         if ((diff > 0 && s.activeSlideIndex === 0)) diff = Math.pow(diff, 0.85);
         else if (diff < 0 && s.activeSlideIndex === s.slides.length - s.params.slidesPerView) diff = -Math.pow(-diff, 0.85);
         
-        var translateX = isH ? diff + currentTranslate: 0, translateY = isH ? 0 : diff + currentTranslate;
+        var translateX = isH ? (diff + currentTranslate) * inverter : 0, translateY = isH ? 0 : diff + currentTranslate;
+
         s.wrapper.transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
     };
     s.onTouchEnd = function (e) {
@@ -208,7 +213,7 @@ var Slider = function (container, params) {
             return;
         }
         isTouched = isMoved = false;
-        var touchesDiff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+        var touchesDiff = isH ? (touchesCurrent.x - touchesStart.x) * inverter : touchesCurrent.y - touchesStart.y;
         
         //Release links clicks
         if (Math.abs(touchesDiff) < 5 && (timeDiff) < 300 && s.allowClick === false) {
@@ -278,7 +283,7 @@ var Slider = function (container, params) {
         s.isFirst = s.activeSlideIndex === 0;
         s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
         s.onSlideChangeStart();
-        var translateX = isH ? translate : 0, translateY = isH ? 0 : translate;
+        var translateX = isH ? translate * inverter : 0, translateY = isH ? 0 : translate;
         if (speed === 0) {
             s.wrapper
                 .transition(0)

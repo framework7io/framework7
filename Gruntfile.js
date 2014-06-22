@@ -90,7 +90,8 @@ module.exports = function (grunt) {
                     cleancss: false
                 },
                 files: {
-                    'build/css/framework7.css' : ['src/less/framework7.less']
+                    'build/css/framework7.css' : ['src/less/framework7.less'],
+                    'build/css/framework7.rtl.css' : ['src/less/framework7.rtl.less']
                 }
             },
             dist: {
@@ -99,7 +100,8 @@ module.exports = function (grunt) {
                     cleancss: true
                 },
                 files: {
-                    'dist/css/framework7.min.css' : ['src/less/framework7.less']
+                    'dist/css/framework7.min.css' : ['src/less/framework7.less'],
+                    'dist/css/framework7.rtl.min.css' : ['src/less/framework7.rtl.less'],
                 }
             },
             kitchen: {

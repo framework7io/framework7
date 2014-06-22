@@ -5,7 +5,7 @@ app.initSearchbar = function (pageContainer) {
     pageContainer = $(pageContainer);
     var searchbar = pageContainer.find('.searchbar');
     if (searchbar.length === 0) return;
-    var searchbarOverlay = pageContainer.find('.searchbar-overlay');
+    var searchbarOverlay = pageContainer.hasClass('navbar') ? $('.searchbar-overlay') : pageContainer.find('.searchbar-overlay');
     var input = searchbar.find('input[type="search"]');
     var clear = searchbar.find('.searchbar-clear');
     var cancel = searchbar.find('.searchbar-cancel');
@@ -16,12 +16,19 @@ app.initSearchbar = function (pageContainer) {
     var notFound = $('.searchbar-not-found');
 
     // Cancel button
-    cancel.css('margin-right', - cancel.width() + 'px');
+    var cancelWidth, cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
+    if (cancel.length > 0) {
+        cancelWidth = cancel.width();
+
+        cancel.css(cancelMarginProp, - cancelWidth + 'px');
+    }
 
     // Handlers
     function disableSearchbar() {
         input.val('').trigger('change');
         searchbar.removeClass('searchbar-active searchbar-not-empty');
+        if (cancel.length > 0) cancel.css(cancelMarginProp, - cancelWidth + 'px');
+        
         if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
         if (app.device.ios) {
             setTimeout(function () {
@@ -39,11 +46,14 @@ app.initSearchbar = function (pageContainer) {
             setTimeout(function () {
                 if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
                 searchbar.addClass('searchbar-active');
+                if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
+
             }, 400);
         }
         else {
             if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
             searchbar.addClass('searchbar-active');
+            if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
         }
     }
 
@@ -125,9 +135,12 @@ app.initSearchbar = function (pageContainer) {
     // Destroy on page remove
     function pageBeforeRemove() {
         detachEvents();
-        $(pageContainer).off('pageBeforeRemove', pageBeforeRemove);
+        pageContainer.off('pageBeforeRemove', pageBeforeRemove);
     }
-    $(pageContainer).on('pageBeforeRemove', pageBeforeRemove);
+    if (pageContainer.hasClass('page')) {
+        pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+    }
+        
 };
 app.destroySearchbar = function (searchbar) {
     searchbar = $(searchbar);

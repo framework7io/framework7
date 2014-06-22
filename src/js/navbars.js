@@ -30,8 +30,8 @@ app.sizeNavbars = function (viewContainer) {
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
     navbarInner.each(function () {
         var tt = $(this),
-            left = tt.find('.left'),
-            right = tt.find('.right'),
+            left = app.rtl ? tt.find('.right') : tt.find('.left'),
+            right = app.rtl ? tt.find('.left') : tt.find('.right'),
             center = tt.find('.center'),
             noLeft = left.length === 0,
             noRight = right.length === 0,
@@ -64,20 +64,39 @@ app.sizeNavbars = function (viewContainer) {
         else {
             diff = 0;
         }
-        center.css({left: diff + 'px'});
+        // RTL inverter
+        var inverter = app.rtl ? -1 : 1;
+        
+        // Center left
+        var centerLeft = diff;
+        if (app.rtl && noLeft && noRight && center.length > 0) centerLeft = -centerLeft;
+        center.css({left: centerLeft + 'px'});
+
         if (center.hasClass('sliding')) {
-            center[0].f7NavbarLeftOffset = -(currLeft + diff);
-            center[0].f7NavbarRightOffset = navbarWidth - currLeft - diff - centerWidth;
+            center[0].f7NavbarLeftOffset = -(currLeft + diff) * inverter;
+            center[0].f7NavbarRightOffset = (navbarWidth - currLeft - diff - centerWidth) * inverter;
             if (onLeft) center.transform('translate3d(' + center[0].f7NavbarLeftOffset + 'px, 0, 0)');
         }
         if (!noLeft && left.hasClass('sliding')) {
-            left[0].f7NavbarLeftOffset = -leftWidth;
-            left[0].f7NavbarRightOffset = (navbarWidth - left.outerWidth()) / 2;
+            if (app.rtl) {
+                left[0].f7NavbarLeftOffset = -(navbarWidth - left.outerWidth()) / 2 * inverter;
+                left[0].f7NavbarRightOffset = leftWidth * inverter;
+            }
+            else {
+                left[0].f7NavbarLeftOffset = -leftWidth;
+                left[0].f7NavbarRightOffset = (navbarWidth - left.outerWidth()) / 2;
+            }
             if (onLeft) left.transform('translate3d(' + left[0].f7NavbarLeftOffset + 'px, 0, 0)');
         }
         if (!noRight && right.hasClass('sliding')) {
-            right[0].f7NavbarLeftOffset = -(navbarWidth - right.outerWidth()) / 2;
-            right[0].f7NavbarRightOffset = rightWidth;
+            if (app.rtl) {
+                right[0].f7NavbarLeftOffset = -rightWidth * inverter;
+                right[0].f7NavbarRightOffset = (navbarWidth - right.outerWidth()) / 2 * inverter;
+            }
+            else {
+                right[0].f7NavbarLeftOffset = -(navbarWidth - right.outerWidth()) / 2;
+                right[0].f7NavbarRightOffset = rightWidth;
+            }
             if (onLeft) right.transform('translate3d(' + right[0].f7NavbarLeftOffset + 'px, 0, 0)');
         }
         

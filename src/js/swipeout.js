@@ -57,6 +57,7 @@ app.initSwipeout = function (swipeoutEl) {
         e.preventDefault();
         e.f7PreventPanelSwipe = true;
         touchesDiff = pageX - touchesStart.x;
+        if (app.rtl) touchesDiff = -touchesDiff;
         translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
 
         if (translate > 0) translate = 0;
@@ -79,6 +80,7 @@ app.initSwipeout = function (swipeoutEl) {
             }
         }
         else {
+            if (app.rtl) translate = -translate;
             swipeOutEl.trigger('swipeout', {progress: Math.abs(translate / swipeOutActionsWidth)});
             swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
         }
@@ -94,7 +96,7 @@ app.initSwipeout = function (swipeoutEl) {
         isMoved = false;
         var timeDiff = (new Date()).getTime() - touchStartTime;
         if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeout = false;
-        
+        if (app.rtl) translate = -translate;
         var action;
         if (opened) {
             if (
@@ -122,7 +124,8 @@ app.initSwipeout = function (swipeoutEl) {
             app.swipeoutOpenedEl = swipeOutEl;
             swipeOutEl.trigger('open');
             swipeOutEl.addClass('swipeout-opened transitioning');
-            swipeOutContent.transform('translate3d(' + -swipeOutActionsWidth + 'px,0,0)');
+            var newTranslate = app.rtl ? swipeOutActionsWidth : -swipeOutActionsWidth;
+            swipeOutContent.transform('translate3d(' + newTranslate + 'px,0,0)');
         }
         else {
             swipeOutEl.trigger('close');
@@ -168,7 +171,8 @@ app.swipeoutOpen = function (el) {
     if (el.length > 1) el = $(el[0]);
     el.trigger('open').addClass('transitioning swipeout-opened');
     var swipeOutActions = el.find('.swipeout-actions-inner');
-    el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
+    var translate = app.rtl ? swipeOutActions.width() : -swipeOutActions.width();
+    el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
     });
     app.swipeoutOpenedEl = el;
@@ -201,5 +205,6 @@ app.swipeoutDelete = function (el) {
         el.trigger('deleted');
         el.remove();
     });
-    el.find('.swipeout-content').transform('translate3d(-100%,0,0)');
+    var translate = app.rtl ? '100%' : '-100%';
+    el.find('.swipeout-content').transform('translate3d(' + translate + ',0,0)');
 };

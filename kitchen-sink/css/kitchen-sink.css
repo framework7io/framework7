@@ -105,6 +105,10 @@
   margin-right: 15px;
   font-family: inherit;
 }
+html[dir="rtl"] .page[data-page="messages"] .ks-messages-input {
+  margin-left: 15px;
+  margin-right: 0;
+}
 .page[data-page="messages"] .ks-send-message {
   -webkit-flex-shrink: 0;
   -moz-flex-shrink: 0;

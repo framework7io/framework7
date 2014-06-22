@@ -109,7 +109,14 @@ var View = function (selector, params) {
             var target = $(e.target);
             activePage = target.is('.page') ? target : target.parents('.page');
             previousPage = container.find('.page-on-left:not(.cached)');
-            if (touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea) cancel = true;
+            var notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
+            if (app.rtl) {
+                notFromBorder = touchesStart.x < container.offset().left - container[0].scrollLeft + viewContainerWidth - view.params.swipeBackPageActiveArea;
+            }
+            else {
+                notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
+            }
+            if (notFromBorder) cancel = true;
             if (previousPage.length === 0 || activePage.length === 0) cancel = true;
             if (cancel) {
                 isTouched = false;
@@ -129,18 +136,27 @@ var View = function (selector, params) {
         isMoved = true;
 
         e.preventDefault();
-        touchesDiff = pageX - touchesStart.x - view.params.swipeBackPageThreshold;
+
+        // RTL inverter
+        var inverter = app.rtl ? -1 : 1;
+
+        // Touches diff
+        touchesDiff = (pageX - touchesStart.x - view.params.swipeBackPageThreshold) * inverter;
         if (touchesDiff < 0) touchesDiff = 0;
         var percentage = touchesDiff / viewContainerWidth;
 
         // Transform pages
-        activePage.transform('translate3d(' + touchesDiff + 'px,0,0)');
+        var activePageTranslate = touchesDiff * inverter;
+        var previousPageTranslate = (touchesDiff / 5 - viewContainerWidth / 5) * inverter;
+        if (app.device.pixelRatio === 1) {
+            activePageTranslate = Math.round(activePageTranslate);
+            previousPageTranslate = Math.round(previousPageTranslate);
+        }
+
+        activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
         if (view.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
 
-        var pageTranslate = (touchesDiff / 5 - viewContainerWidth / 5);
-        if (app.device.pixelRatio === 1) pageTranslate = Math.round(pageTranslate);
-
-        previousPage.transform('translate3d(' + pageTranslate + 'px,0,0)');
+        previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
         previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
 
         // Dynamic Navbars Animation

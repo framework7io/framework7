@@ -104,4 +104,9 @@ window.Framework7 = function (params) {
 
     // Link to local storage
     app.ls = localStorage;
+
+    // RTL
+    app.rtl = $('body').css('direction') === 'rtl';
+    if (app.rtl) $('html').attr('dir', 'rtl');
+
     
