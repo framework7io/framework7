@@ -107,7 +107,10 @@ app.initSearchbar = function (pageContainer) {
         var foundItems = [];
         searchList.find('li').each(function (index, el) {
             el = $(el);
-            var compareWith = el.find(searchIn).text().trim().toLowerCase();
+            var compareWithEl = el.find(searchIn);
+            if (compareWithEl.length === 0) return;
+            var compareWith;
+            compareWith = compareWithEl.text().trim().toLowerCase();
             var wordsMatch = 0;
             for (var i = 0; i < values.length; i++) {
                 if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
