@@ -406,7 +406,7 @@ app.loadPage = function (view, url, animatePages, pushState) {
             if (pushState) history.pushState({url: url}, '', app.params.pushStateSeparator + url);
         }
         
-        preprocess(data, null, function (data) {
+        preprocess(data, url, function (data) {
             _load(view, url, data, animatePages);
         });
     });
