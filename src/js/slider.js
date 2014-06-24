@@ -279,7 +279,7 @@ var Slider = function (container, params) {
 
         if (typeof speed === 'undefined') speed = s.params.speed;
         s.previousSlideIndex = s.activeSlideIndex;
-        s.activeSlideIndex = index;
+        s.activeSlideIndex = Math.round(index);
         s.isFirst = s.activeSlideIndex === 0;
         s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
         s.onSlideChangeStart();
