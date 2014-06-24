@@ -55,7 +55,7 @@ app.smartSelectOpen = function (smartSelect) {
         };
     }
 
-    var pageTitle = smartSelect.find('.item-title').text();
+    var pageTitle = smartSelect.attr('data-pagetitle') || smartSelect.find('.item-title').text();
 
     // Generate dynamic page layout
     var id = (new Date()).getTime();
