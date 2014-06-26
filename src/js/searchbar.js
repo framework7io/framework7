@@ -60,6 +60,7 @@ app.initSearchbar = function (pageContainer) {
     // Clear
     function clearSearchbar() {
         input.val('').trigger('change');
+        searchList.trigger('clearSearch');
     }
 
     // Change
