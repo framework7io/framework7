@@ -90,6 +90,7 @@ var PhotoBrowser = function (params) {
 
     pb.open = function (index) {
         if (typeof index === 'undefined') index = pb.activeSlideIndex;
+        index = parseInt(index, 10);
         if (pb.opened && pb.slider) {
             pb.slider.slideTo(index);
             return;
