@@ -1,6 +1,71 @@
 /*======================================================
 ************   Pages   ************
 ======================================================*/
+// Page Callbacks API
+app.pageCallbacks = {};
+
+app.onPage = function (callbackName, pageName, callback) {
+    if (pageName && pageName.split(' ').length > 1) {
+        var pageNames = pageName.split(' ');
+        var returnCallbacks = [];
+        for (var i = 0; i < pageNames.length; i++) {
+            returnCallbacks.push(app.onPage(callbackName, pageNames[i], callback));
+        }
+        returnCallbacks.remove = function () {
+            for (var i = 0; i < returnCallbacks.length; i++) {
+                returnCallbacks[i].remove();
+            }
+        };
+        returnCallbacks.trigger = function () {
+            for (var i = 0; i < returnCallbacks.length; i++) {
+                returnCallbacks[i].trigger();
+            }
+        };
+        return returnCallbacks;
+    }
+    var callbacks = app.pageCallbacks[callbackName][pageName];
+    if (!callbacks) {
+        callbacks = app.pageCallbacks[callbackName][pageName] = [];
+    }
+    app.pageCallbacks[callbackName][pageName].push(callback);
+    return {
+        remove: function () {
+            var removeIndex;
+            for (var i = 0; i < callbacks.length; i++) {
+                if (callbacks[i].toString() === callback.toString()) {
+                    removeIndex = i;
+                }
+            }
+            if (typeof removeIndex !== 'undefined') callbacks.splice(removeIndex, 1);
+        },
+        trigger: callback
+    };
+};
+
+//Create callbacks methods dynamically
+function createPageCallback(callbackName) {
+    var capitalized = callbackName.replace(/^./, function (match) {
+        return match.toUpperCase();
+    });
+    app['onPage' + capitalized] = function (pageName, callback) {
+        return app.onPage(callbackName, pageName, callback);
+    };
+}
+
+var pageCallbacksNames = ('beforeInit init beforeAnimation afterAnimation beforeRemove').split(' ');
+for (var i = 0; i < pageCallbacksNames.length; i++) {
+    app.pageCallbacks[pageCallbacksNames[i]] = {};
+    createPageCallback(pageCallbacksNames[i]);
+}
+
+app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
+    var callbacks = app.pageCallbacks[callbackName][pageName];
+    if (!callbacks || callbacks.length === 0) return;
+    for (var i = 0; i < callbacks.length; i++) {
+        callbacks[i](pageData);
+    }
+};
+
 // On Page Init Callback
 app.pageInitCallback = function (view, pageContainer, url, position) {
     if (pageContainer.f7PageInitialized) return;
@@ -16,6 +81,8 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
     };
     // Before Init Callbacks
     app.pluginHook('pageBeforeInit', pageData);
+    if (app.params.onPageBeforeInit) app.params.onPageBeforeInit(app, pageData);
+    app.triggerPageCallbacks('beforeInit', pageData.name, pageData);
     $(pageData.container).trigger('pageBeforeInit', {page: pageData});
 
     // Init page
@@ -23,6 +90,8 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
 
     // Init Callback
     app.pluginHook('pageInit', pageData);
+    if (app.params.onPageInit) app.params.onPageInit(app, pageData);
+    app.triggerPageCallbacks('init', pageData.name, pageData);
     $(pageData.container).trigger('pageInit', {page: pageData});
 };
 app.pageRemoveCallback = function (view, pageContainer, position) {
@@ -35,6 +104,8 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
     };
     // Before Init Callback
     app.pluginHook('pageBeforeRemove', pageData);
+    if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
+    app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
     $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
 };
 app.pageAnimCallbacks = function (callback, view, params) {
@@ -52,6 +123,8 @@ app.pageAnimCallbacks = function (callback, view, params) {
 
     if (callback === 'after') {
         app.pluginHook('pageAfterAnimation', pageData);
+        if (app.params.onPageAfterAnimation) app.params.onPageAfterAnimation(app, pageData);
+        app.triggerPageCallbacks('afterAnimation', pageData.name, pageData);
         $(pageData.container).trigger('pageAfterAnimation', {page: pageData});
 
     }
@@ -75,6 +148,8 @@ app.pageAnimCallbacks = function (callback, view, params) {
         }
         // Callbacks
         app.pluginHook('pageBeforeAnimation', pageData);
+        if (app.params.onPageBeforeAnimation) app.params.onPageBeforeAnimation(app, pageData);
+        app.triggerPageCallbacks('beforeAnimation', pageData.name, pageData);
         $(pageData.container).trigger('pageBeforeAnimation', {page: pageData});
     }
 };
