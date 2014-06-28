@@ -267,7 +267,7 @@ function _animateNavbars(leftNavbarInner, rightNavbarInner, direction, view) {
     }
 }
 function _load(view, url, content, animatePages) {
-    var viewContainer = $(view.container),
+    var viewContainer = $(view.container), pagesContainer = $(view.pagesContainer),
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
@@ -302,7 +302,7 @@ function _load(view, url, content, animatePages) {
     newPage.addClass('page-on-right');
 
     // Find old page (should be the last one) and remove older pages
-    pagesInView = viewContainer.find('.page:not(.cached)');
+    pagesInView = pagesContainer.children('.page:not(.cached)');
     if (pagesInView.length > 1) {
         for (i = 0; i < pagesInView.length - 2; i++) {
             if (!view.params.domCache) {
@@ -322,7 +322,7 @@ function _load(view, url, content, animatePages) {
         }
     }
 
-    oldPage = viewContainer.find('.page:not(.cached)');
+    oldPage = pagesContainer.children('.page:not(.cached)');
 
     // Dynamic navbar
     if (view.params.dynamicNavbar) {
@@ -375,7 +375,7 @@ function _load(view, url, content, animatePages) {
     view.history.push(url);
 
     // Append Old Page and add classes for animation
-    $(view.pagesContainer).append(newPage[0]);
+    pagesContainer.append(newPage[0]);
 
     // Page Init Events
     app.pageInitCallback(view, newPage[0], url, 'right');
@@ -504,7 +504,8 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
     }
 
     var viewContainer = $(view.container),
-        pagesInView = viewContainer.find('.page'),
+        pagesContainer = $(view.pagesContainer),
+        pagesInView = pagesContainer.children('.page'),
         oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
@@ -549,7 +550,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
         newPage.addClass('page-on-left');
 
         // Find old page (should be the only one)
-        oldPage = $(viewContainer.find('.page')[0]);
+        oldPage = $(pagesInView[0]);
 
         // Dynamic navbar
         if (view.params.dynamicNavbar) {
@@ -576,7 +577,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
             app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'left');
         }
         // Prepend new Page and add classes for animation
-        $(view.pagesContainer).prepend(newPage[0]);
+        pagesContainer.prepend(newPage[0]);
 
         // Page Init Events
         app.pageInitCallback(view, newPage[0], url, 'left');
