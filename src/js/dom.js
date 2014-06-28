@@ -74,7 +74,7 @@ Dom7.prototype = {
             if (this[0]) {
                 var dataKey = this[0].getAttribute('data-' + key);
                 if (dataKey) return dataKey;
-                else if (this[0].f7ElementDataStorage && this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
+                else if (this[0].dom7ElementDataStorage && this[0].dom7ElementDataStorage[key]) return this[0].dom7ElementDataStorage[key];
                 else return undefined;
             }
             else return undefined;
@@ -83,8 +83,8 @@ Dom7.prototype = {
             // Set value
             for (var i = 0; i < this.length; i++) {
                 var el = this[i];
-                if (!el.f7ElementDataStorage) el.f7ElementDataStorage = {};
-                el.f7ElementDataStorage[key] = value;
+                if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
+                el.dom7ElementDataStorage[key] = value;
             }
             return this;
         }
