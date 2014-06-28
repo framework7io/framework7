@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.8
+ * Framework7 0.9.0
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: June 21, 2014
+ * Released on: June 28, 2014
 */
 /*=============
   Framework 7
@@ -495,6 +495,9 @@ html.android .page-from-center-to-right {
   position: relative;
   margin: 0;
   z-index: 500;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .navbar b,
 .toolbar b {
@@ -617,6 +620,11 @@ html.android .page-from-center-to-right {
 }
 .navbar .right {
   margin-left: 10px;
+}
+.navbar .right:first-child {
+  position: absolute;
+  right: 8px;
+  height: 100%;
 }
 .toolbar {
   left: 0;
@@ -956,7 +964,6 @@ html.android .page-from-center-to-right {
   pointer-events: none;
 }
 .searchbar.searchbar-active .searchbar-cancel {
-  margin-right: 0 !important;
   margin-left: 8px;
   opacity: 1;
   pointer-events: auto;
@@ -1239,6 +1246,49 @@ i.icon.icon-prev-white {
 }
 .list-block.inset li:first-child:last-child > a {
   border-radius: 7px;
+}
+@media all and (min-width: 768px) {
+  .list-block.tablet-inset {
+    margin-left: 15px;
+    margin-right: 15px;
+    border-radius: 7px;
+  }
+  .list-block.tablet-inset .content-block-title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .list-block.tablet-inset ul {
+    border-radius: 7px;
+    border-top: none;
+    border-bottom: none;
+  }
+  .list-block.tablet-inset li:first-child > a {
+    border-radius: 7px 7px 0 0;
+  }
+  .list-block.tablet-inset li:last-child > a {
+    border-radius: 0 0 7px 7px;
+  }
+  .list-block.tablet-inset li:first-child:last-child > a {
+    border-radius: 7px;
+  }
+  .list-block.tablet-inset .content-block-title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .list-block.tablet-inset ul {
+    border-radius: 7px;
+    border-top: none;
+    border-bottom: none;
+  }
+  .list-block.tablet-inset li:first-child > a {
+    border-radius: 7px 7px 0 0;
+  }
+  .list-block.tablet-inset li:last-child > a {
+    border-radius: 0 0 7px 7px;
+  }
+  .list-block.tablet-inset li:first-child:last-child > a {
+    border-radius: 7px;
+  }
 }
 .list-block li {
   -webkit-box-sizing: border-box;
@@ -2748,8 +2798,8 @@ html.with-statusbar-overlay body .panel {
   height: 20px;
   -webkit-transform-origin: 50%;
   transform-origin: 50%;
-  -webkit-animation: spin 1s step-end infinite;
-  animation: spin 1s step-end infinite;
+  -webkit-animation: preloader-spin 1s step-end infinite;
+  animation: preloader-spin 1s step-end infinite;
 }
 .preloader:after {
   display: block;
@@ -2764,7 +2814,7 @@ html.with-statusbar-overlay body .panel {
 .preloader-white:after {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='%23fff' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='%23l' opacity='.27'/><use xlink:href='%23l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='%23l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='%23l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='%23l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='%23l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='%23l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='%23l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='%23l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
 }
-@-webkit-keyframes spin {
+@-webkit-keyframes preloader-spin {
   0% {
     -webkit-transform: rotate(0deg);
   }
@@ -2805,7 +2855,7 @@ html.with-statusbar-overlay body .panel {
     -webkit-transform: rotate(360deg);
   }
 }
-@keyframes spin {
+@keyframes preloader-spin {
   0% {
     transform: rotate(0deg);
   }

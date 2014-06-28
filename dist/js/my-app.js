@@ -10,16 +10,12 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
-// Event listener to run specific code for specific pages
-$$(document).on('pageInit', function (e) {
-    var page = e.detail.page;
-    // If it is About page
-    if (page.name === 'about') {
-        // run createContentPage func after link was clicked
-        $$('.create-page').on('click', function () {
-            createContentPage();
-        });
-    }
+// Callbacks to run specific code for specific pages, for example for About page:
+myApp.onPageInit('about', function (page) {
+    // run createContentPage func after link was clicked
+    $$('.create-page').on('click', function () {
+        createContentPage();
+    });
 });
 
 // Generate dynamic page

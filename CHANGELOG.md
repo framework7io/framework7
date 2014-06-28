@@ -1,5 +1,18 @@
 # Change Log
 
+## Framework7 v0.9.0 - Updated on June 28, 2014
+
+  * Full RTL support for right to left languages (Arabic, Hebrew)!
+  * New Page callbacks API
+  * Smart Select: configurable page title and back link text via data-pagetitle and data-backtext attributes, new smartSelectBackText app parameter
+  * Dom7: new .prop(prop, value) method to set/access HTMLElement properties (checked, disabled, etc.)
+  * Search Bar: improved search for items that don't match to "search-in"; new "enableSearch", "disableSearch", "clearSearch" events
+  * Slider: support for fractional slidesPerView value
+  * Improved behavior of nested Views
+  * New ".tablet-inset" class for List Views to make them inset only on tablets (iPad)
+  * Navbar: fixed layout with only "right" element
+  * Changed preloader's CSS animation name to prevent conflicts with Font Awesome
+
 ## Framework7 v0.8.8 - Updated on June 21, 2014
 
   * New App and View option to disable page animations - "animatePages:false"

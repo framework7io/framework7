@@ -1,5 +1,5 @@
 /*
- * Framework7 0.8.8
+ * Framework7 0.9.0
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: June 21, 2014
+ * Released on: June 28, 2014
 */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '0.8.8';
+        app.version = '0.9.0';
     
         // Anim Frame
         app._animFrame = function (callback) {
@@ -63,7 +63,8 @@
             swipeout: true,
             swipeoutNoFollow: false,
             // Smart Select Back link template
-            smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>',
+            smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>{{backText}}</span></a></div>',
+            smartSelectBackText: 'Back',
             smartSelectSearchbar: false,
             // Panels
             swipePanel: false, // or 'left' or 'right'
@@ -120,6 +121,11 @@
     
         // Link to local storage
         app.ls = localStorage;
+    
+        // RTL
+        app.rtl = $('body').css('direction') === 'rtl';
+        if (app.rtl) $('html').attr('dir', 'rtl');
+    
         
         /*======================================================
         ************   Views   ************
@@ -220,7 +226,7 @@
                 if (typeof isScrolling === 'undefined') {
                     isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
                 }
-                if (isScrolling) {
+                if (isScrolling || e.f7PreventSwipeBack) {
                     isTouched = false;
                     return;
                 }
@@ -232,7 +238,14 @@
                     var target = $(e.target);
                     activePage = target.is('.page') ? target : target.parents('.page');
                     previousPage = container.find('.page-on-left:not(.cached)');
-                    if (touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea) cancel = true;
+                    var notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
+                    if (app.rtl) {
+                        notFromBorder = touchesStart.x < container.offset().left - container[0].scrollLeft + viewContainerWidth - view.params.swipeBackPageActiveArea;
+                    }
+                    else {
+                        notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
+                    }
+                    if (notFromBorder) cancel = true;
                     if (previousPage.length === 0 || activePage.length === 0) cancel = true;
                     if (cancel) {
                         isTouched = false;
@@ -252,18 +265,27 @@
                 isMoved = true;
         
                 e.preventDefault();
-                touchesDiff = pageX - touchesStart.x - view.params.swipeBackPageThreshold;
+        
+                // RTL inverter
+                var inverter = app.rtl ? -1 : 1;
+        
+                // Touches diff
+                touchesDiff = (pageX - touchesStart.x - view.params.swipeBackPageThreshold) * inverter;
                 if (touchesDiff < 0) touchesDiff = 0;
                 var percentage = touchesDiff / viewContainerWidth;
         
                 // Transform pages
-                activePage.transform('translate3d(' + touchesDiff + 'px,0,0)');
+                var activePageTranslate = touchesDiff * inverter;
+                var previousPageTranslate = (touchesDiff / 5 - viewContainerWidth / 5) * inverter;
+                if (app.device.pixelRatio === 1) {
+                    activePageTranslate = Math.round(activePageTranslate);
+                    previousPageTranslate = Math.round(previousPageTranslate);
+                }
+        
+                activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
                 if (view.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
         
-                var pageTranslate = (touchesDiff / 5 - viewContainerWidth / 5);
-                if (app.device.pixelRatio === 1) pageTranslate = Math.round(pageTranslate);
-        
-                previousPage.transform('translate3d(' + pageTranslate + 'px,0,0)');
+                previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
                 previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
         
                 // Dynamic Navbars Animation
@@ -491,8 +513,8 @@
             var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
             navbarInner.each(function () {
                 var tt = $(this),
-                    left = tt.find('.left'),
-                    right = tt.find('.right'),
+                    left = app.rtl ? tt.find('.right') : tt.find('.left'),
+                    right = app.rtl ? tt.find('.left') : tt.find('.right'),
                     center = tt.find('.center'),
                     noLeft = left.length === 0,
                     noRight = right.length === 0,
@@ -525,20 +547,39 @@
                 else {
                     diff = 0;
                 }
-                center.css({left: diff + 'px'});
+                // RTL inverter
+                var inverter = app.rtl ? -1 : 1;
+                
+                // Center left
+                var centerLeft = diff;
+                if (app.rtl && noLeft && noRight && center.length > 0) centerLeft = -centerLeft;
+                center.css({left: centerLeft + 'px'});
+        
                 if (center.hasClass('sliding')) {
-                    center[0].f7NavbarLeftOffset = -(currLeft + diff);
-                    center[0].f7NavbarRightOffset = navbarWidth - currLeft - diff - centerWidth;
+                    center[0].f7NavbarLeftOffset = -(currLeft + diff) * inverter;
+                    center[0].f7NavbarRightOffset = (navbarWidth - currLeft - diff - centerWidth) * inverter;
                     if (onLeft) center.transform('translate3d(' + center[0].f7NavbarLeftOffset + 'px, 0, 0)');
                 }
                 if (!noLeft && left.hasClass('sliding')) {
-                    left[0].f7NavbarLeftOffset = -leftWidth;
-                    left[0].f7NavbarRightOffset = (navbarWidth - left.outerWidth()) / 2;
+                    if (app.rtl) {
+                        left[0].f7NavbarLeftOffset = -(navbarWidth - left.outerWidth()) / 2 * inverter;
+                        left[0].f7NavbarRightOffset = leftWidth * inverter;
+                    }
+                    else {
+                        left[0].f7NavbarLeftOffset = -leftWidth;
+                        left[0].f7NavbarRightOffset = (navbarWidth - left.outerWidth()) / 2;
+                    }
                     if (onLeft) left.transform('translate3d(' + left[0].f7NavbarLeftOffset + 'px, 0, 0)');
                 }
                 if (!noRight && right.hasClass('sliding')) {
-                    right[0].f7NavbarLeftOffset = -(navbarWidth - right.outerWidth()) / 2;
-                    right[0].f7NavbarRightOffset = rightWidth;
+                    if (app.rtl) {
+                        right[0].f7NavbarLeftOffset = -rightWidth * inverter;
+                        right[0].f7NavbarRightOffset = (navbarWidth - right.outerWidth()) / 2 * inverter;
+                    }
+                    else {
+                        right[0].f7NavbarLeftOffset = -(navbarWidth - right.outerWidth()) / 2;
+                        right[0].f7NavbarRightOffset = rightWidth;
+                    }
                     if (onLeft) right.transform('translate3d(' + right[0].f7NavbarLeftOffset + 'px, 0, 0)');
                 }
                 
@@ -573,7 +614,7 @@
             pageContainer = $(pageContainer);
             var searchbar = pageContainer.find('.searchbar');
             if (searchbar.length === 0) return;
-            var searchbarOverlay = pageContainer.find('.searchbar-overlay');
+            var searchbarOverlay = pageContainer.hasClass('navbar') ? $('.searchbar-overlay') : pageContainer.find('.searchbar-overlay');
             var input = searchbar.find('input[type="search"]');
             var clear = searchbar.find('.searchbar-clear');
             var cancel = searchbar.find('.searchbar-cancel');
@@ -584,12 +625,19 @@
             var notFound = $('.searchbar-not-found');
         
             // Cancel button
-            cancel.css('margin-right', - cancel.width() + 'px');
+            var cancelWidth, cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
+            if (cancel.length > 0) {
+                cancelWidth = cancel.width();
+        
+                cancel.css(cancelMarginProp, - cancelWidth + 'px');
+            }
         
             // Handlers
             function disableSearchbar() {
                 input.val('').trigger('change');
                 searchbar.removeClass('searchbar-active searchbar-not-empty');
+                if (cancel.length > 0) cancel.css(cancelMarginProp, - cancelWidth + 'px');
+                
                 if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
                 if (app.device.ios) {
                     setTimeout(function () {
@@ -607,17 +655,23 @@
                     setTimeout(function () {
                         if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
                         searchbar.addClass('searchbar-active');
+                        if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
+                        searchList.trigger('enableSearch');
+        
                     }, 400);
                 }
                 else {
                     if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
                     searchbar.addClass('searchbar-active');
+                    if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
+                    searchList.trigger('disableSearch');
                 }
             }
         
             // Clear
             function clearSearchbar() {
                 input.val('').trigger('change');
+                searchList.trigger('clearSearch');
             }
         
             // Change
@@ -665,7 +719,10 @@
                 var foundItems = [];
                 searchList.find('li').each(function (index, el) {
                     el = $(el);
-                    var compareWith = el.find(searchIn).text().trim().toLowerCase();
+                    var compareWithEl = el.find(searchIn);
+                    if (compareWithEl.length === 0) return;
+                    var compareWith;
+                    compareWith = compareWithEl.text().trim().toLowerCase();
                     var wordsMatch = 0;
                     for (var i = 0; i < values.length; i++) {
                         if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
@@ -693,9 +750,12 @@
             // Destroy on page remove
             function pageBeforeRemove() {
                 detachEvents();
-                $(pageContainer).off('pageBeforeRemove', pageBeforeRemove);
+                pageContainer.off('pageBeforeRemove', pageBeforeRemove);
             }
-            $(pageContainer).on('pageBeforeRemove', pageBeforeRemove);
+            if (pageContainer.hasClass('page')) {
+                pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+            }
+                
         };
         app.destroySearchbar = function (searchbar) {
             searchbar = $(searchbar);
@@ -766,6 +826,71 @@
         /*======================================================
         ************   Pages   ************
         ======================================================*/
+        // Page Callbacks API
+        app.pageCallbacks = {};
+        
+        app.onPage = function (callbackName, pageName, callback) {
+            if (pageName && pageName.split(' ').length > 1) {
+                var pageNames = pageName.split(' ');
+                var returnCallbacks = [];
+                for (var i = 0; i < pageNames.length; i++) {
+                    returnCallbacks.push(app.onPage(callbackName, pageNames[i], callback));
+                }
+                returnCallbacks.remove = function () {
+                    for (var i = 0; i < returnCallbacks.length; i++) {
+                        returnCallbacks[i].remove();
+                    }
+                };
+                returnCallbacks.trigger = function () {
+                    for (var i = 0; i < returnCallbacks.length; i++) {
+                        returnCallbacks[i].trigger();
+                    }
+                };
+                return returnCallbacks;
+            }
+            var callbacks = app.pageCallbacks[callbackName][pageName];
+            if (!callbacks) {
+                callbacks = app.pageCallbacks[callbackName][pageName] = [];
+            }
+            app.pageCallbacks[callbackName][pageName].push(callback);
+            return {
+                remove: function () {
+                    var removeIndex;
+                    for (var i = 0; i < callbacks.length; i++) {
+                        if (callbacks[i].toString() === callback.toString()) {
+                            removeIndex = i;
+                        }
+                    }
+                    if (typeof removeIndex !== 'undefined') callbacks.splice(removeIndex, 1);
+                },
+                trigger: callback
+            };
+        };
+        
+        //Create callbacks methods dynamically
+        function createPageCallback(callbackName) {
+            var capitalized = callbackName.replace(/^./, function (match) {
+                return match.toUpperCase();
+            });
+            app['onPage' + capitalized] = function (pageName, callback) {
+                return app.onPage(callbackName, pageName, callback);
+            };
+        }
+        
+        var pageCallbacksNames = ('beforeInit init beforeAnimation afterAnimation beforeRemove').split(' ');
+        for (var i = 0; i < pageCallbacksNames.length; i++) {
+            app.pageCallbacks[pageCallbacksNames[i]] = {};
+            createPageCallback(pageCallbacksNames[i]);
+        }
+        
+        app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
+            var callbacks = app.pageCallbacks[callbackName][pageName];
+            if (!callbacks || callbacks.length === 0) return;
+            for (var i = 0; i < callbacks.length; i++) {
+                callbacks[i](pageData);
+            }
+        };
+        
         // On Page Init Callback
         app.pageInitCallback = function (view, pageContainer, url, position) {
             if (pageContainer.f7PageInitialized) return;
@@ -781,6 +906,8 @@
             };
             // Before Init Callbacks
             app.pluginHook('pageBeforeInit', pageData);
+            if (app.params.onPageBeforeInit) app.params.onPageBeforeInit(app, pageData);
+            app.triggerPageCallbacks('beforeInit', pageData.name, pageData);
             $(pageData.container).trigger('pageBeforeInit', {page: pageData});
         
             // Init page
@@ -788,6 +915,8 @@
         
             // Init Callback
             app.pluginHook('pageInit', pageData);
+            if (app.params.onPageInit) app.params.onPageInit(app, pageData);
+            app.triggerPageCallbacks('init', pageData.name, pageData);
             $(pageData.container).trigger('pageInit', {page: pageData});
         };
         app.pageRemoveCallback = function (view, pageContainer, position) {
@@ -800,6 +929,8 @@
             };
             // Before Init Callback
             app.pluginHook('pageBeforeRemove', pageData);
+            if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
+            app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
             $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
         };
         app.pageAnimCallbacks = function (callback, view, params) {
@@ -817,6 +948,8 @@
         
             if (callback === 'after') {
                 app.pluginHook('pageAfterAnimation', pageData);
+                if (app.params.onPageAfterAnimation) app.params.onPageAfterAnimation(app, pageData);
+                app.triggerPageCallbacks('afterAnimation', pageData.name, pageData);
                 $(pageData.container).trigger('pageAfterAnimation', {page: pageData});
         
             }
@@ -840,6 +973,8 @@
                 }
                 // Callbacks
                 app.pluginHook('pageBeforeAnimation', pageData);
+                if (app.params.onPageBeforeAnimation) app.params.onPageBeforeAnimation(app, pageData);
+                app.triggerPageCallbacks('beforeAnimation', pageData.name, pageData);
                 $(pageData.container).trigger('pageBeforeAnimation', {page: pageData});
             }
         };
@@ -957,7 +1092,7 @@
             }
         }
         function _load(view, url, content, animatePages) {
-            var viewContainer = $(view.container),
+            var viewContainer = $(view.container), pagesContainer = $(view.pagesContainer),
                 newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
         
             if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
@@ -992,7 +1127,7 @@
             newPage.addClass('page-on-right');
         
             // Find old page (should be the last one) and remove older pages
-            pagesInView = viewContainer.find('.page:not(.cached)');
+            pagesInView = pagesContainer.children('.page:not(.cached)');
             if (pagesInView.length > 1) {
                 for (i = 0; i < pagesInView.length - 2; i++) {
                     if (!view.params.domCache) {
@@ -1012,7 +1147,7 @@
                 }
             }
         
-            oldPage = viewContainer.find('.page:not(.cached)');
+            oldPage = pagesContainer.children('.page:not(.cached)');
         
             // Dynamic navbar
             if (view.params.dynamicNavbar) {
@@ -1065,7 +1200,7 @@
             view.history.push(url);
         
             // Append Old Page and add classes for animation
-            $(view.pagesContainer).append(newPage[0]);
+            pagesContainer.append(newPage[0]);
         
             // Page Init Events
             app.pageInitCallback(view, newPage[0], url, 'right');
@@ -1171,7 +1306,7 @@
                     if (pushState) history.pushState({url: url}, '', app.params.pushStateSeparator + url);
                 }
                 
-                preprocess(data, null, function (data) {
+                preprocess(data, url, function (data) {
                     _load(view, url, data, animatePages);
                 });
             });
@@ -1194,7 +1329,8 @@
             }
         
             var viewContainer = $(view.container),
-                pagesInView = viewContainer.find('.page'),
+                pagesContainer = $(view.pagesContainer),
+                pagesInView = pagesContainer.children('.page'),
                 oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
         
             if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
@@ -1239,7 +1375,7 @@
                 newPage.addClass('page-on-left');
         
                 // Find old page (should be the only one)
-                oldPage = $(viewContainer.find('.page')[0]);
+                oldPage = $(pagesInView[0]);
         
                 // Dynamic navbar
                 if (view.params.dynamicNavbar) {
@@ -1266,7 +1402,7 @@
                     app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'left');
                 }
                 // Prepend new Page and add classes for animation
-                $(view.pagesContainer).prepend(newPage[0]);
+                pagesContainer.prepend(newPage[0]);
         
                 // Page Init Events
                 app.pageInitCallback(view, newPage[0], url, 'left');
@@ -2163,6 +2299,7 @@
         
                 e.preventDefault();
                 e.f7PreventPanelSwipe = true;
+                if (app.rtl) e.f7PreventSwipeBack = true;
                 touchesDiff = pageX - touchesStart.x;
                 translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
         
@@ -2201,7 +2338,6 @@
                 isMoved = false;
                 var timeDiff = (new Date()).getTime() - touchStartTime;
                 if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeout = false;
-                
                 var action;
                 if (opened) {
                     if (
@@ -2229,7 +2365,8 @@
                     app.swipeoutOpenedEl = swipeOutEl;
                     swipeOutEl.trigger('open');
                     swipeOutEl.addClass('swipeout-opened transitioning');
-                    swipeOutContent.transform('translate3d(' + -swipeOutActionsWidth + 'px,0,0)');
+                    var newTranslate = -swipeOutActionsWidth;
+                    swipeOutContent.transform('translate3d(' + newTranslate + 'px,0,0)');
                 }
                 else {
                     swipeOutEl.trigger('close');
@@ -2275,7 +2412,8 @@
             if (el.length > 1) el = $(el[0]);
             el.trigger('open').addClass('transitioning swipeout-opened');
             var swipeOutActions = el.find('.swipeout-actions-inner');
-            el.find('.swipeout-content').transform('translate3d(-' + swipeOutActions.width() + 'px,0,0)').transitionEnd(function () {
+            var translate = -swipeOutActions.width();
+            el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
                 el.trigger('opened');
             });
             app.swipeoutOpenedEl = el;
@@ -2308,7 +2446,8 @@
                 el.trigger('deleted');
                 el.remove();
             });
-            el.find('.swipeout-content').transform('translate3d(-100%,0,0)');
+            var translate = '-100%';
+            el.find('.swipeout-content').transform('translate3d(' + translate + ',0,0)');
         };
         
         /*===============================================================================
@@ -2484,7 +2623,8 @@
                 };
             }
         
-            var pageTitle = smartSelect.find('.item-title').text();
+            var pageTitle = smartSelect.attr('data-pagetitle') || smartSelect.find('.item-title').text();
+            var backText = smartSelect.attr('data-backtext') || app.params.smartSelectBackText;
         
             // Generate dynamic page layout
             var id = (new Date()).getTime();
@@ -2506,7 +2646,7 @@
             var navbarHTML =
                 '<div class="navbar">' +
                 '  <div class="navbar-inner">' +
-                    app.params.smartSelectBackTemplate +
+                    app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText) +
                 '    <div class="center sliding">' + pageTitle + '</div>' +
                 '  </div>' +
                 '</div>';
@@ -3455,11 +3595,14 @@
         
             var isH = s.params.direction === 'horizontal';
         
+            var inverter = isH ? (app.rtl ? -1 : 1) : 1;
+        
             s.updateSlides = function () {
                 s.slides = s.wrapper.children('.' + s.params.slideClass);
         
                 if (s.params.spaceBetween !== 0) {
-                    if (isH) s.slides.css({marginRight: s.params.spaceBetween + 'px'});
+                    var marginProp = app.rtl ? 'margin-left' : 'margin-right';
+                    if (isH) s.slides.css(marginProp, s.params.spaceBetween + 'px');
                     else s.slides.css({marginBottom: s.params.spaceBetween + 'px'});
                 }
                 if (s.params.slidesPerView > 1) {
@@ -3563,7 +3706,7 @@
                 e.stopPropagation();
         
                 if (!isMoved) {
-                    currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y');
+                    currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y') * inverter;
                     s.wrapper.transition(0);
                     if (animating) s.onSlideChangeEnd();
                     if (params.autoplay && autoplay) {
@@ -3574,11 +3717,13 @@
                     }
                 }
                 isMoved = true;
-                var diff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+                var diff = isH ? (touchesCurrent.x - touchesStart.x) * inverter : touchesCurrent.y - touchesStart.y;
+        
                 if ((diff > 0 && s.activeSlideIndex === 0)) diff = Math.pow(diff, 0.85);
                 else if (diff < 0 && s.activeSlideIndex === s.slides.length - s.params.slidesPerView) diff = -Math.pow(-diff, 0.85);
                 
-                var translateX = isH ? diff + currentTranslate: 0, translateY = isH ? 0 : diff + currentTranslate;
+                var translateX = isH ? (diff + currentTranslate) * inverter : 0, translateY = isH ? 0 : diff + currentTranslate;
+        
                 s.wrapper.transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
             };
             s.onTouchEnd = function (e) {
@@ -3612,7 +3757,7 @@
                     return;
                 }
                 isTouched = isMoved = false;
-                var touchesDiff = isH ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+                var touchesDiff = isH ? (touchesCurrent.x - touchesStart.x) * inverter : touchesCurrent.y - touchesStart.y;
                 
                 //Release links clicks
                 if (Math.abs(touchesDiff) < 5 && (timeDiff) < 300 && s.allowClick === false) {
@@ -3678,11 +3823,11 @@
         
                 if (typeof speed === 'undefined') speed = s.params.speed;
                 s.previousSlideIndex = s.activeSlideIndex;
-                s.activeSlideIndex = index;
+                s.activeSlideIndex = Math.round(index);
                 s.isFirst = s.activeSlideIndex === 0;
                 s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
                 s.onSlideChangeStart();
-                var translateX = isH ? translate : 0, translateY = isH ? 0 : translate;
+                var translateX = isH ? translate * inverter : 0, translateY = isH ? 0 : translate;
                 if (speed === 0) {
                     s.wrapper
                         .transition(0)
@@ -3929,6 +4074,7 @@
         
             pb.open = function (index) {
                 if (typeof index === 'undefined') index = pb.activeSlideIndex;
+                index = parseInt(index, 10);
                 if (pb.opened && pb.slider) {
                     pb.slider.slideTo(index);
                     return;
@@ -4515,13 +4661,25 @@
                 return this;
             }
         },
+        prop: function (prop, value) {
+            if (typeof value === 'undefined') {
+                if (this[0]) return this[0][prop];
+                else return undefined;
+            }
+            else {
+                for (var i = 0; i < this.length; i++) {
+                    this[i][prop] = value;
+                }
+                return this;
+            }
+        },
         data: function (key, value) {
             if (typeof value === 'undefined') {
                 // Get value
                 if (this[0]) {
                     var dataKey = this[0].getAttribute('data-' + key);
                     if (dataKey) return dataKey;
-                    else if (this[0].f7ElementDataStorage && this[0].f7ElementDataStorage[key]) return this[0].f7ElementDataStorage[key];
+                    else if (this[0].dom7ElementDataStorage && this[0].dom7ElementDataStorage[key]) return this[0].dom7ElementDataStorage[key];
                     else return undefined;
                 }
                 else return undefined;
@@ -4530,8 +4688,8 @@
                 // Set value
                 for (var i = 0; i < this.length; i++) {
                     var el = this[i];
-                    if (!el.f7ElementDataStorage) el.f7ElementDataStorage = {};
-                    el.f7ElementDataStorage[key] = value;
+                    if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
+                    el.dom7ElementDataStorage[key] = value;
                 }
                 return this;
             }
@@ -5058,6 +5216,7 @@
     $.parseUrlQuery = function (url) {
         var query = {}, i, params, param;
         if (url.indexOf('?') >= 0) url = url.split('?')[1];
+        else return query;
         params = url.split('&');
         for (i = 0; i < params.length; i++) {
             param = params[i].split('=');
