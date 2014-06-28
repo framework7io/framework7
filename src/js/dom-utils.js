@@ -2,6 +2,7 @@
 $.parseUrlQuery = function (url) {
     var query = {}, i, params, param;
     if (url.indexOf('?') >= 0) url = url.split('?')[1];
+    else return query;
     params = url.split('&');
     for (i = 0; i < params.length; i++) {
         param = params[i].split('=');
