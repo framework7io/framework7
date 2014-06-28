@@ -56,6 +56,7 @@ app.smartSelectOpen = function (smartSelect) {
     }
 
     var pageTitle = smartSelect.attr('data-pagetitle') || smartSelect.find('.item-title').text();
+    var backText = smartSelect.attr('data-backtext') || app.params.smartSelectBackText;
 
     // Generate dynamic page layout
     var id = (new Date()).getTime();
@@ -77,7 +78,7 @@ app.smartSelectOpen = function (smartSelect) {
     var navbarHTML =
         '<div class="navbar">' +
         '  <div class="navbar-inner">' +
-            app.params.smartSelectBackTemplate +
+            app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText) +
         '    <div class="center sliding">' + pageTitle + '</div>' +
         '  </div>' +
         '</div>';
