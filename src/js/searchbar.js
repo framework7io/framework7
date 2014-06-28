@@ -47,6 +47,7 @@ app.initSearchbar = function (pageContainer) {
                 if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
                 searchbar.addClass('searchbar-active');
                 if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
+                searchList.trigger('enableSearch');
 
             }, 400);
         }
@@ -54,6 +55,7 @@ app.initSearchbar = function (pageContainer) {
             if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
             searchbar.addClass('searchbar-active');
             if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
+            searchList.trigger('disableSearch');
         }
     }
 
