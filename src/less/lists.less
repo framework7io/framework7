@@ -27,8 +27,7 @@
         .align-items(flex-start);
     }
     
-    
-    &.inset {
+    .inset() {
         margin-left: 15px;
         margin-right: 15px;
         border-radius: 7px;
@@ -51,7 +50,14 @@
             border-radius: 7px;
         }
     }
-    
+    &.inset {
+        .inset()
+    }
+    &.tablet-inset {
+        @media all and (min-width:768px) {
+            .inset();
+        }
+    }
 
     
 
