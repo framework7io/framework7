@@ -273,7 +273,7 @@ app.popup = function (modal, removeOnClose) {
         _modal.innerHTML = modal;
         if (_modal.childNodes.length > 0) {
             for (var i = 0; i < _modal.childNodes.length; i++) {
-                if(_modal.childNodes[i].nodeName === 'DIV'){
+                if (_modal.childNodes[i].nodeName === 'DIV') {
                     modal = _modal.childNodes[i];
                     if (removeOnClose) modal.classList.add('remove-on-close');
                     $('body').append(modal);
