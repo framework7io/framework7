@@ -163,9 +163,14 @@ app.popover = function (modal, target, removeOnClose) {
         var _modal = document.createElement('div');
         _modal.innerHTML = modal;
         if (_modal.childNodes.length > 0) {
-            modal = _modal.childNodes[0];
-            if (removeOnClose) modal.classList.add('remove-on-close');
-            $('body').append(modal);
+            for (var i = 0; i < _modal.childNodes.length; i++) {
+                if (_modal.childNodes[i].nodeName === 'DIV') {
+                    modal = _modal.childNodes[i];
+                    if (removeOnClose) modal.classList.add('remove-on-close');
+                    $('body').append(modal);
+                    break;
+                }
+            }
         }
         else return false; //nothing found
     }
