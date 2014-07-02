@@ -1,17 +1,17 @@
 /*===========================
-Device/OS Detection
-===========================*/
+ Device/OS Detection
+ ===========================*/
 Framework7.prototype.device = (function () {
-    var device = {};
-    var ua = navigator.userAgent;
-
-    var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
-    var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
-    var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
-    var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+    var device = {},
+        ua = navigator.userAgent,
+        android = ua.match(/(Android);?[\s\/]+([\d.]+)?/),
+        ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+        ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/),
+        iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+        osVersionArr, windowWidth, windowHeight, className, major, i;
 
     device.ios = device.android = device.iphone = device.ipad = false;
-    
+
     // Android
     if (android) {
         device.os = 'android';
@@ -38,53 +38,47 @@ Framework7.prototype.device = (function () {
 
     // Webview
     device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
-        
+
     // Minimal UI
     if (device.os && device.os === 'ios') {
-        var osVersionArr = device.osVersion.split('.');
+        osVersionArr = device.osVersion.split('.');
         device.minimalUi = !device.webView &&
-                            (ipod || iphone) &&
-                            (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) &&
-                            $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
+            (ipod || iphone) &&
+            (osVersionArr[0] === 7 ? osVersionArr[1] >= 1 : osVersionArr[0] > 7) &&
+            $('meta[name="viewport"]').length > 0 && $('meta[name="viewport"]').attr('content').indexOf('minimal-ui') >= 0;
     }
 
     // Check for status bar and fullscreen app mode
-    var windowWidth = $(window).width();
-    var windowHeight = $(window).height();
-    device.statusBar = false;
-    if (
+    windowWidth = $(window).width();
+    windowHeight = $(window).height();
+    device.statusBar = (
         device.webView &&
-        (
-            // iPhone 5
-            (windowWidth === 320 && windowHeight === 568) ||
-            (windowWidth === 568 && windowHeight === 320) ||
-            // iPhone 4
-            (windowWidth === 320 && windowHeight === 480) ||
-            (windowWidth === 480 && windowHeight === 320) ||
-            // iPad
-            (windowWidth === 768 && windowHeight === 1024) ||
-            (windowWidth === 1024 && windowHeight === 768)
-        )
-    ) {
-        device.statusBar = true;
-    }
-    else {
-        device.statusBar = false;
-    }
+            (
+                // iPhone 5
+                (windowWidth === 320 && windowHeight === 568) ||
+                    (windowWidth === 568 && windowHeight === 320) ||
+                    // iPhone 4
+                    (windowWidth === 320 && windowHeight === 480) ||
+                    (windowWidth === 480 && windowHeight === 320) ||
+                    // iPad
+                    (windowWidth === 768 && windowHeight === 1024) ||
+                    (windowWidth === 1024 && windowHeight === 768)
+                )
+        );
 
     // Pixel Ratio
     device.pixelRatio = window.devicePixelRatio || 1;
 
     // Add html classes
     if (device.os) {
-        var className = device.os +
-                        ' ' +
-                        device.os + '-' + device.osVersion.split('.')[0] +
-                        ' ' +
-                        device.os + '-' + device.osVersion.replace(/\./g, '-');
+        className = device.os +
+            ' ' +
+            device.os + '-' + device.osVersion.split('.')[0] +
+            ' ' +
+            device.os + '-' + device.osVersion.replace(/\./g, '-');
         if (device.os === 'ios') {
-            var major = parseInt(device.osVersion.split('.')[0], 10);
-            for (var i = major - 1; i >= 6; i--) {
+            major = parseInt(device.osVersion.split('.')[0], 10);
+            for (i = major - 1; i >= 6; i--) {
                 className += ' ' + 'ios-gt-' + i;
             }
         }
