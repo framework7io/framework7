@@ -1,22 +1,27 @@
 /*======================================================
-************   XHR   ************
-======================================================*/
+ ************   XHR   ************
+ ======================================================*/
 // XHR Caching
 app.cache = [];
 app.removeFromCache = function (url) {
-    var index = false;
-    for (var i = 0; i < app.cache.length; i++) {
-        if (app.cache[i].url === url) index = i;
+    var index = false, i;
+    for (i = 0; i < app.cache.length; i++) {
+        if (app.cache[i].url === url) {
+            index = i;
+        }
     }
-    if (index !== false) app.cache.splice(index, 1);
+    if (index !== false) {
+        app.cache.splice(index, 1);
+    }
 };
 
 // XHR
 app.xhr = false;
 app.get = function (url, callback) {
+    var i;
     if (app.params.cache && url.indexOf('nocache') < 0 && app.params.cacheIgnore.indexOf(url) < 0) {
         // Check is the url cached
-        for (var i = 0; i < app.cache.length; i++) {
+        for (i = 0; i < app.cache.length; i++) {
             if (app.cache[i].url === url) {
                 // Check expiration
                 if ((new Date()).getTime() - app.cache[i].time < app.params.cacheDuration) {
@@ -47,11 +52,15 @@ app.get = function (url, callback) {
             else {
                 callback(xhr.responseText, true);
             }
-            if (app.params.onAjaxComplete) app.params.onAjaxComplete(xhr);
+            if (app.params.onAjaxComplete) {
+                app.params.onAjaxComplete(xhr);
+            }
         },
         error: function (xhr) {
             callback(xhr.responseText, true);
-            if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
+            if (app.params.onAjaxError) {
+                app.params.onAjaxonAjaxError(xhr);
+            }
         }
     });
 

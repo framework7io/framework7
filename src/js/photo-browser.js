@@ -1,95 +1,102 @@
 /*======================================================
-************   Photo Browser   ************
-======================================================*/
+ ************   Photo Browser   ************
+ ======================================================*/
 var PhotoBrowser = function (params) {
-    var pb = this, i;
+    var pb = this, i,
+        defaults = {
+            photos: [],
+            initialSlide: 0,
+            spaceBetween: 20,
+            speed: 300,
+            zoom: true,
+            maxZoom: 3,
+            minZoom: 1,
+            exposition: true,
+            type: 'standalone',
+            navbar: true,
+            toolbar: true,
+            theme: 'light',
+            backLinkText: 'Close'
+        }, def, iconColor, navbarTemplate, toolbarTemplate, template, photoTemplate, photosHtml, htmlTemplate,
+        isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, animating = false, currentTranslate,
+        allowClick = true,
+        gestureSlide, gestureImg, gestureImgWrap, scale = 1, currentScale = 1, isScaling = false,
+        imageIsTouched, imageIsMoved, imageCurrentX, imageCurrentY, imageMinX, imageMinY, imageMaxX, imageMaxY, imageWidth, imageHeight, imageTouchesStart = {}, imageTouchesCurrent = {}, imageStartX, imageStartY, velocityPrevPositionX, velocityPrevTime, velocityX, velocityPrevPositionY, velocityY;
 
-    var defaults = {
-        photos : [],
-        initialSlide: 0,
-        spaceBetween: 20,
-        speed: 300,
-        zoom: true,
-        maxZoom: 3,
-        minZoom: 1,
-        exposition: true,
-        type: 'standalone',
-        navbar: true,
-        toolbar: true,
-        theme: 'light',
-        backLinkText: 'Close'
-    };
-    
     params = params || {};
-    for (var def in defaults) {
+    for (def in defaults) {
         if (typeof params[def] === 'undefined') {
             params[def] = defaults[def];
         }
     }
 
     pb.params = params;
-    
+
     function findView() {
         var view;
-        for (i = 0; i < app.views.length; i ++) {
-            if (app.views[i].main) view = app.views[i];
+        for (i = 0; i < app.views.length; i++) {
+            if (app.views[i].main) {
+                view = app.views[i];
+            }
         }
         return view;
     }
 
-    var iconColor = pb.params.theme === 'dark' ? 'white' : 'blue';
+    iconColor = pb.params.theme === 'dark' ? 'white' : 'blue';
 
-    var navbarTemplate = pb.params.navbarTemplate ||
-                        '<div class="navbar">' +
-                            '<div class="navbar-inner">' +
-                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
-                                '<div class="center sliding"><span><span class="photo-browser-current"></span> of <span class="photo-browser-total"></span></span></div>' +
-                                '<div class="right"></div>' +
-                            '</div>' +
-                        '</div>';
+    navbarTemplate = pb.params.navbarTemplate ||
+        '<div class="navbar">' +
+            '<div class="navbar-inner">' +
+            '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
+            '<div class="center sliding"><span><span class="photo-browser-current"></span> of <span class="photo-browser-total"></span></span></div>' +
+            '<div class="right"></div>' +
+            '</div>' +
+            '</div>';
 
-    var toolbarTemplate = pb.params.toolbarTemplate ||
-                        '<div class="toolbar tabbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev-' + iconColor + '"></i></a>' +
-                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next-' + iconColor + '"></i></a>' +
-                            '</div>' +
-                        '</div>';
+    toolbarTemplate = pb.params.toolbarTemplate ||
+        '<div class="toolbar tabbar">' +
+            '<div class="toolbar-inner">' +
+            '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev-' + iconColor + '"></i></a>' +
+            '<a href="#" class="link photo-browser-next"><i class="icon icon-next-' + iconColor + '"></i></a>' +
+            '</div>' +
+            '</div>';
 
-    var template = pb.params.template ||
-                    '<div class="photo-browser photo-browser-' + pb.params.theme + '">' +
-                        '<div class="view navbar-fixed toolbar-fixed">' +
-                            '{{navbar}}' +
-                            '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
-                                '<div class="photo-browser-slider-container slider-container">' +
-                                    '<div class="photo-browser-slider-wrapper slider-wrapper">' +
-                                        '{{photos}}' +
-                                    '</div>' +
-                                '</div>' +
-                                '{{toolbar}}' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+    template = pb.params.template ||
+        '<div class="photo-browser photo-browser-' + pb.params.theme + '">' +
+            '<div class="view navbar-fixed toolbar-fixed">' +
+            '{{navbar}}' +
+            '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
+            '<div class="photo-browser-slider-container slider-container">' +
+            '<div class="photo-browser-slider-wrapper slider-wrapper">' +
+            '{{photos}}' +
+            '</div>' +
+            '</div>' +
+            '{{toolbar}}' +
+            '</div>' +
+            '</div>' +
+            '</div>';
 
-    var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
+    photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
 
-    var photosHtml = '';
-    for (i = 0; i < pb.params.photos.length; i ++) {
+    photosHtml = '';
+    for (i = 0; i < pb.params.photos.length; i++) {
         photosHtml += photoTemplate.replace(/{{url}}/g, pb.params.photos[i]);
     }
 
-    var htmlTemplate = template
-                        .replace('{{navbar}}', (pb.params.navbar ? navbarTemplate : ''))
-                        .replace('{{noNavbar}}', (pb.params.navbar ? '' : 'no-navbar'))
-                        .replace('{{photos}}', photosHtml)
-                        .replace('{{toolbar}}', (pb.params.toolbar ? toolbarTemplate : ''));
+    htmlTemplate = template
+        .replace('{{navbar}}', (pb.params.navbar ? navbarTemplate : ''))
+        .replace('{{noNavbar}}', (pb.params.navbar ? '' : 'no-navbar'))
+        .replace('{{photos}}', photosHtml)
+        .replace('{{toolbar}}', (pb.params.toolbar ? toolbarTemplate : ''));
 
     pb.activeSlideIndex = pb.params.initialSlide;
     pb.openIndex = pb.activeSlideIndex;
     pb.opened = false;
 
     pb.open = function (index) {
-        if (typeof index === 'undefined') index = pb.activeSlideIndex;
+        if (typeof index === 'undefined') {
+            index = pb.activeSlideIndex;
+        }
         index = parseInt(index, 10);
         if (pb.opened && pb.slider) {
             pb.slider.slideTo(index);
@@ -107,7 +114,9 @@ var PhotoBrowser = function (params) {
         if (pb.params.type === 'page') {
             $(document).on('pageBeforeInit', pb.onPageBeforeInit);
             $(document).on('pageBeforeRemove', pb.onPageBeforeRemove);
-            if (!pb.params.view) pb.params.view = findView();
+            if (!pb.params.view) {
+                pb.params.view = findView();
+            }
             pb.params.view.loadContent(htmlTemplate);
             return;
         }
@@ -164,7 +173,7 @@ var PhotoBrowser = function (params) {
         pb.sliderContainer = pb.container.find('.photo-browser-slider-container');
         pb.sliderWrapper = pb.container.find('.photo-browser-slider-wrapper');
         pb.slides = pb.container.find('.photo-browser-slide');
-        
+
         pb.slider = app.slider(pb.sliderContainer, {
             nextButton: pb.params.nextButton || '.photo-browser-next',
             prevButton: pb.params.prevButton || '.photo-browser-prev',
@@ -173,15 +182,23 @@ var PhotoBrowser = function (params) {
             spaceBetween: pb.params.spaceBetween,
             speed: pb.params.speed,
             onTap: function (slider, e) {
-                if (pb.params.onTap) pb.params.onTap(slider, e);
+                if (pb.params.onTap) {
+                    pb.params.onTap(slider, e);
+                }
             },
             onClick: function (slider, e) {
-                if (pb.params.exposition) pb.toggleExposition();
-                if (pb.params.onClick) pb.params.onClick(slider, e);
+                if (pb.params.exposition) {
+                    pb.toggleExposition();
+                }
+                if (pb.params.onClick) {
+                    pb.params.onClick(slider, e);
+                }
             },
             onDoubleTap: function (slider, e) {
                 pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
-                if (pb.params.onDoubleTap) pb.params.onDoubleTap(slider, e);
+                if (pb.params.onDoubleTap) {
+                    pb.params.onDoubleTap(slider, e);
+                }
             },
             onSlideChangeStart: function (slider) {
                 pb.activeSlideIndex = slider.activeSlideIndex;
@@ -198,7 +215,9 @@ var PhotoBrowser = function (params) {
                 else {
                     $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
-                if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(slider);
+                if (pb.params.onSlideChangeStart) {
+                    pb.params.onSlideChangeStart(slider);
+                }
             },
             onSlideChangeEnd: function (slider) {
                 // Reset zoom
@@ -214,7 +233,6 @@ var PhotoBrowser = function (params) {
 
         pb.attachEvents();
 
-        
 
     };
     pb.attachEvents = function (detach) {
@@ -235,26 +253,28 @@ var PhotoBrowser = function (params) {
         pb.container.find('.photo-browser-close-link')[action]('click', pb.close);
     };
 
-    var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, animating = false, currentTranslate;
-    var allowClick = true;
-
     // Expose
     pb.exposed = false;
     pb.toggleExposition = function () {
-        if (pb.container) pb.container.toggleClass('photo-browser-exposed');
+        if (pb.container) {
+            pb.container.toggleClass('photo-browser-exposed');
+        }
         pb.exposed = !pb.exposed;
     };
     pb.expositionOn = function () {
-        if (pb.container) pb.container.addClass('photo-browser-exposed');
+        if (pb.container) {
+            pb.container.addClass('photo-browser-exposed');
+        }
         pb.exposed = true;
     };
     pb.expositionOff = function () {
-        if (pb.container) pb.container.removeClass('photo-browser-exposed');
+        if (pb.container) {
+            pb.container.removeClass('photo-browser-exposed');
+        }
         pb.exposed = false;
     };
-    
+
     // Gestures
-    var gestureSlide, gestureImg, gestureImgWrap, scale = 1, currentScale = 1, isScaling = false;
     pb.onSlideGestureStart = function (e) {
         if (!gestureSlide) {
             gestureSlide = $(this);
@@ -270,7 +290,7 @@ var PhotoBrowser = function (params) {
             scale = pb.params.maxZoom - 1 + Math.pow((scale - pb.params.maxZoom + 1), 0.5);
         }
         if (scale < pb.params.minZoom) {
-            scale =  pb.params.minZoom + 1 - Math.pow((pb.params.minZoom - scale + 1), 0.5);
+            scale = pb.params.minZoom + 1 - Math.pow((pb.params.minZoom - scale + 1), 0.5);
         }
         gestureImg.transform('translate3d(0,0,0) scale(' + scale + ')');
     };
@@ -279,7 +299,9 @@ var PhotoBrowser = function (params) {
         gestureImg.transition(pb.params.speed).transform('translate3d(0,0,0) scale(' + scale + ')');
         currentScale = scale;
         isScaling = false;
-        if (scale === 1) gestureSlide = undefined;
+        if (scale === 1) {
+            gestureSlide = undefined;
+        }
     };
     pb.toggleZoom = function () {
         if (!gestureSlide) {
@@ -299,17 +321,21 @@ var PhotoBrowser = function (params) {
         }
     };
 
-    var imageIsTouched, imageIsMoved, imageCurrentX, imageCurrentY, imageMinX, imageMinY, imageMaxX, imageMaxY, imageWidth, imageHeight, imageTouchesStart = {}, imageTouchesCurrent = {}, imageStartX, imageStartY, velocityPrevPositionX, velocityPrevTime, velocityX, velocityPrevPositionY, velocityY;
 
     pb.onSlideTouchStart = function (e) {
-        if (imageIsTouched) return;
+        if (imageIsTouched) {
+            return;
+        }
         imageIsTouched = true;
         imageTouchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         imageTouchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     };
     pb.onSlideTouchMove = function (e) {
+        var scaledWidth, scaledHeight;
         pb.slider.allowClick = false;
-        if (!imageIsTouched || !gestureSlide) return;
+        if (!imageIsTouched || !gestureSlide) {
+            return;
+        }
 
         if (!imageIsMoved) {
             imageWidth = gestureImg[0].offsetWidth;
@@ -319,57 +345,69 @@ var PhotoBrowser = function (params) {
             gestureImgWrap.transition(0);
         }
         // Define if we need image drag
-        var scaledWidth = imageWidth * scale;
-        var scaledHeight = imageHeight * scale;
+        scaledWidth = imageWidth * scale;
+        scaledHeight = imageHeight * scale;
 
-        if (scaledWidth < pb.slider.width && scaledHeight < pb.slider.height) return;
+        if (scaledWidth < pb.slider.width && scaledHeight < pb.slider.height) {
+            return;
+        }
 
         imageMinX = Math.min((pb.slider.width / 2 - scaledWidth / 2), 0);
         imageMaxX = -imageMinX;
         imageMinY = Math.min((pb.slider.height / 2 - scaledHeight / 2), 0);
         imageMaxY = -imageMinY;
-        
+
         imageTouchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         imageTouchesCurrent.y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
 
         if (!imageIsMoved && !isScaling) {
             if (
                 (Math.floor(imageMinX) === Math.floor(imageStartX) && imageTouchesCurrent.x < imageTouchesStart.x) ||
-                (Math.floor(imageMaxX) === Math.floor(imageStartX) && imageTouchesCurrent.x > imageTouchesStart.x)
+                    (Math.floor(imageMaxX) === Math.floor(imageStartX) && imageTouchesCurrent.x > imageTouchesStart.x)
                 ) {
                 imageIsTouched = false;
                 return;
             }
         }
-        
+
         e.stopPropagation();
         imageIsMoved = true;
         imageCurrentX = imageTouchesCurrent.x - imageTouchesStart.x + imageStartX;
         imageCurrentY = imageTouchesCurrent.y - imageTouchesStart.y + imageStartY;
-        
-        
+
+
         if (imageCurrentX < imageMinX) {
-            imageCurrentX =  imageMinX + 1 - Math.pow((imageMinX - imageCurrentX + 1), 0.8);
+            imageCurrentX = imageMinX + 1 - Math.pow((imageMinX - imageCurrentX + 1), 0.8);
         }
         if (imageCurrentX > imageMaxX) {
             imageCurrentX = imageMaxX - 1 + Math.pow((imageCurrentX - imageMaxX + 1), 0.8);
         }
-        
+
         if (imageCurrentY < imageMinY) {
-            imageCurrentY =  imageMinY + 1 - Math.pow((imageMinY - imageCurrentY + 1), 0.8);
+            imageCurrentY = imageMinY + 1 - Math.pow((imageMinY - imageCurrentY + 1), 0.8);
         }
         if (imageCurrentY > imageMaxY) {
             imageCurrentY = imageMaxY - 1 + Math.pow((imageCurrentY - imageMaxY + 1), 0.8);
         }
 
         //Velocity
-        if (!velocityPrevPositionX) velocityPrevPositionX = imageTouchesCurrent.x;
-        if (!velocityPrevPositionY) velocityPrevPositionY = imageTouchesCurrent.y;
-        if (!velocityPrevTime) velocityPrevTime = Date.now();
+        if (!velocityPrevPositionX) {
+            velocityPrevPositionX = imageTouchesCurrent.x;
+        }
+        if (!velocityPrevPositionY) {
+            velocityPrevPositionY = imageTouchesCurrent.y;
+        }
+        if (!velocityPrevTime) {
+            velocityPrevTime = Date.now();
+        }
         velocityX = (imageTouchesCurrent.x - velocityPrevPositionX) / (Date.now() - velocityPrevTime) / 2;
         velocityY = (imageTouchesCurrent.y - velocityPrevPositionY) / (Date.now() - velocityPrevTime) / 2;
-        if (Math.abs(imageTouchesCurrent.x - velocityPrevPositionX) < 2) velocityX = 0;
-        if (Math.abs(imageTouchesCurrent.y - velocityPrevPositionY) < 2) velocityY = 0;
+        if (Math.abs(imageTouchesCurrent.x - velocityPrevPositionX) < 2) {
+            velocityX = 0;
+        }
+        if (Math.abs(imageTouchesCurrent.y - velocityPrevPositionY) < 2) {
+            velocityY = 0;
+        }
         velocityPrevPositionX = imageTouchesCurrent.x;
         velocityPrevPositionY = imageTouchesCurrent.y;
         velocityPrevTime = Date.now();
@@ -377,6 +415,10 @@ var PhotoBrowser = function (params) {
         gestureImgWrap.transform('translate3d(' + imageCurrentX + 'px, ' + imageCurrentY + 'px,0)');
     };
     pb.onSlideTouchEnd = function (e) {
+        var momentumDurationX, momentumDurationY, momentumDistanceX,
+            newPositionX, momentumDistanceY, newPositionY, momentumDuration,
+            scaledWidth, scaledHeight;
+
         if (!imageIsTouched || !imageIsMoved) {
             imageIsTouched = false;
             imageIsMoved = false;
@@ -384,24 +426,28 @@ var PhotoBrowser = function (params) {
         }
         imageIsTouched = false;
         imageIsMoved = false;
-        var momentumDurationX = 300;
-        var momentumDurationY = 300;
-        var momentumDistanceX = velocityX * momentumDurationX;
-        var newPositionX = imageCurrentX + momentumDistanceX;
-        var momentumDistanceY = velocityY * momentumDurationY;
-        var newPositionY = imageCurrentY + momentumDistanceY;
+        momentumDurationX = 300;
+        momentumDurationY = 300;
+        momentumDistanceX = velocityX * momentumDurationX;
+        newPositionX = imageCurrentX + momentumDistanceX;
+        momentumDistanceY = velocityY * momentumDurationY;
+        newPositionY = imageCurrentY + momentumDistanceY;
 
         //Fix duration
-        if (velocityX !== 0) momentumDurationX = Math.abs((newPositionX - imageCurrentX) / velocityX);
-        if (velocityY !== 0) momentumDurationY = Math.abs((newPositionY - imageCurrentY) / velocityY);
-        var momentumDuration = Math.max(momentumDurationX, momentumDurationY);
+        if (velocityX !== 0) {
+            momentumDurationX = Math.abs((newPositionX - imageCurrentX) / velocityX);
+        }
+        if (velocityY !== 0) {
+            momentumDurationY = Math.abs((newPositionY - imageCurrentY) / velocityY);
+        }
+        momentumDuration = Math.max(momentumDurationX, momentumDurationY);
 
         imageCurrentX = newPositionX;
         imageCurrentY = newPositionY;
 
         // Define if we need image drag
-        var scaledWidth = imageWidth * scale;
-        var scaledHeight = imageHeight * scale;
+        scaledWidth = imageWidth * scale;
+        scaledHeight = imageHeight * scale;
         imageMinX = Math.min((pb.slider.width / 2 - scaledWidth / 2), 0);
         imageMaxX = -imageMinX;
         imageMinY = Math.min((pb.slider.height / 2 - scaledHeight / 2), 0);

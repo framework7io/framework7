@@ -1,39 +1,53 @@
 /*======================================================
-************   Messages   ************
-======================================================*/
+ ************   Messages   ************
+ ======================================================*/
 app.initMessages = function (pageContainer) {
-    var page = $(pageContainer);
-    var messages = page.find('.messages');
-    if (messages.length === 0) return;
-    var pageContent = page.find('.page-content');
-    if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = messages.height() - pageContent.height();
+    var page = $(pageContainer),
+        messages = page.find('.messages'),
+        pageContent;
+    if (messages.length === 0) {
+        return;
+    }
+    pageContent = page.find('.page-content');
+    if (!messages.hasClass('new-messages-first')) {
+        pageContent[0].scrollTop = messages.height() - pageContent.height();
+    }
     app.updateMessagesAngles(messages);
 };
 app.addMessage = function (props) {
+    var messagesContent, messages, newOnTop, html, isPic, messageClass;
     props = props || {};
     /*
-    {
-        text : 'Message text',
-        day : 'Mon',
-        time : '14:42',
-        type : 'sent' // or 'received'
-    }
-    */
+     {
+     text : 'Message text',
+     day : 'Mon',
+     time : '14:42',
+     type : 'sent' // or 'received'
+     }
+     */
     props.type = props.type || 'sent';
-    if (!props.text || props.length === 0) return false;
-    var messagesContent = $('.messages-content');
-    if (messagesContent.length === 0) return false;
-    var messages = messagesContent.find('.messages');
-    var newOnTop = messages.hasClass('new-messages-first');
-    var html = '';
+    if (!props.text || props.length === 0) {
+        return false;
+    }
+    messagesContent = $('.messages-content');
+    if (messagesContent.length === 0) {
+        return false;
+    }
+    messages = messagesContent.find('.messages');
+    newOnTop = messages.hasClass('new-messages-first');
+    html = '';
     if (props.day) {
         html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
     }
-    var isPic = props.text.indexOf('<img') >= 0;
-    var messageClass = 'message' + ' message-' + props.type + (isPic ? ' message-pic' : '') + ' message-appear';
+    isPic = props.text.indexOf('<img') >= 0;
+    messageClass = 'message' + ' message-' + props.type + (isPic ? ' message-pic' : '') + ' message-appear';
     html += '<div class="' + messageClass + '">' + props.text + '</div>';
-    if (newOnTop) messages.prepend(html);
-    else messages.append(html);
+    if (newOnTop) {
+        messages.prepend(html);
+    }
+    else {
+        messages.append(html);
+    }
     app.updateMessagesAngles(messages);
     app.scrollMessagesContainer(messagesContent);
 };
@@ -43,25 +57,34 @@ app.updateMessagesAngles = function (messages) {
         if (!message.next().hasClass('message-sent')) {
             message.addClass('message-last');
         }
-        else message.removeClass('message-last');
+        else {
+            message.removeClass('message-last');
+        }
     });
     messages.find('.message-received').each(function () {
         var message = $(this);
         if (!message.next().hasClass('message-received')) {
             message.addClass('message-last');
         }
-        else message.removeClass('message-last');
+        else {
+            message.removeClass('message-last');
+        }
     });
 };
 app.scrollMessagesContainer = function (messagesContent) {
+    var messages, newOnTop, currentScroll, newScroll, step;
     messagesContent = $(messagesContent || '.messages-content');
-    if (messagesContent.length === 0) return;
-    var messages = messagesContent.find('.messages');
-    var newOnTop = messages.hasClass('new-messages-first');
-    var currentScroll = messagesContent[0].scrollTop;
-    var newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
-    if (newScroll === currentScroll) return;
-    var step = (newScroll - currentScroll) / 12;
+    if (messagesContent.length === 0) {
+        return;
+    }
+    messages = messagesContent.find('.messages');
+    newOnTop = messages.hasClass('new-messages-first');
+    currentScroll = messagesContent[0].scrollTop;
+    newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
+    if (newScroll === currentScroll) {
+        return;
+    }
+    step = (newScroll - currentScroll) / 12;
     function animScroll() {
         if (messagesContent[0].scrollTop > newScroll && newOnTop) {
             messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
@@ -75,5 +98,6 @@ app.scrollMessagesContainer = function (messagesContent) {
             messagesContent[0].scrollTop = newScroll;
         }
     }
+
     app._animFrame(animScroll);
 };

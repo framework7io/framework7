@@ -1,42 +1,46 @@
 /*======================================================
-************   Pages   ************
-======================================================*/
+ ************   Pages   ************
+ ======================================================*/
+var pageCallbacksNames, i;
 // Page Callbacks API
 app.pageCallbacks = {};
 
 app.onPage = function (callbackName, pageName, callback) {
+    var pageNames, returnCallbacks, i, callbacks;
     if (pageName && pageName.split(' ').length > 1) {
-        var pageNames = pageName.split(' ');
-        var returnCallbacks = [];
-        for (var i = 0; i < pageNames.length; i++) {
+        pageNames = pageName.split(' ');
+        returnCallbacks = [];
+        for (i = 0; i < pageNames.length; i++) {
             returnCallbacks.push(app.onPage(callbackName, pageNames[i], callback));
         }
         returnCallbacks.remove = function () {
-            for (var i = 0; i < returnCallbacks.length; i++) {
+            for (i = 0; i < returnCallbacks.length; i++) {
                 returnCallbacks[i].remove();
             }
         };
         returnCallbacks.trigger = function () {
-            for (var i = 0; i < returnCallbacks.length; i++) {
+            for (i = 0; i < returnCallbacks.length; i++) {
                 returnCallbacks[i].trigger();
             }
         };
         return returnCallbacks;
     }
-    var callbacks = app.pageCallbacks[callbackName][pageName];
+    callbacks = app.pageCallbacks[callbackName][pageName];
     if (!callbacks) {
         callbacks = app.pageCallbacks[callbackName][pageName] = [];
     }
     app.pageCallbacks[callbackName][pageName].push(callback);
     return {
         remove: function () {
-            var removeIndex;
-            for (var i = 0; i < callbacks.length; i++) {
+            var removeIndex, i;
+            for (i = 0; i < callbacks.length; i++) {
                 if (callbacks[i].toString() === callback.toString()) {
                     removeIndex = i;
                 }
             }
-            if (typeof removeIndex !== 'undefined') callbacks.splice(removeIndex, 1);
+            if (typeof removeIndex !== 'undefined') {
+                callbacks.splice(removeIndex, 1);
+            }
         },
         trigger: callback
     };
@@ -52,26 +56,33 @@ function createPageCallback(callbackName) {
     };
 }
 
-var pageCallbacksNames = ('beforeInit init beforeAnimation afterAnimation beforeRemove').split(' ');
-for (var i = 0; i < pageCallbacksNames.length; i++) {
+pageCallbacksNames = ('beforeInit init beforeAnimation afterAnimation beforeRemove').split(' ');
+for (i = 0; i < pageCallbacksNames.length; i++) {
     app.pageCallbacks[pageCallbacksNames[i]] = {};
     createPageCallback(pageCallbacksNames[i]);
 }
 
 app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
-    var callbacks = app.pageCallbacks[callbackName][pageName];
-    if (!callbacks || callbacks.length === 0) return;
-    for (var i = 0; i < callbacks.length; i++) {
+    var callbacks = app.pageCallbacks[callbackName][pageName], i;
+    if (!callbacks || callbacks.length === 0) {
+        return;
+    }
+    for (i = 0; i < callbacks.length; i++) {
         callbacks[i](pageData);
     }
 };
 
 // On Page Init Callback
 app.pageInitCallback = function (view, pageContainer, url, position) {
-    if (pageContainer.f7PageInitialized) return;
+    var pageData;
+    if (pageContainer.f7PageInitialized) {
+        return;
+    }
+
     pageContainer.f7PageInitialized = true;
+
     // Page Data
-    var pageData = {
+    pageData = {
         container: pageContainer,
         url: url,
         query: $.parseUrlQuery(url || ''),
@@ -81,7 +92,9 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
     };
     // Before Init Callbacks
     app.pluginHook('pageBeforeInit', pageData);
-    if (app.params.onPageBeforeInit) app.params.onPageBeforeInit(app, pageData);
+    if (app.params.onPageBeforeInit) {
+        app.params.onPageBeforeInit(app, pageData);
+    }
     app.triggerPageCallbacks('beforeInit', pageData.name, pageData);
     $(pageData.container).trigger('pageBeforeInit', {page: pageData});
 
@@ -90,7 +103,9 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
 
     // Init Callback
     app.pluginHook('pageInit', pageData);
-    if (app.params.onPageInit) app.params.onPageInit(app, pageData);
+    if (app.params.onPageInit) {
+        app.params.onPageInit(app, pageData);
+    }
     app.triggerPageCallbacks('init', pageData.name, pageData);
     $(pageData.container).trigger('pageInit', {page: pageData});
 };
@@ -104,26 +119,30 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
     };
     // Before Init Callback
     app.pluginHook('pageBeforeRemove', pageData);
-    if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
+    if (app.params.onPageBeforeRemove) {
+        app.params.onPageBeforeRemove(app, pageData);
+    }
     app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
     $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
 };
 app.pageAnimCallbacks = function (callback, view, params) {
     // Page Data
     var pageData = {
-        container: params.pageContainer,
-        url: params.url,
-        query: $.parseUrlQuery(params.url || ''),
-        name: $(params.pageContainer).attr('data-page'),
-        view: view,
-        from: params.position
-    };
-    var oldPage = params.oldPage,
+            container: params.pageContainer,
+            url: params.url,
+            query: $.parseUrlQuery(params.url || ''),
+            name: $(params.pageContainer).attr('data-page'),
+            view: view,
+            from: params.position
+        },
+        oldPage = params.oldPage,
         newPage = params.newPage;
 
     if (callback === 'after') {
         app.pluginHook('pageAfterAnimation', pageData);
-        if (app.params.onPageAfterAnimation) app.params.onPageAfterAnimation(app, pageData);
+        if (app.params.onPageAfterAnimation) {
+            app.params.onPageAfterAnimation(app, pageData);
+        }
         app.triggerPageCallbacks('afterAnimation', pageData.name, pageData);
         $(pageData.container).trigger('pageAfterAnimation', {page: pageData});
 
@@ -148,7 +167,9 @@ app.pageAnimCallbacks = function (callback, view, params) {
         }
         // Callbacks
         app.pluginHook('pageBeforeAnimation', pageData);
-        if (app.params.onPageBeforeAnimation) app.params.onPageBeforeAnimation(app, pageData);
+        if (app.params.onPageBeforeAnimation) {
+            app.params.onPageBeforeAnimation(app, pageData);
+        }
         app.triggerPageCallbacks('beforeAnimation', pageData.name, pageData);
         $(pageData.container).trigger('pageBeforeAnimation', {page: pageData});
     }
@@ -157,21 +178,37 @@ app.pageAnimCallbacks = function (callback, view, params) {
 // Init Page Events and Manipulations
 app.initPage = function (pageContainer) {
     // Size navbars on page load
-    if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
+    if (app.sizeNavbars) {
+        app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
+    }
     // Init messages
-    if (app.initMessages) app.initMessages(pageContainer);
+    if (app.initMessages) {
+        app.initMessages(pageContainer);
+    }
     // Init forms storage
-    if (app.initFormsStorage) app.initFormsStorage(pageContainer);
+    if (app.initFormsStorage) {
+        app.initFormsStorage(pageContainer);
+    }
     // Init smart select
-    if (app.initSmartSelects) app.initSmartSelects(pageContainer);
+    if (app.initSmartSelects) {
+        app.initSmartSelects(pageContainer);
+    }
     // Init slider
-    if (app.initSlider) app.initSlider(pageContainer);
+    if (app.initSlider) {
+        app.initSlider(pageContainer);
+    }
     // Init pull to refres
-    if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
+    if (app.initPullToRefresh) {
+        app.initPullToRefresh(pageContainer);
+    }
     // Init infinite scroll
-    if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
+    if (app.initInfiniteScroll) {
+        app.initInfiniteScroll(pageContainer);
+    }
     // Init searchbar
-    if (app.initSearchbar) app.initSearchbar(pageContainer);
+    if (app.initSearchbar) {
+        app.initSearchbar(pageContainer);
+    }
 };
 
 // Load Page
@@ -180,8 +217,10 @@ app._tempDomElement = document.createElement('div');
 
 // Search required element in parsed content in related view
 function _findElement(selector, container, view) {
+    var found;
     container = $(container);
-    var found = container.find(selector);
+    found = container.find(selector);
+
     if (found.length > 1) {
         if (typeof view.selector === 'string') {
             // Search in related view
@@ -192,7 +231,9 @@ function _findElement(selector, container, view) {
             found = container.find('.' + app.params.viewMainClass + ' ' + selector);
         }
     }
-    if (found.length === 1) return found;
+    if (found.length === 1) {
+        return found;
+    }
     else {
         return undefined;
     }
@@ -268,9 +309,11 @@ function _animateNavbars(leftNavbarInner, rightNavbarInner, direction, view) {
 }
 function _load(view, url, content, animatePages) {
     var viewContainer = $(view.container), pagesContainer = $(view.pagesContainer),
-        newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+        newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar, ci, clientLeft;
 
-    if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
+    if (typeof animatePages === 'undefined') {
+        animatePages = view.params.animatePages;
+    }
 
     // Plugin hook
     app.pluginHook('loadPage', view, url, content);
@@ -282,7 +325,7 @@ function _load(view, url, content, animatePages) {
         app._tempDomElement.innerHTML = content;
     } else {
         if ('length' in content && content.length > 1) {
-            for (var ci = 0; ci < content.length; ci++) {
+            for (ci = 0; ci < content.length; ci++) {
                 $(app._tempDomElement).append(content[ci]);
             }
         } else {
@@ -336,16 +379,18 @@ function _load(view, url, content, animatePages) {
         oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
         if (oldNavbarInner.length > 0) {
             for (i = 0; i < oldNavbarInner.length - 1; i++) {
-                if (!view.params.domCache)
+                if (!view.params.domCache) {
                     $(oldNavbarInner[i]).remove();
-                else
+                } else {
                     $(oldNavbarInner[i]).addClass('cached');
+                }
             }
             if (!newNavbarInner && oldNavbarInner.length === 1) {
-                if (!view.params.domCache)
+                if (!view.params.domCache) {
                     $(oldNavbarInner[0]).remove();
-                else
+                } else {
                     $(oldNavbarInner[0]).addClass('cached');
+                }
             }
             oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
         }
@@ -392,7 +437,7 @@ function _load(view, url, content, animatePages) {
         });
     }
     // Force reLayout
-    var clientLeft = newPage[0].clientLeft;
+    clientLeft = newPage[0].clientLeft;
 
     // Before Anim Callback
     app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
@@ -406,7 +451,9 @@ function _load(view, url, content, animatePages) {
             oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center').addClass('navbar-on-left');
         }
         app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
-        if (app.params.pushState) app.pushStateClearQueue();
+        if (app.params.pushState) {
+            app.pushStateClearQueue();
+        }
     }
 
     if (animatePages) {
@@ -429,11 +476,9 @@ function _load(view, url, content, animatePages) {
     }
 }
 function preprocess(content, url, next) {
-    //Modified by Greg Keys, added callback
-    
     // Plugin hook
     app.pluginHook('preprocess', content, url, next);
-    
+
     // Preprocess by plugin
     content = app.pluginProcess('preprocess', content);
 
@@ -449,23 +494,33 @@ function preprocess(content, url, next) {
     }
 }
 app.loadContent = function (view, content, animatePages, pushState) {
-    if (!app.allowPageChange) return false;
+    if (!app.allowPageChange) {
+        return false;
+    }
     app.allowPageChange = false;
     if (app.xhr) {
         app.xhr.abort();
         app.xhr = false;
     }
-    if (app.params.pushState)  {
-        if (typeof pushState === 'undefined') pushState = true;
-        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', app.params.pushStateSeparator + '#content-' + view.history.length);
+    if (app.params.pushState) {
+        if (typeof pushState === 'undefined') {
+            pushState = true;
+        }
+        if (pushState) {
+            history.pushState({content: content, url: '#content-' + view.history.length}, '', app.params.pushStateSeparator + '#content-' + view.history.length);
+        }
     }
     preprocess(content, null, function (content) {
         _load(view, null, content, animatePages);
     });
 };
 app.loadPage = function (view, url, animatePages, pushState) {
-    if (!app.allowPageChange) return false;
-    if (view.url === url) return false;
+    if (!app.allowPageChange) {
+        return false;
+    }
+    if (view.url === url) {
+        return false;
+    }
     app.allowPageChange = false;
     if (app.xhr) {
         app.xhr.abort();
@@ -476,18 +531,23 @@ app.loadPage = function (view, url, animatePages, pushState) {
             app.allowPageChange = true;
             return;
         }
-        if (app.params.pushState)  {
+        if (app.params.pushState) {
             if (typeof pushState === 'undefined') pushState = true;
             if (pushState) history.pushState({url: url}, '', app.params.pushStateSeparator + url);
         }
-        
+
         preprocess(data, url, function (data) {
             _load(view, url, data, animatePages);
         });
     });
 };
 app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
-    if (!app.allowPageChange) return false;
+    var viewContainer, pagesContainer, pagesInView, oldPage, newPage,
+        oldNavbarInner, newNavbarInner, navbar, dynamicNavbar, inners, _cache;
+
+    if (!app.allowPageChange) {
+        return false;
+    }
 
     app.allowPageChange = false;
     if (app.xhr) {
@@ -496,19 +556,22 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
     }
     app.pluginHook('goBack', view, url, preloadOnly);
 
-    if (app.params.pushState)  {
-        if (typeof pushState === 'undefined') pushState = true;
+    if (app.params.pushState) {
+        if (typeof pushState === 'undefined') {
+            pushState = true;
+        }
         if (!preloadOnly && history.state && pushState) {
             history.back();
         }
     }
 
-    var viewContainer = $(view.container),
-        pagesContainer = $(view.pagesContainer),
-        pagesInView = pagesContainer.children('.page'),
-        oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+    viewContainer = $(view.container);
+    pagesContainer = $(view.pagesContainer);
+    pagesInView = pagesContainer.children('.page');
 
-    if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
+    if (typeof animatePages === 'undefined') {
+        animatePages = view.params.animatePages;
+    }
 
     function _animate() {
         // Page before animation callback
@@ -529,7 +592,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
                     _animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
                 }, 0);
             }
-            
+
             newPage.animationEnd(function () {
                 afterAnimation();
             });
@@ -539,7 +602,9 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
             afterAnimation();
         }
     }
+
     function _preload() {
+        var clientLeft;
         newPage = _findElement('.page', app._tempDomElement, view);
 
         // If pages not found or there are still more than one, exit
@@ -560,7 +625,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
             if (!newNavbarInner) {
                 dynamicNavbar = false;
             }
-            
+
         }
 
         if (dynamicNavbar) {
@@ -572,7 +637,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
                 oldNavbarInner = navbar.find('.navbar-inner');
             }
             navbar.prepend(newNavbarInner[0]);
-            
+
             // Navbar Init Events
             app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'left');
         }
@@ -608,7 +673,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
         view.url = url;
 
         // Force reLayout
-        var clientLeft = newPage[0].clientLeft;
+        clientLeft = newPage[0].clientLeft;
 
         _animate();
     }
@@ -630,14 +695,16 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
         if (view.params.dynamicNavbar) {
             dynamicNavbar = true;
             // Find navbar
-            var inners = viewContainer.find('.navbar-inner:not(.cached)');
+            inners = viewContainer.find('.navbar-inner:not(.cached)');
             newNavbarInner = $(inners[0]);
             oldNavbarInner = $(inners[1]);
         }
         _animate();
     }
     else {
-        if (url && url.indexOf('#') === 0) url = undefined;
+        if (url && url.indexOf('#') === 0) {
+            url = undefined;
+        }
         if (view.history.length > 1) {
             url = view.history[view.history.length - 2];
         }
@@ -645,10 +712,10 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
             app.allowPageChange = true;
             return;
         }
-        
+
         // Check current url is in cache?
         if (!view.params.domCache && (url in view.contentCache)) {
-            var _cache = view.contentCache[url];
+            _cache = view.contentCache[url];
             app._tempDomElement.innerHTML = '';
             $(app._tempDomElement).append(_cache.nav[0]).append(_cache.page[0]);
             _preload();
@@ -668,6 +735,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
     }
 };
 app.afterGoBack = function (view, oldPage, newPage) {
+    var inners, oldNavbar, newNavbar, cachedNavs, cachedPages;
     // Remove old page and set classes on new one
     oldPage = $(oldPage);
     newPage = $(newPage);
@@ -677,30 +745,32 @@ app.afterGoBack = function (view, oldPage, newPage) {
     app.allowPageChange = true;
     // Updated dynamic navbar
     if (view.params.dynamicNavbar) {
-        var inners = $(view.container).find('.navbar-inner:not(.cached)');
-        var oldNavbar = $(inners[1]).remove();
-        var newNavbar = $(inners[0]).removeClass('navbar-on-left navbar-from-left-to-center').addClass('navbar-on-center');
+        inners = $(view.container).find('.navbar-inner:not(.cached)');
+        oldNavbar = $(inners[1]).remove();
+        newNavbar = $(inners[0]).removeClass('navbar-on-left navbar-from-left-to-center').addClass('navbar-on-center');
 
         if (app.params.preloadPreviousPage && view.params.domCache) {
-            var cachedNavs = $(view.container).find('.navbar-inner.cached');
+            cachedNavs = $(view.container).find('.navbar-inner.cached');
             $(cachedNavs[cachedNavs.length - 1]).removeClass('cached');
         }
     }
     // Update View's History
     view.history.pop();
-    
+
     // Check current page is content based only
     if (!view.params.domCache && view.url && view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
         view.contentCache[view.url] = null;
         delete view.contentCache[view.url];
     }
-    
-    if (app.params.pushState) app.pushStateClearQueue();
+
+    if (app.params.pushState) {
+        app.pushStateClearQueue();
+    }
 
     // Preload previous page
     if (app.params.preloadPreviousPage) {
         if (view.params.domCache) {
-            var cachedPages = $(view.container).find('.page.cached');
+            cachedPages = $(view.container).find('.page.cached');
             $(cachedPages[cachedPages.length - 1]).removeClass('cached');
         }
         app.goBack(view, false, undefined, true);

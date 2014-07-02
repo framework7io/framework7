@@ -1,44 +1,67 @@
 /*======================================================
-************   Views   ************
-======================================================*/
+ ************   Views   ************
+ ======================================================*/
 app.views = [];
 var View = function (selector, params) {
     var defaults = {
-        dynamicNavbar: false,
-        domCache: false,
-        linksView: undefined,
-        swipeBackPage: app.params.swipeBackPage,
-        swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
-        swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
-        swipeBackPageThreshold: app.params.swipeBackPageThreshold,
-        animatePages: app.params.animatePages
-    };
+            dynamicNavbar: false,
+            domCache: false,
+            linksView: undefined,
+            swipeBackPage: app.params.swipeBackPage,
+            swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
+            swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
+            swipeBackPageThreshold: app.params.swipeBackPageThreshold,
+            animatePages: app.params.animatePages
+        }, def, view, container, docLocation, viewURL,
+    // Touch events
+        isTouched = false,
+        isMoved = false,
+        touchesStart = {},
+        isScrolling,
+        activePage,
+        previousPage,
+        viewContainerWidth,
+        touchesDiff,
+        allowViewTouchMove = true,
+        touchStartTime,
+        activeNavbar,
+        previousNavbar,
+        activeNavElements,
+        previousNavElements,
+        activeNavBackIcon,
+        previousNavBackIcon,
+        dynamicNavbar,
+        el,
+        pushStateSeparator,
+        pushStateAnimatePages;
 
     params = params || {};
-    for (var def in defaults) {
+    for (def in defaults) {
         if (typeof params[def] === 'undefined') {
             params[def] = defaults[def];
         }
     }
     // View
-    var view = this;
+    view = this;
     view.params = params;
 
     // Selector
     view.selector = selector;
 
     // Container
-    var container = $(selector);
+    container = $(selector);
     view.container = container[0];
-    
+
     // Location
-    var docLocation = document.location.href;
+    docLocation = document.location.href;
 
     // History
     view.history = [];
-    var viewURL = docLocation;
+    viewURL = docLocation;
     if (app.params.pushState) {
-        if (viewURL.indexOf('#!/') >= 0 && viewURL.indexOf('#!/#') < 0) viewURL = viewURL.split('#!/')[0];
+        if (viewURL.indexOf('#!/') >= 0 && viewURL.indexOf('#!/#') < 0) {
+            viewURL = viewURL.split('#!/')[0];
+        }
     }
     view.url = container.attr('data-url') || viewURL;
 
@@ -60,27 +83,11 @@ var View = function (selector, params) {
     view.main = container.hasClass(app.params.viewMainClass);
 
     // Touch events
-    var isTouched = false,
-        isMoved = false,
-        touchesStart = {},
-        isScrolling,
-        activePage,
-        previousPage,
-        viewContainerWidth,
-        touchesDiff,
-        allowViewTouchMove = true,
-        touchStartTime,
-        activeNavbar,
-        previousNavbar,
-        activeNavElements,
-        previousNavElements,
-        activeNavBackIcon,
-        previousNavBackIcon,
-        dynamicNavbar,
-        el;
 
     view.handleTouchStart = function (e) {
-        if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
+        if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) {
+            return;
+        }
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -91,9 +98,13 @@ var View = function (selector, params) {
     };
 
     view.handleTouchMove = function (e) {
-        if (!isTouched) return;
-        var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-        var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        var pageX, pageY, cancel, target, notFromBorder, inverter, percentage,
+            activePageTranslate, previousPageTranslate, i, activeNavTranslate, previousNavTranslate;
+        if (!isTouched) {
+            return;
+        }
+        pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
@@ -103,21 +114,25 @@ var View = function (selector, params) {
         }
         e.f7PreventPanelSwipe = true;
         if (!isMoved) {
-            var cancel = false;
+            cancel = false;
             // Calc values during first move fired
             viewContainerWidth = container.width();
-            var target = $(e.target);
+            target = $(e.target);
             activePage = target.is('.page') ? target : target.parents('.page');
             previousPage = container.find('.page-on-left:not(.cached)');
-            var notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
+            notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
             if (app.rtl) {
                 notFromBorder = touchesStart.x < container.offset().left - container[0].scrollLeft + viewContainerWidth - view.params.swipeBackPageActiveArea;
             }
             else {
                 notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
             }
-            if (notFromBorder) cancel = true;
-            if (previousPage.length === 0 || activePage.length === 0) cancel = true;
+            if (notFromBorder) {
+                cancel = true;
+            }
+            if (previousPage.length === 0 || activePage.length === 0) {
+                cancel = true;
+            }
             if (cancel) {
                 isTouched = false;
                 return;
@@ -138,36 +153,41 @@ var View = function (selector, params) {
         e.preventDefault();
 
         // RTL inverter
-        var inverter = app.rtl ? -1 : 1;
+        inverter = app.rtl ? -1 : 1;
 
         // Touches diff
         touchesDiff = (pageX - touchesStart.x - view.params.swipeBackPageThreshold) * inverter;
-        if (touchesDiff < 0) touchesDiff = 0;
-        var percentage = touchesDiff / viewContainerWidth;
+        if (touchesDiff < 0) {
+            touchesDiff = 0;
+        }
+        percentage = touchesDiff / viewContainerWidth;
 
         // Transform pages
-        var activePageTranslate = touchesDiff * inverter;
-        var previousPageTranslate = (touchesDiff / 5 - viewContainerWidth / 5) * inverter;
+        activePageTranslate = touchesDiff * inverter;
+        previousPageTranslate = (touchesDiff / 5 - viewContainerWidth / 5) * inverter;
         if (app.device.pixelRatio === 1) {
             activePageTranslate = Math.round(activePageTranslate);
             previousPageTranslate = Math.round(previousPageTranslate);
         }
 
         activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
-        if (view.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
+        if (view.params.swipeBackPageBoxShadow && app.device.os !== 'android') {
+            activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
+        }
 
         previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
         previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
 
         // Dynamic Navbars Animation
         if (dynamicNavbar) {
-            var i;
             for (i = 0; i < activeNavElements.length; i++) {
                 el = $(activeNavElements[i]);
                 el[0].style.opacity = (1 - percentage * 1.3);
                 if (el[0].className.indexOf('sliding') >= 0) {
-                    var activeNavTranslate = percentage * el[0].f7NavbarRightOffset;
-                    if (app.device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
+                    activeNavTranslate = percentage * el[0].f7NavbarRightOffset;
+                    if (app.device.pixelRatio === 1) {
+                        activeNavTranslate = Math.round(activeNavTranslate);
+                    }
                     el.transform('translate3d(' + activeNavTranslate + 'px,0,0)');
                     if (app.params.animateNavBackIcon) {
                         if (el[0].className.indexOf('left') >= 0 && activeNavBackIcon.length > 0) {
@@ -180,8 +200,10 @@ var View = function (selector, params) {
                 el = $(previousNavElements[i]);
                 el[0].style.opacity = percentage * 1.3 - 0.3;
                 if (el[0].className.indexOf('sliding') >= 0) {
-                    var previousNavTranslate = el[0].f7NavbarLeftOffset * (1 - percentage);
-                    if (app.device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
+                    previousNavTranslate = el[0].f7NavbarLeftOffset * (1 - percentage);
+                    if (app.device.pixelRatio === 1) {
+                        previousNavTranslate = Math.round(previousNavTranslate);
+                    }
                     el.transform('translate3d(' + previousNavTranslate + 'px,0,0)');
                     if (app.params.animateNavBackIcon) {
                         if (el[0].className.indexOf('left') >= 0 && previousNavBackIcon.length > 0) {
@@ -194,6 +216,8 @@ var View = function (selector, params) {
     };
 
     view.handleTouchEnd = function (e) {
+        var timeDiff, pageChanged, url;
+
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -206,16 +230,20 @@ var View = function (selector, params) {
             if (dynamicNavbar) {
                 activeNavElements.transform('').css({opacity: ''});
                 previousNavElements.transform('').css({opacity: ''});
-                if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.transform('');
-                if (previousNavBackIcon && activeNavBackIcon.length > 0) previousNavBackIcon.transform('');
+                if (activeNavBackIcon && activeNavBackIcon.length > 0) {
+                    activeNavBackIcon.transform('');
+                }
+                if (previousNavBackIcon && activeNavBackIcon.length > 0) {
+                    previousNavBackIcon.transform('');
+                }
             }
             return;
         }
-        var timeDiff = (new Date()).getTime() - touchStartTime;
-        var pageChanged = false;
+        timeDiff = (new Date()).getTime() - touchStartTime;
+        pageChanged = false;
         // Swipe back to previous page
         if (
-                timeDiff < 300 && touchesDiff > 10 ||
+            timeDiff < 300 && touchesDiff > 10 ||
                 timeDiff >= 300 && touchesDiff > viewContainerWidth / 2
             ) {
             activePage.removeClass('page-on-center').addClass('page-on-right');
@@ -231,21 +259,21 @@ var View = function (selector, params) {
         $([activePage[0], previousPage[0]]).transform('').css({opacity: '', boxShadow: ''}).addClass('page-transitioning');
         if (dynamicNavbar) {
             activeNavElements.css({opacity: ''})
-            .each(function () {
-                var translate = pageChanged ? this.f7NavbarRightOffset : 0;
-                var sliding = $(this);
-                sliding.transform('translate3d(' + translate + 'px,0,0)');
-                if (app.params.animateNavBackIcon) {
-                    if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
-                        activeNavBackIcon.addClass('page-transitioning').transform('translate3d(' + -translate + 'px,0,0)');
+                .each(function () {
+                    var translate = pageChanged ? this.f7NavbarRightOffset : 0,
+                        sliding = $(this);
+                    sliding.transform('translate3d(' + translate + 'px,0,0)');
+                    if (app.params.animateNavBackIcon) {
+                        if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
+                            activeNavBackIcon.addClass('page-transitioning').transform('translate3d(' + -translate + 'px,0,0)');
+                        }
                     }
-                }
 
-            }).addClass('page-transitioning');
+                }).addClass('page-transitioning');
 
             previousNavElements.transform('').css({opacity: ''}).each(function () {
-                var translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
-                var sliding = $(this);
+                var translate = pageChanged ? 0 : this.f7NavbarLeftOffset,
+                    sliding = $(this);
                 sliding.transform('translate3d(' + translate + 'px,0,0)');
                 if (app.params.animateNavBackIcon) {
                     if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
@@ -259,9 +287,9 @@ var View = function (selector, params) {
 
         if (pageChanged) {
             // Update View's URL
-            var url = view.history[view.history.length - 2];
+            url = view.history[view.history.length - 2];
             view.url = url;
-            
+
             // Page before animation callback
             app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage});
         }
@@ -271,13 +299,19 @@ var View = function (selector, params) {
             if (dynamicNavbar) {
                 activeNavElements.removeClass('page-transitioning').css({opacity: ''});
                 previousNavElements.removeClass('page-transitioning').css({opacity: ''});
-                if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('page-transitioning');
-                if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning');
+                if (activeNavBackIcon && activeNavBackIcon.length > 0) {
+                    activeNavBackIcon.removeClass('page-transitioning');
+                }
+                if (previousNavBackIcon && previousNavBackIcon.length > 0) {
+                    previousNavBackIcon.removeClass('page-transitioning');
+                }
             }
             allowViewTouchMove = true;
             app.allowPageChange = true;
             if (pageChanged) {
-                if (app.params.pushState) history.back();
+                if (app.params.pushState) {
+                    history.back();
+                }
                 app.afterGoBack(view, activePage, previousPage);
             }
         });
@@ -299,7 +333,9 @@ var View = function (selector, params) {
 
     // Add view to app
     app.views.push(view);
-    if (view.main) app.mainView = view;
+    if (view.main) {
+        app.mainView = view;
+    }
 
     // Load methods
     view.loadPage = function (url, animatePages) {
@@ -328,10 +364,11 @@ var View = function (selector, params) {
 
     // Push State on load
     if (app.params.pushState && view.main) {
-        var pushStateSeparator = app.params.pushStateSeparator;
+        pushStateSeparator = app.params.pushStateSeparator;
         if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
-            var pushStateAnimatePages;
-            if (app.params.pushStateNoAnimation === true) pushStateAnimatePages = false;
+            if (app.params.pushStateNoAnimation === true) {
+                pushStateAnimatePages = false;
+            }
             app.loadPage(view, docLocation.split(pushStateSeparator)[1], pushStateAnimatePages, false);
         }
     }
@@ -344,7 +381,7 @@ var View = function (selector, params) {
 
     // Plugin hook
     app.pluginHook('addView', view);
-    
+
     // Return view
     return view;
 };

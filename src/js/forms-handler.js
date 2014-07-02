@@ -1,6 +1,6 @@
 /*===============================================================================
-************   Store and parse forms data   ************
-===============================================================================*/
+ ************   Store and parse forms data   ************
+ ===============================================================================*/
 app.formsData = {};
 app.formStoreData = function (formId, formJSON) {
     // Store form data in app.formsData
@@ -28,30 +28,40 @@ app.formGetData = function (formId) {
         return JSON.parse(app.ls['f7form-' + formId]);
     }
     // Try to get it from formsData obj
-    else if (app.formsData[formId]) return app.formsData[formId];
+    else if (app.formsData[formId]) {
+        return app.formsData[formId];
+    }
 };
 app.formToJSON = function (form) {
+    var formData, skipTypes, skipNames;
     form = $(form);
     if (form.length !== 1) return false;
 
     // Form data
-    var formData = {};
+    formData = {};
 
     // Skip input types
-    var skipTypes = ['submit', 'image', 'button', 'file'];
-    var skipNames = [];
+    skipTypes = ['submit', 'image', 'button', 'file'];
+    skipNames = [];
     form.find('input, select, textarea').each(function () {
-        var input = $(this);
-        var name = input.attr('name');
-        var type = input.attr('type');
-        var tag = this.nodeName.toLowerCase();
-        if (skipTypes.indexOf(type) >= 0) return;
-        if (skipNames.indexOf(name) >= 0 || !name) return;
+        var input = $(this),
+            name = input.attr('name'),
+            type = input.attr('type'),
+            tag = this.nodeName.toLowerCase();
+
+        if (skipTypes.indexOf(type) >= 0) {
+            return;
+        }
+        if (skipNames.indexOf(name) >= 0 || !name) {
+            return;
+        }
         if (tag === 'select' && input.attr('multiple')) {
             skipNames.push(name);
             formData[name] = [];
             form.find('select[name="' + name + '"] option').each(function () {
-                if (this.selected) formData[name].push(this.value);
+                if (this.selected) {
+                    formData[name].push(this.value);
+                }
             });
         }
         else {
@@ -60,13 +70,17 @@ app.formToJSON = function (form) {
                     skipNames.push(name);
                     formData[name] = [];
                     form.find('input[name="' + name + '"]').each(function () {
-                        if (this.checked) formData[name].push(this.value);
+                        if (this.checked) {
+                            formData[name].push(this.value);
+                        }
                     });
                     break;
                 case 'radio' :
                     skipNames.push(name);
                     form.find('input[name="' + name + '"]').each(function () {
-                        if (this.checked) formData[name] = this.value;
+                        if (this.checked) {
+                            formData[name] = this.value;
+                        }
                     });
                     break;
                 default :
@@ -74,32 +88,41 @@ app.formToJSON = function (form) {
                     break;
             }
         }
-            
+
     });
 
     return formData;
 };
 app.formFromJSON = function (form, formData) {
+    var skipTypes, skipNames;
     form = $(form);
-    if (form.length !== 1) return false;
+    if (form.length !== 1) {
+        return false;
+    }
 
     // Skip input types
-    var skipTypes = ['submit', 'image', 'button', 'file'];
-    var skipNames = [];
+    skipTypes = ['submit', 'image', 'button', 'file'];
+    skipNames = [];
 
     form.find('input, select, textarea').each(function () {
-        var input = $(this);
-        var name = input.attr('name');
-        var type = input.attr('type');
-        var tag = this.nodeName.toLowerCase();
-        if (!formData[name]) return;
-        if (skipTypes.indexOf(type) >= 0) return;
-        if (skipNames.indexOf(name) >= 0 || !name) return;
+        var input = $(this),
+            name = input.attr('name'),
+            type = input.attr('type'),
+            tag = this.nodeName.toLowerCase();
+
+        if (!formData[name]) {
+            return;
+        }
+        if (skipTypes.indexOf(type) >= 0) {
+            return;
+        }
+        if (skipNames.indexOf(name) >= 0 || !name) {
+            return;
+        }
         if (tag === 'select' && input.attr('multiple')) {
             skipNames.push(name);
             form.find('select[name="' + name + '"] option').each(function () {
-                if (formData[name].indexOf(this.value) >= 0) this.selected = true;
-                else this.selected = false;
+                this.selected = (formData[name].indexOf(this.value) >= 0);
             });
         }
         else {
@@ -107,15 +130,13 @@ app.formFromJSON = function (form, formData) {
                 case 'checkbox' :
                     skipNames.push(name);
                     form.find('input[name="' + name + '"]').each(function () {
-                        if (formData[name].indexOf(this.value) >= 0) this.checked = true;
-                        else this.checked = false;
+                        this.checked = (formData[name].indexOf(this.value) >= 0);
                     });
                     break;
                 case 'radio' :
                     skipNames.push(name);
                     form.find('input[name="' + name + '"]').each(function () {
-                        if (formData[name] === this.value) this.checked = true;
-                        else this.checked = false;
+                        this.checked = (formData[name] === this.value);
                     });
                     break;
                 default :
@@ -123,34 +144,51 @@ app.formFromJSON = function (form, formData) {
                     break;
             }
         }
-            
+
     });
 };
 app.initFormsStorage = function (pageContainer) {
+    var forms;
     pageContainer = $(pageContainer);
-    if (pageContainer.length === 0) return;
+    if (pageContainer.length === 0) {
+        return;
+    }
 
-    var forms = pageContainer.find('form.store-data');
-    if (forms.length === 0) return;
-    
+    forms = pageContainer.find('form.store-data');
+    if (forms.length === 0) {
+        return;
+    }
+
     // Parse forms data and fill form if there is such data
     forms.each(function () {
-        var id = this.getAttribute('id');
-        if (!id) return;
-        var formData = app.formGetData(id);
-        if (formData) app.formFromJSON(this, formData);
+        var id = this.getAttribute('id'),
+            formData;
+        if (!id) {
+            return;
+        }
+        formData = app.formGetData(id);
+        if (formData) {
+            app.formFromJSON(this, formData);
+        }
     });
     // Update forms data on inputs change
     function storeForm() {
         /*jshint validthis:true */
-        var form = $(this);
-        var formId = form[0].id;
-        if (!formId) return;
-        var formJSON = app.formToJSON(form);
-        if (!formJSON) return;
+        var form = $(this),
+            formId = form[0].id,
+            formJSON;
+
+        if (!formId) {
+            return;
+        }
+        formJSON = app.formToJSON(form);
+        if (!formJSON) {
+            return;
+        }
         app.formStoreData(formId, formJSON);
         form.trigger('store', {data: formJSON});
     }
+
     forms.on('change submit', storeForm);
 
     // Detach Listeners
@@ -158,26 +196,36 @@ app.initFormsStorage = function (pageContainer) {
         forms.off('change submit', storeForm);
         pageContainer.off('pageBeforeRemove', pageBeforeRemove);
     }
+
     pageContainer.on('pageBeforeRemove', pageBeforeRemove);
 };
 
 // Ajax submit on forms
 $(document).on('submit change', 'form.ajax-submit, form.ajax-submit-onchange', function (e) {
-    var form = $(this);
-    if (e.type === 'change' && !form.hasClass('ajax-submit-onchange')) return;
-    if (e.type === 'submit') e.preventDefault();
-    
-    var method = form.attr('method') || 'GET';
-    var contentType = form.attr('enctype');
+    var form = $(this), method, contentType, url, data, xhr;
+    if (e.type === 'change' && !form.hasClass('ajax-submit-onchange')) {
+        return;
+    }
+    if (e.type === 'submit') {
+        e.preventDefault();
+    }
 
-    var url = form.attr('action');
-    if (!url) return;
+    method = form.attr('method') || 'GET';
+    contentType = form.attr('enctype');
 
-    var data;
-    if (method === 'POST') data = new FormData(form[0]);
-    else data = $.serializeObject(app.formToJSON(form[0]));
+    url = form.attr('action');
+    if (!url) {
+        return;
+    }
 
-    var xhr = $.ajax({
+    if (method === 'POST') {
+        data = new FormData(form[0]);
+    }
+    else {
+        data = $.serializeObject(app.formToJSON(form[0]));
+    }
+
+    xhr = $.ajax({
         method: method,
         url: url,
         contentType: contentType,
