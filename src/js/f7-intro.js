@@ -117,6 +117,6 @@ window.Framework7 = function (params) {
     if (app.rtl) {
         $('html').attr('dir', 'rtl');
     }
-}
+
 
     
