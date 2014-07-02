@@ -1,14 +1,19 @@
 /*======================================================
-************   Panels   ************
-======================================================*/
+ ************   Panels   ************
+ ======================================================*/
 app.allowPanelOpen = true;
 app.openPanel = function (panelPosition) {
-    if (!app.allowPanelOpen) return false;
-    var panel = $('.panel-' + panelPosition);
-    if (panel.length === 0 || panel.hasClass('active')) return false;
+    var panel, effect, clientLeft, transitionEndTarget, openedTriggered;
+    if (!app.allowPanelOpen) {
+        return false;
+    }
+    panel = $('.panel-' + panelPosition);
+    if (panel.length === 0 || panel.hasClass('active')) {
+        return false;
+    }
     app.closePanel(); // Close if some panel is opened
     app.allowPanelOpen = false;
-    var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
+    effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open');
     if (panel.find('.' + app.params.viewClass).length > 0) {
@@ -16,12 +21,12 @@ app.openPanel = function (panelPosition) {
     }
 
     // Trigger reLayout
-    var clientLeft = panel[0].clientLeft;
-    
+    clientLeft = panel[0].clientLeft;
+
     // Transition End;
-    var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
-    var openedTriggered = false;
-    
+    transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
+    openedTriggered = false;
+
     function panelTransitionEnd() {
         transitionEndTarget.transitionEnd(function (e) {
             if ($(e.target).is(transitionEndTarget)) {
@@ -33,26 +38,33 @@ app.openPanel = function (panelPosition) {
                 }
                 app.allowPanelOpen = true;
             }
-            else panelTransitionEnd();
+            else {
+                panelTransitionEnd();
+            }
         });
     }
+
     panelTransitionEnd();
 
     $('body').addClass('with-panel-' + panelPosition + '-' + effect);
     return true;
 };
 app.closePanel = function () {
-    var activePanel = $('.panel.active');
-    if (activePanel.length === 0) return false;
-    var effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
-    var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
+    var activePanel = $('.panel.active'), effect, panelPosition, transitionEndTarget;
+    if (activePanel.length === 0) {
+        return false;
+    }
+    effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
+    panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
     activePanel.removeClass('active');
-    var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
+    transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
     activePanel.trigger('close');
     app.allowPanelOpen = false;
 
     transitionEndTarget.transitionEnd(function () {
-        if (activePanel.hasClass('active')) return;
+        if (activePanel.hasClass('active')) {
+            return;
+        }
         activePanel.css({display: ''});
         activePanel.trigger('closed');
         $('body').removeClass('panel-closing');
@@ -62,42 +74,60 @@ app.closePanel = function () {
     $('body').addClass('panel-closing').removeClass('with-panel-' + panelPosition + '-' + effect);
 };
 /*======================================================
-************   Swipe panels   ************
-======================================================*/
+ ************   Swipe panels   ************
+ ======================================================*/
 app.initSwipePanels = function () {
-    var panel = $('.panel.panel-' + app.params.swipePanel);
-    if (panel.length === 0) return;
+    var panel = $('.panel.panel-' + app.params.swipePanel), panelOverlay,
+        isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime,
+        touchesDiff, translate, opened, panelWidth, effect, direction, side,
+        views;
+    if (panel.length === 0) {
+        return;
+    }
 
-    var panelOverlay = $('.panel-overlay');
-    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction, side;
-    var views = $('.' + app.params.viewsClass);
+    panelOverlay = $('.panel-overlay');
+    views = $('.' + app.params.viewsClass);
     side = app.params.swipePanel;
 
     function handleTouchStart(e) {
-        if (!app.allowPanelOpen || !app.params.swipePanel) return;
-        if ($('.modal-in, .photo-browser-in').length > 0) return;
+        if (!app.allowPanelOpen || !app.params.swipePanel) {
+            return;
+        }
+        if ($('.modal-in, .photo-browser-in').length > 0) {
+            return;
+        }
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         if (app.params.swipePanelActiveArea) {
             if (app.params.swipePanel === 'left') {
-                if (touchesStart.x > app.params.swipePanelActiveArea) return;
+                if (touchesStart.x > app.params.swipePanelActiveArea) {
+                    return;
+                }
             }
             if (app.params.swipePanel === 'right') {
-                if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) return;
+                if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) {
+                    return;
+                }
             }
         }
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
-        
+
         touchStartTime = (new Date()).getTime();
         direction = undefined;
     }
+
     function handleTouchMove(e) {
-        if (!isTouched) return;
-        if (e.f7PreventPanelSwipe) return;
-        var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-        var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        var pageX, pageY, timeDiff, threshold;
+        if (!isTouched) {
+            return;
+        }
+        if (e.f7PreventPanelSwipe) {
+            return;
+        }
+        pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
@@ -115,30 +145,37 @@ app.initSwipePanels = function () {
 
             if (
                 side === 'left' &&
-                (
-                    direction === 'to-left' && !panel.hasClass('active')
-                ) ||
-                side === 'right' &&
-                (
-                    direction === 'to-right' && !panel.hasClass('active')
-                )
-            )
-            {
+                    (
+                        direction === 'to-left' && !panel.hasClass('active')
+                        ) ||
+                    side === 'right' &&
+                        (
+                            direction === 'to-right' && !panel.hasClass('active')
+                            )
+                ) {
                 isTouched = false;
                 return;
             }
         }
 
         if (app.params.swipePanelNoFollow) {
-            var timeDiff = (new Date()).getTime() - touchStartTime;
+            timeDiff = (new Date()).getTime() - touchStartTime;
             if (timeDiff < 300) {
                 if (direction === 'to-left') {
-                    if (side === 'right') app.openPanel(side);
-                    if (side === 'left' && panel.hasClass('active')) app.closePanel();
+                    if (side === 'right') {
+                        app.openPanel(side);
+                    }
+                    if (side === 'left' && panel.hasClass('active')) {
+                        app.closePanel();
+                    }
                 }
                 if (direction === 'to-right') {
-                    if (side === 'left') app.openPanel(side);
-                    if (side === 'right' && panel.hasClass('active')) app.closePanel();
+                    if (side === 'left') {
+                        app.openPanel(side);
+                    }
+                    if (side === 'right' && panel.hasClass('active')) {
+                        app.closePanel();
+                    }
                 }
             }
             isTouched = false;
@@ -154,28 +191,36 @@ app.initSwipePanels = function () {
             panelWidth = panel.width();
             panel.transition(0);
             if (panel.find('.' + app.params.viewClass).length > 0) {
-                if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
+                if (app.sizeNavbars) {
+                    app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
+                }
             }
         }
 
         isMoved = true;
 
         e.preventDefault();
-        var threshold = opened ? 0 : -app.params.swipePanelThreshold;
-        if (side === 'right') threshold = -threshold;
-        
+        threshold = opened ? 0 : -app.params.swipePanelThreshold;
+        if (side === 'right') {
+            threshold = -threshold;
+        }
+
         touchesDiff = pageX - touchesStart.x + threshold;
 
         if (side === 'right') {
-            translate = touchesDiff  - (opened ? panelWidth : 0);
-            if (translate > 0) translate = 0;
+            translate = touchesDiff - (opened ? panelWidth : 0);
+            if (translate > 0) {
+                translate = 0;
+            }
             if (translate < -panelWidth) {
                 translate = -panelWidth;
             }
         }
         else {
-            translate = touchesDiff  + (opened ? panelWidth : 0);
-            if (translate < 0) translate = 0;
+            translate = touchesDiff + (opened ? panelWidth : 0);
+            if (translate < 0) {
+                translate = 0;
+            }
             if (translate > panelWidth) {
                 translate = panelWidth;
             }
@@ -190,7 +235,9 @@ app.initSwipePanels = function () {
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
     }
+
     function handleTouchEnd(e) {
+        var timeDiff, action, edge, target;
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -198,9 +245,9 @@ app.initSwipePanels = function () {
         }
         isTouched = false;
         isMoved = false;
-        var timeDiff = (new Date()).getTime() - touchStartTime;
-        var action;
-        var edge = (translate === 0 || Math.abs(translate) === panelWidth);
+        timeDiff = (new Date()).getTime() - touchStartTime;
+
+        edge = (translate === 0 || Math.abs(translate) === panelWidth);
 
         if (!opened) {
             if (translate === 0) {
@@ -208,8 +255,8 @@ app.initSwipePanels = function () {
             }
             else if (
                 timeDiff < 300 && Math.abs(translate) > 0 ||
-                timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2)
-            ) {
+                    timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2)
+                ) {
                 action = 'swap';
             }
             else {
@@ -222,10 +269,14 @@ app.initSwipePanels = function () {
             }
             else if (
                 timeDiff < 300 && Math.abs(translate) >= 0 ||
-                timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
-            ) {
-                if (side === 'left' && translate === panelWidth) action = 'reset';
-                else action = 'swap';
+                    timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
+                ) {
+                if (side === 'left' && translate === panelWidth) {
+                    action = 'reset';
+                }
+                else {
+                    action = 'swap';
+                }
             }
             else {
                 action = 'reset';
@@ -243,7 +294,9 @@ app.initSwipePanels = function () {
             else {
                 app.openPanel(side);
             }
-            if (edge) app.allowPanelOpen = true;
+            if (edge) {
+                app.allowPanelOpen = true;
+            }
         }
         if (action === 'reset') {
             if (opened) {
@@ -257,7 +310,7 @@ app.initSwipePanels = function () {
                     panel.css({display: ''});
                 }
                 else {
-                    var target = effect === 'reveal' ? views : panel;
+                    target = effect === 'reveal' ? views : panel;
                     $('body').addClass('panel-closing');
                     target.transitionEnd(function () {
                         app.allowPanelOpen = true;
@@ -274,6 +327,7 @@ app.initSwipePanels = function () {
         panel.transition('').transform('');
         panelOverlay.css({display: ''}).transform('');
     }
+
     $(document).on(app.touchEvents.start, handleTouchStart);
     $(document).on(app.touchEvents.move, handleTouchMove);
     $(document).on(app.touchEvents.end, handleTouchEnd);
