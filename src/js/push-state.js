@@ -1,12 +1,16 @@
 /*======================================================
-************   Handle Browser's History   ************
-======================================================*/
+ ************   Handle Browser's History   ************
+ ======================================================*/
 app.pushStateQueue = [];
 app.pushStateClearQueue = function () {
-    if (app.pushStateQueue.length === 0) return;
-    var queue = app.pushStateQueue.pop();
-    var animatePages;
-    if (app.params.pushStateNoAnimation === true) animatePages = false;
+    var queue, animatePages;
+    if (app.pushStateQueue.length === 0) {
+        return;
+    }
+    queue = app.pushStateQueue.pop();
+    if (app.params.pushStateNoAnimation === true) {
+        animatePages = false;
+    }
     if (queue.action === 'goBack') {
         app.goBack(queue.view, undefined, animatePages, false, false);
     }
@@ -26,22 +30,30 @@ app.initPushState = function () {
         }, 0);
     });
     function handlePopState(e) {
-        if (blockPopstate) return;
-        var mainView;
-        for (var i = 0; i < app.views.length; i++) {
-            if (app.views[i].main) mainView = app.views[i];
+        var mainView, i, state, stateUrl, stateContent, animatePages;
+        if (blockPopstate) {
+            return;
         }
-        if (!mainView) return;
-        var state = e.state;
+
+        for (i = 0; i < app.views.length; i++) {
+            if (app.views[i].main) {
+                mainView = app.views[i];
+            }
+        }
+        if (!mainView) {
+            return;
+        }
+        state = e.state;
         if (!state) {
             state = {
-                url : mainView.history[0]
+                url: mainView.history[0]
             };
         }
-        var stateUrl = state && state.url || undefined;
-        var stateContent = state && state.content || undefined;
-        var animatePages;
-        if (app.params.pushStateNoAnimation === true) animatePages = false;
+        stateUrl = state && state.url || undefined;
+        stateContent = state && state.content || undefined;
+        if (app.params.pushStateNoAnimation === true) {
+            animatePages = false;
+        }
         if (stateUrl !== mainView.url) {
             if (mainView.history.indexOf(stateUrl) >= 0) {
                 // Go Back
@@ -83,5 +95,6 @@ app.initPushState = function () {
             }
         }
     }
+
     $(window).on('popstate', handlePopState);
 };
