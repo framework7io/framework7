@@ -1,16 +1,21 @@
 /*======================================================
-************   Pull To Refresh   ************
-======================================================*/
+ ************   Pull To Refresh   ************
+ ======================================================*/
 app.initPullToRefresh = function (pageContainer) {
-    var eventsTarget = $(pageContainer);
+    var eventsTarget = $(pageContainer), isTouched, isMoved, touchesStart = {},
+        isScrolling, touchesDiff, touchStartTime, container, refresh = false,
+        useTranslate = false, startTranslate = 0, page;
     if (!eventsTarget.hasClass('pull-to-refresh-content')) {
         eventsTarget = eventsTarget.find('.pull-to-refresh-content');
     }
-    if (eventsTarget.length === 0) return;
+    if (eventsTarget.length === 0) {
+        return;
+    }
 
-    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
     function handleTouchStart(e) {
-        if (isTouched) return;
+        if (isTouched) {
+            return;
+        }
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -18,11 +23,14 @@ app.initPullToRefresh = function (pageContainer) {
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
     }
-    
+
     function handleTouchMove(e) {
-        if (!isTouched) return;
-        var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-        var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        var pageX, pageY;
+        if (!isTouched) {
+            return;
+        }
+        pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
@@ -35,12 +43,7 @@ app.initPullToRefresh = function (pageContainer) {
             container = $(this);
             container.removeClass('transitioning');
             startTranslate = container.hasClass('refreshing') ? 44 : 0;
-            if (container[0].scrollHeight === container[0].offsetHeight || app.device.os !== 'ios') {
-                useTranslate = true;
-            }
-            else {
-                useTranslate = false;
-            }
+            useTranslate = (container[0].scrollHeight === container[0].offsetHeight || app.device.os !== 'ios');
         }
         isMoved = true;
         touchesDiff = pageY - touchesStart.y;
@@ -61,9 +64,9 @@ app.initPullToRefresh = function (pageContainer) {
         else {
             container.removeClass('pull-up');
             refresh = false;
-            return;
         }
     }
+
     function handleTouchEnd(e) {
         if (!isTouched || !isMoved) {
             isTouched = false;
@@ -90,8 +93,10 @@ app.initPullToRefresh = function (pageContainer) {
     eventsTarget.on(app.touchEvents.end, handleTouchEnd);
 
     // Detach Events on page remove
-    var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
-    if (page.length === 0) return;
+    page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
+    if (page.length === 0) {
+        return;
+    }
     function detachEvents() {
         eventsTarget.off(app.touchEvents.start, handleTouchStart);
         eventsTarget.off(app.touchEvents.move, handleTouchMove);
@@ -99,13 +104,16 @@ app.initPullToRefresh = function (pageContainer) {
 
         page.off('pageBeforeRemove', detachEvents);
     }
+
     page.on('pageBeforeRemove', detachEvents);
 
 };
 
 app.pullToRefreshDone = function (container) {
     container = $(container);
-    if (container.length === 0) container = $('.pull-to-refresh-content.refreshing');
+    if (container.length === 0) {
+        container = $('.pull-to-refresh-content.refreshing');
+    }
     container.removeClass('refreshing').addClass('transitioning');
     container.transitionEnd(function () {
         container.removeClass('transitioning pull-up');
