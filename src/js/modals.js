@@ -161,7 +161,7 @@ app.popover = function (modal, target, removeOnClose) {
     if (typeof removeOnClose === 'undefined') removeOnClose = true;
     if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
         var _modal = document.createElement('div');
-        _modal.innerHTML = modal;
+        _modal.innerHTML = $.trim(modal);
         if (_modal.childNodes.length > 0) {
             modal = _modal.childNodes[0];
             if (removeOnClose) modal.classList.add('remove-on-close');
@@ -270,7 +270,7 @@ app.popup = function (modal, removeOnClose) {
     if (typeof removeOnClose === 'undefined') removeOnClose = true;
     if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
         var _modal = document.createElement('div');
-        _modal.innerHTML = modal;
+        _modal.innerHTML = $.trim(modal);
         if (_modal.childNodes.length > 0) {
             modal = _modal.childNodes[0];
             if (removeOnClose) modal.classList.add('remove-on-close');

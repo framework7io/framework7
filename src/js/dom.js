@@ -557,7 +557,7 @@ Dom7.prototype = {
             if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
         }
         return this;
-    },
+    }
 };
 // Shortcuts
 (function () {
