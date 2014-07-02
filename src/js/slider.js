@@ -326,7 +326,7 @@ var Slider = function (container, params) {
     };
 
     s.slideTo = function (index, speed, runCallbacks) {
-        var translate, translateX;
+        var translate, translateX, translateY;
         if (typeof index === 'undefined') {
             index = 0;
         }
@@ -347,7 +347,8 @@ var Slider = function (container, params) {
         s.isFirst = s.activeSlideIndex === 0;
         s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
         s.onSlideChangeStart();
-        translateX = isH ? translate * inverter : 0, translateY = isH ? 0 : translate;
+        translateX = isH ? translate * inverter : 0;
+        translateY = isH ? 0 : translate;
         if (speed === 0) {
             s.wrapper
                 .transition(0)
