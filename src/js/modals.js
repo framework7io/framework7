@@ -380,13 +380,15 @@ app.openModal = function (modal) {
     return true;
 };
 app.closeModal = function (modal) {
-    var isPopover = modal.hasClass('popover'),
-        isPopup = modal.hasClass('popup'),
-        removeOnClose = modal.hasClass('remove-on-close'),
+    var isPopover,
+        isPopup,
+        removeOnClose,
         overlay;
 
     modal = $(modal || '.modal-in');
-
+    isPopover = modal.hasClass('popover');
+    isPopup = modal.hasClass('popup');
+    removeOnClose = modal.hasClass('remove-on-close');
 
     overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
     overlay.removeClass('modal-overlay-visible');
