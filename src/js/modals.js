@@ -340,8 +340,6 @@ app.popup = function (modal, removeOnClose) {
 };
 app.openModal = function (modal) {
     var isPopover, isPopup,
-        $modalOverlay = $('.modal-overlay'),
-        $popupOverlay = $('.popup-overlay'),
         overlay, clientLeft;
 
     modal = $(modal);
@@ -352,13 +350,13 @@ app.openModal = function (modal) {
         modal.css({marginTop: -Math.round(modal.outerHeight() / 2) + 'px'});
     }
 
-    if ($modalOverlay.length === 0 && !isPopup) {
+    if ($('.modal-overlay').length === 0 && !isPopup) {
         $('body').append('<div class="modal-overlay"></div>');
     }
-    if ($popupOverlay.length === 0 && isPopup) {
+    if ($('.popup-overlay').length === 0 && isPopup) {
         $('body').append('<div class="popup-overlay"></div>');
     }
-    overlay = isPopup ? $popupOverlay : $modalOverlay;
+    overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
 
 
     //Make sure that styles are applied, trigger relayout;
