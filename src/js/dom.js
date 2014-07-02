@@ -1,8 +1,8 @@
 /*===========================
-jQuery-like DOM library
-===========================*/
+ jQuery-like DOM library
+ ===========================*/
 var Dom7 = function (arr) {
-    var _this = this, i = 0;
+    var _this = this, i;
     // Create array-like object
     for (i = 0; i < arr.length; i++) {
         _this[i] = arr[i];
@@ -32,8 +32,12 @@ Dom7.prototype = {
         return this;
     },
     hasClass: function (className) {
-        if (!this[0]) { return false; }
-        else { return this[0].classList.contains(className); }
+        if (!this[0]) {
+            return false;
+        }
+        else {
+            return this[0].classList.contains(className);
+        }
     },
     toggleClass: function (className) {
         var classes = className.split(' '), i, j;
@@ -47,8 +51,12 @@ Dom7.prototype = {
     attr: function (attr, value) {
         var i;
         if (typeof value === 'undefined') {
-            if (this[0]) { return this[0].getAttribute(attr); }
-            else { return undefined; }
+            if (this[0]) {
+                return this[0].getAttribute(attr);
+            }
+            else {
+                return undefined;
+            }
         }
         else {
             for (i = 0; i < this.length; i++) {
@@ -60,8 +68,12 @@ Dom7.prototype = {
     prop: function (prop, value) {
         var i;
         if (typeof value === 'undefined') {
-            if (this[0]) { return this[0][prop]; }
-            else { return undefined; }
+            if (this[0]) {
+                return this[0][prop];
+            }
+            else {
+                return undefined;
+            }
         }
         else {
             for (i = 0; i < this.length; i++) {
@@ -76,17 +88,27 @@ Dom7.prototype = {
             // Get value
             if (this[0]) {
                 dataKey = this[0].getAttribute('data-' + key);
-                if (dataKey) { return dataKey; }
-                else if (this[0].dom7ElementDataStorage && this[0].dom7ElementDataStorage[key]) { return this[0].dom7ElementDataStorage[key]; }
-                else { return undefined; }
+                if (dataKey) {
+                    return dataKey;
+                }
+                else if (this[0].dom7ElementDataStorage && this[0].dom7ElementDataStorage[key]) {
+                    return this[0].dom7ElementDataStorage[key];
+                }
+                else {
+                    return undefined;
+                }
             }
-            else { return undefined; }
+            else {
+                return undefined;
+            }
         }
         else {
             // Set value
             for (i = 0; i < this.length; i++) {
                 el = this[i];
-                if (!el.dom7ElementDataStorage) { el.dom7ElementDataStorage = {}; }
+                if (!el.dom7ElementDataStorage) {
+                    el.dom7ElementDataStorage = {};
+                }
                 el.dom7ElementDataStorage[key] = value;
             }
             return this;
@@ -95,8 +117,12 @@ Dom7.prototype = {
     val: function (value) {
         var i;
         if (typeof value === 'undefined') {
-            if (this[0]) { return this[0].value; }
-            else { return null; }
+            if (this[0]) {
+                return this[0].value;
+            }
+            else {
+                return null;
+            }
         }
         else {
             for (i = 0; i < this.length; i++) {
@@ -106,7 +132,7 @@ Dom7.prototype = {
         }
     },
     // Transforms
-    transform : function (transform) {
+    transform: function (transform) {
         var i, elStyle;
         for (i = 0; i < this.length; i++) {
             elStyle = this[i].style;
@@ -128,13 +154,18 @@ Dom7.prototype = {
     //Events
     on: function (eventName, targetSelector, listener) {
         var events, i, j;
+
         function handleLiveEvent(e) {
             var target = e.target, parents, k;
-            if ($(target).is(targetSelector)) { listener.call(target, e); }
+            if ($(target).is(targetSelector)) {
+                listener.call(target, e);
+            }
             else {
                 parents = $(target).parents();
                 for (k = 0; k < parents.length; k++) {
-                    if ($(parents[k]).is(targetSelector)) { listener.call(parents[k], e); }
+                    if ($(parents[k]).is(targetSelector)) {
+                        listener.call(parents[k], e);
+                    }
                 }
             }
         }
@@ -143,7 +174,9 @@ Dom7.prototype = {
         for (i = 0; i < this.length; i++) {
             if (arguments.length === 2 || targetSelector === false) {
                 // Usual events
-                if (arguments.length === 2) { listener = arguments[1]; }
+                if (arguments.length === 2) {
+                    listener = arguments[1];
+                }
                 for (j = 0; j < events.length; j++) {
                     this[i].addEventListener(events[j], listener, false);
                 }
@@ -185,6 +218,7 @@ Dom7.prototype = {
     transitionEnd: function (callback) {
         var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
             j, dom = this;
+
         function fireCallBack(e) {
             var i;
             /*jshint validthis:true */
@@ -193,6 +227,7 @@ Dom7.prototype = {
                 dom.off(events[i], fireCallBack);
             }
         }
+
         if (callback) {
             for (j = 0; j < events.length; j++) {
                 dom.on(events[j], fireCallBack);
@@ -203,6 +238,7 @@ Dom7.prototype = {
     animationEnd: function (callback) {
         var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
             j, dom = this;
+
         function fireCallBack(e) {
             var i;
             callback(e);
@@ -210,6 +246,7 @@ Dom7.prototype = {
                 dom.off(events[i], fireCallBack);
             }
         }
+
         if (callback) {
             for (j = 0; j < events.length; j++) {
                 dom.on(events[j], fireCallBack);
@@ -230,17 +267,19 @@ Dom7.prototype = {
                 return null;
             }
         }
-            
+
     },
     outerWidth: function (margins) {
         if (this.length > 0) {
             if (margins) {
                 return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
-            }else {
+            } else {
                 return this[0].offsetWidth;
             }
         }
-        else { return null; }
+        else {
+            return null;
+        }
     },
     height: function () {
         if (this[0] === window) {
@@ -254,7 +293,7 @@ Dom7.prototype = {
                 return null;
             }
         }
-            
+
     },
     outerHeight: function (margins) {
         if (this.length > 0) {
@@ -264,7 +303,9 @@ Dom7.prototype = {
                 return this[0].offsetHeight;
             }
         }
-        else { return null; }
+        else {
+            return null;
+        }
     },
     offset: function () {
         var el, box, body, clientTop, clientLeft, scrollTop, scrollLeft;
@@ -272,12 +313,12 @@ Dom7.prototype = {
             el = this[0];
             box = el.getBoundingClientRect();
             body = document.body;
-            clientTop  = el.clientTop  || body.clientTop  || 0;
+            clientTop = el.clientTop || body.clientTop || 0;
             clientLeft = el.clientLeft || body.clientLeft || 0;
-            scrollTop  = window.pageYOffset || el.scrollTop;
+            scrollTop = window.pageYOffset || el.scrollTop;
             scrollLeft = window.pageXOffset || el.scrollLeft;
             return {
-                top: box.top  + scrollTop  - clientTop,
+                top: box.top + scrollTop - clientTop,
                 left: box.left + scrollLeft - clientLeft
             };
         }
@@ -303,7 +344,9 @@ Dom7.prototype = {
         var i, prop;
         if (arguments.length === 1) {
             if (typeof props === 'string') {
-                if (this[0]) { return window.getComputedStyle(this[0], null).getPropertyValue(props); }
+                if (this[0]) {
+                    return window.getComputedStyle(this[0], null).getPropertyValue(props);
+                }
             }
             else {
                 for (i = 0; i < this.length; i++) {
@@ -322,7 +365,7 @@ Dom7.prototype = {
         }
         return this;
     },
-    
+
     //Dom manipulation
     each: function (callback) {
         var i;
@@ -349,7 +392,9 @@ Dom7.prototype = {
             if (this[0]) {
                 return this[0].textContent.trim();
             }
-            else { return null; }
+            else {
+                return null;
+            }
         }
         else {
             for (i = 0; i < this.length; i++) {
@@ -358,17 +403,31 @@ Dom7.prototype = {
         }
     },
     is: function (selector) {
-        var compareWith, i, el ;
-        if (!this[0]) { return false; }
+        var compareWith, i, el;
+        if (!this[0]) {
+            return false;
+        }
         if (typeof selector === 'string') {
             el = this[0];
-            if (el === document) { return selector === document; }
-            if (el === window) { return selector === window; }
+            if (el === document) {
+                return selector === document;
+            }
+            if (el === window) {
+                return selector === window;
+            }
 
-            if (el.matches) { return el.matches(selector); }
-            else if (el.webkitMatchesSelector) { return el.webkitMatchesSelector(selector); }
-            else if (el.mozMatchesSelector) { return el.mozMatchesSelector(selector); }
-            else if (el.msMatchesSelector) { return el.msMatchesSelector(selector); }
+            if (el.matches) {
+                return el.matches(selector);
+            }
+            else if (el.webkitMatchesSelector) {
+                return el.webkitMatchesSelector(selector);
+            }
+            else if (el.mozMatchesSelector) {
+                return el.mozMatchesSelector(selector);
+            }
+            else if (el.msMatchesSelector) {
+                return el.msMatchesSelector(selector);
+            }
             else {
                 compareWith = $(selector);
                 for (i = 0; i < compareWith.length; i++) {
@@ -377,23 +436,31 @@ Dom7.prototype = {
                 return false;
             }
         }
-        else if (selector === document) { return this[0] === document; }
-        else if (selector === window) { return this[0] === window; }
+        else if (selector === document) {
+            return this[0] === document;
+        }
+        else if (selector === window) {
+            return this[0] === window;
+        }
         else {
             if (selector.nodeType || selector instanceof Dom7) {
                 compareWith = selector.nodeType ? [selector] : selector;
                 for (i = 0; i < compareWith.length; i++) {
-                    if (compareWith[i] === this[0]) { return true; }
+                    if (compareWith[i] === this[0]) {
+                        return true;
+                    }
                 }
                 return false;
             }
             return false;
         }
-        
+
     },
     indexOf: function (el) {
         for (var i = 0; i < this.length; i++) {
-            if (this[i] === el) { return i; }
+            if (this[i] === el) {
+                return i;
+            }
         }
 
         return -1;
@@ -404,15 +471,21 @@ Dom7.prototype = {
             child = this[0];
             i = 0;
             while ((child = child.previousSibling) != null) {
-                if (child.nodeType === 1) { i++; }
+                if (child.nodeType === 1) {
+                    i++;
+                }
             }
             return i;
         }
-        else { return undefined; }
+        else {
+            return undefined;
+        }
     },
     eq: function (index) {
         var length, returnIndex;
-        if (typeof index === 'undefined') { return this; }
+        if (typeof index === 'undefined') {
+            return this;
+        }
         length = this.length;
 
         if (index > length - 1) {
@@ -420,8 +493,12 @@ Dom7.prototype = {
         }
         if (index < 0) {
             returnIndex = length + index;
-            if (returnIndex < 0) { return new Dom7([]); }
-            else { return new Dom7([this[returnIndex]]); }
+            if (returnIndex < 0) {
+                return new Dom7([]);
+            }
+            else {
+                return new Dom7([this[returnIndex]]);
+            }
         }
         return new Dom7([this[index]]);
     },
@@ -485,38 +562,62 @@ Dom7.prototype = {
     },
     next: function () {
         if (this.length > 0) {
-            if (this[0].nextElementSibling) { return new Dom7([this[0].nextElementSibling]); }
-            else { return new Dom7([]); }
+            if (this[0].nextElementSibling) {
+                return new Dom7([this[0].nextElementSibling]);
+            }
+            else {
+                return new Dom7([]);
+            }
         }
-        else { return new Dom7([]); }
+        else {
+            return new Dom7([]);
+        }
     },
     nextAll: function (selector) {
         var nextEls = [],
             el = this[0], next;
-        if (!el) { return new Dom7([]); }
+        if (!el) {
+            return new Dom7([]);
+        }
         while (el.nextElementSibling) {
             next = el.nextElementSibling;
-            if (selector && $(next).is(selector)) { nextEls.push(next); }
-            else { nextEls.push(next); }
+            if (selector && $(next).is(selector)) {
+                nextEls.push(next);
+            }
+            else {
+                nextEls.push(next);
+            }
             el = next;
         }
         return new Dom7(nextEls);
     },
     prev: function () {
         if (this.length > 0) {
-            if (this[0].previousElementSibling) { return new Dom7([this[0].previousElementSibling]); }
-            else { return new Dom7([]); }
+            if (this[0].previousElementSibling) {
+                return new Dom7([this[0].previousElementSibling]);
+            }
+            else {
+                return new Dom7([]);
+            }
         }
-        else { return new Dom7([]); }
+        else {
+            return new Dom7([]);
+        }
     },
     prevAll: function (selector) {
         var prevEls = [],
             el = this[0], prev;
-        if (!el) { return new Dom7([]); }
+        if (!el) {
+            return new Dom7([]);
+        }
         while (el.previousElementSibling) {
             prev = el.previousElementSibling;
-            if (selector && $(prev).is(selector)) { prevEls.push(prev); }
-            else { prevEls.push(prev); }
+            if (selector && $(prev).is(selector)) {
+                prevEls.push(prev);
+            }
+            else {
+                prevEls.push(prev);
+            }
             el = prev;
         }
         return new Dom7(prevEls);
@@ -525,7 +626,9 @@ Dom7.prototype = {
         var parents = [], i;
         for (i = 0; i < this.length; i++) {
             if (selector) {
-                if ($(this[i].parentNode).is(selector)) { parents.push(this[i].parentNode); }
+                if ($(this[i].parentNode).is(selector)) {
+                    parents.push(this[i].parentNode);
+                }
             }
             else {
                 parents.push(this[i].parentNode);
@@ -539,7 +642,9 @@ Dom7.prototype = {
             parent = this[i].parentNode;
             while (parent) {
                 if (selector) {
-                    if ($(parent).is(selector)) { parents.push(parent); }
+                    if ($(parent).is(selector)) {
+                        parents.push(parent);
+                    }
                 }
                 else {
                     parents.push(parent);
@@ -549,7 +654,7 @@ Dom7.prototype = {
         }
         return $($.unique(parents));
     },
-    find : function (selector) {
+    find: function (selector) {
         var foundElements = [], i, found, j;
         for (i = 0; i < this.length; i++) {
             found = this[i].querySelectorAll(selector);
@@ -566,10 +671,14 @@ Dom7.prototype = {
 
             for (j = 0; j < childNodes.length; j++) {
                 if (!selector) {
-                    if (childNodes[j].nodeType === 1) { children.push(childNodes[j]); }
+                    if (childNodes[j].nodeType === 1) {
+                        children.push(childNodes[j]);
+                    }
                 }
                 else {
-                    if (childNodes[j].nodeType === 1 && $(childNodes[j]).is(selector)) { children.push(childNodes[j]); }
+                    if (childNodes[j].nodeType === 1 && $(childNodes[j]).is(selector)) {
+                        children.push(childNodes[j]);
+                    }
                 }
             }
         }
@@ -593,7 +702,9 @@ Dom7.prototype = {
             var i;
             if (typeof handler === 'undefined') {
                 for (i = 0; i < this.length; i++) {
-                    if (notTrigger.indexOf(name) < 0) { this[i][name](); }
+                    if (notTrigger.indexOf(name) < 0) {
+                        this[i][name]();
+                    }
                 }
                 return this;
             }
