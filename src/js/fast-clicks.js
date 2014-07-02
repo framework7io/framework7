@@ -1,21 +1,28 @@
 /*===============================================================================
-************   Fast Clicks   ************
-************   Inspired by https://github.com/ftlabs/fastclick   ************
-===============================================================================*/
+ ************   Fast Clicks   ************
+ ************   Inspired by https://github.com/ftlabs/fastclick   ************
+ ===============================================================================*/
 app.initFastClicks = function () {
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
-    if (!app.support.touch) { return; }
+    if (!app.support.touch) {
+        return;
+    }
 
     function targetNeedsFocus(el) {
         var tag = el.nodeName.toLowerCase(),
             skipInputs = ('button checkbox file image radio submit').split(' ');
-        if (el.disabled || el.readOnly) { return false; }
-        if (tag === 'textarea') { return true; }
+        if (el.disabled || el.readOnly) {
+            return false;
+        }
+        if (tag === 'textarea') {
+            return true;
+        }
         if (tag === 'select') {
             return app.device.os === 'android';
         }
         if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
     }
+
     function targetNeedsPrevent(el) {
         var osv;
         el = $(el);
@@ -24,10 +31,13 @@ app.initFastClicks = function () {
                 osv = app.device.osVersion.split('.');
                 return (osv[0] > 4 || (osv[0] === 4 && osv[1] >= 4));
             }
-            else { return false; }
+            else {
+                return false;
+            }
         }
         return true;
     }
+
     function handleTouchStart(e) {
         var selection;
         isMoved = false;
@@ -65,17 +75,23 @@ app.initFastClicks = function () {
             e.preventDefault();
         }
     }
+
     function handleTouchMove(e) {
-        if (!trackClick) { return; }
+        if (!trackClick) {
+            return;
+        }
         trackClick = false;
         targetElement = null;
         isMoved = true;
     }
+
     function handleTouchEnd(e) {
         var touch, evt, eventType;
 
         if (!trackClick) {
-            if (!activeSelection) { e.preventDefault(); }
+            if (!activeSelection) {
+                e.preventDefault();
+            }
             return true;
         }
 
@@ -99,7 +115,9 @@ app.initFastClicks = function () {
         }
 
         // Trigger focus when required
-        if (targetNeedsFocus(targetElement)) { targetElement.focus(); }
+        if (targetNeedsFocus(targetElement)) {
+            targetElement.focus();
+        }
 
         e.preventDefault();
         touch = e.changedTouches[0];
@@ -114,6 +132,7 @@ app.initFastClicks = function () {
 
         return false;
     }
+
     function handleTouchCancel(e) {
         trackClick = false;
         targetElement = null;
@@ -136,6 +155,7 @@ app.initFastClicks = function () {
         return false;
 
     }
+
     function handleClick(e) {
         var allowClick = false;
 
@@ -150,13 +170,13 @@ app.initFastClicks = function () {
         }
 
         if (!targetElement) {
-            allowClick =  true;
+            allowClick = true;
         }
         if (e.forwardedTouchEvent) {
-            allowClick =  true;
+            allowClick = true;
         }
         if (!e.cancelable) {
-            allowClick =  true;
+            allowClick = true;
         }
 
         if (!allowClick) {
@@ -173,6 +193,7 @@ app.initFastClicks = function () {
 
         return allowClick;
     }
+
     document.addEventListener('click', handleClick, true);
     $(document).on('touchstart', handleTouchStart);
     $(document).on('touchmove', handleTouchMove);
