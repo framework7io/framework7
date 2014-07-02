@@ -1,28 +1,31 @@
 /*===============================================================================
-************   Swipeout Actions (Swipe to delete)   ************
-===============================================================================*/
+ ************   Swipeout Actions (Swipe to delete)   ************
+ ===============================================================================*/
 app.swipeoutOpenedEl = undefined;
 app.allowSwipeout = true;
 app.initSwipeout = function (swipeoutEl) {
     var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, swipeOutActions, swipeOutActionsWidth, translate, opened;
     $(document).on(app.touchEvents.start, function (e) {
+        var target;
         if (app.swipeoutOpenedEl) {
-            var target = $(e.target);
+            target = $(e.target);
             if (!(
                 app.swipeoutOpenedEl.is(target[0]) ||
-                target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
-                target.hasClass('modal-in') ||
-                target.parents('.modal-in').length > 0 ||
-                target.hasClass('modal-overlay')
+                    target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
+                    target.hasClass('modal-in') ||
+                    target.parents('.modal-in').length > 0 ||
+                    target.hasClass('modal-overlay')
                 )) {
                 app.swipeoutClose(app.swipeoutOpenedEl);
             }
         }
     });
-    
+
 
     function handleTouchStart(e) {
-        if (!app.allowSwipeout) return;
+        if (!app.allowSwipeout) {
+            return;
+        }
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -30,10 +33,14 @@ app.initSwipeout = function (swipeoutEl) {
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
     }
+
     function handleTouchMove(e) {
-        if (!isTouched) return;
-        var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-        var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        var pageX, pageY;
+        if (!isTouched) {
+            return;
+        }
+        pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
@@ -43,7 +50,9 @@ app.initSwipeout = function (swipeoutEl) {
         }
 
         if (!isMoved) {
-            if ($('.list-block.sortable-opened').length > 0) return;
+            if ($('.list-block.sortable-opened').length > 0) {
+                return;
+            }
             /*jshint validthis:true */
             swipeOutEl = $(this);
             swipeOutContent = swipeOutEl.find('.swipeout-content');
@@ -56,11 +65,15 @@ app.initSwipeout = function (swipeoutEl) {
 
         e.preventDefault();
         e.f7PreventPanelSwipe = true;
-        if (app.rtl) e.f7PreventSwipeBack = true;
+        if (app.rtl) {
+            e.f7PreventSwipeBack = true;
+        }
         touchesDiff = pageX - touchesStart.x;
-        translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
+        translate = touchesDiff - (opened ? swipeOutActionsWidth : 0);
 
-        if (translate > 0) translate = 0;
+        if (translate > 0) {
+            translate = 0;
+        }
         if (translate < -swipeOutActionsWidth) {
             translate = -swipeOutActionsWidth - Math.pow(-translate - swipeOutActionsWidth, 0.8);
         }
@@ -76,7 +89,6 @@ app.initSwipeout = function (swipeoutEl) {
                 app.swipeoutClose(swipeOutEl);
                 isTouched = false;
                 isMoved = false;
-                return;
             }
         }
         else {
@@ -85,7 +97,9 @@ app.initSwipeout = function (swipeoutEl) {
         }
 
     }
+
     function handleTouchEnd(e) {
+        var timeDiff, action, newTranslate;
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -93,14 +107,15 @@ app.initSwipeout = function (swipeoutEl) {
         }
         isTouched = false;
         isMoved = false;
-        var timeDiff = (new Date()).getTime() - touchStartTime;
-        if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeout = false;
-        var action;
+        timeDiff = (new Date()).getTime() - touchStartTime;
+        if (!(translate === 0 || translate === -swipeOutActionsWidth)) {
+            app.allowSwipeout = false;
+        }
         if (opened) {
             if (
                 timeDiff < 300 && translate > -(swipeOutActionsWidth - 10) ||
-                timeDiff >= 300 && translate > -swipeOutActionsWidth / 2
-            ) {
+                    timeDiff >= 300 && translate > -swipeOutActionsWidth / 2
+                ) {
                 action = 'close';
             }
             else {
@@ -110,8 +125,8 @@ app.initSwipeout = function (swipeoutEl) {
         else {
             if (
                 timeDiff < 300 && translate < -10 ||
-                timeDiff >= 300 && translate < -swipeOutActionsWidth / 2
-            ) {
+                    timeDiff >= 300 && translate < -swipeOutActionsWidth / 2
+                ) {
                 action = 'open';
             }
             else {
@@ -122,7 +137,7 @@ app.initSwipeout = function (swipeoutEl) {
             app.swipeoutOpenedEl = swipeOutEl;
             swipeOutEl.trigger('open');
             swipeOutEl.addClass('swipeout-opened transitioning');
-            var newTranslate = -swipeOutActionsWidth;
+            newTranslate = -swipeOutActionsWidth;
             swipeOutContent.transform('translate3d(' + newTranslate + 'px,0,0)');
         }
         else {
@@ -150,6 +165,7 @@ app.initSwipeout = function (swipeoutEl) {
             });
         }
     }
+
     if (swipeoutEl) {
         $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
         $(swipeoutEl).on(app.touchEvents.move, handleTouchMove);
@@ -160,16 +176,23 @@ app.initSwipeout = function (swipeoutEl) {
         $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
         $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
     }
-        
+
 };
 app.swipeoutOpen = function (el) {
+    var swipeOutActions, translate;
     el = $(el);
-    if (!el.hasClass('swipeout')) return;
-    if (el.length === 0) return;
-    if (el.length > 1) el = $(el[0]);
+    if (!el.hasClass('swipeout')) {
+        return;
+    }
+    if (el.length === 0) {
+        return;
+    }
+    if (el.length > 1) {
+        el = $(el[0]);
+    }
     el.trigger('open').addClass('transitioning swipeout-opened');
-    var swipeOutActions = el.find('.swipeout-actions-inner');
-    var translate = -swipeOutActions.width();
+    swipeOutActions = el.find('.swipeout-actions-inner');
+    translate = -swipeOutActions.width();
     el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
     });
@@ -177,32 +200,41 @@ app.swipeoutOpen = function (el) {
 };
 app.swipeoutClose = function (el) {
     el = $(el);
-    if (el.length === 0) return;
+    if (el.length === 0) {
+        return;
+    }
     app.allowSwipeout = false;
     el.trigger('close');
     el.removeClass('swipeout-opened')
         .addClass('transitioning')
-    .find('.swipeout-content')
+        .find('.swipeout-content')
         .transform('translate3d(' + 0 + 'px,0,0)')
         .transitionEnd(function () {
             el.trigger('closed');
             app.allowSwipeout = true;
         });
 
-    if (app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
+    if (app.swipeoutOpenedEl[0] === el[0]) {
+        app.swipeoutOpenedEl = undefined;
+    }
 };
 app.swipeoutDelete = function (el) {
+    var clientLeft, translate;
     el = $(el);
-    if (el.length === 0) return;
-    if (el.length > 1) el = $(el[0]);
+    if (el.length === 0) {
+        return;
+    }
+    if (el.length > 1) {
+        el = $(el[0]);
+    }
     app.swipeoutOpenedEl = undefined;
     el.trigger('delete');
     el.css({height: el.outerHeight() + 'px'});
-    var clientLeft = el[0].clientLeft;
+    clientLeft = el[0].clientLeft;
     el.css({height: 0 + 'px'}).addClass('deleting transitioning').transitionEnd(function () {
         el.trigger('deleted');
         el.remove();
     });
-    var translate = '-100%';
+    translate = '-100%';
     el.find('.swipeout-content').transform('translate3d(' + translate + ',0,0)');
 };
