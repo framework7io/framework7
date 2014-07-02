@@ -122,7 +122,7 @@ app.formFromJSON = function (form, formData) {
         if (tag === 'select' && input.attr('multiple')) {
             skipNames.push(name);
             form.find('select[name="' + name + '"] option').each(function () {
-                return  this.selected = (formData[name].indexOf(this.value) >= 0);
+                this.selected = (formData[name].indexOf(this.value) >= 0);
             });
         }
         else {
@@ -130,13 +130,13 @@ app.formFromJSON = function (form, formData) {
                 case 'checkbox' :
                     skipNames.push(name);
                     form.find('input[name="' + name + '"]').each(function () {
-                        return this.checked = (formData[name].indexOf(this.value) >= 0);
+                        this.checked = (formData[name].indexOf(this.value) >= 0);
                     });
                     break;
                 case 'radio' :
                     skipNames.push(name);
                     form.find('input[name="' + name + '"]').each(function () {
-                        return this.checked = (formData[name] === this.value);
+                        this.checked = (formData[name] === this.value);
                     });
                     break;
                 default :

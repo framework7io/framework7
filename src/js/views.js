@@ -31,7 +31,9 @@ var View = function (selector, params) {
         activeNavBackIcon,
         previousNavBackIcon,
         dynamicNavbar,
-        el;
+        el,
+        pushStateSeparator,
+        pushStateAnimatePages;
 
     params = params || {};
     for (def in defaults) {
@@ -362,9 +364,8 @@ var View = function (selector, params) {
 
     // Push State on load
     if (app.params.pushState && view.main) {
-        var pushStateSeparator = app.params.pushStateSeparator, pushStateAnimatePages;
+        pushStateSeparator = app.params.pushStateSeparator;
         if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
-            pushStateAnimatePages;
             if (app.params.pushStateNoAnimation === true) {
                 pushStateAnimatePages = false;
             }
