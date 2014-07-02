@@ -1,20 +1,26 @@
 'use strict';
 /*===========================
-Framework 7
-===========================*/
+ Framework 7
+ ===========================*/
 window.Framework7 = function (params) {
 
     // App
-    var app = this;
+    var app = this, param;
 
     // Version
     app.version = '0.9.0';
 
     // Anim Frame
     app._animFrame = function (callback) {
-        if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
-        else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
-        else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
+        if (window.requestAnimationFrame) {
+            return window.requestAnimationFrame(callback);
+        }
+        else if (window.webkitRequestAnimationFrame) {
+            return window.webkitRequestAnimationFrame(callback);
+        }
+        else if (window.mozRequestAnimationFrame) {
+            return window.mozRequestAnimationFrame(callback);
+        }
         else {
             return window.setTimeout(callback, 1000 / 60);
         }
@@ -31,7 +37,7 @@ window.Framework7 = function (params) {
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',
         // Fast clicks
-        fastClicks : true,
+        fastClicks: true,
         // Animate Nav Back Icon
         animateNavBackIcon: false,
         // Swipe Back
@@ -59,13 +65,13 @@ window.Framework7 = function (params) {
         panelsVisibleZIndex: 6000,
         // Modals
         modalTemplate: '<div class="modal {{noButtons}}">' +
-                            '<div class="modal-inner">' +
-                                '{{if title}}<div class="modal-title">{{title}}</div>{{/if title}}' +
-                                '<div class="modal-text">{{text}}</div>' +
-                                '{{afterText}}' +
-                            '</div>' +
-                            '<div class="modal-buttons">{{buttons}}</div>' +
-                        '</div>',
+            '<div class="modal-inner">' +
+            '{{if title}}<div class="modal-title">{{title}}</div>{{/if title}}' +
+            '<div class="modal-text">{{text}}</div>' +
+            '{{afterText}}' +
+            '</div>' +
+            '<div class="modal-buttons">{{buttons}}</div>' +
+            '</div>',
         modalActionsTemplate: '<div class="actions-modal">{{buttons}}</div>',
         modalButtonOk: 'OK',
         modalButtonCancel: 'Cancel',
@@ -89,7 +95,7 @@ window.Framework7 = function (params) {
     };
 
     // Extend defaults with parameters
-    for (var param in params) {
+    for (param in params) {
         app.params[param] = params[param];
     }
 
@@ -108,6 +114,9 @@ window.Framework7 = function (params) {
 
     // RTL
     app.rtl = $('body').css('direction') === 'rtl';
-    if (app.rtl) $('html').attr('dir', 'rtl');
+    if (app.rtl) {
+        $('html').attr('dir', 'rtl');
+    }
+}
 
     
