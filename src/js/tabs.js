@@ -8,6 +8,9 @@ app.showTab = function (tab, tabLink) {
     var tabs = newTab.parent('.tabs');
     if (tabs.length === 0) return false;
 
+    // Return swipeouts in hidden tabs
+    app.allowSwipeout = true;
+
     // Animated tabs
     var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
     if (isAnimatedTabs) {

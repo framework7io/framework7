@@ -189,7 +189,7 @@ app.swipeoutClose = function (el) {
             app.allowSwipeout = true;
         });
 
-    if (app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
+    if (app.swipeoutOpenedEl && app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
 };
 app.swipeoutDelete = function (el) {
     el = $(el);
