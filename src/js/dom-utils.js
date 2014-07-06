@@ -90,4 +90,52 @@ $.getTranslate = function (el, axis) {
     return curTransform || 0;
 };
 
+$.requestAnimationFrame = function (callback) {
+    if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
+    else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
+    else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
+    else {
+        return window.setTimeout(callback, 1000 / 60);
+    }
+};
 $.fn = Dom7.prototype;
+
+$.fn.scrollTop = function (top, duration) {
+    var dom = this;
+    if (typeof top === 'undefined') {
+        if (dom.length > 0) return dom[0].scrollTop;
+        else return null;
+    }
+    return dom.each(function () {
+        var el = this;
+        var currentTop = el.scrollTop;
+        if (!duration) {
+            el.scrollTop = top;
+            return;
+        }
+        var maxTop = el.scrollHeight - el.offsetHeight;
+        var newTop = Math.max(Math.min(top, maxTop), 0);
+        var startTime = null;
+        if (newTop === currentTop) return;
+        function render(time) {
+            if (time === undefined) {
+                time = new Date().getTime();
+            }
+            if (startTime === null) {
+                startTime = time;
+            }
+            var scrollTop = currentTop + ((time - startTime) / duration * (newTop - currentTop));
+            el.scrollTop = scrollTop;
+            if (newTop > currentTop && scrollTop >= newTop)  {
+                el.scrollTop = newTop;
+                return;
+            }
+            if (newTop < currentTop && scrollTop <= newTop)  {
+                el.scrollTop = newTop;
+                return;
+            }
+            $.requestAnimationFrame(render);
+        }
+        $.requestAnimationFrame(render);
+    });
+};
