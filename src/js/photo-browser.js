@@ -61,21 +61,27 @@ var PhotoBrowser = function (params) {
                         '<div class="view navbar-fixed toolbar-fixed">' +
                             '{{navbar}}' +
                             '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
+                                '{{toolbar}}' +
                                 '<div class="photo-browser-slider-container slider-container">' +
                                     '<div class="photo-browser-slider-wrapper slider-wrapper">' +
                                         '{{photos}}' +
                                     '</div>' +
                                 '</div>' +
-                                '{{toolbar}}' +
                             '</div>' +
                         '</div>' +
                     '</div>';
 
     var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
-
+    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide slider-slide">{{object}}</div>';
     var photosHtml = '';
     for (i = 0; i < pb.params.photos.length; i ++) {
-        photosHtml += photoTemplate.replace(/{{url}}/g, pb.params.photos[i]);
+        if (pb.params.photos[i].indexOf('<') >= 0 || pb.params.photos[i].indexOf('>') >= 0) {
+            photosHtml += objectTemplate.replace(/{{object}}/g, pb.params.photos[i]);
+        }
+        else {
+            photosHtml += photoTemplate.replace(/{{url}}/g, pb.params.photos[i]);
+        }
+            
     }
 
     var htmlTemplate = template
@@ -198,6 +204,12 @@ var PhotoBrowser = function (params) {
                 else {
                     $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
+                // Stop Video
+                var previousSlideVideo = slider.slides.eq(slider.previousSlideIndex).find('video');
+                if (previousSlideVideo.length > 0) {
+                    if ('pause' in previousSlideVideo[0]) previousSlideVideo[0].pause();
+                }
+                // Callback
                 if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(slider);
             },
             onSlideChangeEnd: function (slider) {
