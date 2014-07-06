@@ -11,16 +11,6 @@ app.initMessages = function (pageContainer) {
 };
 app.addMessage = function (props) {
     props = props || {};
-    /*
-    {
-        text : 'Message text',
-        day : 'Mon',
-        time : '14:42',
-        type : 'sent' // or 'received',
-        name : 'John Doe',
-        avatar: 'http://lorempixel.com/output/people-q-c-100-100-9.jpg'
-    }
-    */
     props.type = props.type || 'sent';
     if (!props.text || props.length === 0) return false;
     var messagesContent = $('.messages-content');
@@ -101,19 +91,5 @@ app.scrollMessagesContainer = function (messagesContent) {
     var currentScroll = messagesContent[0].scrollTop;
     var newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
     if (newScroll === currentScroll) return;
-    var step = (newScroll - currentScroll) / 12;
-    function animScroll() {
-        if (messagesContent[0].scrollTop > newScroll && newOnTop) {
-            messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
-            app._animFrame(animScroll);
-        }
-        else if (messagesContent[0].scrollTop < newScroll && !newOnTop) {
-            messagesContent[0].scrollTop = messagesContent[0].scrollTop + Math.floor(step);
-            app._animFrame(animScroll);
-        }
-        else {
-            messagesContent[0].scrollTop = newScroll;
-        }
-    }
-    app._animFrame(animScroll);
+    messagesContent.scrollTop(newScroll, 300);
 };
