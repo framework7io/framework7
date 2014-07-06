@@ -59,6 +59,12 @@ for (var i = 0; i < pageCallbacksNames.length; i++) {
 }
 
 app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
+    var allPagesCallbacks = app.pageCallbacks[callbackName]['*'];
+    if (allPagesCallbacks) {
+        for (var j = 0; j < allPagesCallbacks.length; j++) {
+            allPagesCallbacks[j](pageData);
+        }
+    }
     var callbacks = app.pageCallbacks[callbackName][pageName];
     if (!callbacks || callbacks.length === 0) return;
     for (var i = 0; i < callbacks.length; i++) {
