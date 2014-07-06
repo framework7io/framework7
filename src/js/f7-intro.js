@@ -10,16 +10,6 @@ window.Framework7 = function (params) {
     // Version
     app.version = '0.9.0';
 
-    // Anim Frame
-    app._animFrame = function (callback) {
-        if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
-        else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
-        else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
-        else {
-            return window.setTimeout(callback, 1000 / 60);
-        }
-    };
-
     // Default Parameters
     app.params = {
         cache: true,
