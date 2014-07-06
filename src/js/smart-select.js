@@ -17,14 +17,14 @@ app.initSmartSelects = function (pageContainer) {
         var select = $select[0];
         if (select.length === 0) return;
 
-        var valueText;
+        var valueText = [];
         for (var i = 0; i < select.length; i++) {
-            if (select[i].selected) valueText = select[i].textContent.trim();
+            if (select[i].selected) valueText.push(select[i].textContent.trim());
         }
 
         var itemAfter = smartSelect.find('.item-after');
         if (itemAfter.length === 0) {
-            smartSelect.find('.item-inner').append('<div class="item-after">' + valueText + '</div>');
+            smartSelect.find('.item-inner').append('<div class="item-after">' + valueText.join(', ') + '</div>');
         }
         else {
             itemAfter.text(valueText);
@@ -51,7 +51,8 @@ app.smartSelectOpen = function (smartSelect) {
         values[i] = {
             value: select[i].value,
             text: select[i].textContent.trim(),
-            selected: select[i].selected
+            selected: select[i].selected,
+            group: $(select[i]).parent('optgroup')[0]
         };
     }
 
@@ -60,14 +61,23 @@ app.smartSelectOpen = function (smartSelect) {
 
     // Generate dynamic page layout
     var id = (new Date()).getTime();
-    var radiosName = 'radio-' + id;
-    var radiosHTML = '';
+    var inputType = select.multiple ? 'checkbox' : 'radio';
+    var inputName = inputType + '-' + id;
+    var inputsHTML = '';
+    var previousGroup;
     for (var j = 0; j < values.length; j++) {
         var checked = values[j].selected ? 'checked' : '';
-        radiosHTML +=
+        if (values[j].group) {
+            if (values[j].group !== previousGroup) {
+                inputsHTML += '<li><div class="item-divider">' + values[j].group.label + '</div></li>';
+                previousGroup = values[j].group;
+            }
+        }
+        inputsHTML +=
             '<li>' +
-                '<label class="label-radio item-content">' +
-                    '<input type="radio" name="' + radiosName + '" value="' + values[j].value + '" ' + checked + '>' +
+                '<label class="label-' + inputType + ' item-content">' +
+                    '<input type="' + inputType + '" name="' + inputName + '" value="' + values[j].value + '" ' + checked + '>' +
+                    (inputType === 'checkbox' ? '<div class="item-media"><i class="icon icon-form-checkbox"></i></div>' : '') +
                     '<div class="item-inner">' +
                         '<div class="item-title">' + values[j].text + '</div>' +
                     '</div>' +
@@ -87,7 +97,7 @@ app.smartSelectOpen = function (smartSelect) {
     if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
     if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
     // Page Layout
-    var pageName = 'smart-select-' + radiosName;
+    var pageName = 'smart-select-' + inputName;
 
     var noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
     var noNavbar = smartSelect.parents('.page').hasClass('no-navbar') ? 'no-navbar' : '';
@@ -112,14 +122,14 @@ app.smartSelectOpen = function (smartSelect) {
     var pageHTML =
         (navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
-        '  <div data-page="' + pageName + '" class="page ' + noNavbar + ' ' + noToolbar + '">' +
+        '  <div data-page="' + pageName + '" class="page smart-select-page' + noNavbar + ' ' + noToolbar + '">' +
              (navbarLayout === 'fixed' ? navbarHTML : '') +
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
                (navbarLayout === 'static' ? navbarHTML : '') +
         '      <div class="list-block smart-select-list-' + id + '">' +
         '        <ul>' +
-                    radiosHTML +
+                    inputsHTML +
         '        </ul>' +
         '      </div>' +
         '    </div>' +
@@ -127,20 +137,37 @@ app.smartSelectOpen = function (smartSelect) {
         '</div>';
 
     // Event Listeners on new page
-    function handleRadios(e) {
+    function handleInputs(e) {
         var page = e.detail.page;
         if (page.name === pageName) {
-            $(document).off('pageInit', handleRadios);
-            $(page.container).find('input[name="' + radiosName + '"]').on('change', function () {
-                var value = this.value;
-                select.value = value;
+            $(document).off('pageInit', handleInputs);
+            $(page.container).find('input[name="' + inputName + '"]').on('change', function () {
+                var input = this;
+                var value = input.value;
+                var optionText = [];
+                if (input.type === 'checkbox') {
+                    var values = [];
+                    for (var i = 0; i < select.options.length; i++) {
+                        var option = select.options[i];
+                        if (option.value === value) {
+                            option.selected = input.checked;
+                        }
+                        if (option.selected) {
+                            optionText.push(option.textContent.trim());
+                        }
+                    }
+                }
+                else {
+                    optionText = [smartSelect.find('option[value="' + value + '"]').text()];
+                    select.value = value;
+                }
+                    
                 $(select).trigger('change');
-                var optionText = smartSelect.find('option[value="' + value + '"]').text();
-                smartSelect.find('.item-after').text(optionText);
+                smartSelect.find('.item-after').text(optionText.join(', '));
             });
         }
     }
-    $(document).on('pageInit', handleRadios);
+    $(document).on('pageInit', handleInputs);
 
     // Load content
     view.loadContent(pageHTML);
