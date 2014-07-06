@@ -460,10 +460,16 @@ Dom7.prototype = {
             }
         }
     },
-    next: function () {
+    next: function (selector) {
         if (this.length > 0) {
-            if (this[0].nextElementSibling) return new Dom7([this[0].nextElementSibling]);
-            else return new Dom7([]);
+            if (selector) {
+                if (this[0].nextElementSibling && $(this[0].nextElementSibling).is(selector)) return new Dom7([this[0].nextElementSibling]);
+                else return new Dom7([]);
+            }
+            else {
+                if (this[0].nextElementSibling) return new Dom7([this[0].nextElementSibling]);
+                else return new Dom7([]);
+            }
         }
         else return new Dom7([]);
     },
@@ -479,10 +485,16 @@ Dom7.prototype = {
         }
         return new Dom7(nextEls);
     },
-    prev: function () {
+    prev: function (selector) {
         if (this.length > 0) {
-            if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
-            else return new Dom7([]);
+            if (selector) {
+                if (this[0].previousElementSibling && $(this[0].previousElementSibling).is(selector)) return new Dom7([this[0].previousElementSibling]);
+                else return new Dom7([]);
+            }
+            else {
+                if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
+                else return new Dom7([]);
+            }
         }
         else return new Dom7([]);
     },
