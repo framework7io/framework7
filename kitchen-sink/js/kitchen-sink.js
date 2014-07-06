@@ -124,7 +124,23 @@ myApp.onPageInit('messages', function (page) {
         'I am not sure',
         'And what about you?',
         'May be ;)',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus tincidunt erat, a convallis leo rhoncus vitae.'
+        'Lorem ipsum dolor sit amet, consectetur',
+        'What?',
+        'Are you sure?',
+        'Of course',
+        'Need to think about it',
+        'Amazing!!!',
+    ];
+    var people = [
+        {
+            name: 'Kate Johnson',
+            avatar: 'http://lorempixel.com/output/people-q-c-100-100-9.jpg'
+        },
+        {
+            name: 'Blue Ninja',
+            avatar: 'http://lorempixel.com/output/people-q-c-100-100-7.jpg'
+        },
+        
     ];
     var answerTimeout;
     $$('.ks-messages-form').on('submit', function (e) {
@@ -145,9 +161,13 @@ myApp.onPageInit('messages', function (page) {
         // Add answer after timeout
         if (answerTimeout) clearTimeout(answerTimeout);
         answerTimeout = setTimeout(function () {
+            var answerText = answers[Math.floor(Math.random() * answers.length)];
+            var person = people[Math.floor(Math.random() * people.length)];
             myApp.addMessage({
                 text: answers[Math.floor(Math.random() * answers.length)],
-                type: 'received'
+                type: 'received',
+                name: person.name,
+                avatar: person.avatar
             });
         }, 2000);
     });

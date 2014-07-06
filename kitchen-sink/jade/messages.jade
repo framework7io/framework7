@@ -19,24 +19,53 @@
       .messages
         .messages-date Sunday, Feb 9, 
           span 12:58
-        .message.message-sent Hello
-        .message.message-sent How are you?
-        .message.message-received Hi
-        .message.message-received I am fine, thanks! And how are you?
-        .message.message-sent I am great!
-        .message.message-sent What do you think about my new logo?
+        .message.message-sent
+          .message-text Hi, Kate
+        .message.message-sent
+          .message-text How are you?
+        .message.message-sent
+        .message.message-received.message-with-avatar
+          .message-name Kate Johnson
+          .message-text Hi, i am good
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-9.jpg)")
+        .message.message-received.message-with-avatar
+          .message-name Blue Ninja
+          .message-text Hi there, I am also fine, thanks! And how are you?
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-sent 
+          .message-text Hey, Blue Ninja! Glad to see you ;)
+        .message.message-sent 
+          .message-text What do you think about my new logo?
         .messages-date Wednesday, Feb 12, 
           span 19:33
-        .message.message-sent Hey? Any thoughts about my new logo?
+        .message.message-sent 
+          .message-text Hey? Any thoughts about my new logo?
         .messages-date Thursday, Feb 13, 
           span 11:20
-        .message.message-sent Alo...
-        .message.message-sent Are you there?
-        .message.message-received Hi, i am here
-        .message.message-received Your logo is great
-        .message.message-received Leave me alone!
-        .message.message-sent :(
-        .message.message-sent Hey, look, cutest kitten ever!
-        .message.message-sent.message-pic
-          img(src="http://placekitten.com/g/300/400")
-        .message.message-received Yep
+        .message.message-sent 
+          .message-text Alo...
+        .message.message-sent 
+          .message-text Are you there?
+        .message.message-received.message-with-avatar 
+          .message-name Blue Ninja
+          .message-text Hi, i am here
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-received.message-with-avatar 
+          .message-name Blue Ninja
+          .message-text Your logo is great
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-received.message-with-avatar 
+          .message-name Kate Johnson
+          .message-text Leave me alone!
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-9.jpg)")
+        .message.message-sent 
+          .message-text :(
+        .message.message-sent 
+          .message-text Hey, look, cutest kitten ever!
+        .message.message-sent
+          .message-text 
+            img(src="http://placekitten.com/g/300/400")
+        .message.message-received.message-with-avatar  
+          .message-name Blue Ninja
+          .message-text Yep
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
