@@ -125,7 +125,6 @@ $.fn.scrollTop = function (top, duration) {
                 startTime = time;
             }
             var scrollTop = currentTop + ((time - startTime) / duration * (newTop - currentTop));
-            el.scrollTop = scrollTop;
             if (newTop > currentTop && scrollTop >= newTop)  {
                 el.scrollTop = newTop;
                 return;
@@ -134,6 +133,7 @@ $.fn.scrollTop = function (top, duration) {
                 el.scrollTop = newTop;
                 return;
             }
+            el.scrollTop = scrollTop;
             $.requestAnimationFrame(render);
         }
         $.requestAnimationFrame(render);
