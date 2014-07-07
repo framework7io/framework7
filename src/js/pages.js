@@ -463,7 +463,8 @@ app.loadContent = function (view, content, animatePages, pushState) {
     }
     if (app.params.pushState)  {
         if (typeof pushState === 'undefined') pushState = true;
-        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', app.params.pushStateSeparator + '#content-' + view.history.length);
+        var pushStateRoot = app.params.pushStateRoot || '';
+        if (pushState) history.pushState({content: content, url: '#content-' + view.history.length}, '', pushStateRoot + app.params.pushStateSeparator + '#content-' + view.history.length);
     }
     preprocess(content, null, function (content) {
         _load(view, null, content, animatePages);
@@ -484,7 +485,8 @@ app.loadPage = function (view, url, animatePages, pushState) {
         }
         if (app.params.pushState)  {
             if (typeof pushState === 'undefined') pushState = true;
-            if (pushState) history.pushState({url: url}, '', app.params.pushStateSeparator + url);
+            var pushStateRoot = app.params.pushStateRoot || '';
+            if (pushState) history.pushState({url: url}, '', pushStateRoot + app.params.pushStateSeparator + url);
         }
         
         preprocess(data, url, function (data) {

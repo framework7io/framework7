@@ -37,8 +37,16 @@ var View = function (selector, params) {
     // History
     view.history = [];
     var viewURL = docLocation;
+    var pushStateSeparator = app.params.pushStateSeparator;
+    var pushStateRoot = app.params.pushStateRoot;
     if (app.params.pushState) {
-        if (viewURL.indexOf('#!/') >= 0 && viewURL.indexOf('#!/#') < 0) viewURL = viewURL.split('#!/')[0];
+        if (pushStateRoot) {
+            viewURL = pushStateRoot;
+        }
+        else {
+            if (viewURL.indexOf(pushStateSeparator) >= 0 && viewURL.indexOf(pushStateSeparator + '#') < 0) viewURL = viewURL.split(pushStateSeparator)[0];
+        }
+            
     }
     view.url = container.attr('data-url') || viewURL;
 
@@ -328,12 +336,20 @@ var View = function (selector, params) {
 
     // Push State on load
     if (app.params.pushState && view.main) {
-        var pushStateSeparator = app.params.pushStateSeparator;
-        if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
-            var pushStateAnimatePages;
-            if (app.params.pushStateNoAnimation === true) pushStateAnimatePages = false;
-            app.loadPage(view, docLocation.split(pushStateSeparator)[1], pushStateAnimatePages, false);
+        var pushStateUrl;
+        if (pushStateRoot) {
+            pushStateUrl = docLocation.split(app.params.pushStateRoot + pushStateSeparator)[1];
         }
+
+        else if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
+            pushStateUrl = docLocation.split(pushStateSeparator)[1];
+        }
+        var pushStateAnimatePages;
+        if (app.params.pushStateNoAnimation === true) pushStateAnimatePages = false;
+        if (pushStateUrl) {
+            app.loadPage(view, pushStateUrl, pushStateAnimatePages, false);
+        }
+            
     }
 
     // Destroy
