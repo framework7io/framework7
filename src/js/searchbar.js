@@ -3,9 +3,10 @@
 ======================================================*/
 app.initSearchbar = function (pageContainer) {
     pageContainer = $(pageContainer);
-    var searchbar = pageContainer.find('.searchbar');
+    var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
     if (searchbar.length === 0) return;
-    var searchbarOverlay = pageContainer.hasClass('navbar') ? $('.searchbar-overlay') : pageContainer.find('.searchbar-overlay');
+    if (!pageContainer.hasClass('page')) pageContainer = searchbar.parents('.page').eq(0);
+    var searchbarOverlay = pageContainer.hasClass('page') ? pageContainer.find('.searchbar-overlay') : $('.searchbar-overlay');
     var input = searchbar.find('input[type="search"]');
     var clear = searchbar.find('.searchbar-clear');
     var cancel = searchbar.find('.searchbar-cancel');
@@ -148,8 +149,9 @@ app.initSearchbar = function (pageContainer) {
     }
         
 };
-app.destroySearchbar = function (searchbar) {
-    searchbar = $(searchbar);
+app.destroySearchbar = function (pageContainer) {
+    pageContainer = $(pageContainer);
+    var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
     if (searchbar.length === 0) return;
     if (searchbar[0].f7DestroySearchbar) searchbar[0].f7DestroySearchbar();
 };
