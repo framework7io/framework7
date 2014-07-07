@@ -10,11 +10,10 @@
         i.icon.icon-bars-blue
 .pages.navbar-through
   .page(data-page="messages").no-toolbar.toolbar-fixed
-    .toolbar
-      form.ks-messages-form
-        .toolbar-inner
-          input(type="text", placeholder="Message").ks-messages-input
-          a(href="#").link.ks-send-message Send
+    .toolbar.messagebar
+      .toolbar-inner
+        textarea(placeholder="Message")
+        a(href="#").link Send
     .page-content.messages-content
       .messages
         .messages-date Sunday, Feb 9, 

@@ -178,6 +178,8 @@ app.initPage = function (pageContainer) {
     if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
     // Init searchbar
     if (app.initSearchbar) app.initSearchbar(pageContainer);
+    // Init message bar
+    if (app.initMessagebar) app.initMessagebar(pageContainer);
 };
 
 // Load Page

@@ -143,13 +143,12 @@ myApp.onPageInit('messages', function (page) {
         
     ];
     var answerTimeout;
-    $$('.ks-messages-form').on('submit', function (e) {
-        e.preventDefault();
-        var input = $$(this).find('.ks-messages-input');
-        var messageText = input.val();
+    $$('.messagebar a.link').on('click', function () {
+        var textarea = $$('.messagebar textarea');
+        var messageText = textarea.val();
         if (messageText.length === 0) return;
-        // Empty input
-        input.val('');
+        // Empty textarea
+        textarea.val('').trigger('change');
         // Add Message
         myApp.addMessage({
             text: messageText,
@@ -170,9 +169,6 @@ myApp.onPageInit('messages', function (page) {
                 avatar: person.avatar
             });
         }, 2000);
-    });
-    $$('.ks-send-message').on('click', function () {
-        $$('.ks-messages-form').trigger('submit');
     });
 });
 
