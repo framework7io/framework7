@@ -15,6 +15,9 @@ $.ajax = function (options) {
         contentType: 'application/x-www-form-urlencoded'
     };
 
+    //For jQuery guys
+    if (options.type) options.type = options.method;
+
     // Merge options and defaults
     for (var prop in defaults) {
         if (!(prop in options)) options[prop] = defaults[prop];
