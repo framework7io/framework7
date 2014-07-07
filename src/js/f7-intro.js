@@ -18,6 +18,7 @@ window.Framework7 = function (params) {
         preloadPreviousPage: true,
         // Push State
         pushState: false,
+        pushStateRoot: undefined,
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',
         // Fast clicks
