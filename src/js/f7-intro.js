@@ -41,6 +41,7 @@ window.Framework7 = function (params) {
         smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>{{backText}}</span></a></div>',
         smartSelectBackText: 'Back',
         smartSelectSearchbar: false,
+        smartSelectBackOnSelect: false,
         // Panels
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,

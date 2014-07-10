@@ -58,6 +58,7 @@ app.smartSelectOpen = function (smartSelect) {
 
     var pageTitle = smartSelect.attr('data-pagetitle') || smartSelect.find('.item-title').text();
     var backText = smartSelect.attr('data-backtext') || app.params.smartSelectBackText;
+    var backOnSelect = smartSelect.attr('data-backonselect') ? (smartSelect.attr('data-backonselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
 
     // Generate dynamic page layout
     var id = (new Date()).getTime();
@@ -164,6 +165,9 @@ app.smartSelectOpen = function (smartSelect) {
                     
                 $(select).trigger('change');
                 smartSelect.find('.item-after').text(optionText.join(', '));
+                if (backOnSelect && inputType === 'radio') {
+                    view.goBack();
+                }
             });
         }
     }
