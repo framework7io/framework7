@@ -64,6 +64,26 @@ var View = function (selector, params) {
     // Pages
     view.pagesContainer = container.find('.pages')[0];
 
+    // Active Page
+    if (!view.activePage) {
+        var currentPage = $(view.pagesContainer).find('.page-on-center');
+        var currentPageData;
+        if (currentPage.length === 0) {
+            currentPage = $(view.pagesContainer).find('.page');
+            currentPage = currentPage.eq(currentPage.length - 1);
+        }
+        if (currentPage.length > 0) {
+            currentPageData = currentPage[0].f7PageData;
+        
+        }
+        if (currentPageData) {
+            currentPageData.view = view;
+            if (view.url) currentPageData.url = view.url;
+            view.activePage = currentPageData;
+            currentPage[0].f7PageData = currentPageData;
+        }
+    }
+
     // Is main
     view.main = container.hasClass(app.params.viewMainClass);
 
