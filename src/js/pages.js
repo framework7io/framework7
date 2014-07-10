@@ -85,6 +85,13 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
         view: view,
         from: position
     };
+
+    // Store pagedata in page
+    pageContainer.f7PageData = pageData;
+
+    // Update View's activePage
+    if (view) view.activePage = pageData;
+
     // Before Init Callbacks
     app.pluginHook('pageBeforeInit', pageData);
     if (app.params.onPageBeforeInit) app.params.onPageBeforeInit(app, pageData);
@@ -127,6 +134,9 @@ app.pageAnimCallbacks = function (callback, view, params) {
     var oldPage = params.oldPage,
         newPage = params.newPage;
 
+    // Update page date
+    params.pageContainer.f7PageData = pageData;
+
     if (callback === 'after') {
         app.pluginHook('pageAfterAnimation', pageData);
         if (app.params.onPageAfterAnimation) app.params.onPageAfterAnimation(app, pageData);
@@ -137,6 +147,9 @@ app.pageAnimCallbacks = function (callback, view, params) {
     if (callback === 'before') {
         // Add data-page on view
         $(view.container).attr('data-page', pageData.name);
+
+        // Update View's activePage
+        if (view) view.activePage = pageData;
 
         // Hide/show navbar dynamically
         if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
