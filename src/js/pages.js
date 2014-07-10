@@ -710,12 +710,12 @@ app.afterGoBack = function (view, oldPage, newPage) {
         }
     }
     // Update View's History
-    view.history.pop();
+    var previousURL = view.history.pop();
     
-    // Check current page is content based only
-    if (!view.params.domCache && view.url && view.url.indexOf('#content-') > -1 && (view.url in view.contentCache)) {
-        view.contentCache[view.url] = null;
-        delete view.contentCache[view.url];
+    // Check previous page is content based only and remove it from content cache
+    if (!view.params.domCache && previousURL && previousURL.indexOf('#content-') > -1 && (previousURL in view.contentCache)) {
+        view.contentCache[previousURL] = null;
+        delete view.contentCache[previousURL];
     }
     
     if (app.params.pushState) app.pushStateClearQueue();
