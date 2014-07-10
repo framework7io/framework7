@@ -96,7 +96,7 @@
                 top: 2px;
                 left: 2px;
                 .box-shadow(0 2px 5px rgba(0,0,0,0.4));
-                .translate3d(0,0,0);
+                .transform(translateX(0px));
                 .transition(300ms);
             }
         }
@@ -107,13 +107,22 @@
                     .transform(scale(0));
                 }
                 &:after {
-                    left: 22px;
+                    .transform(translateX(22px));
                 }
             }
         }
     }
 }
-
+html.android {
+    .label-switch input[type="checkbox"] {
+        &+ .checkbox {
+            .transition(0);
+            &:after, &:before {
+                .transition(0);
+            }
+        }
+    }
+}
 //Buttons
 .button {
     border: 1px solid @blue;
