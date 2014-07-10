@@ -224,7 +224,17 @@ label.label-radio {
         }
     }
 }
-
+/* === Message Bar === */
+.messagebar {
+    .link + textarea {
+        margin-left: 0;
+        margin-right: 8px;
+    }
+    textarea + .link {
+        margin-left: 0;
+        margin-right: 8px;
+    }
+}
 /* === Modals === */
 .modal-button {
     &:first-child {
@@ -371,6 +381,13 @@ label.label-radio {
     -ms-flex-item-align: end;
     -webkit-align-self: flex-end;
     align-self: flex-end;
+    .align-items(flex-end);
+}
+.message-sent {
+    -ms-flex-item-align: start;
+    -webkit-align-self: flex-start;
+    align-self: flex-start;
+    .align-items(flex-start);
 }
 
 /* === Icons === */
