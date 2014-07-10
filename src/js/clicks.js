@@ -44,6 +44,9 @@ app.initClickEvents = function () {
             else popover = '.popover';
             app.popover(popover, clicked);
         }
+        if (clicked.hasClass('close-popover')) {
+            app.closeModal('.popover.modal-in');
+        }
         // Popup
         var popup;
         if (clicked.hasClass('open-popup')) {
