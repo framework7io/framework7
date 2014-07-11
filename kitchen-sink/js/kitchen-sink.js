@@ -216,7 +216,10 @@ myApp.onPageInit('sortable-list', function (page) {
 /* ===== Photo Browser Examples ===== */
 // Create photoprobsers first:
 var photoBrowserPhotos = [
-    'img/beach.jpg',
+	{
+		url: 'img/beach.jpg',
+		caption: 'Captions! Woohoo!'
+	},
     'http://placekitten.com/1024/1024',
     'img/lock.jpg',
     'img/monkey.jpg',
