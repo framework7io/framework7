@@ -71,17 +71,49 @@ var PhotoBrowser = function (params) {
                         '</div>' +
                     '</div>';
 
-    var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
-    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide slider-slide">{{object}}</div>';
+    var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span>{{caption}}</div>';
+    var captionTemplate = pb.params.captionTemplate || '<div class="photo-browser-caption">{{caption}}</div>';
+
+    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide slider-slide">{{html}}</div>';
     var photosHtml = '';
     for (i = 0; i < pb.params.photos.length; i ++) {
-        if (pb.params.photos[i].indexOf('<') >= 0 || pb.params.photos[i].indexOf('>') >= 0) {
-            photosHtml += objectTemplate.replace(/{{object}}/g, pb.params.photos[i]);
+        var photo = pb.params.photos[i];
+        var thisTemplate = '';
+
+        //check if photo is a string or string-like object, for backwards compatibility 
+        if (typeof(photo) === 'string' || photo instanceof String) {
+
+            //check if "photo" is html object
+            if (photo.indexOf('<') >= 0 || photo.indexOf('>') >= 0) {
+                thisTemplate = objectTemplate.replace(/{{html}}/g, photo);
+            } else {
+                thisTemplate = photoTemplate.replace(/{{url}}/g, photo);
+            }
+
+            //photo is a string, thus has no caption, so remove the caption template placeholder
+            thisTemplate = thisTemplate.replace(/{{caption}}/g, '');
+
+            //otherwise check if photo is an object with a url property
+        } else if (typeof(photo) === 'object') {
+
+            //check if "photo" is html object
+            if (photo.hasOwnProperty('html') && photo.html.length > 0) {
+                thisTemplate = objectTemplate.replace(/{{html}}/g, photo.html);
+            } else if (photo.hasOwnProperty('url') && photo.url.length > 0) {
+                thisTemplate = photoTemplate.replace(/{{url}}/g, photo.url);
+            }
+
+            //check if photo has a caption
+            if (photo.hasOwnProperty('caption') && photo.caption.length > 0) {
+                thisTemplate = thisTemplate.replace(/{{caption}}/g, captionTemplate);
+                thisTemplate = thisTemplate.replace(/{{caption}}/g, photo.caption);
+            } else {
+                thisTemplate = thisTemplate.replace(/{{caption}}/g, '');
+            }
         }
-        else {
-            photosHtml += photoTemplate.replace(/{{url}}/g, pb.params.photos[i]);
-        }
-            
+
+        photosHtml += thisTemplate;
+
     }
 
     var htmlTemplate = template
