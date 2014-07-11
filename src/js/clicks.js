@@ -12,7 +12,7 @@ app.initClickEvents = function () {
         if (isLink) {
             /*jshint shadow:true */
             for (var i = 0; i < app.params.externalLinks.length; i++) {
-                if (clicked.is(app.params.externalLinks[i])) {
+                if (clicked.hasClass(app.params.externalLinks[i])) {
                     return;
                 }
 
