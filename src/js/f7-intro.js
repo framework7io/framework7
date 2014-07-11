@@ -33,7 +33,7 @@ window.Framework7 = function (params) {
         // Ajax
         ajaxLinks: undefined, // or CSS selector
         // External Links
-        externalLinks: ['.external'], // array of CSS selectors
+        externalLinks: ['external'], // array of CSS class selectors and/or rel attributes
         // Sortable
         sortable: true,
         // Swipeout
