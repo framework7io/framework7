@@ -74,7 +74,7 @@ var PhotoBrowser = function (params) {
     var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span>{{caption}}</div>';
     var captionTemplate = pb.params.captionTemplate || '<div class="photo-browser-caption">{{caption}}</div>';
 
-    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide slider-slide">{{object}}</div>';
+    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide slider-slide">{{html}}</div>';
     var photosHtml = '';
     for (i = 0; i < pb.params.photos.length; i ++) {
         var photo = pb.params.photos[i];
@@ -83,9 +83,9 @@ var PhotoBrowser = function (params) {
         //check if photo is a string or string-like object, for backwards compatibility 
         if (typeof(photo) === 'string' || photo instanceof String) {
 
-            //check if photo is a dom object
+            //check if "photo" is html object
             if (photo.indexOf('<') >= 0 || photo.indexOf('>') >= 0) {
-                thisTemplate = objectTemplate.replace(/{{object}}/g, photo);
+                thisTemplate = objectTemplate.replace(/{{html}}/g, photo);
             } else {
                 thisTemplate = photoTemplate.replace(/{{url}}/g, photo);
             }
@@ -96,9 +96,9 @@ var PhotoBrowser = function (params) {
             //otherwise check if photo is an object with a url property
         } else if (typeof(photo) === 'object') {
 
-            //check if photo has a dom object
-            if (photo.hasOwnProperty('object') && photo.object.length > 0) {
-                thisTemplate = objectTemplate.replace(/{{object}}/g, photo.object);
+            //check if "photo" is html object
+            if (photo.hasOwnProperty('html') && photo.html.length > 0) {
+                thisTemplate = objectTemplate.replace(/{{html}}/g, photo.html);
             } else if (photo.hasOwnProperty('url') && photo.url.length > 0) {
                 thisTemplate = photoTemplate.replace(/{{url}}/g, photo.url);
             }
