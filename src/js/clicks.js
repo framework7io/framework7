@@ -16,7 +16,7 @@ app.initClickEvents = function () {
                     return;
                 }
 
-                if (clicked.hasRel(app.params.externalLinks[i])) {
+                if (clicked[0].rel === app.params.externalLinks[i]) {
                     return;
                 }
             }

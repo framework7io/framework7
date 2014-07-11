@@ -97,8 +97,8 @@ var PhotoBrowser = function (params) {
         } else if (typeof(photo) === 'object') {
 
             //check if photo has a dom object
-            if (photo.hasOwnProperty('domObject') && photo.domObject.length > 0) {
-                thisTemplate = objectTemplate.replace(/{{object}}/g, photo.domObject);
+            if (photo.hasOwnProperty('object') && photo.object.length > 0) {
+                thisTemplate = objectTemplate.replace(/{{object}}/g, photo.object);
             } else if (photo.hasOwnProperty('url') && photo.url.length > 0) {
                 thisTemplate = photoTemplate.replace(/{{url}}/g, photo.url);
             }
