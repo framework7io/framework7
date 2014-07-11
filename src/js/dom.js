@@ -374,6 +374,10 @@ Dom7.prototype = {
         }
         
     },
+    hasRel: function (relName) {
+        if (!this[0]) return false;
+        else return this[0].rel === relName;
+    },
     indexOf: function (el) {
         for (var i = 0; i < this.length; i++) {
             if (this[i] === el) return i;

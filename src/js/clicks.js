@@ -7,10 +7,21 @@ app.initClickEvents = function () {
         var clicked = $(this);
         var url = clicked.attr('href');
         var isLink = clicked[0].nodeName.toLowerCase() === 'a';
-        // External
-        if (isLink && clicked.hasClass('external')) {
-            return;
+
+        // Check if link is external 
+        if (isLink) {
+            /*jshint shadow:true */
+            for (var i = 0; i < app.params.externalLinks.length; i++) {
+                if (clicked.is(app.params.externalLinks[i])) {
+                    return;
+                }
+
+                if (clicked.hasRel(app.params.externalLinks[i])) {
+                    return;
+                }
+            }
         }
+
         // Smart Select
         if (clicked.hasClass('smart-select')) {
             if (app.smartSelectOpen) app.smartSelectOpen(clicked);

@@ -32,6 +32,8 @@ window.Framework7 = function (params) {
         swipeBackPageBoxShadow: true,
         // Ajax
         ajaxLinks: undefined, // or CSS selector
+        // External Links
+        externalLinks: ['.external'], // array of CSS selectors
         // Sortable
         sortable: true,
         // Swipeout
