@@ -63,6 +63,8 @@ window.Framework7 = function (params) {
         modalActionsTemplate: '<div class="actions-modal">{{buttons}}</div>',
         modalButtonOk: 'OK',
         modalButtonCancel: 'Cancel',
+        modalUsernamePlaceholder: 'Username',
+        modalPasswordPlaceholder: 'Password',
         modalTitle: 'Framework7',
         modalCloseByOutside: false,
         actionsCloseByOutside: true,
