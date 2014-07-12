@@ -14,7 +14,8 @@ app.modal = function (params) {
             bold: true,
             onClick: function (){},
             close:false
-        }]
+        }],
+        onClick: function(index){}
     }
     */
     var buttonsHTML = '';
@@ -47,6 +48,7 @@ app.modal = function (params) {
         $(el).on('click', function (e) {
             if (params.buttons[index].close !== false) app.closeModal(modal);
             if (params.buttons[index].onClick) params.buttons[index].onClick(modal, e);
+            if (params.onClick) params.onClick(modal, index);
         });
     });
     app.openModal(modal);
@@ -87,15 +89,73 @@ app.prompt = function (text, title, callbackOk, callbackCancel) {
     return app.modal({
         text: text || '',
         title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        afterText: '<input type="text" class="modal-prompt-input">',
+        afterText: '<input type="text" class="modal-text-input">',
         buttons: [
-            {text: app.params.modalButtonCancel, onClick: function (modal) {
-                if (callbackCancel) callbackCancel($(modal).find('.modal-prompt-input').val());
-            }},
-            {text: app.params.modalButtonOk, bold: true, onClick: function (modal) {
-                if (callbackOk) callbackOk($(modal).find('.modal-prompt-input').val());
-            }}
-        ]
+            {
+                text: app.params.modalButtonCancel,
+            },
+            {
+                text: app.params.modalButtonOk,
+                bold: true,
+            }
+        ],
+        onClick: function (modal, index) {
+            if (index === 0 && callbackCancel) callbackCancel($(modal).find('.modal-text-input').val());
+            if (index === 1 && callbackOk) callbackOk($(modal).find('.modal-text-input').val());
+        }
+    });
+};
+app.modalLogin = function (text, title, callbackOk, callbackCancel) {
+    if (typeof title === 'function') {
+        callbackCancel = arguments[2];
+        callbackOk = arguments[1];
+        title = undefined;
+    }
+    return app.modal({
+        text: text || '',
+        title: typeof title === 'undefined' ? app.params.modalTitle : title,
+        afterText: '<input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input">',
+        buttons: [
+            {
+                text: app.params.modalButtonCancel,
+            },
+            {
+                text: app.params.modalButtonOk,
+                bold: true,
+            }
+        ],
+        onClick: function (modal, index) {
+            var username = $(modal).find('.modal-text-input[name="modal-username"]').val();
+            var password = $(modal).find('.modal-text-input[name="modal-password"]').val();
+            if (index === 0 && callbackCancel) callbackCancel(username, password);
+            if (index === 1 && callbackOk) callbackOk(username, password);
+        }
+    });
+};
+app.modalPassword = function (text, title, callbackOk, callbackCancel) {
+    if (typeof title === 'function') {
+        callbackCancel = arguments[2];
+        callbackOk = arguments[1];
+        title = undefined;
+    }
+    return app.modal({
+        text: text || '',
+        title: typeof title === 'undefined' ? app.params.modalTitle : title,
+        afterText: '<input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input">',
+        buttons: [
+            {
+                text: app.params.modalButtonCancel,
+            },
+            {
+                text: app.params.modalButtonOk,
+                bold: true,
+            }
+        ],
+        onClick: function (modal, index) {
+            var password = $(modal).find('.modal-text-input[name="modal-password"]').val();
+            if (index === 0 && callbackCancel) callbackCancel(password);
+            if (index === 1 && callbackOk) callbackOk(password);
+        }
     });
 };
 app.showPreloader = function (title) {
