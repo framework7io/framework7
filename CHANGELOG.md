@@ -6,6 +6,7 @@
   * Core:
     * New "externalLinks" (array) parameter to set custom external links
     * New "cacheIgnoreGetParameters" parameter to ignore caching for same urls with different GET parameters
+    * New "pushStateRoot" parameter that allow to use PushState with empty pushStateSeparator
   * Smart Select:
     * Support for "optgroup" tag which will be converted do list dividers on smart select page
     * Support for "multiple" attribute that will convert radios to checkboxes on smart select page
@@ -28,6 +29,12 @@
     * New Photo Browser parameters: captionsTheme, expositionHideCaptions, captionsTemplate, captionTemplate, objectTemplate
   * View:
     * New .activePage property that contains pageData of currently active page
+  * Styles:
+    * New disabled styles for elements with "disabled" class or attribute
+  * Fixes:
+    * Fixed issues with caching of Dynamic content
+    * Fixed swipeouts when they are in hidden tabs
+    * Corrected z-index relations between modals, overlays and status bar overlay
 
 ## Framework7 v0.9.0 - Updated on June 28, 2014
 
