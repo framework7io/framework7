@@ -196,7 +196,7 @@
     .align-items(center);
 }
 // Prompt
-input.modal-prompt-input {
+input.modal-text-input {
     .border-box();
     height: 30px;
     background: #fff;
@@ -214,6 +214,9 @@ input.modal-prompt-input {
     -moz-appearance: none;
     -ms-appearance: none;
     appearance: none;
+    + input.modal-text-input {
+        margin-top: 5px;
+    }
 }
 // Popover
 .popover {
