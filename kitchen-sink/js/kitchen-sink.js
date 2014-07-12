@@ -218,12 +218,19 @@ myApp.onPageInit('sortable-list', function (page) {
 var photoBrowserPhotos = [
 	{
 		url: 'img/beach.jpg',
-		caption: 'Captions! Woohoo!'
+		caption: 'Amazing beach in Goa, India'
 	},
     'http://placekitten.com/1024/1024',
     'img/lock.jpg',
-    'img/monkey.jpg',
-    'img/mountains.jpg'
+    {
+        url: 'img/monkey.jpg',
+        caption: 'I met this monkey in Chinese mountains'
+    },
+    {
+        url: 'img/mountains.jpg',
+        caption: 'Beautiful mountains in Zhangjiajie, China'
+    }
+    
 ];
 var photoBrowserStandalone = myApp.photoBrowser({
     photos: photoBrowserPhotos
