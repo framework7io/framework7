@@ -10,11 +10,25 @@ app.initSearchbar = function (pageContainer) {
     var input = searchbar.find('input[type="search"]');
     var clear = searchbar.find('.searchbar-clear');
     var cancel = searchbar.find('.searchbar-cancel');
-    var searchList = $(searchbar.data('search-list'));
-    var searchIn = searchbar.data('search-in');
-    var searchBy = searchbar.data('search-by');
-    var found = $('.searchbar-found');
-    var notFound = $('.searchbar-not-found');
+    var searchList = $(searchbar.attr('data-search-list'));
+    var searchIn = searchbar.attr('data-search-in');
+    var searchBy = searchbar.attr('data-search-by');
+    var found = searchbar.attr('data-searchbar-found');
+    if (!found) {
+        found = pageContainer.find('.searchbar-found');
+        if (found.length === 0) found = $('.searchbar-found');
+    }
+    else {
+        found = $(found);
+    }
+    var notFound = searchbar.attr('data-searchbar-not-found');
+    if (!notFound) {
+        notFound = pageContainer.find('.searchbar-not-found');
+        if (notFound.length === 0) notFound = $('.searchbar-not-found');
+    }
+    else {
+        notFound = $(notFound);
+    }
 
     // Cancel button
     var cancelWidth, cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
