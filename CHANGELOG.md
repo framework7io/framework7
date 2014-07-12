@@ -1,4 +1,33 @@
 # Change Log
+## Framework7 v0.9.2 - Updated on July 12, 2014
+
+  * New Message Bar component to be used with messages
+  * Totally reworked Messages, now they support avatar and user name
+  * Core:
+    * New "externalLinks" (array) parameter to set custom external links
+    * New "cacheIgnoreGetParameters" parameter to ignore caching for same urls with different GET parameters
+  * Smart Select:
+    * Support for "optgroup" tag which will be converted do list dividers on smart select page
+    * Support for "multiple" attribute that will convert radios to checkboxes on smart select page
+    * New "smartSelectBackOnSelect" option that will close Smart Select page when user choose item
+  * Modals:
+    * New Login Modal available by myApp.modalLogin() method
+    * New Password Modal available by myApp.modalPassword() method
+    * New "closePopover" class for links to close popover
+  * Searchbar:
+    * New option to specify "found" and "not-found" containers using data-searchbar-found and data-searchbar-not-found attributes
+  * Dom7:
+    * .next() and .prev() methods now support matching selector as an argument
+    * New .scrollTop(position, duration) method for animated scroll on element or to get element's scroll top position if no arguments passed
+  * Page Callbacks API:
+    * Support for "*" page name value to trigger callback for all pages
+  * Photo Browser
+    * Videos support with &lt;video&gt; or within embedded iframes
+    * Captions
+    * New syntax to define photos, not it could be array of objects with "url" and "caption" properties
+    * New Photo Browser parameters: captionsTheme, expositionHideCaptions, captionsTemplate, captionTemplate, objectTemplate
+  * View:
+    * New .activePage property that contains pageData of currently active page
 
 ## Framework7 v0.9.0 - Updated on June 28, 2014
 
