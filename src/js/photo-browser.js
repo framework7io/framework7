@@ -13,6 +13,7 @@ var PhotoBrowser = function (params) {
         maxZoom: 3,
         minZoom: 1,
         exposition: true,
+        expositionHideCaptions: false,
         type: 'standalone',
         navbar: true,
         toolbar: true,
@@ -62,6 +63,7 @@ var PhotoBrowser = function (params) {
                             '{{navbar}}' +
                             '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
                                 '{{toolbar}}' +
+                                '{{captions}}' +
                                 '<div class="photo-browser-slider-container slider-container">' +
                                     '<div class="photo-browser-slider-wrapper slider-wrapper">' +
                                         '{{photos}}' +
@@ -71,11 +73,14 @@ var PhotoBrowser = function (params) {
                         '</div>' +
                     '</div>';
 
-    var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span>{{caption}}</div>';
-    var captionTemplate = pb.params.captionTemplate || '<div class="photo-browser-caption">{{caption}}</div>';
+    var photoTemplate = pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>';
+    var captionsTheme = pb.params.captionsTheme || pb.params.theme;
+    var captionsTemplate = pb.params.captionsTemplate || '<div class="photo-browser-captions photo-browser-captions-' + captionsTheme + '">{{captions}}</div>';
+    var captionTemplate = pb.params.captionTemplate || '<div class="photo-browser-caption" data-caption-index="{{captionIndex}}">{{caption}}</div>';
 
     var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide slider-slide">{{html}}</div>';
     var photosHtml = '';
+    var captionsHtml = '';
     for (i = 0; i < pb.params.photos.length; i ++) {
         var photo = pb.params.photos[i];
         var thisTemplate = '';
@@ -91,7 +96,7 @@ var PhotoBrowser = function (params) {
             }
 
             //photo is a string, thus has no caption, so remove the caption template placeholder
-            thisTemplate = thisTemplate.replace(/{{caption}}/g, '');
+            // captionsHtml += captionTemplate.replace(/{{caption}}/g, '');
 
             //otherwise check if photo is an object with a url property
         } else if (typeof(photo) === 'object') {
@@ -105,10 +110,10 @@ var PhotoBrowser = function (params) {
 
             //check if photo has a caption
             if (photo.hasOwnProperty('caption') && photo.caption.length > 0) {
-                thisTemplate = thisTemplate.replace(/{{caption}}/g, captionTemplate);
-                thisTemplate = thisTemplate.replace(/{{caption}}/g, photo.caption);
+                captionsHtml += captionTemplate.replace(/{{caption}}/g, photo.caption).replace(/{{captionIndex}}/g, i);
             } else {
                 thisTemplate = thisTemplate.replace(/{{caption}}/g, '');
+                // captionsHtml += captionTemplate.replace(/{{caption}}/g, '');
             }
         }
 
@@ -120,6 +125,7 @@ var PhotoBrowser = function (params) {
                         .replace('{{navbar}}', (pb.params.navbar ? navbarTemplate : ''))
                         .replace('{{noNavbar}}', (pb.params.navbar ? '' : 'no-navbar'))
                         .replace('{{photos}}', photosHtml)
+                        .replace('{{captions}}', captionsTemplate.replace(/{{captions}}/g, captionsHtml))
                         .replace('{{toolbar}}', (pb.params.toolbar ? toolbarTemplate : ''));
 
     pb.activeSlideIndex = pb.params.initialSlide;
@@ -202,6 +208,8 @@ var PhotoBrowser = function (params) {
         pb.sliderContainer = pb.container.find('.photo-browser-slider-container');
         pb.sliderWrapper = pb.container.find('.photo-browser-slider-wrapper');
         pb.slides = pb.container.find('.photo-browser-slide');
+        pb.captionsContainer = pb.container.find('.photo-browser-captions');
+        pb.captions = pb.container.find('.photo-browser-caption');
         
         pb.slider = app.slider(pb.sliderContainer, {
             nextButton: pb.params.nextButton || '.photo-browser-next',
@@ -236,6 +244,13 @@ var PhotoBrowser = function (params) {
                 else {
                     $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
+
+                // Update captions
+                if (pb.captions.length > 0) {
+                    pb.captionsContainer.find('.photo-browser-caption-active').removeClass('photo-browser-caption-active');
+                    pb.captionsContainer.find('[data-caption-index="' + pb.activeSlideIndex + '"]').addClass('photo-browser-caption-active');
+                }
+
                 // Stop Video
                 var previousSlideVideo = slider.slides.eq(slider.previousSlideIndex).find('video');
                 if (previousSlideVideo.length > 0) {
@@ -286,14 +301,17 @@ var PhotoBrowser = function (params) {
     pb.exposed = false;
     pb.toggleExposition = function () {
         if (pb.container) pb.container.toggleClass('photo-browser-exposed');
+        if (pb.params.expositionHideCaptions) pb.captionsContainer.toggleClass('photo-browser-captions-exposed');
         pb.exposed = !pb.exposed;
     };
     pb.expositionOn = function () {
         if (pb.container) pb.container.addClass('photo-browser-exposed');
+        if (pb.params.expositionHideCaptions) pb.captionsContainer.addClass('photo-browser-captions-exposed');
         pb.exposed = true;
     };
     pb.expositionOff = function () {
         if (pb.container) pb.container.removeClass('photo-browser-exposed');
+        if (pb.params.expositionHideCaptions) pb.captionsContainer.removeClass('photo-browser-captions-exposed');
         pb.exposed = false;
     };
     
