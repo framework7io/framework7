@@ -217,6 +217,14 @@ input.modal-text-input {
     + input.modal-text-input {
         margin-top: 5px;
     }
+    &.modal-text-input-double {
+        border-radius: 5px 5px 0 0;
+        + input.modal-text-input {
+            margin-top: 0;
+            border-top: 0;
+            border-radius: 0 0 5px 5px;
+        }
+    }
 }
 // Popover
 .popover {

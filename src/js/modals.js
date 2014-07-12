@@ -114,7 +114,7 @@ app.modalLogin = function (text, title, callbackOk, callbackCancel) {
     return app.modal({
         text: text || '',
         title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        afterText: '<input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input">',
+        afterText: '<input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input modal-text-input-double"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input modal-text-input-double">',
         buttons: [
             {
                 text: app.params.modalButtonCancel,
