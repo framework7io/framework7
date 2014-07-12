@@ -14,7 +14,8 @@
   * Modals:
     * New Login Modal available by myApp.modalLogin() method
     * New Password Modal available by myApp.modalPassword() method
-    * New "closePopover" class for links to close popover
+    * New "close-popover" class for links to close popover
+    * New .onClick(modal, index) callback function for custom Modal that receives index number of clicked button
   * Searchbar:
     * New option to specify "found" and "not-found" containers using data-searchbar-found and data-searchbar-not-found attributes
   * Dom7:
