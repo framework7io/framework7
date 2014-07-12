@@ -14,6 +14,7 @@ window.Framework7 = function (params) {
     app.params = {
         cache: true,
         cacheIgnore: [],
+        cacheIgnoreGetParameters: true,
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
         // Push State

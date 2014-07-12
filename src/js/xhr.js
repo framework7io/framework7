@@ -14,10 +14,15 @@ app.removeFromCache = function (url) {
 // XHR
 app.xhr = false;
 app.get = function (url, callback) {
-    if (app.params.cache && url.indexOf('nocache') < 0 && app.params.cacheIgnore.indexOf(url) < 0) {
+    // should we ignore get params or not
+    var _url = url;
+    if (app.params.cacheIgnoreGetParameters && url.indexOf('?') >= 0) {
+        _url = url.split('?')[0];
+    }
+    if (app.params.cache && url.indexOf('nocache') < 0 && app.params.cacheIgnore.indexOf(_url) < 0) {
         // Check is the url cached
         for (var i = 0; i < app.cache.length; i++) {
-            if (app.cache[i].url === url) {
+            if (app.cache[i].url === _url) {
                 // Check expiration
                 if ((new Date()).getTime() - app.cache[i].time < app.params.cacheDuration) {
                     // Load from cache
@@ -36,9 +41,9 @@ app.get = function (url, callback) {
             if (xhr.status === 200 || xhr.status === 0) {
                 callback(xhr.responseText, false);
                 if (app.params.cache) {
-                    app.removeFromCache(url);
+                    app.removeFromCache(_url);
                     app.cache.push({
-                        url: url,
+                        url: _url,
                         time: (new Date()).getTime(),
                         data: xhr.responseText
                     });
