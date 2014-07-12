@@ -208,6 +208,15 @@ label.label-radio input[type="radio"]:checked ~ .item-inner {
   margin-left: 0;
   margin-right: 8px;
 }
+/* === Message Bar === */
+.messagebar .link + textarea {
+  margin-left: 0;
+  margin-right: 8px;
+}
+.messagebar textarea + .link {
+  margin-left: 0;
+  margin-right: 8px;
+}
 /* === Modals === */
 .modal-button:first-child {
   border-radius: 0 0 7px 0;
@@ -361,6 +370,19 @@ label.label-radio input[type="radio"]:checked ~ .item-inner {
   -ms-flex-item-align: end;
   -webkit-align-self: flex-end;
   align-self: flex-end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+}
+.message-sent {
+  -ms-flex-item-align: start;
+  -webkit-align-self: flex-start;
+  align-self: flex-start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
 }
 /* === Icons === */
 i.icon.icon-back-blue {

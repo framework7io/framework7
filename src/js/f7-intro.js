@@ -8,13 +8,13 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '0.9.0';
+    app.version = '0.9.2';
 
     // Default Parameters
     app.params = {
         cache: true,
         cacheIgnore: [],
-        cacheIgnoreGetParameters: true,
+        cacheIgnoreGetParameters: false,
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
         // Push State
