@@ -18,6 +18,7 @@ var PhotoBrowser = function (params) {
         navbar: true,
         toolbar: true,
         theme: 'light',
+        swipeToClose: true,
         backLinkText: 'Close'
     };
     
@@ -211,7 +212,7 @@ var PhotoBrowser = function (params) {
         pb.captionsContainer = pb.container.find('.photo-browser-captions');
         pb.captions = pb.container.find('.photo-browser-caption');
         
-        pb.slider = app.slider(pb.sliderContainer, {
+        var sliderSettings = {
             nextButton: pb.params.nextButton || '.photo-browser-next',
             prevButton: pb.params.prevButton || '.photo-browser-prev',
             indexButton: pb.params.indexButton,
@@ -268,13 +269,17 @@ var PhotoBrowser = function (params) {
                     scale = currentScale = 1;
                 }
                 if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(slider);
-            }
-        });
+            },
+        };
 
+        if (pb.params.swipeToClose && pb.params.type !== 'page') {
+            sliderSettings.onTouchStart = pb.swipeCloseTouchStart;
+            sliderSettings.onOppositeTouchMove = pb.swipeCloseTouchMove;
+            sliderSettings.onTouchEnd = pb.swipeCloseTouchEnd;
+        }
+
+        pb.slider = app.slider(pb.sliderContainer, sliderSettings);
         pb.attachEvents();
-
-        
-
     };
     pb.attachEvents = function (detach) {
         var action = detach ? 'off' : 'on';
@@ -472,6 +477,64 @@ var PhotoBrowser = function (params) {
         imageCurrentY = Math.max(Math.min(imageCurrentY, imageMaxY), imageMinY);
 
         gestureImgWrap.transition(momentumDuration).transform('translate3d(' + imageCurrentX + 'px, ' + imageCurrentY + 'px,0)');
+    };
+
+    // Swipe Up To Close
+    var swipeToCloseIsTouched = false;
+    var allowSwipeToClose = true;
+    var swipeToCloseDiff, swipeToCloseStart, swipeToCloseCurrent, swipeToCloseStarted = false, swipeToCloseActiveSlide, swipeToCloseTimeStart;
+    pb.swipeCloseTouchStart = function (slider, e) {
+        if (!allowSwipeToClose) return;
+        swipeToCloseIsTouched = true;
+    };
+    pb.swipeCloseTouchMove = function (slider, e) {
+        if (!swipeToCloseIsTouched) return;
+        if (!swipeToCloseStarted) {
+            swipeToCloseStarted = true;
+            swipeToCloseStart = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+            swipeToCloseActiveSlide = pb.slider.slides.eq(pb.slider.activeSlideIndex);
+            swipeToCloseTimeStart = (new Date()).getTime();
+        }
+        e.preventDefault();
+        swipeToCloseCurrent = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        swipeToCloseDiff = swipeToCloseStart - swipeToCloseCurrent;
+        var opacity = 1 - Math.abs(swipeToCloseDiff) / 300;
+        swipeToCloseActiveSlide.transform('translate3d(0,' + (-swipeToCloseDiff) + 'px,0)');
+        pb.slider.container.css('opacity', opacity).transition(0);
+    };
+    pb.swipeCloseTouchEnd = function (slider, e) {
+        swipeToCloseIsTouched = false;
+        if (!swipeToCloseStarted) {
+            swipeToCloseStarted = false;
+            return;
+        }
+        swipeToCloseStarted = false;
+        allowSwipeToClose = false;
+        var diff = Math.abs(swipeToCloseDiff);
+        var timeDiff = (new Date()).getTime() - swipeToCloseTimeStart;
+        if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
+            setTimeout(function () {
+                if (pb.params.type === 'standalone') {
+                    pb.close();
+                }
+                if (pb.params.type === 'popup') {
+                    app.closeModal(pb.popup);
+                }
+                allowSwipeToClose = true;
+            }, 0);
+            return;
+        }
+        if (diff !== 0) {
+            swipeToCloseActiveSlide.addClass('transitioning').transitionEnd(function () {
+                allowSwipeToClose = true;
+                swipeToCloseActiveSlide.removeClass('transitioning');
+            });
+        }
+        else {
+            allowSwipeToClose = true;
+        }
+        pb.slider.container.css('opacity', '').transition('');
+        swipeToCloseActiveSlide.transform('');
     };
 
     return pb;

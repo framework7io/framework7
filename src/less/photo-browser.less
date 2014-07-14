@@ -31,7 +31,13 @@
             .transform(translate3d(0,0,0));
         }
     }
+    .page[data-page="photo-browser-slides"] {
+        background:none;
+    }
 
+}
+.photo-browser-popup {
+    background: none;
 }
 .photo-browser, .view[data-page="photo-browser-slides"] {
     .navbar, .toolbar {
@@ -138,6 +144,9 @@
     .align-items(center);
     .flex-shrink(0);
     .border-box();
+    &.transitioning {
+       .transition(400ms); 
+    }
     span {
         width: 100%;
         text-align: center;
