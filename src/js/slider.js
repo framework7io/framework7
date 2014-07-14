@@ -143,7 +143,6 @@ var Slider = function (container, params) {
     s.onTouchMove = function (e) {
         if (s.params.onTouchMove) s.params.onTouchMove(s, e);
         s.allowClick = false;
-        if (!isTouched) return;
         if (e.targetTouches && e.targetTouches.length > 1) return;
         
         touchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
@@ -152,6 +151,10 @@ var Slider = function (container, params) {
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
         }
+        if ((isH && isScrolling) || (!isH && !isScrolling))  {
+            if (s.params.onOppositeTouchMove) s.params.onOppositeTouchMove(s, e);
+        }
+        if (!isTouched) return;
         if ((isH && isScrolling) || (!isH && !isScrolling))  {
             isTouched = false;
             return;
@@ -190,6 +193,7 @@ var Slider = function (container, params) {
             if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
                 clickTimeout = setTimeout(function () {
+                    if (!s) return;
                     if (s.params.paginationHide && s.paginationContainer) {
                         s.paginationContainer.toggleClass('slider-pagination-hidden');
                     }
@@ -220,6 +224,7 @@ var Slider = function (container, params) {
             s.allowClick = true;
         }
         setTimeout(function () {
+            if (!s) return;
             s.allowClick = true;
         }, 100);
         
