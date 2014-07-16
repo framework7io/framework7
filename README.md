@@ -1,5 +1,6 @@
 [![Stories in Ready](https://badge.waffle.io/nolimits4web/framework7.png?label=ready&title=Ready)](https://waffle.io/nolimits4web/framework7)
 [![Build Status](https://travis-ci.org/nolimits4web/Framework7.svg?branch=master)](https://travis-ci.org/nolimits4web/Framework7)
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=nolimits4web&url=https://github.com/nolimits4web/framework7/&title=Framework7&language=JavaScript&tags=github&category=software)
 
 Framework7
 ==========
@@ -66,6 +67,8 @@ Distributable version will available in `dist/` folder.
 
 All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at Gruntfile.js for concat files order)
 
+If you want to help in Framework7 development and make it event better visit this page: http://www.idangero.us/framework7/contribute/
+
 ## Forum
 
 If you have questions about Framework7 or want to help others you are welcome to special forum at http://www.idangero.us/framework7/forum/
@@ -73,3 +76,11 @@ If you have questions about Framework7 or want to help others you are welcome to
 ## Docs
 
 Documentation available at http://idangero.us/framework7/docs/
+
+## Tutorials
+
+Tutorials available at http://idangero.us/framework7/tutorials/
+
+## Showcase
+
+Appstore apps made with Framework7: http://idangero.us/framework7/showcase/
