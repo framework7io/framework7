@@ -597,6 +597,11 @@ Dom7.prototype = {
 // Selector 
 var $ = function (selector, context) {
     var arr = [], i = 0;
+    if (selector && !context) {
+        if (selector instanceof Dom7) {
+            return selector;
+        }
+    }
     if (selector) {
         // String
         if (typeof selector === 'string') {
