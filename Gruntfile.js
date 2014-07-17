@@ -29,6 +29,7 @@ module.exports = function (grunt) {
         'src/js/pull-to-refresh.js',
         'src/js/infinite-scroll.js',
         'src/js/tabs.js',
+        'src/js/accordion.js',
         'src/js/fast-clicks.js',
         'src/js/clicks.js',
         'src/js/resize.js',
