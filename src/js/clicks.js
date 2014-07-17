@@ -120,7 +120,7 @@ app.initClickEvents = function () {
             app.sortableClose(clicked.data('sortable'));
         }
         // Accordion
-        if (clicked.hasClass('accordion-toggle')) {
+        if (clicked.hasClass('accordion-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
             var accordionItem = clicked.parents('.accordion-item');
             if (accordionItem.length === 0) accordionItem = clicked.parents('li');
             app.accordionToggle(accordionItem);
