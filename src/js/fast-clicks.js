@@ -7,6 +7,9 @@ app.initFastClicks = function () {
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
 
     function targetNeedsFocus(el) {
+        if (document.activeElement === el) {
+            return false;
+        }
         var tag = el.nodeName.toLowerCase();
         var skipInputs = ('button checkbox file image radio submit').split(' ');
         if (el.disabled || el.readOnly) return false;
@@ -36,9 +39,10 @@ app.initFastClicks = function () {
         if (e.targetTouches.length > 1) {
             return true;
         }
+
         if (app.device.os === 'ios') {
             var selection = window.getSelection();
-            if (selection.rangeCount && !selection.isCollapsed) {
+            if (selection.rangeCount && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
                 activeSelection = true;
                 return true;
             }
@@ -46,6 +50,7 @@ app.initFastClicks = function () {
                 activeSelection = false;
             }
         }
+
         trackClick = true;
         targetElement = e.target;
         touchStartTime = (new Date()).getTime();
@@ -79,6 +84,10 @@ app.initFastClicks = function () {
             return true;
         }
 
+        if (document.activeElement === e.target) {
+            return true;
+        }
+
         if (!activeSelection) {
             e.preventDefault();
         }
@@ -99,7 +108,9 @@ app.initFastClicks = function () {
         }
 
         // Trigger focus when required
-        if (targetNeedsFocus(targetElement)) targetElement.focus();
+        if (targetNeedsFocus(targetElement)) {
+            targetElement.focus();
+        }
 
         e.preventDefault();
         var touch = e.changedTouches[0];
@@ -121,23 +132,6 @@ app.initFastClicks = function () {
         targetElement = null;
     }
 
-    function onMouse(e) {
-        if (!targetElement) {
-            return true;
-        }
-        if (e.forwardedTouchEvent) {
-            return true;
-        }
-        if (!e.cancelable) {
-            return true;
-        }
-        e.stopImmediatePropagation();
-        e.stopPropagation();
-        e.preventDefault();
-
-        return false;
-
-    }
     function handleClick(e) {
         var allowClick = false;
 
@@ -152,6 +146,9 @@ app.initFastClicks = function () {
         }
 
         if (!targetElement) {
+            allowClick =  true;
+        }
+        if (document.activeElement === targetElement) {
             allowClick =  true;
         }
         if (e.forwardedTouchEvent) {
