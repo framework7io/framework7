@@ -223,4 +223,56 @@ i.ks-tabbar-icon-4 {
         left: 0;
     }
 }
-    
+// Custom Accordion
+.custom-accordion {
+    padding-left: 0;
+    padding-right: 0;
+    .accordion-toggle {
+        background: #222;
+        padding: 0px 15px;
+        color:#fff;
+        height: 44px;
+        line-height: 44px;
+        font-size: 17px;
+        border-bottom: 1px solid #000;
+        cursor: pointer;
+        &:active {
+            background: #000;
+        }
+        span {
+            display: inline-block;
+            margin-left: 15px;
+            html[dir="rtl"] & {
+                margin-left: 0;
+                margin-right: 15px;
+            }
+        }
+    }
+    .accordion-item:last-child .accordion-toggle {
+        border-bottom: none;
+    }
+    .icon-plus, .icon-minus {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        border: 1px solid #fff;
+        border-radius: 100%;
+        line-height: 20px;
+        text-align: center;
+    }
+    .icon-minus {
+        display: none;
+    }
+    .accordion-item-expanded {
+        .icon-minus {
+            display: inline-block;
+        }
+        .icon-plus {
+            display: none;
+        }
+    }
+    .accordion-content {
+        background: #fff;
+        padding: 0px 15px;
+    }
+}

@@ -211,3 +211,54 @@ i.ks-tabbar-icon-4 {
 .ks-slider-custom .slider-prev-button {
   left: 0;
 }
+.custom-accordion {
+  padding-left: 0;
+  padding-right: 0;
+}
+.custom-accordion .accordion-toggle {
+  background: #222;
+  padding: 0px 15px;
+  color: #fff;
+  height: 44px;
+  line-height: 44px;
+  font-size: 17px;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+}
+.custom-accordion .accordion-toggle:active {
+  background: #000;
+}
+.custom-accordion .accordion-toggle span {
+  display: inline-block;
+  margin-left: 15px;
+}
+html[dir="rtl"] .custom-accordion .accordion-toggle span {
+  margin-left: 0;
+  margin-right: 15px;
+}
+.custom-accordion .accordion-item:last-child .accordion-toggle {
+  border-bottom: none;
+}
+.custom-accordion .icon-plus,
+.custom-accordion .icon-minus {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #fff;
+  border-radius: 100%;
+  line-height: 20px;
+  text-align: center;
+}
+.custom-accordion .icon-minus {
+  display: none;
+}
+.custom-accordion .accordion-item-expanded .icon-minus {
+  display: inline-block;
+}
+.custom-accordion .accordion-item-expanded .icon-plus {
+  display: none;
+}
+.custom-accordion .accordion-content {
+  background: #fff;
+  padding: 0px 15px;
+}
