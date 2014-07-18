@@ -136,6 +136,7 @@ var View = function (selector, params) {
             viewContainerWidth = container.width();
             var target = $(e.target);
             activePage = target.is('.page') ? target : target.parents('.page');
+            if (activePage.hasClass('no-swipeback')) cancel = true;
             previousPage = container.find('.page-on-left:not(.cached)');
             var notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
             if (app.rtl) {
