@@ -1,8 +1,8 @@
 /* === Grid === */
 .row {
-    .clearfix();
+    .flexbox();
+    .justify-content(space-between);
     > [class*="col-"] {
-        float: left;
         margin-left: 15px;
         .border-box();
         &:first-child{
