@@ -5,6 +5,7 @@
 @dividerColor: #8e8e93;
 .list-block {
     margin: 35px 0;
+    font-size: 17px;
     ul {
         background: @listBlockBg;
         list-style: none;
@@ -94,7 +95,6 @@
         padding-top: 8px;
         padding-bottom: 7px;
         min-height: 44px;
-
         .border-box();
         .flexbox();
         -webkit-box-flex:1;
@@ -103,7 +103,6 @@
         .align-items(center);
     }
     .item-title {
-        font-size: 17px;
         .flex-shrink(1);
         white-space: nowrap;
         position: relative;
@@ -130,7 +129,7 @@
         margin-left: 5px;
         .flexbox();
         max-height: 28px;
-        font-size: 17px;
+        
     }
     .smart-select .item-after {
         max-width: 70%;
@@ -142,6 +141,7 @@
         .transition(300ms);
         display: block;
         color: inherit;
+
         .item-inner {
             padding-right: 35px;
             background: no-repeat -webkit-calc(~"100% - 15px") center;
@@ -212,7 +212,6 @@
         backface-visibility: hidden;
     }
     .swipeout-actions {
-        font-size: 17px;
         border-bottom: 1px solid @listBlockBorderColor;
         position: absolute;
         z-index: 0;
@@ -300,7 +299,6 @@
         }
     }
     .item-divider, .list-group-title {
-        font-size: 17px;
         background: @dividerBg;
         border-top: 1px solid @listBlockBorderColor;
         margin-top: -1px;
