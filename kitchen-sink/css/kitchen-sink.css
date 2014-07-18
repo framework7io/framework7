@@ -216,17 +216,16 @@ i.ks-tabbar-icon-4 {
   padding-right: 0;
 }
 .custom-accordion .accordion-toggle {
-  background: #222;
   padding: 0px 15px;
-  color: #fff;
   height: 44px;
   line-height: 44px;
   font-size: 17px;
-  border-bottom: 1px solid #000;
+  color: #000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
 .custom-accordion .accordion-toggle:active {
-  background: #000;
+  background: rgba(0, 0, 0, 0.15);
 }
 .custom-accordion .accordion-toggle span {
   display: inline-block;
@@ -244,7 +243,7 @@ html[dir="rtl"] .custom-accordion .accordion-toggle span {
   display: inline-block;
   width: 22px;
   height: 22px;
-  border: 1px solid #fff;
+  border: 1px solid #000;
   border-radius: 100%;
   line-height: 20px;
   text-align: center;
@@ -259,6 +258,5 @@ html[dir="rtl"] .custom-accordion .accordion-toggle span {
   display: none;
 }
 .custom-accordion .accordion-content {
-  background: #fff;
   padding: 0px 15px;
 }

@@ -1,5 +1,5 @@
 /* === Accordion === */
-.list-block.accordion-list {
+.list-block {
     .accordion-toggle {
         cursor: pointer;
         .transition(300ms);
@@ -35,12 +35,14 @@
             border-bottom: 1px solid transparent;
         }
     }
-    .content-block, .list-block {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-    ul {
-        padding-left: 0;
+    .accordion-item {
+        .content-block, .list-block {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        ul {
+            padding-left: 0;
+        }
     }
 }
 .accordion-content {
