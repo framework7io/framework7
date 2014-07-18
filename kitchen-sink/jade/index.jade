@@ -227,7 +227,7 @@ html
                         .item-inner 
                           .item-title Accordion
                           .item-after
-                            span.badge.badge-green new
+                            span.badge.badge-green NEW
                   li
                     a(href="pull-to-refresh.html").item-link 
                       .item-content
@@ -305,7 +305,15 @@ html
                           i.icon.icon-f7
                         .item-inner 
                           .item-title Notifications
-                  
+                  li
+                    a(href="login-screen.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Login Screen
+                          .item-after
+                            span.badge.badge-green NEW
                   li
                     a(href="#").item-link.ks-generate-page
                       .item-content
@@ -324,7 +332,7 @@ html
               .content-block
                 p 
                   a(href="core-features.html").button Read About Core Features
-    .popup
+    .popup.demo-popup
       .view.navbar-fixed
         .page
           .navbar
@@ -385,5 +393,28 @@ html
                   .item-title-row
                     .item-title Billie Jean
                   .item-subtitle Michael Jackson
+    .popup.login-popup
+      .view
+        .page
+          .page-content.login-screen-content
+            .login-screen-title Framework7
+            form
+              .list-block
+                ul
+                  li.item-content
+                    .item-inner 
+                      .item-title.label Username
+                      .item-input
+                        input(type="text", name="username", placeholder="Your username")
+                  li.item-content
+                    .item-inner 
+                      .item-title.label Password
+                      .item-input
+                        input(type="password", name="password", placeholder="Your password")
+              .list-block
+                ul
+                  li
+                    a(href="#").item-link.list-button Sign In
+                .list-block-label Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     script(type="text/javascript", src="../build/js/framework7.js")
     script(type="text/javascript", src="js/kitchen-sink.js")

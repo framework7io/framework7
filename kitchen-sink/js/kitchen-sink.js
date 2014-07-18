@@ -347,6 +347,16 @@ myApp.onPageInit('notifications', function (page) {
     });
 });
 
+/* ===== Login screen page events ===== */
+myApp.onPageInit('login-screen-embedded', function (page) {
+    $$(page.container).find('.list-button').on('click', function () {
+        var username = $$(page.container).find('input[name="username"]').val();
+        var password = $$(page.container).find('input[name="password"]').val();
+        myApp.alert('Username: ' + username + ', password: ' + password, function () {
+            mainView.goBack();
+        });
+    });
+});
 
 /* ===== Demo Popover ===== */
 $$('.popover a').on('click', function () {
