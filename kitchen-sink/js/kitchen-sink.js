@@ -45,6 +45,16 @@ myApp.onPageInit('modals', function (page) {
             });
         });
     });
+    $$('.demo-login').on('click', function () {
+        myApp.modalLogin('Enter your username and password', function (username, password) {
+            myApp.alert('Thank you! Username: ' + username + ', password: ' + password);
+        });
+    });
+    $$('.demo-password').on('click', function () {
+        myApp.modalPassword('Enter your password', function (password) {
+            myApp.alert('Thank you! Password: ' + password);
+        });
+    });
 });
 
 /* ===== Preloader Page events ===== */
