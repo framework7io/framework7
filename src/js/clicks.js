@@ -70,6 +70,18 @@ app.initClickEvents = function () {
         if (clicked.hasClass('close-popup')) {
             app.closeModal('.popup.modal-in');
         }
+        // Login Screen
+        var loginScreen;
+        if (clicked.hasClass('open-login-screen')) {
+            if (clicked.attr('data-login-screen')) {
+                loginScreen = clicked.attr('data-login-screen');
+            }
+            else loginScreen = '.login-screen';
+            app.loginScreen(loginScreen);
+        }
+        if (clicked.hasClass('close-login-screen')) {
+            app.closeModal('.login-screen.modal-in');
+        }
         // Close Modal
         if (clicked.hasClass('modal-overlay')) {
             if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
@@ -156,5 +168,5 @@ app.initClickEvents = function () {
             else view.loadPage(clicked.attr('href'), animatePages);
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-toggle', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-toggle', handleClicks);
 };

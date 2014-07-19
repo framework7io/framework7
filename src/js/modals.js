@@ -347,21 +347,35 @@ app.popup = function (modal, removeOnClose) {
     app.openModal(modal);
     return modal[0];
 };
+app.loginScreen = function (modal) {
+    if (!modal) modal = '.login-screen';
+    modal = $(modal);
+    if (modal.length === 0) return false;
+    modal.show();
+    if (modal.find('.' + app.params.viewClass).length > 0) {
+        app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
+    }
+    app.openModal(modal);
+    return modal[0];
+};
 app.openModal = function (modal) {
     modal = $(modal);
 
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
-    if (!isPopover && !isPopup) modal.css({marginTop: - Math.round(modal.outerHeight() / 2) + 'px'});
+    var isLoginScreen = modal.hasClass('login-screen');
+    if (!isPopover && !isPopup && !isLoginScreen) modal.css({marginTop: - Math.round(modal.outerHeight() / 2) + 'px'});
 
-    if ($('.modal-overlay').length === 0 && !isPopup) {
-        $('body').append('<div class="modal-overlay"></div>');
+    var overlay;
+    if (!isLoginScreen) {
+        if ($('.modal-overlay').length === 0 && !isPopup) {
+            $('body').append('<div class="modal-overlay"></div>');
+        }
+        if ($('.popup-overlay').length === 0 && isPopup) {
+            $('body').append('<div class="popup-overlay"></div>');
+        }
+        overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
     }
-    if ($('.popup-overlay').length === 0 && isPopup) {
-        $('body').append('<div class="popup-overlay"></div>');
-    }
-    var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
-
 
     //Make sure that styles are applied, trigger relayout;
     var clientLeft = modal[0].clientLeft;
@@ -370,7 +384,7 @@ app.openModal = function (modal) {
     modal.trigger('open');
 
     // Classes for transition in
-    overlay.addClass('modal-overlay-visible');
+    if (!isLoginScreen) overlay.addClass('modal-overlay-visible');
     modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
         if (modal.hasClass('modal-out')) modal.trigger('closed');
         else modal.trigger('opened');
@@ -381,6 +395,8 @@ app.closeModal = function (modal) {
     modal = $(modal || '.modal-in');
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
+    var isLoginScreen = modal.hasClass('login-screen');
+
     var removeOnClose = modal.hasClass('remove-on-close');
 
     var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
@@ -388,14 +404,18 @@ app.closeModal = function (modal) {
 
     modal.trigger('close');
     
-
     if (!isPopover) {
         modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
             if (modal.hasClass('modal-out')) modal.trigger('closed');
             else modal.trigger('opened');
-            if (!isPopup) modal.remove();
-            if (isPopup) modal.removeClass('modal-out').hide();
-            if (removeOnClose) modal.remove();
+            
+            if (isPopup || isLoginScreen) {
+                modal.removeClass('modal-out').hide();
+                if (removeOnClose && modal.length > 0) modal.remove();
+            }
+            else {
+                modal.remove();
+            }
         });
     }
     else {

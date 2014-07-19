@@ -320,7 +320,7 @@ input.modal-text-input {
 }
 
 // Popup
-.popup {
+.popup, .login-screen {
     position: absolute;
     left: 0;
     top: 0;
@@ -346,8 +346,13 @@ input.modal-text-input {
     &.modal-out {
         .translate3d(0,100%,0);
     }
-    // iPad Modal
-    @media all and (min-width:630px) and (min-height:630px) {
+}
+.login-screen.modal-in, .login-screen.modal-out {
+    display: block;
+}
+// iPad Popup
+@media all and (min-width:630px) and (min-height:630px) {
+    .popup {
         width: 630px;
         height: 630px;
         left: 50%;
@@ -362,11 +367,10 @@ input.modal-text-input {
             .translate3d(0,1024px,0);
         }
     }
-
 }
-// iPhone with statusbar overlay
-@media all and (max-width:629px), (max-height:629px) {
-    html.with-statusbar-overlay {
+html.with-statusbar-overlay {
+    // iPhone with statusbar overlay
+    @media all and (max-width:629px), (max-height:629px) {
         .popup {
             height: ~"-webkit-calc(100% - 20px)";
             height: ~"-moz-calc(100% - 20px)";
@@ -378,7 +382,15 @@ input.modal-text-input {
             z-index: 9800;
         }
     }
+    .login-screen {
+        height: ~"-webkit-calc(100% - 20px)";
+        height: ~"-moz-calc(100% - 20px)";
+        height: ~"-ms-calc(100% - 20px)";
+        height: ~"calc(100% - 20px)";
+        top: 20px;
+    }
 }
+
 //Preloaders modals
 .modal .preloader {
     width: 34px;
