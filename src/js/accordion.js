@@ -10,7 +10,7 @@ app.accordionToggle = function (item) {
 app.accordionOpen = function (item) {
     item = $(item);
     var list = item.parents('.accordion-list');
-    var content = item.find('.accordion-content');
+    var content = item.find('.accordion-item-content');
     var expandedItem = list.find('.accordion-item-expanded');
     if (expandedItem.length > 0) {
         app.accordionClose(expandedItem);
@@ -29,7 +29,7 @@ app.accordionOpen = function (item) {
 };
 app.accordionClose = function (item) {
     item = $(item);
-    var content = item.find('.accordion-content');
+    var content = item.find('.accordion-item-content');
     item.removeClass('accordion-item-expanded');
     content.transition(0);
     content.css('height', content[0].scrollHeight + 'px');

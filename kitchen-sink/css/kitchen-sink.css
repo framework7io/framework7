@@ -215,7 +215,7 @@ i.ks-tabbar-icon-4 {
   padding-left: 0;
   padding-right: 0;
 }
-.custom-accordion .accordion-toggle {
+.custom-accordion .accordion-item-toggle {
   padding: 0px 15px;
   height: 44px;
   line-height: 44px;
@@ -224,18 +224,18 @@ i.ks-tabbar-icon-4 {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
-.custom-accordion .accordion-toggle:active {
+.custom-accordion .accordion-item-toggle:active {
   background: rgba(0, 0, 0, 0.15);
 }
-.custom-accordion .accordion-toggle span {
+.custom-accordion .accordion-item-toggle span {
   display: inline-block;
   margin-left: 15px;
 }
-html[dir="rtl"] .custom-accordion .accordion-toggle span {
+html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
   margin-left: 0;
   margin-right: 15px;
 }
-.custom-accordion .accordion-item:last-child .accordion-toggle {
+.custom-accordion .accordion-item:last-child .accordion-item-toggle {
   border-bottom: none;
 }
 .custom-accordion .icon-plus,
@@ -257,6 +257,6 @@ html[dir="rtl"] .custom-accordion .accordion-toggle span {
 .custom-accordion .accordion-item-expanded .icon-plus {
   display: none;
 }
-.custom-accordion .accordion-content {
+.custom-accordion .accordion-item-content {
   padding: 0px 15px;
 }

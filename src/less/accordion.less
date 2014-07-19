@@ -1,6 +1,6 @@
 /* === Accordion === */
 .list-block {
-    .accordion-toggle {
+    .accordion-item-toggle {
         cursor: pointer;
         .transition(300ms);
         .item-inner {
@@ -21,7 +21,7 @@
             }
         }
     }
-    .accordion-toggle, .accordion-item > .item-link {
+    .accordion-item-toggle, .accordion-item > .item-link {
         .item-inner {
             .transition(300ms);
             -webkit-transition-property: background-color, border-color;
@@ -45,7 +45,7 @@
         }
     }
 }
-.accordion-content {
+.accordion-item-content {
     position: relative;
     overflow: hidden;
     height: 0;

@@ -132,7 +132,7 @@ app.initClickEvents = function () {
             app.sortableClose(clicked.data('sortable'));
         }
         // Accordion
-        if (clicked.hasClass('accordion-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
+        if (clicked.hasClass('accordion-item-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
             var accordionItem = clicked.parents('.accordion-item');
             if (accordionItem.length === 0) accordionItem = clicked.parents('li');
             app.accordionToggle(accordionItem);
@@ -168,5 +168,5 @@ app.initClickEvents = function () {
             else view.loadPage(clicked.attr('href'), animatePages);
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-toggle', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle', handleClicks);
 };
