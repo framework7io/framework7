@@ -73,7 +73,8 @@
     position: relative;
     top: 1px;
     background-size: cover;
-    display: none;
+    opacity: 0;
+    .transition(400ms);
 }
 .message-sent {
     -ms-flex-item-align: end;
@@ -148,7 +149,7 @@
 .message-last {
     margin-bottom: 8px;
     .message-avatar {
-        display: block;
+        opacity: 1;
     }
 }
 .message-appear {
