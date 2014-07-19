@@ -98,6 +98,8 @@ $.requestAnimationFrame = function (callback) {
         return window.setTimeout(callback, 1000 / 60);
     }
 };
+
+// Plugins
 $.fn = Dom7.prototype;
 
 $.fn.scrollTop = function (top, duration) {
