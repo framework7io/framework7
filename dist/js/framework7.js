@@ -3223,7 +3223,6 @@
             if (expandedItem.length > 0) {
                 app.accordionClose(expandedItem);
             }
-            item.addClass('accordion-item-expanded');
             content.css('height', content[0].scrollHeight + 'px').transitionEnd(function () {
                 if (item.hasClass('accordion-item-expanded')) {
                     content.transition(0);
@@ -3233,7 +3232,7 @@
                 }
                 else content.css('height', '');
             });
-        
+            item.addClass('accordion-item-expanded');
         };
         app.accordionClose = function (item) {
             item = $(item);

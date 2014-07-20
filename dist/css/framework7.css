@@ -2197,6 +2197,9 @@ label.label-radio:active .item-inner {
   -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+.accordion-item-expanded .accordion-item-content {
+  height: auto;
+}
 /* === Modals === */
 .modal-overlay,
 .preloader-indicator-overlay,
