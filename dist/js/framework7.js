@@ -1,5 +1,5 @@
 /*
- * Framework7 0.9.2
+ * Framework7 0.9.3
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: July 12, 2014
+ * Released on: July 20, 2014
 */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '0.9.2';
+        app.version = '0.9.3';
     
         // Default Parameters
         app.params = {
@@ -263,6 +263,7 @@
                     viewContainerWidth = container.width();
                     var target = $(e.target);
                     activePage = target.is('.page') ? target : target.parents('.page');
+                    if (activePage.hasClass('no-swipeback')) cancel = true;
                     previousPage = container.find('.page-on-left:not(.cached)');
                     var notFromBorder = touchesStart.x - container.offset().left > view.params.swipeBackPageActiveArea;
                     if (app.rtl) {
@@ -2047,21 +2048,35 @@
             app.openModal(modal);
             return modal[0];
         };
+        app.loginScreen = function (modal) {
+            if (!modal) modal = '.login-screen';
+            modal = $(modal);
+            if (modal.length === 0) return false;
+            modal.show();
+            if (modal.find('.' + app.params.viewClass).length > 0) {
+                app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
+            }
+            app.openModal(modal);
+            return modal[0];
+        };
         app.openModal = function (modal) {
             modal = $(modal);
         
             var isPopover = modal.hasClass('popover');
             var isPopup = modal.hasClass('popup');
-            if (!isPopover && !isPopup) modal.css({marginTop: - Math.round(modal.outerHeight() / 2) + 'px'});
+            var isLoginScreen = modal.hasClass('login-screen');
+            if (!isPopover && !isPopup && !isLoginScreen) modal.css({marginTop: - Math.round(modal.outerHeight() / 2) + 'px'});
         
-            if ($('.modal-overlay').length === 0 && !isPopup) {
-                $('body').append('<div class="modal-overlay"></div>');
+            var overlay;
+            if (!isLoginScreen) {
+                if ($('.modal-overlay').length === 0 && !isPopup) {
+                    $('body').append('<div class="modal-overlay"></div>');
+                }
+                if ($('.popup-overlay').length === 0 && isPopup) {
+                    $('body').append('<div class="popup-overlay"></div>');
+                }
+                overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
             }
-            if ($('.popup-overlay').length === 0 && isPopup) {
-                $('body').append('<div class="popup-overlay"></div>');
-            }
-            var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
-        
         
             //Make sure that styles are applied, trigger relayout;
             var clientLeft = modal[0].clientLeft;
@@ -2070,7 +2085,7 @@
             modal.trigger('open');
         
             // Classes for transition in
-            overlay.addClass('modal-overlay-visible');
+            if (!isLoginScreen) overlay.addClass('modal-overlay-visible');
             modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
                 if (modal.hasClass('modal-out')) modal.trigger('closed');
                 else modal.trigger('opened');
@@ -2081,6 +2096,8 @@
             modal = $(modal || '.modal-in');
             var isPopover = modal.hasClass('popover');
             var isPopup = modal.hasClass('popup');
+            var isLoginScreen = modal.hasClass('login-screen');
+        
             var removeOnClose = modal.hasClass('remove-on-close');
         
             var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
@@ -2088,14 +2105,18 @@
         
             modal.trigger('close');
             
-        
             if (!isPopover) {
                 modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
                     if (modal.hasClass('modal-out')) modal.trigger('closed');
                     else modal.trigger('opened');
-                    if (!isPopup) modal.remove();
-                    if (isPopup) modal.removeClass('modal-out').hide();
-                    if (removeOnClose) modal.remove();
+                    
+                    if (isPopup || isLoginScreen) {
+                        modal.removeClass('modal-out').hide();
+                        if (removeOnClose && modal.length > 0) modal.remove();
+                    }
+                    else {
+                        modal.remove();
+                    }
                 });
             }
             else {
@@ -3186,6 +3207,55 @@
             return true;
         };
         /*===============================================================================
+        ************   Accordion   ************
+        ===============================================================================*/
+        app.accordionToggle = function (item) {
+            item = $(item);
+            if (item.length === 0) return;
+            if (item.hasClass('accordion-item-expanded')) app.accordionClose(item);
+            else app.accordionOpen(item);
+        };
+        app.accordionOpen = function (item) {
+            item = $(item);
+            var list = item.parents('.accordion-list');
+            var content = item.find('.accordion-item-content');
+            var expandedItem = list.find('.accordion-item-expanded');
+            if (expandedItem.length > 0) {
+                app.accordionClose(expandedItem);
+            }
+            item.addClass('accordion-item-expanded');
+            content.css('height', content[0].scrollHeight + 'px').transitionEnd(function () {
+                if (item.hasClass('accordion-item-expanded')) {
+                    content.transition(0);
+                    content.css('height', 'auto');
+                    var clientLeft = content[0].clientLeft;
+                    content.transition('');
+                }
+                else content.css('height', '');
+            });
+        
+        };
+        app.accordionClose = function (item) {
+            item = $(item);
+            var content = item.find('.accordion-item-content');
+            item.removeClass('accordion-item-expanded');
+            content.transition(0);
+            content.css('height', content[0].scrollHeight + 'px');
+            // Relayout
+            var clientLeft = content[0].clientLeft;
+            // Close
+            content.transition('');
+            content.css('height', '').transitionEnd(function () {
+                if (item.hasClass('accordion-item-expanded')) {
+                    content.transition(0);
+                    content.css('height', 'auto');
+                    var clientLeft = content[0].clientLeft;
+                    content.transition('');
+                }
+                else content.css('height', '');
+            });
+        };
+        /*===============================================================================
         ************   Fast Clicks   ************
         ************   Inspired by https://github.com/ftlabs/fastclick   ************
         ===============================================================================*/
@@ -3194,6 +3264,9 @@
             var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
         
             function targetNeedsFocus(el) {
+                if (document.activeElement === el) {
+                    return false;
+                }
                 var tag = el.nodeName.toLowerCase();
                 var skipInputs = ('button checkbox file image radio submit').split(' ');
                 if (el.disabled || el.readOnly) return false;
@@ -3223,9 +3296,10 @@
                 if (e.targetTouches.length > 1) {
                     return true;
                 }
+        
                 if (app.device.os === 'ios') {
                     var selection = window.getSelection();
-                    if (selection.rangeCount && !selection.isCollapsed) {
+                    if (selection.rangeCount && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
                         activeSelection = true;
                         return true;
                     }
@@ -3233,6 +3307,7 @@
                         activeSelection = false;
                     }
                 }
+        
                 trackClick = true;
                 targetElement = e.target;
                 touchStartTime = (new Date()).getTime();
@@ -3266,6 +3341,10 @@
                     return true;
                 }
         
+                if (document.activeElement === e.target) {
+                    return true;
+                }
+        
                 if (!activeSelection) {
                     e.preventDefault();
                 }
@@ -3286,7 +3365,9 @@
                 }
         
                 // Trigger focus when required
-                if (targetNeedsFocus(targetElement)) targetElement.focus();
+                if (targetNeedsFocus(targetElement)) {
+                    targetElement.focus();
+                }
         
                 e.preventDefault();
                 var touch = e.changedTouches[0];
@@ -3308,23 +3389,6 @@
                 targetElement = null;
             }
         
-            function onMouse(e) {
-                if (!targetElement) {
-                    return true;
-                }
-                if (e.forwardedTouchEvent) {
-                    return true;
-                }
-                if (!e.cancelable) {
-                    return true;
-                }
-                e.stopImmediatePropagation();
-                e.stopPropagation();
-                e.preventDefault();
-        
-                return false;
-        
-            }
             function handleClick(e) {
                 var allowClick = false;
         
@@ -3339,6 +3403,9 @@
                 }
         
                 if (!targetElement) {
+                    allowClick =  true;
+                }
+                if (document.activeElement === targetElement) {
                     allowClick =  true;
                 }
                 if (e.forwardedTouchEvent) {
@@ -3441,6 +3508,18 @@
                 if (clicked.hasClass('close-popup')) {
                     app.closeModal('.popup.modal-in');
                 }
+                // Login Screen
+                var loginScreen;
+                if (clicked.hasClass('open-login-screen')) {
+                    if (clicked.attr('data-login-screen')) {
+                        loginScreen = clicked.attr('data-login-screen');
+                    }
+                    else loginScreen = '.login-screen';
+                    app.loginScreen(loginScreen);
+                }
+                if (clicked.hasClass('close-login-screen')) {
+                    app.closeModal('.login-screen.modal-in');
+                }
                 // Close Modal
                 if (clicked.hasClass('modal-overlay')) {
                     if ($('.modal.modal-in').length > 0 && app.params.modalCloseByOutside)
@@ -3490,6 +3569,12 @@
                 if (clicked.hasClass('close-sortable')) {
                     app.sortableClose(clicked.data('sortable'));
                 }
+                // Accordion
+                if (clicked.hasClass('accordion-item-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
+                    var accordionItem = clicked.parents('.accordion-item');
+                    if (accordionItem.length === 0) accordionItem = clicked.parents('li');
+                    app.accordionToggle(accordionItem);
+                }
                 // Load Page
                 if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks) || !isLink) {
                     return;
@@ -3521,7 +3606,7 @@
                     else view.loadPage(clicked.attr('href'), animatePages);
                 }
             }
-            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .smart-select, .toggle-sortable, .open-sortable, .close-sortable', handleClicks);
+            $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle', handleClicks);
         };
         
         /*======================================================
@@ -3976,7 +4061,6 @@
             s.onTouchMove = function (e) {
                 if (s.params.onTouchMove) s.params.onTouchMove(s, e);
                 s.allowClick = false;
-                if (!isTouched) return;
                 if (e.targetTouches && e.targetTouches.length > 1) return;
                 
                 touchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
@@ -3985,6 +4069,10 @@
                 if (typeof isScrolling === 'undefined') {
                     isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
                 }
+                if ((isH && isScrolling) || (!isH && !isScrolling))  {
+                    if (s.params.onOppositeTouchMove) s.params.onOppositeTouchMove(s, e);
+                }
+                if (!isTouched) return;
                 if ((isH && isScrolling) || (!isH && !isScrolling))  {
                     isTouched = false;
                     return;
@@ -4023,6 +4111,7 @@
                     if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
                         if (clickTimeout) clearTimeout(clickTimeout);
                         clickTimeout = setTimeout(function () {
+                            if (!s) return;
                             if (s.params.paginationHide && s.paginationContainer) {
                                 s.paginationContainer.toggleClass('slider-pagination-hidden');
                             }
@@ -4053,6 +4142,7 @@
                     s.allowClick = true;
                 }
                 setTimeout(function () {
+                    if (!s) return;
                     s.allowClick = true;
                 }, 100);
                 
@@ -4291,6 +4381,7 @@
                 navbar: true,
                 toolbar: true,
                 theme: 'light',
+                swipeToClose: true,
                 backLinkText: 'Close'
             };
             
@@ -4484,7 +4575,7 @@
                 pb.captionsContainer = pb.container.find('.photo-browser-captions');
                 pb.captions = pb.container.find('.photo-browser-caption');
                 
-                pb.slider = app.slider(pb.sliderContainer, {
+                var sliderSettings = {
                     nextButton: pb.params.nextButton || '.photo-browser-next',
                     prevButton: pb.params.prevButton || '.photo-browser-prev',
                     indexButton: pb.params.indexButton,
@@ -4541,13 +4632,17 @@
                             scale = currentScale = 1;
                         }
                         if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(slider);
-                    }
-                });
+                    },
+                };
         
+                if (pb.params.swipeToClose && pb.params.type !== 'page') {
+                    sliderSettings.onTouchStart = pb.swipeCloseTouchStart;
+                    sliderSettings.onOppositeTouchMove = pb.swipeCloseTouchMove;
+                    sliderSettings.onTouchEnd = pb.swipeCloseTouchEnd;
+                }
+        
+                pb.slider = app.slider(pb.sliderContainer, sliderSettings);
                 pb.attachEvents();
-        
-                
-        
             };
             pb.attachEvents = function (detach) {
                 var action = detach ? 'off' : 'on';
@@ -4745,6 +4840,64 @@
                 imageCurrentY = Math.max(Math.min(imageCurrentY, imageMaxY), imageMinY);
         
                 gestureImgWrap.transition(momentumDuration).transform('translate3d(' + imageCurrentX + 'px, ' + imageCurrentY + 'px,0)');
+            };
+        
+            // Swipe Up To Close
+            var swipeToCloseIsTouched = false;
+            var allowSwipeToClose = true;
+            var swipeToCloseDiff, swipeToCloseStart, swipeToCloseCurrent, swipeToCloseStarted = false, swipeToCloseActiveSlide, swipeToCloseTimeStart;
+            pb.swipeCloseTouchStart = function (slider, e) {
+                if (!allowSwipeToClose) return;
+                swipeToCloseIsTouched = true;
+            };
+            pb.swipeCloseTouchMove = function (slider, e) {
+                if (!swipeToCloseIsTouched) return;
+                if (!swipeToCloseStarted) {
+                    swipeToCloseStarted = true;
+                    swipeToCloseStart = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                    swipeToCloseActiveSlide = pb.slider.slides.eq(pb.slider.activeSlideIndex);
+                    swipeToCloseTimeStart = (new Date()).getTime();
+                }
+                e.preventDefault();
+                swipeToCloseCurrent = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+                swipeToCloseDiff = swipeToCloseStart - swipeToCloseCurrent;
+                var opacity = 1 - Math.abs(swipeToCloseDiff) / 300;
+                swipeToCloseActiveSlide.transform('translate3d(0,' + (-swipeToCloseDiff) + 'px,0)');
+                pb.slider.container.css('opacity', opacity).transition(0);
+            };
+            pb.swipeCloseTouchEnd = function (slider, e) {
+                swipeToCloseIsTouched = false;
+                if (!swipeToCloseStarted) {
+                    swipeToCloseStarted = false;
+                    return;
+                }
+                swipeToCloseStarted = false;
+                allowSwipeToClose = false;
+                var diff = Math.abs(swipeToCloseDiff);
+                var timeDiff = (new Date()).getTime() - swipeToCloseTimeStart;
+                if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
+                    setTimeout(function () {
+                        if (pb.params.type === 'standalone') {
+                            pb.close();
+                        }
+                        if (pb.params.type === 'popup') {
+                            app.closeModal(pb.popup);
+                        }
+                        allowSwipeToClose = true;
+                    }, 0);
+                    return;
+                }
+                if (diff !== 0) {
+                    swipeToCloseActiveSlide.addClass('transitioning').transitionEnd(function () {
+                        allowSwipeToClose = true;
+                        swipeToCloseActiveSlide.removeClass('transitioning');
+                    });
+                }
+                else {
+                    allowSwipeToClose = true;
+                }
+                pb.slider.container.css('opacity', '').transition('');
+                swipeToCloseActiveSlide.transform('');
             };
         
             return pb;
@@ -5553,6 +5706,11 @@
     // Selector 
     var $ = function (selector, context) {
         var arr = [], i = 0;
+        if (selector && !context) {
+            if (selector instanceof Dom7) {
+                return selector;
+            }
+        }
         if (selector) {
             // String
             if (typeof selector === 'string') {
@@ -5675,6 +5833,8 @@
             return window.setTimeout(callback, 1000 / 60);
         }
     };
+    
+    // Plugins
     $.fn = Dom7.prototype;
     
     $.fn.scrollTop = function (top, duration) {
@@ -5716,7 +5876,6 @@
             $.requestAnimationFrame(render);
         });
     };
-    
     // Ajax
     $.ajax = function (options) {
         var defaults = {

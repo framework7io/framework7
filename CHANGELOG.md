@@ -1,4 +1,23 @@
 # Change Log
+
+## Framework7 v0.9.3 - Updated on July 20, 2014
+  
+  * New Accordion component
+  * New Login Screen component
+  * Messages 
+    * Avatars now hide/show with transition
+    * Fixes white space wrap along long-words messages
+  * Views 
+    * New "no-swipeback" class for .page to prevent Swipe Back on this page
+  * Grid
+    * Grid reworked to flex-box layout
+  * Fast Clicks
+    * Improved behavior on form fields
+  * Slider
+    * New "onOppositeTouchMove" callback
+  * Photo Browser
+    * New "swipeToClose" parameter that allows to close photo browser on swipe up/down
+
 ## Framework7 v0.9.2 - Updated on July 12, 2014
 
   * New Message Bar component to be used with messages
