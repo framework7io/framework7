@@ -56,6 +56,11 @@ Dom7.prototype = {
             return this;
         }
     },
+    removeAttr: function (attr) {
+        for (var i = 0; i < this.length; i++) {
+            this[i].removeAttribute(attr);
+        }
+    },
     prop: function (prop, value) {
         if (typeof value === 'undefined') {
             if (this[0]) return this[0][prop];
