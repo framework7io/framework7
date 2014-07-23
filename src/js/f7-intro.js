@@ -45,6 +45,9 @@ window.Framework7 = function (params) {
         smartSelectBackText: 'Back',
         smartSelectSearchbar: false,
         smartSelectBackOnSelect: false,
+        // Searchbar
+        searchbarHideDividers: true,
+        searchbarHideGroups: true,
         // Panels
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,

@@ -121,7 +121,7 @@ app.initSearchbar = function (pageContainer) {
     // Search
     function search(query) {
         var values = query.trim().toLowerCase().split(' ');
-        searchList.find('li').css('display', '');
+        searchList.find('li').removeClass('hidden-by-searchbar');
         var foundItems = [];
         searchList.find('li').each(function (index, el) {
             el = $(el);
@@ -134,12 +134,41 @@ app.initSearchbar = function (pageContainer) {
                 if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
             }
             if (wordsMatch !== values.length) {
-                el.hide();
+                el.addClass('hidden-by-searchbar');
             }
             else {
                 foundItems.push(el[0]);
             }
         });
+
+        if (app.params.searchbarHideDividers) {
+            searchList.find('.item-divider, .list-group-title').each(function () {
+                var title = $(this);
+                var nextElements = title.nextAll('li');
+                var hide = true;
+                for (var i = 0; i < nextElements.length; i++) {
+                    var nextEl = $(nextElements[i]);
+                    if (nextEl.hasClass('list-group-title') || nextEl.hasClass('item-divider')) break;
+                    if (!nextEl.hasClass('hidden-by-searchbar')) {
+                        hide = false;
+                    }
+                }
+                if (hide) title.addClass('hidden-by-searchbar');
+                else title.removeClass('hidden-by-searchbar');
+            });
+        }
+        if (app.params.searchbarHideGroups) {
+            searchList.find('.list-group').each(function () {
+                var group = $(this);
+                var notHidden = group.find('li:not(.hidden-by-searchbar)');
+                if (notHidden.length === 0) {
+                    group.addClass('hidden-by-searchbar');
+                }
+                else {
+                    group.removeClass('hidden-by-searchbar');
+                }
+            });
+        }
 
         searchList.trigger('search', {query: query, foundItems: foundItems});
 
