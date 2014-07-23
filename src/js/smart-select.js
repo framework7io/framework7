@@ -45,6 +45,9 @@ app.smartSelectOpen = function (smartSelect) {
 
     // Collect all values
     var select = smartSelect.find('select')[0];
+    if (select.disabled || smartSelect.hasClass('disabled') || $(select).hasClass('disabled')) {
+        return;
+    }
     var values = {};
     values.length = select.length;
     for (var i = 0; i < select.length; i++) {
@@ -52,7 +55,8 @@ app.smartSelectOpen = function (smartSelect) {
             value: select[i].value,
             text: select[i].textContent.trim(),
             selected: select[i].selected,
-            group: $(select[i]).parent('optgroup')[0]
+            group: $(select[i]).parent('optgroup')[0],
+            disabled: select[i].disabled
         };
     }
 
@@ -67,6 +71,7 @@ app.smartSelectOpen = function (smartSelect) {
     var inputsHTML = '';
     var previousGroup;
     for (var j = 0; j < values.length; j++) {
+        if (values[j].disabled) continue;
         var checked = values[j].selected ? 'checked' : '';
         if (values[j].group) {
             if (values[j].group !== previousGroup) {
