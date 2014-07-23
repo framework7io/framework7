@@ -75,7 +75,7 @@ app.smartSelectOpen = function (smartSelect) {
         var checked = values[j].selected ? 'checked' : '';
         if (values[j].group) {
             if (values[j].group !== previousGroup) {
-                inputsHTML += '<li><div class="item-divider">' + values[j].group.label + '</div></li>';
+                inputsHTML += '<li class="item-divider">' + values[j].group.label + '</li>';
                 previousGroup = values[j].group;
             }
         }
