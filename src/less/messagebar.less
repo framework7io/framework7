@@ -29,14 +29,17 @@
     .link {
         .align-self(flex-end);
     }
-    .link + textarea {
+    .link.icon-only {
+        margin-left: -6px;
+    }
+    .link:not(.icon-only) + textarea {
         margin-left: 8px;
     }
     textarea + .link {
         margin-left: 8px;
     }
     .link {
-        .flex-shrink(0);   
+        .flex-shrink(0);
     }
     ~ .page-content {
         padding-bottom: 44px;
