@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: July 20, 2014
+ * Released on: July 24, 2014
 */
 /*=============
   Framework 7
@@ -999,6 +999,11 @@ html.android .page-from-center-to-right {
   pointer-events: auto;
 }
 .searchbar-not-found {
+  display: none;
+}
+.hidden-by-searchbar,
+.list-block .hidden-by-searchbar,
+.list-block li.hidden-by-searchbar {
   display: none;
 }
 .page > .searchbar {

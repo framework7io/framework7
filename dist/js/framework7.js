@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: July 20, 2014
+ * Released on: July 24, 2014
 */
 (function () {
 
@@ -61,6 +61,9 @@
             smartSelectBackText: 'Back',
             smartSelectSearchbar: false,
             smartSelectBackOnSelect: false,
+            // Searchbar
+            searchbarHideDividers: true,
+            searchbarHideGroups: true,
             // Panels
             swipePanel: false, // or 'left' or 'right'
             swipePanelActiveArea: 0,
@@ -765,7 +768,7 @@
             // Search
             function search(query) {
                 var values = query.trim().toLowerCase().split(' ');
-                searchList.find('li').css('display', '');
+                searchList.find('li').removeClass('hidden-by-searchbar');
                 var foundItems = [];
                 searchList.find('li').each(function (index, el) {
                     el = $(el);
@@ -778,12 +781,41 @@
                         if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
                     }
                     if (wordsMatch !== values.length) {
-                        el.hide();
+                        el.addClass('hidden-by-searchbar');
                     }
                     else {
                         foundItems.push(el[0]);
                     }
                 });
+        
+                if (app.params.searchbarHideDividers) {
+                    searchList.find('.item-divider, .list-group-title').each(function () {
+                        var title = $(this);
+                        var nextElements = title.nextAll('li');
+                        var hide = true;
+                        for (var i = 0; i < nextElements.length; i++) {
+                            var nextEl = $(nextElements[i]);
+                            if (nextEl.hasClass('list-group-title') || nextEl.hasClass('item-divider')) break;
+                            if (!nextEl.hasClass('hidden-by-searchbar')) {
+                                hide = false;
+                            }
+                        }
+                        if (hide) title.addClass('hidden-by-searchbar');
+                        else title.removeClass('hidden-by-searchbar');
+                    });
+                }
+                if (app.params.searchbarHideGroups) {
+                    searchList.find('.list-group').each(function () {
+                        var group = $(this);
+                        var notHidden = group.find('li:not(.hidden-by-searchbar)');
+                        if (notHidden.length === 0) {
+                            group.addClass('hidden-by-searchbar');
+                        }
+                        else {
+                            group.removeClass('hidden-by-searchbar');
+                        }
+                    });
+                }
         
                 searchList.trigger('search', {query: query, foundItems: foundItems});
         
@@ -2875,6 +2907,9 @@
         
             // Collect all values
             var select = smartSelect.find('select')[0];
+            if (select.disabled || smartSelect.hasClass('disabled') || $(select).hasClass('disabled')) {
+                return;
+            }
             var values = {};
             values.length = select.length;
             for (var i = 0; i < select.length; i++) {
@@ -2882,7 +2917,8 @@
                     value: select[i].value,
                     text: select[i].textContent.trim(),
                     selected: select[i].selected,
-                    group: $(select[i]).parent('optgroup')[0]
+                    group: $(select[i]).parent('optgroup')[0],
+                    disabled: select[i].disabled
                 };
             }
         
@@ -2897,10 +2933,11 @@
             var inputsHTML = '';
             var previousGroup;
             for (var j = 0; j < values.length; j++) {
+                if (values[j].disabled) continue;
                 var checked = values[j].selected ? 'checked' : '';
                 if (values[j].group) {
                     if (values[j].group !== previousGroup) {
-                        inputsHTML += '<li><div class="item-divider">' + values[j].group.label + '</div></li>';
+                        inputsHTML += '<li class="item-divider">' + values[j].group.label + '</li>';
                         previousGroup = values[j].group;
                     }
                 }
@@ -5162,6 +5199,11 @@
                     this[i].setAttribute(attr, value);
                 }
                 return this;
+            }
+        },
+        removeAttr: function (attr) {
+            for (var i = 0; i < this.length; i++) {
+                this[i].removeAttribute(attr);
             }
         },
         prop: function (prop, value) {
