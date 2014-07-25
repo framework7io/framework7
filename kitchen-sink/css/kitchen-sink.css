@@ -238,8 +238,8 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
 .custom-accordion .accordion-item:last-child .accordion-item-toggle {
   border-bottom: none;
 }
-.custom-accordion .icon-plus,
-.custom-accordion .icon-minus {
+.custom-accordion .icon-ks-plus,
+.custom-accordion .icon-ks-minus {
   display: inline-block;
   width: 22px;
   height: 22px;
@@ -248,13 +248,13 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
   line-height: 20px;
   text-align: center;
 }
-.custom-accordion .icon-minus {
+.custom-accordion .icon-ks-minus {
   display: none;
 }
-.custom-accordion .accordion-item-expanded .icon-minus {
+.custom-accordion .accordion-item-expanded .icon-ks-minus {
   display: inline-block;
 }
-.custom-accordion .accordion-item-expanded .icon-plus {
+.custom-accordion .accordion-item-expanded .icon-ks-plus {
   display: none;
 }
 .custom-accordion .accordion-item-content {
