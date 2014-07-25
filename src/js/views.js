@@ -48,7 +48,7 @@ var View = function (selector, params) {
         }
             
     }
-    view.url = container.attr('data-url') || viewURL;
+    view.url = container.attr('data-url') || view.params.url || viewURL;
 
     // Store to history main view's url
     if (view.url) {
