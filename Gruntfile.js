@@ -10,6 +10,20 @@ module.exports = function (grunt) {
         filename: 'framework7'
     };
 
+
+    var customModules = grunt.file.readJSON('modules.json');
+    var customBanner = '/*\n' +
+                    ' * <%= pkg.name %> <%= pkg.version %> - Custom Build\n' +
+                    ' *\n' +
+                    ' * Included modules: <%= modulesList %>\n' +
+                    ' *\n' +
+                    ' * Copyright <%= grunt.template.today("yyyy") %>, <%= pkg.author %>\n' +
+                    ' * The iDangero.us\n' +
+                    ' * http://www.idangero.us/\n' +
+                    ' *\n' +
+                    ' * Created on: <%= grunt.template.today("mmmm d, yyyy, HH:MM") %>\n' +
+                    '*/\n';
+
     // List of js files to concatenate
     var jsFilesList = [
         'src/js/wrap-start.js',
@@ -92,8 +106,8 @@ module.exports = function (grunt) {
                     cleancss: false
                 },
                 files: {
-                    'build/css/framework7.css' : ['src/less/framework7.less'],
-                    'build/css/framework7.rtl.css' : ['src/less/framework7.rtl.less']
+                    'build/css/<%= framework7.filename %>.css' : ['src/less/<%= framework7.filename %>.less'],
+                    'build/css/<%= framework7.filename %>.rtl.css' : ['src/less/<%= framework7.filename %>.rtl.less']
                 }
             },
             dist: {
@@ -102,8 +116,8 @@ module.exports = function (grunt) {
                     cleancss: true
                 },
                 files: {
-                    'dist/css/framework7.min.css' : ['src/less/framework7.less'],
-                    'dist/css/framework7.rtl.min.css' : ['src/less/framework7.rtl.less'],
+                    'dist/css/<%= framework7.filename %>.min.css' : ['src/less/<%= framework7.filename %>.less'],
+                    'dist/css/<%= framework7.filename %>.rtl.min.css' : ['src/less/<%= framework7.filename %>.rtl.less'],
                 }
             },
             kitchen: {
@@ -164,6 +178,24 @@ module.exports = function (grunt) {
                     },
                 ]
             },
+            custom: {
+                options: {
+                    paths: ['less'],
+                    cleancss: false
+                },
+                files: {
+                    'custom/css/<%= framework7.filename %>.custom.css' : ['custom/<%= framework7.filename %>.custom.less'],
+                }
+            },
+            custom_min: {
+                options: {
+                    paths: ['less'],
+                    cleancss: true
+                },
+                files: {
+                    'custom/css/<%= framework7.filename %>.custom.min.css' : ['custom/<%= framework7.filename %>.custom.less'],
+                }
+            },
         },
         concat: {
             options: {
@@ -197,6 +229,29 @@ module.exports = function (grunt) {
                 src: ['dist/css/<%= framework7.filename %>.min.css'],
                 dest: 'dist/css/<%= framework7.filename %>.min.css'
             },
+            js_custom: {
+                options: {
+                    banner: customBanner
+                },
+                src: '<%= modulesJsList %>',
+                dest: 'custom/js/<%= framework7.filename %>.custom.js'
+            },
+            less_custom: {
+                options: {
+                    banner: '',
+                },
+                src: '<%= modulesLessList %>',
+                dest: 'custom/<%= framework7.filename %>.custom.less'
+            },
+            css_custom: {
+                options: {
+                    banner: customBanner
+                },
+                files: {
+                    'custom/css/<%= framework7.filename %>.custom.css' : ['custom/css/<%= framework7.filename %>.custom.css'],
+                    'custom/css/<%= framework7.filename %>.custom.min.css' : ['custom/css/<%= framework7.filename %>.custom.min.css'],
+                }
+            }
         },
         uglify: {
             options: {
@@ -206,14 +261,24 @@ module.exports = function (grunt) {
                 src: ['dist/js/<%= framework7.filename %>.js'],
                 dest: 'dist/js/<%= framework7.filename %>.min.js',
             },
+            custom: {
+                options: {
+                    banner: customBanner
+                },
+                src: ['custom/js/<%= framework7.filename %>.custom.js'],
+                dest: 'custom/js/<%= framework7.filename %>.custom.min.js',
+            }
         },
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            gruntfile: {
+            build: {
                 src: ['Gruntfile.js', 'build/js/framework7.js']
+            },
+            custom: {
+                src: ['custom/js/<%= framework7.filename %>.custom.js']
             }
         },
         
@@ -374,7 +439,7 @@ module.exports = function (grunt) {
         'concat:js',
         'less:build',
         'concat:css_build',
-        'jshint',
+        'jshint:build',
     ]);
 
     // Build a new version of the library
@@ -382,7 +447,7 @@ module.exports = function (grunt) {
         'concat:js',
         'less:build',
         'concat:css_build',
-        'jshint',
+        'jshint:build',
         'copy:build',
         'jade:build',
     ]);
@@ -394,7 +459,7 @@ module.exports = function (grunt) {
         'less:dist',
         'concat:css_build',
         'concat:css_dist',
-        'jshint',
+        'jshint:build',
         'copy:build',
         'jade:build',
         'copy:dist',
@@ -423,5 +488,61 @@ module.exports = function (grunt) {
         'open',
         'watch'
     ]);
+
+    // Custom Build
+    this.registerTask('custom', 'Include modules in custom build', function (modules) {
+        if (modules) modules = modules.split(',');
+        modules = modules || [];
+        var modulesJsList = [], modulesLessList = [];
+        var i, module;
+        modulesJsList.push.apply(modulesJsList, customModules.core_intro.js);
+        modulesLessList.push.apply(modulesLessList, customModules.core_intro.less);
+
+        for (i = 0; i < modules.length; i++) {
+            module = customModules[modules[i]];
+            if (module.dependencies.length > 0) {
+                modules.push.apply(modules, module.dependencies);
+            }
+        }
+        for (i = 0; i < modules.length; i++) {
+            module = customModules[modules[i]];
+            if (!(module)) continue;
+
+            if (module.js.length > 0) {
+                modulesJsList.push.apply(modulesJsList, module.js);
+            }
+            if (module.less.length > 0) {
+                modulesLessList.push.apply(modulesLessList, module.less);
+            }
+        }
+        modulesJsList.push.apply(modulesJsList, customModules.core_outro.js);
+        modulesLessList.push.apply(modulesLessList, customModules.core_outro.less);
+
+        // Unique
+        var uniqueJsList = [];
+        var uniqueLessList = [];
+        for (i = 0; i < modulesJsList.length; i++) {
+            if (uniqueJsList.indexOf(modulesJsList[i]) < 0) uniqueJsList.push(modulesJsList[i]);
+        }
+        for (i = 0; i < modulesLessList.length; i++) {
+            if (uniqueLessList.indexOf(modulesLessList[i]) < 0) uniqueLessList.push(modulesLessList[i]);
+        }
+
+        // Tasks vars
+        grunt.config.set('modulesJsList', uniqueJsList);
+        grunt.config.set('modulesLessList', uniqueLessList);
+        grunt.config.set('modulesList', modules.join(', '));
+
+        // Run tasks
+        grunt.task.run([
+            'concat:js_custom',
+            'jshint:custom',
+            'uglify:custom',
+            'concat:less_custom',
+            'less:custom',
+            'less:custom_min',
+            'concat:css_custom'
+        ]);
+    });
 
 };

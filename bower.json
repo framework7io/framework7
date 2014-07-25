@@ -20,7 +20,7 @@
   "ignore": [
     ".*",
     "build",
-    "build_rails",
+    "custom",
     "kitchen-sink/",
     "Gruntfile.js",
     "apps",
