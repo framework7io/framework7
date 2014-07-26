@@ -64,6 +64,9 @@
     top: 0;
     background: @navbarBg;
     border-bottom: 1px solid @navbarBorderColor;
+    html.ios-gt-7 & {
+        border-bottom-width: 0.5px;
+    }
     .center {
         font-size: 17px;
         font-weight: 500;
@@ -106,6 +109,9 @@
     bottom: 0;
     background: @toolbarBg;
     border-top: 1px solid @toolbarBorderColor;
+    html.ios-gt-7 & {
+        border-top-width: 0.5px;
+    }
     a {
         .flex-shrink(1);
         position: relative;
