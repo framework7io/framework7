@@ -34,13 +34,6 @@ html.ios .page-content {
 }
 i.icon-plus {
   color: #fff;
-  border-radius: 100%;
-  width: 25px;
-  height: 25px;
-  font-size: 31px;
-  line-height: 20px;
-  text-align: center;
-  font-weight: 100;
 }
 .todo-items-list {
   margin: 0;
