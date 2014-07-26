@@ -149,6 +149,8 @@ Dom7.prototype = {
             else {
                 //Live events
                 for (j = 0; j < events.length; j++) {
+                    if (!this[i].dom7LiveListeners) this[i].dom7LiveListeners = [];
+                    this[i].dom7LiveListeners.push({listener: listener, liveListener: handleLiveEvent});
                     this[i].addEventListener(events[j], handleLiveEvent, false);
                 }
             }
@@ -160,7 +162,20 @@ Dom7.prototype = {
         var events = eventName.split(' ');
         for (var i = 0; i < events.length; i++) {
             for (var j = 0; j < this.length; j++) {
-                this[j].removeEventListener(events[i], listener, false);
+                if (arguments.length === 3) {
+                    var _targetSelector = arguments[1];
+                    var _listener = arguments[2];
+                    if (this[j].dom7LiveListeners) {
+                        for (var k = 0; k < this[j].dom7LiveListeners.length; k++) {
+                            if (this[j].dom7LiveListeners[k].listener === _listener) {
+                                this[j].removeEventListener(events[i], this[j].dom7LiveListeners[k].liveListener, false);
+                            }
+                        }
+                    }
+                }
+                else {
+                    this[j].removeEventListener(events[i], listener, false);
+                }
             }
         }
         return this;
