@@ -1,5 +1,5 @@
 /*
- * Framework7 0.9.3
+ * Framework7 0.9.4
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: July 20, 2014
+ * Released on: July 26, 2014
 */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '0.9.3';
+        app.version = '0.9.4';
     
         // Default Parameters
         app.params = {
@@ -61,6 +61,9 @@
             smartSelectBackText: 'Back',
             smartSelectSearchbar: false,
             smartSelectBackOnSelect: false,
+            // Searchbar
+            searchbarHideDividers: true,
+            searchbarHideGroups: true,
             // Panels
             swipePanel: false, // or 'left' or 'right'
             swipePanelActiveArea: 0,
@@ -123,6 +126,12 @@
         app.rtl = $('body').css('direction') === 'rtl';
         if (app.rtl) $('html').attr('dir', 'rtl');
     
+        // Overwrite statusbar overlay
+        if (typeof app.params.statusbarOverlay !== 'undefined') {
+            if (app.params.statusbarOverlay) $('html').addClass('with-statusbar-overlay');
+            else $('html').removeClass('with-statusbar-overlay');
+        }
+    
         
     
         /*======================================================
@@ -175,7 +184,7 @@
                 }
                     
             }
-            view.url = container.attr('data-url') || viewURL;
+            view.url = container.attr('data-url') || view.params.url || viewURL;
         
             // Store to history main view's url
             if (view.url) {
@@ -765,7 +774,7 @@
             // Search
             function search(query) {
                 var values = query.trim().toLowerCase().split(' ');
-                searchList.find('li').css('display', '');
+                searchList.find('li').removeClass('hidden-by-searchbar');
                 var foundItems = [];
                 searchList.find('li').each(function (index, el) {
                     el = $(el);
@@ -778,12 +787,41 @@
                         if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
                     }
                     if (wordsMatch !== values.length) {
-                        el.hide();
+                        el.addClass('hidden-by-searchbar');
                     }
                     else {
                         foundItems.push(el[0]);
                     }
                 });
+        
+                if (app.params.searchbarHideDividers) {
+                    searchList.find('.item-divider, .list-group-title').each(function () {
+                        var title = $(this);
+                        var nextElements = title.nextAll('li');
+                        var hide = true;
+                        for (var i = 0; i < nextElements.length; i++) {
+                            var nextEl = $(nextElements[i]);
+                            if (nextEl.hasClass('list-group-title') || nextEl.hasClass('item-divider')) break;
+                            if (!nextEl.hasClass('hidden-by-searchbar')) {
+                                hide = false;
+                            }
+                        }
+                        if (hide) title.addClass('hidden-by-searchbar');
+                        else title.removeClass('hidden-by-searchbar');
+                    });
+                }
+                if (app.params.searchbarHideGroups) {
+                    searchList.find('.list-group').each(function () {
+                        var group = $(this);
+                        var notHidden = group.find('li:not(.hidden-by-searchbar)');
+                        if (notHidden.length === 0) {
+                            group.addClass('hidden-by-searchbar');
+                        }
+                        else {
+                            group.removeClass('hidden-by-searchbar');
+                        }
+                    });
+                }
         
                 searchList.trigger('search', {query: query, foundItems: foundItems});
         
@@ -2875,6 +2913,9 @@
         
             // Collect all values
             var select = smartSelect.find('select')[0];
+            if (select.disabled || smartSelect.hasClass('disabled') || $(select).hasClass('disabled')) {
+                return;
+            }
             var values = {};
             values.length = select.length;
             for (var i = 0; i < select.length; i++) {
@@ -2882,7 +2923,8 @@
                     value: select[i].value,
                     text: select[i].textContent.trim(),
                     selected: select[i].selected,
-                    group: $(select[i]).parent('optgroup')[0]
+                    group: $(select[i]).parent('optgroup')[0],
+                    disabled: select[i].disabled
                 };
             }
         
@@ -2897,10 +2939,11 @@
             var inputsHTML = '';
             var previousGroup;
             for (var j = 0; j < values.length; j++) {
+                if (values[j].disabled) continue;
                 var checked = values[j].selected ? 'checked' : '';
                 if (values[j].group) {
                     if (values[j].group !== previousGroup) {
-                        inputsHTML += '<li><div class="item-divider">' + values[j].group.label + '</div></li>';
+                        inputsHTML += '<li class="item-divider">' + values[j].group.label + '</li>';
                         previousGroup = values[j].group;
                     }
                 }
@@ -3196,8 +3239,15 @@
             // Update class on tab-links
             if (tabLink) tabLink = $(tabLink);
             else {
+                // Search by id
                 if (typeof tab === 'string') tabLink = $('.tab-link[href="' + tab + '"]');
                 else tabLink = $('.tab-link[href="#' + newTab.attr('id') + '"]');
+                // Search by data-tab
+                if (tabLink.length === 0) {
+                    $('[data-tab]').each(function () {
+                        if (newTab.is($(this).attr('data-tab'))) tabLink = $(this);
+                    });
+                }
             }
             if (tabLink.length === 0) return;
         
@@ -3535,7 +3585,7 @@
         
                 // Tabs
                 if (clicked.hasClass('tab-link')) {
-                    app.showTab(clicked.attr('href'), clicked);
+                    app.showTab(clicked.attr('data-tab') || clicked.attr('href'), clicked);
                 }
                 // Swipeout Delete
                 if (clicked.hasClass('swipeout-delete')) {
@@ -5164,6 +5214,11 @@
                 return this;
             }
         },
+        removeAttr: function (attr) {
+            for (var i = 0; i < this.length; i++) {
+                this[i].removeAttribute(attr);
+            }
+        },
         prop: function (prop, value) {
             if (typeof value === 'undefined') {
                 if (this[0]) return this[0][prop];
@@ -5252,6 +5307,8 @@
                 else {
                     //Live events
                     for (j = 0; j < events.length; j++) {
+                        if (!this[i].dom7LiveListeners) this[i].dom7LiveListeners = [];
+                        this[i].dom7LiveListeners.push({listener: listener, liveListener: handleLiveEvent});
                         this[i].addEventListener(events[j], handleLiveEvent, false);
                     }
                 }
@@ -5263,7 +5320,20 @@
             var events = eventName.split(' ');
             for (var i = 0; i < events.length; i++) {
                 for (var j = 0; j < this.length; j++) {
-                    this[j].removeEventListener(events[i], listener, false);
+                    if (arguments.length === 3) {
+                        var _targetSelector = arguments[1];
+                        var _listener = arguments[2];
+                        if (this[j].dom7LiveListeners) {
+                            for (var k = 0; k < this[j].dom7LiveListeners.length; k++) {
+                                if (this[j].dom7LiveListeners[k].listener === _listener) {
+                                    this[j].removeEventListener(events[i], this[j].dom7LiveListeners[k].liveListener, false);
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        this[j].removeEventListener(events[i], listener, false);
+                    }
                 }
             }
             return this;

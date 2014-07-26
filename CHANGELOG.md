@@ -1,5 +1,27 @@
 # Change Log
 
+## Framework7 v0.9.4 - Updated on July 26, 2014
+  
+  * New Framework7 grunt custom library builder where you can include only required components
+  * Half-pixel (0.5px) borders in iOS 8 for list views, navbars, toolbars, modals, etc.
+  * Core
+    * New "statusbarOverlay" parameter to overwrite automatic statusbar overlay detection
+  * Searchbar
+    * Now it may consider and hide item-dividers and grouped list if nothing found there with two new App's options: searchbarHideDividers and searchbarHideGroups. By default, they are enabled (true)
+  * Smart Select 
+    * Now it consider and doesn't output "disabled" options and will not be opened if it has "disabled" class or attribute
+  * Dom7 
+    * New .removeAttr(attrName) method to remove attribute
+    * Now it is possible to detach live event listeners with the same "live" syntax `$('something').off('click', '.target', listener)`
+  * Icons
+    * New "icon-camera" (in message bar) and "icon-plus" icons
+  * Views
+    * New "url" parameter to specify View's default (startup) URL
+  * Tabs
+    * Now it is possible to swith multiple tabs with single tab-link by using "data-tab" attribute instead of "#" href attribute
+  * Modals
+    * New "ipad-fullscreen" class on Popup to make fullscreen popup in iPad
+
 ## Framework7 v0.9.3 - Updated on July 20, 2014
   
   * New Accordion component

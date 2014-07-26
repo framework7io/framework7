@@ -1,5 +1,5 @@
 /*
- * Framework7 0.9.3
+ * Framework7 0.9.4
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,11 +10,8 @@
  *
  * Licensed under MIT
  *
- * Released on: July 20, 2014
+ * Released on: July 26, 2014
 */
-/*=============
-  Framework 7
-=============*/
 html,
 body {
   position: relative;
@@ -569,6 +566,9 @@ html.android .page-from-center-to-right {
   background: #f7f7f8;
   border-bottom: 1px solid #c4c4c4;
 }
+html.ios-gt-7 .navbar {
+  border-bottom-width: 0.5px;
+}
 .navbar .center {
   font-size: 17px;
   font-weight: 500;
@@ -632,6 +632,9 @@ html.android .page-from-center-to-right {
   bottom: 0;
   background: #f7f7f8;
   border-top: 1px solid #c4c4c4;
+}
+html.ios-gt-7 .toolbar {
+  border-top-width: 0.5px;
 }
 .toolbar a {
   -webkit-flex-shrink: 1;
@@ -896,6 +899,9 @@ html.android .page-from-center-to-right {
   -webkit-align-items: center;
   align-items: center;
 }
+html.ios-gt-7 .searchbar {
+  border-bottom-width: 0.5px;
+}
 .searchbar .searchbar-input {
   width: 100%;
   height: 28px;
@@ -1001,6 +1007,11 @@ html.android .page-from-center-to-right {
 .searchbar-not-found {
   display: none;
 }
+.hidden-by-searchbar,
+.list-block .hidden-by-searchbar,
+.list-block li.hidden-by-searchbar {
+  display: none;
+}
 .page > .searchbar {
   position: absolute;
   width: 100%;
@@ -1062,7 +1073,10 @@ html.android .page-from-center-to-right {
   -webkit-align-self: flex-end;
   align-self: flex-end;
 }
-.messagebar .link + textarea {
+.messagebar .link.icon-only:first-child {
+  margin-left: -6px;
+}
+.messagebar .link:not(.icon-only) + textarea {
   margin-left: 8px;
 }
 .messagebar textarea + .link {
@@ -1125,6 +1139,11 @@ i.icon.icon-bars-black {
   width: 21px;
   height: 13px;
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26' fill='%23000'><rect width='4' height='4'/><rect x='8' y='1' width='34' height='2'/><rect y='11' width='4' height='4'/><rect x='8' y='12' width='34' height='2'/><rect y='22' width='4' height='4'/><rect x='8' y='23' width='34' height='2'/></svg>");
+}
+i.icon.icon-camera {
+  width: 25px;
+  height: 20px;
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 25 20'><path fill='%238C8D92' d='M13.3,5.5c-2.7,0-5,2.2-5,5s2.2,5,5,5c2.7,0,5-2.2,5-5S16,5.5,13.3,5.5z'/><path fill='%238C8D92' d='M22.8,1.8h-3.3c-0.2-1.3-1-1.8-2-1.8H8.1c-1,0-1.8,0.4-2,1.8H2.8C1.4,1.8,0,2.8,0,4.2v12.6 c0,1.4,1.4,2.5,2.8,2.5h20c1.4,0,2.2-1.1,2.2-2.5V4.2C25,2.8,24.2,1.8,22.8,1.8z M3.5,6.4C2.6,6.4,2,5.8,2,5c0-0.8,0.7-1.5,1.5-1.5 S5,4.1,5,5C5,5.8,4.3,6.4,3.5,6.4z M13.3,16.8c-3.5,0-6.3-2.7-6.3-6.2c0-3.3,2.5-6.2,5.7-6.2h1.2c3.2,0,5.7,2.9,5.7,6.2 C19.6,14.1,16.7,16.8,13.3,16.8z'/></svg>");
 }
 i.icon.icon-f7 {
   width: 29px;
@@ -1200,6 +1219,14 @@ i.icon.icon-next-white {
 i.icon.icon-prev-white {
   background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23ffffff' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
 }
+i.icon.icon-plus {
+  width: 25px;
+  height: 25px;
+  font-size: 31px;
+  line-height: 20px;
+  text-align: center;
+  font-weight: 100;
+}
 .badge {
   font-size: 13px;
   display: inline-block;
@@ -1261,6 +1288,10 @@ i.icon.icon-prev-white {
   border-bottom: 1px solid #c8c7cc;
   border-top: 1px solid #c8c7cc;
   color: #000;
+}
+html.ios-gt-7 .content-block-inner {
+  border-top-width: 0.5px;
+  border-bottom-width: 0.5px;
 }
 /* === Lists === */
 .list-block {
@@ -1731,6 +1762,23 @@ i.icon.icon-prev-white {
 }
 .list-block li.sorting .item-inner {
   border-bottom: none;
+}
+html.ios-gt-7 .list-block ul {
+  border-top-width: 0.5px;
+  border-bottom-width: 0.5px;
+}
+html.ios-gt-7 .list-block li:not(:last-child) .item-inner {
+  border-bottom-width: 0.5px;
+}
+html.ios-gt-7 .swipeout-actions {
+  border-bottom-width: 0.5px;
+}
+html.ios-gt-7 .item-divider {
+  border-top-width: 0.5px;
+  margin-top: -0.5px;
+}
+html.ios-gt-7 .item-link.list-button {
+  border-bottom-width: 0.5px;
 }
 /* === Contacts === */
 .contacts-content {
@@ -2610,7 +2658,7 @@ input.modal-text-input.modal-text-input-double + input.modal-text-input {
   display: block;
 }
 @media all and (min-width: 630px) and (min-height: 630px) {
-  .popup {
+  .popup:not(.ipad-fullscreen) {
     width: 630px;
     height: 630px;
     left: 50%;
@@ -2621,12 +2669,12 @@ input.modal-text-input.modal-text-input-double + input.modal-text-input {
     -ms-transform: translate3d(0, 1024px, 0);
     transform: translate3d(0, 1024px, 0);
   }
-  .popup.modal-in {
+  .popup:not(.ipad-fullscreen).modal-in {
     -webkit-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
-  .popup.modal-out {
+  .popup:not(.ipad-fullscreen).modal-out {
     -webkit-transform: translate3d(0, 1024px, 0);
     -ms-transform: translate3d(0, 1024px, 0);
     transform: translate3d(0, 1024px, 0);
@@ -2644,7 +2692,8 @@ input.modal-text-input.modal-text-input-double + input.modal-text-input {
     z-index: 9800;
   }
 }
-html.with-statusbar-overlay .login-screen {
+html.with-statusbar-overlay .login-screen,
+html.with-statusbar-overlay .popup.ipad-fullscreen {
   height: -webkit-calc(100% - 20px);
   height: -moz-calc(100% - 20px);
   height: -ms-calc(100% - 20px);
@@ -2675,6 +2724,19 @@ html.with-statusbar-overlay .login-screen {
   display: block;
   width: 34px;
   height: 34px;
+}
+html.ios-gt-7 .modal-inner {
+  border-bottom-width: 0.5px;
+}
+html.ios-gt-7 .modal-button {
+  border-right-width: 0.5px;
+}
+html.ios-gt-7 .actions-modal-button,
+html.ios-gt-7 .actions-modal-label {
+  border-bottom-width: 0.5px;
+}
+html.ios-gt-7 input.modal-text-input {
+  border-width: 0.5px;
 }
 /* === Panels === */
 .panel-overlay {

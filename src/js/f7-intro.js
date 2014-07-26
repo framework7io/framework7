@@ -8,7 +8,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '0.9.3';
+    app.version = '0.9.4';
 
     // Default Parameters
     app.params = {
