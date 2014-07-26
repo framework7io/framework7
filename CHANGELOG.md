@@ -20,7 +20,7 @@
   * Tabs
     * Now it is possible to swith multiple tabs with single tab-link by using "data-tab" attribute instead of "#" href attribute
   * Modals
-    * New "ipad-fullscreen" class on Popup to make fullscreen popup in iPad
+    * New "tablet-fullscreen" class on Popup to make fullscreen popup in iPad
 
 ## Framework7 v0.9.3 - Updated on July 20, 2014
   
