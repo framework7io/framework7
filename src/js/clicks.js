@@ -98,7 +98,7 @@ app.initClickEvents = function () {
 
         // Tabs
         if (clicked.hasClass('tab-link')) {
-            app.showTab(clicked.attr('href'), clicked);
+            app.showTab(clicked.attr('data-tab') || clicked.attr('href'), clicked);
         }
         // Swipeout Delete
         if (clicked.hasClass('swipeout-delete')) {

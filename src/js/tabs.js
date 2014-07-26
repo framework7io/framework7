@@ -36,8 +36,15 @@ app.showTab = function (tab, tabLink) {
     // Update class on tab-links
     if (tabLink) tabLink = $(tabLink);
     else {
+        // Search by id
         if (typeof tab === 'string') tabLink = $('.tab-link[href="' + tab + '"]');
         else tabLink = $('.tab-link[href="#' + newTab.attr('id') + '"]');
+        // Search by data-tab
+        if (tabLink.length === 0) {
+            $('[data-tab]').each(function () {
+                if (newTab.is($(this).attr('data-tab'))) tabLink = $(this);
+            });
+        }
     }
     if (tabLink.length === 0) return;
 
