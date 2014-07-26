@@ -110,4 +110,10 @@ window.Framework7 = function (params) {
     app.rtl = $('body').css('direction') === 'rtl';
     if (app.rtl) $('html').attr('dir', 'rtl');
 
+    // Overwrite statusbar overlay
+    if (typeof app.params.statusbarOverlay !== 'undefined') {
+        if (app.params.statusbarOverlay) $('html').addClass('with-statusbar-overlay');
+        else $('html').removeClass('with-statusbar-overlay');
+    }
+
     
