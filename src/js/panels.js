@@ -76,13 +76,25 @@ app.initSwipePanels = function () {
     function handleTouchStart(e) {
         if (!app.allowPanelOpen || !app.params.swipePanel) return;
         if ($('.modal-in, .photo-browser-in').length > 0) return;
+        if (!app.params.swipePanelCloseOpposite) {
+            if ($('.panel.active').length > 0 && !panel.hasClass('active')) return;
+        }
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        if (app.params.swipePanelCloseOpposite) {
+            if ($('.panel.active').length > 0) {
+                side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
+            }
+            else {
+                side = app.params.swipePanel;
+            }
+        }
+        panel = $('.panel.panel-' + side);
         if (app.params.swipePanelActiveArea) {
-            if (app.params.swipePanel === 'left') {
+            if (side === 'left') {
                 if (touchesStart.x > app.params.swipePanelActiveArea) return;
             }
-            if (app.params.swipePanel === 'right') {
+            if (side === 'right') {
                 if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) return;
             }
         }

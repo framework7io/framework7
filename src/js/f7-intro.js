@@ -51,10 +51,10 @@ window.Framework7 = function (params) {
         // Panels
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,
+        swipePanelCloseOpposite: true,
         swipePanelNoFollow: false,
         swipePanelThreshold: 0,
         panelsCloseByOutside: true,
-        panelsVisibleZIndex: 6000,
         // Modals
         modalTemplate: '<div class="modal {{noButtons}}">' +
                             '<div class="modal-inner">' +
