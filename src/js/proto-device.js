@@ -72,30 +72,36 @@ Framework7.prototype.device = (function () {
         device.statusBar = false;
     }
 
+    // Classes
+    var classNames = [];
+
     // Pixel Ratio
     device.pixelRatio = window.devicePixelRatio || 1;
+    if (device.pixelRatio >= 2) {
+        classNames.push('retina');
+    }
 
-    // Add html classes
+    // OS classes
     if (device.os) {
-        var className = device.os +
-                        ' ' +
-                        device.os + '-' + device.osVersion.split('.')[0] +
-                        ' ' +
-                        device.os + '-' + device.osVersion.replace(/\./g, '-');
+        classNames.push(device.os, device.os + '-' + device.osVersion.split('.')[0], device.os + '-' + device.osVersion.replace(/\./g, '-'));
         if (device.os === 'ios') {
             var major = parseInt(device.osVersion.split('.')[0], 10);
             for (var i = major - 1; i >= 6; i--) {
-                className += ' ' + 'ios-gt-' + i;
+                classNames.push('ios-gt-' + i);
             }
         }
-        $('html').addClass(className);
+        
     }
+    // Status bar classes
     if (device.statusBar) {
-        $('html').addClass('with-statusbar-overlay');
+        classNames.push('with-statusbar-overlay');
     }
     else {
         $('html').removeClass('with-statusbar-overlay');
     }
+
+    // Add html classes
+    if (classNames.length > 0) $('html').addClass(classNames.join(' '));
 
     // Export object
     return device;
