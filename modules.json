@@ -87,7 +87,7 @@
     },
     "pull-to-refresh": {
         "js" : ["src/js/pull-to-refresh.js"],
-        "less": [],
+        "less": ["src/less/pull-to-refresh.less"],
         "dependencies" : []
     },
     "infinite-scroll": {
