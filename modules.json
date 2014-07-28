@@ -92,7 +92,7 @@
     },
     "infinite-scroll": {
         "js" : ["src/js/infinite-scroll.js"],
-        "less": [],
+        "less": ["src/less/pull-to-refresh.less"],
         "dependencies" : []
     },
     "tabs": {
