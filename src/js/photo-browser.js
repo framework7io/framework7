@@ -157,12 +157,18 @@ var PhotoBrowser = function (params) {
             return;
         }
         pb.layout(pb.openIndex);
+        if (pb.params.onOpen) {
+            pb.params.onOpen(pb);
+        }
 
     };
     pb.close = function () {
         pb.opened = false;
         if (!pb.sliderContainer || pb.sliderContainer.length === 0) {
             return;
+        }
+        if (pb.params.onClose) {
+            pb.params.onClose(pb);
         }
         // Detach events
         pb.attachEvents(true);
