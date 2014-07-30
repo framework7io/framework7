@@ -241,16 +241,13 @@ var PhotoBrowser = function (params) {
                 pb.activeSlideIndex = slider.activeSlideIndex;
                 pb.container.find('.photo-browser-current').text(slider.activeSlideIndex + 1);
                 pb.container.find('.photo-browser-total').text(slider.slides.length);
+
+                $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 if (slider.isFirst) {
                     $('.photo-browser-prev').addClass('photo-browser-link-inactive');
-                    $('.photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
-                else if (slider.isLast) {
+                if (slider.isLast) {
                     $('.photo-browser-next').addClass('photo-browser-link-inactive');
-                    $('.photo-browser-prev').removeClass('photo-browser-link-inactive');
-                }
-                else {
-                    $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
 
                 // Update captions
