@@ -526,6 +526,9 @@ var PhotoBrowser = function (params) {
                 if (pb.params.type === 'popup') {
                     app.closeModal(pb.popup);
                 }
+                if (pb.params.onSwipeToClose) {
+                    pb.params.onSwipeToClose(pb);
+                }
                 allowSwipeToClose = true;
             }, 0);
             return;
