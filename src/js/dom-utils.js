@@ -102,23 +102,36 @@ $.requestAnimationFrame = function (callback) {
 // Plugins
 $.fn = Dom7.prototype;
 
-$.fn.scrollTop = function (top, duration) {
-    var dom = this;
-    if (typeof top === 'undefined') {
-        if (dom.length > 0) return dom[0].scrollTop;
-        else return null;
-    }
-    return dom.each(function () {
+$.fn.scrollTo = function (left, top, duration) {
+    return this.each(function () {
         var el = this;
-        var currentTop = el.scrollTop;
-        if (!duration) {
-            el.scrollTop = top;
-            return;
+        var currentTop, currentLeft, maxTop, maxLeft, newTop, newLeft, scrollTop, scrollLeft;
+        var animateTop = top > 0 || top === 0;
+        var animateLeft = left > 0 || left === 0;
+        if (animateTop) {
+            currentTop = el.scrollTop;
+            if (!duration) {
+                el.scrollTop = top;
+            }
         }
-        var maxTop = el.scrollHeight - el.offsetHeight;
-        var newTop = Math.max(Math.min(top, maxTop), 0);
+        if (animateLeft) {
+            currentLeft = el.scrollLeft;
+            if (!duration) {
+                el.scrollLeft = left;
+            }
+        }
+        if (!duration) return;
+        if (animateTop) {
+            maxTop = el.scrollHeight - el.offsetHeight;
+            newTop = Math.max(Math.min(top, maxTop), 0);
+        }
+        if (animateLeft) {
+            maxLeft = el.scrollWidth - el.offsetWidth;
+            newLeft = Math.max(Math.min(left, maxLeft), 0);
+        }
         var startTime = null;
-        if (newTop === currentTop) return;
+        if (animateTop && newTop === currentTop) animateTop = false;
+        if (animateLeft && newLeft === currentLeft) animateLeft = false;
         function render(time) {
             if (time === undefined) {
                 time = new Date().getTime();
@@ -126,18 +139,49 @@ $.fn.scrollTop = function (top, duration) {
             if (startTime === null) {
                 startTime = time;
             }
-            var scrollTop = currentTop + ((time - startTime) / duration * (newTop - currentTop));
-            if (newTop > currentTop && scrollTop >= newTop)  {
+            var doneLeft, doneTop, done;
+            if (animateTop) scrollTop = currentTop + ((time - startTime) / duration * (newTop - currentTop));
+            if (animateLeft) scrollLeft = currentLeft + ((time - startTime) / duration * (newLeft - currentLeft));
+
+            if (animateTop && newTop > currentTop && scrollTop >= newTop)  {
                 el.scrollTop = newTop;
-                return;
+                done = true;
             }
-            if (newTop < currentTop && scrollTop <= newTop)  {
+            if (animateTop && newTop < currentTop && scrollTop <= newTop)  {
                 el.scrollTop = newTop;
-                return;
+                done = true;
             }
-            el.scrollTop = scrollTop;
+
+            if (animateLeft && newLeft > currentLeft && scrollLeft >= newLeft)  {
+                el.scrollLeft = newLeft;
+                done = true;
+            }
+            if (animateLeft && newLeft < currentLeft && scrollLeft <= newLeft)  {
+                el.scrollLeft = newLeft;
+                done = true;
+            }
+
+            if (done) return;
+            if (animateTop) el.scrollTop = scrollTop;
+            if (animateLeft) el.scrollLeft = scrollLeft;
             $.requestAnimationFrame(render);
         }
         $.requestAnimationFrame(render);
     });
+};
+$.fn.scrollTop = function (top, duration) {
+    var dom = this;
+    if (typeof top === 'undefined') {
+        if (dom.length > 0) return dom[0].scrollTop;
+        else return null;
+    }
+    return dom.scrollTo(undefined, top, duration);
+};
+$.fn.scrollLeft = function (left, duration) {
+    var dom = this;
+    if (typeof left === 'undefined') {
+        if (dom.length > 0) return dom[0].scrollLeft;
+        else return null;
+    }
+    return dom.scrollTo(left, undefined, duration);
 };
