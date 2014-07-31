@@ -1,0 +1,110 @@
+/* === Dark theme === */
+[data-theme="dark"] {
+    @pageBg: #222;
+    @barsBg: #131313;
+    @barsBorder: #333;
+    @text: #ddd;
+    @lightText: #bbb;
+    @strongText: #fff;
+    @activeLink: #333;
+    @blockBg: @pageBg;
+    @blockBorder: #393939;
+    @blockStrongBg: #191919;
+    @dividersBg: #1a1a1a;
+    @searchbarBg: #333;
+    @searchbarBorder: #333;
+    @swipeoutButton: #444;
+    .page {
+        color:@text;    
+    }
+    .navbar, .toolbar {
+        background-color: @barsBg;
+        color:@strongText;
+    }
+    .navbar {
+        border-bottom-color: @barsBorder;
+    }
+    .toolbar {
+        border-top-color: @barsBorder;
+    }
+    .tabbar a:not(.active) {
+        color:@strongText;
+    }
+    .page, .login-screen-content {
+        background-color: @pageBg;
+    }
+    .content-block-title {
+        color:@strongText;
+    }
+    .content-block {
+        color:@lightText;
+    }
+    .content-block-inner {
+        background: @blockStrongBg;
+        color:@text;
+        border-color: @blockBorder;
+    }
+    .list-block:not(.notifications) {
+        ul {
+            background: @blockBg;
+            border-color: @blockBorder;
+        }
+        &.inset ul{
+            background: @blockStrongBg;
+        }
+    }
+    li.sorting {
+        background-color: @activeLink;
+    }
+    .swipeout-content {
+        background: @blockBg;
+    }
+    .swipeout-actions {
+        border-bottom-color: @blockBorder;
+    }
+    .swipeout-actions-inner a {
+        background-color: @swipeoutButton;
+    }
+    .item-inner, .list-block ul ul li:last-child .item-inner {
+        border-color: @blockBorder;
+    }
+    .item-after {
+        color:@lightText;
+    }
+    .item-link:active, label.label-checkbox:active, label.label-radio:active {
+        background-color: @activeLink;
+    }
+    .item-link.list-button {
+        border-bottom-color: @blockBorder;
+    }
+    .list-block-label {
+        color:@lightText;
+    }
+    .item-divider, .list-group-title {
+        background: @dividersBg;
+        color:@lightText;
+        border-top-color: @blockBorder;
+    }
+    
+    // Searchbar
+    .searchbar {
+        background: @searchbarBg;
+        border-bottom-color: @searchbarBorder;
+    }
+
+    // Forms
+    .list-block {
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
+            color:@strongText;
+        }
+    }
+    .label-switch .checkbox {
+        background-color: @blockBorder;
+        &:before {
+            background-color: @blockBg;
+        }
+    }
+    .range-slider input[type="range"]:after {
+        background: @blockBg;
+    }
+}
