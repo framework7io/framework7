@@ -106,7 +106,7 @@ app.smartSelectOpen = function (smartSelect) {
     var pageName = 'smart-select-' + inputName;
 
     var noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
-    var noNavbar = smartSelect.parents('.page').hasClass('no-navbar') ? 'no-navbar' : '';
+    var noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
 
     var useSearchbar = typeof smartSelect.data('searchbar') === 'undefined' ? app.params.smartSelectSearchbar : (smartSelect.data('searchbar') === 'true' ? true : false);
     var searchbarPlaceholder, searchbarCancel;
@@ -128,7 +128,7 @@ app.smartSelectOpen = function (smartSelect) {
     var pageHTML =
         (navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
-        '  <div data-page="' + pageName + '" class="page smart-select-page' + noNavbar + ' ' + noToolbar + '">' +
+        '  <div data-page="' + pageName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
              (navbarLayout === 'fixed' ? navbarHTML : '') +
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
