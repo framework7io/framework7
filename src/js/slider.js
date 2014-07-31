@@ -125,7 +125,10 @@ var Slider = function (container, params) {
     s.onClick = function (e) {
         if (s.params.preventClicks && !s.allowClick) {
             e.preventDefault();
-            if (s.params.preventClicksPropagation) e.stopPropagation();
+            if (s.params.preventClicksPropagation) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
         }
     };
     s.onTouchStart = function (e) {
