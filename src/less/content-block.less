@@ -6,6 +6,7 @@
     margin: 35px 0;
     padding: 0 15px;
     color: @contentBlockTitle;
+
 }
 .content-block-title {
     position: relative;
@@ -33,5 +34,26 @@
     html.retina.ios-gt-7 & {
         border-top-width: 0.5px;
         border-bottom-width: 0.5px;
+    }
+}
+.content-block.inset {
+    margin-left: 15px;
+    margin-right: 15px;
+    border-radius: 7px;
+    .content-block-inner {
+        border: none;
+        border-radius: 7px;
+    }
+}
+@media all and (min-width:768px) {
+    .content-block.tablet-inset {
+        margin-left: 15px;
+        margin-right: 15px;
+        border-radius: 7px
+    }
+    
+    .content-block.tablet-inset .content-block-inner {
+    	border: none;
+    	border-radius: 7px;
     }
 }

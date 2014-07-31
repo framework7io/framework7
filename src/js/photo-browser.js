@@ -158,12 +158,18 @@ var PhotoBrowser = function (params) {
             return;
         }
         pb.layout(pb.openIndex);
+        if (pb.params.onOpen) {
+            pb.params.onOpen(pb);
+        }
 
     };
     pb.close = function () {
         pb.opened = false;
         if (!pb.sliderContainer || pb.sliderContainer.length === 0) {
             return;
+        }
+        if (pb.params.onClose) {
+            pb.params.onClose(pb);
         }
         // Detach events
         pb.attachEvents(true);
@@ -235,16 +241,13 @@ var PhotoBrowser = function (params) {
                 pb.activeSlideIndex = slider.activeSlideIndex;
                 pb.container.find('.photo-browser-current').text(slider.activeSlideIndex + 1);
                 pb.container.find('.photo-browser-total').text(slider.slides.length);
+
+                $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 if (slider.isFirst) {
                     $('.photo-browser-prev').addClass('photo-browser-link-inactive');
-                    $('.photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
-                else if (slider.isLast) {
+                if (slider.isLast) {
                     $('.photo-browser-next').addClass('photo-browser-link-inactive');
-                    $('.photo-browser-prev').removeClass('photo-browser-link-inactive');
-                }
-                else {
-                    $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                 }
 
                 // Update captions
@@ -520,6 +523,9 @@ var PhotoBrowser = function (params) {
                 }
                 if (pb.params.type === 'popup') {
                     app.closeModal(pb.popup);
+                }
+                if (pb.params.onSwipeToClose) {
+                    pb.params.onSwipeToClose(pb);
                 }
                 allowSwipeToClose = true;
             }, 0);
