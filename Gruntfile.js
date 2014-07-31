@@ -108,7 +108,7 @@ module.exports = function (grunt) {
                 files: {
                     'build/css/<%= framework7.filename %>.css' : ['src/less/<%= framework7.filename %>.less'],
                     'build/css/<%= framework7.filename %>.rtl.css' : ['src/less/<%= framework7.filename %>.rtl.less'],
-                    'build/css/<%= framework7.filename %>.theme.dark.css' : ['src/less/<%= framework7.filename %>.theme.dark.less']
+                    'build/css/<%= framework7.filename %>.themes.css' : ['src/less/<%= framework7.filename %>.themes.less']
                 }
             },
             dist: {
