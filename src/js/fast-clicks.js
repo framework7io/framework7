@@ -6,6 +6,20 @@ app.initFastClicks = function () {
     if (!app.support.touch) return;
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
 
+    function androidNeedsBlur(el) {
+        var noBlur = ('button checkbox file image radio submit input textarea').split(' ');
+        if (document.activeElement && el !== document.activeElement && document.activeElement !== document.body) {
+            if (noBlur.indexOf(el.nodeName.toLowerCase()) >= 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    }
     function targetNeedsFocus(el) {
         if (document.activeElement === el) {
             return false;
@@ -48,6 +62,11 @@ app.initFastClicks = function () {
             }
             else {
                 activeSelection = false;
+            }
+        }
+        if (app.device.os === 'android')  {
+            if (androidNeedsBlur(e.target)) {
+                document.activeElement.blur();
             }
         }
 
