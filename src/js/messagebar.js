@@ -28,7 +28,7 @@ app.initMessagebar = function (pageContainer) {
         if (scrollHeight + diff > height) {
             var newAreaHeight = scrollHeight + diff;
             var newBarHeight = initialBarHeight + (newAreaHeight - initialAreaHeight);
-            var maxBarHeight = $(messagebar).parents('.view')[0].offsetHeight - 88;
+            var maxBarHeight = messagebar.attr('data-max-height') || messagebar.parents('.view')[0].offsetHeight - 88;
             if (newBarHeight > maxBarHeight) {
                 newBarHeight = maxBarHeight;
                 newAreaHeight = newBarHeight - initialBarHeight + initialAreaHeight;
