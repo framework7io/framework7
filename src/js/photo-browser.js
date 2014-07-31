@@ -374,7 +374,7 @@ var PhotoBrowser = function (params) {
 
     pb.onSlideTouchStart = function (e) {
         if (imageIsTouched) return;
-        if (app.device.os=='android') e.preventDefault();
+        if (app.device.os === 'android') e.preventDefault();
         imageIsTouched = true;
         imageTouchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         imageTouchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
