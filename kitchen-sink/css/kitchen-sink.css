@@ -11,12 +11,7 @@
   color: #000;
   border: 1px solid #ddd;
   padding: 5px;
-}
-.ks-grid .row {
   margin-bottom: 15px;
-}
-.ks-grid .row:last-child {
-  margin-bottom: 0;
 }
 .ks-preloaders {
   text-align: center;
