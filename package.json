@@ -37,19 +37,19 @@
   },
   "devDependencies": {
     "grunt": "~0.4.2",
-    "load-grunt-tasks": "~0.2.0",
-    "jshint": "~0.9",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-jshint": "~0.7.2",
-    "grunt-contrib-uglify": "~0.4.0",
+    "load-grunt-tasks": "~0.6.0",
+    "jshint": "~2.5.2",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "~0.5.1",
     "grunt-contrib-less": "^0.11.0",
-    "grunt-contrib-jade": "~0.9.0",
-    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jade": "~0.12.0",
+    "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-connect": "~0.7.0",
+    "grunt-contrib-connect": "~0.8.0",
     "grunt-open": "~0.2.3",
-    "jshint-stylish": "~0.1.5",
-    "time-grunt": "~0.2.8"
+    "jshint-stylish": "~0.4.0",
+    "time-grunt": "~0.4.0"
   },
   "scripts": {
     "test": "grunt test"
