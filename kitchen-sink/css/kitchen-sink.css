@@ -2,54 +2,6 @@
   background: #222;
   color: #dddddd;
 }
-.panel-left .content-block,
-.panel-left .content-block-title {
-  color: #dddddd;
-}
-.panel-left .list-block ul {
-  background: none;
-}
-.panel-left .list-block ul,
-.panel-left .list-block .item-inner {
-  border-color: rgba(255, 255, 255, 0.1);
-}
-.panel-left .list-block a {
-  color: inherit;
-}
-.panel-left .list-block a:active {
-  background: #000;
-}
-.panel-right .content-block,
-.panel-right .content-block-title,
-.panel-right .list-panel-title {
-  color: #dddddd;
-}
-.panel-right .navbar {
-  background: #000;
-  border-bottom: 1px solid #333;
-}
-.panel-right .navbar .center {
-  color: #007aff;
-}
-.panel-right .navbar a.link {
-  color: #fff;
-}
-.panel-right .page {
-  background: #222;
-}
-.panel-right .list-block ul {
-  background: none;
-}
-.panel-right .list-block ul,
-.panel-right .list-block .item-inner {
-  border-color: rgba(255, 255, 255, 0.1);
-}
-.panel-right .list-block a {
-  color: inherit;
-}
-.panel-right .list-block a:active {
-  background: #000;
-}
 .popover {
   width: 240px;
 }
