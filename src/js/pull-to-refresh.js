@@ -111,3 +111,14 @@ app.pullToRefreshDone = function (container) {
         container.removeClass('transitioning pull-up');
     });
 };
+app.pullToRefreshTrigger = function (container) {
+    container = $(container);
+    if (container.length === 0) container = $('.pull-to-refresh-content');
+    if (container.hasClass('refreshing')) return;
+    container.addClass('transitioning refreshing');
+    container.trigger('refresh', {
+        done: function () {
+            app.pullToRefreshDone(container);
+        }
+    });
+};
