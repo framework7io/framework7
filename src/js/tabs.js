@@ -48,7 +48,7 @@ app.showTab = function (tab, tabLink) {
     }
     if (tabLink.length === 0) return;
 
-    tabs.find('.tab.active').removeClass('active');
+    tabs.find('.tab-link.active').removeClass('active');
     tabLink.addClass('active');
     
     return true;
