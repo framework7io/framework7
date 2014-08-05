@@ -1,10 +1,10 @@
 // Initialize your app
-var myApp = new Framework7({preloadPreviousPage: false});
+var myApp = new Framework7({preloadPreviousPage: false, pushState: true});
 
 // Export selectors engine
 var $$ = Framework7.$;
 
-var mainView = myApp.addView('.view-main', {
+window.mainView = myApp.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
     dynamicNavbar: true,
     domCache: true
@@ -13,9 +13,13 @@ var mainView = myApp.addView('.view-main', {
 window.mainView = mainView;
 
 $$(document).on("click", ".item-link-services", function() {
-  return mainView.switchContent(".services");
+  return mainView.switchPage("services");
 });
 
 $$(document).on("click", ".item-link-about", function() {
-  return mainView.switchContent(".about");
+  return mainView.switchPage("about");
+});
+
+$$(document).on("click", ".item-link-more-services", function() {
+  return mainView.switchPage("more-services");
 });
