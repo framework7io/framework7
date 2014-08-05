@@ -301,6 +301,10 @@ function _switch(view, selector, url, animatePages) {
         app.allowPageChange = true;
         throw new Error('Navbar of page "' + selector + ' not found');
     }
+    if (!(pagesContainer.hasClass('inline-templates'))){
+        app.allowPageChange = true;
+        throw new Error('Please include "inline-templates" class on the pages DIV');
+    }
 
     _showPage(view, url, newPage, newNavbarInner, animatePages);
 }
