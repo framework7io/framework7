@@ -16,8 +16,8 @@ app.pushStateClearQueue = function () {
     if (queue.action === 'loadContent') {
         app.loadContent(queue.view, queue.stateContent, animatePages, false);
     }
-    if (queue.action === 'switchContent') {
-        app.switchContentContent(queue.view, queue.statePage, animatePages, false);
+    if (queue.action === 'switchPage') {
+        app.switchPage(queue.view, queue.statePage, animatePages, false);
     }
 };
 
@@ -59,6 +59,19 @@ app.initPushState = function () {
                     });
                 }
             }
+            else if (statePage) {
+                // Load Page
+                if (app.allowPageChange) {
+                    app.switchPage(mainView, statePage, animatePages, false);
+                }
+                else {
+                    app.pushStateQueue.unshift({
+                        action: 'switchPage',
+                        stateContent: statePage,
+                        view: mainView
+                    });
+                }
+            }
             else if (stateUrl && !stateContent) {
                 // Load Page
                 if (app.allowPageChange) {
@@ -81,19 +94,6 @@ app.initPushState = function () {
                     app.pushStateQueue.unshift({
                         action: 'loadContent',
                         stateContent: stateContent,
-                        view: mainView
-                    });
-                }
-            }
-            else if (statePage) {
-                // Load Page
-                if (app.allowPageChange) {
-                    app.switchContent(mainView, statePage, animatePages, false);
-                }
-                else {
-                    app.pushStateQueue.unshift({
-                        action: 'switchContent',
-                        stateContent: statePage,
                         view: mainView
                     });
                 }

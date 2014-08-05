@@ -287,13 +287,22 @@ function _animateNavbars(leftNavbarInner, rightNavbarInner, direction, view) {
         });
     }
 }
-function _switch(view, selector, animatePages) {
+function _switch(view, selector, url, animatePages) {
     var pagesContainer = $(view.pagesContainer), newPage, newNavbarInner;
 
-    newPage = _findElement('.page' + selector, pagesContainer, view);
-    newNavbarInner = _findElement('.navbar-inner' + selector, pagesContainer.parent(), view);
+    newPage = pagesContainer.find('.page[data-page="' + selector + '"]');
+    newNavbarInner = pagesContainer.parent().find('.navbar-inner[data-page="' + selector + '"]');
 
-    _switch2(view, undefined, undefined, newPage, newNavbarInner, animatePages);
+    if (!(newPage.length && newPage.length !== 0)) {
+        app.allowPageChange = true;
+        throw new Error('Page "' + selector + '" not found');
+    }
+    if (!(newNavbarInner.length && newNavbarInner.length !== 0)) {
+        app.allowPageChange = true;
+        throw new Error('Navbar of page "' + selector + ' not found');
+    }
+
+    _showPage(view, url, newPage, newNavbarInner, animatePages);
 }
 function _load(view, url, content, animatePages) {
     var newPage, newNavbarInner;
@@ -321,12 +330,12 @@ function _load(view, url, content, animatePages) {
     // Find navbar
     newNavbarInner = _findElement('.navbar-inner', app._tempDomElement, view);
 
-    _switch2(view, url, content, newPage, newNavbarInner, animatePages);
+    _showPage(view, url, newPage, newNavbarInner, animatePages);
 }
-function _switch2(view, url, content, newPage, newNavbarInner, animatePages) {
+function _showPage(view, url, newPage, newNavbarInner, animatePages) {
     var viewContainer = $(view.container), pagesContainer = $(view.pagesContainer),
         oldPage, pagesInView, i, oldNavbarInner, navbar, dynamicNavbar,
-        isSwitch = newPage.hasClass('cached');
+        isSwitch = pagesContainer.hasClass('inline-templates');
     
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
 
@@ -360,8 +369,10 @@ function _switch2(view, url, content, newPage, newNavbarInner, animatePages) {
     }
 
     oldPage = pagesContainer.children('.page:not(.cached)');
-    if (oldPage[0] === newPage[0]) return console.log('Can not switch; The page is already displayed');
-        
+    if (oldPage[0] === newPage[0]) {
+        app.allowPageChange = true;
+        throw new Error('Can not switch; The page is already displayed');
+    }  
 
     // Dynamic navbar
     if (view.params.dynamicNavbar) {
@@ -514,21 +525,23 @@ app.loadContent = function (view, content, animatePages, pushState) {
         _load(view, null, content, animatePages);
     });
 };
-app.switchContent = function (view, page, animatePages, pushState) {
-    if (!app.allowPageChange) return console.log('allowPageChange is false');
-    if (!view.params.domCache) return console.log('switchContent is currently only available when using the domCache option on the view');
-    
+app.switchPage = function (view, page, animatePages, pushState) {
+    var url = 'page-' + page;
+    if (!app.allowPageChange) throw new Error('AllowPageChange is false');
+    if (!view.params.domCache) throw new Error('SwitchPage is currently only available when using the domCache option on the view');
+
     app.allowPageChange = false;
     if (app.xhr) {
         app.xhr.abort();
         app.xhr = false;
     }
+
     if (app.params.pushState)  {
         if (typeof pushState === 'undefined') pushState = true;
         var pushStateRoot = app.params.pushStateRoot || '';
-        if (pushState) history.pushState({page: page, url: '#content-' + view.history.length}, '', pushStateRoot + app.params.pushStateSeparator + '#content-' + view.history.length);
+        if (pushState) history.pushState({page: page, url: url}, '', pushStateRoot + app.params.pushStateSeparator + url);
     }
-    _switch(view, page, animatePages);
+    _switch(view, page, url, animatePages);
 };
 app.loadPage = function (view, url, animatePages, pushState) {
     if (!app.allowPageChange) return false;
@@ -555,6 +568,7 @@ app.loadPage = function (view, url, animatePages, pushState) {
     });
 };
 app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
+    var page, backToUrl;
     if (!app.allowPageChange) return false;
 
     app.allowPageChange = false;
@@ -574,8 +588,15 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
     var viewContainer = $(view.container),
         pagesContainer = $(view.pagesContainer),
         pagesInView = pagesContainer.children('.page:not(.cached)'),
-        wasSwitch = true,//todo
+        wasSwitch = pagesContainer.hasClass('inline-templates'),
         oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar;
+
+    if (wasSwitch) {
+        backToUrl = view.history[view.history.length - 2];
+        if (backToUrl && backToUrl.slice(0, 5) === 'page-') {
+            page = backToUrl.slice(5);
+        }
+    }
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
 
@@ -688,7 +709,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
         _animate();
     }
 
-    if (pagesInView.length > 1) {
+    if (wasSwitch || pagesInView.length > 1) {
         // Exit if only preloadOnly
         if (preloadOnly) {
             app.allowPageChange = true;
@@ -698,16 +719,37 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
         view.url = view.history[view.history.length - 2];
 
         // Define old and new pages
-        newPage = $(pagesInView[pagesInView.length - 2]);
-        oldPage = $(pagesInView[pagesInView.length - 1]);
+        if (wasSwitch) {
+            newPage = pagesContainer.find('.page[data-page="' + page + '"]');
+            oldPage = pagesContainer.find('.page[data-page="' + view.activePage.name + '"]');
+            if (!(newPage.length && newPage.length !== 0)) {
+                newPage = $(viewContainer.find('.page:first-child'));
+                newPage.removeClass('cached');
+            }
+        }
+        else {
+            newPage = $(pagesInView[pagesInView.length - 2]);
+            oldPage = $(pagesInView[pagesInView.length - 1]);
+        }
 
         // Dynamic navbar
         if (view.params.dynamicNavbar) {
             dynamicNavbar = true;
             // Find navbar
-            var inners = viewContainer.find('.navbar-inner:not(.cached)');
-            newNavbarInner = $(inners[0]);
-            oldNavbarInner = $(inners[1]);
+            
+            if (wasSwitch) {
+                newNavbarInner = viewContainer.find('.navbar-inner[data-page="' + page + '"]');
+                oldNavbarInner = viewContainer.find('.navbar-inner[data-page="' + view.activePage.name + '"]');
+                if (!(newNavbarInner.length && newNavbarInner.length !== 0)) {
+                    newNavbarInner = $(viewContainer.find('.navbar-inner:first-child'));
+                    newNavbarInner.removeClass('cached');
+                }
+            }
+            else {
+                var inners = viewContainer.find('.navbar-inner:not(.cached)');
+                newNavbarInner = $(inners[0]);
+                oldNavbarInner = $(inners[1]);
+            }
         }
         _animate();
     }
