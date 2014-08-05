@@ -349,10 +349,16 @@ function _showPage(view, url, newPage, newNavbarInner, animatePages) {
         return;
     }
 
-    newPage.addClass('page-on-right');
-
     // Find old page (should be the last one) and remove older pages
     pagesInView = pagesContainer.children('.page:not(.cached)');
+    oldPage = pagesContainer.children('.page:not(.cached)');
+    if (oldPage[0] === newPage[0]) {
+        app.allowPageChange = true;
+        throw new Error('Can not switch; The page is already displayed');
+    }
+
+    newPage.addClass('page-on-right');
+
     if (pagesInView.length > 1) {
         for (i = 0; i < pagesInView.length - 2; i++) {
             if (!view.params.domCache) {
@@ -371,12 +377,6 @@ function _showPage(view, url, newPage, newNavbarInner, animatePages) {
             $(pagesInView[i]).addClass('cached');
         }
     }
-
-    oldPage = pagesContainer.children('.page:not(.cached)');
-    if (oldPage[0] === newPage[0]) {
-        app.allowPageChange = true;
-        throw new Error('Can not switch; The page is already displayed');
-    }  
 
     // Dynamic navbar
     if (view.params.dynamicNavbar) {
