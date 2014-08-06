@@ -1,4 +1,5 @@
 // Ajax
+var _jsonpRequests = 0;
 $.ajax = function (options) {
     var defaults = {
         method: 'GET',
@@ -46,7 +47,7 @@ $.ajax = function (options) {
     // JSONP
     if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
         
-        var callbackName = 'f7jsonp_' + Date.now();
+        var callbackName = 'f7jsonp_' + Date.now() + (_jsonpRequests++);
         var requestURL;
         var callbackSplit = options.url.split('callback=');
         if (callbackSplit[1].indexOf('&') >= 0) {
