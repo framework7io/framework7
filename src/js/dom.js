@@ -14,6 +14,9 @@ var Dom7 = function (arr) {
 Dom7.prototype = {
     // Classes and attriutes
     addClass: function (className) {
+        if (typeof className === 'undefined') {
+            return this;
+        }
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
@@ -23,6 +26,9 @@ Dom7.prototype = {
         return this;
     },
     removeClass: function (className) {
+        if (typeof className === 'undefined') {
+            return this.removeAttr('class');
+        }
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
