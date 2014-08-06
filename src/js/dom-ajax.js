@@ -169,9 +169,7 @@ $.ajax = function (options) {
         }
         $(document).trigger('ajaxComplete', {xhr: xhr});
     };
-    if (options.error) {
-
-    }
+    
     xhr.onerror = function (e) {
         $(document).trigger('ajaxError', {xhr: xhr});
         if (options.error) options.error(xhr);
