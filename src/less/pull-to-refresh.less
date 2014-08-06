@@ -15,6 +15,7 @@
         margin-left: -10px;
         margin-top: -10px;
         visibility: hidden;
+        
     }
     .pull-to-refresh-arrow {
         width: 13px;
@@ -36,6 +37,11 @@
 .pull-to-refresh-content {
     &.transitioning {
         .transition(400ms); 
+    }
+    &:not(.refreshing) {
+        .preloader {
+            .animation(none);
+        }
     }
     &.refreshing {
         .translate3d(0,44px,0);
