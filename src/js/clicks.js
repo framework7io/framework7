@@ -164,6 +164,7 @@ app.initClickEvents = function () {
             if (!view) return;
             var animatePages;
             if (clicked.hasClass('no-animation')) animatePages = false;
+            if (clicked.hasClass('with-animation')) animatePages = true;
             if (clicked.hasClass('back')) view.goBack(clicked.attr('href'), animatePages);
             else view.loadPage(clicked.attr('href'), animatePages);
         }
