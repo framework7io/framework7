@@ -129,7 +129,8 @@ app.pageAnimCallbacks = function (callback, view, params) {
         query: $.parseUrlQuery(params.url || ''),
         name: $(params.pageContainer).attr('data-page'),
         view: view,
-        from: params.position
+        from: params.position,
+        swipeBack: params.swipeBack
     };
     var oldPage = params.oldPage,
         newPage = params.newPage;

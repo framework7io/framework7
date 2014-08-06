@@ -305,7 +305,7 @@ var View = function (selector, params) {
             view.url = url;
             
             // Page before animation callback
-            app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage});
+            app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
         }
 
         activePage.transitionEnd(function () {
