@@ -174,6 +174,19 @@ var View = function (selector, params) {
         if (touchesDiff < 0) touchesDiff = 0;
         var percentage = touchesDiff / viewContainerWidth;
 
+        // Swipe Back Callback
+        var callbackData = {
+            percentage: percentage,
+            activePage: activePage[0],
+            previousPage: previousPage[0],
+            activeNavbar: activeNavbar[0],
+            previousNavbar: previousNavbar[0]
+        };
+        if (view.params.onSwipeBackMove) {
+            view.params.onSwipeBackMove(callbackData);
+        }
+        container.trigger('swipebackmove', callbackData);
+
         // Transform pages
         var activePageTranslate = touchesDiff * inverter;
         var previousPageTranslate = (touchesDiff / 5 - viewContainerWidth / 5) * inverter;
