@@ -286,29 +286,33 @@ html.android {
 label.label-checkbox {
     cursor: pointer;
     i.icon-form-checkbox {
-        width: 29px;
-        height: 29px;
+        width: 22px;
+        height: 22px;
         position: relative;
+        border-radius: 22px;
+        border: 1px solid #c7c7cc;
+        .border-box();
+
         &:after {
             content:' ';
             position: absolute;
             left: 50%;
-            margin-left: -11px;
+            margin-left: -6px;
             top: 50%;
-            margin-top: -11px;
-            width: 22px;
-            height: 22px;
-            border-radius: 22px;
-            border: 1px solid #c7c7cc;
-            .border-box();
+            margin-top: -4px;
+            width: 12px;
+            height: 9px;
         }
     }
     input[type="checkbox"], input[type="radio"] {
         display: none;
         &:checked + .item-media{
-            i.icon-form-checkbox:after {
+            i.icon-form-checkbox {
                 border: none;
-                background: @blue no-repeat center;
+                background-color: @blue;
+            }
+            i.icon-form-checkbox:after {
+                background: no-repeat center;
                 background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 12 9' xml:space='preserve'><polygon fill='%23ffffff' points='12,0.7 11.3,0 3.9,7.4 0.7,4.2 0,4.9 3.9,8.8 3.9,8.8 3.9,8.8 '/></svg>");
                 -webkit-background-size: 12px 9px;
                 background-size: 12px 9px;
@@ -325,7 +329,8 @@ label.label-radio {
         }
         &:checked ~ .item-inner{
             background: no-repeat center;
-            background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 13 10'><polygon fill='%23007aff' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+            background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='%23007aff' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+            background-position: 90% center;
             background-position: ~"-webkit-calc(100% - 15px)" center;
             background-position: ~"calc(100% - 15px)" center;
             -webkit-background-size: 13px 10px;
