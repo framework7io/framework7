@@ -16,6 +16,9 @@ app.pushStateClearQueue = function () {
     if (queue.action === 'loadContent') {
         app.loadContent(queue.view, queue.stateContent, animatePages, false);
     }
+    if (queue.action === 'switchPage') {
+        app.switchPage(queue.view, queue.statePage, animatePages, false);
+    }
 };
 
 app.initPushState = function () {
@@ -40,6 +43,7 @@ app.initPushState = function () {
         }
         var stateUrl = state && state.url || undefined;
         var stateContent = state && state.content || undefined;
+        var statePage = state && state.page || undefined;
         var animatePages;
         if (app.params.pushStateNoAnimation === true) animatePages = false;
         if (stateUrl !== mainView.url) {
@@ -51,6 +55,19 @@ app.initPushState = function () {
                 else {
                     app.pushStateQueue.push({
                         action: 'goBack',
+                        view: mainView
+                    });
+                }
+            }
+            else if (statePage) {
+                // Load Page
+                if (app.allowPageChange) {
+                    app.switchPage(mainView, statePage, animatePages, false);
+                }
+                else {
+                    app.pushStateQueue.unshift({
+                        action: 'switchPage',
+                        stateContent: statePage,
                         view: mainView
                     });
                 }

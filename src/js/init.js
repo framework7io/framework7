@@ -13,7 +13,7 @@ app.init = function () {
     if (app.initClickEvents) app.initClickEvents();
 
     // Init each page callbacks
-    $('.page').each(function () {
+    $('.page:not(.cached)').each(function () {
         var pageContainer = $(this);
         var viewContainer = pageContainer.parents('.' + app.params.viewClass);
         if (viewContainer.length === 0) return;

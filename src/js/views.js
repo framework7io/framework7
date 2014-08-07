@@ -350,6 +350,9 @@ var View = function (selector, params) {
     view.loadContent = function (content, animatePages) {
         return app.loadContent(view, content, animatePages);
     };
+    view.switchPage = function (page, animatePages) {
+        return app.switchPage(view, page, animatePages);
+    };
     view.goBack = function (url, animatePages) {
         return app.goBack(view, url, animatePages);
     };
