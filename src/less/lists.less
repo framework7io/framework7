@@ -57,21 +57,10 @@
         }
     }
 
-    
-
     // List items
     li {
         .border-box();
         position: relative;
-    }
-    li:last-child .item-inner, li:last-child .swipeout-actions {
-        border-bottom: none;
-    }
-    ul ul li:last-child .item-inner, li:last-child li .item-inner, ul ul li:last-child .swipeout-actions, li:last-child li .swipeout-actions {
-        border-bottom: 1px solid @listBlockBorderColor;
-    }
-    li:last-child li:last-child .item-inner, li:last-child li:last-child .swipeout-actions {
-        border-bottom: none;
     }
     
     .item-media {
@@ -157,7 +146,7 @@
             .transition(0ms);
             background-color: #d9d9d9;
             .item-inner {
-                border-bottom: 1px solid transparent;
+                border-bottom-color: transparent;
             }
         }
         &.list-button {
@@ -172,11 +161,8 @@
             }
         }
     }
-    li:last-child {
-        .list-button {
-            border-bottom: none;
-        }
-    }
+
+    
     .item-content {
         .border-box();
         padding-left: 15px;
@@ -367,6 +353,25 @@
         .transition(0ms);
         .item-inner {
             border-bottom: none;
+        }
+    }
+
+    // Last-childs
+    li {
+        &:last-child {
+            .list-button {
+                border-bottom: none;
+            }
+        }
+        &:last-child, &:last-child li:last-child {
+            .item-inner, .swipeout-actions {
+                border-bottom: none;
+            }
+        }
+        li:last-child, &:last-child li {
+            .item-inner, .swipeout-actions {
+                border-bottom: 1px solid @listBlockBorderColor;
+            }
         }
     }
 }
