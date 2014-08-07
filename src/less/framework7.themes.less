@@ -1,3 +1,9 @@
+/* 
+==========================
+Framework7 Themes & Colors 
+==========================
+*/
+
 /* === Dark theme === */
 [data-theme="dark"] {
     @pageBg: #222;
@@ -18,29 +24,27 @@
     @searchbarBorder: #333;
     @swipeoutButton: #444;
     @checkboxBorder: @blockBorder;
-    .page {
-        color:@text;    
-    }
-    .navbar, .toolbar {
+    .navbar, &.navbar {
+        border-bottom-color: @barsBorder;
         background-color: @barsBg;
         color:@barsText;
     }
-    .navbar {
-        border-bottom-color: @barsBorder;
-    }
-    .toolbar {
+    .toolbar, &.toolbar {
         border-top-color: @barsBorder;
+        background-color: @barsBg;
+        color:@barsText;
     }
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
-    .page, .login-screen-content {
+    .page, .login-screen-content, &.page {
         background-color: @pageBg;
+        color:@text;
     }
     .content-block-title {
         color:@strongText;
     }
-    .content-block {
+    .content-block, &.content-block {
         color:@lightText;
     }
     .content-block-inner {
@@ -48,7 +52,7 @@
         color:@text;
         border-color: @blockBorder;
     }
-    .list-block {
+    .list-block, &.list-block {
         ul {
             background: @blockBg;
             border-color: @blockBorder;
@@ -97,7 +101,7 @@
     }
 
     // Forms
-    .list-block {
+    .list-block, &.list-block {
         input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
             color:@strongText;
         }
@@ -133,29 +137,27 @@
     @searchbarBorder: #b4b4b4;
     @swipeoutButton: #c7c7cc;
     @checkboxBorder: #e5e5e5;
-    .page {
-        color:@text;    
-    }
-    .navbar, .toolbar {
+    .navbar, &.navbar {
+        border-bottom-color: @barsBorder;
         background-color: @barsBg;
         color:@barsText;
     }
-    .navbar {
-        border-bottom-color: @barsBorder;
-    }
-    .toolbar {
+    .toolbar, &.toolbar {
         border-top-color: @barsBorder;
+        background-color: @barsBg;
+        color:@barsText;
     }
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
-    .page, .login-screen-content {
+    .page, .login-screen-content, &.page {
         background-color: @pageBg;
+        color: @text;
     }
     .content-block-title {
         color:@strongText;
     }
-    .content-block {
+    .content-block, &.content-block {
         color:@lightText;
     }
     .content-block-inner {
@@ -163,7 +165,7 @@
         color:@text;
         border-color: @blockBorder;
     }
-    .list-block {
+    .list-block, &.list-block {
         ul {
             background: @blockBg;
             border-color: @blockBorder;
@@ -212,7 +214,7 @@
     }
 
     // Forms
-    .list-block {
+    .list-block, &.list-block {
         input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
             color:@strongText;
         }
