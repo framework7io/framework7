@@ -1,10 +1,10 @@
-/* 
-==========================
-Framework7 Themes & Colors 
-==========================
-*/
+/*==========================
+Framework7 Themes & Colors
+==========================*/
 
-/* === Dark theme === */
+/*==== Themes ====*/
+
+/* Dark theme */
 [data-theme="dark"] {
     @pageBg: #222;
     @barsBg: #131313;
@@ -24,12 +24,12 @@ Framework7 Themes & Colors
     @searchbarBorder: #333;
     @swipeoutButton: #444;
     @checkboxBorder: @blockBorder;
-    .navbar, &.navbar {
+    .navbar, .navbar& {
         border-bottom-color: @barsBorder;
         background-color: @barsBg;
         color:@barsText;
     }
-    .toolbar, &.toolbar {
+    .toolbar, .toolbar& {
         border-top-color: @barsBorder;
         background-color: @barsBg;
         color:@barsText;
@@ -37,14 +37,14 @@ Framework7 Themes & Colors
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
-    .page, .login-screen-content, &.page {
+    .page, .login-screen-content, .page& {
         background-color: @pageBg;
         color:@text;
     }
     .content-block-title {
         color:@strongText;
     }
-    .content-block, &.content-block {
+    .content-block, .content-block& {
         color:@lightText;
     }
     .content-block-inner {
@@ -52,7 +52,7 @@ Framework7 Themes & Colors
         color:@text;
         border-color: @blockBorder;
     }
-    .list-block, &.list-block {
+    .list-block, .list-block& {
         ul {
             background: @blockBg;
             border-color: @blockBorder;
@@ -101,7 +101,7 @@ Framework7 Themes & Colors
     }
 
     // Forms
-    .list-block, &.list-block {
+    .list-block, .list-block& {
         input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
             color:@strongText;
         }
@@ -137,12 +137,12 @@ Framework7 Themes & Colors
     @searchbarBorder: #b4b4b4;
     @swipeoutButton: #c7c7cc;
     @checkboxBorder: #e5e5e5;
-    .navbar, &.navbar {
+    .navbar, .navbar& {
         border-bottom-color: @barsBorder;
         background-color: @barsBg;
         color:@barsText;
     }
-    .toolbar, &.toolbar {
+    .toolbar, .toolbar& {
         border-top-color: @barsBorder;
         background-color: @barsBg;
         color:@barsText;
@@ -150,14 +150,14 @@ Framework7 Themes & Colors
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
-    .page, .login-screen-content, &.page {
+    .page, .login-screen-content, .page& {
         background-color: @pageBg;
         color: @text;
     }
     .content-block-title {
         color:@strongText;
     }
-    .content-block, &.content-block {
+    .content-block, .content-block& {
         color:@lightText;
     }
     .content-block-inner {
@@ -165,7 +165,7 @@ Framework7 Themes & Colors
         color:@text;
         border-color: @blockBorder;
     }
-    .list-block, &.list-block {
+    .list-block, .list-block& {
         ul {
             background: @blockBg;
             border-color: @blockBorder;
@@ -214,7 +214,7 @@ Framework7 Themes & Colors
     }
 
     // Forms
-    .list-block, &.list-block {
+    .list-block, .list-block& {
         input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
             color:@strongText;
         }
@@ -228,4 +228,100 @@ Framework7 Themes & Colors
     .range-slider input[type="range"]:after {
         background: @blockBg;
     }
+}
+.color-mixin() {
+    a, a&, .item-link.list-button, .item-link.list-button& {
+        color: @color;
+    }
+    .button:not(.button-submit):not(.button-cancel), .button& {
+        border-color: @color;
+        &.active {
+            background-color: @color;
+        }
+        &:active {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
+        }
+    }
+    .navbar, .toolbar {
+        a.link {
+            color:@color;
+        }
+    }
+    .tabbar {
+        a {
+            color:inherit;
+        }
+        a.active {
+            color:@color;
+        }
+    }
+    .range-slider, .range-slider& {
+        input[type="range"]::-webkit-slider-thumb:before {
+            background-color: @color;
+        }
+    }
+    label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+        background-color: @color;
+    }
+    label.label-radio input[type="checkbox"]:checked ~ .item-inner, label.label-radio input[type="radio"]:checked ~ .item-inner {
+        background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='%23@{_color}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+    }
+    .slider-pagination, .slider-pagination& {
+        .slider-pagination-active {
+            background-color: @color;
+        }
+    }
+    i.icon-next-blue, i.icon-next-blue& {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{_color}' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
+    }
+    i.icon-prev-blue, i.icon-prev-blue& {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{_color}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
+    }
+    i.icon-back-blue, i.icon-back-blue& {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{_color}'/></svg>");
+    }
+    i.icon-bars-blue, i.icon-bars-blue& {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26' fill='%23@{_color}'><rect width='4' height='4'/><rect x='8' y='1' width='34' height='2'/><rect y='11' width='4' height='4'/><rect x='8' y='12' width='34' height='2'/><rect y='22' width='4' height='4'/><rect x='8' y='23' width='34' height='2'/></svg>");
+    }
+}
+/*==== Colors ====*/
+[data-color="lightblue"] {
+    @color: #5ac8fa;
+    @_color: '5ac8fa';
+    .color-mixin();
+}
+[data-color="yellow"] {
+    @color: #ffcc00;
+    @_color: 'ffcc00';
+    .color-mixin();
+}
+[data-color="orange"] {
+    @color: #ff9500;
+    @_color: 'ff9500';
+    .color-mixin();
+}
+[data-color="pink"] {
+    @color: #ff2d55;
+    @_color: 'ff2d55';
+    .color-mixin();
+}
+[data-color="blue"] {
+    @color: #007aff;
+    @_color: '007aff';
+    .color-mixin();
+}
+[data-color="green"] {
+    @color: #4cd964;
+    @_color: '4cd964';
+    .color-mixin();
+}
+[data-color="red"] {
+    @color: #ff3b30;
+    @_color: 'ff3b30';
+    .color-mixin();
+}
+[data-color="gray"] {
+    @color: #8e8e93;
+    @_color: '8e8e93';
+    .color-mixin();
 }
