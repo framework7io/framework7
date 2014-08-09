@@ -1,12 +1,9 @@
 /*==========================
-Framework7 Themes & Colors
+Framework7 Themes & Layouts
 ==========================*/
-
-/*==== Themes ====*/
-
-/* Dark theme */
-[data-theme="dark"] {
-    @pageBg: #222;
+/* Dark layout */
+.layout-dark {
+    @pageBg: #222426;
     @barsBg: #131313;
     @barsBorder: #333;
     @barsText: #fff;
@@ -14,10 +11,10 @@ Framework7 Themes & Colors
     @text: #ddd;
     @lightText: #bbb;
     @strongText: #fff;
-    @activeLink: #333;
-    @blockBg: @pageBg;
+    @activeLink: #29292f;
+    @blockBg: #1c1d1f;
     @blockBorder: #393939;
-    @blockStrongBg: #191919;
+    @blockStrongBg: #1c1d1f;
     @dividerBg: #1a1a1a;
     @itemAfterText: @lightText;
     @searchbarBg: #333;
@@ -34,10 +31,16 @@ Framework7 Themes & Colors
         background-color: @barsBg;
         color:@barsText;
     }
+    // Photo Browser
+    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+        .navbar, .toolbar {
+            background: rgba(red(@barsBg), green(@barsBg), blue(@barsBg), 0.95);
+        }
+    }
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
-    .page, .login-screen-content, .page& {
+    .page, .login-screen-content, .page&, .panel, .panel& {
         background-color: @pageBg;
         color:@text;
     }
@@ -60,6 +63,18 @@ Framework7 Themes & Colors
         &.inset ul{
             background: @blockStrongBg;
         }
+        &.notifications > ul {
+            background: none;
+        }
+    }
+    .popover, .popover& {
+        background: rgba(0,0,0,0.8);
+        .popover-angle:after {
+            background: rgba(0,0,0,0.8);
+        }
+    }
+    .popover-inner > .list-block ul {
+        background: none;
     }
     li.sorting {
         background-color: @activeLink;
@@ -115,10 +130,11 @@ Framework7 Themes & Colors
     .range-slider input[type="range"]:after {
         background: @blockBg;
     }
+
 }
 
-/* === White theme === */
-[data-theme="white"] {
+/* === White layout === */
+.layout-white {
     @pageBg: #fff;
     @barsBg: #fff;
     @barsBorder: #ddd;
@@ -147,10 +163,16 @@ Framework7 Themes & Colors
         background-color: @barsBg;
         color:@barsText;
     }
+    // Photo Browser
+    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+        .navbar, .toolbar {
+            background: rgba(red(@barsBg), green(@barsBg), blue(@barsBg), 0.95);
+        }
+    }
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
-    .page, .login-screen-content, .page& {
+    .page, .login-screen-content, .page&, .panel, .panel& {
         background-color: @pageBg;
         color: @text;
     }
@@ -173,6 +195,12 @@ Framework7 Themes & Colors
         &.inset ul{
             background: @blockStrongBg;
         }
+        &.notifications > ul {
+            background: none;
+        }
+    }
+    .popover-inner > .list-block ul {
+        background: none;
     }
     li.sorting {
         background-color: @activeLink;
@@ -229,99 +257,106 @@ Framework7 Themes & Colors
         background: @blockBg;
     }
 }
-.color-mixin() {
-    a, a&, .item-link.list-button, .item-link.list-button& {
+.color-mixin(@colorName, @color, @colorHex) {
+    .theme-@{colorName} {
+        a, a&, .item-link.list-button, .item-link.list-button&, a.link, a.link& {
+            color: @color;
+        }
+        .button:not(.button-fill), .button:not(.button-fill)& {
+            border-color: @color;
+            &:active {
+                background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
+            }
+            &.active {
+                background-color: @color;
+            }
+        }
+        .button-fill, .button-fill& {
+            background-color: @color;
+            color: #fff;
+        }
+        .buttonMixin(@colorName) when (@color = #ffffff) {
+            .button.active, .button-fill {
+                color:#000;
+            }
+        }
+        .buttonMixin(@colorName);
+        .tabbar, .tabbar& {
+            a {
+                color:inherit;
+            }
+            a.active {
+                color:@color;
+            }
+        }
+        .range-slider, .range-slider& {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+        }
+        label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+            background-color: @color;
+        }
+        label.label-radio input[type="checkbox"]:checked ~ .item-inner, label.label-radio input[type="radio"]:checked ~ .item-inner {
+            background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='%23@{colorHex}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+        }
+        .slider-pagination, .slider-pagination& {
+            .slider-pagination-active {
+                background-color: @color;
+            }
+        }
+        i.icon {
+            color: @color;
+        }
+        i.icon-next, i.icon-next& {
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
+        }
+        i.icon-prev, i.icon-prev& {
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
+        }
+        i.icon-back, i.icon-back& {
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{colorHex}'/></svg>");
+        }
+        i.icon-bars, i.icon-bars& {
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26' fill='%23@{colorHex}'><rect width='4' height='4'/><rect x='8' y='1' width='34' height='2'/><rect y='11' width='4' height='4'/><rect x='8' y='12' width='34' height='2'/><rect y='22' width='4' height='4'/><rect x='8' y='23' width='34' height='2'/></svg>");
+        }
+    }
+    .color-@{colorName} {
         color: @color;
-    }
-    .button:not(.button-submit):not(.button-cancel), .button& {
-        border-color: @color;
-        &.active {
-            background-color: @color;
-        }
-        &:active {
-            background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
+        a&, .button&, .button.button-fill&, i.icon& {
+            color: @color !important;
         }
     }
-    .navbar, .toolbar {
-        a.link {
-            color:@color;
-        }
-    }
-    .tabbar {
-        a {
-            color:inherit;
-        }
-        a.active {
-            color:@color;
-        }
-    }
-    .range-slider, .range-slider& {
-        input[type="range"]::-webkit-slider-thumb:before {
-            background-color: @color;
-        }
-    }
-    label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+    .bg-@{colorName} {
         background-color: @color;
-    }
-    label.label-radio input[type="checkbox"]:checked ~ .item-inner, label.label-radio input[type="radio"]:checked ~ .item-inner {
-        background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='%23@{_color}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
-    }
-    .slider-pagination, .slider-pagination& {
-        .slider-pagination-active {
-            background-color: @color;
+        a&, .button&, .button.button-fill& {
+            background-color: @color !important;
         }
     }
-    i.icon-next-blue, i.icon-next-blue& {
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{_color}' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
-    }
-    i.icon-prev-blue, i.icon-prev-blue& {
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{_color}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
-    }
-    i.icon-back-blue, i.icon-back-blue& {
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{_color}'/></svg>");
-    }
-    i.icon-bars-blue, i.icon-bars-blue& {
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26' fill='%23@{_color}'><rect width='4' height='4'/><rect x='8' y='1' width='34' height='2'/><rect y='11' width='4' height='4'/><rect x='8' y='12' width='34' height='2'/><rect y='22' width='4' height='4'/><rect x='8' y='23' width='34' height='2'/></svg>");
+    .border-@{colorName} {
+        border-color: @color;
+        a&, .button&, .button.button-fill& {
+            border-color: @color !important;
+        }
     }
 }
-/*==== Colors ====*/
-[data-color="lightblue"] {
-    @color: #5ac8fa;
-    @_color: '5ac8fa';
-    .color-mixin();
-}
-[data-color="yellow"] {
-    @color: #ffcc00;
-    @_color: 'ffcc00';
-    .color-mixin();
-}
-[data-color="orange"] {
-    @color: #ff9500;
-    @_color: 'ff9500';
-    .color-mixin();
-}
-[data-color="pink"] {
-    @color: #ff2d55;
-    @_color: 'ff2d55';
-    .color-mixin();
-}
-[data-color="blue"] {
-    @color: #007aff;
-    @_color: '007aff';
-    .color-mixin();
-}
-[data-color="green"] {
-    @color: #4cd964;
-    @_color: '4cd964';
-    .color-mixin();
-}
-[data-color="red"] {
-    @color: #ff3b30;
-    @_color: 'ff3b30';
-    .color-mixin();
-}
-[data-color="gray"] {
-    @color: #8e8e93;
-    @_color: '8e8e93';
-    .color-mixin();
-}
+/*==== White ====*/
+.color-mixin(e('white'), #ffffff, 'ffffff');
+/*==== Black ====*/
+.color-mixin(e('black'), #000000, '000000');
+/*==== Lightblue ====*/
+.color-mixin(e('lightblue'), #5ac8fa, '5ac8fa');
+/*==== Yellow ====*/
+.color-mixin(e('yellow'), #ffcc00, 'ffcc00');
+/*==== Orange ====*/
+.color-mixin(e('orange'), #ff9500, 'ff9500');
+/*==== Pink ====*/
+.color-mixin(e('pink'), #ff2d55, 'ff2d55');
+/*==== Blue ====*/
+.color-mixin(e('blue'), #007aff, '007aff');
+/*==== Green ====*/
+.color-mixin(e('green'), #4cd964, '4cd964');
+/*==== Red ====*/
+.color-mixin(e('red'), #ff3b30, 'ff3b30');
+/*==== Gray ====*/
+.color-mixin(e('gray'), #8e8e93, '8e8e93');
