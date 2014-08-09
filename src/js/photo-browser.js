@@ -40,12 +40,12 @@ var PhotoBrowser = function (params) {
         return view;
     }
 
-    var iconColor = pb.params.theme === 'dark' ? 'white' : 'blue';
+    var iconColor = pb.params.theme === 'dark' ? 'theme-white' : '';
 
     var navbarTemplate = pb.params.navbarTemplate ||
                         '<div class="navbar">' +
                             '<div class="navbar-inner">' +
-                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
+                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
                                 '<div class="center sliding"><span><span class="photo-browser-current"></span> ' + pb.params.ofText + ' <span class="photo-browser-total"></span></span></div>' +
                                 '<div class="right"></div>' +
                             '</div>' +
@@ -54,8 +54,8 @@ var PhotoBrowser = function (params) {
     var toolbarTemplate = pb.params.toolbarTemplate ||
                         '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev-' + iconColor + '"></i></a>' +
-                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next-' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev ' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next ' + iconColor + '"></i></a>' +
                             '</div>' +
                         '</div>';
 
