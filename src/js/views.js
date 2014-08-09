@@ -320,6 +320,8 @@ var View = function (selector, params) {
             app.allowPageChange = true;
             if (pageChanged) {
                 if (app.params.pushState) history.back();
+                // Page after animation callback
+                app.pageAnimCallbacks('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 app.afterGoBack(view, activePage, previousPage);
             }
         });
