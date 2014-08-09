@@ -55,15 +55,22 @@ app.initSwipeout = function (swipeoutEl) {
         isMoved = true;
 
         e.preventDefault();
-        e.f7PreventPanelSwipe = true;
+        
         if (app.rtl) e.f7PreventSwipeBack = true;
         touchesDiff = pageX - touchesStart.x;
         translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
 
-        if (translate > 0) translate = 0;
+        if (translate > 0) {
+            if (!opened) {
+                isTouched = isMoved = false;
+                return;
+            }
+            translate = 0;
+        }
         if (translate < -swipeOutActionsWidth) {
             translate = -swipeOutActionsWidth - Math.pow(-translate - swipeOutActionsWidth, 0.8);
         }
+        e.f7PreventPanelSwipe = true;
 
         if (app.params.swipeoutNoFollow) {
             if (touchesDiff < 0 && !opened) {
