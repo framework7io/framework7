@@ -73,7 +73,7 @@ app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
 };
 
 // On Page Init Callback
-app.pageInitCallback = function (view, pageContainer, url, position) {
+app.pageInitCallback = function (view, pageContainer, url, position, navbarInnerContainer) {
     if (pageContainer.f7PageInitialized) return;
     pageContainer.f7PageInitialized = true;
     // Page Data
@@ -83,7 +83,8 @@ app.pageInitCallback = function (view, pageContainer, url, position) {
         query: $.parseUrlQuery(url || ''),
         name: $(pageContainer).attr('data-page'),
         view: view,
-        from: position
+        from: position,
+        navbarInnerContainer: navbarInnerContainer
     };
 
     // Store pagedata in page
@@ -375,9 +376,6 @@ function _load(view, url, content, animatePages) {
     if (dynamicNavbar) {
         newNavbarInner.addClass('navbar-on-right');
         navbar.append(newNavbarInner[0]);
-
-        // Navbar Init Events
-        app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
     }
 
     // save content areas into view's cache
@@ -400,7 +398,12 @@ function _load(view, url, content, animatePages) {
     pagesContainer.append(newPage[0]);
 
     // Page Init Events
-    app.pageInitCallback(view, newPage[0], url, 'right');
+    app.pageInitCallback(view, newPage[0], url, 'right', dynamicNavbar ? newNavbarInner[0] : undefined);
+
+    // Navbar init event
+    if (dynamicNavbar) {
+        app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
+    }
 
     if (dynamicNavbar && animatePages) {
         newNavbarInner.find('.sliding').each(function () {
@@ -597,14 +600,17 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
             }
             navbar.prepend(newNavbarInner[0]);
             
-            // Navbar Init Events
-            app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'left');
         }
         // Prepend new Page and add classes for animation
         pagesContainer.prepend(newPage[0]);
 
         // Page Init Events
-        app.pageInitCallback(view, newPage[0], url, 'left');
+        app.pageInitCallback(view, newPage[0], url, 'left', dynamicNavbar ? newNavbarInner[0] : undefined);
+
+        // Navbar init event
+        if (dynamicNavbar) {
+            app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
+        }
 
         if (dynamicNavbar && newNavbarInner.hasClass('navbar-on-left') && animatePages) {
             newNavbarInner.find('.sliding').each(function () {
