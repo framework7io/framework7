@@ -393,6 +393,9 @@ app.openModal = function (modal) {
 };
 app.closeModal = function (modal) {
     modal = $(modal || '.modal-in');
+    if (typeof modal !== 'undefined' && modal.length === 0) {
+        return;
+    }
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
     var isLoginScreen = modal.hasClass('login-screen');

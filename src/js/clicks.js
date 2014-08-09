@@ -68,7 +68,11 @@ app.initClickEvents = function () {
             app.popup(popup);
         }
         if (clicked.hasClass('close-popup')) {
-            app.closeModal('.popup.modal-in');
+            if (clicked.attr('data-popup')) {
+                popup = clicked.attr('data-popup');
+            }
+            else popup = '.popup.modal-in';
+            app.closeModal(popup);
         }
         // Login Screen
         var loginScreen;

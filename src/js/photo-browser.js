@@ -45,7 +45,7 @@ var PhotoBrowser = function (params) {
     var navbarTemplate = pb.params.navbarTemplate ||
                         '<div class="navbar">' +
                             '<div class="navbar-inner">' +
-                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
+                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
                                 '<div class="center sliding"><span><span class="photo-browser-current"></span> ' + pb.params.ofText + ' <span class="photo-browser-total"></span></span></div>' +
                                 '<div class="right"></div>' +
                             '</div>' +
