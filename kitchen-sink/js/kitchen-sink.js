@@ -107,7 +107,7 @@ myApp.onPageInit('swipe-delete modals media-lists', function (page) {
                 // Another red button
                 {
                     text: 'Nice Red Button ',
-                    red: true,
+                    color: 'red',
                     onClick: function () {
                         myApp.alert('You have clicked red button!');
                     }

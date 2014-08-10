@@ -189,7 +189,7 @@ app.actions = function (params) {
             var button = params[i][j];
             var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
             if (button.bold) buttonClass += ' actions-modal-button-bold';
-            if (button.red) buttonClass += ' actions-modal-button-red';
+            if (button.color) buttonClass += ' color-' + button.color;
             buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
             if (j === params[i].length - 1) buttonsHTML += '</div>';
         }
