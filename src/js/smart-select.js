@@ -45,17 +45,22 @@ app.smartSelectOpen = function (smartSelect) {
 
     // Collect all values
     var select = smartSelect.find('select')[0];
-    if (select.disabled || smartSelect.hasClass('disabled') || $(select).hasClass('disabled')) {
+    var $select = $(select);
+    if (select.disabled || smartSelect.hasClass('disabled') || $select.hasClass('disabled')) {
         return;
     }
     var values = {};
     values.length = select.length;
+    var option;
     for (var i = 0; i < select.length; i++) {
+        option = $(select[i]);
         values[i] = {
             value: select[i].value,
             text: select[i].textContent.trim(),
             selected: select[i].selected,
-            group: $(select[i]).parent('optgroup')[0],
+            group: option.parent('optgroup')[0],
+            image: option.attr('data-option-image') || $select.attr('data-option-image'),
+            icon: option.attr('data-option-icon') || $select.attr('data-option-icon'),
             disabled: select[i].disabled
         };
     }
@@ -79,11 +84,15 @@ app.smartSelectOpen = function (smartSelect) {
                 previousGroup = values[j].group;
             }
         }
+        var media = '';
+        if (inputType === 'checkbox') media += '<i class="icon icon-form-checkbox"></i>';
+        if (values[j].icon) media += '<i class="icon ' + values[j].icon + '"></i>';
+        if (values[j].image) media += '<img src="' + values[j].image + '">';
         inputsHTML +=
             '<li>' +
                 '<label class="label-' + inputType + ' item-content">' +
                     '<input type="' + inputType + '" name="' + inputName + '" value="' + values[j].value + '" ' + checked + '>' +
-                    (inputType === 'checkbox' ? '<div class="item-media"><i class="icon icon-form-checkbox"></i></div>' : '') +
+                    (media !== '' ? '<div class="item-media">' + media + '</div>' : '') +
                     '<div class="item-inner">' +
                         '<div class="item-title">' + values[j].text + '</div>' +
                     '</div>' +
@@ -168,7 +177,7 @@ app.smartSelectOpen = function (smartSelect) {
                     select.value = value;
                 }
                     
-                $(select).trigger('change');
+                $select.trigger('change');
                 smartSelect.find('.item-after').text(optionText.join(', '));
                 if (backOnSelect && inputType === 'radio') {
                     view.goBack();
