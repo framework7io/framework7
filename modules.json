@@ -46,7 +46,8 @@
         ],
         "less" : [
             "src/less/login-screen.less",
-            "src/less/disabled.less"
+            "src/less/disabled.less",
+            "src/less/colors.less"
         ]
     },
 
