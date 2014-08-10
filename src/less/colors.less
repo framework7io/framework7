@@ -6,6 +6,9 @@
         .list-block .item-link.list-button&, .tabbar a.active&, a& {
             color: @color;
         }
+        .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
+            background-color: @color;
+        }
     }
     //Buttons
     .color-@{colorName}.button:not(.button-fill), .color-@{colorName}.buttons-row .button, .theme-@{colorName} .button:not(.button-fill) {
@@ -18,7 +21,7 @@
             color:#fff;
         }
     }
-    .color-@{colorName}.button.button-fill, .theme-@{colorName} .button.button-fill {
+    .theme-@{colorName} .button.button-fill, .button.button-fill.color-@{colorName} {
         background: @color;
         color:#fff;
     }
@@ -27,18 +30,18 @@
         i.icon, i.icon& {
             color:@color;
         }
-        i.icon-next, i.icon-next& {
-            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
-        }
-        i.icon-prev, i.icon-prev& {
-            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
-        }
-        i.icon-back, i.icon-back& {
-            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{colorHex}'/></svg>");
-        }
-        i.icon-bars, i.icon-bars& {
-            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><path d='M0,1h1.2v1.2H0V1z M2.5,1.3H13v0.6H2.5V1.3z M0,4.4h1.2v1.2H0V4.4z M2.5,4.7H13v0.6H2.5V4.7z M0,7.8h1.2V9H0V7.8z M2.5,8.1 H13v0.6H2.5V8.1z' fill='%23@{colorHex}'/></svg>");
-        }
+    }
+    i.icon-next.color-@{colorName}, i.icon-next.theme-@{colorName}, .theme-@{colorName} i.icon-next {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
+    }
+    i.icon-prev.color-@{colorName}, i.icon-prev.theme-@{colorName}, .theme-@{colorName} i.icon-prev {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
+    }
+    i.icon-back.color-@{colorName}, i.icon-back.theme-@{colorName}, .theme-@{colorName} i.icon-back {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{colorHex}'/></svg>");
+    }
+    i.icon-bars.color-@{colorName}, i.icon-bars.theme-@{colorName}, .theme-@{colorName} i.icon-bars {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><path d='M0,1h1.2v1.2H0V1z M2.5,1.3H13v0.6H2.5V1.3z M0,4.4h1.2v1.2H0V4.4z M2.5,4.7H13v0.6H2.5V4.7z M0,7.8h1.2V9H0V7.8z M2.5,8.1 H13v0.6H2.5V8.1z' fill='%23@{colorHex}'/></svg>");
     }
     // Theme
     .theme-@{colorName} {
@@ -78,6 +81,7 @@
     }
 }
 /* === Themes === */
+.theme-mixin(e('gray'), #8e8e93, '8e8e93');
 .theme-mixin(e('white'), #ffffff, 'ffffff');
 .theme-mixin(e('black'), #000000, '000000');
 .theme-mixin(e('lightblue'), #5ac8fa, '5ac8fa');
@@ -87,4 +91,3 @@
 .theme-mixin(e('blue'), #007aff, '007aff');
 .theme-mixin(e('green'), #4cd964, '4cd964');
 .theme-mixin(e('red'), #ff3b30, 'ff3b30');
-.theme-mixin(e('gray'), #8e8e93, '8e8e93');
