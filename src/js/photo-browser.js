@@ -40,7 +40,7 @@ var PhotoBrowser = function (params) {
         return view;
     }
 
-    var iconColor = pb.params.theme === 'dark' ? 'theme-white' : '';
+    var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
 
     var navbarTemplate = pb.params.navbarTemplate ||
                         '<div class="navbar">' +

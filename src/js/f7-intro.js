@@ -41,7 +41,7 @@ window.Framework7 = function (params) {
         swipeout: true,
         swipeoutNoFollow: false,
         // Smart Select Back link template
-        smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>{{backText}}</span></a></div>',
+        smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
         smartSelectBackText: 'Back',
         smartSelectSearchbar: false,
         smartSelectBackOnSelect: false,
