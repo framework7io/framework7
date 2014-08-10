@@ -46,16 +46,17 @@ var PhotoBrowser = function (params) {
                         '<div class="navbar">' +
                             '<div class="navbar-inner">' +
                                 '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
-                                '<div class="center sliding"><span><span class="photo-browser-current"></span> ' + pb.params.ofText + ' <span class="photo-browser-total"></span></span></div>' +
+                                '<div class="center sliding"><span class="photo-browser-current"></span> <span class="photo-browser-of">' + pb.params.ofText + '</span> <span class="photo-browser-total"></span></div>' +
                                 '<div class="right"></div>' +
                             '</div>' +
                         '</div>';
-
+    var prevIconClassName = app.rtl ? 'next' : 'prev';
+    var nextIconClassName = app.rtl ? 'prev' : 'next';
     var toolbarTemplate = pb.params.toolbarTemplate ||
                         '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev ' + iconColor + '"></i></a>' +
-                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next ' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-' + prevIconClassName + ' ' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-next"><i class="icon icon-' + nextIconClassName + ' ' + iconColor + '"></i></a>' +
                             '</div>' +
                         '</div>';
 
