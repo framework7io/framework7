@@ -10,7 +10,12 @@ app.initPullToRefresh = function (pageContainer) {
 
     var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
     function handleTouchStart(e) {
-        if (isTouched) return;
+        if (isTouched) {
+            if (app.device.os === 'android') {
+                if ('targetTouches' in e && e.targetTouches.length > 1) return;
+            }
+            else return;
+        }
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
