@@ -45,7 +45,7 @@ app.initPushState = function () {
         if (stateUrl !== mainView.url) {
             if (mainView.history.indexOf(stateUrl) >= 0) {
                 // Go Back
-                if (app.allowPageChange) {
+                if (mainView.allowPageChange) {
                     app.goBack(mainView, undefined, animatePages, false, false);
                 }
                 else {
@@ -57,7 +57,7 @@ app.initPushState = function () {
             }
             else if (stateUrl && !stateContent) {
                 // Load Page
-                if (app.allowPageChange) {
+                if (mainView.allowPageChange) {
                     app.loadPage(mainView, stateUrl, animatePages, false);
                 }
                 else {
@@ -70,7 +70,7 @@ app.initPushState = function () {
             }
             else if (stateContent) {
                 // Load Page
-                if (app.allowPageChange) {
+                if (mainView.allowPageChange) {
                     app.loadContent(mainView, stateContent, animatePages, false);
                 }
                 else {

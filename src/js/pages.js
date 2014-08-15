@@ -318,7 +318,7 @@ function _load(view, url, content, animatePages) {
 
     // If page not found exit
     if (!newPage) {
-        app.allowPageChange = true;
+        view.allowPageChange = true;
         return;
     }
 
@@ -423,7 +423,7 @@ function _load(view, url, content, animatePages) {
     app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
 
     function afterAnimation() {
-        app.allowPageChange = true;
+        view.allowPageChange = true;
         newPage.removeClass('page-from-right-to-center page-on-right').addClass('page-on-center');
         oldPage.removeClass('page-from-center-to-left page-on-center').addClass('page-on-left');
         if (dynamicNavbar) {
@@ -474,9 +474,9 @@ function preprocess(content, url, next) {
     }
 }
 app.loadContent = function (view, content, animatePages, pushState) {
-    if (!app.allowPageChange) return false;
-    app.allowPageChange = false;
-    if (app.xhr) {
+    if (!view.allowPageChange) return false;
+    view.allowPageChange = false;
+    if (app.xhr && view.xhr && view.xhr === app.xhr) {
         app.xhr.abort();
         app.xhr = false;
     }
@@ -490,16 +490,16 @@ app.loadContent = function (view, content, animatePages, pushState) {
     });
 };
 app.loadPage = function (view, url, animatePages, pushState) {
-    if (!app.allowPageChange) return false;
+    if (!view.allowPageChange) return false;
     if (view.url === url) return false;
-    app.allowPageChange = false;
-    if (app.xhr) {
+    view.allowPageChange = false;
+    if (app.xhr && view.xhr && view.xhr === app.xhr) {
         app.xhr.abort();
         app.xhr = false;
     }
-    app.get(url, function (data, error) {
+    app.get(url, view, function (data, error) {
         if (error) {
-            app.allowPageChange = true;
+            view.allowPageChange = true;
             return;
         }
         if (app.params.pushState)  {
@@ -514,10 +514,10 @@ app.loadPage = function (view, url, animatePages, pushState) {
     });
 };
 app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
-    if (!app.allowPageChange) return false;
+    if (!view.allowPageChange) return false;
 
-    app.allowPageChange = false;
-    if (app.xhr) {
+    view.allowPageChange = false;
+    if (app.xhr && view.xhr && view.xhr === app.xhr) {
         app.xhr.abort();
         app.xhr = false;
     }
@@ -571,7 +571,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
 
         // If pages not found or there are still more than one, exit
         if (!newPage) {
-            app.allowPageChange = true;
+            view.allowPageChange = true;
             return;
         }
         newPage.addClass('page-on-left');
@@ -630,7 +630,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
         // Exit if we need only to preload page
         if (preloadOnly) {
             newPage.addClass('page-on-left');
-            app.allowPageChange = true;
+            view.allowPageChange = true;
             return;
         }
 
@@ -646,7 +646,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
     if (pagesInView.length > 1) {
         // Exit if only preloadOnly
         if (preloadOnly) {
-            app.allowPageChange = true;
+            view.allowPageChange = true;
             return;
         }
         // Update View's URL
@@ -672,7 +672,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
             url = view.history[view.history.length - 2];
         }
         if (!url) {
-            app.allowPageChange = true;
+            view.allowPageChange = true;
             return;
         }
         
@@ -685,9 +685,9 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
             return;
         }
 
-        app.get(url, function (data, error) {
+        app.get(url, view, function (data, error) {
             if (error) {
-                app.allowPageChange = true;
+                view.allowPageChange = true;
                 return;
             }
             preprocess(data, null, function (data) {
@@ -704,7 +704,7 @@ app.afterGoBack = function (view, oldPage, newPage) {
     app.pageRemoveCallback(view, oldPage[0], 'right');
     oldPage.remove();
     newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
-    app.allowPageChange = true;
+    view.allowPageChange = true;
     // Updated dynamic navbar
     if (view.params.dynamicNavbar) {
         var inners = $(view.container).find('.navbar-inner:not(.cached)');

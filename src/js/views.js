@@ -64,6 +64,8 @@ var View = function (selector, params) {
     // Pages
     view.pagesContainer = container.find('.pages')[0];
 
+    view.allowPageChange = true;
+
     // Active Page
     if (!view.activePage) {
         var currentPage = $(view.pagesContainer).find('.page-on-center');
@@ -297,7 +299,7 @@ var View = function (selector, params) {
             }).addClass('page-transitioning');
         }
         allowViewTouchMove = false;
-        app.allowPageChange = false;
+        view.allowPageChange = false;
 
         if (pageChanged) {
             // Update View's URL
@@ -317,7 +319,7 @@ var View = function (selector, params) {
                 if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning');
             }
             allowViewTouchMove = true;
-            app.allowPageChange = true;
+            view.allowPageChange = true;
             if (pageChanged) {
                 if (app.params.pushState) history.back();
                 // Page after animation callback
