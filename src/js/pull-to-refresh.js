@@ -8,7 +8,10 @@ app.initPullToRefresh = function (pageContainer) {
     }
     if (eventsTarget.length === 0) return;
 
-    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
+    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop;
+
+    container = eventsTarget;
+
     function handleTouchStart(e) {
         if (isTouched) {
             if (app.device.os === 'android') {
@@ -35,10 +38,16 @@ app.initPullToRefresh = function (pageContainer) {
             isTouched = false;
             return;
         }
+
+        scrollTop = container[0].scrollTop;
+
         if (!isMoved) {
             /*jshint validthis:true */
-            container = $(this);
             container.removeClass('transitioning');
+            if (scrollTop > container[0].offsetHeight) {
+                isTouched = false;
+                return;
+            }
             startTranslate = container.hasClass('refreshing') ? 44 : 0;
             if (container[0].scrollHeight === container[0].offsetHeight || app.device.os !== 'ios') {
                 useTranslate = true;
@@ -49,10 +58,12 @@ app.initPullToRefresh = function (pageContainer) {
         }
         isMoved = true;
         touchesDiff = pageY - touchesStart.y;
-        if (touchesDiff > 0 && container[0].scrollTop <= 0 || container[0].scrollTop < 0) {
+        
+        if (touchesDiff > 0 && scrollTop <= 0 || scrollTop < 0) {
             if (useTranslate) {
                 e.preventDefault();
-                container.transform('translate3d(0,' + (Math.pow(touchesDiff, 0.85) + startTranslate) + 'px,0)');
+                translate = (Math.pow(touchesDiff, 0.85) + startTranslate);
+                container.transform('translate3d(0,' + translate + 'px,0)');
             }
             if ((useTranslate && Math.pow(touchesDiff, 0.85) > 44) || (!useTranslate && touchesDiff >= 88)) {
                 refresh = true;
@@ -64,6 +75,7 @@ app.initPullToRefresh = function (pageContainer) {
             }
         }
         else {
+            
             container.removeClass('pull-up');
             refresh = false;
             return;
@@ -75,7 +87,10 @@ app.initPullToRefresh = function (pageContainer) {
             isMoved = false;
             return;
         }
-        container.addClass('transitioning');
+        if (translate) {
+            container.addClass('transitioning');
+            translate = 0;
+        }
         container.transform('');
         if (refresh) {
             container.addClass('refreshing');
