@@ -93,8 +93,8 @@ window.Framework7 = function (params) {
         app.params[param] = params[param];
     }
 
-    // Expose DOM lib
-    app.$ = $;
+    // DOM lib
+    var $ = Dom7;
 
     // Touch events
     app.touchEvents = {

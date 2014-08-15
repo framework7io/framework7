@@ -4,6 +4,7 @@ Device/OS Detection
 Framework7.prototype.device = (function () {
     var device = {};
     var ua = navigator.userAgent;
+    var $ = Dom7;
 
     var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
     var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
