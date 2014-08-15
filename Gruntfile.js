@@ -55,10 +55,11 @@ module.exports = function (grunt) {
         'src/js/plugins.js',
         'src/js/init.js',
         'src/js/f7-outro.js',
-        'src/js/dom.js',
-        'src/js/dom-utils.js',
-        'src/js/dom-ajax.js',
-        'src/js/dom-export.js',
+        'src/js/dom7-intro.js',
+        'src/js/dom7-methods.js',
+        'src/js/dom7-ajax.js',
+        'src/js/dom7-utils.js',
+        'src/js/dom7-outro.js',
         'src/js/proto-support.js',
         'src/js/proto-device.js',
         'src/js/proto-plugins.js',
@@ -209,7 +210,14 @@ module.exports = function (grunt) {
                         if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
                             addIndent = '';
                         }
-                        if (filename === 'f7-intro.js' || filename === 'f7-outro.js' || filename.indexOf('dom') >= 0 || filename.indexOf('proto') >= 0) addIndent = '    ';
+                        var add4spaces = ('f7-intro.js f7-outro.js proto-device.js proto-plugins.js proto-support.js dom7-intro.js dom7-outro.js').split(' ');
+                        if (add4spaces.indexOf(filename) >= 0) {
+                            addIndent = '    ';
+                        }
+                        var add8spaces = ('dom7-methods.js dom7-ajax.js dom7-utils.js').split(' ');
+                        if (add8spaces.indexOf(filename) >= 0) {
+                            addIndent = '        ';
+                        }
                         src = grunt.util.normalizelf(src);
                         return src.split(grunt.util.linefeed).map(function (line) {
                             return addIndent + line;

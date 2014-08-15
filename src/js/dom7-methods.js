@@ -1,16 +1,3 @@
-/*===========================
-jQuery-like DOM library
-===========================*/
-var Dom7 = function (arr) {
-    var _this = this, i = 0;
-    // Create array-like object
-    for (i = 0; i < arr.length; i++) {
-        _this[i] = arr[i];
-    }
-    _this.length = arr.length;
-    // Return collection with methods
-    return this;
-};
 Dom7.prototype = {
     // Classes and attriutes
     addClass: function (className) {
@@ -409,7 +396,7 @@ Dom7.prototype = {
         if (this[0]) {
             var child = this[0];
             var i = 0;
-            while ((child = child.previousSibling) != null) {
+            while ((child = child.previousSibling) !== null) {
                 if (child.nodeType === 1) i++;
             }
             return i;
@@ -431,12 +418,18 @@ Dom7.prototype = {
         return new Dom7([this[index]]);
     },
     append: function (newChild) {
-        for (var i = 0; i < this.length; i++) {
+        var i, j;
+        for (i = 0; i < this.length; i++) {
             if (typeof newChild === 'string') {
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = newChild;
                 while (tempDiv.firstChild) {
                     this[i].appendChild(tempDiv.firstChild);
+                }
+            }
+            else if (newChild instanceof Dom7) {
+                for (j = 0; j < newChild.length; j++) {
+                    this[i].appendChild(newChild[j]);
                 }
             }
             else {
@@ -446,12 +439,18 @@ Dom7.prototype = {
         return this;
     },
     prepend: function (newChild) {
-        for (var i = 0; i < this.length; i++) {
+        var i, j;
+        for (i = 0; i < this.length; i++) {
             if (typeof newChild === 'string') {
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = newChild;
-                for (var j = tempDiv.childNodes.length - 1; j >= 0; j--) {
+                for (j = tempDiv.childNodes.length - 1; j >= 0; j--) {
                     this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
+                }
+            }
+            else if (newChild instanceof Dom7) {
+                for (j = 0; j < newChild.length; j++) {
+                    this[i].insertBefore(newChild[j], this[i].childNodes[0]);
                 }
             }
             else {
@@ -595,8 +594,12 @@ Dom7.prototype = {
             if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
         }
         return this;
+    },
+    detach: function () {
+        return this.remove();
     }
 };
+
 // Shortcuts
 (function () {
     var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
@@ -619,33 +622,3 @@ Dom7.prototype = {
         createMethod(shortcuts[i]);
     }
 })();
-
-// Selector 
-var $ = function (selector, context) {
-    var arr = [], i = 0;
-    if (selector && !context) {
-        if (selector instanceof Dom7) {
-            return selector;
-        }
-    }
-    if (selector) {
-        // String
-        if (typeof selector === 'string') {
-            var els = (context || document).querySelectorAll(selector);
-            for (i = 0; i < els.length; i++) {
-                arr.push(els[i]);
-            }
-        }
-        // Node/element
-        else if (selector.nodeType || selector === window || selector === document) {
-            arr.push(selector);
-        }
-        //Array of elements or instance of Dom
-        else if (selector.length > 0 && selector[0].nodeType) {
-            for (i = 0; i < selector.length; i++) {
-                arr.push(selector[i]);
-            }
-        }
-    }
-    return new Dom7(arr);
-};
