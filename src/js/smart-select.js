@@ -65,9 +65,9 @@ app.smartSelectOpen = function (smartSelect) {
         };
     }
 
-    var pageTitle = smartSelect.attr('data-pagetitle') || smartSelect.find('.item-title').text();
-    var backText = smartSelect.attr('data-backtext') || app.params.smartSelectBackText;
-    var backOnSelect = smartSelect.attr('data-backonselect') ? (smartSelect.attr('data-backonselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
+    var pageTitle = smartSelect.attr('data-page-title') || smartSelect.find('.item-title').text();
+    var backText = smartSelect.attr('data-back-text') || app.params.smartSelectBackText;
+    var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
 
     // Generate dynamic page layout
     var id = (new Date()).getTime();
