@@ -1,5 +1,73 @@
 # Change Log
 
+## Framework7 v0.9.5 - Updated on August 15, 2014
+  * Colors
+    * Now Framework7 supports color themes: 10 default iOS colors (red, green, blue, lightblue, gray, white, black, orange, yellow, pink) that can be applied to any interactive elements (icons, links, buttons, form elements)  
+    * There are also introduced layout themes (with additional framework7.themes.css file) which contains 2 additional layout themes: dark and white. These themes change look of whole app.
+  * Core
+    * Links support additional "with-animation" class name to force animation if it is disabled in App/View parameters
+    * Reworked `allowPageChange` flag. Now it is linked to View. This allows to load pages in multiple Views at the same time
+  * View
+    * New `onSwipeBackMove` callback function parameter that will be executed during swipe back
+    * Also triggers `swipebackmove` event during swipe back
+  * Dom7
+    * Dom7 is totally restructured, now it is a global Window function and can be accessible from everywhere
+    * New `.scrollLeft(left, duration)`, `.scrollTo(left, top, duration)` methods
+    * Fixed issue with multiple JSONP requests at the same time
+    * `.removeClass` now will remove "class" attribute if class name is not passed as argument
+  * Custom build
+    * Included missed Pull To Refresh' css styles
+  * Styles
+    * Half-pixel iOS 8 borders are available only for retina iOS screens
+    * Fixed list view items borders on nested lists and accordions
+  * Device API
+    * `html` also has "retina" class on HiDPI screens
+  * Panels
+    * Resolved conflict with swipe panel and swipeouts
+    * New `swipePanelCloseOpposite` app parameter that also allows to close opposite panel with swipe
+    * Fixed multi touch issue
+  * Content block
+    * Now can be inset with additional `inset` and `tablet-inset` classes
+  * Messages/Message Bar
+    * Fixed crashes on iOS 8
+    * Message Bar has additional `data-max-height` attribute to set its max grow height
+  * Photo Browser
+    * New `onOpen`, `onClose`, `onSwipeToClose` callback functions parameters
+    * New `ofText` parameter allows customisation of "of" word in photos counter "3 of 5"
+    * Fixed next/prev icons opacity when there is only one photo browser slide
+    * Resolved z-indexes conflict with Popup
+    * Fixed panning ability on Android
+  * Smart Select
+    * Smart select's `<option>` now support additional `data-option-icon` and `data-option-image` attributes to set appropriate media element on opened Smart select page
+    * `data-backtext`, `data-pagetitle`, `data-backonselect` attributes are changed to `data-back-text`, `data-page-title`, `data-back-onselect`
+  * Icons
+    * Checkbox and radio icons images now moved to CSS with SVG
+  * Fast Clicks
+    * Automatically trigger blur on form inputs on Android when it is required
+  * Pull To Refresh
+    * New `app.pullToRefreshTrigger` method to trigger pull to refresh manually
+    * Improved scrolling performance on long lists
+    * Fixed issue with continuous browser repaint because of preloader animation
+    * Fixed Android's "lost focus" bug
+  * Grid
+    * Now grid is responsive, and number of columns could be changed on Phone/Tablet with additional class like `.col-50.tablet-33`
+  * Tabs 
+    * Tabs links now support more complex layout, now each tab's link could be placed in different Dom parts and on different level
+  * Pages
+    * `pageData` now has additional `swipeBack` property within pageBefore/AfterAnimation callback to detect that page was animated after swipe back
+    * `pageData` now has additional `navbarInnerContainer` property with related Navbar inner (only for Dynamic Navbar)
+  * Action Sheet
+    * Action Sheet button doesn't support "red" property anymore. Now it supports "color" property where you may specify any of 10 default colors
+  * Lot of minor fixes
+
+### 0.9.5 Breaking changes!
+  * Icons now haven't color name in class, there are no more "icon-back-blue", "icon-bars-blue", etc. Now they are just "icon-back", "icon-bars", etc. Their color could be changed with introduced color themes.
+  * Badges don't support additional badge-red/green/etc. classes anymore. Their color could be changed with introduced color themes
+  * There is no more `app.allowPageChange` flag. Now this flag is linked to each View
+  * Because of Dom7 now globally available, the `Framework7.$` dom export is now deprecated and will be removed in next release
+  * Smart select `data-backtext`, `data-pagetitle`, `data-backonselect` attributes are changed to `data-back-text`, `data-page-title`, `data-back-onselect`
+  
+
 ## Framework7 v0.9.4 - Updated on July 26, 2014
   
   * New Framework7 grunt custom library builder where you can include only required components

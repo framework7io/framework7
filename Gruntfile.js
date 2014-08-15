@@ -120,6 +120,7 @@ module.exports = function (grunt) {
                 files: {
                     'dist/css/<%= framework7.filename %>.min.css' : ['src/less/<%= framework7.filename %>.less'],
                     'dist/css/<%= framework7.filename %>.rtl.min.css' : ['src/less/<%= framework7.filename %>.rtl.less'],
+                    'dist/css/<%= framework7.filename %>.themes.min.css' : ['src/less/<%= framework7.filename %>.themes.less']
                 }
             },
             kitchen: {
