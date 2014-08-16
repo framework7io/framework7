@@ -24,7 +24,7 @@ myApp.searchLocation = function (search) {
     if (searchTimeout) clearTimeout(searchTimeout);
     $$('.popup .preloader').show();
     searchTimeout = setTimeout(function () {
-        myApp.get(q, function (results) {
+        $$.get(q, function (results) {
             var html = '';
             results = JSON.parse(results);
             $$('.popup .preloader').hide();
@@ -63,7 +63,7 @@ myApp.updateWeatherData = function (callback) {
     var query = encodeURIComponent('select * from weather.forecast where woeid in (' + JSON.stringify(woeids).replace('[', '').replace(']', '') + ') and u="c"');
     var q = 'http://query.yahooapis.com/v1/public/yql?q=' + query + '&format=json';
     myApp.showIndicator();
-    myApp.get(q, function (data) {
+    $$.get(q, function (data) {
         var weatherData = [];
         myApp.hideIndicator();
         data = JSON.parse(data);
