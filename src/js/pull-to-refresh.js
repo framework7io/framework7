@@ -25,6 +25,7 @@ app.initPullToRefresh = function (pageContainer) {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
+        container = $(this);
     }
     
     function handleTouchMove(e) {
