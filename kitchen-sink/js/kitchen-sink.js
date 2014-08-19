@@ -4,7 +4,7 @@ var myApp = new Framework7({
 });
 
 // Expose Internal DOM library
-var $$ = Framework7.$;
+var $$ = Dom7;
 
 // Add main view
 var mainView = myApp.addView('.view-main', {
@@ -107,7 +107,7 @@ myApp.onPageInit('swipe-delete modals media-lists', function (page) {
                 // Another red button
                 {
                     text: 'Nice Red Button ',
-                    red: true,
+                    color: 'red',
                     onClick: function () {
                         myApp.alert('You have clicked red button!');
                     }
@@ -368,6 +368,18 @@ $$('.login-screen').find('.list-button').on('click', function () {
 /* ===== Demo Popover ===== */
 $$('.popover a').on('click', function () {
     myApp.closeModal('.popover');
+});
+
+/* ===== Color themes ===== */
+myApp.onPageInit('color-themes', function (page) {
+    var themes = 'theme-white theme-black theme-yellow theme-red theme-blue theme-green theme-pink theme-lightblue theme-orange theme-gray';
+    var layouts = 'layout-dark layout-white';
+    $$(page.container).find('.ks-color-theme').click(function () {
+        $$('body').removeClass(themes).addClass('theme-' + $$(this).attr('data-theme'));
+    });
+    $$(page.container).find('.ks-layout-theme').click(function () {
+        $$('body').removeClass(layouts).addClass('layout-' + $$(this).attr('data-theme'));
+    });
 });
 
 /* ===== Change statusbar bg when panel opened/closed ===== */

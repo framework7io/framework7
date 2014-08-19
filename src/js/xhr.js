@@ -13,7 +13,7 @@ app.removeFromCache = function (url) {
 
 // XHR
 app.xhr = false;
-app.get = function (url, callback) {
+app.get = function (url, view, callback) {
     // should we ignore get params or not
     var _url = url;
     if (app.params.cacheIgnoreGetParameters && url.indexOf('?') >= 0) {
@@ -59,6 +59,7 @@ app.get = function (url, callback) {
             if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
         }
     });
+    if (view) view.xhr = app.xhr;
 
     return app.xhr;
 };

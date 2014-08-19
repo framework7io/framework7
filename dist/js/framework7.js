@@ -1,5 +1,5 @@
 /*
- * Framework7 0.9.4
+ * Framework7 0.9.5
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: July 26, 2014
+ * Released on: August 15, 2014
 */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '0.9.4';
+        app.version = '0.9.5';
     
         // Default Parameters
         app.params = {
@@ -57,7 +57,7 @@
             swipeout: true,
             swipeoutNoFollow: false,
             // Smart Select Back link template
-            smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>{{backText}}</span></a></div>',
+            smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
             smartSelectBackText: 'Back',
             smartSelectSearchbar: false,
             smartSelectBackOnSelect: false,
@@ -67,10 +67,10 @@
             // Panels
             swipePanel: false, // or 'left' or 'right'
             swipePanelActiveArea: 0,
+            swipePanelCloseOpposite: true,
             swipePanelNoFollow: false,
             swipePanelThreshold: 0,
             panelsCloseByOutside: true,
-            panelsVisibleZIndex: 6000,
             // Modals
             modalTemplate: '<div class="modal {{noButtons}}">' +
                                 '<div class="modal-inner">' +
@@ -109,8 +109,8 @@
             app.params[param] = params[param];
         }
     
-        // Expose DOM lib
-        app.$ = $;
+        // DOM lib
+        var $ = Dom7;
     
         // Touch events
         app.touchEvents = {
@@ -199,6 +199,8 @@
         
             // Pages
             view.pagesContainer = container.find('.pages')[0];
+        
+            view.allowPageChange = true;
         
             // Active Page
             if (!view.activePage) {
@@ -310,6 +312,19 @@
                 if (touchesDiff < 0) touchesDiff = 0;
                 var percentage = touchesDiff / viewContainerWidth;
         
+                // Swipe Back Callback
+                var callbackData = {
+                    percentage: percentage,
+                    activePage: activePage[0],
+                    previousPage: previousPage[0],
+                    activeNavbar: activeNavbar[0],
+                    previousNavbar: previousNavbar[0]
+                };
+                if (view.params.onSwipeBackMove) {
+                    view.params.onSwipeBackMove(callbackData);
+                }
+                container.trigger('swipebackmove', callbackData);
+        
                 // Transform pages
                 var activePageTranslate = touchesDiff * inverter;
                 var previousPageTranslate = (touchesDiff / 5 - viewContainerWidth / 5) * inverter;
@@ -420,7 +435,7 @@
                     }).addClass('page-transitioning');
                 }
                 allowViewTouchMove = false;
-                app.allowPageChange = false;
+                view.allowPageChange = false;
         
                 if (pageChanged) {
                     // Update View's URL
@@ -428,7 +443,7 @@
                     view.url = url;
                     
                     // Page before animation callback
-                    app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage});
+                    app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 }
         
                 activePage.transitionEnd(function () {
@@ -440,9 +455,11 @@
                         if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning');
                     }
                     allowViewTouchMove = true;
-                    app.allowPageChange = true;
+                    view.allowPageChange = true;
                     if (pageChanged) {
                         if (app.params.pushState) history.back();
+                        // Page after animation callback
+                        app.pageAnimCallbacks('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
                         app.afterGoBack(view, activePage, previousPage);
                     }
                 });
@@ -882,7 +899,7 @@
                 if (scrollHeight + diff > height) {
                     var newAreaHeight = scrollHeight + diff;
                     var newBarHeight = initialBarHeight + (newAreaHeight - initialAreaHeight);
-                    var maxBarHeight = $(messagebar).parents('.view')[0].offsetHeight - 88;
+                    var maxBarHeight = messagebar.attr('data-max-height') || messagebar.parents('.view')[0].offsetHeight - 88;
                     if (newBarHeight > maxBarHeight) {
                         newBarHeight = maxBarHeight;
                         newAreaHeight = newBarHeight - initialBarHeight + initialAreaHeight;
@@ -954,7 +971,7 @@
         
         // XHR
         app.xhr = false;
-        app.get = function (url, callback) {
+        app.get = function (url, view, callback) {
             // should we ignore get params or not
             var _url = url;
             if (app.params.cacheIgnoreGetParameters && url.indexOf('?') >= 0) {
@@ -1000,6 +1017,7 @@
                     if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
                 }
             });
+            if (view) view.xhr = app.xhr;
         
             return app.xhr;
         };
@@ -1079,7 +1097,7 @@
         };
         
         // On Page Init Callback
-        app.pageInitCallback = function (view, pageContainer, url, position) {
+        app.pageInitCallback = function (view, pageContainer, url, position, navbarInnerContainer) {
             if (pageContainer.f7PageInitialized) return;
             pageContainer.f7PageInitialized = true;
             // Page Data
@@ -1089,7 +1107,8 @@
                 query: $.parseUrlQuery(url || ''),
                 name: $(pageContainer).attr('data-page'),
                 view: view,
-                from: position
+                from: position,
+                navbarInnerContainer: navbarInnerContainer
             };
         
             // Store pagedata in page
@@ -1135,7 +1154,8 @@
                 query: $.parseUrlQuery(params.url || ''),
                 name: $(params.pageContainer).attr('data-page'),
                 view: view,
-                from: params.position
+                from: params.position,
+                swipeBack: params.swipeBack
             };
             var oldPage = params.oldPage,
                 newPage = params.newPage;
@@ -1322,7 +1342,7 @@
         
             // If page not found exit
             if (!newPage) {
-                app.allowPageChange = true;
+                view.allowPageChange = true;
                 return;
             }
         
@@ -1380,9 +1400,6 @@
             if (dynamicNavbar) {
                 newNavbarInner.addClass('navbar-on-right');
                 navbar.append(newNavbarInner[0]);
-        
-                // Navbar Init Events
-                app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
             }
         
             // save content areas into view's cache
@@ -1405,7 +1422,12 @@
             pagesContainer.append(newPage[0]);
         
             // Page Init Events
-            app.pageInitCallback(view, newPage[0], url, 'right');
+            app.pageInitCallback(view, newPage[0], url, 'right', dynamicNavbar ? newNavbarInner[0] : undefined);
+        
+            // Navbar init event
+            if (dynamicNavbar) {
+                app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
+            }
         
             if (dynamicNavbar && animatePages) {
                 newNavbarInner.find('.sliding').each(function () {
@@ -1422,10 +1444,10 @@
             var clientLeft = newPage[0].clientLeft;
         
             // Before Anim Callback
-            app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
+            app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
         
             function afterAnimation() {
-                app.allowPageChange = true;
+                view.allowPageChange = true;
                 newPage.removeClass('page-from-right-to-center page-on-right').addClass('page-on-center');
                 oldPage.removeClass('page-from-center-to-left page-on-center').addClass('page-on-left');
                 if (dynamicNavbar) {
@@ -1476,9 +1498,9 @@
             }
         }
         app.loadContent = function (view, content, animatePages, pushState) {
-            if (!app.allowPageChange) return false;
-            app.allowPageChange = false;
-            if (app.xhr) {
+            if (!view.allowPageChange) return false;
+            view.allowPageChange = false;
+            if (app.xhr && view.xhr && view.xhr === app.xhr) {
                 app.xhr.abort();
                 app.xhr = false;
             }
@@ -1492,16 +1514,16 @@
             });
         };
         app.loadPage = function (view, url, animatePages, pushState) {
-            if (!app.allowPageChange) return false;
+            if (!view.allowPageChange) return false;
             if (view.url === url) return false;
-            app.allowPageChange = false;
-            if (app.xhr) {
+            view.allowPageChange = false;
+            if (app.xhr && view.xhr && view.xhr === app.xhr) {
                 app.xhr.abort();
                 app.xhr = false;
             }
-            app.get(url, function (data, error) {
+            app.get(url, view, function (data, error) {
                 if (error) {
-                    app.allowPageChange = true;
+                    view.allowPageChange = true;
                     return;
                 }
                 if (app.params.pushState)  {
@@ -1516,10 +1538,10 @@
             });
         };
         app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
-            if (!app.allowPageChange) return false;
+            if (!view.allowPageChange) return false;
         
-            app.allowPageChange = false;
-            if (app.xhr) {
+            view.allowPageChange = false;
+            if (app.xhr && view.xhr && view.xhr === app.xhr) {
                 app.xhr.abort();
                 app.xhr = false;
             }
@@ -1573,7 +1595,7 @@
         
                 // If pages not found or there are still more than one, exit
                 if (!newPage) {
-                    app.allowPageChange = true;
+                    view.allowPageChange = true;
                     return;
                 }
                 newPage.addClass('page-on-left');
@@ -1602,14 +1624,17 @@
                     }
                     navbar.prepend(newNavbarInner[0]);
                     
-                    // Navbar Init Events
-                    app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'left');
                 }
                 // Prepend new Page and add classes for animation
                 pagesContainer.prepend(newPage[0]);
         
                 // Page Init Events
-                app.pageInitCallback(view, newPage[0], url, 'left');
+                app.pageInitCallback(view, newPage[0], url, 'left', dynamicNavbar ? newNavbarInner[0] : undefined);
+        
+                // Navbar init event
+                if (dynamicNavbar) {
+                    app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
+                }
         
                 if (dynamicNavbar && newNavbarInner.hasClass('navbar-on-left') && animatePages) {
                     newNavbarInner.find('.sliding').each(function () {
@@ -1629,7 +1654,7 @@
                 // Exit if we need only to preload page
                 if (preloadOnly) {
                     newPage.addClass('page-on-left');
-                    app.allowPageChange = true;
+                    view.allowPageChange = true;
                     return;
                 }
         
@@ -1645,7 +1670,7 @@
             if (pagesInView.length > 1) {
                 // Exit if only preloadOnly
                 if (preloadOnly) {
-                    app.allowPageChange = true;
+                    view.allowPageChange = true;
                     return;
                 }
                 // Update View's URL
@@ -1671,7 +1696,7 @@
                     url = view.history[view.history.length - 2];
                 }
                 if (!url) {
-                    app.allowPageChange = true;
+                    view.allowPageChange = true;
                     return;
                 }
                 
@@ -1684,9 +1709,9 @@
                     return;
                 }
         
-                app.get(url, function (data, error) {
+                app.get(url, view, function (data, error) {
                     if (error) {
-                        app.allowPageChange = true;
+                        view.allowPageChange = true;
                         return;
                     }
                     preprocess(data, null, function (data) {
@@ -1703,7 +1728,7 @@
             app.pageRemoveCallback(view, oldPage[0], 'right');
             oldPage.remove();
             newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
-            app.allowPageChange = true;
+            view.allowPageChange = true;
             // Updated dynamic navbar
             if (view.params.dynamicNavbar) {
                 var inners = $(view.container).find('.navbar-inner:not(.cached)');
@@ -1928,7 +1953,7 @@
                     var button = params[i][j];
                     var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
                     if (button.bold) buttonClass += ' actions-modal-button-bold';
-                    if (button.red) buttonClass += ' actions-modal-button-red';
+                    if (button.color) buttonClass += ' color-' + button.color;
                     buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
                     if (j === params[i].length - 1) buttonsHTML += '</div>';
                 }
@@ -2132,6 +2157,9 @@
         };
         app.closeModal = function (modal) {
             modal = $(modal || '.modal-in');
+            if (typeof modal !== 'undefined' && modal.length === 0) {
+                return;
+            }
             var isPopover = modal.hasClass('popover');
             var isPopup = modal.hasClass('popup');
             var isLoginScreen = modal.hasClass('login-screen');
@@ -2240,15 +2268,27 @@
             side = app.params.swipePanel;
         
             function handleTouchStart(e) {
-                if (!app.allowPanelOpen || !app.params.swipePanel) return;
+                if (!app.allowPanelOpen || !app.params.swipePanel || isTouched) return;
                 if ($('.modal-in, .photo-browser-in').length > 0) return;
+                if (!app.params.swipePanelCloseOpposite) {
+                    if ($('.panel.active').length > 0 && !panel.hasClass('active')) return;
+                }
                 touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
                 touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+                if (app.params.swipePanelCloseOpposite) {
+                    if ($('.panel.active').length > 0) {
+                        side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
+                    }
+                    else {
+                        side = app.params.swipePanel;
+                    }
+                }
+                panel = $('.panel.panel-' + side);
                 if (app.params.swipePanelActiveArea) {
-                    if (app.params.swipePanel === 'left') {
+                    if (side === 'left') {
                         if (touchesStart.x > app.params.swipePanelActiveArea) return;
                     }
-                    if (app.params.swipePanel === 'right') {
+                    if (side === 'right') {
                         if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) return;
                     }
                 }
@@ -2598,15 +2638,22 @@
                 isMoved = true;
         
                 e.preventDefault();
-                e.f7PreventPanelSwipe = true;
+                
                 if (app.rtl) e.f7PreventSwipeBack = true;
                 touchesDiff = pageX - touchesStart.x;
                 translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
         
-                if (translate > 0) translate = 0;
+                if (translate > 0) {
+                    if (!opened) {
+                        isTouched = isMoved = false;
+                        return;
+                    }
+                    translate = 0;
+                }
                 if (translate < -swipeOutActionsWidth) {
                     translate = -swipeOutActionsWidth - Math.pow(-translate - swipeOutActionsWidth, 0.8);
                 }
+                e.f7PreventPanelSwipe = true;
         
                 if (app.params.swipeoutNoFollow) {
                     if (touchesDiff < 0 && !opened) {
@@ -2862,8 +2909,15 @@
                 isMoved = false;
             }
             $(document).on(app.touchEvents.start, '.list-block.sortable .sortable-handler', handleTouchStart);
-            $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
-            $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
+            if (app.support.touch) {
+                $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
+                $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
+            }
+            else {
+                $(document).on(app.touchEvents.move, handleTouchMove);
+                $(document).on(app.touchEvents.end, handleTouchEnd);
+            }
+                
         };
         
         /*===============================================================================
@@ -2913,24 +2967,29 @@
         
             // Collect all values
             var select = smartSelect.find('select')[0];
-            if (select.disabled || smartSelect.hasClass('disabled') || $(select).hasClass('disabled')) {
+            var $select = $(select);
+            if (select.disabled || smartSelect.hasClass('disabled') || $select.hasClass('disabled')) {
                 return;
             }
             var values = {};
             values.length = select.length;
+            var option;
             for (var i = 0; i < select.length; i++) {
+                option = $(select[i]);
                 values[i] = {
                     value: select[i].value,
                     text: select[i].textContent.trim(),
                     selected: select[i].selected,
-                    group: $(select[i]).parent('optgroup')[0],
+                    group: option.parent('optgroup')[0],
+                    image: option.attr('data-option-image') || $select.attr('data-option-image'),
+                    icon: option.attr('data-option-icon') || $select.attr('data-option-icon'),
                     disabled: select[i].disabled
                 };
             }
         
-            var pageTitle = smartSelect.attr('data-pagetitle') || smartSelect.find('.item-title').text();
-            var backText = smartSelect.attr('data-backtext') || app.params.smartSelectBackText;
-            var backOnSelect = smartSelect.attr('data-backonselect') ? (smartSelect.attr('data-backonselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
+            var pageTitle = smartSelect.attr('data-page-title') || smartSelect.find('.item-title').text();
+            var backText = smartSelect.attr('data-back-text') || app.params.smartSelectBackText;
+            var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
         
             // Generate dynamic page layout
             var id = (new Date()).getTime();
@@ -2947,11 +3006,15 @@
                         previousGroup = values[j].group;
                     }
                 }
+                var media = '';
+                if (inputType === 'checkbox') media += '<i class="icon icon-form-checkbox"></i>';
+                if (values[j].icon) media += '<i class="icon ' + values[j].icon + '"></i>';
+                if (values[j].image) media += '<img src="' + values[j].image + '">';
                 inputsHTML +=
                     '<li>' +
                         '<label class="label-' + inputType + ' item-content">' +
                             '<input type="' + inputType + '" name="' + inputName + '" value="' + values[j].value + '" ' + checked + '>' +
-                            (inputType === 'checkbox' ? '<div class="item-media"><i class="icon icon-form-checkbox"></i></div>' : '') +
+                            (media !== '' ? '<div class="item-media">' + media + '</div>' : '') +
                             '<div class="item-inner">' +
                                 '<div class="item-title">' + values[j].text + '</div>' +
                             '</div>' +
@@ -2974,7 +3037,7 @@
             var pageName = 'smart-select-' + inputName;
         
             var noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
-            var noNavbar = smartSelect.parents('.page').hasClass('no-navbar') ? 'no-navbar' : '';
+            var noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
         
             var useSearchbar = typeof smartSelect.data('searchbar') === 'undefined' ? app.params.smartSelectSearchbar : (smartSelect.data('searchbar') === 'true' ? true : false);
             var searchbarPlaceholder, searchbarCancel;
@@ -2996,7 +3059,7 @@
             var pageHTML =
                 (navbarLayout === 'through' ? navbarHTML : '') +
                 '<div class="pages">' +
-                '  <div data-page="' + pageName + '" class="page smart-select-page' + noNavbar + ' ' + noToolbar + '">' +
+                '  <div data-page="' + pageName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
                      (navbarLayout === 'fixed' ? navbarHTML : '') +
                      (useSearchbar ? searchbarHTML : '') +
                 '    <div class="page-content">' +
@@ -3036,7 +3099,7 @@
                             select.value = value;
                         }
                             
-                        $(select).trigger('change');
+                        $select.trigger('change');
                         smartSelect.find('.item-after').text(optionText.join(', '));
                         if (backOnSelect && inputType === 'radio') {
                             view.goBack();
@@ -3061,9 +3124,17 @@
             }
             if (eventsTarget.length === 0) return;
         
-            var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0;
+            var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop;
+        
+            container = eventsTarget;
+        
             function handleTouchStart(e) {
-                if (isTouched) return;
+                if (isTouched) {
+                    if (app.device.os === 'android') {
+                        if ('targetTouches' in e && e.targetTouches.length > 1) return;
+                    }
+                    else return;
+                }
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
@@ -3083,10 +3154,16 @@
                     isTouched = false;
                     return;
                 }
+        
+                scrollTop = container[0].scrollTop;
+        
                 if (!isMoved) {
                     /*jshint validthis:true */
-                    container = $(this);
                     container.removeClass('transitioning');
+                    if (scrollTop > container[0].offsetHeight) {
+                        isTouched = false;
+                        return;
+                    }
                     startTranslate = container.hasClass('refreshing') ? 44 : 0;
                     if (container[0].scrollHeight === container[0].offsetHeight || app.device.os !== 'ios') {
                         useTranslate = true;
@@ -3097,10 +3174,12 @@
                 }
                 isMoved = true;
                 touchesDiff = pageY - touchesStart.y;
-                if (touchesDiff > 0 && container[0].scrollTop <= 0 || container[0].scrollTop < 0) {
+                
+                if (touchesDiff > 0 && scrollTop <= 0 || scrollTop < 0) {
                     if (useTranslate) {
                         e.preventDefault();
-                        container.transform('translate3d(0,' + (Math.pow(touchesDiff, 0.85) + startTranslate) + 'px,0)');
+                        translate = (Math.pow(touchesDiff, 0.85) + startTranslate);
+                        container.transform('translate3d(0,' + translate + 'px,0)');
                     }
                     if ((useTranslate && Math.pow(touchesDiff, 0.85) > 44) || (!useTranslate && touchesDiff >= 88)) {
                         refresh = true;
@@ -3112,6 +3191,7 @@
                     }
                 }
                 else {
+                    
                     container.removeClass('pull-up');
                     refresh = false;
                     return;
@@ -3123,7 +3203,10 @@
                     isMoved = false;
                     return;
                 }
-                container.addClass('transitioning');
+                if (translate) {
+                    container.addClass('transitioning');
+                    translate = 0;
+                }
                 container.transform('');
                 if (refresh) {
                     container.addClass('refreshing');
@@ -3164,7 +3247,17 @@
                 container.removeClass('transitioning pull-up');
             });
         };
-        
+        app.pullToRefreshTrigger = function (container) {
+            container = $(container);
+            if (container.length === 0) container = $('.pull-to-refresh-content');
+            if (container.hasClass('refreshing')) return;
+            container.addClass('transitioning refreshing');
+            container.trigger('refresh', {
+                done: function () {
+                    app.pullToRefreshDone(container);
+                }
+            });
+        };
         /* ===============================================================================
         ************   Infinite Scroll   ************
         =============================================================================== */
@@ -3221,7 +3314,7 @@
             }
         
             // Remove active class from old tabs
-            tabs.children('.tab.active').removeClass('active');
+            var oldTab = tabs.children('.tab.active').removeClass('active');
             // Add active class to new tab
             newTab.addClass('active');
             // Trigger 'show' event on new tab
@@ -3236,7 +3329,7 @@
                 app.sizeNavbars(viewContainer);
             }
         
-            // Update class on tab-links
+            // Find related link for new tab
             if (tabLink) tabLink = $(tabLink);
             else {
                 // Search by id
@@ -3251,8 +3344,23 @@
             }
             if (tabLink.length === 0) return;
         
-            tabLink.parent().find('.active').removeClass('active');
-            tabLink.addClass('active');
+            // Find related link for old tab
+            var oldTabLink;
+            if (oldTab && oldTab.length > 0) {
+                // Search by id
+                var oldTabId = oldTab.attr('id');
+                if (oldTabId) oldTabLink = $('.tab-link[href="#' + oldTabId + '"]');
+                // Search by data-tab
+                if (oldTabLink.length === 0) {
+                    $('[data-tab]').each(function () {
+                        if (oldTab.is($(this).attr('data-tab'))) oldTabLink = $(this);
+                    });
+                }
+            }
+        
+            // Update links' classes
+            if (tabLink && tabLink.length > 0) tabLink.addClass('active');
+            if (oldTabLink && oldTabLink.length > 0) oldTabLink.removeClass('active');
             
             return true;
         };
@@ -3312,6 +3420,20 @@
             if (!app.support.touch) return;
             var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
         
+            function androidNeedsBlur(el) {
+                var noBlur = ('button checkbox file image radio submit input textarea').split(' ');
+                if (document.activeElement && el !== document.activeElement && document.activeElement !== document.body) {
+                    if (noBlur.indexOf(el.nodeName.toLowerCase()) >= 0) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
             function targetNeedsFocus(el) {
                 if (document.activeElement === el) {
                     return false;
@@ -3354,6 +3476,11 @@
                     }
                     else {
                         activeSelection = false;
+                    }
+                }
+                if (app.device.os === 'android')  {
+                    if (androidNeedsBlur(e.target)) {
+                        document.activeElement.blur();
                     }
                 }
         
@@ -3555,7 +3682,11 @@
                     app.popup(popup);
                 }
                 if (clicked.hasClass('close-popup')) {
-                    app.closeModal('.popup.modal-in');
+                    if (clicked.attr('data-popup')) {
+                        popup = clicked.attr('data-popup');
+                    }
+                    else popup = '.popup.modal-in';
+                    app.closeModal(popup);
                 }
                 // Login Screen
                 var loginScreen;
@@ -3651,6 +3782,7 @@
                     if (!view) return;
                     var animatePages;
                     if (clicked.hasClass('no-animation')) animatePages = false;
+                    if (clicked.hasClass('with-animation')) animatePages = true;
                     if (clicked.hasClass('back')) view.goBack(clicked.attr('href'), animatePages);
                     else view.loadPage(clicked.attr('href'), animatePages);
                 }
@@ -3924,7 +4056,7 @@
                 if (stateUrl !== mainView.url) {
                     if (mainView.history.indexOf(stateUrl) >= 0) {
                         // Go Back
-                        if (app.allowPageChange) {
+                        if (mainView.allowPageChange) {
                             app.goBack(mainView, undefined, animatePages, false, false);
                         }
                         else {
@@ -3936,7 +4068,7 @@
                     }
                     else if (stateUrl && !stateContent) {
                         // Load Page
-                        if (app.allowPageChange) {
+                        if (mainView.allowPageChange) {
                             app.loadPage(mainView, stateUrl, animatePages, false);
                         }
                         else {
@@ -3949,7 +4081,7 @@
                     }
                     else if (stateContent) {
                         // Load Page
-                        if (app.allowPageChange) {
+                        if (mainView.allowPageChange) {
                             app.loadContent(mainView, stateContent, animatePages, false);
                         }
                         else {
@@ -4092,7 +4224,10 @@
             s.onClick = function (e) {
                 if (s.params.preventClicks && !s.allowClick) {
                     e.preventDefault();
-                    if (s.params.preventClicksPropagation) e.stopPropagation();
+                    if (s.params.preventClicksPropagation) {
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                    }
                 }
             };
             s.onTouchStart = function (e) {
@@ -4431,7 +4566,8 @@
                 toolbar: true,
                 theme: 'light',
                 swipeToClose: true,
-                backLinkText: 'Close'
+                backLinkText: 'Close',
+                ofText: 'of'
             };
             
             params = params || {};
@@ -4451,22 +4587,23 @@
                 return view;
             }
         
-            var iconColor = pb.params.theme === 'dark' ? 'white' : 'blue';
+            var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
         
             var navbarTemplate = pb.params.navbarTemplate ||
                                 '<div class="navbar">' +
                                     '<div class="navbar-inner">' +
-                                        '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link"><i class="icon icon-back-' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
-                                        '<div class="center sliding"><span><span class="photo-browser-current"></span> of <span class="photo-browser-total"></span></span></div>' +
+                                        '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
+                                        '<div class="center sliding"><span class="photo-browser-current"></span> <span class="photo-browser-of">' + pb.params.ofText + '</span> <span class="photo-browser-total"></span></div>' +
                                         '<div class="right"></div>' +
                                     '</div>' +
                                 '</div>';
-        
+            var prevIconClassName = app.rtl ? 'next' : 'prev';
+            var nextIconClassName = app.rtl ? 'prev' : 'next';
             var toolbarTemplate = pb.params.toolbarTemplate ||
                                 '<div class="toolbar tabbar">' +
                                     '<div class="toolbar-inner">' +
-                                        '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev-' + iconColor + '"></i></a>' +
-                                        '<a href="#" class="link photo-browser-next"><i class="icon icon-next-' + iconColor + '"></i></a>' +
+                                        '<a href="#" class="link photo-browser-prev"><i class="icon icon-' + prevIconClassName + ' ' + iconColor + '"></i></a>' +
+                                        '<a href="#" class="link photo-browser-next"><i class="icon icon-' + nextIconClassName + ' ' + iconColor + '"></i></a>' +
                                     '</div>' +
                                 '</div>';
         
@@ -4569,12 +4706,18 @@
                     return;
                 }
                 pb.layout(pb.openIndex);
+                if (pb.params.onOpen) {
+                    pb.params.onOpen(pb);
+                }
         
             };
             pb.close = function () {
                 pb.opened = false;
                 if (!pb.sliderContainer || pb.sliderContainer.length === 0) {
                     return;
+                }
+                if (pb.params.onClose) {
+                    pb.params.onClose(pb);
                 }
                 // Detach events
                 pb.attachEvents(true);
@@ -4646,16 +4789,13 @@
                         pb.activeSlideIndex = slider.activeSlideIndex;
                         pb.container.find('.photo-browser-current').text(slider.activeSlideIndex + 1);
                         pb.container.find('.photo-browser-total').text(slider.slides.length);
+        
+                        $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                         if (slider.isFirst) {
                             $('.photo-browser-prev').addClass('photo-browser-link-inactive');
-                            $('.photo-browser-next').removeClass('photo-browser-link-inactive');
                         }
-                        else if (slider.isLast) {
+                        if (slider.isLast) {
                             $('.photo-browser-next').addClass('photo-browser-link-inactive');
-                            $('.photo-browser-prev').removeClass('photo-browser-link-inactive');
-                        }
-                        else {
-                            $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
                         }
         
                         // Update captions
@@ -4782,6 +4922,7 @@
         
             pb.onSlideTouchStart = function (e) {
                 if (imageIsTouched) return;
+                if (app.device.os === 'android') e.preventDefault();
                 imageIsTouched = true;
                 imageTouchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
                 imageTouchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
@@ -4931,6 +5072,9 @@
                         }
                         if (pb.params.type === 'popup') {
                             app.closeModal(pb.popup);
+                        }
+                        if (pb.params.onSwipeToClose) {
+                            pb.params.onSwipeToClose(pb);
                         }
                         allowSwipeToClose = true;
                     }, 0);
@@ -5121,6 +5265,7 @@
             $('.page').each(function () {
                 var pageContainer = $(this);
                 var viewContainer = pageContainer.parents('.' + app.params.viewClass);
+                if (viewContainer.length === 0) return;
                 var view = viewContainer[0].f7View || false;
                 var url = view && view.url ? view.url : false;
                 if (viewContainer) {
@@ -5157,1003 +5302,1077 @@
     };
     
     /*===========================
-    jQuery-like DOM library
+    Dom7 Library
     ===========================*/
-    var Dom7 = function (arr) {
-        var _this = this, i = 0;
-        // Create array-like object
-        for (i = 0; i < arr.length; i++) {
-            _this[i] = arr[i];
-        }
-        _this.length = arr.length;
-        // Return collection with methods
-        return this;
-    };
-    Dom7.prototype = {
-        // Classes and attriutes
-        addClass: function (className) {
-            var classes = className.split(' ');
-            for (var i = 0; i < classes.length; i++) {
-                for (var j = 0; j < this.length; j++) {
-                    this[j].classList.add(classes[i]);
+    var Dom7 = (function () {
+        var Dom7 = function (arr) {
+            var _this = this, i = 0;
+            // Create array-like object
+            for (i = 0; i < arr.length; i++) {
+                _this[i] = arr[i];
+            }
+            _this.length = arr.length;
+            // Return collection with methods
+            return this;
+        };
+        var $ = function (selector, context) {
+            var arr = [], i = 0;
+            if (selector && !context) {
+                if (selector instanceof Dom7) {
+                    return selector;
                 }
             }
-            return this;
-        },
-        removeClass: function (className) {
-            var classes = className.split(' ');
-            for (var i = 0; i < classes.length; i++) {
-                for (var j = 0; j < this.length; j++) {
-                    this[j].classList.remove(classes[i]);
+            if (selector) {
+                // String
+                if (typeof selector === 'string') {
+                    var els = (context || document).querySelectorAll(selector);
+                    for (i = 0; i < els.length; i++) {
+                        arr.push(els[i]);
+                    }
+                }
+                // Node/element
+                else if (selector.nodeType || selector === window || selector === document) {
+                    arr.push(selector);
+                }
+                //Array of elements or instance of Dom
+                else if (selector.length > 0 && selector[0].nodeType) {
+                    for (i = 0; i < selector.length; i++) {
+                        arr.push(selector[i]);
+                    }
                 }
             }
-            return this;
-        },
-        hasClass: function (className) {
-            if (!this[0]) return false;
-            else return this[0].classList.contains(className);
-        },
-        toggleClass: function (className) {
-            var classes = className.split(' ');
-            for (var i = 0; i < classes.length; i++) {
-                for (var j = 0; j < this.length; j++) {
-                    this[j].classList.toggle(classes[i]);
+            return new Dom7(arr);
+        };
+        Dom7.prototype = {
+            // Classes and attriutes
+            addClass: function (className) {
+                if (typeof className === 'undefined') {
+                    return this;
                 }
-            }
-            return this;
-        },
-        attr: function (attr, value) {
-            if (typeof value === 'undefined') {
-                if (this[0]) return this[0].getAttribute(attr);
-                else return undefined;
-            }
-            else {
-                for (var i = 0; i < this.length; i++) {
-                    this[i].setAttribute(attr, value);
+                var classes = className.split(' ');
+                for (var i = 0; i < classes.length; i++) {
+                    for (var j = 0; j < this.length; j++) {
+                        this[j].classList.add(classes[i]);
+                    }
                 }
                 return this;
-            }
-        },
-        removeAttr: function (attr) {
-            for (var i = 0; i < this.length; i++) {
-                this[i].removeAttribute(attr);
-            }
-        },
-        prop: function (prop, value) {
-            if (typeof value === 'undefined') {
-                if (this[0]) return this[0][prop];
-                else return undefined;
-            }
-            else {
-                for (var i = 0; i < this.length; i++) {
-                    this[i][prop] = value;
+            },
+            removeClass: function (className) {
+                if (typeof className === 'undefined') {
+                    return this.removeAttr('class');
+                }
+                var classes = className.split(' ');
+                for (var i = 0; i < classes.length; i++) {
+                    for (var j = 0; j < this.length; j++) {
+                        this[j].classList.remove(classes[i]);
+                    }
                 }
                 return this;
-            }
-        },
-        data: function (key, value) {
-            if (typeof value === 'undefined') {
-                // Get value
-                if (this[0]) {
-                    var dataKey = this[0].getAttribute('data-' + key);
-                    if (dataKey) return dataKey;
-                    else if (this[0].dom7ElementDataStorage && this[0].dom7ElementDataStorage[key]) return this[0].dom7ElementDataStorage[key];
+            },
+            hasClass: function (className) {
+                if (!this[0]) return false;
+                else return this[0].classList.contains(className);
+            },
+            toggleClass: function (className) {
+                var classes = className.split(' ');
+                for (var i = 0; i < classes.length; i++) {
+                    for (var j = 0; j < this.length; j++) {
+                        this[j].classList.toggle(classes[i]);
+                    }
+                }
+                return this;
+            },
+            attr: function (attr, value) {
+                if (typeof value === 'undefined') {
+                    if (this[0]) return this[0].getAttribute(attr);
                     else return undefined;
                 }
-                else return undefined;
-            }
-            else {
-                // Set value
-                for (var i = 0; i < this.length; i++) {
-                    var el = this[i];
-                    if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
-                    el.dom7ElementDataStorage[key] = value;
-                }
-                return this;
-            }
-        },
-        val: function (value) {
-            if (typeof value === 'undefined') {
-                if (this[0]) return this[0].value;
-                else return null;
-            }
-            else {
-                for (var i = 0; i < this.length; i++) {
-                    this[i].value = value;
-                }
-                return this;
-            }
-        },
-        // Transforms
-        transform : function (transform) {
-            for (var i = 0; i < this.length; i++) {
-                var elStyle = this[i].style;
-                elStyle.webkitTransform = elStyle.MsTransform = elStyle.msTransform = elStyle.MozTransform = elStyle.OTransform = elStyle.transform = transform;
-            }
-            return this;
-        },
-        transition: function (duration) {
-            if (typeof duration !== 'string') {
-                duration = duration + 'ms';
-            }
-            for (var i = 0; i < this.length; i++) {
-                var elStyle = this[i].style;
-                elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration;
-            }
-            return this;
-        },
-        //Events
-        on: function (eventName, targetSelector, listener) {
-            function handleLiveEvent(e) {
-                var target = e.target;
-                if ($(target).is(targetSelector)) listener.call(target, e);
                 else {
-                    var parents = $(target).parents();
-                    for (var k = 0; k < parents.length; k++) {
-                        if ($(parents[k]).is(targetSelector)) listener.call(parents[k], e);
+                    for (var i = 0; i < this.length; i++) {
+                        this[i].setAttribute(attr, value);
                     }
+                    return this;
                 }
-            }
-            var events = eventName.split(' ');
-            var i, j;
-            for (i = 0; i < this.length; i++) {
-                if (arguments.length === 2 || targetSelector === false) {
-                    // Usual events
-                    if (arguments.length === 2) listener = arguments[1];
-                    for (j = 0; j < events.length; j++) {
-                        this[i].addEventListener(events[j], listener, false);
-                    }
+            },
+            removeAttr: function (attr) {
+                for (var i = 0; i < this.length; i++) {
+                    this[i].removeAttribute(attr);
+                }
+            },
+            prop: function (prop, value) {
+                if (typeof value === 'undefined') {
+                    if (this[0]) return this[0][prop];
+                    else return undefined;
                 }
                 else {
-                    //Live events
-                    for (j = 0; j < events.length; j++) {
-                        if (!this[i].dom7LiveListeners) this[i].dom7LiveListeners = [];
-                        this[i].dom7LiveListeners.push({listener: listener, liveListener: handleLiveEvent});
-                        this[i].addEventListener(events[j], handleLiveEvent, false);
+                    for (var i = 0; i < this.length; i++) {
+                        this[i][prop] = value;
+                    }
+                    return this;
+                }
+            },
+            data: function (key, value) {
+                if (typeof value === 'undefined') {
+                    // Get value
+                    if (this[0]) {
+                        var dataKey = this[0].getAttribute('data-' + key);
+                        if (dataKey) return dataKey;
+                        else if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
+                        else return undefined;
+                    }
+                    else return undefined;
+                }
+                else {
+                    // Set value
+                    for (var i = 0; i < this.length; i++) {
+                        var el = this[i];
+                        if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
+                        el.dom7ElementDataStorage[key] = value;
+                    }
+                    return this;
+                }
+            },
+            val: function (value) {
+                if (typeof value === 'undefined') {
+                    if (this[0]) return this[0].value;
+                    else return null;
+                }
+                else {
+                    for (var i = 0; i < this.length; i++) {
+                        this[i].value = value;
+                    }
+                    return this;
+                }
+            },
+            // Transforms
+            transform : function (transform) {
+                for (var i = 0; i < this.length; i++) {
+                    var elStyle = this[i].style;
+                    elStyle.webkitTransform = elStyle.MsTransform = elStyle.msTransform = elStyle.MozTransform = elStyle.OTransform = elStyle.transform = transform;
+                }
+                return this;
+            },
+            transition: function (duration) {
+                if (typeof duration !== 'string') {
+                    duration = duration + 'ms';
+                }
+                for (var i = 0; i < this.length; i++) {
+                    var elStyle = this[i].style;
+                    elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration;
+                }
+                return this;
+            },
+            //Events
+            on: function (eventName, targetSelector, listener) {
+                function handleLiveEvent(e) {
+                    var target = e.target;
+                    if ($(target).is(targetSelector)) listener.call(target, e);
+                    else {
+                        var parents = $(target).parents();
+                        for (var k = 0; k < parents.length; k++) {
+                            if ($(parents[k]).is(targetSelector)) listener.call(parents[k], e);
+                        }
                     }
                 }
-            }
-    
-            return this;
-        },
-        off: function (eventName, listener) {
-            var events = eventName.split(' ');
-            for (var i = 0; i < events.length; i++) {
-                for (var j = 0; j < this.length; j++) {
-                    if (arguments.length === 3) {
-                        var _targetSelector = arguments[1];
-                        var _listener = arguments[2];
-                        if (this[j].dom7LiveListeners) {
-                            for (var k = 0; k < this[j].dom7LiveListeners.length; k++) {
-                                if (this[j].dom7LiveListeners[k].listener === _listener) {
-                                    this[j].removeEventListener(events[i], this[j].dom7LiveListeners[k].liveListener, false);
+                var events = eventName.split(' ');
+                var i, j;
+                for (i = 0; i < this.length; i++) {
+                    if (arguments.length === 2 || targetSelector === false) {
+                        // Usual events
+                        if (arguments.length === 2) listener = arguments[1];
+                        for (j = 0; j < events.length; j++) {
+                            this[i].addEventListener(events[j], listener, false);
+                        }
+                    }
+                    else {
+                        //Live events
+                        for (j = 0; j < events.length; j++) {
+                            if (!this[i].dom7LiveListeners) this[i].dom7LiveListeners = [];
+                            this[i].dom7LiveListeners.push({listener: listener, liveListener: handleLiveEvent});
+                            this[i].addEventListener(events[j], handleLiveEvent, false);
+                        }
+                    }
+                }
+        
+                return this;
+            },
+            off: function (eventName, listener) {
+                var events = eventName.split(' ');
+                for (var i = 0; i < events.length; i++) {
+                    for (var j = 0; j < this.length; j++) {
+                        if (arguments.length === 3) {
+                            var _targetSelector = arguments[1];
+                            var _listener = arguments[2];
+                            if (this[j].dom7LiveListeners) {
+                                for (var k = 0; k < this[j].dom7LiveListeners.length; k++) {
+                                    if (this[j].dom7LiveListeners[k].listener === _listener) {
+                                        this[j].removeEventListener(events[i], this[j].dom7LiveListeners[k].liveListener, false);
+                                    }
                                 }
                             }
                         }
-                    }
-                    else {
-                        this[j].removeEventListener(events[i], listener, false);
-                    }
-                }
-            }
-            return this;
-        },
-        trigger: function (eventName, eventData) {
-            for (var i = 0; i < this.length; i++) {
-                var evt;
-                try {
-                    evt = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
-                }
-                catch (e) {
-                    evt = document.createEvent('Event');
-                    evt.initEvent(eventName, true, true);
-                    evt.detail = eventData;
-                }
-                this[i].dispatchEvent(evt);
-            }
-            return this;
-        },
-        transitionEnd: function (callback) {
-            var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
-                i, j, dom = this;
-            function fireCallBack(e) {
-                /*jshint validthis:true */
-                callback.call(this, e);
-                for (i = 0; i < events.length; i++) {
-                    dom.off(events[i], fireCallBack);
-                }
-            }
-            if (callback) {
-                for (i = 0; i < events.length; i++) {
-                    dom.on(events[i], fireCallBack);
-                }
-            }
-            return this;
-        },
-        animationEnd: function (callback) {
-            var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
-                i, j, dom = this;
-            function fireCallBack(e) {
-                callback(e);
-                for (i = 0; i < events.length; i++) {
-                    dom.off(events[i], fireCallBack);
-                }
-            }
-            if (callback) {
-                for (i = 0; i < events.length; i++) {
-                    dom.on(events[i], fireCallBack);
-                }
-            }
-            return this;
-        },
-        // Sizing/Styles
-        width: function () {
-            if (this[0] === window) {
-                return window.innerWidth;
-            }
-            else {
-                if (this.length > 0) {
-                    return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
-                }
-                else {
-                    return null;
-                }
-            }
-                
-        },
-        outerWidth: function (margins) {
-            if (this.length > 0) {
-                if (margins)
-                    return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
-                else
-                    return this[0].offsetWidth;
-            }
-            else return null;
-        },
-        height: function () {
-            if (this[0] === window) {
-                return window.innerHeight;
-            }
-            else {
-                if (this.length > 0) {
-                    return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
-                }
-                else {
-                    return null;
-                }
-            }
-                
-        },
-        outerHeight: function (margins) {
-            if (this.length > 0) {
-                if (margins)
-                    return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
-                else
-                    return this[0].offsetHeight;
-            }
-            else return null;
-        },
-        offset: function () {
-            if (this.length > 0) {
-                var el = this[0];
-                var box = el.getBoundingClientRect();
-                var body = document.body;
-                var clientTop  = el.clientTop  || body.clientTop  || 0;
-                var clientLeft = el.clientLeft || body.clientLeft || 0;
-                var scrollTop  = window.pageYOffset || el.scrollTop;
-                var scrollLeft = window.pageXOffset || el.scrollLeft;
-                return {
-                    top: box.top  + scrollTop  - clientTop,
-                    left: box.left + scrollLeft - clientLeft
-                };
-            }
-            else {
-                return null;
-            }
-        },
-        hide: function () {
-            for (var i = 0; i < this.length; i++) {
-                this[i].style.display = 'none';
-            }
-            return this;
-        },
-        show: function () {
-            for (var i = 0; i < this.length; i++) {
-                this[i].style.display = 'block';
-            }
-            return this;
-        },
-        css: function (props, value) {
-            var i;
-            if (arguments.length === 1) {
-                if (typeof props === 'string') {
-                    if (this[0]) return window.getComputedStyle(this[0], null).getPropertyValue(props);
-                }
-                else {
-                    for (i = 0; i < this.length; i++) {
-                        for (var prop in props) {
-                            this[i].style[prop] = props[prop];
+                        else {
+                            this[j].removeEventListener(events[i], listener, false);
                         }
                     }
-                    return this;
-                }
-            }
-            if (arguments.length === 2 && typeof props === 'string') {
-                for (i = 0; i < this.length; i++) {
-                    this[i].style[props] = value;
                 }
                 return this;
-            }
-            return this;
-        },
-        
-        //Dom manipulation
-        each: function (callback) {
-            for (var i = 0; i < this.length; i++) {
-                callback.call(this[i], i, this[i]);
-            }
-            return this;
-        },
-        html: function (html) {
-            if (typeof html === 'undefined') {
-                return this[0] ? this[0].innerHTML : undefined;
-            }
-            else {
+            },
+            trigger: function (eventName, eventData) {
                 for (var i = 0; i < this.length; i++) {
-                    this[i].innerHTML = html;
+                    var evt;
+                    try {
+                        evt = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
+                    }
+                    catch (e) {
+                        evt = document.createEvent('Event');
+                        evt.initEvent(eventName, true, true);
+                        evt.detail = eventData;
+                    }
+                    this[i].dispatchEvent(evt);
                 }
                 return this;
-            }
-        },
-        text: function (text) {
-            if (typeof text === 'undefined') {
-                if (this[0]) {
-                    return this[0].textContent.trim();
+            },
+            transitionEnd: function (callback) {
+                var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
+                    i, j, dom = this;
+                function fireCallBack(e) {
+                    /*jshint validthis:true */
+                    callback.call(this, e);
+                    for (i = 0; i < events.length; i++) {
+                        dom.off(events[i], fireCallBack);
+                    }
+                }
+                if (callback) {
+                    for (i = 0; i < events.length; i++) {
+                        dom.on(events[i], fireCallBack);
+                    }
+                }
+                return this;
+            },
+            animationEnd: function (callback) {
+                var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
+                    i, j, dom = this;
+                function fireCallBack(e) {
+                    callback(e);
+                    for (i = 0; i < events.length; i++) {
+                        dom.off(events[i], fireCallBack);
+                    }
+                }
+                if (callback) {
+                    for (i = 0; i < events.length; i++) {
+                        dom.on(events[i], fireCallBack);
+                    }
+                }
+                return this;
+            },
+            // Sizing/Styles
+            width: function () {
+                if (this[0] === window) {
+                    return window.innerWidth;
+                }
+                else {
+                    if (this.length > 0) {
+                        return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                    
+            },
+            outerWidth: function (margins) {
+                if (this.length > 0) {
+                    if (margins)
+                        return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
+                    else
+                        return this[0].offsetWidth;
                 }
                 else return null;
-            }
-            else {
+            },
+            height: function () {
+                if (this[0] === window) {
+                    return window.innerHeight;
+                }
+                else {
+                    if (this.length > 0) {
+                        return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                    
+            },
+            outerHeight: function (margins) {
+                if (this.length > 0) {
+                    if (margins)
+                        return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
+                    else
+                        return this[0].offsetHeight;
+                }
+                else return null;
+            },
+            offset: function () {
+                if (this.length > 0) {
+                    var el = this[0];
+                    var box = el.getBoundingClientRect();
+                    var body = document.body;
+                    var clientTop  = el.clientTop  || body.clientTop  || 0;
+                    var clientLeft = el.clientLeft || body.clientLeft || 0;
+                    var scrollTop  = window.pageYOffset || el.scrollTop;
+                    var scrollLeft = window.pageXOffset || el.scrollLeft;
+                    return {
+                        top: box.top  + scrollTop  - clientTop,
+                        left: box.left + scrollLeft - clientLeft
+                    };
+                }
+                else {
+                    return null;
+                }
+            },
+            hide: function () {
                 for (var i = 0; i < this.length; i++) {
-                    this[0].textContent = text;
+                    this[i].style.display = 'none';
                 }
-            }
-        },
-        is: function (selector) {
-            if (!this[0]) return false;
-            var compareWith, i;
-            if (typeof selector === 'string') {
-                var el = this[0];
-                if (el === document) return selector === document;
-                if (el === window) return selector === window;
-    
-                if (el.matches) return el.matches(selector);
-                else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
-                else if (el.mozMatchesSelector) return el.mozMatchesSelector(selector);
-                else if (el.msMatchesSelector) return el.msMatchesSelector(selector);
-                else {
-                    compareWith = $(selector);
-                    for (i = 0; i < compareWith.length; i++) {
-                        if (compareWith[i] === this[0]) return true;
-                    }
-                    return false;
+                return this;
+            },
+            show: function () {
+                for (var i = 0; i < this.length; i++) {
+                    this[i].style.display = 'block';
                 }
-            }
-            else if (selector === document) return this[0] === document;
-            else if (selector === window) return this[0] === window;
-            else {
-                if (selector.nodeType || selector instanceof Dom7) {
-                    compareWith = selector.nodeType ? [selector] : selector;
-                    for (i = 0; i < compareWith.length; i++) {
-                        if (compareWith[i] === this[0]) return true;
-                    }
-                    return false;
-                }
-                return false;
-            }
-            
-        },
-        indexOf: function (el) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] === el) return i;
-            }
-        },
-        index: function () {
-            if (this[0]) {
-                var child = this[0];
-                var i = 0;
-                while ((child = child.previousSibling) != null) {
-                    if (child.nodeType === 1) i++;
-                }
-                return i;
-            }
-            else return undefined;
-        },
-        eq: function (index) {
-            if (typeof index === 'undefined') return this;
-            var length = this.length;
-            var returnIndex;
-            if (index > length - 1) {
-                return new Dom7([]);
-            }
-            if (index < 0) {
-                returnIndex = length + index;
-                if (returnIndex < 0) return new Dom7([]);
-                else return new Dom7([this[returnIndex]]);
-            }
-            return new Dom7([this[index]]);
-        },
-        append: function (newChild) {
-            for (var i = 0; i < this.length; i++) {
-                if (typeof newChild === 'string') {
-                    var tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = newChild;
-                    while (tempDiv.firstChild) {
-                        this[i].appendChild(tempDiv.firstChild);
-                    }
-                }
-                else {
-                    this[i].appendChild(newChild);
-                }
-            }
-            return this;
-        },
-        prepend: function (newChild) {
-            for (var i = 0; i < this.length; i++) {
-                if (typeof newChild === 'string') {
-                    var tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = newChild;
-                    for (var j = tempDiv.childNodes.length - 1; j >= 0; j--) {
-                        this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
-                    }
-                }
-                else {
-                    this[i].insertBefore(newChild, this[i].childNodes[0]);
-                }
-            }
-            return this;
-        },
-        insertBefore: function (selector) {
-            var before = $(selector);
-            for (var i = 0; i < this.length; i++) {
-                if (before.length === 1) {
-                    before[0].parentNode.insertBefore(this[i], before[0]);
-                }
-                else if (before.length > 1) {
-                    for (var j = 0; j < before.length; j++) {
-                        before[j].parentNode.insertBefore(this[i].cloneNode(true), before[j]);
-                    }
-                }
-            }
-        },
-        insertAfter: function (selector) {
-            var after = $(selector);
-            for (var i = 0; i < this.length; i++) {
-                if (after.length === 1) {
-                    after[0].parentNode.insertBefore(this[i], after[0].nextSibling);
-                }
-                else if (after.length > 1) {
-                    for (var j = 0; j < after.length; j++) {
-                        after[j].parentNode.insertBefore(this[i].cloneNode(true), after[j].nextSibling);
-                    }
-                }
-            }
-        },
-        next: function (selector) {
-            if (this.length > 0) {
-                if (selector) {
-                    if (this[0].nextElementSibling && $(this[0].nextElementSibling).is(selector)) return new Dom7([this[0].nextElementSibling]);
-                    else return new Dom7([]);
-                }
-                else {
-                    if (this[0].nextElementSibling) return new Dom7([this[0].nextElementSibling]);
-                    else return new Dom7([]);
-                }
-            }
-            else return new Dom7([]);
-        },
-        nextAll: function (selector) {
-            var nextEls = [];
-            var el = this[0];
-            if (!el) return new Dom7([]);
-            while (el.nextElementSibling) {
-                var next = el.nextElementSibling;
-                if (selector && $(next).is(selector)) nextEls.push(next);
-                else nextEls.push(next);
-                el = next;
-            }
-            return new Dom7(nextEls);
-        },
-        prev: function (selector) {
-            if (this.length > 0) {
-                if (selector) {
-                    if (this[0].previousElementSibling && $(this[0].previousElementSibling).is(selector)) return new Dom7([this[0].previousElementSibling]);
-                    else return new Dom7([]);
-                }
-                else {
-                    if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
-                    else return new Dom7([]);
-                }
-            }
-            else return new Dom7([]);
-        },
-        prevAll: function (selector) {
-            var prevEls = [];
-            var el = this[0];
-            if (!el) return new Dom7([]);
-            while (el.previousElementSibling) {
-                var prev = el.previousElementSibling;
-                if (selector && $(prev).is(selector)) prevEls.push(prev);
-                else prevEls.push(prev);
-                el = prev;
-            }
-            return new Dom7(prevEls);
-        },
-        parent: function (selector) {
-            var parents = [];
-            for (var i = 0; i < this.length; i++) {
-                if (selector) {
-                    if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
-                }
-                else {
-                    parents.push(this[i].parentNode);
-                }
-            }
-            return $($.unique(parents));
-        },
-        parents: function (selector) {
-            var parents = [];
-            for (var i = 0; i < this.length; i++) {
-                var parent = this[i].parentNode;
-                while (parent) {
-                    if (selector) {
-                        if ($(parent).is(selector)) parents.push(parent);
-                    }
-                    else {
-                        parents.push(parent);
-                    }
-                    parent = parent.parentNode;
-                }
-            }
-            return $($.unique(parents));
-        },
-        find : function (selector) {
-            var foundElements = [];
-            for (var i = 0; i < this.length; i++) {
-                var found = this[i].querySelectorAll(selector);
-                for (var j = 0; j < found.length; j++) {
-                    foundElements.push(found[j]);
-                }
-            }
-            return new Dom7(foundElements);
-        },
-        children: function (selector) {
-            var children = [];
-            for (var i = 0; i < this.length; i++) {
-                var childNodes = this[i].childNodes;
-    
-                for (var j = 0; j < childNodes.length; j++) {
-                    if (!selector) {
-                        if (childNodes[j].nodeType === 1) children.push(childNodes[j]);
-                    }
-                    else {
-                        if (childNodes[j].nodeType === 1 && $(childNodes[j]).is(selector)) children.push(childNodes[j]);
-                    }
-                }
-            }
-            return new Dom7($.unique(children));
-        },
-        remove: function () {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
-            }
-            return this;
-        }
-    };
-    // Shortcuts
-    (function () {
-        var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
-        var notTrigger = ('resize scroll').split(' ');
-        function createMethod(name) {
-            Dom7.prototype[name] = function (handler) {
+                return this;
+            },
+            css: function (props, value) {
                 var i;
-                if (typeof handler === 'undefined') {
+                if (arguments.length === 1) {
+                    if (typeof props === 'string') {
+                        if (this[0]) return window.getComputedStyle(this[0], null).getPropertyValue(props);
+                    }
+                    else {
+                        for (i = 0; i < this.length; i++) {
+                            for (var prop in props) {
+                                this[i].style[prop] = props[prop];
+                            }
+                        }
+                        return this;
+                    }
+                }
+                if (arguments.length === 2 && typeof props === 'string') {
                     for (i = 0; i < this.length; i++) {
-                        if (notTrigger.indexOf(name) < 0) this[i][name]();
+                        this[i].style[props] = value;
                     }
                     return this;
                 }
+                return this;
+            },
+            
+            //Dom manipulation
+            each: function (callback) {
+                for (var i = 0; i < this.length; i++) {
+                    callback.call(this[i], i, this[i]);
+                }
+                return this;
+            },
+            html: function (html) {
+                if (typeof html === 'undefined') {
+                    return this[0] ? this[0].innerHTML : undefined;
+                }
                 else {
-                    return this.on(name, handler);
+                    for (var i = 0; i < this.length; i++) {
+                        this[i].innerHTML = html;
+                    }
+                    return this;
                 }
-            };
-        }
-        for (var i = 0; i < shortcuts.length; i++) {
-            createMethod(shortcuts[i]);
-        }
-    })();
-    
-    // Selector 
-    var $ = function (selector, context) {
-        var arr = [], i = 0;
-        if (selector && !context) {
-            if (selector instanceof Dom7) {
-                return selector;
-            }
-        }
-        if (selector) {
-            // String
-            if (typeof selector === 'string') {
-                var els = (context || document).querySelectorAll(selector);
-                for (i = 0; i < els.length; i++) {
-                    arr.push(els[i]);
+            },
+            text: function (text) {
+                if (typeof text === 'undefined') {
+                    if (this[0]) {
+                        return this[0].textContent.trim();
+                    }
+                    else return null;
                 }
-            }
-            // Node/element
-            else if (selector.nodeType || selector === window || selector === document) {
-                arr.push(selector);
-            }
-            //Array of elements or instance of Dom
-            else if (selector.length > 0 && selector[0].nodeType) {
-                for (i = 0; i < selector.length; i++) {
-                    arr.push(selector[i]);
+                else {
+                    for (var i = 0; i < this.length; i++) {
+                        this[0].textContent = text;
+                    }
                 }
-            }
-        }
-        return new Dom7(arr);
-    };
-    
-    // DOM Library Utilites
-    $.parseUrlQuery = function (url) {
-        var query = {}, i, params, param;
-        if (url.indexOf('?') >= 0) url = url.split('?')[1];
-        else return query;
-        params = url.split('&');
-        for (i = 0; i < params.length; i++) {
-            param = params[i].split('=');
-            query[param[0]] = param[1];
-        }
-        return query;
-    };
-    $.isArray = function (arr) {
-        if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
-        else return false;
-    };
-    $.unique = function (arr) {
-        var unique = [];
-        for (var i = 0; i < arr.length; i++) {
-            if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
-        }
-        return unique;
-    };
-    $.trim = function (str) {
-        return str.trim();
-    };
-    $.serializeObject = function (obj) {
-        if (typeof obj === 'string') return obj;
-        var resultArray = [];
-        var separator = '&';
-        for (var prop in obj) {
-            if ($.isArray(obj[prop])) {
-                var toPush = [];
-                for (var i = 0; i < obj[prop].length; i ++) {
-                    toPush.push(prop + '=' + obj[prop][i]);
-                }
-                resultArray.push(toPush.join(separator));
-            }
-            else {
-                // Should be string
-                resultArray.push(prop + '=' + obj[prop]);
-            }
-        }
-    
-        return resultArray.join(separator);
-    };
-    
-    $.getTranslate = function (el, axis) {
-        var matrix, curTransform, curStyle, transformMatrix;
-    
-        // automatic axis detection
-        if (typeof axis === 'undefined') {
-            axis = 'x';
-        }
-    
-        curStyle = window.getComputedStyle(el, null);
-        if (window.WebKitCSSMatrix) {
-            // Some old versions of Webkit choke when 'none' is passed; pass
-            // empty string instead in this case
-            transformMatrix = new WebKitCSSMatrix(curStyle.webkitTransform === 'none' ? '' : curStyle.webkitTransform);
-        }
-        else {
-            transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform  || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
-            matrix = transformMatrix.toString().split(',');
-        }
-    
-        if (axis === 'x') {
-            //Latest Chrome and webkits Fix
-            if (window.WebKitCSSMatrix)
-                curTransform = transformMatrix.m41;
-            //Crazy IE10 Matrix
-            else if (matrix.length === 16)
-                curTransform = parseFloat(matrix[12]);
-            //Normal Browsers
-            else
-                curTransform = parseFloat(matrix[4]);
-        }
-        if (axis === 'y') {
-            //Latest Chrome and webkits Fix
-            if (window.WebKitCSSMatrix)
-                curTransform = transformMatrix.m42;
-            //Crazy IE10 Matrix
-            else if (matrix.length === 16)
-                curTransform = parseFloat(matrix[13]);
-            //Normal Browsers
-            else
-                curTransform = parseFloat(matrix[5]);
-        }
+            },
+            is: function (selector) {
+                if (!this[0]) return false;
+                var compareWith, i;
+                if (typeof selector === 'string') {
+                    var el = this[0];
+                    if (el === document) return selector === document;
+                    if (el === window) return selector === window;
         
-        return curTransform || 0;
-    };
-    
-    $.requestAnimationFrame = function (callback) {
-        if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
-        else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
-        else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
-        else {
-            return window.setTimeout(callback, 1000 / 60);
-        }
-    };
-    
-    // Plugins
-    $.fn = Dom7.prototype;
-    
-    $.fn.scrollTop = function (top, duration) {
-        var dom = this;
-        if (typeof top === 'undefined') {
-            if (dom.length > 0) return dom[0].scrollTop;
-            else return null;
-        }
-        return dom.each(function () {
-            var el = this;
-            var currentTop = el.scrollTop;
-            if (!duration) {
-                el.scrollTop = top;
+                    if (el.matches) return el.matches(selector);
+                    else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
+                    else if (el.mozMatchesSelector) return el.mozMatchesSelector(selector);
+                    else if (el.msMatchesSelector) return el.msMatchesSelector(selector);
+                    else {
+                        compareWith = $(selector);
+                        for (i = 0; i < compareWith.length; i++) {
+                            if (compareWith[i] === this[0]) return true;
+                        }
+                        return false;
+                    }
+                }
+                else if (selector === document) return this[0] === document;
+                else if (selector === window) return this[0] === window;
+                else {
+                    if (selector.nodeType || selector instanceof Dom7) {
+                        compareWith = selector.nodeType ? [selector] : selector;
+                        for (i = 0; i < compareWith.length; i++) {
+                            if (compareWith[i] === this[0]) return true;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+                
+            },
+            indexOf: function (el) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i] === el) return i;
+                }
+            },
+            index: function () {
+                if (this[0]) {
+                    var child = this[0];
+                    var i = 0;
+                    while ((child = child.previousSibling) !== null) {
+                        if (child.nodeType === 1) i++;
+                    }
+                    return i;
+                }
+                else return undefined;
+            },
+            eq: function (index) {
+                if (typeof index === 'undefined') return this;
+                var length = this.length;
+                var returnIndex;
+                if (index > length - 1) {
+                    return new Dom7([]);
+                }
+                if (index < 0) {
+                    returnIndex = length + index;
+                    if (returnIndex < 0) return new Dom7([]);
+                    else return new Dom7([this[returnIndex]]);
+                }
+                return new Dom7([this[index]]);
+            },
+            append: function (newChild) {
+                var i, j;
+                for (i = 0; i < this.length; i++) {
+                    if (typeof newChild === 'string') {
+                        var tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = newChild;
+                        while (tempDiv.firstChild) {
+                            this[i].appendChild(tempDiv.firstChild);
+                        }
+                    }
+                    else if (newChild instanceof Dom7) {
+                        for (j = 0; j < newChild.length; j++) {
+                            this[i].appendChild(newChild[j]);
+                        }
+                    }
+                    else {
+                        this[i].appendChild(newChild);
+                    }
+                }
+                return this;
+            },
+            prepend: function (newChild) {
+                var i, j;
+                for (i = 0; i < this.length; i++) {
+                    if (typeof newChild === 'string') {
+                        var tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = newChild;
+                        for (j = tempDiv.childNodes.length - 1; j >= 0; j--) {
+                            this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
+                        }
+                    }
+                    else if (newChild instanceof Dom7) {
+                        for (j = 0; j < newChild.length; j++) {
+                            this[i].insertBefore(newChild[j], this[i].childNodes[0]);
+                        }
+                    }
+                    else {
+                        this[i].insertBefore(newChild, this[i].childNodes[0]);
+                    }
+                }
+                return this;
+            },
+            insertBefore: function (selector) {
+                var before = $(selector);
+                for (var i = 0; i < this.length; i++) {
+                    if (before.length === 1) {
+                        before[0].parentNode.insertBefore(this[i], before[0]);
+                    }
+                    else if (before.length > 1) {
+                        for (var j = 0; j < before.length; j++) {
+                            before[j].parentNode.insertBefore(this[i].cloneNode(true), before[j]);
+                        }
+                    }
+                }
+            },
+            insertAfter: function (selector) {
+                var after = $(selector);
+                for (var i = 0; i < this.length; i++) {
+                    if (after.length === 1) {
+                        after[0].parentNode.insertBefore(this[i], after[0].nextSibling);
+                    }
+                    else if (after.length > 1) {
+                        for (var j = 0; j < after.length; j++) {
+                            after[j].parentNode.insertBefore(this[i].cloneNode(true), after[j].nextSibling);
+                        }
+                    }
+                }
+            },
+            next: function (selector) {
+                if (this.length > 0) {
+                    if (selector) {
+                        if (this[0].nextElementSibling && $(this[0].nextElementSibling).is(selector)) return new Dom7([this[0].nextElementSibling]);
+                        else return new Dom7([]);
+                    }
+                    else {
+                        if (this[0].nextElementSibling) return new Dom7([this[0].nextElementSibling]);
+                        else return new Dom7([]);
+                    }
+                }
+                else return new Dom7([]);
+            },
+            nextAll: function (selector) {
+                var nextEls = [];
+                var el = this[0];
+                if (!el) return new Dom7([]);
+                while (el.nextElementSibling) {
+                    var next = el.nextElementSibling;
+                    if (selector && $(next).is(selector)) nextEls.push(next);
+                    else nextEls.push(next);
+                    el = next;
+                }
+                return new Dom7(nextEls);
+            },
+            prev: function (selector) {
+                if (this.length > 0) {
+                    if (selector) {
+                        if (this[0].previousElementSibling && $(this[0].previousElementSibling).is(selector)) return new Dom7([this[0].previousElementSibling]);
+                        else return new Dom7([]);
+                    }
+                    else {
+                        if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
+                        else return new Dom7([]);
+                    }
+                }
+                else return new Dom7([]);
+            },
+            prevAll: function (selector) {
+                var prevEls = [];
+                var el = this[0];
+                if (!el) return new Dom7([]);
+                while (el.previousElementSibling) {
+                    var prev = el.previousElementSibling;
+                    if (selector && $(prev).is(selector)) prevEls.push(prev);
+                    else prevEls.push(prev);
+                    el = prev;
+                }
+                return new Dom7(prevEls);
+            },
+            parent: function (selector) {
+                var parents = [];
+                for (var i = 0; i < this.length; i++) {
+                    if (selector) {
+                        if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
+                    }
+                    else {
+                        parents.push(this[i].parentNode);
+                    }
+                }
+                return $($.unique(parents));
+            },
+            parents: function (selector) {
+                var parents = [];
+                for (var i = 0; i < this.length; i++) {
+                    var parent = this[i].parentNode;
+                    while (parent) {
+                        if (selector) {
+                            if ($(parent).is(selector)) parents.push(parent);
+                        }
+                        else {
+                            parents.push(parent);
+                        }
+                        parent = parent.parentNode;
+                    }
+                }
+                return $($.unique(parents));
+            },
+            find : function (selector) {
+                var foundElements = [];
+                for (var i = 0; i < this.length; i++) {
+                    var found = this[i].querySelectorAll(selector);
+                    for (var j = 0; j < found.length; j++) {
+                        foundElements.push(found[j]);
+                    }
+                }
+                return new Dom7(foundElements);
+            },
+            children: function (selector) {
+                var children = [];
+                for (var i = 0; i < this.length; i++) {
+                    var childNodes = this[i].childNodes;
+        
+                    for (var j = 0; j < childNodes.length; j++) {
+                        if (!selector) {
+                            if (childNodes[j].nodeType === 1) children.push(childNodes[j]);
+                        }
+                        else {
+                            if (childNodes[j].nodeType === 1 && $(childNodes[j]).is(selector)) children.push(childNodes[j]);
+                        }
+                    }
+                }
+                return new Dom7($.unique(children));
+            },
+            remove: function () {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
+                }
+                return this;
+            },
+            detach: function () {
+                return this.remove();
+            }
+        };
+        
+        // Shortcuts
+        (function () {
+            var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
+            var notTrigger = ('resize scroll').split(' ');
+            function createMethod(name) {
+                Dom7.prototype[name] = function (handler) {
+                    var i;
+                    if (typeof handler === 'undefined') {
+                        for (i = 0; i < this.length; i++) {
+                            if (notTrigger.indexOf(name) < 0) this[i][name]();
+                        }
+                        return this;
+                    }
+                    else {
+                        return this.on(name, handler);
+                    }
+                };
+            }
+            for (var i = 0; i < shortcuts.length; i++) {
+                createMethod(shortcuts[i]);
+            }
+        })();
+        
+        // Ajax
+        var _jsonpRequests = 0;
+        $.ajax = function (options) {
+            var defaults = {
+                method: 'GET',
+                data: false,
+                async: true,
+                cache: true,
+                user: '',
+                password: '',
+                headers: {},
+                xhrFields: {},
+                statusCode: {},
+                processData: true,
+                dataType: 'text',
+                contentType: 'application/x-www-form-urlencoded'
+            };
+        
+            //For jQuery guys
+            if (options.type) options.type = options.method;
+        
+            // Merge options and defaults
+            for (var prop in defaults) {
+                if (!(prop in options)) options[prop] = defaults[prop];
+            }
+        
+            // Default URL
+            if (!options.url) {
+                options.url = window.location.toString();
+            }
+        
+            // Data to modify GET URL
+            if ((options.method === 'GET' || options.method === 'HEAD') && options.data) {
+                var stringData;
+                if (typeof options.data === 'string') {
+                    // Should be key=value string
+                    if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];
+                    else stringData = options.data;
+                }
+                else {
+                    // Should be key=value object
+                    stringData = $.serializeObject(options.data);
+                }
+                if (options.url.indexOf('?') >= 0) options.url += '&' + stringData;
+                else options.url += '?' + stringData;
+            }
+            // JSONP
+            if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
+                
+                var callbackName = 'f7jsonp_' + Date.now() + (_jsonpRequests++);
+                var requestURL;
+                var callbackSplit = options.url.split('callback=');
+                if (callbackSplit[1].indexOf('&') >= 0) {
+                    var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
+                    requestURL = callbackSplit[0] + 'callback=' + callbackName + (addVars.length > 0 ? '&' + addVars : '');
+                }
+                else {
+                    requestURL = callbackSplit[0] + 'callback=' + callbackName;
+                }
+        
+                // Create script
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = requestURL;
+        
+                // Handler
+                window[callbackName] = function (data) {
+                    if (options.success) options.success(data);
+                    script.parentNode.removeChild(script);
+                    script = null;
+                    delete window[callbackName];
+                };
+                document.querySelector('head').appendChild(script);
+        
                 return;
             }
-            var maxTop = el.scrollHeight - el.offsetHeight;
-            var newTop = Math.max(Math.min(top, maxTop), 0);
-            var startTime = null;
-            if (newTop === currentTop) return;
-            function render(time) {
-                if (time === undefined) {
-                    time = new Date().getTime();
-                }
-                if (startTime === null) {
-                    startTime = time;
-                }
-                var scrollTop = currentTop + ((time - startTime) / duration * (newTop - currentTop));
-                if (newTop > currentTop && scrollTop >= newTop)  {
-                    el.scrollTop = newTop;
-                    return;
-                }
-                if (newTop < currentTop && scrollTop <= newTop)  {
-                    el.scrollTop = newTop;
-                    return;
-                }
-                el.scrollTop = scrollTop;
-                $.requestAnimationFrame(render);
-            }
-            $.requestAnimationFrame(render);
-        });
-    };
-    // Ajax
-    $.ajax = function (options) {
-        var defaults = {
-            method: 'GET',
-            data: false,
-            async: true,
-            cache: true,
-            user: '',
-            password: '',
-            headers: {},
-            xhrFields: {},
-            statusCode: {},
-            processData: true,
-            dataType: 'text',
-            contentType: 'application/x-www-form-urlencoded'
-        };
-    
-        //For jQuery guys
-        if (options.type) options.type = options.method;
-    
-        // Merge options and defaults
-        for (var prop in defaults) {
-            if (!(prop in options)) options[prop] = defaults[prop];
-        }
-    
-        // Default URL
-        if (!options.url) {
-            options.url = window.location.toString();
-        }
-    
-        // Data to modify GET URL
-        if ((options.method === 'GET' || options.method === 'HEAD') && options.data) {
-            var stringData;
-            if (typeof options.data === 'string') {
-                // Should be key=value string
-                if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];
-                else stringData = options.data;
-            }
-            else {
-                // Should be key=value object
-                stringData = $.serializeObject(options.data);
-            }
-            if (options.url.indexOf('?') >= 0) options.url += '&' + stringData;
-            else options.url += '?' + stringData;
-        }
-        // JSONP
-        if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-            
-            var callbackName = 'f7jsonp_' + Date.now();
-            var requestURL;
-            var callbackSplit = options.url.split('callback=');
-            if (callbackSplit[1].indexOf('&') >= 0) {
-                var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
-                requestURL = callbackSplit[0] + 'callback=' + callbackName + (addVars.length > 0 ? '&' + addVars : '');
-            }
-            else {
-                requestURL = callbackSplit[0] + 'callback=' + callbackName;
-            }
-    
-            // Create script
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = requestURL;
-    
-            // Handler
-            window[callbackName] = function (data) {
-                if (options.success) options.success(data);
-                script.parentNode.removeChild(script);
-                script = null;
-                delete window[callbackName];
-            };
-            document.querySelector('head').appendChild(script);
-    
-            return;
-        }
-    
-        // Cache for GET/HEAD requests
-        if (options.method === 'GET' || options.method === 'HEAD') {
-            if (options.cache === false) options.url += ('_nocache=' + Date.now());
-        }
-    
-        // Create XHR
-        var xhr = new XMLHttpRequest();
-    
-        // Open XHR
-        xhr.open(options.method, options.url, options.async, options.user, options.password);
-    
-        // Create POST Data
-        var postData = null;
         
-        if ((options.method === 'POST' || options.method === 'PUT') && options.data) {
-            if (options.processData) {
-                var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
-                // Post Data
-                if (postDataInstances.indexOf(options.data.constructor) >= 0) {
-                    postData = options.data;
+            // Cache for GET/HEAD requests
+            if (options.method === 'GET' || options.method === 'HEAD') {
+                if (options.cache === false) options.url += ('_nocache=' + Date.now());
+            }
+        
+            // Create XHR
+            var xhr = new XMLHttpRequest();
+        
+            // Open XHR
+            xhr.open(options.method, options.url, options.async, options.user, options.password);
+        
+            // Create POST Data
+            var postData = null;
+            
+            if ((options.method === 'POST' || options.method === 'PUT') && options.data) {
+                if (options.processData) {
+                    var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
+                    // Post Data
+                    if (postDataInstances.indexOf(options.data.constructor) >= 0) {
+                        postData = options.data;
+                    }
+                    else {
+                        // POST Headers
+                        var boundary = '---------------------------' + Date.now().toString(16);
+        
+                        if (options.contentType === 'multipart\/form-data') {
+                            xhr.setRequestHeader('Content-Type', 'multipart\/form-data; boundary=' + boundary);
+                        }
+                        else {
+                            xhr.setRequestHeader('Content-Type', options.contentType);
+                        }
+                        postData = '';
+                        var _data = $.serializeObject(options.data);
+                        if (options.contentType === 'multipart\/form-data') {
+                            boundary = '---------------------------' + Date.now().toString(16);
+                            _data = _data.split('&');
+                            var _newData = [];
+                            for (var i = 0; i < _data.length; i++) {
+                                _newData.push('Content-Disposition: form-data; name="' + _data[i].split('=')[0] + '"\r\n\r\n' + _data[i].split('=')[1] + '\r\n');
+                            }
+                            postData = '--' + boundary + '\r\n' + _newData.join('--' + boundary + '\r\n') + '--' + boundary + '--\r\n';
+                        }
+                        else {
+                            postData = options.contentType === 'application/x-www-form-urlencoded' ? _data : _data.replace(/&/g, '\r\n');
+                        }
+                    }
                 }
                 else {
-                    // POST Headers
-                    var boundary = '---------------------------' + Date.now().toString(16);
-    
-                    if (options.contentType === 'multipart\/form-data') {
-                        xhr.setRequestHeader('Content-Type', 'multipart\/form-data; boundary=' + boundary);
-                    }
-                    else {
-                        xhr.setRequestHeader('Content-Type', options.contentType);
-                    }
-                    postData = '';
-                    var _data = $.serializeObject(options.data);
-                    if (options.contentType === 'multipart\/form-data') {
-                        boundary = '---------------------------' + Date.now().toString(16);
-                        _data = _data.split('&');
-                        var _newData = [];
-                        for (var i = 0; i < _data.length; i++) {
-                            _newData.push('Content-Disposition: form-data; name="' + _data[i].split('=')[0] + '"\r\n\r\n' + _data[i].split('=')[1] + '\r\n');
-                        }
-                        postData = '--' + boundary + '\r\n' + _newData.join('--' + boundary + '\r\n') + '--' + boundary + '--\r\n';
-                    }
-                    else {
-                        postData = options.contentType === 'application/x-www-form-urlencoded' ? _data : _data.replace(/&/g, '\r\n');
+                    postData = options.data;
+                }
+                    
+            }
+        
+            // Additional headers
+            if (options.headers) {
+                for (var header in options.headers) {
+                    xhr.setRequestHeader(header, options.headers[header]);
+                }
+            }
+        
+            // Check for crossDomain
+            if (typeof options.crossDomain === 'undefined') {
+                options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+            }
+        
+            if (!options.crossDomain) {
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            }
+        
+            if (options.xhrFields) {
+                for (var field in options.xhrFields) {
+                    xhr[field] = options.xhrFields[field];
+                }
+            }
+        
+            // Handle XHR
+            xhr.onload = function (e) {
+                if (xhr.status === 200 || xhr.status === 0) {
+                    $(document).trigger('ajaxSuccess', {xhr: xhr});
+                    if (options.success) {
+                        var responseData = xhr.responseText;
+        
+                        if (options.dataType === 'json') responseData = JSON.parse(responseData);
+                        options.success(responseData, xhr.status, xhr);
                     }
                 }
+                if (options.statusCode) {
+                    if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
+                }
+                if (options.complete) {
+                    options.complete(xhr);
+                }
+                $(document).trigger('ajaxComplete', {xhr: xhr});
+            };
+            
+            xhr.onerror = function (e) {
+                $(document).trigger('ajaxError', {xhr: xhr});
+                if (options.error) options.error(xhr);
+            };
+        
+            // Ajax start callback
+            if (options.start) options.start(xhr);
+        
+            // Send XHR
+            $(document).trigger('ajaxStart', {xhr: xhr});
+            xhr.send(postData);
+        
+            // Return XHR object
+            return xhr;
+        };
+        // Shrotcuts
+        (function () {
+            var methods = ('get post getJSON').split(' ');
+            function createMethod(method) {
+                $[method] = function (url, data, success) {
+                    return $.ajax({
+                        url: url,
+                        method: method === 'post' ? 'POST' : 'GET',
+                        data: typeof data === 'function' ? undefined : data,
+                        success: typeof data === 'function' ? data : success,
+                        dataType: method === 'getJSON' ? 'json' : undefined
+                    });
+                };
+            }
+            for (var i = 0; i < methods.length; i++) {
+                createMethod(methods[i]);
+            }
+        })();
+        // DOM Library Utilites
+        $.parseUrlQuery = function (url) {
+            var query = {}, i, params, param;
+            if (url.indexOf('?') >= 0) url = url.split('?')[1];
+            else return query;
+            params = url.split('&');
+            for (i = 0; i < params.length; i++) {
+                param = params[i].split('=');
+                query[param[0]] = param[1];
+            }
+            return query;
+        };
+        $.isArray = function (arr) {
+            if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
+            else return false;
+        };
+        $.unique = function (arr) {
+            var unique = [];
+            for (var i = 0; i < arr.length; i++) {
+                if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
+            }
+            return unique;
+        };
+        $.trim = function (str) {
+            return str.trim();
+        };
+        $.serializeObject = function (obj) {
+            if (typeof obj === 'string') return obj;
+            var resultArray = [];
+            var separator = '&';
+            for (var prop in obj) {
+                if ($.isArray(obj[prop])) {
+                    var toPush = [];
+                    for (var i = 0; i < obj[prop].length; i ++) {
+                        toPush.push(prop + '=' + obj[prop][i]);
+                    }
+                    resultArray.push(toPush.join(separator));
+                }
+                else {
+                    // Should be string
+                    resultArray.push(prop + '=' + obj[prop]);
+                }
+            }
+        
+            return resultArray.join(separator);
+        };
+        
+        $.getTranslate = function (el, axis) {
+            var matrix, curTransform, curStyle, transformMatrix;
+        
+            // automatic axis detection
+            if (typeof axis === 'undefined') {
+                axis = 'x';
+            }
+        
+            curStyle = window.getComputedStyle(el, null);
+            if (window.WebKitCSSMatrix) {
+                // Some old versions of Webkit choke when 'none' is passed; pass
+                // empty string instead in this case
+                transformMatrix = new WebKitCSSMatrix(curStyle.webkitTransform === 'none' ? '' : curStyle.webkitTransform);
             }
             else {
-                postData = options.data;
+                transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform  || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
+                matrix = transformMatrix.toString().split(',');
             }
-                
-        }
-    
-        // Additional headers
-        if (options.headers) {
-            for (var header in options.headers) {
-                xhr.setRequestHeader(header, options.headers[header]);
+        
+            if (axis === 'x') {
+                //Latest Chrome and webkits Fix
+                if (window.WebKitCSSMatrix)
+                    curTransform = transformMatrix.m41;
+                //Crazy IE10 Matrix
+                else if (matrix.length === 16)
+                    curTransform = parseFloat(matrix[12]);
+                //Normal Browsers
+                else
+                    curTransform = parseFloat(matrix[4]);
             }
-        }
-    
-        // Check for crossDomain
-        if (typeof options.crossDomain === 'undefined') {
-            options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
-        }
-    
-        if (!options.crossDomain) {
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        }
-    
-        if (options.xhrFields) {
-            for (var field in options.xhrFields) {
-                xhr[field] = options.xhrFields[field];
+            if (axis === 'y') {
+                //Latest Chrome and webkits Fix
+                if (window.WebKitCSSMatrix)
+                    curTransform = transformMatrix.m42;
+                //Crazy IE10 Matrix
+                else if (matrix.length === 16)
+                    curTransform = parseFloat(matrix[13]);
+                //Normal Browsers
+                else
+                    curTransform = parseFloat(matrix[5]);
             }
-        }
-    
-        // Handle XHR
-        xhr.onload = function (e) {
-            if (xhr.status === 200 || xhr.status === 0) {
-                $(document).trigger('ajaxSuccess', {xhr: xhr});
-                if (options.success) {
-                    var responseData = xhr.responseText;
-    
-                    if (options.dataType === 'json') responseData = JSON.parse(responseData);
-                    options.success(responseData, xhr.status, xhr);
+            
+            return curTransform || 0;
+        };
+        
+        $.requestAnimationFrame = function (callback) {
+            if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
+            else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
+            else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
+            else {
+                return window.setTimeout(callback, 1000 / 60);
+            }
+        };
+        $.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+        
+        // Link to prototype
+        $.fn = Dom7.prototype;
+        
+        // Plugins
+        $.fn.scrollTo = function (left, top, duration) {
+            return this.each(function () {
+                var el = this;
+                var currentTop, currentLeft, maxTop, maxLeft, newTop, newLeft, scrollTop, scrollLeft;
+                var animateTop = top > 0 || top === 0;
+                var animateLeft = left > 0 || left === 0;
+                if (animateTop) {
+                    currentTop = el.scrollTop;
+                    if (!duration) {
+                        el.scrollTop = top;
+                    }
                 }
-            }
-            if (options.statusCode) {
-                if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
-            }
-            if (options.complete) {
-                options.complete(xhr);
-            }
-            $(document).trigger('ajaxComplete', {xhr: xhr});
+                if (animateLeft) {
+                    currentLeft = el.scrollLeft;
+                    if (!duration) {
+                        el.scrollLeft = left;
+                    }
+                }
+                if (!duration) return;
+                if (animateTop) {
+                    maxTop = el.scrollHeight - el.offsetHeight;
+                    newTop = Math.max(Math.min(top, maxTop), 0);
+                }
+                if (animateLeft) {
+                    maxLeft = el.scrollWidth - el.offsetWidth;
+                    newLeft = Math.max(Math.min(left, maxLeft), 0);
+                }
+                var startTime = null;
+                if (animateTop && newTop === currentTop) animateTop = false;
+                if (animateLeft && newLeft === currentLeft) animateLeft = false;
+                function render(time) {
+                    if (time === undefined) {
+                        time = new Date().getTime();
+                    }
+                    if (startTime === null) {
+                        startTime = time;
+                    }
+                    var doneLeft, doneTop, done;
+                    if (animateTop) scrollTop = currentTop + ((time - startTime) / duration * (newTop - currentTop));
+                    if (animateLeft) scrollLeft = currentLeft + ((time - startTime) / duration * (newLeft - currentLeft));
+        
+                    if (animateTop && newTop > currentTop && scrollTop >= newTop)  {
+                        el.scrollTop = newTop;
+                        done = true;
+                    }
+                    if (animateTop && newTop < currentTop && scrollTop <= newTop)  {
+                        el.scrollTop = newTop;
+                        done = true;
+                    }
+        
+                    if (animateLeft && newLeft > currentLeft && scrollLeft >= newLeft)  {
+                        el.scrollLeft = newLeft;
+                        done = true;
+                    }
+                    if (animateLeft && newLeft < currentLeft && scrollLeft <= newLeft)  {
+                        el.scrollLeft = newLeft;
+                        done = true;
+                    }
+        
+                    if (done) return;
+                    if (animateTop) el.scrollTop = scrollTop;
+                    if (animateLeft) el.scrollLeft = scrollLeft;
+                    $.requestAnimationFrame(render);
+                }
+                $.requestAnimationFrame(render);
+            });
         };
-        if (options.error) {
-    
-        }
-        xhr.onerror = function (e) {
-            $(document).trigger('ajaxError', {xhr: xhr});
-            if (options.error) options.error(xhr);
+        $.fn.scrollTop = function (top, duration) {
+            var dom = this;
+            if (typeof top === 'undefined') {
+                if (dom.length > 0) return dom[0].scrollTop;
+                else return null;
+            }
+            return dom.scrollTo(undefined, top, duration);
         };
-    
-        // Ajax start callback
-        if (options.start) options.start(xhr);
-    
-        // Send XHR
-        $(document).trigger('ajaxStart', {xhr: xhr});
-        xhr.send(postData);
-    
-        // Return XHR object
-        return xhr;
-    };
-    // Shrotcuts
-    (function () {
-        var methods = ('get post getJSON').split(' ');
-        function createMethod(method) {
-            $[method] = function (url, data, success) {
-                return $.ajax({
-                    url: url,
-                    method: method === 'post' ? 'POST' : 'GET',
-                    data: typeof data === 'function' ? undefined : data,
-                    success: typeof data === 'function' ? data : success,
-                    dataType: method === 'getJSON' ? 'json' : undefined
-                });
-            };
-        }
-        for (var i = 0; i < methods.length; i++) {
-            createMethod(methods[i]);
-        }
+        $.fn.scrollLeft = function (left, duration) {
+            var dom = this;
+            if (typeof left === 'undefined') {
+                if (dom.length > 0) return dom[0].scrollLeft;
+                else return null;
+            }
+            return dom.scrollTo(left, undefined, duration);
+        };
+        return $;
     })();
     
-    // Export Selectors engine to global Framework7
-    Framework7.$ = $;
+    // Export Dom7 to Framework7
+    Framework7.$ = Dom7;
+    
+    // Export to local scope
+    var $ = Dom7;
+    
+    // Export to Window
+    window.Dom7 = Dom7;
     
     /*===========================
     Features Support Detection
@@ -6173,6 +6392,7 @@
     Framework7.prototype.device = (function () {
         var device = {};
         var ua = navigator.userAgent;
+        var $ = Dom7;
     
         var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
         var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
@@ -6241,30 +6461,36 @@
             device.statusBar = false;
         }
     
+        // Classes
+        var classNames = [];
+    
         // Pixel Ratio
         device.pixelRatio = window.devicePixelRatio || 1;
+        if (device.pixelRatio >= 2) {
+            classNames.push('retina');
+        }
     
-        // Add html classes
+        // OS classes
         if (device.os) {
-            var className = device.os +
-                            ' ' +
-                            device.os + '-' + device.osVersion.split('.')[0] +
-                            ' ' +
-                            device.os + '-' + device.osVersion.replace(/\./g, '-');
+            classNames.push(device.os, device.os + '-' + device.osVersion.split('.')[0], device.os + '-' + device.osVersion.replace(/\./g, '-'));
             if (device.os === 'ios') {
                 var major = parseInt(device.osVersion.split('.')[0], 10);
                 for (var i = major - 1; i >= 6; i--) {
-                    className += ' ' + 'ios-gt-' + i;
+                    classNames.push('ios-gt-' + i);
                 }
             }
-            $('html').addClass(className);
+            
         }
+        // Status bar classes
         if (device.statusBar) {
-            $('html').addClass('with-statusbar-overlay');
+            classNames.push('with-statusbar-overlay');
         }
         else {
             $('html').removeClass('with-statusbar-overlay');
         }
+    
+        // Add html classes
+        if (classNames.length > 0) $('html').addClass(classNames.join(' '));
     
         // Export object
         return device;

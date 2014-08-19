@@ -74,7 +74,7 @@ app.initSwipePanels = function () {
     side = app.params.swipePanel;
 
     function handleTouchStart(e) {
-        if (!app.allowPanelOpen || !app.params.swipePanel) return;
+        if (!app.allowPanelOpen || !app.params.swipePanel || isTouched) return;
         if ($('.modal-in, .photo-browser-in').length > 0) return;
         if (!app.params.swipePanelCloseOpposite) {
             if ($('.panel.active').length > 0 && !panel.hasClass('active')) return;

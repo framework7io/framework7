@@ -1,0 +1,92 @@
+/* === Color Themes === */
+.theme-mixin(@colorName, @color, @colorHex) {
+    //Plain color and links
+    .color-@{colorName} {
+        color: @color;
+        .list-block .item-link.list-button&, .tabbar a.active&, a& {
+            color: @color;
+        }
+        .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
+            background-color: @color;
+        }
+    }
+    //Buttons
+    .color-@{colorName}.button:not(.button-fill), .color-@{colorName}.buttons-row .button, .theme-@{colorName} .button:not(.button-fill) {
+        border-color: @color;
+        &:active {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
+        }
+        &.active {
+            background-color: @color;
+            color:#fff;
+        }
+    }
+    .theme-@{colorName} .button.button-fill, .button.button-fill.color-@{colorName} {
+        background: @color;
+        color:#fff;
+    }
+    //Icons
+    .color-@{colorName}, .theme-@{colorName} {
+        i.icon, i.icon& {
+            color:@color;
+        }
+    }
+    i.icon-next.color-@{colorName}, i.icon-next.theme-@{colorName}, .theme-@{colorName} i.icon-next {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
+    }
+    i.icon-prev.color-@{colorName}, i.icon-prev.theme-@{colorName}, .theme-@{colorName} i.icon-prev {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='%23@{colorHex}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
+    }
+    i.icon-back.color-@{colorName}, i.icon-back.theme-@{colorName}, .theme-@{colorName} i.icon-back {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{colorHex}'/></svg>");
+    }
+    i.icon-bars.color-@{colorName}, i.icon-bars.theme-@{colorName}, .theme-@{colorName} i.icon-bars {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26'><path fill='%23@{colorHex}' d='M0,0h4v4H0V0z M8,1h34v2H8V1z M0,11h4v4H0V11z M8,12h34v2H8V12z M0,22h4v4H0V22z M8,23h34v2H8V23z'/></svg>");
+    }
+    // Theme
+    .theme-@{colorName} {
+        a, .item-link.list-button {
+            color: @color;
+        }
+        .tabbar, .tabbar& {
+            a {
+                color:inherit;
+            }
+            a.active {
+                color:@color;
+            }
+        }
+        .range-slider, .range-slider& {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+        }
+        label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+            background-color: @color;
+        }
+        label.label-radio input[type="checkbox"]:checked ~ .item-inner, label.label-radio input[type="radio"]:checked ~ .item-inner {
+            background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='%23@{colorHex}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+        }
+        .slider-pagination-active {
+            background-color: @color;
+        }
+    }
+    // Bg rule
+    .bg-@{colorName}, .button.button-fill.bg-@{colorName}, a.bg-@{colorName}, .swipeout-actions a.bg-@{colorName} {
+        background-color: @color;
+    }
+    // Border rule
+    .border-@{colorName} {
+        border-color: @color;
+    }
+}
+.theme-mixin(e('gray'), #8e8e93, '8e8e93');
+.theme-mixin(e('white'), #ffffff, 'ffffff');
+.theme-mixin(e('black'), #000000, '000000');
+.theme-mixin(e('lightblue'), #5ac8fa, '5ac8fa');
+.theme-mixin(e('yellow'), #ffcc00, 'ffcc00');
+.theme-mixin(e('orange'), #ff9500, 'ff9500');
+.theme-mixin(e('pink'), #ff2d55, 'ff2d55');
+.theme-mixin(e('blue'), #007aff, '007aff');
+.theme-mixin(e('green'), #4cd964, '4cd964');
+.theme-mixin(e('red'), #ff3b30, 'ff3b30');

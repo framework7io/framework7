@@ -110,6 +110,13 @@ app.initSortable = function () {
         isMoved = false;
     }
     $(document).on(app.touchEvents.start, '.list-block.sortable .sortable-handler', handleTouchStart);
-    $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
-    $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
+    if (app.support.touch) {
+        $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
+        $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
+    }
+    else {
+        $(document).on(app.touchEvents.move, handleTouchMove);
+        $(document).on(app.touchEvents.end, handleTouchEnd);
+    }
+        
 };

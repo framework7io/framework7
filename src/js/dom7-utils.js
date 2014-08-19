@@ -98,10 +98,12 @@ $.requestAnimationFrame = function (callback) {
         return window.setTimeout(callback, 1000 / 60);
     }
 };
+$.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 
-// Plugins
+// Link to prototype
 $.fn = Dom7.prototype;
 
+// Plugins
 $.fn.scrollTo = function (left, top, duration) {
     return this.each(function () {
         var el = this;
