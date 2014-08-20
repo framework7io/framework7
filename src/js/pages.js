@@ -619,7 +619,7 @@ app.goBack = function (view, url, animatePages, preloadOnly, pushState) {
                     if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
                         sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarLeftOffset) + 'px,0,0)');
                     }
-                    if (sliding.hasClass('center') && oldNavbarInner.find('.left .back .icon').length > 0 && !oldNavbarInner.find('.left .icon-only').length) {
+                    if (sliding.hasClass('center') && oldNavbarInner.find('.left .back .icon ~ span').length > 0) {
                         this.f7NavbarLeftOffset += oldNavbarInner.find('.left .back span')[0].offsetLeft;
                     }
                 }
