@@ -23,7 +23,11 @@
     &.modal-overlay-visible {
         visibility: visible;
         opacity: 1;
+        html.ios & {
+            .scrollable();
+        }
     }
+
 }
 .popup-overlay {
     z-index: 10200;
