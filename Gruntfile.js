@@ -446,10 +446,11 @@ module.exports = function (grunt) {
             },
         },
     });
-    var rails = grunt.option('rails');
-
+    var rails = grunt.option('rails') || grunt.option('rails-gem');
+    var gem = grunt.option('rails-gem');
+    
     // Set directory paths
-    framework7.imgDir = (rails ? 'images' : 'img');
+    framework7.imgDir = (rails ? (gem ? 'assets' : 'images') : 'img');
     framework7.cssDir = (rails ? 'stylesheets' : 'css');
     framework7.jsDir = (rails ? 'javascripts' : 'js');
 
