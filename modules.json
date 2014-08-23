@@ -43,7 +43,8 @@
             "src/js/proto-support.js",
             "src/js/proto-device.js",
             "src/js/proto-plugins.js",
-            "src/js/wrap-end.js"
+            "src/js/wrap-end.js",
+            "src/js/template7.js"
         ],
         "less" : [
             "src/less/login-screen.less",

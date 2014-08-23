@@ -4,39 +4,24 @@
 var _modalTemplateTempDiv = document.createElement('div');
 app.modal = function (params) {
     params = params || {};
-    /* @params example
-    {
-        title: 'Modal title',
-        text: 'Modal text',
-        afterText: 'Custom content after text',
-        buttons: [{
-            text:'Cancel',
-            bold: true,
-            onClick: function (){},
-            close:false
-        }],
-        onClick: function(index){}
-    }
-    */
-    var buttonsHTML = '';
-    if (params.buttons && params.buttons.length > 0) {
-        for (var i = 0; i < params.buttons.length; i++) {
-            buttonsHTML += '<span class="modal-button' + (params.buttons[i].bold ? ' modal-button-bold' : '') + '">' + params.buttons[i].text + '</span>';
-        }
-    }
-    var modalTemplate = app.params.modalTemplate;
-    if (!params.title) {
-        modalTemplate = modalTemplate.split('{{if title}}')[0] + modalTemplate.split('{{/if title}}')[1];
+    var modalHTML = '';
+    if (app.params.modalTemplate) {
+        modalHTML = t7(app.params.modalTemplate, params);
     }
     else {
-        modalTemplate = modalTemplate.replace(/{{if\ title}}/g, '').replace(/{{\/if\ title}}/g, '');
+        var buttonsHTML = '';
+        if (params.buttons && params.buttons.length > 0) {
+            for (var i = 0; i < params.buttons.length; i++) {
+                buttonsHTML += '<span class="modal-button' + (params.buttons[i].bold ? ' modal-button-bold' : '') + '">' + params.buttons[i].text + '</span>';
+            }
+        }
+        var titleHTML = params.title ? '<div class="modal-title">' + params.title + '</div>' : '';
+        var textHTML = params.title ? '<div class="modal-text">' + params.text + '</div>' : '';
+        var afterTextHTML = params.afterText ? params.afterText : '';
+        var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
+        modalHTML = '<div class="modal ' + noButtons + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons">' + buttonsHTML + '</div></div>';
     }
-    var modalHTML = modalTemplate
-                    .replace(/{{title}}/g, params.title || '')
-                    .replace(/{{text}}/g, params.text || '')
-                    .replace(/{{afterText}}/g, params.afterText || '')
-                    .replace(/{{buttons}}/g, buttonsHTML)
-                    .replace(/{{noButtons}}/g, !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '');
+    
     _modalTemplateTempDiv.innerHTML = modalHTML;
 
     var modal = $(_modalTemplateTempDiv).children();
@@ -180,21 +165,27 @@ app.actions = function (params) {
     if (params.length > 0 && !$.isArray(params[0])) {
         params = [params];
     }
+    var modalHTML;
 
-    var actionsTemplate = app.params.modalActionsTemplate;
-    var buttonsHTML = '';
-    for (var i = 0; i < params.length; i++) {
-        for (var j = 0; j < params[i].length; j++) {
-            if (j === 0) buttonsHTML += '<div class="actions-modal-group">';
-            var button = params[i][j];
-            var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
-            if (button.bold) buttonClass += ' actions-modal-button-bold';
-            if (button.color) buttonClass += ' color-' + button.color;
-            buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
-            if (j === params[i].length - 1) buttonsHTML += '</div>';
-        }
+    if (app.params.modalActionsTemplate) {
+        modalHTML = t7(app.params.modalActionsTemplate, params);
     }
-    var modalHTML = actionsTemplate.replace(/{{buttons}}/g, buttonsHTML);
+    else {
+        var buttonsHTML = '';
+        for (var i = 0; i < params.length; i++) {
+            for (var j = 0; j < params[i].length; j++) {
+                if (j === 0) buttonsHTML += '<div class="actions-modal-group">';
+                var button = params[i][j];
+                var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
+                if (button.bold) buttonClass += ' actions-modal-button-bold';
+                if (button.color) buttonClass += ' color-' + button.color;
+                buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
+                if (j === params[i].length - 1) buttonsHTML += '</div>';
+            }
+        }
+        modalHTML = '<div class="actions-modal">' + buttonsHTML + '</div>';
+    }
+        
 
     _modalTemplateTempDiv.innerHTML = modalHTML;
     var modal = $(_modalTemplateTempDiv).children();
@@ -406,7 +397,7 @@ app.closeModal = function (modal) {
     overlay.removeClass('modal-overlay-visible');
 
     modal.trigger('close');
-    
+
     if (!isPopover) {
         modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
             if (modal.hasClass('modal-out')) modal.trigger('closed');
@@ -414,7 +405,9 @@ app.closeModal = function (modal) {
             
             if (isPopup || isLoginScreen) {
                 modal.removeClass('modal-out').hide();
-                if (removeOnClose && modal.length > 0) modal.remove();
+                if (removeOnClose && modal.length > 0) {
+                    modal.remove();
+                }
             }
             else {
                 modal.remove();
@@ -423,7 +416,9 @@ app.closeModal = function (modal) {
     }
     else {
         modal.removeClass('modal-in modal-out').trigger('closed').hide();
-        if (removeOnClose) modal.remove();
+        if (removeOnClose) {
+            modal.remove();
+        }
     }
     return true;
 };

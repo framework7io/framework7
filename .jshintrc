@@ -23,7 +23,9 @@
     "Document": true,
     "window": true,
     "$":true,
+    "t7": true,
     "Framework7":true,
+    "Template7":true,
     "Event":true,
     "DocumentTouch":true,
     "app":true

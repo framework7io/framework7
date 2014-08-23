@@ -56,15 +56,6 @@ window.Framework7 = function (params) {
         swipePanelThreshold: 0,
         panelsCloseByOutside: true,
         // Modals
-        modalTemplate: '<div class="modal {{noButtons}}">' +
-                            '<div class="modal-inner">' +
-                                '{{if title}}<div class="modal-title">{{title}}</div>{{/if title}}' +
-                                '<div class="modal-text">{{text}}</div>' +
-                                '{{afterText}}' +
-                            '</div>' +
-                            '<div class="modal-buttons">{{buttons}}</div>' +
-                        '</div>',
-        modalActionsTemplate: '<div class="actions-modal">{{buttons}}</div>',
         modalButtonOk: 'OK',
         modalButtonCancel: 'Cancel',
         modalUsernamePlaceholder: 'Username',
@@ -95,6 +86,9 @@ window.Framework7 = function (params) {
 
     // DOM lib
     var $ = Dom7;
+
+    // Template7 lib
+    var t7 = Template7;
 
     // Touch events
     app.touchEvents = {
