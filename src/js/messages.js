@@ -23,7 +23,7 @@ app.addMessage = function (props) {
     }
     var isPic = props.text.indexOf('<img') >= 0 ? 'message-pic' : '';
     var withAvatar = props.avatar ? 'message-with-avatar' : '';
-    var messageClass = 'message' + ' message-' + props.type + isPic  + ' ' + withAvatar + ' message-appear';
+    var messageClass = 'message' + ' message-' + props.type + ' ' + isPic  + ' ' + withAvatar + ' message-appear';
     html += '<div class="' + messageClass + '">' +
                 (props.name ? '<div class="message-name">' + props.name + '</div>' : '') +
                 '<div class="message-text">' + props.text + '</div>' +
