@@ -99,8 +99,6 @@ var PhotoBrowser = function (params) {
             }
 
             //photo is a string, thus has no caption, so remove the caption template placeholder
-            // captionsHtml += captionTemplate.replace(/{{caption}}/g, '');
-
             //otherwise check if photo is an object with a url property
         } else if (typeof(photo) === 'object') {
 
@@ -116,7 +114,6 @@ var PhotoBrowser = function (params) {
                 captionsHtml += captionTemplate.replace(/{{caption}}/g, photo.caption).replace(/{{captionIndex}}/g, i);
             } else {
                 thisTemplate = thisTemplate.replace(/{{caption}}/g, '');
-                // captionsHtml += captionTemplate.replace(/{{caption}}/g, '');
             }
         }
 
