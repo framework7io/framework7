@@ -104,7 +104,10 @@ module.exports = function (grunt) {
             build: {
                 options: {
                     paths: ['less'],
-                    cleancss: false
+                    cleancss: false,
+                    modifyVars: {
+                        imgBaseUrl: '"../<%= framework7.imgDir %>"'
+                    }
                 },
                 files: {
                     'build/<%= framework7.cssDir %>/<%= framework7.filename %>.css' : ['src/less/<%= framework7.filename %>.less'],
@@ -115,7 +118,10 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     paths: ['less'],
-                    cleancss: true
+                    cleancss: true,
+                    modifyVars: {
+                        imgBaseUrl: '"../<%= framework7.imgDir %>"'
+                    }
                 },
                 files: {
                     'dist/<%= framework7.cssDir %>/<%= framework7.filename %>.min.css' : ['src/less/<%= framework7.filename %>.less'],
