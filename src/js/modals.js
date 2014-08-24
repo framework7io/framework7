@@ -6,7 +6,8 @@ app.modal = function (params) {
     params = params || {};
     var modalHTML = '';
     if (app.params.modalTemplate) {
-        modalHTML = t7(app.params.modalTemplate, params);
+        if (!app.modalTemplateCompiled) app.modalTemplateCompiled = t7.compile(app.params.modalTemplate);
+        modalHTML = app.modalTemplateCompiled(params);
     }
     else {
         var buttonsHTML = '';
@@ -168,7 +169,8 @@ app.actions = function (params) {
     var modalHTML;
 
     if (app.params.modalActionsTemplate) {
-        modalHTML = t7(app.params.modalActionsTemplate, params);
+        if (!app.modalActionsTemplateCompiled) app.modalActionsTemplateCompiled = t7.compile(app.params.modalActionsTemplate);
+        modalHTML = app.modalActionsTemplateCompiled(params);
     }
     else {
         var buttonsHTML = '';

@@ -167,8 +167,6 @@ window.Template7 = (function () {
                 inverse: function (newContext, privateData) {
                     return block.inverseContent ? render(block.inverseContent, newContext, privateData) : '';
                 },
-                content: block.content,
-                inverseContent: block.inverseContent,
                 hash: block.hash || {},
                 helpers: t.helpers,
                 data: privateData
@@ -176,6 +174,9 @@ window.Template7 = (function () {
         }
         function render(template, data, privateData) {
             template = template || t.template;
+            if (typeof template !== 'string') {
+                throw new Error('Template7: Template must be a string');
+            }
             var scope = data || t.context;
             var blocks = stringToBlocks(template);
             var resultString = '';
@@ -211,7 +212,7 @@ window.Template7 = (function () {
                             else helperResult = render(block.content, context[helperName]);
                         }
                         else {
-                            throw new Error('Missing helper: "' + helperName + '"');
+                            throw new Error('Template7: Missing helper: "' + helperName + '"');
                         }
                     }
                     if (typeof helperResult !== 'undefined') {
@@ -221,6 +222,84 @@ window.Template7 = (function () {
             }
             return resultString;
         }
+
+        var depth = 0;
+        function getCompileFn(block) {
+            if (block.content) return compile(block.content);
+            else return function () {return ''; };
+        }
+        function getCompileInverse(block) {
+            if (block.inverseContent) return compile(block.inverseContent);
+            else return function () {return ''; };
+        }
+        function getCompileVar(name) {
+            var variable = name === 'this' ? 'ctx' : 'ctx.' + name;
+            if (name && name.indexOf('@') >= 0) {
+                variable = '(data && data.' + name.replace('@', '') + ')';
+            }
+            return variable;
+        }
+        function compile(template) {
+            template = template || t.template;
+            if (typeof template !== 'string') {
+                throw new Error('Template7: Template must be a string');
+            }
+            var blocks = stringToBlocks(template);
+            if (blocks.length === 0) {
+                return function () { return ''; };
+            }
+            var resultString = '(function (ctx, data) {\n';
+            if (depth === 0) {
+                resultString += 'function c(val) {if (typeof val !== "undefined") return val; else return ""}\n';
+                resultString += 'function isArray(arr){return Object.prototype.toString.apply(arr) === \'[object Array]\';}\n';
+            }
+            depth ++;
+            resultString += 'var ret = \'\';\n';
+            var i, j, context;
+            for (i = 0; i < blocks.length; i++) {
+                var block = blocks[i];
+                // Plain block
+                if (block.type === 'plain') {
+                    resultString += 'ret +=\'' + (block.content).replace(/\n/g, '\\n').replace(/'/g, '\\' + '\'') + '\';';
+                    continue;
+                }
+                var variable;
+                // Variable block
+                if (block.type === 'variable') {
+                    variable = getCompileVar(block.contextName);
+                    resultString += 'ret += c(' + variable + ');';
+                }
+                // Helpers block
+                if (block.type === 'helper') {
+                    if (block.helperName in t.helpers) {
+                        variable = getCompileVar(block.contextName);
+                        resultString += 'ret += (Template7.helpers.' + block.helperName + ').call(ctx, ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block) + ', inverse: ' + getCompileInverse(block) + '});';
+                    }
+                    else {
+                        if (block.contextName) {
+                            throw new Error('Template7: Missing helper: "' + block.helperName + '"');
+                        }
+                        else {
+                            variable = getCompileVar(block.helperName);
+                            resultString += 'if (' + variable + ') {';
+                            resultString += 'if (isArray(' + variable + ')) {';
+                            resultString += 'ret += (Template7.helpers.each).call(ctx, ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block) + ', inverse: ' + getCompileInverse(block) + '});';
+                            resultString += '}else {';
+                            resultString += 'ret += (Template7.helpers.with).call(ctx, ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block) + ', inverse: ' + getCompileInverse(block) + '});';
+                            resultString += '}}';
+                        }
+                    }
+                }
+            }
+            resultString += '\nreturn ret;})';
+            return eval.call(window, resultString);
+        }
+        t.compile = function (template) {
+            if (!t.compiled) {
+                t.compiled = compile(template);
+            }
+            return t.compiled;
+        };
         t.render = function (data) {
             t.context = data;
             t.prevContext = undefined;
@@ -246,7 +325,7 @@ window.Template7 = (function () {
     };
     Template7.prototype = {
         options: {
-            cache: true
+            cache: false
         },
         helpers: {
             'if': function (context, options) {
@@ -309,10 +388,17 @@ window.Template7 = (function () {
             instance = null;
             return (rendered);
         }
-        else return new Template7(template, data);
+        else return new Template7(template);
     };
     t7.registerHelper = function (name, fn) {
         Template7.prototype.helpers[name] = fn;
+    };
+    t7.render = function (template, data) {
+        var instance = t7(template, data);
+    };
+    t7.compile = function (template) {
+        var instance = new Template7(template);
+        return instance.compile();
     };
     t7.cache = cache;
     t7.clearCache = function (arg) {
