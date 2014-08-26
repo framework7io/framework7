@@ -4,7 +4,7 @@
 app.swipeoutOpenedEl = undefined;
 app.allowSwipeout = true;
 app.initSwipeout = function (swipeoutEl) {
-    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, swipeOutActions, swipeOutActionsWidth, translate, opened;
+    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction;
     $(document).on(app.touchEvents.start, function (e) {
         if (app.swipeoutOpenedEl) {
             var target = $(e.target);
@@ -47,10 +47,26 @@ app.initSwipeout = function (swipeoutEl) {
             /*jshint validthis:true */
             swipeOutEl = $(this);
             swipeOutContent = swipeOutEl.find('.swipeout-content');
-            swipeOutActions = swipeOutEl.find('.swipeout-actions-inner');
-            swipeOutActionsWidth = swipeOutActions.width();
+            actionsRight = swipeOutEl.find('.swipeout-actions-right');
+            actionsLeft = swipeOutEl.find('.swipeout-actions-left');
+            actionsLeftWidth = actionsRightWidth = buttonsLeft = buttonsRight = null;
+            if (actionsLeft.length > 0) {
+                actionsLeftWidth = actionsLeft.width();
+                buttonsLeft = actionsLeft.children('a');
+            }
+            if (actionsRight.length > 0) {
+                actionsRightWidth = actionsRight.width();
+                buttonsRight = actionsRight.children('a');
+            }
             opened = swipeOutEl.hasClass('swipeout-opened');
+            if (opened) {
+                openedActions = swipeOutEl.find('.swipeout-actions-left.swipeout-actions-opened').length > 0 ? 'left' : 'right';
+            }
             swipeOutEl.removeClass('transitioning');
+            if (!app.params.swipeoutNoFollow) {
+                swipeOutEl.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
+                swipeOutEl.removeClass('swipeout-opened');
+            }
         }
         isMoved = true;
 
@@ -58,39 +74,74 @@ app.initSwipeout = function (swipeoutEl) {
         
         if (app.rtl) e.f7PreventSwipeBack = true;
         touchesDiff = pageX - touchesStart.x;
-        translate = touchesDiff  - (opened ? swipeOutActionsWidth : 0);
 
-        if (translate > 0) {
+        translate = touchesDiff;
+        if (opened) {
+            if (openedActions === 'right') translate = translate - actionsRightWidth;
+            else translate = translate + actionsLeftWidth;
+        }
+
+        if (translate > 0 && actionsLeft.length === 0 || translate < 0 && actionsRight.length === 0) {
             if (!opened) {
                 isTouched = isMoved = false;
                 return;
             }
             translate = 0;
         }
-        if (translate < -swipeOutActionsWidth) {
-            translate = -swipeOutActionsWidth - Math.pow(-translate - swipeOutActionsWidth, 0.8);
-        }
-        e.f7PreventPanelSwipe = true;
 
-        if (app.params.swipeoutNoFollow) {
-            if (touchesDiff < 0 && !opened) {
-                app.swipeoutOpen(swipeOutEl);
-                isTouched = false;
-                isMoved = false;
-                return;
-            }
-            if (touchesDiff > 0 && opened) {
-                app.swipeoutClose(swipeOutEl);
-                isTouched = false;
-                isMoved = false;
-                return;
-            }
-        }
+        if (translate < 0) direction = 'to-left';
+        else if (translate > 0) direction = 'to-right';
         else {
-            swipeOutEl.trigger('swipeout', {progress: Math.abs(translate / swipeOutActionsWidth)});
-            swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
+            if (direction) direction = direction;
+            else direction = 'to-left';
         }
-
+        
+        var i, buttonOffset, progress;
+        e.f7PreventPanelSwipe = true;
+        if (app.params.swipeoutNoFollow) {
+            if (opened) {
+                if (openedActions === 'right' && touchesDiff > 0) {
+                    app.swipeoutClose(swipeOutEl);
+                }
+                if (openedActions === 'left' && touchesDiff < 0) {
+                    app.swipeoutClose(swipeOutEl);
+                }
+            }
+            else {
+                if (touchesDiff < 0 && actionsRight.length > 0) {
+                    app.swipeoutOpen(swipeOutEl, 'right');
+                }
+                if (touchesDiff > 0 && actionsLeft.length > 0) {
+                    app.swipeoutOpen(swipeOutEl, 'left');
+                }
+            }
+            isTouched = false;
+            isMoved = false;
+            return;
+        }
+        if (direction === 'to-left' && actionsRight.length > 0) {
+            // Show right actions
+            progress = translate / actionsRightWidth;
+            if (translate < -actionsRightWidth) {
+                translate = -actionsRightWidth - Math.pow(-translate - actionsRightWidth, 0.8);
+            }
+            for (i = 0; i < buttonsRight.length; i++) {
+                buttonOffset = buttonsRight[i].offsetLeft;
+                $(buttonsRight[i]).transform('translate3d(' + (translate - buttonOffset * (1 + Math.max(progress, -1))) + 'px,0,0)');
+            }
+        }
+        if (direction === 'to-right' && actionsLeft.length > 0) {
+            // Show left actions
+            progress = translate / actionsLeftWidth;
+            if (translate > actionsLeftWidth) {
+                translate = actionsLeftWidth + Math.pow(translate - actionsLeftWidth, 0.8);
+            }
+            for (i = 0; i < buttonsLeft.length; i++) {
+                buttonOffset = actionsLeftWidth - buttonsLeft[i].offsetLeft - buttonsLeft[i].offsetWidth;
+                $(buttonsLeft[i]).css('z-index', buttonsLeft.length - i).transform('translate3d(' + (translate + buttonOffset * (1 - Math.min(progress, 1))) + 'px,0,0)');
+            }
+        }
+        swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
     }
     function handleTouchEnd(e) {
         if (!isTouched || !isMoved) {
@@ -101,61 +152,60 @@ app.initSwipeout = function (swipeoutEl) {
         isTouched = false;
         isMoved = false;
         var timeDiff = (new Date()).getTime() - touchStartTime;
-        if (!(translate === 0 || translate === -swipeOutActionsWidth)) app.allowSwipeout = false;
-        var action;
-        if (opened) {
-            if (
-                timeDiff < 300 && translate > -(swipeOutActionsWidth - 10) ||
-                timeDiff >= 300 && translate > -swipeOutActionsWidth / 2
-            ) {
-                action = 'close';
-            }
-            else {
-                action = 'open';
-            }
+        var action, actionsWidth, actions, buttons, i;
+        
+        actions = direction === 'to-left' ? actionsRight : actionsLeft;
+        actionsWidth = direction === 'to-left' ? actionsRightWidth : actionsLeftWidth;
+
+        if (
+            timeDiff < 300 && (touchesDiff < -10 && direction === 'to-left' || touchesDiff > 10 && direction === 'to-right') ||
+            timeDiff >= 300 && Math.abs(translate) > actionsWidth / 2
+        ) {
+            action = 'open';
         }
         else {
-            if (
-                timeDiff < 300 && translate < -10 ||
-                timeDiff >= 300 && translate < -swipeOutActionsWidth / 2
-            ) {
-                action = 'open';
-            }
-            else {
-                action = 'close';
-            }
+            action = 'close';
         }
+        if (timeDiff < 300) {
+            if (Math.abs(translate) === 0) action = 'close';
+            if (Math.abs(translate) === actionsWidth) action = 'open';
+        }
+        
         if (action === 'open') {
             app.swipeoutOpenedEl = swipeOutEl;
             swipeOutEl.trigger('open');
             swipeOutEl.addClass('swipeout-opened transitioning');
-            var newTranslate = -swipeOutActionsWidth;
+            var newTranslate = direction === 'to-left' ? -actionsWidth : actionsWidth;
             swipeOutContent.transform('translate3d(' + newTranslate + 'px,0,0)');
+            actions.addClass('swipeout-actions-opened');
+            buttons = direction === 'to-left' ? buttonsRight : buttonsLeft;
+            if (buttons) {
+                for (i = 0; i < buttons.length; i++) {
+                    $(buttons[i]).transform('translate3d(' + newTranslate + 'px,0,0)');
+                }
+            }
         }
         else {
             swipeOutEl.trigger('close');
             app.swipeoutOpenedEl = undefined;
             swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
-            swipeOutContent.transform('translate3d(' + 0 + 'px,0,0)');
+            swipeOutContent.transform('');
+            actions.removeClass('swipeout-actions-opened');
         }
-        if (translate <= -swipeOutActionsWidth) {
-            if (!opened) {
-                swipeOutEl.trigger('opened');
+        if (buttonsLeft && buttonsLeft.length > 0 && buttonsLeft !== buttons) {
+            for (i = 0; i < buttonsLeft.length; i++) {
+                $(buttonsLeft[i]).transform('translate3d(' + (actionsWidth - buttonsLeft[i].offsetWidth - buttonsLeft[i].offsetLeft) + 'px,0,0)');
             }
-            app.allowSwipeout = true;
         }
-        else if (translate >= 0) {
-            if (opened) {
-                swipeOutEl.trigger('closed');
+        if (buttonsRight && buttonsRight.length > 0 && buttonsRight !== buttons) {
+            for (i = 0; i < buttonsRight.length; i++) {
+                $(buttonsRight[i]).transform('translate3d(' + (-buttonsRight[i].offsetLeft) + 'px,0,0)');
             }
-            app.allowSwipeout = true;
         }
-        else {
-            swipeOutContent.transitionEnd(function () {
-                app.allowSwipeout = true;
-                swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
-            });
-        }
+        swipeOutContent.transitionEnd(function (e) {
+            if (opened && action === 'open' || closed && action === 'close') return;
+            swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
+        });
     }
     if (swipeoutEl) {
         $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
@@ -169,14 +219,40 @@ app.initSwipeout = function (swipeoutEl) {
     }
         
 };
-app.swipeoutOpen = function (el) {
+app.swipeoutOpen = function (el, dir) {
     el = $(el);
-    if (!el.hasClass('swipeout')) return;
+
     if (el.length === 0) return;
     if (el.length > 1) el = $(el[0]);
-    el.trigger('open').addClass('transitioning swipeout-opened');
-    var swipeOutActions = el.find('.swipeout-actions-inner');
-    var translate = -swipeOutActions.width();
+    if (!el.hasClass('swipeout') || el.hasClass('swipeout-opened')) return;
+    if (!dir) {
+        if (el.find('.swipeout-actions-right').length > 0) dir = 'right';
+        else dir = 'left';
+    }
+    var swipeOutActions = el.find('.swipeout-actions-' + dir);
+    if (swipeOutActions.length === 0) return;
+    el.trigger('open').addClass('swipeout-opened').removeClass('transitioning');
+    swipeOutActions.addClass('swipeout-actions-opened');
+    var buttons = swipeOutActions.children('a');
+    var swipeOutActionsWidth = swipeOutActions.width();
+    var translate = dir === 'right' ? -swipeOutActionsWidth : swipeOutActionsWidth;
+    var i;
+    if (buttons.length > 1) {
+        for (i = 0; i < buttons.length; i++) {
+            if (dir === 'right') {
+                $(buttons[i]).transform('translate3d(' + (- buttons[i].offsetLeft) + 'px,0,0)');
+            }
+            else {
+                $(buttons[i]).css('z-index', buttons.length - i).transform('translate3d(' + (swipeOutActionsWidth - buttons[i].offsetWidth - buttons[i].offsetLeft) + 'px,0,0)');
+            }
+        }
+        var clientLeft = buttons[1].clientLeft;
+    }
+    
+    el.addClass('transitioning');
+    for (i = 0; i < buttons.length; i++) {
+        $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0');
+    }
     el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
     });
@@ -185,17 +261,27 @@ app.swipeoutOpen = function (el) {
 app.swipeoutClose = function (el) {
     el = $(el);
     if (el.length === 0) return;
+    if (!el.hasClass('swipeout-opened')) return;
+    var dir = el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
+    var swipeOutActions = el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
+    var buttons = swipeOutActions.children('a');
+    var swipeOutActionsWidth = swipeOutActions.width();
     app.allowSwipeout = false;
     el.trigger('close');
-    el.removeClass('swipeout-opened')
-        .addClass('transitioning')
-    .find('.swipeout-content')
-        .transform('translate3d(' + 0 + 'px,0,0)')
-        .transitionEnd(function () {
-            el.trigger('closed');
-            app.allowSwipeout = true;
-        });
+    el.removeClass('swipeout-opened').addClass('transitioning');
 
+    el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(function () {
+        el.trigger('closed');
+        app.allowSwipeout = true;
+    });
+    for (var i = 0; i < buttons.length; i++) {
+        if (dir === 'right') {
+            $(buttons[i]).transform('translate3d(' + (-buttons[i].offsetLeft) + 'px,0,0)');
+        }
+        else {
+            $(buttons[i]).transform('translate3d(' + (swipeOutActionsWidth - buttons[i].offsetWidth - buttons[i].offsetLeft) + 'px,0,0)');
+        }
+    }
     if (app.swipeoutOpenedEl && app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
 };
 app.swipeoutDelete = function (el) {

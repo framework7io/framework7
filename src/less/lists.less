@@ -175,50 +175,67 @@
     }
 
     // Swipe outs
-    .swipeout.deleting {
+    .swipeout {
         overflow: hidden;
+    }
+    .swipeout.deleting {
         .transition(300ms);
         .swipeout-content {
             .translate3d(-100%);
         }
     }
     .swipeout.transitioning {
-        .swipeout-content {
+        .swipeout-content, .swipeout-actions-right a, .swipeout-actions-left a {
             .transition(300ms);
         }    
     }
     .swipeout-content {
         position: relative;
         z-index: 10;
-        background: #fff;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
     }
-    .swipeout-actions {
-        border-bottom: 1px solid @listBlockBorderColor;
+    .swipeout-actions-left, .swipeout-actions-right {
         position: absolute;
-        z-index: 0;
-        right: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        .border-box();
-    }
-    .swipeout-actions-inner {
-        position: absolute;
-        right: 0;
         top: 0;
         height: 100%;
         .flexbox();
+        .translate3d(0%,0,0);
         a {
             padding: 0 30px;
             color:#fff;
             background: #c7c7cc;
             .flexbox();
             .align-items(center);
+            position: relative;
+            &:after {
+                content:'';
+                position: absolute;
+                top: 0;
+                width: 600%;
+                height: 100%;
+                background: inherit;
+                z-index: -1;
+            }
         }
         a.swipeout-delete {
             background: @red;
+        }
+    }
+    .swipeout-actions-right {
+        right: 0%;
+        .translate3d(100%,0,0);
+        a:after {
+            left: 100%;
+            margin-left: -1px;
+        }
+    }
+    .swipeout-actions-left {
+        left: 0%;
+        .translate3d(-100%,0,0);
+        a:after {
+            right: 100%;
+            margin-right: -1px;
         }
     }
     .item-subtitle {
@@ -359,12 +376,12 @@
             }
         }
         &:last-child, &:last-child li:last-child {
-            .item-inner, .swipeout-actions {
+            .item-inner {
                 border-bottom: none;
             }
         }
         li:last-child, &:last-child li {
-            .item-inner, .swipeout-actions {
+            .item-inner {
                 border-bottom: 1px solid @listBlockBorderColor;
             }
         }
@@ -381,9 +398,6 @@ html.retina.ios-gt-7 {
                 border-bottom-width: 0.5px;
             }
         }
-    }
-    .swipeout-actions {
-        border-bottom-width: 0.5px;
     }
     .item-divider {
         border-top-width: 0.5px;
