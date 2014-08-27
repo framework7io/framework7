@@ -177,6 +177,8 @@
     // Swipe outs
     .swipeout {
         overflow: hidden;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
     }
     .swipeout.deleting {
         .transition(300ms);
@@ -185,15 +187,18 @@
         }
     }
     .swipeout.transitioning {
-        .swipeout-content, .swipeout-actions-right a, .swipeout-actions-left a {
-            .transition(300ms);
+        .swipeout-content, .swipeout-actions-right a, .swipeout-actions-left a, .swipeout-overswipe {
+            -webkit-transition: 300ms;
+            transition: 300ms;
         }    
     }
     .swipeout-content {
         position: relative;
         z-index: 10;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
+    }
+    .swipeout-overswipe {
+        -webkit-transition: 200ms left;
+        transition: 200ms left;
     }
     .swipeout-actions-left, .swipeout-actions-right {
         position: absolute;
@@ -208,6 +213,7 @@
             .flexbox();
             .align-items(center);
             position: relative;
+            left: 0;
             &:after {
                 content:'';
                 position: absolute;

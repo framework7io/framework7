@@ -85,6 +85,18 @@ myApp.onPageInit('swipe-delete', function (page) {
         myApp.alert('Thanks, item removed!');
     });
 });
+myApp.onPageInit('swipe-delete media-lists', function (page) {
+    $$('.demo-reply').on('click', function () {
+        myApp.alert('Reply');
+    });
+    $$('.demo-mark').on('click', function () {
+        myApp.alert('Mark');
+    });
+    $$('.demo-forward').on('click', function () {
+        myApp.alert('Forward');
+    });
+});
+
 
 /* ===== Action sheet, we use it on few pages ===== */
 myApp.onPageInit('swipe-delete modals media-lists', function (page) {

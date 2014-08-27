@@ -127,7 +127,7 @@ var View = function (selector, params) {
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
-        if (isScrolling || e.f7PreventSwipeBack) {
+        if (isScrolling || e.f7PreventSwipeBack || app.preventSwipeBack) {
             isTouched = false;
             return;
         }

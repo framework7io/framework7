@@ -4,7 +4,7 @@
 app.swipeoutOpenedEl = undefined;
 app.allowSwipeout = true;
 app.initSwipeout = function (swipeoutEl) {
-    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction;
+    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction, overswipeLeftButton, overswipeRightButton, overswipeLeft, overswipeRight;
     $(document).on(app.touchEvents.start, function (e) {
         if (app.swipeoutOpenedEl) {
             var target = $(e.target);
@@ -29,6 +29,7 @@ app.initSwipeout = function (swipeoutEl) {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
+        app.preventSwipeBack = false;
     }
     function handleTouchMove(e) {
         if (!isTouched) return;
@@ -49,14 +50,16 @@ app.initSwipeout = function (swipeoutEl) {
             swipeOutContent = swipeOutEl.find('.swipeout-content');
             actionsRight = swipeOutEl.find('.swipeout-actions-right');
             actionsLeft = swipeOutEl.find('.swipeout-actions-left');
-            actionsLeftWidth = actionsRightWidth = buttonsLeft = buttonsRight = null;
+            actionsLeftWidth = actionsRightWidth = buttonsLeft = buttonsRight = overswipeRightButton = overswipeLeftButton = null;
             if (actionsLeft.length > 0) {
                 actionsLeftWidth = actionsLeft.width();
                 buttonsLeft = actionsLeft.children('a');
+                overswipeLeftButton = actionsLeft.find('.swipeout-overswipe');
             }
             if (actionsRight.length > 0) {
                 actionsRightWidth = actionsRight.width();
                 buttonsRight = actionsRight.children('a');
+                overswipeRightButton = actionsRight.find('.swipeout-overswipe');
             }
             opened = swipeOutEl.hasClass('swipeout-opened');
             if (opened) {
@@ -69,13 +72,11 @@ app.initSwipeout = function (swipeoutEl) {
             }
         }
         isMoved = true;
-
         e.preventDefault();
         
-        if (app.rtl) e.f7PreventSwipeBack = true;
         touchesDiff = pageX - touchesStart.x;
-
         translate = touchesDiff;
+
         if (opened) {
             if (openedActions === 'right') translate = translate - actionsRightWidth;
             else translate = translate + actionsLeftWidth;
@@ -97,6 +98,10 @@ app.initSwipeout = function (swipeoutEl) {
         }
         
         var i, buttonOffset, progress;
+        if ((app.rtl && direction === 'to-left') || (!app.rtl && direction === 'to-right')) {
+            e.f7PreventSwipeBack = true;
+            app.preventSwipeBack = true;
+        }
         e.f7PreventPanelSwipe = true;
         if (app.params.swipeoutNoFollow) {
             if (opened) {
@@ -119,31 +124,56 @@ app.initSwipeout = function (swipeoutEl) {
             isMoved = false;
             return;
         }
-        if (direction === 'to-left' && actionsRight.length > 0) {
+        overswipeLeft = false;
+        overswipeRight = false;
+        var $button;
+        if (actionsRight.length > 0) {
             // Show right actions
             progress = translate / actionsRightWidth;
             if (translate < -actionsRightWidth) {
                 translate = -actionsRightWidth - Math.pow(-translate - actionsRightWidth, 0.8);
+                if (overswipeRightButton.length > 0) {
+                    overswipeRight = true;
+                }
+
             }
             for (i = 0; i < buttonsRight.length; i++) {
-                buttonOffset = buttonsRight[i].offsetLeft;
-                $(buttonsRight[i]).transform('translate3d(' + (translate - buttonOffset * (1 + Math.max(progress, -1))) + 'px,0,0)');
+                if (typeof buttonsRight[i]._buttonOffset === 'undefined') {
+                    buttonsRight[i]._buttonOffset = buttonsRight[i].offsetLeft;
+                }
+                buttonOffset = buttonsRight[i]._buttonOffset;
+                $button = $(buttonsRight[i]);
+                if (overswipeRightButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
+                    $button.css({left: (overswipeRight ? -buttonOffset : 0) + 'px'});
+                }
+                $button.transform('translate3d(' + (translate - buttonOffset * (1 + Math.max(progress, -1))) + 'px,0,0)');
             }
         }
-        if (direction === 'to-right' && actionsLeft.length > 0) {
+        if (actionsLeft.length > 0) {
             // Show left actions
             progress = translate / actionsLeftWidth;
             if (translate > actionsLeftWidth) {
                 translate = actionsLeftWidth + Math.pow(translate - actionsLeftWidth, 0.8);
+                if (overswipeLeftButton.length > 0) {
+                    overswipeLeft = true;
+                }
             }
             for (i = 0; i < buttonsLeft.length; i++) {
-                buttonOffset = actionsLeftWidth - buttonsLeft[i].offsetLeft - buttonsLeft[i].offsetWidth;
-                $(buttonsLeft[i]).css('z-index', buttonsLeft.length - i).transform('translate3d(' + (translate + buttonOffset * (1 - Math.min(progress, 1))) + 'px,0,0)');
+                if (typeof buttonsLeft[i]._buttonOffset === 'undefined') {
+                    buttonsLeft[i]._buttonOffset = actionsLeftWidth - buttonsLeft[i].offsetLeft - buttonsLeft[i].offsetWidth;
+                }
+                buttonOffset = buttonsLeft[i]._buttonOffset;
+                $button = $(buttonsLeft[i]);
+                if (overswipeLeftButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
+                    $button.css({left: (overswipeLeft ? buttonOffset : 0) + 'px'});
+                }
+                $button.css('z-index', buttonsLeft.length - i).transform('translate3d(' + (translate + buttonOffset * (1 - Math.min(progress, 1))) + 'px,0,0)');
             }
         }
         swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
     }
     function handleTouchEnd(e) {
+        app.preventSwipeBack = false;
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
@@ -184,6 +214,12 @@ app.initSwipeout = function (swipeoutEl) {
                     $(buttons[i]).transform('translate3d(' + newTranslate + 'px,0,0)');
                 }
             }
+            if (overswipeRight) {
+                actionsRight.find('.swipeout-overswipe')[0].click();
+            }
+            if (overswipeLeft) {
+                actionsLeft.find('.swipeout-overswipe')[0].click();
+            }
         }
         else {
             swipeOutEl.trigger('close');
@@ -192,14 +228,24 @@ app.initSwipeout = function (swipeoutEl) {
             swipeOutContent.transform('');
             actions.removeClass('swipeout-actions-opened');
         }
+        
+        var buttonOffset;
         if (buttonsLeft && buttonsLeft.length > 0 && buttonsLeft !== buttons) {
             for (i = 0; i < buttonsLeft.length; i++) {
-                $(buttonsLeft[i]).transform('translate3d(' + (actionsWidth - buttonsLeft[i].offsetWidth - buttonsLeft[i].offsetLeft) + 'px,0,0)');
+                buttonOffset = buttonsLeft[i]._buttonOffset;
+                if (typeof buttonOffset === 'undefined') {
+                    buttonsLeft[i]._buttonOffset = actionsLeftWidth - buttonsLeft[i].offsetLeft - buttonsLeft[i].offsetWidth;
+                }
+                $(buttonsLeft[i]).transform('translate3d(' + (buttonOffset) + 'px,0,0)');
             }
         }
         if (buttonsRight && buttonsRight.length > 0 && buttonsRight !== buttons) {
             for (i = 0; i < buttonsRight.length; i++) {
-                $(buttonsRight[i]).transform('translate3d(' + (-buttonsRight[i].offsetLeft) + 'px,0,0)');
+                buttonOffset = buttonsRight[i]._buttonOffset;
+                if (typeof buttonOffset === 'undefined') {
+                    buttonsRight[i]._buttonOffset = buttonsRight[i].offsetLeft;
+                }
+                $(buttonsRight[i]).transform('translate3d(' + (-buttonOffset) + 'px,0,0)');
             }
         }
         swipeOutContent.transitionEnd(function (e) {
@@ -281,6 +327,7 @@ app.swipeoutClose = function (el) {
         else {
             $(buttons[i]).transform('translate3d(' + (swipeOutActionsWidth - buttons[i].offsetWidth - buttons[i].offsetLeft) + 'px,0,0)');
         }
+        $(buttons[i]).css({left:0 + 'px'});
     }
     if (app.swipeoutOpenedEl && app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
 };
