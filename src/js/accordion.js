@@ -21,9 +21,14 @@ app.accordionOpen = function (item) {
             content.css('height', 'auto');
             var clientLeft = content[0].clientLeft;
             content.transition('');
+            list.trigger('opened');
         }
-        else content.css('height', '');
+        else {
+            content.css('height', '');
+            list.trigger('closed');
+        }
     });
+    list.trigger('open');
     item.addClass('accordion-item-expanded');
 };
 app.accordionClose = function (item) {
@@ -42,7 +47,12 @@ app.accordionClose = function (item) {
             content.css('height', 'auto');
             var clientLeft = content[0].clientLeft;
             content.transition('');
+            list.trigger('opened');
         }
-        else content.css('height', '');
+        else {
+            content.css('height', '');
+            list.trigger('closed');
+        }
     });
+    list.trigger('close');
 };
