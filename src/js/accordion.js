@@ -33,6 +33,7 @@ app.accordionOpen = function (item) {
 };
 app.accordionClose = function (item) {
     item = $(item);
+    var list = item.parents('.accordion-list');
     var content = item.find('.accordion-item-content');
     item.removeClass('accordion-item-expanded');
     content.transition(0);
