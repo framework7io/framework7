@@ -29,7 +29,6 @@ app.initSwipeout = function (swipeoutEl) {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
-        app.preventSwipeBack = false;
     }
     function handleTouchMove(e) {
         if (!isTouched) return;
@@ -98,10 +97,7 @@ app.initSwipeout = function (swipeoutEl) {
         }
         
         var i, buttonOffset, progress;
-        if ((app.rtl && direction === 'to-left') || (!app.rtl && direction === 'to-right')) {
-            e.f7PreventSwipeBack = true;
-            app.preventSwipeBack = true;
-        }
+        
         e.f7PreventPanelSwipe = true;
         if (app.params.swipeoutNoFollow) {
             if (opened) {
@@ -173,7 +169,6 @@ app.initSwipeout = function (swipeoutEl) {
         swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
     }
     function handleTouchEnd(e) {
-        app.preventSwipeBack = false;
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;

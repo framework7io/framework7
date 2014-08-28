@@ -131,12 +131,17 @@ var View = function (selector, params) {
             isTouched = false;
             return;
         }
-        e.f7PreventPanelSwipe = true;
+        
         if (!isMoved) {
             var cancel = false;
             // Calc values during first move fired
             viewContainerWidth = container.width();
             var target = $(e.target);
+            var swipeout = target.hasClass('swipeout') ? target : target.parents('.swipeout');
+            if (swipeout.length > 0) {
+                if (!app.rtl && swipeout.find('.swipeout-actions-left').length > 0) cancel = true;
+                if (app.rtl && swipeout.find('.swipeout-actions-right').length > 0) cancel = true;
+            }
             activePage = target.is('.page') ? target : target.parents('.page');
             if (activePage.hasClass('no-swipeback')) cancel = true;
             previousPage = container.find('.page-on-left:not(.cached)');
@@ -164,8 +169,8 @@ var View = function (selector, params) {
                 }
             }
         }
+        e.f7PreventPanelSwipe = true;
         isMoved = true;
-
         e.preventDefault();
 
         // RTL inverter
