@@ -394,6 +394,12 @@ var Slider = function (container, params) {
         s.attachEvents();
         if (s.params.autoplay) s.startAutoplay();
     };
+    s.update = function () {
+        s.updateSlides();
+        s.updatePagination();
+        s.updateSize();
+        s.updateClasses();
+    };
 
     // Destroy
     s.destroy = function () {
