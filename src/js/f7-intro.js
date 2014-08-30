@@ -89,6 +89,7 @@ window.Framework7 = function (params) {
 
     // Template7 lib
     var t7 = Template7;
+    app._compiledTemplates = {};
 
     // Touch events
     app.touchEvents = {
