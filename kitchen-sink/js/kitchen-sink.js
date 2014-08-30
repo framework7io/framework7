@@ -100,40 +100,46 @@ myApp.onPageInit('swipe-delete media-lists', function (page) {
 
 /* ===== Action sheet, we use it on few pages ===== */
 myApp.onPageInit('swipe-delete modals media-lists', function (page) {
-    $$('.demo-actions').on('click', function () {
-        myApp.actions([
-            // First buttons group
-            [
-                // Group Label
-                {
-                    text: 'Here comes some optional description or warning for actions below',
-                    label: true
-                },
-                // First button
-                {
-                    text: 'Alert',
-                    onClick: function () {
-                        myApp.alert('He Hoou!');
-                    }
-                },
-                // Another red button
-                {
-                    text: 'Nice Red Button ',
-                    color: 'red',
-                    onClick: function () {
-                        myApp.alert('You have clicked red button!');
-                    }
-                },
-            ],
-            // Second group
-            [
-                {
-                    text: 'Cancel',
-                    bold: true
+    var actionSheetButtons = [
+        // First buttons group
+        [
+            // Group Label
+            {
+                text: 'Here comes some optional description or warning for actions below',
+                label: true
+            },
+            // First button
+            {
+                text: 'Alert',
+                onClick: function () {
+                    myApp.alert('He Hoou!');
                 }
-            ]
-        ]);
+            },
+            // Another red button
+            {
+                text: 'Nice Red Button ',
+                color: 'red',
+                onClick: function () {
+                    myApp.alert('You have clicked red button!');
+                }
+            },
+        ],
+        // Second group
+        [
+            {
+                text: 'Cancel',
+                bold: true
+            }
+        ]
+    ];
+    $$('.demo-actions').on('click', function (e) {
+        myApp.actions(actionSheetButtons);
     });
+    $$('.demo-actions-popover').on('click', function (e) {
+        // We need to pass additional target parameter (this) for popover
+        myApp.actions(this, actionSheetButtons);
+    });
+    
 });
 
 /* ===== Messages Page ===== */

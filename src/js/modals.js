@@ -6,8 +6,8 @@ app.modal = function (params) {
     params = params || {};
     var modalHTML = '';
     if (app.params.modalTemplate) {
-        if (!app.modalTemplateCompiled) app.modalTemplateCompiled = t7.compile(app.params.modalTemplate);
-        modalHTML = app.modalTemplateCompiled(params);
+        if (!app._compiledTemplates.modal) app._compiledTemplates.modal = t7.compile(app.params.modalTemplate);
+        modalHTML = app._compiledTemplates.modal(params);
     }
     else {
         var buttonsHTML = '';
@@ -160,54 +160,100 @@ app.hideIndicator = function () {
     $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
 };
 // Action Sheet
-app.actions = function (params) {
+app.actions = function (target, params) {
+    var toPopover = false, modal, groupSelector, buttonSelector;
+    if (arguments.length === 1) {
+        // Actions
+        params = target;
+    } 
+    else {
+        // Popover
+        if (app.device.ios) {
+            if (app.device.iphone) toPopover = true;
+        }
+        else {
+            if ($(window).width() >= 768) toPopover = true;
+        }
+    }
     params = params || [];
     
     if (params.length > 0 && !$.isArray(params[0])) {
         params = [params];
     }
     var modalHTML;
-
-    if (app.params.modalActionsTemplate) {
-        if (!app.modalActionsTemplateCompiled) app.modalActionsTemplateCompiled = t7.compile(app.params.modalActionsTemplate);
-        modalHTML = app.modalActionsTemplateCompiled(params);
+    if (toPopover) {
+        var actionsPopoverTemplate = 
+            '<div class="popover actions-popover">' +
+              '<div class="popover-inner">' +
+                '{{#each this}}' +
+                '<div class="list-block">' +
+                  '<ul>' +
+                    '{{#each this}}' +
+                    '{{#if label}}' +
+                    '<li class="actions-popover-label {{#if color}}color-{{color}}{{/if}} {{#if bold}}actions-popover-bold{{/if}}">{{text}}</li>' +
+                    '{{else}}' +
+                    '<li><a href="#" class="item-link list-button {{#if color}}color-{{color}}{{/if}} {{#if bold}}actions-popover-bold{{/if}}">{{text}}</a></li>' +
+                    '{{/if}}' +
+                    '{{/each}}' +
+                  '</ul>' +
+                '</div>' +
+                '{{/each}}' +
+              '</div>' +
+            '</div>';
+        if (!app._compiledTemplates.actionsPopover) {
+            app._compiledTemplates.actionsPopover = t7.compile(actionsPopoverTemplate);
+        }
+        var popoverHTML = app._compiledTemplates.actionsPopover(params);
+        modal = $(app.popover(popoverHTML, target, true));
+        groupSelector = '.list-block ul';
+        buttonSelector = '.list-button';
     }
     else {
-        var buttonsHTML = '';
-        for (var i = 0; i < params.length; i++) {
-            for (var j = 0; j < params[i].length; j++) {
-                if (j === 0) buttonsHTML += '<div class="actions-modal-group">';
-                var button = params[i][j];
-                var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
-                if (button.bold) buttonClass += ' actions-modal-button-bold';
-                if (button.color) buttonClass += ' color-' + button.color;
-                buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
-                if (j === params[i].length - 1) buttonsHTML += '</div>';
-            }
+        if (app.params.modalActionsTemplate) {
+            if (!app._compiledTemplates.actions) app._compiledTemplates.actions = t7.compile(app.params.modalActionsTemplate);
+            modalHTML = app._compiledTemplates.actions(params);
         }
-        modalHTML = '<div class="actions-modal">' + buttonsHTML + '</div>';
+        else {
+            var buttonsHTML = '';
+            for (var i = 0; i < params.length; i++) {
+                for (var j = 0; j < params[i].length; j++) {
+                    if (j === 0) buttonsHTML += '<div class="actions-modal-group">';
+                    var button = params[i][j];
+                    var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
+                    if (button.bold) buttonClass += ' actions-modal-button-bold';
+                    if (button.color) buttonClass += ' color-' + button.color;
+                    buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
+                    if (j === params[i].length - 1) buttonsHTML += '</div>';
+                }
+            }
+            modalHTML = '<div class="actions-modal">' + buttonsHTML + '</div>';
+        }
+        _modalTemplateTempDiv.innerHTML = modalHTML;
+        modal = $(_modalTemplateTempDiv).children();
+        $('body').append(modal[0]);
+        groupSelector = '.actions-modal-group';
+        buttonSelector = '.actions-modal-button';
     }
-        
-
-    _modalTemplateTempDiv.innerHTML = modalHTML;
-    var modal = $(_modalTemplateTempDiv).children();
-    $('body').append(modal[0]);
-
-    var groups = modal.find('.actions-modal-group');
+    
+    var groups = modal.find(groupSelector);
     groups.each(function (index, el) {
         var groupIndex = index;
         $(el).children().each(function (index, el) {
             var buttonIndex = index;
             var buttonParams = params[groupIndex][buttonIndex];
-            if ($(el).hasClass('actions-modal-button')) {
-                $(el).on('click', function (e) {
+            var clickTarget;
+            if (!toPopover && $(el).is(buttonSelector)) clickTarget = $(el);
+            if (toPopover && $(el).find(buttonSelector).length > 0) clickTarget = $(el).find(buttonSelector);
+
+            if (clickTarget) {
+                clickTarget.on('click', function (e) {
                     if (buttonParams.close !== false) app.closeModal(modal);
                     if (buttonParams.onClick) buttonParams.onClick(modal, e);
                 });
             }
         });
     });
-    app.openModal(modal);
+    if (!toPopover) app.openModal(modal);
     return modal[0];
 };
 app.popover = function (modal, target, removeOnClose) {

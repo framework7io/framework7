@@ -27,7 +27,6 @@
             .scrollable();
         }
     }
-
 }
 .popup-overlay {
     z-index: 10200;
@@ -253,6 +252,38 @@ input.modal-text-input {
         .transition(@actionsModalDuration);
         opacity: 1;
     }
+    .list-block {
+        margin: 0;
+        ul {
+            background: none;
+        }
+        &:first-child {
+            ul {
+                border-top: none;
+                border-radius: 7px 7px 0 0;
+            }
+            li:first-child a{
+                border-radius: 7px 7px 0 0;
+            }
+        }
+        &:last-child {
+            ul {
+                border-bottom: none;
+                border-radius: 0 0 7px 7px;
+            }
+            li:last-child a{
+                border-radius: 0 0 7px 7px;
+            }
+        }
+        &:first-child:last-child {
+            li:first-child:last-child a, ul:first-child:last-child {
+                border-radius: 7px;
+            }
+        }
+        + .list-block {
+            margin-top: 35px;
+        }
+    }
 }
 .popover-angle {
     width: 26px;
@@ -305,25 +336,27 @@ input.modal-text-input {
     }
 }
 .popover-inner {
-    .scrollable();
-    >.list-block {
-        margin: 0;
-        ul {
-            border: none;
-            background: none;
-        }
-        li:first-child a{
-            border-radius: 7px 7px 0 0;
-        }
-        li:last-child a{
-            border-radius: 0 0 7px 7px;
-        }
-        li:first-child:last-child a {
-            border-radius: 7px;
-        }
+    .scrollable();    
+}
+.actions-popover {
+    .list-block + .list-block {
+        margin-top: 20px;
+    }
+    .list-block ul {
+        background: #fff;
     }
 }
-
+.actions-popover-label {
+    padding: 8px 10px;
+    color:#8a8a8a;
+    font-size: 13px;
+    line-height: 1.3;
+    text-align: center;
+    border-bottom: 1px solid #d2d2d6;
+    &:last-child {
+        border-bottom: none;
+    }
+}
 // Popup
 .popup, .login-screen {
     position: absolute;
@@ -428,7 +461,11 @@ html.retina.ios-gt-7 {
     .actions-modal-button, .actions-modal-label {
         border-bottom-width: 0.5px;   
     }
+    .actions-popover-label {
+        border-bottom-width: 0.5px;
+    }
     input.modal-text-input {
         border-width: 0.5px;
     }
+
 }
