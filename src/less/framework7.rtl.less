@@ -368,13 +368,27 @@ label.label-radio {
     .align-items(flex-start);
 }
 
-/* === Icons === */
+/* === Back Icons === */
 i.icon {
     &.icon-back {
         background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23007aff' transform='translate(12,20) rotate(180)'/></svg>");
     }
 }
-
+.back-icon-mixin(@colorName, @color, @colorHex) {
+    i.icon-back.color-@{colorName}, i.icon-back.theme-@{colorName}, .theme-@{colorName} i.icon-back {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{colorHex}' transform='translate(12,20) rotate(180)'/></svg>");
+    }
+}
+.back-icon-mixin(e('gray'), #8e8e93, '8e8e93');
+.back-icon-mixin(e('white'), #ffffff, 'ffffff');
+.back-icon-mixin(e('black'), #000000, '000000');
+.back-icon-mixin(e('lightblue'), #5ac8fa, '5ac8fa');
+.back-icon-mixin(e('yellow'), #ffcc00, 'ffcc00');
+.back-icon-mixin(e('orange'), #ff9500, 'ff9500');
+.back-icon-mixin(e('pink'), #ff2d55, 'ff2d55');
+.back-icon-mixin(e('blue'), #007aff, '007aff');
+.back-icon-mixin(e('green'), #4cd964, '4cd964');
+.back-icon-mixin(e('red'), #ff3b30, 'ff3b30');
 /* === Accordion === */
 .list-block {
     .accordion-toggle {
