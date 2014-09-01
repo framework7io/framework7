@@ -69,16 +69,16 @@ app.initPullToRefresh = function (pageContainer) {
             }
             if ((useTranslate && Math.pow(touchesDiff, 0.85) > 44) || (!useTranslate && touchesDiff >= 88)) {
                 refresh = true;
-                container.addClass('pull-up');
+                container.addClass('pull-up').removeClass('pull-down');
             }
             else {
                 refresh = false;
-                container.removeClass('pull-up');
+                container.removeClass('pull-up').addClass('pull-down');
             }
         }
         else {
             
-            container.removeClass('pull-up');
+            container.removeClass('pull-up pull-down');
             refresh = false;
             return;
         }
@@ -101,6 +101,9 @@ app.initPullToRefresh = function (pageContainer) {
                     app.pullToRefreshDone(container);
                 }
             });
+        }
+        else {
+            container.removeClass('pull-down');
         }
         isTouched = false;
         isMoved = false;
@@ -130,7 +133,7 @@ app.pullToRefreshDone = function (container) {
     if (container.length === 0) container = $('.pull-to-refresh-content.refreshing');
     container.removeClass('refreshing').addClass('transitioning');
     container.transitionEnd(function () {
-        container.removeClass('transitioning pull-up');
+        container.removeClass('transitioning pull-up pull-down');
     });
 };
 app.pullToRefreshTrigger = function (container) {
