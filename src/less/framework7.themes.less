@@ -97,8 +97,10 @@ Framework7 Layouts Themes
     .item-after {
         color:@itemAfterText;
     }
-    .item-link:active, label.label-checkbox:active, label.label-radio:active {
-        background-color: @activeLink;
+    .item-link, label.label-checkbox, label.label-radio {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: @activeLink;
+        }
     }
     .item-link.list-button {
         border-bottom-color: @blockBorder;
@@ -220,8 +222,10 @@ Framework7 Layouts Themes
     .item-after {
         color:@itemAfterText;
     }
-    .item-link:active, label.label-checkbox:active, label.label-radio:active {
-        background-color: @activeLink;
+    .item-link, label.label-checkbox, label.label-radio {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: @activeLink;
+        }
     }
     .item-link.list-button {
         border-bottom-color: @blockBorder;

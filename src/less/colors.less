@@ -13,7 +13,7 @@
     //Buttons
     .color-@{colorName}.button:not(.button-fill), .color-@{colorName}.buttons-row .button, .theme-@{colorName} .button:not(.button-fill) {
         border-color: @color;
-        &:active {
+        html:not(.watch-active-state) &:active, &.active-state {
             background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
         }
         &.active {

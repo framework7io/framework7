@@ -76,7 +76,7 @@
             margin-left: 8px;
             opacity: 1;
             pointer-events: auto;
-            &:active{
+            html:not(.watch-active-state) &:active, &.active-state {
                 opacity: 0.3;
                 .transition(0ms);
             }

@@ -151,7 +151,7 @@ html.android {
         width: 100%;
     }
 
-    &:active {
+    html:not(.watch-active-state) &:active, &.active-state {
         background: rgba(red(@blue), green(@blue), blue(@blue), .15);
     }
     &.button-round {
@@ -170,7 +170,7 @@ html.android {
         color:#fff;
         background: @blue;
         border: none;
-        &:active {
+        html:not(.watch-active-state) &:active, &.active-state {
             opacity: 0.8;
         }
     }
@@ -334,7 +334,7 @@ label.label-radio {
 }
 label.label-checkbox, label.label-radio {
     .transition(300ms);
-    &:active {
+    html:not(.watch-active-state) &:active, &.active-state {
         .transition(0ms);
         background-color: #d9d9d9;
         .item-inner {

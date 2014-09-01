@@ -23,7 +23,10 @@ window.Framework7 = function (params) {
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',
         // Fast clicks
-        fastClicks : true,
+        fastClicks: true,
+        // Active State
+        activeState: true,
+        activeStateElements: 'a, button, label, span',
         // Animate Nav Back Icon
         animateNavBackIcon: false,
         // Swipe Back

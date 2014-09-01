@@ -113,7 +113,7 @@
     &.modal-button-bold {
         font-weight: 500;
     }
-    &:active {
+    html:not(.watch-active-state) &:active, &.active-state {
         background: @modalButonActiveBg;
     }
 }
@@ -185,7 +185,7 @@
     line-height: 43px;
     font-size: 20px;
     color: @blue;
-    &:active {
+    html:not(.watch-active-state) &:active, &.active-state {
         background: @actionsModalActiveButtonBg;
     }
 }

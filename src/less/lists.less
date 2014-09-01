@@ -142,7 +142,7 @@
             background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='%23c7c7cc'/></svg>");
             background-size: 10px 20px;
         }
-        &:active {
+        html:not(.watch-active-state) &:active, &.active-state {
             .transition(0ms);
             background-color: #d9d9d9;
             .item-inner {

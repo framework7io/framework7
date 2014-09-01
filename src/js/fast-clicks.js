@@ -3,8 +3,42 @@
 ************   Inspired by https://github.com/ftlabs/fastclick   ************
 ===============================================================================*/
 app.initFastClicks = function () {
-    if (!app.support.touch) return;
+    if (app.params.activeState) {
+        $('html').addClass('watch-active-state');
+    }
+
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
+    var activableElement, activeTimeout;
+
+    function findActivableElement(e) {
+        var target = $(e.target);
+        var parents = target.parents(app.params.activeStateElements);
+        
+        return (parents.length > 0) ? parents : target;
+    }
+    function isInsideScrollableView() {
+        var pageContent = activableElement.parents('.page-content, .panel');
+        
+        if (pageContent.length === 0) {
+            return false;
+        }
+        
+        // This event handler covers the "tap to stop scrolling".
+        if (pageContent.prop('scrollHandlerSet') !== 'yes') {
+            pageContent.on('scroll', function() {
+              clearTimeout(activeTimeout);
+            });
+            pageContent.prop('scrollHandlerSet', 'yes');
+        }
+        
+        return true;
+    }
+    function addActive() {
+        activableElement.addClass('active-state');
+    }
+    function removeActive(el) {
+        activableElement.removeClass('active-state');
+    }
 
     function androidNeedsBlur(el) {
         var noBlur = ('button checkbox file image radio submit input textarea').split(' ');
@@ -48,6 +82,24 @@ app.initFastClicks = function () {
         }
         return true;
     }
+
+    // Mouse Handlers
+    function handleMouseDown (e) {
+        findActivableElement(e).addClass('active-state');
+        if ('which' in e && e.which === 3) {
+            setTimeout(function () {
+                $('.active-state').removeClass('active-state');
+            }, 0);
+        }
+    }
+    function handleMouseMove (e) {
+        $('.active-state').removeClass('active-state');
+    }
+    function handleMouseUp (e) {
+        $('.active-state').removeClass('active-state');
+    }
+
+    // Touch Handlers
     function handleTouchStart(e) {
         isMoved = false;
         if (e.targetTouches.length > 1) {
@@ -90,14 +142,32 @@ app.initFastClicks = function () {
         if ((e.timeStamp - lastClickTime) < 200) {
             e.preventDefault();
         }
+        if (app.params.activeState) {
+            activableElement = findActivableElement(e);
+            // If it's inside a scrollable view, we don't trigger active-state yet,
+            // because it can be a scroll instead. Based on the link:
+            // http://labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
+            if (!isInsideScrollableView(e)) {
+                addActive();
+            } else {
+                activeTimeout = setTimeout(addActive, 80);
+            }
+        }
     }
     function handleTouchMove(e) {
         if (!trackClick) return;
         trackClick = false;
         targetElement = null;
         isMoved = true;
+
+        if (app.params.activeState) {
+            clearTimeout(activeTimeout);
+            removeActive();
+        }
     }
     function handleTouchEnd(e) {
+        clearTimeout(activeTimeout);
+
         if (!trackClick) {
             if (!activeSelection) e.preventDefault();
             return true;
@@ -124,6 +194,14 @@ app.initFastClicks = function () {
             if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
                 return false;
             }
+        }
+
+        // Add active-state here because, in a very fast tap, the timeout didn't
+        // have the chance to execute. Removing active-state in a timeout gives 
+        // the chance to the animation execute.
+        if (app.params.activeState) {
+            addActive();
+            setTimeout(removeActive, 0);
         }
 
         // Trigger focus when required
@@ -191,9 +269,19 @@ app.initFastClicks = function () {
 
         return allowClick;
     }
-    document.addEventListener('click', handleClick, true);
-    $(document).on('touchstart', handleTouchStart);
-    $(document).on('touchmove', handleTouchMove);
-    $(document).on('touchend', handleTouchEnd);
-    $(document).on('touchcancel', handleTouchCancel);
+    if (app.support.touch) {
+        document.addEventListener('click', handleClick, true);
+        app.addGlobalEventListener('touchstart', handleTouchStart);
+        app.addGlobalEventListener('touchmove', handleTouchMove);
+        app.addGlobalEventListener('touchend', handleTouchEnd);
+        app.addGlobalEventListener('touchcancel', handleTouchCancel);
+    }
+    else {
+        if (app.params.activeState) {
+            app.addGlobalEventListener('mousedown', handleMouseDown);
+            app.addGlobalEventListener('mousemove', handleMouseMove);
+            app.addGlobalEventListener('mouseup', handleMouseUp);
+        }
+    }
+        
 };
