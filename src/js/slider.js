@@ -107,7 +107,7 @@ var Slider = function (container, params) {
         if (s.params.indexButton) $(s.params.indexButton)[action]('click', s.onClickIndex);
 
         // Prevent Links
-        if (s.params.preventClicks) s.container[action]('click', s.onClick);
+        if (s.params.preventClicks || s.params.preventClicksPropagation) s.container[action]('click', s.onClick, true);
     };
     s.detachEvents = function () {
         s.attachEvents(true);
