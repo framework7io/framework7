@@ -442,7 +442,9 @@ app.closeModal = function (modal) {
     var removeOnClose = modal.hasClass('remove-on-close');
 
     var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
-    overlay.removeClass('modal-overlay-visible');
+    if (isPopup && modal.length === $('.popup.modal-in').length) {
+        overlay.removeClass('modal-overlay-visible');    
+    }
 
     modal.trigger('close');
 
