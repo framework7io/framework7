@@ -57,8 +57,10 @@ var Slider = function (container, params) {
         s.slides = s.wrapper.children('.' + s.params.slideClass);
 
         if (s.params.spaceBetween !== 0) {
-            var marginProp = app.rtl ? 'margin-left' : 'margin-right';
-            if (isH) s.slides.css(marginProp, s.params.spaceBetween + 'px');
+            var marginProp = app.rtl ? 'marginLeft' : 'marginRight';
+            if (isH) {
+                s.slides.css(marginProp, s.params.spaceBetween + 'px');
+            }
             else s.slides.css({marginBottom: s.params.spaceBetween + 'px'});
         }
         if (s.params.slidesPerView > 1) {
