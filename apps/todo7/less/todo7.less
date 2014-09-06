@@ -68,20 +68,12 @@ i.icon-plus {
     .swipeout-content {
         background: none;
     }
-    .swipeout-actions {
-        opacity: 0;
-        border-bottom-color: rgba(255,255,255,0.1);
-        .transition(300ms);
-    }
-    .swipeout-opened .swipeout-actions {
-        opacity: 1;
-    }
     .item-inner {
         padding-top: 18px;
         padding-bottom: 16px;
         border-bottom-color: rgba(255,255,255,0.2);
     }
-    .label-checkbox:active {
+    .label-checkbox.active-state {
         background: rgba(255,255,255,0.2);
     }
     .item-content{
@@ -113,10 +105,6 @@ i.icon-plus {
     }
 
 }
-label.label-checkbox input[type=checkbox]:checked+.item-media i.icon-form-checkbox:after {
-    background-color: transparent;
-    border: 1px solid #fff;
-}
 
 .popup {
     @darkPink: darken(@pink,30%);
@@ -146,7 +134,7 @@ label.label-checkbox input[type=checkbox]:checked+.item-media i.icon-form-checkb
         border-color: #fff;
         color:#fff;
     }
-    .button:active {
+    .button.active-state {
         background: rgba(255,255,255,0.1);
     }
 }
@@ -227,7 +215,7 @@ body.with-popup {
     background: @pink;
     border-right-color: darken(@pink, 10%);
     color:#fff;
-    &:active {
+    &.active-state {
         background: darken(@pink, 10%);
     }
 }

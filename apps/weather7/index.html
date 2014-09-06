@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Weather7</title>
-    <link rel="stylesheet" href="../../dist/css/framework7.min.css">
+    <link rel="stylesheet" href="../../build/css/framework7.css">
     <link rel="stylesheet" href="css/weather7.css">
     <!-- Favicon-->
     <link href="img/icon-57.png" rel="shortcut icon"> 
@@ -71,10 +71,16 @@
       </div>
     </div>
     <!-- Templates-->
-    <script id="search-item-template" type="template">  
-      <li data-woeid="{{woeid}}" data-city="{{city}}" data-country="{{country}}" class="close-popup">{{city}} <span>{{province}}, {{country}}</span></li>
+    <script id="search-results-template" type="text/template">
+        
+      {{#each this}}
+      {{#if admin1}}{{#if admin1.content}}
+      <li data-woeid="{{woeid}}" data-city="{{name}}" data-country="{{country.content}}" class="close-popup">{{name}} <span>{{admin1.content}}, {{country.content}}</span></li>{{/if}}{{/if}}
+      {{/each}}
     </script>
-    <script id="weather-item-template" type="template">      
+    <script id="home-items-template" type="text/template">
+            
+      {{#each this}}
       <li data-woeid="{{woeid}}" class="swipeout">
         <div class="swipeout-content"><a href="#" data-woeid="{{woeid}}" class="item-content item-link">
             <div class="item-inner">
@@ -82,14 +88,12 @@
                 <div class="city">{{city}}</div>
                 <div class="country">{{country}}</div>
               </div>
-              <div class="item-after">{{temp}}</div>
+              <div class="item-after">{{condition.temp}}&deg;</div>
             </div></a></div>
-        <div class="swipeout-actions">
-          <div class="swipeout-actions-inner"><a href="#" class="swipeout-delete">Delete</a></div>
-        </div>
-      </li>
+        <div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div>
+      </li>{{/each}}
     </script>
-    <script id="details-template" type="template">
+    <script id="details-template" type="text/template">
       <div class="navbar">
         <div class="navbar-inner">
           <div class="left sliding"><a href="index.html" class="back link"><span class="navbar-logo"></span></a></div>
@@ -99,17 +103,24 @@
         <div data-page="detail" class="page">
           <div class="page-content">
             <div class="detail-city">{{city}}</div>
-            <div class="detail-condition">{{condition}}</div>
-            <div class="detail-temp">{{temp}}</div>
+            <div class="detail-condition">{{condition.text}}</div>
+            <div class="detail-temp">{{condition.temp}}&deg;</div>
             <div class="list-block forecast-list">
-              <ul>{{forecast}}</ul>
+              <ul>{{#each forecast}}
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">{{dayOfWeek date}}</div>
+                    <div class="item-after"><span class="state">{{text}}</span><span class="temps"><span class="high">{{high}}&deg;</span><span class="low">{{low}}&deg;</span></span></div>
+                  </div>
+                </li>{{/each}}
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </script>
     <!-- Path to Framework7 Library JS-->
-    <script type="text/javascript" src="../../dist/js/framework7.min.js"></script>
+    <script type="text/javascript" src="../../build/js/framework7.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/weather7.js"></script>
   </body>

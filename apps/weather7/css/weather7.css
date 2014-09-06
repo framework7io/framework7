@@ -89,9 +89,6 @@ i.icon-plus {
   padding-right: 15px;
   border-bottom-color: rgba(255, 255, 255, 0.2);
 }
-.places-list .swipeout-actions {
-  border-bottom-color: rgba(255, 255, 255, 0.2);
-}
 .places-list li:last-child .item-inner,
 .places-list li:last-child a.item-link:active .item-inner {
   border-bottom: none;
@@ -117,20 +114,6 @@ i.icon-plus {
 .places-list .country {
   font-size: 14px;
   font-weight: 300;
-}
-.places-list .swipeout-content {
-  background: none;
-}
-.places-list .swipeout-actions {
-  opacity: 0;
-  -webkit-transition-duration: 300ms;
-  -moz-transition-duration: 300ms;
-  -ms-transition-duration: 300ms;
-  -o-transition-duration: 300ms;
-  transition-duration: 300ms;
-}
-.places-list .swipeout-opened .swipeout-actions {
-  opacity: 1;
 }
 .places-list .list-block-label {
   text-align: center;

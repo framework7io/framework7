@@ -6,7 +6,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
     title Weather7
-    link(rel="stylesheet", href="../../dist/css/framework7.min.css")
+    link(rel="stylesheet", href="../../build/css/framework7.css")
     link(rel="stylesheet", href="css/weather7.css")
     // Favicon
     link(href="img/icon-57.png", rel="shortcut icon")
@@ -60,12 +60,17 @@ html.with-statusbar-overlay(manifest="manifest.php")
             .page-content
               ul.search-results
     // Templates
-    script(id="search-item-template", type="template")   
-      li.close-popup(data-woeid="{{woeid}}", data-city="{{city}}", data-country="{{country}}")
-        | {{city}} 
-        span {{province}}, {{country}}
+    script(id="search-results-template", type="text/template")   
+      {{#each this}}
+      {{#if admin1}}{{#if admin1.content}}
+      li.close-popup(data-woeid="{{woeid}}", data-city="{{name}}", data-country="{{country.content}}")
+        | {{name}} 
+        span {{admin1.content}}, {{country.content}}
+      {{/if}}{{/if}}
+      {{/each}}
 
-    script(id="weather-item-template", type="template")       
+    script(id="home-items-template", type="text/template")       
+      {{#each this}}
       li.swipeout(data-woeid="{{woeid}}")
         .swipeout-content
           a(href="#", data-woeid="{{woeid}}").item-content.item-link
@@ -73,11 +78,11 @@ html.with-statusbar-overlay(manifest="manifest.php")
               .item-title
                 .city {{city}}
                 .country {{country}}
-              .item-after {{temp}}
-        .swipeout-actions
-          .swipeout-actions-inner
-            a(href="#").swipeout-delete Delete
-    script(id="details-template", type="template")
+              .item-after {{condition.temp}}&deg;
+        .swipeout-actions-right
+          a(href="#").swipeout-delete Delete
+      {{/each}}
+    script(id="details-template", type="text/template")
       .navbar
         .navbar-inner
           .left.sliding
@@ -87,13 +92,22 @@ html.with-statusbar-overlay(manifest="manifest.php")
         .page(data-page="detail")
           .page-content
             .detail-city {{city}}
-            .detail-condition {{condition}}
-            .detail-temp {{temp}}
+            .detail-condition {{condition.text}}
+            .detail-temp {{condition.temp}}&deg;
             .list-block.forecast-list
               ul 
-                {{forecast}}
+                {{#each forecast}}
+                li.item-content
+                  .item-inner
+                    .item-title {{dayOfWeek date}}
+                    .item-after 
+                      span.state {{text}}
+                      span.temps
+                        span.high {{high}}&deg;
+                        span.low {{low}}&deg;
+                {{/each}}
 
     // Path to Framework7 Library JS
-    script(type="text/javascript", src="../../dist/js/framework7.min.js")
+    script(type="text/javascript", src="../../build/js/framework7.js")
     // Path to your app js
     script(type="text/javascript", src="js/weather7.js")

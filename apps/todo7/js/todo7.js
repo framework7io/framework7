@@ -50,19 +50,12 @@ $$('.popup .add-task').on('click', function () {
     myApp.closeModal('.popup');
 });
 
-// Build Todo HTML
-var todoItemTemplate = $$('#todo-item-template').html();
+// Build Todo HTML using Template7 template engine
+var todoItemTemplateSource = $$('#todo-item-template').html();
+var todoItemTemplate = Template7.compile(todoItemTemplateSource);
 function buildTodoListHtml() {
-    var html = '';
-    for (var i = 0; i < todoData.length; i++) {
-        var todoItem = todoData[i];
-        html += todoItemTemplate
-                    .replace(/{{title}}/g, todoItem.title)
-                    .replace(/{{color}}/g, todoItem.color)
-                    .replace(/{{checked}}/g, todoItem.checked)
-                    .replace(/{{id}}/g, todoItem.id);
-    }
-    $$('.todo-items-list ul').html(html);
+    var renderedList = todoItemTemplate(todoData);
+    $$('.todo-items-list').html(renderedList);
 }
 // Build HTML on App load
 buildTodoListHtml();
@@ -70,8 +63,9 @@ buildTodoListHtml();
 // Mark checked
 $$('.todo-items-list').on('change', 'input', function () {
     var input = $$(this);
+    var item = input.parents('li');
     var checked = input[0].checked;
-    var id = input.parents('li').attr('data-id') * 1;
+    var id = item.attr('data-id') * 1;
     for (var i = 0; i < todoData.length; i++) {
         if (todoData[i].id === id) todoData[i].checked = checked ? 'checked' : '';
     }

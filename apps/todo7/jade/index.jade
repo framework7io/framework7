@@ -6,7 +6,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
     title ToDo7
-    link(rel="stylesheet", href="../../dist/css/framework7.min.css")
+    link(rel="stylesheet", href="../../build/css/framework7.css")
     link(rel="stylesheet", href="css/todo7.css")
     // Favicon
     link(href="img/icon-57.png", rel="shortcut icon")
@@ -41,8 +41,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
         .pages
           .page(data-page="index")
             .page-content
-              .list-block.todo-items-list
-                ul
+              .list-block.todo-items-list.theme-pink
     // Popup to add new task           
     .popup
       .view.view-popup.navbar-fixed
@@ -79,19 +78,22 @@ html.with-statusbar-overlay(manifest="manifest.php")
               .content-block
                 a.button.add-task Add Task
     // Template
-    script(id="todo-item-template", type="template")
-      li.swipeout(data-color="{{color}}", data-id="{{id}}")
-        label.label-checkbox.item-content.swipeout-content
-          | <input type="checkbox" {{checked}}>
-          .item-media
-            i.icon.icon-form-checkbox
-          .item-inner
-            .item-title {{title}}
-        .swipeout-actions
-          .swipeout-actions-inner
+    script(id="todo-item-template", type="text/template")
+      ul
+        {{#each this}}
+        li.swipeout(data-color="{{color}}", data-id="{{id}}")
+          .swipeout-content
+            label.label-checkbox.item-content
+              | <input type="checkbox" {{checked}}>
+              .item-media
+                i.icon.icon-form-checkbox
+              .item-inner
+                .item-title {{title}}
+          .swipeout-actions-right
             a(href="#").swipeout-delete Delete
+        {{/each}}
 
     // Path to Framework7 Library JS
-    script(type="text/javascript", src="../../dist/js/framework7.min.js")
+    script(type="text/javascript", src="../../build/js/framework7.js")
     // Path to your app js
     script(type="text/javascript", src="js/todo7.js")

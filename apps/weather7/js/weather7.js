@@ -6,10 +6,16 @@ var myApp = new Framework7({
 // Export selectors engine
 var $$ = Dom7;
 
-// Templates
-myApp.searchItemTemplate = $$('#search-item-template').html();
-myApp.weatherItemTemplate = $$('#weather-item-template').html();
-myApp.detailsTemplate = $$('#details-template').html();
+// Register required Template7 helpers, before templates compilation
+Template7.registerHelper('dayOfWeek', function (date) {
+    date = new Date(date);
+    var days = ('Monday Tuesday Wednesday Thursday Friday Saturday Sunday').split(' ');
+    return days[date.getDay()];
+});
+// Templates using Template7 template engine
+myApp.searchResultsTemplate = Template7.compile($$('#search-results-template').html());
+myApp.homeItemsTemplate = Template7.compile($$('#home-items-template').html());
+myApp.detailsTemplate = Template7.compile($$('#details-template').html());
 
 // Add view
 var mainView = myApp.addView('.view-main', {
@@ -30,16 +36,7 @@ myApp.searchLocation = function (search) {
             $$('.popup .preloader').hide();
             if (results.query.count > 0) {
                 var places = results.query.results.place;
-                for (var i = 0; i < places.length; i++) {
-                    var place = places[i];
-                    if (place.placeTypeName.code === '12') break;
-                    var adminArea = place.admin1 && place.admin1.content ? place.admin1.content : '';
-                    html += myApp.searchItemTemplate
-                        .replace(/{{woeid}}/g, place.woeid)
-                        .replace(/{{city}}/g, place.name)
-                        .replace(/{{country}}/g, place.country.content)
-                        .replace(/{{province}}/g, adminArea);
-                }
+                html = myApp.searchResultsTemplate(places);
             }
             $$('.popup .search-results').html(html);
         });
@@ -118,18 +115,7 @@ myApp.buildWeatherHTML = function () {
     if (!weatherData) return;
     $$('.places-list ul').html('');
     weatherData = JSON.parse(weatherData);
-    var html = '';
-    for (var i = 0; i < weatherData.length; i++) {
-        var item = weatherData[i];
-        var temperature = item.condition.temp;
-        var date = new Date(item.condition.date);
-        var time = date.getHours(date) + ':' + date.getMinutes(date);
-        html += myApp.weatherItemTemplate
-                .replace(/{{woeid}}/g, item.woeid)
-                .replace(/{{city}}/g, item.city)
-                .replace(/{{country}}/g, item.country)
-                .replace(/{{temp}}/g, temperature + '&deg;');
-    }
+    var html = myApp.homeItemsTemplate(weatherData);
     $$('.places-list ul').html(html);
 };
 
@@ -206,25 +192,7 @@ $$('.places-list').on('click', 'a.item-link', function (e) {
     for (var i = 0; i < weatherData.length; i++) {
         if (weatherData[i].woeid === woeid) item = weatherData[i];
     }
-    var days = ('Monday Tuesday Wednesday Thursday Friday Saturday Sunday').split(' ');
-    var forecastHTML = '';
-    for (i = 0; i < item.forecast.length; i++) {
-        var forecastItem = item.forecast[i];
-        var date = new Date(forecastItem.date);
-        var formatDate  = days[date.getDay()];
-        forecastHTML +=
-                '<li class="item-content">' +
-                  '<div class="item-inner">' +
-                    '<div class="item-title">' + formatDate + '</div>' +
-                    '<div class="item-after"><span class="state">' + forecastItem.text + '</span><span class="temps"><span class="high">' + forecastItem.high + '&deg;</span><span class="low">' + forecastItem.low + '&deg;</span></span></div>' +
-                  '</div>' +
-                '</li>';
-    }
-    var pageContent = myApp.detailsTemplate
-                    .replace(/{{city}}/g, item.city)
-                    .replace(/{{temp}}/g, item.condition.temp + '&deg;')
-                    .replace(/{{condition}}/g, item.condition.text)
-                    .replace(/{{forecast}}/g, forecastHTML);
+    var pageContent = myApp.detailsTemplate(item);
     mainView.loadContent(pageContent);
 });
 

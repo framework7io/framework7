@@ -50,24 +50,12 @@ i.icon-plus {
 .todo-items-list .swipeout-content {
   background: none;
 }
-.todo-items-list .swipeout-actions {
-  opacity: 0;
-  border-bottom-color: rgba(255, 255, 255, 0.1);
-  -webkit-transition-duration: 300ms;
-  -moz-transition-duration: 300ms;
-  -ms-transition-duration: 300ms;
-  -o-transition-duration: 300ms;
-  transition-duration: 300ms;
-}
-.todo-items-list .swipeout-opened .swipeout-actions {
-  opacity: 1;
-}
 .todo-items-list .item-inner {
   padding-top: 18px;
   padding-bottom: 16px;
   border-bottom-color: rgba(255, 255, 255, 0.2);
 }
-.todo-items-list .label-checkbox:active {
+.todo-items-list .label-checkbox.active-state {
   background: rgba(255, 255, 255, 0.2);
 }
 .todo-items-list .item-content {
@@ -97,10 +85,6 @@ i.icon-plus {
 .todo-items-list li[data-color="cyan"] .item-content {
   border-left-color: #00fff6;
 }
-label.label-checkbox input[type=checkbox]:checked + .item-media i.icon-form-checkbox:after {
-  background-color: transparent;
-  border: 1px solid #fff;
-}
 .popup {
   background: rgba(54, 1, 17, 0.7);
 }
@@ -127,7 +111,7 @@ label.label-checkbox input[type=checkbox]:checked + .item-media i.icon-form-chec
   border-color: #fff;
   color: #fff;
 }
-.popup .button:active {
+.popup .button.active-state {
   background: rgba(255, 255, 255, 0.1);
 }
 .popup span.color {
@@ -219,6 +203,6 @@ body.with-popup .statusbar-overlay {
   border-right-color: #9a0332;
   color: #fff;
 }
-.modal-button:active {
+.modal-button.active-state {
   background: #9a0332;
 }
