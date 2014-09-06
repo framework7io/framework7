@@ -321,6 +321,7 @@ app.swipeoutClose = function (el) {
 
     el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(function () {
         el.trigger('closed');
+        buttons.transform('');
         app.allowSwipeout = true;
     });
     for (var i = 0; i < buttons.length; i++) {
