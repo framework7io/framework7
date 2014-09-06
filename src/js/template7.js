@@ -13,6 +13,63 @@ window.Template7 = (function () {
         return typeof func === 'function';
     }
     var cache = {};
+    function helperToSlices(string) {
+        var helperParts = string.replace(/[{}#}]/g, '').split(' ');
+        var slices = [];
+        var shiftIndex, i, j;
+        for (i = 0; i < helperParts.length; i++) {
+            var part = helperParts[i];
+            if (i === 0) slices.push(part);
+            else {
+                if (part.indexOf('"') === 0) {
+                    // Plain String
+                    if (part.match(/"/g).length === 2) {
+                        // One word string
+                        slices.push(part);
+                    }
+                    else {
+                        // Find closed Index
+                        shiftIndex = 0;
+                        for (j = i + 1; j < helperParts.length; j++) {
+                            part += ' ' + helperParts[j];
+                            if (helperParts[j].indexOf('"') >= 0) {
+                                shiftIndex = j;
+                                slices.push(part);
+                                break;
+                            }
+                        }
+                        if (shiftIndex) i = shiftIndex;
+                    }
+                }
+                else {
+                    if (part.indexOf('=') > 0) {
+                        // Hash
+                        var hashParts = part.split('=');
+                        var hashName = hashParts[0];
+                        var hashContent = hashParts[1];
+                        if (hashContent.match(/"/g).length !== 2) {
+                            shiftIndex = 0;
+                            for (j = i + 1; j < helperParts.length; j++) {
+                                hashContent += ' ' + helperParts[j];
+                                if (helperParts[j].indexOf('"') >= 0) {
+                                    shiftIndex = j;
+                                    break;
+                                }
+                            }
+                            if (shiftIndex) i = shiftIndex;
+                        }
+                        var hash = [hashName, hashContent.replace(/"/g,'')];
+                        slices.push(hash);
+                    }
+                    else {
+                        // Plain variable
+                        slices.push(part);
+                    }
+                }
+            }
+        }
+        return slices;
+    }
     function stringToBlocks(string) {
         var blocks = [], i, j, k;
         if (!string) return [];
@@ -39,19 +96,21 @@ window.Template7 = (function () {
                     continue;
                 }
                 // Helpers
-                var helperSlices = block.replace(/[{}#}]/g, '').split(' ');
+                var helperSlices = helperToSlices(block);
                 var helperName = helperSlices[0];
-                var helperContext = helperSlices[1];
+                var helperContext = [];
                 var helperHash = {};
-                
-                if (helperSlices.length > 1) {
-                    var hashRes;
-                    var reg = new RegExp(/\b(\w+)=["']([^"']+)(?=["'])/g);
-                    while ((hashRes = reg.exec(block)) !== null) {
-                        helperHash[hashRes[1]] = hashRes[2] === 'false' ? false : hashRes[2];
+                for (j = 1; j < helperSlices.length; j++) {
+                    var slice = helperSlices[j];
+                    if (isArray(slice)) {
+                        // Hash
+                        helperHash[slice[0]] = slice[1] === 'false' ? false : slice[1];
+                    }
+                    else {
+                        helperContext.push(slice);
                     }
                 }
-                    
+                
                 if (block.indexOf('{#') >= 0) {
                     // Condition/Helper
                     var helperStartIndex = i;
@@ -152,6 +211,16 @@ window.Template7 = (function () {
                 
             return variable;
         }
+        function getCompiledArguments(contextArray, ctx) {
+            var arr = [];
+            for (var i = 0; i < contextArray.length; i++) {
+                if (contextArray[i].indexOf('"') === 0) arr.push(contextArray[i]);
+                else {
+                    arr.push(getCompileVar(contextArray[i], ctx));
+                }
+            }
+            return arr.join(', ');
+        }
         function compile(template, depth) {
             depth = depth || 1;
             template = template || t.template;
@@ -179,7 +248,7 @@ window.Template7 = (function () {
                     resultString += 'r +=\'' + (block.content).replace(/\n/g, '\\n').replace(/'/g, '\\' + '\'') + '\';';
                     continue;
                 }
-                var variable;
+                var variable, compiledArguments;
                 // Variable block
                 if (block.type === 'variable') {
                     variable = getCompileVar(block.contextName, ctx);
@@ -188,11 +257,11 @@ window.Template7 = (function () {
                 // Helpers block
                 if (block.type === 'helper') {
                     if (block.helperName in t.helpers) {
-                        variable = getCompileVar(block.contextName, ctx);
-                        resultString += 'r += (Template7.helpers.' + block.helperName + ').call(' + ctx + ', ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + '});';
+                        compiledArguments = getCompiledArguments(block.contextName, ctx);
+                        resultString += 'r += (Template7.helpers.' + block.helperName + ').call(' + ctx + ', ' + compiledArguments + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + '});';
                     }
                     else {
-                        if (block.contextName) {
+                        if (block.contextName.length > 0) {
                             throw new Error('Template7: Missing helper: "' + block.helperName + '"');
                         }
                         else {
@@ -244,16 +313,14 @@ window.Template7 = (function () {
                 var ret = '', i = 0;
                 if (isFunction(context)) { context = context.call(this); }
                 if (isArray(context)) {
-                    if (options.hash.reverse && !context.t7Reversed) {
+                    if (options.hash.reverse) {
                         context = context.reverse();
-                        context.t7Reversed = true;
-                    }
-                    if (!options.hash.reverse && context.t7Reversed) {
-                        context = context.reverse();
-                        context.t7Reversed = false;
                     }
                     for (i = 0; i < context.length; i++) {
                         ret += options.fn(context[i], {first: i === 0, last: i === context.length - 1, index: i});
+                    }
+                    if (options.hash.reverse) {
+                        context = context.reverse();
                     }
                 }
                 else {
