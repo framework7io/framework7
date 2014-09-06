@@ -46,9 +46,15 @@ app.addNotification = function (params) {
     var item = $(_tempNotificationElement).children();
 
     item.on('click', function (e) {
-        if (params.onClick) params.onClick(e, item[0]);
-        if (params.closeOnClick) app.closeNotification(item[0]);
-        else if ($(e.target).is('.close-notification') || $(e.target).parents('.close-notification').length > 0) app.closeNotification(item[0]);
+        var close = false;
+        if ($(e.target).is('.close-notification') || $(e.target).parents('.close-notification').length > 0) {
+            close = true;
+        }
+        else {
+            if (params.onClick) params.onClick(e, item[0]);
+            if (params.closeOnClick) close = true;
+        }
+        if (close) app.closeNotification(item[0]);
     });
     if (params.onClose) {
         item.data('f7NotificationOnClose', function () {
