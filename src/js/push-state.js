@@ -8,13 +8,13 @@ app.pushStateClearQueue = function () {
     var animatePages;
     if (app.params.pushStateNoAnimation === true) animatePages = false;
     if (queue.action === 'goBack') {
-        app.goBack(queue.view, undefined, animatePages, false, false);
+        app.goBack(queue.view, {animatePages: animatePages});
     }
     if (queue.action === 'loadPage') {
-        app.loadPage(queue.view, queue.stateUrl, animatePages, false);
+        app.loadPage(queue.view, {url: queue.stateUrl, animatePages: animatePages, pushState: false});
     }
     if (queue.action === 'loadContent') {
-        app.loadContent(queue.view, queue.stateContent, animatePages, false);
+        app.loadPage(queue.view, {content: queue.stateContent, animatePages: animatePages, pushState: false});
     }
 };
 
@@ -46,7 +46,7 @@ app.initPushState = function () {
             if (mainView.history.indexOf(stateUrl) >= 0) {
                 // Go Back
                 if (mainView.allowPageChange) {
-                    app.goBack(mainView, undefined, animatePages, false, false);
+                    app.goBack(mainView, {url:undefined, animatePages: animatePages, pushState: false, preloadOnly:false});
                 }
                 else {
                     app.pushStateQueue.push({
@@ -58,7 +58,7 @@ app.initPushState = function () {
             else if (stateUrl && !stateContent) {
                 // Load Page
                 if (mainView.allowPageChange) {
-                    app.loadPage(mainView, stateUrl, animatePages, false);
+                    app.loadPage(mainView, {url:stateUrl, animatePages: animatePages, pushState: false});
                 }
                 else {
                     app.pushStateQueue.unshift({
@@ -71,7 +71,7 @@ app.initPushState = function () {
             else if (stateContent) {
                 // Load Page
                 if (mainView.allowPageChange) {
-                    app.loadContent(mainView, stateContent, animatePages, false);
+                    app.loadPage(mainView, {content:stateContent, animatePages: animatePages, pushState: false});
                 }
                 else {
                     app.pushStateQueue.unshift({

@@ -353,14 +353,26 @@ var View = function (selector, params) {
     if (view.main) app.mainView = view;
 
     // Load methods
-    view.loadPage = function (url, animatePages) {
-        return app.loadPage(view, url, animatePages);
+    view.loadPage = function (options) {
+        options = options || {};
+        if (typeof options === 'string') {
+            options = {url: options};
+        }
+        return app.loadPage(view, options);
     };
-    view.loadContent = function (content, animatePages) {
-        return app.loadContent(view, content, animatePages);
+    view.loadContent = function (options) {
+        options = options || {};
+        if (typeof options === 'string' || options.nodeType || 'length' in options) {
+            options = {content: options};
+        }
+        return app.loadPage(view, options);
     };
-    view.goBack = function (url, animatePages) {
-        return app.goBack(view, url, animatePages);
+    view.goBack = function (options) {
+        options = options || {};
+        if (typeof options === 'string' || options.nodeType || 'length' in options) {
+            options = {url: options};
+        }
+        return app.goBack(view, options);
     };
 
     // Bars methods
