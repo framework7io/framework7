@@ -353,20 +353,27 @@ var View = function (selector, params) {
     if (view.main) app.mainView = view;
 
     // Load methods
-    view.loadPage = function (options) {
-        options = options || {};
-        if (typeof options === 'string') {
-            options = {url: options};
-        }
-        return app.loadPage(view, options);
-    };
-    view.loadContent = function (options) {
-        options = options || {};
-        if (typeof options === 'string' || options.nodeType || 'length' in options) {
-            options = {content: options};
-        }
-        return app.loadPage(view, options);
-    };
+    var pageMethods = ('loadPage loadContent reloadPage reloadContent refresh').split(' ');
+    function createPageMethod (methodName) {
+        view[methodName] = function (options) {
+            options = options || {};
+            var isContentMethod = methodName.indexOf('Content') > 0;
+            if (typeof options === 'string' || options.nodeType || 'length' in options) {
+                if (isContentMethod) options = {content: options};
+                else options = {url: options};
+            }
+            if (methodName.indexOf('reload') >= 0) options.reload = true;
+            if (methodName === 'refresh') {
+                options.url = view.url;
+                options.reload = true;
+            }
+            return app.loadPage(view, options);
+        };
+    }
+    for (var i = 0; i < pageMethods.length; i++) {
+        createPageMethod(pageMethods[i]);
+    }
+    
     view.goBack = function (options) {
         options = options || {};
         if (typeof options === 'string' || options.nodeType || 'length' in options) {
