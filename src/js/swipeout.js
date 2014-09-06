@@ -246,6 +246,14 @@ app.initSwipeout = function (swipeoutEl) {
         swipeOutContent.transitionEnd(function (e) {
             if (opened && action === 'open' || closed && action === 'close') return;
             swipeOutEl.trigger(action === 'open' ? 'opened' : 'closed');
+            if (opened && action === 'close') {
+                if (actionsRight.length > 0) {
+                    buttonsRight.transform('');
+                }
+                if (actionsLeft.length > 0) {
+                    buttonsLeft.transform('');
+                }
+            }
         });
     }
     if (swipeoutEl) {
