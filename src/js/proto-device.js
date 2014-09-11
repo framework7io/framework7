@@ -36,6 +36,12 @@ Framework7.prototype.device = (function () {
         device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
         device.iphone = true;
     }
+    // iOS 8+ changed UA
+    if (device.ios && device.osVersion && ua.indexOf('Version/') >= 0) {
+        if (device.osVersion.split('.')[0] === '10') {
+            device.osVersion = ua.toLowerCase().split('version/')[1].split(' ')[0];
+        }
+    }
 
     // Webview
     device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
@@ -53,20 +59,7 @@ Framework7.prototype.device = (function () {
     var windowWidth = $(window).width();
     var windowHeight = $(window).height();
     device.statusBar = false;
-    if (
-        device.webView &&
-        (
-            // iPhone 5
-            (windowWidth === 320 && windowHeight === 568) ||
-            (windowWidth === 568 && windowHeight === 320) ||
-            // iPhone 4
-            (windowWidth === 320 && windowHeight === 480) ||
-            (windowWidth === 480 && windowHeight === 320) ||
-            // iPad
-            (windowWidth === 768 && windowHeight === 1024) ||
-            (windowWidth === 1024 && windowHeight === 768)
-        )
-    ) {
+    if (device.webView && (windowWidth * windowHeight === screen.width * screen.height)) {
         device.statusBar = true;
     }
     else {
