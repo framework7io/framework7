@@ -11,7 +11,8 @@ var View = function (selector, params) {
         swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
         swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
         swipeBackPageThreshold: app.params.swipeBackPageThreshold,
-        animatePages: app.params.animatePages
+        animatePages: app.params.animatePages,
+        preloadPreviousPage: app.params.preloadPreviousPage
     };
 
     params = params || {};
