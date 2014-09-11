@@ -353,19 +353,29 @@ var View = function (selector, params) {
     if (view.main) app.mainView = view;
 
     // Load methods
-    var pageMethods = ('loadPage loadContent reloadPage reloadContent refresh').split(' ');
+    var pageMethods = ('loadPage loadContent reloadPage reloadContent reloadPreviousPage reloadPreviousContent refreshPage refreshPreviousPage').split(' ');
     function createPageMethod (methodName) {
         view[methodName] = function (options) {
             options = options || {};
-            var isContentMethod = methodName.indexOf('Content') > 0;
+            var method = methodName.toLowerCase();
+            var isContent = method.indexOf('content') > 0;
             if (typeof options === 'string' || options.nodeType || 'length' in options) {
-                if (isContentMethod) options = {content: options};
+                if (isContent) options = {content: options};
                 else options = {url: options};
             }
-            if (methodName.indexOf('reload') >= 0) options.reload = true;
-            if (methodName === 'refresh') {
-                options.url = view.url;
+            if (method.indexOf('reload') >= 0) {
                 options.reload = true;
+                if (method.indexOf('previous') >= 0) {
+                    options.reloadPrevious = true;
+                }
+            }
+            if (method.indexOf('refresh') >= 0) {
+                options.url = method.indexOf('previous') >= 0 ? view.history[view.history.length - 2] : view.url;
+                options.reload = true;
+                options.ignoreCache = true;
+                if (method.indexOf('previous') >= 0) {
+                    options.reloadPrevious = true;
+                }
             }
             return app.loadPage(view, options);
         };
@@ -373,7 +383,7 @@ var View = function (selector, params) {
     for (var i = 0; i < pageMethods.length; i++) {
         createPageMethod(pageMethods[i]);
     }
-    
+
     view.goBack = function (options) {
         options = options || {};
         if (typeof options === 'string' || options.nodeType || 'length' in options) {
@@ -402,14 +412,12 @@ var View = function (selector, params) {
         if (pushStateRoot) {
             pushStateUrl = docLocation.split(app.params.pushStateRoot + pushStateSeparator)[1];
         }
-
         else if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
             pushStateUrl = docLocation.split(pushStateSeparator)[1];
         }
-        var pushStateAnimatePages;
-        if (app.params.pushStateNoAnimation === true) pushStateAnimatePages = false;
+        var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
         if (pushStateUrl) {
-            app.loadPage(view, pushStateUrl, pushStateAnimatePages, false);
+            app.loadPage(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
         }
             
     }

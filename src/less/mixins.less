@@ -55,7 +55,22 @@
     display: -webkit-flex;
     display: flex;
 }
-.flex-wrap(@fw) {
+.flex-wrap(@fw) when (@fw = nowrap) {
+    -webkit-box-lines: single;
+    -moz-box-lines: single;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: none;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+.flex-wrap(@fw) when (@fw = wrap) {
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.flex-wrap(@fw) when not (@fw = wrap) and not (@fw = nowrap) {
     -webkit-flex-wrap: @fw;
     -ms-flex-wrap: @fw;
     flex-wrap: @fw;
