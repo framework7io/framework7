@@ -6,7 +6,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
     title Weather7
-    link(rel="stylesheet", href="../../build/css/framework7.css")
+    link(rel="stylesheet", href="../../dist/css/framework7.min.css")
     link(rel="stylesheet", href="css/weather7.css")
     // Favicon
     link(href="img/icon-57.png", rel="shortcut icon")
@@ -108,6 +108,6 @@ html.with-statusbar-overlay(manifest="manifest.php")
                 {{/each}}
 
     // Path to Framework7 Library JS
-    script(type="text/javascript", src="../../build/js/framework7.js")
+    script(type="text/javascript", src="../../dist/js/framework7.min.js")
     // Path to your app js
     script(type="text/javascript", src="js/weather7.js")
