@@ -540,6 +540,16 @@ function _load(view, url, content, options) {
         }
         app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
         if (app.params.pushState) app.pushStateClearQueue();
+        if (!(view.params.swipeBackPage || view.params.preloadPreviousPage)) {
+            if (view.params.domCache) {
+                oldPage.addClass('cached');
+                oldNavbarInner.addClass('cached');
+            }
+            else {
+                oldPage.remove();
+                oldNavbarInner.remove();
+            }
+        }
     }
 
     if (animatePages) {
@@ -841,7 +851,7 @@ app.afterGoBack = function (view, oldPage, newPage) {
         var oldNavbar = $(inners[1]).remove();
         var newNavbar = $(inners[0]).removeClass('navbar-on-left navbar-from-left-to-center').addClass('navbar-on-center');
 
-        if (app.params.preloadPreviousPage && view.params.domCache) {
+        if (view.params.preloadPreviousPage && view.params.domCache) {
             var cachedNavs = $(view.container).find('.navbar-inner.cached');
             $(cachedNavs[cachedNavs.length - 1]).removeClass('cached');
         }
@@ -858,7 +868,7 @@ app.afterGoBack = function (view, oldPage, newPage) {
     if (app.params.pushState) app.pushStateClearQueue();
 
     // Preload previous page
-    if (app.params.preloadPreviousPage) {
+    if (view.params.preloadPreviousPage) {
         if (view.params.domCache) {
             var cachedPages = $(view.container).find('.page.cached');
             $(cachedPages[cachedPages.length - 1]).removeClass('cached');
