@@ -166,10 +166,24 @@ app.initFastClicks = function () {
     }
     function handleTouchMove(e) {
         if (!trackClick) return;
-        trackClick = false;
-        targetElement = null;
-        isMoved = true;
-
+        var _isMoved = false;
+        var distance = app.params.fastClicksDistanceThreshold;
+        if (distance) {
+            var pageX = e.targetTouches[0].pageX;
+            var pageY = e.targetTouches[0].pageY;
+            if (Math.abs(pageX - touchStartX) > distance ||  Math.abs(pageY - touchStartY) > distance) {
+                _isMoved = true;
+            }
+        }
+        else {
+            _isMoved = true;
+        }
+        if (_isMoved) {
+            trackClick = false;
+            targetElement = null;
+            isMoved = true;
+        }
+            
         if (app.params.activeState) {
             clearTimeout(activeTimeout);
             removeActive();
