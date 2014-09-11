@@ -173,10 +173,20 @@ app.initClickEvents = function () {
             }
             if (!view) return;
 
+            var animatePages;
+            if (clicked.attr('data-animatePages')) {
+                animatePages = toBoolean(clicked.attr('data-animatePages'));
+            }
+            else {
+                if (clicked.hasClass('with-animation')) animatePages = true;
+                if (clicked.hasClass('no-animation')) animatePages = false;
+            }
             var options = {
-                animatePages: toBoolean(clicked.attr('data-animatePages')),
+                animatePages: animatePages,
                 ignoreCache: toBoolean(clicked.attr('data-ignoreCache')),
                 forceUrl: toBoolean(clicked.attr('data-forceUrl')),
+                reload: toBoolean(clicked.attr('data-reload')),
+                reloadPrevious: toBoolean(clicked.attr('data-reloadPrevious')),
                 url: clicked.attr('href')
             };
             
