@@ -502,6 +502,17 @@ function _load(view, url, content, options) {
     view.url = url;
     view.history.push(url);
 
+    // Unique history
+    var history = false;
+    var historyBecameUnique = false;
+    if (view.params.uniqueHistory) {
+        if (view.history.indexOf(url) !== view.history.lastIndexOf(url)) {
+            view.history = view.history.slice(0, view.history.indexOf(url));
+            view.history.push(url);
+            historyBecameUnique = true;
+        }
+    }
+
     // Append New Page
     pagesContainer.append(newPage[0]);
 
@@ -549,6 +560,9 @@ function _load(view, url, content, options) {
                 oldPage.remove();
                 oldNavbarInner.remove();
             }
+        }
+        if (view.params.uniqueHistory && historyBecameUnique) {
+            view.refreshPreviousPage();
         }
     }
 

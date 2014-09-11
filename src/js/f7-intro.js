@@ -17,6 +17,7 @@ window.Framework7 = function (params) {
         cacheIgnoreGetParameters: false,
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
+        uniqueHistory: false,
         // Push State
         pushState: false,
         pushStateRoot: undefined,
