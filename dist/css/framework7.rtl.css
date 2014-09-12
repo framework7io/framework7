@@ -61,12 +61,9 @@ html {
 .list-block.sortable-opened .item-link .item-title-row {
   background-image: none;
 }
-.list-block .swipeout-actions-inner {
-  -webkit-box-direction: reverse;
-  -moz-box-direction: reverse;
-  -ms-flex-direction: row-reverse;
-  -webkit-flex-direction: row-reverse;
-  flex-direction: row-reverse;
+.list-block .swipeout-actions-left,
+.list-block .swipeout-actions-right {
+  direction: ltr;
 }
 /* === Toolbars === */
 .navbar a.link i + span,
@@ -360,9 +357,59 @@ label.label-radio input[type="radio"]:checked ~ .item-inner {
   -webkit-align-items: flex-start;
   align-items: flex-start;
 }
-/* === Icons === */
+/* === Back Icons === */
 i.icon.icon-back {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23007aff' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-gray,
+i.icon-back.theme-gray,
+.theme-gray i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%238e8e93' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-white,
+i.icon-back.theme-white,
+.theme-white i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23ffffff' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-black,
+i.icon-back.theme-black,
+.theme-black i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23000000' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-lightblue,
+i.icon-back.theme-lightblue,
+.theme-lightblue i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%235ac8fa' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-yellow,
+i.icon-back.theme-yellow,
+.theme-yellow i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23ffcc00' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-orange,
+i.icon-back.theme-orange,
+.theme-orange i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23ff9500' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-pink,
+i.icon-back.theme-pink,
+.theme-pink i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23ff2d55' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-blue,
+i.icon-back.theme-blue,
+.theme-blue i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23007aff' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-green,
+i.icon-back.theme-green,
+.theme-green i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%234cd964' transform='translate(12,20) rotate(180)'/></svg>");
+}
+i.icon-back.color-red,
+i.icon-back.theme-red,
+.theme-red i.icon-back {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23ff3b30' transform='translate(12,20) rotate(180)'/></svg>");
 }
 /* === Accordion === */
 .list-block .accordion-toggle .item-inner {

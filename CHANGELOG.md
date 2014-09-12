@@ -1,5 +1,55 @@
 # Change Log
 
+## Framework7 v0.9.6 - Updated on September 12, 2014
+  * Template7
+    * Now Framework7 comes with its own template engine - Template7. Which has totally the same syntax as Handlebars, but a way faster in templates compilation and rendering, especially in mobile Safari (up to 4 times faster!)
+    * It is now globally available in window as `Template7` function
+  * Modals
+    * App's `modalTemplate` and `modalActionsTemplate` now accept Template7 html template string
+  * Swipeouts
+    * Totally reworked swipeouts layout (not compatible with previous F7 versions) and behavior to make them like in iOS 8. Now they could be on both sides (on left or/and right) and support overswipe to immediately trigger action without click on action button
+  * Status bar overlay now detected correctly on iPhone 6 and 6 plus
+  * Slider
+    * New .update() method to update slides, positions, sizes, pagination if you add slides dynamically
+    * New onTransitionStart/End callbacks parameters
+    * Totally prevent click events and custom handlers when `preventClicks` enabled
+  * Accordion
+    * Now triggers "open", "opened", "close", "closed" events
+  * Action Sheet
+    * Now could be automatically converted to Popover on iPad if you call it with new two-arguments syntax .actionSheet(target, buttons)
+  * Pull To Refresh
+    * Pull to refresh content receives additional "pull-down" class when pulled down
+    * Fixed issues on iOS 8
+  * Fast Clicks
+    * New "Active state" feature to make :active state behavior like in apps not like in web. With two additional App parameters: `activeState` and `activeStateElements`. It is enabled by default
+    * Now fast clicks could be disabled on some specific element with "no-fastclick" class
+    * New `fastClicksDistanceThreshold` app parameter to set distance threshold to prevent short taps 
+    * Fixed issue with input:file
+  * Dom7
+    * Support to add event listeners with "capture", so the full syntax now is `.on(eventName, target, listener, capture)` or `.on(eventName, listener, capture)`
+    * New `.once` method to add event listener that should be executed only once
+    * JSONP requests now support "error" callback and script load timeout
+  * Notifications
+    * Prevent .onClick callback function when user clicks on "close" icon
+  * Highly reworked App router:
+    * New `uniqueHistory` App/View initialization parameter, that will remove duplicate pages from View history and from DOM
+    * Now, there will be only one page in View's DOM if `swipeBackPage` and `preloadPreviousPage` App/View parameters are set to `false`
+    * New View's `.loadPage(options)` method that accepts object with options: `animatePages`, `ignoreCache`, `url`, `content`, `forceUrl`, `reload`, `reloadPrevious`
+    * New View's `.goBack(options)` method that accepts object with options: `animatePages`, `ignoreCache`, `url`, `content`, `forceUrl`, `reload`, `reloadPrevious`
+    * Links now also support these options as data- attributes, like `<a href="#" data-animatePages="true" data-ignoreCache="true" ... >`
+    * New View's .loadPage's shortcuts methods: 
+      * `.loadPage(url)` - load page by specified url
+      * `.loadContent(content)` - load page with specified content
+      * `.reloadPage(url)` - reload currenly active view's page from specified URL
+      * `.reloadPreviousPage(url)` - the same but for previous (left) view's page
+      * `.reloadContent(content)`  - reload currenly active view's page with passed HTML content
+      * `.reloadPreviousContent(content)` - the same but for previous (left) view's page
+      * `.refreshPage()` - refresh currenly active view's page from specified URL
+      * `.refreshPreviousPage()` - the same but for previous (left) view's page
+  * Tab bar
+    * New additional classes `tabbar-labels-fixed` and `tabbar-labels-through` (for Views, View, Pages and Page) for pages with tab bar to set required bottom padding on `page-content`
+  * ToDo7 / Weather7 apps updated with support of new swipeouts and now they use Template7 for templating
+
 ## Framework7 v0.9.5 - Updated on August 15, 2014
   * Colors
     * Now Framework7 supports color themes: 10 default iOS colors (red, green, blue, lightblue, gray, white, black, orange, yellow, pink) that can be applied to any interactive elements (icons, links, buttons, form elements)  

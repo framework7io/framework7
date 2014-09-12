@@ -67,19 +67,21 @@ Framework7 Layouts Themes
 .popover.layout-dark .popover-angle:after {
   background: rgba(0, 0, 0, 0.8);
 }
-.layout-dark .popover-inner > .list-block ul {
+.layout-dark .popover .list-block ul,
+.popover.layout-dark .list-block ul {
   background: none;
+}
+.layout-dark .actions-popover .list-block ul {
+  border-color: #393939;
+}
+.layout-dark .actions-popover .actions-popover-label {
+  border-bottom-color: #393939;
 }
 .layout-dark li.sorting {
   background-color: #29292f;
 }
-.layout-dark .swipeout-content {
-  background: #1c1d1f;
-}
-.layout-dark .swipeout-actions {
-  border-bottom-color: #393939;
-}
-.layout-dark .swipeout-actions-inner a {
+.layout-dark .swipeout-actions-left a,
+.layout-dark .swipeout-actions-right a {
   background-color: #444444;
 }
 .layout-dark .item-inner,
@@ -89,9 +91,12 @@ Framework7 Layouts Themes
 .layout-dark .item-after {
   color: #bbbbbb;
 }
-.layout-dark .item-link:active,
-.layout-dark label.label-checkbox:active,
-.layout-dark label.label-radio:active {
+html:not(.watch-active-state) .layout-dark .item-link:active,
+html:not(.watch-active-state) .layout-dark label.label-checkbox:active,
+html:not(.watch-active-state) .layout-dark label.label-radio:active,
+.layout-dark .item-link.active-state,
+.layout-dark label.label-checkbox.active-state,
+.layout-dark label.label-radio.active-state {
   background-color: #29292f;
 }
 .layout-dark .item-link.list-button {
@@ -206,13 +211,8 @@ Framework7 Layouts Themes
 .layout-white li.sorting {
   background-color: #eeeeee;
 }
-.layout-white .swipeout-content {
-  background: #ffffff;
-}
-.layout-white .swipeout-actions {
-  border-bottom-color: #dddddd;
-}
-.layout-white .swipeout-actions-inner a {
+.layout-white .swipeout-actions-left a,
+.layout-white .swipeout-actions-right a {
   background-color: #c7c7cc;
 }
 .layout-white .item-inner,
@@ -222,9 +222,12 @@ Framework7 Layouts Themes
 .layout-white .item-after {
   color: #8e8e93;
 }
-.layout-white .item-link:active,
-.layout-white label.label-checkbox:active,
-.layout-white label.label-radio:active {
+html:not(.watch-active-state) .layout-white .item-link:active,
+html:not(.watch-active-state) .layout-white label.label-checkbox:active,
+html:not(.watch-active-state) .layout-white label.label-radio:active,
+.layout-white .item-link.active-state,
+.layout-white label.label-checkbox.active-state,
+.layout-white label.label-radio.active-state {
   background-color: #eeeeee;
 }
 .layout-white .item-link.list-button {

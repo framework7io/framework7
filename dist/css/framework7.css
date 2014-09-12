@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: August 15, 2014
+ * Released on: September 12, 2014
 */
 html,
 body {
@@ -70,9 +70,15 @@ p {
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
   justify-content: space-between;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
 }
 .row > [class*="col-"] {
   -webkit-box-sizing: border-box;
@@ -631,8 +637,10 @@ html.android .page-from-center-to-right {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
-.navbar a.link:active,
-.toolbar a.link:active {
+html:not(.watch-active-state) .navbar a.link:active,
+html:not(.watch-active-state) .toolbar a.link:active,
+.navbar a.link.active-state,
+.toolbar a.link.active-state {
   opacity: 0.3;
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
@@ -791,6 +799,9 @@ html.retina.ios-gt-7 .toolbar {
   -webkit-flex-direction: column;
   flex-direction: column;
 }
+.tabbar i.icon {
+  height: 30px;
+}
 .tabbar-labels {
   height: 50px;
 }
@@ -826,7 +837,7 @@ html.retina.ios-gt-7 .toolbar {
     min-width: 105px;
   }
   .tabbar-labels {
-    height: 55px;
+    height: 56px;
   }
   .tabbar-labels span.tabbar-label {
     font-size: 14px;
@@ -941,17 +952,25 @@ html.retina.ios-gt-7 .toolbar {
 .views > .toolbar {
   position: absolute;
 }
-.navbar-through .page-content {
-  padding-top: 44px;
-}
-.toolbar-through .page-content {
-  padding-bottom: 44px;
-}
+.navbar-through .page-content,
 .navbar-fixed .page-content {
   padding-top: 44px;
 }
-.toolbar-fixed .page-content {
+.toolbar-through .page-content,
+.toolbar-fixed .page-content,
+.tabbar-through .page-content,
+.tabbar-fixed .page-content {
   padding-bottom: 44px;
+}
+.tabbar-labels-fixed .page-content,
+.tabbar-labels-through .page-content {
+  padding-bottom: 50px;
+}
+@media all and (min-width: 768px) {
+  .tabbar-labels-fixed .page-content,
+  .tabbar-labels-through .page-content {
+    padding-bottom: 56px;
+  }
 }
 .hidden-navbar .navbar {
   -webkit-transition-duration: 400ms;
@@ -1082,7 +1101,8 @@ html.retina.ios-gt-7 .searchbar {
   opacity: 1;
   pointer-events: auto;
 }
-.searchbar.searchbar-active .searchbar-cancel:active {
+html:not(.watch-active-state) .searchbar.searchbar-active .searchbar-cancel:active,
+.searchbar.searchbar-active .searchbar-cancel.active-state {
   opacity: 0.3;
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
@@ -1487,7 +1507,10 @@ html.retina.ios-gt-7 .content-block-inner {
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
+  -webkit-box-lines: single;
+  -moz-box-lines: single;
   -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: none;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
   -webkit-box-sizing: border-box;
@@ -1592,12 +1615,14 @@ html.retina.ios-gt-7 .content-block-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='%23c7c7cc'/></svg>");
   background-size: 10px 20px;
 }
-.list-block .item-link:active {
+html:not(.watch-active-state) .list-block .item-link:active,
+.list-block .item-link.active-state {
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
   background-color: #d9d9d9;
 }
-.list-block .item-link:active .item-inner {
+html:not(.watch-active-state) .list-block .item-link:active .item-inner,
+.list-block .item-link.active-state .item-inner {
   border-bottom-color: transparent;
 }
 .list-block .item-link.list-button {
@@ -1633,8 +1658,12 @@ html.retina.ios-gt-7 .content-block-inner {
   font-size: 14px;
   color: #8f8f94;
 }
-.list-block .swipeout.deleting {
+.list-block .swipeout {
   overflow: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.list-block .swipeout.deleting {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
@@ -1643,40 +1672,36 @@ html.retina.ios-gt-7 .content-block-inner {
   -ms-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
-.list-block .swipeout.transitioning .swipeout-content {
-  -webkit-transition-duration: 300ms;
-  transition-duration: 300ms;
+.list-block .swipeout.transitioning .swipeout-content,
+.list-block .swipeout.transitioning .swipeout-actions-right a,
+.list-block .swipeout.transitioning .swipeout-actions-left a,
+.list-block .swipeout.transitioning .swipeout-overswipe {
+  -webkit-transition: 300ms;
+  transition: 300ms;
 }
 .list-block .swipeout-content {
   position: relative;
   z-index: 10;
-  background: #fff;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
-.list-block .swipeout-actions {
-  border-bottom: 1px solid #c8c7cc;
-  position: absolute;
-  z-index: 0;
-  right: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+.list-block .swipeout-overswipe {
+  -webkit-transition: 200ms left;
+  transition: 200ms left;
 }
-.list-block .swipeout-actions-inner {
+.list-block .swipeout-actions-left,
+.list-block .swipeout-actions-right {
   position: absolute;
-  right: 0;
   top: 0;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  -webkit-transform: translate3d(0%, 0, 0);
+  -ms-transform: translate3d(0%, 0, 0);
+  transform: translate3d(0%, 0, 0);
 }
-.list-block .swipeout-actions-inner a {
+.list-block .swipeout-actions-left a,
+.list-block .swipeout-actions-right a {
   padding: 0 30px;
   color: #fff;
   background: #c7c7cc;
@@ -1688,9 +1713,42 @@ html.retina.ios-gt-7 .content-block-inner {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+  position: relative;
+  left: 0;
 }
-.list-block .swipeout-actions-inner a.swipeout-delete {
+.list-block .swipeout-actions-left a:after,
+.list-block .swipeout-actions-right a:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 600%;
+  height: 100%;
+  background: inherit;
+  z-index: -1;
+}
+.list-block .swipeout-actions-left a.swipeout-delete,
+.list-block .swipeout-actions-right a.swipeout-delete {
   background: #ff3b30;
+}
+.list-block .swipeout-actions-right {
+  right: 0%;
+  -webkit-transform: translate3d(100%, 0, 0);
+  -ms-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+.list-block .swipeout-actions-right a:after {
+  left: 100%;
+  margin-left: -1px;
+}
+.list-block .swipeout-actions-left {
+  left: 0%;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+.list-block .swipeout-actions-left a:after {
+  right: 100%;
+  margin-right: -1px;
 }
 .list-block .item-subtitle {
   font-size: 15px;
@@ -1835,15 +1893,11 @@ html.retina.ios-gt-7 .content-block-inner {
   border-bottom: none;
 }
 .list-block li:last-child .item-inner,
-.list-block li:last-child li:last-child .item-inner,
-.list-block li:last-child .swipeout-actions,
-.list-block li:last-child li:last-child .swipeout-actions {
+.list-block li:last-child li:last-child .item-inner {
   border-bottom: none;
 }
 .list-block li li:last-child .item-inner,
-.list-block li:last-child li .item-inner,
-.list-block li li:last-child .swipeout-actions,
-.list-block li:last-child li .swipeout-actions {
+.list-block li:last-child li .item-inner {
   border-bottom: 1px solid #c8c7cc;
 }
 html.retina.ios-gt-7 .list-block ul {
@@ -1851,9 +1905,6 @@ html.retina.ios-gt-7 .list-block ul {
   border-bottom-width: 0.5px;
 }
 html.retina.ios-gt-7 .list-block li:not(:last-child) .item-inner {
-  border-bottom-width: 0.5px;
-}
-html.retina.ios-gt-7 .swipeout-actions {
   border-bottom-width: 0.5px;
 }
 html.retina.ios-gt-7 .item-divider {
@@ -2064,7 +2115,8 @@ input[type="submit"].button,
 input[type="button"].button {
   width: 100%;
 }
-.button:active {
+html:not(.watch-active-state) .button:active,
+.button.active-state {
   background: rgba(0, 122, 255, 0.15);
 }
 .button.button-round {
@@ -2084,7 +2136,8 @@ input[type="button"].button {
   background: #007aff;
   border: none;
 }
-.button.button-fill:active {
+html:not(.watch-active-state) .button.button-fill:active,
+.button.button-fill.active-state {
   opacity: 0.8;
 }
 .buttons-row {
@@ -2095,7 +2148,10 @@ input[type="button"].button {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  -webkit-box-lines: single;
+  -moz-box-lines: single;
   -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: none;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
 }
@@ -2258,14 +2314,18 @@ label.label-radio {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
-label.label-checkbox:active,
-label.label-radio:active {
+html:not(.watch-active-state) label.label-checkbox:active,
+html:not(.watch-active-state) label.label-radio:active,
+label.label-checkbox.active-state,
+label.label-radio.active-state {
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
   background-color: #d9d9d9;
 }
-label.label-checkbox:active .item-inner,
-label.label-radio:active .item-inner {
+html:not(.watch-active-state) label.label-checkbox:active .item-inner,
+html:not(.watch-active-state) label.label-radio:active .item-inner,
+label.label-checkbox.active-state .item-inner,
+label.label-radio.active-state .item-inner {
   border-bottom-color: transparent;
 }
 .smart-select select {
@@ -2284,12 +2344,14 @@ label.label-radio:active .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='%23c7c7cc'/></svg>");
   background-size: 10px 20px;
 }
-.list-block .accordion-item-toggle:active {
+html:not(.watch-active-state) .list-block .accordion-item-toggle:active,
+.list-block .accordion-item-toggle.active-state {
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
   background-color: #d9d9d9;
 }
-.list-block .accordion-item-toggle:active > .item-inner {
+html:not(.watch-active-state) .list-block .accordion-item-toggle:active > .item-inner,
+.list-block .accordion-item-toggle.active-state > .item-inner {
   border-bottom-color: transparent;
 }
 .list-block .accordion-item-toggle .item-inner,
@@ -2348,6 +2410,12 @@ label.label-radio:active .item-inner {
 .popup-overlay.modal-overlay-visible {
   visibility: visible;
   opacity: 1;
+}
+html.ios .modal-overlay.modal-overlay-visible,
+html.ios .preloader-indicator-overlay.modal-overlay-visible,
+html.ios .popup-overlay.modal-overlay-visible {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .popup-overlay {
   z-index: 10200;
@@ -2451,7 +2519,8 @@ label.label-radio:active .item-inner {
 .modal-button.modal-button-bold {
   font-weight: 500;
 }
-.modal-button:active {
+html:not(.watch-active-state) .modal-button:active,
+.modal-button.active-state {
   background: #d4d4d4;
 }
 .modal-no-buttons .modal-inner {
@@ -2538,7 +2607,8 @@ label.label-radio:active .item-inner {
   font-size: 20px;
   color: #007aff;
 }
-.actions-modal-button:active {
+html:not(.watch-active-state) .actions-modal-button:active,
+.actions-modal-button.active-state {
   background: #dcdcdc;
 }
 .actions-modal-label {
@@ -2618,6 +2688,33 @@ input.modal-text-input.modal-text-input-double + input.modal-text-input {
   transition-duration: 300ms;
   opacity: 1;
 }
+.popover .list-block {
+  margin: 0;
+}
+.popover .list-block ul {
+  background: none;
+}
+.popover .list-block:first-child ul {
+  border-top: none;
+  border-radius: 7px 7px 0 0;
+}
+.popover .list-block:first-child li:first-child a {
+  border-radius: 7px 7px 0 0;
+}
+.popover .list-block:last-child ul {
+  border-bottom: none;
+  border-radius: 0 0 7px 7px;
+}
+.popover .list-block:last-child li:last-child a {
+  border-radius: 0 0 7px 7px;
+}
+.popover .list-block:first-child:last-child li:first-child:last-child a,
+.popover .list-block:first-child:last-child ul:first-child:last-child {
+  border-radius: 7px;
+}
+.popover .list-block + .list-block {
+  margin-top: 35px;
+}
 .popover-angle {
   width: 26px;
   height: 26px;
@@ -2674,21 +2771,22 @@ input.modal-text-input.modal-text-input-double + input.modal-text-input {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
-.popover-inner > .list-block {
-  margin: 0;
+.actions-popover .list-block + .list-block {
+  margin-top: 20px;
 }
-.popover-inner > .list-block ul {
-  border: none;
-  background: none;
+.actions-popover .list-block ul {
+  background: #fff;
 }
-.popover-inner > .list-block li:first-child a {
-  border-radius: 7px 7px 0 0;
+.actions-popover-label {
+  padding: 8px 10px;
+  color: #8a8a8a;
+  font-size: 13px;
+  line-height: 1.3;
+  text-align: center;
+  border-bottom: 1px solid #d2d2d6;
 }
-.popover-inner > .list-block li:last-child a {
-  border-radius: 0 0 7px 7px;
-}
-.popover-inner > .list-block li:first-child:last-child a {
-  border-radius: 7px;
+.actions-popover-label:last-child {
+  border-bottom: none;
 }
 .popup,
 .login-screen {
@@ -2809,6 +2907,9 @@ html.retina.ios-gt-7 .modal-button {
 }
 html.retina.ios-gt-7 .actions-modal-button,
 html.retina.ios-gt-7 .actions-modal-label {
+  border-bottom-width: 0.5px;
+}
+html.retina.ios-gt-7 .actions-popover-label {
   border-bottom-width: 0.5px;
 }
 html.retina.ios-gt-7 input.modal-text-input {
@@ -3358,6 +3459,9 @@ html.with-statusbar-overlay body .panel {
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
   transition-property: transform;
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .slider-container-vertical > .slider-wrapper {
   -webkit-box-orient: vertical;
@@ -3761,9 +3865,9 @@ body > .photo-browser .toolbar {
 .notifications .close-notification {
   width: 19px;
   height: 19px;
-  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19'><g><path fill='%23bcbfc4' d='M9.5,1C14.2,1,18,4.8,18,9.5S14.2,18,9.5,18S1,14.2,1,9.5S4.8,1,9.5,1 M9.5,0C4.3,0,0,4.3,0,9.5 S4.3,19,9.5,19S19,14.7,19,9.5S14.7,0,9.5,0L9.5,0z'/></g><line stroke='%23bcbfc4' stroke-miterlimit='10' x1='5.2' y1='5.2' x2='13.8' y2='13.8'/><line stroke='%23bcbfc4' stroke-miterlimit='10' x1='14.1' y1='4.9' x2='4.9' y2='14.1'/></svg>");
-  -webkit-background-size: 19px 19px;
-  background-size: 19px 19px;
+  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19 19'><g><path fill='%23bcbfc4' d='M9.5,1C14.2,1,18,4.8,18,9.5S14.2,18,9.5,18S1,14.2,1,9.5S4.8,1,9.5,1 M9.5,0C4.3,0,0,4.3,0,9.5 S4.3,19,9.5,19S19,14.7,19,9.5S14.7,0,9.5,0L9.5,0z'/></g><line stroke='%23bcbfc4' stroke-miterlimit='10' x1='5.2' y1='5.2' x2='13.8' y2='13.8'/><line stroke='%23bcbfc4' stroke-miterlimit='10' x1='14.1' y1='4.9' x2='4.9' y2='14.1'/></svg>") no-repeat center top;
+  -webkit-background-size: 100% auto;
+  background-size: 100% auto;
   position: relative;
 }
 .notifications .close-notification span {
@@ -3843,9 +3947,12 @@ a.color-gray {
 .theme-gray .button:not(.button-fill) {
   border-color: #8e8e93;
 }
-.color-gray.button:not(.button-fill):active,
-.color-gray.buttons-row .button:active,
-.theme-gray .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-gray.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-gray.buttons-row .button:active,
+html:not(.watch-active-state) .theme-gray .button:not(.button-fill):active,
+.color-gray.button:not(.button-fill).active-state,
+.color-gray.buttons-row .button.active-state,
+.theme-gray .button:not(.button-fill).active-state {
   background-color: rgba(142, 142, 147, 0.15);
 }
 .color-gray.button:not(.button-fill).active,
@@ -3915,7 +4022,8 @@ i.icon-bars.theme-gray,
 .bg-gray,
 .button.button-fill.bg-gray,
 a.bg-gray,
-.swipeout-actions a.bg-gray {
+.list-block .swipeout-actions-left a.bg-gray,
+.list-block .swipeout-actions-right a.bg-gray {
   background-color: #8e8e93;
 }
 .border-gray {
@@ -3938,9 +4046,12 @@ a.color-white {
 .theme-white .button:not(.button-fill) {
   border-color: #ffffff;
 }
-.color-white.button:not(.button-fill):active,
-.color-white.buttons-row .button:active,
-.theme-white .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-white.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-white.buttons-row .button:active,
+html:not(.watch-active-state) .theme-white .button:not(.button-fill):active,
+.color-white.button:not(.button-fill).active-state,
+.color-white.buttons-row .button.active-state,
+.theme-white .button:not(.button-fill).active-state {
   background-color: rgba(255, 255, 255, 0.15);
 }
 .color-white.button:not(.button-fill).active,
@@ -4010,7 +4121,8 @@ i.icon-bars.theme-white,
 .bg-white,
 .button.button-fill.bg-white,
 a.bg-white,
-.swipeout-actions a.bg-white {
+.list-block .swipeout-actions-left a.bg-white,
+.list-block .swipeout-actions-right a.bg-white {
   background-color: #ffffff;
 }
 .border-white {
@@ -4033,9 +4145,12 @@ a.color-black {
 .theme-black .button:not(.button-fill) {
   border-color: #000000;
 }
-.color-black.button:not(.button-fill):active,
-.color-black.buttons-row .button:active,
-.theme-black .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-black.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-black.buttons-row .button:active,
+html:not(.watch-active-state) .theme-black .button:not(.button-fill):active,
+.color-black.button:not(.button-fill).active-state,
+.color-black.buttons-row .button.active-state,
+.theme-black .button:not(.button-fill).active-state {
   background-color: rgba(0, 0, 0, 0.15);
 }
 .color-black.button:not(.button-fill).active,
@@ -4105,7 +4220,8 @@ i.icon-bars.theme-black,
 .bg-black,
 .button.button-fill.bg-black,
 a.bg-black,
-.swipeout-actions a.bg-black {
+.list-block .swipeout-actions-left a.bg-black,
+.list-block .swipeout-actions-right a.bg-black {
   background-color: #000000;
 }
 .border-black {
@@ -4128,9 +4244,12 @@ a.color-lightblue {
 .theme-lightblue .button:not(.button-fill) {
   border-color: #5ac8fa;
 }
-.color-lightblue.button:not(.button-fill):active,
-.color-lightblue.buttons-row .button:active,
-.theme-lightblue .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-lightblue.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-lightblue.buttons-row .button:active,
+html:not(.watch-active-state) .theme-lightblue .button:not(.button-fill):active,
+.color-lightblue.button:not(.button-fill).active-state,
+.color-lightblue.buttons-row .button.active-state,
+.theme-lightblue .button:not(.button-fill).active-state {
   background-color: rgba(90, 200, 250, 0.15);
 }
 .color-lightblue.button:not(.button-fill).active,
@@ -4200,7 +4319,8 @@ i.icon-bars.theme-lightblue,
 .bg-lightblue,
 .button.button-fill.bg-lightblue,
 a.bg-lightblue,
-.swipeout-actions a.bg-lightblue {
+.list-block .swipeout-actions-left a.bg-lightblue,
+.list-block .swipeout-actions-right a.bg-lightblue {
   background-color: #5ac8fa;
 }
 .border-lightblue {
@@ -4223,9 +4343,12 @@ a.color-yellow {
 .theme-yellow .button:not(.button-fill) {
   border-color: #ffcc00;
 }
-.color-yellow.button:not(.button-fill):active,
-.color-yellow.buttons-row .button:active,
-.theme-yellow .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-yellow.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-yellow.buttons-row .button:active,
+html:not(.watch-active-state) .theme-yellow .button:not(.button-fill):active,
+.color-yellow.button:not(.button-fill).active-state,
+.color-yellow.buttons-row .button.active-state,
+.theme-yellow .button:not(.button-fill).active-state {
   background-color: rgba(255, 204, 0, 0.15);
 }
 .color-yellow.button:not(.button-fill).active,
@@ -4295,7 +4418,8 @@ i.icon-bars.theme-yellow,
 .bg-yellow,
 .button.button-fill.bg-yellow,
 a.bg-yellow,
-.swipeout-actions a.bg-yellow {
+.list-block .swipeout-actions-left a.bg-yellow,
+.list-block .swipeout-actions-right a.bg-yellow {
   background-color: #ffcc00;
 }
 .border-yellow {
@@ -4318,9 +4442,12 @@ a.color-orange {
 .theme-orange .button:not(.button-fill) {
   border-color: #ff9500;
 }
-.color-orange.button:not(.button-fill):active,
-.color-orange.buttons-row .button:active,
-.theme-orange .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-orange.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-orange.buttons-row .button:active,
+html:not(.watch-active-state) .theme-orange .button:not(.button-fill):active,
+.color-orange.button:not(.button-fill).active-state,
+.color-orange.buttons-row .button.active-state,
+.theme-orange .button:not(.button-fill).active-state {
   background-color: rgba(255, 149, 0, 0.15);
 }
 .color-orange.button:not(.button-fill).active,
@@ -4390,7 +4517,8 @@ i.icon-bars.theme-orange,
 .bg-orange,
 .button.button-fill.bg-orange,
 a.bg-orange,
-.swipeout-actions a.bg-orange {
+.list-block .swipeout-actions-left a.bg-orange,
+.list-block .swipeout-actions-right a.bg-orange {
   background-color: #ff9500;
 }
 .border-orange {
@@ -4413,9 +4541,12 @@ a.color-pink {
 .theme-pink .button:not(.button-fill) {
   border-color: #ff2d55;
 }
-.color-pink.button:not(.button-fill):active,
-.color-pink.buttons-row .button:active,
-.theme-pink .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-pink.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-pink.buttons-row .button:active,
+html:not(.watch-active-state) .theme-pink .button:not(.button-fill):active,
+.color-pink.button:not(.button-fill).active-state,
+.color-pink.buttons-row .button.active-state,
+.theme-pink .button:not(.button-fill).active-state {
   background-color: rgba(255, 45, 85, 0.15);
 }
 .color-pink.button:not(.button-fill).active,
@@ -4485,7 +4616,8 @@ i.icon-bars.theme-pink,
 .bg-pink,
 .button.button-fill.bg-pink,
 a.bg-pink,
-.swipeout-actions a.bg-pink {
+.list-block .swipeout-actions-left a.bg-pink,
+.list-block .swipeout-actions-right a.bg-pink {
   background-color: #ff2d55;
 }
 .border-pink {
@@ -4508,9 +4640,12 @@ a.color-blue {
 .theme-blue .button:not(.button-fill) {
   border-color: #007aff;
 }
-.color-blue.button:not(.button-fill):active,
-.color-blue.buttons-row .button:active,
-.theme-blue .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-blue.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-blue.buttons-row .button:active,
+html:not(.watch-active-state) .theme-blue .button:not(.button-fill):active,
+.color-blue.button:not(.button-fill).active-state,
+.color-blue.buttons-row .button.active-state,
+.theme-blue .button:not(.button-fill).active-state {
   background-color: rgba(0, 122, 255, 0.15);
 }
 .color-blue.button:not(.button-fill).active,
@@ -4580,7 +4715,8 @@ i.icon-bars.theme-blue,
 .bg-blue,
 .button.button-fill.bg-blue,
 a.bg-blue,
-.swipeout-actions a.bg-blue {
+.list-block .swipeout-actions-left a.bg-blue,
+.list-block .swipeout-actions-right a.bg-blue {
   background-color: #007aff;
 }
 .border-blue {
@@ -4603,9 +4739,12 @@ a.color-green {
 .theme-green .button:not(.button-fill) {
   border-color: #4cd964;
 }
-.color-green.button:not(.button-fill):active,
-.color-green.buttons-row .button:active,
-.theme-green .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-green.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-green.buttons-row .button:active,
+html:not(.watch-active-state) .theme-green .button:not(.button-fill):active,
+.color-green.button:not(.button-fill).active-state,
+.color-green.buttons-row .button.active-state,
+.theme-green .button:not(.button-fill).active-state {
   background-color: rgba(76, 217, 100, 0.15);
 }
 .color-green.button:not(.button-fill).active,
@@ -4675,7 +4814,8 @@ i.icon-bars.theme-green,
 .bg-green,
 .button.button-fill.bg-green,
 a.bg-green,
-.swipeout-actions a.bg-green {
+.list-block .swipeout-actions-left a.bg-green,
+.list-block .swipeout-actions-right a.bg-green {
   background-color: #4cd964;
 }
 .border-green {
@@ -4698,9 +4838,12 @@ a.color-red {
 .theme-red .button:not(.button-fill) {
   border-color: #ff3b30;
 }
-.color-red.button:not(.button-fill):active,
-.color-red.buttons-row .button:active,
-.theme-red .button:not(.button-fill):active {
+html:not(.watch-active-state) .color-red.button:not(.button-fill):active,
+html:not(.watch-active-state) .color-red.buttons-row .button:active,
+html:not(.watch-active-state) .theme-red .button:not(.button-fill):active,
+.color-red.button:not(.button-fill).active-state,
+.color-red.buttons-row .button.active-state,
+.theme-red .button:not(.button-fill).active-state {
   background-color: rgba(255, 59, 48, 0.15);
 }
 .color-red.button:not(.button-fill).active,
@@ -4770,7 +4913,8 @@ i.icon-bars.theme-red,
 .bg-red,
 .button.button-fill.bg-red,
 a.bg-red,
-.swipeout-actions a.bg-red {
+.list-block .swipeout-actions-left a.bg-red,
+.list-block .swipeout-actions-right a.bg-red {
   background-color: #ff3b30;
 }
 .border-red {
