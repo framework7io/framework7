@@ -177,6 +177,19 @@ Dom7.prototype = {
         }
         return this;
     },
+    once: function (eventName, targetSelector, listener, capture) {
+        var dom = this;
+        if (typeof targetSelector === 'function') {
+            targetSelector = false;
+            listener = arguments[1];
+            capture = arguments[2];
+        }
+        function proxy(e) {
+            listener(e);
+            dom.off(eventName, targetSelector, proxy, capture);
+        }
+        dom.on(eventName, targetSelector, proxy, capture);
+    },
     trigger: function (eventName, eventData) {
         for (var i = 0; i < this.length; i++) {
             var evt;
@@ -431,6 +444,7 @@ Dom7.prototype = {
                 while (tempDiv.firstChild) {
                     this[i].appendChild(tempDiv.firstChild);
                 }
+                // this[i].insertAdjacentHTML('beforeend', newChild);
             }
             else if (newChild instanceof Dom7) {
                 for (j = 0; j < newChild.length; j++) {
@@ -452,6 +466,7 @@ Dom7.prototype = {
                 for (j = tempDiv.childNodes.length - 1; j >= 0; j--) {
                     this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
                 }
+                // this[i].insertAdjacentHTML('afterbegin', newChild);
             }
             else if (newChild instanceof Dom7) {
                 for (j = 0; j < newChild.length; j++) {

@@ -13,11 +13,12 @@ $.ajax = function (options) {
         statusCode: {},
         processData: true,
         dataType: 'text',
-        contentType: 'application/x-www-form-urlencoded'
+        contentType: 'application/x-www-form-urlencoded',
+        timeout: 0 // 0s JSONp timeout
     };
 
     //For jQuery guys
-    if (options.type) options.type = options.method;
+    if (options.type) options.method = options.type;
 
     // Merge options and defaults
     for (var prop in defaults) {
@@ -28,9 +29,10 @@ $.ajax = function (options) {
     if (!options.url) {
         options.url = window.location.toString();
     }
-
+    // UC method
+    var _method = options.method.toUpperCase();
     // Data to modify GET URL
-    if ((options.method === 'GET' || options.method === 'HEAD') && options.data) {
+    if ((_method === 'GET' || _method === 'HEAD') && options.data) {
         var stringData;
         if (typeof options.data === 'string') {
             // Should be key=value string
@@ -48,7 +50,7 @@ $.ajax = function (options) {
     if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
         
         var callbackName = 'f7jsonp_' + Date.now() + (_jsonpRequests++);
-        var requestURL;
+        var requestURL, abortTimeout;
         var callbackSplit = options.url.split('callback=');
         if (callbackSplit[1].indexOf('&') >= 0) {
             var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
@@ -61,10 +63,15 @@ $.ajax = function (options) {
         // Create script
         var script = document.createElement('script');
         script.type = 'text/javascript';
+        script.onerror = function() {
+            clearTimeout(abortTimeout);
+            if (options.error) options.error();
+        };
         script.src = requestURL;
 
         // Handler
         window[callbackName] = function (data) {
+            clearTimeout(abortTimeout);
             if (options.success) options.success(data);
             script.parentNode.removeChild(script);
             script = null;
@@ -72,11 +79,19 @@ $.ajax = function (options) {
         };
         document.querySelector('head').appendChild(script);
 
+        if (options.timeout > 0) {
+            abortTimeout = setTimeout(function () {
+                script.parentNode.removeChild(script);
+                script = null;
+                if (options.error) options.error();
+            }, options.timeout);
+        }
+
         return;
     }
 
     // Cache for GET/HEAD requests
-    if (options.method === 'GET' || options.method === 'HEAD') {
+    if (_method === 'GET' || _method === 'HEAD') {
         if (options.cache === false) options.url += ('_nocache=' + Date.now());
     }
 
@@ -84,12 +99,12 @@ $.ajax = function (options) {
     var xhr = new XMLHttpRequest();
 
     // Open XHR
-    xhr.open(options.method, options.url, options.async, options.user, options.password);
+    xhr.open(_method, options.url, options.async, options.user, options.password);
 
     // Create POST Data
     var postData = null;
     
-    if ((options.method === 'POST' || options.method === 'PUT') && options.data) {
+    if ((_method === 'POST' || _method === 'PUT') && options.data) {
         if (options.processData) {
             var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
             // Post Data
