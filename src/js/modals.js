@@ -169,7 +169,7 @@ app.actions = function (target, params) {
     else {
         // Popover
         if (app.device.ios) {
-            if (app.device.iphone) toPopover = true;
+            if (app.device.ipad) toPopover = true;
         }
         else {
             if ($(window).width() >= 768) toPopover = true;
