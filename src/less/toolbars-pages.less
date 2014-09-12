@@ -4,21 +4,23 @@
         position: absolute;
     }
 }
-.navbar-through {
+.navbar-through, .navbar-fixed {
     .page-content {
         padding-top: 44px;
     }
 }
-.toolbar-through {
+.toolbar-through, .toolbar-fixed, .tabbar-through, .tabbar-fixed {
     .page-content {
         padding-bottom: 44px;
     }
 }
-.navbar-fixed .page-content {
-    padding-top: 44px;
-}
-.toolbar-fixed .page-content {
-    padding-bottom: 44px;
+.tabbar-labels-fixed, .tabbar-labels-through {
+    .page-content {
+        padding-bottom: 50px;
+        @media all and (min-width:768px) {
+            padding-bottom: 56px;
+        }
+    }
 }
 // Page Hidden Navbar
 .hidden-navbar {

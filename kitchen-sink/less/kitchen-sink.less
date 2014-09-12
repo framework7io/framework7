@@ -35,15 +35,20 @@
 }
 // Demo tab bars
 .page[data-page="tabbar"], .page[data-page="tabbar-labels"] {
-    .toolbar {
+    .tabbar {
         -webkit-transform: none;
         -moz-transform: none;
         -ms-transform: none;
         -o-transform: none;
         transform: none;
     }
+}
+.page[data-page="tabbar-labels"] {
     .page-content {
-        padding-bottom: 44px;
+        padding-bottom: 50px;
+        @media all and (min-width:768px) {
+            padding-bottom: 56px;
+        }
     }
 }
 i.ks-tabbar-icon-1 {
