@@ -9,16 +9,23 @@
         padding-top: 44px;
     }
 }
-.toolbar-through {
+.toolbar-through, .toolbar-fixed {
     .page-content {
         padding-bottom: 44px;
     }
+    &.tabbar .page-content {
+      padding-bottom: 50px;
+    }
+}
+@media all and (min-width:768px) {
+  .toolbar-through, .toolbar-fixed {
+      &.tabbar .page-content {
+        padding-bottom: 55px;
+      }
+  }
 }
 .navbar-fixed .page-content {
     padding-top: 44px;
-}
-.toolbar-fixed .page-content {
-    padding-bottom: 44px;
 }
 // Page Hidden Navbar
 .hidden-navbar {
