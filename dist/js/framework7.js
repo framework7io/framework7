@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: September 12, 2014
+ * Released on: September 13, 2014
 */
 (function () {
 
@@ -3804,19 +3804,18 @@
                     content.css('height', 'auto');
                     var clientLeft = content[0].clientLeft;
                     content.transition('');
-                    list.trigger('opened');
+                    item.trigger('opened');
                 }
                 else {
                     content.css('height', '');
-                    list.trigger('closed');
+                    item.trigger('closed');
                 }
             });
-            list.trigger('open');
+            item.trigger('open');
             item.addClass('accordion-item-expanded');
         };
         app.accordionClose = function (item) {
             item = $(item);
-            var list = item.parents('.accordion-list');
             var content = item.find('.accordion-item-content');
             item.removeClass('accordion-item-expanded');
             content.transition(0);
@@ -3831,14 +3830,14 @@
                     content.css('height', 'auto');
                     var clientLeft = content[0].clientLeft;
                     content.transition('');
-                    list.trigger('opened');
+                    item.trigger('opened');
                 }
                 else {
                     content.css('height', '');
-                    list.trigger('closed');
+                    item.trigger('closed');
                 }
             });
-            list.trigger('close');
+            item.trigger('close');
         };
         /*===============================================================================
         ************   Fast Clicks   ************
