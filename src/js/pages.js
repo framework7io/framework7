@@ -557,8 +557,11 @@ function _load(view, url, content, options) {
                 oldNavbarInner.addClass('cached');
             }
             else {
-                oldPage.remove();
-                oldNavbarInner.remove();
+                if (!(url.indexOf('#content') ===0 && newPage.attr('data-page').indexOf('smart-select-') === 0)) {
+                    app.pageRemoveCallback(view, oldPage[0], 'left');
+                    oldPage.remove();
+                    oldNavbarInner.remove();    
+                }
             }
         }
         if (view.params.uniqueHistory && historyBecameUnique) {
