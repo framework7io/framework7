@@ -39,7 +39,6 @@ app.get = function (url, view, ignoreCache, callback) {
         start: app.params.onAjaxStart,
         complete: function (xhr) {
             if (xhr.status === 200 || xhr.status === 0) {
-                callback(xhr.responseText, false);
                 if (app.params.cache && !ignoreCache) {
                     app.removeFromCache(_url);
                     app.cache.push({
@@ -48,6 +47,7 @@ app.get = function (url, view, ignoreCache, callback) {
                         content: xhr.responseText
                     });
                 }
+                callback(xhr.responseText, false);
             }
             else {
                 callback(xhr.responseText, true);
