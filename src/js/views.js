@@ -8,6 +8,7 @@ var View = function (selector, params) {
         domCache: false,
         linksView: undefined,
         uniqueHistory: app.params.uniqueHistory,
+        uniqueHistoryIgnoreGetParameters: app.params.uniqueHistoryIgnoreGetParameters,
         swipeBackPage: app.params.swipeBackPage,
         swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
         swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,

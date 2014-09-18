@@ -506,8 +506,18 @@ function _load(view, url, content, options) {
     var history = false;
     var historyBecameUnique = false;
     if (view.params.uniqueHistory) {
-        if (view.history.indexOf(url) !== view.history.lastIndexOf(url)) {
-            view.history = view.history.slice(0, view.history.indexOf(url));
+        var _history = view.history;
+        var _url = url;
+        if (view.params.uniqueHistoryIgnoreGetParameters) {
+            _history = [];
+            _url = url.split('?')[0];
+            for (i = 0; i < view.history.length; i++) {
+                _history.push(view.history[i].split('?')[0]);
+            }
+        }
+        
+        if (_history.indexOf(_url) !== _history.lastIndexOf(_url)) {
+            view.history = view.history.slice(0, _history.indexOf(_url));
             view.history.push(url);
             historyBecameUnique = true;
         }
