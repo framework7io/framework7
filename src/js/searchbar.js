@@ -48,10 +48,12 @@ app.initSearchbar = function (pageContainer) {
         if (app.device.ios) {
             setTimeout(function () {
                 input.blur();
+                searchList.trigger('disableSearch');
             }, 400);
         }
         else {
             input.blur();
+            searchList.trigger('disableSearch');
         }
     }
 
@@ -70,7 +72,7 @@ app.initSearchbar = function (pageContainer) {
             if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
             searchbar.addClass('searchbar-active');
             if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
-            searchList.trigger('disableSearch');
+            searchList.trigger('enableSearch');
         }
     }
 
