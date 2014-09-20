@@ -182,9 +182,14 @@ var Slider = function (container, params) {
         }
         isMoved = true;
         var diff = isH ? (touchesCurrent.x - touchesStart.x) * inverter : touchesCurrent.y - touchesStart.y;
-
+        
         if ((diff > 0 && s.activeSlideIndex === 0)) diff = Math.pow(diff, 0.85);
-        else if (diff < 0 && s.activeSlideIndex === s.slides.length - s.params.slidesPerView) diff = -Math.pow(-diff, 0.85);
+        else if (diff < 0 && s.activeSlideIndex === s.slides.length - s.params.slidesPerView) {
+            diff = -Math.pow(-diff, 0.85);
+        }
+        else if (diff < 0 && s.activeSlideIndex === 0 && s.slides.length < s.params.slidesPerView) {
+            diff = -Math.pow(-diff, 0.85);
+        }
         
         var translateX = isH ? (diff + currentTranslate) * inverter : 0, translateY = isH ? 0 : diff + currentTranslate;
 
@@ -282,8 +287,8 @@ var Slider = function (container, params) {
 
     s.slideTo = function (index, speed, runCallbacks) {
         if (typeof index === 'undefined') index = 0;
-        if (index < 0) index = 0;
         if (index > s.slides.length - s.params.slidesPerView) index = s.slides.length - s.params.slidesPerView;
+        if (index < 0) index = 0;
 
         var translate = - (s.size + s.params.spaceBetween) * index / s.params.slidesPerView;
 
