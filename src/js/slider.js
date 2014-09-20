@@ -8,6 +8,7 @@ var Slider = function (container, params) {
         speed: 300,
         slidesPerView: 1,
         direction: 'horizontal',
+        align: 'straight', // straight | reverse 
         paginationHide: true,
         slideClass: 'slider-slide',
         slideActiveClass: 'slider-slide-active',
@@ -298,7 +299,12 @@ var Slider = function (container, params) {
         s.isFirst = s.activeSlideIndex === 0;
         s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
         s.onTransitionStart();
+
         var translateX = isH ? translate * inverter : 0, translateY = isH ? 0 : translate;
+        if (isH && params.align == 'reverse') {
+            translateX = Math.min(0, translateX);
+        }
+
         if (speed === 0) {
             s.wrapper
                 .transition(0)
