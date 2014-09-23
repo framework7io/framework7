@@ -76,6 +76,9 @@ var Slider = function (container, params) {
                 s.slides.css('height', 'calc(' + sizeValue + ')');
             }
         }
+        // First/last
+        s.isFirst = s.activeSlideIndex === 0;
+        s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
     };
 
     s.updatePagination = function () {
