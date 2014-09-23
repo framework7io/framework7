@@ -7,6 +7,7 @@ var Slider = function (container, params) {
         spaceBetween: 0,
         speed: 300,
         slidesPerView: 1,
+        onlyExternal: false,
         direction: 'horizontal',
         paginationHide: true,
         slideClass: 'slider-slide',
@@ -137,6 +138,7 @@ var Slider = function (container, params) {
         }
     };
     s.onTouchStart = function (e) {
+        if (s.params.onlyExternal) return;
         isTouched = true;
         isMoved = false;
         isScrolling = undefined;
