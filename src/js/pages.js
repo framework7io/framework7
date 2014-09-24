@@ -839,7 +839,7 @@ app.goBack = function (view, options) {
 
         // Modify history
         if (forceUrl) {
-            if (view.history.indexOf(url)) {
+            if (view.history.indexOf(url) >= 0) {
                 view.history = view.history.slice(0, view.history.indexOf(url) + 2);
             }
         }
