@@ -17,7 +17,7 @@ app.modal = function (params) {
             }
         }
         var titleHTML = params.title ? '<div class="modal-title">' + params.title + '</div>' : '';
-        var textHTML = params.title ? '<div class="modal-text">' + params.text + '</div>' : '';
+        var textHTML = params.text ? '<div class="modal-text">' + params.text + '</div>' : '';
         var afterTextHTML = params.afterText ? params.afterText : '';
         var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
         modalHTML = '<div class="modal ' + noButtons + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons">' + buttonsHTML + '</div></div>';
