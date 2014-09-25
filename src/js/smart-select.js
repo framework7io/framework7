@@ -112,7 +112,7 @@ app.smartSelectOpen = function (smartSelect) {
     if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
     if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
     // Page Layout
-    var pageName = 'smart-select-' + inputName;
+    var pageName = 'smart-select-' + inputType;
 
     var noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
     var noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
