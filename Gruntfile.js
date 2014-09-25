@@ -106,23 +106,29 @@ module.exports = function (grunt) {
             build: {
                 options: {
                     paths: ['less'],
-                    cleancss: false
+                    cleancss: false,
+                    modifyVars: {
+                        imgBaseUrl: '"../<%= framework7.imgDir %>"'
+                    }
                 },
                 files: {
-                    'build/css/<%= framework7.filename %>.css' : ['src/less/<%= framework7.filename %>.less'],
-                    'build/css/<%= framework7.filename %>.rtl.css' : ['src/less/<%= framework7.filename %>.rtl.less'],
-                    'build/css/<%= framework7.filename %>.themes.css' : ['src/less/<%= framework7.filename %>.themes.less']
+                    'build/<%= framework7.cssDir %>/<%= framework7.filename %>.css' : ['src/less/<%= framework7.filename %>.less'],
+                    'build/<%= framework7.cssDir %>/<%= framework7.filename %>.rtl.css' : ['src/less/<%= framework7.filename %>.rtl.less'],
+                    'build/<%= framework7.cssDir %>/<%= framework7.filename %>.themes.css' : ['src/less/<%= framework7.filename %>.themes.less']
                 }
             },
             dist: {
                 options: {
                     paths: ['less'],
-                    cleancss: true
+                    cleancss: true,
+                    modifyVars: {
+                        imgBaseUrl: '"../<%= framework7.imgDir %>"'
+                    }
                 },
                 files: {
-                    'dist/css/<%= framework7.filename %>.min.css' : ['src/less/<%= framework7.filename %>.less'],
-                    'dist/css/<%= framework7.filename %>.rtl.min.css' : ['src/less/<%= framework7.filename %>.rtl.less'],
-                    'dist/css/<%= framework7.filename %>.themes.min.css' : ['src/less/<%= framework7.filename %>.themes.less']
+                    'dist/<%= framework7.cssDir %>/<%= framework7.filename %>.min.css' : ['src/less/<%= framework7.filename %>.less'],
+                    'dist/<%= framework7.cssDir %>/<%= framework7.filename %>.rtl.min.css' : ['src/less/<%= framework7.filename %>.rtl.less'],
+                    'dist/<%= framework7.cssDir %>/<%= framework7.filename %>.themes.min.css' : ['src/less/<%= framework7.filename %>.themes.less']
                 }
             },
             kitchen: {
@@ -189,7 +195,7 @@ module.exports = function (grunt) {
                     cleancss: false
                 },
                 files: {
-                    'custom/css/<%= framework7.filename %>.custom.css' : ['custom/<%= framework7.filename %>.custom.less'],
+                    'custom/<%= framework7.cssDir %>/<%= framework7.filename %>.custom.css' : ['custom/<%= framework7.filename %>.custom.less'],
                 }
             },
             custom_min: {
@@ -198,7 +204,7 @@ module.exports = function (grunt) {
                     cleancss: true
                 },
                 files: {
-                    'custom/css/<%= framework7.filename %>.custom.min.css' : ['custom/<%= framework7.filename %>.custom.less'],
+                    'custom/<%= framework7.cssDir %>/<%= framework7.filename %>.custom.min.css' : ['custom/<%= framework7.filename %>.custom.less'],
                 }
             },
         },
@@ -231,22 +237,22 @@ module.exports = function (grunt) {
             },
             js: {
                 src: jsFilesList,
-                dest: 'build/js/<%= framework7.filename %>.js'
+                dest: 'build/<%= framework7.jsDir %>/<%= framework7.filename %>.js'
             },
             css_build: {
-                src: ['build/css/<%= framework7.filename %>.css'],
-                dest: 'build/css/<%= framework7.filename %>.css'
+                src: ['build/<%= framework7.cssDir %>/<%= framework7.filename %>.css'],
+                dest: 'build/<%= framework7.cssDir %>/<%= framework7.filename %>.css'
             },
             css_dist: {
-                src: ['dist/css/<%= framework7.filename %>.min.css'],
-                dest: 'dist/css/<%= framework7.filename %>.min.css'
+                src: ['dist/<%= framework7.cssDir %>/<%= framework7.filename %>.min.css'],
+                dest: 'dist/<%= framework7.cssDir %>/<%= framework7.filename %>.min.css'
             },
             js_custom: {
                 options: {
                     banner: customBanner
                 },
                 src: '<%= modulesJsList %>',
-                dest: 'custom/js/<%= framework7.filename %>.custom.js'
+                dest: 'custom/<%= framework7.jsDir %>/<%= framework7.filename %>.custom.js'
             },
             less_custom: {
                 options: {
@@ -260,8 +266,8 @@ module.exports = function (grunt) {
                     banner: customBanner
                 },
                 files: {
-                    'custom/css/<%= framework7.filename %>.custom.css' : ['custom/css/<%= framework7.filename %>.custom.css'],
-                    'custom/css/<%= framework7.filename %>.custom.min.css' : ['custom/css/<%= framework7.filename %>.custom.min.css'],
+                    'custom/<%= framework7.cssDir %>/<%= framework7.filename %>.custom.css' : ['custom/<%= framework7.cssDir %>/<%= framework7.filename %>.custom.css'],
+                    'custom/<%= framework7.cssDir %>/<%= framework7.filename %>.custom.min.css' : ['custom/<%= framework7.cssDir %>/<%= framework7.filename %>.custom.min.css'],
                 }
             }
         },
@@ -270,15 +276,15 @@ module.exports = function (grunt) {
                 banner: '<%= banner %>'
             },
             dist: {
-                src: ['dist/js/<%= framework7.filename %>.js'],
-                dest: 'dist/js/<%= framework7.filename %>.min.js',
+                src: ['dist/<%= framework7.jsDir %>/<%= framework7.filename %>.js'],
+                dest: 'dist/<%= framework7.jsDir %>/<%= framework7.filename %>.min.js',
             },
             custom: {
                 options: {
                     banner: customBanner
                 },
-                src: ['custom/js/<%= framework7.filename %>.custom.js'],
-                dest: 'custom/js/<%= framework7.filename %>.custom.min.js',
+                src: ['custom/<%= framework7.jsDir %>/<%= framework7.filename %>.custom.js'],
+                dest: 'custom/<%= framework7.jsDir %>/<%= framework7.filename %>.custom.min.js',
             }
         },
         jshint: {
@@ -287,10 +293,10 @@ module.exports = function (grunt) {
                 reporter: require('jshint-stylish')
             },
             build: {
-                src: ['Gruntfile.js', 'build/js/framework7.js']
+                src: ['Gruntfile.js', 'build/<%= framework7.jsDir %>/framework7.js']
             },
             custom: {
-                src: ['custom/js/<%= framework7.filename %>.custom.js']
+                src: ['custom/<%= framework7.jsDir %>/<%= framework7.filename %>.custom.js']
             }
         },
         
@@ -412,21 +418,21 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'src/',
-                        src: ['img/**'],
-                        dest: 'build/'
+                        cwd: 'src/img',
+                        src: ['**'],
+                        dest: 'build/<%= framework7.imgDir %>'
                     },
                     {
                         expand: true,
                         cwd: 'src/my-app/',
                         src: ['my-app.css'],
-                        dest: 'build/css/'
+                        dest: 'build/<%= framework7.cssDir %>/'
                     },
                     {
                         expand: true,
                         cwd: 'src/my-app/',
                         src: ['my-app.js'],
-                        dest: 'build/js/'
+                        dest: 'build/<%= framework7.jsDir %>/'
                     }
                 ]
             },
@@ -442,6 +448,13 @@ module.exports = function (grunt) {
             },
         },
     });
+    var rails = grunt.option('rails') || grunt.option('rails-gem');
+    var gem = grunt.option('rails-gem');
+    
+    // Set directory paths
+    framework7.imgDir = (rails ? (gem ? 'assets' : 'images') : 'img');
+    framework7.cssDir = (rails ? 'stylesheets' : 'css');
+    framework7.jsDir = (rails ? 'javascripts' : 'js');
 
     // Default task.
     this.registerTask('default', ['build']);
