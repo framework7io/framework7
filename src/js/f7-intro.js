@@ -19,6 +19,7 @@ window.Framework7 = function (params) {
         preloadPreviousPage: true,
         uniqueHistory: false,
         uniqueHistoryIgnoreGetParameters: false,
+        dynamicPageUrl: 'content-{{name}}-{{index}}',
         // Push State
         pushState: false,
         pushStateRoot: undefined,
