@@ -78,11 +78,11 @@ app.prompt = function (text, title, callbackOk, callbackCancel) {
         afterText: '<input type="text" class="modal-text-input">',
         buttons: [
             {
-                text: app.params.modalButtonCancel,
+                text: app.params.modalButtonCancel
             },
             {
                 text: app.params.modalButtonOk,
-                bold: true,
+                bold: true
             }
         ],
         onClick: function (modal, index) {
@@ -103,11 +103,11 @@ app.modalLogin = function (text, title, callbackOk, callbackCancel) {
         afterText: '<input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input modal-text-input-double"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input modal-text-input-double">',
         buttons: [
             {
-                text: app.params.modalButtonCancel,
+                text: app.params.modalButtonCancel
             },
             {
                 text: app.params.modalButtonOk,
-                bold: true,
+                bold: true
             }
         ],
         onClick: function (modal, index) {
@@ -130,11 +130,11 @@ app.modalPassword = function (text, title, callbackOk, callbackCancel) {
         afterText: '<input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input">',
         buttons: [
             {
-                text: app.params.modalButtonCancel,
+                text: app.params.modalButtonCancel
             },
             {
                 text: app.params.modalButtonOk,
-                bold: true,
+                bold: true
             }
         ],
         onClick: function (modal, index) {
