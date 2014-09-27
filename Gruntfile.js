@@ -231,7 +231,11 @@ module.exports = function (grunt) {
             },
             js: {
                 src: jsFilesList,
-                dest: 'build/js/<%= framework7.filename %>.js'
+                dest: 'build/js/<%= framework7.filename %>.js',
+                sourceMap: true,
+                options: {
+                    sourceMap: true
+                }
             },
             css_build: {
                 src: ['build/css/<%= framework7.filename %>.css'],
