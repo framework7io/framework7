@@ -267,7 +267,8 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                banner: '<%= banner %>'
+                banner: '<%= banner %>',
+                sourceMap: true
             },
             dist: {
                 src: ['dist/js/<%= framework7.filename %>.js'],
