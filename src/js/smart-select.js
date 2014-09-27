@@ -180,7 +180,7 @@ app.smartSelectOpen = function (smartSelect) {
                 $select.trigger('change');
                 smartSelect.find('.item-after').text(optionText.join(', '));
                 if (backOnSelect && inputType === 'radio') {
-                    view.goBack();
+                    view.back();
                 }
             });
         }

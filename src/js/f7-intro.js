@@ -20,7 +20,6 @@ window.Framework7 = function (params) {
         uniqueHistory: false,
         uniqueHistoryIgnoreGetParameters: false,
         dynamicPageUrl: 'content-{{index}}',
-        domCachePageUrl: '{{name}}',
         // Push State
         pushState: false,
         pushStateRoot: undefined,

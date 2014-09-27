@@ -7,8 +7,8 @@ app.pushStateClearQueue = function () {
     var queue = app.pushStateQueue.pop();
     var animatePages;
     if (app.params.pushStateNoAnimation === true) animatePages = false;
-    if (queue.action === 'goBack') {
-        app.goBack(queue.view, {animatePages: animatePages});
+    if (queue.action === 'back') {
+        app.back(queue.view, {animatePages: animatePages});
     }
     if (queue.action === 'loadPage') {
         app.loadPage(queue.view, {url: queue.stateUrl, animatePages: animatePages, pushState: false});
@@ -55,11 +55,11 @@ app.initPushState = function () {
             if (view.history.indexOf(stateUrl) >= 0) {
                 // Go Back
                 if (view.allowPageChange) {
-                    app.goBack(view, {url:undefined, animatePages: animatePages, pushState: false, preloadOnly:false});
+                    app.back(view, {url:undefined, animatePages: animatePages, pushState: false, preloadOnly:false});
                 }
                 else {
                     app.pushStateQueue.push({
-                        action: 'goBack',
+                        action: 'back',
                         view: view
                     });
                 }

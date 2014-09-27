@@ -107,7 +107,7 @@ var View = function (selector, params) {
             currentPage[0].f7PageData = currentPageData;
         }
         if (view.params.domCache) {
-            view.pagesCache[view.url] = currentPage.attr('data-page');
+            view.pagesCache['#' + currentPage.attr('data-page')] = currentPage.attr('data-page');
         }
     }
 
@@ -415,12 +415,12 @@ var View = function (selector, params) {
         createPageMethod(pageMethods[i]);
     }
 
-    view.goBack = function (options) {
+    view.back = function (options) {
         options = options || {};
         if (typeof options === 'string' || options.nodeType || 'length' in options) {
             options = {url: options};
         }
-        return app.goBack(view, options);
+        return app.back(view, options);
     };
 
     // Bars methods

@@ -195,14 +195,14 @@ app.initClickEvents = function () {
             var options = {
                 animatePages: animatePages,
                 ignoreCache: toBoolean(clicked.attr('data-ignoreCache')),
-                forceUrl: toBoolean(clicked.attr('data-forceUrl')),
+                force: toBoolean(clicked.attr('data-force')),
                 reload: toBoolean(clicked.attr('data-reload')),
                 reloadPrevious: toBoolean(clicked.attr('data-reloadPrevious')),
                 pageName: pageName,
                 url: url
             };
             
-            if (clicked.hasClass('back')) view.goBack(options);
+            if (clicked.hasClass('back')) view.back(options);
             else view.loadPage(options);
         }
     }
