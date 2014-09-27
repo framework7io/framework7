@@ -16,6 +16,7 @@ var View = function (selector, params) {
         animatePages: app.params.animatePages,
         preloadPreviousPage: app.params.preloadPreviousPage
     };
+    var i;
 
     params = params || {};
     for (var def in defaults) {
@@ -61,11 +62,29 @@ var View = function (selector, params) {
     // Content cache
     view.contentCache = {};
 
+    // Pages cache
+    view.pagesCache = {};
+
     // Store View in element for easy access
     container[0].f7View = view;
 
     // Pages
     view.pagesContainer = container.find('.pages')[0];
+    view.initialPages = [];
+    view.initialNavbars = [];
+    if (view.params.domCache) {
+        var initialPages = container.find('.page');
+        for (i = 0; i < initialPages.length; i++) {
+            view.initialPages.push(initialPages[i]);
+        }
+        if (view.params.dynamicNavbar) {
+            var initialNavbars = container.find('.navbar-inner');
+            for (i = 0; i < initialNavbars.length; i++) {
+                view.initialNavbars.push(initialNavbars[i]);
+            }
+        }
+            
+    }
 
     view.allowPageChange = true;
 
@@ -86,6 +105,9 @@ var View = function (selector, params) {
             if (view.url) currentPageData.url = view.url;
             view.activePage = currentPageData;
             currentPage[0].f7PageData = currentPageData;
+        }
+        if (view.params.domCache) {
+            view.pagesCache[view.url] = currentPage.attr('data-page');
         }
     }
 
@@ -374,6 +396,12 @@ var View = function (selector, params) {
             }
             if (method.indexOf('refresh') >= 0) {
                 options.url = method.indexOf('previous') >= 0 ? view.history[view.history.length - 2] : view.url;
+                
+                if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
+                    options.pageName = view.pagesCache[options.url];
+                    options.url = undefined;
+                    delete options.url;
+                }
                 options.reload = true;
                 options.ignoreCache = true;
                 if (method.indexOf('previous') >= 0) {
@@ -383,7 +411,7 @@ var View = function (selector, params) {
             return app.loadPage(view, options);
         };
     }
-    for (var i = 0; i < pageMethods.length; i++) {
+    for (i = 0; i < pageMethods.length; i++) {
         createPageMethod(pageMethods[i]);
     }
 
@@ -419,8 +447,15 @@ var View = function (selector, params) {
             pushStateUrl = docLocation.split(pushStateSeparator)[1];
         }
         var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
+
         if (pushStateUrl) {
             app.loadPage(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
+        }
+        else if (docLocation.indexOf(pushStateSeparator + '#') >= 0) {
+            var state = history.state;
+            if (state.pageName && 'viewIndex' in state) {
+                app.loadPage(view, {pageName: state.pageName, pushState: false});
+            }
         }
             
     }
