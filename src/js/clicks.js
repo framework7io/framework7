@@ -154,8 +154,10 @@ app.initClickEvents = function () {
         if (isLink) {
             e.preventDefault();
         }
-        var validUrl = url && url.length > 0 && url.indexOf('#') !== 0;
+        var validUrl = url && url.length > 0 && url !== '#';
+        
         if (validUrl || clicked.hasClass('back')) {
+
             var view;
             if (clicked.attr('data-view')) {
                 view = $(clicked.attr('data-view'))[0].f7View;
@@ -173,6 +175,15 @@ app.initClickEvents = function () {
             }
             if (!view) return;
 
+            var pageName;
+            if (url.indexOf('#') === 0)  {
+                if (view.params.domCache) {
+                    pageName = url.split('#')[1];
+                    url = undefined;
+                }
+                else return;
+            }
+
             var animatePages;
             if (clicked.attr('data-animatePages')) {
                 animatePages = toBoolean(clicked.attr('data-animatePages'));
@@ -187,7 +198,8 @@ app.initClickEvents = function () {
                 forceUrl: toBoolean(clicked.attr('data-forceUrl')),
                 reload: toBoolean(clicked.attr('data-reload')),
                 reloadPrevious: toBoolean(clicked.attr('data-reloadPrevious')),
-                url: clicked.attr('href')
+                pageName: pageName,
+                url: url
             };
             
             if (clicked.hasClass('back')) view.goBack(options);
