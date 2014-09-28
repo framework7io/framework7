@@ -2,7 +2,7 @@
 .pull-to-refresh-layer {
     position:absolute; 
     position: relative;
-    margin-top: -44px;
+    margin-top: 0;
     left:0; 
     top:0; 
     width:100%; 
@@ -35,6 +35,9 @@
     
 }
 .pull-to-refresh-content {
+    margin-top: -44px;
+    height: ~'-webkit-calc(100% + 44px)';
+    height: ~'calc(100% + 44px)';
     &.transitioning, &.refreshing {
         .transition(400ms); 
     }
@@ -59,4 +62,14 @@
         }
     }
     
+}
+
+.navbar-through, .navbar-fixed {
+    .pull-to-refresh-content {
+        margin-top: 0;
+        height: 100%;
+    }
+    .pull-to-refresh-layer {
+        margin-top: -44px;
+    }
 }
