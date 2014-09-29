@@ -56,7 +56,7 @@ app.initFastClicks = function () {
     }
     function targetNeedsFastClick(el) {
         if (el.nodeName.toLowerCase() === 'input' && el.type === 'file') return false;
-        if (el.className.indexOf('no-fastclick') >= 0) return false;
+        if (el.className.indexOf('no-fastclick') >= 0 || $(el).parents('no-fastclick').length > 0) return false;
         return true;
     }
     function targetNeedsFocus(el) {
@@ -210,7 +210,6 @@ app.initFastClicks = function () {
         }
 
         lastClickTime = e.timeStamp;
-        touchStartTime = 0;
 
         trackClick = false;
 
@@ -232,6 +231,14 @@ app.initFastClicks = function () {
         if (targetNeedsFocus(targetElement)) {
             targetElement.focus();
         }
+        
+        if (!app.device.webView && (app.device.os === 'ios')) {
+            if (e.timeStamp - touchStartTime >= 140 && app.device.osVersion.split('.')[0] >= 8) {
+                if (targetElement.nodeName.toLowerCase() === 'label' || $(targetElement).parents('label').length > 0) {
+                    return true;
+                }
+            }
+        }
 
         e.preventDefault();
         var touch = e.changedTouches[0];
@@ -251,6 +258,7 @@ app.initFastClicks = function () {
     function handleTouchCancel(e) {
         trackClick = false;
         targetElement = null;
+        console.log('cancel');
     }
 
     function handleClick(e) {
