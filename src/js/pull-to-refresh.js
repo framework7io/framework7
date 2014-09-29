@@ -8,7 +8,14 @@ app.initPullToRefresh = function (pageContainer) {
     }
     if (eventsTarget.length === 0) return;
 
-    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled;
+    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer;
+    var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
+    var hasNavbar = false;
+    if (page.find('.navbar').length > 0 || page.parents('.navbar-fixed, .navbar-through').length > 0 || page.hasClass('navbar-fixed') || page.hasClass('navbar-through')) hasNavbar = true;
+    if (page.hasClass('no-navbar')) hasNavbar = false;
+    if (!hasNavbar) eventsTarget.addClass('pull-to-refresh-no-navbar');
+
+    if (eventsTarget)
 
     container = eventsTarget;
 
@@ -48,6 +55,7 @@ app.initPullToRefresh = function (pageContainer) {
         if (!isMoved) {
             /*jshint validthis:true */
             container.removeClass('transitioning');
+            // layer.removeClass('transitioning');
             if (scrollTop > container[0].offsetHeight) {
                 isTouched = false;
                 return;
@@ -71,6 +79,8 @@ app.initPullToRefresh = function (pageContainer) {
                 e.preventDefault();
                 translate = (Math.pow(touchesDiff, 0.85) + startTranslate);
                 container.transform('translate3d(0,' + translate + 'px,0)');
+            }
+            else {
             }
             if ((useTranslate && Math.pow(touchesDiff, 0.85) > 44) || (!useTranslate && touchesDiff >= 88)) {
                 refresh = true;
@@ -120,7 +130,6 @@ app.initPullToRefresh = function (pageContainer) {
     eventsTarget.on(app.touchEvents.end, handleTouchEnd);
 
     // Detach Events on page remove
-    var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
     if (page.length === 0) return;
     function detachEvents() {
         eventsTarget.off(app.touchEvents.start, handleTouchStart);

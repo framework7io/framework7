@@ -35,6 +35,15 @@
     
 }
 .pull-to-refresh-content {
+    &.pull-to-refresh-no-navbar {
+        margin-top: -44px;
+        height: ~"-webkit-calc(100% + 44px)";
+        height: ~"-moz-calc(100% + 44px)";
+        height: ~"calc(100% + 44px)";
+        .pull-to-refresh-layer {
+            margin-top: 0;
+        }
+    }
     &.transitioning, &.refreshing {
         .transition(400ms); 
     }
