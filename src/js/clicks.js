@@ -157,7 +157,6 @@ app.initClickEvents = function () {
         var validUrl = url && url.length > 0 && url !== '#';
         
         if (validUrl || clicked.hasClass('back')) {
-
             var view;
             if (clicked.attr('data-view')) {
                 view = $(clicked.attr('data-view'))[0].f7View;
@@ -176,13 +175,14 @@ app.initClickEvents = function () {
             if (!view) return;
 
             var pageName;
-            if (url.indexOf('#') === 0)  {
+            if (url.indexOf('#') === 0 && url !== '#')  {
                 if (view.params.domCache) {
                     pageName = url.split('#')[1];
                     url = undefined;
                 }
                 else return;
             }
+            if (url === '#' && !clicked.hasClass('back')) return;
 
             var animatePages;
             if (clicked.attr('data-animatePages')) {
@@ -192,6 +192,7 @@ app.initClickEvents = function () {
                 if (clicked.hasClass('with-animation')) animatePages = true;
                 if (clicked.hasClass('no-animation')) animatePages = false;
             }
+            
             var options = {
                 animatePages: animatePages,
                 ignoreCache: toBoolean(clicked.attr('data-ignoreCache')),

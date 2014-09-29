@@ -64,9 +64,12 @@ app.smartSelectOpen = function (smartSelect) {
             disabled: select[i].disabled
         };
     }
+    var openIn = smartSelect.attr('data-open-in');
+    if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
 
     var pageTitle = smartSelect.attr('data-page-title') || smartSelect.find('.item-title').text();
     var backText = smartSelect.attr('data-back-text') || app.params.smartSelectBackText;
+    var closeText = smartSelect.attr('data-popup-close-text') || smartSelect.attr('data-back-text') || app.params.smartSelectPopupCloseText ;
     var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
 
     // Generate dynamic page layout
@@ -100,22 +103,45 @@ app.smartSelectOpen = function (smartSelect) {
             '</li>';
     }
     // Navbar HTML
+    var navbarLeftTemplate = openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText);
     var navbarHTML =
         '<div class="navbar">' +
         '  <div class="navbar-inner">' +
-            app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText) +
+            navbarLeftTemplate +
         '    <div class="center sliding">' + pageTitle + '</div>' +
         '  </div>' +
         '</div>';
-    // Determine navbar layout type - static/fixed/through
-    var navbarLayout = 'static';
-    if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
-    if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
-    // Page Layout
-    var pageName = 'smart-select-' + inputType;
 
-    var noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
-    var noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+    if (app.params.smartSelectNavbarTemplate) {
+        if (!app._compiledTemplates.smartSelectNavbar) {
+            app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate);
+        }
+        navbarHTML = app._compiledTemplates.smartSelectNavbar({
+            pageTitle: pageTitle,
+            backText: backText,
+            openIn: openIn,
+            inPopup: openIn === 'popup',
+            inPage: openIn === 'page',
+            id: id,
+            inputType: inputType
+        });
+    }
+    // Determine navbar layout type - static/fixed/through
+    var noNavbar = '', noToolbar = '', navbarLayout;
+    if (openIn === 'page') {
+        navbarLayout = 'static';
+        if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
+        if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
+        noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
+        noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+    }
+    else {
+        navbarLayout = 'fixed';
+    }
+        
+
+    // Page Layout
+    var pageName = 'smart-select-' + inputName;
 
     var useSearchbar = typeof smartSelect.data('searchbar') === 'undefined' ? app.params.smartSelectSearchbar : (smartSelect.data('searchbar') === 'true' ? true : false);
     var searchbarPlaceholder, searchbarCancel;
@@ -152,42 +178,52 @@ app.smartSelectOpen = function (smartSelect) {
         '</div>';
 
     // Event Listeners on new page
-    function handleInputs(e) {
-        var page = e.detail.page;
-        if (page.name === pageName) {
-            $(document).off('pageInit', handleInputs);
-            $(page.container).find('input[name="' + inputName + '"]').on('change', function () {
-                var input = this;
-                var value = input.value;
-                var optionText = [];
-                if (input.type === 'checkbox') {
-                    var values = [];
-                    for (var i = 0; i < select.options.length; i++) {
-                        var option = select.options[i];
-                        if (option.value === value) {
-                            option.selected = input.checked;
-                        }
-                        if (option.selected) {
-                            optionText.push(option.textContent.trim());
-                        }
+    function handleInputs(container) {
+        $(container).find('input[name="' + inputName + '"]').on('change', function () {
+            var input = this;
+            var value = input.value;
+            var optionText = [];
+            if (input.type === 'checkbox') {
+                var values = [];
+                for (var i = 0; i < select.options.length; i++) {
+                    var option = select.options[i];
+                    if (option.value === value) {
+                        option.selected = input.checked;
+                    }
+                    if (option.selected) {
+                        optionText.push(option.textContent.trim());
                     }
                 }
-                else {
-                    optionText = [smartSelect.find('option[value="' + value + '"]').text()];
-                    select.value = value;
-                }
-                    
-                $select.trigger('change');
-                smartSelect.find('.item-after').text(optionText.join(', '));
-                if (backOnSelect && inputType === 'radio') {
-                    view.back();
-                }
-            });
+            }
+            else {
+                optionText = [smartSelect.find('option[value="' + value + '"]').text()];
+                select.value = value;
+            }
+                
+            $select.trigger('change');
+            smartSelect.find('.item-after').text(optionText.join(', '));
+            if (backOnSelect && inputType === 'radio') {
+                view.back();
+            }
+        });
+    }
+    function pageInit(e) {
+        var page = e.detail.page;
+        if (page.name === pageName) {
+            $(document).off('pageInit', pageInit);
+            handleInputs(page.container);
         }
     }
-    $(document).on('pageInit', handleInputs);
+    $(document).on('pageInit', pageInit);
 
     // Load content
-    view.loadContent(pageHTML);
-
+    if (openIn === 'popup') {
+        var popup = app.popup('<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
+                    '<div class="view navbar-fixed">' +
+                        pageHTML +
+                    '</div>' +
+                '</div>');
+        handleInputs(popup);
+    }
+    else view.loadContent(pageHTML);
 };
