@@ -231,14 +231,6 @@ app.initFastClicks = function () {
         if (targetNeedsFocus(targetElement)) {
             targetElement.focus();
         }
-        
-        if (!app.device.webView && (app.device.os === 'ios')) {
-            if (e.timeStamp - touchStartTime >= 140 && app.device.osVersion.split('.')[0] >= 8) {
-                if (targetElement.nodeName.toLowerCase() === 'label' || $(targetElement).parents('label').length > 0) {
-                    return true;
-                }
-            }
-        }
 
         e.preventDefault();
         var touch = e.changedTouches[0];
@@ -305,16 +297,17 @@ app.initFastClicks = function () {
     }
     if (app.support.touch) {
         document.addEventListener('click', handleClick, true);
-        app.addGlobalEventListener('touchstart', handleTouchStart);
-        app.addGlobalEventListener('touchmove', handleTouchMove);
-        app.addGlobalEventListener('touchend', handleTouchEnd);
-        app.addGlobalEventListener('touchcancel', handleTouchCancel);
+        
+        document.addEventListener('touchstart', handleTouchStart);
+        document.addEventListener('touchmove', handleTouchMove);
+        document.addEventListener('touchend', handleTouchEnd);
+        document.addEventListener('touchcancel', handleTouchCancel);
     }
     else {
         if (app.params.activeState) {
-            app.addGlobalEventListener('mousedown', handleMouseDown);
-            app.addGlobalEventListener('mousemove', handleMouseMove);
-            app.addGlobalEventListener('mouseup', handleMouseUp);
+            document.addEventListener('mousedown', handleMouseDown);
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
         }
     }
         
