@@ -8,11 +8,8 @@ Framework7
 
 Full Featured HTML Framework For Building iOS7 Apps
 
-## Attention!
-
-Framework7 is on early development stage, so many things may be changed and sorted in a short time.
-
 ## Getting Started
+  * [Getting Started Guide](http://www.idangero.us/framework7/get-started/)
   * Clone/download this repo
   * Start building your App from changing Kitchen Sink, or from a clean template from `dist/` folder
 
