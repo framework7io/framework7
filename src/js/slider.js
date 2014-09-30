@@ -6,6 +6,7 @@ var Slider = function (container, params) {
         initialSlide: 0,
         spaceBetween: 0,
         speed: 300,
+        loop: false,
         slidesPerView: 1,
         onlyExternal: false,
         direction: 'horizontal',
@@ -85,7 +86,11 @@ var Slider = function (container, params) {
     s.updatePagination = function () {
         if (s.paginationContainer && s.paginationContainer.length > 0) {
             var bulletsHTML = '';
-            for (var i = 0; i < s.slides.length - s.params.slidesPerView + 1; i++) {
+            var bulletsLength = s.slides.length - s.params.slidesPerView + 1;
+            if (s.params.loop) {
+                bulletsLength = s.slides.length - s.loopedSlides * 2;
+            }
+            for (var i = 0; i < bulletsLength; i++) {
                 bulletsHTML += '<span class="' + s.params.bulletClass + '"></span>';
             }
             s.paginationContainer.html(bulletsHTML);
@@ -124,8 +129,9 @@ var Slider = function (container, params) {
         s.slideTo(s.activeSlideIndex, 0, false);
     };
 
-    var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate, animating = false;
+    var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate; 
     var lastClickTime = Date.now(), clickTimeout;
+    s.animating = false;
     s.allowClick = true;
 
     s.onClick = function (e) {
@@ -175,9 +181,12 @@ var Slider = function (container, params) {
         e.stopPropagation();
 
         if (!isMoved) {
+            if (params.loop) {
+                s.fixLoop();
+            }
             currentTranslate = $.getTranslate(s.wrapper[0], isH ? 'x' : 'y') * inverter;
             s.wrapper.transition(0);
-            if (animating) s.onTransitionEnd();
+            if (s.animating) s.onTransitionEnd();
             if (params.autoplay && autoplay) {
                 if (s.params.autoplayDisableOnInteraction) s.stopAutoplay();
                 else {
@@ -311,7 +320,7 @@ var Slider = function (container, params) {
             if (runCallbacks !== false) s.onTransitionEnd();
         }
         else {
-            animating = true;
+            s.animating = true;
             s.wrapper
                 .transition(speed)
                 .transform('translate3d(' + translateX + 'px,' + translateY + 'px,0)')
@@ -329,7 +338,14 @@ var Slider = function (container, params) {
 
         if (s.bullets && s.bullets.length > 0) {
             s.bullets.removeClass(s.params.bulletActiveClass);
-            s.bullets.eq(s.activeSlideIndex).addClass(s.params.bulletActiveClass);
+            var activeBulletIndex = s.activeSlideIndex;
+            if (s.params.loop) {
+                activeBulletIndex = activeBulletIndex - s.loopedSlides;
+                if (activeBulletIndex < 0) activeBulletIndex = s.bullets.length + activeBulletIndex;
+                if (activeBulletIndex >= s.bullets.length) activeBulletIndex = activeBulletIndex - s.bullets.length;
+            }
+                
+            s.bullets.eq(activeBulletIndex).addClass(s.params.bulletActiveClass);
         }
     };
     s.onTransitionStart = function () {
@@ -340,7 +356,7 @@ var Slider = function (container, params) {
         if (s.params.onTransitionStart) s.params.onTransitionStart(s);
     };
     s.onTransitionEnd = function () {
-        animating = false;
+        s.animating = false;
         s.wrapper.transition(0);
         if (s.activeSlideIndex !== s.previousSlideIndex) {
             if (s.params.onSlideChangeEnd) s.params.onSlideChangeEnd(s);
@@ -348,10 +364,24 @@ var Slider = function (container, params) {
         if (s.params.onTransitionEnd) s.params.onTransitionEnd(s);
     };
     s.slideNext = function () {
-        s.slideTo(s.activeSlideIndex + 1);
+        if (s.params.loop) {
+            if (s.animating) return;
+            s.fixLoop();
+            setTimeout(function () {
+                s.slideTo(s.activeSlideIndex + 1);
+            }, 0);
+        }
+        else s.slideTo(s.activeSlideIndex + 1);
     };
     s.slidePrev = function () {
-        s.slideTo(s.activeSlideIndex - 1);
+        if (s.params.loop) {
+            if (s.animating) return;
+            s.fixLoop();
+            setTimeout(function () {
+                s.slideTo(s.activeSlideIndex - 1);
+            }, 0);
+        }
+        else s.slideTo(s.activeSlideIndex - 1);
     };
     s.slideReset = function () {
         s.slideTo(s.activeSlideIndex);
@@ -396,17 +426,63 @@ var Slider = function (container, params) {
         s.startAutoplay();
     };
 
+    // Create looped slides
+    s.createLoop = function () {
+        // Remove duplicated slides
+        s.wrapper.children('.' + s.params.slideClass+'.slider-slide-duplicate').remove();
+
+        var slides = s.wrapper.children('.' + s.params.slideClass);
+        s.loopedSlides = parseInt(s.params.loopedSlides || s.params.slidesPerView, 10);
+        if (s.loopedSlides > slides.length) {
+            s.loopedSlides = slides.length;
+            return;
+        }
+        var prependSlides = [], appendSlides = [], i;
+        slides.each(function (index, el) {
+            var slide = $(this);
+            if (index < s.loopedSlides) appendSlides.push(el);
+            if (index < slides.length && index >= slides.length - s.loopedSlides) prependSlides.push(el);
+            slide.attr('data-slider-slide-index', index);
+        });
+        for (i = 0; i < appendSlides.length; i++) {
+            s.wrapper.append($(appendSlides[i].cloneNode(true)).addClass('slider-slide-duplicate'));
+        }
+        for (i = prependSlides.length - 1; i >= 0; i--) {
+            s.wrapper.prepend($(prependSlides[i].cloneNode(true)).addClass('slider-slide-duplicate'));
+        }
+    };
+    s.fixLoop = function () {
+        var newIndex;
+        //Fix For Negative Oversliding
+        if (s.activeSlideIndex < s.loopedSlides) {
+            newIndex = s.slides.length - s.loopedSlides * 3 + s.activeSlideIndex;
+            newIndex = newIndex + s.loopedSlides;
+            s.slideTo(newIndex, 0, false);
+        }
+        //Fix For Positive Oversliding
+        else if (s.activeSlideIndex > s.slides.length - s.params.slidesPerView * 2) {
+            newIndex = -s.slides.length + s.activeSlideIndex + s.loopedSlides;
+            newIndex = newIndex + s.loopedSlides;
+            s.slideTo(newIndex, 0, false);
+        }
+    };
+
     // init
     s.init = function () {
+        if (s.params.loop) s.createLoop();
         s.updateSlides();
         s.updatePagination();
         s.updateSize();
-        if (s.params.initialSlide > 0) s.slideTo(s.params.initialSlide, 0, false);
+        if (s.params.loop) {
+            s.slideTo(s.params.initialSlide + s.loopedSlides, 0, false);
+        }
+        else if (s.params.initialSlide > 0) s.slideTo(s.params.initialSlide, 0, false);
         else s.updateClasses();
         s.attachEvents();
         if (s.params.autoplay) s.startAutoplay();
     };
     s.update = function () {
+        if (s.params.loop) s.createLoop();
         s.updateSlides();
         s.updatePagination();
         s.updateSize();
@@ -449,10 +525,12 @@ app.initSlider = function (pageContainer) {
                 initialSlide: parseInt(slider.data('initialSlide'), 10) || undefined,
                 spaceBetween: parseInt(slider.data('spaceBetween'), 10) || undefined,
                 speed: parseInt(slider.data('speed'), 10) || undefined,
-                slidesPerView: slider.data('slidesPerView'),
+                slidesPerView: parseInt(slider.data('slidesPerView'), 10) || undefined,
                 direction: slider.data('direction'),
                 pagination: slider.data('pagination'),
                 paginationHide: slider.data('paginationHide') && (slider.data('paginationHide') === 'true' ? true : false),
+                loop: slider.data('loop') && (slider.data('loop') === 'true' ? true : false),
+                onlyExternal: slider.data('onlyExternal') && (slider.data('onlyExternal') === 'true' ? true : false),
                 slideClass: slider.data('slideClass'),
                 slideActiveClass: slider.data('slideActiveClass'),
                 slideNextClass: slider.data('slideNextClass'),
