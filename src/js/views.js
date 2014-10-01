@@ -378,42 +378,60 @@ var View = function (selector, params) {
     if (view.main) app.mainView = view;
 
     // Load methods
-    var pageMethods = ('loadPage loadContent reloadPage reloadContent reloadPreviousPage reloadPreviousContent refreshPage refreshPreviousPage').split(' ');
-    function createPageMethod (methodName) {
-        view[methodName] = function (options) {
-            options = options || {};
-            var method = methodName.toLowerCase();
-            var isContent = method.indexOf('content') > 0;
-            if (typeof options === 'string' || options.nodeType || 'length' in options) {
-                if (isContent) options = {content: options};
-                else options = {url: options};
+    view.loadPage = function (options) {
+        options = options || {};
+        if (typeof options === 'string') {
+            var url = options;
+            options = {};
+            if (url && url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[url]) {
+                options.pageName = view.pagesCache[url];
             }
-            if (method.indexOf('reload') >= 0) {
-                options.reload = true;
-                if (method.indexOf('previous') >= 0) {
-                    options.reloadPrevious = true;
-                }
-            }
-            if (method.indexOf('refresh') >= 0) {
-                options.url = method.indexOf('previous') >= 0 ? view.history[view.history.length - 2] : view.url;
-                
-                if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
-                    options.pageName = view.pagesCache[options.url];
-                    options.url = undefined;
-                    delete options.url;
-                }
-                options.reload = true;
-                options.ignoreCache = true;
-                if (method.indexOf('previous') >= 0) {
-                    options.reloadPrevious = true;
-                }
-            }
-            return app.loadPage(view, options);
+            else options.url = url;
+        }
+        return app.loadPage(view, options);
+    };
+    view.loadContent = function (content) {
+        return app.loadPage(view, {content: content});
+    };
+    view.reloadPage = function (url) {
+        return app.loadPage(view, {url: url, reload: true});
+    };
+    view.reloadContent = function (content) {
+        return app.loadPage(view, {content: content, reload: true});
+    };
+    view.reloadPreviousPage = function (url) {
+        return app.loadPage(view, {url: url, reloadPrevious: true, reload: true});
+    };
+    view.reloadPreviousContent = function (content) {
+        return app.loadPage(view, {content: content, reloadPrevious: true, reload: true});
+    };
+    view.refreshPage = function () {
+        var options = {
+            url: view.url,
+            reload: true,
+            ignoreCache: true
         };
-    }
-    for (i = 0; i < pageMethods.length; i++) {
-        createPageMethod(pageMethods[i]);
-    }
+        if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
+            options.pageName = view.pagesCache[options.url];
+            options.url = undefined;
+            delete options.url;
+        }
+        return app.loadPage(view, options);
+    };
+    view.refreshPreviousPage = function () {
+        var options = {
+            url: view.history[view.history.length - 2],
+            reload: true,
+            reloadPrevious: true,
+            ignoreCache: true
+        };
+        if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
+            options.pageName = view.pagesCache[options.url];
+            options.url = undefined;
+            delete options.url;
+        }
+        return app.loadPage(view, options);
+    };
 
     view.back = function (options) {
         options = options || {};
