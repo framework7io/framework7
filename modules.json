@@ -7,6 +7,7 @@
             "src/js/navbars.js",
             "src/js/xhr.js",
             "src/js/pages.js",
+            "src/js/router.js",
             "src/js/clicks.js",
             "src/js/resize.js",
             "src/js/panels.js"

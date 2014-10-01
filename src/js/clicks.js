@@ -147,8 +147,9 @@ app.initClickEvents = function () {
             if (accordionItem.length === 0) accordionItem = clicked.parents('li');
             app.accordionToggle(accordionItem);
         }
+
         // Load Page
-        if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks) || !isLink) {
+        if (app.params.ajaxLinks && !clicked.is(app.params.ajaxLinks) || !isLink || !app.params.router) {
             return;
         }
         if (isLink) {

@@ -34,6 +34,7 @@ module.exports = function (grunt) {
         'src/js/messagebar.js',
         'src/js/xhr.js',
         'src/js/pages.js',
+        'src/js/router.js',
         'src/js/modals.js',
         'src/js/panels.js',
         'src/js/messages.js',
