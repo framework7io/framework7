@@ -337,13 +337,14 @@ var PhotoBrowser = function (params) {
     pb.onSlideGestureStart = function (e) {
         if (!gestureSlide) {
             gestureSlide = $(this);
-            gestureImg = gestureSlide.find('img');
+            gestureImg = gestureSlide.find('img, svg, canvas');
             gestureImgWrap = gestureImg.parent();
         }
         gestureImg.transition(0);
         isScaling = true;
     };
     pb.onSlideGestureChange = function (e) {
+        if (!gestureImg || gestureImg.length === 0) return;
         scale = e.scale * currentScale;
         if (scale > pb.params.maxZoom) {
             scale = pb.params.maxZoom - 1 + Math.pow((scale - pb.params.maxZoom + 1), 0.5);
@@ -354,6 +355,7 @@ var PhotoBrowser = function (params) {
         gestureImg.transform('translate3d(0,0,0) scale(' + scale + ')');
     };
     pb.onSlideGestureEnd = function (e) {
+        if (!gestureImg || gestureImg.length === 0) return;
         scale = Math.max(Math.min(scale, pb.params.maxZoom), pb.params.minZoom);
         gestureImg.transition(pb.params.speed).transform('translate3d(0,0,0) scale(' + scale + ')');
         currentScale = scale;
@@ -363,9 +365,10 @@ var PhotoBrowser = function (params) {
     pb.toggleZoom = function () {
         if (!gestureSlide) {
             gestureSlide = pb.slides.eq(pb.slider.activeSlideIndex);
-            gestureImg = gestureSlide.find('img');
+            gestureImg = gestureSlide.find('img, svg, canvas');
             gestureImgWrap = gestureImg.parent();
         }
+        if (!gestureImg || gestureImg.length === 0) return;
         gestureImgWrap.transition(300).transform('translate3d(0,0,0)');
         if (scale && scale !== 1) {
             scale = currentScale = 1;
@@ -381,6 +384,7 @@ var PhotoBrowser = function (params) {
     var imageIsTouched, imageIsMoved, imageCurrentX, imageCurrentY, imageMinX, imageMinY, imageMaxX, imageMaxY, imageWidth, imageHeight, imageTouchesStart = {}, imageTouchesCurrent = {}, imageStartX, imageStartY, velocityPrevPositionX, velocityPrevTime, velocityX, velocityPrevPositionY, velocityY;
 
     pb.onSlideTouchStart = function (e) {
+        if (!gestureImg || gestureImg.length === 0) return;
         if (imageIsTouched) return;
         if (app.device.os === 'android') e.preventDefault();
         imageIsTouched = true;
@@ -388,6 +392,7 @@ var PhotoBrowser = function (params) {
         imageTouchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     };
     pb.onSlideTouchMove = function (e) {
+        if (!gestureImg || gestureImg.length === 0) return;
         pb.slider.allowClick = false;
         if (!imageIsTouched || !gestureSlide) return;
 
@@ -457,6 +462,7 @@ var PhotoBrowser = function (params) {
         gestureImgWrap.transform('translate3d(' + imageCurrentX + 'px, ' + imageCurrentY + 'px,0)');
     };
     pb.onSlideTouchEnd = function (e) {
+        if (!gestureImg || gestureImg.length === 0) return;
         if (!imageIsTouched || !imageIsMoved) {
             imageIsTouched = false;
             imageIsMoved = false;
