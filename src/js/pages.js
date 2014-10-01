@@ -300,7 +300,7 @@ app._animateNavbars = function (leftNavbarInner, rightNavbarInner, direction, vi
         });
     }
 };
-app._load = function (view, options) {
+app._loadPage = function (view, options) {
     options = options || {};
     
     var url = options.url,
@@ -633,7 +633,7 @@ app.loadPage = function (view, options) {
     function proceed(content) {
         preprocess(content, url, function (content) {
             options.content = content;
-            app._load(view, options);
+            app._loadPage(view, options);
         });
     }
     if (content || pageName) {
