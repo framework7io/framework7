@@ -149,7 +149,7 @@
     &.transitioning {
        .transition(400ms); 
     }
-    span {
+    span.photo-browser-zoom-container {
         width: 100%;
         text-align: center;
         display: none;
@@ -162,16 +162,31 @@
         display: none;
     }
     &.slider-slide-active, &.slider-slide-next, &.slider-slide-prev {
-        span {
+        span.photo-browser-zoom-container {
             display: block;
         }
         img {
             display: inline;
         }
+        &.photo-browser-slide-lazy {
+            .preloader {
+                display: block;
+            }
+        }
     }
     iframe {
         width: 100%;
         height: 100%;
+    }
+    .preloader {
+        display: none;
+        position: absolute;
+        width: 42px;
+        height: 42px;
+        margin-left: -21px;
+        margin-top: -21px;
+        left: 50%;
+        top: 50%;
     }
 }
 
