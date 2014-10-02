@@ -34,7 +34,7 @@ var View = function (selector, params) {
     // Container
     var container = $(selector);
     view.container = container[0];
-    
+
     // Location
     var docLocation = document.location.href;
 
@@ -50,7 +50,7 @@ var View = function (selector, params) {
         else {
             if (viewURL.indexOf(pushStateSeparator) >= 0 && viewURL.indexOf(pushStateSeparator + '#') < 0) viewURL = viewURL.split(pushStateSeparator)[0];
         }
-            
+
     }
     view.url = container.attr('data-url') || view.params.url || viewURL;
 
@@ -83,7 +83,7 @@ var View = function (selector, params) {
                 view.initialNavbars.push(initialNavbars[i]);
             }
         }
-            
+
     }
 
     view.allowPageChange = true;
@@ -98,7 +98,7 @@ var View = function (selector, params) {
         }
         if (currentPage.length > 0) {
             currentPageData = currentPage[0].f7PageData;
-        
+
         }
         if (currentPageData) {
             currentPageData.view = view;
@@ -119,14 +119,14 @@ var View = function (selector, params) {
         isMoved = false,
         touchesStart = {},
         isScrolling,
-        activePage,
-        previousPage,
+        activePage = [],
+        previousPage = [],
         viewContainerWidth,
         touchesDiff,
         allowViewTouchMove = true,
         touchStartTime,
-        activeNavbar,
-        previousNavbar,
+        activeNavbar = [],
+        previousNavbar = [],
         activeNavElements,
         previousNavElements,
         activeNavBackIcon,
@@ -156,7 +156,7 @@ var View = function (selector, params) {
             isTouched = false;
             return;
         }
-        
+
         if (!isMoved) {
             var cancel = false;
             // Calc values during first move fired
@@ -335,7 +335,7 @@ var View = function (selector, params) {
             // Update View's URL
             var url = view.history[view.history.length - 2];
             view.url = url;
-            
+
             // Page before animation callback
             app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
         }
@@ -475,7 +475,7 @@ var View = function (selector, params) {
                 app.loadPage(view, {pageName: state.pageName, pushState: false});
             }
         }
-            
+
     }
 
     // Destroy
@@ -486,7 +486,7 @@ var View = function (selector, params) {
 
     // Plugin hook
     app.pluginHook('addView', view);
-    
+
     // Return view
     return view;
 };
