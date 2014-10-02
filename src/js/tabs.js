@@ -40,7 +40,7 @@ app.showTab = function (tab, tabLink) {
         if (typeof tab === 'string') tabLink = $('.tab-link[href="' + tab + '"]');
         else tabLink = $('.tab-link[href="#' + newTab.attr('id') + '"]');
         // Search by data-tab
-        if (tabLink.length === 0) {
+        if (!tabLink || tabLink && tabLink.length === 0) {
             $('[data-tab]').each(function () {
                 if (newTab.is($(this).attr('data-tab'))) tabLink = $(this);
             });
@@ -55,7 +55,7 @@ app.showTab = function (tab, tabLink) {
         var oldTabId = oldTab.attr('id');
         if (oldTabId) oldTabLink = $('.tab-link[href="#' + oldTabId + '"]');
         // Search by data-tab
-        if (oldTabLink.length === 0) {
+        if (!oldTabLink || oldTabLink && oldTabLink.length === 0) {
             $('[data-tab]').each(function () {
                 if (oldTab.is($(this).attr('data-tab'))) oldTabLink = $(this);
             });
