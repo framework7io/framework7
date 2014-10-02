@@ -150,7 +150,7 @@ app._loadPage = function (view, options) {
     }
 
     // If page not found exit
-    if (!newPage || newPage.length === 0 || (pageName && (view.activePage.name === pageName))) {
+    if (!newPage || newPage.length === 0 || (pageName && view.activePage && view.activePage.name === pageName)) {
         view.allowPageChange = true;
         return;
     }
@@ -686,7 +686,7 @@ app._back = function (view, options) {
         }
     }
     else {
-        if (url && url === view.url || pageName && pageName === view.activePage.name) {
+        if (url && url === view.url || pageName && view.activePage && view.activePage.name === pageName) {
             view.allowPageChange = true;
             return;
         }

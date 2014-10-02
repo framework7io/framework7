@@ -93,12 +93,11 @@ var View = function (selector, params) {
         var currentPage = $(view.pagesContainer).find('.page-on-center');
         var currentPageData;
         if (currentPage.length === 0) {
-            currentPage = $(view.pagesContainer).find('.page');
+            currentPage = $(view.pagesContainer).find('.page:not(.cached)');
             currentPage = currentPage.eq(currentPage.length - 1);
         }
         if (currentPage.length > 0) {
             currentPageData = currentPage[0].f7PageData;
-
         }
         if (currentPageData) {
             currentPageData.view = view;
@@ -383,8 +382,8 @@ var View = function (selector, params) {
         if (typeof options === 'string') {
             var url = options;
             options = {};
-            if (url && url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[url]) {
-                options.pageName = view.pagesCache[url];
+            if (url && url.indexOf('#') === 0 && view.params.domCache) {
+                options.pageName = url.split('#')[1];
             }
             else options.url = url;
         }
