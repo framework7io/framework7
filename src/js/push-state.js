@@ -8,16 +8,16 @@ app.pushStateClearQueue = function () {
     var animatePages;
     if (app.params.pushStateNoAnimation === true) animatePages = false;
     if (queue.action === 'back') {
-        app.back(queue.view, {animatePages: animatePages});
+        app.router.back(queue.view, {animatePages: animatePages});
     }
     if (queue.action === 'loadPage') {
-        app.loadPage(queue.view, {url: queue.stateUrl, animatePages: animatePages, pushState: false});
+        app.router.load(queue.view, {url: queue.stateUrl, animatePages: animatePages, pushState: false});
     }
     if (queue.action === 'loadContent') {
-        app.loadPage(queue.view, {content: queue.stateContent, animatePages: animatePages, pushState: false});
+        app.router.load(queue.view, {content: queue.stateContent, animatePages: animatePages, pushState: false});
     }
     if (queue.action === 'loadPageName') {
-        app.loadPage(queue.view, {pageName: queue.statePageName, animatePages: animatePages, pushState: false});
+        app.router.load(queue.view, {pageName: queue.statePageName, animatePages: animatePages, pushState: false});
     }
 };
 
@@ -55,7 +55,7 @@ app.initPushState = function () {
             if (view.history.indexOf(stateUrl) >= 0) {
                 // Go Back
                 if (view.allowPageChange) {
-                    app.back(view, {url:undefined, animatePages: animatePages, pushState: false, preloadOnly:false});
+                    app.router.back(view, {url:undefined, animatePages: animatePages, pushState: false, preloadOnly:false});
                 }
                 else {
                     app.pushStateQueue.push({
@@ -67,7 +67,7 @@ app.initPushState = function () {
             else if (stateContent) {
                 // Load Page
                 if (view.allowPageChange) {
-                    app.loadPage(view, {content:stateContent, animatePages: animatePages, pushState: false});
+                    app.router.load(view, {content:stateContent, animatePages: animatePages, pushState: false});
                 }
                 else {
                     app.pushStateQueue.unshift({
@@ -81,7 +81,7 @@ app.initPushState = function () {
             else if (statePageName) {
                 // Load Page by page name with Dom Cache
                 if (view.allowPageChange) {
-                    app.loadPage(view, {pageName:statePageName, animatePages: animatePages, pushState: false});
+                    app.router.load(view, {pageName:statePageName, animatePages: animatePages, pushState: false});
                 }
                 else {
                     app.pushStateQueue.unshift({
@@ -94,7 +94,7 @@ app.initPushState = function () {
             else  {
                 // Load Page
                 if (view.allowPageChange) {
-                    app.loadPage(view, {url:stateUrl, animatePages: animatePages, pushState: false});
+                    app.router.load(view, {url:stateUrl, animatePages: animatePages, pushState: false});
                 }
                 else {
                     app.pushStateQueue.unshift({

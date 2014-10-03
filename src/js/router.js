@@ -1,110 +1,149 @@
 /*======================================================
 ************   Navigation / Router   ************
 ======================================================*/
-// Load Page
-app.allowPageChange = true;
-app._tempDomElement = document.createElement('div');
+app.router = {
+    // Temporary DOM Element
+    temporaryDom: document.createElement('div'),
 
-// Search required element in parsed content in related view
-function _findElement(selector, container, view, notCached) {
-    container = $(container);
-    if (notCached) selector = selector + ':not(.cached)';
-    var found = container.find(selector);
-    if (found.length > 1) {
-        if (typeof view.selector === 'string') {
-            // Search in related view
-            found = container.find(view.selector + ' ' + selector);
-        }
+    // Find page or navbar in passed container which are related to View
+    findElement: function (selector, container, view, notCached) {
+        container = $(container);
+        if (notCached) selector = selector + ':not(.cached)';
+        var found = container.find(selector);
         if (found.length > 1) {
-            // Search in main view
-            found = container.find('.' + app.params.viewMainClass + ' ' + selector);
+            if (typeof view.selector === 'string') {
+                // Search in related view
+                found = container.find(view.selector + ' ' + selector);
+            }
+            if (found.length > 1) {
+                // Search in main view
+                found = container.find('.' + app.params.viewMainClass + ' ' + selector);
+            }
+        }
+        if (found.length === 1) return found;
+        else {
+            // Try to find non cached
+            if (!notCached) found = app.router.findElement(selector, container, view, true);
+            if (found && found.length === 1) return found;
+            else return undefined;
+        }
+    },
+
+    // Set pages classess for animationEnd
+    animatePages: function (leftPage, rightPage, direction, view) {
+        // Loading new page
+        var removeClasses = 'page-on-center page-on-right page-on-left';
+        if (direction === 'to-left') {
+            // leftPage.removeClass('page-on-center').addClass('page-from-center-to-left');
+            // rightPage.removeClass('page-on-left').addClass('page-from-right-to-center');
+            leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
+            rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
+        }
+        // Go back
+        if (direction === 'to-right') {
+            // leftPage.removeClass('page-on-left').addClass('page-from-left-to-center');
+            // rightPage.removeClass('page-on-center').addClass('page-from-center-to-right');
+            leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
+            rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
+            
+        }
+    },
+
+    // Prepare navbar before animarion
+    prepareNavbar: function (newNavbarInner, oldNavbarInner, newNavbarPosition) {
+        $(newNavbarInner).find('.sliding').each(function () {
+            var sliding = $(this);
+            var slidingOffset = newNavbarPosition === 'right' ? this.f7NavbarRightOffset : this.f7NavbarLeftOffset;
+
+            if (app.params.animateNavBackIcon) {
+                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                    sliding.find('.back .icon').transform('translate3d(' + (-slidingOffset) + 'px,0,0)');
+                }
+                if (newNavbarPosition === 'left' && sliding.hasClass('center') && $(oldNavbarInner).find('.left .back .icon ~ span').length > 0) {
+                    slidingOffset += $(oldNavbarInner).find('.left .back span')[0].offsetLeft;
+                }
+            }
+
+            sliding.transform('translate3d(' + slidingOffset + 'px,0,0)');
+        });
+    },
+
+    // Set navbars classess for animation
+    animateNavbars: function (leftNavbarInner, rightNavbarInner, direction, view) {
+        // Loading new page
+        var removeClasses = 'navbar-on-right navbar-on-center navbar-on-left';
+        if (direction === 'to-left') {
+            rightNavbarInner.removeClass(removeClasses).addClass('navbar-from-right-to-center');
+            rightNavbarInner.find('.sliding').each(function () {
+                var sliding = $(this);
+                sliding.transform('translate3d(0px,0,0)');
+                if (app.params.animateNavBackIcon) {
+                    if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                        sliding.find('.back .icon').transform('translate3d(0px,0,0)');
+                    }
+                }
+            });
+
+            leftNavbarInner.removeClass(removeClasses).addClass('navbar-from-center-to-left');
+            leftNavbarInner.find('.sliding').each(function () {
+                var sliding = $(this);
+                if (app.params.animateNavBackIcon) {
+                    if (sliding.hasClass('center') && rightNavbarInner.find('.sliding.left .back .icon').length > 0) {
+                        this.f7NavbarLeftOffset += rightNavbarInner.find('.sliding.left .back span')[0].offsetLeft;
+                    }
+                    if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                        sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarLeftOffset) + 'px,0,0)');
+                    }
+                }
+                sliding.transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
+            });
+        }
+        // Go back
+        if (direction === 'to-right') {
+            leftNavbarInner.removeClass(removeClasses).addClass('navbar-from-left-to-center');
+            leftNavbarInner.find('.sliding').each(function () {
+                var sliding = $(this);
+                sliding.transform('translate3d(0px,0,0)');
+                if (app.params.animateNavBackIcon) {
+                    if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                        sliding.find('.back .icon').transform('translate3d(0px,0,0)');
+                    }
+                }
+            });
+
+            rightNavbarInner.removeClass(removeClasses).addClass('navbar-from-center-to-right');
+            rightNavbarInner.find('.sliding').each(function () {
+                var sliding = $(this);
+                if (app.params.animateNavBackIcon) {
+                    if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
+                        sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarRightOffset) + 'px,0,0)');
+                    }
+                }
+                sliding.transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
+            });
+        }
+    },
+
+    preprocess: function(content, url, next) {
+        // Plugin hook
+        app.pluginHook('preprocess', content, url, next);
+        
+        // Preprocess by plugin
+        content = app.pluginProcess('preprocess', content);
+
+        if (app.params.preprocess) {
+            content = app.params.preprocess(content, url, next);
+            if (typeof content !== 'undefined') {
+                next(content);
+            }
+        } else {
+            next(content);
         }
     }
-    if (found.length === 1) return found;
-    else {
-        // Try to find non cached
-        if (!notCached) found = _findElement(selector, container, view, true);
-        if (found && found.length === 1) return found;
-        else return undefined;
-    }
-}
-
-// Set pages classess for animation
-app._animatePages = function (leftPage, rightPage, direction, view) {
-    // Loading new page
-    var removeClasses = 'page-on-center page-on-right page-on-left';
-    if (direction === 'to-left') {
-        // leftPage.removeClass('page-on-center').addClass('page-from-center-to-left');
-        // rightPage.removeClass('page-on-left').addClass('page-from-right-to-center');
-        leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
-        rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
-    }
-    // Go back
-    if (direction === 'to-right') {
-        // leftPage.removeClass('page-on-left').addClass('page-from-left-to-center');
-        // rightPage.removeClass('page-on-center').addClass('page-from-center-to-right');
-        leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
-        rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
-        
-    }
 };
 
-// Set navbars classess for animation
-app._animateNavbars = function (leftNavbarInner, rightNavbarInner, direction, view) {
-    // Loading new page
-    var removeClasses = 'navbar-on-right navbar-on-center navbar-on-left';
-    if (direction === 'to-left') {
-        rightNavbarInner.removeClass(removeClasses).addClass('navbar-from-right-to-center');
-        rightNavbarInner.find('.sliding').each(function () {
-            var sliding = $(this);
-            sliding.transform('translate3d(0px,0,0)');
-            if (app.params.animateNavBackIcon) {
-                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
-                    sliding.find('.back .icon').transform('translate3d(0px,0,0)');
-                }
-            }
-        });
 
-        leftNavbarInner.removeClass(removeClasses).addClass('navbar-from-center-to-left');
-        leftNavbarInner.find('.sliding').each(function () {
-            var sliding = $(this);
-            if (app.params.animateNavBackIcon) {
-                if (sliding.hasClass('center') && rightNavbarInner.find('.sliding.left .back .icon').length > 0) {
-                    this.f7NavbarLeftOffset += rightNavbarInner.find('.sliding.left .back span')[0].offsetLeft;
-                }
-                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
-                    sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarLeftOffset) + 'px,0,0)');
-                }
-            }
-            sliding.transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
-        });
-    }
-    // Go back
-    if (direction === 'to-right') {
-        leftNavbarInner.removeClass(removeClasses).addClass('navbar-from-left-to-center');
-        leftNavbarInner.find('.sliding').each(function () {
-            var sliding = $(this);
-            sliding.transform('translate3d(0px,0,0)');
-            if (app.params.animateNavBackIcon) {
-                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
-                    sliding.find('.back .icon').transform('translate3d(0px,0,0)');
-                }
-            }
-        });
-
-        rightNavbarInner.removeClass(removeClasses).addClass('navbar-from-center-to-right');
-        rightNavbarInner.find('.sliding').each(function () {
-            var sliding = $(this);
-            if (app.params.animateNavBackIcon) {
-                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
-                    sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarRightOffset) + 'px,0,0)');
-                }
-            }
-            sliding.transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
-        });
-    }
-};
-app._loadPage = function (view, options) {
+app.router._load = function (view, options) {
     options = options || {};
     
     var url = options.url,
@@ -122,20 +161,20 @@ app._loadPage = function (view, options) {
     // Plugin hook
     app.pluginHook('loadPage', view, options);
 
-    app._tempDomElement.innerHTML = '';
+    app.router.temporaryDom.innerHTML = '';
 
     // Parse DOM
     if (!pageName) {
         if (url || (typeof content === 'string')) {
 
-            app._tempDomElement.innerHTML = content;
+            app.router.temporaryDom.innerHTML = content;
         } else {
             if ('length' in content && content.length > 1) {
                 for (var ci = 0; ci < content.length; ci++) {
-                    $(app._tempDomElement).append(content[ci]);
+                    $(app.router.temporaryDom).append(content[ci]);
                 }
             } else {
-                $(app._tempDomElement).append(content);
+                $(app.router.temporaryDom).append(content);
             }
         }
     }
@@ -146,7 +185,7 @@ app._loadPage = function (view, options) {
     // Find new page
     if (pageName) newPage = pagesContainer.find('.page[data-page="' + pageName + '"]');
     else {
-        newPage = _findElement('.page', app._tempDomElement, view);
+        newPage = app.router.findElement('.page', app.router.temporaryDom, view);
     }
 
     // If page not found exit
@@ -200,14 +239,14 @@ app._loadPage = function (view, options) {
             newNavbarInner = viewContainer.find('.navbar-inner[data-page="' + pageName + '"]');
         }
         else {
-            newNavbarInner = _findElement('.navbar-inner', app._tempDomElement, view);    
+            newNavbarInner = app.router.findElement('.navbar-inner', app.router.temporaryDom, view);    
         }
         if (!newNavbarInner || newNavbarInner.length === 0) {
             dynamicNavbar = false;
         }
         navbar = viewContainer.find('.navbar');
         if (options.reload) {
-            oldNavbarInner = navbar.find('.navbar-inner:last-child');
+            oldNavbarInner = navbar.find('.navbar-inner:not(.cached):last-child');
         }
         else {
             oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');    
@@ -341,15 +380,7 @@ app._loadPage = function (view, options) {
     }
 
     if (dynamicNavbar && animatePages) {
-        newNavbarInner.find('.sliding').each(function () {
-            var sliding = $(this);
-            sliding.transform('translate3d(' + (this.f7NavbarRightOffset) + 'px,0,0)');
-            if (app.params.animateNavBackIcon) {
-                if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
-                    sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarRightOffset) + 'px,0,0)');
-                }
-            }
-        });
+        app.router.prepareNavbar(newNavbarInner, oldNavbarInner, 'right');
     }
     // Force reLayout
     var clientLeft = newPage[0].clientLeft;
@@ -387,12 +418,12 @@ app._loadPage = function (view, options) {
 
     if (animatePages) {
         // Set pages before animation
-        app._animatePages(oldPage, newPage, 'to-left', view);
+        app.router.animatePages(oldPage, newPage, 'to-left', view);
 
         // Dynamic navbar animation
         if (dynamicNavbar) {
             setTimeout(function () {
-                app._animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
+                app.router.animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
             }, 0);
 
         }
@@ -404,25 +435,8 @@ app._loadPage = function (view, options) {
         afterAnimation();
     }
 };
-function preprocess(content, url, next) {
-    // Plugin hook
-    app.pluginHook('preprocess', content, url, next);
-    
-    // Preprocess by plugin
-    content = app.pluginProcess('preprocess', content);
 
-    if (app.params.preprocess) {
-        content = app.params.preprocess(content, url, next);
-        //this should handle backwards compatibility
-        //@NOTE if using loadPage from within preprocess it may be necessary to set myApp.allowPageChange = true;
-        if (typeof content !== 'undefined') {
-            next(content);
-        }
-    } else {//we need to call the callback function if there is no preprocessing
-        next(content);
-    }
-}
-app.loadPage = function (view, options) {
+app.router.load = function (view, options) {
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
@@ -435,9 +449,9 @@ app.loadPage = function (view, options) {
         app.xhr = false;
     }
     function proceed(content) {
-        preprocess(content, url, function (content) {
+        app.router.preprocess(content, url, function (content) {
             options.content = content;
-            app._loadPage(view, options);
+            app.router._load(view, options);
         });
     }
     if (content || pageName) {
@@ -453,7 +467,7 @@ app.loadPage = function (view, options) {
         proceed(content);
     });
 };
-app._back = function (view, options) {
+app.router._back = function (view, options) {
     options = options || {};
     var url = options.url,
         content = options.content, 
@@ -482,7 +496,7 @@ app._back = function (view, options) {
 
     // Animation
     function afterAnimation() {
-        app.afterGoBack(view, oldPage[0], newPage[0]);
+        app.router.afterBack(view, oldPage[0], newPage[0]);
         app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
     }
     function animateBack() {
@@ -491,12 +505,12 @@ app._back = function (view, options) {
 
         if (animatePages) {
             // Set pages before animation
-            app._animatePages(newPage, oldPage, 'to-right', view);
+            app.router.animatePages(newPage, oldPage, 'to-right', view);
 
             // Dynamic navbar animation
             if (dynamicNavbar) {
                 setTimeout(function () {
-                    app._animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
+                    app.router.animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
                 }, 0);
             }
             
@@ -511,24 +525,24 @@ app._back = function (view, options) {
     }
 
     function parseNewPage() {
-        app._tempDomElement.innerHTML = '';
+        app.router.temporaryDom.innerHTML = '';
         // Parse DOM
         if (url || (typeof content === 'string')) {
-            app._tempDomElement.innerHTML = content;
+            app.router.temporaryDom.innerHTML = content;
         } else {
             if ('length' in content && content.length > 1) {
                 for (var ci = 0; ci < content.length; ci++) {
-                    $(app._tempDomElement).append(content[ci]);
+                    $(app.router.temporaryDom).append(content[ci]);
                 }
             } else {
-                $(app._tempDomElement).append(content);
+                $(app.router.temporaryDom).append(content);
             }
         }
-        newPage = _findElement('.page', app._tempDomElement, view);
+        newPage = app.router.findElement('.page', app.router.temporaryDom, view);
 
         if (view.params.dynamicNavbar) {
             // Find navbar
-            newNavbarInner = _findElement('.navbar-inner', app._tempDomElement, view);
+            newNavbarInner = app.router.findElement('.navbar-inner', app.router.temporaryDom, view);
         }
     }
     function setPages() {
@@ -605,18 +619,7 @@ app._back = function (view, options) {
         }
 
         if (dynamicNavbar && newNavbarInner.hasClass('navbar-on-left') && animatePages) {
-            newNavbarInner.find('.sliding').each(function () {
-                var sliding = $(this);
-                if (app.params.animateNavBackIcon) {
-                    if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
-                        sliding.find('.back .icon').transform('translate3d(' + (-this.f7NavbarLeftOffset) + 'px,0,0)');
-                    }
-                    if (sliding.hasClass('center') && oldNavbarInner.find('.left .back .icon ~ span').length > 0) {
-                        this.f7NavbarLeftOffset += oldNavbarInner.find('.left .back span')[0].offsetLeft;
-                    }
-                }
-                sliding.transform('translate3d(' + (this.f7NavbarLeftOffset) + 'px,0,0)');
-            });
+            app.router.prepareNavbar(newNavbarInner,  oldNavbarInner, 'left');
         }
 
         if (preloadOnly) {
@@ -719,7 +722,7 @@ app._back = function (view, options) {
     }
     
 };
-app.back = function (view, options) {
+app.router.back = function (view, options) {
     options = options || {};
     var url = options.url;
     var content = options.content;
@@ -734,15 +737,15 @@ app.back = function (view, options) {
     var pagesInView = $(view.pagesContainer).find('.page:not(.cached)');
     
     function proceed(content) {
-        preprocess(content, url, function (content) {
+        app.router.preprocess(content, url, function (content) {
             options.content = content;
-            app._back(view, options);
+            app.router._back(view, options);
         });
     }
     function back() {}
     if (pagesInView.length > 1 && !force) {
         // Simple go back to previos page in view
-        app._back(view, options);
+        app.router._back(view, options);
         return;
     }
     if (!force) {
@@ -798,7 +801,7 @@ app.back = function (view, options) {
     return;
 };
 
-app.afterGoBack = function (view, oldPage, newPage) {
+app.router.afterBack = function (view, oldPage, newPage) {
     // Remove old page and set classes on new one
     oldPage = $(oldPage);
     newPage = $(newPage);
@@ -877,7 +880,7 @@ app.afterGoBack = function (view, oldPage, newPage) {
             if (previousNavbar && previousNavbar.length > 0) previousNavbar.removeClass('cached navbar-on-right navbar-on-center').addClass('navbar-on-left');
         }
         else {
-            app.back(view, {preloadOnly: true}); 
+            app.router.back(view, {preloadOnly: true}); 
         }
     }
 };

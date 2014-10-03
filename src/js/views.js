@@ -353,7 +353,7 @@ var View = function (selector, params) {
                 if (app.params.pushState) history.back();
                 // Page after animation callback
                 app.pageAnimCallbacks('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
-                app.afterGoBack(view, activePage, previousPage);
+                app.router.afterBack(view, activePage, previousPage);
             }
         });
     };
@@ -376,69 +376,81 @@ var View = function (selector, params) {
     app.views.push(view);
     if (view.main) app.mainView = view;
 
-    // Load methods
-    view.loadPage = function (options) {
-        options = options || {};
-        if (typeof options === 'string') {
-            var url = options;
-            options = {};
-            if (url && url.indexOf('#') === 0 && view.params.domCache) {
-                options.pageName = url.split('#')[1];
+    // Router 
+    view.router = {
+        load: function (options) {
+            return app.router.load(view, options);
+        },
+        back: function (options) {
+            return app.router.back(view, options);  
+        },
+        // Shortcuts
+        loadPage: function (options) {
+            options = options || {};
+            if (typeof options === 'string') {
+                var url = options;
+                options = {};
+                if (url && url.indexOf('#') === 0 && view.params.domCache) {
+                    options.pageName = url.split('#')[1];
+                }
+                else options.url = url;
             }
-            else options.url = url;
+            return app.router.load(view, options);
+        },
+        loadContent: function (content) {
+            return app.router.load(view, {content: content});
+        },
+        reloadPage: function (url) {
+            return app.router.load(view, {url: url, reload: true});
+        },
+        reloadContent: function (content) {
+            return app.router.load(view, {content: content, reload: true});
+        },
+        reloadPreviousPage: function (url) {
+            return app.router.load(view, {url: url, reloadPrevious: true, reload: true});
+        },
+        reloadPreviousContent: function (content) {
+            return app.router.load(view, {content: content, reloadPrevious: true, reload: true});
+        },
+        refreshPage: function () {
+            var options = {
+                url: view.url,
+                reload: true,
+                ignoreCache: true
+            };
+            if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
+                options.pageName = view.pagesCache[options.url];
+                options.url = undefined;
+                delete options.url;
+            }
+            return app.router.load(view, options);
+        },
+        refreshPreviousPage: function () {
+            var options = {
+                url: view.history[view.history.length - 2],
+                reload: true,
+                reloadPrevious: true,
+                ignoreCache: true
+            };
+            if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
+                options.pageName = view.pagesCache[options.url];
+                options.url = undefined;
+                delete options.url;
+            }
+            return app.router.load(view, options);
         }
-        return app.loadPage(view, options);
-    };
-    view.loadContent = function (content) {
-        return app.loadPage(view, {content: content});
-    };
-    view.reloadPage = function (url) {
-        return app.loadPage(view, {url: url, reload: true});
-    };
-    view.reloadContent = function (content) {
-        return app.loadPage(view, {content: content, reload: true});
-    };
-    view.reloadPreviousPage = function (url) {
-        return app.loadPage(view, {url: url, reloadPrevious: true, reload: true});
-    };
-    view.reloadPreviousContent = function (content) {
-        return app.loadPage(view, {content: content, reloadPrevious: true, reload: true});
-    };
-    view.refreshPage = function () {
-        var options = {
-            url: view.url,
-            reload: true,
-            ignoreCache: true
-        };
-        if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
-            options.pageName = view.pagesCache[options.url];
-            options.url = undefined;
-            delete options.url;
-        }
-        return app.loadPage(view, options);
-    };
-    view.refreshPreviousPage = function () {
-        var options = {
-            url: view.history[view.history.length - 2],
-            reload: true,
-            reloadPrevious: true,
-            ignoreCache: true
-        };
-        if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
-            options.pageName = view.pagesCache[options.url];
-            options.url = undefined;
-            delete options.url;
-        }
-        return app.loadPage(view, options);
     };
 
-    view.back = function (options) {
-        options = options || {};
-        if (typeof options === 'string' || options.nodeType || 'length' in options) {
-            options = {url: options};
-        }
-        return app.back(view, options);
-    };
+    // Aliases for temporary backward compatibility
+    view.loadPage = view.router.loadPage;
+    view.loadContent = view.router.loadContent;
+    view.reloadPage = view.router.reloadPage;
+    view.reloadContent = view.router.reloadContent;
+    view.reloadPreviousPage = view.router.reloadPreviousPage;
+    view.reloadPreviousContent = view.router.reloadPreviousContent;
+    view.refreshPage = view.router.refreshPage;
+    view.refreshPreviousPage = view.router.refreshPreviousPage;
+    view.back = view.router.back;
 
     // Bars methods
     view.hideNavbar = function () {
@@ -466,12 +478,12 @@ var View = function (selector, params) {
         var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
 
         if (pushStateUrl) {
-            app.loadPage(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
+            app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
         }
         else if (docLocation.indexOf(pushStateSeparator + '#') >= 0) {
             var state = history.state;
             if (state.pageName && 'viewIndex' in state) {
-                app.loadPage(view, {pageName: state.pageName, pushState: false});
+                app.router.load(view, {pageName: state.pageName, pushState: false});
             }
         }
 

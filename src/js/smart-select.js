@@ -203,7 +203,7 @@ app.smartSelectOpen = function (smartSelect) {
             $select.trigger('change');
             smartSelect.find('.item-after').text(optionText.join(', '));
             if (backOnSelect && inputType === 'radio') {
-                view.back();
+                view.router.back();
             }
         });
     }
@@ -225,5 +225,5 @@ app.smartSelectOpen = function (smartSelect) {
                 '</div>');
         handleInputs(popup);
     }
-    else view.loadContent(pageHTML);
+    else view.router.load({content: pageHTML});
 };

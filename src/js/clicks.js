@@ -107,7 +107,9 @@ app.initClickEvents = function () {
         }
 
         // Tabs
+        var isTabLink;
         if (clicked.hasClass('tab-link')) {
+            isTabLink = true;
             app.showTab(clicked.attr('data-tab') || clicked.attr('href'), clicked);
         }
         // Swipeout Delete
@@ -155,7 +157,7 @@ app.initClickEvents = function () {
         if (isLink) {
             e.preventDefault();
         }
-        var validUrl = url && url.length > 0 && url !== '#';
+        var validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
         
         if (validUrl || clicked.hasClass('back')) {
             var view;
@@ -204,8 +206,8 @@ app.initClickEvents = function () {
                 url: url
             };
             
-            if (clicked.hasClass('back')) view.back(options);
-            else view.loadPage(options);
+            if (clicked.hasClass('back')) view.router.back(options);
+            else view.router.load(options);
         }
     }
     $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle', handleClicks);
