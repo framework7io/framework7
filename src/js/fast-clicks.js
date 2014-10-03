@@ -56,7 +56,7 @@ app.initFastClicks = function () {
     }
     function targetNeedsFastClick(el) {
         if (el.nodeName.toLowerCase() === 'input' && el.type === 'file') return false;
-        if (el.className.indexOf('no-fastclick') >= 0 || $(el).parents('no-fastclick').length > 0) return false;
+        if (el.className.indexOf('no-fastclick') >= 0 || $(el).parents('.no-fastclick').length > 0) return false;
         return true;
     }
     function targetNeedsFocus(el) {
