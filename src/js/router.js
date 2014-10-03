@@ -126,7 +126,7 @@ app.router = {
 
     preprocess: function(content, url, next) {
         // Plugin hook
-        app.pluginHook('preprocess', content, url, next);
+        app.pluginHook('routerPreprocess', content, url, next);
         
         // Preprocess by plugin
         content = app.pluginProcess('preprocess', content);
@@ -159,7 +159,7 @@ app.router._load = function (view, options) {
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
 
     // Plugin hook
-    app.pluginHook('loadPage', view, options);
+    app.pluginHook('routerLoad', view, options);
 
     app.router.temporaryDom.innerHTML = '';
 
@@ -484,7 +484,7 @@ app.router._back = function (view, options) {
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
 
-    app.pluginHook('back', view, options);
+    app.pluginHook('routerBack', view, options);
 
     // Push state
     if (app.params.pushState)  {
