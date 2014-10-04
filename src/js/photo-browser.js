@@ -392,12 +392,12 @@ var PhotoBrowser = function (params) {
         if (pb.params.expositionHideCaptions) pb.captionsContainer.toggleClass('photo-browser-captions-exposed');
         pb.exposed = !pb.exposed;
     };
-    pb.expositionOn = function () {
+    pb.enableExposition = function () {
         if (pb.container) pb.container.addClass('photo-browser-exposed');
         if (pb.params.expositionHideCaptions) pb.captionsContainer.addClass('photo-browser-captions-exposed');
         pb.exposed = true;
     };
-    pb.expositionOff = function () {
+    pb.disableExposition = function () {
         if (pb.container) pb.container.removeClass('photo-browser-exposed');
         if (pb.params.expositionHideCaptions) pb.captionsContainer.removeClass('photo-browser-captions-exposed');
         pb.exposed = false;
