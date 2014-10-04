@@ -29,17 +29,18 @@ app.navbarInitCallback = function (view, pageContainer, navbar, navbarInnerConta
 app.sizeNavbars = function (viewContainer) {
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
     navbarInner.each(function () {
-        var tt = $(this),
-            left = app.rtl ? tt.find('.right') : tt.find('.left'),
-            right = app.rtl ? tt.find('.left') : tt.find('.right'),
-            center = tt.find('.center'),
+        var n = $(this);
+        if (n.hasClass('cached')) return;
+        var left = app.rtl ? n.find('.right') : n.find('.left'),
+            right = app.rtl ? n.find('.left') : n.find('.right'),
+            center = n.find('.center'),
             noLeft = left.length === 0,
             noRight = right.length === 0,
             leftWidth = noLeft ? 0 : left.outerWidth(true),
             rightWidth = noRight ? 0 : right.outerWidth(true),
             centerWidth = center.outerWidth(true),
-            navbarWidth = tt.width(),
-            onLeft = tt.hasClass('navbar-on-left'),
+            navbarWidth = n.width(),
+            onLeft = n.hasClass('navbar-on-left'),
             currLeft, diff;
 
         if (noRight) {
