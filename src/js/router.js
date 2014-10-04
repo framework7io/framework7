@@ -805,13 +805,13 @@ app.router.afterBack = function (view, oldPage, newPage) {
     // Remove old page and set classes on new one
     oldPage = $(oldPage);
     newPage = $(newPage);
-    app.pageRemoveCallback(view, oldPage[0], 'right');
     
     if (view.params.domCache && view.initialPages.indexOf(oldPage[0]) >= 0) {
         oldPage.removeClass('page-from-center-to-right').addClass('cached');
     }
     else {
         oldPage.remove();
+        app.pageRemoveCallback(view, oldPage[0], 'right');
     }
         
     newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
