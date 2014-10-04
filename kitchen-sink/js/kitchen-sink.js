@@ -281,6 +281,11 @@ var photoBrowserPopupDark = myApp.photoBrowser({
     theme: 'dark',
     type: 'popup'
 });
+var photoBrowserLazy = myApp.photoBrowser({
+    photos: photoBrowserPhotos,
+    lazyLoading: true,
+    theme: 'dark'
+});
 myApp.onPageInit('photo-browser', function (page) {
     $$('.ks-pb-standalone').on('click', function () {
         photoBrowserStandalone.open();
@@ -296,6 +301,9 @@ myApp.onPageInit('photo-browser', function (page) {
     });
     $$('.ks-pb-standalone-dark').on('click', function () {
         photoBrowserDark.open();
+    });
+    $$('.ks-pb-lazy').on('click', function () {
+        photoBrowserLazy.open();
     });
 });
 
