@@ -46,8 +46,8 @@ window.Framework7 = function (params) {
         // Sortable
         sortable: true,
         // Scroll toolbars
-        hideNavbarOnPageScroll: true,
-        hideToolbarOnPageScroll: true,
+        hideNavbarOnPageScroll: false,
+        hideToolbarOnPageScroll: false,
         showBarsOnPageScrollEnd: true,
         // Swipeout
         swipeout: true,

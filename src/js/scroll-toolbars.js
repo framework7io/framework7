@@ -23,6 +23,7 @@ app.initScrollToolbars = function (pageContainer) {
     var toolbarHeight = (hasToolbar && hideToolbar) ? viewContainer.find('.toolbar')[0].offsetHeight : 0;
 
     function handleScroll(e) {
+        if (pageContainer.hasClass('page-on-left')) return;
         currentScroll = scrollContent[0].scrollTop;
         scrollHeight = scrollContent[0].scrollHeight;
         offsetHeight = scrollContent[0].offsetHeight;
