@@ -52,7 +52,7 @@ function createPageCallback(callbackName) {
     };
 }
 
-var pageCallbacksNames = ('beforeInit init beforeAnimation afterAnimation back afterBack beforeRemove').split(' ');
+var pageCallbacksNames = ('beforeInit init reinit beforeAnimation afterAnimation back afterBack beforeRemove').split(' ');
 for (var i = 0; i < pageCallbacksNames.length; i++) {
     app.pageCallbacks[pageCallbacksNames[i]] = {};
     createPageCallback(pageCallbacksNames[i]);
@@ -74,8 +74,8 @@ app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
 
 // On Page Init Callback
 app.pageInitCallback = function (view, pageContainer, url, position, navbarInnerContainer) {
-    if (pageContainer.f7PageInitialized) return;
-    pageContainer.f7PageInitialized = true;
+    if (pageContainer.f7PageInitialized && !view.params.domCache) return;
+
     // Page Data
     var pageData = {
         container: pageContainer,
@@ -86,6 +86,19 @@ app.pageInitCallback = function (view, pageContainer, url, position, navbarInner
         from: position,
         navbarInnerContainer: navbarInnerContainer
     };
+
+    if (pageContainer.f7PageInitialized && view.params.domCache) {
+        // Reinit Page
+        app.reinitPage(pageContainer);
+
+        // Callbacks
+        app.pluginHook('pageReinit', pageData);
+        if (app.params.onPageReinit) app.params.onPageBeforeInit(app, pageData);
+        app.triggerPageCallbacks('reinit', pageData.name, pageData);
+        $(pageData.container).trigger('pageReinit', {page: pageData});
+        return;
+    }
+    pageContainer.f7PageInitialized = true;
 
     // Store pagedata in page
     pageContainer.f7PageData = pageData;
@@ -226,4 +239,10 @@ app.initPage = function (pageContainer) {
     if (app.initMessagebar) app.initMessagebar(pageContainer);
     // Init scroll toolbars
     if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
+};
+app.reinitPage = function (pageContainer) {
+    // Size navbars on page reinit
+    if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
+    // Reinit slider
+    if (app.reinitSlider) app.reinitSlider(pageContainer);
 };
