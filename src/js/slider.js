@@ -548,3 +548,14 @@ app.initSlider = function (pageContainer) {
         destroySliderOnRemove(_slider);
     }
 };
+app.reinitSlider = function (pageContainer) {
+    var page = $(pageContainer);
+    var sliders = page.find('.slider-init');
+    if (sliders.length === 0) return;
+    for (var i = 0; i < sliders.length; i++) {
+        var sliderInstance = sliders[0].f7Slider;
+        if (sliderInstance) {
+            sliderInstance.onResize();
+        }
+    }
+};
