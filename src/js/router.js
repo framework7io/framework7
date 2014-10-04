@@ -862,7 +862,8 @@ app.router.afterBack = function (view, oldPage, newPage) {
             var preloadUrl = view.history[view.history.length - 2];
             var previousPage;
             var previousNavbar;
-            if (preloadUrl && preloadUrl.indexOf('#') === 0 && view.pagesCache[preloadUrl]) {
+
+            if (preloadUrl && view.pagesCache[preloadUrl]) {
                 // Load by page name
                 previousPage = $(view.container).find('.page[data-page="' + view.pagesCache[preloadUrl] + '"]');
                 previousPage.insertBefore(newPage);
