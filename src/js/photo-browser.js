@@ -24,7 +24,7 @@ var PhotoBrowser = function (params) {
         loop: false,
         lazyLoading: false,
         lazyLoadingInPrevNext: false,
-        lazyLoadingOnSlideStart: false
+        lazyLoadingOnTransitionStart: false
     };
     
     params = params || {};
@@ -279,7 +279,7 @@ var PhotoBrowser = function (params) {
 
         // Lazy loading
         if (pb.params.lazyLoading){
-            if (pb.params.lazyLoadingOnSlideStart || !(pb.params.lazyLoadingOnSlideStart && pb.initialLazyLoaded)) {
+            if (pb.params.lazyLoadingOnTransitionStart || (!pb.params.lazyLoadingOnTransitionStart && !pb.initialLazyLoaded)) {
                 pb.initialLazyLoaded = true;
                 pb.lazyLoading(slider, pb.activeSlideIndex);
             }
@@ -294,7 +294,7 @@ var PhotoBrowser = function (params) {
         if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(slider);
     };
     pb.onSliderTransitionEnd = function (slider) {
-        if (pb.params.lazyLoading && !pb.params.lazyLoadingOnSlideStart) {
+        if (pb.params.lazyLoading && !pb.params.lazyLoadingOnTransitionStart) {
             pb.lazyLoading(slider, pb.activeSlideIndex);
         }
         // Reset zoom
