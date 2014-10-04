@@ -119,7 +119,7 @@ app.initFastClicks = function () {
         }
         if (app.device.os === 'ios') {
             var selection = window.getSelection();
-            if (selection.rangeCount && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
+            if (selection.rangeCount && selection.focusNode !== document.body && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
                 activeSelection = true;
                 return true;
             }
