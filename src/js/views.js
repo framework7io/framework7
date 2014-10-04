@@ -35,30 +35,6 @@ var View = function (selector, params) {
     var container = $(selector);
     view.container = container[0];
 
-    // Location
-    var docLocation = document.location.href;
-
-    // History
-    view.history = [];
-    var viewURL = docLocation;
-    var pushStateSeparator = app.params.pushStateSeparator;
-    var pushStateRoot = app.params.pushStateRoot;
-    if (app.params.pushState) {
-        if (pushStateRoot) {
-            viewURL = pushStateRoot;
-        }
-        else {
-            if (viewURL.indexOf(pushStateSeparator) >= 0 && viewURL.indexOf(pushStateSeparator + '#') < 0) viewURL = viewURL.split(pushStateSeparator)[0];
-        }
-
-    }
-    view.url = container.attr('data-url') || view.params.url || viewURL;
-
-    // Store to history main view's url
-    if (view.url) {
-        view.history.push(view.url);
-    }
-
     // Content cache
     view.contentCache = {};
 
@@ -88,10 +64,28 @@ var View = function (selector, params) {
 
     view.allowPageChange = true;
 
+    // Location
+    var docLocation = document.location.href;
+
+    // History
+    view.history = [];
+    var viewURL = docLocation;
+    var pushStateSeparator = app.params.pushStateSeparator;
+    var pushStateRoot = app.params.pushStateRoot;
+    if (app.params.pushState) {
+        if (pushStateRoot) {
+            viewURL = pushStateRoot;
+        }
+        else {
+            if (viewURL.indexOf(pushStateSeparator) >= 0 && viewURL.indexOf(pushStateSeparator + '#') < 0) viewURL = viewURL.split(pushStateSeparator)[0];
+        }
+
+    }
+
     // Active Page
+    var currentPage, currentPageData;
     if (!view.activePage) {
-        var currentPage = $(view.pagesContainer).find('.page-on-center');
-        var currentPageData;
+        currentPage = $(view.pagesContainer).find('.page-on-center');
         if (currentPage.length === 0) {
             currentPage = $(view.pagesContainer).find('.page:not(.cached)');
             currentPage = currentPage.eq(currentPage.length - 1);
@@ -99,15 +93,26 @@ var View = function (selector, params) {
         if (currentPage.length > 0) {
             currentPageData = currentPage[0].f7PageData;
         }
-        if (currentPageData) {
-            currentPageData.view = view;
-            if (view.url) currentPageData.url = view.url;
-            view.activePage = currentPageData;
-            currentPage[0].f7PageData = currentPageData;
-        }
-        if (view.params.domCache) {
-            view.pagesCache['#' + currentPage.attr('data-page')] = currentPage.attr('data-page');
-        }
+    }
+
+    // View startup URL
+    if (view.params.domCache && currentPage) {
+        view.url = container.attr('data-url') || view.params.url || '#' + currentPage.attr('data-page');   
+        view.pagesCache[view.url] = currentPage.attr('data-page');
+    }
+    else view.url = container.attr('data-url') || view.params.url || viewURL;
+
+    // Update current page Data
+    if (currentPageData) {
+        currentPageData.view = view;
+        currentPageData.url = view.url;
+        view.activePage = currentPageData;
+        currentPage[0].f7PageData = currentPageData;
+    }
+
+    // Store to history main view's url
+    if (view.url) {
+        view.history.push(view.url);
     }
 
     // Is main
