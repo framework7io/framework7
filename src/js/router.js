@@ -480,7 +480,7 @@ app.router._back = function (view, options) {
     var viewContainer = $(view.container),
         pagesContainer = $(view.pagesContainer),
         pagesInView = pagesContainer.children('.page:not(.cached)'),
-        oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, navbarInners, dynamicNavbar;
+        oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, navbarInners, dynamicNavbar, manipulateDom = true;
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
 
@@ -605,14 +605,11 @@ app.router._back = function (view, options) {
         }
 
         if (dynamicNavbar) {
-            newNavbarInner.insertBefore(oldNavbarInner);
+            if (manipulateDom) newNavbarInner.insertBefore(oldNavbarInner);
             newNavbarInner[0].f7RelatedPage = newPage[0];
-        }    
-        newPage.insertBefore(oldPage);
-        if (dynamicNavbar) {
             newPage[0].f7RelatedNavbar = newNavbarInner[0];
         }
-        
+        if (manipulateDom) newPage.insertBefore(oldPage);
 
         // Page Init Events
         app.pageInitCallback(view, newPage[0], url, 'left', dynamicNavbar ? newNavbarInner[0] : undefined);
@@ -662,6 +659,7 @@ app.router._back = function (view, options) {
             newNavbarInner = $(navbarInners[0]);
             oldNavbarInner = $(navbarInners[1]);
         }
+        manipulateDom = false;
         setPages();
         return;
     }
