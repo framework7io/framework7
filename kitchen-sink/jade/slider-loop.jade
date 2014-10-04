@@ -1,0 +1,18 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Infinite Loop Mode
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="slider-loop")
+    .page-content
+      .slider-container.slider-init.ks-demo-slider(data-pagination=".slider-pagination", data-loop="true")
+        .slider-pagination
+        .slider-wrapper
+          - for (var i = 1; i < 11; i++)
+            .slider-slide Slide #{i}
