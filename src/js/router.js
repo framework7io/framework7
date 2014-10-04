@@ -496,11 +496,13 @@ app.router._back = function (view, options) {
 
     // Animation
     function afterAnimation() {
-        app.router.afterBack(view, oldPage[0], newPage[0]);
+        app.pageBackCallbacks('after', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage});
         app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
+        app.router.afterBack(view, oldPage[0], newPage[0]);
     }
     function animateBack() {
         // Page before animation callback
+        app.pageBackCallbacks('before', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage});
         app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
 
         if (animatePages) {

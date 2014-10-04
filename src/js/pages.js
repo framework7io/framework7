@@ -52,7 +52,7 @@ function createPageCallback(callbackName) {
     };
 }
 
-var pageCallbacksNames = ('beforeInit init beforeAnimation afterAnimation beforeRemove').split(' ');
+var pageCallbacksNames = ('beforeInit init beforeAnimation afterAnimation back afterBack beforeRemove').split(' ');
 for (var i = 0; i < pageCallbacksNames.length; i++) {
     app.pageCallbacks[pageCallbacksNames[i]] = {};
     createPageCallback(pageCallbacksNames[i]);
@@ -121,6 +121,34 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
     if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
     app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
     $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
+};
+app.pageBackCallbacks = function (callback, view, params) {
+    // Page Data
+    var pageContainer = params.pageContainer;
+
+    var pageData = {
+        container: params.pageContainer,
+        name: $(pageContainer).attr('data-page'),
+        url: pageContainer.f7PageData && pageContainer.f7PageData.url,
+        query: pageContainer.f7PageData && pageContainer.f7PageData.query,
+        view: view,
+        from: params.position,
+        swipeBack: params.swipeBack
+    };
+
+    if (callback === 'after') {
+        app.pluginHook('pageAfterBack', pageData);
+        if (app.params.onPageAfterBack) app.params.onPageAfterBack(app, pageData);
+        app.triggerPageCallbacks('afterBack', pageData.name, pageData);
+        $(pageContainer).trigger('pageAfterBack', {page: pageData});
+
+    }
+    if (callback === 'before') {
+        app.pluginHook('pageBack', pageData);
+        if (app.params.onPageBack) app.params.onPageBack(app, pageData);
+        app.triggerPageCallbacks('back', pageData.name, pageData);
+        $(pageData.container).trigger('pageBack', {page: pageData});
+    }
 };
 app.pageAnimCallbacks = function (callback, view, params) {
     // Page Data

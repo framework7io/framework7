@@ -336,6 +336,7 @@ var View = function (selector, params) {
             view.url = url;
 
             // Page before animation callback
+            app.pageBackCallbacks('before', view, {pageContainer: activePage[0], url: url, position: 'center', newPage: previousPage, oldPage: activePage, swipeBack: true});
             app.pageAnimCallbacks('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
         }
 
@@ -352,6 +353,7 @@ var View = function (selector, params) {
             if (pageChanged) {
                 if (app.params.pushState) history.back();
                 // Page after animation callback
+                app.pageBackCallbacks('after', view, {pageContainer: activePage[0], url: url, position: 'center', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 app.pageAnimCallbacks('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 app.router.afterBack(view, activePage, previousPage);
             }
