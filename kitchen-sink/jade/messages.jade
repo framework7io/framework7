@@ -17,7 +17,7 @@
         textarea(placeholder="Message")
         a(href="#").link Send
     .page-content.messages-content
-      .messages
+      .messages.messages-auto-layout
         .messages-date Sunday, Feb 9,
           span 12:58
         .message.message-sent
@@ -62,10 +62,14 @@
           .message-text :(
         .message.message-sent
           .message-text Hey, look, cutest kitten ever!
-        .message.message-sent
+        .message.message-sent.message-pic
           .message-text
             img(src="http://placekitten.com/g/300/400")
         .message.message-received.message-with-avatar
           .message-name Blue Ninja
           .message-text Yep
           .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-sent
+          .message-text Cool
+          .message-label Delivered 1 week ago
+        

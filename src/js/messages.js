@@ -7,7 +7,7 @@ app.initMessages = function (pageContainer) {
     if (messages.length === 0) return;
     var pageContent = page.find('.page-content');
     if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = messages.height() - pageContent.height();
-    app.updateMessagesAngles(messages);
+    if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
 };
 app.addMessage = function (props) {
     props = props || {};
@@ -31,10 +31,10 @@ app.addMessage = function (props) {
             '</div>';
     if (newOnTop) messages.prepend(html);
     else messages.append(html);
-    app.updateMessagesAngles(messages);
+    if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
     app.scrollMessagesContainer(messagesContent);
 };
-app.updateMessagesAngles = function (messages) {
+app.updateMessagesLayout = function (messages) {
     messages.find('.message').each(function () {
         var message = $(this);
         if (message.find('.message-text img').length > 0) message.addClass('message-pic');
@@ -45,9 +45,9 @@ app.updateMessagesAngles = function (messages) {
         var next = message.next('.message-sent');
         var prev = message.prev('.message-sent');
         if (next.length === 0) {
-            message.addClass('message-last');
+            message.addClass('message-last message-with-tail');
         }
-        else message.removeClass('message-last');
+        else message.removeClass('message-last message-with-tail');
 
         if (prev.length === 0) {
             message.addClass('message-first');
@@ -56,7 +56,7 @@ app.updateMessagesAngles = function (messages) {
         // Search for changed names
         if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
             if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
-                prev.addClass('message-last');
+                prev.addClass('message-last message-with-tail');
                 message.addClass('message-first');
             }
         }
@@ -66,18 +66,19 @@ app.updateMessagesAngles = function (messages) {
         var next = message.next('.message-received');
         var prev = message.prev('.message-received');
         if (next.length === 0) {
-            message.addClass('message-last');
+            message.addClass('message-last message-with-tail');
         }
-        else message.removeClass('message-last');
+        else message.removeClass('message-last message-with-tail');
 
         if (prev.length === 0) {
             message.addClass('message-first');
         }
         else message.removeClass('message-first');
+
         // Search for changed names
         if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
             if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
-                prev.addClass('message-last');
+                prev.addClass('message-last message-with-tail');
                 message.addClass('message-first');
             }
         }
