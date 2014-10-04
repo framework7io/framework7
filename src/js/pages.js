@@ -185,16 +185,17 @@ app.pageAnimCallbacks = function (callback, view, params) {
         if (newPage.hasClass('no-navbar') && !oldPage.hasClass('no-navbar')) {
             view.hideNavbar();
         }
-        if (!newPage.hasClass('no-navbar') && oldPage.hasClass('no-navbar')) {
+        if (!newPage.hasClass('no-navbar') && (oldPage.hasClass('no-navbar') || oldPage.hasClass('no-navbar-by-scroll'))) {
             view.showNavbar();
         }
         // Hide/show navbar toolbar
         if (newPage.hasClass('no-toolbar') && !oldPage.hasClass('no-toolbar')) {
             view.hideToolbar();
         }
-        if (!newPage.hasClass('no-toolbar') && oldPage.hasClass('no-toolbar')) {
+        if (!newPage.hasClass('no-toolbar') && (oldPage.hasClass('no-toolbar') || oldPage.hasClass('no-toolbar-by-scroll'))) {
             view.showToolbar();
         }
+        oldPage.removeClass('no-navbar-by-scroll no-toolbar-by-scroll');
         // Callbacks
         app.pluginHook('pageBeforeAnimation', pageData);
         if (app.params.onPageBeforeAnimation) app.params.onPageBeforeAnimation(app, pageData);
@@ -223,4 +224,6 @@ app.initPage = function (pageContainer) {
     if (app.initSearchbar) app.initSearchbar(pageContainer);
     // Init message bar
     if (app.initMessagebar) app.initMessagebar(pageContainer);
+    // Init scroll toolbars
+    if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
 };

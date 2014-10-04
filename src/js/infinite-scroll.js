@@ -27,6 +27,7 @@ app.detachInfiniteScroll = function (infiniteContent) {
 app.initInfiniteScroll = function (pageContainer) {
     pageContainer = $(pageContainer);
     var infiniteContent = pageContainer.find('.infinite-scroll');
+    if (infiniteContent.length === 0) return;
     app.attachInfiniteScroll(infiniteContent);
     function detachEvents() {
         app.detachInfiniteScroll(infiniteContent);

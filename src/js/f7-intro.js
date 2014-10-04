@@ -45,6 +45,10 @@ window.Framework7 = function (params) {
         externalLinks: ['external'], // array of CSS class selectors and/or rel attributes
         // Sortable
         sortable: true,
+        // Scroll toolbars
+        hideNavbarOnPageScroll: true,
+        hideToolbarOnPageScroll: true,
+        showBarsOnPageScrollEnd: true,
         // Swipeout
         swipeout: true,
         swipeoutNoFollow: false,

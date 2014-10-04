@@ -99,6 +99,11 @@
         "less": [],
         "dependencies" : []
     },
+    "scroll-toolbars": {
+        "js" : ["src/js/scroll-toolbars.js"],
+        "less": [],
+        "dependencies" : []
+    },
     "tabs": {
         "js" : ["src/js/tabs.js"],
         "less": ["src/less/tabs.less"],
