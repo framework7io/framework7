@@ -245,13 +245,10 @@ app.initFastClicks = function () {
         targetElement.dispatchEvent(evt);
 
         return false;
-
-        
     }
     function handleTouchCancel(e) {
         trackClick = false;
         targetElement = null;
-        console.log('cancel');
     }
 
     function handleClick(e) {
