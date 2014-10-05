@@ -80,8 +80,6 @@ window.Framework7 = function (params) {
         actionsCloseByOutside: true,
         popupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
-        // Auto init
-        init: true,
         // Name space
         viewClass: 'view',
         viewMainClass: 'view-main',
@@ -90,8 +88,11 @@ window.Framework7 = function (params) {
         notificationCloseOnClick: false,
         notificationCloseIcon: true,
         // Animate Pages
-        animatePages: true
-
+        animatePages: true,
+        // Compile Template7 Templates on app init
+        compileTemplates: true,
+        // Auto init
+        init: true,
     };
 
     // Extend defaults with parameters

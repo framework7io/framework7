@@ -43,6 +43,9 @@ app.init = function () {
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
 
+    // Compile Template7 templates on app load
+    if (app.initTemplate7Templates && app.params.compileTemplates) app.initTemplate7Templates();
+
     // Plugin app init hook
     app.pluginHook('appInit');
 };
