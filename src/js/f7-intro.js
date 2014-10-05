@@ -89,8 +89,11 @@ window.Framework7 = function (params) {
         notificationCloseIcon: true,
         // Animate Pages
         animatePages: true,
-        // Compile Template7 Templates on app init
-        compileTemplates: true,
+        // Template7
+        templates: {},
+        templatesData: {},
+        template7Pages: false,
+        precompileTemplates: false,
         // Auto init
         init: true,
     };

@@ -157,9 +157,10 @@ app.initClickEvents = function () {
         if (isLink) {
             e.preventDefault();
         }
+
         var validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
-        
-        if (validUrl || clicked.hasClass('back')) {
+        var template = clicked.attr('data-template');
+        if (validUrl || clicked.hasClass('back') || template) {
             var view;
             if (clicked.attr('data-view')) {
                 view = $(clicked.attr('data-view'))[0].f7View;
@@ -178,14 +179,19 @@ app.initClickEvents = function () {
             if (!view) return;
 
             var pageName;
-            if (url.indexOf('#') === 0 && url !== '#')  {
-                if (view.params.domCache) {
-                    pageName = url.split('#')[1];
-                    url = undefined;
+            if (!template) {
+                if (url.indexOf('#') === 0 && url !== '#')  {
+                    if (view.params.domCache) {
+                        pageName = url.split('#')[1];
+                        url = undefined;
+                    }
+                    else return;
                 }
-                else return;
+                if (url === '#' && !clicked.hasClass('back')) return;
             }
-            if (url === '#' && !clicked.hasClass('back')) return;
+            else {
+                url = undefined;
+            }
 
             var animatePages;
             if (clicked.attr('data-animatePages')) {
@@ -205,7 +211,18 @@ app.initClickEvents = function () {
                 pageName: pageName,
                 url: url
             };
-            
+
+            if (app.params.template7Pages) {
+                options.contextName = clicked.attr('data-contextName');
+                var context = clicked.attr('data-context');
+                if (context) {
+                    options.context = JSON.parse(context);
+                }
+            }
+            if (template && template in t7.templates) {
+                options.template = t7.templates[template];
+            }
+
             if (clicked.hasClass('back')) view.router.back(options);
             else view.router.load(options);
         }

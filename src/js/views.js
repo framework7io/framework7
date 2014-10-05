@@ -425,10 +425,17 @@ var View = function (selector, params) {
                 reload: true,
                 ignoreCache: true
             };
-            if (options.url && options.url.indexOf('#') === 0 && view.params.domCache && view.pagesCache[options.url]) {
-                options.pageName = view.pagesCache[options.url];
-                options.url = undefined;
-                delete options.url;
+            if (options.url && options.url.indexOf('#') === 0) {
+                if (view.params.domCache && view.pagesCache[options.url]) {
+                    options.pageName = view.pagesCache[options.url];
+                    options.url = undefined;
+                    delete options.url;
+                }
+                else if (view.contentCache[options.url]) {
+                    options.content = view.contentCache[options.url];
+                    options.url = undefined;
+                    delete options.url;
+                }
             }
             return app.router.load(view, options);
         },

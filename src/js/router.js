@@ -139,6 +139,69 @@ app.router = {
         } else {
             next(content);
         }
+    },
+
+    template7Render: function (view, options) {
+        var url = options.url,
+            content = options.content, //initial content
+            t7_rendered_content = options.content, // will be rendered using Template7
+            context = options.context, // Context data for Template7
+            contextName = options.contextName, // Name of context object to look in Template7.templatesData[contextName] or app.templatesData[contextName]
+            template = options.template, // Template 7 compiled template
+            pageName = options.pageName;
+
+        var t7_ctx, t7_template;
+        if (typeof content === 'string') {
+            if (url) {
+                if (app.templatesCache[url]) t7_template = t7.templatesCache[url];
+                else {
+                    t7_template = t7.compile(content);
+                    t7.templatesCache[url] = t7_template;
+                }
+            }
+            else t7_template = t7.compile(content);
+        }
+        else if (template) {
+            t7_template = template;
+        }
+
+        if (context) t7_ctx = context;
+        else {
+            if (contextName) t7_ctx = t7.templatesData[contextName];
+            if (!t7_ctx && url) {
+                t7_ctx = t7.templatesData['url:' + url];
+            }
+            if (!t7_ctx && typeof content === 'string' && !template) {
+                //try to find by page name in content
+                var pageNameMatch = content.match(/(data-page=["'][^"^']*["'])/);
+                if (pageNameMatch) {
+                    var page = pageNameMatch[0].split('data-page=')[1].replace(/['"]/g, '');
+                    if (page) t7_ctx = t7.templatesData['page:' + page];
+                }
+            }
+            if (!t7_ctx && template && t7.templates) {
+                // Try to find matched template name in t7.templates
+                for (var templateName in t7.templates) {
+                    if (t7.templates[templateName] === template) t7_ctx = t7.templatesData[templateName];
+                }
+            }
+            if (!t7_ctx) t7_ctx = {};
+        }
+        
+        if (t7_template && t7_ctx) {
+            if (typeof t7_ctx === 'function') t7_ctx = t7_ctx();
+            if (url) {
+                // Extend data with URL query
+                var query = $.parseUrlQuery(url);
+                t7_ctx.url_query = {};
+                for (var key in query) {
+                    t7_ctx.url_query[key] = query[key];
+                }
+            }
+            t7_rendered_content = t7_template(t7_ctx);
+        }
+
+        return t7_rendered_content;
     }
 };
 
@@ -147,13 +210,15 @@ app.router._load = function (view, options) {
     options = options || {};
     
     var url = options.url,
-        content = options.content,
+        content = options.content, //initial content
+        t7_rendered_content = options.content, // will be rendered using Template7
+        template = options.template, // Template 7 compiled template
         pageName = options.pageName,
         viewContainer = $(view.container), 
         pagesContainer = $(view.pagesContainer),
         animatePages = options.animatePages,
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar, reloadPosition,
-        isDynamicPage = typeof url === 'undefined' && content, 
+        isDynamicPage = typeof url === 'undefined' && content || template, 
         pushState = options.pushState;
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
@@ -161,13 +226,20 @@ app.router._load = function (view, options) {
     // Plugin hook
     app.pluginHook('routerLoad', view, options);
 
+    // Render with Template7
+    if (app.params.template7Pages && typeof content === 'string' || template) {
+        t7_rendered_content = app.router.template7Render(view, options);
+        if (t7_rendered_content && !content) {
+            content = t7_rendered_content;
+        }
+    }
+
     app.router.temporaryDom.innerHTML = '';
 
     // Parse DOM
     if (!pageName) {
         if (url || (typeof content === 'string')) {
-
-            app.router.temporaryDom.innerHTML = content;
+            app.router.temporaryDom.innerHTML = t7_rendered_content;
         } else {
             if ('length' in content && content.length > 1) {
                 for (var ci = 0; ci < content.length; ci++) {
@@ -229,7 +301,6 @@ app.router._load = function (view, options) {
         oldPage = pagesContainer.children('.page:not(.cached)');
     }
     if(view.params.domCache) newPage.removeClass('cached');
-    
 
     // Dynamic navbar
     if (view.params.dynamicNavbar) {
@@ -310,7 +381,7 @@ app.router._load = function (view, options) {
     view.url = url;
     if (options.reload) {
         var lastUrl = view.history[view.history.length - (options.reloadPrevious ? 2 : 1)];
-        if (lastUrl && lastUrl.indexOf('#') === 0 && lastUrl in view.contentCache) {
+        if (lastUrl && lastUrl.indexOf('#') === 0 && lastUrl in view.contentCache && lastUrl !== url) {
             view.contentCache[lastUrl] = null;
             delete view.contentCache[lastUrl];
         }
@@ -440,6 +511,7 @@ app.router.load = function (view, options) {
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
+    var template = options.template;
 
     if (!view.allowPageChange) return false;
     if (url && view.url === url && !options.reload) return false;
@@ -458,7 +530,15 @@ app.router.load = function (view, options) {
         proceed(content);
         return;
     }
-    
+    else if (template) {
+        app.router._load(view, options);
+        return;
+    }
+
+    if (!options.url || options.url === '#') {
+        view.allowPageChange = true;
+        return;
+    }
     app.get(options.url, view, options.ignoreCache, function (content, error) {
         if (error) {
             view.allowPageChange = true;
@@ -467,16 +547,20 @@ app.router.load = function (view, options) {
         proceed(content);
     });
 };
+
 app.router._back = function (view, options) {
     options = options || {};
     var url = options.url,
         content = options.content, 
+        t7_rendered_content = options.content, // will be rendered using Template7
+        template = options.template, // Template 7 compiled template
         animatePages = options.animatePages, 
         preloadOnly = options.preloadOnly, 
         pushState = options.pushState, 
         ignoreCache = options.ignoreCache,
         force = options.force,
         pageName = options.pageName;
+
     var viewContainer = $(view.container),
         pagesContainer = $(view.pagesContainer),
         pagesInView = pagesContainer.children('.page:not(.cached)'),
@@ -485,6 +569,14 @@ app.router._back = function (view, options) {
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
 
     app.pluginHook('routerBack', view, options);
+
+    // Render with Template7
+    if (app.params.template7Pages && typeof content === 'string' || template) {
+        t7_rendered_content = app.router.template7Render(view, options);
+        if (t7_rendered_content && !content) {
+            content = t7_rendered_content;
+        }
+    }
 
     // Push state
     if (app.params.pushState)  {
@@ -530,7 +622,7 @@ app.router._back = function (view, options) {
         app.router.temporaryDom.innerHTML = '';
         // Parse DOM
         if (url || (typeof content === 'string')) {
-            app.router.temporaryDom.innerHTML = content;
+            app.router.temporaryDom.innerHTML = t7_rendered_content;
         } else {
             if ('length' in content && content.length > 1) {
                 for (var ci = 0; ci < content.length; ci++) {
@@ -742,7 +834,7 @@ app.router.back = function (view, options) {
             app.router._back(view, options);
         });
     }
-    function back() {}
+    
     if (pagesInView.length > 1 && !force) {
         // Simple go back to previos page in view
         app.router._back(view, options);
