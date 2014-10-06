@@ -146,7 +146,7 @@ app.router = {
             content = options.content, //initial content
             t7_rendered_content = options.content, // will be rendered using Template7
             context = options.context, // Context data for Template7
-            contextName = options.contextName, // Name of context object to look in Template7.templatesData[contextName] or app.templatesData[contextName]
+            contextName = options.contextName, 
             template = options.template, // Template 7 compiled template
             pageName = options.pageName;
 
@@ -167,7 +167,17 @@ app.router = {
 
         if (context) t7_ctx = context;
         else {
-            if (contextName) t7_ctx = t7.data[contextName];
+            if (contextName) {
+                if (contextName.indexOf('.') >= 0) {
+                    var _ctx_path = contextName.split('.');
+                    var _ctx = t7.data[_ctx_path[0]];
+                    for (var i = 1; i < _ctx_path.length; i++) {
+                        if (_ctx_path[i]) _ctx = _ctx[_ctx_path[i]];
+                    }
+                    t7_ctx = _ctx;
+                }
+                else t7_ctx = t7.data[contextName];
+            }
             if (!t7_ctx && url) {
                 t7_ctx = t7.data['url:' + url];
             }
