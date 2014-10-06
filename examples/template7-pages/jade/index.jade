@@ -48,11 +48,9 @@ html
               .list-block
                 ul
                   li
-                    | <a href="#" class="item-link item-content" data-template="about" data-context='{"name":"John Doe","age":32,"position":"CEO","company":"Google","interests":["swimming","music","JavaScript","iMac","iOS apps","sport"]}'>
-                    |   <div class="item-inner">
-                    |     <div class="item-title">About Me</div>
-                    |   </div>
-                    | </a>
+                    a(href="#", data-template="about", date-contextName="about").item-link.item-content
+                      .item-inner 
+                        .item-title About Me
                   li
                     a(href="projects.html").item-link.item-content
                       .item-inner 

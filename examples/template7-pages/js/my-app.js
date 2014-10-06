@@ -78,7 +78,16 @@ var myApp = new Framework7({
                 year: 2014,
                 description: ''
             },
-        ]  
+        ],
+
+        // Another plain data object, used in "about" link in data-contextName object 
+        about: {
+            name: 'John Doe',
+            age: 32,
+            position: 'CEO',
+            company: 'Google',
+            interests: ['swimming', 'music', 'JavaScript', 'iMac', 'iOS apps', 'sport']
+        }
     }
 });
 
