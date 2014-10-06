@@ -131,6 +131,9 @@
     a.active {
         color: @tabbarActiveLinksColor;
     }
+    a.link {
+        line-height: 1.4;
+    }
     a.tab-link, a.link {
         height: 100%;
         width: 100%;
@@ -158,10 +161,14 @@
         padding-bottom: 4px;
         height: 100%;
         .justify-content(space-between);
+        i + span {
+            margin: 0;
+        }
     }
     span.tabbar-label {
         line-height: 1;
         display: block;
+        margin: 0;
         letter-spacing: 0.01em;
         font-size: 10px;
         position: relative;
