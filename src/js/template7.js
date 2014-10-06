@@ -351,7 +351,7 @@ window.Template7 = (function () {
     t7.registerHelper = function (name, fn) {
         Template7.prototype.helpers[name] = fn;
     };
-    t7.deregisterHelper = function (name) {
+    t7.unregisterHelper = function (name) {
         Template7.prototype.helpers[name] = undefined;  
         delete Template7.prototype.helpers[name];
     };
