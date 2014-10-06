@@ -167,22 +167,22 @@ app.router = {
 
         if (context) t7_ctx = context;
         else {
-            if (contextName) t7_ctx = t7.templatesData[contextName];
+            if (contextName) t7_ctx = t7.data[contextName];
             if (!t7_ctx && url) {
-                t7_ctx = t7.templatesData['url:' + url];
+                t7_ctx = t7.data['url:' + url];
             }
             if (!t7_ctx && typeof content === 'string' && !template) {
                 //try to find by page name in content
                 var pageNameMatch = content.match(/(data-page=["'][^"^']*["'])/);
                 if (pageNameMatch) {
                     var page = pageNameMatch[0].split('data-page=')[1].replace(/['"]/g, '');
-                    if (page) t7_ctx = t7.templatesData['page:' + page];
+                    if (page) t7_ctx = t7.data['page:' + page];
                 }
             }
             if (!t7_ctx && template && t7.templates) {
                 // Try to find matched template name in t7.templates
                 for (var templateName in t7.templates) {
-                    if (t7.templates[templateName] === template) t7_ctx = t7.templatesData[templateName];
+                    if (t7.templates[templateName] === template) t7_ctx = t7.data[templateName];
                 }
             }
             if (!t7_ctx) t7_ctx = {};
