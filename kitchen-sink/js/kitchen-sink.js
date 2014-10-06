@@ -422,7 +422,7 @@ $$('.panel-left, .panel-right').on('close', function () {
 /* ===== Generate Content Dynamically ===== */
 var dynamicPageIndex = 0;
 function createContentPage() {
-    mainView.loadContent(
+    mainView.router.loadContent(
         '<!-- Top Navbar-->' +
         '<div class="navbar">' +
         '  <div class="navbar-inner">' +
