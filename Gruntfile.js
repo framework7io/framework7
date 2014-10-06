@@ -168,6 +168,13 @@ module.exports = function (grunt) {
                         src: ['*.less'],
                         dest: 'examples/inline-pages/css/',
                         ext: '.css'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/template7-pages/less/',
+                        src: ['*.less'],
+                        dest: 'examples/template7-pages/css/',
+                        ext: '.css'
                     }
                 ]
             },
@@ -328,7 +335,8 @@ module.exports = function (grunt) {
                     'examples/tab-bar/jade/**', 'examples/tab-bar/less/**',
                     'examples/split-view/jade/**', 'examples/split-view/less/**',
                     'examples/split-view-panel/jade/**', 'examples/split-view-panel/less/**',
-                    'examples/inline-pages/jade/**', 'examples/inline-pages/less/**'
+                    'examples/inline-pages/jade/**', 'examples/inline-pages/less/**',
+                    'examples/template7-pages/jade/**', 'examples/template7-pages/less/**'
                 ],
                 tasks: ['jade:examples', 'less:examples'],
                 options: {
@@ -402,6 +410,13 @@ module.exports = function (grunt) {
                         cwd: 'examples/inline-pages/jade/',
                         src: ['*.jade'],
                         dest: 'examples/inline-pages/',
+                        ext: '.html'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'examples/template7-pages/jade/',
+                        src: ['*.jade'],
+                        dest: 'examples/template7-pages/',
                         ext: '.html'
                     }
                 ]
