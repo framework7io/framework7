@@ -7,7 +7,7 @@ html
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     title My App
     // Path to Framework7 Library CSS
-    link(rel="stylesheet", href="../../build/css/framework7.css")
+    link(rel="stylesheet", href="../../dist/css/framework7.min.css")
     // Path to your custom app styles
     link(rel="stylesheet", href="css/my-app.css")
   body
@@ -41,21 +41,21 @@ html
                 i.icon.icon-bars
           // Navbar inner for About page
           .navbar-inner(data-page="about").cached
-            .left
+            .left.sliding
               a(href="#").back.link 
                 i.icon.icon-back
                 span Back
             .center.sliding About Us
           // Navbar inner for Services page
           .navbar-inner(data-page="services").cached
-            .left
+            .left.sliding
               a(href="#").back.link 
                 i.icon.icon-back
                 span Back
             .center.sliding Services
           // Navbar inner for Form page
           .navbar-inner(data-page="form").cached
-            .left
+            .left.sliding
               a(href="#").back.link 
                 i.icon.icon-back
                 span Back
@@ -275,6 +275,6 @@ html
             a(href="#").link Link 2
 
     // Path to Framework7 Library JS
-    script(type="text/javascript", src="../../build/js/framework7.js")
+    script(type="text/javascript", src="../../dist/js/framework7.min.js")
     // Path to your app js
     script(type="text/javascript", src="js/my-app.js")

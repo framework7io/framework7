@@ -7,7 +7,7 @@ html
     meta(name="apple-mobile-web-app-status-bar-style", content="black")
     title My App
     // Path to Framework7 Library CSS
-    link(rel="stylesheet", href="../../build/css/framework7.css")
+    link(rel="stylesheet", href="../../dist/css/framework7.min.css")
     // Path to your custom app styles
     link(rel="stylesheet", href="css/my-app.css")
   body
@@ -32,7 +32,7 @@ html
         // Top Navbar
         .navbar
           .navbar-inner
-            .center.sliding Template7 Pages Rendering
+            .center.sliding Template7 Pages
             .right
               a(href="#").link.icon-only.open-panel 
                 i.icon.icon-bars
@@ -96,9 +96,9 @@ html
             .content-block
               .content-block-inner
                 p Hello, my name is {{name}}. I am {{age}} years old and i am working as {{position}} at {{company}}.
-                p I have a lot of interests: {{join interests delimeter=", "}}
+                p I have a lot of interests: {{#if interests}}{{join interests delimeter=", "}}{{/if}}
 
     // Path to Framework7 Library JS
-    script(type="text/javascript", src="../../build/js/framework7.js")
+    script(type="text/javascript", src="../../dist/js/framework7.min.js")
     // Path to your app js
     script(type="text/javascript", src="js/my-app.js")

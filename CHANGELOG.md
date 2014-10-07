@@ -1,5 +1,71 @@
 # Change Log
 
+## Framework7 v0.9.7 - Updated on October 7, 2014
+  * Slider
+    * Now supports continuous loop mode with `loop:true` option
+    * New `onlyExternal` option to disable swipes
+    * Fixed issue when `slidesPerView` is more than actual amount of slides
+  * Photo Browser
+    * Renamed enable/disable exposition methods to `.enableExposition` and `.disableExposition`
+    * Also supports continuous loop mode with option `loop:true`
+    * Added support for images lazy loading with new available options: `lazyLoading`, `lazyLoadingInPrevNext`, `lazyLoadingOnTransitionStart`
+    * New template `photoLazyTemplate` parameter for lazy laoding images layout
+    * Now it also supports pan and zoom for `<svg>` and `<canvas>`
+  * Smart Select
+    * Now could be opened in Popup instead of Page with configuration using new related App parameters `smartSelectInPopup`, `smartSelectPopupCloseTemplate`, `smartSelectPopupCloseText`
+    * Smart select element supports new additional attributes `data-open-in` (to open in popup or in page) and `data-popup-close-text` (to sepcify popup's close button text)
+  * Messages
+    * New message element `message-label`
+    * Fixed bubbles masks on iOS 8 devices with none retina screens
+    * `app.updateMessagesAngles` renamed to `app.updateMessagesLayout`
+    * Each messages now supports additional classes `message-hide-avatar`, `message-with-tail`, `message-hide-name`, `message-hide-label`
+    * Auto set tails and hide/show avatars and names now requires for additional `messages-auto-layout` class on `messages` container
+  * Searchbar
+    * Fixed `disalbeSearch` and `enableSearch` events
+  * Pull To Refresh
+    * Fixed issue when there is no navbar on PTR page
+  * Icons
+    * Reworked `icon-bars` for none retina screens
+  * Navbars/Toolbars
+    * Now, can be hidden automatically when scrolling content (`page-content`). Could be enabled by adding `hide-bars-on-scroll` or `hide-navbar-on-scroll` or `hide-toolbar-on-scroll` additional classes on `page-content`. Or by setting app parameters: `hideNavbarOnPageScroll`, `hideToolbarOnPageScroll`, `showBarsOnPageScrollEnd`
+  * Template7
+    * Template7 updated to v1.0.1
+      * Now supports helpers without context
+      * New method `.unregisterHelper` to remove helper
+    * `<script type="text/template7">` templates could be automatically precompiled by setting `precompileTemplates` App parameter. They will be accessable as properties of `Template7.templates` object
+    * Template7 is integrated to app router so now you can use Template7 templates in Ajax- or Dynamically-loded pages. It is configurable with new App parameters: `template7Pages`, `template7Data` or using `data-template`, `data-context` and `data-contextName` attributes on links
+  * Pages
+    * New page events `pageBack`, `pageAfterBack` and `pageReinit` and new page callbacks: `back`, `afterBack` and `reinit`
+  * Router
+    * New App/View parameter `uniqueHistoryIgnoreGetParameters` to treat urls like "about.html" and "about.html?id=1" as the same url
+    * New App parameter `dynamicPageUrl` to set URL rule for dynamically loaded pages
+    * Router loading methods are highly reworked
+      * `.goBack()` method is renamed to just `back()`
+      * All page router methods are reworked and now moved to `.router` View property and has 2 main methods:
+        * `view.router.load(options)` - to load page
+        * `view.router.back(options)` - to go back in navigation
+      * Also there are shortcut methods:
+        * `view.router.loadPage()`
+        * `view.router.reloadPage()`
+        * `view.router.reloadPreviousPage()`
+        * `view.router.loadContent()`
+        * `view.router.reloadContent()`
+        * `view.router.reloadPreviousContent()`
+        * `view.router.refreshPage()`
+        * `view.router.refreshPreviousPage()`
+        * `view.router.back()`
+      * `options` object now supports the following properties: `url`, `content`, `force`, `reload`, `reloadPrevious`, `ignoreCache`, `pushState`, `animatePages`, `pageName`, `template`, `context`, `contextName`
+      * The same options are supported for links as `data-` attributes
+    * Support for Inline Pages by enabling `domCache` View' parameter 
+      * Now, Dom cache allows to use Inline Pages in Framework7. So you may set up all your pages in single file, where you need to add `cached` class to initialy hidden pages and navbar inners
+      * Such pages could be loaded with usual links by using `<a href="#{pageName}">` format
+  * Examples
+    * 2 new examples to show how to handle "Inline Pages" and "Template7 Pages"
+
+
+
+
+  
 ## Framework7 v0.9.6 - Updated on September 12, 2014
   * Template7
     * Now Framework7 comes with its own template engine - Template7. Which has totally the same syntax as Handlebars, but a way faster in templates compilation and rendering, especially in mobile Safari (up to 4 times faster!)

@@ -1,5 +1,7 @@
 // Initialize your app
-var myApp = new Framework7();
+var myApp = new Framework7({
+    animateNavBackIcon:true
+});
 
 // Export selectors engine
 var $$ = Dom7;
