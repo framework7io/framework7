@@ -28,6 +28,7 @@ app.addMessage = function (props) {
                 (props.name ? '<div class="message-name">' + props.name + '</div>' : '') +
                 '<div class="message-text">' + props.text + '</div>' +
                 (props.avatar ? '<div class="message-avatar" style="background-image:url(' + props.avatar + ')"></div>' : '') +
+                (props.label ? '<div class="message-label">' + props.label + '</div>' : '') +
             '</div>';
     if (newOnTop) messages.prepend(html);
     else messages.append(html);
