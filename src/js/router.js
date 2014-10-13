@@ -655,7 +655,7 @@ app.router._back = function (view, options) {
             view.allowPageChange = true;
             return;
         }
-        if (view.params.dynamicNavbar) {
+        if (view.params.dynamicNavbar && typeof dynamicNavbar === 'undefined') {
             if (!newNavbarInner || newNavbarInner.length === 0) {
                 dynamicNavbar = false;
             }
@@ -702,8 +702,9 @@ app.router._back = function (view, options) {
 
         oldPage = $(pagesInView[pagesInView.length - 1]);
             
-        if (dynamicNavbar) {
+        if (dynamicNavbar && !oldNavbarInner) {
             oldNavbarInner = $(navbarInners[navbarInners.length - 1]);
+            if (oldNavbarInner.length === 0 || newNavbarInner[0] === oldNavbarInner[0]) dynamicNavbar = false;
         }
 
         if (dynamicNavbar) {
@@ -760,6 +761,9 @@ app.router._back = function (view, options) {
             navbarInners = viewContainer.find('.navbar-inner:not(.cached)');
             newNavbarInner = $(navbarInners[0]);
             oldNavbarInner = $(navbarInners[1]);
+            if (newNavbarInner.length === 0 || oldNavbarInner.length === 0 || oldNavbarInner[0] === newNavbarInner[0]) {
+                dynamicNavbar = false;
+            }
         }
         manipulateDom = false;
         setPages();
