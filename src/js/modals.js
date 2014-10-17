@@ -222,6 +222,7 @@ app.actions = function (target, params) {
                     var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
                     if (button.bold) buttonClass += ' actions-modal-button-bold';
                     if (button.color) buttonClass += ' color-' + button.color;
+                    if (button.bg) buttonClass += ' bg-' + button.bg;
                     buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
                     if (j === params[i].length - 1) buttonsHTML += '</div>';
                 }
