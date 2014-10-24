@@ -103,24 +103,24 @@ app.sizeNavbars = function (viewContainer) {
         
     });
 };
-app.hideNavbar = function (viewContainer) {
-    $(viewContainer).addClass('hidden-navbar');
+app.hideNavbar = function (navbarContainer) {
+    $(navbarContainer).addClass('navbar-hidden');
     return true;
 };
-app.showNavbar = function (viewContainer) {
-    var vc = $(viewContainer);
-    vc.addClass('hiding-navbar').removeClass('hidden-navbar').find('.navbar').transitionEnd(function () {
-        vc.removeClass('hiding-navbar');
+app.showNavbar = function (navbarContainer) {
+    var navbar = $(navbarContainer);
+    navbar.addClass('navbar-hiding').removeClass('navbar-hidden').transitionEnd(function () {
+        navbar.removeClass('navbar-hiding');
     });
     return true;
 };
-app.hideToolbar = function (viewContainer) {
-    $(viewContainer).addClass('hidden-toolbar');
+app.hideToolbar = function (toolbarContainer) {
+    $(toolbarContainer).addClass('toolbar-hidden');
     return true;
 };
-app.showToolbar = function (viewContainer) {
-    var vc = $(viewContainer);
-    vc.addClass('hiding-toolbar').removeClass('hidden-toolbar').find('.toolbar').transitionEnd(function () {
-        vc.removeClass('hiding-toolbar');
+app.showToolbar = function (toolbarContainer) {
+    var toolbar = $(toolbarContainer);
+    toolbar.addClass('toolbar-hiding').removeClass('toolbar-hidden').transitionEnd(function () {
+        toolbar.removeClass('toolbar-hiding');
     });
 };

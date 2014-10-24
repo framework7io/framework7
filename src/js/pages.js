@@ -208,6 +208,19 @@ app.pageAnimCallbacks = function (callback, view, params) {
         if (!newPage.hasClass('no-toolbar') && (oldPage.hasClass('no-toolbar') || oldPage.hasClass('no-toolbar-by-scroll'))) {
             view.showToolbar();
         }
+        // Hide/show tabbar
+        var tabBar;
+        if (newPage.hasClass('no-tabbar') && !oldPage.hasClass('no-tabbar')) {
+            tabBar = $(view.container).find('.tabbar');
+            if (tabBar.length === 0) tabBar = $(view.container).parents('.' + app.params.viewsClass).find('.tabbar');
+            app.hideToolbar(tabBar);
+        }
+        if (!newPage.hasClass('no-tabbar') && (oldPage.hasClass('no-tabbar') || oldPage.hasClass('no-tabbar-by-scroll'))) {
+            tabBar = $(view.container).find('.tabbar');
+            if (tabBar.length === 0) tabBar = $(view.container).parents('.' + app.params.viewsClass).find('.tabbar');
+            app.showToolbar(tabBar);
+        }
+
         oldPage.removeClass('no-navbar-by-scroll no-toolbar-by-scroll');
         // Callbacks
         app.pluginHook('pageBeforeAnimation', pageData);

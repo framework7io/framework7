@@ -469,16 +469,16 @@ var View = function (selector, params) {
 
     // Bars methods
     view.hideNavbar = function () {
-        return app.hideNavbar(container);
+        return app.hideNavbar(container.find('.navbar'));
     };
     view.showNavbar = function () {
-        return app.showNavbar(container);
+        return app.showNavbar(container.find('.navbar'));
     };
     view.hideToolbar = function () {
-        return app.hideToolbar(container);
+        return app.hideToolbar(container.find('.toolbar'));
     };
     view.showToolbar = function () {
-        return app.showToolbar(container);
+        return app.showToolbar(container.find('.toolbar'));
     };
 
     // Push State on load

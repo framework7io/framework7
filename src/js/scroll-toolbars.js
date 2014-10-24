@@ -7,29 +7,44 @@ app.initScrollToolbars = function (pageContainer) {
     if (scrollContent.length === 0) return;
     var hideNavbar = app.params.hideNavbarOnPageScroll || scrollContent.hasClass('hide-navbar-on-scroll') || scrollContent.hasClass('hide-bars-on-scroll');
     var hideToolbar = app.params.hideToolbarOnPageScroll || scrollContent.hasClass('hide-toolbar-on-scroll') || scrollContent.hasClass('hide-bars-on-scroll');
-    if (!(hideNavbar || hideToolbar)) return;
+    var hideTabbar = app.params.hideTabbarOnPageScroll || scrollContent.hasClass('hide-tabbar-on-scroll');
+
+    if (!(hideNavbar || hideToolbar || hideTabbar)) return;
     
     var viewContainer = scrollContent.parents('.' + app.params.viewClass);
     if (viewContainer.length === 0) return;
 
-    var hasNavbar = viewContainer.find('.navbar').length > 0;
-    var hasToolbar = viewContainer.find('.toolbar').length > 0;
+    var navbar = viewContainer.find('.navbar'), 
+        toolbar = viewContainer.find('.toolbar'), 
+        tabbar;
+    if (hideTabbar) {
+        tabbar = viewContainer.find('.tabbar');
+        if (tabbar.length === 0) tabbar = viewContainer.parents('.' + app.params.viewsClass).find('.tabbar');
+    }
+
+    var hasNavbar = navbar.length > 0,
+        hasToolbar = toolbar.length > 0,
+        hasTabbar = tabbar && tabbar.length > 0;
 
     var previousScroll, currentScroll;
         previousScroll = currentScroll = scrollContent[0].scrollTop;
 
-    var scrollHeight, offsetHeight, reachEnd, action, navbarHidden, toolbarHidden;
+    var scrollHeight, offsetHeight, reachEnd, action, navbarHidden, toolbarHidden, tabbarHidden;
 
-    var toolbarHeight = (hasToolbar && hideToolbar) ? viewContainer.find('.toolbar')[0].offsetHeight : 0;
+    var toolbarHeight = (hasToolbar && hideToolbar) ? toolbar[0].offsetHeight : 0;
+    var tabbarHeight = (hasTabbar && hideTabbar) ? tabbar[0].offsetHeight : 0;
+    var bottomBarHeight = tabbarHeight || toolbarHeight;
 
     function handleScroll(e) {
         if (pageContainer.hasClass('page-on-left')) return;
         currentScroll = scrollContent[0].scrollTop;
         scrollHeight = scrollContent[0].scrollHeight;
         offsetHeight = scrollContent[0].offsetHeight;
-        reachEnd = app.params.showBarsOnPageScrollEnd && (currentScroll + offsetHeight >= scrollHeight - toolbarHeight);
-        navbarHidden = viewContainer.hasClass('hidden-navbar');
-        toolbarHidden = viewContainer.hasClass('hidden-toolbar');
+        reachEnd = app.params.showBarsOnPageScrollEnd && (currentScroll + offsetHeight >= scrollHeight - bottomBarHeight);
+        navbarHidden = navbar.hasClass('navbar-hidden');
+        toolbarHidden = toolbar.hasClass('toolbar-hidden');
+        tabbarHidden = tabbar && tabbar.hasClass('toolbar-hidden');
+
 
         if (previousScroll > currentScroll || reachEnd) {
             action = 'show';
@@ -45,26 +60,36 @@ app.initScrollToolbars = function (pageContainer) {
 
         if (action === 'show') {
             if (hasNavbar && hideNavbar && navbarHidden) {
-                app.showNavbar(viewContainer);
+                app.showNavbar(navbar);
                 pageContainer.removeClass('no-navbar-by-scroll'); 
                 navbarHidden = false;
             }
             if (hasToolbar && hideToolbar && toolbarHidden) {
-                app.showToolbar(viewContainer);
+                app.showToolbar(toolbar);
                 pageContainer.removeClass('no-toolbar-by-scroll'); 
                 toolbarHidden = false;
+            }
+            if (hasTabbar && hideTabbar && tabbarHidden) {
+                app.showToolbar(tabbar);
+                pageContainer.removeClass('no-tabbar-by-scroll'); 
+                tabbarHidden = false;
             }
         }
         else {
             if (hasNavbar && hideNavbar && !navbarHidden) {
-                app.hideNavbar(viewContainer);
+                app.hideNavbar(navbar);
                 pageContainer.addClass('no-navbar-by-scroll'); 
                 navbarHidden = true;
             }
             if (hasToolbar && hideToolbar && !toolbarHidden) {
-                app.hideToolbar(viewContainer);
+                app.hideToolbar(toolbar);
                 pageContainer.addClass('no-toolbar-by-scroll'); 
                 toolbarHidden = true;
+            }
+            if (hasTabbar && hideTabbar && !tabbarHidden) {
+                app.hideToolbar(tabbar);
+                pageContainer.addClass('no-tabbar-by-scroll'); 
+                tabbarHidden = true;
             }
         }
             

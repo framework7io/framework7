@@ -49,6 +49,7 @@ window.Framework7 = function (params) {
         // Scroll toolbars
         hideNavbarOnPageScroll: false,
         hideToolbarOnPageScroll: false,
+        hideTabbarOnPageScroll: false,
         showBarsOnPageScrollEnd: true,
         // Swipeout
         swipeout: true,

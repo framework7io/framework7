@@ -23,34 +23,30 @@
     }
 }
 // Page Hidden Navbar
-.hidden-navbar {
-    .navbar {
-        .transition(400ms);
-        .translate3d(0,-100%,0);
-    }
-}
-.hiding-navbar {
-    .navbar {
+.navbar {
+    &.navbar-hiding {
         .transition(400ms);
         .translate3d(0,0,0);
+    }
+    &.navbar-hidden {
+        .transition(400ms);
+        .translate3d(0,-100%,0);
     }
 }
 .page.no-navbar .page-content {
     padding-top: 0;
 }
 // Page Hidden Toolbar
-.hidden-toolbar {
-    .toolbar {
+.toolbar, .tabbar {
+    &.toolbar-hiding, &.tabbar-hiding {
+        .transition(400ms);
+        .translate3d(0,0,0);
+    }
+    &.toolbar-hidden, &.tabbar-hidden {
         .transition(400ms);
         .translate3d(0,100%,0);
     }
 }
-.hiding-toolbar {
-    .toolbar {
-        .transition(400ms);
-        .translate3d(0,0,0);
-    }
-}
-.page.no-toolbar .page-content {
+.page.no-toolbar .page-content, .page.no-tabbar .page-content {
     padding-bottom: 0;
 }
