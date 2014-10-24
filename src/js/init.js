@@ -22,7 +22,7 @@ app.init = function () {
         if (viewContainer) {
             viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
         }
-        app.pageInitCallback(view, this, url, 'center');
+        app.pageInitCallback(view, {pageContainer: this, url: url, position: 'center'});
     });
     
     // Init resize events
