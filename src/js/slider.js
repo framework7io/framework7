@@ -412,9 +412,14 @@ var Slider = function (container, params) {
             s.wrapper.transitionEnd(function () {
                 s.startAutoplay();
             });
-            var index = s.activeSlideIndex + 1;
-            if (index > s.slides.length - s.params.slidesPerView) index = 0;
-            s.slideTo(index);
+            if (s.params.loop) {
+                s.slideNext();
+            }
+            else {
+                var index = s.activeSlideIndex + 1;
+                if (index > s.slides.length - s.params.slidesPerView) index = 0;
+                s.slideTo(index);
+            }
         }, s.params.autoplay);
     };
     s.stopAutoplay = function () {
