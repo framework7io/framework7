@@ -38,7 +38,8 @@ window.Framework7 = function (params) {
         swipeBackPage: true,
         swipeBackPageThreshold: 0,
         swipeBackPageActiveArea: 30,
-        swipeBackPageBoxShadow: true,
+        swipeBackPageAnimateShadow: true,
+        swipeBackPageAnimateOpacity: true,
         // Ajax
         ajaxLinks: undefined, // or CSS selector
         // External Links
