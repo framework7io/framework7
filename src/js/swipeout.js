@@ -174,6 +174,7 @@ app.initSwipeout = function (swipeoutEl) {
             isMoved = false;
             return;
         }
+
         isTouched = false;
         isMoved = false;
         var timeDiff = (new Date()).getTime() - touchStartTime;
@@ -297,10 +298,9 @@ app.swipeoutOpen = function (el, dir) {
         }
         var clientLeft = buttons[1].clientLeft;
     }
-    
     el.addClass('transitioning');
     for (i = 0; i < buttons.length; i++) {
-        $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0');
+        $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0)');
     }
     el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
