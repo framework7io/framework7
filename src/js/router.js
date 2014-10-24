@@ -968,7 +968,6 @@ app.router.afterBack = function (view, oldPage, newPage) {
             var preloadUrl = view.history[view.history.length - 2];
             var previousPage;
             var previousNavbar;
-
             if (preloadUrl && view.pagesCache[preloadUrl]) {
                 // Load by page name
                 previousPage = $(view.container).find('.page[data-page="' + view.pagesCache[preloadUrl] + '"]');
@@ -977,6 +976,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
                     previousNavbar = $(view.container).find('.navbar-inner[data-page="' + view.pagesCache[preloadUrl] + '"]');
                     previousNavbar.insertBefore(newNavbar);
                 }
+                if(!previousNavbar || previousNavbar.length === 0) previousNavbar = newNavbar.prev('.navbar-inner.cached');
             }
             else {
                 // Just load previous page
