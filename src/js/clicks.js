@@ -16,16 +16,7 @@ app.initClickEvents = function () {
         }
         // Check if link is external 
         if (isLink) {
-            /*jshint shadow:true */
-            for (var i = 0; i < app.params.externalLinks.length; i++) {
-                if (clicked.hasClass(app.params.externalLinks[i])) {
-                    return;
-                }
-
-                if (clicked[0].rel === app.params.externalLinks[i]) {
-                    return;
-                }
-            }
+            if (clicked.is(app.params.externalLinks)) return;
         }
 
         // Smart Select

@@ -43,7 +43,7 @@ window.Framework7 = function (params) {
         // Ajax
         ajaxLinks: undefined, // or CSS selector
         // External Links
-        externalLinks: ['external'], // array of CSS class selectors and/or rel attributes
+        externalLinks: '.external', // CSS selector
         // Sortable
         sortable: true,
         // Scroll toolbars
