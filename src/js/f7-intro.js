@@ -93,7 +93,7 @@ window.Framework7 = function (params) {
         animatePages: true,
         // Template7
         templates: {},
-        templatesData: {},
+        template7Data: {},
         template7Pages: false,
         precompileTemplates: false,
         // Auto init
