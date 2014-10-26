@@ -53,6 +53,7 @@ window.Framework7 = function (params) {
         showBarsOnPageScrollEnd: true,
         // Swipeout
         swipeout: true,
+        swipeoutActionsNoFold: false,
         swipeoutNoFollow: false,
         // Smart Select Back link template
         smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
