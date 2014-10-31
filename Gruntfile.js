@@ -41,6 +41,7 @@ module.exports = function (grunt) {
         'src/js/swipeout.js',
         'src/js/sortable.js',
         'src/js/smart-select.js',
+        'src/js/virtual-list.js',
         'src/js/pull-to-refresh.js',
         'src/js/infinite-scroll.js',
         'src/js/scroll-toolbars.js',

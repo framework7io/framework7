@@ -408,7 +408,40 @@ myApp.onPageInit('color-themes', function (page) {
     });
 });
 
-/* ===== Change statusbar bg when panel opened/closed ===== */
+/* ===== Virtual List ===== */
+myApp.onPageInit('virtual-list', function (page) {
+    var vList = myApp.virtualList($$(page.container).find('.virtual-list'), {
+        items: (function () {
+            var arr = [];
+            for (var _di = 0; _di < 100000; _di++) {
+                var imageIndex = Math.ceil(Math.random()*10);
+                arr.push({
+                    title: _di + '. John Doe (via Twitter)',
+                    subtitle: 'John Doe (@_johndoe) mentioned you on Twitter!',
+                    time: '17:11',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat.',
+                });
+            }
+            return arr;
+        })(),
+        /*
+        searchByItem: function (query, index, item) {
+            if (item.title.indexOf(query) >=0 || query.trim() === '') return true;
+        },
+        */
+        searchAll: function (query, items) {
+            var found = [];
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].title.indexOf(query) >= 0 || query.trim() === '') found.push(i);
+            }
+            return found;
+        },
+        template: '<li><a href="#{{@index}}" class="item-link item-content"><div class="item-inner"><div class="item-title-row"><div class="item-title">{{title}}</div><div class="item-after">{{time}}</div></div><div class="item-subtitle">{{subtitle}}</div><div class="item-text">{{text}}</div></div></a></li>',
+        height: 106,
+    });
+});
+
+/* ===== Change statusbar bg when panel opened/closed ===== 
 $$('.panel-left').on('open', function () {
     $$('.statusbar-overlay').addClass('with-panel-left');
 });

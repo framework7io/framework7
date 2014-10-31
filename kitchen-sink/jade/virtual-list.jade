@@ -1,0 +1,26 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Virtual List
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="virtual-list")
+    form.searchbar(data-search-list=".virtual-list")
+      .searchbar-input
+        input(type="search", placeholder="Search")
+        a(href="#").searchbar-clear
+      a(href="#").searchbar-cancel Cancel
+    .searchbar-overlay
+    .page-content
+      .list-block.media-list.virtual-list.searchbar-found
+      .list-block.searchbar-not-found
+        ul
+          li.item-content
+            .item-inner
+              .item-title Nothing found
+        

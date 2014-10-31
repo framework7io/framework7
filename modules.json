@@ -90,6 +90,11 @@
         "less": [],
         "dependencies" : []
     },
+    "virtual-list": {
+        "js" : ["src/js/virtual-list.js"],
+        "less": [],
+        "dependencies" : []
+    },
     "pull-to-refresh": {
         "js" : ["src/js/pull-to-refresh.js"],
         "less": ["src/less/pull-to-refresh.less"],
