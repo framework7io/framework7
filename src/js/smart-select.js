@@ -71,6 +71,8 @@ app.smartSelectOpen = function (smartSelect) {
     var backText = smartSelect.attr('data-back-text') || app.params.smartSelectBackText;
     var closeText = smartSelect.attr('data-popup-close-text') || smartSelect.attr('data-back-text') || app.params.smartSelectPopupCloseText ;
     var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
+    var formTheme = smartSelect.attr('data-form-theme') || app.params.smartSelectFormTheme;
+    var navbarTheme = smartSelect.attr('data-navbar-theme') || app.params.smartSelectNavbarTheme;
 
     // Generate dynamic page layout
     var id = (new Date()).getTime();
@@ -105,7 +107,7 @@ app.smartSelectOpen = function (smartSelect) {
     // Navbar HTML
     var navbarLeftTemplate = openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText);
     var navbarHTML =
-        '<div class="navbar">' +
+        '<div class="navbar ' + (navbarTheme ? 'theme-' + navbarTheme : '') + '">' +
         '  <div class="navbar-inner">' +
             navbarLeftTemplate +
         '    <div class="center sliding">' + pageTitle + '</div>' +
@@ -168,7 +170,7 @@ app.smartSelectOpen = function (smartSelect) {
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
                (navbarLayout === 'static' ? navbarHTML : '') +
-        '      <div class="list-block smart-select-list-' + id + '">' +
+        '      <div class="list-block smart-select-list-' + id + ' ' + (formTheme ? 'theme-' + formTheme : '') + '">' +
         '        <ul>' +
                     inputsHTML +
         '        </ul>' +
@@ -176,6 +178,9 @@ app.smartSelectOpen = function (smartSelect) {
         '    </div>' +
         '  </div>' +
         '</div>';
+
+    // Define popup
+    var popup;
 
     // Event Listeners on new page
     function handleInputs(container) {
@@ -203,7 +208,8 @@ app.smartSelectOpen = function (smartSelect) {
             $select.trigger('change');
             smartSelect.find('.item-after').text(optionText.join(', '));
             if (backOnSelect && inputType === 'radio') {
-                view.router.back();
+                if (openIn === 'popup') app.closeModal(popup);
+                else view.router.back();
             }
         });
     }
@@ -218,7 +224,7 @@ app.smartSelectOpen = function (smartSelect) {
 
     // Load content
     if (openIn === 'popup') {
-        var popup = app.popup('<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
+        popup = app.popup('<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
                     '<div class="view navbar-fixed">' +
                         pageHTML +
                     '</div>' +
