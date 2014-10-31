@@ -159,7 +159,8 @@ app.initClickEvents = function () {
             else {
                 view = clicked.parents('.' + app.params.viewClass)[0] && clicked.parents('.' + app.params.viewClass)[0].f7View;
                 if (view && view.params.linksView) {
-                    view = $(view.params.linksView)[0].f7View;
+                    if (typeof view.params.linksView === 'string') view = $(view.params.linksView)[0].f7View;
+                    else if (view.params.linksView instanceof View) view = view.params.linksView;
                 }
             }
             if (!view) {
