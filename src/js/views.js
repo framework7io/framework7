@@ -7,6 +7,7 @@ var View = function (selector, params) {
         dynamicNavbar: false,
         domCache: false,
         linksView: undefined,
+        reloadPages: false,
         uniqueHistory: app.params.uniqueHistory,
         uniqueHistoryIgnoreGetParameters: app.params.uniqueHistoryIgnoreGetParameters,
         swipeBackPage: app.params.swipeBackPage,

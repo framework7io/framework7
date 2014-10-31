@@ -524,10 +524,12 @@ app.router._load = function (view, options) {
 };
 
 app.router.load = function (view, options) {
+    options = options || {};
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
     var template = options.template;
+    if (view.params.reloadPages === true) options.reload = true;
 
     if (!view.allowPageChange) return false;
     if (url && view.url === url && !options.reload) return false;
