@@ -153,10 +153,10 @@ app.router = {
         var t7_ctx, t7_template;
         if (typeof content === 'string') {
             if (url) {
-                if (app.templatesCache[url]) t7_template = t7.templatesCache[url];
+                if (app.template7Cache[url]) t7_template = t7.cache[url];
                 else {
                     t7_template = t7.compile(content);
-                    t7.templatesCache[url] = t7_template;
+                    t7.cache[url] = t7_template;
                 }
             }
             else t7_template = t7.compile(content);
