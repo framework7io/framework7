@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>My App</title>
+    <title>Kitchen Cloud Mobile</title>
     <!-- Path to Framework7 Library CSS-->
     <link rel="stylesheet" href="css/framework7.min.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/my-app.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   </head>
   <body>
     <!-- Status bar overlay for fullscreen mode-->
@@ -25,7 +26,15 @@
     <!-- Right panel with cover effect-->
     <div class="panel panel-right panel-cover">
       <div class="content-block">
-        <p>Right panel content goes here</p>
+        <h4>Notifications</h4>
+            <div class="notification urgent">
+                <p>Your message here</p>
+                <i class="fa fa-times fa-lg"></i>
+            </div>
+            <div class="notification standard multi-line">
+                <p>Another standard notification separated onto two lines</p>
+                <i class="fa fa-times fa-lg"></i>
+            </div>
       </div>
     </div>
     <!-- Views-->
@@ -36,9 +45,12 @@
         <div class="navbar">
           <div class="navbar-inner">
             <!-- We have home navbar without left link-->
-            <div class="center sliding">Awesome App</div>
+            <div class="center sliding">Kitchen Cloud</div>
             <div class="right">
-              <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+              <a href="#" data-panel="right" class="link icon-only open-panel">
+            		<span class="num-notices">2</span>
+              		<i class="fa fa-bullhorn fa-lg"></i>
+              	</a>
             </div>
           </div>
         </div>
@@ -48,6 +60,11 @@
           <div data-page="index" class="page">
             <!-- Scrollable page content-->
             <div class="page-content">
+            	<a href="https://itunes.apple.com/us/app/calorie-counter-diet-tracker/id341232718?mt=8" class="link" target="_blank">
+                <div id="ad_space_top">
+                	Ad Space Available
+                </div>
+            </a>
               <div class="content-block-title">Welcome To My Awesome App</div>
               <div class="content-block">
                 <div class="content-block-inner">
@@ -70,7 +87,7 @@
                           <div class="item-title">Services</div>
                         </div>
                       </div></a></li>
-                  <li><a href="form.html" class="item-link">
+                  <li><a href="user-settings.html" class="item-link">
                       <div class="item-content"> 
                         <div class="item-inner">
                           <div class="item-title">Form</div>
@@ -90,7 +107,7 @@
         </div>
         <!-- Bottom Toolbar-->
         <div class="toolbar">
-          <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="#" class="link">Link 2</a></div>
+          <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="user-settings.html" class="link">Link 2</a></div>
         </div>
       </div>
     </div>

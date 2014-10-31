@@ -1,0 +1,65 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+    <div class="center sliding">User Settings</div>
+    <div class="right">
+      <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="pages">
+	<!-- Page, data-page contains page name-->
+  	<div data-page="sign-up" class="page">
+    	<!-- Scrollable page content-->
+    	<div class="page-content" style="margin:0 10px;">
+        	<h2>Sign-In to Your Account</h2>
+            
+            <form id="sign_in_form" action="" method="put">
+        	<div class="list-block">
+  				<ul>
+    				<li>
+                   		<div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <input type="text" placeholder="Username or Email">
+                              </div>
+                            </div>
+                     	</div>
+                  	</li>
+                    <li>
+                   		<div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-input">
+                                <input type="password" placeholder="Password">
+                              </div>
+                            </div>
+                     	</div>
+                  	</li>
+              	</ul>
+        	</div>
+            
+        	<p><input type="button" class="button button-big" value="Sign-In" onClick="signIn()"></p>
+            
+            </form>
+            
+            <p align="center"><a href="" style="font-size:16px; color:#999;">Forgot your password?</a></p>
+            
+            <div class="divide">
+            	<span class="left-divide"></span>
+                <p align="center">or</p>
+                <span class="right-divide"></span>
+            </div>
+            
+            <p><input type="button" href="#" class="button button-big facebook-btn" value="Sign-In with Facebook"></p>
+      	</div><!-- End of page-content -->
+   	</div>
+</div>
+
+<script>
+	function signIn() {
+    	document.getElementById("sign_in_form").submit();
+	}
+</script>

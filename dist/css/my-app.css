@@ -1,0 +1,258 @@
+.page { background: #fff url(../img/background-2.png); }
+
+.navbar {
+	color: #fff;
+	left: 0;
+	top: 0;
+	background: #74baa2;
+	border-bottom: 4px solid #699c8b;
+}
+
+/* General UI */
+#title {
+	color: #fff;
+}
+
+.searchbar {
+	background-color: #e08f50;
+	height: 50px;
+	margin-top: 43px;
+	padding: 5px;
+}
+
+.fa-search {
+	z-index: 4;
+	position: absolute;
+	left: 15px;
+	top: 56px;
+	color: #ccc;
+}
+
+.searchbar input[type="search"] {
+	width: 270px;
+}
+
+.button-big {
+	background: #74baa2;
+	color: #fff;
+	font-size: 24px;
+	height: 42px;
+	width: 100%;
+}
+
+/* Addition Search */
+#addition .searchbar {
+	background: none !important;
+	height: 50px;
+	float: left;
+	margin-top: 0 !important;
+	padding: 5px;
+	width: 75%;
+}
+
+#addition .fa-search {
+	z-index: 4;
+	position: relative;
+	left: 15px;
+	top: 15px;
+	color: #ccc;
+}
+
+#addition .searchbar input[type="search"] {
+	width: 100% !important;
+}
+
+#addition .scan input[type="file"] {
+	height: 40px;
+	float: right;
+	padding: 4px; 
+	text-indent: 400px; 
+	width: 50px;
+}
+
+#addition .fa-barcode {
+	color: #fff;
+	left: 17px;
+	position: relative; 
+	top: -39px; 
+}
+
+/* Notifications */
+.fa-bullhorn {
+	position: relative;
+	z-index: 3;
+}
+
+.num-notices {
+	background: #c56a58;
+	border-radius: 20px;
+	border: 2px solid #ccc;
+	color: #fff;
+	font-size: 12px;
+	padding: 3px 7px;
+	position: relative;
+	z-index: 4;
+	left: 40px;
+	top: -7px;
+}
+
+.notification {
+	padding: 10px;
+	margin-bottom: 10px;
+	min-height: 20px;
+}
+
+.notification p {
+	float: left;
+	margin: 0;
+	width: 92%;
+}
+
+.notification i {
+	float: right;
+}
+
+.urgent {
+	background: #f3d1d0;
+	border: 1px solid red;
+}
+
+.standard {
+	background: #cee9f0;
+}
+
+.multi-line {
+	min-height: 40px;
+}
+
+/* Main Screen */
+.food-list-item .item-inner {
+	margin-left: -15px !important;
+}
+
+.item-text {
+	border-right: 1px solid #999;
+	float: left;
+	width: 40%;
+	margin: 0;
+}
+
+.status {
+	float: left;
+	margin-left: 5px;
+}
+
+.age {
+	clear: both;
+}
+
+.age > .status {
+	float: right;
+}
+
+.item-inner > .bad, .age > .bad {
+	color: #fff;
+	background: url(../img/bad-ribbon.png) no-repeat;
+	background-size: 80%;
+	padding: 1px 40px 0 3px;
+}
+
+.item-inner > .soon, .age > .soon {
+	color: #c69f06;
+	font-weight: bold;
+	padding: 2px 0 0 5px;
+}
+
+.food-icon {
+	width: 70px;
+	height: 70px;
+	position: relative;
+	top: 3px;
+	margin-right: 5px;
+}
+
+.toolbar-inner a.analytics {
+	background-color: #725f50;
+	border-radius: 32px;
+	padding: 5px;
+	position: relative;
+	top: -5px;
+}
+
+a.analytics img {
+	position: relative;
+	top: -1px;
+}
+
+#ad_space_top, #ad_space_bottom {
+	text-align: center;
+	padding-top: 25px;
+	width: 100%;
+	background: #C0D0D4;
+	height: 50px;
+}
+
+/* Item Details */
+.nutrition-info {
+	background: #fff;
+	padding: 5px;
+}
+
+/* User Settings */
+[data-page="settings"] .list-block li, [data-page="sign-up"] .list-block li {
+	background: #FFF;
+}
+
+.item-media i {
+	padding: 0 5px;
+}
+
+/* User Sign-In/Sign-Up */
+.left-divide {
+	width: 100px;
+	height: 3px;
+	background-color: #ffffff;
+	background-image: -webkit-gradient(linear, left top, right top, from(#ededed), to(#a09ea1));
+	background-image: -webkit-linear-gradient(left, #ededed, #a09ea1);
+	background-image: linear-gradient(left, #ededed, #a09ea1);
+	opacity: 0.46;
+}
+
+.right-divide {
+	width:100px;
+	height: 3px;
+	background-color: #ffffff;
+	background-image: -webkit-gradient(linear, left top, right top, from(#a09ea1), to(#ededed));
+	background-image: -webkit-linear-gradient(left, #a09ea1, #ededed);
+	background-image: linear-gradient(left, #a09ea1, #ededed);
+	opacity: 0.46;
+
+}
+
+.divide p {
+	font-family: Times, "Times New Roman", serif;
+	font-size: 18px;
+	font-style: italic;
+	width: 100%;
+}
+
+.facebook-btn {
+	background: #367298 !important;
+}
+
+
+/*=========================================================================
+	Wishlist Items
+=========================================================================*/
+
+#speech_input {
+	display: block;
+	border: 0;
+    background-color:transparent;
+	color: #c35e10;
+	float: right;
+    padding: 0;
+	position: relative;
+	right: 5px;
+	top: -17px;
+}
