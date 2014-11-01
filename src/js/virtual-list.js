@@ -21,7 +21,7 @@ var VirtualList = function (listBlock, params) {
         updatableScroll: true/false,
         searchAll: function(query, items) ,
         searchByItem: function(query, index, item) ,
-        renderItem: function (item, index) {
+        renderItem: function (index, item) {
             return 'item string' 
         }
     }
@@ -70,15 +70,8 @@ var VirtualList = function (listBlock, params) {
     // Fragment
     vl.fragment = document.createDocumentFragment();
 
-    // Set indexes
-    vl.setIndexes = function () {
-        for (var i = 0; i < vl.items.length; i++) {
-            vl.items[i]._virtualIndex = i;
-        }
-    };
-
     // Filter
-    vl.filter = function (indexes) {
+    vl.filterItems = function (indexes) {
         vl.filteredItems = [];
         var firstIndex = indexes[0];
         var lastIndex = indexes[indexes.length - 1];
@@ -108,7 +101,7 @@ var VirtualList = function (listBlock, params) {
     };
 
     // Set items (inser/remove/replace)
-    vl.renderItems = function (force) {
+    vl.render = function (force) {
         if (force) vl.lastRepaintY = null;
         var scrollTop = vl.pageContent[0].scrollTop;
         var fromPos = parseInt(scrollTop / vl.params.height) - vl.rowsBefore;
@@ -121,48 +114,57 @@ var VirtualList = function (listBlock, params) {
         else {
             return;
         }
-
         var items = vl.filteredItems || vl.items;
         var finalItem = Math.min(fromPos + vl.rowsToRender, items.length);
         for (var i = fromPos; i < finalItem; i++) {
-            var item;
-            if (vl.domCache[items[i]._virtualIndex]) {
-                item = vl.domCache[items[i]._virtualIndex];
+            var item, index;
+            // Define real item index
+            index = vl.items.indexOf(items[i]);
+            
+            // Find items
+            if (vl.domCache[index]) {
+                item = vl.domCache[index];
             }
             else {
                 if (vl.template) {
-                    vl.tempDomElement.innerHTML = vl.template(items[i], {index: items[i]._virtualIndex});
+                    vl.tempDomElement.innerHTML = vl.template(items[i], {index: index});
                 }
                 else if (vl.params.renderItem) {
-                    vl.tempDomElement.innerHTML = vl.params.renderItem(items[i], items[i]._virtualIndex);   
+                    vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]);   
                 }
                 else {
                     vl.tempDomElement.innerHTML = items[i];
                 }
                 item = vl.tempDomElement.childNodes[0];
-                vl.domCache[items[i]._virtualIndex] = item;
+                vl.domCache[index] = item;
             }
-            item.f7VirtualListIndex = items[i]._virtualIndex;
+            item.f7VirtualListIndex = index;
                 
-
+            // Set item top position
             item.style.top = (i * vl.params.height) + 'px';
+
+            // Append item to fragment
             vl.fragment.appendChild(item);
+
+            // Update list height with not updatable scroll
             if (!updatableScroll) {
                 vl.ul[0].style.height = (i + 1) * vl.params.height + 'px';
             }
         }
+
+        // Update list html
         vl.ul[0].innerHTML = '';
         vl.ul[0].appendChild(vl.fragment);
     };
 
     // Handle scroll event
     vl.handleScroll = function (e) {
-        vl.renderItems();
+        vl.render();
     };
     // Handle resize event
     vl.handleResize = function (e) {
         vl.setListSize();
-        vl.renderItems(true);
+        vl.render(true);
     };
 
     vl.attachEvents = function (detach) {
@@ -174,9 +176,8 @@ var VirtualList = function (listBlock, params) {
     // Init Virtual List
     vl.init = function () {
         vl.attachEvents();
-        vl.setIndexes();
         vl.setListSize();
-        vl.renderItems();
+        vl.render();
     };
 
     // Append/Prepend
@@ -184,7 +185,6 @@ var VirtualList = function (listBlock, params) {
         for (var i = 0; i < items.length; i++) {
             vl.items.push(items[i]);
         }
-        vl.setIndexes();
         vl.update();
     };
     vl.appendItem = function (item) {
@@ -193,7 +193,6 @@ var VirtualList = function (listBlock, params) {
     vl.replaceItem = function (index, item) {
         vl.items[index] = item;
         delete vl.domCache[index];
-        vl.setIndexes();
         vl.update();
     };
     
@@ -206,7 +205,6 @@ var VirtualList = function (listBlock, params) {
             newCache[parseInt(cached, 10) + items.length] = vl.domCache[cached];
         }
         vl.domCache = newCache;
-        vl.setIndexes();
         vl.update();
     };
     vl.prependItem = function (item) {
@@ -224,7 +222,11 @@ var VirtualList = function (listBlock, params) {
             }
             index = index + indexShift;
             prevIndex = indexes[i];
-                    
+            // Delete item
+            var deletedItem = vl.items.splice(index, 1);
+            // Delete from filtered
+            if (vl.filteredItems && vl.filteredItems.indexOf(deletedItem)) vl.filteredItems.splice(vl.filteredItems.indexOf(deletedItem), 1);
+            // Update cache
             var newCache = {};
             for (var cached in vl.domCache) {
                 var cachedIndex = parseInt(cached, 10);
@@ -240,7 +242,6 @@ var VirtualList = function (listBlock, params) {
             }
             vl.domCache = newCache;
         }
-        vl.setIndexes();
         vl.update();
     };
     vl.deleteItem = function (index) {
@@ -250,7 +251,7 @@ var VirtualList = function (listBlock, params) {
     // Update Virtual List
     vl.update = function () {
         vl.setListSize();
-        vl.renderItems(true);
+        vl.render(true);
     };
 
     // Destroy
