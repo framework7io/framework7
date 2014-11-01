@@ -33,18 +33,17 @@ app.initSearchbar = function (pageContainer) {
     }
 
     // Cancel button
-    var cancelWidth, cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
+    var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
     if (cancel.length > 0) {
-        cancelWidth = cancel.width();
-
-        cancel.css(cancelMarginProp, - cancelWidth + 'px');
+        cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
     }
+        
 
     // Handlers
     function disableSearchbar() {
         input.val('').trigger('change');
         searchbar.removeClass('searchbar-active searchbar-not-empty');
-        if (cancel.length > 0) cancel.css(cancelMarginProp, - cancelWidth + 'px');
+        if (cancel.length > 0) cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
         
         if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
         if (app.device.ios) {
@@ -80,7 +79,7 @@ app.initSearchbar = function (pageContainer) {
 
     // Clear
     function clearSearchbar() {
-        input.val('').trigger('change');
+        input.val('').trigger('change').focus();
         searchList.trigger('clearSearch');
     }
 
