@@ -78,6 +78,7 @@ var VirtualList = function (listBlock, params) {
         for (var i = 0; i < indexes.length; i++) {
             vl.filteredItems.push(vl.items[indexes[i]]);
         }
+        vl.pageContent[0].scrollTop = 0;
         vl.update();
     };
     vl.resetFilter = function () {
