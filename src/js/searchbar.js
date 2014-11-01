@@ -202,7 +202,7 @@ app.initSearchbar = function (pageContainer) {
             found.show();
         }
         if (isVirtualList) {
-            virtualList.filter(foundItems);
+            virtualList.filterItems(foundItems);
         }
     }
 
