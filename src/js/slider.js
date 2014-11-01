@@ -143,8 +143,17 @@ var Slider = function (container, params) {
             }
         }
     };
+
+    function isFormElement(el) {
+        var nn = el.nodeName.toLowerCase();
+        if (nn === 'input' || nn === 'textarea' || nn === 'select') return true;
+        return false;
+    }
+    s.touchedTarget = null;
+    var hasFocused, hasBlured;
     s.onTouchStart = function (e) {
         if (s.params.onlyExternal) return;
+        s.touchedTarget = e.target;
         isTouched = true;
         isMoved = false;
         isScrolling = undefined;
@@ -154,7 +163,11 @@ var Slider = function (container, params) {
         s.allowClick = true;
         s.updateSize();
         if (s.params.onTouchStart) s.params.onTouchStart(s, e);
-        if (e.type === 'mousedown') e.preventDefault();
+        hasFocused = hasBlured = false;
+        if (e.type === 'mousedown') {
+            if (!isFormElement(e.target)) e.preventDefault();
+        }
+        
     };
     s.onTouchMove = function (e) {
         if (s.params.onTouchMove) s.params.onTouchMove(s, e);
@@ -213,12 +226,17 @@ var Slider = function (container, params) {
         if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
         var touchEndTime = Date.now();
         var timeDiff = touchEndTime - touchStartTime;
+        if (isFormElement(s.touchedTarget)) hasFocused = true;
+        if (document.activeElement && document.activeElement !== s.touchedTarget && isFormElement(document.activeElement)) {
+            document.activeElement.blur();
+            hasBlured = true;
+        }
         if (s.allowClick) {
             if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
                 clickTimeout = setTimeout(function () {
                     if (!s) return;
-                    if (s.params.paginationHide && s.paginationContainer) {
+                    if (s.params.paginationHide && s.paginationContainer && !hasBlured && !hasFocused) {
                         s.paginationContainer.toggleClass('slider-pagination-hidden');
                     }
                     if (s.params.onClick) s.params.onClick(s, e);
