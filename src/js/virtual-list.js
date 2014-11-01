@@ -140,9 +140,9 @@ var VirtualList = function (listBlock, params) {
                     vl.tempDomElement.innerHTML = items[i];
                 }
                 item = vl.tempDomElement.childNodes[0];
-                
                 vl.domCache[items[i]._virtualIndex] = item;
             }
+            item.f7VirtualListIndex = items[i]._virtualIndex;
                 
 
             item.style.top = (i * vl.params.height) + 'px';
