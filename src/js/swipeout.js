@@ -350,7 +350,14 @@ app.swipeoutDelete = function (el) {
     var clientLeft = el[0].clientLeft;
     el.css({height: 0 + 'px'}).addClass('deleting transitioning').transitionEnd(function () {
         el.trigger('deleted');
-        el.remove();
+        if (el.parents('.virtual-list').length > 0) {
+            var virtualList = el.parents('.virtual-list')[0].f7VirtualList;
+            var virtualIndex = el[0].f7VirtualListIndex;
+            if (virtualList && typeof virtualIndex !== 'undefined') virtualList.deleteItem(virtualIndex);
+        }
+        else {
+            el.remove();
+        }
     });
     var translate = '-100%';
     el.find('.swipeout-content').transform('translate3d(' + translate + ',0,0)');
