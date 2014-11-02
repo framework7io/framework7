@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: October 7, 2014
+ * Released on: November 2, 2014
 */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '0.9.7';
+        app.version = '0.9.8';
     
         // Default Parameters
         app.params = {
@@ -54,19 +54,22 @@
             swipeBackPage: true,
             swipeBackPageThreshold: 0,
             swipeBackPageActiveArea: 30,
-            swipeBackPageBoxShadow: true,
+            swipeBackPageAnimateShadow: true,
+            swipeBackPageAnimateOpacity: true,
             // Ajax
             ajaxLinks: undefined, // or CSS selector
             // External Links
-            externalLinks: ['external'], // array of CSS class selectors and/or rel attributes
+            externalLinks: '.external', // CSS selector
             // Sortable
             sortable: true,
             // Scroll toolbars
             hideNavbarOnPageScroll: false,
             hideToolbarOnPageScroll: false,
+            hideTabbarOnPageScroll: false,
             showBarsOnPageScrollEnd: true,
             // Swipeout
             swipeout: true,
+            swipeoutActionsNoFold: false,
             swipeoutNoFollow: false,
             // Smart Select Back link template
             smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
@@ -107,7 +110,7 @@
             animatePages: true,
             // Template7
             templates: {},
-            templatesData: {},
+            template7Data: {},
             template7Pages: false,
             precompileTemplates: false,
             // Auto init
@@ -157,10 +160,12 @@
                 dynamicNavbar: false,
                 domCache: false,
                 linksView: undefined,
+                reloadPages: false,
                 uniqueHistory: app.params.uniqueHistory,
                 uniqueHistoryIgnoreGetParameters: app.params.uniqueHistoryIgnoreGetParameters,
                 swipeBackPage: app.params.swipeBackPage,
-                swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
+                swipeBackPageAnimateShadow: app.params.swipeBackPageAnimateShadow,
+                swipeBackPageAnimateOpacity: app.params.swipeBackPageAnimateOpacity,
                 swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
                 swipeBackPageThreshold: app.params.swipeBackPageThreshold,
                 animatePages: app.params.animatePages,
@@ -382,10 +387,10 @@
                 }
         
                 activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
-                if (view.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
+                if (view.params.swipeBackPageAnimateShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
         
                 previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
-                previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
+                if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
         
                 // Dynamic Navbars Animation
                 if (dynamicNavbar) {
@@ -618,16 +623,16 @@
         
             // Bars methods
             view.hideNavbar = function () {
-                return app.hideNavbar(container);
+                return app.hideNavbar(container.find('.navbar'));
             };
             view.showNavbar = function () {
-                return app.showNavbar(container);
+                return app.showNavbar(container.find('.navbar'));
             };
             view.hideToolbar = function () {
-                return app.hideToolbar(container);
+                return app.hideToolbar(container.find('.toolbar'));
             };
             view.showToolbar = function () {
-                return app.showToolbar(container);
+                return app.showToolbar(container.find('.toolbar'));
             };
         
             // Push State on load
@@ -775,25 +780,25 @@
                 
             });
         };
-        app.hideNavbar = function (viewContainer) {
-            $(viewContainer).addClass('hidden-navbar');
+        app.hideNavbar = function (navbarContainer) {
+            $(navbarContainer).addClass('navbar-hidden');
             return true;
         };
-        app.showNavbar = function (viewContainer) {
-            var vc = $(viewContainer);
-            vc.addClass('hiding-navbar').removeClass('hidden-navbar').find('.navbar').transitionEnd(function () {
-                vc.removeClass('hiding-navbar');
+        app.showNavbar = function (navbarContainer) {
+            var navbar = $(navbarContainer);
+            navbar.addClass('navbar-hiding').removeClass('navbar-hidden').transitionEnd(function () {
+                navbar.removeClass('navbar-hiding');
             });
             return true;
         };
-        app.hideToolbar = function (viewContainer) {
-            $(viewContainer).addClass('hidden-toolbar');
+        app.hideToolbar = function (toolbarContainer) {
+            $(toolbarContainer).addClass('toolbar-hidden');
             return true;
         };
-        app.showToolbar = function (viewContainer) {
-            var vc = $(viewContainer);
-            vc.addClass('hiding-toolbar').removeClass('hidden-toolbar').find('.toolbar').transitionEnd(function () {
-                vc.removeClass('hiding-toolbar');
+        app.showToolbar = function (toolbarContainer) {
+            var toolbar = $(toolbarContainer);
+            toolbar.addClass('toolbar-hiding').removeClass('toolbar-hidden').transitionEnd(function () {
+                toolbar.removeClass('toolbar-hiding');
             });
         };
         
@@ -810,6 +815,8 @@
             var clear = searchbar.find('.searchbar-clear');
             var cancel = searchbar.find('.searchbar-cancel');
             var searchList = $(searchbar.attr('data-search-list'));
+            var isVirtualList = searchList.hasClass('virtual-list');
+            var virtualList;
             var searchIn = searchbar.attr('data-search-in');
             var searchBy = searchbar.attr('data-search-by');
             var found = searchbar.attr('data-searchbar-found');
@@ -830,18 +837,17 @@
             }
         
             // Cancel button
-            var cancelWidth, cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
+            var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
             if (cancel.length > 0) {
-                cancelWidth = cancel.width();
-        
-                cancel.css(cancelMarginProp, - cancelWidth + 'px');
+                cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
             }
+                
         
             // Handlers
             function disableSearchbar() {
                 input.val('').trigger('change');
                 searchbar.removeClass('searchbar-active searchbar-not-empty');
-                if (cancel.length > 0) cancel.css(cancelMarginProp, - cancelWidth + 'px');
+                if (cancel.length > 0) cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
                 
                 if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
                 if (app.device.ios) {
@@ -877,7 +883,7 @@
         
             // Clear
             function clearSearchbar() {
-                input.val('').trigger('change');
+                input.val('').trigger('change').focus();
                 searchList.trigger('clearSearch');
             }
         
@@ -893,7 +899,7 @@
                         searchbar.addClass('searchbar-not-empty');
                         if (searchList && searchbar.hasClass('searchbar-active')) searchbarOverlay.removeClass('searchbar-overlay-active');
                     }
-                    if (searchList.length > 0 && searchIn) search(value);
+                    if (searchList.length > 0 && (searchIn || isVirtualList)) search(value);
                 }, 0);
             }
         
@@ -922,57 +928,75 @@
             // Search
             function search(query) {
                 var values = query.trim().toLowerCase().split(' ');
-                searchList.find('li').removeClass('hidden-by-searchbar');
                 var foundItems = [];
-                searchList.find('li').each(function (index, el) {
-                    el = $(el);
-                    var compareWithEl = el.find(searchIn);
-                    if (compareWithEl.length === 0) return;
-                    var compareWith;
-                    compareWith = compareWithEl.text().trim().toLowerCase();
-                    var wordsMatch = 0;
-                    for (var i = 0; i < values.length; i++) {
-                        if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
+                if (isVirtualList) {
+                    virtualList = searchList[0].f7VirtualList;
+                    if (query.trim() === '') {
+                        virtualList.resetFilter();
+                        notFound.hide();
+                        found.show();
+                        return;
                     }
-                    if (wordsMatch !== values.length) {
-                        el.addClass('hidden-by-searchbar');
+                    if (virtualList.params.searchAll) {
+                        foundItems = virtualList.params.searchAll(query, virtualList.items) || [];
                     }
-                    else {
-                        foundItems.push(el[0]);
-                    }
-                });
-        
-                if (app.params.searchbarHideDividers) {
-                    searchList.find('.item-divider, .list-group-title').each(function () {
-                        var title = $(this);
-                        var nextElements = title.nextAll('li');
-                        var hide = true;
-                        for (var i = 0; i < nextElements.length; i++) {
-                            var nextEl = $(nextElements[i]);
-                            if (nextEl.hasClass('list-group-title') || nextEl.hasClass('item-divider')) break;
-                            if (!nextEl.hasClass('hidden-by-searchbar')) {
-                                hide = false;
+                    else if (virtualList.params.searchByItem) {
+                        for (var i = 0; i < virtualList.items.length; i++) {
+                            if(virtualList.params.searchByItem(query, i, virtualList.params.items[i])) {
+                                foundItems.push(i);
                             }
                         }
-                        if (hide) title.addClass('hidden-by-searchbar');
-                        else title.removeClass('hidden-by-searchbar');
-                    });
+                    }
                 }
-                if (app.params.searchbarHideGroups) {
-                    searchList.find('.list-group').each(function () {
-                        var group = $(this);
-                        var notHidden = group.find('li:not(.hidden-by-searchbar)');
-                        if (notHidden.length === 0) {
-                            group.addClass('hidden-by-searchbar');
+                else {
+                    searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
+                        el = $(el);
+                        var compareWithEl = el.find(searchIn);
+                        if (compareWithEl.length === 0) return;
+                        var compareWith;
+                        compareWith = compareWithEl.text().trim().toLowerCase();
+                        var wordsMatch = 0;
+                        for (var i = 0; i < values.length; i++) {
+                            if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
+                        }
+                        if (wordsMatch !== values.length) {
+                            el.addClass('hidden-by-searchbar');
                         }
                         else {
-                            group.removeClass('hidden-by-searchbar');
+                            foundItems.push(el[0]);
                         }
                     });
+        
+                    if (app.params.searchbarHideDividers) {
+                        searchList.find('.item-divider, .list-group-title').each(function () {
+                            var title = $(this);
+                            var nextElements = title.nextAll('li');
+                            var hide = true;
+                            for (var i = 0; i < nextElements.length; i++) {
+                                var nextEl = $(nextElements[i]);
+                                if (nextEl.hasClass('list-group-title') || nextEl.hasClass('item-divider')) break;
+                                if (!nextEl.hasClass('hidden-by-searchbar')) {
+                                    hide = false;
+                                }
+                            }
+                            if (hide) title.addClass('hidden-by-searchbar');
+                            else title.removeClass('hidden-by-searchbar');
+                        });
+                    }
+                    if (app.params.searchbarHideGroups) {
+                        searchList.find('.list-group').each(function () {
+                            var group = $(this);
+                            var notHidden = group.find('li:not(.hidden-by-searchbar)');
+                            if (notHidden.length === 0) {
+                                group.addClass('hidden-by-searchbar');
+                            }
+                            else {
+                                group.removeClass('hidden-by-searchbar');
+                            }
+                        });
+                    }
                 }
-        
                 searchList.trigger('search', {query: query, foundItems: foundItems});
-        
                 if (foundItems.length === 0) {
                     notFound.show();
                     found.hide();
@@ -980,6 +1004,9 @@
                 else {
                     notFound.hide();
                     found.show();
+                }
+                if (isVirtualList) {
+                    virtualList.filterItems(foundItems);
                 }
             }
         
@@ -1228,18 +1255,20 @@
         };
         
         // On Page Init Callback
-        app.pageInitCallback = function (view, pageContainer, url, position, navbarInnerContainer) {
+        app.pageInitCallback = function (view, params) {
+            var pageContainer = params.pageContainer;
             if (pageContainer.f7PageInitialized && !view.params.domCache) return;
         
             // Page Data
             var pageData = {
                 container: pageContainer,
-                url: url,
-                query: $.parseUrlQuery(url || ''),
+                url: params.url,
+                query: $.parseUrlQuery(params.url || ''),
                 name: $(pageContainer).attr('data-page'),
                 view: view,
-                from: position,
-                navbarInnerContainer: navbarInnerContainer
+                from: params.position,
+                context: params.context,
+                navbarInnerContainer: params.navbarInnerContainer
             };
         
             if (pageContainer.f7PageInitialized && view.params.domCache) {
@@ -1282,6 +1311,8 @@
                 container: pageContainer,
                 name: $(pageContainer).attr('data-page'),
                 view: view,
+                url: pageContainer.f7PageData && pageContainer.f7PageData.url,
+                query: pageContainer.f7PageData && pageContainer.f7PageData.query,
                 from: position
             };
             // Before Init Callback
@@ -1301,6 +1332,7 @@
                 query: pageContainer.f7PageData && pageContainer.f7PageData.query,
                 view: view,
                 from: params.position,
+                context: params.context,
                 swipeBack: params.swipeBack
             };
         
@@ -1327,6 +1359,7 @@
                 name: $(params.pageContainer).attr('data-page'),
                 view: view,
                 from: params.position,
+                context: params.context,
                 swipeBack: params.swipeBack
             };
             var oldPage = params.oldPage,
@@ -1363,6 +1396,19 @@
                 if (!newPage.hasClass('no-toolbar') && (oldPage.hasClass('no-toolbar') || oldPage.hasClass('no-toolbar-by-scroll'))) {
                     view.showToolbar();
                 }
+                // Hide/show tabbar
+                var tabBar;
+                if (newPage.hasClass('no-tabbar') && !oldPage.hasClass('no-tabbar')) {
+                    tabBar = $(view.container).find('.tabbar');
+                    if (tabBar.length === 0) tabBar = $(view.container).parents('.' + app.params.viewsClass).find('.tabbar');
+                    app.hideToolbar(tabBar);
+                }
+                if (!newPage.hasClass('no-tabbar') && (oldPage.hasClass('no-tabbar') || oldPage.hasClass('no-tabbar-by-scroll'))) {
+                    tabBar = $(view.container).find('.tabbar');
+                    if (tabBar.length === 0) tabBar = $(view.container).parents('.' + app.params.viewsClass).find('.tabbar');
+                    app.showToolbar(tabBar);
+                }
+        
                 oldPage.removeClass('no-navbar-by-scroll no-toolbar-by-scroll');
                 // Callbacks
                 app.pluginHook('pageBeforeAnimation', pageData);
@@ -1556,10 +1602,10 @@
                 var t7_ctx, t7_template;
                 if (typeof content === 'string') {
                     if (url) {
-                        if (app.templatesCache[url]) t7_template = t7.templatesCache[url];
+                        if (app.template7Cache[url]) t7_template = t7.cache[url];
                         else {
                             t7_template = t7.compile(content);
-                            t7.templatesCache[url] = t7_template;
+                            t7.cache[url] = t7_template;
                         }
                     }
                     else t7_template = t7.compile(content);
@@ -1600,7 +1646,7 @@
                     }
                     if (!t7_ctx) t7_ctx = {};
                 }
-                
+        
                 if (t7_template && t7_ctx) {
                     if (typeof t7_ctx === 'function') t7_ctx = t7_ctx();
                     if (url) {
@@ -1614,7 +1660,7 @@
                     t7_rendered_content = t7_template(t7_ctx);
                 }
         
-                return t7_rendered_content;
+                return {content: t7_rendered_content, context: t7_ctx};
             }
         };
         
@@ -1624,7 +1670,7 @@
             
             var url = options.url,
                 content = options.content, //initial content
-                t7_rendered_content = options.content, // will be rendered using Template7
+                t7_rendered = {content: options.content},
                 template = options.template, // Template 7 compiled template
                 pageName = options.pageName,
                 viewContainer = $(view.container), 
@@ -1641,9 +1687,9 @@
         
             // Render with Template7
             if (app.params.template7Pages && typeof content === 'string' || template) {
-                t7_rendered_content = app.router.template7Render(view, options);
-                if (t7_rendered_content && !content) {
-                    content = t7_rendered_content;
+                t7_rendered = app.router.template7Render(view, options);
+                if (t7_rendered.content && !content) {
+                    content = t7_rendered.content;
                 }
             }
         
@@ -1652,7 +1698,7 @@
             // Parse DOM
             if (!pageName) {
                 if (url || (typeof content === 'string')) {
-                    app.router.temporaryDom.innerHTML = t7_rendered_content;
+                    app.router.temporaryDom.innerHTML = t7_rendered.content;
                 } else {
                     if ('length' in content && content.length > 1) {
                         for (var ci = 0; ci < content.length; ci++) {
@@ -1850,7 +1896,13 @@
             }
         
             // Page Init Events
-            app.pageInitCallback(view, newPage[0], url, options.reload ? reloadPosition : 'right', dynamicNavbar ? newNavbarInner[0] : undefined);
+            app.pageInitCallback(view, {
+                pageContainer: newPage[0], 
+                url: url, 
+                position: options.reload ? reloadPosition : 'right', 
+                navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
+                context: t7_rendered.context
+            });
         
             // Navbar init event
             if (dynamicNavbar) {
@@ -1870,7 +1922,7 @@
             var clientLeft = newPage[0].clientLeft;
         
             // Before Anim Callback
-            app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
+            app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
         
             function afterAnimation() {
                 view.allowPageChange = true;
@@ -1880,7 +1932,7 @@
                     newNavbarInner.removeClass('navbar-from-right-to-center navbar-on-right').addClass('navbar-on-center');
                     oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center').addClass('navbar-on-left');
                 }
-                app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage});
+                app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
                 if (app.params.pushState) app.pushStateClearQueue();
                 if (!(view.params.swipeBackPage || view.params.preloadPreviousPage)) {
                     if (view.params.domCache) {
@@ -1921,10 +1973,12 @@
         };
         
         app.router.load = function (view, options) {
+            options = options || {};
             var url = options.url;
             var content = options.content;
             var pageName = options.pageName;
             var template = options.template;
+            if (view.params.reloadPages === true) options.reload = true;
         
             if (!view.allowPageChange) return false;
             if (url && view.url === url && !options.reload) return false;
@@ -1965,7 +2019,7 @@
             options = options || {};
             var url = options.url,
                 content = options.content, 
-                t7_rendered_content = options.content, // will be rendered using Template7
+                t7_rendered = {content: options.content}, // will be rendered using Template7
                 template = options.template, // Template 7 compiled template
                 animatePages = options.animatePages, 
                 preloadOnly = options.preloadOnly, 
@@ -1985,9 +2039,9 @@
         
             // Render with Template7
             if (app.params.template7Pages && typeof content === 'string' || template) {
-                t7_rendered_content = app.router.template7Render(view, options);
-                if (t7_rendered_content && !content) {
-                    content = t7_rendered_content;
+                t7_rendered = app.router.template7Render(view, options);
+                if (t7_rendered.content && !content) {
+                    content = t7_rendered.content;
                 }
             }
         
@@ -2001,14 +2055,14 @@
         
             // Animation
             function afterAnimation() {
-                app.pageBackCallbacks('after', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage});
-                app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
+                app.pageBackCallbacks('after', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
+                app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
                 app.router.afterBack(view, oldPage[0], newPage[0]);
             }
             function animateBack() {
                 // Page before animation callback
-                app.pageBackCallbacks('before', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage});
-                app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage});
+                app.pageBackCallbacks('before', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
+                app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
         
                 if (animatePages) {
                     // Set pages before animation
@@ -2035,7 +2089,7 @@
                 app.router.temporaryDom.innerHTML = '';
                 // Parse DOM
                 if (url || (typeof content === 'string')) {
-                    app.router.temporaryDom.innerHTML = t7_rendered_content;
+                    app.router.temporaryDom.innerHTML = t7_rendered.content;
                 } else {
                     if ('length' in content && content.length > 1) {
                         for (var ci = 0; ci < content.length; ci++) {
@@ -2058,7 +2112,7 @@
                     view.allowPageChange = true;
                     return;
                 }
-                if (view.params.dynamicNavbar) {
+                if (view.params.dynamicNavbar && typeof dynamicNavbar === 'undefined') {
                     if (!newNavbarInner || newNavbarInner.length === 0) {
                         dynamicNavbar = false;
                     }
@@ -2105,8 +2159,9 @@
         
                 oldPage = $(pagesInView[pagesInView.length - 1]);
                     
-                if (dynamicNavbar) {
+                if (dynamicNavbar && !oldNavbarInner) {
                     oldNavbarInner = $(navbarInners[navbarInners.length - 1]);
+                    if (oldNavbarInner.length === 0 || newNavbarInner[0] === oldNavbarInner[0]) dynamicNavbar = false;
                 }
         
                 if (dynamicNavbar) {
@@ -2117,7 +2172,13 @@
                 if (manipulateDom) newPage.insertBefore(oldPage);
         
                 // Page Init Events
-                app.pageInitCallback(view, newPage[0], url, 'left', dynamicNavbar ? newNavbarInner[0] : undefined);
+                app.pageInitCallback(view, {
+                    pageContainer: newPage[0], 
+                    url: url, 
+                    position: 'left', 
+                    navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
+                    context: t7_rendered.context
+                });
                 if (dynamicNavbar) {
                     app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
                 }
@@ -2163,6 +2224,9 @@
                     navbarInners = viewContainer.find('.navbar-inner:not(.cached)');
                     newNavbarInner = $(navbarInners[0]);
                     oldNavbarInner = $(navbarInners[1]);
+                    if (newNavbarInner.length === 0 || oldNavbarInner.length === 0 || oldNavbarInner[0] === newNavbarInner[0]) {
+                        dynamicNavbar = false;
+                    }
                 }
                 manipulateDom = false;
                 setPages();
@@ -2367,7 +2431,6 @@
                     var preloadUrl = view.history[view.history.length - 2];
                     var previousPage;
                     var previousNavbar;
-        
                     if (preloadUrl && view.pagesCache[preloadUrl]) {
                         // Load by page name
                         previousPage = $(view.container).find('.page[data-page="' + view.pagesCache[preloadUrl] + '"]');
@@ -2376,6 +2439,7 @@
                             previousNavbar = $(view.container).find('.navbar-inner[data-page="' + view.pagesCache[preloadUrl] + '"]');
                             previousNavbar.insertBefore(newNavbar);
                         }
+                        if(!previousNavbar || previousNavbar.length === 0) previousNavbar = newNavbar.prev('.navbar-inner.cached');
                     }
                     else {
                         // Just load previous page
@@ -2584,7 +2648,7 @@
                             '{{#if label}}' +
                             '<li class="actions-popover-label {{#if color}}color-{{color}}{{/if}} {{#if bold}}actions-popover-bold{{/if}}">{{text}}</li>' +
                             '{{else}}' +
-                            '<li><a href="#" class="item-link list-button {{#if color}}color-{{color}}{{/if}} {{#if bold}}actions-popover-bold{{/if}}">{{text}}</a></li>' +
+                            '<li><a href="#" class="item-link list-button {{#if color}}color-{{color}}{{/if}} {{#if bg}}bg-{{bg}}{{/if}} {{#if bold}}actions-popover-bold{{/if}}">{{text}}</a></li>' +
                             '{{/if}}' +
                             '{{/each}}' +
                           '</ul>' +
@@ -2614,6 +2678,7 @@
                             var buttonClass = button.label ? 'actions-modal-label' : 'actions-modal-button';
                             if (button.bold) buttonClass += ' actions-modal-button-bold';
                             if (button.color) buttonClass += ' color-' + button.color;
+                            if (button.bg) buttonClass += ' bg-' + button.bg;
                             buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
                             if (j === params[i].length - 1) buttonsHTML += '</div>';
                         }
@@ -2674,6 +2739,7 @@
                 var modalHeight =  modal.height(); // 13 - height of angle
                 var modalAngle = modal.find('.popover-angle');
                 var modalAngleSize = modalAngle.width() / 2;
+                var modalAngleLeft, modalAngleTop;
                 modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
         
                 var targetWidth = target.outerWidth();
@@ -2724,7 +2790,9 @@
                     if (modalPosition === 'top') modalAngle.addClass('on-bottom');
                     if (modalPosition === 'bottom') modalAngle.addClass('on-top');
                     diff = diff - modalLeft;
-                    modalAngle.css({left: (modalWidth / 2 - modalAngleSize + diff) + 'px'});
+                    modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
+                    modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
+                    modalAngle.css({left: modalAngleLeft + 'px'});
                 }
                 else if (modalPosition === 'middle') {
                     modalLeft = targetOffset.left - modalWidth - modalAngleSize;
@@ -2737,7 +2805,9 @@
                         modalLeft = windowWidth - modalWidth - 5;
                         modalAngle.removeClass('on-right').addClass('on-left');
                     }
-                    modalAngle.css({top: (modalHeight / 2 - modalAngleSize + diff) + 'px'});
+                    modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
+                    modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 6), 6);
+                    modalAngle.css({top: modalAngleTop + 'px'});
                 }
         
                 // Apply Styles
@@ -3193,6 +3263,7 @@
                         (props.name ? '<div class="message-name">' + props.name + '</div>' : '') +
                         '<div class="message-text">' + props.text + '</div>' +
                         (props.avatar ? '<div class="message-avatar" style="background-image:url(' + props.avatar + ')"></div>' : '') +
+                        (props.label ? '<div class="message-label">' + props.label + '</div>' : '') +
                     '</div>';
             if (newOnTop) messages.prepend(html);
             else messages.append(html);
@@ -3266,7 +3337,7 @@
         app.swipeoutOpenedEl = undefined;
         app.allowSwipeout = true;
         app.initSwipeout = function (swipeoutEl) {
-            var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction, overswipeLeftButton, overswipeRightButton, overswipeLeft, overswipeRight;
+            var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction, overswipeLeftButton, overswipeRightButton, overswipeLeft, overswipeRight, noFoldLeft, noFoldRight;
             $(document).on(app.touchEvents.start, function (e) {
                 if (app.swipeoutOpenedEl) {
                     var target = $(e.target);
@@ -3281,7 +3352,6 @@
                     }
                 }
             });
-            
         
             function handleTouchStart(e) {
                 if (!app.allowSwipeout) return;
@@ -3312,6 +3382,8 @@
                     actionsRight = swipeOutEl.find('.swipeout-actions-right');
                     actionsLeft = swipeOutEl.find('.swipeout-actions-left');
                     actionsLeftWidth = actionsRightWidth = buttonsLeft = buttonsRight = overswipeRightButton = overswipeLeftButton = null;
+                    noFoldLeft = actionsLeft.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
+                    noFoldRight = actionsRight.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
                     if (actionsLeft.length > 0) {
                         actionsLeftWidth = actionsLeft.width();
                         buttonsLeft = actionsLeft.children('a');
@@ -3393,7 +3465,6 @@
                         if (overswipeRightButton.length > 0) {
                             overswipeRight = true;
                         }
-        
                     }
                     for (i = 0; i < buttonsRight.length; i++) {
                         if (typeof buttonsRight[i]._buttonOffset === 'undefined') {
@@ -3425,7 +3496,10 @@
                         if (overswipeLeftButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
                             $button.css({left: (overswipeLeft ? buttonOffset : 0) + 'px'});
                         }
-                        $button.css('z-index', buttonsLeft.length - i).transform('translate3d(' + (translate + buttonOffset * (1 - Math.min(progress, 1))) + 'px,0,0)');
+                        if (buttonsLeft.length > 1) {
+                            $button.css('z-index', buttonsLeft.length - i); 
+                        }
+                        $button.transform('translate3d(' + (translate + buttonOffset * (1 - Math.min(progress, 1))) + 'px,0,0)');
                     }
                 }
                 swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
@@ -3436,11 +3510,13 @@
                     isMoved = false;
                     return;
                 }
+        
                 isTouched = false;
                 isMoved = false;
                 var timeDiff = (new Date()).getTime() - touchStartTime;
-                var action, actionsWidth, actions, buttons, i;
+                var action, actionsWidth, actions, buttons, i, noFold;
                 
+                noFold = direction === 'to-left' ? noFoldRight : noFoldLeft;
                 actions = direction === 'to-left' ? actionsRight : actionsLeft;
                 actionsWidth = direction === 'to-left' ? actionsRightWidth : actionsLeftWidth;
         
@@ -3542,6 +3618,7 @@
             }
             var swipeOutActions = el.find('.swipeout-actions-' + dir);
             if (swipeOutActions.length === 0) return;
+            var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
             el.trigger('open').addClass('swipeout-opened').removeClass('transitioning');
             swipeOutActions.addClass('swipeout-actions-opened');
             var buttons = swipeOutActions.children('a');
@@ -3559,10 +3636,9 @@
                 }
                 var clientLeft = buttons[1].clientLeft;
             }
-            
             el.addClass('transitioning');
             for (i = 0; i < buttons.length; i++) {
-                $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0');
+                $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0)');
             }
             el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
                 el.trigger('opened');
@@ -3575,12 +3651,12 @@
             if (!el.hasClass('swipeout-opened')) return;
             var dir = el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
             var swipeOutActions = el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
+            var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
             var buttons = swipeOutActions.children('a');
             var swipeOutActionsWidth = swipeOutActions.width();
             app.allowSwipeout = false;
             el.trigger('close');
             el.removeClass('swipeout-opened').addClass('transitioning');
-        
             el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(function () {
                 el.trigger('closed');
                 buttons.transform('');
@@ -3607,7 +3683,14 @@
             var clientLeft = el[0].clientLeft;
             el.css({height: 0 + 'px'}).addClass('deleting transitioning').transitionEnd(function () {
                 el.trigger('deleted');
-                el.remove();
+                if (el.parents('.virtual-list').length > 0) {
+                    var virtualList = el.parents('.virtual-list')[0].f7VirtualList;
+                    var virtualIndex = el[0].f7VirtualListIndex;
+                    if (virtualList && typeof virtualIndex !== 'undefined') virtualList.deleteItem(virtualIndex);
+                }
+                else {
+                    el.remove();
+                }
             });
             var translate = '-100%';
             el.find('.swipeout-content').transform('translate3d(' + translate + ',0,0)');
@@ -3643,7 +3726,7 @@
             return sortableContainer;
         };
         app.initSortable = function () {
-            var isTouched, isMoved, touchStartY, touchesDiff, sortingEl, sortingItems, minTop, maxTop, insertAfter, insertBefore, sortableContainer;
+            var isTouched, isMoved, touchStartY, touchesDiff, sortingEl, sortingElHeight, sortingItems, minTop, maxTop, insertAfter, insertBefore, sortableContainer;
             
             function handleTouchStart(e) {
                 isMoved = false;
@@ -3665,7 +3748,7 @@
                     sortableContainer.addClass('sortable-sorting');
                     minTop = sortingEl[0].offsetTop;
                     maxTop = sortingEl.parent().height() - sortingEl[0].offsetTop - sortingEl.height();
-                    
+                    sortingElHeight = sortingEl[0].offsetHeight;
                 }
                 isMoved = true;
         
@@ -3687,12 +3770,12 @@
                     var sortingElOffset = sortingEl[0].offsetTop + translate;
         
                     if ((sortingElOffset >= currentElOffset - currentElHeight / 2) && sortingEl.index() < currentEl.index()) {
-                        currentEl.transform('translate3d(0,-100%,0)');
+                        currentEl.transform('translate3d(0, '+(-sortingElHeight)+'px,0)');
                         insertAfter = currentEl;
                         insertBefore = undefined;
                     }
                     else if ((sortingElOffset <= currentElOffset + currentElHeight / 2) && sortingEl.index() > currentEl.index()) {
-                        $(this).transform('translate3d(0,100%,0)');
+                        currentEl.transform('translate3d(0, '+(sortingElHeight)+'px,0)');
                         insertAfter = undefined;
                         if (!insertBefore) insertBefore = currentEl;
                     }
@@ -3712,6 +3795,7 @@
                 sortingItems.transform('');
                 sortingEl.removeClass('sorting');
                 sortableContainer.removeClass('sortable-sorting');
+                var virtualList, oldIndex, newIndex;
                 if (insertAfter) {
                     sortingEl.insertAfter(insertAfter);
                     sortingEl.trigger('sort');
@@ -3719,6 +3803,12 @@
                 if (insertBefore) {
                     sortingEl.insertBefore(insertBefore);
                     sortingEl.trigger('sort');
+                }
+                if ((insertAfter || insertBefore) && sortableContainer.hasClass('virtual-list')) {
+                    virtualList = sortableContainer[0].f7VirtualList;
+                    oldIndex = sortingEl[0].f7VirtualListIndex;
+                    newIndex = insertBefore ? insertBefore[0].f7VirtualListIndex : insertAfter[0].f7VirtualListIndex;
+                    if (virtualList) virtualList.moveItem(oldIndex, newIndex);
                 }
                 insertAfter = insertBefore = undefined;
                 isTouched = false;
@@ -3809,6 +3899,8 @@
             var backText = smartSelect.attr('data-back-text') || app.params.smartSelectBackText;
             var closeText = smartSelect.attr('data-popup-close-text') || smartSelect.attr('data-back-text') || app.params.smartSelectPopupCloseText ;
             var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
+            var formTheme = smartSelect.attr('data-form-theme') || app.params.smartSelectFormTheme;
+            var navbarTheme = smartSelect.attr('data-navbar-theme') || app.params.smartSelectNavbarTheme;
         
             // Generate dynamic page layout
             var id = (new Date()).getTime();
@@ -3843,7 +3935,7 @@
             // Navbar HTML
             var navbarLeftTemplate = openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText);
             var navbarHTML =
-                '<div class="navbar">' +
+                '<div class="navbar ' + (navbarTheme ? 'theme-' + navbarTheme : '') + '">' +
                 '  <div class="navbar-inner">' +
                     navbarLeftTemplate +
                 '    <div class="center sliding">' + pageTitle + '</div>' +
@@ -3906,7 +3998,7 @@
                      (useSearchbar ? searchbarHTML : '') +
                 '    <div class="page-content">' +
                        (navbarLayout === 'static' ? navbarHTML : '') +
-                '      <div class="list-block smart-select-list-' + id + '">' +
+                '      <div class="list-block smart-select-list-' + id + ' ' + (formTheme ? 'theme-' + formTheme : '') + '">' +
                 '        <ul>' +
                             inputsHTML +
                 '        </ul>' +
@@ -3914,6 +4006,9 @@
                 '    </div>' +
                 '  </div>' +
                 '</div>';
+        
+            // Define popup
+            var popup;
         
             // Event Listeners on new page
             function handleInputs(container) {
@@ -3941,7 +4036,8 @@
                     $select.trigger('change');
                     smartSelect.find('.item-after').text(optionText.join(', '));
                     if (backOnSelect && inputType === 'radio') {
-                        view.router.back();
+                        if (openIn === 'popup') app.closeModal(popup);
+                        else view.router.back();
                     }
                 });
             }
@@ -3956,7 +4052,7 @@
         
             // Load content
             if (openIn === 'popup') {
-                var popup = app.popup('<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
+                popup = app.popup('<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
                             '<div class="view navbar-fixed">' +
                                 pageHTML +
                             '</div>' +
@@ -3966,6 +4062,428 @@
             else view.router.load({content: pageHTML});
         };
         
+        /*===============================================================================
+        ************   Virtual List   ************
+        ===============================================================================*/
+        var VirtualList = function (listBlock, params) {
+            var defaults = {
+                cols: 1,
+                height: 44,
+                cache: true
+            };
+            params = params || {};
+            for (var def in defaults) {
+                if (typeof params[def] === 'undefined') {
+                    params[def] = defaults[def];
+                }
+            }
+        
+            // Preparation
+            var vl = this;
+            vl.listBlock = $(listBlock);
+            vl.params = params;
+            vl.items = params.items;
+            if (params.template) {
+                if (typeof params.template === 'string') vl.template = t7.compile(params.template);
+                else if (typeof params.template === 'function') vl.template = params.template;
+            }
+            vl.pageContent = vl.listBlock.parents('.page-content');
+        
+            // Bad scroll
+            var updatableScroll;
+            if (typeof vl.params.updatableScroll !== 'undefined') {
+                updatableScroll = vl.params.updatableScroll;
+            }
+            else {
+                updatableScroll = true;
+                if (app.device.ios && app.device.osVersion.split('.')[0] < 8) {
+                    updatableScroll = false;
+                }
+            }
+                
+            // Append <ul>
+            vl.ul = vl.listBlock.children('ul');
+            if (vl.ul.length === 0) {
+                vl.listBlock.append('<ul></ul>');
+                vl.ul = vl.listBlock.children('ul');
+            }
+        
+            // DOM cached items
+            vl.domCache = {};
+            vl.displayDomCache = {};
+        
+            // Temporary DOM Element
+            vl.tempDomElement = document.createElement('ul');
+        
+            // Last repain position
+            vl.lastRepaintY = null;
+        
+            // Fragment
+            vl.fragment = document.createDocumentFragment();
+        
+            // Filter
+            vl.filterItems = function (indexes, resetScrollTop) {
+                vl.filteredItems = [];
+                var firstIndex = indexes[0];
+                var lastIndex = indexes[indexes.length - 1];
+                for (var i = 0; i < indexes.length; i++) {
+                    vl.filteredItems.push(vl.items[indexes[i]]);
+                }
+                if (typeof resetScrollTop === 'undefined') resetScrollTop = true;
+                if (resetScrollTop) {
+                    vl.pageContent[0].scrollTop = 0;
+                }
+                vl.update();
+            };
+            vl.resetFilter = function () {
+                vl.filteredItems = null;
+                delete vl.filteredItems;
+                vl.update();
+            };
+        
+            var pageHeight, rowsPerScreen, rowsBefore, rowsAfter, rowsToRender, maxBufferHeight = 0, listHeight;
+            var dynamicHeight = typeof vl.params.height === 'function';
+        
+            // Set list size
+            vl.setListSize = function () {
+                var items = vl.filteredItems || vl.items;
+                pageHeight = vl.pageContent[0].offsetHeight;
+                if (dynamicHeight) {
+                    listHeight = 0;
+                    vl.heights = [];
+                    for (var i = 0; i < items.length; i++) {
+                        var itemHeight = vl.params.height(items[i]);
+                        listHeight += itemHeight;
+                        vl.heights.push(itemHeight);
+                    }
+                }
+                else {
+                    listHeight = items.length * vl.params.height;
+                    rowsPerScreen = Math.ceil(pageHeight / vl.params.height);
+                    rowsBefore = vl.params.rowsBefore || rowsPerScreen * 2;
+                    rowsAfter = vl.params.rowsAfter || rowsPerScreen;
+                    rowsToRender = (rowsPerScreen + rowsBefore + rowsAfter);
+                    maxBufferHeight = rowsBefore / 2 * vl.params.height;
+                }
+        
+                if (updatableScroll) {
+                    vl.ul.css({height: listHeight + 'px'});
+                }
+            };
+        
+            // Render items
+            vl.render = function (force) {
+                if (force) vl.lastRepaintY = null;
+                var scrollTop = vl.pageContent[0].scrollTop;
+                if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
+                    vl.lastRepaintY = scrollTop;
+                }
+                else {
+                    return;
+                }
+                var items = vl.filteredItems || vl.items, 
+                    fromIndex, toIndex, heightBeforeFirstItem = 0, heightBeforeLastItem = 0;
+                if (dynamicHeight) {
+                    var itemTop = 0, j, itemHeight; 
+                    maxBufferHeight = pageHeight;
+                    for (j = 0; j < vl.heights.length; j++) {
+                        itemHeight = vl.heights[j];
+                        if (typeof fromIndex === 'undefined') {
+                            if (itemTop + itemHeight >= scrollTop - pageHeight * 2) fromIndex = j;
+                            else heightBeforeFirstItem += itemHeight;
+                        }
+                        
+                        if (typeof toIndex === 'undefined') {
+                            if (itemTop + itemHeight >= scrollTop + pageHeight * 2 || j === vl.heights.length - 1) toIndex = j + 1;
+                            heightBeforeLastItem += itemHeight;
+                        }
+                        itemTop += itemHeight;
+                    }
+                    toIndex = Math.min(toIndex, items.length);
+                }
+                else {
+                    fromIndex = (parseInt(scrollTop / vl.params.height) - rowsBefore) * vl.params.cols;
+                    if (fromIndex < 0) {
+                        fromIndex = 0;
+                    }
+                    toIndex = Math.min(fromIndex + rowsToRender * vl.params.cols, items.length);
+                }
+        
+                var topPosition;
+                vl.reachEnd = false;
+                for (var i = fromIndex; i < toIndex; i++) {
+                    var item, index;
+                    // Define real item index
+                    index = vl.items.indexOf(items[i]);
+        
+                    if (i === fromIndex) vl.currentFromIndex = index;
+                    if (i === toIndex - 1) vl.currentToIndex = index;
+                    if (index === vl.items.length - 1) vl.reachEnd = true;
+                    
+                    // Find items
+                    if (vl.domCache[index]) {
+                        item = vl.domCache[index];
+                    }
+                    else {
+                        if (vl.template) {
+                            vl.tempDomElement.innerHTML = vl.template(items[i], {index: index});
+                        }
+                        else if (vl.params.renderItem) {
+                            vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]);   
+                        }
+                        else {
+                            vl.tempDomElement.innerHTML = items[i];
+                        }
+                        item = vl.tempDomElement.childNodes[0];
+                        if (vl.params.cache) vl.domCache[index] = item;
+                    }
+                    item.f7VirtualListIndex = index;
+        
+                    // Set item top position
+                    if (i === fromIndex) {
+                        if (dynamicHeight) {
+                            topPosition = heightBeforeFirstItem;
+                        }
+                        else {
+                            topPosition = (i * vl.params.height / vl.params.cols);
+                        }
+                    }
+                    item.style.top = topPosition + 'px';
+                    
+                    // Before item insert
+                    if (vl.params.onItemBeforeInsert) vl.params.onItemBeforeInsert(vl, item);
+        
+                    // Append item to fragment
+                    vl.fragment.appendChild(item);
+        
+                    // Update list height with not updatable scroll
+                    if (!updatableScroll) {
+                        if (dynamicHeight) {
+                            vl.ul[0].style.height = heightBeforeLastItem + 'px';
+                        }
+                        else {
+                            vl.ul[0].style.height = (i + 1) * vl.params.height + 'px';
+                        }
+                    }
+                }
+        
+                // Update list html
+                if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
+                vl.ul[0].innerHTML = '';
+        
+                if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
+                vl.ul[0].appendChild(vl.fragment);
+                if (vl.params.onItemsAfterInsert) vl.params.onFragmentAfterInsert(vl, vl.fragment);
+            };
+        
+            // Handle scroll event
+            vl.handleScroll = function (e) {
+                vl.render();
+            };
+            // Handle resize event
+            vl.handleResize = function (e) {
+                vl.setListSize();
+                vl.render(true);
+            };
+        
+            vl.attachEvents = function (detach) {
+                var action = detach ? 'off' : 'on';
+                vl.pageContent[action]('scroll', vl.handleScroll);
+                $(window)[action]('resize', vl.handleResize);
+            };
+        
+            // Init Virtual List
+            vl.init = function () {
+                vl.attachEvents();
+                vl.setListSize();
+                vl.render();
+            };
+        
+            // Append
+            vl.appendItems = function (items) {
+                for (var i = 0; i < items.length; i++) {
+                    vl.items.push(items[i]);
+                }
+                vl.update();
+            };
+            vl.appendItem = function (item) {
+                vl.appendItems([item]);
+            };
+            // Replace
+            vl.replaceAllItems = function (items) {
+                vl.items = items;
+                delete vl.filteredItems;
+                vl.domCache = {};
+                vl.update();
+            };
+            vl.replaceItem = function (index, item) {
+                vl.items[index] = item;
+                if (vl.params.cache) delete vl.domCache[index];
+                vl.update();
+            };
+            // Prepend
+            vl.prependItems = function (items) {
+                for (var i = items.length - 1; i >= 0; i--) {
+                    vl.items.unshift(items[i]);
+                }
+                if (vl.params.cache) {
+                    var newCache = {};
+                    for (var cached in vl.domCache) {
+                        newCache[parseInt(cached, 10) + items.length] = vl.domCache[cached];
+                    }
+                    vl.domCache = newCache;
+                }
+                vl.update();
+            };
+            vl.prependItem = function (item) {
+                vl.prependItems([item]);
+            };
+        
+            // Move
+            vl.moveItem = function (oldIndex, newIndex) {
+                if (oldIndex === newIndex) return;
+                // remove item from array
+                var item = vl.items.splice(oldIndex, 1)[0];
+                if (newIndex >= vl.items.length) {
+                    // Add item to the end
+                    vl.items.push(item);
+                    newIndex = vl.items.length - 1;
+                }
+                else {
+                    // Add item to new index
+                    vl.items.splice(newIndex, 0, item);
+                }
+                // Update cache
+                if (vl.params.cache) {
+                    var newCache = {};
+                    for (var cached in vl.domCache) {
+                        var cachedIndex = parseInt(cached, 10);
+                        var leftIndex = oldIndex < newIndex ? oldIndex : newIndex;
+                        var rightIndex = oldIndex < newIndex ? newIndex : oldIndex;
+                        var indexShift = oldIndex < newIndex ? -1 : 1;
+                        if (cachedIndex < leftIndex || cachedIndex > rightIndex) newCache[cachedIndex] = vl.domCache[cachedIndex];
+                        if (cachedIndex === leftIndex) newCache[rightIndex] = vl.domCache[cachedIndex];
+                        if (cachedIndex > leftIndex && cachedIndex <= rightIndex) newCache[cachedIndex + indexShift] = vl.domCache[cachedIndex];
+                    }
+                    vl.domCache = newCache;
+                }
+                vl.update();
+            };
+            // Insert before
+            vl.insertItemBefore = function (index, item) {
+                if (index === 0) {
+                    vl.prependItem(item);
+                    return;
+                }
+                if (index >= vl.items.length) {
+                    vl.appendItem(item);
+                    return;
+                }
+                vl.items.splice(index, 0, item);
+                // Update cache
+                if (vl.params.cache) {
+                    var newCache = {};
+                    for (var cached in vl.domCache) {
+                        var cachedIndex = parseInt(cached, 10);
+                        if (cachedIndex >= index) {
+                            newCache[cachedIndex + 1] = vl.domCache[cachedIndex];
+                        }
+                    }
+                    vl.domCache = newCache;
+                }
+                vl.update();
+            };
+            // Delete
+            vl.deleteItems = function (indexes) {
+                var prevIndex, indexShift = 0;
+                for (var i = 0; i < indexes.length; i++) {
+                    var index = indexes[i];
+                    if (typeof prevIndex !== 'undefined') {
+                        if (index > prevIndex) {
+                            indexShift = -i;
+                        }
+                    }
+                    index = index + indexShift;
+                    prevIndex = indexes[i];
+                    // Delete item
+                    var deletedItem = vl.items.splice(index, 1)[0];
+                    
+                    // Delete from filtered
+                    if (vl.filteredItems && vl.filteredItems.indexOf(deletedItem) >= 0) {
+                        vl.filteredItems.splice(vl.filteredItems.indexOf(deletedItem), 1);
+                    }
+                    // Update cache
+                    if (vl.params.cache) {
+                        var newCache = {};
+                        for (var cached in vl.domCache) {
+                            var cachedIndex = parseInt(cached, 10);
+                            if (cachedIndex === index) {
+                                delete vl.domCache[index];
+                            }
+                            else if (parseInt(cached, 10) > index) {
+                                newCache[cachedIndex - 1] = vl.domCache[cached];
+                            }
+                            else {
+                                newCache[cachedIndex] = vl.domCache[cached];   
+                            }
+                        }
+                        vl.domCache = newCache;
+                    }
+                }
+                vl.update();
+            };
+            vl.deleteAllItems = function () {
+                vl.items = [];
+                delete vl.filteredItems;
+                if (vl.params.cache) vl.domCache = {};
+                vl.update();
+            };
+            vl.deleteItem = function (index) {
+                vl.deleteItems([index]);
+            };
+        
+            // Clear cache
+            vl.clearCache = function () {
+                vl.domCache = {};
+            };
+        
+            // Update Virtual List
+            vl.update = function () {
+                vl.setListSize();
+                vl.render(true);
+            };
+        
+            // Destroy
+            vl.destroy = function () {
+                vl.attachEvents(true);
+                delete vl.items;
+                delete vl.domCache;
+            };
+        
+            // Init Virtual List
+            vl.init();
+        
+            // Store vl in container
+            vl.listBlock[0].f7VirtualList = vl;
+            return vl;
+        };
+        
+        // App Method
+        app.virtualList = function (listBlock, params) {
+            return new VirtualList(listBlock, params);
+        };
+        
+        app.reinitVirtualList = function (pageContainer) {
+            var page = $(pageContainer);
+            var vlists = page.find('.virtual-list');
+            if (vlists.length === 0) return;
+            for (var i = 0; i < vlists.length; i++) {
+                var vlistInstance = vlistInstance[0].f7VirtualList;
+                if (vlistInstance) {
+                    vlistInstance.update();
+                }
+            }
+        };
         /*======================================================
         ************   Pull To Refresh   ************
         ======================================================*/
@@ -4135,18 +4653,24 @@
         =============================================================================== */
         function handleInfiniteScroll() {
             /*jshint validthis:true */
-            var inf = this;
-            var scrollTop = inf.scrollTop;
-            var scrollHeight = inf.scrollHeight;
-            var height = inf.offsetHeight;
-            var distance = inf.getAttribute('data-distance');
+            var inf = $(this);
+            var scrollTop = inf[0].scrollTop;
+            var scrollHeight = inf[0].scrollHeight;
+            var height = inf[0].offsetHeight;
+            var distance = inf[0].getAttribute('data-distance');
+            var virtualListContainer = inf.find('.virtual-list');
+            var virtualList;
             if (!distance) distance = 50;
             if (typeof distance === 'string' && distance.indexOf('%') >= 0) {
                 distance = parseInt(distance, 10) / 100 * height;
             }
             if (distance > height) distance = height;
             if (scrollTop + height >= scrollHeight - distance) {
-                $(inf).trigger('infinite');
+                if (virtualListContainer.length > 0) {
+                    virtualList = virtualListContainer[0].f7VirtualList;
+                    if (virtualList && !virtualList.reachEnd) return;
+                }
+                inf.trigger('infinite');
             }
         }
         app.attachInfiniteScroll = function (infiniteContent) {
@@ -4176,29 +4700,44 @@
             if (scrollContent.length === 0) return;
             var hideNavbar = app.params.hideNavbarOnPageScroll || scrollContent.hasClass('hide-navbar-on-scroll') || scrollContent.hasClass('hide-bars-on-scroll');
             var hideToolbar = app.params.hideToolbarOnPageScroll || scrollContent.hasClass('hide-toolbar-on-scroll') || scrollContent.hasClass('hide-bars-on-scroll');
-            if (!(hideNavbar || hideToolbar)) return;
+            var hideTabbar = app.params.hideTabbarOnPageScroll || scrollContent.hasClass('hide-tabbar-on-scroll');
+        
+            if (!(hideNavbar || hideToolbar || hideTabbar)) return;
             
             var viewContainer = scrollContent.parents('.' + app.params.viewClass);
             if (viewContainer.length === 0) return;
         
-            var hasNavbar = viewContainer.find('.navbar').length > 0;
-            var hasToolbar = viewContainer.find('.toolbar').length > 0;
+            var navbar = viewContainer.find('.navbar'), 
+                toolbar = viewContainer.find('.toolbar'), 
+                tabbar;
+            if (hideTabbar) {
+                tabbar = viewContainer.find('.tabbar');
+                if (tabbar.length === 0) tabbar = viewContainer.parents('.' + app.params.viewsClass).find('.tabbar');
+            }
+        
+            var hasNavbar = navbar.length > 0,
+                hasToolbar = toolbar.length > 0,
+                hasTabbar = tabbar && tabbar.length > 0;
         
             var previousScroll, currentScroll;
                 previousScroll = currentScroll = scrollContent[0].scrollTop;
         
-            var scrollHeight, offsetHeight, reachEnd, action, navbarHidden, toolbarHidden;
+            var scrollHeight, offsetHeight, reachEnd, action, navbarHidden, toolbarHidden, tabbarHidden;
         
-            var toolbarHeight = (hasToolbar && hideToolbar) ? viewContainer.find('.toolbar')[0].offsetHeight : 0;
+            var toolbarHeight = (hasToolbar && hideToolbar) ? toolbar[0].offsetHeight : 0;
+            var tabbarHeight = (hasTabbar && hideTabbar) ? tabbar[0].offsetHeight : 0;
+            var bottomBarHeight = tabbarHeight || toolbarHeight;
         
             function handleScroll(e) {
                 if (pageContainer.hasClass('page-on-left')) return;
                 currentScroll = scrollContent[0].scrollTop;
                 scrollHeight = scrollContent[0].scrollHeight;
                 offsetHeight = scrollContent[0].offsetHeight;
-                reachEnd = app.params.showBarsOnPageScrollEnd && (currentScroll + offsetHeight >= scrollHeight - toolbarHeight);
-                navbarHidden = viewContainer.hasClass('hidden-navbar');
-                toolbarHidden = viewContainer.hasClass('hidden-toolbar');
+                reachEnd = app.params.showBarsOnPageScrollEnd && (currentScroll + offsetHeight >= scrollHeight - bottomBarHeight);
+                navbarHidden = navbar.hasClass('navbar-hidden');
+                toolbarHidden = toolbar.hasClass('toolbar-hidden');
+                tabbarHidden = tabbar && tabbar.hasClass('toolbar-hidden');
+        
         
                 if (previousScroll > currentScroll || reachEnd) {
                     action = 'show';
@@ -4214,26 +4753,36 @@
         
                 if (action === 'show') {
                     if (hasNavbar && hideNavbar && navbarHidden) {
-                        app.showNavbar(viewContainer);
+                        app.showNavbar(navbar);
                         pageContainer.removeClass('no-navbar-by-scroll'); 
                         navbarHidden = false;
                     }
                     if (hasToolbar && hideToolbar && toolbarHidden) {
-                        app.showToolbar(viewContainer);
+                        app.showToolbar(toolbar);
                         pageContainer.removeClass('no-toolbar-by-scroll'); 
                         toolbarHidden = false;
+                    }
+                    if (hasTabbar && hideTabbar && tabbarHidden) {
+                        app.showToolbar(tabbar);
+                        pageContainer.removeClass('no-tabbar-by-scroll'); 
+                        tabbarHidden = false;
                     }
                 }
                 else {
                     if (hasNavbar && hideNavbar && !navbarHidden) {
-                        app.hideNavbar(viewContainer);
+                        app.hideNavbar(navbar);
                         pageContainer.addClass('no-navbar-by-scroll'); 
                         navbarHidden = true;
                     }
                     if (hasToolbar && hideToolbar && !toolbarHidden) {
-                        app.hideToolbar(viewContainer);
+                        app.hideToolbar(toolbar);
                         pageContainer.addClass('no-toolbar-by-scroll'); 
                         toolbarHidden = true;
+                    }
+                    if (hasTabbar && hideTabbar && !tabbarHidden) {
+                        app.hideToolbar(tabbar);
+                        pageContainer.addClass('no-tabbar-by-scroll'); 
+                        tabbarHidden = true;
                     }
                 }
                     
@@ -4709,16 +5258,7 @@
                 }
                 // Check if link is external 
                 if (isLink) {
-                    /*jshint shadow:true */
-                    for (var i = 0; i < app.params.externalLinks.length; i++) {
-                        if (clicked.hasClass(app.params.externalLinks[i])) {
-                            return;
-                        }
-        
-                        if (clicked[0].rel === app.params.externalLinks[i]) {
-                            return;
-                        }
-                    }
+                    if (clicked.is(app.params.externalLinks)) return;
                 }
         
                 // Smart Select
@@ -4861,7 +5401,8 @@
                     else {
                         view = clicked.parents('.' + app.params.viewClass)[0] && clicked.parents('.' + app.params.viewClass)[0].f7View;
                         if (view && view.params.linksView) {
-                            view = $(view.params.linksView)[0].f7View;
+                            if (typeof view.params.linksView === 'string') view = $(view.params.linksView)[0].f7View;
+                            else if (view.params.linksView instanceof View) view = view.params.linksView;
                         }
                     }
                     if (!view) {
@@ -5398,8 +5939,17 @@
                     }
                 }
             };
+        
+            function isFormElement(el) {
+                var nn = el.nodeName.toLowerCase();
+                if (nn === 'input' || nn === 'textarea' || nn === 'select') return true;
+                return false;
+            }
+            s.touchedTarget = null;
+            var hasFocused, hasBlured;
             s.onTouchStart = function (e) {
                 if (s.params.onlyExternal) return;
+                s.touchedTarget = e.target;
                 isTouched = true;
                 isMoved = false;
                 isScrolling = undefined;
@@ -5409,7 +5959,11 @@
                 s.allowClick = true;
                 s.updateSize();
                 if (s.params.onTouchStart) s.params.onTouchStart(s, e);
-                if (e.type === 'mousedown') e.preventDefault();
+                hasFocused = hasBlured = false;
+                if (e.type === 'mousedown') {
+                    if (!isFormElement(e.target)) e.preventDefault();
+                }
+                
             };
             s.onTouchMove = function (e) {
                 if (s.params.onTouchMove) s.params.onTouchMove(s, e);
@@ -5468,12 +6022,17 @@
                 if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
                 var touchEndTime = Date.now();
                 var timeDiff = touchEndTime - touchStartTime;
+                if (isFormElement(s.touchedTarget)) hasFocused = true;
+                if (document.activeElement && document.activeElement !== s.touchedTarget && isFormElement(document.activeElement)) {
+                    document.activeElement.blur();
+                    hasBlured = true;
+                }
                 if (s.allowClick) {
                     if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
                         if (clickTimeout) clearTimeout(clickTimeout);
                         clickTimeout = setTimeout(function () {
                             if (!s) return;
-                            if (s.params.paginationHide && s.paginationContainer) {
+                            if (s.params.paginationHide && s.paginationContainer && !hasBlured && !hasFocused) {
                                 s.paginationContainer.toggleClass('slider-pagination-hidden');
                             }
                             if (s.params.onClick) s.params.onClick(s, e);
@@ -5667,9 +6226,14 @@
                     s.wrapper.transitionEnd(function () {
                         s.startAutoplay();
                     });
-                    var index = s.activeSlideIndex + 1;
-                    if (index > s.slides.length - s.params.slidesPerView) index = 0;
-                    s.slideTo(index);
+                    if (s.params.loop) {
+                        s.slideNext();
+                    }
+                    else {
+                        var index = s.activeSlideIndex + 1;
+                        if (index > s.slides.length - s.params.slidesPerView) index = 0;
+                        s.slideTo(index);
+                    }
                 }, s.params.autoplay);
             };
             s.stopAutoplay = function () {
@@ -6575,11 +7139,11 @@
             if (!window.Template7) return;
             Template7.templates = Template7.templates || app.params.templates || {};
             Template7.data = Template7.data || app.params.template7Data || {};
-            Template7.templatesCache = {};
+            Template7.template7Cache = {};
         
             app.templates = Template7.templates;
             app.template7Data = Template7.data;
-            app.templatesCache = Template7.templatesCache;
+            app.template7Cache = Template7.cache;
         
             // Precompile templates on app init
             if (!app.params.precompileTemplates) return;
@@ -6655,7 +7219,7 @@
                 if (viewContainer) {
                     viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
                 }
-                app.pageInitCallback(view, this, url, 'center');
+                app.pageInitCallback(view, {pageContainer: this, url: url, position: 'center'});
             });
             
             // Init resize events

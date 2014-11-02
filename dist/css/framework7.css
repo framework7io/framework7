@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: October 7, 2014
+ * Released on: November 2, 2014
 */
 html,
 body {
@@ -421,9 +421,6 @@ p {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   height: 100%;
-}
-html.ios-gt-7 .page-on-left .page-content {
-  -webkit-overflow-scrolling: auto;
 }
 .page-transitioning {
   -webkit-transition-duration: 400ms;
@@ -986,38 +983,45 @@ html.retina.ios-gt-7 .toolbar {
     padding-bottom: 56px;
   }
 }
-.hidden-navbar .navbar {
+.navbar.navbar-hiding {
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.navbar.navbar-hidden {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
   -webkit-transform: translate3d(0, -100%, 0);
   -ms-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
-.hiding-navbar .navbar {
+.page.no-navbar .page-content {
+  padding-top: 0;
+}
+.toolbar.toolbar-hiding,
+.tabbar.toolbar-hiding,
+.toolbar.tabbar-hiding,
+.tabbar.tabbar-hiding {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
   -webkit-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-.page.no-navbar .page-content {
-  padding-top: 0;
-}
-.hidden-toolbar .toolbar {
+.toolbar.toolbar-hidden,
+.tabbar.toolbar-hidden,
+.toolbar.tabbar-hidden,
+.tabbar.tabbar-hidden {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
   -webkit-transform: translate3d(0, 100%, 0);
   -ms-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
-.hiding-toolbar .toolbar {
-  -webkit-transition-duration: 400ms;
-  transition-duration: 400ms;
-  -webkit-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-.page.no-toolbar .page-content {
+.page.no-toolbar .page-content,
+.page.no-tabbar .page-content {
   padding-bottom: 0;
 }
 /* === Search Bar === */
@@ -1689,9 +1693,9 @@ html:not(.watch-active-state) .list-block .item-link:active .item-inner,
   transition-duration: 300ms;
 }
 .list-block .swipeout.deleting .swipeout-content {
-  -webkit-transform: translate3d(-100%, 0, 0);
-  -ms-transform: translate3d(-100%, 0, 0);
-  transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 .list-block .swipeout.transitioning .swipeout-content,
 .list-block .swipeout.transitioning .swipeout-actions-right a,
@@ -1717,9 +1721,6 @@ html:not(.watch-active-state) .list-block .item-link:active .item-inner,
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-transform: translate3d(0%, 0, 0);
-  -ms-transform: translate3d(0%, 0, 0);
-  transform: translate3d(0%, 0, 0);
 }
 .list-block .swipeout-actions-left a,
 .list-block .swipeout-actions-right a {
@@ -1753,9 +1754,9 @@ html:not(.watch-active-state) .list-block .item-link:active .item-inner,
 }
 .list-block .swipeout-actions-right {
   right: 0%;
-  -webkit-transform: translate3d(100%, 0, 0);
-  -ms-transform: translate3d(100%, 0, 0);
-  transform: translate3d(100%, 0, 0);
+  -webkit-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  transform: translateX(100%);
 }
 .list-block .swipeout-actions-right a:after {
   left: 100%;
@@ -1763,9 +1764,9 @@ html:not(.watch-active-state) .list-block .item-link:active .item-inner,
 }
 .list-block .swipeout-actions-left {
   left: 0%;
-  -webkit-transform: translate3d(-100%, 0, 0);
-  -ms-transform: translate3d(-100%, 0, 0);
-  transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 .list-block .swipeout-actions-left a:after {
   right: 100%;
@@ -1964,6 +1965,7 @@ html.retina.ios-gt-7 .item-link.list-button {
 .list-block input[type="url"],
 .list-block input[type="date"],
 .list-block input[type="datetime-local"],
+.list-block input[type="time"],
 .list-block input[type="number"],
 .list-block select,
 .list-block textarea {
