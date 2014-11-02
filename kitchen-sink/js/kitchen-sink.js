@@ -410,9 +410,9 @@ myApp.onPageInit('color-themes', function (page) {
 
 /* ===== Virtual List ===== */
 myApp.onPageInit('virtual-list', function (page) {
-    // Generate array with 100000 demo items:
+    // Generate array with 10000 demo items:
     var items = [];
-    for (var i = 0; i < 100000; i++) {
+    for (var i = 0; i < 10000; i++) {
         items.push({
             title: 'Item ' + i
         });
