@@ -28,7 +28,7 @@ app.sortableClose = function (sortableContainer) {
     return sortableContainer;
 };
 app.initSortable = function () {
-    var isTouched, isMoved, touchStartY, touchesDiff, sortingEl, sortingItems, minTop, maxTop, insertAfter, insertBefore, sortableContainer;
+    var isTouched, isMoved, touchStartY, touchesDiff, sortingEl, sortingElHeight, sortingItems, minTop, maxTop, insertAfter, insertBefore, sortableContainer;
     
     function handleTouchStart(e) {
         isMoved = false;
@@ -50,7 +50,7 @@ app.initSortable = function () {
             sortableContainer.addClass('sortable-sorting');
             minTop = sortingEl[0].offsetTop;
             maxTop = sortingEl.parent().height() - sortingEl[0].offsetTop - sortingEl.height();
-            
+            sortingElHeight = sortingEl[0].offsetHeight;
         }
         isMoved = true;
 
@@ -72,12 +72,12 @@ app.initSortable = function () {
             var sortingElOffset = sortingEl[0].offsetTop + translate;
 
             if ((sortingElOffset >= currentElOffset - currentElHeight / 2) && sortingEl.index() < currentEl.index()) {
-                currentEl.transform('translate3d(0,-100%,0)');
+                currentEl.transform('translate3d(0, '+(-sortingElHeight)+'px,0)');
                 insertAfter = currentEl;
                 insertBefore = undefined;
             }
             else if ((sortingElOffset <= currentElOffset + currentElHeight / 2) && sortingEl.index() > currentEl.index()) {
-                $(this).transform('translate3d(0,100%,0)');
+                currentEl.transform('translate3d(0, '+(sortingElHeight)+'px,0)');
                 insertAfter = undefined;
                 if (!insertBefore) insertBefore = currentEl;
             }
@@ -97,6 +97,7 @@ app.initSortable = function () {
         sortingItems.transform('');
         sortingEl.removeClass('sorting');
         sortableContainer.removeClass('sortable-sorting');
+        var virtualList, oldIndex, newIndex;
         if (insertAfter) {
             sortingEl.insertAfter(insertAfter);
             sortingEl.trigger('sort');
@@ -104,6 +105,12 @@ app.initSortable = function () {
         if (insertBefore) {
             sortingEl.insertBefore(insertBefore);
             sortingEl.trigger('sort');
+        }
+        if ((insertAfter || insertBefore) && sortableContainer.hasClass('virtual-list')) {
+            virtualList = sortableContainer[0].f7VirtualList;
+            oldIndex = sortingEl[0].f7VirtualListIndex;
+            newIndex = insertBefore ? insertBefore[0].f7VirtualListIndex : insertAfter[0].f7VirtualListIndex;
+            if (virtualList) virtualList.moveItem(oldIndex, newIndex);
         }
         insertAfter = insertBefore = undefined;
         isTouched = false;
