@@ -1,5 +1,48 @@
 # Change Log
 
+## Framework7 v0.9.8 - Updated on November 2, 2014
+  * Virtual List
+    * New component that allows to render lists with huge amount of items without loss of performance.
+  * Swipeouts
+    * Improved performance and fixes issues that could cause app crashes
+    * Fixed issue with `swipeoutNoFollow`
+    * Compatibility with Virtual List
+  * Searchbar
+    * Better calculation for input field width with "Cancel" button
+    * Send .focus() on search field after tap on clear (x) icon
+    * Compatibility with Virtual List
+  * Infinite Scroll
+    * Compatibility with Virtual List
+  * Sortable
+    * Compatibility with Virtual List
+  * Smart Select
+    * Close smart select popup when use data-back-onselect attribute
+    * New attributes (data-form-theme, data-navbar-theme) and new app parameters (smartSelectFormTheme, smartSelectNavbarTheme) to control color theme on smart select page/popup
+  * Messages
+    * New `label` property for `app.addMessage()` method to specify message label
+  * Action Sheet
+    * Added `bg` property for button to specify button background color
+  * Slider
+    * Fixed issues with loop and autoplay when slider jumps over slides
+    * Fixes issue with focusing form elements in slides
+  * Swipe Back
+    * `swipeBackPageBoxShadow` App/View parameter renamed to `swipeBackPageAnimateShadow`
+    * New app parameter `swipeBackPageAnimateOpacity` that allows to control back page opacity during swipe back
+  * App
+    * `externalLinks` parameter now accepts string with CSS selector of external links
+  * Navbar / Toolbar
+    * New app methods `app.show/hideNavbar(navbar)`, `app.show/hideToolbar(navbar)` to show and hide navbar and toolbar/tabbar
+    * Now, tab bar can also be hidden by scroll by adding "hide-tabbar-on-scroll" class to page-content or using `hideTabbarOnPageScroll` parameter
+    * Fixed issues with disappearing navbar when using domCache
+  * Pages
+    * Page data object now has additional `context` property with passed context when using Template7 Pages
+  * View
+    * `linksView` parameter now also supports another View instance
+    * New reload behavior with new `reloadPages: true` parameter. In this mode View will always reload currently active page without loading new one
+  * Popover
+    * Fixed "angle" position on edge screen position
+
+
 ## Framework7 v0.9.7 - Updated on October 7, 2014
   * Slider
     * Now supports continuous loop mode with `loop:true` option
