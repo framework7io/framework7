@@ -283,6 +283,7 @@ app.popover = function (modal, target, removeOnClose) {
         var modalHeight =  modal.height(); // 13 - height of angle
         var modalAngle = modal.find('.popover-angle');
         var modalAngleSize = modalAngle.width() / 2;
+        var modalAngleLeft, modalAngleTop;
         modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
 
         var targetWidth = target.outerWidth();
@@ -333,7 +334,9 @@ app.popover = function (modal, target, removeOnClose) {
             if (modalPosition === 'top') modalAngle.addClass('on-bottom');
             if (modalPosition === 'bottom') modalAngle.addClass('on-top');
             diff = diff - modalLeft;
-            modalAngle.css({left: (modalWidth / 2 - modalAngleSize + diff) + 'px'});
+            modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
+            modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
+            modalAngle.css({left: modalAngleLeft + 'px'});
         }
         else if (modalPosition === 'middle') {
             modalLeft = targetOffset.left - modalWidth - modalAngleSize;
@@ -346,7 +349,9 @@ app.popover = function (modal, target, removeOnClose) {
                 modalLeft = windowWidth - modalWidth - 5;
                 modalAngle.removeClass('on-right').addClass('on-left');
             }
-            modalAngle.css({top: (modalHeight / 2 - modalAngleSize + diff) + 'px'});
+            modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
+            modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 6), 6);
+            modalAngle.css({top: modalAngleTop + 'px'});
         }
 
         // Apply Styles
