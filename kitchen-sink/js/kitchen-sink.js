@@ -410,38 +410,43 @@ myApp.onPageInit('color-themes', function (page) {
 
 /* ===== Virtual List ===== */
 myApp.onPageInit('virtual-list', function (page) {
-    var vList = myApp.virtualList($$(page.container).find('.virtual-list'), {
-        items: (function () {
-            var arr = [];
-            for (var _di = 0; _di < 100000; _di++) {
-                var imageIndex = Math.ceil(Math.random()*10);
-                arr.push({
-                    title: _di + '. John Doe (via Twitter)',
-                    subtitle: 'John Doe (@_johndoe) mentioned you on Twitter!',
-                    time: '17:11',
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat.',
-                });
-            }
-            return arr;
-        })(),
-        /*
-        searchByItem: function (query, index, item) {
-            if (item.title.indexOf(query) >=0 || query.trim() === '') return true;
-        },
-        */
+    // Generate array with 100000 demo items:
+    var items = [];
+    for (var i = 0; i < 100000; i++) {
+        items.push({
+            title: 'Item ' + i
+        });
+    }
+
+    // Create virtual list
+    var virtualList = myApp.virtualList($$(page.container).find('.virtual-list'), {
+        // Pass array with items
+        items: items,
+        // Custom search function for searchbar
         searchAll: function (query, items) {
             var found = [];
             for (var i = 0; i < items.length; i++) {
                 if (items[i].title.indexOf(query) >= 0 || query.trim() === '') found.push(i);
             }
-            return found;
+            return found; //return array with mathced indexes
         },
-        template: '<li><a href="#{{@index}}" class="item-link item-content"><div class="item-inner"><div class="item-title-row"><div class="item-title">{{title}}</div><div class="item-after">{{time}}</div></div><div class="item-subtitle">{{subtitle}}</div><div class="item-text">{{text}}</div></div></a></li>',
-        height: 106,
+        // List item Template7 template
+        template: '<li class="swipeout">' +
+                    '<div class="swipeout-content">' +
+                      '<a href="#" class="item-link item-content">' +
+                        '<div class="item-inner">' +
+                          '<div class="item-title">{{title}}</div>' +
+                        '</div>' +
+                      '</a>' +
+                    '</div>' +
+                    '<div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div>' +
+                  '</li>',
+        // Item height
+        height: 44,
     });
 });
 
-/* ===== Change statusbar bg when panel opened/closed ===== 
+/* ===== Change statusbar bg when panel opened/closed ===== */
 $$('.panel-left').on('open', function () {
     $$('.statusbar-overlay').addClass('with-panel-left');
 });
