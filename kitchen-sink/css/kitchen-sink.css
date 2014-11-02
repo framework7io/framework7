@@ -162,6 +162,9 @@ i.ks-tabbar-icon-4 {
 .ks-slider-custom .slider-prev-button {
   left: 0;
 }
+.virtual-list li {
+  height: 63px;
+}
 .custom-accordion {
   padding-left: 0;
   padding-right: 0;
