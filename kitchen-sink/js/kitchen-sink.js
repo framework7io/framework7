@@ -414,7 +414,8 @@ myApp.onPageInit('virtual-list', function (page) {
     var items = [];
     for (var i = 0; i < 10000; i++) {
         items.push({
-            title: 'Item ' + i
+            title: 'Item ' + i,
+            subtitle: 'Subtitle ' + i
         });
     }
 
@@ -431,18 +432,18 @@ myApp.onPageInit('virtual-list', function (page) {
             return found; //return array with mathced indexes
         },
         // List item Template7 template
-        template: '<li class="swipeout">' +
-                    '<div class="swipeout-content">' +
-                      '<a href="#" class="item-link item-content">' +
-                        '<div class="item-inner">' +
+        template: '<li>' +
+                    '<a href="#" class="item-link item-content">' +
+                      '<div class="item-inner">' +
+                        '<div class="item-title-row">' +
                           '<div class="item-title">{{title}}</div>' +
                         '</div>' +
-                      '</a>' +
-                    '</div>' +
-                    '<div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div>' +
+                        '<div class="item-subtitle">{{subtitle}}</div>' +
+                      '</div>' +
+                    '</a>' +
                   '</li>',
         // Item height
-        height: 44,
+        height: 63,
     });
 });
 
