@@ -177,6 +177,7 @@ myApp.onPageInit('messages', function (page) {
         if (messageText.length === 0) return;
         // Empty textarea
         textarea.val('').trigger('change');
+        textarea[0].focus();
         // Add Message
         myApp.addMessage({
             text: messageText,
