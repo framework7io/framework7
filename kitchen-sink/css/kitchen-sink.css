@@ -30,7 +30,11 @@
   background: #131313;
 }
 .page[data-page="tabbar"] .tabbar,
-.page[data-page="tabbar-labels"] .tabbar {
+.page[data-page="tabbar-labels"] .tabbar,
+.page[data-page="messages"] .tabbar,
+.page[data-page="tabbar"] .toolbar,
+.page[data-page="tabbar-labels"] .toolbar,
+.page[data-page="messages"] .toolbar {
   -webkit-transform: none;
   -moz-transform: none;
   -ms-transform: none;
