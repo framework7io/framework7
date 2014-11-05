@@ -683,16 +683,17 @@ app.router._back = function (view, options) {
         if (force) {
             var pageToRemove, navbarToRemove;
             pageToRemove = $(pagesInView[pagesInView.length - 2]);
-            if (dynamicNavbar) navbarToRemove = $(pageToRemove[0].f7RelatedNavbar || navbarInners[navbarInners.length - 2]);
+            
+            if (dynamicNavbar) navbarToRemove = $(pageToRemove[0] && pageToRemove[0].f7RelatedNavbar || navbarInners[navbarInners.length - 2]);
             if (view.params.domCache && view.initialPages.indexOf(pageToRemove[0]) >= 0) {
-                pageToRemove.addClass('cached');
-                if (dynamicNavbar) {
+                if (pageToRemove.length) pageToRemove.addClass('cached');
+                if (dynamicNavbar && navbarToRemove.length) {
                     navbarToRemove.addClass('cached');
                 }
             }
             else {
-                pageToRemove.remove();
-                if (dynamicNavbar) {
+                if (pageToRemove.length) pageToRemove.remove();
+                if (dynamicNavbar && navbarToRemove.length) {
                     navbarToRemove.remove();
                 } 
             }
@@ -704,7 +705,12 @@ app.router._back = function (view, options) {
                 view.history = view.history.slice(0, view.history.indexOf(url) + 2);
             }
             else {
-                view.history[view.history.length - 2] = url;
+                if (view.history[[view.history.length - 2]]) {
+                    view.history[view.history.length - 2] = url;    
+                }
+                else {
+                    view.history.unshift(url);
+                }
             }
         }
 
@@ -865,7 +871,6 @@ app.router.back = function (view, options) {
             app.router._back(view, options);
         });
     }
-    
     if (pagesInView.length > 1 && !force) {
         // Simple go back to previos page in view
         app.router._back(view, options);
@@ -886,7 +891,7 @@ app.router.back = function (view, options) {
             proceed();
             return;
         }
-        else if (url.indexOf('#') < 0) {
+        else if (url.indexOf('#') !== 0) {
             // Load ajax page
             app.get(options.url, view, options.ignoreCache, function (content, error) {
                 if (error) {
