@@ -224,11 +224,14 @@ app.smartSelectOpen = function (smartSelect) {
 
     // Load content
     if (openIn === 'popup') {
-        popup = app.popup('<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
+        popup = app.popup(
+                '<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
                     '<div class="view navbar-fixed">' +
                         pageHTML +
                     '</div>' +
-                '</div>');
+                '</div>'
+                );
+        app.initPage($(popup).find('.page'));
         handleInputs(popup);
     }
     else view.router.load({content: pageHTML});
