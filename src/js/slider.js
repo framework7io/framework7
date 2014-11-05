@@ -503,6 +503,9 @@ var Slider = function (container, params) {
         else s.updateClasses();
         s.attachEvents();
         if (s.params.autoplay) s.startAutoplay();
+        if (typeof s.params.onInit === 'function') {
+	        s.params.onInit();
+        }
     };
     s.update = function () {
         if (s.params.loop) s.createLoop();
