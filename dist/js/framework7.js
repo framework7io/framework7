@@ -1,5 +1,5 @@
 /*
- * Framework7 0.9.7
+ * Framework7 0.9.8
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: November 4, 2014
+ * Released on: November 6, 2014
 */
 (function () {
 
@@ -2132,16 +2132,17 @@
                 if (force) {
                     var pageToRemove, navbarToRemove;
                     pageToRemove = $(pagesInView[pagesInView.length - 2]);
-                    if (dynamicNavbar) navbarToRemove = $(pageToRemove[0].f7RelatedNavbar || navbarInners[navbarInners.length - 2]);
+                    
+                    if (dynamicNavbar) navbarToRemove = $(pageToRemove[0] && pageToRemove[0].f7RelatedNavbar || navbarInners[navbarInners.length - 2]);
                     if (view.params.domCache && view.initialPages.indexOf(pageToRemove[0]) >= 0) {
-                        pageToRemove.addClass('cached');
-                        if (dynamicNavbar) {
+                        if (pageToRemove.length) pageToRemove.addClass('cached');
+                        if (dynamicNavbar && navbarToRemove.length) {
                             navbarToRemove.addClass('cached');
                         }
                     }
                     else {
-                        pageToRemove.remove();
-                        if (dynamicNavbar) {
+                        if (pageToRemove.length) pageToRemove.remove();
+                        if (dynamicNavbar && navbarToRemove.length) {
                             navbarToRemove.remove();
                         } 
                     }
@@ -2153,7 +2154,12 @@
                         view.history = view.history.slice(0, view.history.indexOf(url) + 2);
                     }
                     else {
-                        view.history[view.history.length - 2] = url;
+                        if (view.history[[view.history.length - 2]]) {
+                            view.history[view.history.length - 2] = url;    
+                        }
+                        else {
+                            view.history.unshift(url);
+                        }
                     }
                 }
         
@@ -2236,8 +2242,11 @@
             
             if (!force) {
                 // Go back when there is no pages on left
-                view.url = view.history[view.history.length - 2];
-                url = view.url;
+                if (!preloadOnly) {
+                    view.url = view.history[view.history.length - 2];
+                    url = view.url;
+                }
+                    
                 if (content) {
                     parseNewPage();
                     setPages();
@@ -2311,7 +2320,6 @@
                     app.router._back(view, options);
                 });
             }
-            
             if (pagesInView.length > 1 && !force) {
                 // Simple go back to previos page in view
                 app.router._back(view, options);
@@ -2332,7 +2340,7 @@
                     proceed();
                     return;
                 }
-                else if (url.indexOf('#') < 0) {
+                else if (url.indexOf('#') !== 0) {
                     // Load ajax page
                     app.get(options.url, view, options.ignoreCache, function (content, error) {
                         if (error) {
@@ -3345,7 +3353,7 @@
                         app.swipeoutOpenedEl.is(target[0]) ||
                         target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
                         target.hasClass('modal-in') ||
-                        target.parents('.modal-in').length > 0 ||
+                        target.parents('.modal.modal-in').length > 0 ||
                         target.hasClass('modal-overlay')
                         )) {
                         app.swipeoutClose(app.swipeoutOpenedEl);
@@ -3737,7 +3745,7 @@
                 sortingItems = sortingEl.parent().find('li');
                 sortableContainer = sortingEl.parents('.sortable');
                 e.preventDefault();
-                app.allowsPanelOpen = app.allowSwipeout = false;
+                app.allowPanelOpen = app.allowSwipeout = false;
             }
             function handleTouchMove(e) {
                 if (!isTouched || !sortingEl) return;
@@ -3785,7 +3793,7 @@
                 });
             }
             function handleTouchEnd(e) {
-                app.allowsPanelOpen = app.allowSwipeout = true;
+                app.allowPanelOpen = app.allowSwipeout = true;
                 if (!isTouched || !isMoved) {
                     isTouched = false;
                     isMoved = false;
@@ -4052,11 +4060,14 @@
         
             // Load content
             if (openIn === 'popup') {
-                popup = app.popup('<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
+                popup = app.popup(
+                        '<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
                             '<div class="view navbar-fixed">' +
                                 pageHTML +
                             '</div>' +
-                        '</div>');
+                        '</div>'
+                        );
+                app.initPage($(popup).find('.page'));
                 handleInputs(popup);
             }
             else view.router.load({content: pageHTML});
@@ -6299,6 +6310,9 @@
                 else s.updateClasses();
                 s.attachEvents();
                 if (s.params.autoplay) s.startAutoplay();
+                if (typeof s.params.onInit === 'function') {
+        	        s.params.onInit();
+                }
             };
             s.update = function () {
                 if (s.params.loop) s.createLoop();
