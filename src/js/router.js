@@ -787,8 +787,11 @@ app.router._back = function (view, options) {
     
     if (!force) {
         // Go back when there is no pages on left
-        view.url = view.history[view.history.length - 2];
-        url = view.url;
+        if (!preloadOnly) {
+            view.url = view.history[view.history.length - 2];
+            url = view.url;
+        }
+            
         if (content) {
             parseNewPage();
             setPages();
