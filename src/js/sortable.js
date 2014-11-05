@@ -39,7 +39,7 @@ app.initSortable = function () {
         sortingItems = sortingEl.parent().find('li');
         sortableContainer = sortingEl.parents('.sortable');
         e.preventDefault();
-        app.allowsPanelOpen = app.allowSwipeout = false;
+        app.allowPanelOpen = app.allowSwipeout = false;
     }
     function handleTouchMove(e) {
         if (!isTouched || !sortingEl) return;
@@ -87,7 +87,7 @@ app.initSortable = function () {
         });
     }
     function handleTouchEnd(e) {
-        app.allowsPanelOpen = app.allowSwipeout = true;
+        app.allowPanelOpen = app.allowSwipeout = true;
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
