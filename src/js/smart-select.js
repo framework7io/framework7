@@ -43,27 +43,7 @@ app.smartSelectOpen = function (smartSelect) {
     view = view[0].f7View;
     if (!view) return;
 
-    // Collect all values
-    var select = smartSelect.find('select')[0];
-    var $select = $(select);
-    if (select.disabled || smartSelect.hasClass('disabled') || $select.hasClass('disabled')) {
-        return;
-    }
-    var values = {};
-    values.length = select.length;
-    var option;
-    for (var i = 0; i < select.length; i++) {
-        option = $(select[i]);
-        values[i] = {
-            value: select[i].value,
-            text: select[i].textContent.trim(),
-            selected: select[i].selected,
-            group: option.parent('optgroup')[0],
-            image: option.attr('data-option-image') || $select.attr('data-option-image'),
-            icon: option.attr('data-option-icon') || $select.attr('data-option-icon'),
-            disabled: select[i].disabled
-        };
-    }
+    // Parameters
     var openIn = smartSelect.attr('data-open-in');
     if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
 
@@ -73,61 +53,110 @@ app.smartSelectOpen = function (smartSelect) {
     var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
     var formTheme = smartSelect.attr('data-form-theme') || app.params.smartSelectFormTheme;
     var navbarTheme = smartSelect.attr('data-navbar-theme') || app.params.smartSelectNavbarTheme;
+    var virtualList = smartSelect.attr('data-virtual-list') === 'true';
+    var virtualListItemHeight = smartSelect.attr('data-virtual-list-height');
 
-    // Generate dynamic page layout
+    // Collect all options/values
+    var select = smartSelect.find('select')[0];
+    var $select = $(select);
+    if (select.disabled || smartSelect.hasClass('disabled') || $select.hasClass('disabled')) {
+        return;
+    }
+    var values = [];
     var id = (new Date()).getTime();
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
-    var inputsHTML = '';
-    var previousGroup;
-    for (var j = 0; j < values.length; j++) {
-        if (values[j].disabled) continue;
-        var checked = values[j].selected ? 'checked' : '';
-        if (values[j].group) {
-            if (values[j].group !== previousGroup) {
-                inputsHTML += '<li class="item-divider">' + values[j].group.label + '</li>';
-                previousGroup = values[j].group;
+    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup;
+    for (var i = 0; i < select.length; i++) {
+        option = $(select[i]);
+        if (option[0].disabled) continue;
+        optionImage = option.attr('data-option-image') || $select.attr('data-option-image');
+        optionIcon = option.attr('data-option-icon') || $select.attr('data-option-icon');
+        optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
+        optionGroup = option.parent('optgroup')[0];
+        optionGroupLabel = optionGroup && optionGroup.label;
+        optionShowGroupLabel = false;
+        if (optionGroup) {
+            if (optionGroup !== previousGroup) {
+                optionShowGroupLabel = true;
+                previousGroup = optionGroup;
             }
         }
-        var media = '';
-        if (inputType === 'checkbox') media += '<i class="icon icon-form-checkbox"></i>';
-        if (values[j].icon) media += '<i class="icon ' + values[j].icon + '"></i>';
-        if (values[j].image) media += '<img src="' + values[j].image + '">';
-        inputsHTML +=
-            '<li>' +
-                '<label class="label-' + inputType + ' item-content">' +
-                    '<input type="' + inputType + '" name="' + inputName + '" value="' + values[j].value + '" ' + checked + '>' +
-                    (media !== '' ? '<div class="item-media">' + media + '</div>' : '') +
-                    '<div class="item-inner">' +
-                        '<div class="item-title">' + values[j].text + '</div>' +
-                    '</div>' +
-                '</label>' +
-            '</li>';
-    }
-    // Navbar HTML
-    var navbarLeftTemplate = openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText);
-    var navbarHTML =
-        '<div class="navbar ' + (navbarTheme ? 'theme-' + navbarTheme : '') + '">' +
-        '  <div class="navbar-inner">' +
-            navbarLeftTemplate +
-        '    <div class="center sliding">' + pageTitle + '</div>' +
-        '  </div>' +
-        '</div>';
-
-    if (app.params.smartSelectNavbarTemplate) {
-        if (!app._compiledTemplates.smartSelectNavbar) {
-            app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate);
-        }
-        navbarHTML = app._compiledTemplates.smartSelectNavbar({
-            pageTitle: pageTitle,
-            backText: backText,
-            openIn: openIn,
-            inPopup: openIn === 'popup',
-            inPage: openIn === 'page',
+        values.push({
+            value: option[0].value,
+            text: option[0].textContent.trim(),
+            selected: option[0].selected,
+            group: optionGroup,
+            groupLabel: optionGroupLabel,
+            showGroupLabel: optionShowGroupLabel,
+            image: optionImage,
+            icon: optionIcon,
+            disabled: option[0].disabled,
+            inputType: inputType,
             id: id,
-            inputType: inputType
+            hasMedia: optionHasMedia,
+            checkbox: inputType === 'checkbox',
+            inputName: inputName,
+            test: this
         });
     }
+
+
+    // Item template/HTML
+    if (!app._compiledTemplates.smartSelectItem) {
+        app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate || 
+            '{{#if showGroupLabel}}' +
+            '<li class="item-divider">{{groupLabel}}</li>' +
+            '{{/if}}' +
+            '<li>' +
+                '<label class="label-{{inputType}} item-content">' +
+                    '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
+                    '{{#if hasMedia}}' +
+                    '<div class="item-media">' +
+                        '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
+                        '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
+                        '{{#if image}}<img src="{{image}}">{{/if}}' +
+                    '</div>' +
+                    '{{/if}}' +
+                    '<div class="item-inner">' +
+                        '<div class="item-title">{{text}}</div>' +
+                    '</div>' +
+                '</label>' +
+            '</li>'
+        );
+    }
+    var smartSelectItemTemplate = app._compiledTemplates.smartSelectItem;
+    
+    var inputsHTML = '';
+    if (!virtualList) {
+        for (var j = 0; j < values.length; j++) {
+            inputsHTML += smartSelectItemTemplate(values[j]);
+        }
+    }
+
+    // Navbar HTML
+    if (!app._compiledTemplates.smartSelectNavbar) {
+        app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate || 
+            '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
+                '<div class="navbar-inner">' +
+                    '{{leftTemplate}}' +
+                    '<div class="center sliding">{{pageTitle}}</div>' +
+                '</div>' +
+            '</div>'
+        );
+    }
+    var navbarHTML = app._compiledTemplates.smartSelectNavbar({
+        pageTitle: pageTitle,
+        backText: backText,
+        closeText: closeText,
+        openIn: openIn,
+        navbarTheme: navbarTheme,
+        inPopup: openIn === 'popup',
+        inPage: openIn === 'page',
+        leftTemplate: openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText)
+    });
+
+    
     // Determine navbar layout type - static/fixed/through
     var noNavbar = '', noToolbar = '', navbarLayout;
     if (openIn === 'page') {
@@ -170,9 +199,9 @@ app.smartSelectOpen = function (smartSelect) {
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
                (navbarLayout === 'static' ? navbarHTML : '') +
-        '      <div class="list-block smart-select-list-' + id + ' ' + (formTheme ? 'theme-' + formTheme : '') + '">' +
+        '      <div class="list-block ' + (virtualList ? 'virtual-list' : '') + ' smart-select-list-' + id + ' ' + (formTheme ? 'theme-' + formTheme : '') + '">' +
         '        <ul>' +
-                    inputsHTML +
+                    (virtualList ? '' : inputsHTML) +
         '        </ul>' +
         '      </div>' +
         '    </div>' +
@@ -184,7 +213,21 @@ app.smartSelectOpen = function (smartSelect) {
 
     // Event Listeners on new page
     function handleInputs(container) {
-        $(container).find('input[name="' + inputName + '"]').on('change', function () {
+        if (virtualList) {
+            var virtualListInstance = app.virtualList($(container).find('.virtual-list'), {
+                items: values,
+                template: smartSelectItemTemplate,
+                height: virtualListItemHeight || undefined,
+                searchByItem: function (query, index, item) {
+                    if (item.text.toLowerCase().indexOf(query.trim()) >=0 ) return true;
+                    return false;
+                }
+            });
+            $(container).once(openIn === 'popup' ? 'closed': 'pageBeforeRemove', function () {
+                if (virtualListInstance && virtualListInstance.destroy) virtualListInstance.destroy();
+            });
+        }
+        $(container).on('change', 'input[name="' + inputName + '"]', function () {
             var input = this;
             var value = input.value;
             var optionText = [];
@@ -220,8 +263,7 @@ app.smartSelectOpen = function (smartSelect) {
             handleInputs(page.container);
         }
     }
-    $(document).on('pageInit', pageInit);
-
+    
     // Load content
     if (openIn === 'popup') {
         popup = app.popup(
@@ -234,5 +276,8 @@ app.smartSelectOpen = function (smartSelect) {
         app.initPage($(popup).find('.page'));
         handleInputs(popup);
     }
-    else view.router.load({content: pageHTML});
+    else {
+        $(document).on('pageInit', pageInit);
+        view.router.load({content: pageHTML});
+    }
 };
