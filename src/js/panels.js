@@ -90,7 +90,8 @@ app.initSwipePanels = function () {
             }
         }
         panel = $('.panel.panel-' + side);
-        if (app.params.swipePanelActiveArea) {
+        opened = panel.hasClass('active');
+        if (app.params.swipePanelActiveArea && !opened) {
             if (side === 'left') {
                 if (touchesStart.x > app.params.swipePanelActiveArea) return;
             }
@@ -160,9 +161,10 @@ app.initSwipePanels = function () {
 
         if (!isMoved) {
             effect = panel.hasClass('panel-cover') ? 'cover' : 'reveal';
-            panel.show();
-            panelOverlay.show();
-            opened = panel.hasClass('active');
+            if (!opened) {
+                panel.show();
+                panelOverlay.show();
+            }
             panelWidth = panel.width();
             panel.transition(0);
             if (panel.find('.' + app.params.viewClass).length > 0) {
