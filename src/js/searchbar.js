@@ -122,7 +122,10 @@ app.initSearchbar = function (pageContainer) {
     attachEvents();
 
     // Search
+    var previousQuery;
     function search(query) {
+        if (query.trim() === previousQuery) return;
+        previousQuery = query.trim();
         var values = query.trim().toLowerCase().split(' ');
         var foundItems = [];
         if (isVirtualList) {
