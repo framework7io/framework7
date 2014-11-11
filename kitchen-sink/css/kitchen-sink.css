@@ -166,7 +166,7 @@ i.ks-tabbar-icon-4 {
 .ks-slider-custom .slider-prev-button {
   left: 0;
 }
-.virtual-list li {
+.page[data-page="virtual-list"] .virtual-list li {
   height: 63px;
 }
 .custom-accordion {
