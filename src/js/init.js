@@ -38,7 +38,7 @@ app.init = function () {
     if (app.initSortable && app.params.sortable) app.initSortable();
 
     // Init Live Swipe Panels
-    if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
+    if (app.initSwipePanels && (app.params.swipePanel || app.params.swipePanelOnlyClose)) app.initSwipePanels();
     
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
