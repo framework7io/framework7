@@ -381,7 +381,7 @@ myApp.onPageInit('login-screen-embedded', function (page) {
         var username = $$(page.container).find('input[name="username"]').val();
         var password = $$(page.container).find('input[name="password"]').val();
         myApp.alert('Username: ' + username + ', password: ' + password, function () {
-            mainView.goBack();
+            mainView.router.back();
         });
     });
 });
