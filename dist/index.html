@@ -45,10 +45,11 @@
         <div class="navbar">
           <div class="navbar-inner">
             <!-- We have home navbar without left link-->
+            <div class="left"><a href="physical-addition.html" class="link"><i class="fa fa-plus fa-lg"></i></a></div>
             <div class="center sliding">Kitchen Cloud</div>
             <div class="right">
               <a href="#" data-panel="right" class="link icon-only open-panel">
-            		<span class="num-notices">2</span>
+            		<div class="num-notices"><span>2</span></div>
               		<i class="fa fa-bullhorn fa-lg"></i>
               	</a>
             </div>
@@ -59,55 +60,97 @@
           <!-- Page, data-page contains page name-->
           <div data-page="index" class="page">
             <!-- Scrollable page content-->
-            <div class="page-content">
+            <div class="page-content pull-to-refresh-content">
+            	 <!-- Puul to refresh -->
+              	<div class="pull-to-refresh-layer">
+      				<div class="preloader"></div>
+      				<div class="pull-to-refresh-arrow"></div>
+    			</div>
+                
             	<a href="https://itunes.apple.com/us/app/calorie-counter-diet-tracker/id341232718?mt=8" class="link" target="_blank">
-                <div id="ad_space_top">
-                	Ad Space Available
-                </div>
-            </a>
-              <div class="content-block-title">Welcome To My Awesome App</div>
-              <div class="content-block">
-                <div class="content-block-inner">
-                  <p>Couple of worlds here because my app is so awesome!</p>
-                  <p>Duis sed erat ac eros ultrices pharetra id ut tellus. Praesent rhoncus enim ornare ipsum aliquet ultricies. Pellentesque sodales erat quis elementum sagittis.</p>
-                </div>
-              </div>
-              <div class="content-block-title">What about simple navigation?</div>
-              <div class="list-block">
-                <ul>
-                  <li><a href="about.html" class="item-link">
-                      <div class="item-content">
-                        <div class="item-inner"> 
-                          <div class="item-title">About</div>
-                        </div>
-                      </div></a></li>
-                  <li><a href="services.html" class="item-link">
-                      <div class="item-content"> 
-                        <div class="item-inner">
-                          <div class="item-title">Services</div>
-                        </div>
-                      </div></a></li>
-                  <li><a href="user-settings.html" class="item-link">
-                      <div class="item-content"> 
-                        <div class="item-inner">
-                          <div class="item-title">Form</div>
-                        </div>
-                      </div></a></li>
+                	<div id="ad_space_top">
+                		Ad Space Available
+                	</div>
+            	</a>
+                
+              <!-- Catalog Items -->
+              <div class="list-block" style="margin: 0;">
+                <ul id="food_catalog">
+                	<!-- Item 001 -->
+                	<li class="swipeout">
+                    	<a href="item-details.html" class="item-link">
+                      		<div class="item-content swipeout-content">
+                            	<div class="item-media">
+                          			<img class="food-icon" src="img/food/icon-milk.png">
+                         		</div>
+                        		<div class="item-inner"> 
+                            		<h3>{Item Name}</h3>
+                            		<small class="item-subtitle">Purchased on {date}</small>
+                                    <div class="clear"></div>
+                            		<div class="item-text">{num} days old</div>
+                             		<div class="status bad">GONE BAD</div>
+                        		</div>
+                      		</div>
+                      	</a>
+                        
+                        <div class="swipeout-actions-right">
+          					<a href="#" class="swipeout-delete">Remove</a>
+      					</div>
+                   	</li>
+                    
+                    <!-- Item 002 -->
+                	<li class="swipeout">
+                    	<a href="item-details.html" class="item-link">
+                      		<div class="item-content swipeout-content">
+                            	<div class="item-media">
+                          			<img class="food-icon" src="img/food/icon-cucumber.png">
+                         		</div>
+                        		<div class="item-inner"> 
+                            		<div class="item-title">{Item Name}</div>
+                            		<div class="item-subtitle">Purchased on {date}</div>
+                            		<div class="item-text">{num} days old</div>
+                             		<div class="status soon">USE SOON</div>
+                        		</div>
+                      		</div>
+                      	</a>
+                        
+                        <div class="swipeout-actions-right">
+          					<a href="#" class="swipeout-delete">Remove</a>
+      					</div>
+                   	</li>
+                    
+                    <!-- Item 003 -->
+                	<li class="swipeout">
+                    	<a href="item-details.html" class="item-link">
+                      		<div class="item-content swipeout-content">
+                            	<div class="item-media">
+                          			<img class="food-icon" src="img/food/icon-french-fry.png">
+                         		</div>
+                        		<div class="item-inner"> 
+                            		<div class="item-title">{Item Name}</div>
+                            		<div class="item-subtitle">Purchased on {date}</div>
+                            		<div class="item-text">{num} days old</div>
+                        		</div>
+                      		</div>
+                      	</a>
+                        
+                        <div class="swipeout-actions-right">
+          					<a href="#" class="swipeout-delete">Remove</a>
+      					</div>
+                   	</li>
                 </ul>
               </div>
-              <div class="content-block-title">Side panels</div>
-              <div class="content-block">
-                <div class="row">
-                  <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
-                  <div class="col-50"><a href="#" data-panel="right" class="button open-panel">Right Panel</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+        
         <!-- Bottom Toolbar-->
         <div class="toolbar">
-          <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="user-settings.html" class="link">Link 2</a></div>
+          	<div class="toolbar-inner">
+       			<a href="index.html" class="link"><img src="img/icon-pantry.png" width="25" height="29"></a>
+             	<a href="#" class="link"><img src="img/icon-list.png" width="21" height="29"></a>
+              	<a href="analytics.html" class="link analytics"><img src="img/icon-analytics.png" width="40" height="40"></a>
+             	<a href="recipes.html" class="link"><img src="img/icon-recipes.png" width="29" height="29"></a>
+             	<a href="user-settings.html" class="link"><img src="img/icon-user.png" width="29" height="29"></a>
+          	</div>
         </div>
       </div>
     </div>

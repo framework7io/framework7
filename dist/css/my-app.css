@@ -8,9 +8,26 @@
 	border-bottom: 4px solid #699c8b;
 }
 
+.navbar a {
+	color: #fff;
+}
+
+.navbar .center {
+	text-transform: uppercase;
+}
+
+.panel-right {
+	background: #fff;
+	color: #444;
+}
+
 /* General UI */
 #title {
 	color: #fff;
+}
+
+.toolbar {
+	background: #725f50;
 }
 
 .searchbar {
@@ -89,11 +106,18 @@
 	border: 2px solid #ccc;
 	color: #fff;
 	font-size: 12px;
-	padding: 3px 7px;
+	height: 18px;
 	position: relative;
 	z-index: 4;
-	left: 40px;
-	top: -7px;
+	left: 30px;
+	top: -5px;
+	width: 18px;
+}
+
+.num-notices > span {
+	position: absolute;
+	top: -12px;
+	left: 6px;
 }
 
 .notification {
@@ -126,14 +150,22 @@
 }
 
 /* Main Screen */
-.food-list-item .item-inner {
-	margin-left: -15px !important;
+#food_catalog li .item-inner {
+	border: none;
 }
 
-.item-text {
+ul#food_catalog li {
+	border-bottom: 1px solid #c8c7cc;
+}
+
+#food_catalog > .item-subtitle {
+	clear: both;
+}
+
+#food_catalog li .item-text {
 	border-right: 1px solid #999;
 	float: left;
-	width: 40%;
+	width: 100%;
 	margin: 0;
 }
 
@@ -173,8 +205,8 @@
 
 .toolbar-inner a.analytics {
 	background-color: #725f50;
-	border-radius: 32px;
-	padding: 5px;
+	border-radius: 40px;
+	padding: 8px;
 	position: relative;
 	top: -5px;
 }
