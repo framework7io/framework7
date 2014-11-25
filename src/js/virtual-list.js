@@ -38,7 +38,7 @@ var VirtualList = function (listBlock, params) {
     }
         
     // Append <ul>
-    vl.ul = vl.listBlock.children('ul');
+    vl.ul = vl.params.ul ? $(vl.params.ul) : vl.listBlock.children('ul');
     if (vl.ul.length === 0) {
         vl.listBlock.append('<ul></ul>');
         vl.ul = vl.listBlock.children('ul');
@@ -110,7 +110,8 @@ var VirtualList = function (listBlock, params) {
     // Render items
     vl.render = function (force) {
         if (force) vl.lastRepaintY = null;
-        var scrollTop = vl.pageContent[0].scrollTop;
+        // var scrollTop = vl.pageContent[0].scrollTop;
+        var scrollTop = -(vl.listBlock[0].getBoundingClientRect().top + vl.pageContent[0].getBoundingClientRect().top);
         if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
             vl.lastRepaintY = scrollTop;
         }
