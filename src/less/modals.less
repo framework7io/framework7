@@ -80,6 +80,10 @@
     overflow: hidden;
     .flexbox();
     .justify-content(center);
+    &.modal-buttons-vertical {
+        display: block;
+        height: auto;
+    }
 }
 .modal-button {
     width: 100%;
@@ -115,6 +119,15 @@
     }
     html:not(.watch-active-state) &:active, &.active-state {
         background: @modalButonActiveBg;
+    }
+    .modal-buttons-vertical & {
+        border-right: none;
+        border-bottom: 1px solid #b5b5b5;
+        border-radius: 0;
+        &:last-child {
+            border-radius: 0 0 7px 7px;
+            border-bottom: none;
+        }
     }
 }
 .modal-no-buttons {
