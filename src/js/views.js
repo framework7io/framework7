@@ -10,6 +10,7 @@ var View = function (selector, params) {
         reloadPages: false,
         uniqueHistory: app.params.uniqueHistory,
         uniqueHistoryIgnoreGetParameters: app.params.uniqueHistoryIgnoreGetParameters,
+        allowDuplicateUrls: app.params.allowDuplicateUrls,
         swipeBackPage: app.params.swipeBackPage,
         swipeBackPageAnimateShadow: app.params.swipeBackPageAnimateShadow,
         swipeBackPageAnimateOpacity: app.params.swipeBackPageAnimateOpacity,

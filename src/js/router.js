@@ -532,7 +532,7 @@ app.router.load = function (view, options) {
     if (view.params.reloadPages === true) options.reload = true;
 
     if (!view.allowPageChange) return false;
-    if (url && view.url === url && !options.reload) return false;
+    if (url && view.url === url && !options.reload && !view.params.allowDuplicateUrls) return false;
     view.allowPageChange = false;
     if (app.xhr && view.xhr && view.xhr === app.xhr) {
         app.xhr.abort();
