@@ -444,7 +444,6 @@ Dom7.prototype = {
                 while (tempDiv.firstChild) {
                     this[i].appendChild(tempDiv.firstChild);
                 }
-                // this[i].insertAdjacentHTML('beforeend', newChild);
             }
             else if (newChild instanceof Dom7) {
                 for (j = 0; j < newChild.length; j++) {
