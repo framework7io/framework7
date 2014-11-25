@@ -136,7 +136,8 @@ app.initClickEvents = function () {
         }
         // Accordion
         if (clicked.hasClass('accordion-item-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
-            var accordionItem = clicked.parents('.accordion-item');
+            var accordionItem = clicked.parent('.accordion-item');
+            if (accordionItem.length === 0) accordionItem = clicked.parents('.accordion-item');
             if (accordionItem.length === 0) accordionItem = clicked.parents('li');
             app.accordionToggle(accordionItem);
         }

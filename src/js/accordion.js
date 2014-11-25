@@ -9,9 +9,10 @@ app.accordionToggle = function (item) {
 };
 app.accordionOpen = function (item) {
     item = $(item);
-    var list = item.parents('.accordion-list');
-    var content = item.find('.accordion-item-content');
-    var expandedItem = list.find('.accordion-item-expanded');
+    var list = item.parents('.accordion-list').eq(0);
+    var content = item.children('.accordion-item-content');
+    if (content.length === 0) content = item.find('.accordion-item-content');
+    var expandedItem = list.length > 0 && item.parent().children('.accordion-item-expanded');
     if (expandedItem.length > 0) {
         app.accordionClose(expandedItem);
     }
@@ -33,7 +34,8 @@ app.accordionOpen = function (item) {
 };
 app.accordionClose = function (item) {
     item = $(item);
-    var content = item.find('.accordion-item-content');
+    var content = item.children('.accordion-item-content');
+    if (content.length === 0) content = item.find('.accordion-item-content');
     item.removeClass('accordion-item-expanded');
     content.transition(0);
     content.css('height', content[0].scrollHeight + 'px');
