@@ -165,9 +165,7 @@ app.initClickEvents = function () {
                 }
             }
             if (!view) {
-                for (var i = 0; i < app.views.length; i++) {
-                    if (app.views[i].main) view = app.views[i];
-                }
+                if (app.mainView) view = app.mainView;
             }
             if (!view) return;
 

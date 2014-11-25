@@ -36,14 +36,6 @@ var PhotoBrowser = function (params) {
 
     pb.params = params;
     
-    function findView() {
-        var view;
-        for (i = 0; i < app.views.length; i ++) {
-            if (app.views[i].main) view = app.views[i];
-        }
-        return view;
-    }
-
     var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
 
     var navbarTemplate = pb.params.navbarTemplate ||
@@ -159,7 +151,7 @@ var PhotoBrowser = function (params) {
         if (pb.params.type === 'page') {
             $(document).on('pageBeforeInit', pb.onPageBeforeInit);
             $(document).on('pageBeforeRemove', pb.onPageBeforeRemove);
-            if (!pb.params.view) pb.params.view = findView();
+            if (!pb.params.view) pb.params.view = app.mainView;
             pb.params.view.loadContent(htmlTemplate);
             return;
         }
