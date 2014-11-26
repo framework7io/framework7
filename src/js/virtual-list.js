@@ -94,7 +94,7 @@ var VirtualList = function (listBlock, params) {
             }
         }
         else {
-            listHeight = items.length * vl.params.height;
+            listHeight = items.length * vl.params.height / vl.params.cols;
             rowsPerScreen = Math.ceil(pageHeight / vl.params.height);
             rowsBefore = vl.params.rowsBefore || rowsPerScreen * 2;
             rowsAfter = vl.params.rowsAfter || rowsPerScreen;
@@ -112,12 +112,13 @@ var VirtualList = function (listBlock, params) {
         if (force) vl.lastRepaintY = null;
         // var scrollTop = vl.pageContent[0].scrollTop;
         var scrollTop = -(vl.listBlock[0].getBoundingClientRect().top + vl.pageContent[0].getBoundingClientRect().top);
-        if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
+        if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (vl.pageContent[0].scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
             vl.lastRepaintY = scrollTop;
         }
         else {
             return;
         }
+
         var items = vl.filteredItems || vl.items, 
             fromIndex, toIndex, heightBeforeFirstItem = 0, heightBeforeLastItem = 0;
         if (dynamicHeight) {
@@ -193,16 +194,19 @@ var VirtualList = function (listBlock, params) {
             // Append item to fragment
             vl.fragment.appendChild(item);
 
-            // Update list height with not updatable scroll
-            if (!updatableScroll) {
-                if (dynamicHeight) {
-                    vl.ul[0].style.height = heightBeforeLastItem + 'px';
-                }
-                else {
-                    vl.ul[0].style.height = (i + 1) * vl.params.height + 'px';
-                }
+        
+        }
+
+        // Update list height with not updatable scroll
+        if (!updatableScroll) {
+            if (dynamicHeight) {
+                vl.ul[0].style.height = heightBeforeLastItem + 'px';
+            }
+            else {
+                vl.ul[0].style.height = i * vl.params.height / vl.params.cols + 'px';
             }
         }
+            
 
         // Update list html
         if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
