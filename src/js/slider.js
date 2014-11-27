@@ -79,8 +79,8 @@ var Slider = function (container, params) {
             }
         }
         // First/last
-        s.isFirst = s.activeSlideIndex === 0;
-        s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
+        s.isFirst = s.isBeginning = s.activeSlideIndex === 0;
+        s.isLast = s.isEnd = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
     };
 
     s.updatePagination = function () {
@@ -327,8 +327,8 @@ var Slider = function (container, params) {
         if (typeof speed === 'undefined') speed = s.params.speed;
         s.previousSlideIndex = s.activeSlideIndex;
         s.activeSlideIndex = Math.round(index);
-        s.isFirst = s.activeSlideIndex === 0;
-        s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
+        s.isFirst = s.isBeginning = s.activeSlideIndex === 0;
+        s.isLast = s.isEnd = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
         s.onTransitionStart();
         var translateX = isH ? translate * inverter : 0, translateY = isH ? 0 : translate;
         if (speed === 0) {
