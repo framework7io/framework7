@@ -22,14 +22,14 @@ var Dom7 = (function () {
         if (selector) {
             // String
             if (typeof selector === 'string') {
-                var els, tempParent;
-                if (selector.indexOf('<') === 0 && selector.indexOf('>') > 0) {
+                var els, tempParent, html = selector.trim();
+                if (html.indexOf('<') >= 0 && html.indexOf('>') >= 0) {
                     var toCreate = 'div';
-                    if (selector.indexOf('<li') === 0) toCreate = 'ul';
-                    if (selector.indexOf('<tr') === 0) toCreate = 'tbody';
-                    if (selector.indexOf('<td') === 0 || selector.indexOf('<th') === 0) toCreate = 'tr';
-                    if (selector.indexOf('<tbody') === 0) toCreate = 'table';
-                    if (selector.indexOf('<option') === 0) toCreate = 'select';
+                    if (html.indexOf('<li') === 0) toCreate = 'ul';
+                    if (html.indexOf('<tr') === 0) toCreate = 'tbody';
+                    if (html.indexOf('<td') === 0 || html.indexOf('<th') === 0) toCreate = 'tr';
+                    if (html.indexOf('<tbody') === 0) toCreate = 'table';
+                    if (html.indexOf('<option') === 0) toCreate = 'select';
                     tempParent = document.createElement(toCreate);
                     tempParent.innerHTML = selector;
                     for (i = 0; i < tempParent.childNodes.length; i++) {
