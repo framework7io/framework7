@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: November 6, 2014
+ * Released on: December 5, 2014
 */
 html,
 body {
@@ -2410,8 +2410,13 @@ html:not(.watch-active-state) .list-block .accordion-item-toggle:active > .item-
   -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-.accordion-item-expanded .accordion-item-content {
+.accordion-item-expanded > .accordion-item-content {
   height: auto;
+}
+html.android-4 .accordion-item-content {
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
 }
 /* === Modals === */
 .modal-overlay,
@@ -2508,6 +2513,10 @@ html.ios .popup-overlay.modal-overlay-visible {
   -webkit-justify-content: center;
   justify-content: center;
 }
+.modal-buttons.modal-buttons-vertical {
+  display: block;
+  height: auto;
+}
 .modal-button {
   width: 100%;
   padding: 0 5px;
@@ -2546,6 +2555,15 @@ html.ios .popup-overlay.modal-overlay-visible {
 html:not(.watch-active-state) .modal-button:active,
 .modal-button.active-state {
   background: #d4d4d4;
+}
+.modal-buttons-vertical .modal-button {
+  border-right: none;
+  border-bottom: 1px solid #b5b5b5;
+  border-radius: 0;
+}
+.modal-buttons-vertical .modal-button:last-child {
+  border-radius: 0 0 7px 7px;
+  border-bottom: none;
 }
 .modal-no-buttons .modal-inner {
   border-radius: 7px;
