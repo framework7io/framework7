@@ -351,7 +351,7 @@ app.router._load = function (view, options) {
     }
     if (dynamicNavbar) {
         newNavbarInner.addClass(options.reload ? 'navbar-on-' + reloadPosition : 'navbar-on-right');
-        if(view.params.domCache) newNavbarInner.removeClass('cached');
+        if(view.params.domCache) newNavbarInner.removeClass('cached navbar-on-left');
         newPage[0].f7RelatedNavbar = newNavbarInner[0];
         newNavbarInner[0].f7RelatedPage = newPage[0];
     }
@@ -672,13 +672,6 @@ app.router._back = function (view, options) {
             }
         }
 
-        newPage.addClass('page-on-left').removeClass('cached');
-        if (dynamicNavbar) {
-            navbar = viewContainer.find('.navbar');
-            navbarInners = viewContainer.find('.navbar-inner:not(.cached)');
-            newNavbarInner.addClass('navbar-on-left').removeClass('cached');
-        }
-        
         // Remove/hide previous page in force mode
         if (force) {
             var pageToRemove, navbarToRemove;
@@ -712,6 +705,13 @@ app.router._back = function (view, options) {
                     view.history.unshift(url);
                 }
             }
+        }
+
+        newPage.addClass('page-on-left').removeClass('cached');
+        if (dynamicNavbar) {
+            navbar = viewContainer.find('.navbar');
+            navbarInners = viewContainer.find('.navbar-inner:not(.cached)');
+            newNavbarInner.addClass('navbar-on-left').removeClass('cached');
         }
 
         oldPage = $(pagesInView[pagesInView.length - 1]);
