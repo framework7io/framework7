@@ -1,4 +1,7 @@
-.page { background: #fff url(../img/background-2.png); }
+.page { 
+	background: #fff url(../img/bg_@2X.jpg) repeat; 
+	background-size: 50%;
+}
 
 .navbar {
 	color: #fff;
@@ -21,6 +24,8 @@
 	color: #444;
 }
 
+.clear { clear: both; }
+
 /* General UI */
 #title {
 	color: #fff;
@@ -28,6 +33,15 @@
 
 .toolbar {
 	background: #725f50;
+}
+
+.content-block {
+	margin: 0 !important;
+}
+
+.content-block-inner {
+	background: none;
+	border: none;
 }
 
 .searchbar {
@@ -60,6 +74,7 @@
 /* Addition Search */
 #addition .searchbar {
 	background: none !important;
+	border: none;
 	height: 50px;
 	float: left;
 	margin-top: 0 !important;
@@ -77,9 +92,17 @@
 
 #addition .searchbar input[type="search"] {
 	width: 100% !important;
+	height: 40px;
+}
+
+#addition .scan {
+	position: relative;
+	top: 10px;
 }
 
 #addition .scan input[type="file"] {
+	background: #74baa2;
+	border: none;
 	height: 40px;
 	float: right;
 	padding: 4px; 
@@ -158,41 +181,35 @@ ul#food_catalog li {
 	border-bottom: 1px solid #c8c7cc;
 }
 
-#food_catalog > .item-subtitle {
-	clear: both;
+#food_catalog li .item-inner  h4.item-title, h4.item-title {
+	float: left;
+	margin: 0;
+	width: 100%;
 }
 
-#food_catalog li .item-text {
-	border-right: 1px solid #999;
+#food_catalog li .item-inner .item-subtitle, .item-subtitle {
 	float: left;
-	width: 100%;
+	font-size: 12px;
+}
+
+#food_catalog li .item-inner td.item-text, td.item-text {
+	font-size: 14px;
+	float: left;
 	margin: 0;
 }
 
-.status {
-	float: left;
-	margin-left: 5px;
-}
 
-.age {
+#food_catalog li .item-inner td.age {
 	clear: both;
 }
 
-.age > .status {
-	float: right;
+
+.bad {
+	color: #B96F70;
 }
 
-.item-inner > .bad, .age > .bad {
-	color: #fff;
-	background: url(../img/bad-ribbon.png) no-repeat;
-	background-size: 80%;
-	padding: 1px 40px 0 3px;
-}
-
-.item-inner > .soon, .age > .soon {
-	color: #c69f06;
-	font-weight: bold;
-	padding: 2px 0 0 5px;
+.soon {
+	color: #C5B156;
 }
 
 .food-icon {
@@ -205,10 +222,14 @@ ul#food_catalog li {
 
 .toolbar-inner a.analytics {
 	background-color: #725f50;
-	border-radius: 40px;
-	padding: 8px;
+	border-radius: 71px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 0px;
 	position: relative;
 	top: -5px;
+	height: 60px;
 }
 
 a.analytics img {
@@ -217,6 +238,7 @@ a.analytics img {
 }
 
 #ad_space_top, #ad_space_bottom {
+	display: none;
 	text-align: center;
 	padding-top: 25px;
 	width: 100%;

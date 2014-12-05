@@ -25,7 +25,7 @@ $$(".fa-times").on('click', function ()  {
 });
 
 //Hides notification bubble
-if ($$("div .notification").length > 1) {
+if ($$(".panel-right .content-block .notification").length > 1) {
 	$$("div .num-notices").show();
 } else {
 	$$("div .num-notices").remove();

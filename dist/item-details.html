@@ -3,14 +3,14 @@
 <!-- Top Navbar-->
 <div class="navbar">
 	<div class="navbar-inner">
-  		<div class="left sliding"><a href="#" class="back link">Back</a></div>
-      	<div class="center" id="title">KITCHEN CLOUD</div>
-       	<div class="right">
-       		<a href="#" data-panel="right" class="open-panel">
-            	<span class="num-notices">2</span>
-              	<i class="fa fa-bullhorn fa-lg"></i>
-         	</a>
-       	</div>
+  		<div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+        <div class="center sliding">KITCHEN CLOUD</div>
+        <div class="right">
+            <a href="#" data-panel="right" class="link icon-only open-panel">
+                <div class="num-notices"><span>2</span></div>
+                <i class="fa fa-bullhorn fa-lg"></i>
+            </a>
+        </div>
  	</div>
 </div>
 <div class="pages">
@@ -21,16 +21,21 @@
       <div class="content-block">
         <table class="food-list-item">
         	<tr>
-           	<td valign="top"><img class="food-icon" src="img/food/icon-milk.png"></td>
-           	<td valign="top">
-             		<h4>2% Whole Milk</h4>
-                	<small>Purchased on 06/10/14</small>
-                                    
-                	<div class="age">
-                		<div class="item-text">45 days old</div>
-                  		<div class="status bad">GONE BAD</div>
-                  	</div>
-           	</td>
+                <td valign="top"><img class="food-icon" src="img/food/icon-milk.png"></td>
+                <td valign="top">
+                	<table>
+                    	<tr>
+                        	<td><h4 class="item-title">{Item Name}</h4></td>
+                        </tr>
+                        <tr>
+                			<td class="item-subtitle"><small>Purchased on {date}</small></td>
+                       	</tr>
+                        <tr class="age">
+                        	<td class="item-text">{num} days old</td>
+                  			<td class="status bad">GONE BAD</td>
+                        </tr>
+                   	</table>
+               	</td>
 			</tr>
 		</table>
         

@@ -1,17 +1,21 @@
 <!-- We don't need full layout here, because this page will be parsed with Ajax-->
 <!-- Top Navbar-->
 <div class="navbar">
-  <div class="navbar-inner">
-    <div class="center sliding">User Settings</div>
-    <div class="right">
-    	<a href="#" data-panel="right" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
-    </div>
-  </div>
+	<div class="navbar-inner">
+    	<div class="center sliding">Kitchen Cloud</div>
+    	
+        <div class="right">
+        	<a href="#" data-panel="right" class="link icon-only open-panel">
+           		<div class="num-notices"><span>2</span></div>
+              	<i class="fa fa-bullhorn fa-lg"></i>
+        	</a>
+     	</div>
+  	</div>
 </div>
 
-<div class="pages">
+<div class="pages toolbar-through">
   <!-- Page, data-page contains page name-->
-  <div data-page="settings" class="page">
+  <div data-page="index" class="page">
     <!-- Scrollable page content-->
     <div class="page-content">
    		<div class="list-block">
@@ -85,6 +89,18 @@
     		</ul>
     	</div><!-- End of list-block -->
         
-    </div>  
+    </div> 
+    
+    <!-- Bottom Toolbar-->
+        <div class="toolbar tabbar">
+          	<div class="toolbar-inner">
+       			<a href="index.html" class="link active"><img src="img/icon-pantry.png" width="25" height="29"></a>
+             	<a href="#" class="link"><img src="img/icon-list.png" width="21" height="29"></a>
+              	<a href="analytics.html" class="link analytics"><img src="img/icon-analytics.png" width="40" height="40"></a>
+             	<a href="recipes.html" class="link"><img src="img/icon-recipes.png" width="29" height="29"></a>
+             	<a href="user-settings.html" class="link"><img src="img/icon-user.png" width="29" height="29"></a>
+          	</div>
+        </div>
+         
   </div>
 </div>
