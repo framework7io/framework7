@@ -269,7 +269,7 @@ Dom7.prototype = {
         }
         else {
             if (this.length > 0) {
-                return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+                return parseFloat(this.css('width'));
             }
             else {
                 return null;
