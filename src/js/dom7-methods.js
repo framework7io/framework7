@@ -269,17 +269,16 @@ Dom7.prototype = {
         }
         else {
             if (this.length > 0) {
-                return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+                return parseFloat(this.css('width'));
             }
             else {
                 return null;
             }
         }
-            
     },
-    outerWidth: function (margins) {
+    outerWidth: function (includeMargins) {
         if (this.length > 0) {
-            if (margins)
+            if (includeMargins)
                 return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
             else
                 return this[0].offsetWidth;
@@ -292,17 +291,16 @@ Dom7.prototype = {
         }
         else {
             if (this.length > 0) {
-                return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
+                return parseFloat(this.css('height'));
             }
             else {
                 return null;
             }
         }
-            
     },
-    outerHeight: function (margins) {
+    outerHeight: function (includeMargins) {
         if (this.length > 0) {
-            if (margins)
+            if (includeMargins)
                 return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
             else
                 return this[0].offsetHeight;
