@@ -91,7 +91,7 @@ app.scrollMessagesContainer = function (messagesContent) {
     var messages = messagesContent.find('.messages');
     var newOnTop = messages.hasClass('new-messages-first');
     var currentScroll = messagesContent[0].scrollTop;
-    var newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
+    var newScroll = newOnTop ? 0 : messagesContent[0].scrollHeight - messagesContent[0].offsetHeight;
     if (newScroll === currentScroll) return;
     messagesContent.scrollTop(newScroll, 300);
 };
