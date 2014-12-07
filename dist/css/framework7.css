@@ -1,5 +1,5 @@
 /*
- * Framework7 0.9.8
+ * Framework7 0.9.9
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: November 6, 2014
+ * Released on: December 7, 2014
 */
 html,
 body {
@@ -2164,6 +2164,16 @@ html:not(.watch-active-state) .button.button-fill:active,
 .button.button-fill.active-state {
   opacity: 0.8;
 }
+.button i.icon:first-child {
+  margin-right: 10px;
+}
+.button i.icon:last-child {
+  margin-left: 10px;
+}
+.button i.icon:first-child:last-child {
+  margin-left: 0;
+  margin-right: 0;
+}
 .buttons-row {
   -ms-flex-item-align: center;
   -webkit-align-self: center;
@@ -2410,8 +2420,13 @@ html:not(.watch-active-state) .list-block .accordion-item-toggle:active > .item-
   -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-.accordion-item-expanded .accordion-item-content {
+.accordion-item-expanded > .accordion-item-content {
   height: auto;
+}
+html.android-4 .accordion-item-content {
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
 }
 /* === Modals === */
 .modal-overlay,
@@ -2508,6 +2523,10 @@ html.ios .popup-overlay.modal-overlay-visible {
   -webkit-justify-content: center;
   justify-content: center;
 }
+.modal-buttons.modal-buttons-vertical {
+  display: block;
+  height: auto;
+}
 .modal-button {
   width: 100%;
   padding: 0 5px;
@@ -2546,6 +2565,15 @@ html.ios .popup-overlay.modal-overlay-visible {
 html:not(.watch-active-state) .modal-button:active,
 .modal-button.active-state {
   background: #d4d4d4;
+}
+.modal-buttons-vertical .modal-button {
+  border-right: none;
+  border-bottom: 1px solid #b5b5b5;
+  border-radius: 0;
+}
+.modal-buttons-vertical .modal-button:last-child {
+  border-radius: 0 0 7px 7px;
+  border-bottom: none;
 }
 .modal-no-buttons .modal-inner {
   border-radius: 7px;

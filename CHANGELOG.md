@@ -1,5 +1,31 @@
 # Change Log
 
+## Framework7 v0.9.9 - Updated on December 7, 2014
+  * Virtual List
+    * Now it is possible to use multiple Virtual Lists on same page
+    * Fixed issue with muliple columns and wrong list height on iOS 7
+  * Smart Select
+    * Generated Smart Select page/popup can be used with Virtual List by adding `data-virtual-list="true"` and `data-virtual-list-height="44"` attributes to Smart Select. 
+  * Panels
+    * Fixed issue with swipe panel with specified `swipePanelActiveArea` parameter
+    * New app parameter `swipePanelOnlyClose` allows to close panels with swipe without `swipePanel`
+  * Modals
+    * New `verticalButtons` modal parameter to enable vertical buttons layout
+  * Accordion
+    * Better support for nested accordions
+    * Fixed issue when its content becomes invisible on Android devices
+  * Router
+    * New App and View `allowDuplicateUrls` parameter (disabled by default) that allows loading of pages with same urls
+    * Fixed issues with DOM manipulation with enabled `domCache`
+  * Dom7
+    * Now Dom7 can parse and create DOM elements from string, like `var div = $$('<div></div>')`
+    * Better width/height calculationg in `.width()` and `.height()` methods
+    * Support for JSON declaration of attributes and propeties in `.attr()` and `.prop()` methods
+  * Template7
+    * Updated to latest Template7 version with new support of Global context, that could be specified using `Template7.global` property and used as `@global` keyword in templates
+  * Pull To Refresh
+    * New `app.destroyPullToRefresh()` method to destroy/disable PTR on page
+    
 ## Framework7 v0.9.8 - Updated on November 2, 2014
   * Virtual List
     * New component that allows to render lists with huge amount of items without loss of performance.
