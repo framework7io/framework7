@@ -6,7 +6,7 @@ app.initPullToRefresh = function (pageContainer) {
     if (!eventsTarget.hasClass('pull-to-refresh-content')) {
         eventsTarget = eventsTarget.find('.pull-to-refresh-content');
     }
-    if (eventsTarget.length === 0) return;
+    if (!eventsTarget || eventsTarget.length === 0) return;
 
     var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer;
     var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
@@ -14,8 +14,6 @@ app.initPullToRefresh = function (pageContainer) {
     if (page.find('.navbar').length > 0 || page.parents('.navbar-fixed, .navbar-through').length > 0 || page.hasClass('navbar-fixed') || page.hasClass('navbar-through')) hasNavbar = true;
     if (page.hasClass('no-navbar')) hasNavbar = false;
     if (!hasNavbar) eventsTarget.addClass('pull-to-refresh-no-navbar');
-
-    if (eventsTarget)
 
     container = eventsTarget;
 
@@ -131,11 +129,14 @@ app.initPullToRefresh = function (pageContainer) {
 
     // Detach Events on page remove
     if (page.length === 0) return;
-    function detachEvents() {
+    function destroyPullToRefresh() {
         eventsTarget.off(app.touchEvents.start, handleTouchStart);
         eventsTarget.off(app.touchEvents.move, handleTouchMove);
         eventsTarget.off(app.touchEvents.end, handleTouchEnd);
-
+    }
+    eventsTarget[0].f7DestroyPullToRefresh = destroyPullToRefresh;
+    function detachEvents() {
+        destroyPullToRefresh();
         page.off('pageBeforeRemove', detachEvents);
     }
     page.on('pageBeforeRemove', detachEvents);
@@ -160,4 +161,11 @@ app.pullToRefreshTrigger = function (container) {
             app.pullToRefreshDone(container);
         }
     });
+};
+
+app.destroyPullToRefresh = function (pageContainer) {
+    pageContainer = $(pageContainer);
+    var pullToRefreshContent = pageContainer.hasClass('pull-to-refresh-content') ? pageContainer : pageContainer.find('.pull-to-refresh-content');
+    if (pullToRefreshContent.length === 0) return;
+    if (pullToRefreshContent[0].f7DestroyPullToRefresh) pullToRefreshContent[0].f7DestroyPullToRefresh();
 };
