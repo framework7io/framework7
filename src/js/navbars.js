@@ -39,7 +39,7 @@ app.sizeNavbars = function (viewContainer) {
             leftWidth = noLeft ? 0 : left.outerWidth(true),
             rightWidth = noRight ? 0 : right.outerWidth(true),
             centerWidth = center.outerWidth(true),
-            navbarWidth = n.width(),
+            navbarWidth = n[0].offsetWidth - parseInt(n.css('padding-left'), 10) - parseInt(n.css('padding-right'), 10),
             onLeft = n.hasClass('navbar-on-left'),
             currLeft, diff;
 
