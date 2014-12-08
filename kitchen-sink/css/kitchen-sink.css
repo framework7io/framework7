@@ -40,6 +40,9 @@
   -ms-transform: none;
   -o-transform: none;
   transform: none;
+  -webkit-transition: 0ms;
+  -o-transition: 0ms;
+  transition: 0ms;
 }
 .page[data-page="tabbar-labels"] .page-content {
   padding-bottom: 50px;
