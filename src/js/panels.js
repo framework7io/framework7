@@ -174,7 +174,7 @@ app.initSwipePanels = function () {
                 panel.show();
                 panelOverlay.show();
             }
-            panelWidth = panel.width();
+            panelWidth = panel[0].offsetWidth;
             panel.transition(0);
             if (panel.find('.' + app.params.viewClass).length > 0) {
                 if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
