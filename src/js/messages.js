@@ -6,8 +6,8 @@ app.initMessages = function (pageContainer) {
     var messages = page.find('.messages');
     if (messages.length === 0) return;
     var pageContent = page.find('.page-content');
-    if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = messages.height() - pageContent.height();
     if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
+    if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = pageContent[0].scrollHeight - pageContent[0].offsetHeight;
 };
 app.addMessage = function (props) {
     props = props || {};
