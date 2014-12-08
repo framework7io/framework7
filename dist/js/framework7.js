@@ -1,5 +1,5 @@
 /*
- * Framework7 0.9.9
+ * Framework7 0.10.0
  * Full Featured HTML Framework For Building iOS 7 Apps
  *
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  *
  * Licensed under MIT
  *
- * Released on: December 7, 2014
+ * Released on: December 8, 2014
 */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '0.9.9';
+        app.version = '0.10.0';
     
         // Default Parameters
         app.params = {
@@ -719,7 +719,7 @@
                     leftWidth = noLeft ? 0 : left.outerWidth(true),
                     rightWidth = noRight ? 0 : right.outerWidth(true),
                     centerWidth = center.outerWidth(true),
-                    navbarWidth = n.width(),
+                    navbarWidth = n[0].offsetWidth - parseInt(n.css('padding-left'), 10) - parseInt(n.css('padding-right'), 10),
                     onLeft = n.hasClass('navbar-on-left'),
                     currLeft, diff;
         
@@ -3144,7 +3144,7 @@
                         panel.show();
                         panelOverlay.show();
                     }
-                    panelWidth = panel.width();
+                    panelWidth = panel[0].offsetWidth;
                     panel.transition(0);
                     if (panel.find('.' + app.params.viewClass).length > 0) {
                         if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
@@ -3280,8 +3280,8 @@
             var messages = page.find('.messages');
             if (messages.length === 0) return;
             var pageContent = page.find('.page-content');
-            if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = messages.height() - pageContent.height();
             if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
+            if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = pageContent[0].scrollHeight - pageContent[0].offsetHeight;
         };
         app.addMessage = function (props) {
             props = props || {};
@@ -3365,7 +3365,7 @@
             var messages = messagesContent.find('.messages');
             var newOnTop = messages.hasClass('new-messages-first');
             var currentScroll = messagesContent[0].scrollTop;
-            var newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
+            var newScroll = newOnTop ? 0 : messagesContent[0].scrollHeight - messagesContent[0].offsetHeight;
             if (newScroll === currentScroll) return;
             messagesContent.scrollTop(newScroll, 300);
         };
@@ -3424,12 +3424,12 @@
                     noFoldLeft = actionsLeft.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
                     noFoldRight = actionsRight.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
                     if (actionsLeft.length > 0) {
-                        actionsLeftWidth = actionsLeft.width();
+                        actionsLeftWidth = actionsLeft.outerWidth();
                         buttonsLeft = actionsLeft.children('a');
                         overswipeLeftButton = actionsLeft.find('.swipeout-overswipe');
                     }
                     if (actionsRight.length > 0) {
-                        actionsRightWidth = actionsRight.width();
+                        actionsRightWidth = actionsRight.outerWidth();
                         buttonsRight = actionsRight.children('a');
                         overswipeRightButton = actionsRight.find('.swipeout-overswipe');
                     }
@@ -3661,7 +3661,7 @@
             el.trigger('open').addClass('swipeout-opened').removeClass('transitioning');
             swipeOutActions.addClass('swipeout-actions-opened');
             var buttons = swipeOutActions.children('a');
-            var swipeOutActionsWidth = swipeOutActions.width();
+            var swipeOutActionsWidth = swipeOutActions.outerWidth();
             var translate = dir === 'right' ? -swipeOutActionsWidth : swipeOutActionsWidth;
             var i;
             if (buttons.length > 1) {
@@ -3692,7 +3692,7 @@
             var swipeOutActions = el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
             var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
             var buttons = swipeOutActions.children('a');
-            var swipeOutActionsWidth = swipeOutActions.width();
+            var swipeOutActionsWidth = swipeOutActions.outerWidth();
             app.allowSwipeout = false;
             el.trigger('close');
             el.removeClass('swipeout-opened').addClass('transitioning');
@@ -7188,7 +7188,7 @@
             list.prepend(item[0]);
             container.show();
             
-            var itemHeight = item.height();
+            var itemHeight = item.outerHeight();
             item.css('marginTop', -itemHeight + 'px');
             item.transition(0);
         
@@ -7207,7 +7207,7 @@
             if (item.hasClass('notification-item-removing')) return;
             var container = $('.notifications');
         
-            var itemHeight = item.height();
+            var itemHeight = item.outerHeight();
             item.css('height', itemHeight + 'px').transition(0);
             var clientLeft = item[0].clientLeft;
         

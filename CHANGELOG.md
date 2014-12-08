@@ -1,5 +1,9 @@
 # Change Log
 
+## Framework7 v0.10.0 - Updated on December 8, 2014
+  * Fixed issue with messages scrolling when adding new message
+  * Fixed issue with positioning of dynamic navbar elements
+
 ## Framework7 v0.9.9 - Updated on December 7, 2014
   * Virtual List
     * Now it is possible to use multiple Virtual Lists on same page
