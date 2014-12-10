@@ -388,7 +388,7 @@ Dom7.prototype = {
         }
         else {
             for (var i = 0; i < this.length; i++) {
-                this[0].textContent = text;
+                this[i].textContent = text;
             }
         }
     },
