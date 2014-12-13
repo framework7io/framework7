@@ -466,18 +466,23 @@ html.with-statusbar-overlay {
 }
 html.retina.ios-gt-7 {
     .modal-inner {
-        border-bottom-width: 0.5px;
+        border-bottom-width: 0;
+        .hairline-bottom();
     }
     .modal-button {
+        // todo: figure out how to do right
         border-right-width: 0.5px;   
     }
     .actions-modal-button, .actions-modal-label {
-        border-bottom-width: 0.5px;   
+        border-bottom-width: 0;
+        .hairline-bottom();
     }
     .actions-popover-label {
-        border-bottom-width: 0.5px;
+        border-bottom-width: 0;
+        .hairline-bottom();
     }
     input.modal-text-input {
+        // todo: figure out how to do all
         border-width: 0.5px;
     }
 

@@ -65,7 +65,8 @@
     background: @navbarBg;
     border-bottom: 1px solid @navbarBorderColor;
     html.retina.ios-gt-7 & {
-        border-bottom-width: 0.5px;
+        border-bottom-width: 0;
+        .hairline-bottom();
     }
     .center {
         font-size: 17px;
@@ -110,7 +111,8 @@
     background: @toolbarBg;
     border-top: 1px solid @toolbarBorderColor;
     html.retina.ios-gt-7 & {
-        border-top-width: 0.5px;
+        border-top-width: 0;
+        .hairline-top();
     }
     a {
         .flex-shrink(1);
