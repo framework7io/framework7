@@ -395,6 +395,7 @@
 html.retina.ios-gt-7 {
     .list-block {
         ul {
+            position: relative;
             border-top-width: 0;
             border-bottom-width: 0;
             .hairline-top();
@@ -402,16 +403,19 @@ html.retina.ios-gt-7 {
         }
         li:not(:last-child) {
             .item-inner{
+                position: relative;
                 border-bottom-width: 0;
                 .hairline-bottom();
             }
         }
     }
     .item-divider {
+        position: relative;
         border-top-width: 0;
         .hairline-top();
     }
     .item-link.list-button {
+        position: relative;
         border-bottom-width: 0;
         .hairline-bottom();
     }
