@@ -1,3 +1,5 @@
+@contentHairlineBorderColor: #c8c7cc;
+
 .transition(@d) {
     -webkit-transition-duration: @d;
     transition-duration: @d;
@@ -147,7 +149,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        border-top: 1px solid #c8c7cc;
+        border-top: 1px solid @contentHairlineBorderColor;
         transform: scaleY(0.5);
         -webkit-transform: scaleY(0.5);
         content: "";
@@ -160,7 +162,7 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        border-bottom: 1px solid #c8c7cc;
+        border-bottom: 1px solid @contentHairlineBorderColor;
         transform: scaleY(0.5);
         -webkit-transform: scaleY(0.5);
         content: "";
