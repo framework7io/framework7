@@ -75,7 +75,7 @@ app.initIonicKeyboardMessagebar = function(pageContainer) {
   function keyboardShowHandler(e) {
     if (notStopped) {
       notStopped = false;
-      var height = newBarHeight != 0 ? newBarHeight/1 : initialPadding;
+      var height = newBarHeight !== 0 ? newBarHeight/1 : initialPadding;
       messagebar.css('bottom', e.keyboardHeight + 'px');
       pageContent.css('padding-bottom', e.keyboardHeight + height + 'px');
       setTimeout(function () {
@@ -93,7 +93,7 @@ app.initIonicKeyboardMessagebar = function(pageContainer) {
   function keyboardHideHandler() {
     setTimeout(function() {
       messagebar.css('bottom', '0');
-      var height = newBarHeight != 0 ? newBarHeight/1 : initialPadding;
+      var height = newBarHeight !== 0 ? newBarHeight/1 : initialPadding;
       pageContent.css('padding-bottom', height + 'px');
       pageContent.scrollTop(pageContent[0].scrollHeight - pageContent[0].offsetHeight, 200);
       isKeyboardOpen = false;
