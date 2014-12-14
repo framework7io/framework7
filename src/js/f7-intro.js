@@ -101,6 +101,8 @@ window.Framework7 = function (params) {
         precompileTemplates: false,
         // Auto init
         init: true,
+        // has plugins
+        ionicKeyboard: false
     };
 
     // Extend defaults with parameters
