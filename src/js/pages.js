@@ -254,12 +254,13 @@ app.initPage = function (pageContainer) {
     if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
     // Init searchbar
     if (app.initSearchbar) app.initSearchbar(pageContainer);
+    // Init scroll toolbars
+    if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
     // Init message bar
     if (!app.params.ionicKeyboard && app.initMessagebar) app.initMessagebar(pageContainer);
     // Init ionic keyboard plugin
     if (app.params.ionicKeyboard && app.initIonicKeyboardMessagebar) app.initIonicKeyboardMessagebar(pageContainer);
-    // Init scroll toolbars
-    if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
+    if (app.params.ionicKeyboard && app.initIonicKeyboardInputs) app.initIonicKeyboardInputs(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     // Size navbars on page reinit

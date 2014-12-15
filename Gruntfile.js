@@ -33,6 +33,7 @@ module.exports = function (grunt) {
         'src/js/searchbar.js',
         'src/js/messagebar.js',
         'src/js/messagebar-ionic-keyboard.js',
+        'src/js/inputs-ionic-keyboard.js',
         'src/js/xhr.js',
         'src/js/pages.js',
         'src/js/router.js',
