@@ -649,7 +649,12 @@ Dom7.prototype = {
             var i;
             if (typeof handler === 'undefined') {
                 for (i = 0; i < this.length; i++) {
-                    if (notTrigger.indexOf(name) < 0) this[i][name]();
+                    if (notTrigger.indexOf(name) < 0) {
+                        if (name in this[i]) this[i][name]();
+                        else {
+                            $(this[i]).trigger(name);
+                        }
+                    }
                 }
                 return this;
             }
