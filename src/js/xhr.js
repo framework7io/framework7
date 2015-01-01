@@ -36,7 +36,7 @@ app.get = function (url, view, ignoreCache, callback) {
     app.xhr = $.ajax({
         url: url,
         method: 'GET',
-        start: app.params.onAjaxStart,
+        beforeSend: app.params.onAjaxStart,
         complete: function (xhr) {
             if (xhr.status === 200 || xhr.status === 0) {
                 if (app.params.cache && !ignoreCache) {

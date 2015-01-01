@@ -184,7 +184,7 @@ $(document).on('submit change', 'form.ajax-submit, form.ajax-submit-onchange', f
         url: url,
         contentType: contentType,
         data: data,
-        start: function (xhr) {
+        beforeSend: function (xhr) {
             form.trigger('beforeSubmit', {data:data, xhr: xhr});
         },
         error: function (xhr) {
