@@ -76,6 +76,7 @@ app.formToJSON = function (form) {
         }
             
     });
+    form.trigger('formToJSON', {formData: formData});
 
     return formData;
 };
@@ -125,6 +126,7 @@ app.formFromJSON = function (form, formData) {
         }
             
     });
+    form.trigger('formFromJSON', {formData: formData});
 };
 app.initFormsStorage = function (pageContainer) {
     pageContainer = $(pageContainer);
@@ -182,6 +184,12 @@ $(document).on('submit change', 'form.ajax-submit, form.ajax-submit-onchange', f
         url: url,
         contentType: contentType,
         data: data,
+        start: function (xhr) {
+            form.trigger('beforeSubmit', {data:data, xhr: xhr});
+        },
+        error: function (xhr) {
+            form.trigger('submitError', {data:data, xhr: xhr});  
+        },
         success: function (data) {
             form.trigger('submitted', {data: data, xhr: xhr});
         }
