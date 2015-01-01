@@ -98,6 +98,14 @@ $.requestAnimationFrame = function (callback) {
         return window.setTimeout(callback, 1000 / 60);
     }
 };
+$.cancelAnimationFrame = function (id) {
+    if (window.cancelAnimationFrame) return window.cancelAnimationFrame(id);
+    else if (window.webkitCancelAnimationFrame) return window.webkitCancelAnimationFrame(id);
+    else if (window.mozCancelAnimationFrame) return window.mozCancelAnimationFrame(id);
+    else {
+        return window.clearTimeout(id);
+    }  
+};
 $.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
 
 // Link to prototype
