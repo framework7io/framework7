@@ -5,7 +5,8 @@ var VirtualList = function (listBlock, params) {
     var defaults = {
         cols: 1,
         height: 44,
-        cache: true
+        cache: true,
+        dynamicHeightBufferSize: 1
     };
     params = params || {};
     for (var def in defaults) {
@@ -124,15 +125,16 @@ var VirtualList = function (listBlock, params) {
         if (dynamicHeight) {
             var itemTop = 0, j, itemHeight; 
             maxBufferHeight = pageHeight;
+            
             for (j = 0; j < vl.heights.length; j++) {
                 itemHeight = vl.heights[j];
                 if (typeof fromIndex === 'undefined') {
-                    if (itemTop + itemHeight >= scrollTop - pageHeight * 2) fromIndex = j;
+                    if (itemTop + itemHeight >= scrollTop - pageHeight * 2 * vl.params.dynamicHeightBufferSize) fromIndex = j;
                     else heightBeforeFirstItem += itemHeight;
                 }
                 
                 if (typeof toIndex === 'undefined') {
-                    if (itemTop + itemHeight >= scrollTop + pageHeight * 2 || j === vl.heights.length - 1) toIndex = j + 1;
+                    if (itemTop + itemHeight >= scrollTop + pageHeight * 2 * vl.params.dynamicHeightBufferSize || j === vl.heights.length - 1) toIndex = j + 1;
                     heightBeforeLastItem += itemHeight;
                 }
                 itemTop += itemHeight;
