@@ -1,3 +1,12 @@
+// Global Ajax Setup
+var globalAjaxOptions = {};
+$.ajaxSetup = function (options) {
+    if (options.type) options.method = options.type;
+    for (var option in options) {
+        globalAjaxOptions[option]  = options[option];
+    }
+};
+
 // Ajax
 var _jsonpRequests = 0;
 $.ajax = function (options) {
@@ -14,11 +23,26 @@ $.ajax = function (options) {
         processData: true,
         dataType: 'text',
         contentType: 'application/x-www-form-urlencoded',
-        timeout: 0 // 0s JSONp timeout
+        timeout: 0
     };
+
+    /*== 
+    Available callbacks options:
+    beforeSend (start)
+    error
+    complete
+    success
+    statusCode - object with functions
+    ==*/
+
 
     //For jQuery guys
     if (options.type) options.method = options.type;
+
+    // Merge global and defaults
+    for (var globalOption in globalAjaxOptions) {
+        defaults[globalOption] = globalAjaxOptions[globalOption];
+    }
 
     // Merge options and defaults
     for (var prop in defaults) {
@@ -165,8 +189,10 @@ $.ajax = function (options) {
         }
     }
 
+    var xhrTimeout;
     // Handle XHR
     xhr.onload = function (e) {
+        if (xhrTimeout) clearTimeout(xhrTimeout);
         if (xhr.status === 200 || xhr.status === 0) {
             $(document).trigger('ajaxSuccess', {xhr: xhr});
             if (options.success) {
@@ -180,22 +206,35 @@ $.ajax = function (options) {
             if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
         }
         if (options.complete) {
-            options.complete(xhr);
+            options.complete(xhr, xhr.status);
         }
         $(document).trigger('ajaxComplete', {xhr: xhr});
     };
     
     xhr.onerror = function (e) {
+        if (xhrTimeout) clearTimeout(xhrTimeout);
         $(document).trigger('ajaxError', {xhr: xhr});
-        if (options.error) options.error(xhr);
+        if (options.error) options.error(xhr, xhr.status);
     };
 
     // Ajax start callback
     if (options.start) options.start(xhr);
+    if (options.beforeSend) options.beforeSend(xhr);
 
     // Send XHR
     $(document).trigger('ajaxStart', {xhr: xhr});
     xhr.send(postData);
+
+    // Timeout
+    if (options.timeout > 0) {
+        xhrTimeout = setTimeout(function () {
+            xhr.abort();
+            if (options.complete) options.complete(xhr, 'timeout');
+            if (options.error) options.error(xhr, 'timeout');
+            $(document).trigger('ajaxComplete', {xhr: xhr, timeout: true});
+            $(document).trigger('ajaxError', {xhr: xhr, timeout: true});
+        }, options.timeout);
+    }
 
     // Return XHR object
     return xhr;
