@@ -480,7 +480,7 @@ app.router._load = function (view, options) {
         newPage.removeClass('page-from-right-to-center page-on-right').addClass('page-on-center');
         oldPage.removeClass('page-from-center-to-left page-on-center').addClass('page-on-left');
         if (dynamicNavbar) {
-            newNavbarInner.removeClass('navbar-from-right-to-center navbar-on-right').addClass('navbar-on-center');
+            newNavbarInner.removeClass('navbar-from-right-to-center navbar-on-left navbar-on-right').addClass('navbar-on-center');
             oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center').addClass('navbar-on-left');
         }
         app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
@@ -519,6 +519,7 @@ app.router._load = function (view, options) {
         });
     }
     else {
+        newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
         afterAnimation();
     }
 };
