@@ -4,14 +4,15 @@
 var Picker = function (params) {
     var p = this;
     var defaults = {
-        updateItemsDuringScroll: true,
-        rotateEffect: true,
+        updateItemsDuringScroll: false,
+        rotateEffect: false,
         shrinkView: true,
+        pickerbarCloseText: 'Done',
         pickerbarHTML: 
             '<div class="toolbar pickerbar">' +
                 '<div class="left"></div>' +
                 '<div class="right">' +
-                    '<a href="#" class="link close-picker">Done</a>' +
+                    '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
             '</div>'
     };
@@ -313,7 +314,7 @@ var Picker = function (params) {
         }
         var pickerHTML =
             '<div class="picker ' + (p.params.cssClass || '') + '">' +
-                p.params.pickerbarHTML +
+                p.params.pickerbarHTML.replace(/{{closeText}}/g, p.params.pickerbarCloseText) +
                 '<div class="picker-items">' +
                     colsHTML +
                     '<div class="picker-center-highlight"></div>' +
