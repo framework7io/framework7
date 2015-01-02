@@ -97,6 +97,11 @@ app.initClickEvents = function () {
                 app.closeModal('.popup.modal-in');
         }
 
+        // Picker
+        if (clicked.hasClass('close-picker')) {
+            var picker = app.closePicker(clicked.parents('.picker'));
+        }
+
         // Tabs
         var isTabLink;
         if (clicked.hasClass('tab-link')) {
@@ -218,5 +223,5 @@ app.initClickEvents = function () {
             else view.router.load(options);
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker', handleClicks);
 };

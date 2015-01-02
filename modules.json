@@ -144,5 +144,10 @@
         "js" : ["src/js/notifications.js"],
         "less": ["src/less/notifications.less"],
         "dependencies" : []
+    },
+    "picker": {
+        "js" : ["src/js/picker.js"],
+        "less": ["src/less/picker.less"],
+        "dependencies" : []
     }
 }
