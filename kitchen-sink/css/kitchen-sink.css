@@ -221,6 +221,22 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
 .custom-accordion .accordion-item-content {
   padding: 0px 15px;
 }
+.ks-date-time-picker .picker-item {
+  color: #999;
+}
+.ks-date-time-picker .picker-selected {
+  color: #000;
+}
+@media (max-width: 767px) {
+  .ks-date-time-picker .picker-items {
+    font-size: 21px;
+  }
+  .ks-date-time-picker .picker-item {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 6px;
+  }
+}
 .ks-layout-theme {
   height: 44px;
   border: 1px solid #aaa;
