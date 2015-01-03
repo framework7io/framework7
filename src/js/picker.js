@@ -6,8 +6,10 @@ var Picker = function (params) {
     var defaults = {
         updateItemsDuringScroll: false,
         rotateEffect: false,
-        shrinkView: true,
+        shrinkView: false,
+        scrollToInput: true,
         pickerbarCloseText: 'Done',
+        momentumRatio: 7,
         pickerbarHTML: 
             '<div class="toolbar pickerbar">' +
                 '<div class="left"></div>' +
@@ -23,10 +25,13 @@ var Picker = function (params) {
         }
     }
     p.params = params;
-    p.cols = p.params.cols;
+    p.cols = [];
     p.initialized = false;
     
     var isInline = p.params.container ? true : false;
+
+    // Origin bug, only on safari
+    var originBug = app.device.ios || (navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && navigator.userAgent.toLowerCase().indexOf('chrome') < 0);
 
     // Should be converted to popover
     function isPopover() {
@@ -41,22 +46,25 @@ var Picker = function (params) {
         } 
         return toPopover; 
     }
-    
-        
-        
 
     // Value
     p.setValue = function (arrValues, transition) {
-        for (var i = 0; i < arrValues.length; i++) {
-            if (p.cols[i]) p.cols[i].setValue(arrValues[i], transition);
+        var valueIndex = 0;
+        for (var i = 0; i < p.cols.length; i++) {
+            if (p.cols[i] && !p.cols[i].divider) {
+                p.cols[i].setValue(arrValues[valueIndex], transition);
+                valueIndex++;
+            }
         }
     };
     p.updateValue = function () {
         var newValue = [];
         var newTextValue = [];
         for (var i = 0; i < p.cols.length; i++) {
-            newValue.push(p.cols[i].value);
-            newTextValue.push(p.cols[i].textValue);
+            if (!p.cols[i].divider) {
+                newValue.push(p.cols[i].value);
+                newTextValue.push(p.cols[i].textValue);
+            }
         }
         if (newValue.indexOf(undefined) >= 0) {
             return;
@@ -68,12 +76,14 @@ var Picker = function (params) {
         }
         if (p.input && p.input.length > 0) {
             $(p.input).val(p.params.formatValue ? p.params.formatValue(p, p.value, p.textValue) : p.value.join(' '));
+            $(p.input).trigger('change');
         }
     };
     p.initPickerCol = function (colElement, updateItems) {
         var colContainer = $(colElement);
         var colIndex = colContainer.index();
         var col = p.cols[colIndex];
+        if (col.divider) return;
         col.container = colContainer;
         col.wrapper = col.container.find('.picker-items-col-wrapper');
         col.items = col.wrapper.find('.picker-item');
@@ -82,18 +92,32 @@ var Picker = function (params) {
         var wrapperHeight, itemHeight, itemsHeight, minTranslate, maxTranslate;
 
         col.calcSize = function () {
+            if (p.params.rotateEffect) {
+                col.container.removeClass('picker-items-col-absolute');
+                col.container.css({width:''});
+            }
+            col.width = 0;
             col.height = col.container[0].offsetHeight;
             wrapperHeight = col.wrapper[0].offsetHeight;
             itemHeight = col.items[0].offsetHeight;
             itemsHeight = itemHeight * col.items.length;
             minTranslate = col.height / 2 - itemsHeight + itemHeight / 2;
             maxTranslate = col.height / 2 - itemHeight / 2;    
+            if (p.params.rotateEffect) {
+                col.items.each(function () {
+                    var item = $(this);
+                    item.css({width:'auto'});
+                    col.width = Math.max(col.width, item[0].offsetWidth);
+                    item.css({width:''});
+                });
+                col.container.css({minWidth: col.width + 'px'});
+                col.container.addClass('picker-items-col-absolute');
+            }
         };
         col.calcSize();
         
         col.wrapper.transform('translate3d(0,' + maxTranslate + 'px,0)').transition(0);
 
-        var isTouched, isMoved, touchStartY, touchStartX, touchCurrentX, touchCurrentY, touchStartTime, isScrolling, startTranslate, returnTo, currentTranslate, prevTranslate, velocityTranslate, velocityTime;
 
         var activeIndex = 0;
         var animationFrameId;
@@ -109,16 +133,18 @@ var Picker = function (params) {
             // Update wrapper
             col.wrapper.transition(transition);
             col.wrapper.transform('translate3d(0,' + (newTranslate) + 'px,0)');
-            col.wrapper.transitionEnd(function(){
-                $.cancelAnimationFrame(animationFrameId);
-            });
-            // Update items
-            col.updateItems(newActiveIndex, newTranslate, transition, valueCallbacks);
-
+                
             // Watch items
-            if (p.params.updateItemsDuringScroll && col.activeIndex !== newActiveIndex) {
+            if (p.params.updateItemsDuringScroll && col.activeIndex && col.activeIndex !== newActiveIndex ) {
+                $.cancelAnimationFrame(animationFrameId);
+                col.wrapper.transitionEnd(function(){
+                    $.cancelAnimationFrame(animationFrameId);
+                });
                 updateDuringScroll();
             }
+
+            // Update items
+            col.updateItems(newActiveIndex, newTranslate, transition, valueCallbacks);
         };
 
         col.updateItems = function (activeIndex, translate, transition, valueCallbacks) {
@@ -163,12 +189,17 @@ var Picker = function (params) {
                 var translateOffset = maxTranslate - translate;
                 var itemOffset = itemOffsetTop - translateOffset;
                 var percentage = itemOffset / itemHeight;
+
+                var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
                 
-                var angle = (-20*percentage);
-                if (angle > 90) angle = 90;
-                if (angle < -90) angle = -90;
-                var tz = (Math.cos( angle*2*Math.PI/360 ) * 500 - 500);
-                item.transform('translate3d(0, 0px,' + tz + 'px) rotateX(' + angle + 'deg)');
+                var angle = (-18*percentage);
+                if (angle > 180) angle = 180;
+                if (angle < -180) angle = -180;
+                // Far class
+                if (Math.abs(percentage) > itemsFit) item.addClass('picker-item-far');
+                else item.removeClass('picker-item-far');
+                // Set transform
+                item.transform('translate3d(0, ' + (-translate + maxTranslate) + 'px, ' + (originBug ? -110 : 0) + 'px) rotateX(' + angle + 'deg)');
             });
         };
 
@@ -183,14 +214,14 @@ var Picker = function (params) {
         if (updateItems) col.updateItems(0, maxTranslate, 0);
 
         var allowItemClick = true;
+        var isTouched, isMoved, touchStartY, touchCurrentY, touchStartTime, touchEndTime, startTranslate, returnTo, currentTranslate, prevTranslate, velocityTranslate, velocityTime;
         function handleTouchStart (e) {
             if (isMoved || isTouched) return;
             e.preventDefault();
             isTouched = true;
-            touchStartX = touchCurrentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
             touchStartY = touchCurrentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-            isScrolling = undefined;
-            $.cancelAnimationFrame(animationFrameId);
+            touchStartTime = (new Date()).getTime();
+            
             allowItemClick = true;
             startTranslate = currentTranslate = $.getTranslate(col.wrapper[0], 'y');
         }
@@ -198,11 +229,10 @@ var Picker = function (params) {
             if (!isTouched) return;
             e.preventDefault();
             allowItemClick = false;
-            touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
             touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-            
             if (!isMoved) {
                 // First move
+                $.cancelAnimationFrame(animationFrameId);
                 isMoved = true;
                 startTranslate = currentTranslate = $.getTranslate(col.wrapper[0], 'y');
                 col.wrapper.transition(0);
@@ -239,7 +269,6 @@ var Picker = function (params) {
                 return;
             }
             isTouched = isMoved = false;
-
             col.wrapper.transition('');
             if (returnTo) {
                 if (returnTo === 'min') {
@@ -247,10 +276,18 @@ var Picker = function (params) {
                 }
                 else col.wrapper.transform('translate3d(0,' + maxTranslate + 'px,0)');
             }
-            var touchEndTime = new Date();
-            var velocity = Math.abs(velocityTranslate / (touchEndTime - velocityTime));
-            var newTranslate = currentTranslate + velocityTranslate * 5;
+            touchEndTime = new Date().getTime();
+            var velocity, newTranslate;
+            if (touchEndTime - touchStartTime > 300) {
+                newTranslate = currentTranslate;
+            }
+            else {
+                velocity = Math.abs(velocityTranslate / (touchEndTime - velocityTime));
+                newTranslate = currentTranslate + velocityTranslate * p.params.momentumRatio;
+            }
+
             newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
+
             // Active Index
             var activeIndex = -Math.floor((newTranslate - maxTranslate)/itemHeight);
 
@@ -258,10 +295,7 @@ var Picker = function (params) {
             newTranslate = -activeIndex * itemHeight + maxTranslate;
 
             // Transform wrapper
-            col.wrapper.transform('translate3d(0,' + (newTranslate) + 'px,0)');
-            col.wrapper.transitionEnd(function(){
-                $.cancelAnimationFrame(animationFrameId);
-            });
+            col.wrapper.transform('translate3d(0,' + (parseInt(newTranslate,10)) + 'px,0)');
 
             // Update items
             col.updateItems(activeIndex, newTranslate, '');
@@ -269,6 +303,9 @@ var Picker = function (params) {
             // Watch items
             if (p.params.updateItemsDuringScroll) {
                 updateDuringScroll();
+                col.wrapper.transitionEnd(function(){
+                    $.cancelAnimationFrame(animationFrameId);
+                });
             }
 
             // Allow click
@@ -278,6 +315,8 @@ var Picker = function (params) {
         }
 
         function handleClick(e) {
+            if (!allowItemClick) return;
+            $.cancelAnimationFrame(animationFrameId);
             /*jshint validthis:true */
             var value = $(this).attr('data-picker-value');
             col.setValue(value);
@@ -303,17 +342,24 @@ var Picker = function (params) {
 
     p.layout = function () {
         var colsHTML = '';
-        for (var i = 0; i < p.cols.length; i++) {
+        p.cols = [];
+        for (var i = 0; i < p.params.cols.length; i++) {
             var columnItemsHTML = '';
-            var col = p.cols[i];
-            for (var j = 0; j < col.values.length; j++) {
-                columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.textValues ? col.textValues[j] : col.values[j]) + '</div>';
+            var col = p.params.cols[i];
+            p.cols.push(col);
+            if (col.divider) {
+                colsHTML += '<div class="picker-items-col picker-items-col-divider ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '">' + col.content + '</div>';
             }
-            colsHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
+            else {
+                for (var j = 0; j < col.values.length; j++) {
+                    columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.textValues ? col.textValues[j] : col.values[j]) + '</div>';
+                }
+                colsHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
+            }
 
         }
         var pickerHTML =
-            '<div class="picker ' + (p.params.cssClass || '') + '">' +
+            '<div class="picker ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '') + '">' +
                 p.params.pickerbarHTML.replace(/{{closeText}}/g, p.params.pickerbarCloseText) +
                 '<div class="picker-items">' +
                     colsHTML +
@@ -327,6 +373,16 @@ var Picker = function (params) {
     function openOnInput(e) {
         e.preventDefault();
         p.open();
+        if (p.params.scrollToInput && !isPopover()) {
+            var pageContent = p.input.parents('.page-content');
+            if (pageContent.length === 0) return;
+            var pageHeight = pageContent.height() - 44 - p.container.height();
+            if (p.params.shrinkView) pageHeight = pageHeight - 44;
+            var inputTop = p.input.offset().top - 44;
+            if (inputTop > pageHeight) {
+                pageContent.scrollTop(pageContent.scrollTop() + inputTop - pageHeight + p.input[0].offsetHeight, 200);
+            }
+        }
     }
     function closeOnHTMLClick(e) {
         if (isPopover()) return;
@@ -345,6 +401,9 @@ var Picker = function (params) {
 
     if (p.params.input && !isInline) {
         p.input.on('click', openOnInput);
+        p.input.on('focus touchend', function (e) {
+            e.preventDefault();
+        });
     }
     if (!isInline) $('html').on('click', closeOnHTMLClick);
 
@@ -352,8 +411,10 @@ var Picker = function (params) {
     function resizeCols() {
         if (!p.opened) return;
         for (var i = 0; i < p.cols.length; i++) {
-            p.cols[i].calcSize();
-            p.cols[i].setValue(p.cols[i].value, 0, false);
+            if (!p.cols[i].divider) {
+                p.cols[i].calcSize();
+                p.cols[i].setValue(p.cols[i].value, 0, false);
+            }
         }
     }
     $(window).on('resize', resizeCols);
@@ -374,6 +435,7 @@ var Picker = function (params) {
                 p.container = $(p.popover).find('.picker');
                 $(p.popover).on('close', function () {
                     p.opened = false;
+                    if (p.params.onClose) p.params.onClose(p);
                     p.container.find('.picker-items-col').each(function () {
                         p.destroyPickerCol(this);
                     });
@@ -423,6 +485,8 @@ var Picker = function (params) {
         // Set flag
         p.opened = true;
         p.initialized = true;
+
+        if (p.params.onOpen) p.params.onOpen(p);
     };
 
     // Close
@@ -435,6 +499,7 @@ var Picker = function (params) {
         $('body').removeClass('with-picker-opened');
         if (p.params.shrinkView) $('body').removeClass('with-picker-shrink-view');
         $('body').addClass('picker-closing');
+        if (p.params.onClose) p.params.onClose(p);
         p.container.addClass('picker-out').removeClass('picker-in').transitionEnd(function () {
             $('body').removeClass('picker-closing');
             if (p.container.hasClass('picker-out')) {
