@@ -4,7 +4,8 @@
 var Picker = function (params) {
     var p = this;
     var defaults = {
-        updateItemsDuringScroll: false,
+        updateValuesOnMomentum: false,
+        updateValuesOnTouchmove: true,
         rotateEffect: false,
         shrinkView: false,
         scrollToInput: true,
@@ -32,7 +33,7 @@ var Picker = function (params) {
     var isInline = p.params.container ? true : false;
 
     // Origin bug, only on safari
-    var originBug = app.device.ios || (navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && navigator.userAgent.toLowerCase().indexOf('chrome') < 0);
+    var originBug = app.device.ios || (navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && navigator.userAgent.toLowerCase().indexOf('chrome') < 0) && !app.device.android;
 
     // Should be converted to popover
     function isPopover() {
@@ -140,7 +141,7 @@ var Picker = function (params) {
             col.wrapper.transform('translate3d(0,' + (newTranslate) + 'px,0)');
                 
             // Watch items
-            if (p.params.updateItemsDuringScroll && col.activeIndex && col.activeIndex !== newActiveIndex ) {
+            if (p.params.updateValuesOnMomentum && col.activeIndex && col.activeIndex !== newActiveIndex ) {
                 $.cancelAnimationFrame(animationFrameId);
                 col.wrapper.transitionEnd(function(){
                     $.cancelAnimationFrame(animationFrameId);
@@ -156,7 +157,6 @@ var Picker = function (params) {
             if (typeof translate === 'undefined') {
                 translate = $.getTranslate(col.wrapper[0], 'y');
             }
-            if (typeof valueCallbacks === 'undefined') valueCallbacks = true;
             if(typeof activeIndex === 'undefined') activeIndex = -Math.round((translate - maxTranslate)/itemHeight);
             if (activeIndex < 0) activeIndex = 0;
             if (activeIndex >= col.items.length) activeIndex = col.items.length - 1;
@@ -169,12 +169,12 @@ var Picker = function (params) {
             var prevItems = selectedItem.prevAll().addClass('picker-before-selected');
             var nextItems = selectedItem.nextAll().addClass('picker-after-selected');
 
-            if (valueCallbacks) {
+            if (valueCallbacks || typeof valueCallbacks === 'undefined') {
                 // Update values
                 col.value = selectedItem.attr('data-picker-value');
                 col.textValue = col.textValues ? col.textValues[activeIndex] : col.value;
                 // On change callback
-                if (previousActiveIndex !== activeIndex) {
+                if (previousActiveIndex !== activeIndex || valueCallbacks === true) {
                     if (col.onChange) {
                         col.onChange(p, col.value, col.textValue);
                     }
@@ -261,7 +261,7 @@ var Picker = function (params) {
             col.wrapper.transform('translate3d(0,' + currentTranslate + 'px,0)');
 
             // Update items
-            col.updateItems(undefined, currentTranslate, 0);
+            col.updateItems(undefined, currentTranslate, 0, p.params.updateValuesOnTouchmove);
             
             // Calc velocity
             velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
@@ -303,10 +303,10 @@ var Picker = function (params) {
             col.wrapper.transform('translate3d(0,' + (parseInt(newTranslate,10)) + 'px,0)');
 
             // Update items
-            col.updateItems(activeIndex, newTranslate, '');
+            col.updateItems(activeIndex, newTranslate, '', true);
 
             // Watch items
-            if (p.params.updateItemsDuringScroll) {
+            if (p.params.updateValuesOnMomentum) {
                 updateDuringScroll();
                 col.wrapper.transitionEnd(function(){
                     $.cancelAnimationFrame(animationFrameId);
