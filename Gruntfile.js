@@ -37,6 +37,7 @@ module.exports = function (grunt) {
         'src/js/router.js',
         'src/js/modals.js',
         'src/js/panels.js',
+        'src/js/lazy-load.js',
         'src/js/messages.js',
         'src/js/swipeout.js',
         'src/js/sortable.js',

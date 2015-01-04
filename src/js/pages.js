@@ -258,10 +258,14 @@ app.initPage = function (pageContainer) {
     if (app.initMessagebar) app.initMessagebar(pageContainer);
     // Init scroll toolbars
     if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
+    // Init scroll toolbars
+    if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     // Size navbars on page reinit
     if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
     // Reinit slider
     if (app.reinitSlider) app.reinitSlider(pageContainer);
+    // Reinit lazy load
+    if (app.reinitLazyLoad) app.reinitLazyLoad(pageContainer);
 };

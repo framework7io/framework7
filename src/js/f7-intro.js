@@ -85,6 +85,9 @@ window.Framework7 = function (params) {
         actionsCloseByOutside: true,
         popupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
+        // Lazy Load
+        imagesLazyLoadThreshold: 0,
+        imagesLazyLoadSequential: true,
         // Name space
         viewClass: 'view',
         viewMainClass: 'view-main',

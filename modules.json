@@ -10,7 +10,8 @@
             "src/js/router.js",
             "src/js/clicks.js",
             "src/js/resize.js",
-            "src/js/panels.js"
+            "src/js/panels.js",
+            "src/js/lazy-load.js"
         ],
         "less" : [
             "src/less/mixins.less",
@@ -27,6 +28,7 @@
             "src/less/contacts.less",
             "src/less/forms.less",
             "src/less/panels.less",
+            "src/less/lazy-load.less",
             "src/less/statusbar.less",
             "src/less/preloader.less"
         ]
