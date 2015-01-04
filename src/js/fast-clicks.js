@@ -207,6 +207,7 @@ app.initFastClicks = function () {
         }
 
         if ((e.timeStamp - lastClickTime) < 200) {
+            setTimeout(removeActive, 0);
             return true;
         }
 
