@@ -112,12 +112,15 @@ $.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && docume
 $.fn = Dom7.prototype;
 
 // Plugins
-$.fn.scrollTo = function (left, top, duration) {
+$.fn.scrollTo = function (left, top, duration, easing) {
     return this.each(function () {
         var el = this;
         var currentTop, currentLeft, maxTop, maxLeft, newTop, newLeft, scrollTop, scrollLeft;
         var animateTop = top > 0 || top === 0;
         var animateLeft = left > 0 || left === 0;
+        if (typeof easing === 'undefined') {
+            easing = 'swing';
+        }
         if (animateTop) {
             currentTop = el.scrollTop;
             if (!duration) {
@@ -150,9 +153,10 @@ $.fn.scrollTo = function (left, top, duration) {
                 startTime = time;
             }
             var doneLeft, doneTop, done;
-            if (animateTop) scrollTop = currentTop + ((time - startTime) / duration * (newTop - currentTop));
-            if (animateLeft) scrollLeft = currentLeft + ((time - startTime) / duration * (newLeft - currentLeft));
-
+            var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
+            var easeProgress = easing === 'linear' ? progress : (0.5 - Math.cos( progress * Math.PI ) / 2);
+            if (animateTop) scrollTop = currentTop + (easeProgress * (newTop - currentTop));
+            if (animateLeft) scrollLeft = currentLeft + (easeProgress * (newLeft - currentLeft));
             if (animateTop && newTop > currentTop && scrollTop >= newTop)  {
                 el.scrollTop = newTop;
                 done = true;
@@ -179,19 +183,19 @@ $.fn.scrollTo = function (left, top, duration) {
         $.requestAnimationFrame(render);
     });
 };
-$.fn.scrollTop = function (top, duration) {
+$.fn.scrollTop = function (top, duration, easing) {
     var dom = this;
     if (typeof top === 'undefined') {
         if (dom.length > 0) return dom[0].scrollTop;
         else return null;
     }
-    return dom.scrollTo(undefined, top, duration);
+    return dom.scrollTo(undefined, top, duration, easing);
 };
-$.fn.scrollLeft = function (left, duration) {
+$.fn.scrollLeft = function (left, duration, easing) {
     var dom = this;
     if (typeof left === 'undefined') {
         if (dom.length > 0) return dom[0].scrollLeft;
         else return null;
     }
-    return dom.scrollTo(left, undefined, duration);
+    return dom.scrollTo(left, undefined, duration, easing);
 };
