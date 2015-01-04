@@ -452,7 +452,8 @@ app.router._load = function (view, options) {
         url: url, 
         position: options.reload ? reloadPosition : 'right', 
         navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
-        context: t7_rendered.context
+        context: t7_rendered.context,
+        query: options.query
     });
 
     // Navbar init event
@@ -473,7 +474,15 @@ app.router._load = function (view, options) {
     var clientLeft = newPage[0].clientLeft;
 
     // Before Anim Callback
-    app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
+    app.pageAnimCallbacks('before', view, {
+        pageContainer: newPage[0], 
+        url: url, 
+        position: 'right', 
+        oldPage: oldPage, 
+        newPage: newPage, 
+        context: t7_rendered.context,
+        query: options.query
+    });
 
     function afterAnimation() {
         view.allowPageChange = true;
@@ -483,7 +492,15 @@ app.router._load = function (view, options) {
             newNavbarInner.removeClass('navbar-from-right-to-center navbar-on-left navbar-on-right').addClass('navbar-on-center');
             oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center').addClass('navbar-on-left');
         }
-        app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'right', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
+        app.pageAnimCallbacks('after', view, {
+            pageContainer: newPage[0], 
+            url: url, 
+            position: 'right', 
+            oldPage: oldPage, 
+            newPage: newPage, 
+            context: t7_rendered.context,
+            query: options.query
+        });
         if (app.params.pushState) app.pushStateClearQueue();
         if (!(view.params.swipeBackPage || view.params.preloadPreviousPage)) {
             if (view.params.domCache) {
@@ -529,6 +546,12 @@ app.router.load = function (view, options) {
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
+    if (pageName) {
+        if (pageName.indexOf('?') > 0) {
+            options.query = $.parseUrlQuery(pageName);
+            options.pageName = pageName = pageName.split('?')[0];
+        }
+    }
     var template = options.template;
     if (view.params.reloadPages === true) options.reload = true;
 
@@ -608,13 +631,13 @@ app.router._back = function (view, options) {
     // Animation
     function afterAnimation() {
         app.pageBackCallbacks('after', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
-        app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
+        app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context, query: options.query});
         app.router.afterBack(view, oldPage[0], newPage[0]);
     }
     function animateBack() {
         // Page before animation callback
         app.pageBackCallbacks('before', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
-        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
+        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context, query: options.query});
 
         if (animatePages) {
             // Set pages before animation
@@ -748,7 +771,8 @@ app.router._back = function (view, options) {
             url: url, 
             position: 'left', 
             navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
-            context: t7_rendered.context
+            context: t7_rendered.context,
+            query: options.query
         });
         if (dynamicNavbar) {
             app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
@@ -870,6 +894,12 @@ app.router.back = function (view, options) {
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
+    if (pageName) {
+        if (pageName.indexOf('?') > 0) {
+            options.query = $.parseUrlQuery(pageName);
+            options.pageName = pageName = pageName.split('?')[0];
+        }
+    }
     var force = options.force;
     if (!view.allowPageChange) return false;
     view.allowPageChange = false;

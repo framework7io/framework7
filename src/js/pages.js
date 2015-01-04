@@ -81,7 +81,7 @@ app.pageInitCallback = function (view, params) {
     var pageData = {
         container: pageContainer,
         url: params.url,
-        query: $.parseUrlQuery(params.url || ''),
+        query: params.query || $.parseUrlQuery(params.url || ''),
         name: $(pageContainer).attr('data-page'),
         view: view,
         from: params.position,
@@ -173,7 +173,7 @@ app.pageAnimCallbacks = function (callback, view, params) {
     var pageData = {
         container: params.pageContainer,
         url: params.url,
-        query: $.parseUrlQuery(params.url || ''),
+        query: params.query || $.parseUrlQuery(params.url || ''),
         name: $(params.pageContainer).attr('data-page'),
         view: view,
         from: params.position,
