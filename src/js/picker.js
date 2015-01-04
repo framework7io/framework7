@@ -10,6 +10,7 @@ var Picker = function (params) {
         scrollToInput: true,
         pickerbarCloseText: 'Done',
         momentumRatio: 7,
+        freeMode: false,
         pickerbarHTML: 
             '<div class="toolbar pickerbar">' +
                 '<div class="left"></div>' +
@@ -45,6 +46,10 @@ var Picker = function (params) {
             }
         } 
         return toPopover; 
+    }
+    function inPopover() {
+        if (p.opened && p.container && p.container.length > 0 && p.container.parents('.popover').length > 0) return true;
+        else return false;
     }
 
     // Value
@@ -110,7 +115,7 @@ var Picker = function (params) {
                     col.width = Math.max(col.width, item[0].offsetWidth);
                     item.css({width:''});
                 });
-                col.container.css({minWidth: col.width + 'px'});
+                col.container.css({width: (col.width + 2) + 'px'});
                 col.container.addClass('picker-items-col-absolute');
             }
         };
@@ -292,7 +297,7 @@ var Picker = function (params) {
             var activeIndex = -Math.floor((newTranslate - maxTranslate)/itemHeight);
 
             // Normalize translate
-            newTranslate = -activeIndex * itemHeight + maxTranslate;
+            if (!p.params.freeMode) newTranslate = -activeIndex * itemHeight + maxTranslate;
 
             // Transform wrapper
             col.wrapper.transform('translate3d(0,' + (parseInt(newTranslate,10)) + 'px,0)');
@@ -385,7 +390,7 @@ var Picker = function (params) {
         }
     }
     function closeOnHTMLClick(e) {
-        if (isPopover()) return;
+        if (inPopover()) return;
         if (p.input && p.input.length > 0) {
             if (e.target !== p.input[0] && $(e.target).parents('.picker').length === 0) p.close();
         }
@@ -492,7 +497,7 @@ var Picker = function (params) {
     // Close
     p.close = function () {
         if (!p.opened || isInline) return;
-        if (isPopover()) {
+        if (inPopover()) {
             app.closeModal('.popover-picker.modal-in');
             return;
         }
