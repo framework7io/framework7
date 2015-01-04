@@ -237,6 +237,18 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
     padding: 0 6px;
   }
 }
+img.ks-demo-lazy {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+div.ks-demo-lazy {
+  background: #aaa;
+  -webkit-background-size: cover;
+  background-size: cover;
+  height: 300px;
+  height: 60vw;
+}
 .ks-layout-theme {
   height: 44px;
   border: 1px solid #aaa;
