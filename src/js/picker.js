@@ -385,7 +385,7 @@ var Picker = function (params) {
             if (p.params.shrinkView) pageHeight = pageHeight - 44;
             var inputTop = p.input.offset().top - 44;
             if (inputTop > pageHeight) {
-                pageContent.scrollTop(pageContent.scrollTop() + inputTop - pageHeight + p.input[0].offsetHeight, 200);
+                pageContent.scrollTop(pageContent.scrollTop() + inputTop - pageHeight + p.input[0].offsetHeight, 300);
             }
         }
     }
@@ -406,7 +406,7 @@ var Picker = function (params) {
 
     if (p.params.input && !isInline) {
         p.input.on('click', openOnInput);
-        p.input.on('focus touchend', function (e) {
+        p.input.on('focus mousedown', function (e) {
             e.preventDefault();
         });
     }
