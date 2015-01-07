@@ -527,14 +527,14 @@ myApp.onPageInit('form-pickers', function (page) {
         cssClass: 'ks-date-time-picker',
         rotateEffect: true,
         value: [today.getMonth(), today.getDate(), today.getFullYear(), today.getHours(), (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())],
-        onChange: function (picker, value, textValue) {
+        onChange: function (picker, values, textValues) {
             var daysInMonth = new Date(picker.value[2], picker.value[0]*1 + 1, 0).getDate();
-            if (value[1] > daysInMonth) {
+            if (values[1] > daysInMonth) {
                 picker.cols[1].setValue(daysInMonth);
             }
         },
-        formatValue: function (p, value, textValue) {
-            return textValue[0] + ' ' + value[1] + ', ' + value[2] + ' ' + value[3] + ':' + value[4];
+        formatValue: function (p, values, textValues) {
+            return textValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
         },
         cols: [
             // Months
