@@ -9,8 +9,10 @@ var Picker = function (params) {
         rotateEffect: false,
         shrinkView: false,
         scrollToInput: true,
+        inputReadOnly: true,
         momentumRatio: 7,
         freeMode: false,
+        convertToPopover: true,
         toolbarCloseText: 'Done',
         toolbarHTML: 
             '<div class="toolbar">' +
@@ -38,6 +40,7 @@ var Picker = function (params) {
     // Should be converted to popover
     function isPopover() {
         var toPopover = false;
+        if (!p.params.convertToPopover) return toPopover;
         if (!isInline && p.params.input) {
             if (app.device.ios) {
                 toPopover = app.device.ipad ? true : false;
@@ -364,9 +367,9 @@ var Picker = function (params) {
 
         }
         var pickerHTML =
-            '<div class="picker ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '') + '">' +
+            '<div class="picker-modal picker ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '') + '">' +
                 p.params.toolbarHTML.replace(/{{closeText}}/g, p.params.toolbarCloseText) +
-                '<div class="picker-items">' +
+                '<div class="picker-modal-inner picker-items">' +
                     colsHTML +
                     '<div class="picker-center-highlight"></div>' +
                 '</div>' +
@@ -401,14 +404,17 @@ var Picker = function (params) {
 
     if (p.params.input) {
         p.input = $(p.params.input);
-        p.input.prop('readOnly', true);
+        if (p.params.inputReadOnly) p.input.prop('readOnly', true);
     }
 
     if (p.params.input && !isInline) {
         p.input.on('click', openOnInput);
-        p.input.on('focus mousedown', function (e) {
-            e.preventDefault();
-        });
+        if (p.params.inputReadOnly) {
+            p.input.on('focus mousedown', function (e) {
+                e.preventDefault();
+            });
+        }
+            
     }
     if (!isInline) $('html').on('click', closeOnHTMLClick);
 
@@ -425,6 +431,14 @@ var Picker = function (params) {
     $(window).on('resize', resizeCols);
 
     // Open
+    function onPickerClose() {
+        p.opened = false;
+        
+        if (p.params.onClose) p.params.onClose(p);
+        p.container.find('.picker-items-col').each(function () {
+            p.destroyPickerCol(this);
+        });
+    }
     p.opened = false;
     p.open = function () {
         var toPopover = isPopover();
@@ -439,23 +453,20 @@ var Picker = function (params) {
                 p.popover = app.popover(p.pickerHTML, p.params.input, true);
                 p.container = $(p.popover).find('.picker');
                 $(p.popover).on('close', function () {
-                    p.opened = false;
-                    if (p.params.onClose) p.params.onClose(p);
-                    p.container.find('.picker-items-col').each(function () {
-                        p.destroyPickerCol(this);
-                    });
+                    onPickerClose();
                 });
             }
-            else {
+            else if (isInline) {
                 p.container = $(p.pickerHTML);
-                if (isInline) {
-                    p.container.addClass('picker-inline');
-                    $(p.params.container).append(p.container);
-                }
-                else {
-                    $('body').append(p.container);
-                    p.container.show();
-                }   
+                p.container.addClass('picker-modal-inline');
+                $(p.params.container).append(p.container);
+            }
+            else {
+                p.container = $(app.pickerModal(p.pickerHTML));
+                $(p.container)
+                .on('close', function () {
+                    onPickerClose();
+                });
             }
 
             // Store picker instance
@@ -480,12 +491,8 @@ var Picker = function (params) {
         }
 
         if (!isInline && !toPopover) {
-            // In
-            p.container.removeClass('picker-out').addClass('picker-in');
-
             // Add class to body
-            $('body').addClass('with-picker-opened');
-            if (p.params.shrinkView) $('body').addClass('with-picker-shrink-view');
+            if (p.params.shrinkView) $('body').addClass('with-picker-modal-shrink-view');
         }
         // Set flag
         p.opened = true;
@@ -498,23 +505,13 @@ var Picker = function (params) {
     p.close = function () {
         if (!p.opened || isInline) return;
         if (inPopover()) {
-            app.closeModal('.popover-picker.modal-in');
+            app.closeModal(p.popover);
             return;
         }
-        $('body').removeClass('with-picker-opened');
-        if (p.params.shrinkView) $('body').removeClass('with-picker-shrink-view');
-        $('body').addClass('picker-closing');
-        if (p.params.onClose) p.params.onClose(p);
-        p.container.addClass('picker-out').removeClass('picker-in').transitionEnd(function () {
-            $('body').removeClass('picker-closing');
-            if (p.container.hasClass('picker-out')) {
-                p.opened = false;
-                p.container.remove();
-                p.container.find('.picker-items-col').each(function () {
-                    p.destroyPickerCol(this);
-                });
-            }
-        });
+        else {
+            app.closeModal(p.container);
+            return;
+        }
     };
 
     // Destroy
@@ -535,13 +532,4 @@ var Picker = function (params) {
 };
 app.picker = function (params) {
     return new Picker(params);
-};
-app.closePicker = function (picker) {
-    picker = $(picker);
-    if (picker.length === 0) picker = $('.picker.picker-in');
-    if (picker.length === 0) return;
-    picker.each(function () {
-        var pickerInstance = this.f7Picker;
-        if (pickerInstance) pickerInstance.close();
-    });
 };
