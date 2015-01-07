@@ -380,13 +380,17 @@ var Picker = function (params) {
     // Input Events
     function openOnInput(e) {
         e.preventDefault();
+        if (p.opened) return;
         p.open();
         if (p.params.scrollToInput && !isPopover()) {
             var pageContent = p.input.parents('.page-content');
             if (pageContent.length === 0) return;
-            var pageHeight = pageContent.height() - 44 - p.container.height();
-            if (p.params.shrinkView) pageHeight = pageHeight - 44;
-            var inputTop = p.input.offset().top - 44;
+            var paddingTop = parseInt(pageContent.css('padding-top'), 10);
+            var pageHeight = pageContent.height() - paddingTop - p.container.height();
+            if (p.params.shrinkView) {
+                pageHeight = pageHeight - 44;
+            }
+            var inputTop = p.input.offset().top - paddingTop;
             if (inputTop > pageHeight) {
                 pageContent.scrollTop(pageContent.scrollTop() + inputTop - pageHeight + p.input[0].offsetHeight, 300);
             }
@@ -405,17 +409,16 @@ var Picker = function (params) {
     if (p.params.input) {
         p.input = $(p.params.input);
         if (p.params.inputReadOnly) p.input.prop('readOnly', true);
-    }
-
-    if (p.params.input && !isInline) {
-        p.input.on('click', openOnInput);
+        if (!isInline) {
+            p.input.on('click', openOnInput);    
+        }
         if (p.params.inputReadOnly) {
             p.input.on('focus mousedown', function (e) {
                 e.preventDefault();
             });
         }
-            
     }
+    
     if (!isInline) $('html').on('click', closeOnHTMLClick);
 
     // Resize cols
@@ -433,7 +436,7 @@ var Picker = function (params) {
     // Open
     function onPickerClose() {
         p.opened = false;
-        
+        $('body').removeClass('with-picker-modal-shrink-view');
         if (p.params.onClose) p.params.onClose(p);
         p.container.find('.picker-items-col').each(function () {
             p.destroyPickerCol(this);
