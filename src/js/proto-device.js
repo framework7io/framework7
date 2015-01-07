@@ -71,7 +71,7 @@ Framework7.prototype.device = (function () {
 
     // Pixel Ratio
     device.pixelRatio = window.devicePixelRatio || 1;
-    classNames.push('pixel-ratio-' + device.pixelRatio);
+    classNames.push('pixel-ratio-' + Math.floor(device.pixelRatio));
     if (device.pixelRatio >= 2) {
         classNames.push('retina');
     }
