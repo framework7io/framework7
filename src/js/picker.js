@@ -9,11 +9,11 @@ var Picker = function (params) {
         rotateEffect: false,
         shrinkView: false,
         scrollToInput: true,
-        pickerbarCloseText: 'Done',
         momentumRatio: 7,
         freeMode: false,
-        pickerbarHTML: 
-            '<div class="toolbar pickerbar">' +
+        toolbarCloseText: 'Done',
+        toolbarHTML: 
+            '<div class="toolbar">' +
                 '<div class="left"></div>' +
                 '<div class="right">' +
                     '<a href="#" class="link close-picker">{{closeText}}</a>' +
@@ -365,7 +365,7 @@ var Picker = function (params) {
         }
         var pickerHTML =
             '<div class="picker ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '') + '">' +
-                p.params.pickerbarHTML.replace(/{{closeText}}/g, p.params.pickerbarCloseText) +
+                p.params.toolbarHTML.replace(/{{closeText}}/g, p.params.toolbarCloseText) +
                 '<div class="picker-items">' +
                     colsHTML +
                     '<div class="picker-center-highlight"></div>' +

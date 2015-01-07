@@ -478,14 +478,14 @@ myApp.onPageInit('form-pickers', function (page) {
         ]
     });
 
-    // Custom Pickerbar
-    var pickerCustomPickerbar = myApp.picker({
-        input: '#ks-picker-custom-pickerbar',
+    // Custom Toolbar
+    var pickerCustomToolbar = myApp.picker({
+        input: '#ks-picker-custom-toolbar',
         rotateEffect: true,
-        pickerbarHTML: 
-            '<div class="toolbar pickerbar">' +
+        toolbarHTML: 
+            '<div class="toolbar">' +
                 '<div class="left">' +
-                    '<a href="#" class="link custom-pickerbar-random">Randomize</a>' +
+                    '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
                 '</div>' +
                 '<div class="right">' +
                     '<a href="#" class="link close-picker">That\'s me</a>' +
@@ -504,7 +504,7 @@ myApp.onPageInit('form-pickers', function (page) {
             },
         ],
         onOpen: function (picker) {
-            picker.container.find('.custom-pickerbar-random').on('click', function () {
+            picker.container.find('.toolbar-randomize-link').on('click', function () {
                 var col0Values = picker.cols[0].values;
                 var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
 
@@ -523,7 +523,7 @@ myApp.onPageInit('form-pickers', function (page) {
     var pickerInline = myApp.picker({
         input: '#ks-picker-date',
         container: '#ks-picker-date-container',
-        pickerbarHTML: '',
+        toolbarHTML: '',
         cssClass: 'ks-date-time-picker',
         rotateEffect: true,
         value: [today.getMonth(), today.getDate(), today.getFullYear(), today.getHours(), (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())],
