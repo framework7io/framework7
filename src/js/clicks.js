@@ -99,7 +99,24 @@ app.initClickEvents = function () {
 
         // Picker
         if (clicked.hasClass('close-picker')) {
-            var picker = app.closePicker(clicked.parents('.picker'));
+            var pickerToClose = $('.picker-modal.modal-in');
+            if (pickerToClose.length > 0) {
+                app.closeModal(pickerToClose);
+            }
+            else {
+                pickerToClose = $('.popover.modal-in .picker');
+                if (pickerToClose.length > 0) {
+                    app.closeModal(pickerToClose.parents('.popover'));
+                }
+            }
+        }
+        if (clicked.hasClass('open-picker')) {
+            var pickerToOpen;
+            if (clicked.attr('data-picker')) {
+                pickerToOpen = clicked.attr('data-picker');
+            }
+            else pickerToOpen = '.picker-modal';
+            app.pickerModal(pickerToOpen, clicked);
         }
 
         // Tabs

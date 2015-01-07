@@ -464,21 +464,115 @@ html.with-statusbar-overlay {
         height: 34px;
     }
 }
-html.retina.ios-gt-7 {
-    .modal-inner {
-        border-bottom-width: 0.5px;
+
+// Picker Modal
+.picker-modal {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 260px;
+    z-index: 11500;
+    display: none;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -ms-transition-property: -ms-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+    background: #cfd5da;
+    .translate3d(0,100%,0);
+    &.modal-in, &.modal-out {
+        .transition(400ms);
     }
+    &.modal-in {
+        .translate3d(0,0,0);
+    }
+    &.modal-out {
+        .translate3d(0,100%,0);
+    }
+    .picker-modal-inner {
+        height: 100%;
+        position: relative;
+    }
+    .toolbar {
+        border-top-color: #929499;
+        border-bottom: none;
+        height: 44px;
+        position: relative;
+        width: 100%;
+        padding: 0 8px;
+        .border-box();
+        .flexbox();
+        .justify-content(space-between);
+        .align-items(center);
+        + .picker-modal-inner {
+            height: ~"-webkit-calc(100% - 44px)";
+            height: ~"-moz-calc(100% - 44px)";
+            height: ~"calc(100% - 44px)";    
+        }
+    }
+    &.picker-modal-inline, .popover & {
+        height: 200px;
+        display: block;
+        position: relative;
+        background: none;
+        .translate3d(0,0,0);
+        .toolbar {
+            border-bottom: 1px solid #929499;
+        }
+    }
+    .popover & {
+        width: auto;
+        .toolbar {
+            border-top: none;
+            background: none;
+        }
+    }
+    @media (orientation: landscape) and (max-height: 415px) {
+        &:not(.picker-modal-inline) {
+            height: 200px;
+        }
+    }
+}
+body.with-picker-modal, body.picker-modal-closing {
+    .views {
+        .transition(400ms);
+    }
+}
+body.with-picker-modal-shrink-view {
+    .panel {
+        padding-bottom: 260px;
+    }
+    .views {
+        height: ~"-webkit-calc(100% - 260px)";
+        height: ~"-moz-calc(100% - 260px)";
+        height: ~"calc(100% - 260px)";
+    }
+}
+@media (orientation: landscape) and (max-height: 415px) {
+    body.with-picker-modal-shrink-view {
+        .panel {
+            padding-bottom: 200px;
+        }
+        .views {
+            height: ~"-webkit-calc(100% - 200px)";
+            height: ~"-moz-calc(100% - 200px)";
+            height: ~"calc(100% - 200px)";
+        }
+    }
+}
+// Half borders
+html.retina.ios-gt-7 {
     .modal-button {
         border-right-width: 0.5px;   
     }
-    .actions-modal-button, .actions-modal-label {
+    .modal-inner, .actions-modal-button, .actions-modal-label, .actions-popover-label {
         border-bottom-width: 0.5px;   
-    }
-    .actions-popover-label {
-        border-bottom-width: 0.5px;
     }
     input.modal-text-input {
         border-width: 0.5px;
     }
-
+    .picker-modal-inline .toolbar, .popover .picker-modal .toolbar{
+        border-bottom-width: 0.5px;
+    }
 }
