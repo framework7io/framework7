@@ -1,5 +1,5 @@
 /* === Picker & Calendar === */
-.picker {
+.picker, .calendar {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -14,27 +14,6 @@
     transition-property: transform;
     background: #cfd5da;
     .translate3d(0,100%,0);
-    &.picker-in, &.picker-out {
-        .transition(400ms);
-    }
-    &.picker-in {
-        .translate3d(0,0,0);
-    }
-    &.picker-out {
-        .translate3d(0,100%,0);
-    }
-    &.picker-inline, .popover & {
-        display: block;
-        position: relative;
-        background: none;
-        .translate3d(0,0,0);
-        .toolbar {
-            border-bottom: 1px solid #929499;
-        }
-    }
-    &.picker-inline {
-        height: 200px;
-    }
     .popover & {
         width: auto;
         .toolbar {
@@ -43,10 +22,31 @@
         }
     }
 }
-.popover.popover-picker {
+.picker-in, .picker-out, .calendar-in, .calendar-out {
+    .transition(400ms);
+}
+.picker-in, .calendar-in {
+    .translate3d(0,0,0);
+}
+.picker-out, .calendar-out {
+    .translate3d(0,100%,0);
+}
+.picker.picker-inline, .calendar.calendar-inline {
+    height: 200px;
+}
+.picker.picker-inline, .calendar.calendar-inline, .popover .picker, .popover .calendar {
+    display: block;
+    position: relative;
+    background: none;
+    .translate3d(0,0,0);
+    .toolbar {
+        border-bottom: 1px solid #929499;
+    }
+}
+.popover.popover-picker, .popover.popover-calendar {
     width: 280px;
 }
-.picker .toolbar {
+.picker .toolbar, .calendar .toolbar {
     background: #f0f1f2;
     border-top: 1px solid #929499;
     border-bottom: none;
@@ -143,10 +143,10 @@
     pointer-events: none;
 }
 html.ios-gt-7.retina {
-    .picker .toolbar {
+    .picker .toolbar, .calendar .toolbar {
         border-top-width: 0.5px;
     }
-    .picker-inline .toolbar, .popover .picker .toolbar {
+    .picker-inline .toolbar, .popover .picker .toolbar, .calendar-inline .toolbar, .popover .calendar .toolbar {
         border-bottom-width: 0.5px;
     }
     .picker-center-highlight {
@@ -178,7 +178,7 @@ html.ios-gt-7.retina {
     }
 }
 
-body.with-picker-shrink-view {
+body.with-picker-shrink-view, body.with-calendar-shrink-view {
     .panel {
         padding-bottom: 260px;
     }
@@ -188,19 +188,19 @@ body.with-picker-shrink-view {
         height: ~"calc(100% - 260px)";
     }
 }
-body.with-picker-shrink-view, body.picker-closing {
+body.with-picker-shrink-view, body.picker-closing, body.with-calendar-shrink-view, body.calendar-closing {
     .views {
         .transition(400ms);
     }
 }
 
 @media (orientation: landscape) and (max-height: 415px) {
-    .picker:not(.picker-inline) {
+    .picker:not(.picker-inline), .calendar:not(.calendar-inline) {
         height: 200px;
     }
-    body.with-picker-shrink-view {
+    body.with-picker-shrink-view, body.with-calendar-shrink-view {
         .panel {
-            padding-bottom: 210px;
+            padding-bottom: 200px;
         }
         .views {
             height: ~"-webkit-calc(100% - 200px)";

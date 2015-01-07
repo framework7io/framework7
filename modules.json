@@ -149,7 +149,12 @@
     },
     "picker": {
         "js" : ["src/js/picker.js"],
-        "less": ["src/less/picker.less"],
+        "less": ["src/less/picker-calendar.less"],
+        "dependencies" : []
+    },
+    "calendar": {
+        "js" : ["src/js/calendar.js"],
+        "less": ["src/less/picker-calendar.less"],
         "dependencies" : []
     }
 }
