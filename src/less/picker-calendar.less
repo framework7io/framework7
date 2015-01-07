@@ -1,4 +1,4 @@
-/* === Picker === */
+/* === Picker & Calendar === */
 .picker {
     position: absolute;
     left: 0;
@@ -28,7 +28,7 @@
         position: relative;
         background: none;
         .translate3d(0,0,0);
-        .pickerbar {
+        .toolbar {
             border-bottom: 1px solid #929499;
         }
     }
@@ -37,7 +37,7 @@
     }
     .popover & {
         width: auto;
-        .pickerbar {
+        .toolbar {
             border-top: none;
             background: none;
         }
@@ -46,7 +46,7 @@
 .popover.popover-picker {
     width: 280px;
 }
-.pickerbar {
+.picker .toolbar {
     background: #f0f1f2;
     border-top: 1px solid #929499;
     border-bottom: none;
@@ -69,7 +69,7 @@
     font-size: 24px;
     -webkit-mask-box-image: -webkit-linear-gradient(bottom, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
     -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
-    .pickerbar + & {
+    .toolbar + & {
         height: ~"-webkit-calc(100% - 44px)";
         height: ~"-moz-calc(100% - 44px)";
         height: ~"calc(100% - 44px)";    
@@ -143,10 +143,10 @@
     pointer-events: none;
 }
 html.ios-gt-7.retina {
-    .pickerbar {
+    .picker .toolbar {
         border-top-width: 0.5px;
     }
-    .picker-inline .pickerbar, .popover .pickerbar {
+    .picker-inline .toolbar, .popover .picker .toolbar {
         border-bottom-width: 0.5px;
     }
     .picker-center-highlight {
