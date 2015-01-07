@@ -56,7 +56,6 @@ module.exports = function (grunt) {
         'src/js/slider.js',
         'src/js/photo-browser.js',
         'src/js/picker.js',
-        'src/js/calendar.js',
         'src/js/notifications.js',
         'src/js/template7-templates.js',
         'src/js/plugins.js',
