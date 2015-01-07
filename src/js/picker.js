@@ -4,14 +4,20 @@
 var Picker = function (params) {
     var p = this;
     var defaults = {
+        // Picker settings
         updateValuesOnMomentum: false,
         updateValuesOnTouchmove: true,
         rotateEffect: false,
+        momentumRatio: 7,
+        freeMode: false,
+        // Calendar settings
+        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'],
+        dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        firstDay: 1, //First day of the week, Monday
+        // Common settings
         shrinkView: false,
         scrollToInput: true,
         inputReadOnly: true,
-        momentumRatio: 7,
-        freeMode: false,
         convertToPopover: true,
         toolbarCloseText: 'Done',
         toolbarHTML: 
