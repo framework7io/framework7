@@ -202,13 +202,17 @@ $.ajax = function (options) {
                 options.success(responseData, xhr.status, xhr);
             }
         }
+        else {
+            $(document).trigger('ajaxError', {xhr: xhr});
+            if (options.error) options.error(xhr, xhr.status);
+        }
         if (options.statusCode) {
             if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
         }
+        $(document).trigger('ajaxComplete', {xhr: xhr});
         if (options.complete) {
             options.complete(xhr, xhr.status);
         }
-        $(document).trigger('ajaxComplete', {xhr: xhr});
     };
     
     xhr.onerror = function (e) {
@@ -218,11 +222,11 @@ $.ajax = function (options) {
     };
 
     // Ajax start callback
+    $(document).trigger('ajaxStart', {xhr: xhr});
     if (options.start) options.start(xhr);
     if (options.beforeSend) options.beforeSend(xhr);
 
     // Send XHR
-    $(document).trigger('ajaxStart', {xhr: xhr});
     xhr.send(postData);
 
     // Timeout
