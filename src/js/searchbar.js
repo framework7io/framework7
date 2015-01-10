@@ -11,6 +11,8 @@ app.initSearchbar = function (pageContainer) {
     var clear = searchbar.find('.searchbar-clear');
     var cancel = searchbar.find('.searchbar-cancel');
     var searchList = $(searchbar.attr('data-search-list'));
+    var isVirtualList = searchList.hasClass('virtual-list');
+    var virtualList;
     var searchIn = searchbar.attr('data-search-in');
     var searchBy = searchbar.attr('data-search-by');
     var found = searchbar.attr('data-searchbar-found');
@@ -31,18 +33,17 @@ app.initSearchbar = function (pageContainer) {
     }
 
     // Cancel button
-    var cancelWidth, cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
+    var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
     if (cancel.length > 0) {
-        cancelWidth = cancel.width();
-
-        cancel.css(cancelMarginProp, - cancelWidth + 'px');
+        cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
     }
+        
 
     // Handlers
     function disableSearchbar() {
         input.val('').trigger('change');
         searchbar.removeClass('searchbar-active searchbar-not-empty');
-        if (cancel.length > 0) cancel.css(cancelMarginProp, - cancelWidth + 'px');
+        if (cancel.length > 0) cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
         
         if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
         if (app.device.ios) {
@@ -78,7 +79,7 @@ app.initSearchbar = function (pageContainer) {
 
     // Clear
     function clearSearchbar() {
-        input.val('').trigger('change');
+        input.val('').trigger('change').focus();
         searchList.trigger('clearSearch');
     }
 
@@ -94,7 +95,7 @@ app.initSearchbar = function (pageContainer) {
                 searchbar.addClass('searchbar-not-empty');
                 if (searchList && searchbar.hasClass('searchbar-active')) searchbarOverlay.removeClass('searchbar-overlay-active');
             }
-            if (searchList.length > 0 && searchIn) search(value);
+            if (searchList.length > 0 && (searchIn || isVirtualList)) search(value);
         }, 0);
     }
 
@@ -121,59 +122,80 @@ app.initSearchbar = function (pageContainer) {
     attachEvents();
 
     // Search
+    var previousQuery;
     function search(query) {
+        if (query.trim() === previousQuery) return;
+        previousQuery = query.trim();
         var values = query.trim().toLowerCase().split(' ');
-        searchList.find('li').removeClass('hidden-by-searchbar');
         var foundItems = [];
-        searchList.find('li').each(function (index, el) {
-            el = $(el);
-            var compareWithEl = el.find(searchIn);
-            if (compareWithEl.length === 0) return;
-            var compareWith;
-            compareWith = compareWithEl.text().trim().toLowerCase();
-            var wordsMatch = 0;
-            for (var i = 0; i < values.length; i++) {
-                if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
+        if (isVirtualList) {
+            virtualList = searchList[0].f7VirtualList;
+            if (query.trim() === '') {
+                virtualList.resetFilter();
+                notFound.hide();
+                found.show();
+                return;
             }
-            if (wordsMatch !== values.length) {
-                el.addClass('hidden-by-searchbar');
+            if (virtualList.params.searchAll) {
+                foundItems = virtualList.params.searchAll(query, virtualList.items) || [];
             }
-            else {
-                foundItems.push(el[0]);
-            }
-        });
-
-        if (app.params.searchbarHideDividers) {
-            searchList.find('.item-divider, .list-group-title').each(function () {
-                var title = $(this);
-                var nextElements = title.nextAll('li');
-                var hide = true;
-                for (var i = 0; i < nextElements.length; i++) {
-                    var nextEl = $(nextElements[i]);
-                    if (nextEl.hasClass('list-group-title') || nextEl.hasClass('item-divider')) break;
-                    if (!nextEl.hasClass('hidden-by-searchbar')) {
-                        hide = false;
+            else if (virtualList.params.searchByItem) {
+                for (var i = 0; i < virtualList.items.length; i++) {
+                    if(virtualList.params.searchByItem(query, i, virtualList.params.items[i])) {
+                        foundItems.push(i);
                     }
                 }
-                if (hide) title.addClass('hidden-by-searchbar');
-                else title.removeClass('hidden-by-searchbar');
-            });
+            }
         }
-        if (app.params.searchbarHideGroups) {
-            searchList.find('.list-group').each(function () {
-                var group = $(this);
-                var notHidden = group.find('li:not(.hidden-by-searchbar)');
-                if (notHidden.length === 0) {
-                    group.addClass('hidden-by-searchbar');
+        else {
+            searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
+                el = $(el);
+                var compareWithEl = el.find(searchIn);
+                if (compareWithEl.length === 0) return;
+                var compareWith;
+                compareWith = compareWithEl.text().trim().toLowerCase();
+                var wordsMatch = 0;
+                for (var i = 0; i < values.length; i++) {
+                    if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
+                }
+                if (wordsMatch !== values.length) {
+                    el.addClass('hidden-by-searchbar');
                 }
                 else {
-                    group.removeClass('hidden-by-searchbar');
+                    foundItems.push(el[0]);
                 }
             });
+
+            if (app.params.searchbarHideDividers) {
+                searchList.find('.item-divider, .list-group-title').each(function () {
+                    var title = $(this);
+                    var nextElements = title.nextAll('li');
+                    var hide = true;
+                    for (var i = 0; i < nextElements.length; i++) {
+                        var nextEl = $(nextElements[i]);
+                        if (nextEl.hasClass('list-group-title') || nextEl.hasClass('item-divider')) break;
+                        if (!nextEl.hasClass('hidden-by-searchbar')) {
+                            hide = false;
+                        }
+                    }
+                    if (hide) title.addClass('hidden-by-searchbar');
+                    else title.removeClass('hidden-by-searchbar');
+                });
+            }
+            if (app.params.searchbarHideGroups) {
+                searchList.find('.list-group').each(function () {
+                    var group = $(this);
+                    var notHidden = group.find('li:not(.hidden-by-searchbar)');
+                    if (notHidden.length === 0) {
+                        group.addClass('hidden-by-searchbar');
+                    }
+                    else {
+                        group.removeClass('hidden-by-searchbar');
+                    }
+                });
+            }
         }
-
         searchList.trigger('search', {query: query, foundItems: foundItems});
-
         if (foundItems.length === 0) {
             notFound.show();
             found.hide();
@@ -181,6 +203,9 @@ app.initSearchbar = function (pageContainer) {
         else {
             notFound.hide();
             found.show();
+        }
+        if (isVirtualList) {
+            virtualList.filterItems(foundItems);
         }
     }
 

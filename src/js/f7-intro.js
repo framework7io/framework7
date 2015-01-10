@@ -8,7 +8,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '0.9.6';
+    app.version = '0.10.0';
 
     // Default Parameters
     app.params = {
@@ -20,6 +20,7 @@ window.Framework7 = function (params) {
         uniqueHistory: false,
         uniqueHistoryIgnoreGetParameters: false,
         dynamicPageUrl: 'content-{{index}}',
+        allowDuplicateUrls: false,
         router: true,
         // Push State
         pushState: false,
@@ -38,19 +39,22 @@ window.Framework7 = function (params) {
         swipeBackPage: true,
         swipeBackPageThreshold: 0,
         swipeBackPageActiveArea: 30,
-        swipeBackPageBoxShadow: true,
+        swipeBackPageAnimateShadow: true,
+        swipeBackPageAnimateOpacity: true,
         // Ajax
         ajaxLinks: undefined, // or CSS selector
         // External Links
-        externalLinks: ['external'], // array of CSS class selectors and/or rel attributes
+        externalLinks: '.external', // CSS selector
         // Sortable
         sortable: true,
         // Scroll toolbars
         hideNavbarOnPageScroll: false,
         hideToolbarOnPageScroll: false,
+        hideTabbarOnPageScroll: false,
         showBarsOnPageScrollEnd: true,
         // Swipeout
         swipeout: true,
+        swipeoutActionsNoFold: false,
         swipeoutNoFollow: false,
         // Smart Select Back link template
         smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
@@ -67,6 +71,7 @@ window.Framework7 = function (params) {
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,
         swipePanelCloseOpposite: true,
+        swipePanelOnlyClose: false,
         swipePanelNoFollow: false,
         swipePanelThreshold: 0,
         panelsCloseByOutside: true,
@@ -80,6 +85,9 @@ window.Framework7 = function (params) {
         actionsCloseByOutside: true,
         popupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
+        // Lazy Load
+        imagesLazyLoadThreshold: 0,
+        imagesLazyLoadSequential: true,
         // Name space
         viewClass: 'view',
         viewMainClass: 'view-main',
@@ -91,7 +99,7 @@ window.Framework7 = function (params) {
         animatePages: true,
         // Template7
         templates: {},
-        templatesData: {},
+        template7Data: {},
         template7Pages: false,
         precompileTemplates: false,
         // Auto init

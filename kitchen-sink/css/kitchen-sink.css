@@ -24,18 +24,25 @@
   background: #000;
 }
 .statusbar-overlay.with-panel-left {
-  background: #222;
+  background: #222426;
 }
 .statusbar-overlay.with-panel-right {
-  background: #000;
+  background: #131313;
 }
 .page[data-page="tabbar"] .tabbar,
-.page[data-page="tabbar-labels"] .tabbar {
+.page[data-page="tabbar-labels"] .tabbar,
+.page[data-page="messages"] .tabbar,
+.page[data-page="tabbar"] .toolbar,
+.page[data-page="tabbar-labels"] .toolbar,
+.page[data-page="messages"] .toolbar {
   -webkit-transform: none;
   -moz-transform: none;
   -ms-transform: none;
   -o-transform: none;
   transform: none;
+  -webkit-transition: 0ms;
+  -o-transition: 0ms;
+  transition: 0ms;
 }
 .page[data-page="tabbar-labels"] .page-content {
   padding-bottom: 50px;
@@ -162,6 +169,9 @@ i.ks-tabbar-icon-4 {
 .ks-slider-custom .slider-prev-button {
   left: 0;
 }
+.page[data-page="virtual-list"] .virtual-list li {
+  height: 63px;
+}
 .custom-accordion {
   padding-left: 0;
   padding-right: 0;
@@ -210,6 +220,34 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
 }
 .custom-accordion .accordion-item-content {
   padding: 0px 15px;
+}
+.ks-date-time-picker .picker-item {
+  color: #999;
+}
+.ks-date-time-picker .picker-selected {
+  color: #000;
+}
+@media (max-width: 767px) {
+  .ks-date-time-picker .picker-items {
+    font-size: 21px;
+  }
+  .ks-date-time-picker .picker-item {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 6px;
+  }
+}
+img.ks-demo-lazy {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+div.ks-demo-lazy {
+  background: #aaa;
+  -webkit-background-size: cover;
+  background-size: cover;
+  height: 300px;
+  height: 60vw;
 }
 .ks-layout-theme {
   height: 44px;

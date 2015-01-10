@@ -177,6 +177,7 @@ myApp.onPageInit('messages', function (page) {
         if (messageText.length === 0) return;
         // Empty textarea
         textarea.val('').trigger('change');
+        textarea[0].focus();
         // Add Message
         myApp.addMessage({
             text: messageText,
@@ -211,7 +212,8 @@ myApp.onPageInit('pull-to-refresh', function (page) {
     ptrContent.on('refresh', function (e) {
         // Emulate 2s loading
         setTimeout(function () {
-            var picURL = 'http://hhhhold.com/88/d/jpg?' + Math.round(Math.random() * 100);
+            // var picURL = 'http://hhhhold.com/88/d/jpg?' + Math.round(Math.random() * 100);
+            var picURL = 'http://lorempixel.com/88/88/';
             var song = songs[Math.floor(Math.random() * songs.length)];
             var author = authors[Math.floor(Math.random() * authors.length)];
             var linkHTML = '<li class="item-content">' +
@@ -379,7 +381,7 @@ myApp.onPageInit('login-screen-embedded', function (page) {
         var username = $$(page.container).find('input[name="username"]').val();
         var password = $$(page.container).find('input[name="password"]').val();
         myApp.alert('Username: ' + username + ', password: ' + password, function () {
-            mainView.goBack();
+            mainView.router.back();
         });
     });
 });
@@ -405,6 +407,181 @@ myApp.onPageInit('color-themes', function (page) {
     });
     $$(page.container).find('.ks-layout-theme').click(function () {
         $$('body').removeClass(layouts).addClass('layout-' + $$(this).attr('data-theme'));
+    });
+});
+
+/* ===== Virtual List ===== */
+myApp.onPageInit('virtual-list', function (page) {
+    // Generate array with 10000 demo items:
+    var items = [];
+    for (var i = 0; i < 10000; i++) {
+        items.push({
+            title: 'Item ' + i,
+            subtitle: 'Subtitle ' + i
+        });
+    }
+
+    // Create virtual list
+    var virtualList = myApp.virtualList($$(page.container).find('.virtual-list'), {
+        // Pass array with items
+        items: items,
+        // Custom search function for searchbar
+        searchAll: function (query, items) {
+            var found = [];
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].title.indexOf(query) >= 0 || query.trim() === '') found.push(i);
+            }
+            return found; //return array with mathced indexes
+        },
+        // List item Template7 template
+        template: '<li>' +
+                    '<a href="#" class="item-link item-content">' +
+                      '<div class="item-inner">' +
+                        '<div class="item-title-row">' +
+                          '<div class="item-title">{{title}}</div>' +
+                        '</div>' +
+                        '<div class="item-subtitle">{{subtitle}}</div>' +
+                      '</div>' +
+                    '</a>' +
+                  '</li>',
+        // Item height
+        height: 63,
+    });
+});
+/* ===== Pickers ===== */
+myApp.onPageInit('form-pickers', function (page) {
+    var today = new Date();
+
+    // iOS Device picker
+    var pickerDevice = myApp.picker({
+        input: '#ks-picker-device',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['iPhone 4', 'iPhone 4S', 'iPhone 5', 'iPhone 5S', 'iPhone 6', 'iPhone 6 Plus', 'iPad 2', 'iPad Retina', 'iPad Air', 'iPad mini', 'iPad mini 2', 'iPad mini 3']
+            }
+        ]
+    });
+
+    // Describe yourself picker
+    var pickerDescribe = myApp.picker({
+        input: '#ks-picker-describe',
+        rotateEffect: true,
+        cols: [
+            {
+                textAlign: 'left',
+                values: ('Super Lex Amazing Bat Iron Rocket Lex Cool Beautiful Wonderful Raining Happy Amazing Funny Cool Hot').split(' ')
+            },
+            {
+                values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+        ]
+    });
+
+    // Custom Pickerbar
+    var pickerCustomPickerbar = myApp.picker({
+        input: '#ks-picker-custom-pickerbar',
+        rotateEffect: true,
+        pickerbarHTML: 
+            '<div class="toolbar pickerbar">' +
+                '<div class="left">' +
+                    '<a href="#" class="link custom-pickerbar-random">Randomize</a>' +
+                '</div>' +
+                '<div class="right">' +
+                    '<a href="#" class="link close-picker">That\'s me</a>' +
+                '</div>' +
+            '</div>',
+        cols: [
+            {
+                values: ['Mr', 'Ms'],
+            },
+            {
+                textAlign: 'left',
+                values: ('Super Lex Amazing Bat Iron Rocket Lex Cool Beautiful Wonderful Raining Happy Amazing Funny Cool Hot').split(' ')
+            },
+            {
+                values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+        ],
+        onOpen: function (picker) {
+            picker.container.find('.custom-pickerbar-random').on('click', function () {
+                var col0Values = picker.cols[0].values;
+                var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
+
+                var col1Values = picker.cols[1].values;
+                var col1Random = col1Values[Math.floor(Math.random() * col1Values.length)];
+
+                var col2Values = picker.cols[2].values;
+                var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
+                
+                picker.setValue([col0Random, col1Random, col2Random]);
+            });
+        }
+    });
+
+    // Inline date-time
+    var pickerInline = myApp.picker({
+        input: '#ks-picker-date',
+        container: '#ks-picker-date-container',
+        pickerbarHTML: '',
+        cssClass: 'ks-date-time-picker',
+        rotateEffect: true,
+        value: [today.getMonth(), today.getDate(), today.getFullYear(), today.getHours(), (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())],
+        onChange: function (picker, value, textValue) {
+            var daysInMonth = new Date(picker.value[2], picker.value[0]*1 + 1, 0).getDate();
+            if (value[1] > daysInMonth) {
+                picker.cols[1].setValue(daysInMonth);
+            }
+        },
+        formatValue: function (p, value, textValue) {
+            return textValue[0] + ' ' + value[1] + ', ' + value[2] + ' ' + value[3] + ':' + value[4];
+        },
+        cols: [
+            // Months
+            {
+                values: ('0 1 2 3 4 5 6 7 8 9 10 11').split(' '),
+                textValues: ('January February March April May June July August September October November December').split(' '),
+                textAlign: 'left',
+            },
+            // Days
+            {
+                values: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            },
+            // Years
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 1950; i <= 2030; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            // Space divider
+            {
+                divider: true,
+                content: '&nbsp;&nbsp;'
+            },
+            // Hours
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 23; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            // Divider
+            {
+                divider: true,
+                content: ':'
+            },
+            // Minutes
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                    return arr;
+                })(),
+            }
+        ]
     });
 });
 

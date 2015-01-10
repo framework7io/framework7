@@ -79,8 +79,8 @@ var Slider = function (container, params) {
             }
         }
         // First/last
-        s.isFirst = s.activeSlideIndex === 0;
-        s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
+        s.isFirst = s.isBeginning = s.activeSlideIndex === 0;
+        s.isLast = s.isEnd = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
     };
 
     s.updatePagination = function () {
@@ -143,8 +143,17 @@ var Slider = function (container, params) {
             }
         }
     };
+
+    function isFormElement(el) {
+        var nn = el.nodeName.toLowerCase();
+        if (nn === 'input' || nn === 'textarea' || nn === 'select') return true;
+        return false;
+    }
+    s.touchedTarget = null;
+    var hasFocused, hasBlured;
     s.onTouchStart = function (e) {
         if (s.params.onlyExternal) return;
+        s.touchedTarget = e.target;
         isTouched = true;
         isMoved = false;
         isScrolling = undefined;
@@ -154,7 +163,11 @@ var Slider = function (container, params) {
         s.allowClick = true;
         s.updateSize();
         if (s.params.onTouchStart) s.params.onTouchStart(s, e);
-        if (e.type === 'mousedown') e.preventDefault();
+        hasFocused = hasBlured = false;
+        if (e.type === 'mousedown') {
+            if (!isFormElement(e.target)) e.preventDefault();
+        }
+        
     };
     s.onTouchMove = function (e) {
         if (s.params.onTouchMove) s.params.onTouchMove(s, e);
@@ -213,12 +226,17 @@ var Slider = function (container, params) {
         if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
         var touchEndTime = Date.now();
         var timeDiff = touchEndTime - touchStartTime;
+        if (isFormElement(s.touchedTarget)) hasFocused = true;
+        if (document.activeElement && document.activeElement !== s.touchedTarget && isFormElement(document.activeElement)) {
+            document.activeElement.blur();
+            hasBlured = true;
+        }
         if (s.allowClick) {
             if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
                 clickTimeout = setTimeout(function () {
                     if (!s) return;
-                    if (s.params.paginationHide && s.paginationContainer) {
+                    if (s.params.paginationHide && s.paginationContainer && !hasBlured && !hasFocused) {
                         s.paginationContainer.toggleClass('slider-pagination-hidden');
                     }
                     if (s.params.onClick) s.params.onClick(s, e);
@@ -309,8 +327,8 @@ var Slider = function (container, params) {
         if (typeof speed === 'undefined') speed = s.params.speed;
         s.previousSlideIndex = s.activeSlideIndex;
         s.activeSlideIndex = Math.round(index);
-        s.isFirst = s.activeSlideIndex === 0;
-        s.isLast = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
+        s.isFirst = s.isBeginning = s.activeSlideIndex === 0;
+        s.isLast = s.isEnd = s.activeSlideIndex === s.slides.length - s.params.slidesPerView;
         s.onTransitionStart();
         var translateX = isH ? translate * inverter : 0, translateY = isH ? 0 : translate;
         if (speed === 0) {
@@ -412,9 +430,14 @@ var Slider = function (container, params) {
             s.wrapper.transitionEnd(function () {
                 s.startAutoplay();
             });
-            var index = s.activeSlideIndex + 1;
-            if (index > s.slides.length - s.params.slidesPerView) index = 0;
-            s.slideTo(index);
+            if (s.params.loop) {
+                s.slideNext();
+            }
+            else {
+                var index = s.activeSlideIndex + 1;
+                if (index > s.slides.length - s.params.slidesPerView) index = 0;
+                s.slideTo(index);
+            }
         }, s.params.autoplay);
     };
     s.stopAutoplay = function () {
@@ -480,6 +503,9 @@ var Slider = function (container, params) {
         else s.updateClasses();
         s.attachEvents();
         if (s.params.autoplay) s.startAutoplay();
+        if (typeof s.params.onInit === 'function') {
+	        s.params.onInit();
+        }
     };
     s.update = function () {
         if (s.params.loop) s.createLoop();

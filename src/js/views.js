@@ -7,10 +7,13 @@ var View = function (selector, params) {
         dynamicNavbar: false,
         domCache: false,
         linksView: undefined,
+        reloadPages: false,
         uniqueHistory: app.params.uniqueHistory,
         uniqueHistoryIgnoreGetParameters: app.params.uniqueHistoryIgnoreGetParameters,
+        allowDuplicateUrls: app.params.allowDuplicateUrls,
         swipeBackPage: app.params.swipeBackPage,
-        swipeBackPageBoxShadow: app.params.swipeBackPageBoxShadow,
+        swipeBackPageAnimateShadow: app.params.swipeBackPageAnimateShadow,
+        swipeBackPageAnimateOpacity: app.params.swipeBackPageAnimateOpacity,
         swipeBackPageActiveArea: app.params.swipeBackPageActiveArea,
         swipeBackPageThreshold: app.params.swipeBackPageThreshold,
         animatePages: app.params.animatePages,
@@ -232,10 +235,10 @@ var View = function (selector, params) {
         }
 
         activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
-        if (view.params.swipeBackPageBoxShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
+        if (view.params.swipeBackPageAnimateShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
 
         previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
-        previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
+        if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
 
         // Dynamic Navbars Animation
         if (dynamicNavbar) {
@@ -468,16 +471,16 @@ var View = function (selector, params) {
 
     // Bars methods
     view.hideNavbar = function () {
-        return app.hideNavbar(container);
+        return app.hideNavbar(container.find('.navbar'));
     };
     view.showNavbar = function () {
-        return app.showNavbar(container);
+        return app.showNavbar(container.find('.navbar'));
     };
     view.hideToolbar = function () {
-        return app.hideToolbar(container);
+        return app.hideToolbar(container.find('.toolbar'));
     };
     view.showToolbar = function () {
-        return app.showToolbar(container);
+        return app.showToolbar(container.find('.toolbar'));
     };
 
     // Push State on load

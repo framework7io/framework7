@@ -28,19 +28,22 @@
     background: #000;
 }
 .statusbar-overlay.with-panel-left {
-    background: #222;
+    background: #222426;
 }
 .statusbar-overlay.with-panel-right {
-    background: #000;
+    background: #131313;
 }
 // Demo tab bars
-.page[data-page="tabbar"], .page[data-page="tabbar-labels"] {
-    .tabbar {
+.page[data-page="tabbar"], .page[data-page="tabbar-labels"], .page[data-page="messages"] {
+    .tabbar, .toolbar {
         -webkit-transform: none;
         -moz-transform: none;
         -ms-transform: none;
         -o-transform: none;
         transform: none;
+        -webkit-transition: 0ms;
+        -o-transition: 0ms;
+        transition: 0ms;
     }
 }
 .page[data-page="tabbar-labels"] {
@@ -171,6 +174,10 @@ i.ks-tabbar-icon-4 {
         left: 0;
     }
 }
+// Virtual List
+.page[data-page="virtual-list"] .virtual-list li {
+    height: 63px;
+}
 // Custom Accordion
 .custom-accordion {
     padding-left: 0;
@@ -223,6 +230,39 @@ i.ks-tabbar-icon-4 {
     }
 }
 
+// Demo Pickers
+.ks-date-time-picker {
+    .picker-item {
+        color:#999;
+    }
+    .picker-selected {
+        color:#000;
+    }
+    @media (max-width:767px) {
+        .picker-items {
+            font-size: 21px;
+        }
+        .picker-item {
+            height: 36px;
+            line-height: 36px;
+            padding: 0 6px;
+        }
+    }
+}
+// Demo Lazy Loading
+img.ks-demo-lazy {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+div.ks-demo-lazy {
+    background: #aaa;
+    -webkit-background-size: cover;
+    background-size: cover;
+    height: 300px;
+    height: 60vw;
+}
+// Color Theme
 .ks-layout-theme {
     height: 44px;
     border: 1px solid #aaa;
@@ -243,3 +283,4 @@ i.ks-tabbar-icon-4 {
     cursor: pointer;
     margin-bottom: 10px;
 }
+

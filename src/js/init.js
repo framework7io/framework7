@@ -2,6 +2,9 @@
 ************   App Init   ************
 ======================================================*/
 app.init = function () {
+    // Compile Template7 templates on app load
+    if (app.initTemplate7Templates) app.initTemplate7Templates();
+    
     // Init Plugins
     if (app.initPlugins) app.initPlugins();
     
@@ -22,7 +25,7 @@ app.init = function () {
         if (viewContainer) {
             viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
         }
-        app.pageInitCallback(view, this, url, 'center');
+        app.pageInitCallback(view, {pageContainer: this, url: url, position: 'center'});
     });
     
     // Init resize events
@@ -38,13 +41,10 @@ app.init = function () {
     if (app.initSortable && app.params.sortable) app.initSortable();
 
     // Init Live Swipe Panels
-    if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
+    if (app.initSwipePanels && (app.params.swipePanel || app.params.swipePanelOnlyClose)) app.initSwipePanels();
     
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
-
-    // Compile Template7 templates on app load
-    if (app.initTemplate7Templates) app.initTemplate7Templates();
 
     // Plugin app init hook
     app.pluginHook('appInit');

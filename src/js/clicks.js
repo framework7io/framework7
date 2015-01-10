@@ -16,16 +16,7 @@ app.initClickEvents = function () {
         }
         // Check if link is external 
         if (isLink) {
-            /*jshint shadow:true */
-            for (var i = 0; i < app.params.externalLinks.length; i++) {
-                if (clicked.hasClass(app.params.externalLinks[i])) {
-                    return;
-                }
-
-                if (clicked[0].rel === app.params.externalLinks[i]) {
-                    return;
-                }
-            }
+            if (clicked.is(app.params.externalLinks)) return;
         }
 
         // Smart Select
@@ -106,6 +97,11 @@ app.initClickEvents = function () {
                 app.closeModal('.popup.modal-in');
         }
 
+        // Picker
+        if (clicked.hasClass('close-picker')) {
+            var picker = app.closePicker(clicked.parents('.picker'));
+        }
+
         // Tabs
         var isTabLink;
         if (clicked.hasClass('tab-link')) {
@@ -145,7 +141,8 @@ app.initClickEvents = function () {
         }
         // Accordion
         if (clicked.hasClass('accordion-item-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
-            var accordionItem = clicked.parents('.accordion-item');
+            var accordionItem = clicked.parent('.accordion-item');
+            if (accordionItem.length === 0) accordionItem = clicked.parents('.accordion-item');
             if (accordionItem.length === 0) accordionItem = clicked.parents('li');
             app.accordionToggle(accordionItem);
         }
@@ -168,13 +165,12 @@ app.initClickEvents = function () {
             else {
                 view = clicked.parents('.' + app.params.viewClass)[0] && clicked.parents('.' + app.params.viewClass)[0].f7View;
                 if (view && view.params.linksView) {
-                    view = $(view.params.linksView)[0].f7View;
+                    if (typeof view.params.linksView === 'string') view = $(view.params.linksView)[0].f7View;
+                    else if (view.params.linksView instanceof View) view = view.params.linksView;
                 }
             }
             if (!view) {
-                for (var i = 0; i < app.views.length; i++) {
-                    if (app.views[i].main) view = app.views[i];
-                }
+                if (app.mainView) view = app.mainView;
             }
             if (!view) return;
 
@@ -227,5 +223,5 @@ app.initClickEvents = function () {
             else view.router.load(options);
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker', handleClicks);
 };

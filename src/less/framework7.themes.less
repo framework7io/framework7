@@ -30,6 +30,20 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
+    // Picker
+    .popover .picker, .picker.picker-inline {
+        .picker-center-highlight {
+            border-color: @barsBorder;
+        }
+        .picker-item.picker-selected {
+            color:#fff;
+        }
+    }
+    .popover .picker {
+        .pickerbar {
+            border-bottom-color: @barsBorder;
+        }
+    }
     // Photo Browser
     .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
         .navbar, .toolbar {
@@ -164,6 +178,17 @@ Framework7 Layouts Themes
         border-top-color: @barsBorder;
         background-color: @barsBg;
         color:@barsText;
+    }
+    // Picker
+    .popover .picker, .picker.picker-inline {
+        .picker-center-highlight {
+            border-color: @barsBorder;
+        }
+    }
+    .popover .picker {
+        .pickerbar {
+            border-bottom-color: @barsBorder;
+        }
     }
     // Photo Browser
     .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {

@@ -73,18 +73,20 @@ app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
 };
 
 // On Page Init Callback
-app.pageInitCallback = function (view, pageContainer, url, position, navbarInnerContainer) {
+app.pageInitCallback = function (view, params) {
+    var pageContainer = params.pageContainer;
     if (pageContainer.f7PageInitialized && !view.params.domCache) return;
 
     // Page Data
     var pageData = {
         container: pageContainer,
-        url: url,
-        query: $.parseUrlQuery(url || ''),
+        url: params.url,
+        query: params.query || $.parseUrlQuery(params.url || ''),
         name: $(pageContainer).attr('data-page'),
         view: view,
-        from: position,
-        navbarInnerContainer: navbarInnerContainer
+        from: params.position,
+        context: params.context,
+        navbarInnerContainer: params.navbarInnerContainer
     };
 
     if (pageContainer.f7PageInitialized && view.params.domCache) {
@@ -127,6 +129,8 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
         container: pageContainer,
         name: $(pageContainer).attr('data-page'),
         view: view,
+        url: pageContainer.f7PageData && pageContainer.f7PageData.url,
+        query: pageContainer.f7PageData && pageContainer.f7PageData.query,
         from: position
     };
     // Before Init Callback
@@ -146,6 +150,7 @@ app.pageBackCallbacks = function (callback, view, params) {
         query: pageContainer.f7PageData && pageContainer.f7PageData.query,
         view: view,
         from: params.position,
+        context: params.context,
         swipeBack: params.swipeBack
     };
 
@@ -168,10 +173,11 @@ app.pageAnimCallbacks = function (callback, view, params) {
     var pageData = {
         container: params.pageContainer,
         url: params.url,
-        query: $.parseUrlQuery(params.url || ''),
+        query: params.query || $.parseUrlQuery(params.url || ''),
         name: $(params.pageContainer).attr('data-page'),
         view: view,
         from: params.position,
+        context: params.context,
         swipeBack: params.swipeBack
     };
     var oldPage = params.oldPage,
@@ -208,6 +214,19 @@ app.pageAnimCallbacks = function (callback, view, params) {
         if (!newPage.hasClass('no-toolbar') && (oldPage.hasClass('no-toolbar') || oldPage.hasClass('no-toolbar-by-scroll'))) {
             view.showToolbar();
         }
+        // Hide/show tabbar
+        var tabBar;
+        if (newPage.hasClass('no-tabbar') && !oldPage.hasClass('no-tabbar')) {
+            tabBar = $(view.container).find('.tabbar');
+            if (tabBar.length === 0) tabBar = $(view.container).parents('.' + app.params.viewsClass).find('.tabbar');
+            app.hideToolbar(tabBar);
+        }
+        if (!newPage.hasClass('no-tabbar') && (oldPage.hasClass('no-tabbar') || oldPage.hasClass('no-tabbar-by-scroll'))) {
+            tabBar = $(view.container).find('.tabbar');
+            if (tabBar.length === 0) tabBar = $(view.container).parents('.' + app.params.viewsClass).find('.tabbar');
+            app.showToolbar(tabBar);
+        }
+
         oldPage.removeClass('no-navbar-by-scroll no-toolbar-by-scroll');
         // Callbacks
         app.pluginHook('pageBeforeAnimation', pageData);
@@ -239,10 +258,14 @@ app.initPage = function (pageContainer) {
     if (app.initMessagebar) app.initMessagebar(pageContainer);
     // Init scroll toolbars
     if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
+    // Init scroll toolbars
+    if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     // Size navbars on page reinit
     if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
     // Reinit slider
     if (app.reinitSlider) app.reinitSlider(pageContainer);
+    // Reinit lazy load
+    if (app.reinitLazyLoad) app.reinitLazyLoad(pageContainer);
 };

@@ -207,6 +207,7 @@ app.initFastClicks = function () {
         }
 
         if ((e.timeStamp - lastClickTime) < 200) {
+            setTimeout(removeActive, 0);
             return true;
         }
 
@@ -233,6 +234,12 @@ app.initFastClicks = function () {
             targetElement.focus();
         }
 
+        // Blur active elements
+        if (document.activeElement && targetElement !== document.activeElement && document.activeElement !== document.body && targetElement.nodeName.toLowerCase() !== 'label') {
+            document.activeElement.blur();
+        }
+
+        // Send click
         e.preventDefault();
         var touch = e.changedTouches[0];
         var evt = document.createEvent('MouseEvents');

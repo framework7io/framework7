@@ -65,23 +65,32 @@ app.closePanel = function () {
 ************   Swipe panels   ************
 ======================================================*/
 app.initSwipePanels = function () {
-    var panel = $('.panel.panel-' + app.params.swipePanel);
-    if (panel.length === 0) return;
-
+    var panel, side;
+    if (app.params.swipePanel) {
+        panel = $('.panel.panel-' + app.params.swipePanel);
+        side = app.params.swipePanel;
+        if (panel.length === 0) return;
+    }
+    else {
+        if (app.params.swipePanelOnlyClose) {
+            if ($('.panel').length === 0) return;
+        }
+        else return;
+    }
+    
     var panelOverlay = $('.panel-overlay');
-    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction, side;
+    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction;
     var views = $('.' + app.params.viewsClass);
-    side = app.params.swipePanel;
 
     function handleTouchStart(e) {
-        if (!app.allowPanelOpen || !app.params.swipePanel || isTouched) return;
+        if (!app.allowPanelOpen || (!app.params.swipePanel && !app.params.swipePanelOnlyClose) || isTouched) return;
         if ($('.modal-in, .photo-browser-in').length > 0) return;
-        if (!app.params.swipePanelCloseOpposite) {
+        if (!(app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose)) {
             if ($('.panel.active').length > 0 && !panel.hasClass('active')) return;
         }
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-        if (app.params.swipePanelCloseOpposite) {
+        if (app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose) {
             if ($('.panel.active').length > 0) {
                 side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
             }
@@ -90,7 +99,8 @@ app.initSwipePanels = function () {
             }
         }
         panel = $('.panel.panel-' + side);
-        if (app.params.swipePanelActiveArea) {
+        opened = panel.hasClass('active');
+        if (app.params.swipePanelActiveArea && !opened) {
             if (side === 'left') {
                 if (touchesStart.x > app.params.swipePanelActiveArea) return;
             }
@@ -160,10 +170,11 @@ app.initSwipePanels = function () {
 
         if (!isMoved) {
             effect = panel.hasClass('panel-cover') ? 'cover' : 'reveal';
-            panel.show();
-            panelOverlay.show();
-            opened = panel.hasClass('active');
-            panelWidth = panel.width();
+            if (!opened) {
+                panel.show();
+                panelOverlay.show();
+            }
+            panelWidth = panel[0].offsetWidth;
             panel.transition(0);
             if (panel.find('.' + app.params.viewClass).length > 0) {
                 if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);

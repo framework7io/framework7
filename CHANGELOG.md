@@ -1,5 +1,78 @@
 # Change Log
 
+## Framework7 v0.10.0 - Updated on December 8, 2014
+  * Fixed issue with messages scrolling when adding new message
+  * Fixed issue with positioning of dynamic navbar elements
+
+## Framework7 v0.9.9 - Updated on December 7, 2014
+  * Virtual List
+    * Now it is possible to use multiple Virtual Lists on same page
+    * Fixed issue with muliple columns and wrong list height on iOS 7
+  * Smart Select
+    * Generated Smart Select page/popup can be used with Virtual List by adding `data-virtual-list="true"` and `data-virtual-list-height="44"` attributes to Smart Select. 
+  * Panels
+    * Fixed issue with swipe panel with specified `swipePanelActiveArea` parameter
+    * New app parameter `swipePanelOnlyClose` allows to close panels with swipe without `swipePanel`
+  * Modals
+    * New `verticalButtons` modal parameter to enable vertical buttons layout
+  * Accordion
+    * Better support for nested accordions
+    * Fixed issue when its content becomes invisible on Android devices
+  * Router
+    * New App and View `allowDuplicateUrls` parameter (disabled by default) that allows loading of pages with same urls
+    * Fixed issues with DOM manipulation with enabled `domCache`
+  * Dom7
+    * Now Dom7 can parse and create DOM elements from string, like `var div = $$('<div></div>')`
+    * Better width/height calculationg in `.width()` and `.height()` methods
+    * Support for JSON declaration of attributes and propeties in `.attr()` and `.prop()` methods
+  * Template7
+    * Updated to latest Template7 version with new support of Global context, that could be specified using `Template7.global` property and used as `@global` keyword in templates
+  * Pull To Refresh
+    * New `app.destroyPullToRefresh()` method to destroy/disable PTR on page
+    
+## Framework7 v0.9.8 - Updated on November 2, 2014
+  * Virtual List
+    * New component that allows to render lists with huge amount of items without loss of performance.
+  * Swipeouts
+    * Improved performance and fixes issues that could cause app crashes
+    * Fixed issue with `swipeoutNoFollow`
+    * Compatibility with Virtual List
+  * Searchbar
+    * Better calculation for input field width with "Cancel" button
+    * Send .focus() on search field after tap on clear (x) icon
+    * Compatibility with Virtual List
+  * Infinite Scroll
+    * Compatibility with Virtual List
+  * Sortable
+    * Compatibility with Virtual List
+  * Smart Select
+    * Close smart select popup when use data-back-onselect attribute
+    * New attributes (data-form-theme, data-navbar-theme) and new app parameters (smartSelectFormTheme, smartSelectNavbarTheme) to control color theme on smart select page/popup
+  * Messages
+    * New `label` property for `app.addMessage()` method to specify message label
+  * Action Sheet
+    * Added `bg` property for button to specify button background color
+  * Slider
+    * Fixed issues with loop and autoplay when slider jumps over slides
+    * Fixes issue with focusing form elements in slides
+  * Swipe Back
+    * `swipeBackPageBoxShadow` App/View parameter renamed to `swipeBackPageAnimateShadow`
+    * New app parameter `swipeBackPageAnimateOpacity` that allows to control back page opacity during swipe back
+  * App
+    * `externalLinks` parameter now accepts string with CSS selector of external links
+  * Navbar / Toolbar
+    * New app methods `app.show/hideNavbar(navbar)`, `app.show/hideToolbar(navbar)` to show and hide navbar and toolbar/tabbar
+    * Now, tab bar can also be hidden by scroll by adding "hide-tabbar-on-scroll" class to page-content or using `hideTabbarOnPageScroll` parameter
+    * Fixed issues with disappearing navbar when using domCache
+  * Pages
+    * Page data object now has additional `context` property with passed context when using Template7 Pages
+  * View
+    * `linksView` parameter now also supports another View instance
+    * New reload behavior with new `reloadPages: true` parameter. In this mode View will always reload currently active page without loading new one
+  * Popover
+    * Fixed "angle" position on edge screen position
+
+
 ## Framework7 v0.9.7 - Updated on October 7, 2014
   * Slider
     * Now supports continuous loop mode with `loop:true` option

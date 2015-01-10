@@ -6,8 +6,8 @@ app.initMessages = function (pageContainer) {
     var messages = page.find('.messages');
     if (messages.length === 0) return;
     var pageContent = page.find('.page-content');
-    if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = messages.height() - pageContent.height();
     if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
+    if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = pageContent[0].scrollHeight - pageContent[0].offsetHeight;
 };
 app.addMessage = function (props) {
     props = props || {};
@@ -28,6 +28,7 @@ app.addMessage = function (props) {
                 (props.name ? '<div class="message-name">' + props.name + '</div>' : '') +
                 '<div class="message-text">' + props.text + '</div>' +
                 (props.avatar ? '<div class="message-avatar" style="background-image:url(' + props.avatar + ')"></div>' : '') +
+                (props.label ? '<div class="message-label">' + props.label + '</div>' : '') +
             '</div>';
     if (newOnTop) messages.prepend(html);
     else messages.append(html);
@@ -90,7 +91,7 @@ app.scrollMessagesContainer = function (messagesContent) {
     var messages = messagesContent.find('.messages');
     var newOnTop = messages.hasClass('new-messages-first');
     var currentScroll = messagesContent[0].scrollTop;
-    var newScroll = newOnTop ? 0 : messages.height() - messagesContent.height();
+    var newScroll = newOnTop ? 0 : messagesContent[0].scrollHeight - messagesContent[0].offsetHeight;
     if (newScroll === currentScroll) return;
     messagesContent.scrollTop(newScroll, 300);
 };

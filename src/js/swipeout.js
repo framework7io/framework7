@@ -4,7 +4,7 @@
 app.swipeoutOpenedEl = undefined;
 app.allowSwipeout = true;
 app.initSwipeout = function (swipeoutEl) {
-    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction, overswipeLeftButton, overswipeRightButton, overswipeLeft, overswipeRight;
+    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction, overswipeLeftButton, overswipeRightButton, overswipeLeft, overswipeRight, noFoldLeft, noFoldRight;
     $(document).on(app.touchEvents.start, function (e) {
         if (app.swipeoutOpenedEl) {
             var target = $(e.target);
@@ -12,14 +12,13 @@ app.initSwipeout = function (swipeoutEl) {
                 app.swipeoutOpenedEl.is(target[0]) ||
                 target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
                 target.hasClass('modal-in') ||
-                target.parents('.modal-in').length > 0 ||
+                target.parents('.modal.modal-in').length > 0 ||
                 target.hasClass('modal-overlay')
                 )) {
                 app.swipeoutClose(app.swipeoutOpenedEl);
             }
         }
     });
-    
 
     function handleTouchStart(e) {
         if (!app.allowSwipeout) return;
@@ -50,13 +49,15 @@ app.initSwipeout = function (swipeoutEl) {
             actionsRight = swipeOutEl.find('.swipeout-actions-right');
             actionsLeft = swipeOutEl.find('.swipeout-actions-left');
             actionsLeftWidth = actionsRightWidth = buttonsLeft = buttonsRight = overswipeRightButton = overswipeLeftButton = null;
+            noFoldLeft = actionsLeft.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
+            noFoldRight = actionsRight.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
             if (actionsLeft.length > 0) {
-                actionsLeftWidth = actionsLeft.width();
+                actionsLeftWidth = actionsLeft.outerWidth();
                 buttonsLeft = actionsLeft.children('a');
                 overswipeLeftButton = actionsLeft.find('.swipeout-overswipe');
             }
             if (actionsRight.length > 0) {
-                actionsRightWidth = actionsRight.width();
+                actionsRightWidth = actionsRight.outerWidth();
                 buttonsRight = actionsRight.children('a');
                 overswipeRightButton = actionsRight.find('.swipeout-overswipe');
             }
@@ -131,7 +132,6 @@ app.initSwipeout = function (swipeoutEl) {
                 if (overswipeRightButton.length > 0) {
                     overswipeRight = true;
                 }
-
             }
             for (i = 0; i < buttonsRight.length; i++) {
                 if (typeof buttonsRight[i]._buttonOffset === 'undefined') {
@@ -163,7 +163,10 @@ app.initSwipeout = function (swipeoutEl) {
                 if (overswipeLeftButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
                     $button.css({left: (overswipeLeft ? buttonOffset : 0) + 'px'});
                 }
-                $button.css('z-index', buttonsLeft.length - i).transform('translate3d(' + (translate + buttonOffset * (1 - Math.min(progress, 1))) + 'px,0,0)');
+                if (buttonsLeft.length > 1) {
+                    $button.css('z-index', buttonsLeft.length - i); 
+                }
+                $button.transform('translate3d(' + (translate + buttonOffset * (1 - Math.min(progress, 1))) + 'px,0,0)');
             }
         }
         swipeOutContent.transform('translate3d(' + translate + 'px,0,0)');
@@ -174,11 +177,13 @@ app.initSwipeout = function (swipeoutEl) {
             isMoved = false;
             return;
         }
+
         isTouched = false;
         isMoved = false;
         var timeDiff = (new Date()).getTime() - touchStartTime;
-        var action, actionsWidth, actions, buttons, i;
+        var action, actionsWidth, actions, buttons, i, noFold;
         
+        noFold = direction === 'to-left' ? noFoldRight : noFoldLeft;
         actions = direction === 'to-left' ? actionsRight : actionsLeft;
         actionsWidth = direction === 'to-left' ? actionsRightWidth : actionsLeftWidth;
 
@@ -280,10 +285,11 @@ app.swipeoutOpen = function (el, dir) {
     }
     var swipeOutActions = el.find('.swipeout-actions-' + dir);
     if (swipeOutActions.length === 0) return;
+    var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
     el.trigger('open').addClass('swipeout-opened').removeClass('transitioning');
     swipeOutActions.addClass('swipeout-actions-opened');
     var buttons = swipeOutActions.children('a');
-    var swipeOutActionsWidth = swipeOutActions.width();
+    var swipeOutActionsWidth = swipeOutActions.outerWidth();
     var translate = dir === 'right' ? -swipeOutActionsWidth : swipeOutActionsWidth;
     var i;
     if (buttons.length > 1) {
@@ -297,10 +303,9 @@ app.swipeoutOpen = function (el, dir) {
         }
         var clientLeft = buttons[1].clientLeft;
     }
-    
     el.addClass('transitioning');
     for (i = 0; i < buttons.length; i++) {
-        $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0');
+        $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0)');
     }
     el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
@@ -313,12 +318,12 @@ app.swipeoutClose = function (el) {
     if (!el.hasClass('swipeout-opened')) return;
     var dir = el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
     var swipeOutActions = el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
+    var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
     var buttons = swipeOutActions.children('a');
-    var swipeOutActionsWidth = swipeOutActions.width();
+    var swipeOutActionsWidth = swipeOutActions.outerWidth();
     app.allowSwipeout = false;
     el.trigger('close');
     el.removeClass('swipeout-opened').addClass('transitioning');
-
     el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(function () {
         el.trigger('closed');
         buttons.transform('');
@@ -345,7 +350,14 @@ app.swipeoutDelete = function (el) {
     var clientLeft = el[0].clientLeft;
     el.css({height: 0 + 'px'}).addClass('deleting transitioning').transitionEnd(function () {
         el.trigger('deleted');
-        el.remove();
+        if (el.parents('.virtual-list').length > 0) {
+            var virtualList = el.parents('.virtual-list')[0].f7VirtualList;
+            var virtualIndex = el[0].f7VirtualListIndex;
+            if (virtualList && typeof virtualIndex !== 'undefined') virtualList.deleteItem(virtualIndex);
+        }
+        else {
+            el.remove();
+        }
     });
     var translate = '-100%';
     el.find('.swipeout-content').transform('translate3d(' + translate + ',0,0)');
