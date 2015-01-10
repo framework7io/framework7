@@ -9,11 +9,11 @@ app.initMessages = function (pageContainer) {
     if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
     if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = pageContent[0].scrollHeight - pageContent[0].offsetHeight;
 };
-app.addMessage = function (props) {
+app.addMessage = function (props, messagesContent) {
     props = props || {};
     props.type = props.type || 'sent';
     if (!props.text || props.length === 0) return false;
-    var messagesContent = $('.messages-content');
+    messagesContent = $(messagesContent || '.messages-content');
     if (messagesContent.length === 0) return false;
     var messages = messagesContent.find('.messages');
     var newOnTop = messages.hasClass('new-messages-first');
@@ -93,5 +93,5 @@ app.scrollMessagesContainer = function (messagesContent) {
     var currentScroll = messagesContent[0].scrollTop;
     var newScroll = newOnTop ? 0 : messagesContent[0].scrollHeight - messagesContent[0].offsetHeight;
     if (newScroll === currentScroll) return;
-    messagesContent.scrollTop(newScroll, 300);
+    messagesContent.scrollTop(newScroll, 400);
 };
