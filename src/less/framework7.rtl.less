@@ -373,10 +373,16 @@ i.icon {
     &.icon-back {
         background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23007aff' transform='translate(12,20) rotate(180)'/></svg>");
     }
+    &.icon-forward {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='%23007aff' transform='translate(12,20) rotate(180)'/></svg>");
+    }
 }
 .back-icon-mixin(@colorName, @color, @colorHex) {
     i.icon-back.color-@{colorName}, i.icon-back.theme-@{colorName}, .theme-@{colorName} i.icon-back {
         background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='%23@{colorHex}' transform='translate(12,20) rotate(180)'/></svg>");
+    }
+    i.icon-forward.color-@{colorName}, i.icon-forward.theme-@{colorName}, .theme-@{colorName} i.icon-forward {
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='%23@{colorHex}' transform='translate(12,20) rotate(180)'/></svg>");
     }
 }
 .back-icon-mixin(e('gray'), #8e8e93, '8e8e93');
