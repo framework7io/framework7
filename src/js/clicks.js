@@ -104,7 +104,7 @@ app.initClickEvents = function () {
                 app.closeModal(pickerToClose);
             }
             else {
-                pickerToClose = $('.popover.modal-in .picker');
+                pickerToClose = $('.popover.modal-in .picker-modal');
                 if (pickerToClose.length > 0) {
                     app.closeModal(pickerToClose.parents('.popover'));
                 }
