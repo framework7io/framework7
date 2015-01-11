@@ -27,10 +27,21 @@
     &.navbar-hiding {
         .transition(400ms);
         .translate3d(0,0,0);
+        & ~ .page-content, & ~ .pages, & ~ .page {
+            .list-group-title {
+                .transition(400ms);
+            }
+        }
     }
     &.navbar-hidden {
         .transition(400ms);
         .translate3d(0,-100%,0);
+        & ~ .page-content, & ~ .pages, & ~ .page {
+            .list-group-title {
+                .transition(400ms);
+                top:-44px;
+            }
+        }
     }
 }
 .page.no-navbar .page-content {
