@@ -1,10 +1,18 @@
-/* === Picker === */
-.picker {
+/* === Columns Picker === */
+.picker-columns {
     width: 100%;
     height: 260px;
     z-index: 11500;
+    &.picker-modal-inline, .popover & {
+        height: 200px;
+    }
+    @media (orientation: landscape) and (max-height: 415px) {
+        &:not(.picker-modal-inline) {
+            height: 200px;
+        }
+    }
 }
-.popover.popover-picker {
+.popover.popover-picker-columns {
     width: 280px;
 }
 .picker-items {
@@ -64,7 +72,7 @@
     }
     &.picker-selected {
         color: #000;
-        -webkit-transform: translate3d(0,0,0) rotateX(0deg);
+        .transform(translate3d(0,0,0) rotateX(0deg));
     }
     &.picker-before-selected {
     }

@@ -497,14 +497,8 @@ html.with-statusbar-overlay {
     .toolbar {
         border-top-color: #929499;
         border-bottom: none;
-        height: 44px;
         position: relative;
         width: 100%;
-        padding: 0 8px;
-        .border-box();
-        .flexbox();
-        .justify-content(space-between);
-        .align-items(center);
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - 44px)";
             height: ~"-moz-calc(100% - 44px)";
@@ -512,7 +506,6 @@ html.with-statusbar-overlay {
         }
     }
     &.picker-modal-inline, .popover & {
-        height: 200px;
         display: block;
         position: relative;
         background: none;
@@ -526,11 +519,6 @@ html.with-statusbar-overlay {
         .toolbar {
             border-top: none;
             background: none;
-        }
-    }
-    @media (orientation: landscape) and (max-height: 415px) {
-        &:not(.picker-modal-inline) {
-            height: 200px;
         }
     }
 }
