@@ -1,0 +1,77 @@
+channel link, channel language, channel copyright, channel managingEditor, channel webMaster, channel docs, channel lastBuildDate {
+	display:none;
+}
+
+rss {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:0.7em;
+	line-height:130%;
+	margin:1em;
+}
+
+/* HEADER */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+channel title {
+	display:block;
+	padding:0.4em 0.2em;
+	color:#FFF;
+	border-bottom:1px solid black;
+	font-weight:bold;
+	font-size:140%;
+	background-color:#4483C7;
+}
+
+channel description {
+	display:block;
+	float:left;
+	font-size:120%;
+	font-weight:bold;
+	margin:1em 0.5em 0;
+}
+
+/* CONTENT */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+channel item {
+	background-color:#FFFFEE;
+	border:1px solid #538620;
+	clear:both;
+	display:block;
+	padding:0 0 0.5em;
+	margin:1em;
+}
+
+channel item title {
+	background-color:#538620;
+	border-bottom-width:0;
+	color:#FFF;
+	display:block;
+	font-size:110%;
+	font-weight:bold;
+	margin:0;
+	padding:0.3em 0.5em;
+}
+
+channel item description {
+	display: block;
+	float:none;
+	margin:0;
+	text-align: left;
+	padding:0.2em 0.5em 0.4em;
+	color: black;
+	font-size:100%;
+	font-weight:normal;
+}
+
+channel item link {
+	color:#666;
+	display:block;
+	font-size:86%;
+	padding:0 0.5em;
+}
+
+channel item pubDate {
+	color:#666;
+	display:block;
+	font-size:86%;
+	padding:0 0.5em;
+}

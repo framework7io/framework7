@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="latest.xsl" ?>
+<?xml-stylesheet type="text/css" href="latest.css" ?>
+<rss version="2.0">
+	<channel>
+		<title>xefteri.com</title>
+		<link>http://www.xefteri.com</link>
+		<description>The latest articles from xefteri.com</description>
+		<language>en-us</language>
+		<copyright>Copyright 2005 xefteri.com</copyright>
+		<docs>http://blogs.law.harvard.edu/tech/rss/</docs>
+		<lastBuildDate>Mon, 07 Mar 2005 00:00:00 MST</lastBuildDate>
+
+		<item>
+			<image src="http://images.media-allrecipes.com/userphotos/250x250/00/20/98/209854.jpg" width="80" height="80"></image>
+			<title>Improving an XML feed display through CSS and XSLT</title> 
+			<description>XML feeds, though useful, are boring to look at in a browser because they are simple XML files. It's possible though to make them easier on the eye, and in this article we'll look at two ways of doing that. First, we'll use simple CSS properties to format each XML node, and then we'll use a little more complex but much more powerful XSL transformation.</description>
+			<pubDate>Sun, 06 Mar 2005 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=24</link>
+		</item>
+	
+		<item>
+			<title>Identity fields in Oracle and SQL Server</title> 
+			<description>While it may be relatively easy to create an incrementing and unique identifier inside a table in SQL Server, things get tricky with Oracle. In this article, we'll see the differences between the two databases and offer a way of solving the problem.</description>
+			<pubDate>Mon, 17 Mar 2003 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=23</link>
+		</item>
+	
+		<item>
+			<title>Exporting Word files to HTML</title> 
+			<description>In this article we will first discuss the case for and against using Word as your HTML editor. Then we will see how to properly save a Word file to smaller, more compact HTML files. Third and last, we will see how to do this through code, and possibly create a batch process for converting numerous Word files to HTML at once.</description>
+			<pubDate>Wed, 05 Mar 2003 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=22</link>
+		</item>
+	
+		<item>
+			<title>GetRows VBScript Class - Part III: Paging the results</title> 
+			<description>In Part I of this series, we saw how to create a VBScript class to query our database using the very fast GetRows() method, and return a recordset as a local array. In Part II, we extended the class to allow ADDing and UPDATEing a row in the database. In this Part III, we will expand the class further to allow pagination of the returned recordset.</description>
+			<pubDate>Thu, 16 Jan 2003 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=21</link>
+		</item>
+	
+		<item>
+			<title>Smart headers and footers using ASP.NET User Controls</title> 
+			<description>Good site usability often means removing links from one page back to itself. In this article we will look at how to create an ASP.NET User Control which will act as a common header to a site. It will automatically know which page we are looking at, and it will remove links to the same page from itself. For example, on this site, if we click on the About us section of the header, it will take you to the page, and it will make that link inactive. That way, we know that we are under that section, and we can't click on it anymore.</description>
+			<pubDate>Mon, 23 Dec 2002 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=20</link>
+		</item>
+	
+	</channel>
+</rss>

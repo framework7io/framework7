@@ -1,0 +1,90 @@
+body {
+	background-color:#FFF;
+	font-family:Verdana, Arial, SunSans-Regular, Sans-Serif; 
+	font-size:small;
+	line-height:1.4em;
+	margin:0;
+	padding:0;
+}
+a:visited {
+	color:#666666;
+}
+
+a:hover {
+	color: #F00;
+}
+#logo {
+	border-top:0.2em solid #235B9C;
+	background-color:#4483C7;
+	padding:0.2em 0.4em 0.4em;
+	color:#FFF;
+	font-family:"Trebuchet MS", Verdana, Arial, SunSans-Regular, Sans-Serif; 
+	font-size:240%;
+}
+#logo a:link, #logo a:visited {
+	text-decoration:none;
+	color:#FFF;
+}
+
+.Snippet {
+	margin-bottom:30px;
+	border:1px solid #538620;
+	background-color:#FFFFEE;
+}
+.Snippet .title {
+	background-color:#538620;
+	color:#FFF;
+	font-family:Tahoma, "Lucida Sans Unicode", Verdana, sans-serif;
+	font-size:86%;
+	letter-spacing:0.1em;
+	margin:0;
+	padding:0.3em 1em;
+}
+.Snippet .titleWithLine {
+	background-color:#FFF;
+	border-bottom:1px solid #538620;
+	color:#538620;
+	font-family:Tahoma, "Lucida Sans Unicode", Verdana, sans-serif;
+	font-size:86%;
+	letter-spacing:0.1em;
+	margin:0;
+	padding:0.3em 1em;
+}
+.Snippet table {
+	font-size:86%;
+}
+.Snippet ul li, .Snippet ol li{
+	margin-bottom:0.4em;
+	margin-left:-0.5em;
+	font-size:86%;
+	line-height:145%;
+}
+#Snippet ul li {
+	list-style-type:square;
+}
+.Snippet dl {
+	margin-left:1em;
+}
+.Snippet dl dd {
+	font-size:110%;
+	margin:0;
+	font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	padding-bottom:0.2em;
+}
+.Snippet dl dt {
+	border-bottom: 1px solid #EEE;	
+	font-size:86%;
+	line-height:145%;
+	margin-bottom:0.6em;
+	padding-bottom:0.4em;
+}
+.Snippet dl dt .comments {
+	color:#666;
+	font-size:86%;
+}
+.Snippet .updated {
+	color:#666666;
+	font-size:80%;
+	padding:0 1em;
+	text-align:center
+}

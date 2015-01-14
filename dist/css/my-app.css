@@ -33,6 +33,8 @@
 
 .toolbar {
 	background: #725f50;
+	position: fixed;
+	bottom:0;
 }
 
 .content-block {
@@ -47,16 +49,11 @@
 .searchbar {
 	background-color: #e08f50;
 	height: 50px;
-	margin-top: 43px;
 	padding: 5px;
 }
 
-.fa-search {
-	z-index: 4;
-	position: absolute;
-	left: 15px;
-	top: 56px;
-	color: #ccc;
+.searchbar .searchbar-clear {
+	right: 15px;
 }
 
 .searchbar input[type="search"] {
@@ -294,6 +291,83 @@ a.analytics img {
 	background: #367298 !important;
 }
 
+/* Analytics Page */
+[data-page="anayltics"] .tabs, [data-page="anayltics"] .buttons-row a.active {
+	background-color: #F1F1F1;
+	color: #444;
+}
+
+[data-page="anayltics"] .buttons-row .button:first-child, [data-page="anayltics"] .buttons-row .button:last-child {
+	border-radius: 0;
+	border-left-width: 0;
+	border-left-style: 0;
+}
+
+[data-page="anayltics"] .buttons-row {
+	border-radius: 0;
+	margin-left: 10px;
+	margin-right: 20px;
+}
+
+[data-page="anayltics"] .tabs {
+	margin-top:0;
+	padding: 5px 5px 0 5px;
+}
+
+[data-page="anayltics"] .tab-link {
+	background-color: #99c9b9;
+	border: none;
+	border-radius: 0;
+	color: #5e9985;
+	margin-right: 2px;
+}
+
+[data-page="anayltics"] .custom {
+	width: 25%;
+}
+
+[data-page="anayltics"] .tabs .tab .activity {
+	border-bottom: 1px solid #CCC;
+	min-height: 120px;
+	margin-top: 5px;
+	padding: 5px 20px;
+	position: relative;
+	left: -20px;
+	width: 100%;
+}
+
+[data-page="anayltics"] .tabs .tab .use-percentage {
+	min-height: 150px;
+	margin-top: 5px;
+	padding: 5px 20px;
+}
+
+[data-page="anayltics"] .tabs .tab .cost {
+	border-top: 8px solid #fadd99;
+	background-color: #e08f50;
+	min-height: 150px;
+	margin-top: 10px;
+	padding: 5px 20px;
+	position: relative;
+	left: -20px;
+	width: 100%;
+}
+
+.cost h2, .cost h3 {
+	font-weight: normal;
+	margin: 5px 0;
+}
+
+.cost h2 {
+	color: #fff;
+	font-size: 18px;
+}
+
+.cost h3 {
+	color: #ebc7ad;
+	font-size: 14px;
+}
+
 
 /*=========================================================================
 	Wishlist Items
@@ -305,8 +379,7 @@ a.analytics img {
     background-color:transparent;
 	color: #c35e10;
 	float: right;
-    padding: 0;
+    padding: 0 5px 0 0;
 	position: relative;
-	right: 5px;
-	top: -17px;
+	right: 3px;
 }

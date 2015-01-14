@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="latest.xsl" ?>
+<?xml-stylesheet type="text/css" href="latest.css" ?>
+<rss version="2.0">
+	<channel>
+		<language>en-us</language>
+		<ttl>240</ttl>
+		
+		<skipHours>
+			<hour>2</hour>
+			<hour>3</hour>
+		</skipHours>
+		
+		<pubDate>Fri, 05 Dec 2014 03:00:07 GMT</pubDate>
+		<lastBuildDate>Fri, 05 Dec 2014 03:00:07 GMT</lastBuildDate>
+		
+		<item>
+			<image src="http://images.media-allrecipes.com/userphotos/250x250/00/20/98/209854.jpg" width="80" height="80"></image>
+			<title>Burgers: Pepperoni Burgers</title>
+			
+			<description>
+			<![CDATA[
+			 <p>Standard beef burgers receive a delicious upgrade with the addition of minced pepperoni
+			 </p>
+			</description>
+			<guid isPermaLink="false">http://allrecipes.com/Recipe/Pepperoni-Burgers/Detail.aspx Fri, 05 Dec 2014 00:00:00 GMT</guid>
+		</item>
+	</channel>
+</rss>
