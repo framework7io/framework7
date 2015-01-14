@@ -31,10 +31,13 @@
     border-bottom: 1px solid @contentBlockBorderColor;
     border-top: 1px solid @contentBlockBorderColor;
     color: #000;
-    html.retina.ios-gt-7 & {
-        border-top-width: 0.5px;
-        border-bottom-width: 0.5px;
-    }
+}
+html.retina.ios-gt-7 .content-block-inner {
+    position: relative;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    .hairline-top();
+    .hairline-bottom();
 }
 .content-block.inset {
     margin-left: 15px;

@@ -396,20 +396,101 @@
 html.retina.ios-gt-7 {
     .list-block {
         ul {
-            border-top-width: 0.5px;
-            border-bottom-width: 0.5px;
-        }
-        li:not(:last-child) {
-            .item-inner{
-                border-bottom-width: 0.5px;
+            ul {
+                border-top: none;
+                border-bottom: none;
+                .hairline-clear-top();
+                .hairline-clear-bottom();
             }
         }
     }
-    .item-divider {
-        border-top-width: 0.5px;
-        margin-top: -0.5px;
+    :not(.popover-inner) {
+        > .list-block.inset {
+            ul {
+                border-top-width: 0;
+                border-bottom-width: 0;
+                ul {
+                    border-top: none;
+                    border-bottom: none;
+                    .hairline-clear-top();
+                    .hairline-clear-bottom();
+                }
+            }
+            li:not(:last-child) {
+                .item-inner {
+                    position: relative;
+                    border-bottom-width: 0;
+                    .hairline-bottom();
+                }
+                .item-divider {
+                    position: relative;
+                    border-top-width: 0;
+                    .hairline-top();
+                }
+                .item-link.list-button {
+                    position: relative;
+                    border-bottom-width: 0;
+                    .hairline-bottom();
+                }
+            }
+        }
+        > .list-block:not(.inset) {
+            ul {
+                position: relative;
+                border-top-width: 0;
+                border-bottom-width: 0;
+                .hairline-top();
+                .hairline-bottom();
+                ul {
+                    border-top: none;
+                    border-bottom: none;
+                    .hairline-clear-top();
+                    .hairline-clear-bottom();
+                }
+            }
+            li:not(:last-child) {
+                .item-inner {
+                    position: relative;
+                    border-bottom-width: 0;
+                    .hairline-bottom();
+                }
+                .item-divider {
+                    position: relative;
+                    border-top-width: 0;
+                    .hairline-top();
+                }
+                .item-link.list-button {
+                    position: relative;
+                    border-bottom-width: 0;
+                    .hairline-bottom();
+                }
+            }
+        }
     }
-    .item-link.list-button {
-        border-bottom-width: 0.5px;   
+    .popover-inner {
+        .list-block {
+            ul {
+                border-top-width: 0;
+                border-bottom-width: 0;
+            }
+            li:not(:last-child) {
+                .item-inner{
+                    position: relative;
+                    border-bottom-width: 0;
+                    .hairline-bottom();
+                }
+                .item-divider:not(:first-child) {
+                    position: relative;
+                    border-top-width: 0;
+                    border-bottom-width: 0;
+                    .hairline-bottom();
+                }
+                .item-link.list-button {
+                    position: relative;
+                    border-bottom-width: 0;
+                    .hairline-bottom();
+                }
+            }
+        }
     }
 }
