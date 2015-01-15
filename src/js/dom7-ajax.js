@@ -74,14 +74,14 @@ $.ajax = function (options) {
     if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
         
         var callbackName = 'f7jsonp_' + Date.now() + (_jsonpRequests++);
-        var requestURL, abortTimeout;
+        var requestUrl, abortTimeout;
         var callbackSplit = options.url.split('callback=');
         if (callbackSplit[1].indexOf('&') >= 0) {
             var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
-            requestURL = callbackSplit[0] + 'callback=' + callbackName + (addVars.length > 0 ? '&' + addVars : '');
+            requestUrl = callbackSplit[0] + 'callback=' + callbackName + (addVars.length > 0 ? '&' + addVars : '');
         }
         else {
-            requestURL = callbackSplit[0] + 'callback=' + callbackName;
+            requestUrl = callbackSplit[0] + 'callback=' + callbackName;
         }
 
         // Create script
@@ -91,7 +91,7 @@ $.ajax = function (options) {
             clearTimeout(abortTimeout);
             if (options.error) options.error();
         };
-        script.src = requestURL;
+        script.src = requestUrl;
 
         // Handler
         window[callbackName] = function (data) {
@@ -121,6 +121,9 @@ $.ajax = function (options) {
 
     // Create XHR
     var xhr = new XMLHttpRequest();
+
+    // Save Request URL
+    xhr.requestUrl = options.url;
 
     // Open XHR
     xhr.open(_method, options.url, options.async, options.user, options.password);
