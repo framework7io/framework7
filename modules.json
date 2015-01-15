@@ -151,5 +151,10 @@
         "js" : ["src/js/picker.js"],
         "less": ["src/less/picker.less"],
         "dependencies" : []
+    },
+    "calendar": {
+        "js" : ["src/js/calendar.js"],
+        "less": ["src/less/calendar.less"],
+        "dependencies" : []
     }
 }
