@@ -64,8 +64,9 @@
 }
 .modal-inner {
     padding: 15px;
-    border-bottom: 1px solid #b5b5b5;
+    .hairline(bottom, #b5b5b5);
     border-radius: 7px 7px 0 0;
+    position: relative;
     background: @modalBgColor;
 }
 .modal-title {
@@ -102,14 +103,14 @@
     overflow: hidden;
     cursor: pointer;
     .border-box();
-    border-right: 1px solid #b5b5b5;
+    .hairline(right, #b5b5b5);
     -webkit-box-flex:1;
     -ms-flex:1;
     &:first-child {
         border-radius: 0 0 0 7px;
     }
     &:last-child {
-        border-right: none;
+        .hairline-remove(right);
         border-radius: 0 0 7px 0;
     }
     &:first-child:last-child {
@@ -122,19 +123,20 @@
         background: @modalButonActiveBg;
     }
     .modal-buttons-vertical & {
-        border-right: none;
+        .hairline-remove(right);
+        .hairline(bottom, #b5b5b5);
         border-bottom: 1px solid #b5b5b5;
         border-radius: 0;
         &:last-child {
             border-radius: 0 0 7px 7px;
-            border-bottom: none;
+            .hairline-remove(bottom);
         }
     }
 }
 .modal-no-buttons {
     .modal-inner {
         border-radius: 7px;
-        border-bottom: none;
+        .hairline-remove(bottom);
     }
     .modal-buttons {
         display: none;
@@ -169,7 +171,8 @@
     background: @actionsModalButtonBg;
     .border-box();
     display: block;
-    border-bottom: 1px solid #d2d2d6;
+    position: relative;
+    .hairline(bottom, #d2d2d6);
     a {
         text-decoration: none;
         color: inherit;
@@ -187,7 +190,7 @@
         border-radius: 4px 4px 0 0;
     }
     &:last-child {
-        border: none;
+        .hairline-remove(bottom);
         border-radius: 0 0 4px 4px;
     }
     &:first-child:last-child {
@@ -273,7 +276,7 @@ input.modal-text-input {
         }
         &:first-child {
             ul {
-                border-top: none;
+                .hairline-remove(top);
                 border-radius: 7px 7px 0 0;
             }
             li:first-child a{
@@ -282,7 +285,7 @@ input.modal-text-input {
         }
         &:last-child {
             ul {
-                border-bottom: none;
+                .hairline-remove(bottom);
                 border-radius: 0 0 7px 7px;
             }
             li:last-child a{
@@ -366,9 +369,10 @@ input.modal-text-input {
     font-size: 13px;
     line-height: 1.3;
     text-align: center;
-    border-bottom: 1px solid #d2d2d6;
+    position: relative;
+    .hairline(bottom, #d2d2d6);
     &:last-child {
-        border-bottom: none;
+        .hairline-remove(bottom);
     }
 }
 // Popup
@@ -496,7 +500,7 @@ html.with-statusbar-overlay {
         position: relative;
     }
     .toolbar {
-        border-top-color: #929499;
+        .hairline(top, #929499);
         position: relative;
         width: 100%;
         + .picker-modal-inner {
@@ -509,10 +513,11 @@ html.with-statusbar-overlay {
         display: block;
         position: relative;
         background: none;
+        z-index: inherit;
         .translate3d(0,0,0);
         .toolbar {
-            border-top: none;
-            border-bottom: 1px solid #929499;
+            .hairline-remove(top);
+            .hairline(bottom, #929499);
         }
     }
     .popover & {
@@ -547,20 +552,5 @@ body.with-picker-modal-shrink-view {
             height: ~"-moz-calc(100% - 200px)";
             height: ~"calc(100% - 200px)";
         }
-    }
-}
-// Half borders
-html.retina.ios-gt-7 {
-    .modal-button {
-        border-right-width: 0.5px;   
-    }
-    .modal-inner, .actions-modal-button, .actions-modal-label, .actions-popover-label {
-        border-bottom-width: 0.5px;   
-    }
-    input.modal-text-input {
-        border-width: 0.5px;
-    }
-    .picker-modal-inline .toolbar, .popover .picker-modal .toolbar{
-        border-bottom-width: 0.5px;
     }
 }

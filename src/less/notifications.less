@@ -21,7 +21,8 @@
     perspective:1200px;
     
     &.list-block > ul {
-        border: none;
+        .hairline-remove(top);
+        .hairline-remove(bottom);
         background: none;
         margin: 0;
     }
@@ -48,7 +49,7 @@
         font-weight: 300;
     }
     .item-inner {
-        border-bottom-color: rgba(255,255,255,0.2);
+        .hairline-color(bottom, rgba(255,255,255,0.2));
     }
     .item-media {
         i.icon {

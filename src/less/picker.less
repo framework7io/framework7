@@ -87,8 +87,8 @@
     width: 100%;
     top: 50%;
     margin-top: -18px;
-    border-top: 1px solid #a8abb0;
-    border-bottom: 1px solid #a8abb0;
+    .hairline(top, #a8abb0);
+    .hairline(bottom, #a8abb0);
     pointer-events: none;
 }
 // 3D Picker
@@ -112,13 +112,5 @@
         backface-visibility: hidden;
         -webkit-transition-timing-function: ease-out;
         transition-timing-function: ease-out;
-    }
-}
-
-// Retina
-html.ios-gt-7.retina {
-    .picker-center-highlight {
-        border-top-width: 0.5px;
-        border-bottom-width: 0.5px;
     }
 }

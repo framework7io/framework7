@@ -17,9 +17,10 @@
     height: 18px;
     background: #f7f7f8;
     .flexbox();
-    border-bottom: 1px solid #c4c4c4;
+    .hairline(bottom, #c4c4c4);
     font-size: 11px;
     .border-box();
+    position: relative;
     .picker-calendar-week-day {
         .flex-shrink(1);
         width: 100% / 7;
@@ -68,9 +69,10 @@
     .flexbox();
     .flex-shrink(1);
     width: 100%;
-    border-bottom: 1px solid #ccc;
+    position: relative;
+    .hairline(bottom, #ccc);
     &:last-child {
-        border-bottom: none;
+        .hairline-remove(bottom);
     }
 }
 .picker-calendar-day {
@@ -138,19 +140,10 @@
         background: none;
     }
     .toolbar, .picker-calendar-week-days {
-        border: none;
+        .hairline-remove(top);
+        .hairline-remove(bottom);
     }
     .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
-        border-top: 1px solid #c4c4c4;
-    }
-}
-
-// Retina
-html.ios-gt-7.retina {
-    .picker-calendar-week-days, .picker-calendar-row {
-        border-bottom-width: 0.5px;
-    }
-    .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
-        border-top-width: 0.5px;
+        .hairline(top, #c4c4c4);
     }
 }
