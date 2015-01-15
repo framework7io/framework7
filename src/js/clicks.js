@@ -125,6 +125,10 @@ app.initClickEvents = function () {
             isTabLink = true;
             app.showTab(clicked.attr('data-tab') || clicked.attr('href'), clicked);
         }
+        // Swipeout Close
+        if (clicked.hasClass('swipeout-close')) {
+            app.swipeoutClose(clicked.parents('.swipeout-opened'));
+        }
         // Swipeout Delete
         if (clicked.hasClass('swipeout-delete')) {
             if (clicked.attr('data-confirm')) {
