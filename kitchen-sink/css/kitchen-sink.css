@@ -235,6 +235,9 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
 #ks-picker-date-container .picker-selected {
   color: #000;
 }
+.layout-dark #ks-picker-date-container .picker-selected {
+  color: #fff;
+}
 @media (max-width: 767px) {
   #ks-picker-date-container .picker-items {
     font-size: 21px;
@@ -244,9 +247,6 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
     line-height: 36px;
     padding: 0 6px;
   }
-}
-.calendar-custom-toolbar {
-  border: none;
 }
 #ks-calendar-inline-container .picker-calendar {
   height: 280px;

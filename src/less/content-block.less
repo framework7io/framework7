@@ -28,20 +28,18 @@
     padding: 10px 15px;
     margin-left: -15px;
     width: 100%;
-    border-bottom: 1px solid @contentBlockBorderColor;
-    border-top: 1px solid @contentBlockBorderColor;
+    position: relative;
+    .hairline(top, @contentBlockBorderColor);
+    .hairline(bottom, @contentBlockBorderColor);
     color: #000;
-    html.retina.ios-gt-7 & {
-        border-top-width: 0.5px;
-        border-bottom-width: 0.5px;
-    }
 }
 .content-block.inset {
     margin-left: 15px;
     margin-right: 15px;
     border-radius: 7px;
     .content-block-inner {
-        border: none;
+        .hairline-remove(top);
+        .hairline-remove(bottom);
         border-radius: 7px;
     }
 }
@@ -53,7 +51,8 @@
     }
     
     .content-block.tablet-inset .content-block-inner {
-    	border: none;
+    	.hairline-remove(top);
+        .hairline-remove(bottom);
     	border-radius: 7px;
     }
 }

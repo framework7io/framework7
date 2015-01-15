@@ -11,12 +11,12 @@
         list-style: none;
         padding: 0;
         margin: 0;
-        border-top: 1px solid @listBlockBorderColor;
-        border-bottom: 1px solid @listBlockBorderColor;
         position: relative;
+        .hairline(top, @listBlockBorderColor);
+        .hairline(bottom, @listBlockBorderColor);
         ul {
-            border-top: none;
-            border-bottom: none;
+            .hairline-remove(top);
+            .hairline-remove(bottom);
             padding-left: 45px;
         }
     }
@@ -35,8 +35,8 @@
         }
         ul {
             border-radius: 7px;
-            border-top: none;
-            border-bottom: none;
+            .hairline-remove(top);
+            .hairline-remove(bottom);
         }
         li:first-child > a{
             border-radius: 7px 7px 0 0;
@@ -83,7 +83,8 @@
     }
     .item-inner {
         padding-right: 15px;
-        border-bottom: 1px solid @listBlockBorderColor;
+        position: relative;
+        .hairline(bottom, @listBlockBorderColor);
         width: 100%;
         padding-top: 8px;
         padding-bottom: 7px;
@@ -147,7 +148,7 @@
             .transition(0ms);
             background-color: #d9d9d9;
             .item-inner {
-                border-bottom-color: transparent;
+                .hairline-color(bottom, transparent);
             }
         }
         &.list-button {
@@ -155,7 +156,7 @@
             text-align: center;
             color: @blue;
             display: block;
-            border-bottom: 1px solid @listBlockBorderColor;
+            .hairline(bottom, @listBlockBorderColor);
             line-height: 43px;
         }
     }
@@ -296,14 +297,19 @@
             .justify-content(space-between);
         }
     }
-    .list-group:nth-child(n+2) {
+    .list-group {
         ul {
-            border-top: none;
+            &:after, &:before {
+                z-index: 11;
+            }
+        }
+        + .list-group ul {
+            .hairline-remove(top);   
         }
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        border-top: 1px solid @listBlockBorderColor;
+        .hairline(top, @listBlockBorderColor);
         margin-top: -1px;
         padding: 4px 15px;
         white-space: nowrap;
@@ -321,9 +327,8 @@
         top: 0px;
         z-index: 10;
         margin-top: 0;
-        border-top: none;
+        .hairline-remove(top);
     }
-
     // Sortable
     .sortable-handler {
         position: absolute;
@@ -370,7 +375,7 @@
         box-shadow: 0px 2px 8px rgba(0,0,0,0.6);
         .transition(0ms);
         .item-inner {
-            border-bottom: none;
+            .hairline-remove(bottom);
         }
     }
 
@@ -378,38 +383,18 @@
     li {
         &:last-child {
             .list-button {
-                border-bottom: none;
+                .hairline-remove(bottom);
             }
         }
         &:last-child, &:last-child li:last-child {
             .item-inner {
-                border-bottom: none;
+                .hairline-remove(bottom);
             }
         }
         li:last-child, &:last-child li {
             .item-inner {
-                border-bottom: 1px solid @listBlockBorderColor;
+                .hairline(bottom, @listBlockBorderColor);
             }
         }
-    }
-}
-html.retina.ios-gt-7 {
-    .list-block {
-        ul {
-            border-top-width: 0.5px;
-            border-bottom-width: 0.5px;
-        }
-        li:not(:last-child) {
-            .item-inner{
-                border-bottom-width: 0.5px;
-            }
-        }
-    }
-    .item-divider {
-        border-top-width: 0.5px;
-        margin-top: -0.5px;
-    }
-    .item-link.list-button {
-        border-bottom-width: 0.5px;   
     }
 }

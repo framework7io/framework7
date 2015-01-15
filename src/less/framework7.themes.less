@@ -1,6 +1,8 @@
 /*==========================
 Framework7 Layouts Themes
 ==========================*/
+@import url('mixins.less');
+/* === Dark layout === */
 .layout-dark {
     @pageBg: #222426;
     @barsBg: #131313;
@@ -21,12 +23,12 @@ Framework7 Layouts Themes
     @swipeoutButton: #444;
     @checkboxBorder: @blockBorder;
     .navbar, .navbar& {
-        border-bottom-color: @barsBorder;
+        .hairline-color(bottom, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
     }
     .toolbar, .toolbar& {
-        border-top-color: @barsBorder;
+        .hairline-color(top, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
     }
@@ -37,7 +39,8 @@ Framework7 Layouts Themes
     }
     .popover .picker-modal, .picker-modal.picker-modal-inline {
         .picker-center-highlight {
-            border-color: @barsBorder;
+            .hairline-color(top, @barsBorder);
+            .hairline-color(bottom, @barsBorder);
         }
         .picker-item.picker-selected {
             color:#fff;
@@ -58,16 +61,16 @@ Framework7 Layouts Themes
             }
         }
         .picker-calendar-week-days, .picker-calendar-row {
-            border-color: @barsBorder;
+            .hairline-color(bottom, @barsBorder);
         }
         .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
-            border-color: @barsBorder;   
+            .hairline-color(top, @barsBorder);
         }
 
     }
     .popover .picker-modal {
         .toolbar {
-            border-bottom-color: @barsBorder;
+            .hairline-color(bottom, @barsBorder);
         }
     }
     // Photo Browser
@@ -92,12 +95,14 @@ Framework7 Layouts Themes
     .content-block-inner {
         background: @blockStrongBg;
         color:@text;
-        border-color: @blockBorder;
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
     }
     .list-block, .list-block& {
         ul {
             background: @blockBg;
-            border-color: @blockBorder;
+            .hairline-color(top, @blockBorder);
+            .hairline-color(bottom, @blockBorder);
         }
         &.inset ul{
             background: @blockStrongBg;
@@ -117,10 +122,11 @@ Framework7 Layouts Themes
 
     }
     .actions-popover .list-block ul {
-        border-color: @blockBorder;
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
     }
     .actions-popover .actions-popover-label {
-        border-bottom-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     li.sorting {
         background-color: @activeLink;
@@ -129,7 +135,7 @@ Framework7 Layouts Themes
         background-color: @swipeoutButton;
     }
     .item-inner, .list-block ul ul li:last-child .item-inner {
-        border-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .item-after {
         color:@itemAfterText;
@@ -140,21 +146,21 @@ Framework7 Layouts Themes
         }
     }
     .item-link.list-button {
-        border-bottom-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .list-block-label {
         color:@lightText;
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        color:@lightText;
-        border-top-color: @blockBorder;
+        color:@lightText;        
+        .hairline-color(top, @blockBorder);
     }
     
     // Searchbar
     .searchbar {
         background: @searchbarBg;
-        border-bottom-color: @searchbarBorder;
+        .hairline-color(bottom, @searchbarBorder);
     }
 
     // Forms
@@ -196,30 +202,31 @@ Framework7 Layouts Themes
     @swipeoutButton: #c7c7cc;
     @checkboxBorder: #e5e5e5;
     .navbar, .navbar& {
-        border-bottom-color: @barsBorder;
+        .hairline-color(bottom, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
     }
     .toolbar, .toolbar& {
-        border-top-color: @barsBorder;
+        .hairline-color(top, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
     }
     // Picker
     .popover .picker-modal, .picker-modal.picker-modal-inline {
         .picker-center-highlight {
-            border-color: @barsBorder;
+            .hairline-color(top, @barsBorder);
+            .hairline-color(bottom, @barsBorder);
         }
         .picker-calendar-week-days, .picker-calendar-row {
-            border-color: @barsBorder;
+            .hairline-color(bottom, @barsBorder);
         }
         .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
-            border-color: @barsBorder;   
+            .hairline-color(top, @barsBorder);
         }
     }
     .popover .picker-modal {
         .toolbar {
-            border-bottom-color: @barsBorder;
+            .hairline-color(bottom, @barsBorder);
         }
     }
     // Photo Browser
@@ -244,12 +251,14 @@ Framework7 Layouts Themes
     .content-block-inner {
         background: @blockStrongBg;
         color:@text;
-        border-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
+        .hairline-color(top, @blockBorder);
     }
     .list-block, .list-block& {
         ul {
             background: @blockBg;
-            border-color: @blockBorder;
+            .hairline-color(bottom, @blockBorder);
+            .hairline-color(top, @blockBorder);
         }
         &.inset ul{
             background: @blockStrongBg;
@@ -269,6 +278,7 @@ Framework7 Layouts Themes
     }
     .item-inner, .list-block ul ul li:last-child .item-inner {
         border-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .item-after {
         color:@itemAfterText;
@@ -279,7 +289,7 @@ Framework7 Layouts Themes
         }
     }
     .item-link.list-button {
-        border-bottom-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .list-block-label {
         color:@lightText;
@@ -287,13 +297,13 @@ Framework7 Layouts Themes
     .item-divider, .list-group-title {
         background: @dividerBg;
         color:@lightText;
-        border-top-color: @blockBorder;
+        .hairline-color(top, @blockBorder);
     }
     
     // Searchbar
     .searchbar {
         background: @searchbarBg;
-        border-bottom-color: @searchbarBorder;
+        .hairline-color(bottom, @searchbarBorder);
     }
 
     // Forms
