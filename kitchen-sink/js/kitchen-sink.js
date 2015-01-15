@@ -19,7 +19,7 @@ var rightView = myApp.addView('.view-right', {
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
-$$(document).on('ajaxStart', function () {
+$$(document).on('ajaxStart', function (e) {
     myApp.showIndicator();
 });
 $$(document).on('ajaxComplete', function () {
@@ -54,6 +54,17 @@ myApp.onPageInit('modals', function (page) {
         myApp.modalPassword('Enter your password', function (password) {
             myApp.alert('Thank you! Password: ' + password);
         });
+    });
+    $$('.demo-modals-stack').on('click', function () {
+        // Open 5 alerts
+        myApp.alert('Alert 1');
+        myApp.alert('Alert 2');
+        myApp.alert('Alert 3');
+        myApp.alert('Alert 4');
+        myApp.alert('Alert 5');
+    });
+    $$('.demo-picker-modal').on('click', function () {
+        myApp.pickerModal('.picker-modal-demo');
     });
 });
 
