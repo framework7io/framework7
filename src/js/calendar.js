@@ -53,6 +53,7 @@ var Calendar = function (params) {
         onChange
         onOpen
         onClose
+        onDayClick
         onMonthYearChangeStart
         onMonthYearChangeEnd
         */
@@ -274,7 +275,13 @@ var Calendar = function (params) {
             if (day.hasClass('picker-calendar-day-disabled')) return;
             if (day.hasClass('picker-calendar-day-next')) p.nextMonth();
             if (day.hasClass('picker-calendar-day-prev')) p.prevMonth();
-            p.addValue(new Date(day.attr('data-year'), day.attr('data-month'), day.attr('data-day')).getTime());
+            var dateYear = day.attr('data-year');
+            var dateMonth = day.attr('data-month');
+            var dateDay = day.attr('data-day');
+            if (p.params.onDayClick) {
+                p.params.onDayClick(p, day[0], dateYear, dateMonth, dateDay);
+            }
+            p.addValue(new Date(dateYear, dateMonth, dateDay).getTime());
             if (p.params.closeOnSelect) p.close();
         }
 
