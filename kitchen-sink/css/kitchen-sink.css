@@ -169,6 +169,14 @@ i.ks-tabbar-icon-4 {
 .ks-slider-custom .slider-prev-button {
   left: 0;
 }
+html[dir="rtl"] .ks-slider-custom .slider-next-button {
+  right: auto;
+  left: 0;
+}
+html[dir="rtl"] .ks-slider-custom .slider-prev-button {
+  left: auto;
+  right: 0;
+}
 .page[data-page="virtual-list"] .virtual-list li {
   height: 63px;
 }
@@ -221,21 +229,27 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
 .custom-accordion .accordion-item-content {
   padding: 0px 15px;
 }
-.ks-date-time-picker .picker-item {
+#ks-picker-date-container .picker-item {
   color: #999;
 }
-.ks-date-time-picker .picker-selected {
+#ks-picker-date-container .picker-selected {
   color: #000;
 }
 @media (max-width: 767px) {
-  .ks-date-time-picker .picker-items {
+  #ks-picker-date-container .picker-items {
     font-size: 21px;
   }
-  .ks-date-time-picker .picker-item {
+  #ks-picker-date-container .picker-item {
     height: 36px;
     line-height: 36px;
     padding: 0 6px;
   }
+}
+.calendar-custom-toolbar {
+  border: none;
+}
+#ks-calendar-inline-container .picker-calendar {
+  height: 280px;
 }
 img.ks-demo-lazy {
   display: block;

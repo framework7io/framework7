@@ -448,8 +448,58 @@ myApp.onPageInit('virtual-list', function (page) {
         height: 63,
     });
 });
+/* ===== Calendar ===== */
+myApp.onPageInit('calendar', function (page) {
+    // Default
+    var calendarDefault = myApp.calendar({
+        input: '#ks-calendar-default',
+    });
+    // With custom date format
+    var calendarDateFormat = myApp.calendar({
+        input: '#ks-calendar-date-format',
+        dateFormat: 'DD, MM dd, yyyy'
+    });
+    // With multiple values
+    var calendarMultiple = myApp.calendar({
+        input: '#ks-calendar-multiple',
+        dateFormat: 'M dd yyyy',
+        multiple: true
+    });
+    // Inline with custom toolbar
+    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
+    var calendarInline = myApp.calendar({
+        container: '#ks-calendar-inline-container',
+        value: [new Date()],
+        weekHeader: false,
+        toolbarTemplate: 
+            '<div class="toolbar calendar-custom-toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                    '</div>' +
+                    '<div class="center"></div>' +
+                    '<div class="right">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>',
+        onOpen: function (p) {
+            $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+            $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                calendarInline.prevMonth();
+            });
+            $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                calendarInline.nextMonth();
+            });
+        },
+        onMonthYearChangeStart: function (p) {
+            $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+        }
+    });
+});
+
 /* ===== Pickers ===== */
-myApp.onPageInit('form-pickers', function (page) {
+myApp.onPageInit('pickers', function (page) {
     var today = new Date();
 
     // iOS Device picker
@@ -482,13 +532,15 @@ myApp.onPageInit('form-pickers', function (page) {
     var pickerCustomToolbar = myApp.picker({
         input: '#ks-picker-custom-toolbar',
         rotateEffect: true,
-        toolbarHTML: 
+        toolbarTemplate: 
             '<div class="toolbar">' +
-                '<div class="left">' +
-                    '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
-                '</div>' +
-                '<div class="right">' +
-                    '<a href="#" class="link close-picker">That\'s me</a>' +
+                '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                        '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+                    '</div>' +
+                    '<div class="right">' +
+                        '<a href="#" class="link close-picker">That\'s me</a>' +
+                    '</div>' +
                 '</div>' +
             '</div>',
         cols: [
@@ -523,24 +575,23 @@ myApp.onPageInit('form-pickers', function (page) {
     var pickerInline = myApp.picker({
         input: '#ks-picker-date',
         container: '#ks-picker-date-container',
-        toolbarHTML: '',
-        cssClass: 'ks-date-time-picker',
+        toolbar: false,
         rotateEffect: true,
         value: [today.getMonth(), today.getDate(), today.getFullYear(), today.getHours(), (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())],
-        onChange: function (picker, values, textValues) {
+        onChange: function (picker, values, displayValues) {
             var daysInMonth = new Date(picker.value[2], picker.value[0]*1 + 1, 0).getDate();
             if (values[1] > daysInMonth) {
                 picker.cols[1].setValue(daysInMonth);
             }
         },
-        formatValue: function (p, values, textValues) {
-            return textValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
+        formatValue: function (p, values, displayValues) {
+            return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
         },
         cols: [
             // Months
             {
                 values: ('0 1 2 3 4 5 6 7 8 9 10 11').split(' '),
-                textValues: ('January February March April May June July August September October November December').split(' '),
+                displayValues: ('January February March April May June July August September October November December').split(' '),
                 textAlign: 'left',
             },
             // Days

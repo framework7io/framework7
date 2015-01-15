@@ -173,6 +173,14 @@ i.ks-tabbar-icon-4 {
     .slider-prev-button {
         left: 0;
     }
+    html[dir="rtl"] & .slider-next-button {
+        right: auto;
+        left: 0;
+    }
+    html[dir="rtl"] & .slider-prev-button {
+        left: auto;
+        right: 0;
+    }
 }
 // Virtual List
 .page[data-page="virtual-list"] .virtual-list li {
@@ -231,7 +239,7 @@ i.ks-tabbar-icon-4 {
 }
 
 // Demo Pickers
-.ks-date-time-picker {
+#ks-picker-date-container {
     .picker-item {
         color:#999;
     }
@@ -247,6 +255,15 @@ i.ks-tabbar-icon-4 {
             line-height: 36px;
             padding: 0 6px;
         }
+    }
+}
+// Demo Calendar
+.calendar-custom-toolbar {
+    border: none;
+}
+#ks-calendar-inline-container {
+    .picker-calendar {
+        height: 280px;
     }
 }
 // Demo Lazy Loading
