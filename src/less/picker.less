@@ -91,12 +91,6 @@
     border-bottom: 1px solid #a8abb0;
     pointer-events: none;
 }
-html.ios-gt-7.retina {
-    .picker-center-highlight {
-        border-top-width: 0.5px;
-        border-bottom-width: 0.5px;
-    }
-}
 // 3D Picker
 .picker-3d {
     .picker-items {
@@ -118,5 +112,13 @@ html.ios-gt-7.retina {
         backface-visibility: hidden;
         -webkit-transition-timing-function: ease-out;
         transition-timing-function: ease-out;
+    }
+}
+
+// Retina
+html.ios-gt-7.retina {
+    .picker-center-highlight {
+        border-top-width: 0.5px;
+        border-bottom-width: 0.5px;
     }
 }
