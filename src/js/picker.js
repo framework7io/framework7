@@ -14,8 +14,9 @@ var Picker = function (params) {
         scrollToInput: true,
         inputReadOnly: true,
         convertToPopover: true,
+        toolbar: true,
         toolbarCloseText: 'Done',
-        toolbarHTML: 
+        toolbarTemplate: 
             '<div class="toolbar">' +
                 '<div class="toolbar-inner">' +
                     '<div class="left"></div>' +
@@ -72,23 +73,23 @@ var Picker = function (params) {
     };
     p.updateValue = function () {
         var newValue = [];
-        var newTextValue = [];
+        var newDisplayValue = [];
         for (var i = 0; i < p.cols.length; i++) {
             if (!p.cols[i].divider) {
                 newValue.push(p.cols[i].value);
-                newTextValue.push(p.cols[i].textValue);
+                newDisplayValue.push(p.cols[i].displayValue);
             }
         }
         if (newValue.indexOf(undefined) >= 0) {
             return;
         }
         p.value = newValue;
-        p.textValue = newTextValue;
+        p.displayValue = newDisplayValue;
         if (p.params.onChange) {
-            p.params.onChange(p, p.value, p.textValue);
+            p.params.onChange(p, p.value, p.displayValue);
         }
         if (p.input && p.input.length > 0) {
-            $(p.input).val(p.params.formatValue ? p.params.formatValue(p, p.value, p.textValue) : p.value.join(' '));
+            $(p.input).val(p.params.formatValue ? p.params.formatValue(p, p.value, p.displayValue) : p.value.join(' '));
             $(p.input).trigger('change');
         }
     };
@@ -181,11 +182,11 @@ var Picker = function (params) {
             if (valueCallbacks || typeof valueCallbacks === 'undefined') {
                 // Update values
                 col.value = selectedItem.attr('data-picker-value');
-                col.textValue = col.textValues ? col.textValues[activeIndex] : col.value;
+                col.displayValue = col.displayValues ? col.displayValues[activeIndex] : col.value;
                 // On change callback
                 if (previousActiveIndex !== activeIndex || valueCallbacks === true) {
                     if (col.onChange) {
-                        col.onChange(p, col.value, col.textValue);
+                        col.onChange(p, col.value, col.displayValue);
                     }
                     p.updateValue();
                 }
@@ -381,7 +382,7 @@ var Picker = function (params) {
             }
             else {
                 for (var j = 0; j < col.values.length; j++) {
-                    columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.textValues ? col.textValues[j] : col.values[j]) + '</div>';
+                    columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.displayValues ? col.displayValues[j] : col.values[j]) + '</div>';
                 }
                 innerHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
             }
@@ -389,7 +390,7 @@ var Picker = function (params) {
         pickerClass = 'picker-modal picker-columns ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '');
         pickerHTML =
             '<div class="' + (pickerClass) + '">' +
-                p.params.toolbarHTML.replace(/{{closeText}}/g, p.params.toolbarCloseText) +
+                (p.params.toolbar ? p.params.toolbarTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText) : '') +
                 '<div class="picker-modal-inner picker-items">' +
                     innerHTML +
                     '<div class="picker-center-highlight"></div>' +
