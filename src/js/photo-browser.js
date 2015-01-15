@@ -46,13 +46,11 @@ var PhotoBrowser = function (params) {
                                 '<div class="right"></div>' +
                             '</div>' +
                         '</div>';
-    var prevIconClassName = app.rtl ? 'next' : 'prev';
-    var nextIconClassName = app.rtl ? 'prev' : 'next';
     var toolbarTemplate = pb.params.toolbarTemplate ||
                         '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-' + prevIconClassName + ' ' + iconColor + '"></i></a>' +
-                                '<a href="#" class="link photo-browser-next"><i class="icon icon-' + nextIconClassName + ' ' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev ' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next ' + iconColor + '"></i></a>' +
                             '</div>' +
                         '</div>';
 
