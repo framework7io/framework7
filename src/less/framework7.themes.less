@@ -31,6 +31,10 @@ Framework7 Layouts Themes
         color:@barsText;
     }
     // Picker
+    .picker-calendar-week-days {
+        color:#fff;
+        background-color: @barsBg;
+    }
     .popover .picker-modal, .picker-modal.picker-modal-inline {
         .picker-center-highlight {
             border-color: @barsBorder;
@@ -38,6 +42,28 @@ Framework7 Layouts Themes
         .picker-item.picker-selected {
             color:#fff;
         }
+        .picker-calendar-week-days {
+            color: #fff;
+        }
+        .picker-calendar-day {
+            color:#fff;
+            &.picker-calendar-day-prev, &.picker-calendar-day-next {
+                color: #777;
+            }
+            &.picker-calendar-day-disabled {
+                color: #555;
+            }
+            &.picker-calendar-day-today span {
+                background: #444;
+            }
+        }
+        .picker-calendar-week-days, .picker-calendar-row {
+            border-color: @barsBorder;
+        }
+        .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
+            border-color: @barsBorder;   
+        }
+
     }
     .popover .picker-modal {
         .toolbar {
@@ -183,6 +209,12 @@ Framework7 Layouts Themes
     .popover .picker-modal, .picker-modal.picker-modal-inline {
         .picker-center-highlight {
             border-color: @barsBorder;
+        }
+        .picker-calendar-week-days, .picker-calendar-row {
+            border-color: @barsBorder;
+        }
+        .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
+            border-color: @barsBorder;   
         }
     }
     .popover .picker-modal {
