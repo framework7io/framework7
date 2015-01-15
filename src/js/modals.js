@@ -2,6 +2,12 @@
 ************   Modals   ************
 ======================================================*/
 var _modalTemplateTempDiv = document.createElement('div');
+app.modalStack = [];
+app.modalStackClearQueue = function () {
+    if (app.modalStack.length) {
+        (app.modalStack.shift())();
+    }
+};
 app.modal = function (params) {
     params = params || {};
     var modalHTML = '';
@@ -422,12 +428,23 @@ app.loginScreen = function (modal) {
 };
 app.openModal = function (modal) {
     modal = $(modal);
-
+    var isModal = modal.hasClass('modal');
+    if ($('.modal.modal-in:not(.modal-out)').length && app.params.modalStack && isModal) {
+        app.modalStack.push(function () {
+            app.openModal(modal);
+        });
+        return;
+    }
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
     var isLoginScreen = modal.hasClass('login-screen');
     var isPickerModal = modal.hasClass('picker-modal');
-    if (!isPopover && !isPopup && !isLoginScreen && !isPickerModal) modal.css({marginTop: - Math.round(modal.outerHeight() / 2) + 'px'});
+    if (isModal) {
+        modal.show();
+        modal.css({
+            marginTop: - Math.round(modal.outerHeight() / 2) + 'px'
+        });
+    }
 
     var overlay;
     if (!isLoginScreen && !isPickerModal) {
@@ -464,6 +481,7 @@ app.closeModal = function (modal) {
     if (typeof modal !== 'undefined' && modal.length === 0) {
         return;
     }
+    var isModal = modal.hasClass('modal');
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
     var isLoginScreen = modal.hasClass('login-screen');
@@ -507,6 +525,9 @@ app.closeModal = function (modal) {
                 modal.remove();
             }
         });
+        if (isModal && app.params.modalStack) {
+            app.modalStackClearQueue();
+        }
     }
     else {
         modal.removeClass('modal-in modal-out').trigger('closed').hide();
