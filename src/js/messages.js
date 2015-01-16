@@ -9,14 +9,14 @@ app.initMessages = function (pageContainer) {
     if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
     if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = pageContent[0].scrollHeight - pageContent[0].offsetHeight;
 };
-app.addMessage = function (props, messagesContent) {
+app.addMessage = function (props, messagesContent, method) {
     props = props || {};
+    method = method || 'append';
     props.type = props.type || 'sent';
     if (!props.text || props.length === 0) return false;
     messagesContent = $(messagesContent || '.messages-content');
     if (messagesContent.length === 0) return false;
     var messages = messagesContent.find('.messages');
-    var newOnTop = messages.hasClass('new-messages-first');
     var html = '';
     if (props.day) {
         html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
@@ -30,10 +30,9 @@ app.addMessage = function (props, messagesContent) {
                 (props.avatar ? '<div class="message-avatar" style="background-image:url(' + props.avatar + ')"></div>' : '') +
                 (props.label ? '<div class="message-label">' + props.label + '</div>' : '') +
             '</div>';
-    if (newOnTop) messages.prepend(html);
-    else messages.append(html);
+    messages[method](html);
     if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
-    app.scrollMessagesContainer(messagesContent);
+    if (method === 'append') app.scrollMessagesContainer(messagesContent);
 };
 app.updateMessagesLayout = function (messages) {
     messages.find('.message').each(function () {
