@@ -1,5 +1,5 @@
 /* ===============================================================================
-************   Infinite Scroll   ************
+************   Infinite Scroll Bottom   ************
 =============================================================================== */
 function handleInfiniteScroll() {
     /*jshint validthis:true */
@@ -37,6 +37,36 @@ app.initInfiniteScroll = function (pageContainer) {
     app.attachInfiniteScroll(infiniteContent);
     function detachEvents() {
         app.detachInfiniteScroll(infiniteContent);
+        pageContainer.off('pageBeforeRemove', detachEvents);
+    }
+    pageContainer.on('pageBeforeRemove', detachEvents);
+};
+
+/* ===============================================================================
+ ************   Infinite Scroll Top   ************
+ =============================================================================== */
+function handleInfiniteScrollTop() {
+    /*jshint validthis:true */
+    var inf = $(this);
+    var scrollTop = inf[0].scrollTop;
+    if (scrollTop <= 20) {
+        inf.trigger('infiniteTop');
+    }
+}
+app.attachInfiniteScrollTop = function (infiniteTopContent) {
+    $(infiniteTopContent).on('scroll', handleInfiniteScrollTop);
+};
+app.detachInfiniteScrollTop = function (infiniteTopContent) {
+    $(infiniteTopContent).off('scroll', handleInfiniteScrollTop);
+};
+
+app.initInfiniteScrollTop = function (pageContainer) {
+    pageContainer = $(pageContainer);
+    var infiniteTopContent = pageContainer.find('.infinite-scroll-top');
+    if (infiniteTopContent.length === 0) return;
+    app.attachInfiniteScrollTop(infiniteTopContent);
+    function detachEvents() {
+        app.detachInfiniteScrollTop(infiniteTopContent);
         pageContainer.off('pageBeforeRemove', detachEvents);
     }
     pageContainer.on('pageBeforeRemove', detachEvents);

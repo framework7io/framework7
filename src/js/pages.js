@@ -250,8 +250,10 @@ app.initPage = function (pageContainer) {
     if (app.initSlider) app.initSlider(pageContainer);
     // Init pull to refres
     if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
-    // Init infinite scroll
+    // Init infinite scroll bottom
     if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
+    // Init infinite scroll top
+    if (app.initInfiniteScrollTop) app.initInfiniteScrollTop(pageContainer);
     // Init searchbar
     if (app.initSearchbar) app.initSearchbar(pageContainer);
     // Init message bar
