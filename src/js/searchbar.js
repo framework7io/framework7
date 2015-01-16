@@ -108,7 +108,7 @@ app.initSearchbar = function (pageContainer) {
         var method = destroy ? 'off' : 'on';
         searchbar[method]('submit', preventSubmit);
         cancel[method]('click', disableSearchbar);
-        searchbarOverlay[method]('click', disableSearchbar);
+        searchbarOverlay[method]('click touchstart', disableSearchbar);
         input[method]('focus', enableSearchbar);
         input[method]('change keydown keypress keyup', searchValue);
         clear[method]('click', clearSearchbar);

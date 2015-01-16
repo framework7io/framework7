@@ -150,6 +150,11 @@ app.initSwipePanels = function () {
                 return;
             }
         }
+        // prevents scrolling of panel overlay
+        function touchPanel() {
+            panelOverlay.click();
+            panelOverlay.off('touchstart', touchPanel);
+        }
 
         if (app.params.swipePanelNoFollow) {
             var timeDiff = (new Date()).getTime() - touchStartTime;
@@ -173,6 +178,7 @@ app.initSwipePanels = function () {
             if (!opened) {
                 panel.show();
                 panelOverlay.show();
+                panelOverlay.on('touchstart', touchPanel);
             }
             panelWidth = panel[0].offsetWidth;
             panel.transition(0);
@@ -180,7 +186,6 @@ app.initSwipePanels = function () {
                 if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
             }
         }
-
         isMoved = true;
 
         e.preventDefault();
