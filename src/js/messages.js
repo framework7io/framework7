@@ -11,28 +11,36 @@ app.initMessages = function (pageContainer) {
 };
 app.addMessage = function (props, messagesContent, addToTop) {
     props = props || {};
-    addToTop = (addToTop ? 'prepend' : 'append');
     props.type = props.type || 'sent';
     if (!props.text || props.length === 0) return false;
     messagesContent = $(messagesContent || '.messages-content');
     if (messagesContent.length === 0) return false;
     var messages = messagesContent.find('.messages');
+    var newOnTop = messages.hasClass('new-messages-first');
+
+    if (typeof addToTop === 'undefined') {
+        addToTop = newOnTop ? true : false;
+    }
+    var method = addToTop ? 'prepend' : 'append';
+
     var html = '';
     if (props.day) {
         html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
     }
     var isPic = props.text.indexOf('<img') >= 0 ? 'message-pic' : '';
     var withAvatar = props.avatar ? 'message-with-avatar' : '';
-    var messageClass = 'message' + ' message-' + props.type + ' ' + isPic  + ' ' + withAvatar + ' message-appear';
+    var messageClass = 'message' + ' message-' + props.type + ' ' + isPic  + ' ' + withAvatar + ' message-appear-from-' + (method === 'append' ? 'bottom' : 'top');
     html += '<div class="' + messageClass + '">' +
                 (props.name ? '<div class="message-name">' + props.name + '</div>' : '') +
                 '<div class="message-text">' + props.text + '</div>' +
                 (props.avatar ? '<div class="message-avatar" style="background-image:url(' + props.avatar + ')"></div>' : '') +
                 (props.label ? '<div class="message-label">' + props.label + '</div>' : '') +
             '</div>';
-    messages[addToTop](html);
+    messages[method](html);
     if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
-    if (addToTop === 'append') app.scrollMessagesContainer(messagesContent);
+    if ((method === 'append' && !newOnTop) || (method === 'prepend' && newOnTop)) {
+        app.scrollMessagesContainer(messagesContent);
+    }
 };
 app.updateMessagesLayout = function (messages) {
     messages.find('.message').each(function () {
