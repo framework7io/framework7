@@ -86,7 +86,6 @@ app.initSearchbar = function (pageContainer) {
     // Change
     function searchValue() {
         setTimeout(function () {
-            searchIn = searchbar.attr('data-search-in');
             var value = input.val().trim();
             if (value.length === 0) {
                 searchbar.removeClass('searchbar-not-empty');
@@ -149,6 +148,7 @@ app.initSearchbar = function (pageContainer) {
             }
         }
         else {
+            searchIn = searchbar.attr('data-search-in');
             searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
                 el = $(el);
                 var compareWithEl = el.find(searchIn);
