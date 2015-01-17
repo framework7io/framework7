@@ -13,8 +13,14 @@ app.initFastClicks = function () {
     function findActivableElement(e) {
         var target = $(e.target);
         var parents = target.parents(app.params.activeStateElements);
-        
-        return (parents.length > 0) ? parents : target;
+        var activable;
+        if (target.is(app.params.activeStateElements)) {
+            activable = target;
+        }
+        if (parents.length > 0) {
+            activable = activable ? activable.add(parents) : parents;
+        }
+        return activable ? activable : target;
     }
     function isInsideScrollableView() {
         var pageContent = activableElement.parents('.page-content, .panel');
