@@ -86,7 +86,8 @@ app.pageInitCallback = function (view, params) {
         view: view,
         from: params.position,
         context: params.context,
-        navbarInnerContainer: params.navbarInnerContainer
+        navbarInnerContainer: params.navbarInnerContainer,
+        fromPage: params.fromPage
     };
 
     if (pageContainer.f7PageInitialized && view.params.domCache) {
@@ -178,7 +179,8 @@ app.pageAnimCallbacks = function (callback, view, params) {
         view: view,
         from: params.position,
         context: params.context,
-        swipeBack: params.swipeBack
+        swipeBack: params.swipeBack,
+        fromPage: params.fromPage
     };
     var oldPage = params.oldPage,
         newPage = params.newPage;

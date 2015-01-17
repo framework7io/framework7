@@ -453,7 +453,8 @@ app.router._load = function (view, options) {
         position: options.reload ? reloadPosition : 'right', 
         navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
         context: t7_rendered.context,
-        query: options.query
+        query: options.query,
+        fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
     });
 
     // Navbar init event
@@ -481,7 +482,8 @@ app.router._load = function (view, options) {
         oldPage: oldPage, 
         newPage: newPage, 
         context: t7_rendered.context,
-        query: options.query
+        query: options.query,
+        fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
     });
 
     function afterAnimation() {
@@ -499,7 +501,8 @@ app.router._load = function (view, options) {
             oldPage: oldPage, 
             newPage: newPage, 
             context: t7_rendered.context,
-            query: options.query
+            query: options.query,
+            fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
         });
         if (app.params.pushState) app.pushStateClearQueue();
         if (!(view.params.swipeBackPage || view.params.preloadPreviousPage)) {
@@ -630,14 +633,46 @@ app.router._back = function (view, options) {
 
     // Animation
     function afterAnimation() {
-        app.pageBackCallbacks('after', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
-        app.pageAnimCallbacks('after', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context, query: options.query});
+        app.pageBackCallbacks('after', view, {
+            pageContainer: oldPage[0], 
+            url: url, 
+            position: 'center', 
+            oldPage: oldPage, 
+            newPage: newPage, 
+            context: t7_rendered.context
+        });
+        app.pageAnimCallbacks('after', view, {
+            pageContainer: newPage[0], 
+            url: url, 
+            position: 'left', 
+            oldPage: oldPage, 
+            newPage: newPage, 
+            context: t7_rendered.context, 
+            query: options.query,
+            fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
+        });
         app.router.afterBack(view, oldPage[0], newPage[0]);
     }
     function animateBack() {
         // Page before animation callback
-        app.pageBackCallbacks('before', view, {pageContainer: oldPage[0], url: url, position: 'center', oldPage: oldPage, newPage: newPage, context: t7_rendered.context});
-        app.pageAnimCallbacks('before', view, {pageContainer: newPage[0], url: url, position: 'left', oldPage: oldPage, newPage: newPage, context: t7_rendered.context, query: options.query});
+        app.pageBackCallbacks('before', view, {
+            pageContainer: oldPage[0], 
+            url: url, 
+            position: 'center', 
+            oldPage: oldPage, 
+            newPage: newPage, 
+            context: t7_rendered.context,
+        });
+        app.pageAnimCallbacks('before', view, {
+            pageContainer: newPage[0], 
+            url: url, 
+            position: 'left', 
+            oldPage: oldPage, 
+            newPage: newPage, 
+            context: t7_rendered.context, 
+            query: options.query,
+            fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
+        });
 
         if (animatePages) {
             // Set pages before animation
@@ -772,7 +807,8 @@ app.router._back = function (view, options) {
             position: 'left', 
             navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
             context: t7_rendered.context,
-            query: options.query
+            query: options.query,
+            fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
         });
         if (dynamicNavbar) {
             app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
