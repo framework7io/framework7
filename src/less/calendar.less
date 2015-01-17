@@ -3,10 +3,14 @@
     background: #fff;
     height: 300px;
     width: 100%;
+    overflow: hidden;
     @media (orientation: landscape) and (max-height: 415px) {
         &:not(.picker-modal-inline) {
             height: 220px;
         }
+    }
+    .picker-modal-inner {
+        overflow: hidden;
     }
 }
 .popover.popover-picker-calendar {
