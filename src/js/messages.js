@@ -14,7 +14,7 @@ app.addMessage = function (props, messagesContent, addToTop) {
     addToTop = (addToTop ? 'prepend' : 'append');
     props.type = props.type || 'sent';
     if (!props.text || props.length === 0) return false;
-    messagesContent = messagesContent || $('.messages-content');
+    messagesContent = $(messagesContent || '.messages-content');
     if (messagesContent.length === 0) return false;
     var messages = messagesContent.find('.messages');
     var html = '';
