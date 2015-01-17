@@ -86,6 +86,7 @@ app.initSearchbar = function (pageContainer) {
     // Change
     function searchValue() {
         setTimeout(function () {
+            searchIn = searchbar.attr('data-search-in');
             var value = input.val().trim();
             if (value.length === 0) {
                 searchbar.removeClass('searchbar-not-empty');
