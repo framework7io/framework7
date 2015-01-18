@@ -88,10 +88,14 @@ i.ks-tabbar-icon-4 {
 }
 
 // Demo Slider
+.ks-demo-slider {
+    width: 100%;
+    height: 100%;
+}
 .ks-demo-slider, .ks-carousel-slider{
     font-size: 25px;
     font-weight: 300;
-    .slider-slide {
+    .slider-slide, .swiper-slide {
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;
@@ -108,29 +112,29 @@ i.ks-tabbar-icon-4 {
     }
 }
 .ks-carousel-slider{
-    .slider-slide {
+    .slider-slide, .swiper-slide {
         box-sizing:border-box;
         border: 1px solid #ccc;
         background: #fff;
     }
 }
-.page[data-page="slider-multiple"] .slider-container {
+.page[data-page="slider-multiple"] .swiper-container {
     margin: 35px 0;
     font-size: 18px;
     height: 120px;
 }
 .ks-slider-custom {
     height: 100%;
-    .slider-container {
+    .swiper-container {
         background: #000;
     }
-    .slider-slide {
+    .swiper-slide {
         -webkit-background-size: cover;
         background-size: cover;
         background-position: center;
     }
-    .slider-pagination{
-        .slider-pagination-bullet {
+    .swiper-pagination{
+        .swiper-pagination-bullet {
             cursor: pointer;
             width: 10px;
             height: 10px;
@@ -149,7 +153,7 @@ i.ks-tabbar-icon-4 {
             box-sizing:border-box;
             border: 1px solid rgba(255,255,255,0.8);
         }
-        .slider-pagination-active {
+        .swiper-pagination-bullet-active {
             z-index: 1;
             border: 1px solid #007aff;
             -webkit-transform: scale(1.4);
@@ -157,7 +161,7 @@ i.ks-tabbar-icon-4 {
             transform: scale(1.4);
         }
     }
-    .slider-prev-button, .slider-next-button {
+    .swiper-prev-button, .swiper-next-button {
         width: 44px;
         height: 44px;
         background: rgba(0,0,0,0.8);
@@ -167,17 +171,17 @@ i.ks-tabbar-icon-4 {
         line-height: 44px;
         margin-top: -22px;
     }
-    .slider-next-button {
+    .swiper-next-button {
         right: 0;
     }
-    .slider-prev-button {
+    .swiper-prev-button {
         left: 0;
     }
-    html[dir="rtl"] & .slider-next-button {
+    html[dir="rtl"] & .swiper-next-button {
         right: auto;
         left: 0;
     }
-    html[dir="rtl"] & .slider-prev-button {
+    html[dir="rtl"] & .swiper-prev-button {
         left: auto;
         right: 0;
     }

@@ -132,15 +132,15 @@
         "less" : [],
         "dependencies" : []
     },
-    "slider": {
-        "js" : ["src/js/slider.js"],
-        "less": ["src/less/slider.less"],
+    "swiper": {
+        "js" : ["src/js/swiper.js"],
+        "less": ["src/less/swiper.less"],
         "dependencies" : []
     },
     "photo-browser": {
         "js" : ["src/js/photo-browser.js"],
         "less": ["src/less/photo-browser.less"],
-        "dependencies" : ["slider"]
+        "dependencies" : ["swiper"]
     },
     "notifications": {
         "js" : ["src/js/notifications.js"],

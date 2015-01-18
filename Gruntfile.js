@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         'src/js/resize.js',
         'src/js/forms-handler.js',
         'src/js/push-state.js',
-        'src/js/slider.js',
+        'src/js/swiper.js',
         'src/js/photo-browser.js',
         'src/js/picker.js',
         'src/js/calendar.js',
