@@ -481,7 +481,6 @@ app.router._load = function (view, options) {
         position: 'right', 
         oldPage: oldPage, 
         newPage: newPage, 
-        context: t7_rendered.context,
         query: options.query,
         fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
     });
@@ -500,7 +499,6 @@ app.router._load = function (view, options) {
             position: 'right', 
             oldPage: oldPage, 
             newPage: newPage, 
-            context: t7_rendered.context,
             query: options.query,
             fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
         });
@@ -639,7 +637,6 @@ app.router._back = function (view, options) {
             position: 'center', 
             oldPage: oldPage, 
             newPage: newPage, 
-            context: t7_rendered.context
         });
         app.pageAnimCallbacks('after', view, {
             pageContainer: newPage[0], 
@@ -647,7 +644,6 @@ app.router._back = function (view, options) {
             position: 'left', 
             oldPage: oldPage, 
             newPage: newPage, 
-            context: t7_rendered.context, 
             query: options.query,
             fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
         });
@@ -661,7 +657,6 @@ app.router._back = function (view, options) {
             position: 'center', 
             oldPage: oldPage, 
             newPage: newPage, 
-            context: t7_rendered.context,
         });
         app.pageAnimCallbacks('before', view, {
             pageContainer: newPage[0], 
@@ -669,7 +664,6 @@ app.router._back = function (view, options) {
             position: 'left', 
             oldPage: oldPage, 
             newPage: newPage, 
-            context: t7_rendered.context, 
             query: options.query,
             fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
         });
@@ -808,7 +802,8 @@ app.router._back = function (view, options) {
             navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
             context: t7_rendered.context,
             query: options.query,
-            fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
+            fromPage: oldPage && oldPage.length && oldPage[0].f7PageData,
+            preloadOnly: preloadOnly
         });
         if (dynamicNavbar) {
             app.navbarInitCallback(view, newPage[0], navbar[0], newNavbarInner[0], url, 'right');
@@ -863,7 +858,6 @@ app.router._back = function (view, options) {
         setPages();
         return;
     }
-    
     
     if (!force) {
         // Go back when there is no pages on left
