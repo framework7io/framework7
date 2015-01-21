@@ -25,23 +25,18 @@ $.ajax = function (options) {
         contentType: 'application/x-www-form-urlencoded',
         timeout: 0
     };
-
-    /*== 
-    Available callbacks options:
-    beforeSend (start)
-    error
-    complete
-    success
-    statusCode - object with functions
-    ==*/
-
+    var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
 
     //For jQuery guys
     if (options.type) options.method = options.type;
 
     // Merge global and defaults
     for (var globalOption in globalAjaxOptions) {
-        defaults[globalOption] = globalAjaxOptions[globalOption];
+        if (callbacks.indexOf(globalOption) < 0) defaults[globalOption] = globalAjaxOptions[globalOption];
+    }
+    // Global callbacks
+    function globalAjaxCallback(callback) {
+        if (callback in globalAjaxOptions) globalAjaxOptions[callback](arguments[1], arguments[2], arguments[3], arguments[4]);
     }
 
     // Merge options and defaults
@@ -89,6 +84,7 @@ $.ajax = function (options) {
         script.type = 'text/javascript';
         script.onerror = function() {
             clearTimeout(abortTimeout);
+            globalAjaxCallback('error', null, 'scripterror');
             if (options.error) options.error();
         };
         script.src = requestUrl;
@@ -96,6 +92,7 @@ $.ajax = function (options) {
         // Handler
         window[callbackName] = function (data) {
             clearTimeout(abortTimeout);
+            globalAjaxCallback('success', data);
             if (options.success) options.success(data);
             script.parentNode.removeChild(script);
             script = null;
@@ -107,7 +104,8 @@ $.ajax = function (options) {
             abortTimeout = setTimeout(function () {
                 script.parentNode.removeChild(script);
                 script = null;
-                if (options.error) options.error();
+                globalAjaxCallback('error', null, 'timeout');
+                if (options.error) options.error(null, 'timeout');
             }, options.timeout);
         }
 
@@ -197,22 +195,42 @@ $.ajax = function (options) {
     xhr.onload = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
         if (xhr.status === 200 || xhr.status === 0) {
-            $(document).trigger('ajaxSuccess', {xhr: xhr});
-            if (options.success) {
-                var responseData = xhr.responseText;
-
-                if (options.dataType === 'json') responseData = JSON.parse(responseData);
-                options.success(responseData, xhr.status, xhr);
+            var isSuccess, responseData;
+            if (options.dataType === 'json') {
+                try {
+                    responseData = JSON.parse(xhr.responseText);
+                    $(document).trigger('ajaxSuccess', {xhr: xhr});
+                    globalAjaxCallback('success', responseData, xhr.status, xhr);
+                    if (options.success) {
+                        options.success(responseData, xhr.status, xhr);
+                    }
+                }
+                catch (e) {
+                    $(document).trigger('ajaxError', {xhr: xhr, parseerror: true});
+                    globalAjaxCallback('error', xhr, 'parseerror');
+                    if (options.error) options.error(xhr, 'parseerror');
+                }
+            }
+            else {
+                $(document).trigger('ajaxSuccess', {xhr: xhr});
+                globalAjaxCallback('success', responseData, xhr.status, xhr);
+                if (options.success) {
+                    responseData = xhr.responseText;
+                    options.success(responseData, xhr.status, xhr);
+                }
             }
         }
         else {
             $(document).trigger('ajaxError', {xhr: xhr});
+            globalAjaxCallback('error', xhr, xhr.status);
             if (options.error) options.error(xhr, xhr.status);
         }
         if (options.statusCode) {
+            if (globalAjaxOptions.statusCode && globalAjaxOptions.statusCode[xhr.status]) globalAjaxOptions.statusCode[xhr.status](xhr);
             if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
         }
         $(document).trigger('ajaxComplete', {xhr: xhr});
+        globalAjaxCallback('complete', xhr, xhr.status);
         if (options.complete) {
             options.complete(xhr, xhr.status);
         }
@@ -221,11 +239,14 @@ $.ajax = function (options) {
     xhr.onerror = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
         $(document).trigger('ajaxError', {xhr: xhr});
+        globalAjaxCallback('error', xhr, xhr.status);
         if (options.error) options.error(xhr, xhr.status);
     };
 
     // Ajax start callback
     $(document).trigger('ajaxStart', {xhr: xhr});
+    globalAjaxCallback('start', xhr);
+    globalAjaxCallback('beforeSend', xhr);
     if (options.start) options.start(xhr);
     if (options.beforeSend) options.beforeSend(xhr);
 
@@ -236,10 +257,12 @@ $.ajax = function (options) {
     if (options.timeout > 0) {
         xhrTimeout = setTimeout(function () {
             xhr.abort();
+            $(document).trigger('ajaxError', {xhr: xhr, timeout: true});
+            $(document).trigger('ajaxComplete', {xhr: xhr, timeout: true});
+            globalAjaxCallback('error', xhr, 'timeout');
+            globalAjaxCallback('complete', xhr, 'timeout');
             if (options.complete) options.complete(xhr, 'timeout');
             if (options.error) options.error(xhr, 'timeout');
-            $(document).trigger('ajaxComplete', {xhr: xhr, timeout: true});
-            $(document).trigger('ajaxError', {xhr: xhr, timeout: true});
         }, options.timeout);
     }
 
