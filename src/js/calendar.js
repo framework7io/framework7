@@ -494,7 +494,7 @@ var Calendar = function (params) {
             p.wrapper.append(nextMonthHTML[0]);
             p.months = p.wrapper.find('.picker-calendar-month');
             if (p.params.onMonthAdd) {
-                p.params.onMonthAdd(p.months.eq(p.months.length - 1)[0]);
+                p.params.onMonthAdd(p, p.months.eq(p.months.length - 1)[0]);
             }
         }
         p.animating = true;
@@ -533,7 +533,7 @@ var Calendar = function (params) {
             p.wrapper.prepend(prevMonthHTML[0]);
             p.months = p.wrapper.find('.picker-calendar-month');
             if (p.params.onMonthAdd) {
-                p.params.onMonthAdd(p.months.eq(0)[0]);
+                p.params.onMonthAdd(p, p.months.eq(0)[0]);
             }
         }
         p.animating = true;
@@ -784,7 +784,11 @@ var Calendar = function (params) {
         // Set flag
         p.opened = true;
         p.initialized = true;
-
+        if (p.params.onMonthAdd) {
+            p.months.each(function () {
+                p.params.onMonthAdd(p, this);
+            });
+        }
         if (p.params.onOpen) p.params.onOpen(p);
     };
 
