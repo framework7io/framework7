@@ -1,10 +1,18 @@
 /* ===============================================================================
 ************   Tabs   ************
 =============================================================================== */
-app.showTab = function (tab, tabLink) {
+app.showTab = function (tab, tabLink, force) {
     var newTab = $(tab);
-    if (newTab.hasClass('active')) return false;
+    if (arguments.length === 2) {
+        if (typeof tabLink === 'boolean') {
+            force = tabLink;
+        }
+    }
     if (newTab.length === 0) return false;
+    if (newTab.hasClass('active')) {
+        if (force) newTab.trigger('show');
+        return false;
+    }
     var tabs = newTab.parent('.tabs');
     if (tabs.length === 0) return false;
 
