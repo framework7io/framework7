@@ -109,10 +109,12 @@ var VirtualList = function (listBlock, params) {
     };
 
     // Render items
-    vl.render = function (force) {
+    vl.render = function (force, forceScrollTop) {
         if (force) vl.lastRepaintY = null;
-        // var scrollTop = vl.pageContent[0].scrollTop;
+
         var scrollTop = -(vl.listBlock[0].getBoundingClientRect().top + vl.pageContent[0].getBoundingClientRect().top);
+        if (typeof forceScrollTop !== 'undefined') scrollTop = forceScrollTop;
+
         if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (vl.pageContent[0].scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
             vl.lastRepaintY = scrollTop;
         }
@@ -217,6 +219,27 @@ var VirtualList = function (listBlock, params) {
         if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
         vl.ul[0].appendChild(vl.fragment);
         if (vl.params.onItemsAfterInsert) vl.params.onFragmentAfterInsert(vl, vl.fragment);
+
+        if (typeof forceScrollTop !== 'undefined' && force) {
+            vl.pageContent.scrollTop(forceScrollTop, 0);
+        }
+    };
+
+    vl.scrollToItem = function (index) {
+        if (index > vl.items.length) return false;
+
+        var itemTop = 0, listTop;
+        if (dynamicHeight) {
+            for (var i = 0; i < index; i++) {
+                itemTop += vl.heights[i];
+            }
+        }
+        else {
+            itemTop = index * vl.params.height;
+        }
+        listTop = vl.listBlock[0].offsetTop;
+        vl.render(true, listTop + itemTop - parseInt(vl.pageContent.css('padding-top'), 10));
+        return true;
     };
 
     // Handle scroll event
