@@ -193,8 +193,8 @@ var View = function (selector, params) {
             if (dynamicNavbar) {
                 activeNavbar = container.find('.navbar-on-center:not(.cached)');
                 previousNavbar = container.find('.navbar-on-left:not(.cached)');
-                activeNavElements = activeNavbar.find('.left, .center, .right');
-                previousNavElements = previousNavbar.find('.left, .center, .right');
+                activeNavElements = activeNavbar.find('.left, .center, .right, .subnavbar, .fading');
+                previousNavElements = previousNavbar.find('.left, .center, .right, .subnavbar, .fading');
                 if (app.params.animateNavBackIcon) {
                     activeNavBackIcon = activeNavbar.find('.left.sliding .back .icon');
                     previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
@@ -245,7 +245,7 @@ var View = function (selector, params) {
             var i;
             for (i = 0; i < activeNavElements.length; i++) {
                 el = $(activeNavElements[i]);
-                el[0].style.opacity = (1 - percentage * 1.3);
+                if (!el.is('.subnavbar.sliding')) el[0].style.opacity = (1 - percentage * 1.3);
                 if (el[0].className.indexOf('sliding') >= 0) {
                     var activeNavTranslate = percentage * el[0].f7NavbarRightOffset;
                     if (app.device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
@@ -259,7 +259,7 @@ var View = function (selector, params) {
             }
             for (i = 0; i < previousNavElements.length; i++) {
                 el = $(previousNavElements[i]);
-                el[0].style.opacity = percentage * 1.3 - 0.3;
+                if (!el.is('.subnavbar.sliding')) el[0].style.opacity = percentage * 1.3 - 0.3;
                 if (el[0].className.indexOf('sliding') >= 0) {
                     var previousNavTranslate = el[0].f7NavbarLeftOffset * (1 - percentage);
                     if (app.device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);

@@ -34,6 +34,7 @@ app.sizeNavbars = function (viewContainer) {
         var left = app.rtl ? n.find('.right') : n.find('.left'),
             right = app.rtl ? n.find('.left') : n.find('.right'),
             center = n.find('.center'),
+            subnavbar = n.find('.subnavbar'),
             noLeft = left.length === 0,
             noRight = right.length === 0,
             leftWidth = noLeft ? 0 : left.outerWidth(true),
@@ -99,6 +100,10 @@ app.sizeNavbars = function (viewContainer) {
                 right[0].f7NavbarRightOffset = rightWidth;
             }
             if (onLeft) right.transform('translate3d(' + right[0].f7NavbarLeftOffset + 'px, 0, 0)');
+        }
+        if (subnavbar.length && subnavbar.hasClass('sliding')) {
+            subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : -subnavbar[0].offsetWidth;
+            subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset;
         }
         
     });

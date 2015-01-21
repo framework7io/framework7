@@ -99,7 +99,45 @@
         right: 8px;
         height: 100%;
     }
-
+}
+.subnavbar {
+    height: 44px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: -1px;
+    background: @navbarBg;
+    z-index: 20;
+    .border-box();
+    padding: 0 8px;
+    .flexbox();
+    .justify-content(space-between);
+    .align-items(center);
+    .hairline(bottom, @navbarBorderColor);
+    .navbar-on-left &, .navbar-on-right &{
+        pointer-events: none;
+    }
+    .navbar &, .page & {
+        position: absolute;
+    }
+    .page & {
+        top: 0;
+        margin-top: 0;
+    }
+    > .buttons-row {
+        width: 100%;
+    }
+    .searchbar, &.searchbar {
+        position: absolute;
+    }
+    &.searchbar, .searchbar {
+        position: absolute;
+    }
+    .searchbar {
+        left: 0;
+        top: 0;
+    }
 }
 .toolbar {
     left: 0;
@@ -192,7 +230,7 @@
 @toolbarDuration: 400ms;
 
 .navbar-from-right-to-center {
-    .left, .right, .center {
+    .left, .right, .center, .subnavbar, .fading {
         .animation(navbarElementFadeIn @toolbarDuration forwards);
     }
     .sliding {
@@ -201,11 +239,14 @@
     
 }
 .navbar-from-center-to-right {
-    .left, .right, .center {
+    .left, .right, .center, .subnavbar, .fading {
         .animation(navbarElementFadeOut @toolbarDuration forwards);
     }
     .sliding {
         opacity: 0;
+    }
+    .subnavbar.sliding {
+        opacity: 1;
     }
 }
 @-webkit-keyframes navbarElementFadeIn {
@@ -225,15 +266,18 @@
     }
 }
 .navbar-from-center-to-left {
-    .left, .right, .center {
+    .left, .right, .center, .subnavbar, .fading {
         .animation(navbarElementFadeOut @toolbarDuration forwards);
     }
     .sliding {
         opacity: 0;
     }
+    .subnavbar.sliding {
+        opacity: 1;
+    }
 }
 .navbar-from-left-to-center {
-    .left, .right, .center {
+    .left, .right, .center, .subnavbar, .fading {
         .animation(navbarElementFadeIn @toolbarDuration forwards);
     }
     .sliding {
@@ -241,19 +285,25 @@
     }
 }
 .navbar-on-left {
-    .left, .right, .center {
+    .left, .right, .center, .subnavbar, .fading {
         opacity: 0;
     }
     .sliding {
         opacity: 0;
+    }
+    .subnavbar.sliding {
+        .translate3d(-100%,0,0);
     }
 }
 .navbar-on-right {
-    .left, .right, .center {
+    .left, .right, .center, .subnavbar, .fading {
         opacity: 0;
     }
     .sliding {
         opacity: 0;
+    }
+    .subnavbar.sliding {
+        .translate3d(100%,0,0);
     }
 }
 @-webkit-keyframes navbarElementFadeOut {
