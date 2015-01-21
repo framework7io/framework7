@@ -3,6 +3,7 @@
 @searchbarBorderColor: #b4b4b4;
 .searchbar {
     height: 44px;
+    width: 100%;
     background: @searchbarBg;
     .border-box();
     .hairline(bottom, @searchbarBorderColor);
@@ -67,6 +68,7 @@
         .flex-shrink(0);
         margin-left: 0;
         pointer-events:none;
+        display: none;
     }
     &.searchbar-active {
         .searchbar-cancel {

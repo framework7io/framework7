@@ -35,6 +35,7 @@ app.initSearchbar = function (pageContainer) {
     // Cancel button
     var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
     if (cancel.length > 0) {
+        cancel.show();
         cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
     }
         
