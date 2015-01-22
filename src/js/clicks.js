@@ -16,7 +16,7 @@ app.initClickEvents = function () {
         }
         // Check if link is external 
         if (isLink) {
-          if (clicked.is(app.params.extenalLinks) {
+          if (clicked.is(app.params.extenalLinks)) {
             if(clicked.attr('target') === '_system') {
               e.preventDefault();
               window.open(url, '_system');
