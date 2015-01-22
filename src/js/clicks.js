@@ -16,13 +16,13 @@ app.initClickEvents = function () {
         }
         // Check if link is external 
         if (isLink) {
-            if (clicked.is(app.params.externalLinks) && clicked.attr('target') && clicked.attr('target') === '_system') {
-                window.open(url, '_system');
-                e.preventDefault();
-                return;
-            } else if (clicked.is(app.params.externalLinks)) {
-                return;
+          if (clicked.is(app.params.extenalLinks) {
+            if(clicked.attr('target') === '_system') {
+              e.preventDefault();
+              window.open(url, '_system');
             }
+            return;
+          }
         }
 
         // Smart Select
