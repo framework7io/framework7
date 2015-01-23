@@ -27,7 +27,14 @@ app.initSmartSelects = function (pageContainer) {
             smartSelect.find('.item-inner').append('<div class="item-after">' + valueText.join(', ') + '</div>');
         }
         else {
-            itemAfter.text(valueText);
+            var selectedText = itemAfter.text();
+            if (itemAfter.hasClass('smart-select-value')) {
+                for (i = 0; i < select.length; i++) {
+                    select[i].selected = select[i].textContent.trim() === selectedText.trim();
+                }
+            } else {
+                itemAfter.text(valueText);
+            }
         }
         
     });
