@@ -544,7 +544,9 @@ Dom7.prototype = {
         if (!el) return new Dom7([]);
         while (el.nextElementSibling) {
             var next = el.nextElementSibling;
-            if (selector && $(next).is(selector)) nextEls.push(next);
+            if (selector) {
+                if($(next).is(selector)) nextEls.push(next);
+            }
             else nextEls.push(next);
             el = next;
         }
@@ -569,7 +571,9 @@ Dom7.prototype = {
         if (!el) return new Dom7([]);
         while (el.previousElementSibling) {
             var prev = el.previousElementSibling;
-            if (selector && $(prev).is(selector)) prevEls.push(prev);
+            if (selector) {
+                if($(prev).is(selector)) prevEls.push(prev);
+            }
             else prevEls.push(prev);
             el = prev;
         }
