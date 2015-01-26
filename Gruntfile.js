@@ -112,7 +112,8 @@ module.exports = function (grunt) {
             build: {
                 options: {
                     paths: ['less'],
-                    cleancss: false
+                    cleancss: false,
+                    compress: false,
                 },
                 files: {
                     'build/css/<%= framework7.filename %>.css' : ['src/less/<%= framework7.filename %>.less'],
@@ -123,7 +124,8 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     paths: ['less'],
-                    cleancss: true
+                    cleancss: true,
+                    compress: true,
                 },
                 files: {
                     'dist/css/<%= framework7.filename %>.min.css' : ['src/less/<%= framework7.filename %>.less'],
@@ -206,7 +208,8 @@ module.exports = function (grunt) {
             custom: {
                 options: {
                     paths: ['less'],
-                    cleancss: false
+                    cleancss: false,
+                    compress: false,
                 },
                 files: {
                     'custom/css/<%= framework7.filename %>.custom.css' : ['custom/<%= framework7.filename %>.custom.less'],
@@ -215,7 +218,8 @@ module.exports = function (grunt) {
             custom_min: {
                 options: {
                     paths: ['less'],
-                    cleancss: true
+                    cleancss: true,
+                    compress: true,
                 },
                 files: {
                     'custom/css/<%= framework7.filename %>.custom.min.css' : ['custom/<%= framework7.filename %>.custom.less'],
