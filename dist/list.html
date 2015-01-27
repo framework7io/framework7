@@ -36,26 +36,32 @@
                 <form id="item_form" action="" method="put">
             		<div class="list-block">
                         <ul>
-                            <li>
-                            	<label class="label-radio item-content">
-                            	<input type="radio" name="my-radio" value="Milk">
-                                
-                            	<div class="item-inner">
-                               		<div class="item-title">2% Milk</div>
-                              	</div>
-                                
-                                </label>
+                            <li id="item">
+                            	<label class="label-checkbox item-content">
+                                    <input type="checkbox" name="my-checkbox" value="Milk">
+                                    
+                                    <div class="item-media">
+                                      <i class="icon icon-form-checkbox"></i>
+                                    </div>
+                                    
+                                    <div class="item-inner">
+                                      <div class="item-title">2% Milk</div>
+                                    </div>
+                              </label>
                             </li>
                             
-                            <li>
-                            	<label class="label-radio item-content">
-                            	<input type="radio" name="my-radio" value="Bread">
-                                
-                            	<div class="item-inner">
-                               		<div class="item-title">Bread</div>
-                              	</div>
-                                
-                                </label>
+                            <li id="item">
+                            	<label class="label-checkbox item-content">
+                                    <input type="checkbox" name="my-checkbox" value="Bread" class="checkbox">
+                                    
+                                    <div class="item-media">
+                                      <i class="icon icon-form-checkbox"></i>
+                                    </div>
+                                    
+                                    <div class="item-inner">
+                                      <div class="item-title">Bread</div>
+                                    </div>
+                              </label>
                             </li>
                         </ul>
     				</div><!-- End of list-block -->
@@ -68,14 +74,15 @@
                 </div>
             </div>
             
+            <div class="clear">&nbsp;</div>
+            
         	<div class="list-block">
   				<ul>
     				<li>
                    		<div class="item-content">
                             <div class="item-inner">
                               <div class="item-input">
-                                <input type="text">
-                                <input type="button" class="button link" value="Add">
+                                <input type="text" placeholder="Add an item">
                               </div>
                             </div>
                      	</div>
@@ -99,11 +106,3 @@
         </div>
   </div>
 </div>
-
-<script src="js/jquery.flot.js"></script>
-<script src="js/jquery.flot.pie.js"></script>
-
-<script type="text/javascript">
-	$(function() {
-	});
-</script>

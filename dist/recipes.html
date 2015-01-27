@@ -19,7 +19,7 @@
     <div class="searchbar-input">	
       <input type="search" placeholder="Search for Recipes"><a href="#" class="searchbar-clear"></a>
     </div>
-    <button id="speech_input" onclick="speechInput(event)">
+    <button id="speech_input" onclick="speechInput()">
     	<i class="fa fa-microphone fa-3x"></i>
    	</button>
   </form>
@@ -27,7 +27,8 @@
   <div class="page-content">
     <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
     <div class="list-block list-block-search searchbar-found" style="margin: 0;">
-      <iframe width="315" height="700" style="border: none;" src="feeds/latest.xml"></iframe>
+    	<style>@import url(css/rss.css);</style>
+      <iframe width="315" height="700" style="border: none;" src="feeds/recipe-feed.xml"></iframe>
     </div>
   </div>
   

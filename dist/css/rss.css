@@ -1,0 +1,29 @@
+rss {
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: none;
+}
+
+title {
+}
+
+link {
+	color: gray;
+}
+
+item {
+	background: #fff;
+	width: 95%;
+	main-height: 125px;
+	height: auto;
+	padding: 10px;
+	margin: 5px auto;
+}
+
+docs {
+}
+
+/* Hidden Elements */
+language, lastBuildDate, ttl, guid, category, description, pubDate, updateFrequency, updatePeriod {
+	display: none;
+}
+

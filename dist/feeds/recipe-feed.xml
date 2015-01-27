@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="recipe.xsl" ?>
+<?xml-stylesheet type="text/css" href="../css/rss.css" ?>
+
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" version="2.0">
+	<channel>
+		<atom:link href="http://kitchencloud.net/feed/?post_type=recipe" rel="self" type="application/rss+xml"/>
+		
+		<description>Think of your food differently</description>
+		
+		<lastBuildDate>Tue, 27 Jan 2015 03:52:13 +0000</lastBuildDate>
+		
+		<language>en-US</language>
+		
+		<sy:updatePeriod>hourly</sy:updatePeriod>
+		
+		<sy:updateFrequency>1</sy:updateFrequency>
+		
+		<generator>http://wordpress.org/?v=4.1</generator>
+		
+		<item>
+			<image src="../img/i-f7.png" width="80" height="80"></image>
+			<title>Testing Recipe</title> 
+			<description>Something happening here.</description>
+			<pubDate>Sun, 06 Mar 2005 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=24</link>
+		</item>
+		
+		<item>
+			<image src="../img/i-f7.png" width="80" height="80"></image>
+			<title>Testing Recipe</title> 
+			<description>Something happening here.</description>
+			<pubDate>Sun, 06 Mar 2005 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=24</link>
+		</item>
+		
+		<item>
+			<image src="../img/i-f7.png" width="80" height="80"></image>
+			<title>Testing Recipe</title> 
+			<description>Something happening here.</description>
+			<pubDate>Sun, 06 Mar 2005 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=24</link>
+		</item>
+		
+		<item>
+			<image src="../img/i-f7.png" width="80" height="80"></image>
+			<title>Testing Recipe</title> 
+			<description>Something happening here.</description>
+			<pubDate>Sun, 06 Mar 2005 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=24</link>
+		</item>
+		
+		<item>
+			<image src="../img/i-f7.png" width="80" height="80"></image>
+			<title>Testing Recipe</title> 
+			<description>Something happening here.</description>
+			<pubDate>Sun, 06 Mar 2005 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=24</link>
+		</item>
+		
+		<item>
+			<image src="../img/i-f7.png" width="80" height="80"></image>
+			<title>Testing Recipe</title> 
+			<description>Something happening here.</description>
+			<pubDate>Sun, 06 Mar 2005 00:00:00 MST</pubDate>
+			<link>http://www.xefteri.com/articles/show.cfm?id=24</link>
+		</item>
+	</channel>
+</rss>

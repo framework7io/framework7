@@ -31,8 +31,17 @@ if ($$(".panel-right .content-block .notification").length > 1) {
 	$$("div .num-notices").remove();
 }
 
+//Interaction for the list items
+$$(".checkbox").click(function(){
+	if ($$(".checkbox").is(":checked")) {
+		$$("#item").remove();
+	} else {
+		$$("#item").show();
+	}
+});
+
 // Pull to refresh content
-var ptrContent = $$('.pull-to-refresh-content');
+/*var ptrContent = $$('.pull-to-refresh-content');
  
 // Add 'refresh' listener on it
 ptrContent.on('refresh', function (e) {
@@ -96,4 +105,4 @@ function createContentPage() {
         '</div>'
     );
 	return;
-}
+}*/
