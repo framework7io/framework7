@@ -24,7 +24,6 @@ app.initClickEvents = function () {
                 return;
             }
         }
-
         // Smart Select
         if (clicked.hasClass('smart-select')) {
             if (app.smartSelectOpen) app.smartSelectOpen(clicked);
