@@ -413,9 +413,14 @@ var Picker = function (params) {
             if (p.params.shrinkView) {
                 pageHeight = pageHeight - 44;
             }
-            var inputTop = p.input.offset().top - paddingTop;
+            var inputTop = p.input.offset().top - paddingTop + p.input[0].offsetHeight;
             if (inputTop > pageHeight) {
-                pageContent.scrollTop(pageContent.scrollTop() + inputTop - pageHeight + p.input[0].offsetHeight, 300);
+                var pageMissingHeight = inputTop - pageHeight + parseInt(pageContent.css('padding-bottom'), 10);
+                var scrollHeight = pageContent.scrollTop() + inputTop - pageHeight;
+                if (pageMissingHeight < scrollHeight) {
+                    pageContent.css({'padding-bottom': pageMissingHeight + 'px'});
+                }
+                pageContent.scrollTop(scrollHeight, 300);
             }
         }
     }
@@ -448,6 +453,7 @@ var Picker = function (params) {
     function onPickerClose() {
         p.opened = false;
         $('body').removeClass('with-picker-modal-shrink-view');
+        p.input.parents('.page-content').css({'padding-bottom': ''});
         if (p.params.onClose) p.params.onClose(p);
 
         // Destroy events
