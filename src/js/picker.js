@@ -105,27 +105,43 @@ var Picker = function (params) {
         
         var i, j;
         var wrapperHeight, itemHeight, itemsHeight, minTranslate, maxTranslate;
-
+        col.replaceValues = function (values, displayValues) {
+            col.values = values;
+            col.displayValues = displayValues;
+            var newItemsHTML = p.columnHTML(col, true);
+            col.wrapper.html(newItemsHTML);
+            col.items = col.wrapper.find('.picker-item');
+            col.calcSize();
+            col.setValue(col.values[0], 0, true);
+        };
         col.calcSize = function () {
             if (p.params.rotateEffect) {
                 col.container.removeClass('picker-items-col-absolute');
-                col.container.css({width:''});
+                if (!col.width) col.container.css({width:''});
             }
-            col.width = 0;
-            col.height = col.container[0].offsetHeight;
+            var colWidth, colHeight;
+            colWidth = 0;
+            colHeight = col.container[0].offsetHeight;
             wrapperHeight = col.wrapper[0].offsetHeight;
             itemHeight = col.items[0].offsetHeight;
             itemsHeight = itemHeight * col.items.length;
-            minTranslate = col.height / 2 - itemsHeight + itemHeight / 2;
-            maxTranslate = col.height / 2 - itemHeight / 2;    
+            minTranslate = colHeight / 2 - itemsHeight + itemHeight / 2;
+            maxTranslate = colHeight / 2 - itemHeight / 2;    
+            if (col.width) {
+                colWidth = col.width;
+                if (parseInt(colWidth, 10) === colWidth) colWidth = colWidth + 'px';
+                col.container.css({width: colWidth});
+            }
             if (p.params.rotateEffect) {
-                col.items.each(function () {
-                    var item = $(this);
-                    item.css({width:'auto'});
-                    col.width = Math.max(col.width, item[0].offsetWidth);
-                    item.css({width:''});
-                });
-                col.container.css({width: (col.width + 2) + 'px'});
+                if (!col.width) {
+                    col.items.each(function () {
+                        var item = $(this);
+                        item.css({width:'auto'});
+                        colWidth = Math.max(colWidth, item[0].offsetWidth);
+                        item.css({width:''});
+                    });
+                    col.container.css({width: (colWidth + 2) + 'px'});
+                }
                 col.container.addClass('picker-items-col-absolute');
             }
         };
@@ -183,7 +199,7 @@ var Picker = function (params) {
                 col.value = selectedItem.attr('data-picker-value');
                 col.displayValue = col.displayValues ? col.displayValues[activeIndex] : col.value;
                 // On change callback
-                if (previousActiveIndex !== activeIndex || valueCallbacks === true) {
+                if (previousActiveIndex !== activeIndex) {
                     if (col.onChange) {
                         col.onChange(p, col.value, col.displayValue);
                     }
@@ -366,32 +382,37 @@ var Picker = function (params) {
     $(window).on('resize', resizeCols);
 
     // HTML Layout
+    p.columnHTML = function (col, onlyItems) {
+        var columnItemsHTML = '';
+        var columnHTML = '';
+        if (col.divider) {
+            columnHTML += '<div class="picker-items-col picker-items-col-divider ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '">' + col.content + '</div>';
+        }
+        else {
+            for (var j = 0; j < col.values.length; j++) {
+                columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.displayValues ? col.displayValues[j] : col.values[j]) + '</div>';
+            }
+            columnHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
+        }
+        return onlyItems ? columnItemsHTML : columnHTML;
+    };
     p.layout = function () {
         var pickerHTML = '';
         var pickerClass = '';
         var i;
         p.cols = [];
-        var innerHTML = '';
+        var colsHTML = '';
         for (i = 0; i < p.params.cols.length; i++) {
-            var columnItemsHTML = '';
             var col = p.params.cols[i];
+            colsHTML += p.columnHTML(p.params.cols[i]);
             p.cols.push(col);
-            if (col.divider) {
-                innerHTML += '<div class="picker-items-col picker-items-col-divider ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '">' + col.content + '</div>';
-            }
-            else {
-                for (var j = 0; j < col.values.length; j++) {
-                    columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.displayValues ? col.displayValues[j] : col.values[j]) + '</div>';
-                }
-                innerHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
-            }
         }
         pickerClass = 'picker-modal picker-columns ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '');
         pickerHTML =
             '<div class="' + (pickerClass) + '">' +
                 (p.params.toolbar ? p.params.toolbarTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText) : '') +
                 '<div class="picker-modal-inner picker-items">' +
-                    innerHTML +
+                    colsHTML +
                     '<div class="picker-center-highlight"></div>' +
                 '</div>' +
             '</div>';

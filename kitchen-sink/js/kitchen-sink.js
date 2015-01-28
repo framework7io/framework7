@@ -539,6 +539,35 @@ myApp.onPageInit('pickers', function (page) {
         ]
     });
 
+    // Dependent values
+    var carVendors = {
+        Japanese : ['Honda', 'Lexus', 'Mazda', 'Nissan', 'Toyota'],
+        German : ['Audi', 'BMW', 'Mercedes', 'Volkswagen', 'Volvo'],
+        American : ['Cadillac', 'Chrysler', 'Dodge', 'Ford']
+    };
+    var pickerDependent = myApp.picker({
+        input: '#ks-picker-dependent',
+        rotateEffect: true,
+        formatValue: function (picker, values) {
+            return values[1];
+        },
+        cols: [
+            {
+                textAlign: 'left',
+                values: ['Japanese', 'German', 'American'],
+                onChange: function (picker, country) {
+                    if(picker.cols[1].replaceValues){
+                        picker.cols[1].replaceValues(carVendors[country]);
+                    }
+                }
+            },
+            {
+                values: carVendors.Japanese,
+                width: 160,
+            },
+        ]
+    });
+
     // Custom Toolbar
     var pickerCustomToolbar = myApp.picker({
         input: '#ks-picker-custom-toolbar',
@@ -603,7 +632,7 @@ myApp.onPageInit('pickers', function (page) {
             {
                 values: ('0 1 2 3 4 5 6 7 8 9 10 11').split(' '),
                 displayValues: ('January February March April May June July August September October November December').split(' '),
-                textAlign: 'left',
+                textAlign: 'left'
             },
             // Days
             {
