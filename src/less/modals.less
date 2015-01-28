@@ -527,30 +527,3 @@ html.with-statusbar-overlay {
         }
     }
 }
-body.with-picker-modal, body.picker-modal-closing {
-    .views {
-        .transition(400ms);
-    }
-}
-body.with-picker-modal-shrink-view {
-    .panel {
-        padding-bottom: 260px;
-    }
-    .views {
-        height: ~"-webkit-calc(100% - 260px)";
-        height: ~"-moz-calc(100% - 260px)";
-        height: ~"calc(100% - 260px)";
-    }
-}
-@media (orientation: landscape) and (max-height: 415px) {
-    body.with-picker-modal-shrink-view {
-        .panel {
-            padding-bottom: 200px;
-        }
-        .views {
-            height: ~"-webkit-calc(100% - 200px)";
-            height: ~"-moz-calc(100% - 200px)";
-            height: ~"calc(100% - 200px)";
-        }
-    }
-}

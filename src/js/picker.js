@@ -10,7 +10,6 @@ var Picker = function (params) {
         momentumRatio: 7,
         freeMode: false,
         // Common settings
-        shrinkView: false,
         scrollToInput: true,
         inputReadOnly: true,
         convertToPopover: true,
@@ -408,19 +407,19 @@ var Picker = function (params) {
         if (p.params.scrollToInput && !isPopover()) {
             var pageContent = p.input.parents('.page-content');
             if (pageContent.length === 0) return;
-            var paddingTop = parseInt(pageContent.css('padding-top'), 10);
-            var pageHeight = pageContent.height() - paddingTop - p.container.height();
-            if (p.params.shrinkView) {
-                pageHeight = pageHeight - 44;
-            }
+
+            var paddingTop = parseInt(pageContent.css('padding-top'), 10),
+                paddingBottom = parseInt(pageContent.css('padding-bottom'), 10),
+                pageHeight = pageContent[0].offsetHeight - paddingTop - p.container.height(),
+                pageScrollHeight = pageContent[0].scrollHeight - paddingTop - p.container.height();
+
             var inputTop = p.input.offset().top - paddingTop + p.input[0].offsetHeight;
             if (inputTop > pageHeight) {
-                var pageMissingHeight = inputTop - pageHeight + parseInt(pageContent.css('padding-bottom'), 10);
-                var scrollHeight = pageContent.scrollTop() + inputTop - pageHeight;
-                if (pageMissingHeight < scrollHeight) {
-                    pageContent.css({'padding-bottom': pageMissingHeight + 'px'});
+                var scrollTop = pageContent.scrollTop() + inputTop - pageHeight;
+                if (scrollTop + pageHeight > pageScrollHeight) {
+                    pageContent.css({'padding-bottom': (scrollTop + pageHeight - pageScrollHeight + paddingBottom) + 'px'});
                 }
-                pageContent.scrollTop(scrollHeight, 300);
+                pageContent.scrollTop(scrollTop, 300);
             }
         }
     }
@@ -452,7 +451,6 @@ var Picker = function (params) {
     // Open
     function onPickerClose() {
         p.opened = false;
-        $('body').removeClass('with-picker-modal-shrink-view');
         p.input.parents('.page-content').css({'padding-bottom': ''});
         if (p.params.onClose) p.params.onClose(p);
 
@@ -514,10 +512,6 @@ var Picker = function (params) {
             }
         }
 
-        if (!p.inline && !toPopover) {
-            // Add class to body
-            if (p.params.shrinkView) $('body').addClass('with-picker-modal-shrink-view');
-        }
         // Set flag
         p.opened = true;
         p.initialized = true;
