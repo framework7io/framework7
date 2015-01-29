@@ -624,7 +624,6 @@ window.Swiper = function (container, params) {
         if (newActiveIndex === s.activeIndex) {
             return;
         }
-        // console.log(s.snapIndex);
         s.snapIndex = snapIndex;
         s.previousIndex = s.activeIndex;
         s.activeIndex = newActiveIndex;
@@ -823,7 +822,32 @@ window.Swiper = function (container, params) {
             s.clickedIndex = $(slide).index();
         }
         if (s.params.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s.activeIndex) {
-            s.slideTo(s.clickedIndex);
+            var slideToIndex = s.clickedIndex,
+                realIndex;
+            if (s.params.loop) {
+                realIndex = $(s.clickedSlide).attr('data-swiper-slide-index');
+                if (slideToIndex > s.slides.length - s.params.slidesPerView) {
+                    s.fixLoop();
+                    slideToIndex = s.wrapper.children('.' + s.params.slideClass + '[data-swiper-slide-index="' + realIndex + '"]').eq(0).index();
+                    setTimeout(function () {
+                        s.slideTo(slideToIndex);
+                    }, 0);
+                }
+                else if (slideToIndex < s.params.slidesPerView - 1) {
+                    s.fixLoop();
+                    var duplicatedSlides = s.wrapper.children('.' + s.params.slideClass + '[data-swiper-slide-index="' + realIndex + '"]');
+                    slideToIndex = duplicatedSlides.eq(duplicatedSlides.length - 1).index();
+                    setTimeout(function () {
+                        s.slideTo(slideToIndex);
+                    }, 0);
+                }
+                else {
+                    s.slideTo(slideToIndex);
+                }
+            }
+            else {
+                s.slideTo(slideToIndex);
+            }
         }
     };
     
