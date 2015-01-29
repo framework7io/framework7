@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         'src/js/resize.js',
         'src/js/forms-handler.js',
         'src/js/push-state.js',
-        'src/js/swiper.js',
+        'src/js/swiper-init.js',
         'src/js/photo-browser.js',
         'src/js/picker.js',
         'src/js/calendar.js',
@@ -70,8 +70,9 @@ module.exports = function (grunt) {
         'src/js/proto-support.js',
         'src/js/proto-device.js',
         'src/js/proto-plugins.js',
-        'src/js/wrap-end.js',
-        'src/js/template7.js'
+        'src/js/template7.js',
+        'src/js/swiper.js',
+        'src/js/wrap-end.js'
     ];
 
     // Project configuration.
@@ -230,10 +231,10 @@ module.exports = function (grunt) {
                     if (filename.indexOf('.js') >= 0) {
                         var addIndent = '        ';
                         filename = filename.replace('src/js/', '');
-                        if (filename === 'wrap-start.js' || filename === 'wrap-end.js' || filename === 'template7.js') {
+                        if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
                             addIndent = '';
                         }
-                        var add4spaces = ('f7-intro.js f7-outro.js proto-device.js proto-plugins.js proto-support.js dom7-intro.js dom7-outro.js').split(' ');
+                        var add4spaces = ('f7-intro.js f7-outro.js proto-device.js proto-plugins.js proto-support.js dom7-intro.js dom7-outro.js template7.js swiper.js').split(' ');
                         if (add4spaces.indexOf(filename) >= 0) {
                             addIndent = '    ';
                         }

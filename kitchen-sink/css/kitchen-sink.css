@@ -127,6 +127,7 @@ i.ks-tabbar-icon-4 {
 }
 .ks-slider-custom .swiper-container {
   background: #000;
+  height: 100%;
 }
 .ks-slider-custom .swiper-slide {
   -webkit-background-size: cover;
@@ -169,6 +170,7 @@ i.ks-tabbar-icon-4 {
   text-align: center;
   line-height: 44px;
   margin-top: -22px;
+  z-index: 10;
 }
 .ks-slider-custom .swiper-next-button {
   right: 0;

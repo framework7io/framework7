@@ -47,8 +47,8 @@
             "src/js/proto-support.js",
             "src/js/proto-device.js",
             "src/js/proto-plugins.js",
-            "src/js/wrap-end.js",
-            "src/js/template7.js"
+            "src/js/template7.js",
+            "src/js/wrap-end.js"
         ],
         "less" : [
             "src/less/login-screen.less",
@@ -133,7 +133,7 @@
         "dependencies" : []
     },
     "swiper": {
-        "js" : ["src/js/swiper.js"],
+        "js" : ["src/js/swiper.js", "src/js/swiper-init.js"],
         "less": ["src/less/swiper.less"],
         "dependencies" : []
     },
