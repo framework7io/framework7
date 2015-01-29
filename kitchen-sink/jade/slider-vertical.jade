@@ -11,8 +11,8 @@
 .pages.navbar-through
   .page(data-page="slider-vertical")
     .page-content
-      .slider-container.slider-init.ks-demo-slider(data-direction="vertical", data-pagination=".slider-pagination")
-        .slider-pagination
-        .slider-wrapper
+      .swiper-container.swiper-init.ks-demo-slider(data-direction="vertical", data-pagination=".swiper-pagination", data-paginationHide="true")
+        .swiper-pagination
+        .swiper-wrapper
           - for (var i = 1; i < 11; i++)
-            .slider-slide Slide #{i}
+            .swiper-slide Slide #{i}
