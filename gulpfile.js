@@ -414,6 +414,10 @@
         // KS
         gulp.watch(paths.ks.less, [ 'ks-less' ]);
         gulp.watch(paths.ks.jade, [ 'ks-jade' ]);
+        gulp.watch(paths.ks.root + 'js/*.js', function () {
+            gulp.src(paths.ks.root)
+                .pipe(connect.reload());
+        });
         // Examples
         var i;
         for (i = 0; i < paths.examples.list.length; i++) {
