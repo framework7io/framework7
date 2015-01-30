@@ -26,7 +26,7 @@ app.initSwiper = function (pageContainer) {
                 initialSlide: parseInt(swiper.data('initialSlide'), 10) || undefined,
                 spaceBetween: parseInt(swiper.data('spaceBetween'), 10) || undefined,
                 speed: parseInt(swiper.data('speed'), 10) || undefined,
-                slidesPerView: parseInt(swiper.data('slidesPerView'), 10) || undefined,
+                slidesPerView: swiper.data('slidesPerView') || undefined,
                 slidesPerColumn: parseInt(swiper.data('slidesPerColumn'), 10) || undefined,
                 centeredSlides: swiper.data('centeredSlides') && (swiper.data('centeredSlides') === 'true' ? true : false),
                 direction: swiper.data('direction'),
