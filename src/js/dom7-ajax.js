@@ -39,6 +39,16 @@ $.ajax = function (options) {
         if (callback in globalAjaxOptions) globalAjaxOptions[callback](arguments[1], arguments[2], arguments[3], arguments[4]);
     }
 
+    // Function to run XHR callbacks and events
+    function fireAjaxCallback (eventName, eventData, callbackName) {
+        var a = arguments;
+        if (eventName) $(document).trigger(eventName, eventData);
+        if (callbackName) {
+            globalAjaxCallback(callbackName, a[3], a[4], a[5], a[6]);
+            if (options[callbackName]) options[callbackName](a[3], a[4], a[5], a[6]);
+        }
+    }
+
     // Merge options and defaults
     for (var prop in defaults) {
         if (!(prop in options)) options[prop] = defaults[prop];
@@ -84,16 +94,14 @@ $.ajax = function (options) {
         script.type = 'text/javascript';
         script.onerror = function() {
             clearTimeout(abortTimeout);
-            globalAjaxCallback('error', null, 'scripterror');
-            if (options.error) options.error();
+            fireAjaxCallback(undefined, undefined, 'error', null, 'scripterror');
         };
         script.src = requestUrl;
 
         // Handler
         window[callbackName] = function (data) {
             clearTimeout(abortTimeout);
-            globalAjaxCallback('success', data);
-            if (options.success) options.success(data);
+            fireAjaxCallback(undefined, undefined, 'success', data);
             script.parentNode.removeChild(script);
             script = null;
             delete window[callbackName];
@@ -104,8 +112,7 @@ $.ajax = function (options) {
             abortTimeout = setTimeout(function () {
                 script.parentNode.removeChild(script);
                 script = null;
-                globalAjaxCallback('error', null, 'timeout');
-                if (options.error) options.error(null, 'timeout');
+                fireAjaxCallback(undefined, undefined, 'error', null, 'timeout');
             }, options.timeout);
         }
 
@@ -199,56 +206,35 @@ $.ajax = function (options) {
             if (options.dataType === 'json') {
                 try {
                     responseData = JSON.parse(xhr.responseText);
-                    $(document).trigger('ajaxSuccess', {xhr: xhr});
-                    globalAjaxCallback('success', responseData, xhr.status, xhr);
-                    if (options.success) {
-                        options.success(responseData, xhr.status, xhr);
-                    }
+                    fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
                 }
                 catch (e) {
-                    $(document).trigger('ajaxError', {xhr: xhr, parseerror: true});
-                    globalAjaxCallback('error', xhr, 'parseerror');
-                    if (options.error) options.error(xhr, 'parseerror');
+                    fireAjaxCallback('ajaxError', {xhr: xhr, parseerror: true}, 'error', xhr, 'parseerror');
                 }
             }
             else {
-                $(document).trigger('ajaxSuccess', {xhr: xhr});
-                globalAjaxCallback('success', responseData, xhr.status, xhr);
-                if (options.success) {
-                    responseData = xhr.responseText;
-                    options.success(responseData, xhr.status, xhr);
-                }
+                fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', xhr.responseText, xhr.status, xhr);
             }
         }
         else {
-            $(document).trigger('ajaxError', {xhr: xhr});
-            globalAjaxCallback('error', xhr, xhr.status);
-            if (options.error) options.error(xhr, xhr.status);
+            fireAjaxCallback('ajaxError', {xhr: xhr}, 'error', xhr, xhr.status);
         }
         if (options.statusCode) {
             if (globalAjaxOptions.statusCode && globalAjaxOptions.statusCode[xhr.status]) globalAjaxOptions.statusCode[xhr.status](xhr);
             if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
         }
-        $(document).trigger('ajaxComplete', {xhr: xhr});
-        globalAjaxCallback('complete', xhr, xhr.status);
-        if (options.complete) {
-            options.complete(xhr, xhr.status);
-        }
+        fireAjaxCallback('ajaxComplete', {xhr: xhr}, 'complete', xhr, xhr.status);
     };
     
     xhr.onerror = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
-        $(document).trigger('ajaxError', {xhr: xhr});
-        globalAjaxCallback('error', xhr, xhr.status);
-        if (options.error) options.error(xhr, xhr.status);
+        fireAjaxCallback('ajaxError', {xhr: xhr}, 'error', xhr, xhr.status);
     };
 
     // Ajax start callback
-    $(document).trigger('ajaxStart', {xhr: xhr});
-    globalAjaxCallback('start', xhr);
-    globalAjaxCallback('beforeSend', xhr);
-    if (options.start) options.start(xhr);
-    if (options.beforeSend) options.beforeSend(xhr);
+    fireAjaxCallback('ajaxStart', {xhr: xhr}, 'start', xhr);
+    fireAjaxCallback(undefined, undefined, 'beforeSend', xhr);
+
 
     // Send XHR
     xhr.send(postData);
@@ -257,12 +243,8 @@ $.ajax = function (options) {
     if (options.timeout > 0) {
         xhrTimeout = setTimeout(function () {
             xhr.abort();
-            $(document).trigger('ajaxError', {xhr: xhr, timeout: true});
-            $(document).trigger('ajaxComplete', {xhr: xhr, timeout: true});
-            globalAjaxCallback('error', xhr, 'timeout');
-            globalAjaxCallback('complete', xhr, 'timeout');
-            if (options.complete) options.complete(xhr, 'timeout');
-            if (options.error) options.error(xhr, 'timeout');
+            fireAjaxCallback('ajaxError', {xhr: xhr, timeout: true}, 'error', xhr, 'timeout');
+            fireAjaxCallback('complete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
         }, options.timeout);
     }
 
