@@ -95,7 +95,7 @@ i.ks-tabbar-icon-4 {
 .ks-demo-slider, .ks-carousel-slider{
     font-size: 25px;
     font-weight: 300;
-    .slider-slide, .swiper-slide {
+    .swiper-slide {
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;
@@ -112,14 +112,25 @@ i.ks-tabbar-icon-4 {
     }
 }
 .ks-carousel-slider{
-    .slider-slide, .swiper-slide {
+    .swiper-slide {
         box-sizing:border-box;
         border: 1px solid #ccc;
         background: #fff;
     }
+    &.ks-carousel-slider-auto {
+        .swiper-slide {
+            width: 85%;
+            &:nth-child(2n) {
+                width: 70%;
+            }
+            &:nth-child(3n) {
+                width: 30%;
+            }
+        }
+    }
 }
-.page[data-page="slider-multiple"] .swiper-container {
-    margin: 35px 0;
+.page[data-page="swiper-multiple"] .swiper-container {
+    margin: 0px 0 35px;
     font-size: 18px;
     height: 120px;
 }
@@ -162,22 +173,61 @@ i.ks-tabbar-icon-4 {
             transform: scale(1.4);
         }
     }
-    .swiper-prev-button, .swiper-next-button {
-        width: 44px;
-        height: 44px;
-        background: rgba(0,0,0,0.8);
+}
+.ks-cube-slider {
+    width: 80%;
+    height: 70%;
+    top: 15%;
+}
+.ks-coverflow-slider {
+    height: 90%;
+    top: 5%;
+    .swiper-slide {
+        width: 65%;
+    }
+}
+.ks-coverflow-slider-v {
+    height: 200px;
+}
+.ks-fade-slider {
+    .swiper-slide {
+        background-size: cover;
+        background-position: center;
+    }
+}
+.page[data-page="swiper-gallery"] {
+    background: #000;
+}
+.ks-swiper-gallery-top {
+    height: 70%;
+}
+.ks-swiper-gallery-thumbs {
+    margin-top: 10px;
+    height: 20%;
+    height: ~"-webkit-calc(30% - 20px)";
+    height: ~"-moz-calc(30% - 20px)";
+    height: ~"-ms-calc(30% - 20px)";
+    height: ~"calc(30% - 20px)";
+    .swiper-slide {
+        width: 120px;
+    }
+    .swiper-slide-pic {
         position: absolute;
-        top: 50%;
-        text-align: center;
-        line-height: 44px;
-        margin-top: -22px;
-        z-index: 10;
-    }
-    .swiper-next-button {
-        right: 0;
-    }
-    .swiper-prev-button {
         left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        -webkit-transition: 300ms;
+    }
+    .swiper-slide-active .swiper-slide-pic {
+        opacity: 1;
+    }
+}
+.ks-swiper-gallery-top, .ks-swiper-gallery-thumbs {
+    .swiper-slide, .swiper-slide-pic {
+        background-size: cover;
+        background-position: center;
     }
 }
 // Virtual List

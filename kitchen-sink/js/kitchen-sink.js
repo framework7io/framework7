@@ -459,6 +459,21 @@ myApp.onPageInit('virtual-list', function (page) {
         height: 63,
     });
 });
+/* ===== Swiper Two Way Control Gallery ===== */
+myApp.onPageInit('swiper-gallery', function (page) {
+    var swiperTop = myApp.swiper('.ks-swiper-gallery-top', {
+        spaceBetween: 10
+    });
+    var swiperThumbs = myApp.swiper('.ks-swiper-gallery-thumbs', {
+        slidesPerView: 'auto',
+        slideToClickedSlide: true,
+        onlyExternal: true,
+        spaceBetween: 10,
+        centeredSlides: true
+    });
+    swiperTop.params.control = swiperThumbs;
+    swiperThumbs.params.control = swiperTop;
+});
 /* ===== Calendar ===== */
 myApp.onPageInit('calendar', function (page) {
     // Default
