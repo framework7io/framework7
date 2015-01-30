@@ -187,7 +187,9 @@
             .pipe(jshint())
             .pipe(jshint.reporter(stylish))
             .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest(paths.build.scripts));
+            .pipe(gulp.dest(paths.build.scripts))
+            .pipe(connect.reload());
+        cb();
     });
     gulp.task('styles', function (cb) {
         gulp.src([paths.source.styles + 'framework7.less', paths.source.styles + 'framework7.rtl.less', paths.source.styles + 'framework7.themes.less'])
