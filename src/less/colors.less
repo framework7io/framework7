@@ -73,11 +73,21 @@
         label.label-radio input[type="checkbox"]:checked ~ .item-inner, label.label-radio input[type="radio"]:checked ~ .item-inner {
             background-image: url("data:image/svg+xml;charset=utf-8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='%23@{colorHex}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
         }
-        .slider-pagination-active {
+        .swiper-pagination-bullet-active {
             background-color: @color;
         }
         .picker-calendar-day.picker-calendar-day-selected span {
             background-color: @color !important;
+        }
+    }
+    .swiper-button-next {
+        &.color-@{colorName}, .theme-@{colorName} & {
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23@{colorHex}'/></svg>");
+        }
+    }
+    .swiper-button-prev {
+        &.color-@{colorName}, .theme-@{colorName} & {
+            background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23@{colorHex}'/></svg>");
         }
     }
     // Bg rule
