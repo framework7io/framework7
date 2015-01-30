@@ -106,11 +106,13 @@
             <div class="detail-condition">{{condition.text}}</div>
             <div class="detail-temp">{{condition.temp}}&deg;</div>
             <div class="list-block forecast-list">
-              <ul>{{#each forecast}}
+              <ul>
+                 
+                {{#each forecast}}
                 <li class="item-content">
                   <div class="item-inner">
                     <div class="item-title">{{dayOfWeek date}}</div>
-                    <div class="item-after"><span class="state">{{text}}</span><span class="temps"><span class="high">{{high}}&deg;</span><span class="low">{{low}}&deg;</span></span></div>
+                    <div class="item-after"> <span class="state">{{text}}</span><span class="temps"><span class="high">{{high}}&deg;</span><span class="low">{{low}}&deg;</span></span></div>
                   </div>
                 </li>{{/each}}
               </ul>
