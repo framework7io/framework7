@@ -34,17 +34,14 @@ $.ajax = function (options) {
     for (var globalOption in globalAjaxOptions) {
         if (callbacks.indexOf(globalOption) < 0) defaults[globalOption] = globalAjaxOptions[globalOption];
     }
-    // Global callbacks
-    function globalAjaxCallback(callback) {
-        if (callback in globalAjaxOptions) globalAjaxOptions[callback](arguments[1], arguments[2], arguments[3], arguments[4]);
-    }
-
     // Function to run XHR callbacks and events
     function fireAjaxCallback (eventName, eventData, callbackName) {
         var a = arguments;
         if (eventName) $(document).trigger(eventName, eventData);
         if (callbackName) {
-            globalAjaxCallback(callbackName, a[3], a[4], a[5], a[6]);
+            // Global callback
+            if (callbackName in globalAjaxOptions) globalAjaxOptions[callbackName](a[3], a[4], a[5], a[6]);
+            // Options callback
             if (options[callbackName]) options[callbackName](a[3], a[4], a[5], a[6]);
         }
     }
