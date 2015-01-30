@@ -14,9 +14,11 @@
       .swiper-container.ks-swiper-gallery-top
         .swiper-wrapper
           - for (var i = 1; i < 10; i++)
-            .swiper-slide(style="background-image:url(http://lorempixel.com/1024/1024/nature/#{i})")
+            .swiper-slide(style="background-image:url(http://lorempixel.com/800/800/nature/#{i})")
+        .swiper-button-next.color-white
+        .swiper-button-prev.color-white
       .swiper-container.ks-swiper-gallery-thumbs
         .swiper-wrapper
           - for (var i = 1; i < 10; i++)
             .swiper-slide
-              .swiper-slide-pic(style="background-image:url(http://lorempixel.com/1024/1024/nature/#{i})")
+              .swiper-slide-pic(style="background-image:url(http://lorempixel.com/800/800/nature/#{i})")

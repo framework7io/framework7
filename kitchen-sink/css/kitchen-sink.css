@@ -200,7 +200,7 @@ i.ks-tabbar-icon-4 {
   height: calc(30% - 20px);
 }
 .ks-swiper-gallery-thumbs .swiper-slide {
-  width: 120px;
+  width: 25%;
 }
 .ks-swiper-gallery-thumbs .swiper-slide-pic {
   position: absolute;
@@ -208,7 +208,7 @@ i.ks-tabbar-icon-4 {
   top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.3;
+  opacity: 0.35;
   -webkit-transition: 300ms;
 }
 .ks-swiper-gallery-thumbs .swiper-slide-active .swiper-slide-pic {

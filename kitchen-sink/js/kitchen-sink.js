@@ -462,14 +462,16 @@ myApp.onPageInit('virtual-list', function (page) {
 /* ===== Swiper Two Way Control Gallery ===== */
 myApp.onPageInit('swiper-gallery', function (page) {
     var swiperTop = myApp.swiper('.ks-swiper-gallery-top', {
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
         spaceBetween: 10
     });
     var swiperThumbs = myApp.swiper('.ks-swiper-gallery-thumbs', {
         slidesPerView: 'auto',
-        slideToClickedSlide: true,
-        onlyExternal: true,
         spaceBetween: 10,
-        centeredSlides: true
+        centeredSlides: true,
+        touchRatio: 0.2,
+        slideToClickedSlide: true
     });
     swiperTop.params.control = swiperThumbs;
     swiperThumbs.params.control = swiperTop;
