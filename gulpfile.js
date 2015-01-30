@@ -11,7 +11,7 @@
         path = require('path'),
         uglify = require('gulp-uglify'),
         sourcemaps = require('gulp-sourcemaps'),
-        uglifycss = require('gulp-uglifycss'),
+        minifyCSS = require('gulp-minify-css'),
         tap = require('gulp-tap'),
         concat = require('gulp-concat'),
         jshint = require('gulp-jshint'),
@@ -308,13 +308,13 @@
                     .pipe(gulp.dest(paths.dist.scripts));
 
                 // Minify CSS
-                var minifyCSS = [
+                var minifiedCSS = [
                     paths.dist.styles + f7.filename + '.css', 
                     paths.dist.styles + f7.filename + '.rtl.css', 
                     paths.dist.styles + f7.filename + '.themes.css'
                 ];
-                gulp.src(minifyCSS)
-                    .pipe(uglifycss())
+                gulp.src(minifiedCSS)
+                    .pipe(minifyCSS())
                     .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date }))
                     .pipe(rename(function(path) {
                         path.basename = path.basename + '.min';
@@ -395,7 +395,7 @@
             .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, modulesList: modules.join(',') } ))
             .pipe(gulp.dest(paths.custom.styles))
 
-            .pipe(uglifycss())
+            .pipe(minifyCSS())
             .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, modulesList: modules.join(',') }))
             .pipe(rename(function(path) {
                 path.basename = path.basename + '.min';
