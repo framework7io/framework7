@@ -178,14 +178,6 @@ i.ks-tabbar-icon-4 {
 .ks-slider-custom .swiper-prev-button {
   left: 0;
 }
-html[dir="rtl"] .ks-slider-custom .swiper-next-button {
-  right: auto;
-  left: 0;
-}
-html[dir="rtl"] .ks-slider-custom .swiper-prev-button {
-  left: auto;
-  right: 0;
-}
 .page[data-page="virtual-list"] .virtual-list li {
   height: 63px;
 }
