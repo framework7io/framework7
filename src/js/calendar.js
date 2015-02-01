@@ -674,13 +674,18 @@ var Calendar = function (params) {
             var paddingTop = parseInt(pageContent.css('padding-top'), 10),
                 paddingBottom = parseInt(pageContent.css('padding-bottom'), 10),
                 pageHeight = pageContent[0].offsetHeight - paddingTop - p.container.height(),
-                pageScrollHeight = pageContent[0].scrollHeight - paddingTop - p.container.height();
+                pageScrollHeight = pageContent[0].scrollHeight - paddingTop - p.container.height(),
+                newPaddingBottom;
 
             var inputTop = p.input.offset().top - paddingTop + p.input[0].offsetHeight;
             if (inputTop > pageHeight) {
                 var scrollTop = pageContent.scrollTop() + inputTop - pageHeight;
                 if (scrollTop + pageHeight > pageScrollHeight) {
-                    pageContent.css({'padding-bottom': (scrollTop + pageHeight - pageScrollHeight + paddingBottom) + 'px'});
+                    newPaddingBottom = scrollTop + pageHeight - pageScrollHeight + paddingBottom;
+                    if (pageHeight === pageScrollHeight) {
+                        newPaddingBottom = p.container.height();
+                    }
+                    pageContent.css({'padding-bottom': (newPaddingBottom) + 'px'});
                 }
                 pageContent.scrollTop(scrollTop, 300);
             }
