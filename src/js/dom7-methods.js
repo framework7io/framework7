@@ -110,7 +110,7 @@ Dom7.prototype = {
     val: function (value) {
         if (typeof value === 'undefined') {
             if (this[0]) return this[0].value;
-            else return null;
+            else return undefined;
         }
         else {
             for (var i = 0; i < this.length; i++) {
