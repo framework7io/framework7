@@ -80,7 +80,7 @@ app.initPullToRefresh = function (pageContainer) {
             }
             else {
             }
-            if ((useTranslate && Math.pow(touchesDiff, 0.85) > 44) || (!useTranslate && touchesDiff >= 88)) {
+            if ((useTranslate && Math.pow(touchesDiff, 0.85) > $('body')[0].offsetHeight / 5) || (!useTranslate && touchesDiff >= 88)) {
                 refresh = true;
                 container.addClass('pull-up').removeClass('pull-down');
             }
