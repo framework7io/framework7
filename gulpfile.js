@@ -333,9 +333,9 @@
             modules = [];
         }
         else {
-            modules = modules.replace(/-/g, '').replace(/ /g, '').split(',');
+            modules = modules.substring(1).replace(/ /g, '').replace(/,,/g, ',');
+            modules = modules.split(',');
         }
-        console.log(modules);
         var modulesJsList = [], modulesLessList = [];
         var i, module;
         modulesJsList.push.apply(modulesJsList, f7.modules.core_intro.js);
