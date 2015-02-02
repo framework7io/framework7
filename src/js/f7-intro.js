@@ -30,6 +30,7 @@ window.Framework7 = function (params) {
         // Fast clicks
         fastClicks: true,
         fastClicksDistanceThreshold: 0,
+        fastClicksDelayBetweenClicks: 50,
         // Active State
         activeState: true,
         activeStateElements: 'a, button, label, span',

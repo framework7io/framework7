@@ -156,7 +156,7 @@ app.initFastClicks = function () {
                 }
             });
         }
-        if ((e.timeStamp - lastClickTime) < 200) {
+        if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
             e.preventDefault();
         }
         if (app.params.activeState) {
@@ -212,7 +212,7 @@ app.initFastClicks = function () {
             e.preventDefault();
         }
 
-        if ((e.timeStamp - lastClickTime) < 200) {
+        if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
             setTimeout(removeActive, 0);
             return true;
         }
@@ -266,7 +266,7 @@ app.initFastClicks = function () {
 
     function handleClick(e) {
         var allowClick = false;
-
+        
         if (trackClick) {
             targetElement = null;
             trackClick = false;
