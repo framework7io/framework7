@@ -38,7 +38,6 @@
   "devDependencies": {
     "jshint": "~2.6.0",
     "gulp": "~3.8.10",
-    "gulp-copy" : "~0.0.2",
     "gulp-less": "~2.0.1",
     "gulp-jade": "~0.11.0",
     "gulp-connect": "~2.2.0",
