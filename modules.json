@@ -87,6 +87,11 @@
         "less": [],
         "dependencies" : []
     },
+    "cards": {
+        "js" : [],
+        "less": ["src/less/cards.less"],
+        "dependencies" : []
+    },
     "smart-select": {
         "js" : ["src/js/smart-select.js"],
         "less": [],

@@ -111,6 +111,16 @@ Framework7 Layouts Themes
             background: none;
         }
     }
+    .card {
+        background: @blockBg;
+    }
+    .card-header{
+        .hairline-color(bottom, @blockBorder);
+    }
+    .card-footer {
+        .hairline-color(top, @blockBorder);
+        color:@lightText;
+    }
     .popover, .popover& {
         background: rgba(0,0,0,0.8);
         .popover-angle:after {

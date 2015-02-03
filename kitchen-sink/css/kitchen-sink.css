@@ -172,8 +172,8 @@ i.ks-tabbar-icon-4 {
   top: 15%;
 }
 .ks-coverflow-slider {
-  height: 90%;
-  top: 5%;
+  height: 60%;
+  top: 20%;
 }
 .ks-coverflow-slider .swiper-slide {
   width: 65%;
@@ -326,4 +326,39 @@ div.ks-demo-lazy {
   border: 1px solid #aaa;
   cursor: pointer;
   margin-bottom: 10px;
+}
+.ks-card-header-pic .card-header {
+  height: 40vw;
+  background-size: cover;
+  background-position: center;
+}
+.ks-facebook-card .card-header {
+  display: block;
+  padding: 10px;
+}
+.ks-facebook-card .ks-facebook-avatar {
+  float: left;
+}
+.ks-facebook-card .ks-facebook-name {
+  margin-left: 44px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.ks-facebook-card .ks-facebook-date {
+  margin-left: 44px;
+  font-size: 13px;
+  color: #8e8e93;
+}
+.ks-facebook-card .card-footer {
+  background: #fafafa;
+}
+.ks-facebook-card .card-footer a {
+  color: #81848b;
+  font-weight: 500;
+}
+.ks-facebook-card .card-content img {
+  display: block;
+}
+.ks-facebook-card .card-content-inner {
+  padding: 15px 10px;
 }
