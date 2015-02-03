@@ -64,6 +64,9 @@
     top: 0;
     background: @navbarBg;
     .hairline(bottom, @navbarBorderColor);
+    &.no-border {
+        .hairline-remove(bottom);
+    }
     .center {
         font-size: 17px;
         font-weight: 500;
@@ -115,6 +118,9 @@
     .justify-content(space-between);
     .align-items(center);
     .hairline(bottom, @navbarBorderColor);
+    &.no-border {
+        .hairline-remove(bottom);
+    }
     .navbar-on-left &, .navbar-on-right &{
         pointer-events: none;
     }
@@ -144,6 +150,9 @@
     bottom: 0;
     background: @toolbarBg;
     .hairline(top, @toolbarBorderColor);
+    &.no-border {
+        .hairline-remove(top);
+    }
     a {
         .flex-shrink(1);
         position: relative;
