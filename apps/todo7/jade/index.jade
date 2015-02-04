@@ -80,7 +80,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
     // Template
     script(id="todo-item-template", type="text/template")
       ul
-        {{#each this}}
+        | {{#each this}}
         li.swipeout(data-color="{{color}}", data-id="{{id}}")
           .swipeout-content
             label.label-checkbox.item-content
@@ -91,7 +91,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
                 .item-title {{title}}
           .swipeout-actions-right
             a(href="#").swipeout-delete Delete
-        {{/each}}
+        | {{/each}}
 
     // Path to Framework7 Library JS
     script(type="text/javascript", src="../../dist/js/framework7.min.js")

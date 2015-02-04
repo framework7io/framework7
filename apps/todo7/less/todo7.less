@@ -46,7 +46,9 @@ html.ios {
 .view-main {
 
     .navbar {
-        border-bottom: none;
+        &:after {
+            display: none;
+        }
         background: @pink;
         color: #fff;
     }
@@ -60,7 +62,9 @@ i.icon-plus {
     font-weight: 300;
     ul {
         background: none;
-        border: none;
+        &:after, &:before {
+            display: none;
+        }
     }
     .item-title {
         font-size: 18px;
@@ -71,7 +75,9 @@ i.icon-plus {
     .item-inner {
         padding-top: 18px;
         padding-bottom: 16px;
-        border-bottom-color: rgba(255,255,255,0.2);
+        &:after {
+            background: rgba(255,255,255,0.2);
+        }
     }
     .label-checkbox.active-state {
         background: rgba(255,255,255,0.2);
@@ -112,7 +118,9 @@ i.icon-plus {
     .navbar {
         color:#fff;
         background: darken(@pink, 20%);
-        border: none;
+        &:after {
+            display: none;
+        }
     }
     a.link {
         color:#fff;
@@ -122,13 +130,18 @@ i.icon-plus {
             background: none;
             border: none;
             color:#fff;
+            &:after, &:before {
+                display: none;
+            }
         }
         input {
             color:#fff;
         }
     }
     .item-inner {
-        border-color: rgba(255,255,255,0.2);
+        &:after {
+            background-color: rgba(255,255,255,0.2);
+        }
     }
     .button {
         border-color: #fff;
@@ -209,12 +222,16 @@ body.with-popup {
 .modal-inner {
     background: @pink;
     color:#fff;
-    border-bottom: 1px solid darken(@pink, 10%);
+    &:after {
+        background: darken(@pink, 10%);
+    }
 }
 .modal-button {
     background: @pink;
-    border-right-color: darken(@pink, 10%);
     color:#fff;
+    &:after {
+        background: darken(@pink, 10%);
+    }
     &.active-state {
         background: darken(@pink, 10%);
     }

@@ -56,9 +56,11 @@ html.ios .page-content {
     Navbar
 ==============================*/
 .navbar {
-  border-bottom: none;
   background: #2b1127;
   color: #fff;
+}
+.navbar:after {
+  display: none;
 }
 span.navbar-logo {
   width: 100px;
@@ -80,20 +82,27 @@ i.icon-plus {
 }
 .places-list ul {
   background: none;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid transparent;
+}
+.places-list ul:before {
+  display: none;
+}
+.places-list ul:after {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.places-list ul:empty {
+  display: none;
 }
 .places-list a.item-link .item-inner,
 .places-list .item-inner {
   background: none;
   padding-right: 15px;
-  border-bottom-color: rgba(255, 255, 255, 0.2);
 }
-.places-list li:last-child .item-inner,
-.places-list li:last-child a.item-link:active .item-inner {
-  border-bottom: none;
+.places-list a.item-link .item-inner:after,
+.places-list .item-inner:after {
+  background-color: rgba(255, 255, 255, 0.2);
 }
-.places-list a.item-link:active {
+.places-list a.item-link.active-state {
   background: rgba(255, 255, 255, 0.1);
 }
 .places-list .item-after {
@@ -225,14 +234,14 @@ i.icon-plus {
   }
 }
 .list-block.forecast-list ul {
-  border: none;
   background: rgba(0, 0, 0, 0.2);
 }
-.list-block.forecast-list .item-inner {
-  border-bottom-color: rgba(0, 0, 0, 0.3);
+.list-block.forecast-list ul:before,
+.list-block.forecast-list ul:after {
+  display: none;
 }
-.list-block.forecast-list li:last-child .item-inner {
-  border-bottom: none;
+.list-block.forecast-list .item-inner:after {
+  background: rgba(0, 0, 0, 0.3);
 }
 .list-block.forecast-list span {
   display: inline-block;
@@ -275,17 +284,17 @@ html.with-statusbar-overlay .statusbar-overlay.with-popup-opened {
 /*==============================
     Modal
 ==============================*/
-.modal-inner {
-  border-bottom: 1px solid #390532;
+.modal-inner:after {
+  background: #390532;
 }
-.modal-button {
-  border-right: 1px solid #390532;
+.modal-button:after {
+  background: #390532;
 }
 .modal-inner,
 .modal-button {
   color: #fff;
   background: rgba(77, 12, 68, 0.9);
 }
-.modal-button:active {
+.modal-button.active-state {
   background: #68095b;
 }

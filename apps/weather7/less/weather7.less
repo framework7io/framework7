@@ -60,9 +60,11 @@ html.ios {
     Navbar
 ==============================*/
 .navbar {
-    border-bottom: none;
     background: #2b1127;
     color:#fff;
+    &:after {
+        display: none;
+    }
 }
 span.navbar-logo {
     width: 100px;
@@ -83,20 +85,25 @@ i.icon-plus {
     color:#fff;
     ul {
         background: none;
-        border: none;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
+        border-bottom: 1px solid transparent;
+        &:before {
+            display: none;
+        }
+        &:after {
+            background-color: rgba(255,255,255,0.2);
+        }
+        &:empty {
+            display: none;
+        }
     }
     a.item-link .item-inner, .item-inner {
         background: none;    
         padding-right: 15px;
-        border-bottom-color: rgba(255,255,255,0.2);
-    }
-    li:last-child {
-        .item-inner, a.item-link:active .item-inner{
-            border-bottom: none;
+        &:after {
+            background-color: rgba(255,255,255,0.2)
         }
     }
-    a.item-link:active {
+    a.item-link.active-state {
         background: rgba(255,255,255,0.1);
     }
     .item-after {
@@ -225,14 +232,15 @@ i.icon-plus {
         margin-right: auto;
     }
     ul {
-        border: none;
         background: rgba(0,0,0,0.2);
+        &:before, &:after {
+            display: none;
+        }
     }
     .item-inner {
-        border-bottom-color: rgba(0,0,0,0.3);
-    }
-    li:last-child .item-inner{
-        border-bottom: none;
+        &:after {
+            background: rgba(0,0,0,0.3);
+        }
     }
     span {
         display: inline-block;
@@ -280,15 +288,19 @@ html.with-statusbar-overlay {
     Modal
 ==============================*/    
 .modal-inner {
-    border-bottom: 1px solid #390532;
+    &:after {
+        background: #390532;
+    }
 }
 .modal-button {
-    border-right: 1px solid #390532;
+    &:after {
+        background: #390532;
+    }
 }
 .modal-inner, .modal-button {
     color:#fff;
     background: rgba(77, 12, 68, 0.9);
 }
-.modal-button:active {
+.modal-button.active-state {
     background: lighten(#390532,10%);
 }
