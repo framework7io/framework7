@@ -68,6 +68,9 @@ window.Framework7 = function (params) {
         // Searchbar
         searchbarHideDividers: true,
         searchbarHideGroups: true,
+        // Tap Navbar or Statusbar to scroll to top
+        scrollTopOnNavbarClick: false,
+        scrollTopOnStatusbarClick: false,
         // Panels
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,

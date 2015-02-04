@@ -2,6 +2,63 @@
 ************   Handle clicks and make them fast (on tap);   ************
 ===============================================================================*/
 app.initClickEvents = function () {
+    function handleScrollTop(e) {
+        var clicked = $(this);
+        var target = $(e.target);
+        var isLink = clicked[0].nodeName.toLowerCase() === 'a' ||
+                     clicked.parents('a').length > 0 ||
+                     target[0].nodeName.toLowerCase() === 'a' ||
+                     target.parents('a').length > 0;
+                     
+        if (isLink) return;
+        var pageContent, page;
+        if (app.params.scrollTopOnNavbarClick && clicked.is('.navbar .center')) {
+            // Find active page
+            var navbar = clicked.parents('.navbar');
+
+            // Static Layout
+            pageContent = navbar.parents('.page-content');
+
+            if (pageContent.length === 0) {
+                // Fixed Layout
+                if (navbar.parents('.page').length > 0) {
+                    pageContent = navbar.parents('.page').find('.page-content');
+                }
+                // Through Layout
+                if (pageContent.length === 0) {
+                    if (navbar.nextAll('.pages').length > 0) {
+                        pageContent = navbar.nextAll('.pages').find('.page:not(.page-on-left):not(.page-on-right):not(.cached)').find('.page-content');
+                    }
+                }
+            }
+        }
+        if (app.params.scrollTopOnStatusbarClick && clicked.is('.statusbar-overlay')) {
+            if ($('.popup.modal-in').length > 0) {
+                // Check for opened popup
+                pageContent = $('.popup.modal-in').find('.page:not(.page-on-left):not(.page-on-right):not(.cached)').find('.page-content');
+            }
+            else if ($('.panel.active').length > 0) {
+                // Check for opened panel
+                pageContent = $('.panel.active').find('.page:not(.page-on-left):not(.page-on-right):not(.cached)').find('.page-content');
+            }
+            else if ($('.views > .view.active').length > 0) {
+                // View in tab bar app layout
+                pageContent = $('.views > .view.active').find('.page:not(.page-on-left):not(.page-on-right):not(.cached)').find('.page-content');
+            }
+            else {
+                // Usual case
+                pageContent = $('.views').find('.page:not(.page-on-left):not(.page-on-right):not(.cached)').find('.page-content');   
+            }
+        }
+
+        if (pageContent && pageContent.length > 0) {
+            // Check for tab
+            if (pageContent.hasClass('tab')) {
+                pageContent = pageContent.parent('.tabs').children('.page-content.active');
+            }
+            if (pageContent.length > 0) pageContent.scrollTop(0, 300);
+        }
+    }
     function handleClicks(e) {
         /*jshint validthis:true */
         var clicked = $(this);
@@ -251,6 +308,9 @@ app.initClickEvents = function () {
         }
     }
     $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker', handleClicks);
+    if (app.params.scrollTopOnNavbarClick || app.params.scrollTopOnStatusbarClick) {
+        $(document).on('click', '.statusbar-overlay, .navbar .center', handleScrollTop);
+    }
 
     // Prevent scrolling on overlays
     function preventScrolling(e) {
