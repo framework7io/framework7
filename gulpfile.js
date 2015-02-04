@@ -422,12 +422,18 @@
         var i;
         for (i = 0; i < paths.examples.list.length; i++) {
             var exampleRoot = paths.examples.root + paths.examples.list[i] + '/';
-            gulp.watch([exampleRoot + 'jade/*.jade', exampleRoot + 'less/*.less'], [ 'examples' ]);
+            gulp.watch([exampleRoot + 'jade/*.jade', exampleRoot + 'less/*.less'], [ 'examples' ], function () {
+                gulp.src([exampleRoot + 'jade/*.jade', exampleRoot + 'less/*.less'])
+                    .pipe(connect.reload());
+            });
         }
         // Apps
         for (i = 0; i < paths.apps.list.length; i++) {
             var appRoot = paths.apps.root + paths.apps.list[i] + '/';
-            gulp.watch([appRoot + 'jade/*.jade', appRoot + 'less/*.less'], [ 'examples' ]);
+            gulp.watch([appRoot + 'jade/*.jade', appRoot + 'less/*.less'], [ 'apps' ], function () {
+                gulp.src([appRoot + 'jade/*.jade', appRoot + 'less/*.less'])
+                    .pipe(connect.reload());
+            });
         }
     });
 
