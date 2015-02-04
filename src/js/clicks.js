@@ -3,6 +3,7 @@
 ===============================================================================*/
 app.initClickEvents = function () {
     function handleScrollTop(e) {
+        /*jshint validthis:true */
         var clicked = $(this);
         var target = $(e.target);
         var isLink = clicked[0].nodeName.toLowerCase() === 'a' ||
