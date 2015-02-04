@@ -2,6 +2,14 @@
 ************   Handle clicks and make them fast (on tap);   ************
 ===============================================================================*/
 app.initClickEvents = function () {
+    function scrollTopHandle() {
+        /*jshint validthis:true */
+        var navClicked = $(this);
+        // Check if nav bar clicked scroll top
+        if (navClicked.hasClass('center')) {
+            navClicked.parents('.navbar').nextAll('.pages').find('.page-content').scrollTop(0, 300);
+        }
+    }
     function handleClicks(e) {
         /*jshint validthis:true */
         var clicked = $(this);
@@ -24,7 +32,6 @@ app.initClickEvents = function () {
                 return;
             }
         }
-
         // Smart Select
         if (clicked.hasClass('smart-select')) {
             if (app.smartSelectOpen) app.smartSelectOpen(clicked);
@@ -251,6 +258,7 @@ app.initClickEvents = function () {
         }
     }
     $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker', handleClicks);
+    $(document).on('click', '.navbar-inner .center', scrollTopHandle);
 
     // Prevent scrolling on overlays
     function preventScrolling(e) {
