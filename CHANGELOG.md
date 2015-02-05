@@ -67,6 +67,7 @@
     * Fixed "sticky titles" behavior when Navbar hidden by page scroll
   * Swipeout
     * All links/buttons/swipeout actions with additional `swipeout-close` class will close any opened swipeout element
+    * `app.swipeoutOpen`, `app.swipeoutClose` and `app.swipeoutDelete` methods now support additional `callback` attribute that will be executed after swipeout open/close/delete
   * Searchbar
     * Now `data-search-in` attribute may be changed "on the fly" to dynamically change search field
   * Infinite Scroll
@@ -75,6 +76,7 @@
     * `item-after` element supports additional `smart-select-value` class, in this case Smart Select value will be set depending on "item-after" content  related to `<option>` with same text content, not `<option>` "value"
   * Pull To Refresh
     * Allows to configure trigger distance by stting `data-ptr-distance` attribute on `pull-to-refresh-content`. By default it is 44px
+    * Fixed issue whith not animating (spinning) preloader on page with Pull To Refresh
   * Build
     * Build system (task manager) switched from Grunt to Gulp, because of much better performance
 
