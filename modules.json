@@ -83,7 +83,7 @@
         "dependencies" : []
     },
     "sortable": {
-        "js" : ["src/js/sortable.js.js"],
+        "js" : ["src/js/sortable.js"],
         "less": [],
         "dependencies" : []
     },
