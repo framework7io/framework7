@@ -11,7 +11,7 @@
 .pages.navbar-through
   .page(data-page="swiper-3d-cube")
     .page-content
-      .swiper-container.swiper-init.ks-demo-slider.ks-cube-slider(data-loop="true", data-effect="cube")
+      .swiper-container.swiper-init.ks-demo-slider.ks-cube-slider(data-effect="cube")
         .swiper-wrapper
-          - for (var i = 1; i < 11; i++)
-            .swiper-slide Slide #{i}
+          - for (var i = 1; i < 10; i++)
+            .swiper-slide(style="background-image:url(http://lorempixel.com/800/800/people/#{i})") Slide #{i}

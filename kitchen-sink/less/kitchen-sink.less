@@ -186,9 +186,13 @@ i.ks-tabbar-icon-4 {
         width: 65%;
     }
 }
-.ks-coverflow-slider-v {
-    height: 200px;
-}
+.ks-cube-slider, .ks-coverflow-slider {
+    .swiper-slide {
+        background-size: cover;
+        color: #fff;
+        -webkit-backface-visibility: hidden;
+    }
+} 
 .ks-fade-slider {
     .swiper-slide {
         background-size: cover;

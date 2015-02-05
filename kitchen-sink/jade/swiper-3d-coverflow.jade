@@ -14,6 +14,6 @@
       .swiper-container.swiper-init.ks-demo-slider.ks-coverflow-slider(data-pagination=".swiper-pagination", data-effect="coverflow", data-slidesPerView="auto", data-centeredSlides="true")
         .swiper-pagination
         .swiper-wrapper
-          - for (var i = 1; i < 11; i++)
-            .swiper-slide Slide #{i}
+          - for (var i = 1; i < 10; i++)
+            .swiper-slide(style="background-image:url(http://lorempixel.com/800/800/nature/#{i})") Slide #{i}
       
