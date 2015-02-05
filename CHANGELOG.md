@@ -1,5 +1,85 @@
 # Change Log
 
+## Framework7 v1.0.0 - Updated on February 6, 2015
+  * Picker
+    * New component that allows you to create custom overlay pickers which looks like iOS native picker
+  * Calendar / Datepicker
+    * New component, touch optimized calendar that provides an easy way to handle dates
+  * Cards
+    * New component. Cards, along with List View, is a one more great way to contain and orginize your information
+  * Swiper
+    * New component. Swiper is a powerful and most modern touch slider ever with super flexible configuration and lot, lot of features
+  * Slider
+    * Removed, replaced with Swiper
+  * Lazy Load
+    * New component. Lazy Load delays loading of images on page while they are outside of viewport until user scrolls to them
+  * Sub Navbar
+    * New component to be used in addition to Navbar. It is useful when you need to put any additional elements into Navbar, like Tab Links or Search Bar
+  * Picker Modal
+    * New type of Modals/Overlays, which allows to create custom picker overlays
+  * Modals
+    * New "Modals Stack" behavior. This feature doesn't allow to open multiple modals at the same time, and will automatically open next modal when you close the current one. Such behavior is similar to browser native alerts
+  * Virutal List
+    * Additional `dynamicHeightBufferSize` parameter to control buffer size on Virtual Lists with dynamic height
+    * New `.scrollToItem(index)` method to scroll Virtual List to specified item
+  * Navbars/Toolbars
+    * Now it is possible not to hide Navbar/Toolbar on page scroll for selected pages using `dont-hide-navbar-on-scroll`, `dont-hide-toolbar-on-scroll`, `dont-hide-tabbar-on-scroll` classes
+    * Navbars and toolbars support additional `no-border` class to remove hairlines from them
+    * New app parameters to scroll page content to top:
+      * `scrollTopOnNavbarClick` - set to `true` and clicking on navbar's "center" element will scroll active page to top
+      * `scrollTopOnStatusbarClick` - set to `true` and clicking on "statusbar-overlay" will scroll active page to top
+  * Dom7
+    * Fixed `.text(value)` method when set new text content on multiple elements
+    * Ajax methods
+      * Global Ajax Setup. Now it is possible to set global options/headers for all Ajax requests
+      * Support for timeout by using `timeout` option
+      * `start` callback renamed to `beforeSend`
+      * Returned `xhr` object in all requests will have additional custom `requestUrl` property with requested url
+    * Utils
+      * New `$.cancelAnimationFrame(frameId)` util method to cancel passed animation frame
+      * `.scrollTo(left, top, duration, easing)`, `.scrollTop(top, duration, easing)`, `.scrollLeft(left, duration, easing)` methods now accept additional `easing` parameter, it can be "swing" or "linear" (by default, it is "swing")
+    * New `.add()` method to add elements/collection to the current one
+    * Fixed `.prevAll` and `.nextAll` methods when passed with selector
+  * Forms
+    * New `formFromJSON` and `formToJSON` events on forms that use Forms Storage
+    * New `submitError` and `beforeSubmit` events to be used along with `submitted` event on Ajax Forms 
+  * Clicks / Fast Clicks
+    * Now active/focused form elements (input, textarea, etc.) will be automatically blured on "click out"
+    * Scrolling is now prevented on any kind of overlays (like modal-overlay, popup-overlay, etc.)
+    * Links with `external` class and `target="_system"` attribute will be opened in system browser in Cordova apps
+    * New `fastClicksDelayBetweenClicks` app parameter allows to set minimal delay (in ms) between clicks
+  * Router
+    * Router options object now supports new `query` property where you can pass page query
+    * `pageData` now has additional `fromPage` property within pageData of previously active page
+    * Fixed `context` property in `pageData` that could become empty in some situations
+  * Device API
+    * Now it also adds `pixel-ratio-` class to `<html>` with device pixel ratio 
+  * Messages
+    * `.addMessage(props, messagesContent, addToTop)` method now accepts new arguments: 
+      * `messagesContent` (optional) to specify container with messages, useful if you have  multiple messages containers/pages at the same time
+      * `addToTop` (optional) to specify should new message be appended or prepended
+  * Messagebar
+    * Support for additional `data-keyboard-height` to set additional padding on page content when using it with custom keyboards in Cordova app
+  * Styles / Icons
+    * All harilines reworked to `:after` and `:before` pseudo elements instead of usual CSS borders. Such method allows to have true 0.5px (for iOS Retina) and 0.33px (for iPhone 6 Plus) hairlines
+    * New "forward" (`<i class="icon icon-forward"></i>`) icon to be used along with "back" icon (`<i class="icon icon-back"></i>`)
+  * List View
+    * Fixed "sticky titles" behavior when Navbar hidden by page scroll
+  * Swipeout
+    * All links/buttons/swipeout actions with additional `swipeout-close` class will close any opened swipeout element
+    * `app.swipeoutOpen`, `app.swipeoutClose` and `app.swipeoutDelete` methods now support additional `callback` attribute that will be executed after swipeout open/close/delete
+  * Searchbar
+    * Now `data-search-in` attribute may be changed "on the fly" to dynamically change search field
+  * Infinite Scroll
+    * New option to trigger infinite scroll event on top of the page, could be enabled with additional `infinite-scroll-top` class on `infinite-scroll`
+  * Smart Select
+    * `item-after` element supports additional `smart-select-value` class, in this case Smart Select value will be set depending on "item-after" content  related to `<option>` with same text content, not `<option>` "value"
+  * Pull To Refresh
+    * Allows to configure trigger distance by stting `data-ptr-distance` attribute on `pull-to-refresh-content`. By default it is 44px
+    * Fixed issue whith not animating (spinning) preloader on page with Pull To Refresh
+  * Build
+    * Build system (task manager) switched from Grunt to Gulp, because of much better performance
+
 ## Framework7 v0.10.0 - Updated on December 8, 2014
   * Fixed issue with messages scrolling when adding new message
   * Fixed issue with positioning of dynamic navbar elements
