@@ -685,6 +685,8 @@ html:not(.watch-active-state) .toolbar a.link:active,
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c4c4c4;
@@ -792,6 +794,8 @@ html.ios-gt-6.pixel-ratio-3 .navbar:after {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c4c4c4;
@@ -848,6 +852,8 @@ html.ios-gt-6.pixel-ratio-3 .subnavbar:after {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #c4c4c4;
@@ -1230,6 +1236,8 @@ html.ios-gt-6.pixel-ratio-3 .toolbar:before {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #b4b4b4;
@@ -1607,6 +1615,8 @@ i.icon.icon-plus {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -1628,6 +1638,8 @@ html.ios-gt-6.pixel-ratio-3 .content-block-inner:before {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -1691,6 +1703,8 @@ html.ios-gt-6.pixel-ratio-3 .content-block-inner:after {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -1712,6 +1726,8 @@ html.ios-gt-6.pixel-ratio-3 .list-block ul:before {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -1892,6 +1908,8 @@ html.ios-gt-6.pixel-ratio-3 .list-block ul:after {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -1990,6 +2008,8 @@ html:not(.watch-active-state) .list-block .item-link:active .item-inner:after,
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -2207,6 +2227,8 @@ html.ios-gt-6.pixel-ratio-3 .list-block .item-link.list-button:after {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -2297,6 +2319,8 @@ html.ios-gt-6.pixel-ratio-3 .list-block .list-group-title:before {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c8c7cc;
@@ -2961,6 +2985,8 @@ html:not(.watch-active-state) .card-footer a.link:active,
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #e1e1e1;
@@ -2989,6 +3015,8 @@ html.ios-gt-6.pixel-ratio-3 .card-header:after {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #e1e1e1;
@@ -3086,6 +3114,8 @@ html.ios .popup-overlay.modal-overlay-visible {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #b5b5b5;
@@ -3152,6 +3182,8 @@ html.ios-gt-6.pixel-ratio-3 .modal-inner:after {
   position: absolute;
   right: 0;
   top: 0;
+  left: auto;
+  bottom: auto;
   width: 1px;
   height: 100%;
   background-color: #b5b5b5;
@@ -3188,10 +3220,12 @@ html:not(.watch-active-state) .modal-button:active,
   background: #d4d4d4;
 }
 .modal-buttons-vertical .modal-button {
-  border-bottom: 1px solid #b5b5b5;
   border-radius: 0;
 }
 .modal-buttons-vertical .modal-button:after {
+  display: none;
+}
+.modal-buttons-vertical .modal-button:before {
   display: none;
 }
 .modal-buttons-vertical .modal-button:after {
@@ -3199,6 +3233,8 @@ html:not(.watch-active-state) .modal-button:active,
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #b5b5b5;
@@ -3274,6 +3310,8 @@ html.ios-gt-6.pixel-ratio-3 .modal-buttons-vertical .modal-button:after {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #d2d2d6;
@@ -3516,6 +3554,8 @@ input.modal-text-input.modal-text-input-double + input.modal-text-input {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #d2d2d6;
@@ -3683,6 +3723,8 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #929499;
@@ -3723,6 +3765,8 @@ html.ios-gt-6.pixel-ratio-3 .picker-modal .toolbar:before {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #929499;
@@ -5061,6 +5105,8 @@ body > .photo-browser .toolbar {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #a8abb0;
@@ -5082,6 +5128,8 @@ html.ios-gt-6.pixel-ratio-3 .picker-center-highlight:before {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #a8abb0;
@@ -5156,6 +5204,8 @@ html.ios-gt-6.pixel-ratio-3 .picker-center-highlight:after {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #c4c4c4;
@@ -5237,6 +5287,8 @@ html.ios-gt-6.pixel-ratio-3 .picker-calendar-week-days:after {
   position: absolute;
   left: 0;
   bottom: 0;
+  right: auto;
+  top: auto;
   height: 1px;
   width: 100%;
   background-color: #cccccc;
@@ -5363,6 +5415,8 @@ html.ios-gt-6.pixel-ratio-3 .picker-calendar-row:after {
   position: absolute;
   left: 0;
   top: 0;
+  bottom: auto;
+  right: auto;
   height: 1px;
   width: 100%;
   background-color: #c4c4c4;
