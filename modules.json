@@ -155,11 +155,11 @@
     "picker": {
         "js" : ["src/js/picker.js"],
         "less": ["src/less/picker.less"],
-        "dependencies" : []
+        "dependencies" : ["modals"]
     },
     "calendar": {
         "js" : ["src/js/calendar.js"],
         "less": ["src/less/calendar.less"],
-        "dependencies" : []
+        "dependencies" : ["modals"]
     }
 }
