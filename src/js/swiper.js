@@ -1862,7 +1862,6 @@ window.Swiper = function (container, params) {
     s.controller = {
         setTranslate: function (translate, byController) {
             var controlled = s.params.control;
-            
             var multiplier, controlledTranslate;
             if (s.isArray(controlled)) {
                 for (var i = 0; i < controlled.length; i++) {
@@ -1879,7 +1878,7 @@ window.Swiper = function (container, params) {
                     }
                 }
             }
-            else if (controlled instanceof Swiper) {
+            else if (controlled instanceof Swiper && byController !== controlled) {
                 translate = controlled.rtl && controlled.params.direction === 'horizontal' ? -s.translate : s.translate;
                 multiplier = (controlled.maxTranslate() - controlled.minTranslate()) / (s.maxTranslate() - s.minTranslate());
                 controlledTranslate = (translate - s.minTranslate()) * multiplier + controlled.minTranslate();
@@ -1900,7 +1899,7 @@ window.Swiper = function (container, params) {
                     }
                 }
             }
-            else if (controlled instanceof Swiper) {
+            else if (controlled instanceof Swiper && byController !== controlled) {
                 controlled.setWrapperTransition(duration, s);
             }
         }
