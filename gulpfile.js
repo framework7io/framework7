@@ -188,8 +188,11 @@
             .pipe(jshint.reporter(stylish))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(paths.build.scripts))
-            .pipe(connect.reload());
-        cb();
+            .pipe(connect.reload())
+            .on('end', function () {
+                cb();
+            });
+        
     });
     gulp.task('styles', function (cb) {
         gulp.src([paths.source.styles + 'framework7.less', paths.source.styles + 'framework7.rtl.less', paths.source.styles + 'framework7.themes.less'])
@@ -198,8 +201,10 @@
             }))
             .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date }))
             .pipe(gulp.dest(paths.build.styles))
-            .pipe(connect.reload());
-        cb();
+            .pipe(connect.reload())
+            .on('end', function () {
+                cb();
+            });
     });
 
     // F7 Demo App
