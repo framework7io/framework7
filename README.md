@@ -1,4 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/nolimits4web/framework7.png?label=ready&title=Ready)](https://waffle.io/nolimits4web/framework7)
 [![Build Status](https://travis-ci.org/nolimits4web/Framework7.svg?branch=master)](https://travis-ci.org/nolimits4web/Framework7)
 [![devDependency Status](https://david-dm.org/nolimits4web/framework7/dev-status.svg)](https://david-dm.org/nolimits4web/framework7#info=devDependencies)
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=nolimits4web&url=https://github.com/nolimits4web/framework7/&title=Framework7&language=JavaScript&tags=github&category=software)
@@ -6,7 +5,7 @@
 Framework7
 ==========
 
-Full Featured HTML Framework For Building iOS7 Apps
+Full Featured Mobile HTML Framework For Building iOS Apps
 
 ## Getting Started
   * [Getting Started Guide](http://www.idangero.us/framework7/get-started/)
@@ -74,6 +73,7 @@ $ gulp custom -accordion,modals,tabs
 ```
 After that you will find created `custom/` folder with generated JS and CSS files. Here is the list of available additional modules:
 
+* cards
 * accordion
 * searchbar
 * messages
