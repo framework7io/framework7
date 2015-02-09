@@ -238,7 +238,7 @@ window.Swiper = function (container, params) {
     if (s.rtl) {
         s.wrongRTL = s.wrapper.css('display') === '-webkit-box';
     }
-
+    
     // Translate
     s.translate = 0;
     
@@ -496,7 +496,7 @@ window.Swiper = function (container, params) {
         s.virtualWidth = Math.max(s.virtualWidth, s.size);
     
         var newSlidesGrid;
-
+    
         if (s.rtl && s.wrongRTL && (s.params.effect === 'slide' || s.params.effect === 'coverflow')) {
             s.wrapper.css({width: s.virtualWidth + s.params.spaceBetween + 'px'});
         }
@@ -604,6 +604,7 @@ window.Swiper = function (container, params) {
         }
         s.progress = (translate - s.minTranslate()) / (s.maxTranslate() - s.minTranslate());
         s.isBeginning = s.isEnd = false;
+        
         if (s.progress <= 0) {
             s.isBeginning = true;
             if (s.params.onReachBeginning) s.params.onReachBeginning(s);
@@ -756,26 +757,28 @@ window.Swiper = function (container, params) {
     
     // Attach/detach events
     s.events = function (detach) {
-        var action = detach ? 'off' : 'on';
+        var actionDom = detach ? 'off' : 'on';
+        var actionVanilla = detach ? 'removeEventListener' : 'addEventListener';
         var touchEventsTarget = s.params.touchEventsTarget === 'container' ? s.container : s.wrapper;
         var target = s.support.touch ? touchEventsTarget : $(document);
     
         var moveCapture = s.params.nested ? true : false;
+    
         // Touch events
-        touchEventsTarget[action](s.touchEvents.start, s.onTouchStart, false);
-        target[action](s.touchEvents.move, s.onTouchMove, moveCapture);
-        target[action](s.touchEvents.end, s.onTouchEnd, false);
-        $(window)[action]('resize', s.onResize);
+        touchEventsTarget[0][actionVanilla](s.touchEvents.start, s.onTouchStart, false);
+        target[0][actionVanilla](s.touchEvents.move, s.onTouchMove, moveCapture);
+        target[0][actionVanilla](s.touchEvents.end, s.onTouchEnd, false);
+        window[actionVanilla]('resize', s.onResize);
     
         // Next, Prev, Index
-        if (s.params.nextButton) $(s.params.nextButton)[action]('click', s.onClickNext);
-        if (s.params.prevButton) $(s.params.prevButton)[action]('click', s.onClickPrev);
+        if (s.params.nextButton) $(s.params.nextButton)[actionDom]('click', s.onClickNext);
+        if (s.params.prevButton) $(s.params.prevButton)[actionDom]('click', s.onClickPrev);
         if (s.params.pagination && s.params.paginationClickable) {
-            $(s.paginationContainer)[action]('click', '.' + s.params.bulletClass, s.onClickIndex);
+            $(s.paginationContainer)[actionDom]('click', '.' + s.params.bulletClass, s.onClickIndex);
         }
     
         // Prevent Links Clicks
-        if (s.params.preventClicks || s.params.preventClicksPropagation) touchEventsTarget[action]('click', s.preventClicks, true);
+        if (s.params.preventClicks || s.params.preventClicksPropagation) touchEventsTarget[0][actionVanilla]('click', s.preventClicks, true);
     };
     s.attachEvents = function (detach) {
         s.events();
@@ -843,6 +846,11 @@ window.Swiper = function (container, params) {
             s.clickedSlide = slide;
             s.clickedIndex = $(slide).index();
         }
+        else {
+            s.clickedSlide = undefined;
+            s.clickedIndex = undefined;
+            return;
+        }
         if (s.params.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s.activeIndex) {
             var slideToIndex = s.clickedIndex,
                 realIndex;
@@ -882,9 +890,8 @@ window.Swiper = function (container, params) {
     
     // Touch handlers
     s.onTouchStart = function (e) {
-        if (e.originalEvent) e = e.originalEvent; //jQuery fix
-        if (e.type === 'mousedown' && 'which' in e && e.which === 3) return;
         if (e.originalEvent) e = e.originalEvent;
+        if (e.type === 'mousedown' && 'which' in e && e.which === 3) return;
         if (s.params.noSwiping && findElementInEvent(e, '.' + s.params.noSwipingClass)) return;
         if (s.params.swipeHandler) {
             if (!findElementInEvent(e, s.params.swipeHandler)) return;
@@ -908,7 +915,7 @@ window.Swiper = function (container, params) {
     };
     
     s.onTouchMove = function (e) {
-        if (e.originalEvent) e = e.originalEvent; //jQuery fix
+        if (e.originalEvent) e = e.originalEvent;
         if (e.preventedByNestedSwiper) return;
         if (s.params.onlyExternal) {
             isMoved = true;
@@ -943,7 +950,7 @@ window.Swiper = function (container, params) {
             if (params.loop) {
                 s.fixLoop();
             }
-            startTranslate = s.params.effect === 'cube' ? (s.translate || 0) : s.getWrapperTranslate();
+            startTranslate = s.params.effect === 'cube' ? ((s.rtl ? -s.translate: s.translate) || 0) : s.getWrapperTranslate();
             s.setWrapperTransition(0);
             if (s.animating) {
                 s.wrapper.trigger('webkitTransitionEnd transitionend oTransitionEnd MSTransitionEnd msTransitionEnd');
@@ -1038,7 +1045,7 @@ window.Swiper = function (container, params) {
         s.setWrapperTranslate(currentTranslate);
     };
     s.onTouchEnd = function (e) {
-        if (e.originalEvent) e = e.originalEvent; //jQuery fix
+        if (e.originalEvent) e = e.originalEvent;
         if (!isTouched) return;
         if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
     
@@ -1609,7 +1616,7 @@ window.Swiper = function (container, params) {
                             opacity: 1 + Math.min(Math.max(slide[0].progress, -1), 0)
                         })
                         .transform('translate3d(' + tx + 'px, ' + ty + 'px, 0px)');
-
+    
                 }
             },
             setTransition: function (duration) {
@@ -1639,9 +1646,13 @@ window.Swiper = function (container, params) {
                 for (var i = 0; i < s.slides.length; i++) {
                     var slide = s.slides.eq(i);
                     var slideAngle = i * 90;
+                    var round = Math.floor(slideAngle / 360);
+                    if (s.rtl) {
+                        slideAngle = -slideAngle;
+                        round = Math.floor(-slideAngle / 360);
+                    }
                     var progress = Math.max(Math.min(slide[0].progress, 1), -1);
                     var tx = 0, ty = 0, tz = 0;
-                    var round = Math.floor(slideAngle / 360);
                     if (i % 4 === 0) {
                         tx = - round * 4 * s.size;
                         tz = 0;
@@ -1658,6 +1669,10 @@ window.Swiper = function (container, params) {
                         tx = - s.size;
                         tz = 3 * s.size + s.size * 4 * round;
                     }
+                    if (s.rtl) {
+                        tx = -tx;
+                    }
+                    
                     if (!isH()) {
                         ty = tx;
                         tx = 0;
@@ -1728,24 +1743,24 @@ window.Swiper = function (container, params) {
                     var slideSize = s.slidesSizesGrid[i];
                     var slideOffset = slide[0].swiperSlideOffset;
                     var offsetMultiplier = (center - slideOffset - slideSize / 2) / slideSize * s.params.coverflow.modifier;
-
+    
                     var rotateY = isH() ? rotate * offsetMultiplier : 0;
                     var rotateX = isH() ? 0 : rotate * offsetMultiplier;
                     // var rotateZ = 0
                     var translateZ = -translate * Math.abs(offsetMultiplier);
-
+    
                     var translateY = isH() ? 0 : s.params.coverflow.stretch * (offsetMultiplier);
                     var translateX = isH() ? s.params.coverflow.stretch * (offsetMultiplier) : 0;
-
+    
                     //Fix for ultra small values
                     if (Math.abs(translateX) < 0.001) translateX = 0;
                     if (Math.abs(translateY) < 0.001) translateY = 0;
                     if (Math.abs(translateZ) < 0.001) translateZ = 0;
                     if (Math.abs(rotateY) < 0.001) rotateY = 0;
                     if (Math.abs(rotateX) < 0.001) rotateX = 0;
-
+    
                     var slideTransform = 'translate3d(' + translateX + 'px,' + translateY + 'px,' + translateZ + 'px)  rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
-
+    
                     slide.transform(slideTransform);
                     slide[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
                     if (s.params.coverflow.slideShadows) {
@@ -1764,7 +1779,7 @@ window.Swiper = function (container, params) {
                         if (shadowAfter.length) shadowAfter[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0;
                     }
                 }
-
+    
                 //Set correct perspective for IE10
                 if (window.navigator.pointerEnabled || window.navigator.msPointerEnabled) {
                     var ws = s.wrapper.style;
