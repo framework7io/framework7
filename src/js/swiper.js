@@ -233,7 +233,11 @@ window.Swiper = function (container, params) {
     
     // RTL
     s.rtl = isH() && (s.container[0].dir.toLowerCase() === 'rtl' || s.container.css('direction') === 'rtl');
-    
+    // Wrong RTL support
+    if (s.rtl) {
+        s.wrongRTL = s.wrapper.css('display') === '-webkit-box';
+    }
+
     // Translate
     s.translate = 0;
     
@@ -491,6 +495,10 @@ window.Swiper = function (container, params) {
         s.virtualWidth = Math.max(s.virtualWidth, s.size);
     
         var newSlidesGrid;
+
+        if (s.rtl && s.wrongRTL && (s.params.effect === 'slide' || s.params.effect === 'coverflow')) {
+            s.wrapper.css({width: s.virtualWidth + s.params.spaceBetween + 'px'});
+        }
     
         if (s.params.slidesPerColumn > 1) {
             s.virtualWidth = (slideSize + s.params.spaceBetween) * slidesNumberEvenToRows;
@@ -564,6 +572,7 @@ window.Swiper = function (container, params) {
         if (typeof s.slides[0].swiperSlideOffset === 'undefined') s.updateSlidesOffset();
     
         var offsetCenter = s.params.centeredSlides ? -translate + s.size / 2 : -translate;
+        if (s.rtl) offsetCenter = s.params.centeredSlides ? translate - s.size / 2 : translate;
     
         // Visible Slides
         var containerBox = s.container[0].getBoundingClientRect();
@@ -585,7 +594,7 @@ window.Swiper = function (container, params) {
                     s.slides.eq(i).addClass(s.params.slideVisibleClass);
                 }
             }
-            slide.progress = slideProgress;
+            slide.progress = s.rtl ? -slideProgress : slideProgress;
         }
     };
     s.updateProgress = function (translate) {
@@ -594,7 +603,6 @@ window.Swiper = function (container, params) {
         }
         s.progress = (translate - s.minTranslate()) / (s.maxTranslate() - s.minTranslate());
         s.isBeginning = s.isEnd = false;
-        
         if (s.progress <= 0) {
             s.isBeginning = true;
             if (s.params.onReachBeginning) s.params.onReachBeginning(s);
@@ -1600,7 +1608,7 @@ window.Swiper = function (container, params) {
                             opacity: 1 + Math.min(Math.max(slide[0].progress, -1), 0)
                         })
                         .transform('translate3d(' + tx + 'px, ' + ty + 'px, 0px)');
-    
+
                 }
             },
             setTransition: function (duration) {
@@ -1657,6 +1665,7 @@ window.Swiper = function (container, params) {
                     var transform = 'rotateX(' + (isH() ? 0 : -slideAngle) + 'deg) rotateY(' + (isH() ? slideAngle : 0) + 'deg) translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px)';
                     if (progress <= 1 && progress > -1) {
                         wrapperRotate = i * 90 + progress * 90;
+                        if (s.rtl) wrapperRotate = -i * 90 - progress * 90;
                     }
                     slide.transform(transform);
                     if (s.params.cube.slideShadows) {
@@ -1718,24 +1727,24 @@ window.Swiper = function (container, params) {
                     var slideSize = s.slidesSizesGrid[i];
                     var slideOffset = slide[0].swiperSlideOffset;
                     var offsetMultiplier = (center - slideOffset - slideSize / 2) / slideSize * s.params.coverflow.modifier;
-    
+
                     var rotateY = isH() ? rotate * offsetMultiplier : 0;
                     var rotateX = isH() ? 0 : rotate * offsetMultiplier;
                     // var rotateZ = 0
                     var translateZ = -translate * Math.abs(offsetMultiplier);
-    
+
                     var translateY = isH() ? 0 : s.params.coverflow.stretch * (offsetMultiplier);
                     var translateX = isH() ? s.params.coverflow.stretch * (offsetMultiplier) : 0;
-    
+
                     //Fix for ultra small values
                     if (Math.abs(translateX) < 0.001) translateX = 0;
                     if (Math.abs(translateY) < 0.001) translateY = 0;
                     if (Math.abs(translateZ) < 0.001) translateZ = 0;
                     if (Math.abs(rotateY) < 0.001) rotateY = 0;
                     if (Math.abs(rotateX) < 0.001) rotateX = 0;
-    
+
                     var slideTransform = 'translate3d(' + translateX + 'px,' + translateY + 'px,' + translateZ + 'px)  rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
-    
+
                     slide.transform(slideTransform);
                     slide[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
                     if (s.params.coverflow.slideShadows) {
@@ -1754,7 +1763,7 @@ window.Swiper = function (container, params) {
                         if (shadowAfter.length) shadowAfter[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0;
                     }
                 }
-    
+
                 //Set correct perspective for IE10
                 if (window.navigator.pointerEnabled || window.navigator.msPointerEnabled) {
                     var ws = s.wrapper.style;
