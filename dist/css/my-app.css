@@ -244,8 +244,25 @@ a.analytics img {
 }
 
 /* Item Details */
+[data-page="details"] .item-content {
+	background: #FFF;
+	margin: 10px 0;
+	min-height: 75px;
+}
+
+[data-page="details"] .item-media {
+	float: left;
+	width: 30%;
+}
+
 .nutrition-info {
 	background: #fff;
+	padding: 5px;
+}
+
+.nutrition-info h1 { margin-top: 0; }
+
+[data-page="details"] .purchase-history .item-content {
 	padding: 5px;
 }
 
