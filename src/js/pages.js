@@ -281,3 +281,14 @@ app.reinitPage = function (pageContainer) {
     // Reinit lazy load
     if (app.reinitLazyLoad) app.reinitLazyLoad(pageContainer);
 };
+app.initPageWithCallback = function (pageContainer) {
+    pageContainer = $(pageContainer);
+    var viewContainer = pageContainer.parents('.' + app.params.viewClass);
+    if (viewContainer.length === 0) return;
+    var view = viewContainer[0].f7View || false;
+    var url = view && view.url ? view.url : false;
+    if (viewContainer) {
+        viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
+    }
+    app.pageInitCallback(view, {pageContainer: pageContainer[0], url: url, position: 'center'});
+};
