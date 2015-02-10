@@ -23,6 +23,14 @@ var mainView = myApp.addView('.view-main', {
 $$(".fa-times").on('click', function () {
 	$$(this).parent().remove();
 });
+
+//Camera Basic UI
+$$(".viewport").addClass("hide");
+
+$$("#scan_btn").on('click', function() {
+	$$(".viewport").removeClass("show");
+	$$(this).hide();
+});
 	
 //Hides notification bubble
 $$(".empty-message").hide();

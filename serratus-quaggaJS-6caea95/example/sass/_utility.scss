@@ -1,0 +1,17 @@
+$tablet_upper: 1024px;
+$phone_upper: 603px;
+ 
+@mixin phone {
+  @media (max-width: $phone_upper) {
+    @content;
+  }
+ 
+} // @mixin phone
+ 
+@mixin tablet {
+ 
+  @media (min-width: $phone_upper+1) and (max-width: $tablet_upper) {
+    @content;
+  }
+ 
+} // @mixin tablet

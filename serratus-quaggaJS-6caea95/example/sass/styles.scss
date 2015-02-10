@@ -1,0 +1,56 @@
+@import "compass/css3";
+@import "variables";
+@import "utility";
+
+/* usual styles */
+@import "colors";
+@import "fonts";
+@import "viewport";
+@import "overlay";
+@import "icons";
+
+@import "tablet";
+@import "phone";
+
+body{
+  background-color: #FFF;
+  margin: 0px;
+  font-family: $text-font;
+  color: #1e1e1e;
+  font-weight: normal;
+  padding-top: 0;
+}
+
+h1,h2,h3,h4 {
+  font-family: $header-font;
+}
+
+header {
+  background: $color-primary-0;
+  padding: 1em;
+  .headline {
+    width: 640px;
+    margin: 0 auto;
+    h1 {
+      color: $color-primary-1;
+      font-size: 3em;
+      margin-bottom: 0;
+    }
+    h2 {
+      margin-top: 0.2em;
+    }
+  }
+}
+
+footer {
+  background: $color-secondary-1-0;
+  color: $color-secondary-1-1;
+  padding: 1em 2em 2em;
+}
+
+#container{
+  width: 640px;
+  margin: 20px auto;
+  padding: 10px;
+}
+

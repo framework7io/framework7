@@ -26,6 +26,9 @@
 
 .clear { clear: both; }
 
+.show { display: block; }
+.hide { display: none; }
+
 /* General UI */
 #title {
 	color: #fff;
@@ -53,7 +56,8 @@
 }
 
 .searchbar .searchbar-clear {
-	right: 15px;
+	right: 5px;
+	top: 5px;
 }
 
 .searchbar input[type="search"] {
@@ -76,7 +80,7 @@
 	float: left;
 	margin-top: 0 !important;
 	padding: 5px;
-	width: 75%;
+	width: 100%;
 }
 
 #addition .fa-search {
@@ -97,21 +101,19 @@
 	top: 10px;
 }
 
-#addition .scan input[type="file"] {
+#addition .scan button {
 	background: #74baa2;
 	border: none;
-	height: 40px;
-	float: right;
-	padding: 4px; 
-	text-indent: 400px; 
-	width: 50px;
+	color: #FFF;
+	height: 45px;
+	padding: 4px;  
+	width: 100%;
 }
 
-#addition .fa-barcode {
+#addition .scan button i.fa-barcode {
 	color: #fff;
-	left: 17px;
-	position: relative; 
-	top: -39px; 
+	position: relative;
+	top: 2px;
 }
 
 /* Notifications */

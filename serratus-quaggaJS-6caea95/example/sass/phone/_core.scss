@@ -1,0 +1,15 @@
+@include phone {  
+  #container{
+    width: 300px;
+    margin: 10px auto;
+    @include box-shadow(none);
+    
+    form.voucher-form{
+      input{
+        &.voucher-code{
+          width: 180px;
+        }
+      }
+    }
+  }
+}

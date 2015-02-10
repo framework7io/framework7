@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>index</title>
+    <meta name="description" content="" />
+    <meta name="author" content="Christoph Oberhofer" />
+
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  </head>
+
+  <body>
+      <header>
+          <div class="headline">
+              <h1>QuaggaJS</h1>
+              <h2>An advanced barcode-scanner written in JavaScript</h2>
+          </div>
+      </header>
+    <section id="container" class="container">
+        <h3>The user's camera</h3>
+        <p>If your platform supports the <strong>getUserMedia</strong> API call, you can try the real-time locating and decoding features.
+            Simply allow the page to access your web-cam and point it to a barcode. You can switch between <strong>Code128</strong>
+            and <strong>EAN</strong> to test different scenarios.
+            It works best if your camera has built-in auto-focus.
+            </p>
+      <div class="controls">
+        <button class="stop">Stop</button>
+        <fieldset class="reader-group">
+            <label>Code128</label>
+            <input type="radio" name="reader" value="code_128" checked />
+            <label>EAN</label>
+            <input type="radio" name="reader" value="ean" />
+        </fieldset>
+        <br clear="all" />
+      </div>
+      <div id="result_strip">
+        <ul class="thumbnails"></ul>
+      </div>
+      <div id="interactive" class="viewport"></div>
+    </section>
+          <footer>
+        <p>
+          &copy; Copyright by Christoph Oberhofer
+        </p>
+      </footer>
+    
+    <script src="./src/vendor/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="./dist/quagga.js" type="text/javascript"></script>
+    <script src="live_w_locator.js" type="text/javascript"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+#interactive.viewport{
+  width: $videoWidth;
+  height: $videoHeight;
+}
+
+#interactive.viewport canvas, video{
+  float: left;
+  width: $videoWidth;
+  height: $videoHeight;
+  &.drawingBuffer{
+    margin-left: -$videoWidth;
+  }
+}
+
+.controls {
+  .reader-group {
+    float: right;
+    border: none;
+  }
+}
+
+#result_strip{
+  margin: 10px 0;
+  border-top: 1px solid #EEE;
+  border-bottom: 1px solid #EEE;
+  padding: 10px 0;
+  
+  ul.thumbnails{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    width: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    
+    & > li{
+      display: inline-block;
+      vertical-align: middle;
+      width: $videoWidth/4;
+      .thumbnail{
+        padding: 5px;
+        margin: 4px;
+        border: 1px dashed #CCC;
+        
+        img{
+          max-width: $videoWidth/4 - 20px;
+        }
+        .caption{
+          white-space: normal;
+          h4{
+            text-align: center;
+            word-wrap: break-word;
+            height: 40px;
+            margin: 0px;
+          }
+        }
+      }
+    }
+    
+    &:after{
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+}

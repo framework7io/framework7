@@ -1,0 +1,31 @@
+{
+  "name": "quagga",
+  "version": "0.1.0",
+  "description": "This README would normally document whatever steps are necessary to get your application up and running.",
+  "main": "js/main.js",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-karma": "^0.9.0",
+    "grunt-requirejs": "^0.4.2",
+    "karma": "latest",
+    "karma-chai": "latest",
+    "karma-coverage": "^0.2.7",
+    "karma-mocha": "latest",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-requirejs": "^0.2.2",
+    "karma-sinon": "^1.0.4",
+    "karma-sinon-chai": "^0.2.0",
+    "sinon": "^1.12.1"
+  },
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "author": "",
+  "license": "ISC"
+}

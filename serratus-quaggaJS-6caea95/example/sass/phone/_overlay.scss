@@ -1,0 +1,28 @@
+@include phone {
+  $overlayWidth: $videoWidth;
+  $overlayHeadline: 16px;
+  $overlayHeadlineMargin: 14px;
+  $overlayPadding: 20px;
+  $overlayHeight: $videoHeight + $overlayHeadlineMargin + $overlayHeadline;
+  
+  .overlay.scanner {
+    width: $overlayWidth;
+    height: $overlayHeight;
+    padding: $overlayPadding;
+    margin-top: -($overlayHeight)/2 - $overlayPadding;
+    margin-left: -($overlayWidth + 2*$overlayPadding)/2;
+    background-color: $overlayBackground;
+    @include box-shadow(none);
+    
+    & > .header{
+      margin-bottom: $overlayHeadlineMargin;
+      h4, .close{
+        line-height: $overlayHeadline;
+      }
+      .close{
+        height: $overlayHeadline;
+        width: $overlayHeadline;
+      }
+    }
+  }
+}

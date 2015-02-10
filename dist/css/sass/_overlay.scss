@@ -1,0 +1,48 @@
+$overlayWidth: $videoWidth;
+$overlayHeadline: 16px;
+$overlayHeadlineMargin: 14px;
+$overlayPadding: 20px;
+$overlayHeight: $videoHeight + $overlayHeadlineMargin + $overlayHeadline;
+
+.scanner-overlay {
+  display: none;
+  width: $overlayWidth;
+  height: $overlayHeight;
+  position: absolute;
+  padding: $overlayPadding;
+  top: 50%;
+  margin-top: -($overlayHeight)/2 - $overlayPadding;
+  left: 50%;
+  margin-left: -($overlayWidth + 2*$overlayPadding)/2;
+  background-color: $overlayBackground;
+  @include box-shadow(#333333 0px 4px 10px);
+  
+  & > .header{
+    position: relative;
+    margin-bottom: $overlayHeadlineMargin;
+    h4, .close{
+      line-height: $overlayHeadline;
+    }
+    h4{
+      margin: 0px;
+      padding: 0px;
+    }
+    .close{
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      height: $overlayHeadline;
+      width: $overlayHeadline;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  }
+  
+  & > .body{
+    
+    
+    
+  }
+}

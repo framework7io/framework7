@@ -1,0 +1,42 @@
+@include phone {
+  $videoWidth: 300px;
+  $videoHeight: 400px;
+  
+  #interactive.viewport{
+    width: $videoWidth;
+    height: $videoWidth;
+    overflow: hidden;
+  }
+  
+  #interactive.viewport canvas, video{
+    margin-top: ($videoWidth - $videoHeight)/2;
+    width: $videoWidth;
+    height: $videoHeight;
+    &.drawingBuffer{
+      margin-left: -$videoWidth;
+    }
+  }
+  
+  #result_strip{
+    margin-top: 5px;
+    padding-top: 5px;
+    ul.thumbnails{
+      & > li{
+        width: $videoWidth/2;
+        .thumbnail{
+          .imgWrapper{
+            width: $videoWidth/2 - 20px;
+            height: $videoWidth/2 - 20px;
+            overflow: hidden;
+            img{
+              margin-top: (($videoWidth/2 - 20px) - ($videoHeight/2 - 20px))/2;
+              width: $videoWidth/2 - 20px;
+              height: $videoHeight/2 - 20px;
+            }
+          }
+          
+        }
+      }
+    }
+  }
+}
