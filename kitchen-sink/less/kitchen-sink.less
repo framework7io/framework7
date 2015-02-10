@@ -28,19 +28,22 @@
     background: #000;
 }
 .statusbar-overlay.with-panel-left {
-    background: #222;
+    background: #222426;
 }
 .statusbar-overlay.with-panel-right {
-    background: #000;
+    background: #131313;
 }
 // Demo tab bars
-.page[data-page="tabbar"], .page[data-page="tabbar-labels"] {
-    .tabbar {
+.page[data-page="tabbar"], .page[data-page="tabbar-labels"], .page[data-page="messages"] {
+    .tabbar, .toolbar {
         -webkit-transform: none;
         -moz-transform: none;
         -ms-transform: none;
         -o-transform: none;
         transform: none;
+        -webkit-transition: 0ms;
+        -o-transition: 0ms;
+        transition: 0ms;
     }
 }
 .page[data-page="tabbar-labels"] {
@@ -85,10 +88,14 @@ i.ks-tabbar-icon-4 {
 }
 
 // Demo Slider
+.ks-demo-slider {
+    width: 100%;
+    height: 100%;
+}
 .ks-demo-slider, .ks-carousel-slider{
     font-size: 25px;
     font-weight: 300;
-    .slider-slide {
+    .swiper-slide {
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;
@@ -105,29 +112,41 @@ i.ks-tabbar-icon-4 {
     }
 }
 .ks-carousel-slider{
-    .slider-slide {
+    .swiper-slide {
         box-sizing:border-box;
         border: 1px solid #ccc;
         background: #fff;
     }
+    &.ks-carousel-slider-auto {
+        .swiper-slide {
+            width: 85%;
+            &:nth-child(2n) {
+                width: 70%;
+            }
+            &:nth-child(3n) {
+                width: 30%;
+            }
+        }
+    }
 }
-.page[data-page="slider-multiple"] .slider-container {
-    margin: 35px 0;
+.page[data-page="swiper-multiple"] .swiper-container {
+    margin: 0px 0 35px;
     font-size: 18px;
     height: 120px;
 }
 .ks-slider-custom {
     height: 100%;
-    .slider-container {
+    .swiper-container {
         background: #000;
+        height: 100%;
     }
-    .slider-slide {
+    .swiper-slide {
         -webkit-background-size: cover;
         background-size: cover;
         background-position: center;
     }
-    .slider-pagination{
-        .slider-pagination-bullet {
+    .swiper-pagination{
+        .swiper-pagination-bullet {
             cursor: pointer;
             width: 10px;
             height: 10px;
@@ -146,7 +165,7 @@ i.ks-tabbar-icon-4 {
             box-sizing:border-box;
             border: 1px solid rgba(255,255,255,0.8);
         }
-        .slider-pagination-active {
+        .swiper-pagination-bullet-active {
             z-index: 1;
             border: 1px solid #007aff;
             -webkit-transform: scale(1.4);
@@ -154,22 +173,66 @@ i.ks-tabbar-icon-4 {
             transform: scale(1.4);
         }
     }
-    .slider-prev-button, .slider-next-button {
-        width: 44px;
-        height: 44px;
-        background: rgba(0,0,0,0.8);
+}
+.ks-cube-slider {
+    width: 80%;
+    height: 70%;
+    top: 15%;
+}
+.ks-coverflow-slider {
+    height: 60%;
+    top: 20%;
+    .swiper-slide {
+        width: 65%;
+    }
+}
+.ks-coverflow-slider-v {
+    height: 200px;
+}
+.ks-fade-slider {
+    .swiper-slide {
+        background-size: cover;
+        background-position: center;
+    }
+}
+.page[data-page="swiper-gallery"] {
+    background: #000;
+}
+.ks-swiper-gallery-top {
+    height: 70%;
+}
+.ks-swiper-gallery-thumbs {
+    margin-top: 10px;
+    height: 20%;
+    height: ~"-webkit-calc(30% - 20px)";
+    height: ~"-moz-calc(30% - 20px)";
+    height: ~"-ms-calc(30% - 20px)";
+    height: ~"calc(30% - 20px)";
+    .swiper-slide {
+        width: 25%;
+    }
+    .swiper-slide-pic {
         position: absolute;
-        top: 50%;
-        text-align: center;
-        line-height: 44px;
-        margin-top: -22px;
-    }
-    .slider-next-button {
-        right: 0;
-    }
-    .slider-prev-button {
         left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.35;
+        -webkit-transition: 300ms;
     }
+    .swiper-slide-active .swiper-slide-pic {
+        opacity: 1;
+    }
+}
+.ks-swiper-gallery-top, .ks-swiper-gallery-thumbs {
+    .swiper-slide, .swiper-slide-pic {
+        background-size: cover;
+        background-position: center;
+    }
+}
+// Virtual List
+.page[data-page="virtual-list"] .virtual-list li {
+    height: 63px;
 }
 // Custom Accordion
 .custom-accordion {
@@ -223,6 +286,48 @@ i.ks-tabbar-icon-4 {
     }
 }
 
+// Demo Pickers
+#ks-picker-date-container {
+    .picker-item {
+        color:#999;
+    }
+    .picker-selected {
+        color:#000;
+    }
+    .layout-dark & .picker-selected {
+        color: #fff;
+    }
+    @media (max-width:767px) {
+        .picker-items {
+            font-size: 21px;
+        }
+        .picker-item {
+            height: 36px;
+            line-height: 36px;
+            padding: 0 6px;
+        }
+    }
+}
+// Demo Calendar
+#ks-calendar-inline-container {
+    .picker-calendar {
+        height: 280px;
+    }
+}
+// Demo Lazy Loading
+img.ks-demo-lazy {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+div.ks-demo-lazy {
+    background: #aaa;
+    -webkit-background-size: cover;
+    background-size: cover;
+    height: 300px;
+    height: 60vw;
+}
+// Color Theme
 .ks-layout-theme {
     height: 44px;
     border: 1px solid #aaa;
@@ -242,4 +347,45 @@ i.ks-tabbar-icon-4 {
     border: 1px solid #aaa;
     cursor: pointer;
     margin-bottom: 10px;
+}
+
+// Demo Cards
+.ks-card-header-pic {
+    .card-header {
+        height: 40vw;
+        background-size: cover;
+        background-position: center;
+    }
+}
+.ks-facebook-card {
+    .card-header {
+        display: block;
+        padding: 10px;
+    }
+    .ks-facebook-avatar {
+        float: left;
+    }
+    .ks-facebook-name {
+        margin-left: 44px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .ks-facebook-date {
+        margin-left: 44px;
+        font-size: 13px;
+        color:#8e8e93;
+    }
+    .card-footer {
+        background: #fafafa;
+        a {
+            color:#81848b;
+            font-weight: 500;
+        }
+    }
+    .card-content img {
+        display: block;
+    }
+    .card-content-inner {
+        padding: 15px 10px;
+    }
 }

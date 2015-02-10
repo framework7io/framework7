@@ -60,17 +60,17 @@ html.with-statusbar-overlay(manifest="manifest.php")
             .page-content
               ul.search-results
     // Templates
-    script(id="search-results-template", type="text/template")   
-      {{#each this}}
-      {{#if admin1}}{{#if admin1.content}}
+    script(id="search-results-template", type="text/template")
+      | {{#each this}}
+      | {{#if admin1}}{{#if admin1.content}}
       li.close-popup(data-woeid="{{woeid}}", data-city="{{name}}", data-country="{{country.content}}")
         | {{name}} 
         span {{admin1.content}}, {{country.content}}
-      {{/if}}{{/if}}
-      {{/each}}
+      | {{/if}}{{/if}}
+      | {{/each}}
 
-    script(id="home-items-template", type="text/template")       
-      {{#each this}}
+    script(id="home-items-template", type="text/template")
+      | {{#each this}}
       li.swipeout(data-woeid="{{woeid}}")
         .swipeout-content
           a(href="#", data-woeid="{{woeid}}").item-content.item-link
@@ -81,7 +81,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
               .item-after {{condition.temp}}&deg;
         .swipeout-actions-right
           a(href="#").swipeout-delete Delete
-      {{/each}}
+      | {{/each}}
     script(id="details-template", type="text/template")
       .navbar
         .navbar-inner
@@ -95,8 +95,8 @@ html.with-statusbar-overlay(manifest="manifest.php")
             .detail-condition {{condition.text}}
             .detail-temp {{condition.temp}}&deg;
             .list-block.forecast-list
-              ul 
-                {{#each forecast}}
+              ul
+                | {{#each forecast}}
                 li.item-content
                   .item-inner
                     .item-title {{dayOfWeek date}}
@@ -105,7 +105,7 @@ html.with-statusbar-overlay(manifest="manifest.php")
                       span.temps
                         span.high {{high}}&deg;
                         span.low {{low}}&deg;
-                {{/each}}
+                | {{/each}}
 
     // Path to Framework7 Library JS
     script(type="text/javascript", src="../../dist/js/framework7.min.js")

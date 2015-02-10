@@ -34,14 +34,26 @@ Dom7.prototype = {
         }
         return this;
     },
-    attr: function (attr, value) {
-        if (typeof value === 'undefined') {
-            if (this[0]) return this[0].getAttribute(attr);
+    attr: function (attrs, value) {
+        if (arguments.length === 1 && typeof attrs === 'string') {
+            // Get attr
+            if (this[0]) return this[0].getAttribute(attrs);
             else return undefined;
         }
         else {
+            // Set attrs
             for (var i = 0; i < this.length; i++) {
-                this[i].setAttribute(attr, value);
+                if (arguments.length === 2) {
+                    // String
+                    this[i].setAttribute(attrs, value);
+                }
+                else {
+                    // Object
+                    for (var attrName in attrs) {
+                        this[i][attrName] = attrs[attrName];
+                        this[i].setAttribute(attrName, attrs[attrName]);
+                    }
+                }
             }
             return this;
         }
@@ -51,14 +63,25 @@ Dom7.prototype = {
             this[i].removeAttribute(attr);
         }
     },
-    prop: function (prop, value) {
-        if (typeof value === 'undefined') {
-            if (this[0]) return this[0][prop];
+    prop: function (props, value) {
+        if (arguments.length === 1 && typeof props === 'string') {
+            // Get prop
+            if (this[0]) return this[0][props];
             else return undefined;
         }
         else {
+            // Set props
             for (var i = 0; i < this.length; i++) {
-                this[i][prop] = value;
+                if (arguments.length === 2) {
+                    // String
+                    this[i][props] = value;
+                }
+                else {
+                    // Object
+                    for (var propName in props) {
+                        this[i][propName] = props[propName];
+                    }
+                }
             }
             return this;
         }
@@ -87,7 +110,7 @@ Dom7.prototype = {
     val: function (value) {
         if (typeof value === 'undefined') {
             if (this[0]) return this[0].value;
-            else return null;
+            else return undefined;
         }
         else {
             for (var i = 0; i < this.length; i++) {
@@ -246,17 +269,16 @@ Dom7.prototype = {
         }
         else {
             if (this.length > 0) {
-                return parseFloat(this.css('width')) - parseFloat(this.css('padding-left')) - parseFloat(this.css('padding-right'));
+                return parseFloat(this.css('width'));
             }
             else {
                 return null;
             }
         }
-            
     },
-    outerWidth: function (margins) {
+    outerWidth: function (includeMargins) {
         if (this.length > 0) {
-            if (margins)
+            if (includeMargins)
                 return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
             else
                 return this[0].offsetWidth;
@@ -269,17 +291,16 @@ Dom7.prototype = {
         }
         else {
             if (this.length > 0) {
-                return this[0].offsetHeight - parseFloat(this.css('padding-top')) - parseFloat(this.css('padding-bottom'));
+                return parseFloat(this.css('height'));
             }
             else {
                 return null;
             }
         }
-            
     },
-    outerHeight: function (margins) {
+    outerHeight: function (includeMargins) {
         if (this.length > 0) {
-            if (margins)
+            if (includeMargins)
                 return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
             else
                 return this[0].offsetHeight;
@@ -367,7 +388,7 @@ Dom7.prototype = {
         }
         else {
             for (var i = 0; i < this.length; i++) {
-                this[0].textContent = text;
+                this[i].textContent = text;
             }
         }
     },
@@ -444,7 +465,6 @@ Dom7.prototype = {
                 while (tempDiv.firstChild) {
                     this[i].appendChild(tempDiv.firstChild);
                 }
-                // this[i].insertAdjacentHTML('beforeend', newChild);
             }
             else if (newChild instanceof Dom7) {
                 for (j = 0; j < newChild.length; j++) {
@@ -524,7 +544,9 @@ Dom7.prototype = {
         if (!el) return new Dom7([]);
         while (el.nextElementSibling) {
             var next = el.nextElementSibling;
-            if (selector && $(next).is(selector)) nextEls.push(next);
+            if (selector) {
+                if($(next).is(selector)) nextEls.push(next);
+            }
             else nextEls.push(next);
             el = next;
         }
@@ -549,7 +571,9 @@ Dom7.prototype = {
         if (!el) return new Dom7([]);
         while (el.previousElementSibling) {
             var prev = el.previousElementSibling;
-            if (selector && $(prev).is(selector)) prevEls.push(prev);
+            if (selector) {
+                if($(prev).is(selector)) prevEls.push(prev);
+            }
             else prevEls.push(prev);
             el = prev;
         }
@@ -617,6 +641,18 @@ Dom7.prototype = {
     },
     detach: function () {
         return this.remove();
+    },
+    add: function () {
+        var dom = this;
+        var i, j;
+        for (i = 0; i < arguments.length; i++) {
+            var toAdd = $(arguments[i]);
+            for (j = 0; j < toAdd.length; j++) {
+                dom[dom.length] = toAdd[j];
+                dom.length++;
+            }
+        }
+        return dom;
     }
 };
 
@@ -629,7 +665,12 @@ Dom7.prototype = {
             var i;
             if (typeof handler === 'undefined') {
                 for (i = 0; i < this.length; i++) {
-                    if (notTrigger.indexOf(name) < 0) this[i][name]();
+                    if (notTrigger.indexOf(name) < 0) {
+                        if (name in this[i]) this[i][name]();
+                        else {
+                            $(this[i]).trigger(name);
+                        }
+                    }
                 }
                 return this;
             }

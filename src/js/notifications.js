@@ -73,7 +73,7 @@ app.addNotification = function (params) {
     list.prepend(item[0]);
     container.show();
     
-    var itemHeight = item.height();
+    var itemHeight = item.outerHeight();
     item.css('marginTop', -itemHeight + 'px');
     item.transition(0);
 
@@ -92,7 +92,7 @@ app.closeNotification = function (item) {
     if (item.hasClass('notification-item-removing')) return;
     var container = $('.notifications');
 
-    var itemHeight = item.height();
+    var itemHeight = item.outerHeight();
     item.css('height', itemHeight + 'px').transition(0);
     var clientLeft = item[0].clientLeft;
 

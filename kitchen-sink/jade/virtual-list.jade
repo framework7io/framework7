@@ -1,0 +1,29 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Virtual List
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="virtual-list")
+    form.searchbar(data-search-list=".virtual-list")
+      .searchbar-input
+        input(type="search", placeholder="Search")
+        a(href="#").searchbar-clear
+      a(href="#").searchbar-cancel Cancel
+    .searchbar-overlay
+    .page-content
+      .content-block
+        p Virtual List allows to render lists with huge amount of elements without loss of performance. And it is fully compatible with all Framework7 list components such as Search Bar, Infinite Scroll, Pull To Refresh, Swipeouts (swipe-to-delete) and Sortable.
+        p Here is the example of virtual list with 10 000 items:
+      .list-block.virtual-list.searchbar-found.media-list
+      .list-block.searchbar-not-found
+        ul
+          li.item-content
+            .item-inner
+              .item-title Nothing found
+        

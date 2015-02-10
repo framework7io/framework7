@@ -13,8 +13,14 @@ app.initFastClicks = function () {
     function findActivableElement(e) {
         var target = $(e.target);
         var parents = target.parents(app.params.activeStateElements);
-        
-        return (parents.length > 0) ? parents : target;
+        var activable;
+        if (target.is(app.params.activeStateElements)) {
+            activable = target;
+        }
+        if (parents.length > 0) {
+            activable = activable ? activable.add(parents) : parents;
+        }
+        return activable ? activable : target;
     }
     function isInsideScrollableView() {
         var pageContent = activableElement.parents('.page-content, .panel');
@@ -150,7 +156,7 @@ app.initFastClicks = function () {
                 }
             });
         }
-        if ((e.timeStamp - lastClickTime) < 200) {
+        if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
             e.preventDefault();
         }
         if (app.params.activeState) {
@@ -206,7 +212,8 @@ app.initFastClicks = function () {
             e.preventDefault();
         }
 
-        if ((e.timeStamp - lastClickTime) < 200) {
+        if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
+            setTimeout(removeActive, 0);
             return true;
         }
 
@@ -233,6 +240,12 @@ app.initFastClicks = function () {
             targetElement.focus();
         }
 
+        // Blur active elements
+        if (document.activeElement && targetElement !== document.activeElement && document.activeElement !== document.body && targetElement.nodeName.toLowerCase() !== 'label') {
+            document.activeElement.blur();
+        }
+
+        // Send click
         e.preventDefault();
         var touch = e.changedTouches[0];
         var evt = document.createEvent('MouseEvents');
@@ -253,7 +266,7 @@ app.initFastClicks = function () {
 
     function handleClick(e) {
         var allowClick = false;
-
+        
         if (trackClick) {
             targetElement = null;
             trackClick = false;

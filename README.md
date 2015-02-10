@@ -15,10 +15,10 @@ Full Featured HTML Framework For Building iOS7 Apps
 
 ## Server
 
-Because Framework7 uses Ajax for navigation between pages you will need a server. So to make it work you should put dist folder (or Kitchen Sink) on a server. Or, as an option, you may use Grunt's server. Just run:
+Because Framework7 uses Ajax for navigation between pages you will need a server. So to make it work you should put dist folder (or Kitchen Sink) on a server. Or, as an option, you may use Gulp's server. Just run:
 
 ```
-$ grunt server
+$ gulp server
 ```
 
   * Kitchen Sink will be available on `http://localhost:3000/kitchen-sink/`
@@ -34,19 +34,23 @@ On production use files (JS and CSS) only from `dist/` folder, there will be the
 
 ## Build
 
-Framework7 uses `grunt` to build a development (build) and dist versions.
+Framework7 uses `gulp` to build a development (build) and dist versions.
 
-First you need to have `grunt-cli` which you should install globally.
+First you need to have `gulp-cli` which you should install globally.
 
 ```
-$ npm install -g grunt-cli
+$ npm install --global gulp
 ```
 
 Then install all dependencies, in repo's root:
 
 ```
 $ npm install
-$ grunt build
+```
+
+And build development version of Framework7:
+```
+$ gulp build
 ```
 
 The result is available in `build/` folder.
@@ -56,7 +60,7 @@ The result is available in `build/` folder.
 After you have made build:
 
 ```
-$ grunt dist
+$ gulp dist
 ```
 
 Distributable version will available in `dist/` folder.
@@ -66,7 +70,7 @@ Distributable version will available in `dist/` folder.
 You can build custom version of Framework7 with only required components/modules. For example, if we need to include only Accordion, Modals and Tabs modules in addition to Framework 7 core: 
 
 ```
-$ grunt custom:accordion,modals,tabs
+$ gulp custom -accordion,modals,tabs
 ```
 After that you will find created `custom/` folder with generated JS and CSS files. Here is the list of available additional modules:
 
@@ -83,13 +87,15 @@ After that you will find created `custom/` folder with generated JS and CSS file
 * fast-clicks
 * forms (means Ajax forms and forms storage)
 * push-state
-* slider
+* swiper
 * photo-browser
+* picker
+* calendar
 * notifications
 
 ## Contributing
 
-All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at Gruntfile.js for concat files order)
+All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at gulpfile.js for concat files order)
 
 If you want to help in Framework7 development and make it event better visit this page: http://www.idangero.us/framework7/contribute/
 

@@ -1,0 +1,26 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="swiper.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Nested Sliders
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="swiper-nested")
+    .page-content
+      .swiper-container.swiper-init.ks-demo-slider(data-pagination=".swiper-pagination-h", data-paginationHide="false")
+        .swiper-pagination.swiper-pagination-h
+        .swiper-wrapper
+            .swiper-slide Horizontal Slide 1
+            .swiper-slide 
+              .swiper-container.swiper-init.ks-demo-slider(data-pagination=".swiper-pagination-v", data-direction="vertical", data-paginationHide="false")
+                .swiper-pagination.swiper-pagination-v
+                .swiper-wrapper
+                  .swiper-slide Vertical Slide 1
+                  .swiper-slide Vertical Slide 2
+                  .swiper-slide Vertical Slide 3
+            .swiper-slide Horizontal Slide 3
+            .swiper-slide Horizontal Slide 4

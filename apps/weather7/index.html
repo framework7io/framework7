@@ -72,15 +72,12 @@
     </div>
     <!-- Templates-->
     <script id="search-results-template" type="text/template">
-        
       {{#each this}}
       {{#if admin1}}{{#if admin1.content}}
       <li data-woeid="{{woeid}}" data-city="{{name}}" data-country="{{country.content}}" class="close-popup">{{name}} <span>{{admin1.content}}, {{country.content}}</span></li>{{/if}}{{/if}}
       {{/each}}
     </script>
-    <script id="home-items-template" type="text/template">
-            
-      {{#each this}}
+    <script id="home-items-template" type="text/template">{{#each this}}
       <li data-woeid="{{woeid}}" class="swipeout">
         <div class="swipeout-content"><a href="#" data-woeid="{{woeid}}" class="item-content item-link">
             <div class="item-inner">
@@ -110,7 +107,7 @@
                 <li class="item-content">
                   <div class="item-inner">
                     <div class="item-title">{{dayOfWeek date}}</div>
-                    <div class="item-after"><span class="state">{{text}}</span><span class="temps"><span class="high">{{high}}&deg;</span><span class="low">{{low}}&deg;</span></span></div>
+                    <div class="item-after"> <span class="state">{{text}}</span><span class="temps"><span class="high">{{high}}&deg;</span><span class="low">{{low}}&deg;</span></span></div>
                   </div>
                 </li>{{/each}}
               </ul>

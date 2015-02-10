@@ -1,6 +1,8 @@
 /*==========================
 Framework7 Layouts Themes
 ==========================*/
+@import url('mixins.less');
+/* === Dark layout === */
 .layout-dark {
     @pageBg: #222426;
     @barsBg: #131313;
@@ -20,15 +22,56 @@ Framework7 Layouts Themes
     @searchbarBorder: #333;
     @swipeoutButton: #444;
     @checkboxBorder: @blockBorder;
-    .navbar, .navbar& {
-        border-bottom-color: @barsBorder;
+    .navbar, .navbar&, .subnavbar, .subnavbar& {
+        .hairline-color(bottom, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
     }
     .toolbar, .toolbar& {
-        border-top-color: @barsBorder;
+        .hairline-color(top, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
+    }
+    // Picker
+    .picker-calendar-week-days {
+        color:#fff;
+        background-color: @barsBg;
+    }
+    .popover .picker-modal, .picker-modal.picker-modal-inline {
+        .picker-center-highlight {
+            .hairline-color(top, @barsBorder);
+            .hairline-color(bottom, @barsBorder);
+        }
+        .picker-item.picker-selected {
+            color:#fff;
+        }
+        .picker-calendar-week-days {
+            color: #fff;
+        }
+        .picker-calendar-day {
+            color:#fff;
+            &.picker-calendar-day-prev, &.picker-calendar-day-next {
+                color: #777;
+            }
+            &.picker-calendar-day-disabled {
+                color: #555;
+            }
+            &.picker-calendar-day-today span {
+                background: #444;
+            }
+        }
+        .picker-calendar-week-days, .picker-calendar-row {
+            .hairline-color(bottom, @barsBorder);
+        }
+        .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
+            .hairline-color(top, @barsBorder);
+        }
+
+    }
+    .popover .picker-modal {
+        .toolbar {
+            .hairline-color(bottom, @barsBorder);
+        }
     }
     // Photo Browser
     .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
@@ -52,12 +95,14 @@ Framework7 Layouts Themes
     .content-block-inner {
         background: @blockStrongBg;
         color:@text;
-        border-color: @blockBorder;
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
     }
     .list-block, .list-block& {
         ul {
             background: @blockBg;
-            border-color: @blockBorder;
+            .hairline-color(top, @blockBorder);
+            .hairline-color(bottom, @blockBorder);
         }
         &.inset ul{
             background: @blockStrongBg;
@@ -65,6 +110,16 @@ Framework7 Layouts Themes
         &.notifications > ul {
             background: none;
         }
+    }
+    .card {
+        background: @blockBg;
+    }
+    .card-header{
+        .hairline-color(bottom, @blockBorder);
+    }
+    .card-footer {
+        .hairline-color(top, @blockBorder);
+        color:@lightText;
     }
     .popover, .popover& {
         background: rgba(0,0,0,0.8);
@@ -77,10 +132,11 @@ Framework7 Layouts Themes
 
     }
     .actions-popover .list-block ul {
-        border-color: @blockBorder;
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
     }
     .actions-popover .actions-popover-label {
-        border-bottom-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     li.sorting {
         background-color: @activeLink;
@@ -89,7 +145,7 @@ Framework7 Layouts Themes
         background-color: @swipeoutButton;
     }
     .item-inner, .list-block ul ul li:last-child .item-inner {
-        border-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .item-after {
         color:@itemAfterText;
@@ -100,21 +156,21 @@ Framework7 Layouts Themes
         }
     }
     .item-link.list-button {
-        border-bottom-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .list-block-label {
         color:@lightText;
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        color:@lightText;
-        border-top-color: @blockBorder;
+        color:@lightText;        
+        .hairline-color(top, @blockBorder);
     }
     
     // Searchbar
     .searchbar {
         background: @searchbarBg;
-        border-bottom-color: @searchbarBorder;
+        .hairline-color(bottom, @searchbarBorder);
     }
 
     // Forms
@@ -155,15 +211,33 @@ Framework7 Layouts Themes
     @searchbarBorder: #b4b4b4;
     @swipeoutButton: #c7c7cc;
     @checkboxBorder: #e5e5e5;
-    .navbar, .navbar& {
-        border-bottom-color: @barsBorder;
+    .navbar, .navbar&, .subnavbar, .subnavbar& {
+        .hairline-color(bottom, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
     }
     .toolbar, .toolbar& {
-        border-top-color: @barsBorder;
+        .hairline-color(top, @barsBorder);
         background-color: @barsBg;
         color:@barsText;
+    }
+    // Picker
+    .popover .picker-modal, .picker-modal.picker-modal-inline {
+        .picker-center-highlight {
+            .hairline-color(top, @barsBorder);
+            .hairline-color(bottom, @barsBorder);
+        }
+        .picker-calendar-week-days, .picker-calendar-row {
+            .hairline-color(bottom, @barsBorder);
+        }
+        .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
+            .hairline-color(top, @barsBorder);
+        }
+    }
+    .popover .picker-modal {
+        .toolbar {
+            .hairline-color(bottom, @barsBorder);
+        }
     }
     // Photo Browser
     .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
@@ -187,12 +261,14 @@ Framework7 Layouts Themes
     .content-block-inner {
         background: @blockStrongBg;
         color:@text;
-        border-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
+        .hairline-color(top, @blockBorder);
     }
     .list-block, .list-block& {
         ul {
             background: @blockBg;
-            border-color: @blockBorder;
+            .hairline-color(bottom, @blockBorder);
+            .hairline-color(top, @blockBorder);
         }
         &.inset ul{
             background: @blockStrongBg;
@@ -212,6 +288,7 @@ Framework7 Layouts Themes
     }
     .item-inner, .list-block ul ul li:last-child .item-inner {
         border-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .item-after {
         color:@itemAfterText;
@@ -222,7 +299,7 @@ Framework7 Layouts Themes
         }
     }
     .item-link.list-button {
-        border-bottom-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
     }
     .list-block-label {
         color:@lightText;
@@ -230,13 +307,13 @@ Framework7 Layouts Themes
     .item-divider, .list-group-title {
         background: @dividerBg;
         color:@lightText;
-        border-top-color: @blockBorder;
+        .hairline-color(top, @blockBorder);
     }
     
     // Searchbar
     .searchbar {
         background: @searchbarBg;
-        border-bottom-color: @searchbarBorder;
+        .hairline-color(bottom, @searchbarBorder);
     }
 
     // Forms

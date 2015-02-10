@@ -19,7 +19,7 @@ var rightView = myApp.addView('.view-right', {
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
-$$(document).on('ajaxStart', function () {
+$$(document).on('ajaxStart', function (e) {
     myApp.showIndicator();
 });
 $$(document).on('ajaxComplete', function () {
@@ -54,6 +54,17 @@ myApp.onPageInit('modals', function (page) {
         myApp.modalPassword('Enter your password', function (password) {
             myApp.alert('Thank you! Password: ' + password);
         });
+    });
+    $$('.demo-modals-stack').on('click', function () {
+        // Open 5 alerts
+        myApp.alert('Alert 1');
+        myApp.alert('Alert 2');
+        myApp.alert('Alert 3');
+        myApp.alert('Alert 4');
+        myApp.alert('Alert 5');
+    });
+    $$('.demo-picker-modal').on('click', function () {
+        myApp.pickerModal('.picker-modal-demo');
     });
 });
 
@@ -177,6 +188,7 @@ myApp.onPageInit('messages', function (page) {
         if (messageText.length === 0) return;
         // Empty textarea
         textarea.val('').trigger('change');
+        textarea[0].focus();
         // Add Message
         myApp.addMessage({
             text: messageText,
@@ -211,7 +223,8 @@ myApp.onPageInit('pull-to-refresh', function (page) {
     ptrContent.on('refresh', function (e) {
         // Emulate 2s loading
         setTimeout(function () {
-            var picURL = 'http://hhhhold.com/88/d/jpg?' + Math.round(Math.random() * 100);
+            // var picURL = 'http://hhhhold.com/88/d/jpg?' + Math.round(Math.random() * 100);
+            var picURL = 'http://lorempixel.com/88/88/';
             var song = songs[Math.floor(Math.random() * songs.length)];
             var author = authors[Math.floor(Math.random() * authors.length)];
             var linkHTML = '<li class="item-content">' +
@@ -379,7 +392,7 @@ myApp.onPageInit('login-screen-embedded', function (page) {
         var username = $$(page.container).find('input[name="username"]').val();
         var password = $$(page.container).find('input[name="password"]').val();
         myApp.alert('Username: ' + username + ', password: ' + password, function () {
-            mainView.goBack();
+            mainView.router.back();
         });
     });
 });
@@ -405,6 +418,278 @@ myApp.onPageInit('color-themes', function (page) {
     });
     $$(page.container).find('.ks-layout-theme').click(function () {
         $$('body').removeClass(layouts).addClass('layout-' + $$(this).attr('data-theme'));
+    });
+});
+
+/* ===== Virtual List ===== */
+myApp.onPageInit('virtual-list', function (page) {
+    // Generate array with 10000 demo items:
+    var items = [];
+    for (var i = 0; i < 10000; i++) {
+        items.push({
+            title: 'Item ' + i,
+            subtitle: 'Subtitle ' + i
+        });
+    }
+
+    // Create virtual list
+    var virtualList = myApp.virtualList($$(page.container).find('.virtual-list'), {
+        // Pass array with items
+        items: items,
+        // Custom search function for searchbar
+        searchAll: function (query, items) {
+            var found = [];
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].title.indexOf(query) >= 0 || query.trim() === '') found.push(i);
+            }
+            return found; //return array with mathced indexes
+        },
+        // List item Template7 template
+        template: '<li>' +
+                    '<a href="#" class="item-link item-content">' +
+                      '<div class="item-inner">' +
+                        '<div class="item-title-row">' +
+                          '<div class="item-title">{{title}}</div>' +
+                        '</div>' +
+                        '<div class="item-subtitle">{{subtitle}}</div>' +
+                      '</div>' +
+                    '</a>' +
+                  '</li>',
+        // Item height
+        height: 63,
+    });
+});
+/* ===== Swiper Two Way Control Gallery ===== */
+myApp.onPageInit('swiper-gallery', function (page) {
+    var swiperTop = myApp.swiper('.ks-swiper-gallery-top', {
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 10
+    });
+    var swiperThumbs = myApp.swiper('.ks-swiper-gallery-thumbs', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        centeredSlides: true,
+        touchRatio: 0.2,
+        slideToClickedSlide: true
+    });
+    swiperTop.params.control = swiperThumbs;
+    swiperThumbs.params.control = swiperTop;
+});
+/* ===== Calendar ===== */
+myApp.onPageInit('calendar', function (page) {
+    // Default
+    var calendarDefault = myApp.calendar({
+        input: '#ks-calendar-default',
+    });
+    // With custom date format
+    var calendarDateFormat = myApp.calendar({
+        input: '#ks-calendar-date-format',
+        dateFormat: 'DD, MM dd, yyyy'
+    });
+    // With multiple values
+    var calendarMultiple = myApp.calendar({
+        input: '#ks-calendar-multiple',
+        dateFormat: 'M dd yyyy',
+        multiple: true
+    });
+    // Inline with custom toolbar
+    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
+    var calendarInline = myApp.calendar({
+        container: '#ks-calendar-inline-container',
+        value: [new Date()],
+        weekHeader: false,
+        toolbarTemplate: 
+            '<div class="toolbar calendar-custom-toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                    '</div>' +
+                    '<div class="center"></div>' +
+                    '<div class="right">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>',
+        onOpen: function (p) {
+            $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+            $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                calendarInline.prevMonth();
+            });
+            $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                calendarInline.nextMonth();
+            });
+        },
+        onMonthYearChangeStart: function (p) {
+            $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+        }
+    });
+});
+
+/* ===== Pickers ===== */
+myApp.onPageInit('pickers', function (page) {
+    var today = new Date();
+
+    // iOS Device picker
+    var pickerDevice = myApp.picker({
+        input: '#ks-picker-device',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['iPhone 4', 'iPhone 4S', 'iPhone 5', 'iPhone 5S', 'iPhone 6', 'iPhone 6 Plus', 'iPad 2', 'iPad Retina', 'iPad Air', 'iPad mini', 'iPad mini 2', 'iPad mini 3']
+            }
+        ]
+    });
+
+    // Describe yourself picker
+    var pickerDescribe = myApp.picker({
+        input: '#ks-picker-describe',
+        rotateEffect: true,
+        cols: [
+            {
+                textAlign: 'left',
+                values: ('Super Lex Amazing Bat Iron Rocket Lex Cool Beautiful Wonderful Raining Happy Amazing Funny Cool Hot').split(' ')
+            },
+            {
+                values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+        ]
+    });
+
+    // Dependent values
+    var carVendors = {
+        Japanese : ['Honda', 'Lexus', 'Mazda', 'Nissan', 'Toyota'],
+        German : ['Audi', 'BMW', 'Mercedes', 'Volkswagen', 'Volvo'],
+        American : ['Cadillac', 'Chrysler', 'Dodge', 'Ford']
+    };
+    var pickerDependent = myApp.picker({
+        input: '#ks-picker-dependent',
+        rotateEffect: true,
+        formatValue: function (picker, values) {
+            return values[1];
+        },
+        cols: [
+            {
+                textAlign: 'left',
+                values: ['Japanese', 'German', 'American'],
+                onChange: function (picker, country) {
+                    if(picker.cols[1].replaceValues){
+                        picker.cols[1].replaceValues(carVendors[country]);
+                    }
+                }
+            },
+            {
+                values: carVendors.Japanese,
+                width: 160,
+            },
+        ]
+    });
+
+    // Custom Toolbar
+    var pickerCustomToolbar = myApp.picker({
+        input: '#ks-picker-custom-toolbar',
+        rotateEffect: true,
+        toolbarTemplate: 
+            '<div class="toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                        '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+                    '</div>' +
+                    '<div class="right">' +
+                        '<a href="#" class="link close-picker">That\'s me</a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>',
+        cols: [
+            {
+                values: ['Mr', 'Ms'],
+            },
+            {
+                textAlign: 'left',
+                values: ('Super Lex Amazing Bat Iron Rocket Lex Cool Beautiful Wonderful Raining Happy Amazing Funny Cool Hot').split(' ')
+            },
+            {
+                values: ('Man Luthor Woman Boy Girl Person Cutie Babe Raccoon').split(' ')
+            },
+        ],
+        onOpen: function (picker) {
+            picker.container.find('.toolbar-randomize-link').on('click', function () {
+                var col0Values = picker.cols[0].values;
+                var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
+
+                var col1Values = picker.cols[1].values;
+                var col1Random = col1Values[Math.floor(Math.random() * col1Values.length)];
+
+                var col2Values = picker.cols[2].values;
+                var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
+                
+                picker.setValue([col0Random, col1Random, col2Random]);
+            });
+        }
+    });
+
+    // Inline date-time
+    var pickerInline = myApp.picker({
+        input: '#ks-picker-date',
+        container: '#ks-picker-date-container',
+        toolbar: false,
+        rotateEffect: true,
+        value: [today.getMonth(), today.getDate(), today.getFullYear(), today.getHours(), (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())],
+        onChange: function (picker, values, displayValues) {
+            var daysInMonth = new Date(picker.value[2], picker.value[0]*1 + 1, 0).getDate();
+            if (values[1] > daysInMonth) {
+                picker.cols[1].setValue(daysInMonth);
+            }
+        },
+        formatValue: function (p, values, displayValues) {
+            return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
+        },
+        cols: [
+            // Months
+            {
+                values: ('0 1 2 3 4 5 6 7 8 9 10 11').split(' '),
+                displayValues: ('January February March April May June July August September October November December').split(' '),
+                textAlign: 'left'
+            },
+            // Days
+            {
+                values: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            },
+            // Years
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 1950; i <= 2030; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            // Space divider
+            {
+                divider: true,
+                content: '&nbsp;&nbsp;'
+            },
+            // Hours
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 23; i++) { arr.push(i); }
+                    return arr;
+                })(),
+            },
+            // Divider
+            {
+                divider: true,
+                content: ':'
+            },
+            // Minutes
+            {
+                values: (function () {
+                    var arr = [];
+                    for (var i = 0; i <= 59; i++) { arr.push(i < 10 ? '0' + i : i); }
+                    return arr;
+                })(),
+            }
+        ]
     });
 });
 

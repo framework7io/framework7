@@ -28,9 +28,11 @@ html.ios .page-content {
   margin-bottom: 1px;
 }
 .view-main .navbar {
-  border-bottom: none;
   background: #cc0442;
   color: #fff;
+}
+.view-main .navbar:after {
+  display: none;
 }
 i.icon-plus {
   color: #fff;
@@ -42,7 +44,10 @@ i.icon-plus {
 }
 .todo-items-list ul {
   background: none;
-  border: none;
+}
+.todo-items-list ul:after,
+.todo-items-list ul:before {
+  display: none;
 }
 .todo-items-list .item-title {
   font-size: 18px;
@@ -53,7 +58,9 @@ i.icon-plus {
 .todo-items-list .item-inner {
   padding-top: 18px;
   padding-bottom: 16px;
-  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+.todo-items-list .item-inner:after {
+  background: rgba(255, 255, 255, 0.2);
 }
 .todo-items-list .label-checkbox.active-state {
   background: rgba(255, 255, 255, 0.2);
@@ -91,7 +98,9 @@ i.icon-plus {
 .popup .navbar {
   color: #fff;
   background: #680222;
-  border: none;
+}
+.popup .navbar:after {
+  display: none;
 }
 .popup a.link {
   color: #fff;
@@ -101,11 +110,15 @@ i.icon-plus {
   border: none;
   color: #fff;
 }
+.popup .list-block ul:after,
+.popup .list-block ul:before {
+  display: none;
+}
 .popup .list-block input {
   color: #fff;
 }
-.popup .item-inner {
-  border-color: rgba(255, 255, 255, 0.2);
+.popup .item-inner:after {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 .popup .button {
   border-color: #fff;
@@ -196,12 +209,16 @@ body.with-popup .statusbar-overlay {
 .modal-inner {
   background: #cc0442;
   color: #fff;
-  border-bottom: 1px solid #9a0332;
+}
+.modal-inner:after {
+  background: #9a0332;
 }
 .modal-button {
   background: #cc0442;
-  border-right-color: #9a0332;
   color: #fff;
+}
+.modal-button:after {
+  background: #9a0332;
 }
 .modal-button.active-state {
   background: #9a0332;

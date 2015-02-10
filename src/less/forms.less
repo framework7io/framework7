@@ -1,7 +1,7 @@
 /* === Forms === */
 // Inputs
 .list-block {
-    input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
+    input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
         -webkit-appearance: none;
         -moz-appearance: none;
         -ms-appearance: none;
@@ -175,6 +175,18 @@ html.android {
             opacity: 0.8;
         }
     }
+    i.icon {
+        &:first-child {
+            margin-right: 10px;
+        }
+        &:last-child {
+            margin-left: 10px;
+        }
+        &:first-child:last-child {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
 }
 .buttons-row {
     .align-self(center);
@@ -339,7 +351,7 @@ label.label-checkbox, label.label-radio {
         .transition(0ms);
         background-color: #d9d9d9;
         .item-inner {
-            border-bottom-color: transparent;
+            .hairline-color(bottom, transparent);
         }
     }
 }

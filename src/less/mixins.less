@@ -8,17 +8,14 @@
 }
 .transform(@t) {
     -webkit-transform: @t;
-    -ms-transform: @t;
     transform: @t;
 }
 .transform-origin(@to) {
     -webkit-transform-origin: @to;
-    -ms-transform-origin: @to;
     transform-origin: @to;
 }
 .translate3d(@x:0, @y:0, @z:0) {
     -webkit-transform: translate3d(@x,@y,@z);
-    -ms-transform: translate3d(@x,@y,@z);
     transform: translate3d(@x,@y,@z);
 }
 .animation(@a) {
@@ -140,5 +137,109 @@
     }
     &:after {
         clear: both;
+    }
+}
+.hairline(@position, @color) when (@position = top) {
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 1px;
+        width: 100%;
+        background-color: @color;
+        display: block;
+        z-index: 15;
+        .transform-origin(50% 0%);
+        html.ios-gt-6.pixel-ratio-2 & {
+            .transform(scaleY(0.5));
+        }
+        html.ios-gt-6.pixel-ratio-3 & {
+            .transform(scaleY(0.33));
+        }
+    }
+}
+.hairline(@position, @color) when (@position = left) {
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        background-color: @color;
+        display: block;
+        z-index: 15;
+        .transform-origin(0% 50%);
+        html.ios-gt-6.pixel-ratio-2 & {
+            .transform(scaleX(0.5));
+        }
+        html.ios-gt-6.pixel-ratio-3 & {
+            .transform(scaleX(0.33));
+        }
+    }
+}
+.hairline(@position, @color) when (@position = bottom) {
+    &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 1px;
+        width: 100%;
+        background-color: @color;
+        display: block;
+        z-index: 15;
+        .transform-origin(50% 100%);
+        html.ios-gt-6.pixel-ratio-2 & {
+            .transform(scaleY(0.5));
+        }
+        html.ios-gt-6.pixel-ratio-3 & {
+            .transform(scaleY(0.33));
+        }
+    }
+}
+.hairline(@position, @color) when (@position = right) {
+    &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        background-color: @color;
+        display: block;
+        z-index: 15;
+        .transform-origin(100% 50%);
+        html.ios-gt-6.pixel-ratio-2 & {
+            .transform(scaleX(0.5));
+        }
+        html.ios-gt-6.pixel-ratio-3 & {
+            .transform(scaleX(0.33));
+        }
+    }
+}
+// For right and bottom
+.hairline-remove(@position) when not (@position = left) and not (@position = top) {
+    &:after {
+        display: none;
+    }
+}
+// For left and top
+.hairline-remove(@position) when not (@position = right) and not (@position = bottom) {
+    &:before {
+        display: none;
+    }
+}
+// For right and bottom
+.hairline-color(@position, @color) when not (@position = left) and not (@position = top) {
+    &:after {
+        background-color: @color;
+    }
+}
+// For left and top
+.hairline-color(@position, @color) when not (@position = right) and not (@position = bottom) {
+    &:before {
+        background-color: @color;
     }
 }
