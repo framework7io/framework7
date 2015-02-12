@@ -118,7 +118,14 @@ $.ajax = function (options) {
 
     // Cache for GET/HEAD requests
     if (_method === 'GET' || _method === 'HEAD') {
-        if (options.cache === false) options.url += ('_nocache=' + Date.now());
+        if (options.cache === false) {
+            if (options.url.indexOf('?') >= 0) {
+                options.url += ('&_nocache=' + Date.now());
+            }
+            else {
+                options.url += ('?_nocache=' + Date.now());
+            }
+        }
     }
 
     // Create XHR
@@ -241,7 +248,7 @@ $.ajax = function (options) {
         xhrTimeout = setTimeout(function () {
             xhr.abort();
             fireAjaxCallback('ajaxError', {xhr: xhr, timeout: true}, 'error', xhr, 'timeout');
-            fireAjaxCallback('complete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
+            fireAjaxCallback('ajaxComplete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
         }, options.timeout);
     }
 
