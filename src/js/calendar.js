@@ -22,14 +22,14 @@ var Calendar = function (params) {
         monthPickerTemplate: 
             '<div class="picker-calendar-month-picker">' +
                 '<a href="#" class="link icon-only picker-calendar-prev-month"><i class="icon icon-prev"></i></a>' +
-                '<span class="current-month-value">August</span>' +
+                '<span class="current-month-value"></span>' +
                 '<a href="#" class="link icon-only picker-calendar-next-month"><i class="icon icon-next"></i></a>' +
             '</div>',
         yearPicker: true,
         yearPickerTemplate: 
             '<div class="picker-calendar-year-picker">' +
                 '<a href="#" class="link icon-only picker-calendar-prev-year"><i class="icon icon-prev"></i></a>' +
-                '<span class="current-year-value">2015</span>' +
+                '<span class="current-year-value"></span>' +
                 '<a href="#" class="link icon-only picker-calendar-next-year"><i class="icon icon-next"></i></a>' +
             '</div>',
         weekHeader: true,
