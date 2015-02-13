@@ -5502,7 +5502,7 @@
                 if (el.disabled || el.readOnly) return false;
                 if (tag === 'textarea') return true;
                 if (tag === 'select') {
-                    if (app.device.android) return false;
+                    if (app.device.os === 'android') return false;
                     else return true;
                 }
                 if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
@@ -5510,7 +5510,7 @@
             function targetNeedsPrevent(el) {
                 el = $(el);
                 if (el.is('label') || el.parents('label').length > 0) {
-                    if (app.device.android) {
+                    if (app.device.os === 'android') {
                         var osv = app.device.osVersion.split('.');
                         if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4)) {
                             return false;
@@ -5550,7 +5550,7 @@
                     trackClick = false;
                     return true;
                 }
-                if (app.device.ios) {
+                if (app.device.os === 'ios') {
                     var selection = window.getSelection();
                     if (selection.rangeCount && selection.focusNode !== document.body && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
                         activeSelection = true;
@@ -5560,7 +5560,7 @@
                         activeSelection = false;
                     }
                 }
-                if (app.device.android)  {
+                if (app.device.os === 'android')  {
                     if (androidNeedsBlur(e.target)) {
                         document.activeElement.blur();
                     }
@@ -5573,7 +5573,7 @@
                 touchStartY = e.targetTouches[0].pageY;
         
                 // Detect scroll parent
-                if (app.device.ios) {
+                if (app.device.os === 'ios') {
                     scrollParent = undefined;
                     $(targetElement).parents().each(function () {
                         var parent = this;
@@ -5627,11 +5627,7 @@
                 clearTimeout(activeTimeout);
         
                 if (!trackClick) {
-                    if (!activeSelection && needsFastClick) {
-                        if (!(app.device.android && !e.cancelable)) {
-                            e.preventDefault();
-                        }
-                    }
+                    if (!activeSelection && needsFastClick) e.preventDefault();
                     return true;
                 }
         
@@ -5652,7 +5648,7 @@
         
                 trackClick = false;
         
-                if (app.device.ios && scrollParent) {
+                if (app.device.os === 'ios' && scrollParent) {
                     if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
                         return false;
                     }
@@ -5681,7 +5677,7 @@
                 var touch = e.changedTouches[0];
                 var evt = document.createEvent('MouseEvents');
                 var eventType = 'click';
-                if (app.device.android && targetElement.nodeName.toLowerCase() === 'select') {
+                if (app.device.os === 'android' && targetElement.nodeName.toLowerCase() === 'select') {
                     eventType = 'mousedown';
                 }
                 evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);

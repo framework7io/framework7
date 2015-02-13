@@ -1,8 +1,6 @@
 # Change Log
 
 ## Framework7 v1.0.1 - Updated on February 13, 2015
-  * FastClicks
-    * Fixed issue with sometimes broken inertia scrolling on Androids
   * Swiper
     * Updated to latest version with bettwe suport in RTL layout with old-flexbox
 
