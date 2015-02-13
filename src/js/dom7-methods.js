@@ -7,6 +7,8 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
+                if (typeof this[j].classList === 'undefined')
+                    return this;
                 this[j].classList.add(classes[i]);
             }
         }
@@ -16,6 +18,8 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
+                if (typeof this[j].classList === 'undefined')
+                    return this;
                 this[j].classList.remove(classes[i]);
             }
         }
