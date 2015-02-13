@@ -1,5 +1,5 @@
 /**
- * Framework7 1.0.0
+ * Framework7 1.0.1
  * Full Featured Mobile HTML Framework For Building iOS Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 6, 2015
+ * Released on: February 13, 2015
  */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '1.0.0';
+        app.version = '1.0.1';
     
         // Default Parameters
         app.params = {
@@ -1490,6 +1490,17 @@
             if (app.reinitSwiper) app.reinitSwiper(pageContainer);
             // Reinit lazy load
             if (app.reinitLazyLoad) app.reinitLazyLoad(pageContainer);
+        };
+        app.initPageWithCallback = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            var viewContainer = pageContainer.parents('.' + app.params.viewClass);
+            if (viewContainer.length === 0) return;
+            var view = viewContainer[0].f7View || false;
+            var url = view && view.url ? view.url : false;
+            if (viewContainer) {
+                viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
+            }
+            app.pageInitCallback(view, {pageContainer: pageContainer[0], url: url, position: 'center'});
         };
 
         /*======================================================
@@ -7703,14 +7714,14 @@
                 monthPickerTemplate: 
                     '<div class="picker-calendar-month-picker">' +
                         '<a href="#" class="link icon-only picker-calendar-prev-month"><i class="icon icon-prev"></i></a>' +
-                        '<span class="current-month-value">August</span>' +
+                        '<span class="current-month-value"></span>' +
                         '<a href="#" class="link icon-only picker-calendar-next-month"><i class="icon icon-next"></i></a>' +
                     '</div>',
                 yearPicker: true,
                 yearPickerTemplate: 
                     '<div class="picker-calendar-year-picker">' +
                         '<a href="#" class="link icon-only picker-calendar-prev-year"><i class="icon icon-prev"></i></a>' +
-                        '<span class="current-year-value">2015</span>' +
+                        '<span class="current-year-value"></span>' +
                         '<a href="#" class="link icon-only picker-calendar-next-year"><i class="icon icon-next"></i></a>' +
                     '</div>',
                 weekHeader: true,
@@ -8707,15 +8718,7 @@
         
             // Init each page callbacks
             $('.page:not(.cached)').each(function () {
-                var pageContainer = $(this);
-                var viewContainer = pageContainer.parents('.' + app.params.viewClass);
-                if (viewContainer.length === 0) return;
-                var view = viewContainer[0].f7View || false;
-                var url = view && view.url ? view.url : false;
-                if (viewContainer) {
-                    viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
-                }
-                app.pageInitCallback(view, {pageContainer: this, url: url, position: 'center'});
+                app.initPageWithCallback(this);
             });
             
             // Init resize events
@@ -8822,7 +8825,7 @@
                 var classes = className.split(' ');
                 for (var i = 0; i < classes.length; i++) {
                     for (var j = 0; j < this.length; j++) {
-                        this[j].classList.add(classes[i]);
+                        if (typeof this[j].classList !== 'undefined') this[j].classList.add(classes[i]);
                     }
                 }
                 return this;
@@ -8831,7 +8834,7 @@
                 var classes = className.split(' ');
                 for (var i = 0; i < classes.length; i++) {
                     for (var j = 0; j < this.length; j++) {
-                        this[j].classList.remove(classes[i]);
+                        if (typeof this[j].classList !== 'undefined') this[j].classList.remove(classes[i]);
                     }
                 }
                 return this;
@@ -8844,7 +8847,7 @@
                 var classes = className.split(' ');
                 for (var i = 0; i < classes.length; i++) {
                     for (var j = 0; j < this.length; j++) {
-                        this[j].classList.toggle(classes[i]);
+                        if (typeof this[j].classList !== 'undefined') this[j].classList.toggle(classes[i]);
                     }
                 }
                 return this;
@@ -9620,7 +9623,14 @@
         
             // Cache for GET/HEAD requests
             if (_method === 'GET' || _method === 'HEAD') {
-                if (options.cache === false) options.url += ('_nocache=' + Date.now());
+                if (options.cache === false) {
+                    if (options.url.indexOf('?') >= 0) {
+                        options.url += ('&_nocache=' + Date.now());
+                    }
+                    else {
+                        options.url += ('?_nocache=' + Date.now());
+                    }
+                }
             }
         
             // Create XHR
@@ -9743,7 +9753,7 @@
                 xhrTimeout = setTimeout(function () {
                     xhr.abort();
                     fireAjaxCallback('ajaxError', {xhr: xhr, timeout: true}, 'error', xhr, 'timeout');
-                    fireAjaxCallback('complete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
+                    fireAjaxCallback('ajaxComplete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
                 }, options.timeout);
             }
         
@@ -10556,7 +10566,7 @@
             grabCursor: false,
             // Clicks
             preventClicks: true,
-            clicksStopPropagation: true,
+            preventClicksPropagation: true,
             releaseFormElements: true,
             slideToClickedSlide: false,
             // Images
@@ -10713,6 +10723,11 @@
         
         // RTL
         s.rtl = isH() && (s.container[0].dir.toLowerCase() === 'rtl' || s.container.css('direction') === 'rtl');
+        if (s.rtl) s.container.addClass('swiper-container-rtl');
+        // Wrong RTL support
+        if (s.rtl) {
+            s.wrongRTL = s.wrapper.css('display') === '-webkit-box';
+        }
         
         // Translate
         s.translate = 0;
@@ -10972,6 +10987,10 @@
         
             var newSlidesGrid;
         
+            if (s.rtl && s.wrongRTL && (s.params.effect === 'slide' || s.params.effect === 'coverflow')) {
+                s.wrapper.css({width: s.virtualWidth + s.params.spaceBetween + 'px'});
+            }
+        
             if (s.params.slidesPerColumn > 1) {
                 s.virtualWidth = (slideSize + s.params.spaceBetween) * slidesNumberEvenToRows;
                 s.virtualWidth = Math.ceil(s.virtualWidth / s.params.slidesPerColumn) - s.params.spaceBetween;
@@ -11044,6 +11063,7 @@
             if (typeof s.slides[0].swiperSlideOffset === 'undefined') s.updateSlidesOffset();
         
             var offsetCenter = s.params.centeredSlides ? -translate + s.size / 2 : -translate;
+            if (s.rtl) offsetCenter = s.params.centeredSlides ? translate - s.size / 2 : translate;
         
             // Visible Slides
             var containerBox = s.container[0].getBoundingClientRect();
@@ -11065,7 +11085,7 @@
                         s.slides.eq(i).addClass(s.params.slideVisibleClass);
                     }
                 }
-                slide.progress = slideProgress;
+                slide.progress = s.rtl ? -slideProgress : slideProgress;
             }
         };
         s.updateProgress = function (translate) {
@@ -11195,10 +11215,10 @@
             s.updateClasses();
             if (s.params.slidesPerView === 'auto') s.updatePagination();
             if (s.isEnd) {
-                s.slideTo(s.slides.length - 1, 0, false);
+                s.slideTo(s.slides.length - 1, 0, false, true);
             }
             else {
-                s.slideTo(s.activeIndex, 0, false);
+                s.slideTo(s.activeIndex, 0, false, true);
             }
             if (s.params.scrollbar && s.scrollbar) {
                 s.scrollbar.init();
@@ -11227,26 +11247,28 @@
         
         // Attach/detach events
         s.events = function (detach) {
-            var action = detach ? 'off' : 'on';
+            var actionDom = detach ? 'off' : 'on';
+            var actionVanilla = detach ? 'removeEventListener' : 'addEventListener';
             var touchEventsTarget = s.params.touchEventsTarget === 'container' ? s.container : s.wrapper;
             var target = s.support.touch ? touchEventsTarget : $(document);
         
             var moveCapture = s.params.nested ? true : false;
+        
             // Touch events
-            touchEventsTarget[action](s.touchEvents.start, s.onTouchStart, false);
-            target[action](s.touchEvents.move, s.onTouchMove, moveCapture);
-            target[action](s.touchEvents.end, s.onTouchEnd, false);
-            $(window)[action]('resize', s.onResize);
+            touchEventsTarget[0][actionVanilla](s.touchEvents.start, s.onTouchStart, false);
+            target[0][actionVanilla](s.touchEvents.move, s.onTouchMove, moveCapture);
+            target[0][actionVanilla](s.touchEvents.end, s.onTouchEnd, false);
+            window[actionVanilla]('resize', s.onResize);
         
             // Next, Prev, Index
-            if (s.params.nextButton) $(s.params.nextButton)[action]('click', s.onClickNext);
-            if (s.params.prevButton) $(s.params.prevButton)[action]('click', s.onClickPrev);
+            if (s.params.nextButton) $(s.params.nextButton)[actionDom]('click', s.onClickNext);
+            if (s.params.prevButton) $(s.params.prevButton)[actionDom]('click', s.onClickPrev);
             if (s.params.pagination && s.params.paginationClickable) {
-                $(s.paginationContainer)[action]('click', '.' + s.params.bulletClass, s.onClickIndex);
+                $(s.paginationContainer)[actionDom]('click', '.' + s.params.bulletClass, s.onClickIndex);
             }
         
             // Prevent Links Clicks
-            if (s.params.preventClicks || s.params.clicksStopPropagation) touchEventsTarget[action]('click', 'a', s.preventClicks, true);
+            if (s.params.preventClicks || s.params.preventClicksPropagation) touchEventsTarget[0][actionVanilla]('click', s.preventClicks, true);
         };
         s.attachEvents = function (detach) {
             s.events();
@@ -11263,7 +11285,7 @@
         s.preventClicks = function (e) {
             if (!s.allowClick) {
                 if (s.params.preventClicks) e.preventDefault();
-                if (s.params.clicksStopPropagation) {
+                if (s.params.preventClicksPropagation) {
                     e.stopPropagation();
                     e.stopImmediatePropagation();
                 }
@@ -11314,6 +11336,11 @@
                 s.clickedSlide = slide;
                 s.clickedIndex = $(slide).index();
             }
+            else {
+                s.clickedSlide = undefined;
+                s.clickedIndex = undefined;
+                return;
+            }
             if (s.params.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s.activeIndex) {
                 var slideToIndex = s.clickedIndex,
                     realIndex;
@@ -11353,9 +11380,8 @@
         
         // Touch handlers
         s.onTouchStart = function (e) {
-            if (e.originalEvent) e = e.originalEvent; //jQuery fix
-            if (e.type === 'mousedown' && 'which' in e && e.which === 3) return;
             if (e.originalEvent) e = e.originalEvent;
+            if (e.type === 'mousedown' && 'which' in e && e.which === 3) return;
             if (s.params.noSwiping && findElementInEvent(e, '.' + s.params.noSwipingClass)) return;
             if (s.params.swipeHandler) {
                 if (!findElementInEvent(e, s.params.swipeHandler)) return;
@@ -11370,16 +11396,19 @@
             s.updateContainerSize();
             s.swipeDirection = undefined;
             if (s.params.threshold > 0) allowThresholdMove = false;
-            if (e.type === 'mousedown') {
+            if (e.type !== 'touchstart') {
                 var preventDefault = true;
                 if ($(e.target).is(formElements)) preventDefault = false;
                 if (document.activeElement && $(document.activeElement).is(formElements)) document.activeElement.blur();
+                if (preventDefault) {
+                    e.preventDefault();
+                }
             }
             if (s.params.onTouchStart) s.params.onTouchStart(s, e);
         };
         
         s.onTouchMove = function (e) {
-            if (e.originalEvent) e = e.originalEvent; //jQuery fix
+            if (e.originalEvent) e = e.originalEvent;
             if (e.preventedByNestedSwiper) return;
             if (s.params.onlyExternal) {
                 isMoved = true;
@@ -11414,7 +11443,7 @@
                 if (params.loop) {
                     s.fixLoop();
                 }
-                startTranslate = s.params.effect === 'cube' ? (s.translate || 0) : s.getWrapperTranslate();
+                startTranslate = s.params.effect === 'cube' ? ((s.rtl ? -s.translate: s.translate) || 0) : s.getWrapperTranslate();
                 s.setWrapperTransition(0);
                 if (s.animating) {
                     s.wrapper.trigger('webkitTransitionEnd transitionend oTransitionEnd MSTransitionEnd msTransitionEnd');
@@ -11509,7 +11538,7 @@
             s.setWrapperTranslate(currentTranslate);
         };
         s.onTouchEnd = function (e) {
-            if (e.originalEvent) e = e.originalEvent; //jQuery fix
+            if (e.originalEvent) e = e.originalEvent;
             if (!isTouched) return;
             if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
         
@@ -11804,9 +11833,8 @@
             if (s.params.loop) {
                 if (s.animating) return false;
                 s.fixLoop();
-                setTimeout(function () {
-                    return s.slideTo(s.activeIndex + 1, speed, runCallbacks, internal);
-                }, 0);
+                var clientLeft = s.container[0].clientLeft;
+                return s.slideTo(s.activeIndex + s.params.slidesPerGroup, speed, runCallbacks, internal);
             }
             else return s.slideTo(s.activeIndex + s.params.slidesPerGroup, speed, runCallbacks, internal);
         };
@@ -11817,9 +11845,8 @@
             if (s.params.loop) {
                 if (s.animating) return false;
                 s.fixLoop();
-                setTimeout(function () {
-                    return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
-                }, 0);
+                var clientLeft = s.container[0].clientLeft;
+                return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
             }
             else return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
         };
@@ -12110,9 +12137,13 @@
                     for (var i = 0; i < s.slides.length; i++) {
                         var slide = s.slides.eq(i);
                         var slideAngle = i * 90;
+                        var round = Math.floor(slideAngle / 360);
+                        if (s.rtl) {
+                            slideAngle = -slideAngle;
+                            round = Math.floor(-slideAngle / 360);
+                        }
                         var progress = Math.max(Math.min(slide[0].progress, 1), -1);
                         var tx = 0, ty = 0, tz = 0;
-                        var round = Math.floor(slideAngle / 360);
                         if (i % 4 === 0) {
                             tx = - round * 4 * s.size;
                             tz = 0;
@@ -12129,6 +12160,10 @@
                             tx = - s.size;
                             tz = 3 * s.size + s.size * 4 * round;
                         }
+                        if (s.rtl) {
+                            tx = -tx;
+                        }
+                        
                         if (!isH()) {
                             ty = tx;
                             tx = 0;
@@ -12137,6 +12172,7 @@
                         var transform = 'rotateX(' + (isH() ? 0 : -slideAngle) + 'deg) rotateY(' + (isH() ? slideAngle : 0) + 'deg) translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px)';
                         if (progress <= 1 && progress > -1) {
                             wrapperRotate = i * 90 + progress * 90;
+                            if (s.rtl) wrapperRotate = -i * 90 - progress * 90;
                         }
                         slide.transform(transform);
                         if (s.params.cube.slideShadows) {

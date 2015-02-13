@@ -1,5 +1,9 @@
 # Change Log
 
+## Framework7 v1.0.1 - Updated on February 13, 2015
+  * Swiper
+    * Updated to latest version with bettwe suport in RTL layout with old-flexbox
+
 ## Framework7 v1.0.0 - Updated on February 6, 2015
   * Picker
     * New component that allows you to create custom overlay pickers which looks like iOS native picker

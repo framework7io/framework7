@@ -1,5 +1,5 @@
 /**
- * Framework7 1.0.0
+ * Framework7 1.0.1
  * Full Featured Mobile HTML Framework For Building iOS Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 6, 2015
+ * Released on: February 13, 2015
  */
 html,
 body {
@@ -823,7 +823,7 @@ html.ios-gt-6.pixel-ratio-3 .subnavbar:after {
 .page .subnavbar {
   position: absolute;
 }
-.page .subnavbar {
+.page > .subnavbar {
   top: 0;
   margin-top: 0;
 }
@@ -1123,7 +1123,9 @@ html.ios-gt-6.pixel-ratio-3 .toolbar:before {
   padding-top: 88px;
 }
 .navbar-through .page .subnavbar,
-.navbar-fixed .page .subnavbar {
+.navbar-fixed .page .subnavbar,
+.navbar-through.page .subnavbar,
+.navbar-fixed.page .subnavbar {
   top: 44px;
 }
 .toolbar-through .page-content,
@@ -4467,19 +4469,28 @@ html.with-statusbar-overlay body .panel {
   margin-top: -22px;
   z-index: 10;
   cursor: pointer;
+  -moz-background-size: 27px 44px;
+  -webkit-background-size: 27px 44px;
+  background-size: 27px 44px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .swiper-button-prev.swiper-button-disabled,
 .swiper-button-next.swiper-button-disabled {
   opacity: 0.35;
   cursor: auto;
 }
-.swiper-button-prev {
-  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#007aff'/></svg>");
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23007aff'/></svg>");
   left: 10px;
+  right: auto;
 }
-.swiper-button-next {
-  background: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#007aff'/></svg>");
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
+  background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23007aff'/></svg>");
   right: 10px;
+  left: auto;
 }
 /* Pagination Styles */
 .swiper-pagination {
@@ -4658,6 +4669,12 @@ html.with-statusbar-overlay body .panel {
   backface-visibility: hidden;
   width: 100%;
   height: 100%;
+}
+.swiper-container-cube.swiper-container-rtl .swiper-slide {
+  -webkit-transform-origin: 100% 0;
+  -moz-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
+  transform-origin: 100% 0;
 }
 .swiper-container-cube .swiper-slide-active,
 .swiper-container-cube .swiper-slide-next,
@@ -5691,11 +5708,15 @@ i.icon-bars.theme-gray,
   background-color: #8e8e93 !important;
 }
 .swiper-button-next.color-gray,
-.theme-gray .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-gray,
+.theme-gray .swiper-button-next,
+.theme-gray .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%238e8e93'/></svg>");
 }
 .swiper-button-prev.color-gray,
-.theme-gray .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-gray,
+.theme-gray .swiper-button-prev,
+.theme-gray .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%238e8e93'/></svg>");
 }
 .bg-gray,
@@ -5813,11 +5834,15 @@ i.icon-bars.theme-white,
   background-color: #ffffff !important;
 }
 .swiper-button-next.color-white,
-.theme-white .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-white,
+.theme-white .swiper-button-next,
+.theme-white .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23ffffff'/></svg>");
 }
 .swiper-button-prev.color-white,
-.theme-white .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-white,
+.theme-white .swiper-button-prev,
+.theme-white .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23ffffff'/></svg>");
 }
 .bg-white,
@@ -5935,11 +5960,15 @@ i.icon-bars.theme-black,
   background-color: #000000 !important;
 }
 .swiper-button-next.color-black,
-.theme-black .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-black,
+.theme-black .swiper-button-next,
+.theme-black .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23000000'/></svg>");
 }
 .swiper-button-prev.color-black,
-.theme-black .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-black,
+.theme-black .swiper-button-prev,
+.theme-black .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23000000'/></svg>");
 }
 .bg-black,
@@ -6057,11 +6086,15 @@ i.icon-bars.theme-lightblue,
   background-color: #5ac8fa !important;
 }
 .swiper-button-next.color-lightblue,
-.theme-lightblue .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-lightblue,
+.theme-lightblue .swiper-button-next,
+.theme-lightblue .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%235ac8fa'/></svg>");
 }
 .swiper-button-prev.color-lightblue,
-.theme-lightblue .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-lightblue,
+.theme-lightblue .swiper-button-prev,
+.theme-lightblue .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%235ac8fa'/></svg>");
 }
 .bg-lightblue,
@@ -6179,11 +6212,15 @@ i.icon-bars.theme-yellow,
   background-color: #ffcc00 !important;
 }
 .swiper-button-next.color-yellow,
-.theme-yellow .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-yellow,
+.theme-yellow .swiper-button-next,
+.theme-yellow .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23ffcc00'/></svg>");
 }
 .swiper-button-prev.color-yellow,
-.theme-yellow .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-yellow,
+.theme-yellow .swiper-button-prev,
+.theme-yellow .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23ffcc00'/></svg>");
 }
 .bg-yellow,
@@ -6301,11 +6338,15 @@ i.icon-bars.theme-orange,
   background-color: #ff9500 !important;
 }
 .swiper-button-next.color-orange,
-.theme-orange .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-orange,
+.theme-orange .swiper-button-next,
+.theme-orange .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23ff9500'/></svg>");
 }
 .swiper-button-prev.color-orange,
-.theme-orange .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-orange,
+.theme-orange .swiper-button-prev,
+.theme-orange .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23ff9500'/></svg>");
 }
 .bg-orange,
@@ -6423,11 +6464,15 @@ i.icon-bars.theme-pink,
   background-color: #ff2d55 !important;
 }
 .swiper-button-next.color-pink,
-.theme-pink .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-pink,
+.theme-pink .swiper-button-next,
+.theme-pink .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23ff2d55'/></svg>");
 }
 .swiper-button-prev.color-pink,
-.theme-pink .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-pink,
+.theme-pink .swiper-button-prev,
+.theme-pink .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23ff2d55'/></svg>");
 }
 .bg-pink,
@@ -6545,11 +6590,15 @@ i.icon-bars.theme-blue,
   background-color: #007aff !important;
 }
 .swiper-button-next.color-blue,
-.theme-blue .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-blue,
+.theme-blue .swiper-button-next,
+.theme-blue .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23007aff'/></svg>");
 }
 .swiper-button-prev.color-blue,
-.theme-blue .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-blue,
+.theme-blue .swiper-button-prev,
+.theme-blue .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23007aff'/></svg>");
 }
 .bg-blue,
@@ -6667,11 +6716,15 @@ i.icon-bars.theme-green,
   background-color: #4cd964 !important;
 }
 .swiper-button-next.color-green,
-.theme-green .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-green,
+.theme-green .swiper-button-next,
+.theme-green .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%234cd964'/></svg>");
 }
 .swiper-button-prev.color-green,
-.theme-green .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-green,
+.theme-green .swiper-button-prev,
+.theme-green .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%234cd964'/></svg>");
 }
 .bg-green,
@@ -6789,11 +6842,15 @@ i.icon-bars.theme-red,
   background-color: #ff3b30 !important;
 }
 .swiper-button-next.color-red,
-.theme-red .swiper-button-next {
+.swiper-container-rtl .swiper-button-prev.color-red,
+.theme-red .swiper-button-next,
+.theme-red .swiper-container-rtl .swiper-button-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='%23ff3b30'/></svg>");
 }
 .swiper-button-prev.color-red,
-.theme-red .swiper-button-prev {
+.swiper-container-rtl .swiper-button-next.color-red,
+.theme-red .swiper-button-prev,
+.theme-red .swiper-container-rtl .swiper-button-next {
   background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='%23ff3b30'/></svg>");
 }
 .bg-red,
