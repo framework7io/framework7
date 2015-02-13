@@ -906,7 +906,7 @@ window.Swiper = function (container, params) {
         s.updateContainerSize();
         s.swipeDirection = undefined;
         if (s.params.threshold > 0) allowThresholdMove = false;
-        if (e.type === 'mousedown') {
+        if (e.type !== 'touchstart') {
             var preventDefault = true;
             if ($(e.target).is(formElements)) preventDefault = false;
             if (document.activeElement && $(document.activeElement).is(formElements)) document.activeElement.blur();
@@ -1343,9 +1343,8 @@ window.Swiper = function (container, params) {
         if (s.params.loop) {
             if (s.animating) return false;
             s.fixLoop();
-            setTimeout(function () {
-                return s.slideTo(s.activeIndex + 1, speed, runCallbacks, internal);
-            }, 0);
+            var clientLeft = s.container[0].clientLeft;
+            return s.slideTo(s.activeIndex + s.params.slidesPerGroup, speed, runCallbacks, internal);
         }
         else return s.slideTo(s.activeIndex + s.params.slidesPerGroup, speed, runCallbacks, internal);
     };
@@ -1356,9 +1355,8 @@ window.Swiper = function (container, params) {
         if (s.params.loop) {
             if (s.animating) return false;
             s.fixLoop();
-            setTimeout(function () {
-                return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
-            }, 0);
+            var clientLeft = s.container[0].clientLeft;
+            return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
         }
         else return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
     };
