@@ -7,7 +7,7 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
-                this[j].classList.add(classes[i]);
+                if (typeof this[j].classList !== 'undefined') this[j].classList.add(classes[i]);
             }
         }
         return this;
@@ -16,7 +16,7 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
-                this[j].classList.remove(classes[i]);
+                if (typeof this[j].classList !== 'undefined') this[j].classList.remove(classes[i]);
             }
         }
         return this;
@@ -29,7 +29,7 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
-                this[j].classList.toggle(classes[i]);
+                if (typeof this[j].classList !== 'undefined') this[j].classList.toggle(classes[i]);
             }
         }
         return this;
