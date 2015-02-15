@@ -56,7 +56,7 @@ app.get = function (url, view, ignoreCache, callback) {
         },
         error: function (xhr) {
             callback(xhr.responseText, true);
-            if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
+            if (app.params.onAjaxError) app.params.onAjaxError(xhr);
         }
     });
     if (view) view.xhr = app.xhr;
