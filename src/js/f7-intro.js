@@ -131,7 +131,7 @@ window.Framework7 = function (params) {
     };
 
     // Link to local storage
-    app.ls = localStorage;
+    app.ls = window.localStorage;
 
     // RTL
     app.rtl = $('body').css('direction') === 'rtl';
