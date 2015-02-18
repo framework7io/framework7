@@ -139,6 +139,7 @@ var View = function (selector, params) {
         activeNavBackIcon,
         previousNavBackIcon,
         dynamicNavbar,
+        pageShadow,
         el;
 
     view.handleTouchStart = function (e) {
@@ -190,6 +191,15 @@ var View = function (selector, params) {
                 isTouched = false;
                 return;
             }
+
+            if (view.params.swipeBackPageAnimateShadow) {
+                pageShadow = activePage.find('.page-fake-shadow');
+                if (pageShadow.length === 0) {
+                    pageShadow = $('<div class="page-fake-shadow"></div>');
+                    activePage.append(pageShadow);
+                }
+            }
+
             if (dynamicNavbar) {
                 activeNavbar = container.find('.navbar-on-center:not(.cached)');
                 previousNavbar = container.find('.navbar-on-left:not(.cached)');
@@ -235,7 +245,7 @@ var View = function (selector, params) {
         }
 
         activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
-        if (view.params.swipeBackPageAnimateShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
+        if (view.params.swipeBackPageAnimateShadow) pageShadow[0].style.opacity = 1 - 1 * percentage;
 
         previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
         if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
@@ -365,6 +375,7 @@ var View = function (selector, params) {
                 app.pageAnimCallbacks('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 app.router.afterBack(view, activePage, previousPage);
             }
+            if (pageShadow && pageShadow.length > 0) pageShadow.remove();
         });
     };
     view.attachEvents = function (detach) {

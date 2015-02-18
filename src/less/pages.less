@@ -13,7 +13,6 @@
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     background: #efeff4;
     .translate3d(0,0,0);
     &.cached {
@@ -25,10 +24,15 @@
     .translate3d(-20%);
 }
 .page-on-center {
-    .box-shadow(0 0 12px rgba(0,0,0,0.5));
+    .page-fake-shadow {
+        opacity: 1;
+    }
 }
 .page-on-right {
     .translate3d(100%);
+    .page-fake-shadow {
+        opacity: 0;
+    }
 }
 .page-content {
     .scrollable();
@@ -36,28 +40,36 @@
     height: 100%;
 }
 
+// Page Shadow
+.page-fake-shadow() {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    width: 16px;
+    height: 100%;
+    background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    z-index: -1;
+    content: '';
+}
+.page-fake-shadow {
+    .page-fake-shadow();
+}
+
 @pageDuration: 400ms;
 
 //Class that will trigger transition during page custom transitions (like swipe-back)
 .page-transitioning {
-    .transition(@pageDuration);
-}
-
-// From/to Right To/from Center animations
-.page-from-right-to-center, .page-from-center-to-right {
-    // Fake shadow during animation
-    overflow: visible;
-    &:before {
-        position: absolute;
-        right: 100%;
-        top: 0;
-        width: 16px;
-        height: 100%;
-        background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
-        background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
-        content: '';
+    &, .page-fake-shadow {
+        .transition(@pageDuration);
     }
 }
+.page-from-right-to-center, .page-from-center-to-right {
+    &:before {
+        .page-fake-shadow();
+    }
+}
+// From/to Right To/from Center animations
 .page-from-right-to-center {
     &:before {
         .animation(pageFromRightToCenterShadow @pageDuration forwards);
@@ -65,7 +77,6 @@
     .animation(pageFromRightToCenter @pageDuration forwards);
 }
 .page-from-center-to-right {
-    overflow: visible;
     &:before {
         .animation(pageFromCenterToRightShadow @pageDuration forwards);
     }
