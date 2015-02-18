@@ -235,6 +235,12 @@ label.label-radio {
 }
 
 /* === Pages === */
+.page-from-right-to-center:before, .page-from-center-to-right:before, .page-fake-shadow {
+    right: auto;
+    left: 100%;
+    background: -webkit-linear-gradient(right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    background: linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+}
 .page-on-left {
     .translate3d(20%);
 }
@@ -243,41 +249,33 @@ label.label-radio {
 }
 @-webkit-keyframes pageFromRightToCenter {
     from {
-        .box-shadow(none);
         -webkit-transform: translate3d(-100%,0,0);
     }
     to {
-        .box-shadow(0 0 12px rgba(0,0,0,0.5));
         -webkit-transform: translate3d(0,0,0);
     }
 }
 @-webkit-keyframes pageFromCenterToRight {
     from {
-        .box-shadow(0 0 12px rgba(0,0,0,0.5));
         -webkit-transform: translate3d(0,0,0);
     }
     to {
-        .box-shadow(none);
         -webkit-transform: translate3d(-100%,0,0);
     }
 }
 @keyframes pageFromRightToCenter {
     from {
-        .box-shadow(none);
         transform: translate3d(-100%,0,0);
     }
     to {
-        .box-shadow(0 0 12px rgba(0,0,0,0.5));
         transform: translate3d(0,0,0);
     }
 }
 @keyframes pageFromCenterToRight {
     from {
-        .box-shadow(0 0 12px rgba(0,0,0,0.5));
         transform: translate3d(0,0,0);
     }
     to {
-        .box-shadow(none);
         transform: translate3d(100%,0,0);
     }
 }
@@ -319,38 +317,6 @@ label.label-radio {
     to {
         opacity: 1;
         transform: translate3d(0,0,0);
-    }
-}
-@-webkit-keyframes pageFromRightToCenterDegrade {
-    from {
-        -webkit-transform: translate3d(-100%,0,0);
-    }
-    to {
-        -webkit-transform: translate3d(0,0,0);
-    }
-}
-@-webkit-keyframes pageFromCenterToRightDegrade {
-    from {
-        -webkit-transform: translate3d(0,0,0);
-    }
-    to {
-        -webkit-transform: translate3d(-100%,0,0);
-    }
-}
-@keyframes pageFromRightToCenterDegrade {
-    from {
-        transform: translate3d(-100%,0,0);
-    }
-    to {
-        transform: translate3d(0,0,0);
-    }
-}
-@keyframes pageFromCenterToRightDegrade {
-    from {
-        transform: translate3d(0,0,0);
-    }
-    to {
-        transform: translate3d(-100%,0,0);
     }
 }
 
