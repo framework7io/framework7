@@ -248,8 +248,9 @@ app.pageAnimCallbacks = function (callback, view, params) {
 
 // Init Page Events and Manipulations
 app.initPage = function (pageContainer) {
+    pageContainer = $(pageContainer);
     // Size navbars on page load
-    if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
+    if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
     // Init messages
     if (app.initMessages) app.initMessages(pageContainer);
     // Init forms storage
@@ -273,8 +274,9 @@ app.initPage = function (pageContainer) {
     if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
+    pageContainer = $(pageContainer);
     // Size navbars on page reinit
-    if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
+    if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
     // Reinit slider
     if (app.reinitSlider) app.reinitSlider(pageContainer);
     if (app.reinitSwiper) app.reinitSwiper(pageContainer);
