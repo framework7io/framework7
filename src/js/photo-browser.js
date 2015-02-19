@@ -343,7 +343,7 @@ var PhotoBrowser = function (params) {
 
         if (pb.params.swipeToClose && pb.params.type !== 'page') {
             sliderSettings.onTouchStart = pb.swipeCloseTouchStart;
-            sliderSettings.onOppositeTouchMove = pb.swipeCloseTouchMove;
+            sliderSettings.onTouchMoveOpposite = pb.swipeCloseTouchMove;
             sliderSettings.onTouchEnd = pb.swipeCloseTouchEnd;
         }
 
