@@ -468,7 +468,7 @@ app.router._load = function (view, options) {
         app.router.prepareNavbar(newNavbarInner, oldNavbarInner, 'right');
     }
     // Force reLayout
-    // var clientLeft = newPage[0].clientLeft;
+    var clientLeft = newPage[0].clientLeft;
 
     // Before Anim Callback
     app.pageAnimCallbacks('before', view, {
