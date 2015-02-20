@@ -192,10 +192,10 @@ var View = function (selector, params) {
                 return;
             }
 
-            if (view.params.swipeBackPageAnimateShadow) {
-                pageShadow = activePage.find('.page-fake-shadow');
+            if (view.params.swipeBackPageAnimateShadow && !app.device.android) {
+                pageShadow = activePage.find('.swipeback-page-shadow');
                 if (pageShadow.length === 0) {
-                    pageShadow = $('<div class="page-fake-shadow"></div>');
+                    pageShadow = $('<div class="swipeback-page-shadow"></div>');
                     activePage.append(pageShadow);
                 }
             }
@@ -245,7 +245,7 @@ var View = function (selector, params) {
         }
 
         activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
-        if (view.params.swipeBackPageAnimateShadow) pageShadow[0].style.opacity = 1 - 1 * percentage;
+        if (view.params.swipeBackPageAnimateShadow && !app.device.android) pageShadow[0].style.opacity = 1 - 1 * percentage;
 
         previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
         if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;

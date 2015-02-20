@@ -24,13 +24,13 @@
     .translate3d(-20%);
 }
 .page-on-center {
-    .page-fake-shadow {
+    .swipeback-page-shadow {
         opacity: 1;
     }
 }
 .page-on-right {
     .translate3d(100%);
-    .page-fake-shadow {
+    .swipeback-page-shadow {
         opacity: 0;
     }
 }
@@ -53,8 +53,12 @@
     background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
     z-index: -1;
     content: '';
+    html.android & {
+        display: none;
+        .animation(none);
+    }
 }
-.page-fake-shadow {
+.swipeback-page-shadow {
     .page-fake-shadow();
 }
 
@@ -62,7 +66,7 @@
 
 //Class that will trigger transition during page custom transitions (like swipe-back)
 .page-transitioning {
-    &, .page-fake-shadow {
+    &, .swipeback-page-shadow {
         .transition(@pageDuration);
     }
 }
