@@ -516,17 +516,15 @@ app.router._load = function (view, options) {
             view.refreshPreviousPage();
         }
     }
-
     if (animatePages) {
         // Set pages before animation
         app.router.animatePages(oldPage, newPage, 'to-left', view);
 
         // Dynamic navbar animation
         if (dynamicNavbar) {
-            $.requestAnimationFrame(function () {
+            setTimeout(function() {
                 app.router.animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
-            });
-
+            }, 0);
         }
         newPage.animationEnd(function (e) {
             afterAnimation();
@@ -536,6 +534,7 @@ app.router._load = function (view, options) {
         newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
         afterAnimation();
     }
+
 };
 
 app.router.load = function (view, options) {
@@ -670,9 +669,9 @@ app.router._back = function (view, options) {
 
             // Dynamic navbar animation
             if (dynamicNavbar) {
-                $.requestAnimationFrame(function () {
+                setTimeout(function () {
                     app.router.animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
-                });
+                }, 0);
             }
             
             newPage.animationEnd(function () {
