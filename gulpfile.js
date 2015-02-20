@@ -212,6 +212,10 @@
         gulp.src(paths.source.root + 'templates/*.jade')
             .pipe(jade({
                 pretty: true,
+                locals: {
+                    stylesheetFilename: 'framework7',
+                    scriptFilename: 'framework7',
+                }
             }))
             .pipe(gulp.dest(paths.build.root));
         gulp.src(paths.source.root + 'my-app/my-app.js')
@@ -301,6 +305,16 @@
         gulp.src([paths.build.root + '**/*.*'])
             .pipe(gulp.dest(paths.dist.root))
             .on('end', function () {
+                // Jade
+                gulp.src(paths.source.root + 'templates/*.jade')
+                    .pipe(jade({
+                        pretty: true,
+                        locals: {
+                            stylesheetFilename: 'framework7.min',
+                            scriptFilename: 'framework7.min',
+                        }
+                    }))
+                    .pipe(gulp.dest(paths.dist.root));
                 // Minify JS
                 gulp.src([paths.dist.scripts + f7.filename + '.js'])
                     .pipe(sourcemaps.init())
