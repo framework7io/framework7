@@ -34,15 +34,11 @@ app.router = {
         // Loading new page
         var removeClasses = 'page-on-center page-on-right page-on-left';
         if (direction === 'to-left') {
-            // leftPage.removeClass('page-on-center').addClass('page-from-center-to-left');
-            // rightPage.removeClass('page-on-left').addClass('page-from-right-to-center');
             leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
             rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
         }
         // Go back
         if (direction === 'to-right') {
-            // leftPage.removeClass('page-on-left').addClass('page-from-left-to-center');
-            // rightPage.removeClass('page-on-center').addClass('page-from-center-to-right');
             leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
             rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
             
@@ -472,7 +468,7 @@ app.router._load = function (view, options) {
         app.router.prepareNavbar(newNavbarInner, oldNavbarInner, 'right');
     }
     // Force reLayout
-    var clientLeft = newPage[0].clientLeft;
+    // var clientLeft = newPage[0].clientLeft;
 
     // Before Anim Callback
     app.pageAnimCallbacks('before', view, {
@@ -527,9 +523,9 @@ app.router._load = function (view, options) {
 
         // Dynamic navbar animation
         if (dynamicNavbar) {
-            setTimeout(function () {
+            $.requestAnimationFrame(function () {
                 app.router.animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
-            }, 0);
+            });
 
         }
         newPage.animationEnd(function (e) {
@@ -674,9 +670,9 @@ app.router._back = function (view, options) {
 
             // Dynamic navbar animation
             if (dynamicNavbar) {
-                setTimeout(function () {
+                $.requestAnimationFrame(function () {
                     app.router.animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
-                }, 0);
+                });
             }
             
             newPage.animationEnd(function () {
