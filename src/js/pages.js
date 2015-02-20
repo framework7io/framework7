@@ -134,6 +134,7 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
         view: view,
         url: pageContainer.f7PageData && pageContainer.f7PageData.url,
         query: pageContainer.f7PageData && pageContainer.f7PageData.query,
+        navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
         from: position,
         context: pageContext
     };
@@ -157,6 +158,7 @@ app.pageBackCallbacks = function (callback, view, params) {
         view: view,
         from: params.position,
         context: pageContext,
+        navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
         swipeBack: params.swipeBack
     };
 
@@ -188,6 +190,7 @@ app.pageAnimCallbacks = function (callback, view, params) {
         from: params.position,
         context: pageContext,
         swipeBack: params.swipeBack,
+        navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
         fromPage: params.fromPage
     };
     var oldPage = params.oldPage,
