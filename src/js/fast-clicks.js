@@ -82,19 +82,17 @@ app.initFastClicks = function () {
     }
     function targetNeedsPrevent(el) {
         el = $(el);
+        var prevent = true;
         if (el.is('label') || el.parents('label').length > 0) {
             if (app.device.android) {
-                var osv = app.device.osVersion.split('.');
-                if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4) || app.device.androidChrome) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
+                prevent = false;
             }
-            else return false;
+            else if (app.device.ios && el.is('input')) {
+                prevent = true;
+            }
+            else prevent = false;
         }
-        return true;
+        return prevent;
     }
 
     // Mouse Handlers
@@ -262,7 +260,6 @@ app.initFastClicks = function () {
         evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
         evt.forwardedTouchEvent = true;
         targetElement.dispatchEvent(evt);
-
         return false;
     }
     function handleTouchCancel(e) {
@@ -272,7 +269,6 @@ app.initFastClicks = function () {
 
     function handleClick(e) {
         var allowClick = false;
-        
         if (trackClick) {
             targetElement = null;
             trackClick = false;
@@ -282,9 +278,11 @@ app.initFastClicks = function () {
         if (e.target.type === 'submit' && e.detail === 0) {
             return true;
         }
-
-        if (!targetElement) {
-            allowClick =  true;
+        // if (!targetElement) {
+        //     allowClick =  true;
+        // }
+        if (!needsFastClick) {
+            allowClick = true;
         }
         if (document.activeElement === targetElement) {
             allowClick =  true;
@@ -295,7 +293,6 @@ app.initFastClicks = function () {
         if (!e.cancelable) {
             allowClick =  true;
         }
-
         if (!allowClick) {
             e.stopImmediatePropagation();
             e.stopPropagation();
@@ -309,7 +306,6 @@ app.initFastClicks = function () {
             }
             targetElement = null;
         }
-
         return allowClick;
     }
     if (app.support.touch) {
