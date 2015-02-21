@@ -18,6 +18,7 @@ Framework7.prototype.device = (function () {
         device.os = 'android';
         device.osVersion = android[2];
         device.android = true;
+        device.androidChrome = ua.toLowerCase().indexOf('chrome') >= 0;
     }
     if (ipad || iphone || ipod) {
         device.os = 'ios';
