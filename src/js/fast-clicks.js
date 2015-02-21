@@ -85,10 +85,12 @@ app.initFastClicks = function () {
         if (el.is('label') || el.parents('label').length > 0) {
             if (app.device.android) {
                 var osv = app.device.osVersion.split('.');
-                if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4)) {
+                if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4) || app.device.androidChrome) {
                     return false;
                 }
-                else return true;
+                else {
+                    return true;
+                }
             }
             else return false;
         }
