@@ -14,11 +14,11 @@
       .content-block-title My Cars
       .list-block
         ul
-          {{#each this}}
+          | {{#each this}}
           li
             | <a href="car.html" class="item-content item-link" data-contextName="cars.{{@index}}">
             |   <div class="item-inner">
             |     <div class="item-title">{{vendor}} {{model}}</div>
             |   </div>
             | </a>
-          {{/each}}
+          | {{/each}}
