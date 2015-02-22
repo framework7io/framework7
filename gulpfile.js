@@ -48,10 +48,6 @@
             examples: {
                 root: 'examples/',
                 list: ['inline-pages', 'split-view', 'split-view-panel', 'tab-bar', 'template7-pages']
-            },
-            apps: {
-                root: 'apps/',
-                list: ['todo7', 'weather7']
             }
         },
         f7 = {
@@ -278,27 +274,6 @@
     });
 
     /* =================================
-    Apps
-    ================================= */
-    gulp.task('apps', function (cb) {
-        for (var i = 0; i < paths.apps.list.length; i++) {
-            var appRoot = paths.apps.root + paths.apps.list[i] + '/';
-            gulp.src(appRoot + 'jade/*.jade')
-                .pipe(jade({
-                    pretty: true,
-                }))
-                .pipe(gulp.dest(appRoot));
-            gulp.src(appRoot + 'less/*.less')
-                .pipe(less({
-                    paths: [ path.join(__dirname, 'less', 'includes') ]
-                }))
-                .pipe(gulp.dest(appRoot + 'css/'))
-                .pipe(connect.reload());
-        }
-        cb();
-    });
-
-    /* =================================
     Dist Version
     ================================= */
     gulp.task('dist', function () {
@@ -443,14 +418,6 @@
             var exampleRoot = paths.examples.root + paths.examples.list[i] + '/';
             gulp.watch([exampleRoot + 'jade/*.jade', exampleRoot + 'less/*.less'], [ 'examples' ], function () {
                 gulp.src([exampleRoot + 'jade/*.jade', exampleRoot + 'less/*.less'])
-                    .pipe(connect.reload());
-            });
-        }
-        // Apps
-        for (i = 0; i < paths.apps.list.length; i++) {
-            var appRoot = paths.apps.root + paths.apps.list[i] + '/';
-            gulp.watch([appRoot + 'jade/*.jade', appRoot + 'less/*.less'], [ 'apps' ], function () {
-                gulp.src([appRoot + 'jade/*.jade', appRoot + 'less/*.less'])
                     .pipe(connect.reload());
             });
         }
