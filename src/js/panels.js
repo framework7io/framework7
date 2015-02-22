@@ -95,8 +95,10 @@ app.initSwipePanels = function () {
                 side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
             }
             else {
+                if (app.params.swipePanelOnlyClose) return;
                 side = app.params.swipePanel;
             }
+            if (!side) return;
         }
         panel = $('.panel.panel-' + side);
         opened = panel.hasClass('active');
