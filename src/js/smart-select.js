@@ -33,7 +33,7 @@ app.initSmartSelects = function (pageContainer) {
                     select[i].selected = select[i].textContent.trim() === selectedText.trim();
                 }
             } else {
-                itemAfter.text(valueText);
+                itemAfter.text(valueText.join(', '));
             }
         }
         
