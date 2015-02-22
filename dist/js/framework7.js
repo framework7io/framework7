@@ -1,5 +1,5 @@
 /**
- * Framework7 1.0.1
+ * Framework7 1.0.2
  * Full Featured Mobile HTML Framework For Building iOS Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 13, 2015
+ * Released on: February 22, 2015
  */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '1.0.1';
+        app.version = '1.0.2';
     
         // Default Parameters
         app.params = {
@@ -147,7 +147,7 @@
         };
     
         // Link to local storage
-        app.ls = localStorage;
+        app.ls = window.localStorage;
     
         // RTL
         app.rtl = $('body').css('direction') === 'rtl';
@@ -303,6 +303,7 @@
                 activeNavBackIcon,
                 previousNavBackIcon,
                 dynamicNavbar,
+                pageShadow,
                 el;
         
             view.handleTouchStart = function (e) {
@@ -354,6 +355,15 @@
                         isTouched = false;
                         return;
                     }
+        
+                    if (view.params.swipeBackPageAnimateShadow && !app.device.android) {
+                        pageShadow = activePage.find('.swipeback-page-shadow');
+                        if (pageShadow.length === 0) {
+                            pageShadow = $('<div class="swipeback-page-shadow"></div>');
+                            activePage.append(pageShadow);
+                        }
+                    }
+        
                     if (dynamicNavbar) {
                         activeNavbar = container.find('.navbar-on-center:not(.cached)');
                         previousNavbar = container.find('.navbar-on-left:not(.cached)');
@@ -399,7 +409,7 @@
                 }
         
                 activePage.transform('translate3d(' + activePageTranslate + 'px,0,0)');
-                if (view.params.swipeBackPageAnimateShadow && app.device.os !== 'android') activePage[0].style.boxShadow = '0px 0px 12px rgba(0,0,0,' + (0.5 - 0.5 * percentage) + ')';
+                if (view.params.swipeBackPageAnimateShadow && !app.device.android) pageShadow[0].style.opacity = 1 - 1 * percentage;
         
                 previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
                 if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
@@ -529,6 +539,7 @@
                         app.pageAnimCallbacks('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
                         app.router.afterBack(view, activePage, previousPage);
                     }
+                    if (pageShadow && pageShadow.length > 0) pageShadow.remove();
                 });
             };
             view.attachEvents = function (detach) {
@@ -1199,7 +1210,7 @@
                 },
                 error: function (xhr) {
                     callback(xhr.responseText, true);
-                    if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
+                    if (app.params.onAjaxError) app.params.onAjaxError(xhr);
                 }
             });
             if (view) view.xhr = app.xhr;
@@ -1344,6 +1355,7 @@
                 view: view,
                 url: pageContainer.f7PageData && pageContainer.f7PageData.url,
                 query: pageContainer.f7PageData && pageContainer.f7PageData.query,
+                navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
                 from: position,
                 context: pageContext
             };
@@ -1367,6 +1379,7 @@
                 view: view,
                 from: params.position,
                 context: pageContext,
+                navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
                 swipeBack: params.swipeBack
             };
         
@@ -1398,6 +1411,7 @@
                 from: params.position,
                 context: pageContext,
                 swipeBack: params.swipeBack,
+                navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
                 fromPage: params.fromPage
             };
             var oldPage = params.oldPage,
@@ -1458,8 +1472,9 @@
         
         // Init Page Events and Manipulations
         app.initPage = function (pageContainer) {
+            pageContainer = $(pageContainer);
             // Size navbars on page load
-            if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
+            if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
             // Init messages
             if (app.initMessages) app.initMessages(pageContainer);
             // Init forms storage
@@ -1483,8 +1498,9 @@
             if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
         };
         app.reinitPage = function (pageContainer) {
+            pageContainer = $(pageContainer);
             // Size navbars on page reinit
-            if (app.sizeNavbars) app.sizeNavbars($(pageContainer).parents('.' + app.params.viewClass)[0]);
+            if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
             // Reinit slider
             if (app.reinitSlider) app.reinitSlider(pageContainer);
             if (app.reinitSwiper) app.reinitSwiper(pageContainer);
@@ -1539,15 +1555,11 @@
                 // Loading new page
                 var removeClasses = 'page-on-center page-on-right page-on-left';
                 if (direction === 'to-left') {
-                    // leftPage.removeClass('page-on-center').addClass('page-from-center-to-left');
-                    // rightPage.removeClass('page-on-left').addClass('page-from-right-to-center');
                     leftPage.removeClass(removeClasses).addClass('page-from-center-to-left');
                     rightPage.removeClass(removeClasses).addClass('page-from-right-to-center');
                 }
                 // Go back
                 if (direction === 'to-right') {
-                    // leftPage.removeClass('page-on-left').addClass('page-from-left-to-center');
-                    // rightPage.removeClass('page-on-center').addClass('page-from-center-to-right');
                     leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
                     rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
                     
@@ -2025,17 +2037,15 @@
                     view.refreshPreviousPage();
                 }
             }
-        
             if (animatePages) {
                 // Set pages before animation
                 app.router.animatePages(oldPage, newPage, 'to-left', view);
         
                 // Dynamic navbar animation
                 if (dynamicNavbar) {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         app.router.animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
                     }, 0);
-        
                 }
                 newPage.animationEnd(function (e) {
                     afterAnimation();
@@ -2045,6 +2055,7 @@
                 newNavbarInner.find('.sliding, .sliding .back .icon').transform('');
                 afterAnimation();
             }
+        
         };
         
         app.router.load = function (view, options) {
@@ -3232,8 +3243,10 @@
                         side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
                     }
                     else {
+                        if (app.params.swipePanelOnlyClose) return;
                         side = app.params.swipePanel;
                     }
+                    if (!side) return;
                 }
                 panel = $('.panel.panel-' + side);
                 opened = panel.hasClass('active');
@@ -4229,7 +4242,7 @@
                             select[i].selected = select[i].textContent.trim() === selectedText.trim();
                         }
                     } else {
-                        itemAfter.text(valueText);
+                        itemAfter.text(valueText.join(', '));
                     }
                 }
                 
@@ -5509,17 +5522,17 @@
             }
             function targetNeedsPrevent(el) {
                 el = $(el);
+                var prevent = true;
                 if (el.is('label') || el.parents('label').length > 0) {
                     if (app.device.android) {
-                        var osv = app.device.osVersion.split('.');
-                        if (osv[0] * 1 > 4 || (osv[0] * 1 === 4 && osv[1] * 1 >= 4)) {
-                            return false;
-                        }
-                        else return true;
+                        prevent = false;
                     }
-                    else return false;
+                    else if (app.device.ios && el.is('input')) {
+                        prevent = true;
+                    }
+                    else prevent = false;
                 }
-                return true;
+                return prevent;
             }
         
             // Mouse Handlers
@@ -5687,7 +5700,6 @@
                 evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
                 evt.forwardedTouchEvent = true;
                 targetElement.dispatchEvent(evt);
-        
                 return false;
             }
             function handleTouchCancel(e) {
@@ -5697,7 +5709,6 @@
         
             function handleClick(e) {
                 var allowClick = false;
-                
                 if (trackClick) {
                     targetElement = null;
                     trackClick = false;
@@ -5707,9 +5718,11 @@
                 if (e.target.type === 'submit' && e.detail === 0) {
                     return true;
                 }
-        
-                if (!targetElement) {
-                    allowClick =  true;
+                // if (!targetElement) {
+                //     allowClick =  true;
+                // }
+                if (!needsFastClick) {
+                    allowClick = true;
                 }
                 if (document.activeElement === targetElement) {
                     allowClick =  true;
@@ -5720,7 +5733,6 @@
                 if (!e.cancelable) {
                     allowClick =  true;
                 }
-        
                 if (!allowClick) {
                     e.stopImmediatePropagation();
                     e.stopPropagation();
@@ -5734,7 +5746,6 @@
                     }
                     targetElement = null;
                 }
-        
                 return allowClick;
             }
             if (app.support.touch) {
@@ -6827,7 +6838,7 @@
         
                 if (pb.params.swipeToClose && pb.params.type !== 'page') {
                     sliderSettings.onTouchStart = pb.swipeCloseTouchStart;
-                    sliderSettings.onOppositeTouchMove = pb.swipeCloseTouchMove;
+                    sliderSettings.onTouchMoveOpposite = pb.swipeCloseTouchMove;
                     sliderSettings.onTouchEnd = pb.swipeCloseTouchEnd;
                 }
         
@@ -10024,13 +10035,14 @@
         var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
         var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
     
-        device.ios = device.android = device.iphone = device.ipad = false;
+        device.ios = device.android = device.iphone = device.ipad = device.androidChrome = false;
         
         // Android
         if (android) {
             device.os = 'android';
             device.osVersion = android[2];
             device.android = true;
+            device.androidChrome = ua.toLowerCase().indexOf('chrome') >= 0;
         }
         if (ipad || iphone || ipod) {
             device.os = 'ios';
@@ -10603,8 +10615,12 @@
             // Observer
             observer: false,
             observeParents: false,
+            // Callbacks
+            runCallbacksOnInit: true
             /*
             Callbacks:
+            onInit: function (swiper)
+            onDestroy: function (swiper)
             onClick: function (swiper, e) 
             onTap: function (swiper, e) 
             onDoubleTap: function (swiper, e) 
@@ -10615,9 +10631,9 @@
             onTransitionEnd: function (swiper) 
             onImagesReady: function (swiper) 
             onProgress: function (swiper, progress) 
-            onDestroy: function () 
             onTouchStart: function (swiper, e) 
             onTouchMove: function (swiper, e) 
+            onTouchMoveOpposite: function (swiper, e) 
             onTouchEnd: function (swiper, e) 
             onReachBeginning: function (swiper) 
             onReachEnd: function (swiper) 
@@ -10875,6 +10891,15 @@
             }
         };
         /*=========================
+          Min/Max Translate
+          ===========================*/
+        s.minTranslate = function () {
+            return (-s.snapGrid[0]);
+        };
+        s.maxTranslate = function () {
+            return (-s.snapGrid[s.snapGrid.length - 1]);
+        };
+        /*=========================
           Slider/slides sizes
           ===========================*/
         s.updateContainerSize = function () {
@@ -11040,22 +11065,6 @@
             }
         };
         
-        s.update = function () {
-            s.updateContainerSize();
-            s.updateSlidesSize();
-            s.updateProgress();
-            s.updatePagination();
-            s.updateClasses();
-        };
-        
-        // Min/max translates
-        s.minTranslate = function () {
-            return (-s.snapGrid[0]);
-        };
-        s.maxTranslate = function () {
-            return (-s.snapGrid[s.snapGrid.length - 1]);
-        };
-        
         /*=========================
           Slider/slides progress
           ===========================*/
@@ -11207,7 +11216,33 @@
                 s.bullets = s.paginationContainer.find('.' + s.params.bulletClass);
             }
         };
-        
+        /*=========================
+          Common update method
+          ===========================*/
+        s.update = function (updateTranslate) {
+            s.updateContainerSize();
+            s.updateSlidesSize();
+            s.updateProgress();
+            s.updatePagination();
+            s.updateClasses();
+            if (s.params.scrollbar && s.scrollbar) {
+                s.scrollbar.set();
+            }
+            if (updateTranslate) {
+                var translated, newTranslate;
+                if (s.isEnd) {
+                    translated = s.slideTo(s.slides.length - 1, 0, false, true);
+                }
+                else {
+                    translated = s.slideTo(s.activeIndex, 0, false, true);
+                }
+                if (!translated) {
+                    newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
+                    s.setWrapperTranslate(newTranslate);
+                }
+                
+            }
+        };
         
         /*=========================
           Resize Handler
@@ -11218,14 +11253,14 @@
             s.updateProgress();
             s.updateClasses();
             if (s.params.slidesPerView === 'auto') s.updatePagination();
+            if (s.params.scrollbar && s.scrollbar) {
+                s.scrollbar.set();
+            }
             if (s.isEnd) {
                 s.slideTo(s.slides.length - 1, 0, false, true);
             }
             else {
                 s.slideTo(s.activeIndex, 0, false, true);
-            }
-            if (s.params.scrollbar && s.scrollbar) {
-                s.scrollbar.init();
             }
         };
         
@@ -11375,12 +11410,32 @@
             }
         };
         
-        var isTouched, isMoved, touchesStart = {}, touchesCurrent = {}, touchStartTime, isScrolling, currentTranslate, startTranslate, allowThresholdMove;
+        var isTouched, 
+            isMoved, 
+            touchStartTime, 
+            isScrolling, 
+            currentTranslate, 
+            startTranslate, 
+            allowThresholdMove,
+            // Form elements to match
+            formElements = 'input, select, textarea, button',
+            // Last click time
+            lastClickTime = Date.now(), clickTimeout,
+            //Velocities
+            velocities = [], 
+            allowMomentumBounce;
+        
+        // Animating Flag
         s.animating = false;
-        var lastClickTime = Date.now(), clickTimeout;
-        var velocities = [], allowMomentumBounce;
-        // Form elements to match
-        var formElements = 'input, select, textarea, button';
+        
+        // Touches information
+        s.touches = {
+            startX: 0,
+            startY: 0,
+            currentX: 0,
+            currentY: 0,
+            diff: 0
+        };
         
         // Touch handlers
         s.onTouchStart = function (e) {
@@ -11393,8 +11448,8 @@
             isTouched = true;
             isMoved = false;
             isScrolling = undefined;
-            touchesStart.x = touchesCurrent.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-            touchesStart.y = touchesCurrent.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+            s.touches.startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+            s.touches.startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
             touchStartTime = Date.now();
             s.allowClick = true;
             s.updateContainerSize();
@@ -11421,17 +11476,20 @@
             }
             if (s.params.onTouchMove) s.params.onTouchMove(s, e);
             s.allowClick = false;
-            if (!isTouched) return;
             if (e.targetTouches && e.targetTouches.length > 1) return;
             
-            touchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-            touchesCurrent.y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+            s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+            s.touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
         
-            var touchAngle = Math.atan2(Math.abs(touchesCurrent.y - touchesStart.y), Math.abs(touchesCurrent.x - touchesStart.x)) * 180 / Math.PI;
             if (typeof isScrolling === 'undefined') {
+                var touchAngle = Math.atan2(Math.abs(s.touches.currentY - s.touches.startY), Math.abs(s.touches.currentX - s.touches.startX)) * 180 / Math.PI;
                 isScrolling = isH() ? touchAngle > s.params.touchAngle : (90 - touchAngle > s.params.touchAngle);
                 // isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
             }
+            if (isScrolling && s.params.onTouchMoveOpposite) {
+                s.params.onTouchMoveOpposite(s, e);
+            }
+            if (!isTouched) return;
             if (isScrolling)  {
                 isTouched = false;
                 return;
@@ -11471,7 +11529,7 @@
             }
             isMoved = true;
         
-            var diff = isH() ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
+            var diff = s.touches.diff = isH() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
         
             diff = diff * s.params.touchRatio;
             if (s.rtl) diff = -diff;
@@ -11508,9 +11566,10 @@
                 if (Math.abs(diff) > s.params.threshold || allowThresholdMove) {
                     if (!allowThresholdMove) {
                         allowThresholdMove = true;
-                        touchesStart.x = touchesCurrent.x;
-                        touchesStart.y = touchesCurrent.y;
+                        s.touches.startX = s.touches.currentX;
+                        s.touches.startY = s.touches.currentY;
                         currentTranslate = startTranslate;
+                        s.touches.diff = isH() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
                         return;
                     }
                 }
@@ -11527,12 +11586,12 @@
                 //Velocity
                 if (velocities.length === 0) {
                     velocities.push({
-                        position: touchesStart[isH() ? 'x' : 'y'],
+                        position: s.touches[isH() ? 'startX' : 'startY'],
                         time: touchStartTime
                     });
                 }
                 velocities.push({
-                    position: touchesCurrent[isH() ? 'x' : 'y'],
+                    position: s.touches[isH() ? 'currentX' : 'currentY'],
                     time: (new Date()).getTime()
                 });
             }
@@ -11543,8 +11602,8 @@
         };
         s.onTouchEnd = function (e) {
             if (e.originalEvent) e = e.originalEvent;
-            if (!isTouched) return;
             if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
+            if (!isTouched) return;
         
             //Return Grab Cursor
             if (s.params.grabCursor && isMoved && isTouched) {
@@ -11586,9 +11645,7 @@
                 if (s && s.allowClick) s.allowClick = true;
             }, 0);
         
-            var touchesDiff = isH() ? touchesCurrent.x - touchesStart.x : touchesCurrent.y - touchesStart.y;
-        
-            if (!isTouched || !isMoved || !s.swipeDirection || touchesDiff === 0 || currentTranslate === startTranslate) {
+            if (!isTouched || !isMoved || !s.swipeDirection || s.touches.diff === 0 || currentTranslate === startTranslate) {
                 isTouched = isMoved = false;
                 return;
             }
@@ -11617,7 +11674,6 @@
         
                         var distance = lastMoveEvent.position - velocityEvent.position;
                         var time = lastMoveEvent.time - velocityEvent.time;
-        
                         s.velocity = distance / time;
                         s.velocity = s.velocity / 2;
                         if (Math.abs(s.velocity) < 0.02) {
@@ -11625,8 +11681,7 @@
                         }
                         // this implies that the user stopped moving a finger then released.
                         // There would be no events with distance zero, so the last event is stale.
-                        // if (Math.abs(s.velocity) < 0.1 & time > 150 || timeDiff > 300) {
-                        if (time > 150 || timeDiff > 300) {
+                        if (time > 150 || (new Date().getTime() - lastMoveEvent.time) > 300) {
                             s.velocity = 0;
                         }
                     } else {
@@ -11634,22 +11689,26 @@
                     }
         
                     velocities.length = 0;
-        
                     var momentumDuration = 1000 * s.params.freeModeMomentumRatio;
                     var momentumDistance = s.velocity * momentumDuration;
         
                     var newPosition = s.translate + momentumDistance;
+                    if (s.rtl) newPosition = - newPosition;
                     var doBounce = false;
                     var afterBouncePosition;
                     var bounceAmount = Math.abs(s.velocity) * 20 * s.params.freeModeMomentumBounceRatio;
                     if (newPosition < s.maxTranslate()) {
                         if (s.params.freeModeMomentumBounce) {
-                            if (newPosition + s.maxTranslate() < -bounceAmount) newPosition = s.maxTranslate() - bounceAmount;
+                            if (newPosition + s.maxTranslate() < -bounceAmount) {
+                                newPosition = s.maxTranslate() - bounceAmount;
+                            }
                             afterBouncePosition = s.maxTranslate();
                             doBounce = true;
                             allowMomentumBounce = true;
                         }
-                        else newPosition = s.maxTranslate();
+                        else {
+                            newPosition = s.maxTranslate();
+                        }
                     }
                     if (newPosition > s.minTranslate()) {
                         if (s.params.freeModeMomentumBounce) {
@@ -11660,11 +11719,18 @@
                             doBounce = true;
                             allowMomentumBounce = true;
                         }
-                        else newPosition = s.minTranslate();
+                        else {
+                            newPosition = s.minTranslate();
+                        }
                     }
                     //Fix duration
                     if (s.velocity !== 0) {
-                        momentumDuration = Math.abs((newPosition - s.translate) / s.velocity);
+                        if (s.rtl) {
+                            momentumDuration = Math.abs((-newPosition - s.translate) / s.velocity);
+                        }
+                        else {
+                            momentumDuration = Math.abs((newPosition - s.translate) / s.velocity);
+                        }
                     }
         
                     if (s.params.freeModeMomentumBounce && doBounce) {
@@ -11821,6 +11887,7 @@
                     
             }
             s.updateClasses();
+            return true;
         };
         
         s.onTransitionStart = function () {
@@ -12027,7 +12094,7 @@
                 s.wrapper.prepend($(prependSlides[i].cloneNode(true)).addClass(s.params.slideDuplicateClass));
             }
         };
-        s.deleteLoop = function () {
+        s.destroyLoop = function () {
             s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass).remove();
         };
         s.fixLoop = function () {
@@ -12046,11 +12113,11 @@
             }
         };
         /*=========================
-          Append/Prepend Slides
+          Append/Prepend/Remove Slides
           ===========================*/
         s.appendSlide = function (slides) {
             if (s.params.loop) {
-                s.deleteLoop();
+                s.destroyLoop();
             }
             if (typeof slides === 'object' && slides.length) {
                 for (var i = 0; i < slides.length; i++) {
@@ -12064,12 +12131,12 @@
                 s.createLoop();
             }
             if (!(s.params.observer && s.support.observer)) {
-                s.update();
+                s.update(true);
             }
         };
         s.prependSlide = function (slides) {
             if (s.params.loop) {
-                s.deleteLoop();
+                s.destroyLoop();
             }
             var newActiveIndex = s.activeIndex + 1;
             if (typeof slides === 'object' && slides.length) {
@@ -12085,9 +12152,42 @@
                 s.createLoop();
             }
             if (!(s.params.observer && s.support.observer)) {
-                s.update();
+                s.update(true);
             }
             s.slideTo(newActiveIndex, 0, false);
+        };
+        s.removeSlide = function (slidesIndexes) {
+            if (s.params.loop) {
+                s.destroyLoop();
+            }
+            var newActiveIndex = s.activeIndex,
+                indexToRemove;
+            if (typeof slidesIndexes === 'object' && slidesIndexes.length) {
+                for (var i = 0; i < slidesIndexes.length; i++) {
+                    indexToRemove = slidesIndexes[i];
+                    if (s.slides[indexToRemove]) s.slides.eq(indexToRemove).remove();
+                    if (indexToRemove < newActiveIndex) newActiveIndex--;
+                }
+                newActiveIndex = Math.max(newActiveIndex, 0);
+            }
+            else {
+                indexToRemove = slidesIndexes;
+                if (s.slides[indexToRemove]) s.slides.eq(indexToRemove).remove();
+                if (indexToRemove < newActiveIndex) newActiveIndex--;
+                newActiveIndex = Math.max(newActiveIndex, 0);
+            }
+        
+            if (!(s.params.observer && s.support.observer)) {
+                s.update(true);
+            }
+            s.slideTo(newActiveIndex, 0, false);
+        };
+        s.removeAllSlides = function () {
+            var slidesIndexes = [];
+            for (var i = 0; i < s.slides.length; i++) {
+                slidesIndexes.push(i);
+            }
+            s.removeSlide(slidesIndexes);
         };
         
     
@@ -12291,7 +12391,7 @@
           Scrollbar
           ===========================*/
         s.scrollbar = {
-            init: function () {
+            set: function () {
                 if (!s.params.scrollbar) return;
                 var sb = s.scrollbar;
                 sb.track = $(s.params.scrollbar);
@@ -12434,17 +12534,17 @@
             s.updateSlidesSize();
             s.updatePagination();
             if (s.params.scrollbar && s.scrollbar) {
-                s.scrollbar.init();
+                s.scrollbar.set();
             }
             if (s.params.effect !== 'slide' && s.effects[s.params.effect]) {
                 if (!s.params.loop) s.updateProgress();
                 s.effects[s.params.effect].setTranslate();
             }
             if (s.params.loop) {
-                s.slideTo(s.params.initialSlide + s.loopedSlides, 0, false);
+                s.slideTo(s.params.initialSlide + s.loopedSlides, 0, s.params.runCallbacksOnInit);
             }
             else {
-                s.slideTo(s.params.initialSlide, 0, false);
+                s.slideTo(s.params.initialSlide, 0, s.params.runCallbacksOnInit);
             }
             s.attachEvents();
             if (s.params.observer && s.support.observer) {
@@ -12465,6 +12565,7 @@
             if (s.params.hashnav) {
                 if (s.hashnav) s.hashnav.init();
             }
+            if (s.params.onInit) s.params.onInit(s);
         };
         
         // Destroy
@@ -12472,10 +12573,10 @@
             s.detachEvents();
             s.disconnectObservers();
             if (s.params.keyboardControl) {
-                if (s.disableKeyboard) s.disableKeyboard();
+                if (s.disableKeyboardControl) s.disableKeyboardControl();
             }
             if (s.params.mousewheelControl) {
-                if (s.disableMousewheel) s.disableMousewheel();
+                if (s.disableMousewheelControl) s.disableMousewheelControl();
             }
             if (s.params.onDestroy) s.params.onDestroy();
             if (deleteInstance !== false) s = null;
@@ -12517,7 +12618,7 @@
     
             flexbox: (function () {
                 var div = document.createElement('div').style;
-                var styles = ('WebkitBox msFlexbox MsFlexbox WebkitFlex MozBox fles').split(' ');
+                var styles = ('WebkitBox msFlexbox MsFlexbox WebkitFlex MozBox flex').split(' ');
                 for (var i = 0; i < styles.length; i++) {
                     if (styles[i] in div) return true;
                 }

@@ -1,5 +1,40 @@
 # Change Log
 
+## Framework7 v1.0.2 - Updated on February 22, 2015
+  * Page Transitions
+    * Highly improved page transitions and swipe back performance
+  * FastClicks
+    * Fixed issue with sometimes not working checkboxes on Androids
+  * Icons
+    * All inline SVG icons are now encoded for better support in IE
+  * Photo Browser
+    * Fixed "swipe-to-close" behavior
+  * Pages
+    * `pageData` now has additional `navbarInnerContainer` property with HTML container of related Navbar
+  * Device API
+    * New property `app.device.androidChrome` that indicates Chrome browser running on Android
+  * Swiper update to latest 3.0.2
+    * New callbacks
+      * onInit (swiper)
+      * onTouchMoveOpposite (swiper, e)
+    * Fixed free mode momentum in RTL layout
+    * `.update` method improved to fully cover what `onResize` do for full and correct update
+    * Exposed `swiper.touches` object with the following properties: `startX`, `startY`, `currentX`, `currentY`, `diff`
+    * New methods to remove slides
+      * `.removeSlide(index)` or `.removeSlide([indexes])` - to remove selected slides
+      * `.removeAllSlides()` - to remove all slides
+  * Themes
+    * Improved support for active tabbar icons and global theme colors
+  * Sub Navbar
+    * Improved animation/transition during swipe back action
+  * Panels
+    * Fixed issue with broken `swipePanelOnlyClose` parameter
+  * Smart Select
+    * Fixed small issue with "collapsed" (wtihout space between) values in item-after
+  * Demo Apps
+    * Demo apps removed from main repo to their own repositories on GitHub
+
+
 ## Framework7 v1.0.1 - Updated on February 13, 2015
   * FastClicks
     * Fixed issue with sometimes broken inertia scrolling on Androids
