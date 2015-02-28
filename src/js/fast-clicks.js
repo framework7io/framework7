@@ -6,6 +6,10 @@ app.initFastClicks = function () {
     if (app.params.activeState) {
         $('html').addClass('watch-active-state');
     }
+    if (app.device.ios && app.device.webView) {
+        // Strange hack required for iOS 8 webview to work on inputs
+        window.addEventListener('touchstart', function () {});
+    }
 
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
     var activableElement, activeTimeout, needsFastClick;
