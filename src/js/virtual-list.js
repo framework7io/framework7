@@ -444,7 +444,7 @@ app.reinitVirtualList = function (pageContainer) {
     var vlists = page.find('.virtual-list');
     if (vlists.length === 0) return;
     for (var i = 0; i < vlists.length; i++) {
-        var vlistInstance = vlistInstance[0].f7VirtualList;
+        var vlistInstance = vlists[i].f7VirtualList;
         if (vlistInstance) {
             vlistInstance.update();
         }
