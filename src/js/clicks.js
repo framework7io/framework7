@@ -318,6 +318,6 @@ app.initClickEvents = function () {
         e.preventDefault();
     }
     if (app.support.touch) {
-        $(document).on('touchstart', '.panel-overlay, .modal-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling);
+        $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-overlay, .modal-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling);
     }
 };
