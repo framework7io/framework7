@@ -4,8 +4,13 @@
 app.initSmartSelects = function (pageContainer) {
     var page = $(pageContainer);
     if (page.length === 0) return;
-
-    var selects = page.find('.smart-select');
+    var selects;
+    if (page.is('.smart-select')) {
+        selects = page;
+    }
+    else {
+        selects = page.find('.smart-select');
+    }
     if (selects.length === 0) return;
 
     selects.each(function () {
@@ -40,7 +45,23 @@ app.initSmartSelects = function (pageContainer) {
     });
     
 };
-app.smartSelectOpen = function (smartSelect) {
+app.smartSelectAddOption = function (select, option, index) {
+    select = $(select);
+    var smartSelect = select.parents('.smart-select');
+    if (typeof index === 'undefined') {
+        select.append(option);
+    }
+    else {
+        $(option).insertBefore(select.find('option').eq(index));
+    }
+    app.initSmartSelects(smartSelect);
+    var selectName = smartSelect.find('select').attr('name');
+    var opened = $('.page.smart-select-page[data-select-name="' + selectName + '"]').length > 0;
+    if (opened) {
+        app.smartSelectOpen(smartSelect, true);
+    }
+};
+app.smartSelectOpen = function (smartSelect, reLayout) {
     smartSelect = $(smartSelect);
     if (smartSelect.length === 0) return;
 
@@ -73,6 +94,7 @@ app.smartSelectOpen = function (smartSelect) {
     var id = (new Date()).getTime();
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
+    var selectName = select.name;
     var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
@@ -205,7 +227,7 @@ app.smartSelectOpen = function (smartSelect) {
     var pageHTML =
         (navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
-        '  <div data-page="' + pageName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
+        '  <div data-page="' + pageName + '" data-select-name="' + selectName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
              (navbarLayout === 'fixed' ? navbarHTML : '') +
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
@@ -270,25 +292,32 @@ app.smartSelectOpen = function (smartSelect) {
     function pageInit(e) {
         var page = e.detail.page;
         if (page.name === pageName) {
-            $(document).off('pageInit', pageInit);
             handleInputs(page.container);
         }
     }
-    
-    // Load content
     if (openIn === 'popup') {
-        popup = app.popup(
+        if (reLayout) {
+            popup = $('.popup.smart-select-popup .view');
+            popup.html(pageHTML);
+        }
+        else {
+            popup = app.popup(
                 '<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
                     '<div class="view navbar-fixed">' +
                         pageHTML +
                     '</div>' +
                 '</div>'
                 );
-        app.initPage($(popup).find('.page'));
+            popup = $(popup);
+        }
+        app.initPage(popup.find('.page'));
         handleInputs(popup);
     }
     else {
-        $(document).on('pageInit', pageInit);
-        view.router.load({content: pageHTML});
+        $(document).once('pageInit', '.smart-select-page', pageInit);
+        view.router.load({
+            content: pageHTML,
+            reload: reLayout ? true : undefined
+        });
     }
 };
