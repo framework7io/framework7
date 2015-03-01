@@ -223,8 +223,7 @@ myApp.onPageInit('pull-to-refresh', function (page) {
     ptrContent.on('refresh', function (e) {
         // Emulate 2s loading
         setTimeout(function () {
-            // var picURL = 'http://hhhhold.com/88/d/jpg?' + Math.round(Math.random() * 100);
-            var picURL = 'http://lorempixel.com/88/88/';
+            var picURL = 'http://lorempixel.com/88/88/abstract/' + Math.round(Math.random() * 10);
             var song = songs[Math.floor(Math.random() * songs.length)];
             var author = authors[Math.floor(Math.random() * authors.length)];
             var linkHTML = '<li class="item-content">' +
