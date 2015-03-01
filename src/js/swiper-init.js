@@ -41,7 +41,8 @@ app.initSwiper = function (pageContainer) {
                 onlyExternal: swiper.data('onlyExternal') && (swiper.data('onlyExternal') === 'true' ? true : false),
                 nextButton: swiper.data('nextButton'),
                 prevButton: swiper.data('prevButton'),
-                autoplay: swiper.data('autoplay')
+                autoplay: swiper.data('autoplay'),
+                parallax: swiper.data('parallax') && (swiper.data('parallax') === 'true' ? true : false)
             };
         }
         var _slider = app.swiper(swiper[0], params);
