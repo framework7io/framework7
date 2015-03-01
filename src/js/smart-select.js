@@ -73,13 +73,15 @@ app.smartSelectOpen = function (smartSelect) {
     var id = (new Date()).getTime();
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
-    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup;
+    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
         if (option[0].disabled) continue;
         optionImage = option.attr('data-option-image') || $select.attr('data-option-image');
         optionIcon = option.attr('data-option-icon') || $select.attr('data-option-icon');
         optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
+        optionColor = option.attr('data-option-color');
+        optionClassName = option.attr('data-option-class');
         optionGroup = option.parent('optgroup')[0];
         optionGroupLabel = optionGroup && optionGroup.label;
         optionShowGroupLabel = false;
@@ -98,6 +100,8 @@ app.smartSelectOpen = function (smartSelect) {
             showGroupLabel: optionShowGroupLabel,
             image: optionImage,
             icon: optionIcon,
+            color: optionColor,
+            className: optionClassName,
             disabled: option[0].disabled,
             inputType: inputType,
             id: id,
@@ -115,7 +119,7 @@ app.smartSelectOpen = function (smartSelect) {
             '{{#if showGroupLabel}}' +
             '<li class="item-divider">{{groupLabel}}</li>' +
             '{{/if}}' +
-            '<li>' +
+            '<li{{#if className}} class="{{className}}"{{/if}}>' +
                 '<label class="label-{{inputType}} item-content">' +
                     '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
                     '{{#if hasMedia}}' +
@@ -126,7 +130,7 @@ app.smartSelectOpen = function (smartSelect) {
                     '</div>' +
                     '{{/if}}' +
                     '<div class="item-inner">' +
-                        '<div class="item-title">{{text}}</div>' +
+                        '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
                     '</div>' +
                 '</label>' +
             '</li>'
