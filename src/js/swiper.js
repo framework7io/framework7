@@ -740,18 +740,29 @@ window.Swiper = function (container, params) {
         if (s.params.scrollbar && s.scrollbar) {
             s.scrollbar.set();
         }
+        function forceSetTranslate() {
+            newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
+            s.setWrapperTranslate(newTranslate);
+            s.updateActiveIndex();
+            s.updateClasses();
+        }
         if (updateTranslate) {
             var translated, newTranslate;
-            if (s.isEnd) {
-                translated = s.slideTo(s.slides.length - 1, 0, false, true);
+            if (s.params.freeMode) {
+                forceSetTranslate();
             }
             else {
-                translated = s.slideTo(s.activeIndex, 0, false, true);
+                if (s.params.slidesPerView === 'auto' && s.isEnd && !s.params.centeredSlides) {
+                    translated = s.slideTo(s.slides.length - 1, 0, false, true);
+                }
+                else {
+                    translated = s.slideTo(s.activeIndex, 0, false, true);
+                }
+                if (!translated) {
+                    forceSetTranslate();
+                }
             }
-            if (!translated) {
-                newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
-                s.setWrapperTranslate(newTranslate);
-            }
+                
         }
     };
     
@@ -762,17 +773,26 @@ window.Swiper = function (container, params) {
         s.updateContainerSize();
         s.updateSlidesSize();
         s.updateProgress();
-        s.updateClasses();
-        if (s.params.slidesPerView === 'auto') s.updatePagination();
+        if (s.params.slidesPerView === 'auto' || s.params.freeMode) s.updatePagination();
         if (s.params.scrollbar && s.scrollbar) {
             s.scrollbar.set();
         }
-        if (s.isEnd) {
-            s.slideTo(s.slides.length - 1, 0, false, true);
+        if (s.params.freeMode) {
+            var newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
+            s.setWrapperTranslate(newTranslate);
+            s.updateActiveIndex();
+            s.updateClasses();
         }
         else {
-            s.slideTo(s.activeIndex, 0, false, true);
+            s.updateClasses();
+            if (s.params.slidesPerView === 'auto' && s.isEnd && !s.params.centeredSlides) {
+                s.slideTo(s.slides.length - 1, 0, false, true);
+            }
+            else {
+                s.slideTo(s.activeIndex, 0, false, true);
+            }
         }
+            
     };
     
     /*=========================
@@ -803,6 +823,18 @@ window.Swiper = function (container, params) {
         var target = s.support.touch ? touchEventsTarget : document;
     
         var moveCapture = s.params.nested ? true : false;
+    
+        // // Touch/pointer events
+        // touchEventsTarget[action](s.touchEvents.start, s.onTouchStart, false);
+        // target[action](s.touchEvents.move, s.onTouchMove, moveCapture);
+        // target[action](s.touchEvents.end, s.onTouchEnd, false);
+    
+        // if (s.browser.ie && s.params.simulateTouch) {
+        //     // Additional mouse events for IE
+        //     touchEventsTarget[action]('mousedown', s.onTouchStart, false);
+        //     document[action]('mousemove', s.onTouchMove, moveCapture);
+        //     document[action]('mouseup', s.onTouchEnd, false);
+        // }
     
         //Touch Events
         if (s.browser.ie) {
