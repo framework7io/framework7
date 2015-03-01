@@ -221,8 +221,40 @@ i.ks-tabbar-icon-4 {
 .ks-swiper-gallery-thumbs .swiper-slide,
 .ks-swiper-gallery-top .swiper-slide-pic,
 .ks-swiper-gallery-thumbs .swiper-slide-pic {
+  -webkit-background-size: cover;
   background-size: cover;
   background-position: center;
+}
+.ks-parallax-slider {
+  height: 100%;
+}
+.ks-parallax-slider .swiper-parallax-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 130%;
+  height: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+.ks-parallax-slider .swiper-slide {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 40px 60px;
+  color: #fff;
+}
+.ks-parallax-slider .swiper-slide-title {
+  font-size: 41px;
+  font-weight: 300;
+}
+.ks-parallax-slider .swiper-slide-subtitle {
+  font-size: 21px;
+}
+.ks-parallax-slider .swiper-slide-text {
+  font-size: 14px;
+  max-width: 400px;
+  line-height: 1.3;
 }
 .page[data-page="virtual-list"] .virtual-list li {
   height: 63px;
