@@ -447,7 +447,8 @@ app.router._load = function (view, options) {
         pageContainer: newPage[0], 
         url: url, 
         position: options.reload ? reloadPosition : 'right', 
-        navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
+        navbarInnerContainer: dynamicNavbar ? newNavbarInner && newNavbarInner[0] : undefined, 
+        oldNavbarInnerContainer: dynamicNavbar ? oldNavbarInner && oldNavbarInner[0] : undefined,
         context: t7_rendered.context,
         query: options.query,
         fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
@@ -795,6 +796,7 @@ app.router._back = function (view, options) {
             url: url, 
             position: 'left', 
             navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
+            oldNavbarInnerContainer: dynamicNavbar ? oldNavbarInner && oldNavbarInner[0] : undefined,
             context: t7_rendered.context,
             query: options.query,
             fromPage: oldPage && oldPage.length && oldPage[0].f7PageData,
