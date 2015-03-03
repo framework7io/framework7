@@ -89,6 +89,9 @@ app.pageInitCallback = function (view, params) {
         navbarInnerContainer: params.navbarInnerContainer,
         fromPage: params.fromPage
     };
+    if (params.fromPage && !params.fromPage.navbarInnerContainer && params.oldNavbarInnerContainer) {
+        params.fromPage.navbarInnerContainer = params.oldNavbarInnerContainer;
+    }
 
     if (pageContainer.f7PageInitialized && view.params.domCache) {
         // Reinit Page
