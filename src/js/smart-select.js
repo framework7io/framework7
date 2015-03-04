@@ -252,7 +252,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                 template: smartSelectItemTemplate,
                 height: virtualListItemHeight || undefined,
                 searchByItem: function (query, index, item) {
-                    if (item.text.toLowerCase().indexOf(query.trim()) >=0 ) return true;
+                    if (item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
                     return false;
                 }
             });
