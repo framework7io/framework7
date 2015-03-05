@@ -125,8 +125,8 @@ app.initPageMessagebar = function (pageContainer) {
     if (messagebar.length === 0) return;
     if (!messagebar.hasClass('messagebar-init')) return;
     var mb = app.messagebar(messagebar, {
-        textarea: messagebar.attr('data-textarea'),
-        maxHeight: messagebar.attr('data-max-height') && parseInt(messagebar.attr('data-max-height'), 10),
+        textarea: messagebar.data('textarea'),
+        maxHeight: messagebar.data('max-height') && parseInt(messagebar.data('max-height'), 10),
     });
 
     // Destroy on page remove
