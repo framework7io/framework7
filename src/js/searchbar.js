@@ -1,140 +1,167 @@
 /*======================================================
 ************   Searchbar   ************
 ======================================================*/
-app.initSearchbar = function (pageContainer) {
-    pageContainer = $(pageContainer);
-    var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
-    if (searchbar.length === 0) return;
-    if (!pageContainer.hasClass('page')) pageContainer = searchbar.parents('.page').eq(0);
-    var searchbarOverlay = pageContainer.hasClass('page') ? pageContainer.find('.searchbar-overlay') : $('.searchbar-overlay');
-    var input = searchbar.find('input[type="search"]');
-    var clear = searchbar.find('.searchbar-clear');
-    var cancel = searchbar.find('.searchbar-cancel');
-    var searchList = $(searchbar.attr('data-search-list'));
-    var isVirtualList = searchList.hasClass('virtual-list');
-    var virtualList;
-    var searchIn = searchbar.attr('data-search-in');
-    var searchBy = searchbar.attr('data-search-by');
-    var found = searchbar.attr('data-searchbar-found');
-    if (!found) {
-        found = pageContainer.find('.searchbar-found');
-        if (found.length === 0) found = $('.searchbar-found');
+var Searchbar = function (container, params) {
+    var defaults = {
+        input: null,
+        clearButton: null,
+        cancelButton: null,
+        searchList: null,
+        searchIn: '.item-title',
+        searchBy: '',
+        found: null,
+        notFoud: null,
+        overlay: null,
+        ignore: '.searhbar-ignore'
+    };
+    params = params || {};
+    for (var def in defaults) {
+        if (typeof params[def] === 'undefined' || params[def] === null) {
+            params[def] = defaults[def];
+        }
+    }
+    
+    // Instance
+    var s = this;
+
+    // Params
+    s.params = params;
+
+    // Container
+    container = $(container);
+    s.container = container;
+
+    // Active
+    s.active = false;
+
+    // Input
+    s.input = s.params.input ? $(s.params.input) : s.container.find('input[type="search"]');
+    s.clearButton = s.params.clearButton ? $(s.params.clearButton) : s.container.find('.searchbar-clear');
+    s.cancelButton = s.params.cancelButton ? $(s.params.cancelButton) : s.container.find('.searchbar-cancel');
+
+    // Search List
+    s.searchList = $(s.params.searchList);
+
+    // Is Virtual List
+    s.isVirtualList = s.searchList.hasClass('virtual-list');
+
+    // Is In Page
+    s.pageContainer = s.container.parents('.page').eq(0);
+
+    // Overlay
+    if (!s.params.overlay) {
+        s.overlay = s.pageContainer.length > 0 ? s.pageContainer.find('.searchbar-overlay') : $('.searchbar-overlay');
     }
     else {
-        found = $(found);
+        s.overlay = $(s.params.overlay);
     }
-    var notFound = searchbar.attr('data-searchbar-not-found');
-    if (!notFound) {
-        notFound = pageContainer.find('.searchbar-not-found');
-        if (notFound.length === 0) notFound = $('.searchbar-not-found');
+    // Found and not found
+    if (!s.params.found) {
+        s.found = s.pageContainer.length > 0 ? s.pageContainer.find('.searchbar-found') : $('.searchbar-found');
     }
     else {
-        notFound = $(notFound);
+        s.found = $(s.params.found);
+    }
+    if (!s.params.notFound) {
+        s.notFound = s.pageContainer.length > 0 ? s.pageContainer.find('.searchbar-not-found') : $('.searchbar-not-found');
+    }
+    else {
+        s.notFound = $(s.params.notFound);
     }
 
     // Cancel button
     var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-    if (cancel.length > 0) {
-        cancel.show();
-        cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
+    if (s.cancelButton.length > 0) {
+        s.cancelButton.show();
+        s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
     }
-        
 
-    // Handlers
-    function disableSearchbar() {
-        input.val('').trigger('change');
-        searchbar.removeClass('searchbar-active searchbar-not-empty');
-        if (cancel.length > 0) cancel.css(cancelMarginProp, -cancel[0].offsetWidth + 'px');
-        
-        if (searchList) searchbarOverlay.removeClass('searchbar-overlay-active');
+    // Enable/disalbe
+    s.enable = function () {
+        function _enable() {
+            if (s.searchList.length && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+            s.container.addClass('searchbar-active');
+            if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
+            s.searchList.trigger('enableSearch');
+            s.active = true;
+        }
         if (app.device.ios) {
             setTimeout(function () {
-                input.blur();
-                searchList.trigger('disableSearch');
+                _enable();
             }, 400);
         }
         else {
-            input.blur();
-            searchList.trigger('disableSearch');
+            _enable();
         }
-    }
+    };
 
-    // Activate
-    function enableSearchbar() {
+    s.disable = function () {
+        s.input.val('').trigger('change');
+        s.container.removeClass('searchbar-active searchbar-not-empty');
+        if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
+        
+        if (s.searchList.length) s.overlay.removeClass('searchbar-overlay-active');
+        function _disable() {
+            s.input.blur();
+            s.searchList.trigger('disableSearch');
+            s.active = false;
+        }
         if (app.device.ios) {
             setTimeout(function () {
-                if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
-                searchbar.addClass('searchbar-active');
-                if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
-                searchList.trigger('enableSearch');
-
+                _disable();
             }, 400);
         }
         else {
-            if (searchList && !searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
-            searchbar.addClass('searchbar-active');
-            if (cancel.length > 0) cancel.css(cancelMarginProp, '0px');
-            searchList.trigger('enableSearch');
+            _disable();
         }
-    }
+    };
 
     // Clear
-    function clearSearchbar() {
-        input.val('').trigger('change').focus();
-        searchList.trigger('clearSearch');
-    }
-
-    // Change
-    function searchValue() {
-        setTimeout(function () {
-            var value = input.val().trim();
-            if (value.length === 0) {
-                searchbar.removeClass('searchbar-not-empty');
-                if (searchList && searchbar.hasClass('searchbar-active')) searchbarOverlay.addClass('searchbar-overlay-active');
-            }
-            else {
-                searchbar.addClass('searchbar-not-empty');
-                if (searchList && searchbar.hasClass('searchbar-active')) searchbarOverlay.removeClass('searchbar-overlay-active');
-            }
-            if (searchList.length > 0 && (searchIn || isVirtualList)) search(value);
-        }, 0);
-    }
-
-    //Prevent submit
-    function preventSubmit(e) {
-        e.preventDefault();
-    }
-
-    function attachEvents(destroy) {
-        var method = destroy ? 'off' : 'on';
-        searchbar[method]('submit', preventSubmit);
-        cancel[method]('click', disableSearchbar);
-        searchbarOverlay[method]('click', disableSearchbar);
-        input[method]('focus', enableSearchbar);
-        input[method]('change keydown keypress keyup', searchValue);
-        clear[method]('click', clearSearchbar);
-    }
-    function detachEvents() {
-        attachEvents(true);
-    }
-    searchbar[0].f7DestroySearchbar = detachEvents;
-
-    // Attach events
-    attachEvents();
+    s.clear = function () {
+        s.input.val('').trigger('change').focus();
+        s.searchList.trigger('clearSearch');
+    };
 
     // Search
+    s.handleInput = function () {
+        setTimeout(function () {
+            var value = s.input.val().trim();
+            if (s.searchList.length > 0 && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
+        }, 0);
+    };
+
     var previousQuery;
-    function search(query) {
+    var virtualList;
+    s.search = function (query, internal) {
         if (query.trim() === previousQuery) return;
         previousQuery = query.trim();
+
+        if (!internal) {
+            if (!s.active) {
+                s.enable();
+            }
+            if (!internal) {
+                s.input.val(query);
+            }
+        }
+        // Add active/inactive classes on overlay
+        if (query.length === 0) {
+            s.container.removeClass('searchbar-not-empty');
+            if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+        }
+        else {
+            s.container.addClass('searchbar-not-empty');
+            if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.removeClass('searchbar-overlay-active');
+        }
+
         var values = query.trim().toLowerCase().split(' ');
         var foundItems = [];
-        if (isVirtualList) {
-            virtualList = searchList[0].f7VirtualList;
+        if (s.isVirtualList) {
+            virtualList = s.searchList[0].f7VirtualList;
             if (query.trim() === '') {
                 virtualList.resetFilter();
-                notFound.hide();
-                found.show();
+                s.notFound.hide();
+                s.found.show();
                 return;
             }
             if (virtualList.params.searchAll) {
@@ -149,10 +176,9 @@ app.initSearchbar = function (pageContainer) {
             }
         }
         else {
-            searchIn = searchbar.attr('data-search-in');
-            searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
+            s.searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
                 el = $(el);
-                var compareWithEl = el.find(searchIn);
+                var compareWithEl = el.find(s.params.searchIn);
                 if (compareWithEl.length === 0) return;
                 var compareWith;
                 compareWith = compareWithEl.text().trim().toLowerCase();
@@ -160,7 +186,7 @@ app.initSearchbar = function (pageContainer) {
                 for (var i = 0; i < values.length; i++) {
                     if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
                 }
-                if (wordsMatch !== values.length) {
+                if (wordsMatch !== values.length && !(s.params.ignore && el.is(s.params.ignore))) {
                     el.addClass('hidden-by-searchbar');
                 }
                 else {
@@ -169,7 +195,7 @@ app.initSearchbar = function (pageContainer) {
             });
 
             if (app.params.searchbarHideDividers) {
-                searchList.find('.item-divider, .list-group-title').each(function () {
+                s.searchList.find('.item-divider, .list-group-title').each(function () {
                     var title = $(this);
                     var nextElements = title.nextAll('li');
                     var hide = true;
@@ -180,15 +206,17 @@ app.initSearchbar = function (pageContainer) {
                             hide = false;
                         }
                     }
-                    if (hide) title.addClass('hidden-by-searchbar');
+                    var ignore = s.params.ignore && title.is(s.params.ignore);
+                    if (hide && !ignore) title.addClass('hidden-by-searchbar');
                     else title.removeClass('hidden-by-searchbar');
                 });
             }
             if (app.params.searchbarHideGroups) {
-                searchList.find('.list-group').each(function () {
+                s.searchList.find('.list-group').each(function () {
                     var group = $(this);
+                    var ignore = s.params.ignore && group.is(s.params.ignore);
                     var notHidden = group.find('li:not(.hidden-by-searchbar)');
-                    if (notHidden.length === 0) {
+                    if (notHidden.length === 0 && !ignore) {
                         group.addClass('hidden-by-searchbar');
                     }
                     else {
@@ -197,23 +225,78 @@ app.initSearchbar = function (pageContainer) {
                 });
             }
         }
-        searchList.trigger('search', {query: query, foundItems: foundItems});
+        s.searchList.trigger('search', {query: query, foundItems: foundItems});
         if (foundItems.length === 0) {
-            notFound.show();
-            found.hide();
+            s.notFound.show();
+            s.found.hide();
         }
         else {
-            notFound.hide();
-            found.show();
+            s.notFound.hide();
+            s.found.show();
         }
-        if (isVirtualList) {
+        if (s.isVirtualList) {
             virtualList.filterItems(foundItems);
         }
+    };
+
+    // Events
+    function preventSubmit(e) {
+        e.preventDefault();
     }
+
+    s.attachEvents = function (destroy) {
+        var method = destroy ? 'off' : 'on';
+        s.container[method]('submit', preventSubmit);
+        s.cancelButton[method]('click', s.disable);
+        s.overlay[method]('click', s.disable);
+        s.input[method]('focus', s.enable);
+        s.input[method]('change keydown keypress keyup', s.handleInput);
+        s.clearButton[method]('click', s.clear);
+    };
+    s.detachEvents = function() {
+        s.attachEvents(true);
+    };
+
+    // Init Destroy
+    s.init = function () {
+        s.attachEvents();
+    };
+    s.destroy = function () {
+        s.detachEvents();
+        s = null;
+    };
+
+    // Init
+    s.init();
+
+    s.container[0].f7Searchbar = s;
+    return s;
+
+};
+app.searchbar = function (container, params) {
+    return new Searchbar(container, params);
+};
+app.initSearchbar = function (pageContainer) {
+    pageContainer = $(pageContainer);
+    var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
+    if (searchbar.length === 0) return;
+    if (!searchbar.hasClass('searchbar-init')) return;
+    var sb = app.searchbar(searchbar, {
+        input: searchbar.attr('data-input'),
+        clearButton: searchbar.attr('data-clear-button'),
+        cancelButton: searchbar.attr('data-cancel-button'),
+        searchList: searchbar.attr('data-search-list'),
+        searchIn: searchbar.attr('data-search-in'),
+        searchBy: searchbar.attr('data-search-by'),
+        found: searchbar.attr('data-found'),
+        notFoud: searchbar.attr('data-not-found'),
+        overlay: searchbar.attr('data-overlay'),
+        ignore: searchbar.attr('data-ignore')
+    });
 
     // Destroy on page remove
     function pageBeforeRemove() {
-        detachEvents();
+        sb.destroy();
         pageContainer.off('pageBeforeRemove', pageBeforeRemove);
     }
     if (pageContainer.hasClass('page')) {
@@ -225,5 +308,5 @@ app.destroySearchbar = function (pageContainer) {
     pageContainer = $(pageContainer);
     var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
     if (searchbar.length === 0) return;
-    if (searchbar[0].f7DestroySearchbar) searchbar[0].f7DestroySearchbar();
+    if (searchbar[0].f7Searchbar) searchbar[0].f7Searchbar.destroy();
 };
