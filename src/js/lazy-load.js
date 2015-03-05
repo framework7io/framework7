@@ -61,14 +61,11 @@ app.initImagesLazyLoad = function (pageContainer) {
             }
         }
 
-        if (!app.params.imagesLazyLoadSequential) {
-            onLoad();
-            return;
-        }
-
-        if (imageIsLoading) {
-            if (imagesSequence.indexOf(el[0]) < 0) imagesSequence.push(el[0]);
-            return;
+        if (app.params.imagesLazyLoadSequential) {
+            if (imageIsLoading) {
+                if (imagesSequence.indexOf(el[0]) < 0) imagesSequence.push(el[0]);
+                return;
+            }
         }
 
         // Loading flag
