@@ -276,7 +276,7 @@ var Searchbar = function (container, params) {
 app.searchbar = function (container, params) {
     return new Searchbar(container, params);
 };
-app.initSearchbar = function (pageContainer) {
+app.initPageSearchbar = function (pageContainer) {
     pageContainer = $(pageContainer);
     var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
     if (searchbar.length === 0) return;

@@ -264,15 +264,15 @@ app.initPage = function (pageContainer) {
     // Init smart select
     if (app.initSmartSelects) app.initSmartSelects(pageContainer);
     // Init slider
-    if (app.initSwiper) app.initSwiper(pageContainer);
+    if (app.initPageSwiper) app.initPageSwiper(pageContainer);
     // Init pull to refres
     if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
     // Init infinite scroll
     if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
     // Init searchbar
-    if (app.initSearchbar) app.initSearchbar(pageContainer);
+    if (app.initPageSearchbar) app.initPageSearchbar(pageContainer);
     // Init message bar
-    if (app.initMessagebar) app.initMessagebar(pageContainer);
+    if (app.initPageMessagebar) app.initPageMessagebar(pageContainer);
     // Init scroll toolbars
     if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
     // Init scroll toolbars
@@ -283,7 +283,7 @@ app.reinitPage = function (pageContainer) {
     // Size navbars on page reinit
     if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
     // Reinit slider
-    if (app.reinitSwiper) app.reinitSwiper(pageContainer);
+    if (app.reinitPageSwiper) app.reinitPageSwiper(pageContainer);
     // Reinit lazy load
     if (app.reinitLazyLoad) app.reinitLazyLoad(pageContainer);
 };

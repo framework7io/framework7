@@ -4,7 +4,7 @@ Framework7 Swiper Additions
 app.swiper = function (container, params) {
     return new Swiper(container, params);
 };
-app.initSwiper = function (pageContainer) {
+app.initPageSwiper = function (pageContainer) {
     var page = $(pageContainer);
     var swipers = page.find('.swiper-init');
     if (swipers.length === 0) return;
@@ -49,7 +49,7 @@ app.initSwiper = function (pageContainer) {
         destroySwiperOnRemove(_slider);
     }
 };
-app.reinitSwiper = function (pageContainer) {
+app.reinitPageSwiper = function (pageContainer) {
     var page = $(pageContainer);
     var sliders = page.find('.swiper-init');
     if (sliders.length === 0) return;
