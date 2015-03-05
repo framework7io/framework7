@@ -215,7 +215,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         searchbarCancel = smartSelect.data('searchbar-cancel') || 'Cancel';
     }
 
-    var searchbarHTML =   '<form class="searchbar" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
+    var searchbarHTML =   '<form class="searchbar searchbar-init" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
                             '<div class="searchbar-input">' +
                                 '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
                                 '<a href="#" class="searchbar-clear"></a>' +
