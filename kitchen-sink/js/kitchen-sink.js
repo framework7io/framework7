@@ -181,14 +181,22 @@ myApp.onPageInit('messages', function (page) {
         },
         
     ];
-    var answerTimeout;
-    $$('.messagebar a.link').on('click', function () {
+    var answerTimeout, isFocused;
+    $$('.messagebar a.send-message').on('touchstart mousedown', function () {
+        isFocused = document.activeElement && document.activeElement === $$('.messagebar textarea')[0];
+    });
+    $$('.messagebar a.send-message').on('click', function (e) {
         var textarea = $$('.messagebar textarea');
         var messageText = textarea.val();
-        if (messageText.length === 0) return;
+        if (isFocused) {
+            e.preventDefault();
+            textarea[0].focus();
+        }
+        if (messageText.length === 0) {
+            return;
+        }
         // Empty textarea
         textarea.val('').trigger('change');
-        textarea[0].focus();
         // Add Message
         myApp.addMessage({
             text: messageText,
