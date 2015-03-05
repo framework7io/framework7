@@ -264,7 +264,6 @@ app.initPage = function (pageContainer) {
     // Init smart select
     if (app.initSmartSelects) app.initSmartSelects(pageContainer);
     // Init slider
-    if (app.initSlider) app.initSlider(pageContainer);
     if (app.initSwiper) app.initSwiper(pageContainer);
     // Init pull to refres
     if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
@@ -284,7 +283,6 @@ app.reinitPage = function (pageContainer) {
     // Size navbars on page reinit
     if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
     // Reinit slider
-    if (app.reinitSlider) app.reinitSlider(pageContainer);
     if (app.reinitSwiper) app.reinitSwiper(pageContainer);
     // Reinit lazy load
     if (app.reinitLazyLoad) app.reinitLazyLoad(pageContainer);
