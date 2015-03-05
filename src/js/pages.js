@@ -258,7 +258,7 @@ app.initPage = function (pageContainer) {
     // Size navbars on page load
     if (app.sizeNavbars) app.sizeNavbars(pageContainer.parents('.' + app.params.viewClass)[0]);
     // Init messages
-    if (app.initMessages) app.initMessages(pageContainer);
+    if (app.initPageMessages) app.initPageMessages(pageContainer);
     // Init forms storage
     if (app.initFormsStorage) app.initFormsStorage(pageContainer);
     // Init smart select
