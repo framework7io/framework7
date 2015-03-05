@@ -56,7 +56,7 @@ app.reinitSwiper = function (pageContainer) {
     for (var i = 0; i < sliders.length; i++) {
         var sliderInstance = sliders[0].swiper;
         if (sliderInstance) {
-            sliderInstance.onResize();
+            sliderInstance.update(true);
         }
     }
 };
