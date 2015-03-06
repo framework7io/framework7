@@ -106,6 +106,9 @@
         right: 8px;
         height: 100%;
     }
+    .popup & {
+        .translate3d(0,0,0);
+    }
 }
 .subnavbar {
     height: 44px;
@@ -124,6 +127,9 @@
     .hairline(bottom, @navbarBorderColor);
     &.no-border {
         .hairline-remove(bottom);
+    }
+    .navbar.no-border & {
+        margin-top: 0;
     }
     .navbar-on-left &, .navbar-on-right &{
         pointer-events: none;
