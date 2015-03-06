@@ -42,7 +42,12 @@ app.initPageSwiper = function (pageContainer) {
                 nextButton: swiper.data('next-button'),
                 prevButton: swiper.data('prev-button'),
                 autoplay: swiper.data('autoplay'),
-                parallax: swiper.data('parallax') && (swiper.data('parallax') === 'true' ? true : false)
+                parallax: swiper.data('parallax') && (swiper.data('parallax') === 'true' ? true : false),
+                preloadImages: swiper.data('preload-images') && (swiper.data('preload-images') === 'false' ? false : true),
+                lazyLoading: swiper.data('lazy-loading') && (swiper.data('lazy-loading') === 'true' ? true : false),
+                watchSlidesVisibility: swiper.data('watch-slides-visibility') && (swiper.data('watch-slides-visibility') === 'true' ? true : false),
+                watchSlidesProgress: swiper.data('watch-slides-progress') && (swiper.data('watch-slides-progress') === 'true' ? true : false),
+
             };
         }
         var _slider = app.swiper(swiper[0], params);

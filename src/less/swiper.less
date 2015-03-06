@@ -1,10 +1,4 @@
 /* === Swiper === */
-.preserve3d() {
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-}
 .swiper-container {
     margin:0 auto;
     position:relative;
@@ -135,9 +129,6 @@
     border-radius: 100%;
     background: #000;
     opacity: 0.2;
-    .swiper-pagination-clickable & {
-        cursor: pointer;
-    }
 }
 .swiper-pagination-bullet-active {
     opacity: 1;
@@ -317,4 +308,15 @@
 }
 .swiper-scrollbar-cursor-drag {
     cursor: move;
+}
+/* Preloader */
+.swiper-slide .preloader {
+    width: 42px;
+    height: 42px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -21px;
+    margin-top: -21px;
+    z-index: 10;
 }
