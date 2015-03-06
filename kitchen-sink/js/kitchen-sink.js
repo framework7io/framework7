@@ -184,29 +184,29 @@ myApp.onPageInit('messages', function (page) {
     var answerTimeout, isFocused;
 
     // Initialize Messages
-    var messages = myApp.messages('.messages');
+    var myMessages = myApp.messages('.messages');
 
     // Initialize Messagebar
-    var messagebar = myApp.messagebar('.messagebar');
+    var myMessagebar = myApp.messagebar('.messagebar');
     
     $$('.messagebar a.send-message').on('touchstart mousedown', function () {
-        isFocused = document.activeElement && document.activeElement === messagebar.textarea[0];
+        isFocused = document.activeElement && document.activeElement === myMessagebar.textarea[0];
     });
     $$('.messagebar a.send-message').on('click', function (e) {
         // Keep focused messagebar's textarea if it was in focus before
         if (isFocused) {
             e.preventDefault();
-            messagebar.textarea[0].focus();
+            myMessagebar.textarea[0].focus();
         }
-        var messageText = messagebar.value();
+        var messageText = myMessagebar.value();
         if (messageText.length === 0) {
             return;
         }
         // Clear messagebar
-        messagebar.clear();
+        myMessagebar.clear();
 
         // Add Message
-        messages.addMessage({
+        myMessages.addMessage({
             text: messageText,
             type: 'sent',
             day: !conversationStarted ? 'Today' : false,
@@ -218,7 +218,7 @@ myApp.onPageInit('messages', function (page) {
         answerTimeout = setTimeout(function () {
             var answerText = answers[Math.floor(Math.random() * answers.length)];
             var person = people[Math.floor(Math.random() * people.length)];
-            messages.addMessage({
+            myMessages.addMessage({
                 text: answers[Math.floor(Math.random() * answers.length)],
                 type: 'received',
                 name: person.name,
