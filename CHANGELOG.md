@@ -1,5 +1,86 @@
 # Change Log
 
+## Framework7 v1.0.3 - Updated on March 7, 2015
+  * Dataset
+    * This could be a breaking change but all `data-` attributes, where used, now must be in hyphens-case instead of camelCase like in many places before. For example:
+      * `data-animatePages` on links now should be `data-animate-pages`
+      * `data-slidesPerView` on swiper now should be `data-slides-per-view`
+      * etc.
+  * Cards
+    * Fixed margins when page contains cards only 
+  * Fast Clicks/Clicks
+    * Fixed scroll prevention on overlays when `fastClicks:false`
+  * SmartSelect
+    * `data-back-onselect` renamed to `data-back-on-select`
+    * Ability to add option color and additional class name using `data-option-color` and `data-option-class` attributes on `<option>`
+    * New app method to add options dynamically using `app.smartSelectAddOption(selectElement, optionHTML, atIndex)`
+    * Lower case search when using Smart Select with Virtual List and Searchbar
+  * Virutal List
+    * Fixed issues with Virtual List re initialization when using inline pages
+  * Form elements
+    * Reset styles for input[type="search"]
+  * Searchbar
+    * Searchbar reworked to standalone component/Class, that can be initialized with new `app.searchbar(searchbarElement, params)` method. Such method returns instances with useful methods and properties to get more control over Searchbar:
+      * `searchbar.enable()` - to enable/activate searchbar
+      * `searchbar.disable()` - to disable/deactivate searchbar
+      * `searchbar.clear()` - to clear search query and update results
+      * `searchbar.search(query)` - to search query
+      * `searchbar.destroy()` - to destroy searchbar instance
+      * `searchbar.input` - access to search text field HTML element
+      * `searchbar.active` - property to know is it active or not
+      * `searchbar.input` - access to search text field HTML element
+      * `searchbar.searchList` - access to search list HTML element
+      * `searchbar.container` - access to searchbar self HTML element
+    * Also supports auto-initiliazation with additional "searchbar-init" class and passing parameters as `data-` attributes
+  * Messagebar
+    * Messagebar reworked to standalone component/Class, that can be initialized with new `app.messagebar(messagebarElement, params)` method. Such method returns instances with useful methods and properties to get more control over Messagebar:
+      * `messagebar.textarea` - access to messagebar textarea HTML element
+      * `messagebar.value(newValue)` - method to get/set messagebar value/text
+      * `messagebar.clear()` - to clear messagebar textarea and update/reset its size
+      * `messagebar.container` - access to messagebar self HTML element
+      * `messagebar.destroy()` - to destroy messagebar instance
+    * Also supports auto-initiliazation with additional "messagebar-init" class and passing parameters as `data-` attributes
+  * Messages
+    * Messages reworked to standalone component/Class, that can be initialized with new `app.messages(messagesElement, params)` method. Such method returns instances with useful methods and properties to get more control over Messages:
+      * `messages.container` - access to messages self HTML element
+      * `messages.appendMessage(messageProps)` - add new message to the end
+      * `messages.prependMessage(messageProps)` - add new message to the beginnging
+      * `messages.addMessage(messageProps, method)` - add new message to the end or beginning depending on `newMessagesFirst` parameter
+      * `messages.scrollMessages()` - scroll messages to top/bottom depending on `newMessagesFirst` parameter
+      * `messages.layout()` - apply messages auto layout
+      * `messages.destroy()` - to destroy messages instance
+    * Also supports auto-initiliazation with additional "messages-init" class and passing parameters as `data-` attributes
+  * Router
+    * Fixed issue with disabled pages animation and none dynamic navbar
+  * Lazy Loading
+    * Fixed issue with not working fade effect when `imagesLazyLoadSequential: false`
+  * Popup
+    * Fixed issue with flickering navbar during popup open/close animation
+  * Photo Browser
+    * Lazy Loading logic moved to Swiper's lazy loading
+  * Sticky Titles
+    * Fixed flickering hairline
+  * Swiper updated to latest 3.0.4
+    * New Parallax component for transitions with parallax effects on internal elements
+    * New Images Lazy Load component
+    * With new parameters `lazyLoading`, `lazyLoadingInPrevNext`, `lazyLoadingOnTransitionStart` (all disabled by default)
+    * With new callbacks `onLazyImageLoad` and `onLazyImageReady`
+    * `updateOnImages` ready split into 2 parameters:
+      * `preloadImages` (by default is true) - to preload all images on swiper init
+      * `updateOnImages` (by default is true) - update swiper when all images loaded
+    * Fixed issues with touchmove on focused form elements
+    * New `onObserverUpdate` callback function to be called after updates by ovserver
+    * New `paginationBulletRender` parameter that accepts function which allow custom pagination elements layout
+    * `watchVisibility` parameter renamed to `watchSlidesVisibility`
+    * Fixed issue with not firing onSlideChangeEnd callback after calling .slideTo with runCallbacks=false
+    * Fixed values of isBeginning/isEnd when there is only one slide
+    * New `crossFade` option for fade effect
+    * Improved .update and .onResize methods
+    * Minor fixes
+  * Dom7
+    * New .dataset() method which returns data Object based on element `data-` attributes
+
+
 ## Framework7 v1.0.2 - Updated on February 22, 2015
   * Page Transitions
     * Highly improved page transitions and swipe back performance
