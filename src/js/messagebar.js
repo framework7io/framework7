@@ -113,7 +113,7 @@ var Messagebar = function (container, params) {
     // Init
     m.init();
 
-    m.container[0].f7Searchbar = m;
+    m.container[0].f7Messagebar = m;
     return m;
 };
 app.messagebar = function (container, params) {
@@ -134,10 +134,4 @@ app.initPageMessagebar = function (pageContainer) {
     if (pageContainer.hasClass('page')) {
         pageContainer.on('pageBeforeRemove', pageBeforeRemove);
     }
-};
-app.destroyMessagebar = function (pageContainer) {
-    pageContainer = $(pageContainer);
-    var messagebar = pageContainer.hasClass('messagebar') ? pageContainer : pageContainer.find('.messagebar');
-    if (messagebar.length === 0) return;
-    if (messagebar[0].f7Messagebar) messagebar[0].f7Messagebar.destroy();
 };
