@@ -65,13 +65,7 @@ app.initClickEvents = function () {
         var clicked = $(this);
         var url = clicked.attr('href');
         var isLink = clicked[0].nodeName.toLowerCase() === 'a';
-
-        // Str to boolean for data attributes
-        function toBoolean(str) {
-            if (str === 'false') return false;
-            if (str === 'true') return true;
-            return undefined;
-        }
+        
         // Check if link is external 
         if (isLink) {
             if (clicked.is(app.params.externalLinks)) {
@@ -82,6 +76,9 @@ app.initClickEvents = function () {
                 return;
             }
         }
+
+        // Collect Clicked data- attributes
+        var clickedData = clicked.dataset();
 
         // Smart Select
         if (clicked.hasClass('smart-select')) {
@@ -95,7 +92,7 @@ app.initClickEvents = function () {
                 else app.openPanel('right');
             }
             else {
-                if (clicked.attr('data-panel') === 'right') app.openPanel('right');
+                if (clickedData.panel === 'right') app.openPanel('right');
                 else app.openPanel('left');
             }
         }
@@ -110,8 +107,8 @@ app.initClickEvents = function () {
         // Popover
         if (clicked.hasClass('open-popover')) {
             var popover;
-            if (clicked.attr('data-popover')) {
-                popover = clicked.attr('data-popover');
+            if (clickedData.popover) {
+                popover = clickedData.popover;
             }
             else popover = '.popover';
             app.popover(popover, clicked);
@@ -122,15 +119,15 @@ app.initClickEvents = function () {
         // Popup
         var popup;
         if (clicked.hasClass('open-popup')) {
-            if (clicked.attr('data-popup')) {
-                popup = clicked.attr('data-popup');
+            if (clickedData.popup) {
+                popup = clickedData.popup;
             }
             else popup = '.popup';
             app.popup(popup);
         }
         if (clicked.hasClass('close-popup')) {
-            if (clicked.attr('data-popup')) {
-                popup = clicked.attr('data-popup');
+            if (clickedData.popup) {
+                popup = clickedData.popup;
             }
             else popup = '.popup.modal-in';
             app.closeModal(popup);
@@ -138,8 +135,8 @@ app.initClickEvents = function () {
         // Login Screen
         var loginScreen;
         if (clicked.hasClass('open-login-screen')) {
-            if (clicked.attr('data-login-screen')) {
-                loginScreen = clicked.attr('data-login-screen');
+            if (clickedData.loginScreen) {
+                loginScreen = clickedData.loginScreen;
             }
             else loginScreen = '.login-screen';
             app.loginScreen(loginScreen);
@@ -176,8 +173,8 @@ app.initClickEvents = function () {
         }
         if (clicked.hasClass('open-picker')) {
             var pickerToOpen;
-            if (clicked.attr('data-picker')) {
-                pickerToOpen = clicked.attr('data-picker');
+            if (clickedData.picker) {
+                pickerToOpen = clickedData.picker;
             }
             else pickerToOpen = '.picker-modal';
             app.pickerModal(pickerToOpen, clicked);
@@ -187,7 +184,7 @@ app.initClickEvents = function () {
         var isTabLink;
         if (clicked.hasClass('tab-link')) {
             isTabLink = true;
-            app.showTab(clicked.attr('data-tab') || clicked.attr('href'), clicked);
+            app.showTab(clickedData.tab || clicked.attr('href'), clicked);
         }
         // Swipeout Close
         if (clicked.hasClass('swipeout-close')) {
@@ -195,9 +192,9 @@ app.initClickEvents = function () {
         }
         // Swipeout Delete
         if (clicked.hasClass('swipeout-delete')) {
-            if (clicked.attr('data-confirm')) {
-                var text = clicked.attr('data-confirm');
-                var title = clicked.attr('data-confirm-title');
+            if (clickedData.confirm) {
+                var text = clickedData.confirm;
+                var title = clickedData.confirmTitle;
                 if (title) {
                     app.confirm(text, title, function () {
                         app.swipeoutDelete(clicked.parents('.swipeout'));
@@ -216,13 +213,13 @@ app.initClickEvents = function () {
         }
         // Sortable
         if (clicked.hasClass('toggle-sortable')) {
-            app.sortableToggle(clicked.data('sortable'));
+            app.sortableToggle(clickedData.sortable);
         }
         if (clicked.hasClass('open-sortable')) {
-            app.sortableOpen(clicked.data('sortable'));
+            app.sortableOpen(clickedData.sortable);
         }
         if (clicked.hasClass('close-sortable')) {
-            app.sortableClose(clicked.data('sortable'));
+            app.sortableClose(clickedData.sortable);
         }
         // Accordion
         if (clicked.hasClass('accordion-item-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
@@ -241,11 +238,11 @@ app.initClickEvents = function () {
         }
 
         var validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
-        var template = clicked.attr('data-template');
+        var template = clickedData.template;
         if (validUrl || clicked.hasClass('back') || template) {
             var view;
-            if (clicked.attr('data-view')) {
-                view = $(clicked.attr('data-view'))[0].f7View;
+            if (clickedData.view) {
+                view = $(clickedData.view)[0].f7View;
             }
             else {
                 view = clicked.parents('.' + app.params.viewClass)[0] && clicked.parents('.' + app.params.viewClass)[0].f7View;
@@ -275,8 +272,8 @@ app.initClickEvents = function () {
             }
 
             var animatePages;
-            if (clicked.attr('data-animatePages')) {
-                animatePages = toBoolean(clicked.attr('data-animatePages'));
+            if (typeof clickedData.animatePages !== 'undefined') {
+                animatePages = clickedData.animatePages;
             }
             else {
                 if (clicked.hasClass('with-animation')) animatePages = true;
@@ -285,17 +282,17 @@ app.initClickEvents = function () {
             
             var options = {
                 animatePages: animatePages,
-                ignoreCache: toBoolean(clicked.attr('data-ignoreCache')),
-                force: toBoolean(clicked.attr('data-force')),
-                reload: toBoolean(clicked.attr('data-reload')),
-                reloadPrevious: toBoolean(clicked.attr('data-reloadPrevious')),
+                ignoreCache: clickedData.ignoreCache,
+                force: clickedData.force,
+                reload: clickedData.reload,
+                reloadPrevious: clickedData.reloadPrevious,
                 pageName: pageName,
                 url: url
             };
 
             if (app.params.template7Pages) {
-                options.contextName = clicked.attr('data-contextName');
-                var context = clicked.attr('data-context');
+                options.contextName = clickedData.contextName;
+                var context = clickedData.context;
                 if (context) {
                     options.context = JSON.parse(context);
                 }
