@@ -24,7 +24,20 @@ var PhotoBrowser = function (params) {
         loop: false,
         lazyLoading: false,
         lazyLoadingInPrevNext: false,
-        lazyLoadingOnTransitionStart: false
+        lazyLoadingOnTransitionStart: false,
+        /*
+        Callbacks:
+        onLazyImageLoad(pb, slide, img)
+        onLazyImageReady(pb, slide, img)
+        onOpen(pb)
+        onClose(pb)
+        onSlideChangeStart(swiper)
+        onSlideChangeEnd(swiper)
+        onTap(swiper, e)
+        onClick(swiper, e)
+        onDoubleTap(swiper, e)
+        onSwipeToClose(pb)
+        */
     };
     
     params = params || {};
@@ -72,7 +85,7 @@ var PhotoBrowser = function (params) {
 
     var photoTemplate = !pb.params.lazyLoading ? 
         (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
-        (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}"></span></div>');
+        (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
 
     var captionsTheme = pb.params.captionsTheme || pb.params.theme;
     var captionsTemplate = pb.params.captionsTemplate || '<div class="photo-browser-captions photo-browser-captions-' + captionsTheme + '">{{captions}}</div>';
@@ -138,7 +151,7 @@ var PhotoBrowser = function (params) {
         }
         pb.opened = true;
         pb.openIndex = index;
-        pb.initialLazyLoaded = false;
+        // pb.initialLazyLoaded = false;
         if (pb.params.type === 'standalone') {
             $('body').append(htmlTemplate);
         }
@@ -198,45 +211,6 @@ var PhotoBrowser = function (params) {
         $(document).off('pageBeforeRemove', pb.onPageBeforeRemove);
     };
 
-    pb.loadImageInSlide = function (swiper, index) {
-        if (!swiper || typeof index === 'undefined') return;
-        if (swiper.slides.length === 0) return;
-        
-        var slide = swiper.slides.eq(index);
-        if (!slide.hasClass('photo-browser-slide-lazy')) return;
-
-        var img = slide.find('img');
-        if (img.length === 0) return;
-
-        var image = new Image();
-        var src = img.attr('data-src');
-        
-        image.onload = function () {
-            img.attr('src', src);
-            img.removeAttr('data-src');
-            slide.removeClass('photo-browser-slide-lazy').find('.preloader').remove();
-            if (pb.params.onImageLoaded) {
-                pb.params.onImageLoaded(pb, slide[0], img[0]);
-            }
-        };
-        image.src = src;
-
-        if (pb.params.onImageLoad) {
-            pb.params.onImageLoad(pb, slide[0], img[0]);
-        }
-    };
-
-    pb.lazyLoading = function (swiper, activeIndex) {
-        pb.loadImageInSlide(swiper, activeIndex);
-        if (pb.params.lazyLoadingInPrevNext) {
-            var nextSlide = swiper.wrapper.find('.swiper-slide-next.photo-browser-slide-lazy');
-            if (nextSlide.length > 0) pb.loadImageInSlide(swiper, nextSlide.index());
-
-            var prevSlide = swiper.wrapper.find('.swiper-slide-prev.photo-browser-slide-lazy');
-            if (prevSlide.length > 0) pb.loadImageInSlide(swiper, prevSlide.index());
-        }
-    };
-    
     pb.onSliderTransitionStart = function (swiper) {
         pb.activeIndex = swiper.activeIndex;
 
@@ -267,13 +241,6 @@ var PhotoBrowser = function (params) {
             pb.captionsContainer.find('[data-caption-index="' + captionIndex + '"]').addClass('photo-browser-caption-active');
         }
 
-        // Lazy loading
-        if (pb.params.lazyLoading){
-            if (pb.params.lazyLoadingOnTransitionStart || (!pb.params.lazyLoadingOnTransitionStart && !pb.initialLazyLoaded)) {
-                pb.initialLazyLoaded = true;
-                pb.lazyLoading(swiper, pb.activeIndex);
-            }
-        }
 
         // Stop Video
         var previousSlideVideo = swiper.slides.eq(swiper.previousIndex).find('video');
@@ -284,9 +251,6 @@ var PhotoBrowser = function (params) {
         if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(swiper);
     };
     pb.onSliderTransitionEnd = function (swiper) {
-        if (pb.params.lazyLoading && !pb.params.lazyLoadingOnTransitionStart) {
-            pb.lazyLoading(swiper, pb.activeIndex);
-        }
         // Reset zoom
         if (pb.params.zoom && gestureSlide && swiper.previousIndex !== swiper.activeIndex) {
             gestureImg.transform('translate3d(0,0,0) scale(1)');
@@ -322,6 +286,10 @@ var PhotoBrowser = function (params) {
             spaceBetween: pb.params.spaceBetween,
             speed: pb.params.speed,
             loop: pb.params.loop,
+            lazyLoading: pb.params.lazyLoading,
+            lazyLoadingInPrevNext: pb.params.lazyLoadingInPrevNext,
+            lazyLoadingOnTransitionStart: pb.params.lazyLoadingOnTransitionStart,
+            preloadImages: pb.params.lazyLoading ? false : true,
             onTap: function (swiper, e) {
                 if (pb.params.onTap) pb.params.onTap(swiper, e);
             },
@@ -338,6 +306,13 @@ var PhotoBrowser = function (params) {
             },
             onTransitionEnd: function (swiper) {
                 pb.onSliderTransitionEnd(swiper);  
+            },
+            onLazyImageLoad: function (swiper, slide, img) {
+                if (pb.params.onLazyImageLoad) pb.params.onLazyImageLoad(pb, slide, img);
+            },
+            onLazyImageReady: function (swiper, slide, img) {
+                $(slide).removeClass('photo-browser-slide-lazy');
+                if (pb.params.onLazyImageReady) pb.params.onLazyImageReady(pb, slide, img);
             }
         };
 
