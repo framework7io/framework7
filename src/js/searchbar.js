@@ -293,9 +293,3 @@ app.initPageSearchbar = function (pageContainer) {
     }
         
 };
-app.destroySearchbar = function (pageContainer) {
-    pageContainer = $(pageContainer);
-    var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
-    if (searchbar.length === 0) return;
-    if (searchbar[0].f7Searchbar) searchbar[0].f7Searchbar.destroy();
-};
