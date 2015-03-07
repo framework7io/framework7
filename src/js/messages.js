@@ -45,6 +45,7 @@ var Messages = function (container, params) {
 
     // Auto Layout
     m.layout = function () {
+        if (!m.container.hasClass('messages-auto-layout')) m.container.addClass('messages-auto-layout');
         m.container.find('.message').each(function () {
             var message = $(this);
             if (message.find('.message-text img').length > 0) message.addClass('message-pic');
