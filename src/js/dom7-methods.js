@@ -126,8 +126,8 @@ Dom7.prototype = {
             }
             for (var key in dataset) {
                 if (dataset[key] === 'false') dataset[key] = false;
-                if (dataset[key] === 'true') dataset[key] = true;
-                if (parseFloat(dataset[key]) === dataset[key] * 1) dataset[key] = dataset[key] * 1;
+                else if (dataset[key] === 'true') dataset[key] = true;
+                else if (parseFloat(dataset[key]) === dataset[key] * 1) dataset[key] = dataset[key] * 1;
             }
             return dataset;
         }
