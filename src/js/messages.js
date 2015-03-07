@@ -124,7 +124,7 @@ var Messages = function (container, params) {
     // Init
     m.init();
 
-    m.container[0].f7Messagebar = m;
+    m.container[0].f7Messages = m;
     return m;
 };
 app.messages = function (container, params) {
