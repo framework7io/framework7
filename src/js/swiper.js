@@ -2003,8 +2003,8 @@ window.Swiper = function (container, params) {
                     _img.removeAttr('data-src');
                     _img.addClass('swiper-lazy-loaded').removeClass('swiper-lazy-loading');
                     slide.find('.swiper-lazy-preloader, .preloader').remove();
-                    if (s.params.onLazyImageLoaded) {
-                        s.params.onLazyImageLoaded(s, slide[0], _img[0]);
+                    if (s.params.onLazyImageReady) {
+                        s.params.onLazyImageReady(s, slide[0], _img[0]);
                     }
                 });
                 if (s.params.onLazyImageLoad) {
