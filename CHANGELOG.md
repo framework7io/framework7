@@ -32,6 +32,7 @@
       * `searchbar.searchList` - access to search list HTML element
       * `searchbar.container` - access to searchbar self HTML element
     * Also supports auto-initiliazation with additional "searchbar-init" class and passing parameters as `data-` attributes
+    * Removed `app.destroySearchbar` method
   * Messagebar
     * Messagebar reworked to standalone component/Class, that can be initialized with new `app.messagebar(messagebarElement, params)` method. Such method returns instances with useful methods and properties to get more control over Messagebar:
       * `messagebar.textarea` - access to messagebar textarea HTML element
@@ -40,6 +41,7 @@
       * `messagebar.container` - access to messagebar self HTML element
       * `messagebar.destroy()` - to destroy messagebar instance
     * Also supports auto-initiliazation with additional "messagebar-init" class and passing parameters as `data-` attributes
+    * Removed `app.destroyMessagebar` method
   * Messages
     * Messages reworked to standalone component/Class, that can be initialized with new `app.messages(messagesElement, params)` method. Such method returns instances with useful methods and properties to get more control over Messages:
       * `messages.container` - access to messages self HTML element
@@ -50,6 +52,10 @@
       * `messages.layout()` - apply messages auto layout
       * `messages.destroy()` - to destroy messages instance
     * Also supports auto-initiliazation with additional "messages-init" class and passing parameters as `data-` attributes
+    * Removed app method:
+      * `app.addMessage`
+      * `app.updateMessagesLayout`
+      * `app.scrollMessagesContainer`
   * Router
     * Fixed issue with disabled pages animation and none dynamic navbar
   * Lazy Loading
