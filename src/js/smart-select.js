@@ -75,18 +75,20 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var openIn = smartSelect.attr('data-open-in');
     if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
 
-    var pageTitle = smartSelect.attr('data-page-title') || smartSelect.find('.item-title').text();
-    var backText = smartSelect.attr('data-back-text') || app.params.smartSelectBackText;
-    var closeText = smartSelect.attr('data-popup-close-text') || smartSelect.attr('data-back-text') || app.params.smartSelectPopupCloseText ;
-    var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
-    var formTheme = smartSelect.attr('data-form-theme') || app.params.smartSelectFormTheme;
-    var navbarTheme = smartSelect.attr('data-navbar-theme') || app.params.smartSelectNavbarTheme;
-    var virtualList = smartSelect.attr('data-virtual-list') === 'true';
-    var virtualListItemHeight = smartSelect.attr('data-virtual-list-height');
+    var smartSelectData = smartSelect.dataset();
+    var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
+    var backText = smartSelectData.backText || app.params.smartSelectBackText;
+    var closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;
+    var backOnSelect = smartSelectData.backOnSelect !== undefined ? smartSelectData.backOnSelect : app.params.smartSelectBackOnSelect;
+    var formTheme = smartSelectData.formTheme || app.params.smartSelectFormTheme;
+    var navbarTheme = smartSelectData.navbarTheme || app.params.smartSelectNavbarTheme;
+    var virtualList = smartSelectData.virtualList;
+    var virtualListHeight = smartSelectData.virtualListHeight;
 
     // Collect all options/values
     var select = smartSelect.find('select')[0];
     var $select = $(select);
+    var $selectData = $select.dataset();
     if (select.disabled || smartSelect.hasClass('disabled') || $select.hasClass('disabled')) {
         return;
     }
@@ -95,15 +97,16 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
     var selectName = select.name;
-    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName;
+    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName, optionData;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
         if (option[0].disabled) continue;
-        optionImage = option.attr('data-option-image') || $select.attr('data-option-image');
-        optionIcon = option.attr('data-option-icon') || $select.attr('data-option-icon');
+        optionData = option.dataset();
+        optionImage = optionData.optionImage || $selectData.optionImage;
+        optionIcon = optionData.optionIcon || $selectData.optionIcon;
         optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
-        optionColor = option.attr('data-option-color');
-        optionClassName = option.attr('data-option-class');
+        optionColor = optionData.optionColor;
+        optionClassName = optionData.optionClass;
         optionGroup = option.parent('optgroup')[0];
         optionGroupLabel = optionGroup && optionGroup.label;
         optionShowGroupLabel = false;
@@ -250,7 +253,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             var virtualListInstance = app.virtualList($(container).find('.virtual-list'), {
                 items: values,
                 template: smartSelectItemTemplate,
-                height: virtualListItemHeight || undefined,
+                height: virtualListHeight || undefined,
                 searchByItem: function (query, index, item) {
                     if (item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
                     return false;
