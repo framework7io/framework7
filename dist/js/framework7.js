@@ -1127,13 +1127,6 @@
             }
                 
         };
-        app.destroySearchbar = function (pageContainer) {
-            pageContainer = $(pageContainer);
-            var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
-            if (searchbar.length === 0) return;
-            if (searchbar[0].f7Searchbar) searchbar[0].f7Searchbar.destroy();
-        };
-        
 
         /*======================================================
         ************   Messagebar   ************
@@ -1250,7 +1243,7 @@
             // Init
             m.init();
         
-            m.container[0].f7Searchbar = m;
+            m.container[0].f7Messagebar = m;
             return m;
         };
         app.messagebar = function (container, params) {
@@ -1271,12 +1264,6 @@
             if (pageContainer.hasClass('page')) {
                 pageContainer.on('pageBeforeRemove', pageBeforeRemove);
             }
-        };
-        app.destroyMessagebar = function (pageContainer) {
-            pageContainer = $(pageContainer);
-            var messagebar = pageContainer.hasClass('messagebar') ? pageContainer : pageContainer.find('.messagebar');
-            if (messagebar.length === 0) return;
-            if (messagebar[0].f7Messagebar) messagebar[0].f7Messagebar.destroy();
         };
 
         /*======================================================
@@ -3849,7 +3836,7 @@
             // Init
             m.init();
         
-            m.container[0].f7Messagebar = m;
+            m.container[0].f7Messages = m;
             return m;
         };
         app.messages = function (container, params) {
