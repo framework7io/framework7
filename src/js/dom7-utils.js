@@ -21,9 +21,6 @@ $.unique = function (arr) {
     }
     return unique;
 };
-$.trim = function (str) {
-    return str.trim();
-};
 $.serializeObject = function (obj) {
     if (typeof obj === 'string') return obj;
     var resultArray = [];
@@ -44,7 +41,14 @@ $.serializeObject = function (obj) {
 
     return resultArray.join(separator);
 };
-
+$.camelCase = function (string) {
+    return string.toLowerCase().replace(/-(.)/g, function(match, group1) {
+        return group1.toUpperCase();
+    });
+};
+$.dataset = function (el) {
+    return $(el).dataset();
+};
 $.getTranslate = function (el, axis) {
     var matrix, curTransform, curStyle, transformMatrix;
 
