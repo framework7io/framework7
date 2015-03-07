@@ -136,10 +136,7 @@ app.initPageMessages = function (pageContainer) {
     if (!messages.hasClass('messages-init')) {
         return;
     }
-    var m = app.messages(messages, {
-        autoLayout: messages.data('auto-layout'),
-        newMessagesFirst: messages.data('new-messages-first') && (messages.data('new-messages-first') === 'false' ? false : true),
-    });
+    var m = app.messages(messages, messages.dataset());
 
     // Destroy on page remove
     function pageBeforeRemove() {

@@ -22,33 +22,7 @@ app.initPageSwiper = function (pageContainer) {
             params = JSON.parse(swiper.data('swiper'));
         }
         else {
-            params = {
-                initialSlide: parseInt(swiper.data('initial-slide'), 10) || undefined,
-                spaceBetween: parseInt(swiper.data('space-between'), 10) || undefined,
-                speed: parseInt(swiper.data('speed'), 10) || undefined,
-                slidesPerView: swiper.data('slides-per-view') || undefined,
-                slidesPerColumn: parseInt(swiper.data('slides-per-column'), 10) || undefined,
-                centeredSlides: swiper.data('centered-slides') && (swiper.data('centered-slides') === 'true' ? true : false),
-                direction: swiper.data('direction'),
-                pagination: swiper.data('pagination'),
-                paginationHide: swiper.data('pagination-hide') && (swiper.data('pagination-hide') === 'true' ? true : false),
-                paginationClickable: swiper.data('pagination-clickable') && (swiper.data('pagination-clickable') === 'true' ? true : false),
-                scrollbar: swiper.data('scrollbar'),
-                scrollbarHide: swiper.data('scrollbar-hide') && (swiper.data('scrollbar-hide') === 'true' ? true : false),
-                loop: swiper.data('loop') && (swiper.data('loop') === 'true' ? true : false),
-                effect: swiper.data('effect') || 'slide',
-                freeMode: swiper.data('free-mode') && (swiper.data('free-mode') === 'true' ? true : false),
-                onlyExternal: swiper.data('only-external') && (swiper.data('only-external') === 'true' ? true : false),
-                nextButton: swiper.data('next-button'),
-                prevButton: swiper.data('prev-button'),
-                autoplay: swiper.data('autoplay'),
-                parallax: swiper.data('parallax') && (swiper.data('parallax') === 'true' ? true : false),
-                preloadImages: swiper.data('preload-images') && (swiper.data('preload-images') === 'false' ? false : true),
-                lazyLoading: swiper.data('lazy-loading') && (swiper.data('lazy-loading') === 'true' ? true : false),
-                watchSlidesVisibility: swiper.data('watch-slides-visibility') && (swiper.data('watch-slides-visibility') === 'true' ? true : false),
-                watchSlidesProgress: swiper.data('watch-slides-progress') && (swiper.data('watch-slides-progress') === 'true' ? true : false),
-
-            };
+            params = swiper.dataset();
         }
         var _slider = app.swiper(swiper[0], params);
         destroySwiperOnRemove(_slider);
