@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 7, 2015
+ * Released on: March 8, 2015
  */
 (function () {
 
@@ -24,7 +24,7 @@
         var app = this;
     
         // Version
-        app.version = '1.0.2';
+        app.version = '1.0.3';
     
         // Default Parameters
         app.params = {
@@ -844,9 +844,9 @@
                 searchIn: '.item-title',
                 searchBy: '',
                 found: null,
-                notFoud: null,
+                notFound: null,
                 overlay: null,
-                ignore: '.searhbar-ignore'
+                ignore: '.searchbar-ignore'
             };
             params = params || {};
             for (var def in defaults) {
