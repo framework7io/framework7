@@ -10,9 +10,9 @@ var Searchbar = function (container, params) {
         searchIn: '.item-title',
         searchBy: '',
         found: null,
-        notFoud: null,
+        notFound: null,
         overlay: null,
-        ignore: '.searhbar-ignore'
+        ignore: '.searchbar-ignore'
     };
     params = params || {};
     for (var def in defaults) {
