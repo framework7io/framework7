@@ -210,6 +210,11 @@ var View = function (selector, params) {
                     previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
                 }
             }
+
+            // Close/Hide Any Picker
+            if ($('.picker-modal.modal-in').length > 0) {
+                app.closeModal($('.picker-modal.modal-in'));
+            }
         }
         e.f7PreventPanelSwipe = true;
         isMoved = true;
