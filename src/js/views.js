@@ -538,3 +538,39 @@ var View = function (selector, params) {
 app.addView = function (selector, params) {
     return new View(selector, params);
 };
+
+app.getCurrentView = function (index) {
+    var popoverView = $('.popover.modal-in .view');
+    var popupView = $('.popup.modal-in .view');
+    var panelView = $('.panel.active .view');
+    var appViews = $('.views');
+    // Find active view as tab
+    var appView = appViews.children('.view');
+    // Propably in tabs or split view
+    if (appView.length > 1) {
+        if (appView.hasClass('tab')) {
+            // Tabs
+            appView = appViews.children('.view.active');
+        }
+        else {
+            // Split View, leave appView intact
+        }
+    }
+    if (popoverView.length > 0 && popoverView[0].f7View) return popoverView[0].f7View;
+    if (popupView.length > 0 && popupView[0].f7View) return popupView[0].f7View;
+    if (panelView.length > 0 && panelView[0].f7View) return panelView[0].f7View;
+    if (appView.length > 0) {
+        if (appView.length === 1 && appView[0].f7View) return appView[0].f7View;
+        if (appView.length > 1) {
+            var currentViews = [];
+            for (var i = 0; i < appView.length; i++) {
+                if (appView[i].f7View) currentViews.push(appView[i].f7View);
+            }
+            if (currentViews.length > 0 && typeof index !== 'undefined') return currentViews[index];
+            if (currentViews.length > 1) return currentViews;
+            if (currentViews.length === 1) return currentViews[0];
+            return undefined;
+        }
+    }
+    return undefined;
+};
