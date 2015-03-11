@@ -499,7 +499,7 @@ app.router._load = function (view, options) {
             query: options.query,
             fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
         });
-        if (app.params.pushState) app.pushStateClearQueue();
+        if (app.params.pushState && view.main) app.pushStateClearQueue();
         if (!(view.params.swipeBackPage || view.params.preloadPreviousPage)) {
             if (view.params.domCache) {
                 oldPage.addClass('cached');
@@ -618,7 +618,7 @@ app.router._back = function (view, options) {
     }
 
     // Push state
-    if (app.params.pushState)  {
+    if (app.params.pushState && view.main)  {
         if (typeof pushState === 'undefined') pushState = true;
         if (!preloadOnly && history.state && pushState) {
             history.back();
@@ -1053,7 +1053,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
         delete view.contentCache[previousURL];
     }
     
-    if (app.params.pushState) app.pushStateClearQueue();
+    if (app.params.pushState && view.main) app.pushStateClearQueue();
 
     // Preload previous page
     if (view.params.preloadPreviousPage) {

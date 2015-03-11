@@ -38,6 +38,9 @@ var View = function (selector, params) {
     var container = $(selector);
     view.container = container[0];
 
+    // Is main
+    view.main = container.hasClass(app.params.viewMainClass);
+
     // Content cache
     view.contentCache = {};
 
@@ -75,7 +78,7 @@ var View = function (selector, params) {
     var viewURL = docLocation;
     var pushStateSeparator = app.params.pushStateSeparator;
     var pushStateRoot = app.params.pushStateRoot;
-    if (app.params.pushState) {
+    if (app.params.pushState && view.main) {
         if (pushStateRoot) {
             viewURL = pushStateRoot;
         }
@@ -117,9 +120,6 @@ var View = function (selector, params) {
     if (view.url) {
         view.history.push(view.url);
     }
-
-    // Is main
-    view.main = container.hasClass(app.params.viewMainClass);
 
     // Touch events
     var isTouched = false,
@@ -374,7 +374,7 @@ var View = function (selector, params) {
             allowViewTouchMove = true;
             view.allowPageChange = true;
             if (pageChanged) {
-                if (app.params.pushState) history.back();
+                if (app.params.pushState && view.main) history.back();
                 // Page after animation callback
                 app.pageBackCallbacks('after', view, {pageContainer: activePage[0], url: url, position: 'center', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 app.pageAnimCallbacks('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
