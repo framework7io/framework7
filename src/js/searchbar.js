@@ -178,13 +178,14 @@ var Searchbar = function (container, params) {
         else {
             s.searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
                 el = $(el);
-                var compareWithEl = el.find(s.params.searchIn);
-                if (compareWithEl.length === 0) return;
-                var compareWith;
-                compareWith = compareWithEl.text().trim().toLowerCase();
+                var compareWithText = [];
+                el.find(s.params.searchIn).each(function () {
+                    compareWithText.push($(this).text().trim().toLowerCase());
+                });
+                compareWithText = compareWithText.join(' ');
                 var wordsMatch = 0;
                 for (var i = 0; i < values.length; i++) {
-                    if (compareWith.indexOf(values[i]) >= 0) wordsMatch++;
+                    if (compareWithText.indexOf(values[i]) >= 0) wordsMatch++;
                 }
                 if (wordsMatch !== values.length && !(s.params.ignore && el.is(s.params.ignore))) {
                     el.addClass('hidden-by-searchbar');
