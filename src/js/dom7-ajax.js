@@ -3,6 +3,7 @@ var globalAjaxOptions = {};
 $.ajaxSetup = function (options) {
     if (options.type) options.method = options.type;
     for (var option in options) {
+        if (!options.hasOwnProperty(option)) continue;
         globalAjaxOptions[option]  = options[option];
     }
 };
@@ -25,13 +26,15 @@ $.ajax = function (options) {
         contentType: 'application/x-www-form-urlencoded',
         timeout: 0
     };
-    var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
+    var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'],
+        paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
 
     //For jQuery guys
     if (options.type) options.method = options.type;
 
     // Merge global and defaults
     for (var globalOption in globalAjaxOptions) {
+        if (!globalAjaxOptions.hasOwnProperty(globalOption)) continue;
         if (callbacks.indexOf(globalOption) < 0) defaults[globalOption] = globalAjaxOptions[globalOption];
     }
     // Function to run XHR callbacks and events
@@ -48,6 +51,7 @@ $.ajax = function (options) {
 
     // Merge options and defaults
     for (var prop in defaults) {
+        if (!defaults.hasOwnProperty(prop)) continue;
         if (!(prop in options)) options[prop] = defaults[prop];
     }
 
@@ -69,26 +73,23 @@ $.ajax = function (options) {
             // Should be key=value object
             stringData = $.serializeObject(options.data);
         }
-        if (options.url.indexOf('?') >= 0) options.url += '&' + stringData;
-        else options.url += '?' + stringData;
+        options.url += paramsPrefix + stringData;
     }
     // JSONP
     if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
         
         var callbackName = 'f7jsonp_' + Date.now() + (_jsonpRequests++);
-        var requestUrl, abortTimeout;
+        var abortTimeout;
         var callbackSplit = options.url.split('callback=');
+
+        var requestUrl = callbackSplit[0] + 'callback=' + callbackName;
         if (callbackSplit[1].indexOf('&') >= 0) {
             var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
-            requestUrl = callbackSplit[0] + 'callback=' + callbackName + (addVars.length > 0 ? '&' + addVars : '');
-        }
-        else {
-            requestUrl = callbackSplit[0] + 'callback=' + callbackName;
+            if (addVars.length > 0) requestUrl += '&' + addVars;
         }
 
         // Create script
         var script = document.createElement('script');
-        script.type = 'text/javascript';
         script.onerror = function() {
             clearTimeout(abortTimeout);
             fireAjaxCallback(undefined, undefined, 'error', null, 'scripterror');
@@ -119,12 +120,7 @@ $.ajax = function (options) {
     // Cache for GET/HEAD requests
     if (_method === 'GET' || _method === 'HEAD') {
         if (options.cache === false) {
-            if (options.url.indexOf('?') >= 0) {
-                options.url += ('&_nocache=' + Date.now());
-            }
-            else {
-                options.url += ('?_nocache=' + Date.now());
-            }
+            options.url += (paramsPrefix + '_nocache=' + Date.now());
         }
     }
 
@@ -182,6 +178,7 @@ $.ajax = function (options) {
     // Additional headers
     if (options.headers) {
         for (var header in options.headers) {
+            if (!options.headers.hasOwnProperty(header)) continue;
             xhr.setRequestHeader(header, options.headers[header]);
         }
     }
@@ -197,16 +194,17 @@ $.ajax = function (options) {
 
     if (options.xhrFields) {
         for (var field in options.xhrFields) {
+            if (!options.xhrFields.hasOwnProperty(field)) continue;
             xhr[field] = options.xhrFields[field];
         }
     }
 
     var xhrTimeout;
     // Handle XHR
-    xhr.onload = function (e) {
+    xhr.onload = function () {
         if (xhrTimeout) clearTimeout(xhrTimeout);
         if (xhr.status === 200 || xhr.status === 0) {
-            var isSuccess, responseData;
+            var responseData;
             if (options.dataType === 'json') {
                 try {
                     responseData = JSON.parse(xhr.responseText);
