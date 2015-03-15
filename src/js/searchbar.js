@@ -13,7 +13,7 @@ var Searchbar = function (container, params) {
         notFound: null,
         overlay: null,
         ignore: '.searchbar-ignore',
-        externalSearch: false
+        customSearch: false
     };
     params = params || {};
     for (var def in defaults) {
