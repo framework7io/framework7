@@ -41,6 +41,7 @@ var Searchbar = function (container, params) {
 
     // Search List
     s.searchList = $(s.params.searchList);
+    s.ul = s.searchList.children('ul');
 
     // Is Virtual List
     s.isVirtualList = s.searchList.hasClass('virtual-list');
@@ -72,8 +73,11 @@ var Searchbar = function (container, params) {
     // Cancel button
     var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
     if (s.cancelButton.length > 0) {
-        s.cancelButton.show();
+        s.cancelButton.transition(0).show();
         s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
+        setTimeout(function () {
+            s.cancelButton.transition('');    
+        }, 0);
     }
 
     // Enable/disalbe
@@ -176,7 +180,10 @@ var Searchbar = function (container, params) {
             }
         }
         else {
-            s.searchList.find('li').removeClass('hidden-by-searchbar').each(function (index, el) {
+            if (s.ul.length === 0) {
+                s.ul = s.searchList.children('ul');
+            }
+            s.ul.children('li').removeClass('hidden-by-searchbar').each(function (index, el) {
                 el = $(el);
                 var compareWithText = [];
                 el.find(s.params.searchIn).each(function () {
