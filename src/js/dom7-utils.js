@@ -116,7 +116,11 @@ $.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && docume
 $.fn = Dom7.prototype;
 
 // Plugins
-$.fn.scrollTo = function (left, top, duration, easing) {
+$.fn.scrollTo = function (left, top, duration, easing, callback) {
+    if (arguments.length === 4 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
     return this.each(function () {
         var el = this;
         var currentTop, currentLeft, maxTop, maxLeft, newTop, newLeft, scrollTop, scrollLeft;
@@ -179,7 +183,10 @@ $.fn.scrollTo = function (left, top, duration, easing) {
                 done = true;
             }
 
-            if (done) return;
+            if (done) {
+                if (callback) callback();
+                return;
+            }
             if (animateTop) el.scrollTop = scrollTop;
             if (animateLeft) el.scrollLeft = scrollLeft;
             $.requestAnimationFrame(render);
@@ -187,19 +194,27 @@ $.fn.scrollTo = function (left, top, duration, easing) {
         $.requestAnimationFrame(render);
     });
 };
-$.fn.scrollTop = function (top, duration, easing) {
+$.fn.scrollTop = function (top, duration, easing, callback) {
+    if (arguments.length === 3 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
     var dom = this;
     if (typeof top === 'undefined') {
         if (dom.length > 0) return dom[0].scrollTop;
         else return null;
     }
-    return dom.scrollTo(undefined, top, duration, easing);
+    return dom.scrollTo(undefined, top, duration, easing, callback);
 };
-$.fn.scrollLeft = function (left, duration, easing) {
+$.fn.scrollLeft = function (left, duration, easing, callback) {
+    if (arguments.length === 3 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
     var dom = this;
     if (typeof left === 'undefined') {
         if (dom.length > 0) return dom[0].scrollLeft;
         else return null;
     }
-    return dom.scrollTo(left, undefined, duration, easing);
+    return dom.scrollTo(left, undefined, duration, easing, callback);
 };
