@@ -12,7 +12,7 @@ app.initFastClicks = function () {
     }
 
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
-    var activableElement, activeTimeout, needsFastClick;
+    var activableElement, activeTimeout, needsFastClick, needsFastClickTimeOut;
 
     function findActivableElement(e) {
         var target = $(e.target);
@@ -121,6 +121,7 @@ app.initFastClicks = function () {
         if (e.targetTouches.length > 1) {
             return true;
         }
+        if (needsFastClickTimeOut) clearTimeout(needsFastClickTimeOut);
         needsFastClick = targetNeedsFastClick(e.target);
 
         if (!needsFastClick) {
@@ -278,7 +279,6 @@ app.initFastClicks = function () {
             trackClick = false;
             return true;
         }
-
         if (e.target.type === 'submit' && e.detail === 0) {
             return true;
         }
@@ -310,6 +310,9 @@ app.initFastClicks = function () {
             }
             targetElement = null;
         }
+        needsFastClickTimeOut = setTimeout(function () {
+            needsFastClick = false;    
+        }, 100);
         return allowClick;
     }
     if (app.support.touch) {
