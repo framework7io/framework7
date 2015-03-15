@@ -13,6 +13,7 @@ var Picker = function (params) {
         scrollToInput: true,
         inputReadOnly: true,
         convertToPopover: true,
+        onlyInPopover: false,
         toolbar: true,
         toolbarCloseText: 'Done',
         toolbarTemplate: 
@@ -44,13 +45,16 @@ var Picker = function (params) {
     // Should be converted to popover
     function isPopover() {
         var toPopover = false;
-        if (!p.params.convertToPopover) return toPopover;
+        if (!p.params.convertToPopover && !p.params.onlyInPopover) return toPopover;
         if (!p.inline && p.params.input) {
-            if (app.device.ios) {
-                toPopover = app.device.ipad ? true : false;
-            }
+            if (p.params.onlyInPopover) toPopover = true;
             else {
-                if ($(window).width() >= 768) toPopover = true;
+                if (app.device.ios) {
+                    toPopover = app.device.ipad ? true : false;
+                }
+                else {
+                    if ($(window).width() >= 768) toPopover = true;
+                }
             }
         } 
         return toPopover; 
