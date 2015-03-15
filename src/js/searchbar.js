@@ -12,7 +12,8 @@ var Searchbar = function (container, params) {
         found: null,
         notFound: null,
         overlay: null,
-        ignore: '.searchbar-ignore'
+        ignore: '.searchbar-ignore',
+        externalSearch: false
     };
     params = params || {};
     for (var def in defaults) {
@@ -80,13 +81,18 @@ var Searchbar = function (container, params) {
         }, 0);
     }
 
+    s.triggerEvent = function (eventName, eventData) {
+        s.container.trigger(eventName, eventData);
+        if (s.searchList.length > 0) s.searchList.trigger(eventName, eventData);
+    };
+
     // Enable/disalbe
     s.enable = function () {
         function _enable() {
             if (s.searchList.length && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
             if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
-            s.searchList.trigger('enableSearch');
+            s.triggerEvent('enableSearch');
             s.active = true;
         }
         if (app.device.ios) {
@@ -107,7 +113,7 @@ var Searchbar = function (container, params) {
         if (s.searchList.length) s.overlay.removeClass('searchbar-overlay-active');
         function _disable() {
             s.input.blur();
-            s.searchList.trigger('disableSearch');
+            s.triggerEvent('disableSearch');
             s.active = false;
         }
         if (app.device.ios) {
@@ -123,7 +129,7 @@ var Searchbar = function (container, params) {
     // Clear
     s.clear = function () {
         s.input.val('').trigger('change').focus();
-        s.searchList.trigger('clearSearch');
+        s.triggerEvent('clearSearch');
     };
 
     // Search
@@ -156,6 +162,11 @@ var Searchbar = function (container, params) {
         else {
             s.container.addClass('searchbar-not-empty');
             if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.removeClass('searchbar-overlay-active');
+        }
+
+        if (s.params.externalSearch) {
+            s.triggerEvent('search', {query: query});
+            return;
         }
 
         var values = query.trim().toLowerCase().split(' ');
@@ -233,7 +244,7 @@ var Searchbar = function (container, params) {
                 });
             }
         }
-        s.searchList.trigger('search', {query: query, foundItems: foundItems});
+        s.triggerEvent('search', {query: query, foundItems: foundItems});
         if (foundItems.length === 0) {
             s.notFound.show();
             s.found.hide();
