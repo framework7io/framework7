@@ -564,7 +564,13 @@ var Calendar = function (params) {
             transition = '';
             if (!p.params.animate) transition = 0;
         }
-        var targetDate = new Date(year, month).getTime();
+        var targetDate;
+        if (year < p.currentYear) {
+            targetDate = new Date(year, month + 1, -1).getTime();
+        }
+        else {
+            targetDate = new Date(year, month).getTime();
+        }
         if (p.params.maxDate && targetDate > new Date(p.params.maxDate).getTime()) {
             return false;
         }
@@ -572,7 +578,7 @@ var Calendar = function (params) {
             return false;
         }
         var currentDate = new Date(p.currentYear, p.currentMonth).getTime();
-        var dir;
+        var dir = targetDate > currentDate ? 'next' : 'prev';
         var newMonthHTML = p.monthHTML(new Date(year, month));
         p.monthsTranslate = p.monthsTranslate || 0;
         var prevTranslate = p.monthsTranslate;
@@ -581,7 +587,6 @@ var Calendar = function (params) {
         if (targetDate > currentDate) {
             // To next
             p.monthsTranslate --;
-            dir = 'next';
             if (!p.animating) p.months.eq(p.months.length - 1).remove();
             p.wrapper.append(newMonthHTML);
             p.months = p.wrapper.find('.picker-calendar-month');
@@ -591,7 +596,6 @@ var Calendar = function (params) {
         else {
             // To prev
             p.monthsTranslate ++;
-            dir = 'prev';
             if (!p.animating) p.months.eq(0).remove();
             p.wrapper.prepend(newMonthHTML);
             p.months = p.wrapper.find('.picker-calendar-month');
