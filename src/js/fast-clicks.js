@@ -282,9 +282,12 @@ app.initFastClicks = function () {
         if (e.target.type === 'submit' && e.detail === 0) {
             return true;
         }
-        // if (!targetElement) {
-        //     allowClick =  true;
-        // }
+        if (!targetElement) {
+            var nodeName = e.target && e.target.nodeName.toLowerCase();
+            if (nodeName && !(nodeName === 'input' || nodeName === 'label' || nodeName === 'textarea' || nodeName === 'select')) {
+                allowClick =  true;
+            }
+        }
         if (!needsFastClick) {
             allowClick = true;
         }
@@ -311,7 +314,7 @@ app.initFastClicks = function () {
             targetElement = null;
         }
         needsFastClickTimeOut = setTimeout(function () {
-            needsFastClick = false;    
+            needsFastClick = false;
         }, 100);
         return allowClick;
     }
