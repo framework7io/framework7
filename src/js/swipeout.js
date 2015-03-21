@@ -330,12 +330,18 @@ app.swipeoutClose = function (el, callback) {
     app.allowSwipeout = false;
     el.trigger('close');
     el.removeClass('swipeout-opened').addClass('transitioning');
-    el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(function () {
+
+    var closeTO;
+    function onSwipeoutClose() {
         app.allowSwipeout = true;
         buttons.transform('');
         el.trigger('closed');
         if (callback) callback.call(el[0]);
-    });
+        if (closeTO) clearTimeout(closeTO);
+    }
+    el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(onSwipeoutClose);
+    closeTO = setTimeout(onSwipeoutClose, 500);
+    
     for (var i = 0; i < buttons.length; i++) {
         if (dir === 'right') {
             $(buttons[i]).transform('translate3d(' + (-buttons[i].offsetLeft) + 'px,0,0)');
