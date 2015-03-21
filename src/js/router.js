@@ -120,20 +120,37 @@ app.router = {
         }
     },
 
-    preprocess: function(content, url, next) {
+    preprocess: function(view, content, url, next) {
         // Plugin hook
-        app.pluginHook('routerPreprocess', content, url, next);
+        app.pluginHook('routerPreprocess', view, content, url, next);
         
         // Preprocess by plugin
         content = app.pluginProcess('preprocess', content);
 
-        if (app.params.preprocess) {
-            content = app.params.preprocess(content, url, next);
+        if (view && view.params && view.params.preprocess) {
+            content = view.params.preprocess(content, url, next);
+            console.log(content);
             if (typeof content !== 'undefined') {
                 next(content);
             }
-        } else {
+        } 
+        else if (app.params.preprocess) {
+            content = app.params.preprocess(content, url, next);
+            if (typeof content !== 'undefined') {
+                next(content);
+            }  
+        }
+        else {
             next(content);
+        }
+    },
+    preroute: function(view, options) {
+        app.pluginHook('routerPreroute', view, options);
+        if ((app.params.preroute && app.params.preroute(view, options) === false) || (view && view.params.preroute && view.params.preroute(view, options) === false)) {
+            return true;
+        }
+        else {
+            return false;
         }
     },
 
@@ -539,6 +556,9 @@ app.router._load = function (view, options) {
 };
 
 app.router.load = function (view, options) {
+    if (app.router.preroute(view, options)) {
+        return false;
+    }
     options = options || {};
     var url = options.url;
     var content = options.content;
@@ -560,7 +580,7 @@ app.router.load = function (view, options) {
         app.xhr = false;
     }
     function proceed(content) {
-        app.router.preprocess(content, url, function (content) {
+        app.router.preprocess(view, content, url, function (content) {
             options.content = content;
             app.router._load(view, options);
         });
@@ -917,6 +937,9 @@ app.router._back = function (view, options) {
     
 };
 app.router.back = function (view, options) {
+    if (app.router.preroute(view, options)) {
+        return false;
+    }
     options = options || {};
     var url = options.url;
     var content = options.content;
@@ -937,7 +960,7 @@ app.router.back = function (view, options) {
     var pagesInView = $(view.pagesContainer).find('.page:not(.cached)');
     
     function proceed(content) {
-        app.router.preprocess(content, url, function (content) {
+        app.router.preprocess(view, content, url, function (content) {
             options.content = content;
             app.router._back(view, options);
         });
