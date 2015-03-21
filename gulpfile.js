@@ -308,7 +308,10 @@
                     paths.dist.styles + f7.filename + '.themes.css'
                 ];
                 gulp.src(minifiedCSS)
-                    .pipe(minifyCSS())
+                    .pipe(minifyCSS({
+                        advanced: false,
+                        aggressiveMerging: false,
+                    }))
                     .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date }))
                     .pipe(rename(function(path) {
                         path.basename = path.basename + '.min';
@@ -389,7 +392,10 @@
             .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, modulesList: modules.join(',') } ))
             .pipe(gulp.dest(paths.custom.styles))
 
-            .pipe(minifyCSS())
+            .pipe(minifyCSS({
+                advanced: false,
+                aggressiveMerging: false,
+            }))
             .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, modulesList: modules.join(',') }))
             .pipe(rename(function(path) {
                 path.basename = path.basename + '.min';
