@@ -102,6 +102,9 @@ var Messages = function (container, params) {
             m.scrollMessages();
         }
     };
+    m.clean = function () {
+        m.container.html('');
+    };
 
     // Scroll
     m.scrollMessages = function (duration) {
