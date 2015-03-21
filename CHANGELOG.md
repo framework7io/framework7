@@ -1,5 +1,60 @@
 # Change Log
 
+## Framework7 v1.0.4 - Updated on March 21, 2015
+  * Router
+    * `preprocess` callback parameter now also supported by View on its initialisation which could overwrite `preprocess` app' parameter (if specified)
+    * New `preroute(view, options)` callback parameter which is supported by App and View on their initialisation. This callback allows to prevent default router load/back action and to load another page or do another required actions
+  * Swipeout
+    * Fixed issue with not opening swipeout after incomplete transition
+    * Fixed issue with triggering overswipe action on mobiles
+  * Messages
+    * New method `messages.clean()` - to clean/remove all the messages
+  * Calendar
+    * Fixed issues with years switch when using min/maxDate which didn't allow to return to the current year
+    * New parameter `onlyInPopover` (disabled by default). Enable it and Calendar will be always opened in Popover
+  * Picker
+    * New parameter `onlyInPopover` (disabled by default). Enable it and Calendar will be always opened in Popover
+    * Fixed issues with not-clickable "items" after using `col.replaceValues` method
+  * Fast Clicks
+    * Fixed issue that didn't allow to call click programmatically (using element.click()) after first synthetic click
+  * Dom7
+    * Added jQuery-like `$.each(object, callback)` method to iterate through Objects and Arrays
+    * Added optional `callback` argument for `$.scrollTo/Top/Left` methods to be executed after scrolling completed. With the following arguments options:
+      * `$.scrollTo(left, top, duration, easing, callback)`
+      * `$.scrollTo(left, top, duration, callback)`
+      * `$.scrollTop(top, duration, easing, callback)`
+      * `$.scrollTop(top, duration, callback)`
+      * `$.scrollLeft(top, duration, easing, callback)`
+      * `$.scrollLeft(top, duration, callback)`
+  * Swipe Back
+    * Will automatically close any active Picker Modals
+  * Searchbar
+    * New `customSearch` parameter. When enabled searchbar will not search through any of list blocks and you will be able to use custom search functionality, for example calling external APIs for results
+    * Added ability to search in different places by passing a list of elements in `searchIn` parameters, for example: `searchIn: '.item-title, .item-text'`
+  * View
+    * New App method to get current (currently visible and active) View instance:
+      * `myApp.getCurrentView(index)` - return currently active View. If there are few currently active views (as in split view layout), then you need to specify `index` number of View, otherwise this method will return an array with current Views
+  * Push State
+    * More strictly locked to main view only to prevent states from other views
+  * Swiper updated to latest 3.0.5 version
+      * New Keyboard accessibility module to provide focusable navigation buttons and basic ARIA for screen readers with new parameters:
+      * `a11y: false` - enable accessibility
+      * `prevSlideMessage: 'Previous slide'` - message for screen readers for previous button
+      * `nextSlideMessage: 'Next slide'` - message for screen readers for next button
+      * `firstSlideMessage: 'This is the first slide'` - message for screen readers for previous button when swiper is on first slide
+      * `lastSlideMessage: 'This is the last slide'` - message for screen readers for next button when swiper is on last slide
+    * New Emitter module. It allows to work with callbacks like with events, even adding them after initialization with new methods:
+      * `.on(event, handler)` - add event/callback
+      * `.off(event, handler)` - remove this event/callback
+      * `.once(event, handler)` - add event/callback that will be executed only once
+    * Plugins API is back. It allows to write custom Swiper plugins
+    * New parameter `setWrapperSize` (be default it is `false`) to provide better compatibility with browser without flexbox support. Enabled this option and plugin will set width/height on swiper wrapper equal to total size of all slides
+    * New `virtualTranslate` parameter. When it is enabled swiper will be operated as usual except it will not move. Useful when you may need to create custom slide transition
+    * Added support for multiple Pagination containers
+    * Fixed `onLazyImage...` callbacks
+    * Fixed issue with not accessible links inside of Slides on Android < 4.4
+    * Fixed pagination bullets behavior in loop mode with specified `slidesPerGroup`
+
 ## Framework7 v1.0.3 - Updated on March 7, 2015
   * Dataset
     * This could be a breaking change but all `data-` attributes, where used, now must be in hyphens-case instead of camelCase like in many places before. For example:
@@ -387,11 +442,11 @@
     * New View's .loadPage's shortcuts methods: 
       * `.loadPage(url)` - load page by specified url
       * `.loadContent(content)` - load page with specified content
-      * `.reloadPage(url)` - reload currenly active view's page from specified URL
+      * `.reloadPage(url)` - reload currently active view's page from specified URL
       * `.reloadPreviousPage(url)` - the same but for previous (left) view's page
-      * `.reloadContent(content)`  - reload currenly active view's page with passed HTML content
+      * `.reloadContent(content)`  - reload currently active view's page with passed HTML content
       * `.reloadPreviousContent(content)` - the same but for previous (left) view's page
-      * `.refreshPage()` - refresh currenly active view's page from specified URL
+      * `.refreshPage()` - refresh currently active view's page from specified URL
       * `.refreshPreviousPage()` - the same but for previous (left) view's page
   * Tab bar
     * New additional classes `tabbar-labels-fixed` and `tabbar-labels-through` (for Views, View, Pages and Page) for pages with tab bar to set required bottom padding on `page-content`
