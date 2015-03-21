@@ -2,6 +2,7 @@
 Swiper
 ===========================*/
 window.Swiper = function (container, params) {
+    if (!(this instanceof Swiper)) return new Swiper(container, params);
     var defaults = {
         direction: 'horizontal',
         touchEventsTarget: 'container',
@@ -16,6 +17,10 @@ window.Swiper = function (container, params) {
         freeModeMomentumRatio: 1,
         freeModeMomentumBounce: true,
         freeModeMomentumBounceRatio: 1,
+        // Set wrapper width
+        setWrapperSize: false,
+        // Virtual Translate
+        virtualTranslate: false,
         // Effects
         effect: 'slide', // 'slide' or 'fade' or 'cube' or 'coverflow'
         coverflow: {
@@ -119,35 +124,42 @@ window.Swiper = function (container, params) {
         // Observer
         observer: false,
         observeParents: false,
+        // Accessibility
+        a11y: false,
+        prevSlideMessage: 'Previous slide',
+        nextSlideMessage: 'Next slide',
+        firstSlideMessage: 'This is the first slide',
+        lastSlideMessage: 'This is the last slide',
         // Callbacks
-        runCallbacksOnInit: true
+        runCallbacksOnInit: true,
         /*
         Callbacks:
         onInit: function (swiper)
         onDestroy: function (swiper)
-        onClick: function (swiper, e) 
-        onTap: function (swiper, e) 
-        onDoubleTap: function (swiper, e) 
-        onSliderMove: function (swiper, e) 
-        onSlideChangeStart: function (swiper) 
-        onSlideChangeEnd: function (swiper) 
-        onTransitionStart: function (swiper) 
-        onTransitionEnd: function (swiper) 
-        onImagesReady: function (swiper) 
-        onProgress: function (swiper, progress) 
-        onTouchStart: function (swiper, e) 
-        onTouchMove: function (swiper, e) 
-        onTouchMoveOpposite: function (swiper, e) 
-        onTouchEnd: function (swiper, e) 
-        onReachBeginning: function (swiper) 
-        onReachEnd: function (swiper) 
-        onSetTransition: function (swiper, duration) 
-        onSetTranslate: function (swiper, translate) 
+        onClick: function (swiper, e)
+        onTap: function (swiper, e)
+        onDoubleTap: function (swiper, e)
+        onSliderMove: function (swiper, e)
+        onSlideChangeStart: function (swiper)
+        onSlideChangeEnd: function (swiper)
+        onTransitionStart: function (swiper)
+        onTransitionEnd: function (swiper)
+        onImagesReady: function (swiper)
+        onProgress: function (swiper, progress)
+        onTouchStart: function (swiper, e)
+        onTouchMove: function (swiper, e)
+        onTouchMoveOpposite: function (swiper, e)
+        onTouchEnd: function (swiper, e)
+        onReachBeginning: function (swiper)
+        onReachEnd: function (swiper)
+        onSetTransition: function (swiper, duration)
+        onSetTranslate: function (swiper, translate)
         onAutoplayStart: function (swiper)
         onAutoplayStop: function (swiper),
         onLazyImageLoad: function (swiper, slide, image)
         onLazyImageReady: function (swiper, slide, image)
         */
+        
     };
     params = params || {};
     for (var def in defaults) {
@@ -168,6 +180,9 @@ window.Swiper = function (container, params) {
     
     // Params
     s.params = params;
+    
+    // Classname
+    s.classNames = [];
     /*=========================
       Dom Library and plugins
       ===========================*/
@@ -180,6 +195,8 @@ window.Swiper = function (container, params) {
     }
     if (!$) return;
     
+    // Export it to Swiper instance
+    s.$ = $;
     /*=========================
       Preparation - Define Container, Wrapper and Pagination
       ===========================*/
@@ -196,10 +213,14 @@ window.Swiper = function (container, params) {
     s.container[0].swiper = s;
     s.container.data('swiper', s);
     
-    s.container.addClass('swiper-container-' + s.params.direction);
+    s.classNames.push('swiper-container-' + s.params.direction);
     
     if (s.params.freeMode) {
-        s.container.addClass('swiper-container-free-mode');
+        s.classNames.push('swiper-container-free-mode');
+    }
+    if (!s.support.flexbox) {
+        s.classNames.push('swiper-container-no-flexbox');
+        s.params.slidesPerColumn = 1;
     }
     // Enable slides progress when required
     if (s.params.parallax || s.params.watchSlidesVisibility) {
@@ -209,14 +230,14 @@ window.Swiper = function (container, params) {
     if (['cube', 'coverflow'].indexOf(s.params.effect) >= 0) {
         if (s.support.transforms3d) {
             s.params.watchSlidesProgress = true;
-            s.container.addClass('swiper-container-3d');
+            s.classNames.push('swiper-container-3d');
         }
         else {
             s.params.effect = 'slide';
         }
     }
     if (s.params.effect !== 'slide') {
-        s.container.addClass('swiper-container-' + s.params.effect);
+        s.classNames.push('swiper-container-' + s.params.effect);
     }
     if (s.params.effect === 'cube') {
         s.params.resistanceRatio = 0;
@@ -225,10 +246,16 @@ window.Swiper = function (container, params) {
         s.params.slidesPerGroup = 1;
         s.params.centeredSlides = false;
         s.params.spaceBetween = 0;
+        s.params.virtualTranslate = true;
+        s.params.setWrapperSize = false;
     }
     if (s.params.effect === 'fade') {
+        s.params.slidesPerView = 1;
+        s.params.slidesPerColumn = 1;
+        s.params.slidesPerGroup = 1;
         s.params.watchSlidesProgress = true;
         s.params.spaceBetween = 0;
+        s.params.virtualTranslate = true;
     }
     
     // Grab Cursor
@@ -254,12 +281,27 @@ window.Swiper = function (container, params) {
     
     // RTL
     s.rtl = isH() && (s.container[0].dir.toLowerCase() === 'rtl' || s.container.css('direction') === 'rtl');
-    if (s.rtl) s.container.addClass('swiper-container-rtl');
+    if (s.rtl) {
+        s.classNames.push('swiper-container-rtl');
+    }
     
     // Wrong RTL support
     if (s.rtl) {
         s.wrongRTL = s.wrapper.css('display') === '-webkit-box';
     }
+    
+    // Columns
+    if (s.params.slidesPerColumn > 1) {
+        s.classNames.push('swiper-container-multirow');
+    }
+    
+    // Check for Android
+    if (s.device.android) {
+        s.classNames.push('swiper-container-android');
+    }
+    
+    // Add classes
+    s.container.addClass(s.classNames.join(' '));
     
     // Translate
     s.translate = 0;
@@ -289,11 +331,6 @@ window.Swiper = function (container, params) {
     s.unlockSwipes = function () {
         s.params.allowSwipeToNext = s.params.allowSwipeToPrev = true;
     };
-    
-    // Columns
-    if (s.params.slidesPerColumn > 1) {
-        s.container.addClass('swiper-container-multirow');
-    }
     
     
     /*=========================
@@ -337,7 +374,7 @@ window.Swiper = function (container, params) {
             if (s.imagesLoaded !== undefined) s.imagesLoaded++;
             if (s.imagesLoaded === s.imagesToLoad.length) {
                 if (s.params.updateOnImagesReady) s.update();
-                if (s.params.onImagesReady) s.params.onImagesReady(s);
+                s.emit('onImagesReady', s);
             }
         }
         for (var i = 0; i < s.imagesToLoad.length; i++) {
@@ -377,7 +414,7 @@ window.Swiper = function (container, params) {
         if (!s.params.autoplay) return false;
         if (s.autoplaying) return false;
         s.autoplaying = true;
-        if (s.params.onAutoplayStart) s.params.onAutoplayStart(s);
+        s.emit('onAutoplayStart', s);
         autoplay();
     };
     s.stopAutoplay = function (internal) {
@@ -385,7 +422,7 @@ window.Swiper = function (container, params) {
         if (s.autoplayTimeoutId) clearTimeout(s.autoplayTimeoutId);
         s.autoplaying = false;
         s.autoplayTimeoutId = undefined;
-        if (s.params.onAutoplayStop) s.params.onAutoplayStop(s);
+        s.emit('onAutoplayStop', s);
     };
     s.pauseAutoplay = function (speed) {
         if (s.autoplayPaused) return;
@@ -440,7 +477,7 @@ window.Swiper = function (container, params) {
             spaceBetween = parseFloat(spaceBetween.replace('%', '')) / 100 * s.size;
         }
     
-        s.virtualWidth = -spaceBetween;
+        s.virtualSize = -spaceBetween;
         // reset margins
         if (s.rtl) s.slides.css({marginLeft: '', marginTop: ''});
         else s.slides.css({marginRight: '', marginBottom: ''});
@@ -523,28 +560,33 @@ window.Swiper = function (container, params) {
                 slidePosition = slidePosition + slideSize + spaceBetween;
             }
     
-            s.virtualWidth += slideSize + spaceBetween;
+            s.virtualSize += slideSize + spaceBetween;
     
             prevSlideSize = slideSize;
     
             index ++;
         }
-        s.virtualWidth = Math.max(s.virtualWidth, s.size);
+        s.virtualSize = Math.max(s.virtualSize, s.size);
     
         var newSlidesGrid;
     
-        if (s.rtl && s.wrongRTL && (s.params.effect === 'slide' || s.params.effect === 'coverflow')) {
-            s.wrapper.css({width: s.virtualWidth + s.params.spaceBetween + 'px'});
+        if (
+            s.rtl && s.wrongRTL && (s.params.effect === 'slide' || s.params.effect === 'coverflow')) {
+            s.wrapper.css({width: s.virtualSize + s.params.spaceBetween + 'px'});
+        }
+        if (!s.support.flexbox || s.params.setWrapperSize) {
+            if (isH()) s.wrapper.css({width: s.virtualSize + s.params.spaceBetween + 'px'});
+            else s.wrapper.css({height: s.virtualSize + s.params.spaceBetween + 'px'});
         }
     
         if (s.params.slidesPerColumn > 1) {
-            s.virtualWidth = (slideSize + s.params.spaceBetween) * slidesNumberEvenToRows;
-            s.virtualWidth = Math.ceil(s.virtualWidth / s.params.slidesPerColumn) - s.params.spaceBetween;
-            s.wrapper.css({width: s.virtualWidth + s.params.spaceBetween + 'px'});
+            s.virtualSize = (slideSize + s.params.spaceBetween) * slidesNumberEvenToRows;
+            s.virtualSize = Math.ceil(s.virtualSize / s.params.slidesPerColumn) - s.params.spaceBetween;
+            s.wrapper.css({width: s.virtualSize + s.params.spaceBetween + 'px'});
             if (s.params.centeredSlides) {
                 newSlidesGrid = [];
                 for (i = 0; i < s.snapGrid.length; i++) {
-                    if (s.snapGrid[i] < s.virtualWidth + s.snapGrid[0]) newSlidesGrid.push(s.snapGrid[i]);
+                    if (s.snapGrid[i] < s.virtualSize + s.snapGrid[0]) newSlidesGrid.push(s.snapGrid[i]);
                 }
                 s.snapGrid = newSlidesGrid;
             }
@@ -554,13 +596,13 @@ window.Swiper = function (container, params) {
         if (!s.params.centeredSlides) {
             newSlidesGrid = [];
             for (i = 0; i < s.snapGrid.length; i++) {
-                if (s.snapGrid[i] <= s.virtualWidth - s.size) {
+                if (s.snapGrid[i] <= s.virtualSize - s.size) {
                     newSlidesGrid.push(s.snapGrid[i]);
                 }
             }
             s.snapGrid = newSlidesGrid;
-            if (Math.floor(s.virtualWidth - s.size) > Math.floor(s.snapGrid[s.snapGrid.length - 1])) {
-                s.snapGrid.push(s.virtualWidth - s.size);
+            if (Math.floor(s.virtualSize - s.size) > Math.floor(s.snapGrid[s.snapGrid.length - 1])) {
+                s.snapGrid.push(s.virtualSize - s.size);
             }
         }
         if (s.snapGrid.length === 0) s.snapGrid = [0];
@@ -632,11 +674,11 @@ window.Swiper = function (container, params) {
             s.isBeginning = s.progress <= 0;
             s.isEnd = s.progress >= 1;
         }
-        if (s.isBeginning && s.params.onReachBeginning) s.params.onReachBeginning(s);
-        if (s.isEnd && s.params.onReachEnd) s.params.onReachEnd(s);
+        if (s.isBeginning) s.emit('onReachBeginning', s);
+        if (s.isEnd) s.emit('onReachEnd', s);
         
         if (s.params.watchSlidesProgress) s.updateSlidesProgress(translate);
-        if (s.params.onProgress) s.params.onProgress(s, s.progress);
+        s.emit('onProgress', s, s.progress);
     };
     s.updateActiveIndex = function () {
         var translate = s.rtl ? s.translate : -s.translate;
@@ -691,10 +733,11 @@ window.Swiper = function (container, params) {
             s.bullets.removeClass(s.params.bulletActiveClass);
             var bulletIndex;
             if (s.params.loop) {
-                bulletIndex = s.activeIndex - s.loopedSlides;
+                bulletIndex = Math.ceil(s.activeIndex - s.loopedSlides)/s.params.slidesPerGroup;
                 if (bulletIndex > s.slides.length - 1 - s.loopedSlides * 2) {
                     bulletIndex = bulletIndex - (s.slides.length - s.loopedSlides * 2);
                 }
+                if (bulletIndex > s.bullets.length - 1) bulletIndex = bulletIndex - s.bullets.length; 
             }
             else {
                 if (typeof s.snapIndex !== 'undefined') {
@@ -704,18 +747,37 @@ window.Swiper = function (container, params) {
                     bulletIndex = s.activeIndex || 0;
                 }
             }
-            s.bullets.eq(bulletIndex).addClass(s.params.bulletActiveClass);
+            if (s.paginationContainer.length > 1) {
+                s.bullets.each(function () {
+                    if ($(this).index() === bulletIndex) $(this).addClass(s.params.bulletActiveClass);
+                });
+            }
+            else {
+                s.bullets.eq(bulletIndex).addClass(s.params.bulletActiveClass);
+            }
         }
     
         // Next/active buttons
         if (!s.params.loop) {
             if (s.params.prevButton) {
-                if (s.isBeginning) $(s.params.prevButton).addClass(s.params.buttonDisabledClass);
-                else $(s.params.prevButton).removeClass(s.params.buttonDisabledClass);
+                if (s.isBeginning) {
+                    $(s.params.prevButton).addClass(s.params.buttonDisabledClass);
+                    if (s.params.a11y && s.a11y) s.a11y.disable($(s.params.prevButton));
+                }
+                else {
+                    $(s.params.prevButton).removeClass(s.params.buttonDisabledClass);
+                    if (s.params.a11y && s.a11y) s.a11y.enable($(s.params.prevButton));
+                }
             }
             if (s.params.nextButton) {
-                if (s.isEnd) $(s.params.nextButton).addClass(s.params.buttonDisabledClass);
-                else $(s.params.nextButton).removeClass(s.params.buttonDisabledClass);
+                if (s.isEnd) {
+                    $(s.params.nextButton).addClass(s.params.buttonDisabledClass);
+                    if (s.params.a11y && s.a11y) s.a11y.disable($(s.params.nextButton));
+                }
+                else {
+                    $(s.params.nextButton).removeClass(s.params.buttonDisabledClass);
+                    if (s.params.a11y && s.a11y) s.a11y.enable($(s.params.nextButton));
+                }
             }
         }
     };
@@ -727,7 +789,7 @@ window.Swiper = function (container, params) {
         if (!s.params.pagination) return;
         if (s.paginationContainer && s.paginationContainer.length > 0) {
             var bulletsHTML = '';
-            var numberOfBullets = s.params.loop ? s.slides.length - s.loopedSlides * 2 : s.snapGrid.length;
+            var numberOfBullets = s.params.loop ? Math.ceil((s.slides.length - s.loopedSlides * 2) / s.params.slidesPerGroup) : s.snapGrid.length;
             for (var i = 0; i < numberOfBullets; i++) {
                 if (s.params.paginationBulletRender) {
                     bulletsHTML += s.params.paginationBulletRender(i, s.params.bulletClass);
@@ -828,7 +890,7 @@ window.Swiper = function (container, params) {
     }
     
     // Attach/detach events
-    s.events = function (detach) {
+    s.initEvents = function (detach) {
         var actionDom = detach ? 'off' : 'on';
         var action = detach ? 'removeEventListener' : 'addEventListener';
         var touchEventsTarget = s.params.touchEventsTarget === 'container' ? s.container[0] : s.wrapper[0];
@@ -857,8 +919,14 @@ window.Swiper = function (container, params) {
         window[action]('resize', s.onResize);
     
         // Next, Prev, Index
-        if (s.params.nextButton) $(s.params.nextButton)[actionDom]('click', s.onClickNext);
-        if (s.params.prevButton) $(s.params.prevButton)[actionDom]('click', s.onClickPrev);
+        if (s.params.nextButton) {
+            $(s.params.nextButton)[actionDom]('click', s.onClickNext);
+            if (s.params.a11y && s.a11y) $(s.params.nextButton)[actionDom]('keydown', s.a11y.onEnterKey);
+        }
+        if (s.params.prevButton) {
+            $(s.params.prevButton)[actionDom]('click', s.onClickPrev);
+            if (s.params.a11y && s.a11y) $(s.params.prevButton)[actionDom]('keydown', s.a11y.onEnterKey);
+        }
         if (s.params.pagination && s.params.paginationClickable) {
             $(s.paginationContainer)[actionDom]('click', '.' + s.params.bulletClass, s.onClickIndex);
         }
@@ -867,10 +935,10 @@ window.Swiper = function (container, params) {
         if (s.params.preventClicks || s.params.preventClicksPropagation) touchEventsTarget[action]('click', s.preventClicks, true);
     };
     s.attachEvents = function (detach) {
-        s.events();
+        s.initEvents();
     };
     s.detachEvents = function () {
-        s.events(true);
+        s.initEvents(true);
     };
     
     /*=========================
@@ -995,7 +1063,7 @@ window.Swiper = function (container, params) {
     };
     
     // Touch handlers
-    var isTouchEvent;
+    var isTouchEvent, startMoving;
     s.onTouchStart = function (e) {
         if (e.originalEvent) e = e.originalEvent;
         isTouchEvent = e.type === 'touchstart';
@@ -1010,6 +1078,7 @@ window.Swiper = function (container, params) {
         isTouched = true;
         isMoved = false;
         isScrolling = undefined;
+        startMoving = undefined;
         s.touches.startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         s.touches.startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = Date.now();
@@ -1027,8 +1096,7 @@ window.Swiper = function (container, params) {
                 e.preventDefault();
             }
         }
-    
-        if (s.params.onTouchStart) s.params.onTouchStart(s, e);
+        s.emit('onTouchStart', s, e);
     };
     
     s.onTouchMove = function (e) {
@@ -1047,8 +1115,9 @@ window.Swiper = function (container, params) {
                 return;
             }
         }
-        if (s.params.onTouchMove) s.params.onTouchMove(s, e);
-        s.allowClick = false;
+        
+        s.emit('onTouchMove', s, e);
+        
         if (e.targetTouches && e.targetTouches.length > 1) return;
         
         s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
@@ -1057,18 +1126,25 @@ window.Swiper = function (container, params) {
         if (typeof isScrolling === 'undefined') {
             var touchAngle = Math.atan2(Math.abs(s.touches.currentY - s.touches.startY), Math.abs(s.touches.currentX - s.touches.startX)) * 180 / Math.PI;
             isScrolling = isH() ? touchAngle > s.params.touchAngle : (90 - touchAngle > s.params.touchAngle);
-            // isScrolling = !!(isScrolling || Math.abs(touchesCurrent.y - touchesStart.y) > Math.abs(touchesCurrent.x - touchesStart.x));
         }
-        if (isScrolling && s.params.onTouchMoveOpposite) {
-            s.params.onTouchMoveOpposite(s, e);
+        if (isScrolling) {
+            s.emit('onTouchMoveOpposite', s, e);
+        }
+        if (typeof startMoving === 'undefined' && s.browser.ieTouch) {
+            if (s.touches.currentX !== s.touches.startX || s.touches.currentY !== s.touches.startY) {
+                startMoving = true;
+            }
         }
         if (!isTouched) return;
         if (isScrolling)  {
             isTouched = false;
             return;
         }
-        if (s.params.onSliderMove) s.params.onSliderMove(s, e);
-    
+        if (!startMoving && s.browser.ieTouch) {
+            return;
+        }
+        s.allowClick = false;
+        s.emit('onSliderMove', s, e);
         e.preventDefault();
         if (s.params.touchMoveStopPropagation && !s.params.nested) {
             e.stopPropagation();
@@ -1078,7 +1154,7 @@ window.Swiper = function (container, params) {
             if (params.loop) {
                 s.fixLoop();
             }
-            startTranslate = s.params.effect === 'cube' ? ((s.rtl ? -s.translate: s.translate) || 0) : s.getWrapperTranslate();
+            startTranslate = s.getWrapperTranslate();
             s.setWrapperTransition(0);
             if (s.animating) {
                 s.wrapper.trigger('webkitTransitionEnd transitionend oTransitionEnd MSTransitionEnd msTransitionEnd');
@@ -1175,9 +1251,8 @@ window.Swiper = function (container, params) {
     };
     s.onTouchEnd = function (e) {
         if (e.originalEvent) e = e.originalEvent;
-        if (s.params.onTouchEnd) s.params.onTouchEnd(s, e);
+        s.emit('onTouchEnd', s, e);
         if (!isTouched) return;
-    
         //Return Grab Cursor
         if (s.params.grabCursor && isMoved && isTouched) {
             s.container[0].style.cursor = 'move';
@@ -1193,7 +1268,7 @@ window.Swiper = function (container, params) {
         // Tap, doubleTap, Click
         if (s.allowClick) {
             s.updateClickedSlide(e);
-            if (s.params.onTap) s.params.onTap(s, e);
+            s.emit('onTap', s, e);
             if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
                 clickTimeout = setTimeout(function () {
@@ -1201,15 +1276,13 @@ window.Swiper = function (container, params) {
                     if (s.params.paginationHide && s.paginationContainer.length > 0 && !$(e.target).hasClass(s.params.bulletClass)) {
                         s.paginationContainer.toggleClass(s.params.paginationHiddenClass);
                     }
-                    if (s.params.onClick) s.params.onClick(s, e);
+                    s.emit('onClick', s, e);
                 }, 300);
                 
             }
             if (timeDiff < 300 && (touchEndTime - lastClickTime) < 300) {
                 if (clickTimeout) clearTimeout(clickTimeout);
-                if (s.params.onDoubleTap) {
-                    s.params.onDoubleTap(s, e);
-                }
+                s.emit('onDoubleTap', s, e);
             }
         }
     
@@ -1314,7 +1387,7 @@ window.Swiper = function (container, params) {
                     s.animating = true;
                     s.wrapper.transitionEnd(function () {
                         if (!allowMomentumBounce) return;
-                        if (s.params.onMomentumBounce) s.params.onMomentumBounce(s);
+                        s.emit('onMomentumBounce', s);
     
                         s.setWrapperTransition(s.params.speed);
                         s.setWrapperTranslate(afterBouncePosition);
@@ -1467,8 +1540,10 @@ window.Swiper = function (container, params) {
         if (typeof runCallbacks === 'undefined') runCallbacks = true;
         if (s.lazy) s.lazy.onTransitionStart();
         if (runCallbacks) {
-            if (s.params.onTransitionStart) s.params.onTransitionStart(s);
-            if (s.params.onSlideChangeStart && s.activeIndex !== s.previousIndex) s.params.onSlideChangeStart(s);
+            s.emit('onTransitionStart', s);
+            if (s.activeIndex !== s.previousIndex) {
+                s.emit('onSlideChangeStart', s);
+            }
         }
     };
     s.onTransitionEnd = function (runCallbacks) {
@@ -1477,8 +1552,13 @@ window.Swiper = function (container, params) {
         if (typeof runCallbacks === 'undefined') runCallbacks = true;
         if (s.lazy) s.lazy.onTransitionEnd();
         if (runCallbacks) {
-            if (s.params.onTransitionEnd) s.params.onTransitionEnd(s);
-            if (s.params.onSlideChangeEnd && s.activeIndex !== s.previousIndex) s.params.onSlideChangeEnd(s);
+            s.emit('onTransitionEnd', s);
+            if (s.activeIndex !== s.previousIndex) {
+                s.emit('onSlideChangeEnd', s);
+            }
+        }
+        if (s.params.hashnav && s.hashnav) {
+            s.hashnav.setHash();
         }
             
     };
@@ -1515,7 +1595,6 @@ window.Swiper = function (container, params) {
       ===========================*/
     s.setWrapperTransition = function (duration, byController) {
         s.wrapper.transition(duration);
-        if (s.params.onSetTransition) s.params.onSetTransition(s, duration);
         if (s.params.effect !== 'slide' && s.effects[s.params.effect]) {
             s.effects[s.params.effect].setTransition(duration);
         }
@@ -1528,6 +1607,7 @@ window.Swiper = function (container, params) {
         if (s.params.control && s.controller) {
             s.controller.setTransition(duration, byController);
         }
+        s.emit('onSetTransition', s, duration);
     };
     s.setWrapperTranslate = function (translate, updateActiveIndex, byController) {
         var x = 0, y = 0, z = 0;
@@ -1537,10 +1617,13 @@ window.Swiper = function (container, params) {
         else {
             y = translate;
         }
-        
-        if (s.support.transforms3d) s.wrapper.transform('translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px)');
-        else s.wrapper.transform('translate(' + x + 'px, ' + y + 'px)');
+        if (!s.params.virtualTranslate) {
+            if (s.support.transforms3d) s.wrapper.transform('translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px)');
+            else s.wrapper.transform('translate(' + x + 'px, ' + y + 'px)');
+        }
+    
         s.translate = isH() ? x : y;
+    
         if (updateActiveIndex) s.updateActiveIndex();
         if (s.params.effect !== 'slide' && s.effects[s.params.effect]) {
             s.effects[s.params.effect].setTranslate(s.translate);
@@ -1554,10 +1637,7 @@ window.Swiper = function (container, params) {
         if (s.params.control && s.controller) {
             s.controller.setTranslate(s.translate, byController);
         }
-        if (s.params.hashnav && s.hashnav) {
-            s.hashnav.setHash();
-        }
-        if (s.params.onSetTranslate) s.params.onSetTranslate(s, s.translate);
+        s.emit('onSetTranslate', s, s.translate);
     };
     
     s.getTranslate = function (el, axis) {
@@ -1566,6 +1646,10 @@ window.Swiper = function (container, params) {
         // automatic axis detection
         if (typeof axis === 'undefined') {
             axis = 'x';
+        }
+    
+        if (s.params.virtualTranslate) {
+            return s.rtl ? -s.translate : s.translate;
         }
     
         curStyle = window.getComputedStyle(el, null);
@@ -1622,7 +1706,7 @@ window.Swiper = function (container, params) {
         var observer = new ObserverFunc(function (mutations) {
             mutations.forEach(function (mutation) {
                 s.onResize();
-                if (s.params.onObserverUpdate) s.params.onObserverUpdate(s, mutation);
+                s.emit('onObserverUpdate', s, mutation);
             });
         });
          
@@ -1789,7 +1873,8 @@ window.Swiper = function (container, params) {
                 for (var i = 0; i < s.slides.length; i++) {
                     var slide = s.slides.eq(i);
                     var offset = slide[0].swiperSlideOffset;
-                    var tx = -offset - s.translate;
+                    var tx = -offset;
+                    if (!s.params.virtualTranslate) tx = tx - s.translate;
                     var ty = 0;
                     if (!isH()) {
                         ty = tx;
@@ -1968,8 +2053,8 @@ window.Swiper = function (container, params) {
                 }
     
                 //Set correct perspective for IE10
-                if (window.navigator.pointerEnabled || window.navigator.msPointerEnabled) {
-                    var ws = s.wrapper.style;
+                if (s.browser.ie) {
+                    var ws = s.wrapper[0].style;
                     ws.perspectiveOrigin = center + 'px 50%';
                 }
             },
@@ -2003,13 +2088,11 @@ window.Swiper = function (container, params) {
                     _img.removeAttr('data-src');
                     _img.addClass('swiper-lazy-loaded').removeClass('swiper-lazy-loading');
                     slide.find('.swiper-lazy-preloader, .preloader').remove();
-                    if (s.params.onLazyImageReady) {
-                        s.params.onLazyImageReady(s, slide[0], _img[0]);
-                    }
+    
+                    s.emit('onLazyImageReady', s, slide[0], _img[0]);
                 });
-                if (s.params.onLazyImageLoad) {
-                    s.params.onLazyImageLoad(s, slide[0], _img[0]);
-                }
+                
+                s.emit('onLazyImageLoad', s, slide[0], _img[0]);
             });
                 
         },
@@ -2069,7 +2152,7 @@ window.Swiper = function (container, params) {
             sb.drag[0].style.height = '';
             sb.trackSize = isH() ? sb.track[0].offsetWidth : sb.track[0].offsetHeight;
             
-            sb.divider = s.size / s.virtualWidth;
+            sb.divider = s.size / s.virtualSize;
             sb.moveDivider = sb.divider * (sb.trackSize / s.size);
             sb.dragSize = sb.trackSize * sb.divider;
     
@@ -2119,11 +2202,21 @@ window.Swiper = function (container, params) {
                 }
             }
             if (isH()) {
-                sb.drag.transform('translate3d(' + (newPos) + 'px, 0, 0)');
+                if (s.support.transforms3d) {
+                    sb.drag.transform('translate3d(' + (newPos) + 'px, 0, 0)');
+                }
+                else {
+                    sb.drag.transform('translateX(' + (newPos) + 'px)');   
+                }
                 sb.drag[0].style.width = newSize + 'px';
             }
             else {
-                sb.drag.transform('translate3d(0px, ' + (newPos) + 'px, 0)');
+                if (s.support.transforms3d) {
+                    sb.drag.transform('translate3d(0px, ' + (newPos) + 'px, 0)');
+                }
+                else {
+                    sb.drag.transform('translateY(' + (newPos) + 'px)');   
+                }
                 sb.drag[0].style.height = newSize + 'px';
             }
             if (s.params.scrollbarHide) {
@@ -2195,12 +2288,16 @@ window.Swiper = function (container, params) {
       ===========================*/
     function setParallaxTransform(el, progress) {
         el = $(el);
-        var p, pX, pY, tX, tY;
+        var p, pX, pY;
         
-        p = el.attr('data-swiper-parallax');
+        p = el.attr('data-swiper-parallax') || '0';
         pX = el.attr('data-swiper-parallax-x');
         pY = el.attr('data-swiper-parallax-y');
-        if (!pX && !pY && p) {
+        if (pX || pY) {
+            pX = pX || '0';
+            pY = pY || '0';
+        }
+        else {
             if (isH()) {
                 pX = p;
                 pY = '0';
@@ -2209,12 +2306,6 @@ window.Swiper = function (container, params) {
                 pY = p;
                 pX = '0';
             }
-        }
-        else {
-            if (pX) pX = pX;
-            else pX = '0';
-            if (pY) pY = pY;
-            else pY = '0';
         }
         if ((pX).indexOf('%') >= 0) {
             pX = parseInt(pX, 10) * progress + '%';
@@ -2228,10 +2319,7 @@ window.Swiper = function (container, params) {
         else {
             pY = pY * progress + 'px' ;
         }
-        tX = pX;
-        tY = pY;
-    
-        el.transform('translate3d(' + tX + ', ' + tY + ',0px)');
+        el.transform('translate3d(' + pX + ', ' + pY + ',0px)');
     }   
     s.parallax = {
         setTranslate: function () {
@@ -2257,7 +2345,165 @@ window.Swiper = function (container, params) {
             });
         }
     };
-        
+    
+
+    /*=========================
+      Plugins API. Collect all and init all plugins
+      ===========================*/
+    s._plugins = [];
+    for (var plugin in s.plugins) {
+        var p = s.plugins[plugin](s, s.params[plugin]);
+        if (p) s._plugins.push(p);
+    }
+    // Method to call all plugins event/method
+    s.callPlugins = function (eventName) {
+        for (var i = 0; i < s._plugins.length; i++) {
+            if (eventName in s._plugins[i]) {
+                s._plugins[i][eventName](arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+            }
+        }
+    };
+
+    /*=========================
+      Events/Callbacks/Plugins Emitter
+      ===========================*/
+    function normalizeEventName (eventName) {
+        if (eventName.indexOf('on') !== 0) {
+            if (eventName[0] !== eventName[0].toUpperCase()) {
+                eventName = 'on' + eventName[0].toUpperCase() + eventName.substring(1);
+            }
+            else {
+                eventName = 'on' + eventName;
+            }
+        }
+        return eventName;
+    }
+    s.emitterEventListeners = {
+    
+    };
+    s.emit = function (eventName) {
+        // Trigger callbacks
+        if (s.params[eventName]) {
+            s.params[eventName](arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+        }
+        var i;
+        // Trigger events
+        if (s.emitterEventListeners[eventName]) {
+            for (i = 0; i < s.emitterEventListeners[eventName].length; i++) {
+                s.emitterEventListeners[eventName][i](arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+            }
+        }
+        // Trigger plugins
+        if (s.callPlugins) s.callPlugins(eventName, arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+    };
+    s.on = function (eventName, handler) {
+        eventName = normalizeEventName(normalizeEventName);
+        if (!s.emitterEventListeners[eventName]) s.emitterEventListeners[eventName] = [];
+        s.emitterEventListeners[eventName].push(handler);
+        return s;
+    };
+    s.off = function (eventName, handler) {
+        var i;
+        eventName = normalizeEventName(normalizeEventName);
+        if (typeof handler === 'undefined') {
+            // Remove all handlers for such event
+            s.emitterEventListeners[eventName] = [];
+            return s;
+        }
+        if (!s.emitterEventListeners[eventName] || s.emitterEventListeners[eventName].length === 0) return;
+        for (i = 0; i < s.emitterEventListeners[eventName].length; i++) {
+            if(s.emitterEventListeners[eventName][i] === handler) s.emitterEventListeners[eventName].splice(i, 1);
+        }
+        return s;
+    };
+    s.once = function (eventName, handler) {
+        eventName = normalizeEventName(normalizeEventName);
+        var _handler = function () {
+            handler(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
+            s.off(eventName, _handler);
+        };
+        s.on(eventName, _handler);
+        return s;
+    };
+
+    // Accessibility tools
+    s.a11y = {
+        makeFocusable: function ($el) {
+            $el[0].tabIndex = '0';
+            return $el;
+        },
+        addRole: function ($el, role) {
+            $el.attr('role', role);
+            return $el;
+        },
+    
+        addLabel: function ($el, label) {
+            $el.attr('aria-label', label);
+            return $el;
+        },
+    
+        disable: function ($el) {
+            $el.attr('aria-disabled', true);
+            return $el;
+        },
+    
+        enable: function ($el) {
+            $el.attr('aria-disabled', false);
+            return $el;
+        },
+    
+        onEnterKey: function (event) {
+            if (event.keyCode !== 13) return;
+            if ($(event.target).is(s.params.nextButton)) {
+                s.onClickNext(event);
+                if (s.isEnd) {
+                    s.a11y.notify(s.params.lastSlideMsg);
+                }
+                else {
+                    s.a11y.notify(s.params.nextSlideMsg);
+                }
+            }
+            else if ($(event.target).is(s.params.prevButton)) {
+                s.onClickPrev(event);
+                if (s.isBeginning) {
+                    s.a11y.notify(s.params.firstSlideMsg);
+                }
+                else {
+                    s.a11y.notify(s.params.prevSlideMsg);
+                }
+            }
+        },
+    
+        liveRegion: $('<span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>'),
+    
+        notify: function (message) {
+            var notification = s.a11y.liveRegion;
+            if (notification.length === 0) return;
+            notification.html('');
+            notification.html(message);
+        },
+        init: function () {
+            // Setup accessibility
+            if (s.params.nextButton) {
+                var nextButton = $(s.params.nextButton);
+                s.a11y.makeFocusable(nextButton);
+                s.a11y.addRole(nextButton, 'button');
+                s.a11y.addLabel(nextButton, s.params.nextSlideMsg);
+            }
+            if (s.params.prevButton) {
+                var prevButton = $(s.params.prevButton);
+                s.a11y.makeFocusable(prevButton);
+                s.a11y.addRole(prevButton, 'button');
+                s.a11y.addLabel(prevButton, s.params.prevSlideMsg);
+            }
+    
+            $(s.container).append(s.a11y.liveRegion);
+        },
+        destroy: function () {
+            if (s.a11y.liveRegion && s.a11y.liveRegion.length > 0) s.a11y.liveRegion.remove();
+        }
+    };
+    
 
     /*=========================
       Init/Destroy
@@ -2303,7 +2549,8 @@ window.Swiper = function (container, params) {
         if (s.params.hashnav) {
             if (s.hashnav) s.hashnav.init();
         }
-        if (s.params.onInit) s.params.onInit(s);
+        if (s.params.a11y && s.a11y) s.a11y.init();
+        s.emit('onInit', s);
     };
     
     // Destroy
@@ -2316,7 +2563,8 @@ window.Swiper = function (container, params) {
         if (s.params.mousewheelControl) {
             if (s.disableMousewheelControl) s.disableMousewheelControl();
         }
-        if (s.params.onDestroy) s.params.onDestroy();
+        if (s.params.a11y && s.a11y) s.a11y.destroy();
+        s.emit('onDestroy');
         if (deleteInstance !== false) s = null;
     };
     
@@ -2345,7 +2593,8 @@ Swiper.prototype = {
     Browser
     ====================================================*/
     browser: {
-        ie: window.navigator.pointerEnabled || window.navigator.msPointerEnabled
+        ie: window.navigator.pointerEnabled || window.navigator.msPointerEnabled,
+        ieTouch: (window.navigator.msPointerEnabled && window.navigator.msMaxTouchPoints > 1) || (window.navigator.pointerEnabled && window.navigator.maxTouchPoints > 1),
     },
     /*==================================================
     Devices
@@ -2376,7 +2625,7 @@ Swiper.prototype = {
 
         flexbox: (function () {
             var div = document.createElement('div').style;
-            var styles = ('WebkitBox msFlexbox MsFlexbox WebkitFlex MozBox flex').split(' ');
+            var styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
             for (var i = 0; i < styles.length; i++) {
                 if (styles[i] in div) return true;
             }
@@ -2385,5 +2634,9 @@ Swiper.prototype = {
         observer: (function () {
             return ('MutationObserver' in window || 'WebkitMutationObserver' in window);
         })()
-    }
+    },
+    /*==================================================
+    Plugins
+    ====================================================*/
+    plugins: {}
 };
