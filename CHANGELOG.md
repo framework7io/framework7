@@ -13,7 +13,7 @@
     * Fixed issues with years switch when using min/maxDate which didn't allow to return to the current year
     * New parameter `onlyInPopover` (disabled by default). Enable it and Calendar will be always opened in Popover
   * Picker
-    * New parameter `onlyInPopover` (disabled by default). Enable it and Calendar will be always opened in Popover
+    * New parameter `onlyInPopover` (disabled by default). Enable it and Picker will be always opened in Popover
     * Fixed issues with not-clickable "items" after using `col.replaceValues` method
   * Fast Clicks
     * Fixed issue that didn't allow to call click programmatically (using element.click()) after first synthetic click
@@ -29,7 +29,7 @@
   * Swipe Back
     * Will automatically close any active Picker Modals
   * Searchbar
-    * New `customSearch` parameter. When enabled searchbar will not search through any of list blocks and you will be able to use custom search functionality, for example calling external APIs for results
+    * New `customSearch` parameter. When enabled searchbar will not search through any of list blocks specified by `searchList` and you will be able to use custom search functionality, for example, for calling external APIs with search results and for displaying them manually
     * Added ability to search in different places by passing a list of elements in `searchIn` parameters, for example: `searchIn: '.item-title, .item-text'`
   * View
     * New App method to get current (currently visible and active) View instance:
