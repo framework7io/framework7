@@ -2117,7 +2117,7 @@ window.Swiper = function (container, params) {
                 if (nextSlide.length > 0) s.lazy.loadImageInSlide(nextSlide.index());
     
                 var prevSlide = s.wrapper.children('.' + s.params.slidePrevClass);
-                if (prevSlide.length > 0) s.loadImageInSlide(prevSlide.index());
+                if (prevSlide.length > 0) s.lazy.loadImageInSlide(prevSlide.index());
             }
         },
         onTransitionStart: function () {
@@ -2134,6 +2134,7 @@ window.Swiper = function (container, params) {
             }
         }
     };
+    
 
     /*=========================
       Scrollbar
@@ -2397,14 +2398,14 @@ window.Swiper = function (container, params) {
         if (s.callPlugins) s.callPlugins(eventName, arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
     };
     s.on = function (eventName, handler) {
-        eventName = normalizeEventName(normalizeEventName);
+        eventName = normalizeEventName(eventName);
         if (!s.emitterEventListeners[eventName]) s.emitterEventListeners[eventName] = [];
         s.emitterEventListeners[eventName].push(handler);
         return s;
     };
     s.off = function (eventName, handler) {
         var i;
-        eventName = normalizeEventName(normalizeEventName);
+        eventName = normalizeEventName(eventName);
         if (typeof handler === 'undefined') {
             // Remove all handlers for such event
             s.emitterEventListeners[eventName] = [];
@@ -2417,7 +2418,7 @@ window.Swiper = function (container, params) {
         return s;
     };
     s.once = function (eventName, handler) {
-        eventName = normalizeEventName(normalizeEventName);
+        eventName = normalizeEventName(eventName);
         var _handler = function () {
             handler(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
             s.off(eventName, _handler);
