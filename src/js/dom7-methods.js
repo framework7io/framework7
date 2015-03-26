@@ -62,6 +62,7 @@ Dom7.prototype = {
         for (var i = 0; i < this.length; i++) {
             this[i].removeAttribute(attr);
         }
+        return this;
     },
     prop: function (props, value) {
         if (arguments.length === 1 && typeof props === 'string') {
