@@ -179,7 +179,7 @@ app.initFastClicks = function () {
     function handleTouchMove(e) {
         if (!trackClick) return;
         var _isMoved = false;
-        var distance = app.params.fastClicksDistanceThreshold * app.device.pixelRatio;
+        var distance = app.params.fastClicksDistanceThreshold;
         if (distance) {
             var pageX = e.targetTouches[0].pageX;
             var pageY = e.targetTouches[0].pageY;
@@ -198,7 +198,7 @@ app.initFastClicks = function () {
 				clearTimeout(activeTimeout);
 				removeActive();
 			}
-        }            
+        }
     }
     function handleTouchEnd(e) {
         clearTimeout(activeTimeout);
