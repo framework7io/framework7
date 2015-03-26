@@ -5907,7 +5907,7 @@
             function handleTouchMove(e) {
                 if (!trackClick) return;
                 var _isMoved = false;
-                var distance = app.params.fastClicksDistanceThreshold;
+                var distance = app.params.fastClicksDistanceThreshold * app.device.pixelRatio;
                 if (distance) {
                     var pageX = e.targetTouches[0].pageX;
                     var pageY = e.targetTouches[0].pageY;
