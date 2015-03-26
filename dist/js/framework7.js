@@ -5923,7 +5923,7 @@
                     targetElement = null;
                     isMoved = true;
                 }
-
+                    
                 if (app.params.activeState) {
                     clearTimeout(activeTimeout);
                     removeActive();
