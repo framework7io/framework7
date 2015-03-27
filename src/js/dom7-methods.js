@@ -121,7 +121,7 @@ Dom7.prototype = {
                 for (var i = 0; i < el.attributes.length; i++) {
                     var attr = el.attributes[i];
                     if (attr.name.indexOf('data-') >= 0) {
-                        dataset[$.camelCase(attr.name.split('data-')[1])] = attr.value;
+                        dataset[$.toCamelCase(attr.name.split('data-')[1])] = attr.value;
                     }
                 }
             }
