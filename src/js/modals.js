@@ -207,7 +207,7 @@ app.actions = function (target, params) {
                 '{{/each}}' +
               '</div>' +
             '</div>';
-        if (!app._compiledTemplates.actionsPopover) {
+        if (!app._compiledTemplates.actionsToPopover) {
             app._compiledTemplates.actionsToPopover = t7.compile(actionsToPopoverTemplate);
         }
         var popoverHTML = app._compiledTemplates.actionsToPopover(params);
