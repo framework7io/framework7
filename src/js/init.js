@@ -19,6 +19,11 @@ app.init = function () {
     $('.page:not(.cached)').each(function () {
         app.initPageWithCallback(this);
     });
+
+    // Init each navbar callbacks
+    $('.navbar:not(.cached)').each(function () {
+        app.initNavbarWithCallback(this); 
+    });
     
     // Init resize events
     if (app.initResize) app.initResize();
