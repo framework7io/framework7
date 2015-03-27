@@ -202,7 +202,7 @@ $.ajax = function (options) {
     // Handle XHR
     xhr.onload = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
-        if ((xhr.status >= 200 && xhr.status < 400) || xhr.status === 0) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
             var responseData;
             if (options.dataType === 'json') {
                 try {
