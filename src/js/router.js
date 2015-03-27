@@ -347,14 +347,18 @@ app.router._load = function (view, options) {
         
             if (oldNavbarInner.length > 0) {
                 for (i = 0; i < oldNavbarInner.length - 1; i++) {
-                    if (!view.params.domCache)
+                    if (!view.params.domCache) {
+                        app.navbarRemoveCallback(view, pagesInView[i], navbar[0], oldNavbarInner[i]);
                         $(oldNavbarInner[i]).remove();
+                    }
                     else
                         $(oldNavbarInner[i]).addClass('cached');
                 }
                 if (!newNavbarInner && oldNavbarInner.length === 1) {
-                    if (!view.params.domCache)
+                    if (!view.params.domCache) {
+                        app.navbarRemoveCallback(view, pagesInView[0], navbar[0], oldNavbarInner[0]);
                         $(oldNavbarInner[0]).remove();
+                    }
                     else
                         $(oldNavbarInner[0]).addClass('cached');
                 }
@@ -454,6 +458,7 @@ app.router._load = function (view, options) {
         }
         else {
             app.pageRemoveCallback(view, oldPage[0], reloadPosition);
+            if (dynamicNavbar) app.navbarRemoveCallback(view, oldPage[0], navbar[0], oldNavbarInner[0]);
             oldPage.remove();
             if (dynamicNavbar) oldNavbarInner.remove();
         }
@@ -489,7 +494,7 @@ app.router._load = function (view, options) {
     var clientLeft = newPage[0].clientLeft;
 
     // Before Anim Callback
-    app.pageAnimCallbacks('before', view, {
+    app.pageAnimCallback('before', view, {
         pageContainer: newPage[0], 
         url: url, 
         position: 'right', 
@@ -507,7 +512,7 @@ app.router._load = function (view, options) {
             newNavbarInner.removeClass('navbar-from-right-to-center navbar-on-left navbar-on-right').addClass('navbar-on-center');
             oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center navbar-on-right').addClass('navbar-on-left');
         }
-        app.pageAnimCallbacks('after', view, {
+        app.pageAnimCallback('after', view, {
             pageContainer: newPage[0], 
             url: url, 
             position: 'right', 
@@ -525,6 +530,7 @@ app.router._load = function (view, options) {
             else {
                 if (!(url.indexOf('#') === 0 && newPage.attr('data-page').indexOf('smart-select-') === 0)) {
                     app.pageRemoveCallback(view, oldPage[0], 'left');
+                    if (dynamicNavbar) app.navbarRemoveCallback(view, oldPage[0], navbar[0], oldNavbarInner[0]);
                     oldPage.remove();
                     if (dynamicNavbar) oldNavbarInner.remove();    
                 }
@@ -647,14 +653,14 @@ app.router._back = function (view, options) {
 
     // Animation
     function afterAnimation() {
-        app.pageBackCallbacks('after', view, {
+        app.pageBackCallback('after', view, {
             pageContainer: oldPage[0], 
             url: url, 
             position: 'center', 
             oldPage: oldPage, 
             newPage: newPage, 
         });
-        app.pageAnimCallbacks('after', view, {
+        app.pageAnimCallback('after', view, {
             pageContainer: newPage[0], 
             url: url, 
             position: 'left', 
@@ -667,14 +673,14 @@ app.router._back = function (view, options) {
     }
     function animateBack() {
         // Page before animation callback
-        app.pageBackCallbacks('before', view, {
+        app.pageBackCallback('before', view, {
             pageContainer: oldPage[0], 
             url: url, 
             position: 'center', 
             oldPage: oldPage, 
             newPage: newPage, 
         });
-        app.pageAnimCallbacks('before', view, {
+        app.pageAnimCallback('before', view, {
             pageContainer: newPage[0], 
             url: url, 
             position: 'left', 
@@ -1052,6 +1058,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
             oldNavbar.removeClass('navbar-from-center-to-right').addClass('cached');
         }
         else {
+            app.navbarRemoveCallback(view, oldPage[0], undefined, oldNavbar[0]);
             oldNavbar.remove();
         }
         newNavbar = $(inners[0]).removeClass('navbar-on-left navbar-from-left-to-center').addClass('navbar-on-center');
