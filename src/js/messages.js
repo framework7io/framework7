@@ -129,19 +129,19 @@ var Messages = function (container, params) {
         }
         
     };
-    m.removeMessage = function (messageToRemove) {
-        messageToRemove = $(messageToRemove);
-        if (messageToRemove.length === 0) {
+    m.removeMessage = function (message) {
+        message = $(message);
+        if (message.length === 0) {
             return false;
         }
         else {
-            messageToRemove.remove();
+            message.remove();
             if (m.params.autoLayout) m.layout();
             return true;
         }
     };
-    m.removeMessages = function (messagesToRemove) {
-        m.removeMessage(messagesToRemove);
+    m.removeMessages = function (messages) {
+        m.removeMessage(messages);
     };
     m.clean = function () {
         m.container.html('');
