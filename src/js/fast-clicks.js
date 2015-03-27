@@ -49,9 +49,13 @@ app.initFastClicks = function () {
     function removeActive(el) {
         activableElement.removeClass('active-state');
     }
-
+    function isFormElement(el) {
+        var nodes = ('input select textarea label').split(' ');
+        if (el.nodeName && nodes.indexOf(el.nodeName.toLowerCase()) >= 0) return true;
+        return false;
+    }
     function androidNeedsBlur(el) {
-        var noBlur = ('button checkbox file image radio submit input textarea').split(' ');
+        var noBlur = ('button input textarea select').split(' ');
         if (document.activeElement && el !== document.activeElement && document.activeElement !== document.body) {
             if (noBlur.indexOf(el.nodeName.toLowerCase()) >= 0) {
                 return false;
@@ -296,8 +300,7 @@ app.initFastClicks = function () {
             return true;
         }
         if (!targetElement) {
-            var nodeName = e.target && e.target.nodeName.toLowerCase();
-            if (nodeName && !(nodeName === 'input' || nodeName === 'label' || nodeName === 'textarea' || nodeName === 'select')) {
+            if (!isFormElement(e.target)) {
                 allowClick =  true;
             }
         }
@@ -331,11 +334,12 @@ app.initFastClicks = function () {
         }
         needsFastClickTimeOut = setTimeout(function () {
             needsFastClick = false;
-        }, 100);
+        }, (app.device.ios || app.device.androidChrome ? 100 : 400));
+
         if (app.params.tapHold) {
             tapHoldTimeout = setTimeout(function () {
                 tapHoldFired = false;
-            }, 100);
+            }, (app.device.ios || app.device.androidChrome ? 100 : 400));
         }
             
         return allowClick;
