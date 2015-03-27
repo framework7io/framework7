@@ -32,7 +32,7 @@ window.Framework7 = function (params) {
         fastClicksDistanceThreshold: 0,
         fastClicksDelayBetweenClicks: 50,
         // Tap Hold
-        tapHold: true,
+        tapHold: false,
         tapHoldDelay: 750,
         tapHoldPreventClicks: true,
         // Active State
