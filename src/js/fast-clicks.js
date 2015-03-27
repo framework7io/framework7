@@ -194,11 +194,10 @@ app.initFastClicks = function () {
             trackClick = false;
             targetElement = null;
             isMoved = true;
-        }
-            
-        if (app.params.activeState) {
-            clearTimeout(activeTimeout);
-            removeActive();
+			if (app.params.activeState) {
+				clearTimeout(activeTimeout);
+				removeActive();
+			}
         }
     }
     function handleTouchEnd(e) {
