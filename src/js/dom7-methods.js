@@ -420,7 +420,7 @@ Dom7.prototype = {
         }
     },
     is: function (selector) {
-        if (!this[0] || !selector) return false;
+        if (!this[0] || typeof selector === 'undefined') return false;
         var compareWith, i;
         if (typeof selector === 'string') {
             var el = this[0];
