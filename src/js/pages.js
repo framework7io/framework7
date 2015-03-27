@@ -147,7 +147,7 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
     app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
     $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
 };
-app.pageBackCallbacks = function (callback, view, params) {
+app.pageBackCallback = function (callback, view, params) {
     // Page Data
     var pageContainer = params.pageContainer;
     var pageContext;
@@ -179,7 +179,7 @@ app.pageBackCallbacks = function (callback, view, params) {
         $(pageData.container).trigger('pageBack', {page: pageData});
     }
 };
-app.pageAnimCallbacks = function (callback, view, params) {
+app.pageAnimCallback = function (callback, view, params) {
     var pageContainer = params.pageContainer;
     var pageContext;
     if (pageContainer.f7PageData) pageContext = pageContainer.f7PageData.context;
@@ -270,7 +270,7 @@ app.initPage = function (pageContainer) {
     // Init infinite scroll
     if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
     // Init searchbar
-    if (app.initPageSearchbar) app.initPageSearchbar(pageContainer);
+    if (app.initSearchbar) app.initSearchbar(pageContainer);
     // Init message bar
     if (app.initPageMessagebar) app.initPageMessagebar(pageContainer);
     // Init scroll toolbars
@@ -291,10 +291,10 @@ app.initPageWithCallback = function (pageContainer) {
     pageContainer = $(pageContainer);
     var viewContainer = pageContainer.parents('.' + app.params.viewClass);
     if (viewContainer.length === 0) return;
-    var view = viewContainer[0].f7View || false;
-    var url = view && view.url ? view.url : false;
-    if (viewContainer) {
-        viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
+    var view = viewContainer[0].f7View || undefined;
+    var url = view && view.url ? view.url : undefined;
+    if (viewContainer && pageContainer.attr('data-page')) {
+        viewContainer.attr('data-page', pageContainer.attr('data-page'));
     }
     app.pageInitCallback(view, {pageContainer: pageContainer[0], url: url, position: 'center'});
 };
