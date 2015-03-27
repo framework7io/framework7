@@ -295,20 +295,21 @@ var Searchbar = function (container, params) {
 app.searchbar = function (container, params) {
     return new Searchbar(container, params);
 };
-app.initPageSearchbar = function (pageContainer) {
-    pageContainer = $(pageContainer);
-    var searchbar = pageContainer.hasClass('searchbar') ? pageContainer : pageContainer.find('.searchbar');
+app.initSearchbar = function (container) {
+    container = $(container);
+    var searchbar = container.hasClass('searchbar') ? container : container.find('.searchbar');
     if (searchbar.length === 0) return;
     if (!searchbar.hasClass('searchbar-init')) return;
+
     var sb = app.searchbar(searchbar, searchbar.dataset());
 
-    // Destroy on page remove
-    function pageBeforeRemove() {
+    function onBeforeRemove() {
         sb.destroy();
-        pageContainer.off('pageBeforeRemove', pageBeforeRemove);
     }
-    if (pageContainer.hasClass('page')) {
-        pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+    if (container.hasClass('page')) {
+        container.once('pageBeforeRemove', onBeforeRemove);   
     }
-        
+    else if (container.hasClass('navbar-inner')) {
+        container.once('navbarBeforeRemove', onBeforeRemove);
+    }
 };
