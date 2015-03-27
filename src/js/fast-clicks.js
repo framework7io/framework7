@@ -11,7 +11,7 @@ app.initFastClicks = function () {
         window.addEventListener('touchstart', function () {});
     }
 
-    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved;
+    var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved, tapHoldFired, tapHoldTimeout;
     var activableElement, activeTimeout, needsFastClick, needsFastClickTimeOut;
 
     function findActivableElement(e) {
@@ -118,8 +118,17 @@ app.initFastClicks = function () {
     // Touch Handlers
     function handleTouchStart(e) {
         isMoved = false;
+        tapHoldFired = false;
         if (e.targetTouches.length > 1) {
             return true;
+        }
+        if (app.params.tapHold) {
+            if (tapHoldTimeout) clearTimeout(tapHoldTimeout);
+            tapHoldTimeout = setTimeout(function () {
+                tapHoldFired = true;
+                e.preventDefault();
+                $(e.target).trigger('taphold');
+            }, app.params.tapHoldDelay);
         }
         if (needsFastClickTimeOut) clearTimeout(needsFastClickTimeOut);
         needsFastClick = targetNeedsFastClick(e.target);
@@ -194,7 +203,9 @@ app.initFastClicks = function () {
             trackClick = false;
             targetElement = null;
             isMoved = true;
-            
+            if (app.params.tapHold) {
+                clearTimeout(tapHoldTimeout);
+            }
 			if (app.params.activeState) {
 				clearTimeout(activeTimeout);
 				removeActive();
@@ -203,6 +214,7 @@ app.initFastClicks = function () {
     }
     function handleTouchEnd(e) {
         clearTimeout(activeTimeout);
+        clearTimeout(tapHoldTimeout);
 
         if (!trackClick) {
             if (!activeSelection && needsFastClick) {
@@ -274,6 +286,7 @@ app.initFastClicks = function () {
 
     function handleClick(e) {
         var allowClick = false;
+        
         if (trackClick) {
             targetElement = null;
             trackClick = false;
@@ -300,6 +313,9 @@ app.initFastClicks = function () {
         if (!e.cancelable) {
             allowClick =  true;
         }
+        if (app.params.tapHold && app.params.tapHoldPreventClicks && tapHoldFired) {
+            allowClick = false;
+        }
         if (!allowClick) {
             e.stopImmediatePropagation();
             e.stopPropagation();
@@ -316,6 +332,12 @@ app.initFastClicks = function () {
         needsFastClickTimeOut = setTimeout(function () {
             needsFastClick = false;
         }, 100);
+        if (app.params.tapHold) {
+            tapHoldTimeout = setTimeout(function () {
+                tapHoldFired = false;
+            }, 100);
+        }
+            
         return allowClick;
     }
     if (app.support.touch) {
