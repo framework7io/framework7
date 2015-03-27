@@ -9,7 +9,7 @@ var Messages = function (container, params) {
             '{{#if day}}' +
             '<div class="messages-date">{{day}} {{#if time}}, <span>{{time}}</span>{{/if}}</div>' +
             '{{/if}}' +
-            '<div class="message message-{{type}} {{#if hasImage}}message-pic{{/if}} {{#if avatar}}message-with-avatar{{/if}} message-appear-from-{{position}}">' +
+            '<div class="message message-{{type}} {{#if hasImage}}message-pic{{/if}} {{#if avatar}}message-with-avatar{{/if}} {{#if position}}message-appear-from-{{position}}{{/if}}">' +
                 '{{#if name}}<div class="message-name">{{name}}</div>{{/if}}' +
                 '<div class="message-text">{{text}}</div>' +
                 '{{#if avatar}}<div class="message-avatar" style="background-image:url({{avatar}})"></div>{{/if}}' +
@@ -77,30 +77,71 @@ var Messages = function (container, params) {
     };
 
     // Add Message
-    m.appendMessage = function (props) {
-        return m.addMessage(props, 'append');
+    m.appendMessage = function (props, animate) {
+        return m.addMessage(props, 'append', animate);
     };
-    m.prependMessage = function (props) {
-        return m.addMessage(props, 'prepend');
+    m.prependMessage = function (props, animate) {
+        return m.addMessage(props, 'prepend', animate);
     };
-    m.addMessage = function (props, method) {
+    m.addMessage = function (props, method, animate) {
+        return m.addMessages([props], method, animate);
+    };
+    m.addMessages = function (newMessages, method, animate) {
+        if (typeof animate === 'undefined') {
+            animate = true;
+        }
         if (typeof method === 'undefined') {
             method = m.params.newMessagesFirst ? 'prepend' : 'append';
         }
-        props = props || {};
-        props.type = props.type || 'sent';
-        if (!props.text) return false;
+        var newMessagesHTML = '', i;
+        for (i = 0; i < newMessages.length; i++) {
+            var props = newMessages[i] || {};
+            props.type = props.type || 'sent';
+            if (!props.text) continue;
+            props.hasImage = props.text.indexOf('<img') >= 0;
+            if (animate) props.position = method === 'append' ? 'bottom' : 'top';
 
-        props.hasImage = props.text.indexOf('<img') >= 0;
-        props.position = method === 'append' ? 'bottom' : 'top';
-        
-        var messageHTML = m.template(props);
-        m.container[method](messageHTML);
+            newMessagesHTML += m.template(props);
+        }
+        m.container[method](newMessagesHTML);
 
         if (m.params.autoLayout) m.layout();
         if ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
-            m.scrollMessages();
+            m.scrollMessages(animate ? undefined : 0);
         }
+        var messages = m.container.find('.message');
+        if (newMessages.length === 1) {
+            return method === 'append' ? messages[messages.length - 1] : messages[0];
+        }
+        else {
+            var messagesToReturn = [];
+            if (method === 'append') {
+                for (i = messages.length - newMessages.length; i < messages.length; i++) {
+                    messagesToReturn.push(messages[i]);
+                }
+            }
+            else {
+                for (i = 0; i < newMessages.length; i++) {
+                    messagesToReturn.push(messages[i]);
+                }   
+            }
+            return messagesToReturn;
+        }
+        
+    };
+    m.removeMessage = function (messageToRemove) {
+        messageToRemove = $(messageToRemove);
+        if (messageToRemove.length === 0) {
+            return false;
+        }
+        else {
+            messageToRemove.remove();
+            if (m.params.autoLayout) m.layout();
+            return true;
+        }
+    };
+    m.removeMessages = function (messagesToRemove) {
+        m.removeMessage(messagesToRemove);
     };
     m.clean = function () {
         m.container.html('');
@@ -117,8 +158,14 @@ var Messages = function (container, params) {
 
     // Init Destroy
     m.init = function () {
-        if (m.params.autoLayout) m.layout();
-        m.scrollMessages(0);
+        if (m.params.messages) {
+            m.addMessages(m.params.messages, undefined, false);
+        }
+        else {
+            if (m.params.autoLayout) m.layout();    
+            m.scrollMessages(0);
+        }
+        
     };
     m.destroy = function () {
         m = null;
