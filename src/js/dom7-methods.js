@@ -387,7 +387,7 @@ Dom7.prototype = {
         }
         return this;
     },
-    
+
     //Dom manipulation
     each: function (callback) {
         for (var i = 0; i < this.length; i++) {
@@ -420,7 +420,7 @@ Dom7.prototype = {
         }
     },
     is: function (selector) {
-        if (!this[0]) return false;
+        if (!this[0] || !selector) return false;
         var compareWith, i;
         if (typeof selector === 'string') {
             var el = this[0];
@@ -451,7 +451,7 @@ Dom7.prototype = {
             }
             return false;
         }
-        
+
     },
     indexOf: function (el) {
         for (var i = 0; i < this.length; i++) {
