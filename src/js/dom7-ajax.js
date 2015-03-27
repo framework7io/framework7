@@ -26,7 +26,7 @@ $.ajax = function (options) {
         timeout: 0
     };
     var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
-    
+
 
     //For jQuery guys
     if (options.type) options.method = options.type;
@@ -35,7 +35,7 @@ $.ajax = function (options) {
     $.each(globalAjaxOptions, function (globalOptionName, globalOptionValue) {
         if (callbacks.indexOf(globalOptionName) < 0) defaults[globalOptionName] = globalOptionValue;
     });
-    
+
     // Function to run XHR callbacks and events
     function fireAjaxCallback (eventName, eventData, callbackName) {
         var a = arguments;
@@ -78,7 +78,7 @@ $.ajax = function (options) {
     }
     // JSONP
     if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-        
+
         var callbackName = 'f7jsonp_' + Date.now() + (_jsonpRequests++);
         var abortTimeout;
         var callbackSplit = options.url.split('callback=');
@@ -136,7 +136,7 @@ $.ajax = function (options) {
 
     // Create POST Data
     var postData = null;
-    
+
     if ((_method === 'POST' || _method === 'PUT') && options.data) {
         if (options.processData) {
             var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
@@ -173,7 +173,7 @@ $.ajax = function (options) {
         else {
             postData = options.data;
         }
-            
+
     }
 
     // Additional headers
@@ -202,7 +202,7 @@ $.ajax = function (options) {
     // Handle XHR
     xhr.onload = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
-        if (xhr.status === 200 || xhr.status === 0) {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
             var responseData;
             if (options.dataType === 'json') {
                 try {
@@ -226,7 +226,7 @@ $.ajax = function (options) {
         }
         fireAjaxCallback('ajaxComplete', {xhr: xhr}, 'complete', xhr, xhr.status);
     };
-    
+
     xhr.onerror = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
         fireAjaxCallback('ajaxError', {xhr: xhr}, 'error', xhr, xhr.status);
