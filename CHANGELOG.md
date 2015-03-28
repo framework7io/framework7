@@ -1,5 +1,48 @@
 # Change Log
 
+## Framework7 v1.0.5 - Updated on March 28, 2015
+  * Dom7
+    * `$.camelCase` utilite renamed to `$.toCamelCase`
+    * `.removeAttr()` method now returns current Dom7 collection
+    * All response statuses that are between 200 and 300 will fire "success" callback/event
+  * Fast Clicks
+    * Fixed issue whith removing "Active state" when using `fastClicksDistanceThreshold`
+    * Fixed issues with multiple clicks on Android < 4.4
+    * New Tap Hold Event
+      * It is can be used (if enabled) as usual event on any element like `$('.something').on('taphold', handler)`
+      * It is controled by new App parameters
+        * `tapHold: false` - set to true to enable tap hold events
+        * `tapHoldDelay: 750` - how long (in ms) the user must hold their tap before the taphold event is fired on the target element
+        * `tapHoldPreventClicks: true` - if enabled (by default), then click event will not be fired after tap hold
+  * Navbar
+    * Dynamic Navbar now has some events similar to page events: `navbarReinit`, `navbarBeforeInit`, `navbarInit`, `navbarBeforeRemove`. Each event `detail` contains: 
+      * `navbar` - object with related navbar elements `navbarContainer` and `navbarInnerContainer`
+      * `page` - object with related page data
+  * Action Sheet
+    * Each button support new additional `disabled` parameter to make button disabled
+    * Added "Action Sheet To Popover" template that can be changed using App's `modalActionsToPopoverTemplate` parameter
+  * Messages
+    * New methods to handle messages:
+      * `messages.removeMessage(message)` - remove message
+      * `messages.removeMessages(messages)` - remove multiple messages per once
+      * `messages.addMessages(newMessages, method, animate)` - add multiple messages per once
+    * The following methods have new additional `animate` argument that allows to add new messages immediately without any transition and page scrolling
+      * `messages.addMessage(message, method, animate)`
+      * `messages.appendMessage(message, animate)`
+      * `messages.prependMessage(message, animate)`
+    * New `messages` initialization parameter that allows to pass initial messages using JS on initialization
+  * Template7 update to latest 1.0.5 version:
+    * Support for root context that may be used in templates as `{{@root.someVar}}`
+    * Improved support for paths:
+        * Support to access arrays directly by index `{{someArray.2}}`
+        * Better support for context "level up" `{{../../../someVar}}`
+    * New JS helpers with direct JS execution:
+        * `{{js "this.price * 2"}} - inline helper to modify/check context on the fly or do some JS calculations
+        * `{{#js_compare "this.price > 1000"}}Too expensive{{/js_compare}} - block helper for easier compares of variables
+  * Swiper updated to latest 3.0.6 version:
+    * Fixed sometimes wrong slides position when using "Fade" effect
+    * `.destroy(deleteInstance, cleanupStyles)` method now has second `cleanupStyles` argument, when passed - all custom styles will be removed from slides, wrapper and container. Useful if you need to destroy Swiper and to init again with new options or in different direction
+
 ## Framework7 v1.0.4 - Updated on March 21, 2015
   * Router
     * `preprocess` callback parameter now also supported by View on its initialisation which could overwrite `preprocess` app' parameter (if specified)
