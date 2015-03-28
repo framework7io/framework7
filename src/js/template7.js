@@ -188,28 +188,50 @@ window.Template7 = (function () {
             else return function () {return ''; };
         }
         function getCompileVar(name, ctx) {
-            var parents, variable, context;
-            if (name.indexOf('@global') >= 0) {
-                variable = '(Template7.global && Template7.global.' + (name.split('@global.')[1]) + ')';
+            var variable, parts, levelsUp = 0, initialCtx = ctx;
+            if (name.indexOf('../') === 0) {
+                levelsUp = name.split('../').length - 1;
+                var newDepth = ctx.split('_')[1] - levelsUp;
+                ctx = 'ctx_' + (newDepth >= 1 ? newDepth : 1);
+                parts = name.split('../')[levelsUp].split('.');
             }
-            else if (name.indexOf('@') >= 0) {
-                variable = '(data && data.' + name.replace('@', '') + ')';
+            else if (name.indexOf('@global') === 0) {
+                ctx = 'Template7.global';
+                parts = name.split('@global.')[1].split('.');
+            }
+            else if (name.indexOf('@root') === 0) {
+                ctx = 'ctx_1';
+                parts = name.split('@root.')[1].split('.');
             }
             else {
-                if (name.indexOf('.') > 0) {
-                    if (name.indexOf('this') === 0) variable = name.replace('this', ctx);
-                    else variable = ctx + '.' + name;
-                }
-                else if (name.indexOf('../') === 0) {
-                    var levelUp = name.split('../').length - 1;
-                    var newName = name.split('../')[name.split('../').length - 1];
-                    var newDepth = ctx.split('_')[1] - levelUp;
-                    variable = 'ctx_' + (newDepth >= 1 ? newDepth : 1) + '.' + newName;
+                parts = name.split('.');
+            }
+            variable = ctx;
+            for (var i = 0; i < parts.length; i++) {
+                var part = parts[i];
+                if (part.indexOf('@') === 0) {
+                    if (i > 0) {
+                        variable += '[(data && data.' + part.replace('@', '') + ')]';
+                    }
+                    else {
+                        variable = '(data && data.' + name.replace('@', '') + ')';
+                    }
                 }
                 else {
-                    variable = name === 'this' ? ctx : ctx + '.' + name;
+                    if (isFinite(part)) {
+                        variable += '[' + part + ']';
+                    }
+                    else {
+                        if (part.indexOf('this') === 0) {
+                            variable = part.replace('this', ctx);
+                        }
+                        else {
+                            variable += '.' + part;       
+                        }
+                    }
                 }
             }
+
             return variable;
         }
         function getCompiledArguments(contextArray, ctx) {
@@ -229,7 +251,6 @@ window.Template7 = (function () {
                 throw new Error('Template7: Template must be a string');
             }
             var blocks = stringToBlocks(template);
-            
             if (blocks.length === 0) {
                 return function () { return ''; };
             }
@@ -259,7 +280,7 @@ window.Template7 = (function () {
                 if (block.type === 'helper') {
                     if (block.helperName in t.helpers) {
                         compiledArguments = getCompiledArguments(block.contextName, ctx);
-                        resultString += 'r += (Template7.helpers.' + block.helperName + ').call(' + ctx + ', ' + (compiledArguments && (compiledArguments + ',')) +'{hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + '});';
+                        resultString += 'r += (Template7.helpers.' + block.helperName + ').call(' + ctx + ', ' + (compiledArguments && (compiledArguments + ', ')) +'{hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + ', root: ctx_1});';
                     }
                     else {
                         if (block.contextName.length > 0) {
@@ -269,9 +290,9 @@ window.Template7 = (function () {
                             variable = getCompileVar(block.helperName, ctx);
                             resultString += 'if (' + variable + ') {';
                             resultString += 'if (isArray(' + variable + ')) {';
-                            resultString += 'r += (Template7.helpers.each).call(' + ctx + ', ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + '});';
+                            resultString += 'r += (Template7.helpers.each).call(' + ctx + ', ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + ', root: ctx_1});';
                             resultString += '}else {';
-                            resultString += 'r += (Template7.helpers.with).call(' + ctx + ', ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + '});';
+                            resultString += 'r += (Template7.helpers.with).call(' + ctx + ', ' + variable + ', {hash:' + JSON.stringify(block.hash) + ', data: data || {}, fn: ' + getCompileFn(block, depth+1) + ', inverse: ' + getCompileInverse(block, depth+1) + ', root: ctx_1});';
                             resultString += '}}';
                         }
                     }
@@ -338,6 +359,32 @@ window.Template7 = (function () {
             'join': function (context, options) {
                 if (isFunction(context)) { context = context.call(this); }
                 return context.join(options.hash.delimiter || options.hash.delimeter);
+            },
+            'js': function (expression, options) {
+                var func;
+                if (expression.indexOf('return')>=0) {
+                    func = '(function(){'+expression+'})';
+                }
+                else {
+                    func = '(function(){return ('+expression+')})';
+                }
+                return eval.call(this, func).call(this);
+            },
+            'js_compare': function (expression, options) {
+                var func;
+                if (expression.indexOf('return')>=0) {
+                    func = '(function(){'+expression+'})';
+                }
+                else {
+                    func = '(function(){return ('+expression+')})';
+                }
+                var condition = eval.call(this, func).call(this);
+                if (condition) {
+                    return options.fn(this, options.data);
+                }
+                else {
+                    return options.inverse(this, options.data);   
+                }
             }
         }
     };
