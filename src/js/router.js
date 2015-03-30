@@ -129,7 +129,6 @@ app.router = {
 
         if (view && view.params && view.params.preprocess) {
             content = view.params.preprocess(content, url, next);
-            console.log(content);
             if (typeof content !== 'undefined') {
                 next(content);
             }
