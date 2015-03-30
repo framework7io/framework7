@@ -143,7 +143,7 @@ var View = function (selector, params) {
         el;
 
     view.handleTouchStart = function (e) {
-        if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl) return;
+        if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl || !view.allowPageChange) return;
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -164,7 +164,6 @@ var View = function (selector, params) {
             isTouched = false;
             return;
         }
-
         if (!isMoved) {
             var cancel = false;
             // Calc values during first move fired
