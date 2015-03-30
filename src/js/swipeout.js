@@ -12,8 +12,9 @@ app.initSwipeout = function (swipeoutEl) {
                 app.swipeoutOpenedEl.is(target[0]) ||
                 target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
                 target.hasClass('modal-in') ||
-                target.parents('.modal.modal-in').length > 0 ||
-                target.hasClass('modal-overlay')
+                target.hasClass('modal-overlay') ||
+                target.hasClass('actions-modal') || 
+                target.parents('.actions-modal.modal-in, .modal.modal-in').length > 0
                 )) {
                 app.swipeoutClose(app.swipeoutOpenedEl);
             }
