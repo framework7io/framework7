@@ -329,8 +329,10 @@ Dom7.prototype = {
     },
     outerHeight: function (includeMargins) {
         if (this.length > 0) {
-            if (includeMargins)
-                return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
+            if (includeMargins) {
+                var styles = this.styles();
+                return this[0].offsetHeight + parseFloat(styles.getPropertyValue('margin-top')) + parseFloat(styles.getPropertyValue('margin-bottom'));    
+            }
             else
                 return this[0].offsetHeight;
         }
