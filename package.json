@@ -46,7 +46,7 @@
     "gulp-sourcemaps": "~1.5.1",
     "gulp-util": "~3.0.4",
     "gulp-minify-css": "1.0.0",
-    "gulp-jshint": "~1.9.4",
+    "gulp-jshint": "~1.10.0",
     "gulp-concat": "~2.5.2",
     "gulp-rename": "~1.2.0",
     "gulp-header": "~1.2.2",
