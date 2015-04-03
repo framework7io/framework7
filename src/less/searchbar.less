@@ -1,8 +1,9 @@
 /* === Search Bar === */
 @searchbarBg: #c9c9ce;
 @searchbarBorderColor: #b4b4b4;
+@searchbarSize: 44px;
 .searchbar {
-    height: 44px;
+    height: @searchbarSize;
     width: 100%;
     background: @searchbarBg;
     .border-box();
@@ -123,14 +124,14 @@
     top: 0;
     z-index: 200;
     & ~ .page-content {
-        padding-top: 44px;
+        padding-top: @searchbarSize;
     }
 }
 .navbar-fixed, .navbar-through {
     .page > .searchbar, > .searchbar {
-        top: 44px;
+        top: @toolbarSize;
         & ~ .page-content {
-            padding-top: 88px;
+            padding-top: @searchbarSize + @toolbarSize;
         }
     }
 }

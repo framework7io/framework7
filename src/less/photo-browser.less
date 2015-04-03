@@ -76,10 +76,10 @@
     }
 }
 .toolbar ~ .photo-browser-captions {
-    bottom: 44px;
+    bottom: @toolbarSize;
     .transform(translate3d(0, 0px, 0));
     .photo-browser-exposed & {
-        .transform(translate3d(0, 44px, 0));
+        .transform(translate3d(0, @toolbarSize, 0));
     }
     &.photo-browser-captions-exposed {
         .transform(translate3d(0, 0px, 0));

@@ -5,30 +5,30 @@
     }
 }
 .subnavbar ~ .page-content {
-    padding-top: 44px;
+    padding-top: @toolbarSize;
 }
 .navbar-through, .navbar-fixed {
     .page-content {
-        padding-top: 44px;
+        padding-top: @toolbarSize;
     }
     .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
-        padding-top: 88px;
+        padding-top: @toolbarSize * 2;
     }
     .page .subnavbar, &.page .subnavbar {
-        top: 44px;
+        top: @toolbarSize;
     }
 }
 
 .toolbar-through, .toolbar-fixed, .tabbar-through, .tabbar-fixed {
     .page-content {
-        padding-bottom: 44px;
+        padding-bottom: @toolbarSize;
     }
 }
 .tabbar-labels-fixed, .tabbar-labels-through {
     .page-content {
-        padding-bottom: 50px;
+        padding-bottom: @tabbarLabelsSize;
         @media all and (min-width:768px) {
-            padding-bottom: 56px;
+            padding-bottom: @tabbarLabelsSizeTablet;
         }
     }
 }
@@ -52,7 +52,7 @@
         & ~ .page-content, & ~ .pages, & ~ .page {
             .list-group-title {
                 .transition(400ms);
-                top:-44px;
+                top:-@toolbarSize;
             }
             .subnavbar {
                 .translate3d(0,-100%,0);
@@ -66,7 +66,7 @@
         padding-top: 0;
     }
     &.with-subnavbar .page-content, .with-subnavbar & .page-content, .page-content.with-subnavbar {
-        padding-top: 44px;
+        padding-top: @toolbarSize;
     }
 }
 // Page Hidden Toolbar

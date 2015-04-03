@@ -505,9 +505,9 @@ html.with-statusbar-overlay {
         position: relative;
         width: 100%;
         + .picker-modal-inner {
-            height: ~"-webkit-calc(100% - 44px)";
-            height: ~"-moz-calc(100% - 44px)";
-            height: ~"calc(100% - 44px)";    
+            height: ~"-webkit-calc(100% - @{toolbarSize})";
+            height: ~"-moz-calc(100% - @{toolbarSize})";
+            height: ~"calc(100% - @{toolbarSize})";    
         }
     }
     &.picker-modal-inline, .popover & {

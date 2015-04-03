@@ -1,11 +1,19 @@
 /* === Toolbars === */
-@navbarBg : #f7f7f8;
-@navbarBorderColor: #c4c4c4;
-@toolbarBg: @navbarBg;
-@toolbarBorderColor: @navbarBorderColor;
-@navbarLinksColor: @blue;
+
+//Toolbar/Navbar
+@toolbarBg : #f7f7f8;
+@toolbarBorderColor: #c4c4c4;
+@toolbarLinksColor: @blue;
+@toolbarSize: 44px;
+
+//Tab bar
+@tabbarLabelsSize: 50px;
 @tabbarLinksColor: #929292;
 @tabbarActiveLinksColor: @blue;
+@tabbarLabelsSizeTablet: 56px;
+
+// Toolbars animations
+@toolbarDuration: 400ms;
 
 .navbar-inner, .toolbar-inner {
     position: absolute;
@@ -23,7 +31,7 @@
     display: none;
 }
 .navbar, .toolbar {
-    height: 44px;
+    height: @toolbarSize;
     width: 100%;
     .border-box();
     font-size: 17px;
@@ -36,8 +44,8 @@
         font-weight: 500;
     }
     a.link {
-        line-height: 44px;
-        height: 44px;
+        line-height: @toolbarSize;
+        height: @toolbarSize;
         text-decoration: none;
         position: relative;
         .flexbox();
@@ -53,7 +61,7 @@
         }
     }
     a.icon-only {
-        min-width: 44px;
+        min-width: @toolbarSize;
         .flexbox();
         .justify-content(center);
         .align-items(center);
@@ -66,8 +74,8 @@
 .navbar {
     left: 0;
     top: 0;
-    background: @navbarBg;
-    .hairline(bottom, @navbarBorderColor);
+    background: @toolbarBg;
+    .hairline(bottom, @toolbarBorderColor);
     &.no-border {
         .hairline-remove(bottom);
     }
@@ -80,7 +88,7 @@
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
-        line-height: 44px;
+        line-height: @toolbarSize;
         .flex-shrink(10);
         .flexbox();
         .align-items(center);
@@ -111,20 +119,20 @@
     }
 }
 .subnavbar {
-    height: 44px;
+    height: @toolbarSize;
     width: 100%;
     position: absolute;
     left: 0;
     top: 100%;
     margin-top: -1px;
-    background: @navbarBg;
+    background: @toolbarBg;
     z-index: 20;
     .border-box();
     padding: 0 8px;
     .flexbox();
     .justify-content(space-between);
     .align-items(center);
-    .hairline(bottom, @navbarBorderColor);
+    .hairline(bottom, @toolbarBorderColor);
     &.no-border {
         .hairline-remove(bottom);
     }
@@ -206,7 +214,7 @@
     }
 }
 .tabbar-labels {
-    height: 50px;
+    height: @tabbarLabelsSize;
     a.tab-link, a.link {
         padding-top: 4px;
         padding-bottom: 4px;
@@ -238,15 +246,12 @@
         }
     }
     .tabbar-labels {
-        height: 56px;
+        height: @tabbarLabelsSizeTablet;
         span.tabbar-label {
             font-size: 14px;
         }
     }
 }
-
-// Bars animations
-@toolbarDuration: 400ms;
 
 .navbar-from-right-to-center {
     .left, .right, .center, .subnavbar, .fading {
