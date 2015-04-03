@@ -45,17 +45,20 @@ $.serializeObject = function (obj) {
     var resultArray = [];
     var separator = '&';
     for (var prop in obj) {
-        if ($.isArray(obj[prop])) {
-            var toPush = [];
-            for (var i = 0; i < obj[prop].length; i ++) {
-                toPush.push(prop + '=' + obj[prop][i]);
+        if (obj.hasOwnProperty(prop)) {
+            if ($.isArray(obj[prop])) {
+                var toPush = [];
+                for (var i = 0; i < obj[prop].length; i ++) {
+                    toPush.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop][i]));
+                }
+                resultArray.push(toPush.join(separator));
             }
-            resultArray.push(toPush.join(separator));
+            else {
+                // Should be string
+                resultArray.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop]));
+            }
         }
-        else {
-            // Should be string
-            resultArray.push(prop + '=' + obj[prop]);
-        }
+            
     }
 
     return resultArray.join(separator);
