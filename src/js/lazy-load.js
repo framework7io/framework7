@@ -32,7 +32,9 @@ app.initImagesLazyLoad = function (pageContainer) {
     if (typeof app.params.imagesLazyLoadPlaceholder === 'string') {
         placeholderSrc = app.params.imagesLazyLoadPlaceholder;
     }
-    if (app.params.imagesLazyLoadPlaceholder !== false) lazyLoadImages.attr('src', placeholderSrc);
+    if (app.params.imagesLazyLoadPlaceholder !== false) lazyLoadImages.each(function(){
+        if ($(this).attr('data-src')) $(this).attr('src', placeholderSrc);
+    });
 
     // load image
     var imagesSequence = [];
