@@ -45,9 +45,16 @@ app.initScrollToolbars = function (pageContainer) {
         toolbarHidden = toolbar.hasClass('toolbar-hidden');
         tabbarHidden = tabbar && tabbar.hasClass('toolbar-hidden');
 
-
-        if (previousScroll > currentScroll || reachEnd) {
+        if (reachEnd) {
             action = 'show';
+        }
+        else if (previousScroll > currentScroll) {
+            if (app.params.showBarsOnPageScrollTop || currentScroll <= 44) {
+                action = 'show';
+            }
+            else {
+                action = 'hide';
+            }
         }
         else {
             if (currentScroll > 44) {
