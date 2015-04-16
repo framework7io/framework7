@@ -110,7 +110,12 @@ app.pageInitCallback = function (view, params) {
     pageContainer.f7PageData = pageData;
 
     // Update View's activePage
-    if (view && !params.preloadOnly) view.activePage = pageData;
+    if (view && !params.preloadOnly && !params.reloadPrevious) {
+        // Add data-page on view
+        $(view.container).attr('data-page', pageData.name);
+        // Update View active page data
+        view.activePage = pageData;
+    }
 
     // Before Init Callbacks
     app.pluginHook('pageBeforeInit', pageData);
