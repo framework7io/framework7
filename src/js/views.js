@@ -238,7 +238,7 @@ var View = function (selector, params) {
         if (view.params.onSwipeBackMove) {
             view.params.onSwipeBackMove(callbackData);
         }
-        container.trigger('swipebackmove', callbackData);
+        container.trigger('swipeBackMove', callbackData);
 
         // Transform pages
         var activePageTranslate = touchesDiff * inverter;
@@ -351,7 +351,13 @@ var View = function (selector, params) {
         }
         allowViewTouchMove = false;
         view.allowPageChange = false;
-
+        // Swipe Back Callback
+        var callbackData = {
+            activePage: activePage[0],
+            previousPage: previousPage[0],
+            activeNavbar: activeNavbar[0],
+            previousNavbar: previousNavbar[0]
+        };
         if (pageChanged) {
             // Update View's URL
             var url = view.history[view.history.length - 2];
@@ -360,6 +366,17 @@ var View = function (selector, params) {
             // Page before animation callback
             app.pageBackCallback('before', view, {pageContainer: activePage[0], url: url, position: 'center', newPage: previousPage, oldPage: activePage, swipeBack: true});
             app.pageAnimCallback('before', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
+
+            if (view.params.onSwipeBackBeforeChange) {
+                view.params.onSwipeBackBeforeChange(callbackData);
+            }
+            container.trigger('swipeBackBeforeChange', callbackData);
+        }
+        else {
+            if (view.params.onSwipeBackBeforeReset) {
+                view.params.onSwipeBackBeforeReset(callbackData);
+            }
+            container.trigger('swipeBackBeforeReset', callbackData);
         }
 
         activePage.transitionEnd(function () {
@@ -378,6 +395,17 @@ var View = function (selector, params) {
                 app.pageBackCallback('after', view, {pageContainer: activePage[0], url: url, position: 'center', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 app.pageAnimCallback('after', view, {pageContainer: previousPage[0], url: url, position: 'left', newPage: previousPage, oldPage: activePage, swipeBack: true});
                 app.router.afterBack(view, activePage, previousPage);
+
+                if (view.params.onSwipeBackAfterChange) {
+                    view.params.onSwipeBackAfterChange(callbackData);
+                }
+                container.trigger('swipeBackAfterChange', callbackData);
+            }
+            else {
+                if (view.params.onSwipeBackAfterReset) {
+                    view.params.onSwipeBackAfterReset(callbackData);
+                }
+                container.trigger('swipeBackAfterReset', callbackData);
             }
             if (pageShadow && pageShadow.length > 0) pageShadow.remove();
         });
