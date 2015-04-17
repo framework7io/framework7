@@ -57,7 +57,7 @@ app.navbarRemoveCallback = function (view, pageContainer, navbarContainer, navba
 };
 app.initNavbar = function (navbarContainer, navbarInnerContainer) {
     // Init Subnavbar Searchbar
-    app.initSearchbar(navbarInnerContainer);
+    if (app.initSearchbar) app.initSearchbar(navbarInnerContainer);
 };
 app.reinitNavbar = function (navbarContainer, navbarInnerContainer) {
     // Re init navbar methods
