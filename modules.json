@@ -14,7 +14,8 @@
             "src/js/lazy-load.js"
         ],
         "less" : [
-            "src/less/mixins.less",
+            "src/less/_mixins.less",
+            "src/less/_colors-vars.less",
             "src/less/intro.less",
             "src/less/grid.less",
             "src/less/views.less",
