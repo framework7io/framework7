@@ -51,7 +51,7 @@ $.serializeObject = function (obj) {
                 for (var i = 0; i < obj[prop].length; i ++) {
                     toPush.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop][i]));
                 }
-                resultArray.push(toPush.join(separator));
+                if (toPush.length > 0) resultArray.push(toPush.join(separator));
             }
             else {
                 // Should be string
