@@ -23,7 +23,7 @@ app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarI
         app.pluginHook('navbarReinit', pageData);
 
         // Event
-        $(pageData.container).trigger('navbarReinit', eventData);
+        $(navbarInnerContainer).trigger('navbarReinit', eventData);
         return;
     }
     navbarInnerContainer.f7NavbarInitialized = true;
