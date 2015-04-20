@@ -471,15 +471,18 @@ var Picker = function (params) {
 
     if (p.params.input) {
         p.input = $(p.params.input);
-        if (p.params.inputReadOnly) p.input.prop('readOnly', true);
-        if (!p.inline) {
-            p.input.on('click', openOnInput);    
+        if (p.input.length > 0) {
+            if (p.params.inputReadOnly) p.input.prop('readOnly', true);
+            if (!p.inline) {
+                p.input.on('click', openOnInput);    
+            }
+            if (p.params.inputReadOnly) {
+                p.input.on('focus mousedown', function (e) {
+                    e.preventDefault();
+                });
+            }
         }
-        if (p.params.inputReadOnly) {
-            p.input.on('focus mousedown', function (e) {
-                e.preventDefault();
-            });
-        }
+            
     }
     
     if (!p.inline) $('html').on('click', closeOnHTMLClick);
@@ -487,7 +490,7 @@ var Picker = function (params) {
     // Open
     function onPickerClose() {
         p.opened = false;
-        p.input.parents('.page-content').css({'padding-bottom': ''});
+        if (p.input && p.input.length > 0) p.input.parents('.page-content').css({'padding-bottom': ''});
         if (p.params.onClose) p.params.onClose(p);
 
         // Destroy events
@@ -571,7 +574,7 @@ var Picker = function (params) {
     // Destroy
     p.destroy = function () {
         p.close();
-        if (p.params.input) {
+        if (p.params.input && p.input.length > 0) {
             p.input.off('click focus', openOnInput);
         }
         $('html').off('click', closeOnHTMLClick);
