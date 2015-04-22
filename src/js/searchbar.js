@@ -389,6 +389,7 @@ var Searchbar = function (container, params) {
         s.attachEvents();
     };
     s.destroy = function () {
+        if (!s) return;
         s.detachEvents();
         s = null;
     };
@@ -412,7 +413,7 @@ app.initSearchbar = function (container) {
     var sb = app.searchbar(searchbar, searchbar.dataset());
 
     function onBeforeRemove() {
-        sb.destroy();
+        if (sb) sb.destroy();
     }
     if (container.hasClass('page')) {
         container.once('pageBeforeRemove', onBeforeRemove);   
