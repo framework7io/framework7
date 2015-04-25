@@ -102,6 +102,7 @@ app.initImagesLazyLoad = function (pageContainer) {
     function attachEvents(destroy) {
         var method = destroy ? 'off' : 'on';
         lazyLoadImages[method]('lazy', lazyHandler);
+        pageContainer[method]('lazy', lazyHandler);
         pageContent[method]('lazy', lazyHandler);
         pageContent[method]('scroll', lazyHandler);
         $(window)[method]('resize', lazyHandler);
