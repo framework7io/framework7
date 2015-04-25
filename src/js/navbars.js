@@ -4,6 +4,7 @@
 // On Navbar Init Callback
 app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarInnerContainer) {
     if (!navbarContainer && navbarInnerContainer) navbarContainer = $(navbarInnerContainer).parent('.navbar')[0];
+    if (navbarInnerContainer.f7NavbarInitialized && !view.params.domCache) return;
     var navbarData = {
         container: navbarContainer,
         innerContainer: navbarInnerContainer
@@ -15,12 +16,12 @@ app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarI
         navbar: navbarData
     };
 
-    if (navbarInnerContainer.f7NavbarInitialized) {
+    if (navbarInnerContainer.f7NavbarInitialized && view.params.domCache) {
         // Reinit Navbar
         app.reinitNavbar(navbarContainer, navbarInnerContainer);
 
         // Plugin hook
-        app.pluginHook('navbarReinit', pageData);
+        app.pluginHook('navbarReinit', eventData);
 
         // Event
         $(navbarInnerContainer).trigger('navbarReinit', eventData);
@@ -65,10 +66,20 @@ app.reinitNavbar = function (navbarContainer, navbarInnerContainer) {
 app.initNavbarWithCallback = function (navbarContainer) {
     navbarContainer = $(navbarContainer);
     var viewContainer = navbarContainer.parents('.' + app.params.viewClass);
+    var view;
     if (viewContainer.length === 0) return;
-    var view = viewContainer[0].f7View || undefined;
+    view = viewContainer[0].f7View || undefined;
+
     navbarContainer.find('.navbar-inner').each(function () {
-        app.navbarInitCallback(view, undefined, navbarContainer[0], this);
+        var navbarInnerContainer = this;
+        var pageContainer;
+        viewContainer.find('.page').each(function () {
+            if (this.f7PageData && this.f7PageData.navbarInnerContainer === navbarInnerContainer) {
+                pageContainer = this;
+
+            }
+        });
+        app.navbarInitCallback(view, pageContainer, navbarContainer[0], navbarInnerContainer);
     });
 };
 
