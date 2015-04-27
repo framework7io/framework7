@@ -371,7 +371,7 @@ var PhotoBrowser = function (params) {
     // Gestures
     var gestureSlide, gestureImg, gestureImgWrap, scale = 1, currentScale = 1, isScaling = false;
     pb.onSlideGestureStart = function (e) {
-        if (!gestureSlide) {
+        if (!gestureSlide || !gestureSlide.length) {
             gestureSlide = $(this);
             gestureImg = gestureSlide.find('img, svg, canvas');
             gestureImgWrap = gestureImg.parent('.photo-browser-zoom-container');
