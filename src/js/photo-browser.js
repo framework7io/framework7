@@ -373,6 +373,7 @@ var PhotoBrowser = function (params) {
     pb.onSlideGestureStart = function (e) {
         if (!gestureSlide || !gestureSlide.length) {
             gestureSlide = $(this);
+            if (gestureSlide.length === 0) gestureSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
             gestureImg = gestureSlide.find('img, svg, canvas');
             gestureImgWrap = gestureImg.parent('.photo-browser-zoom-container');
             if (gestureImgWrap.length === 0) {
