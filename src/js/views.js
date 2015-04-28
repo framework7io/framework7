@@ -421,7 +421,7 @@ var View = function (selector, params) {
     };
 
     // Init
-    if (view.params.swipeBackPage) {
+    if (view.params.swipeBackPage && !app.params.material) {
         view.attachEvents();
     }
 
