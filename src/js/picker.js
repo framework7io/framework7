@@ -7,16 +7,22 @@ var Picker = function (params) {
         updateValuesOnMomentum: false,
         updateValuesOnTouchmove: true,
         rotateEffect: false,
-        shrinkView: false,
-        scrollToInput: true,
-        pickerbarCloseText: 'Done',
         momentumRatio: 7,
         freeMode: false,
-        pickerbarHTML: 
-            '<div class="toolbar pickerbar">' +
-                '<div class="left"></div>' +
-                '<div class="right">' +
-                    '<a href="#" class="link close-picker">{{closeText}}</a>' +
+        // Common settings
+        scrollToInput: true,
+        inputReadOnly: true,
+        convertToPopover: true,
+        onlyInPopover: false,
+        toolbar: true,
+        toolbarCloseText: 'Done',
+        toolbarTemplate: 
+            '<div class="toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="left"></div>' +
+                    '<div class="right">' +
+                        '<a href="#" class="link close-picker">{{closeText}}</a>' +
+                    '</div>' +
                 '</div>' +
             '</div>'
     };
@@ -30,20 +36,25 @@ var Picker = function (params) {
     p.cols = [];
     p.initialized = false;
     
-    var isInline = p.params.container ? true : false;
+    // Inline flag
+    p.inline = p.params.container ? true : false;
 
-    // Origin bug, only on safari
+    // 3D Transforms origin bug, only on safari
     var originBug = app.device.ios || (navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && navigator.userAgent.toLowerCase().indexOf('chrome') < 0) && !app.device.android;
 
     // Should be converted to popover
     function isPopover() {
         var toPopover = false;
-        if (!isInline && p.params.input) {
-            if (app.device.ios) {
-                toPopover = app.device.ipad ? true : false;
-            }
+        if (!p.params.convertToPopover && !p.params.onlyInPopover) return toPopover;
+        if (!p.inline && p.params.input) {
+            if (p.params.onlyInPopover) toPopover = true;
             else {
-                if ($(window).width() >= 768) toPopover = true;
+                if (app.device.ios) {
+                    toPopover = app.device.ipad ? true : false;
+                }
+                else {
+                    if ($(window).width() >= 768) toPopover = true;
+                }
             }
         } 
         return toPopover; 
@@ -65,26 +76,28 @@ var Picker = function (params) {
     };
     p.updateValue = function () {
         var newValue = [];
-        var newTextValue = [];
+        var newDisplayValue = [];
         for (var i = 0; i < p.cols.length; i++) {
             if (!p.cols[i].divider) {
                 newValue.push(p.cols[i].value);
-                newTextValue.push(p.cols[i].textValue);
+                newDisplayValue.push(p.cols[i].displayValue);
             }
         }
         if (newValue.indexOf(undefined) >= 0) {
             return;
         }
         p.value = newValue;
-        p.textValue = newTextValue;
+        p.displayValue = newDisplayValue;
         if (p.params.onChange) {
-            p.params.onChange(p, p.value, p.textValue);
+            p.params.onChange(p, p.value, p.displayValue);
         }
         if (p.input && p.input.length > 0) {
-            $(p.input).val(p.params.formatValue ? p.params.formatValue(p, p.value, p.textValue) : p.value.join(' '));
+            $(p.input).val(p.params.formatValue ? p.params.formatValue(p, p.value, p.displayValue) : p.value.join(' '));
             $(p.input).trigger('change');
         }
     };
+
+    // Columns Handlers
     p.initPickerCol = function (colElement, updateItems) {
         var colContainer = $(colElement);
         var colIndex = colContainer.index();
@@ -96,27 +109,45 @@ var Picker = function (params) {
         
         var i, j;
         var wrapperHeight, itemHeight, itemsHeight, minTranslate, maxTranslate;
-
+        col.replaceValues = function (values, displayValues) {
+            col.destroyEvents();
+            col.values = values;
+            col.displayValues = displayValues;
+            var newItemsHTML = p.columnHTML(col, true);
+            col.wrapper.html(newItemsHTML);
+            col.items = col.wrapper.find('.picker-item');
+            col.calcSize();
+            col.setValue(col.values[0], 0, true);
+            col.initEvents();
+        };
         col.calcSize = function () {
             if (p.params.rotateEffect) {
                 col.container.removeClass('picker-items-col-absolute');
-                col.container.css({width:''});
+                if (!col.width) col.container.css({width:''});
             }
-            col.width = 0;
-            col.height = col.container[0].offsetHeight;
+            var colWidth, colHeight;
+            colWidth = 0;
+            colHeight = col.container[0].offsetHeight;
             wrapperHeight = col.wrapper[0].offsetHeight;
             itemHeight = col.items[0].offsetHeight;
             itemsHeight = itemHeight * col.items.length;
-            minTranslate = col.height / 2 - itemsHeight + itemHeight / 2;
-            maxTranslate = col.height / 2 - itemHeight / 2;    
+            minTranslate = colHeight / 2 - itemsHeight + itemHeight / 2;
+            maxTranslate = colHeight / 2 - itemHeight / 2;    
+            if (col.width) {
+                colWidth = col.width;
+                if (parseInt(colWidth, 10) === colWidth) colWidth = colWidth + 'px';
+                col.container.css({width: colWidth});
+            }
             if (p.params.rotateEffect) {
-                col.items.each(function () {
-                    var item = $(this);
-                    item.css({width:'auto'});
-                    col.width = Math.max(col.width, item[0].offsetWidth);
-                    item.css({width:''});
-                });
-                col.container.css({width: (col.width + 2) + 'px'});
+                if (!col.width) {
+                    col.items.each(function () {
+                        var item = $(this);
+                        item.css({width:'auto'});
+                        colWidth = Math.max(colWidth, item[0].offsetWidth);
+                        item.css({width:''});
+                    });
+                    col.container.css({width: (colWidth + 2) + 'px'});
+                }
                 col.container.addClass('picker-items-col-absolute');
             }
         };
@@ -172,11 +203,11 @@ var Picker = function (params) {
             if (valueCallbacks || typeof valueCallbacks === 'undefined') {
                 // Update values
                 col.value = selectedItem.attr('data-picker-value');
-                col.textValue = col.textValues ? col.textValues[activeIndex] : col.value;
+                col.displayValue = col.displayValues ? col.displayValues[activeIndex] : col.value;
                 // On change callback
-                if (previousActiveIndex !== activeIndex || valueCallbacks === true) {
+                if (previousActiveIndex !== activeIndex) {
                     if (col.onChange) {
-                        col.onChange(p, col.value, col.textValue);
+                        col.onChange(p, col.value, col.displayValue);
                     }
                     p.updateValue();
                 }
@@ -327,91 +358,28 @@ var Picker = function (params) {
             col.setValue(value);
         }
 
-        col.container.on(app.touchEvents.start, handleTouchStart);
-        col.container.on(app.touchEvents.move, handleTouchMove);
-        col.container.on(app.touchEvents.end, handleTouchEnd);
-        col.items.on('click', handleClick);
+        col.initEvents = function (detach) {
+            var method = detach ? 'off' : 'on';
+            col.container[method](app.touchEvents.start, handleTouchStart);
+            col.container[method](app.touchEvents.move, handleTouchMove);
+            col.container[method](app.touchEvents.end, handleTouchEnd);
+            col.items[method]('click', handleClick);
+        };
+        col.destroyEvents = function () {
+            col.initEvents(true);
+        };
 
         col.container[0].f7DestroyPickerCol = function () {
-            col.container.off(app.touchEvents.start, handleTouchStart);
-            col.container.off(app.touchEvents.move, handleTouchMove);
-            col.container.off(app.touchEvents.end, handleTouchEnd);
-            col.items.off('click', handleClick);
+            col.destroyEvents();
         };
+
+        col.initEvents();
 
     };
     p.destroyPickerCol = function (colContainer) {
         colContainer = $(colContainer);
         if ('f7DestroyPickerCol' in colContainer[0]) colContainer[0].f7DestroyPickerCol();
     };
-
-    p.layout = function () {
-        var colsHTML = '';
-        p.cols = [];
-        for (var i = 0; i < p.params.cols.length; i++) {
-            var columnItemsHTML = '';
-            var col = p.params.cols[i];
-            p.cols.push(col);
-            if (col.divider) {
-                colsHTML += '<div class="picker-items-col picker-items-col-divider ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '">' + col.content + '</div>';
-            }
-            else {
-                for (var j = 0; j < col.values.length; j++) {
-                    columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.textValues ? col.textValues[j] : col.values[j]) + '</div>';
-                }
-                colsHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
-            }
-
-        }
-        var pickerHTML =
-            '<div class="picker ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '') + '">' +
-                p.params.pickerbarHTML.replace(/{{closeText}}/g, p.params.pickerbarCloseText) +
-                '<div class="picker-items">' +
-                    colsHTML +
-                    '<div class="picker-center-highlight"></div>' +
-                '</div>' +
-            '</div>';
-        p.pickerHTML = pickerHTML;    
-    };
-
-    // Input Events
-    function openOnInput(e) {
-        e.preventDefault();
-        p.open();
-        if (p.params.scrollToInput && !isPopover()) {
-            var pageContent = p.input.parents('.page-content');
-            if (pageContent.length === 0) return;
-            var pageHeight = pageContent.height() - 44 - p.container.height();
-            if (p.params.shrinkView) pageHeight = pageHeight - 44;
-            var inputTop = p.input.offset().top - 44;
-            if (inputTop > pageHeight) {
-                pageContent.scrollTop(pageContent.scrollTop() + inputTop - pageHeight + p.input[0].offsetHeight, 300);
-            }
-        }
-    }
-    function closeOnHTMLClick(e) {
-        if (inPopover()) return;
-        if (p.input && p.input.length > 0) {
-            if (e.target !== p.input[0] && $(e.target).parents('.picker').length === 0) p.close();
-        }
-        else {
-            if ($(e.target).parents('.picker').length === 0) p.close();   
-        }
-    }
-
-    if (p.params.input) {
-        p.input = $(p.params.input);
-        p.input.prop('readOnly', true);
-    }
-
-    if (p.params.input && !isInline) {
-        p.input.on('click', openOnInput);
-        p.input.on('focus mousedown', function (e) {
-            e.preventDefault();
-        });
-    }
-    if (!isInline) $('html').on('click', closeOnHTMLClick);
-
     // Resize cols
     function resizeCols() {
         if (!p.opened) return;
@@ -424,38 +392,142 @@ var Picker = function (params) {
     }
     $(window).on('resize', resizeCols);
 
+    // HTML Layout
+    p.columnHTML = function (col, onlyItems) {
+        var columnItemsHTML = '';
+        var columnHTML = '';
+        if (col.divider) {
+            columnHTML += '<div class="picker-items-col picker-items-col-divider ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '">' + col.content + '</div>';
+        }
+        else {
+            for (var j = 0; j < col.values.length; j++) {
+                columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.displayValues ? col.displayValues[j] : col.values[j]) + '</div>';
+            }
+            columnHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
+        }
+        return onlyItems ? columnItemsHTML : columnHTML;
+    };
+    p.layout = function () {
+        var pickerHTML = '';
+        var pickerClass = '';
+        var i;
+        p.cols = [];
+        var colsHTML = '';
+        for (i = 0; i < p.params.cols.length; i++) {
+            var col = p.params.cols[i];
+            colsHTML += p.columnHTML(p.params.cols[i]);
+            p.cols.push(col);
+        }
+        pickerClass = 'picker-modal picker-columns ' + (p.params.cssClass || '') + (p.params.rotateEffect ? ' picker-3d' : '');
+        pickerHTML =
+            '<div class="' + (pickerClass) + '">' +
+                (p.params.toolbar ? p.params.toolbarTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText) : '') +
+                '<div class="picker-modal-inner picker-items">' +
+                    colsHTML +
+                    '<div class="picker-center-highlight"></div>' +
+                '</div>' +
+            '</div>';
+            
+        p.pickerHTML = pickerHTML;    
+    };
+
+    // Input Events
+    function openOnInput(e) {
+        e.preventDefault();
+        if (p.opened) return;
+        p.open();
+        if (p.params.scrollToInput && !isPopover()) {
+            var pageContent = p.input.parents('.page-content');
+            if (pageContent.length === 0) return;
+
+            var paddingTop = parseInt(pageContent.css('padding-top'), 10),
+                paddingBottom = parseInt(pageContent.css('padding-bottom'), 10),
+                pageHeight = pageContent[0].offsetHeight - paddingTop - p.container.height(),
+                pageScrollHeight = pageContent[0].scrollHeight - paddingTop - p.container.height(),
+                newPaddingBottom;
+            var inputTop = p.input.offset().top - paddingTop + p.input[0].offsetHeight;
+            if (inputTop > pageHeight) {
+                var scrollTop = pageContent.scrollTop() + inputTop - pageHeight;
+                if (scrollTop + pageHeight > pageScrollHeight) {
+                    newPaddingBottom = scrollTop + pageHeight - pageScrollHeight + paddingBottom;
+                    if (pageHeight === pageScrollHeight) {
+                        newPaddingBottom = p.container.height();
+                    }
+                    pageContent.css({'padding-bottom': (newPaddingBottom) + 'px'});
+                }
+                pageContent.scrollTop(scrollTop, 300);
+            }
+        }
+    }
+    function closeOnHTMLClick(e) {
+        if (inPopover()) return;
+        if (p.input && p.input.length > 0) {
+            if (e.target !== p.input[0] && $(e.target).parents('.picker-modal').length === 0) p.close();
+        }
+        else {
+            if ($(e.target).parents('.picker-modal').length === 0) p.close();   
+        }
+    }
+
+    if (p.params.input) {
+        p.input = $(p.params.input);
+        if (p.input.length > 0) {
+            if (p.params.inputReadOnly) p.input.prop('readOnly', true);
+            if (!p.inline) {
+                p.input.on('click', openOnInput);    
+            }
+            if (p.params.inputReadOnly) {
+                p.input.on('focus mousedown', function (e) {
+                    e.preventDefault();
+                });
+            }
+        }
+            
+    }
+    
+    if (!p.inline) $('html').on('click', closeOnHTMLClick);
+
     // Open
+    function onPickerClose() {
+        p.opened = false;
+        if (p.input && p.input.length > 0) p.input.parents('.page-content').css({'padding-bottom': ''});
+        if (p.params.onClose) p.params.onClose(p);
+
+        // Destroy events
+        p.container.find('.picker-items-col').each(function () {
+            p.destroyPickerCol(this);
+        });
+    }
+
     p.opened = false;
     p.open = function () {
         var toPopover = isPopover();
 
         if (!p.opened) {
+
             // Layout
             p.layout();
 
             // Append
             if (toPopover) {
-                p.pickerHTML = '<div class="popover popover-picker"><div class="popover-inner">' + p.pickerHTML + '</div></div>';
+                p.pickerHTML = '<div class="popover popover-picker-columns"><div class="popover-inner">' + p.pickerHTML + '</div></div>';
                 p.popover = app.popover(p.pickerHTML, p.params.input, true);
-                p.container = $(p.popover).find('.picker');
+                p.container = $(p.popover).find('.picker-modal');
                 $(p.popover).on('close', function () {
-                    p.opened = false;
-                    if (p.params.onClose) p.params.onClose(p);
-                    p.container.find('.picker-items-col').each(function () {
-                        p.destroyPickerCol(this);
-                    });
+                    onPickerClose();
                 });
             }
-            else {
+            else if (p.inline) {
                 p.container = $(p.pickerHTML);
-                if (isInline) {
-                    p.container.addClass('picker-inline');
-                    $(p.params.container).append(p.container);
-                }
-                else {
-                    $('body').append(p.container);
-                    p.container.show();
-                }   
+                p.container.addClass('picker-modal-inline');
+                $(p.params.container).append(p.container);
+            }
+            else {
+                p.container = $(app.pickerModal(p.pickerHTML));
+                $(p.container)
+                .on('close', function () {
+                    onPickerClose();
+                });
             }
 
             // Store picker instance
@@ -467,7 +539,7 @@ var Picker = function (params) {
                 if ((!p.initialized && p.params.value) || (p.initialized && p.value)) updateItems = false;
                 p.initPickerCol(this, updateItems);
             });
-
+            
             // Set value
             if (!p.initialized) {
                 if (p.params.value) {
@@ -479,14 +551,6 @@ var Picker = function (params) {
             }
         }
 
-        if (!isInline && !toPopover) {
-            // In
-            p.container.removeClass('picker-out').addClass('picker-in');
-
-            // Add class to body
-            $('body').addClass('with-picker-opened');
-            if (p.params.shrinkView) $('body').addClass('with-picker-shrink-view');
-        }
         // Set flag
         p.opened = true;
         p.initialized = true;
@@ -496,38 +560,28 @@ var Picker = function (params) {
 
     // Close
     p.close = function () {
-        if (!p.opened || isInline) return;
+        if (!p.opened || p.inline) return;
         if (inPopover()) {
-            app.closeModal('.popover-picker.modal-in');
+            app.closeModal(p.popover);
             return;
         }
-        $('body').removeClass('with-picker-opened');
-        if (p.params.shrinkView) $('body').removeClass('with-picker-shrink-view');
-        $('body').addClass('picker-closing');
-        if (p.params.onClose) p.params.onClose(p);
-        p.container.addClass('picker-out').removeClass('picker-in').transitionEnd(function () {
-            $('body').removeClass('picker-closing');
-            if (p.container.hasClass('picker-out')) {
-                p.opened = false;
-                p.container.remove();
-                p.container.find('.picker-items-col').each(function () {
-                    p.destroyPickerCol(this);
-                });
-            }
-        });
+        else {
+            app.closeModal(p.container);
+            return;
+        }
     };
 
     // Destroy
     p.destroy = function () {
         p.close();
-        if (p.params.input) {
+        if (p.params.input && p.input.length > 0) {
             p.input.off('click focus', openOnInput);
         }
         $('html').off('click', closeOnHTMLClick);
         $(window).off('resize', resizeCols);
     };
 
-    if (isInline) {
+    if (p.inline) {
         p.open();
     }
 
@@ -535,13 +589,4 @@ var Picker = function (params) {
 };
 app.picker = function (params) {
     return new Picker(params);
-};
-app.closePicker = function (picker) {
-    picker = $(picker);
-    if (picker.length === 0) picker = $('.picker.picker-in');
-    if (picker.length === 0) return;
-    picker.each(function () {
-        var pickerInstance = this.f7Picker;
-        if (pickerInstance) pickerInstance.close();
-    });
 };

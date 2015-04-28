@@ -1,97 +1,200 @@
 /*======================================================
 ************   Messages   ************
 ======================================================*/
-app.initMessages = function (pageContainer) {
-    var page = $(pageContainer);
-    var messages = page.find('.messages');
-    if (messages.length === 0) return;
-    var pageContent = page.find('.page-content');
-    if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
-    if (!messages.hasClass('new-messages-first')) pageContent[0].scrollTop = pageContent[0].scrollHeight - pageContent[0].offsetHeight;
-};
-app.addMessage = function (props) {
-    props = props || {};
-    props.type = props.type || 'sent';
-    if (!props.text || props.length === 0) return false;
-    var messagesContent = $('.messages-content');
-    if (messagesContent.length === 0) return false;
-    var messages = messagesContent.find('.messages');
-    var newOnTop = messages.hasClass('new-messages-first');
-    var html = '';
-    if (props.day) {
-        html += '<div class="messages-date">' + props.day + (props.time ? ',' : '') + (props.time ? ' <span>' + props.time + '</span>' : '') + '</div>';
+var Messages = function (container, params) {
+    var defaults = {
+        autoLayout: true,
+        newMessagesFirst: false,
+        messageTemplate: 
+            '{{#if day}}' +
+            '<div class="messages-date">{{day}} {{#if time}}, <span>{{time}}</span>{{/if}}</div>' +
+            '{{/if}}' +
+            '<div class="message message-{{type}} {{#if hasImage}}message-pic{{/if}} {{#if avatar}}message-with-avatar{{/if}} {{#if position}}message-appear-from-{{position}}{{/if}}">' +
+                '{{#if name}}<div class="message-name">{{name}}</div>{{/if}}' +
+                '<div class="message-text">{{text}}</div>' +
+                '{{#if avatar}}<div class="message-avatar" style="background-image:url({{avatar}})"></div>{{/if}}' +
+                '{{#if label}}<div class="message-label">{{label}}</div>{{/if}}' +
+            '</div>'
+    };
+    params = params || {};
+    for (var def in defaults) {
+        if (typeof params[def] === 'undefined' || params[def] === null) {
+            params[def] = defaults[def];
+        }
     }
-    var isPic = props.text.indexOf('<img') >= 0 ? 'message-pic' : '';
-    var withAvatar = props.avatar ? 'message-with-avatar' : '';
-    var messageClass = 'message' + ' message-' + props.type + ' ' + isPic  + ' ' + withAvatar + ' message-appear';
-    html += '<div class="' + messageClass + '">' +
-                (props.name ? '<div class="message-name">' + props.name + '</div>' : '') +
-                '<div class="message-text">' + props.text + '</div>' +
-                (props.avatar ? '<div class="message-avatar" style="background-image:url(' + props.avatar + ')"></div>' : '') +
-                (props.label ? '<div class="message-label">' + props.label + '</div>' : '') +
-            '</div>';
-    if (newOnTop) messages.prepend(html);
-    else messages.append(html);
-    if (messages.hasClass('messages-auto-layout')) app.updateMessagesLayout(messages);
-    app.scrollMessagesContainer(messagesContent);
-};
-app.updateMessagesLayout = function (messages) {
-    messages.find('.message').each(function () {
-        var message = $(this);
-        if (message.find('.message-text img').length > 0) message.addClass('message-pic');
-        if (message.find('.message-avatar').length > 0) message.addClass('message-with-avatar');
-    });
-    messages.find('.message-sent').each(function () {
-        var message = $(this);
-        var next = message.next('.message-sent');
-        var prev = message.prev('.message-sent');
-        if (next.length === 0) {
-            message.addClass('message-last message-with-tail');
-        }
-        else message.removeClass('message-last message-with-tail');
 
-        if (prev.length === 0) {
-            message.addClass('message-first');
-        }
-        else message.removeClass('message-first');
-        // Search for changed names
-        if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
-            if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
-                prev.addClass('message-last message-with-tail');
+    // Instance
+    var m = this;
+
+    // Params
+    m.params = params;
+
+    // Container
+    m.container = $(container);
+    if (m.container.length === 0) return;
+
+    // Autolayout
+    if (m.params.autoLayout) m.container.addClass('messages-auto-layout');
+
+    // Is In Page
+    m.pageContainer = m.container.parents('.page').eq(0);
+    m.pageContent = m.pageContainer.find('.page-content');
+
+    // Compiled template
+    m.template = Template7.compile(m.params.messageTemplate);
+
+    // Auto Layout
+    m.layout = function () {
+        if (!m.container.hasClass('messages-auto-layout')) m.container.addClass('messages-auto-layout');
+        m.container.find('.message').each(function () {
+            var message = $(this);
+            if (message.find('.message-text img').length > 0) message.addClass('message-pic');
+            if (message.find('.message-avatar').length > 0) message.addClass('message-with-avatar');
+        });
+        m.container.find('.message').each(function () {
+            var message = $(this);
+            var isSent = message.hasClass('message-sent');
+            var next = message.next('.message-' + (isSent ? 'sent' : 'received'));
+            var prev = message.prev('.message-' + (isSent ? 'sent' : 'received'));
+            if (next.length === 0) {
+                message.addClass('message-last message-with-tail');
+            }
+            else message.removeClass('message-last message-with-tail');
+
+            if (prev.length === 0) {
                 message.addClass('message-first');
             }
-        }
-    });
-    messages.find('.message-received').each(function () {
-        var message = $(this);
-        var next = message.next('.message-received');
-        var prev = message.prev('.message-received');
-        if (next.length === 0) {
-            message.addClass('message-last message-with-tail');
-        }
-        else message.removeClass('message-last message-with-tail');
+            else message.removeClass('message-first');
 
-        if (prev.length === 0) {
-            message.addClass('message-first');
-        }
-        else message.removeClass('message-first');
-
-        // Search for changed names
-        if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
-            if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
-                prev.addClass('message-last message-with-tail');
-                message.addClass('message-first');
+            if (prev.length > 0 && prev.find('.message-name').length > 0 && message.find('.message-name').length > 0) {
+                if (prev.find('.message-name').text() !== message.find('.message-name').text()) {
+                    prev.addClass('message-last message-with-tail');
+                    message.addClass('message-first');
+                }
             }
+        });
+        
+    };
+
+    // Add Message
+    m.appendMessage = function (props, animate) {
+        return m.addMessage(props, 'append', animate);
+    };
+    m.prependMessage = function (props, animate) {
+        return m.addMessage(props, 'prepend', animate);
+    };
+    m.addMessage = function (props, method, animate) {
+        return m.addMessages([props], method, animate);
+    };
+    m.addMessages = function (newMessages, method, animate) {
+        if (typeof animate === 'undefined') {
+            animate = true;
         }
-    });
+        if (typeof method === 'undefined') {
+            method = m.params.newMessagesFirst ? 'prepend' : 'append';
+        }
+        var newMessagesHTML = '', i;
+        for (i = 0; i < newMessages.length; i++) {
+            var props = newMessages[i] || {};
+            props.type = props.type || 'sent';
+            if (!props.text) continue;
+            props.hasImage = props.text.indexOf('<img') >= 0;
+            if (animate) props.position = method === 'append' ? 'bottom' : 'top';
+
+            newMessagesHTML += m.template(props);
+        }
+        m.container[method](newMessagesHTML);
+
+        if (m.params.autoLayout) m.layout();
+        if ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
+            m.scrollMessages(animate ? undefined : 0);
+        }
+        var messages = m.container.find('.message');
+        if (newMessages.length === 1) {
+            return method === 'append' ? messages[messages.length - 1] : messages[0];
+        }
+        else {
+            var messagesToReturn = [];
+            if (method === 'append') {
+                for (i = messages.length - newMessages.length; i < messages.length; i++) {
+                    messagesToReturn.push(messages[i]);
+                }
+            }
+            else {
+                for (i = 0; i < newMessages.length; i++) {
+                    messagesToReturn.push(messages[i]);
+                }   
+            }
+            return messagesToReturn;
+        }
+        
+    };
+    m.removeMessage = function (message) {
+        message = $(message);
+        if (message.length === 0) {
+            return false;
+        }
+        else {
+            message.remove();
+            if (m.params.autoLayout) m.layout();
+            return true;
+        }
+    };
+    m.removeMessages = function (messages) {
+        m.removeMessage(messages);
+    };
+    m.clean = function () {
+        m.container.html('');
+    };
+
+    // Scroll
+    m.scrollMessages = function (duration) {
+        if (typeof duration === 'undefined') duration = 400;
+        var currentScroll = m.pageContent[0].scrollTop;
+        var newScroll = m.params.newMessagesFirst ? 0 : m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight;
+        if (newScroll === currentScroll) return;
+        m.pageContent.scrollTop(newScroll, duration);
+    };
+
+    // Init Destroy
+    m.init = function () {
+        if (m.params.messages) {
+            m.addMessages(m.params.messages, undefined, false);
+        }
+        else {
+            if (m.params.autoLayout) m.layout();    
+            m.scrollMessages(0);
+        }
+        
+    };
+    m.destroy = function () {
+        m = null;
+    };
+
+    // Init
+    m.init();
+
+    m.container[0].f7Messages = m;
+    return m;
 };
-app.scrollMessagesContainer = function (messagesContent) {
-    messagesContent = $(messagesContent || '.messages-content');
-    if (messagesContent.length === 0) return;
-    var messages = messagesContent.find('.messages');
-    var newOnTop = messages.hasClass('new-messages-first');
-    var currentScroll = messagesContent[0].scrollTop;
-    var newScroll = newOnTop ? 0 : messagesContent[0].scrollHeight - messagesContent[0].offsetHeight;
-    if (newScroll === currentScroll) return;
-    messagesContent.scrollTop(newScroll, 300);
+app.messages = function (container, params) {
+    return new Messages (container, params);
+};
+app.initPageMessages = function (pageContainer) {
+    pageContainer = $(pageContainer);
+    var messages = pageContainer.find('.messages');
+    if (messages.length === 0) return;
+    if (!messages.hasClass('messages-init')) {
+        return;
+    }
+    var m = app.messages(messages, messages.dataset());
+
+    // Destroy on page remove
+    function pageBeforeRemove() {
+        m.destroy();
+        pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+    }
+    if (pageContainer.hasClass('page')) {
+        pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+    }
 };

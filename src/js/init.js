@@ -17,15 +17,12 @@ app.init = function () {
 
     // Init each page callbacks
     $('.page:not(.cached)').each(function () {
-        var pageContainer = $(this);
-        var viewContainer = pageContainer.parents('.' + app.params.viewClass);
-        if (viewContainer.length === 0) return;
-        var view = viewContainer[0].f7View || false;
-        var url = view && view.url ? view.url : false;
-        if (viewContainer) {
-            viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
-        }
-        app.pageInitCallback(view, {pageContainer: this, url: url, position: 'center'});
+        app.initPageWithCallback(this);
+    });
+
+    // Init each navbar callbacks
+    $('.navbar:not(.cached)').each(function () {
+        app.initNavbarWithCallback(this); 
     });
     
     // Init resize events

@@ -14,7 +14,8 @@
             "src/js/lazy-load.js"
         ],
         "less" : [
-            "src/less/mixins.less",
+            "src/less/_mixins.less",
+            "src/less/_colors-vars.less",
             "src/less/intro.less",
             "src/less/grid.less",
             "src/less/views.less",
@@ -47,8 +48,8 @@
             "src/js/proto-support.js",
             "src/js/proto-device.js",
             "src/js/proto-plugins.js",
-            "src/js/wrap-end.js",
-            "src/js/template7.js"
+            "src/js/template7.js",
+            "src/js/wrap-end.js"
         ],
         "less" : [
             "src/less/login-screen.less",
@@ -83,8 +84,13 @@
         "dependencies" : []
     },
     "sortable": {
-        "js" : ["src/js/sortable.js.js"],
+        "js" : ["src/js/sortable.js"],
         "less": [],
+        "dependencies" : []
+    },
+    "cards": {
+        "js" : [],
+        "less": ["src/less/cards.less"],
         "dependencies" : []
     },
     "smart-select": {
@@ -132,15 +138,15 @@
         "less" : [],
         "dependencies" : []
     },
-    "slider": {
-        "js" : ["src/js/slider.js"],
-        "less": ["src/less/slider.less"],
+    "swiper": {
+        "js" : ["src/js/swiper.js", "src/js/swiper-init.js"],
+        "less": ["src/less/swiper.less"],
         "dependencies" : []
     },
     "photo-browser": {
         "js" : ["src/js/photo-browser.js"],
         "less": ["src/less/photo-browser.less"],
-        "dependencies" : ["slider"]
+        "dependencies" : ["swiper"]
     },
     "notifications": {
         "js" : ["src/js/notifications.js"],
@@ -150,6 +156,11 @@
     "picker": {
         "js" : ["src/js/picker.js"],
         "less": ["src/less/picker.less"],
-        "dependencies" : []
+        "dependencies" : ["modals"]
+    },
+    "calendar": {
+        "js" : ["src/js/calendar.js"],
+        "less": ["src/less/calendar.less"],
+        "dependencies" : ["modals"]
     }
 }

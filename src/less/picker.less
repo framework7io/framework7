@@ -1,79 +1,28 @@
-/* === Picker === */
-.picker {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+/* === Columns Picker === */
+.picker-columns {
     width: 100%;
     height: 260px;
     z-index: 11500;
-    display: none;
-    -webkit-transition-property: -webkit-transform;
-    -moz-transition-property: -moz-transform;
-    -ms-transition-property: -ms-transform;
-    -o-transition-property: -o-transform;
-    transition-property: transform;
-    background: #cfd5da;
-    .translate3d(0,100%,0);
-    &.picker-in, &.picker-out {
-        .transition(400ms);
-    }
-    &.picker-in {
-        .translate3d(0,0,0);
-    }
-    &.picker-out {
-        .translate3d(0,100%,0);
-    }
-    &.picker-inline, .popover & {
-        display: block;
-        position: relative;
-        background: none;
-        .translate3d(0,0,0);
-        .pickerbar {
-            border-bottom: 1px solid #929499;
-        }
-    }
-    &.picker-inline {
+    &.picker-modal-inline, .popover & {
         height: 200px;
     }
-    .popover & {
-        width: auto;
-        .pickerbar {
-            border-top: none;
-            background: none;
+    @media (orientation: landscape) and (max-height: 415px) {
+        &:not(.picker-modal-inline) {
+            height: 200px;
         }
     }
 }
-.popover.popover-picker {
+.popover.popover-picker-columns {
     width: 280px;
 }
-.pickerbar {
-    background: #f0f1f2;
-    border-top: 1px solid #929499;
-    border-bottom: none;
-    height: 44px;
-    position: relative;
-    width: 100%;
-    padding: 0 8px;
-    .border-box();
-    .flexbox();
-    .justify-content(space-between);
-    .align-items(center);
-}
 .picker-items {
-    position: relative;
     .flexbox();
     .justify-content(center);
-    height: 100%;
     padding: 0;
     text-align: right;
     font-size: 24px;
     -webkit-mask-box-image: -webkit-linear-gradient(bottom, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
     -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
-    .pickerbar + & {
-        height: ~"-webkit-calc(100% - 44px)";
-        height: ~"-moz-calc(100% - 44px)";
-        height: ~"calc(100% - 44px)";    
-    }
 }
 .picker-items-col {
     overflow: hidden;
@@ -123,7 +72,7 @@
     }
     &.picker-selected {
         color: #000;
-        -webkit-transform: translate3d(0,0,0) rotateX(0deg);
+        .transform(translate3d(0,0,0) rotateX(0deg));
     }
     &.picker-before-selected {
     }
@@ -138,23 +87,11 @@
     width: 100%;
     top: 50%;
     margin-top: -18px;
-    border-top: 1px solid #a8abb0;
-    border-bottom: 1px solid #a8abb0;
+    .hairline(top, #a8abb0);
+    .hairline(bottom, #a8abb0);
     pointer-events: none;
 }
-html.ios-gt-7.retina {
-    .pickerbar {
-        border-top-width: 0.5px;
-    }
-    .picker-inline .pickerbar, .popover .pickerbar {
-        border-bottom-width: 0.5px;
-    }
-    .picker-center-highlight {
-        border-top-width: 0.5px;
-        border-bottom-width: 0.5px;
-    }
-}
-
+// 3D Picker
 .picker-3d {
     .picker-items {
         overflow: hidden;
@@ -175,37 +112,5 @@ html.ios-gt-7.retina {
         backface-visibility: hidden;
         -webkit-transition-timing-function: ease-out;
         transition-timing-function: ease-out;
-    }
-}
-
-body.with-picker-shrink-view {
-    .panel {
-        padding-bottom: 260px;
-    }
-    .views {
-        height: ~"-webkit-calc(100% - 260px)";
-        height: ~"-moz-calc(100% - 260px)";
-        height: ~"calc(100% - 260px)";
-    }
-}
-body.with-picker-shrink-view, body.picker-closing {
-    .views {
-        .transition(400ms);
-    }
-}
-
-@media (orientation: landscape) and (max-height: 415px) {
-    .picker:not(.picker-inline) {
-        height: 200px;
-    }
-    body.with-picker-shrink-view {
-        .panel {
-            padding-bottom: 210px;
-        }
-        .views {
-            height: ~"-webkit-calc(100% - 200px)";
-            height: ~"-moz-calc(100% - 200px)";
-            height: ~"calc(100% - 200px)";
-        }
     }
 }

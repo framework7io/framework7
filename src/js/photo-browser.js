@@ -24,7 +24,20 @@ var PhotoBrowser = function (params) {
         loop: false,
         lazyLoading: false,
         lazyLoadingInPrevNext: false,
-        lazyLoadingOnTransitionStart: false
+        lazyLoadingOnTransitionStart: false,
+        /*
+        Callbacks:
+        onLazyImageLoad(pb, slide, img)
+        onLazyImageReady(pb, slide, img)
+        onOpen(pb)
+        onClose(pb)
+        onSlideChangeStart(swiper)
+        onSlideChangeEnd(swiper)
+        onTap(swiper, e)
+        onClick(swiper, e)
+        onDoubleTap(swiper, e)
+        onSwipeToClose(pb)
+        */
     };
     
     params = params || {};
@@ -46,13 +59,11 @@ var PhotoBrowser = function (params) {
                                 '<div class="right"></div>' +
                             '</div>' +
                         '</div>';
-    var prevIconClassName = app.rtl ? 'next' : 'prev';
-    var nextIconClassName = app.rtl ? 'prev' : 'next';
     var toolbarTemplate = pb.params.toolbarTemplate ||
                         '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-' + prevIconClassName + ' ' + iconColor + '"></i></a>' +
-                                '<a href="#" class="link photo-browser-next"><i class="icon icon-' + nextIconClassName + ' ' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev ' + iconColor + '"></i></a>' +
+                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next ' + iconColor + '"></i></a>' +
                             '</div>' +
                         '</div>';
 
@@ -63,8 +74,8 @@ var PhotoBrowser = function (params) {
                             '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
                                 '{{toolbar}}' +
                                 '{{captions}}' +
-                                '<div class="photo-browser-slider-container slider-container">' +
-                                    '<div class="photo-browser-slider-wrapper slider-wrapper">' +
+                                '<div class="photo-browser-swiper-container swiper-container">' +
+                                    '<div class="photo-browser-swiper-wrapper swiper-wrapper">' +
                                         '{{photos}}' +
                                     '</div>' +
                                 '</div>' +
@@ -73,14 +84,14 @@ var PhotoBrowser = function (params) {
                     '</div>';
 
     var photoTemplate = !pb.params.lazyLoading ? 
-        (pb.params.photoTemplate || '<div class="photo-browser-slide slider-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
-        (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy slider-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}"></span></div>');
+        (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
+        (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
 
     var captionsTheme = pb.params.captionsTheme || pb.params.theme;
     var captionsTemplate = pb.params.captionsTemplate || '<div class="photo-browser-captions photo-browser-captions-' + captionsTheme + '">{{captions}}</div>';
     var captionTemplate = pb.params.captionTemplate || '<div class="photo-browser-caption" data-caption-index="{{captionIndex}}">{{caption}}</div>';
 
-    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide slider-slide">{{html}}</div>';
+    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide swiper-slide">{{html}}</div>';
     var photosHtml = '';
     var captionsHtml = '';
     for (i = 0; i < pb.params.photos.length; i ++) {
@@ -127,20 +138,20 @@ var PhotoBrowser = function (params) {
                         .replace('{{captions}}', captionsTemplate.replace(/{{captions}}/g, captionsHtml))
                         .replace('{{toolbar}}', (pb.params.toolbar ? toolbarTemplate : ''));
 
-    pb.activeSlideIndex = pb.params.initialSlide;
-    pb.openIndex = pb.activeSlideIndex;
+    pb.activeIndex = pb.params.initialSlide;
+    pb.openIndex = pb.activeIndex;
     pb.opened = false;
 
     pb.open = function (index) {
-        if (typeof index === 'undefined') index = pb.activeSlideIndex;
+        if (typeof index === 'undefined') index = pb.activeIndex;
         index = parseInt(index, 10);
-        if (pb.opened && pb.slider) {
-            pb.slider.slideTo(index);
+        if (pb.opened && pb.swiper) {
+            pb.swiper.slideTo(index);
             return;
         }
         pb.opened = true;
         pb.openIndex = index;
-        pb.initialLazyLoaded = false;
+        // pb.initialLazyLoaded = false;
         if (pb.params.type === 'standalone') {
             $('body').append(htmlTemplate);
         }
@@ -163,7 +174,7 @@ var PhotoBrowser = function (params) {
     };
     pb.close = function () {
         pb.opened = false;
-        if (!pb.sliderContainer || pb.sliderContainer.length === 0) {
+        if (!pb.swiperContainer || pb.swiperContainer.length === 0) {
             return;
         }
         if (pb.params.onClose) {
@@ -178,9 +189,9 @@ var PhotoBrowser = function (params) {
             });
         }
         // Destroy slider
-        pb.slider.destroy();
+        pb.swiper.destroy();
         // Delete references
-        pb.slider = pb.sliderContainer = pb.sliderWrapper = pb.slides = gestureSlide = gestureImg = gestureImgWrap = undefined;
+        pb.swiper = pb.swiperContainer = pb.swiperWrapper = pb.slides = gestureSlide = gestureImg = gestureImgWrap = undefined;
     };
 
     pb.onPopupClose = function (e) {
@@ -200,53 +211,14 @@ var PhotoBrowser = function (params) {
         $(document).off('pageBeforeRemove', pb.onPageBeforeRemove);
     };
 
-    pb.loadImageInSlide = function (slider, index) {
-        if (!slider || typeof index === 'undefined') return;
-        if (slider.slides.length === 0) return;
-        
-        var slide = slider.slides.eq(index);
-        if (!slide.hasClass('photo-browser-slide-lazy')) return;
+    pb.onSliderTransitionStart = function (swiper) {
+        pb.activeIndex = swiper.activeIndex;
 
-        var img = slide.find('img');
-        if (img.length === 0) return;
-
-        var image = new Image();
-        var src = img.attr('data-src');
-        
-        image.onload = function () {
-            img.attr('src', src);
-            img.removeAttr('data-src');
-            slide.removeClass('photo-browser-slide-lazy').find('.preloader').remove();
-            if (pb.params.onImageLoaded) {
-                pb.params.onImageLoaded(pb, slide[0], img[0]);
-            }
-        };
-        image.src = src;
-
-        if (pb.params.onImageLoad) {
-            pb.params.onImageLoad(pb, slide[0], img[0]);
-        }
-    };
-
-    pb.lazyLoading = function (slider, activeIndex) {
-        pb.loadImageInSlide(slider, activeIndex);
-        if (pb.params.lazyLoadingInPrevNext) {
-            var nextSlide = slider.wrapper.find('.slider-slide-next.photo-browser-slide-lazy');
-            if (nextSlide.length > 0) pb.loadImageInSlide(slider, nextSlide.index());
-
-            var prevSlide = slider.wrapper.find('.slider-slide-prev.photo-browser-slide-lazy');
-            if (prevSlide.length > 0) pb.loadImageInSlide(slider, prevSlide.index());
-        }
-    };
-    
-    pb.onSliderTransitionStart = function (slider) {
-        pb.activeSlideIndex = slider.activeSlideIndex;
-
-        var current = slider.activeSlideIndex + 1;
-        var total = slider.slides.length;
+        var current = swiper.activeIndex + 1;
+        var total = swiper.slides.length;
         if (pb.params.loop) {
             total = total - 2;
-            current = current - slider.loopedSlides;
+            current = current - swiper.loopedSlides;
             if (current < 1) current = total + current;
             if (current > total) current = current - total;
         }
@@ -255,53 +227,43 @@ var PhotoBrowser = function (params) {
 
         $('.photo-browser-prev, .photo-browser-next').removeClass('photo-browser-link-inactive');
         
-        if (slider.isFirst && !pb.params.loop) {
+        if (swiper.isBeginning && !pb.params.loop) {
             $('.photo-browser-prev').addClass('photo-browser-link-inactive');
         }
-        if (slider.isLast && !pb.params.loop) {
+        if (swiper.isEnd && !pb.params.loop) {
             $('.photo-browser-next').addClass('photo-browser-link-inactive');
         }
 
         // Update captions
         if (pb.captions.length > 0) {
             pb.captionsContainer.find('.photo-browser-caption-active').removeClass('photo-browser-caption-active');
-            var captionIndex = pb.params.loop ? slider.slides.eq(slider.activeSlideIndex).attr('data-slider-slide-index') : pb.activeSlideIndex;
+            var captionIndex = pb.params.loop ? swiper.slides.eq(swiper.activeIndex).attr('data-swiper-slide-index') : pb.activeIndex;
             pb.captionsContainer.find('[data-caption-index="' + captionIndex + '"]').addClass('photo-browser-caption-active');
         }
 
-        // Lazy loading
-        if (pb.params.lazyLoading){
-            if (pb.params.lazyLoadingOnTransitionStart || (!pb.params.lazyLoadingOnTransitionStart && !pb.initialLazyLoaded)) {
-                pb.initialLazyLoaded = true;
-                pb.lazyLoading(slider, pb.activeSlideIndex);
-            }
-        }
 
         // Stop Video
-        var previousSlideVideo = slider.slides.eq(slider.previousSlideIndex).find('video');
+        var previousSlideVideo = swiper.slides.eq(swiper.previousIndex).find('video');
         if (previousSlideVideo.length > 0) {
             if ('pause' in previousSlideVideo[0]) previousSlideVideo[0].pause();
         }
         // Callback
-        if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(slider);
+        if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(swiper);
     };
-    pb.onSliderTransitionEnd = function (slider) {
-        if (pb.params.lazyLoading && !pb.params.lazyLoadingOnTransitionStart) {
-            pb.lazyLoading(slider, pb.activeSlideIndex);
-        }
+    pb.onSliderTransitionEnd = function (swiper) {
         // Reset zoom
-        if (pb.params.zoom && gestureSlide && slider.previousSlideIndex !== slider.activeSlideIndex) {
+        if (pb.params.zoom && gestureSlide && swiper.previousIndex !== swiper.activeIndex) {
             gestureImg.transform('translate3d(0,0,0) scale(1)');
             gestureImgWrap.transform('translate3d(0,0,0)');
             gestureSlide = gestureImg = gestureImgWrap = undefined;
             scale = currentScale = 1;
         }
-        if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(slider);
+        if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(swiper);
     };
     
     pb.layout = function (index) {
         if (pb.params.type === 'page') {
-            pb.container = $('.photo-browser-slider-container').parents('.view');
+            pb.container = $('.photo-browser-swiper-container').parents('.view');
         }
         else {
             pb.container = $('.photo-browser');
@@ -310,8 +272,8 @@ var PhotoBrowser = function (params) {
             pb.container.addClass('photo-browser-in');
             app.sizeNavbars(pb.container);
         }
-        pb.sliderContainer = pb.container.find('.photo-browser-slider-container');
-        pb.sliderWrapper = pb.container.find('.photo-browser-slider-wrapper');
+        pb.swiperContainer = pb.container.find('.photo-browser-swiper-container');
+        pb.swiperWrapper = pb.container.find('.photo-browser-swiper-wrapper');
         pb.slides = pb.container.find('.photo-browser-slide');
         pb.captionsContainer = pb.container.find('.photo-browser-captions');
         pb.captions = pb.container.find('.photo-browser-caption');
@@ -324,34 +286,45 @@ var PhotoBrowser = function (params) {
             spaceBetween: pb.params.spaceBetween,
             speed: pb.params.speed,
             loop: pb.params.loop,
-            onTap: function (slider, e) {
-                if (pb.params.onTap) pb.params.onTap(slider, e);
+            lazyLoading: pb.params.lazyLoading,
+            lazyLoadingInPrevNext: pb.params.lazyLoadingInPrevNext,
+            lazyLoadingOnTransitionStart: pb.params.lazyLoadingOnTransitionStart,
+            preloadImages: pb.params.lazyLoading ? false : true,
+            onTap: function (swiper, e) {
+                if (pb.params.onTap) pb.params.onTap(swiper, e);
             },
-            onClick: function (slider, e) {
+            onClick: function (swiper, e) {
                 if (pb.params.exposition) pb.toggleExposition();
-                if (pb.params.onClick) pb.params.onClick(slider, e);
+                if (pb.params.onClick) pb.params.onClick(swiper, e);
             },
-            onDoubleTap: function (slider, e) {
+            onDoubleTap: function (swiper, e) {
                 pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
-                if (pb.params.onDoubleTap) pb.params.onDoubleTap(slider, e);
+                if (pb.params.onDoubleTap) pb.params.onDoubleTap(swiper, e);
             },
-            onTransitionStart: function (slider) {
-                pb.onSliderTransitionStart(slider);
+            onTransitionStart: function (swiper) {
+                pb.onSliderTransitionStart(swiper);
             },
-            onTransitionEnd: function (slider) {
-                pb.onSliderTransitionEnd(slider);  
+            onTransitionEnd: function (swiper) {
+                pb.onSliderTransitionEnd(swiper);  
+            },
+            onLazyImageLoad: function (swiper, slide, img) {
+                if (pb.params.onLazyImageLoad) pb.params.onLazyImageLoad(pb, slide, img);
+            },
+            onLazyImageReady: function (swiper, slide, img) {
+                $(slide).removeClass('photo-browser-slide-lazy');
+                if (pb.params.onLazyImageReady) pb.params.onLazyImageReady(pb, slide, img);
             }
         };
 
         if (pb.params.swipeToClose && pb.params.type !== 'page') {
             sliderSettings.onTouchStart = pb.swipeCloseTouchStart;
-            sliderSettings.onOppositeTouchMove = pb.swipeCloseTouchMove;
+            sliderSettings.onTouchMoveOpposite = pb.swipeCloseTouchMove;
             sliderSettings.onTouchEnd = pb.swipeCloseTouchEnd;
         }
 
-        pb.slider = app.slider(pb.sliderContainer, sliderSettings);
+        pb.swiper = app.swiper(pb.swiperContainer, sliderSettings);
         if (index === 0) {
-            pb.onSliderTransitionStart(pb.slider);
+            pb.onSliderTransitionStart(pb.swiper);
         }
         pb.attachEvents();
     };
@@ -360,7 +333,7 @@ var PhotoBrowser = function (params) {
         // Slide between photos
 
         if (pb.params.zoom) {
-            var target = pb.params.loop ? pb.slider.slides : pb.slides;
+            var target = pb.params.loop ? pb.swiper.slides : pb.slides;
             // Scale image
             target[action]('gesturestart', pb.onSlideGestureStart);
             target[action]('gesturechange', pb.onSlideGestureChange);
@@ -398,8 +371,9 @@ var PhotoBrowser = function (params) {
     // Gestures
     var gestureSlide, gestureImg, gestureImgWrap, scale = 1, currentScale = 1, isScaling = false;
     pb.onSlideGestureStart = function (e) {
-        if (!gestureSlide) {
+        if (!gestureSlide || !gestureSlide.length) {
             gestureSlide = $(this);
+            if (gestureSlide.length === 0) gestureSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
             gestureImg = gestureSlide.find('img, svg, canvas');
             gestureImgWrap = gestureImg.parent('.photo-browser-zoom-container');
             if (gestureImgWrap.length === 0) {
@@ -431,7 +405,7 @@ var PhotoBrowser = function (params) {
     };
     pb.toggleZoom = function () {
         if (!gestureSlide) {
-            gestureSlide = pb.slider.slides.eq(pb.slider.activeSlideIndex);
+            gestureSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
             gestureImg = gestureSlide.find('img, svg, canvas');
             gestureImgWrap = gestureImg.parent('.photo-browser-zoom-container');
         }
@@ -460,7 +434,7 @@ var PhotoBrowser = function (params) {
     };
     pb.onSlideTouchMove = function (e) {
         if (!gestureImg || gestureImg.length === 0) return;
-        pb.slider.allowClick = false;
+        pb.swiper.allowClick = false;
         if (!imageIsTouched || !gestureSlide) return;
 
         if (!imageIsMoved) {
@@ -474,11 +448,11 @@ var PhotoBrowser = function (params) {
         var scaledWidth = imageWidth * scale;
         var scaledHeight = imageHeight * scale;
 
-        if (scaledWidth < pb.slider.width && scaledHeight < pb.slider.height) return;
+        if (scaledWidth < pb.swiper.width && scaledHeight < pb.swiper.height) return;
 
-        imageMinX = Math.min((pb.slider.width / 2 - scaledWidth / 2), 0);
+        imageMinX = Math.min((pb.swiper.width / 2 - scaledWidth / 2), 0);
         imageMaxX = -imageMinX;
-        imageMinY = Math.min((pb.slider.height / 2 - scaledHeight / 2), 0);
+        imageMinY = Math.min((pb.swiper.height / 2 - scaledHeight / 2), 0);
         imageMaxY = -imageMinY;
         
         imageTouchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
@@ -493,6 +467,7 @@ var PhotoBrowser = function (params) {
                 return;
             }
         }
+        e.preventDefault();
         e.stopPropagation();
         imageIsMoved = true;
         imageCurrentX = imageTouchesCurrent.x - imageTouchesStart.x + imageStartX;
@@ -553,9 +528,9 @@ var PhotoBrowser = function (params) {
         // Define if we need image drag
         var scaledWidth = imageWidth * scale;
         var scaledHeight = imageHeight * scale;
-        imageMinX = Math.min((pb.slider.width / 2 - scaledWidth / 2), 0);
+        imageMinX = Math.min((pb.swiper.width / 2 - scaledWidth / 2), 0);
         imageMaxX = -imageMinX;
-        imageMinY = Math.min((pb.slider.height / 2 - scaledHeight / 2), 0);
+        imageMinY = Math.min((pb.swiper.height / 2 - scaledHeight / 2), 0);
         imageMaxY = -imageMinY;
         imageCurrentX = Math.max(Math.min(imageCurrentX, imageMaxX), imageMinX);
         imageCurrentY = Math.max(Math.min(imageCurrentY, imageMaxY), imageMinY);
@@ -567,16 +542,16 @@ var PhotoBrowser = function (params) {
     var swipeToCloseIsTouched = false;
     var allowSwipeToClose = true;
     var swipeToCloseDiff, swipeToCloseStart, swipeToCloseCurrent, swipeToCloseStarted = false, swipeToCloseActiveSlide, swipeToCloseTimeStart;
-    pb.swipeCloseTouchStart = function (slider, e) {
+    pb.swipeCloseTouchStart = function (swiper, e) {
         if (!allowSwipeToClose) return;
         swipeToCloseIsTouched = true;
     };
-    pb.swipeCloseTouchMove = function (slider, e) {
+    pb.swipeCloseTouchMove = function (swiper, e) {
         if (!swipeToCloseIsTouched) return;
         if (!swipeToCloseStarted) {
             swipeToCloseStarted = true;
             swipeToCloseStart = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-            swipeToCloseActiveSlide = pb.slider.slides.eq(pb.slider.activeSlideIndex);
+            swipeToCloseActiveSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
             swipeToCloseTimeStart = (new Date()).getTime();
         }
         e.preventDefault();
@@ -584,9 +559,9 @@ var PhotoBrowser = function (params) {
         swipeToCloseDiff = swipeToCloseStart - swipeToCloseCurrent;
         var opacity = 1 - Math.abs(swipeToCloseDiff) / 300;
         swipeToCloseActiveSlide.transform('translate3d(0,' + (-swipeToCloseDiff) + 'px,0)');
-        pb.slider.container.css('opacity', opacity).transition(0);
+        pb.swiper.container.css('opacity', opacity).transition(0);
     };
-    pb.swipeCloseTouchEnd = function (slider, e) {
+    pb.swipeCloseTouchEnd = function (swiper, e) {
         swipeToCloseIsTouched = false;
         if (!swipeToCloseStarted) {
             swipeToCloseStarted = false;
@@ -620,7 +595,7 @@ var PhotoBrowser = function (params) {
         else {
             allowSwipeToClose = true;
         }
-        pb.slider.container.css('opacity', '').transition('');
+        pb.swiper.container.css('opacity', '').transition('');
         swipeToCloseActiveSlide.transform('');
     };
 

@@ -11,13 +11,14 @@ Framework7.prototype.device = (function () {
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
 
-    device.ios = device.android = device.iphone = device.ipad = false;
+    device.ios = device.android = device.iphone = device.ipad = device.androidChrome = false;
     
     // Android
     if (android) {
         device.os = 'android';
         device.osVersion = android[2];
         device.android = true;
+        device.androidChrome = ua.toLowerCase().indexOf('chrome') >= 0;
     }
     if (ipad || iphone || ipod) {
         device.os = 'ios';

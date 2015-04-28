@@ -8,7 +8,7 @@ app.initPullToRefresh = function (pageContainer) {
     }
     if (!eventsTarget || eventsTarget.length === 0) return;
 
-    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer;
+    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer, triggerDistance, dynamicTriggerDistance;
     var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
     var hasNavbar = false;
     if (page.find('.navbar').length > 0 || page.parents('.navbar-fixed, .navbar-through').length > 0 || page.hasClass('navbar-fixed') || page.hasClass('navbar-through')) hasNavbar = true;
@@ -16,6 +16,14 @@ app.initPullToRefresh = function (pageContainer) {
     if (!hasNavbar) eventsTarget.addClass('pull-to-refresh-no-navbar');
 
     container = eventsTarget;
+
+    // Define trigger distance
+    if (container.attr('data-ptr-distance')) {
+        dynamicTriggerDistance = true;
+    }
+    else {
+        triggerDistance = 44;   
+    }
 
     function handleTouchStart(e) {
         if (isTouched) {
@@ -53,12 +61,15 @@ app.initPullToRefresh = function (pageContainer) {
         if (!isMoved) {
             /*jshint validthis:true */
             container.removeClass('transitioning');
-            // layer.removeClass('transitioning');
             if (scrollTop > container[0].offsetHeight) {
                 isTouched = false;
                 return;
             }
-            startTranslate = container.hasClass('refreshing') ? 44 : 0;
+            if (dynamicTriggerDistance) {
+                triggerDistance = container.attr('data-ptr-distance');
+                if (triggerDistance.indexOf('%') >= 0) triggerDistance = container[0].offsetHeight * parseInt(triggerDistance, 10) / 100;
+            }
+            startTranslate = container.hasClass('refreshing') ? triggerDistance : 0;
             if (container[0].scrollHeight === container[0].offsetHeight || app.device.os !== 'ios') {
                 useTranslate = true;
             }
@@ -80,7 +91,7 @@ app.initPullToRefresh = function (pageContainer) {
             }
             else {
             }
-            if ((useTranslate && Math.pow(touchesDiff, 0.85) > 44) || (!useTranslate && touchesDiff >= 88)) {
+            if ((useTranslate && Math.pow(touchesDiff, 0.85) > triggerDistance) || (!useTranslate && touchesDiff >= triggerDistance * 2)) {
                 refresh = true;
                 container.addClass('pull-up').removeClass('pull-down');
             }

@@ -12,8 +12,9 @@ app.initSwipeout = function (swipeoutEl) {
                 app.swipeoutOpenedEl.is(target[0]) ||
                 target.parents('.swipeout').is(app.swipeoutOpenedEl) ||
                 target.hasClass('modal-in') ||
-                target.parents('.modal.modal-in').length > 0 ||
-                target.hasClass('modal-overlay')
+                target.hasClass('modal-overlay') ||
+                target.hasClass('actions-modal') || 
+                target.parents('.actions-modal.modal-in, .modal.modal-in').length > 0
                 )) {
                 app.swipeoutClose(app.swipeoutOpenedEl);
             }
@@ -273,8 +274,13 @@ app.initSwipeout = function (swipeoutEl) {
     }
         
 };
-app.swipeoutOpen = function (el, dir) {
+app.swipeoutOpen = function (el, dir, callback) {
     el = $(el);
+    if (arguments.length === 2) {
+        if (typeof arguments[1] === 'function') {
+            callback = dir;
+        }
+    }
 
     if (el.length === 0) return;
     if (el.length > 1) el = $(el[0]);
@@ -309,10 +315,11 @@ app.swipeoutOpen = function (el, dir) {
     }
     el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
         el.trigger('opened');
+        if (callback) callback.call(el[0]);
     });
     app.swipeoutOpenedEl = el;
 };
-app.swipeoutClose = function (el) {
+app.swipeoutClose = function (el, callback) {
     el = $(el);
     if (el.length === 0) return;
     if (!el.hasClass('swipeout-opened')) return;
@@ -324,11 +331,18 @@ app.swipeoutClose = function (el) {
     app.allowSwipeout = false;
     el.trigger('close');
     el.removeClass('swipeout-opened').addClass('transitioning');
-    el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(function () {
-        el.trigger('closed');
-        buttons.transform('');
+
+    var closeTO;
+    function onSwipeoutClose() {
         app.allowSwipeout = true;
-    });
+        buttons.transform('');
+        el.trigger('closed');
+        if (callback) callback.call(el[0]);
+        if (closeTO) clearTimeout(closeTO);
+    }
+    el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(onSwipeoutClose);
+    closeTO = setTimeout(onSwipeoutClose, 500);
+    
     for (var i = 0; i < buttons.length; i++) {
         if (dir === 'right') {
             $(buttons[i]).transform('translate3d(' + (-buttons[i].offsetLeft) + 'px,0,0)');
@@ -340,7 +354,7 @@ app.swipeoutClose = function (el) {
     }
     if (app.swipeoutOpenedEl && app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
 };
-app.swipeoutDelete = function (el) {
+app.swipeoutDelete = function (el, callback) {
     el = $(el);
     if (el.length === 0) return;
     if (el.length > 1) el = $(el[0]);
@@ -350,6 +364,7 @@ app.swipeoutDelete = function (el) {
     var clientLeft = el[0].clientLeft;
     el.css({height: 0 + 'px'}).addClass('deleting transitioning').transitionEnd(function () {
         el.trigger('deleted');
+        if (callback) callback.call(el[0]);
         if (el.parents('.virtual-list').length > 0) {
             var virtualList = el.parents('.virtual-list')[0].f7VirtualList;
             var virtualIndex = el[0].f7VirtualListIndex;

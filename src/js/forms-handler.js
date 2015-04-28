@@ -170,7 +170,7 @@ $(document).on('submit change', 'form.ajax-submit, form.ajax-submit-onchange', f
     if (e.type === 'submit') e.preventDefault();
     
     var method = form.attr('method') || 'GET';
-    var contentType = form.attr('enctype');
+    var contentType = form.prop('enctype') || form.attr('enctype');
 
     var url = form.attr('action');
     if (!url) return;

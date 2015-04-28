@@ -38,7 +38,7 @@ app.get = function (url, view, ignoreCache, callback) {
         method: 'GET',
         beforeSend: app.params.onAjaxStart,
         complete: function (xhr) {
-            if (xhr.status === 200 || xhr.status === 0) {
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
                 if (app.params.cache && !ignoreCache) {
                     app.removeFromCache(_url);
                     app.cache.push({
@@ -56,7 +56,7 @@ app.get = function (url, view, ignoreCache, callback) {
         },
         error: function (xhr) {
             callback(xhr.responseText, true);
-            if (app.params.onAjaxError) app.params.onAjaxonAjaxError(xhr);
+            if (app.params.onAjaxError) app.params.onAjaxError(xhr);
         }
     });
     if (view) view.xhr = app.xhr;

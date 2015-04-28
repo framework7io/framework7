@@ -8,7 +8,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '0.10.0';
+    app.version = '1.0.5';
 
     // Default Parameters
     app.params = {
@@ -27,9 +27,15 @@ window.Framework7 = function (params) {
         pushStateRoot: undefined,
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',
+        pushStatePreventOnLoad: true,
         // Fast clicks
         fastClicks: true,
         fastClicksDistanceThreshold: 0,
+        fastClicksDelayBetweenClicks: 50,
+        // Tap Hold
+        tapHold: false,
+        tapHoldDelay: 750,
+        tapHoldPreventClicks: true,
         // Active State
         activeState: true,
         activeStateElements: 'a, button, label, span',
@@ -52,6 +58,7 @@ window.Framework7 = function (params) {
         hideToolbarOnPageScroll: false,
         hideTabbarOnPageScroll: false,
         showBarsOnPageScrollEnd: true,
+        showBarsOnPageScrollTop: true,
         // Swipeout
         swipeout: true,
         swipeoutActionsNoFold: false,
@@ -67,6 +74,9 @@ window.Framework7 = function (params) {
         // Searchbar
         searchbarHideDividers: true,
         searchbarHideGroups: true,
+        // Tap Navbar or Statusbar to scroll to top
+        scrollTopOnNavbarClick: false,
+        scrollTopOnStatusbarClick: false,
         // Panels
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,
@@ -85,6 +95,7 @@ window.Framework7 = function (params) {
         actionsCloseByOutside: true,
         popupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
+        modalStack: true,
         // Lazy Load
         imagesLazyLoadThreshold: 0,
         imagesLazyLoadSequential: true,
@@ -126,7 +137,7 @@ window.Framework7 = function (params) {
     };
 
     // Link to local storage
-    app.ls = localStorage;
+    app.ls = window.localStorage;
 
     // RTL
     app.rtl = $('body').css('direction') === 'rtl';

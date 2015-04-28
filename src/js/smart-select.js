@@ -4,8 +4,13 @@
 app.initSmartSelects = function (pageContainer) {
     var page = $(pageContainer);
     if (page.length === 0) return;
-
-    var selects = page.find('.smart-select');
+    var selects;
+    if (page.is('.smart-select')) {
+        selects = page;
+    }
+    else {
+        selects = page.find('.smart-select');
+    }
     if (selects.length === 0) return;
 
     selects.each(function () {
@@ -27,13 +32,36 @@ app.initSmartSelects = function (pageContainer) {
             smartSelect.find('.item-inner').append('<div class="item-after">' + valueText.join(', ') + '</div>');
         }
         else {
-            itemAfter.text(valueText);
+            var selectedText = itemAfter.text();
+            if (itemAfter.hasClass('smart-select-value')) {
+                for (i = 0; i < select.length; i++) {
+                    select[i].selected = select[i].textContent.trim() === selectedText.trim();
+                }
+            } else {
+                itemAfter.text(valueText.join(', '));
+            }
         }
         
     });
     
 };
-app.smartSelectOpen = function (smartSelect) {
+app.smartSelectAddOption = function (select, option, index) {
+    select = $(select);
+    var smartSelect = select.parents('.smart-select');
+    if (typeof index === 'undefined') {
+        select.append(option);
+    }
+    else {
+        $(option).insertBefore(select.find('option').eq(index));
+    }
+    app.initSmartSelects(smartSelect);
+    var selectName = smartSelect.find('select').attr('name');
+    var opened = $('.page.smart-select-page[data-select-name="' + selectName + '"]').length > 0;
+    if (opened) {
+        app.smartSelectOpen(smartSelect, true);
+    }
+};
+app.smartSelectOpen = function (smartSelect, reLayout) {
     smartSelect = $(smartSelect);
     if (smartSelect.length === 0) return;
 
@@ -47,18 +75,20 @@ app.smartSelectOpen = function (smartSelect) {
     var openIn = smartSelect.attr('data-open-in');
     if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
 
-    var pageTitle = smartSelect.attr('data-page-title') || smartSelect.find('.item-title').text();
-    var backText = smartSelect.attr('data-back-text') || app.params.smartSelectBackText;
-    var closeText = smartSelect.attr('data-popup-close-text') || smartSelect.attr('data-back-text') || app.params.smartSelectPopupCloseText ;
-    var backOnSelect = smartSelect.attr('data-back-onselect') ? (smartSelect.attr('data-back-onselect') === 'true' ? true : false) : app.params.smartSelectBackOnSelect;
-    var formTheme = smartSelect.attr('data-form-theme') || app.params.smartSelectFormTheme;
-    var navbarTheme = smartSelect.attr('data-navbar-theme') || app.params.smartSelectNavbarTheme;
-    var virtualList = smartSelect.attr('data-virtual-list') === 'true';
-    var virtualListItemHeight = smartSelect.attr('data-virtual-list-height');
+    var smartSelectData = smartSelect.dataset();
+    var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
+    var backText = smartSelectData.backText || app.params.smartSelectBackText;
+    var closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;
+    var backOnSelect = smartSelectData.backOnSelect !== undefined ? smartSelectData.backOnSelect : app.params.smartSelectBackOnSelect;
+    var formTheme = smartSelectData.formTheme || app.params.smartSelectFormTheme;
+    var navbarTheme = smartSelectData.navbarTheme || app.params.smartSelectNavbarTheme;
+    var virtualList = smartSelectData.virtualList;
+    var virtualListHeight = smartSelectData.virtualListHeight;
 
     // Collect all options/values
     var select = smartSelect.find('select')[0];
     var $select = $(select);
+    var $selectData = $select.dataset();
     if (select.disabled || smartSelect.hasClass('disabled') || $select.hasClass('disabled')) {
         return;
     }
@@ -66,13 +96,17 @@ app.smartSelectOpen = function (smartSelect) {
     var id = (new Date()).getTime();
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
-    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup;
+    var selectName = select.name;
+    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName, optionData;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
         if (option[0].disabled) continue;
-        optionImage = option.attr('data-option-image') || $select.attr('data-option-image');
-        optionIcon = option.attr('data-option-icon') || $select.attr('data-option-icon');
+        optionData = option.dataset();
+        optionImage = optionData.optionImage || $selectData.optionImage;
+        optionIcon = optionData.optionIcon || $selectData.optionIcon;
         optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
+        optionColor = optionData.optionColor;
+        optionClassName = optionData.optionClass;
         optionGroup = option.parent('optgroup')[0];
         optionGroupLabel = optionGroup && optionGroup.label;
         optionShowGroupLabel = false;
@@ -91,6 +125,8 @@ app.smartSelectOpen = function (smartSelect) {
             showGroupLabel: optionShowGroupLabel,
             image: optionImage,
             icon: optionIcon,
+            color: optionColor,
+            className: optionClassName,
             disabled: option[0].disabled,
             inputType: inputType,
             id: id,
@@ -108,7 +144,7 @@ app.smartSelectOpen = function (smartSelect) {
             '{{#if showGroupLabel}}' +
             '<li class="item-divider">{{groupLabel}}</li>' +
             '{{/if}}' +
-            '<li>' +
+            '<li{{#if className}} class="{{className}}"{{/if}}>' +
                 '<label class="label-{{inputType}} item-content">' +
                     '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
                     '{{#if hasMedia}}' +
@@ -119,7 +155,7 @@ app.smartSelectOpen = function (smartSelect) {
                     '</div>' +
                     '{{/if}}' +
                     '<div class="item-inner">' +
-                        '<div class="item-title">{{text}}</div>' +
+                        '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
                     '</div>' +
                 '</label>' +
             '</li>'
@@ -182,7 +218,7 @@ app.smartSelectOpen = function (smartSelect) {
         searchbarCancel = smartSelect.data('searchbar-cancel') || 'Cancel';
     }
 
-    var searchbarHTML =   '<form class="searchbar" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
+    var searchbarHTML =   '<form class="searchbar searchbar-init" data-search-list=".smart-select-list-' + id + '" data-search-in=".item-title">' +
                             '<div class="searchbar-input">' +
                                 '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
                                 '<a href="#" class="searchbar-clear"></a>' +
@@ -194,7 +230,7 @@ app.smartSelectOpen = function (smartSelect) {
     var pageHTML =
         (navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
-        '  <div data-page="' + pageName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
+        '  <div data-page="' + pageName + '" data-select-name="' + selectName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
              (navbarLayout === 'fixed' ? navbarHTML : '') +
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
@@ -217,9 +253,9 @@ app.smartSelectOpen = function (smartSelect) {
             var virtualListInstance = app.virtualList($(container).find('.virtual-list'), {
                 items: values,
                 template: smartSelectItemTemplate,
-                height: virtualListItemHeight || undefined,
+                height: virtualListHeight || undefined,
                 searchByItem: function (query, index, item) {
-                    if (item.text.toLowerCase().indexOf(query.trim()) >=0 ) return true;
+                    if (item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
                     return false;
                 }
             });
@@ -259,25 +295,32 @@ app.smartSelectOpen = function (smartSelect) {
     function pageInit(e) {
         var page = e.detail.page;
         if (page.name === pageName) {
-            $(document).off('pageInit', pageInit);
             handleInputs(page.container);
         }
     }
-    
-    // Load content
     if (openIn === 'popup') {
-        popup = app.popup(
+        if (reLayout) {
+            popup = $('.popup.smart-select-popup .view');
+            popup.html(pageHTML);
+        }
+        else {
+            popup = app.popup(
                 '<div class="popup smart-select-popup smart-select-popup-' + inputName + '">' +
                     '<div class="view navbar-fixed">' +
                         pageHTML +
                     '</div>' +
                 '</div>'
                 );
-        app.initPage($(popup).find('.page'));
+            popup = $(popup);
+        }
+        app.initPage(popup.find('.page'));
         handleInputs(popup);
     }
     else {
-        $(document).on('pageInit', pageInit);
-        view.router.load({content: pageHTML});
+        $(document).once('pageInit', '.smart-select-page', pageInit);
+        view.router.load({
+            content: pageHTML,
+            reload: reLayout ? true : undefined
+        });
     }
 };

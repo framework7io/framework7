@@ -19,7 +19,7 @@ var rightView = myApp.addView('.view-right', {
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
-$$(document).on('ajaxStart', function () {
+$$(document).on('ajaxStart', function (e) {
     myApp.showIndicator();
 });
 $$(document).on('ajaxComplete', function () {
@@ -54,6 +54,17 @@ myApp.onPageInit('modals', function (page) {
         myApp.modalPassword('Enter your password', function (password) {
             myApp.alert('Thank you! Password: ' + password);
         });
+    });
+    $$('.demo-modals-stack').on('click', function () {
+        // Open 5 alerts
+        myApp.alert('Alert 1');
+        myApp.alert('Alert 2');
+        myApp.alert('Alert 3');
+        myApp.alert('Alert 4');
+        myApp.alert('Alert 5');
+    });
+    $$('.demo-picker-modal').on('click', function () {
+        myApp.pickerModal('.picker-modal-demo');
     });
 });
 
@@ -170,16 +181,32 @@ myApp.onPageInit('messages', function (page) {
         },
         
     ];
-    var answerTimeout;
-    $$('.messagebar a.link').on('click', function () {
-        var textarea = $$('.messagebar textarea');
-        var messageText = textarea.val();
-        if (messageText.length === 0) return;
-        // Empty textarea
-        textarea.val('').trigger('change');
-        textarea[0].focus();
+    var answerTimeout, isFocused;
+
+    // Initialize Messages
+    var myMessages = myApp.messages('.messages');
+
+    // Initialize Messagebar
+    var myMessagebar = myApp.messagebar('.messagebar');
+    
+    $$('.messagebar a.send-message').on('touchstart mousedown', function () {
+        isFocused = document.activeElement && document.activeElement === myMessagebar.textarea[0];
+    });
+    $$('.messagebar a.send-message').on('click', function (e) {
+        // Keep focused messagebar's textarea if it was in focus before
+        if (isFocused) {
+            e.preventDefault();
+            myMessagebar.textarea[0].focus();
+        }
+        var messageText = myMessagebar.value();
+        if (messageText.length === 0) {
+            return;
+        }
+        // Clear messagebar
+        myMessagebar.clear();
+
         // Add Message
-        myApp.addMessage({
+        myMessages.addMessage({
             text: messageText,
             type: 'sent',
             day: !conversationStarted ? 'Today' : false,
@@ -191,7 +218,7 @@ myApp.onPageInit('messages', function (page) {
         answerTimeout = setTimeout(function () {
             var answerText = answers[Math.floor(Math.random() * answers.length)];
             var person = people[Math.floor(Math.random() * people.length)];
-            myApp.addMessage({
+            myMessages.addMessage({
                 text: answers[Math.floor(Math.random() * answers.length)],
                 type: 'received',
                 name: person.name,
@@ -212,8 +239,7 @@ myApp.onPageInit('pull-to-refresh', function (page) {
     ptrContent.on('refresh', function (e) {
         // Emulate 2s loading
         setTimeout(function () {
-            // var picURL = 'http://hhhhold.com/88/d/jpg?' + Math.round(Math.random() * 100);
-            var picURL = 'http://lorempixel.com/88/88/';
+            var picURL = 'http://lorempixel.com/88/88/abstract/' + Math.round(Math.random() * 10);
             var song = songs[Math.floor(Math.random() * songs.length)];
             var author = authors[Math.floor(Math.random() * authors.length)];
             var linkHTML = '<li class="item-content">' +
@@ -448,8 +474,75 @@ myApp.onPageInit('virtual-list', function (page) {
         height: 63,
     });
 });
+/* ===== Swiper Two Way Control Gallery ===== */
+myApp.onPageInit('swiper-gallery', function (page) {
+    var swiperTop = myApp.swiper('.ks-swiper-gallery-top', {
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 10
+    });
+    var swiperThumbs = myApp.swiper('.ks-swiper-gallery-thumbs', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        centeredSlides: true,
+        touchRatio: 0.2,
+        slideToClickedSlide: true
+    });
+    swiperTop.params.control = swiperThumbs;
+    swiperThumbs.params.control = swiperTop;
+});
+/* ===== Calendar ===== */
+myApp.onPageInit('calendar', function (page) {
+    // Default
+    var calendarDefault = myApp.calendar({
+        input: '#ks-calendar-default',
+    });
+    // With custom date format
+    var calendarDateFormat = myApp.calendar({
+        input: '#ks-calendar-date-format',
+        dateFormat: 'DD, MM dd, yyyy'
+    });
+    // With multiple values
+    var calendarMultiple = myApp.calendar({
+        input: '#ks-calendar-multiple',
+        dateFormat: 'M dd yyyy',
+        multiple: true
+    });
+    // Inline with custom toolbar
+    var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
+    var calendarInline = myApp.calendar({
+        container: '#ks-calendar-inline-container',
+        value: [new Date()],
+        weekHeader: false,
+        toolbarTemplate: 
+            '<div class="toolbar calendar-custom-toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                    '</div>' +
+                    '<div class="center"></div>' +
+                    '<div class="right">' +
+                        '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                    '</div>' +
+                '</div>' +
+            '</div>',
+        onOpen: function (p) {
+            $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+            $$('.calendar-custom-toolbar .left .link').on('click', function () {
+                calendarInline.prevMonth();
+            });
+            $$('.calendar-custom-toolbar .right .link').on('click', function () {
+                calendarInline.nextMonth();
+            });
+        },
+        onMonthYearChangeStart: function (p) {
+            $$('.calendar-custom-toolbar .center').text(monthNames[p.currentMonth] +', ' + p.currentYear);
+        }
+    });
+});
+
 /* ===== Pickers ===== */
-myApp.onPageInit('form-pickers', function (page) {
+myApp.onPageInit('pickers', function (page) {
     var today = new Date();
 
     // iOS Device picker
@@ -478,17 +571,48 @@ myApp.onPageInit('form-pickers', function (page) {
         ]
     });
 
-    // Custom Pickerbar
-    var pickerCustomPickerbar = myApp.picker({
-        input: '#ks-picker-custom-pickerbar',
+    // Dependent values
+    var carVendors = {
+        Japanese : ['Honda', 'Lexus', 'Mazda', 'Nissan', 'Toyota'],
+        German : ['Audi', 'BMW', 'Mercedes', 'Volkswagen', 'Volvo'],
+        American : ['Cadillac', 'Chrysler', 'Dodge', 'Ford']
+    };
+    var pickerDependent = myApp.picker({
+        input: '#ks-picker-dependent',
         rotateEffect: true,
-        pickerbarHTML: 
-            '<div class="toolbar pickerbar">' +
-                '<div class="left">' +
-                    '<a href="#" class="link custom-pickerbar-random">Randomize</a>' +
-                '</div>' +
-                '<div class="right">' +
-                    '<a href="#" class="link close-picker">That\'s me</a>' +
+        formatValue: function (picker, values) {
+            return values[1];
+        },
+        cols: [
+            {
+                textAlign: 'left',
+                values: ['Japanese', 'German', 'American'],
+                onChange: function (picker, country) {
+                    if(picker.cols[1].replaceValues){
+                        picker.cols[1].replaceValues(carVendors[country]);
+                    }
+                }
+            },
+            {
+                values: carVendors.Japanese,
+                width: 160,
+            },
+        ]
+    });
+
+    // Custom Toolbar
+    var pickerCustomToolbar = myApp.picker({
+        input: '#ks-picker-custom-toolbar',
+        rotateEffect: true,
+        toolbarTemplate: 
+            '<div class="toolbar">' +
+                '<div class="toolbar-inner">' +
+                    '<div class="left">' +
+                        '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+                    '</div>' +
+                    '<div class="right">' +
+                        '<a href="#" class="link close-picker">That\'s me</a>' +
+                    '</div>' +
                 '</div>' +
             '</div>',
         cols: [
@@ -504,7 +628,7 @@ myApp.onPageInit('form-pickers', function (page) {
             },
         ],
         onOpen: function (picker) {
-            picker.container.find('.custom-pickerbar-random').on('click', function () {
+            picker.container.find('.toolbar-randomize-link').on('click', function () {
                 var col0Values = picker.cols[0].values;
                 var col0Random = col0Values[Math.floor(Math.random() * col0Values.length)];
 
@@ -523,25 +647,24 @@ myApp.onPageInit('form-pickers', function (page) {
     var pickerInline = myApp.picker({
         input: '#ks-picker-date',
         container: '#ks-picker-date-container',
-        pickerbarHTML: '',
-        cssClass: 'ks-date-time-picker',
+        toolbar: false,
         rotateEffect: true,
         value: [today.getMonth(), today.getDate(), today.getFullYear(), today.getHours(), (today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes())],
-        onChange: function (picker, value, textValue) {
+        onChange: function (picker, values, displayValues) {
             var daysInMonth = new Date(picker.value[2], picker.value[0]*1 + 1, 0).getDate();
-            if (value[1] > daysInMonth) {
+            if (values[1] > daysInMonth) {
                 picker.cols[1].setValue(daysInMonth);
             }
         },
-        formatValue: function (p, value, textValue) {
-            return textValue[0] + ' ' + value[1] + ', ' + value[2] + ' ' + value[3] + ':' + value[4];
+        formatValue: function (p, values, displayValues) {
+            return displayValues[0] + ' ' + values[1] + ', ' + values[2] + ' ' + values[3] + ':' + values[4];
         },
         cols: [
             // Months
             {
                 values: ('0 1 2 3 4 5 6 7 8 9 10 11').split(' '),
-                textValues: ('January February March April May June July August September October November December').split(' '),
-                textAlign: 'left',
+                displayValues: ('January February March April May June July August September October November December').split(' '),
+                textAlign: 'left'
             },
             // Days
             {

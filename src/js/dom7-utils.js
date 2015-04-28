@@ -14,6 +14,25 @@ $.isArray = function (arr) {
     if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
     else return false;
 };
+$.each = function (obj, callback) {
+    if (typeof obj !== 'object') return;
+    if (!callback) return;
+    var i, prop;
+    if ($.isArray(obj) || obj instanceof Dom7) {
+        // Array
+        for (i = 0; i < obj.length; i++) {
+            callback(i, obj[i]);
+        }
+    }
+    else {
+        // Object
+        for (prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                callback(prop, obj[prop]);
+            }
+        }
+    }
+};
 $.unique = function (arr) {
     var unique = [];
     for (var i = 0; i < arr.length; i++) {
@@ -21,30 +40,37 @@ $.unique = function (arr) {
     }
     return unique;
 };
-$.trim = function (str) {
-    return str.trim();
-};
 $.serializeObject = function (obj) {
     if (typeof obj === 'string') return obj;
     var resultArray = [];
     var separator = '&';
     for (var prop in obj) {
-        if ($.isArray(obj[prop])) {
-            var toPush = [];
-            for (var i = 0; i < obj[prop].length; i ++) {
-                toPush.push(prop + '=' + obj[prop][i]);
+        if (obj.hasOwnProperty(prop)) {
+            if ($.isArray(obj[prop])) {
+                var toPush = [];
+                for (var i = 0; i < obj[prop].length; i ++) {
+                    toPush.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop][i]));
+                }
+                if (toPush.length > 0) resultArray.push(toPush.join(separator));
             }
-            resultArray.push(toPush.join(separator));
+            else {
+                // Should be string
+                resultArray.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop]));
+            }
         }
-        else {
-            // Should be string
-            resultArray.push(prop + '=' + obj[prop]);
-        }
+            
     }
 
     return resultArray.join(separator);
 };
-
+$.toCamelCase = function (string) {
+    return string.toLowerCase().replace(/-(.)/g, function(match, group1) {
+        return group1.toUpperCase();
+    });
+};
+$.dataset = function (el) {
+    return $(el).dataset();
+};
 $.getTranslate = function (el, axis) {
     var matrix, curTransform, curStyle, transformMatrix;
 
@@ -112,7 +138,11 @@ $.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && docume
 $.fn = Dom7.prototype;
 
 // Plugins
-$.fn.scrollTo = function (left, top, duration, easing) {
+$.fn.scrollTo = function (left, top, duration, easing, callback) {
+    if (arguments.length === 4 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
     return this.each(function () {
         var el = this;
         var currentTop, currentLeft, maxTop, maxLeft, newTop, newLeft, scrollTop, scrollLeft;
@@ -175,7 +205,10 @@ $.fn.scrollTo = function (left, top, duration, easing) {
                 done = true;
             }
 
-            if (done) return;
+            if (done) {
+                if (callback) callback();
+                return;
+            }
             if (animateTop) el.scrollTop = scrollTop;
             if (animateLeft) el.scrollLeft = scrollLeft;
             $.requestAnimationFrame(render);
@@ -183,19 +216,27 @@ $.fn.scrollTo = function (left, top, duration, easing) {
         $.requestAnimationFrame(render);
     });
 };
-$.fn.scrollTop = function (top, duration, easing) {
+$.fn.scrollTop = function (top, duration, easing, callback) {
+    if (arguments.length === 3 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
     var dom = this;
     if (typeof top === 'undefined') {
         if (dom.length > 0) return dom[0].scrollTop;
         else return null;
     }
-    return dom.scrollTo(undefined, top, duration, easing);
+    return dom.scrollTo(undefined, top, duration, easing, callback);
 };
-$.fn.scrollLeft = function (left, duration, easing) {
+$.fn.scrollLeft = function (left, duration, easing, callback) {
+    if (arguments.length === 3 && typeof easing === 'function') {
+        callback = easing;
+        easing = undefined;
+    }
     var dom = this;
     if (typeof left === 'undefined') {
         if (dom.length > 0) return dom[0].scrollLeft;
         else return null;
     }
-    return dom.scrollTo(left, undefined, duration, easing);
+    return dom.scrollTo(left, undefined, duration, easing, callback);
 };

@@ -7,7 +7,7 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
-                this[j].classList.add(classes[i]);
+                if (typeof this[j].classList !== 'undefined') this[j].classList.add(classes[i]);
             }
         }
         return this;
@@ -16,7 +16,7 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
-                this[j].classList.remove(classes[i]);
+                if (typeof this[j].classList !== 'undefined') this[j].classList.remove(classes[i]);
             }
         }
         return this;
@@ -29,7 +29,7 @@ Dom7.prototype = {
         var classes = className.split(' ');
         for (var i = 0; i < classes.length; i++) {
             for (var j = 0; j < this.length; j++) {
-                this[j].classList.toggle(classes[i]);
+                if (typeof this[j].classList !== 'undefined') this[j].classList.toggle(classes[i]);
             }
         }
         return this;
@@ -62,6 +62,7 @@ Dom7.prototype = {
         for (var i = 0; i < this.length; i++) {
             this[i].removeAttribute(attr);
         }
+        return this;
     },
     prop: function (props, value) {
         if (arguments.length === 1 && typeof props === 'string') {
@@ -107,10 +108,36 @@ Dom7.prototype = {
             return this;
         }
     },
+    dataset: function () {
+        var el = this[0];
+        if (el) {
+            var dataset = {};
+            if (el.dataset) {
+                for (var dataKey in el.dataset) {
+                    dataset[dataKey] = el.dataset[dataKey];
+                }
+            }
+            else {
+                for (var i = 0; i < el.attributes.length; i++) {
+                    var attr = el.attributes[i];
+                    if (attr.name.indexOf('data-') >= 0) {
+                        dataset[$.toCamelCase(attr.name.split('data-')[1])] = attr.value;
+                    }
+                }
+            }
+            for (var key in dataset) {
+                if (dataset[key] === 'false') dataset[key] = false;
+                else if (dataset[key] === 'true') dataset[key] = true;
+                else if (parseFloat(dataset[key]) === dataset[key] * 1) dataset[key] = dataset[key] * 1;
+            }
+            return dataset;
+        }
+        else return undefined;
+    },
     val: function (value) {
         if (typeof value === 'undefined') {
             if (this[0]) return this[0].value;
-            else return null;
+            else return undefined;
         }
         else {
             for (var i = 0; i < this.length; i++) {
@@ -278,8 +305,10 @@ Dom7.prototype = {
     },
     outerWidth: function (includeMargins) {
         if (this.length > 0) {
-            if (includeMargins)
-                return this[0].offsetWidth + parseFloat(this.css('margin-right')) + parseFloat(this.css('margin-left'));
+            if (includeMargins) {
+                var styles = this.styles();
+                return this[0].offsetWidth + parseFloat(styles.getPropertyValue('margin-right')) + parseFloat(styles.getPropertyValue('margin-left'));    
+            }
             else
                 return this[0].offsetWidth;
         }
@@ -300,8 +329,10 @@ Dom7.prototype = {
     },
     outerHeight: function (includeMargins) {
         if (this.length > 0) {
-            if (includeMargins)
-                return this[0].offsetHeight + parseFloat(this.css('margin-top')) + parseFloat(this.css('margin-bottom'));
+            if (includeMargins) {
+                var styles = this.styles();
+                return this[0].offsetHeight + parseFloat(styles.getPropertyValue('margin-top')) + parseFloat(styles.getPropertyValue('margin-bottom'));    
+            }
             else
                 return this[0].offsetHeight;
         }
@@ -337,6 +368,11 @@ Dom7.prototype = {
         }
         return this;
     },
+    styles: function () {
+        var i, styles;
+        if (this[0]) return window.getComputedStyle(this[0], null);
+        else return undefined;
+    },
     css: function (props, value) {
         var i;
         if (arguments.length === 1) {
@@ -360,7 +396,7 @@ Dom7.prototype = {
         }
         return this;
     },
-    
+
     //Dom manipulation
     each: function (callback) {
         for (var i = 0; i < this.length; i++) {
@@ -393,7 +429,7 @@ Dom7.prototype = {
         }
     },
     is: function (selector) {
-        if (!this[0]) return false;
+        if (!this[0] || typeof selector === 'undefined') return false;
         var compareWith, i;
         if (typeof selector === 'string') {
             var el = this[0];
@@ -424,7 +460,7 @@ Dom7.prototype = {
             }
             return false;
         }
-        
+
     },
     indexOf: function (el) {
         for (var i = 0; i < this.length; i++) {
@@ -544,7 +580,9 @@ Dom7.prototype = {
         if (!el) return new Dom7([]);
         while (el.nextElementSibling) {
             var next = el.nextElementSibling;
-            if (selector && $(next).is(selector)) nextEls.push(next);
+            if (selector) {
+                if($(next).is(selector)) nextEls.push(next);
+            }
             else nextEls.push(next);
             el = next;
         }
@@ -569,7 +607,9 @@ Dom7.prototype = {
         if (!el) return new Dom7([]);
         while (el.previousElementSibling) {
             var prev = el.previousElementSibling;
-            if (selector && $(prev).is(selector)) prevEls.push(prev);
+            if (selector) {
+                if($(prev).is(selector)) prevEls.push(prev);
+            }
             else prevEls.push(prev);
             el = prev;
         }
@@ -637,6 +677,18 @@ Dom7.prototype = {
     },
     detach: function () {
         return this.remove();
+    },
+    add: function () {
+        var dom = this;
+        var i, j;
+        for (i = 0; i < arguments.length; i++) {
+            var toAdd = $(arguments[i]);
+            for (j = 0; j < toAdd.length; j++) {
+                dom[dom.length] = toAdd[j];
+                dom.length++;
+            }
+        }
+        return dom;
     }
 };
 
