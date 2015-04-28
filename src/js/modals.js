@@ -27,7 +27,7 @@ app.modal = function (params) {
         var afterTextHTML = params.afterText ? params.afterText : '';
         var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
         var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical' : '';
-        modalHTML = '<div class="modal ' + noButtons + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
+        modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
     }
     
     _modalTemplateTempDiv.innerHTML = modalHTML;
@@ -154,7 +154,8 @@ app.modalPassword = function (text, title, callbackOk, callbackCancel) {
 app.showPreloader = function (title) {
     return app.modal({
         title: title || app.params.modalPreloaderTitle,
-        text: '<div class="preloader"></div>'
+        text: '<div class="preloader"></div>',
+        cssClass: 'modal-preloader'
     });
 };
 app.hidePreloader = function () {
@@ -280,19 +281,27 @@ app.popover = function (modal, target, removeOnClose) {
     modal = $(modal);
     target = $(target);
     if (modal.length === 0 || target.length === 0) return false;
-    if (modal.find('.popover-angle').length === 0) {
+    if (modal.find('.popover-angle').length === 0 && !app.params.material) {
         modal.append('<div class="popover-angle"></div>');
     }
     modal.show();
+
+    var material = app.params.material;
 
     function sizePopover() {
         modal.css({left: '', top: ''});
         var modalWidth =  modal.width();
         var modalHeight =  modal.height(); // 13 - height of angle
-        var modalAngle = modal.find('.popover-angle');
-        var modalAngleSize = modalAngle.width() / 2;
-        var modalAngleLeft, modalAngleTop;
-        modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
+        var modalAngle, modalAngleSize = 0, modalAngleLeft, modalAngleTop;
+        if (!material) {
+            modalAngle = modal.find('.popover-angle');
+            modalAngleSize = modalAngle.width() / 2;
+            modalAngle.removeClass('on-left on-right on-top on-bottom').css({left: '', top: ''});
+        }
+        else {
+            modal.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({left: '', top: ''});
+        }
+            
 
         var targetWidth = target.outerWidth();
         var targetHeight = target.outerHeight();
@@ -310,57 +319,99 @@ app.popover = function (modal, target, removeOnClose) {
         var diff = 0;
         // Top Position
         var modalPosition = 'top';
+        if (material) {
+            if (modalHeight < targetOffset.top) {
+                // On top
+                modalTop = targetOffset.top - modalHeight + targetHeight;
+            }
+            else if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
+                // On bottom
+                modalPosition = 'bottom';
+                modalTop = targetOffset.top;
+            }
+            else {
+                // On middle
+                modalPosition = 'bottom';
+                modalTop = targetOffset.top;
+            }
 
-        if ((modalHeight + modalAngleSize) < targetOffset.top) {
-            // On top
-            modalTop = targetOffset.top - modalHeight - modalAngleSize;
-        }
-        else if ((modalHeight + modalAngleSize) < windowHeight - targetOffset.top - targetHeight) {
-            // On bottom
-            modalPosition = 'bottom';
-            modalTop = targetOffset.top + targetHeight + modalAngleSize;
-        }
-        else {
-            // On middle
-            modalPosition = 'middle';
-            modalTop = targetHeight / 2 + targetOffset.top - modalHeight / 2;
-            diff = modalTop;
-            if (modalTop < 0) {
+            if (modalTop <= 0) {
                 modalTop = 5;
             }
-            else if (modalTop + modalHeight > windowHeight) {
+            else if (modalTop + modalHeight >= windowHeight) {
                 modalTop = windowHeight - modalHeight - 5;
             }
-            diff = diff - modalTop;
-        }
-        // Horizontal Position
-        if (modalPosition === 'top' || modalPosition === 'bottom') {
-            modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
-            diff = modalLeft;
+
+            // Horizontal Position
+            modalLeft = targetOffset.left;
             if (modalLeft < 5) modalLeft = 5;
-            if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
-            if (modalPosition === 'top') modalAngle.addClass('on-bottom');
-            if (modalPosition === 'bottom') modalAngle.addClass('on-top');
-            diff = diff - modalLeft;
-            modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
-            modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
-            modalAngle.css({left: modalAngleLeft + 'px'});
-        }
-        else if (modalPosition === 'middle') {
-            modalLeft = targetOffset.left - modalWidth - modalAngleSize;
-            modalAngle.addClass('on-right');
-            if (modalLeft < 5) {
-                modalLeft = targetOffset.left + targetWidth + modalAngleSize;
-                modalAngle.removeClass('on-right').addClass('on-left');
-            }
             if (modalLeft + modalWidth > windowWidth) {
-                modalLeft = windowWidth - modalWidth - 5;
-                modalAngle.removeClass('on-right').addClass('on-left');
+                modalLeft = targetOffset.left + targetWidth - modalWidth;
             }
-            modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
-            modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 6), 6);
-            modalAngle.css({top: modalAngleTop + 'px'});
+            if (modalPosition === 'top') {
+                modal.addClass('popover-on-top');
+            }
+            if (modalPosition === 'bottom') {
+                modal.addClass('popover-on-bottom');
+            }
+            
         }
+        else {
+            if ((modalHeight + modalAngleSize) < targetOffset.top) {
+                // On top
+                modalTop = targetOffset.top - modalHeight - modalAngleSize;
+            }
+            else if ((modalHeight + modalAngleSize) < windowHeight - targetOffset.top - targetHeight) {
+                // On bottom
+                modalPosition = 'bottom';
+                modalTop = targetOffset.top + targetHeight + modalAngleSize;
+            }
+            else {
+                // On middle
+                modalPosition = 'middle';
+                modalTop = targetHeight / 2 + targetOffset.top - modalHeight / 2;
+                diff = modalTop;
+                if (modalTop <= 0) {
+                    modalTop = 5;
+                }
+                else if (modalTop + modalHeight >= windowHeight) {
+                    modalTop = windowHeight - modalHeight - 5;
+                }
+                diff = diff - modalTop;                
+            }
+
+            // Horizontal Position
+            if (modalPosition === 'top' || modalPosition === 'bottom') {
+                modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
+                diff = modalLeft;
+                if (modalLeft < 5) modalLeft = 5;
+                if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+                if (modalPosition === 'top') {
+                    modalAngle.addClass('on-bottom');
+                }
+                if (modalPosition === 'bottom') {
+                    modalAngle.addClass('on-top');
+                }
+                diff = diff - modalLeft;
+                modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
+                modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
+                modalAngle.css({left: modalAngleLeft + 'px'});
+                    
+            }
+            else if (modalPosition === 'middle') {
+                modalLeft = targetOffset.left - modalWidth - modalAngleSize;
+                modalAngle.addClass('on-right');
+                if (modalLeft < 5 || (modalLeft + modalWidth > windowWidth)) {
+                    if (modalLeft < 5) modalLeft = targetOffset.left + targetWidth + modalAngleSize;
+                    if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+                    modalAngle.removeClass('on-right').addClass('on-left');
+                }
+                modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
+                modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 6), 6);
+                modalAngle.css({top: modalAngleTop + 'px'});
+            }
+        }
+            
 
         // Apply Styles
         modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
