@@ -105,6 +105,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         optionImage = optionData.optionImage || $selectData.optionImage;
         optionIcon = optionData.optionIcon || $selectData.optionIcon;
         optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
+        if (app.params.material) optionHasMedia = optionImage || optionIcon;
         optionColor = optionData.optionColor;
         optionClassName = optionData.optionClass;
         optionGroup = option.parent('optgroup')[0];
@@ -133,7 +134,8 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             hasMedia: optionHasMedia,
             checkbox: inputType === 'checkbox',
             inputName: inputName,
-            test: this
+            test: this,
+            material: app.params.material
         });
     }
 
