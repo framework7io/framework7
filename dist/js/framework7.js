@@ -1250,7 +1250,7 @@
                     if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.removeClass('searchbar-overlay-active');
                 }
         
-                if (s.params.externalSearch) {
+                if (s.params.customSearch) {
                     s.triggerEvent('search', {query: query});
                     return;
                 }
