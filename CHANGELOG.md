@@ -1,5 +1,34 @@
 # Change Log
 
+## Framework7 v1.0.6 - Updated on April 29, 2015
+  * Dom7
+    * Improved performance for `outerWidth` and `outerHeight` methods
+    * `.serializeObject` method will apply encode uri to serialized string
+  * Searchbar
+    * Fixed search when using groups
+    * New option `removeDiacritics` to remove/replace diacritics characters (á, í, ó, etc.) during search
+  * Push State
+    * New `pushStatePreventOnLoad` option to prevent pop state on app load
+  * Navbars / Toolbars
+    * New option `showBarsOnPageScrollTop` to show bars when scoll page to top
+  * View
+    * More swipe back callbacks/events on View: `swipebackmove` -> `swipeBackMove`, `swipeBackBeforeChange`, `swipeBackBeforeReset`, `swipeBackAfterChange`, `swipeBackAfterReset`
+  * Calendar, Picker
+    * Fixed issues when `input` is not specified
+  * Grid
+    * New auto layout columns (equal width) with `col-auto` class
+  * Swiper updated to latest 3.0.7 version:
+    * New `width` and `height` parameters to force Swiper size, useful when it is hidden on intialization
+    * Better support for "Scroll Container". So now Swiper can be used as a scroll container with one single "scrollable"/"swipeable" slide
+    * Added lazy loading for background images with `data-background` attribute on required elements
+    * New "Sticky Free Mode" (with `freeModeSticky` parameter) which will snap to slides positions in free mode
+    * Fixed issues with lazy loading  
+    * Fixed slide removing when loop mode is enabled
+    * Fixed issues with Autoplay and Fade effect
+  * Custom Build
+    * Fixed issues with not working custom build
+  * Lot of minor fixes
+
 ## Framework7 v1.0.5 - Updated on March 28, 2015
   * Dom7
     * `$.camelCase` utilite renamed to `$.toCamelCase`
