@@ -1,6 +1,6 @@
 # Change Log
 
-## Framework7 v1.0.6 - Updated on April 29, 2015
+## Framework7 v1.0.6 - Updated on May 1, 2015
   * Dom7
     * Improved performance for `outerWidth` and `outerHeight` methods
     * `.serializeObject` method will apply encode uri to serialized string
