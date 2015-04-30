@@ -23,9 +23,16 @@
             width: ~"-webkit-calc((100% - 15px*@{n-1}) / @{n})";   
             width: ~"calc((100% - 15px*@{n-1}) / @{n})";   
         }
+        &.no-gutter {
+            .col-@{className} {
+                width: ~"@{divider}%";
+            }
+        }
         .-((@i - 1));
     } .-;
     .--(@j: 1) when (@j < length(@cols)) {
+        @divider: e(extract(@cols, @j));
+        @className: `Math.floor(@{divider})`;
         .col-auto:nth-last-child(@{j}), .col-auto:nth-last-child(@{j}) ~ .col-auto {
             @j-1: @j - 1;  
             width: 100% / @j;
