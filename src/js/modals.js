@@ -493,7 +493,7 @@ app.openModal = function (modal) {
     }
     modal.data('f7-modal-shown', true);
     modal.on('closed', function() {
-       modal.removeData('f7-modal-shown');
+       modal.data('f7-modal-shown', false);
     });
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
