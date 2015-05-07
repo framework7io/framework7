@@ -29,13 +29,13 @@ app.modal = function (params) {
         var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical' : '';
         modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
     }
-    
+
     _modalTemplateTempDiv.innerHTML = modalHTML;
 
     var modal = $(_modalTemplateTempDiv).children();
 
     $('body').append(modal[0]);
-    
+
     // Add events on buttons
     modal.find('.modal-button').each(function (index, el) {
         $(el).on('click', function (e) {
@@ -173,7 +173,7 @@ app.actions = function (target, params) {
     if (arguments.length === 1) {
         // Actions
         params = target;
-    } 
+    }
     else {
         // Popover
         if (app.device.ios) {
@@ -184,13 +184,13 @@ app.actions = function (target, params) {
         }
     }
     params = params || [];
-    
+
     if (params.length > 0 && !$.isArray(params[0])) {
         params = [params];
     }
     var modalHTML;
     if (toPopover) {
-        var actionsToPopoverTemplate = app.params.modalActionsToPopoverTemplate || 
+        var actionsToPopoverTemplate = app.params.modalActionsToPopoverTemplate ||
             '<div class="popover actions-popover">' +
               '<div class="popover-inner">' +
                 '{{#each this}}' +
@@ -244,7 +244,7 @@ app.actions = function (target, params) {
         groupSelector = '.actions-modal-group';
         buttonSelector = '.actions-modal-button';
     }
-    
+
     var groups = modal.find(groupSelector);
     groups.each(function (index, el) {
         var groupIndex = index;
@@ -301,7 +301,7 @@ app.popover = function (modal, target, removeOnClose) {
         else {
             modal.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({left: '', top: ''});
         }
-            
+
 
         var targetWidth = target.outerWidth();
         var targetHeight = target.outerHeight();
@@ -354,7 +354,7 @@ app.popover = function (modal, target, removeOnClose) {
             if (modalPosition === 'bottom') {
                 modal.addClass('popover-on-bottom');
             }
-            
+
         }
         else {
             if ((modalHeight + modalAngleSize) < targetOffset.top) {
@@ -377,7 +377,7 @@ app.popover = function (modal, target, removeOnClose) {
                 else if (modalTop + modalHeight >= windowHeight) {
                     modalTop = windowHeight - modalHeight - 5;
                 }
-                diff = diff - modalTop;                
+                diff = diff - modalTop;
             }
 
             // Horizontal Position
@@ -396,7 +396,7 @@ app.popover = function (modal, target, removeOnClose) {
                 modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
                 modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
                 modalAngle.css({left: modalAngleLeft + 'px'});
-                    
+
             }
             else if (modalPosition === 'middle') {
                 modalLeft = targetOffset.left - modalWidth - modalAngleSize;
@@ -411,7 +411,7 @@ app.popover = function (modal, target, removeOnClose) {
                 modalAngle.css({top: modalAngleTop + 'px'});
             }
         }
-            
+
 
         // Apply Styles
         modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
@@ -422,7 +422,7 @@ app.popover = function (modal, target, removeOnClose) {
     modal.on('close', function () {
         $(window).off('resize', sizePopover);
     });
-    
+
     if (modal.find('.' + app.params.viewClass).length > 0) {
         app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
     }
@@ -487,6 +487,14 @@ app.openModal = function (modal) {
         });
         return;
     }
+    // do nothing if this modal already shown
+    if (true === modal.data('f7-modal-shown')) {
+        return;
+    }
+    modal.data('f7-modal-shown', true);
+    modal.on('closed', function() {
+       modal.removeData('f7-modal-shown');
+    });
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
     var isLoginScreen = modal.hasClass('login-screen');
@@ -544,15 +552,15 @@ app.closeModal = function (modal) {
     var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
     if (isPopup){
         if (modal.length === $('.popup.modal-in').length) {
-            overlay.removeClass('modal-overlay-visible');    
-        }  
+            overlay.removeClass('modal-overlay-visible');
+        }
     }
     else if (!isPickerModal) {
         overlay.removeClass('modal-overlay-visible');
     }
 
     modal.trigger('close');
-    
+
     // Picker modal body class
     if (isPickerModal) {
         $('body').removeClass('with-picker-modal');
@@ -563,7 +571,7 @@ app.closeModal = function (modal) {
         modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
             if (modal.hasClass('modal-out')) modal.trigger('closed');
             else modal.trigger('opened');
-            
+
             if (isPickerModal) {
                 $('body').removeClass('picker-modal-closing');
             }
