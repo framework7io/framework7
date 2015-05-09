@@ -108,6 +108,15 @@ Dom7.prototype = {
             return this;
         }
     },
+    removeData: function(key) {
+        for (var i = 0; i < this.length; i++) {
+            var el = this[i];
+            if (el.dom7ElementDataStorage && el.dom7ElementDataStorage[key]) {
+                el.dom7ElementDataStorage[key] = null;
+                delete el.dom7ElementDataStorage[key];
+            }
+        }
+    },
     dataset: function () {
         var el = this[0];
         if (el) {
