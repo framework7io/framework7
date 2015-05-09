@@ -1,13 +1,13 @@
 /* === Lists === */
-@listBlockBorderColor: #c8c7cc;
-@listBlockBg: #fff;
+@listBlockBorderColor: rgba(0,0,0,0.12);
+// @listBlockBg: #fff;
 @dividerBg: #F7F7F7;
 @dividerColor: #8e8e93;
 .list-block {
-    margin: 35px 0;
-    font-size: 17px;
+    margin: 16px 0;
+    font-size: 16px;
     ul {
-        background: @listBlockBg;
+        // background: @listBlockBg;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -71,6 +71,7 @@
         .align-items(center);
         padding-top: 7px;
         padding-bottom: 8px;
+        min-width: 40px;
         i + i {
             margin-left: 8px;
         }
@@ -88,7 +89,7 @@
         width: 100%;
         padding-top: 8px;
         padding-bottom: 7px;
-        min-height: 44px;
+        min-height: 48px;
         .border-box();
         .flexbox();
         -webkit-box-flex:1;
@@ -120,11 +121,12 @@
     }
     .item-after {
         white-space: nowrap;
-        color: #8e8e93;
+        color: #757575;
         .flex-shrink(0);
         margin-left: 8px;
         .flexbox();
         max-height: 28px;
+        font-size: 14px;
     }
     .smart-select .item-after {
         max-width: 70%;
@@ -166,7 +168,7 @@
     .item-content {
         .border-box();
         padding-left: 16px;
-        min-height: 44px;
+        min-height: 48px;
         .flexbox();
         .justify-content(space-between);
         .align-items(center);
@@ -250,7 +252,7 @@
         }
     }
     .item-subtitle {
-        font-size: 15px;
+        font-size: 14px;
         position: relative;
         overflow: hidden;
         white-space: nowrap;
@@ -258,25 +260,22 @@
         text-overflow:ellipsis;
     }
     .item-text {
-        font-size: 15px;
-        color: #8e8e93;
-        line-height: 21px;
+        font-size: 14px;
+        color: #757575;
+        line-height: 19px;
         position: relative;
         overflow: hidden;
-        height: 42px;
+        max-height: 38px;
         text-overflow:ellipsis;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         display: -webkit-box;
     }
     &.media-list, li.media-item {
-        .item-title {
-            font-weight: 500;
-        }
         .item-inner {
             display: block;
-            padding-top: 10px;
-            padding-bottom: 9px;
+            padding-top: 14px;
+            padding-bottom: 14px;
             .align-self(stretch);
         }
         .item-link .item-inner {

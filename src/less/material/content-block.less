@@ -1,7 +1,7 @@
 /* === Content Block === */
-@contentBlockBorderColor: #c8c7cc;
+@contentBlockBorderColor: rgba(0,0,0,0.12);
 .content-block {
-    margin: 35px 0;
+    margin: 16px 0;
     padding: 0 16px;
 
 }
@@ -12,11 +12,16 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     font-size: 14px;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     line-height: 1;
-    margin: 35px 16px 10px;
+    margin: 0px 16px 0px;
+    margin-bottom: 0;
+    height: 48px;
+    line-height: 48px;
+    color: #757575;
+    font-weight: 500;
     + .list-block, + .content-block, +.card {
-        margin-top: 10px;
+        margin-top: 0px;
     }
 }
 .content-block-inner {
