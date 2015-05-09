@@ -2,13 +2,14 @@
   .navbar
     .navbar-inner
       .left
-        a(href="index.html").back.link.icon-only
+        a(href="index.html").back.link
           i.icon.icon-back
+          span Back
       .center Virtual List
       .right
         a(href="#").open-panel.link.icon-only
           i.icon.icon-bars
-  form.searchbar(data-search-list=".virtual-list")
+  form.searchbar.searchbar-init(data-search-list=".virtual-list")
     .searchbar-input
       input(type="search", placeholder="Search")
       a(href="#").searchbar-clear

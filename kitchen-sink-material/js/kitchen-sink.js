@@ -1,5 +1,6 @@
 var myApp = new Framework7({
     modalTitle: 'Framework7',
+    material: true
 });
 // Expose Internal DOM library
 var $$ = Dom7;
@@ -175,16 +176,32 @@ myApp.onPageInit('messages', function (page) {
         },
         
     ];
-    var answerTimeout;
-    $$('.messagebar a.link').on('click', function () {
-        var textarea = $$('.messagebar textarea');
-        var messageText = textarea.val();
-        if (messageText.length === 0) return;
-        // Empty textarea
-        textarea.val('').trigger('change');
-        textarea[0].focus();
+    var answerTimeout, isFocused;
+
+    // Initialize Messages
+    var myMessages = myApp.messages('.messages');
+
+    // Initialize Messagebar
+    var myMessagebar = myApp.messagebar('.messagebar');
+    
+    $$('.messagebar a.send-message').on('touchstart mousedown', function () {
+        isFocused = document.activeElement && document.activeElement === myMessagebar.textarea[0];
+    });
+    $$('.messagebar a.send-message').on('click', function (e) {
+        // Keep focused messagebar's textarea if it was in focus before
+        if (isFocused) {
+            e.preventDefault();
+            myMessagebar.textarea[0].focus();
+        }
+        var messageText = myMessagebar.value();
+        if (messageText.length === 0) {
+            return;
+        }
+        // Clear messagebar
+        myMessagebar.clear();
+
         // Add Message
-        myApp.addMessage({
+        myMessages.addMessage({
             text: messageText,
             type: 'sent',
             day: !conversationStarted ? 'Today' : false,
@@ -196,7 +213,7 @@ myApp.onPageInit('messages', function (page) {
         answerTimeout = setTimeout(function () {
             var answerText = answers[Math.floor(Math.random() * answers.length)];
             var person = people[Math.floor(Math.random() * people.length)];
-            myApp.addMessage({
+            myMessages.addMessage({
                 text: answers[Math.floor(Math.random() * answers.length)],
                 type: 'received',
                 name: person.name,

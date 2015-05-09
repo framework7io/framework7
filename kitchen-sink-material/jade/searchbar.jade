@@ -2,13 +2,14 @@
   .navbar
     .navbar-inner
       .left
-        a(href="index.html").back.link.icon-only
+        a(href="index.html").back.link
           i.icon.icon-back
+          span Back
       .center Search Bar
       .right
         a(href="#").link.open-panel.icon-only
           i.icon.icon-bars
-  form.searchbar(data-search-list=".search-here", data-search-in=".item-title")
+  form.searchbar.searchbar-init(data-search-list=".search-here", data-search-in=".item-title")
     .searchbar-input
       input(type="search", placeholder="Search")
       a(href="#").searchbar-clear
@@ -24,7 +25,7 @@
       ul
         li.item-content
           .item-inner 
-            .item-title Acura 
+            .item-title Acura
         li.item-content
           .item-inner 
             .item-title Audi
