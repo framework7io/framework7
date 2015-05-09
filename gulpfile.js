@@ -117,9 +117,9 @@
             banner: [
                 '/**',
                 ' * <%= pkg.name %> <%= pkg.version %>',
-                ' * <%= theme %>',
                 ' * <%= pkg.description %>',
-                ' * ',
+                '<% if(typeof(theme) !== "undefined") {%> * \n * <%= theme %>\n *<% } else { %> * <% } %>',
+                // ' * ',
                 ' * <%= pkg.homepage %>',
                 ' * ',
                 ' * Copyright <%= date.year %>, <%= pkg.author %>',
@@ -504,7 +504,7 @@
     });
     
     gulp.task('open', function () {
-        return gulp.src(paths.ks.root + 'index.html').pipe(open('', { url: 'http://localhost:3000/' + paths.ks.root + 'index.html'}));
+        return gulp.src(paths.ks.ios.root + 'index.html').pipe(open('', { url: 'http://localhost:3000/' + paths.ks.ios.root + 'index.html'}));
     });
 
     gulp.task('server', [ 'watch', 'connect', 'open' ]);
