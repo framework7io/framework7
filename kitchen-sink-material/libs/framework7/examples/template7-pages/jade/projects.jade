@@ -1,0 +1,23 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="#").back.link 
+        i.icon.icon-back
+        span Back
+    .center.sliding Projects
+    .right
+      a(href="#").link.icon-only.open-panel 
+        i.icon.icon-bars
+.pages
+  .page(data-page="projects")
+    .page-content
+      .content-block-title My Projects
+      .list-block.media-list
+        ul
+          | {{#each projects}}
+          li.item-content
+            .item-inner
+              .item-title-row
+                .item-title {{title}}
+              .item-subtitle {{description}}
+          | {{/each}}

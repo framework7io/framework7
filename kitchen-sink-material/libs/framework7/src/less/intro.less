@@ -1,0 +1,57 @@
+@imgBaseUrl: "../img";
+html,body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: 14px;
+    line-height: 1.4;
+    width: 100%;
+    -webkit-text-size-adjust:100%;
+    background: #fff;
+    overflow: hidden;
+}
+// Fix for iPad in Safari in Lanscape mode
+@media all and (width:1024px) and (height:691px) and (orientation:landscape) {
+    html, body {
+        height: 671px;
+    }
+}
+@media all and (width:1024px) and (height:692px) and (orientation:landscape) {
+    html, body {
+        height: 672px;
+    }
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-touch-callout:none;
+}
+a, input, textarea, select {
+    outline: 0;
+}
+
+@blue:#007aff;
+@red: #ff3b30;
+@white: #ffffff;
+@black: #000000;
+@lightblue: #5ac8fa;
+@yellow: #ffcc00;
+@orange: #ff9500;
+@pink: #ff2d55;
+@green: #4cd964;
+@gray: #8e8e93;
+
+a {
+    text-decoration: none;
+    color: @blue;
+}
+p {
+    margin: 1em 0;
+}

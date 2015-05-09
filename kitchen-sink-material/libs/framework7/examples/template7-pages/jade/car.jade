@@ -1,0 +1,23 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="#").back.link 
+        i.icon.icon-back
+        span Back
+    .center.sliding {{vendor}} {{model}}
+    .right
+      a(href="#").link.icon-only.open-panel 
+        i.icon.icon-bars
+.pages
+  .page(data-page="car")
+    .page-content
+      .content-block
+        .content-block-inner
+          h3 {{vendor}} {{model}}
+          ul
+            li <b>Power</b> - {{power}} hp
+            li <b>Max speed</b> - {{speed}} km/h
+            li <b>Weight</b> - {{weight}} kg
+            li <b>Color</b> - {{color}}
+            li <b>Year</b> - {{year}}
+          

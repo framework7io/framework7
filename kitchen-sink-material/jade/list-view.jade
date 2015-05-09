@@ -1,0 +1,264 @@
+.page(data-page="list-view")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="index.html").back.link.icon-only
+          i.icon.icon-back
+      .center List View
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+      p Framework7 allows you to be flexible with list views (table views). You can make them as navigation menus, you can use there icons, inputs, and any elements inside of the list, and even make them nested:
+    .content-block-title Data list, with icons
+    .list-block
+      ul
+        li
+          .item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ivan Petrov
+              .item-after CEO
+        li
+          .item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title John Doe
+              .item-after 
+                span.badge 5
+        li
+          .item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Jenna Smith
+    .content-block-title Links
+    .list-block
+      ul
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ivan Petrov
+              .item-after CEO
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title John Doe
+              .item-after Cleaner
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Jenna Smith
+    .content-block-title Links, no icons
+    .list-block
+      ul
+        li
+          a(href="#").item-link.item-content
+            .item-inner 
+              .item-title Ivan Petrov
+        li
+          a(href="#").item-link.item-content
+            .item-inner 
+              .item-title John Doe
+        li
+          .item-divider Divider Here
+        li
+          a(href="#").item-link.item-content
+            .item-inner 
+              .item-title Ivan Petrov
+        li
+          a(href="#").item-link.item-content
+            .item-inner 
+              .item-title Jenna Smith
+    .content-block-title Grouped with sticky titles
+    .list-block
+      .list-group
+        ul
+          li.list-group-title A
+          li
+            .item-content
+              .item-inner
+                .item-title Aaron 
+          li
+            .item-content
+              .item-inner
+                .item-title Abbie
+          li
+            .item-content
+              .item-inner
+                .item-title Adam
+      .list-group
+        ul
+          li.list-group-title B
+          li
+            .item-content
+              .item-inner
+                .item-title Bailey
+          li
+            .item-content
+              .item-inner
+                .item-title Barclay
+          li
+            .item-content
+              .item-inner
+                .item-title Bartolo
+      .list-group
+        ul
+          li.list-group-title C
+          li
+            .item-content
+              .item-inner
+                .item-title Caiden
+          li
+            .item-content
+              .item-inner
+                .item-title Calvin
+          li
+            .item-content
+              .item-inner
+                .item-title Candy
+    .content-block-title Mixed and nested
+    .list-block
+      ul
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ivan Petrov
+              .item-after CEO
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Two icons here
+        li
+          .item-content
+            .item-inner 
+              .item-title No icons here
+          ul
+            li
+              a(href="#").item-link.item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Ivan Petrov
+                  .item-after CEO
+            li
+              a(href="#").item-link.item-content
+                .item-media
+                  i.icon.icon-f7
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Two icons here
+            li
+              .item-content
+                .item-inner 
+                  .item-title No icons here
+            li
+              a(href="#").item-link.item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Ultra long text goes here, no, it is really really long
+            li
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title With switch
+                  .item-after
+                    label.label-switch
+                      input(type="checkbox")
+                      .checkbox
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ultra long text goes here, no, it is really really long
+        li
+          .item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title With switch
+              .item-after
+                label.label-switch
+                  input(type="checkbox")
+                  .checkbox
+
+    .content-block-title Mixed, inset
+    .list-block.inset
+      ul
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ivan Petrov
+              .item-after CEO
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Two icons here
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ultra long text goes here, no, it is really really long
+        li
+          .item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title With switch
+              .item-after
+                label.label-switch
+                  input(type="checkbox")
+                  .checkbox
+        
+      .list-block-label
+        p Here comes some useful information about list above
+    .content-block-title Tablet inset
+    .list-block.tablet-inset
+      ul
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ivan Petrov
+              .item-after CEO
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Two icons here
+        li
+          a(href="#").item-link.item-content
+            .item-media
+              i.icon.icon-f7
+            .item-inner 
+              .item-title Ultra long text goes here, no, it is really really long
+      .list-block-label
+        p This list block will look like "inset" only on tablets (iPad)
+        
+        

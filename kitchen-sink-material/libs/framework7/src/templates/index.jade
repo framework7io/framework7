@@ -1,0 +1,87 @@
+doctype
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
+    title My App
+    // Path to Framework7 Library CSS
+    link(rel="stylesheet", href="css/#{stylesheetFilename}.css")
+    // Path to your custom app styles
+    link(rel="stylesheet", href="css/my-app.css")
+  body
+    // Status bar overlay for fullscreen mode
+    .statusbar-overlay
+
+    // Panels overlay
+    .panel-overlay
+    // Left panel with reveal effect
+    .panel.panel-left.panel-reveal
+      .content-block
+        p Left panel content goes here
+    // Right panel with cover effect
+    .panel.panel-right.panel-cover
+      .content-block
+        p Right panel content goes here
+
+    // Views
+    .views
+      // Your main view, should have "view-main" class
+      .view.view-main
+        // Top Navbar
+        .navbar
+          .navbar-inner
+            // We have home navbar without left link
+            .center.sliding Awesome App
+            .right
+              // Right link contains only icon - additional "icon-only" class
+              a(href="#").link.icon-only.open-panel 
+                i.icon.icon-bars
+        // Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes
+        .pages.navbar-through.toolbar-through
+          // Page, data-page contains page name
+          .page(data-page="index")
+            // Scrollable page content
+            .page-content
+              .content-block-title Welcome To My Awesome App
+              .content-block
+                .content-block-inner
+                  p Couple of worlds here because my app is so awesome!
+                  p Duis sed erat ac eros ultrices pharetra id ut tellus. Praesent rhoncus enim ornare ipsum aliquet ultricies. Pellentesque sodales erat quis elementum sagittis.
+              
+              .content-block-title What about simple navigation?
+              .list-block
+                ul
+                  li
+                    a(href="about.html").item-link
+                      .item-content
+                        .item-inner 
+                          .item-title About
+                  li
+                    a(href="services.html").item-link
+                      .item-content 
+                        .item-inner
+                          .item-title Services
+                  li
+                    a(href="form.html").item-link
+                      .item-content 
+                        .item-inner
+                          .item-title Form
+              .content-block-title Side panels
+              .content-block
+                .row
+                  .col-50
+                    a(href="#", data-panel="left").button.open-panel Left Panel
+                  .col-50
+                    a(href="#", data-panel="right").button.open-panel Right Panel
+        // Bottom Toolbar
+        .toolbar
+          .toolbar-inner
+            a(href="#").link Link 1
+            a(href="#").link Link 2
+
+    // Path to Framework7 Library JS
+    script(type="text/javascript", src="js/#{scriptFilename}.js")
+    // Path to your app js
+    script(type="text/javascript", src="js/my-app.js")

@@ -1,0 +1,85 @@
+/* === Relation between toolbar/navbar types and pages === */
+.page, .view, .views{
+    >.navbar, >.toolbar {
+        position: absolute;
+    }
+}
+.subnavbar ~ .page-content {
+    padding-top: @toolbarSize;
+}
+.navbar-through, .navbar-fixed {
+    .page-content {
+        padding-top: @toolbarSize;
+    }
+    .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
+        padding-top: @toolbarSize * 2;
+    }
+    .page .subnavbar, &.page .subnavbar {
+        top: @toolbarSize;
+    }
+}
+
+.toolbar-through, .toolbar-fixed, .tabbar-through, .tabbar-fixed {
+    .page-content {
+        padding-bottom: @toolbarSize;
+    }
+}
+.tabbar-labels-fixed, .tabbar-labels-through {
+    .page-content {
+        padding-bottom: @tabbarLabelsSize;
+        @media all and (min-width:768px) {
+            padding-bottom: @tabbarLabelsSizeTablet;
+        }
+    }
+}
+// Page Hidden Navbar
+.navbar {
+    &.navbar-hiding {
+        .transition(400ms);
+        .translate3d(0,0,0);
+        & ~ .page-content, & ~ .pages, & ~ .page {
+            .list-group-title {
+                .transition(400ms);
+            }
+            .subnavbar {
+                .transition(400ms);
+            }
+        }
+    }
+    &.navbar-hidden {
+        .transition(400ms);
+        .translate3d(0,-100%,0);
+        & ~ .page-content, & ~ .pages, & ~ .page {
+            .list-group-title {
+                .transition(400ms);
+                top:-@toolbarSize;
+            }
+            .subnavbar {
+                .translate3d(0,-100%,0);
+                .transition(400ms);
+            }
+        }
+    }
+}
+.page.no-navbar {
+    .page-content {
+        padding-top: 0;
+    }
+    &.with-subnavbar .page-content, .with-subnavbar & .page-content, .page-content.with-subnavbar {
+        padding-top: @toolbarSize;
+    }
+}
+// Page Hidden Toolbar
+.toolbar, .tabbar {
+    &.toolbar-hiding, &.tabbar-hiding {
+        .transition(400ms);
+        .translate3d(0,0,0);
+    }
+    &.toolbar-hidden, &.tabbar-hidden {
+        .transition(400ms);
+        .translate3d(0,100%,0);
+    }
+}
+.page.no-toolbar .page-content, .page.no-tabbar .page-content {
+    padding-bottom: 0;
+}

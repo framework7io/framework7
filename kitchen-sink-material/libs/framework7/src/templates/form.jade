@@ -1,0 +1,167 @@
+// We don't need full layout here, because this page will be parsed with Ajax
+// Top Navbar
+.navbar
+  .navbar-inner
+    .left
+      a(href="#").back.link 
+        i.icon.icon-back
+        span Back
+    .center.sliding Form
+    .right
+      // Right link contains only icon - additional "icon-only" class
+      a(href="#").link.icon-only.open-panel 
+        i.icon.icon-bars
+.pages
+  // Page, data-page contains page name
+  .page(data-page="form")
+    // Scrollable page content
+    .page-content
+      .content-block-title Form Example
+      .list-block
+        ul
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-name
+              .item-inner 
+                .item-title.label Name
+                .item-input
+                  input(type="text", placeholder="Your name")
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-email
+              .item-inner 
+                .item-title.label E-mail
+                .item-input
+                  input(type="email", placeholder="E-mail")
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-url
+              .item-inner 
+                .item-title.label URL
+                .item-input
+                  input(type="url", placeholder="URL")
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-password
+              .item-inner 
+                .item-title.label Password
+                .item-input
+                  input(type="password", placeholder="Password")
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-tel
+              .item-inner 
+                .item-title.label Phone
+                .item-input
+                  input(type="tel", placeholder="Phone")
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-gender
+              .item-inner 
+                .item-title.label Gender
+                .item-input
+                  select
+                    option Male
+                    option Female
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-calendar
+              .item-inner 
+                .item-title.label Birth date
+                .item-input
+                  input(type="date", placeholder="Birth day", value="2014-04-30")
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-toggle
+              .item-inner 
+                .item-title.label Switch
+                .item-input
+                  label.label-switch
+                    input(type="checkbox")
+                    .checkbox
+          li
+            .item-content
+              .item-media
+                i.icon.icon-form-settings
+              .item-inner
+                .item-title.label Slider
+                .item-input
+                  .range-slider
+                    input(type="range", min="0", max="100", value="50", step="0.1")
+          li.align-top
+            .item-content
+              .item-media
+                i.icon.icon-form-comment
+              .item-inner 
+                .item-title.label Textarea
+                .item-input
+                  textarea
+      .content-block
+        .row
+          .col-50
+            a(href="#").button.button-big.button-fill.color-red Cancel
+          .col-50
+            input(type="submit", value="Submit").button.button-big.button-fill.color-green
+          
+      .content-block-title Checkbox group
+      .list-block
+        ul
+          li
+            label.label-checkbox.item-content
+              input(type="checkbox", name="ks-checkbox", value="Books", checked=true)
+              .item-media
+                i.icon.icon-form-checkbox
+              .item-inner
+                .item-title Books
+          li
+            label.label-checkbox.item-content
+              input(type="checkbox", name="ks-checkbox", value="Movies")
+              .item-media
+                i.icon.icon-form-checkbox
+              .item-inner
+                .item-title Movies
+          li
+            label.label-checkbox.item-content
+              input(type="checkbox", name="ks-checkbox", value="Food")
+              .item-media
+                i.icon.icon-form-checkbox
+              .item-inner
+                .item-title Food
+          li
+            label.label-checkbox.item-content
+              input(type="checkbox", name="ks-checkbox", value="Drinks")
+              .item-media
+                i.icon.icon-form-checkbox
+              .item-inner
+                .item-title Drinks
+      .content-block-title Radio buttons group
+      .list-block
+        ul
+          li
+            label.label-radio.item-content
+              input(type="radio", name="ks-radio", value="Books", checked=true)
+              .item-inner
+                .item-title Books
+          li
+            label.label-radio.item-content
+              input(type="radio", name="ks-radio", value="Movies")
+              .item-inner
+                .item-title Movies
+          li
+            label.label-radio.item-content
+              input(type="radio", name="ks-radio", value="Food")
+              .item-inner
+                .item-title Food
+          li
+            label.label-radio.item-content
+              input(type="radio", name="ks-radio", value="Drinks")
+              .item-inner
+                .item-title Drinks

@@ -1,0 +1,24 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="#").back.link 
+        i.icon.icon-back
+        span Back
+    .center.sliding My Cars
+    .right
+      a(href="#").link.icon-only.open-panel 
+        i.icon.icon-bars
+.pages
+  .page(data-page="cars")
+    .page-content
+      .content-block-title My Cars
+      .list-block
+        ul
+          | {{#each this}}
+          li
+            | <a href="car.html" class="item-content item-link" data-context-name="cars.{{@index}}">
+            |   <div class="item-inner">
+            |     <div class="item-title">{{vendor}} {{model}}</div>
+            |   </div>
+            | </a>
+          | {{/each}}

@@ -1,0 +1,334 @@
+/*==========================
+Framework7 Layouts Themes
+==========================*/
+@import url('_mixins.less');
+/* === Dark layout === */
+.layout-dark {
+    @pageBg: #222426;
+    @barsBg: #131313;
+    @barsBorder: #333;
+    @barsText: #fff;
+    @tabBarText: #fff;
+    @text: #ddd;
+    @lightText: #bbb;
+    @strongText: #fff;
+    @activeLink: #29292f;
+    @blockBg: #1c1d1f;
+    @blockBorder: #393939;
+    @blockStrongBg: #1c1d1f;
+    @dividerBg: #1a1a1a;
+    @itemAfterText: @lightText;
+    @searchbarBg: #333;
+    @searchbarBorder: #333;
+    @swipeoutButton: #444;
+    @checkboxBorder: @blockBorder;
+    .navbar, .navbar&, .subnavbar, .subnavbar& {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+        color:@barsText;
+    }
+    .toolbar, .toolbar& {
+        .hairline-color(top, @barsBorder);
+        background-color: @barsBg;
+        color:@barsText;
+    }
+    // Picker
+    .picker-calendar-week-days {
+        color:#fff;
+        background-color: @barsBg;
+    }
+    .popover .picker-modal, .picker-modal.picker-modal-inline {
+        .picker-center-highlight {
+            .hairline-color(top, @barsBorder);
+            .hairline-color(bottom, @barsBorder);
+        }
+        .picker-item.picker-selected {
+            color:#fff;
+        }
+        .picker-calendar-week-days {
+            color: #fff;
+        }
+        .picker-calendar-day {
+            color:#fff;
+            &.picker-calendar-day-prev, &.picker-calendar-day-next {
+                color: #777;
+            }
+            &.picker-calendar-day-disabled {
+                color: #555;
+            }
+            &.picker-calendar-day-today span {
+                background: #444;
+            }
+        }
+        .picker-calendar-week-days, .picker-calendar-row {
+            .hairline-color(bottom, @barsBorder);
+        }
+        .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
+            .hairline-color(top, @barsBorder);
+        }
+
+    }
+    .popover .picker-modal {
+        .toolbar {
+            .hairline-color(bottom, @barsBorder);
+        }
+    }
+    // Photo Browser
+    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+        .navbar, .toolbar {
+            background: rgba(red(@barsBg), green(@barsBg), blue(@barsBg), 0.95);
+        }
+    }
+    .tabbar a:not(.active) {
+        color:@tabBarText;
+    }
+    .page, .login-screen-content, .page&, .panel, .panel& {
+        background-color: @pageBg;
+        color:@text;
+    }
+    .content-block-title {
+        color:@strongText;
+    }
+    .content-block, .content-block& {
+        color:@lightText;
+    }
+    .content-block-inner {
+        background: @blockStrongBg;
+        color:@text;
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
+    }
+    .list-block, .list-block& {
+        ul {
+            background: @blockBg;
+            .hairline-color(top, @blockBorder);
+            .hairline-color(bottom, @blockBorder);
+        }
+        &.inset ul{
+            background: @blockStrongBg;
+        }
+        &.notifications > ul {
+            background: none;
+        }
+    }
+    .card {
+        background: @blockBg;
+    }
+    .card-header{
+        .hairline-color(bottom, @blockBorder);
+    }
+    .card-footer {
+        .hairline-color(top, @blockBorder);
+        color:@lightText;
+    }
+    .popover, .popover& {
+        background: rgba(0,0,0,0.8);
+        .popover-angle:after {
+            background: rgba(0,0,0,0.8);
+        }
+        .list-block ul {
+            background: none;
+        }    
+
+    }
+    .actions-popover .list-block ul {
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
+    }
+    .actions-popover .actions-popover-label {
+        .hairline-color(bottom, @blockBorder);
+    }
+    li.sorting {
+        background-color: @activeLink;
+    }
+    .swipeout-actions-left a, .swipeout-actions-right a {
+        background-color: @swipeoutButton;
+    }
+    .item-inner, .list-block ul ul li:last-child .item-inner {
+        .hairline-color(bottom, @blockBorder);
+    }
+    .item-after {
+        color:@itemAfterText;
+    }
+    .item-link, label.label-checkbox, label.label-radio {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: @activeLink;
+        }
+    }
+    .item-link.list-button {
+        .hairline-color(bottom, @blockBorder);
+    }
+    .list-block-label {
+        color:@lightText;
+    }
+    .item-divider, .list-group-title {
+        background: @dividerBg;
+        color:@lightText;        
+        .hairline-color(top, @blockBorder);
+    }
+    
+    // Searchbar
+    .searchbar {
+        background: @searchbarBg;
+        .hairline-color(bottom, @searchbarBorder);
+    }
+
+    // Forms
+    .list-block, .list-block& {
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
+            color:@strongText;
+        }
+    }
+    .label-switch .checkbox {
+        background-color: @checkboxBorder;
+        &:before {
+            background-color: @blockBg;
+        }
+    }
+    .range-slider input[type="range"]:after {
+        background: @blockBg;
+    }
+
+}
+
+/* === White layout === */
+.layout-white {
+    @pageBg: #fff;
+    @barsBg: #fff;
+    @barsBorder: #ddd;
+    @barsText: #000;
+    @tabBarText: #777;
+    @text: #000;
+    @lightText: #777;
+    @strongText: #777;
+    @activeLink: #eee;
+    @blockBg: @pageBg;
+    @blockBorder: #ddd;
+    @blockStrongBg: #fafafa;
+    @dividerBg: #f7f7f7;
+    @itemAfterText: #8e8e93;
+    @searchbarBg: #c9c9ce;
+    @searchbarBorder: #b4b4b4;
+    @swipeoutButton: #c7c7cc;
+    @checkboxBorder: #e5e5e5;
+    .navbar, .navbar&, .subnavbar, .subnavbar& {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+        color:@barsText;
+    }
+    .toolbar, .toolbar& {
+        .hairline-color(top, @barsBorder);
+        background-color: @barsBg;
+        color:@barsText;
+    }
+    // Picker
+    .popover .picker-modal, .picker-modal.picker-modal-inline {
+        .picker-center-highlight {
+            .hairline-color(top, @barsBorder);
+            .hairline-color(bottom, @barsBorder);
+        }
+        .picker-calendar-week-days, .picker-calendar-row {
+            .hairline-color(bottom, @barsBorder);
+        }
+        .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
+            .hairline-color(top, @barsBorder);
+        }
+    }
+    .popover .picker-modal {
+        .toolbar {
+            .hairline-color(bottom, @barsBorder);
+        }
+    }
+    // Photo Browser
+    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+        .navbar, .toolbar {
+            background: rgba(red(@barsBg), green(@barsBg), blue(@barsBg), 0.95);
+        }
+    }
+    .tabbar a:not(.active) {
+        color:@tabBarText;
+    }
+    .page, .login-screen-content, .page&, .panel, .panel& {
+        background-color: @pageBg;
+        color: @text;
+    }
+    .content-block-title {
+        color:@strongText;
+    }
+    .content-block, .content-block& {
+        color:@lightText;
+    }
+    .content-block-inner {
+        background: @blockStrongBg;
+        color:@text;
+        .hairline-color(bottom, @blockBorder);
+        .hairline-color(top, @blockBorder);
+    }
+    .list-block, .list-block& {
+        ul {
+            background: @blockBg;
+            .hairline-color(bottom, @blockBorder);
+            .hairline-color(top, @blockBorder);
+        }
+        &.inset ul{
+            background: @blockStrongBg;
+        }
+        &.notifications > ul {
+            background: none;
+        }
+    }
+    .popover-inner > .list-block ul {
+        background: none;
+    }
+    li.sorting {
+        background-color: @activeLink;
+    }
+    .swipeout-actions-left a, .swipeout-actions-right a {
+        background-color: @swipeoutButton;
+    }
+    .item-inner, .list-block ul ul li:last-child .item-inner {
+        border-color: @blockBorder;
+        .hairline-color(bottom, @blockBorder);
+    }
+    .item-after {
+        color:@itemAfterText;
+    }
+    .item-link, label.label-checkbox, label.label-radio {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: @activeLink;
+        }
+    }
+    .item-link.list-button {
+        .hairline-color(bottom, @blockBorder);
+    }
+    .list-block-label {
+        color:@lightText;
+    }
+    .item-divider, .list-group-title {
+        background: @dividerBg;
+        color:@lightText;
+        .hairline-color(top, @blockBorder);
+    }
+    
+    // Searchbar
+    .searchbar {
+        background: @searchbarBg;
+        .hairline-color(bottom, @searchbarBorder);
+    }
+
+    // Forms
+    .list-block, .list-block& {
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
+            color:@strongText;
+        }
+    }
+    .label-switch .checkbox {
+        background-color: @checkboxBorder;
+        &:before {
+            background-color: @blockBg;
+        }
+    }
+    .range-slider input[type="range"]:after {
+        background: @blockBg;
+    }
+}
