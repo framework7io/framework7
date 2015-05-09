@@ -14,7 +14,9 @@ var Searchbar = function (container, params) {
         overlay: null,
         ignore: '.searchbar-ignore',
         customSearch: false,
-        removeDiacritics: false
+        removeDiacritics: false,
+        searchbarHideDividers: true,
+        searchbarHideGroups: true
     };
     params = params || {};
     for (var def in defaults) {
@@ -321,7 +323,7 @@ var Searchbar = function (container, params) {
                 }
             });
 
-            if (app.params.searchbarHideDividers) {
+            if (s.params.searchbarHideDividers) {
                 s.searchList.find('.item-divider, .list-group-title').each(function () {
                     var title = $(this);
                     var nextElements = title.nextAll('li');
@@ -338,7 +340,7 @@ var Searchbar = function (container, params) {
                     else title.removeClass('hidden-by-searchbar');
                 });
             }
-            if (app.params.searchbarHideGroups) {
+            if (s.params.searchbarHideGroups) {
                 s.searchList.find('.list-group').each(function () {
                     var group = $(this);
                     var ignore = s.params.ignore && group.is(s.params.ignore);

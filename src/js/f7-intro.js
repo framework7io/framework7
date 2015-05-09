@@ -71,9 +71,6 @@ window.Framework7 = function (params) {
         smartSelectPopupCloseText: 'Close',
         smartSelectSearchbar: false,
         smartSelectBackOnSelect: false,
-        // Searchbar
-        searchbarHideDividers: true,
-        searchbarHideGroups: true,
         // Tap Navbar or Statusbar to scroll to top
         scrollTopOnNavbarClick: false,
         scrollTopOnStatusbarClick: false,
