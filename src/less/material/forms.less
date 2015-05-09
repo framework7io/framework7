@@ -302,6 +302,12 @@ label.label-checkbox, label.label-radio {
     overflow: hidden;
     z-index: 0;
     .transition(300ms);
+    .item-after {
+        i.icon-form-checkbox, i.icon-form-radio {
+            margin-left: 8px;
+            margin-right: 16px;
+        }
+    }
     html:not(.watch-active-state) &:active, &.active-state {
         .transition(0ms);
         background-color: rgba(0,0,0,0.1);
