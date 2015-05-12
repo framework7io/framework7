@@ -1106,11 +1106,11 @@ app.router.afterBack = function (view, oldPage, newPage) {
             if (preloadUrl && view.pagesCache[preloadUrl]) {
                 // Load by page name
                 previousPage = $(view.container).find('.page[data-page="' + view.pagesCache[preloadUrl] + '"]');
-                previousPage.insertBefore(newPage);
+                if (previousPage.next('.page')[0] !== newPage[0]) previousPage.insertBefore(newPage);
                 if (newNavbar) {
                     previousNavbar = $(view.container).find('.navbar-inner[data-page="' + view.pagesCache[preloadUrl] + '"]');
-                    previousNavbar.insertBefore(newNavbar);
                     if(!previousNavbar || previousNavbar.length === 0) previousNavbar = newNavbar.prev('.navbar-inner.cached');
+                    if (previousNavbar.next('.navbar-inner')[0] !== newNavbar[0]) previousNavbar.insertBefore(newNavbar);
                 }
             }
             else {
