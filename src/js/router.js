@@ -644,14 +644,6 @@ app.router._back = function (view, options) {
         }
     }
 
-    // Push state
-    if (app.params.pushState && view.main)  {
-        if (typeof pushState === 'undefined') pushState = true;
-        if (!preloadOnly && history.state && pushState) {
-            history.back();
-        }
-    }
-
     // Animation
     function afterAnimation() {
         app.pageBackCallback('after', view, {
@@ -858,6 +850,14 @@ app.router._back = function (view, options) {
         var clientLeft = newPage[0].clientLeft;
 
         animateBack();
+
+        // Push state
+        if (app.params.pushState && view.main)  {
+            if (typeof pushState === 'undefined') pushState = true;
+            if (!preloadOnly && history.state && pushState) {
+                history.back();
+            }
+        }
         return;
     }
 
