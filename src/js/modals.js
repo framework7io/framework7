@@ -492,7 +492,7 @@ app.openModal = function (modal) {
         return;
     }
     modal.data('f7-modal-shown', true);
-    modal.on('close', function() {
+    modal.on('closed', function() {
        modal.removeData('f7-modal-shown');
     });
     var isPopover = modal.hasClass('popover');
@@ -541,6 +541,14 @@ app.closeModal = function (modal) {
     if (typeof modal !== 'undefined' && modal.length === 0) {
         return;
     }
+    // do nothing if modal does not shown or in closing process
+    if (true !== modal.data('f7-modal-shown') || true === modal.data('f7-modal-closing')) {
+        return;
+    }
+    modal.data('f7-modal-closing', true);
+    modal.once('closed', function() {
+       modal.removeData('f7-modal-closing');
+    });
     var isModal = modal.hasClass('modal');
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
