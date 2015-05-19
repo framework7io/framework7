@@ -748,3 +748,20 @@ function createContentPage() {
     return;
 }
 $$(document).on('click', '.ks-generate-page', createContentPage);
+
+/* ===== View Source ===== */
+$$('.demo-view-source').on('open', function () {
+    //console.log('demo-view-source page open');
+    var viewsElement = $$('.view-main')[0];
+    var viewInstance = viewsElement.f7View;
+    var popup = $$('.demo-view-source');
+    var url_base = viewInstance.url.replace(".html", "");
+    $$.get(viewInstance.url, function (data) {
+        var pre = popup.find(".source-raw-content-html");
+        pre.text(data);
+    });
+    $$.get("jade/" + url_base + ".jade", function (data) {
+        var pre = popup.find(".source-raw-content-jade");
+        pre.text(data);
+    });
+});
