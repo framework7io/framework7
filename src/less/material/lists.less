@@ -311,15 +311,18 @@
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        .hairline(top, @listBlockBorderColor);
+        .hairline-remove(top);
         margin-top: -1px;
-        padding: 4px 16px;
+        padding: 0px 16px;
         white-space: nowrap;
         position: relative;
         max-width: 100%;
         text-overflow: ellipsis;
         overflow: hidden;
         color: @dividerColor;
+        height: 48px;
+        box-sizing: border-box;
+        line-height: 48px;
     }
     .list-group-title {
         position: relative;
@@ -327,9 +330,8 @@
         position: -moz-sticky;
         position: sticky;
         top: 0px;
-        z-index: 20;
+        z-index: 10;
         margin-top: 0;
-        .hairline-remove(top);
     }
     // Sortable
     .sortable-handler {
