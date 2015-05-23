@@ -282,6 +282,8 @@ app.initPage = function (pageContainer) {
     if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
     // Init scroll toolbars
     if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
+    // Init Material preloader
+    if (app.params.material && app.materialPreloader) app.materialPreloader(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     pageContainer = $(pageContainer);
