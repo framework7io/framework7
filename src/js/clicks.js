@@ -287,6 +287,7 @@ app.initClickEvents = function () {
                 reload: clickedData.reload,
                 reloadPrevious: clickedData.reloadPrevious,
                 pageName: pageName,
+                pushState: clickedData.pushState,
                 url: url
             };
 

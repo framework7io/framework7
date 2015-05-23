@@ -109,17 +109,18 @@ var Calendar = function (params) {
         var month1 = month + 1;
         var day = date.getDate();
         var weekDay = date.getDay();
+
         return p.params.dateFormat
             .replace(/yyyy/g, year)
             .replace(/yy/g, (year + '').substring(2))
             .replace(/mm/g, month1 < 10 ? '0' + month1 : month1)
-            .replace(/m/g, month1)
+            .replace(/m\W+/g, month1 + '$1')
             .replace(/MM/g, p.params.monthNames[month])
-            .replace(/M/g, p.params.monthNamesShort[month])
+            .replace(/M\W+/g, p.params.monthNamesShort[month] + '$1')
             .replace(/dd/g, day < 10 ? '0' + day : day)
-            .replace(/d/g, day)
+            .replace(/d\W+/g, day + '$1')
             .replace(/DD/g, p.params.dayNames[weekDay])
-            .replace(/D/g, p.params.dayNamesShort[weekDay]);
+            .replace(/D\W+/g, p.params.dayNamesShort[weekDay] + '$1');
     }
 
 
