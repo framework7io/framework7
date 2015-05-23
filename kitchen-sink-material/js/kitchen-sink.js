@@ -204,9 +204,9 @@ myApp.onPageInit('messages', function (page) {
         // Add Message
         myMessages.addMessage({
             text: messageText,
+            avatar: 'http://lorempixel.com/output/people-q-c-200-200-6.jpg',
             type: 'sent',
-            day: !conversationStarted ? 'Today' : false,
-            time: !conversationStarted ? (new Date()).getHours() + ':' + (new Date()).getMinutes() : false
+            date: 'Now'
         });
         conversationStarted = true;
         // Add answer after timeout
@@ -218,7 +218,8 @@ myApp.onPageInit('messages', function (page) {
                 text: answers[Math.floor(Math.random() * answers.length)],
                 type: 'received',
                 name: person.name,
-                avatar: person.avatar
+                avatar: person.avatar,
+                date: 'Just now'
             });
         }, 2000);
     });
