@@ -4,10 +4,9 @@
 @dividerBg: #F7F7F7;
 @dividerColor: #8e8e93;
 .list-block {
-    margin: 16px 0;
+    margin: 32px 0;
     font-size: 16px;
     ul {
-        // background: @listBlockBg;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -28,24 +27,24 @@
     .inset() {
         margin-left: 16px;
         margin-right: 16px;
-        border-radius: 7px;
+        border-radius: 4px;
         .content-block-title {
             margin-left: 0;
             margin-right: 0;
         }
         ul {
-            border-radius: 7px;
+            border-radius: 4px;
             .hairline-remove(top);
             .hairline-remove(bottom);
         }
         li:first-child > a{
-            border-radius: 7px 7px 0 0;
+            border-radius: 4px 4px 0 0;
         }
         li:last-child > a{
-            border-radius: 0 0 7px 7px;
+            border-radius: 0 0 4px 4px;
         }
         li:first-child:last-child > a {
-            border-radius: 7px;
+            border-radius: 4px;
         }
     }
     &.inset {
