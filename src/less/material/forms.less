@@ -91,10 +91,10 @@
         display: none;
         &:checked {
             &+ .checkbox {
-                background: rgba(red(@blue), green(@blue), blue(@blue), 0.5);
+                background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), 0.5);
                 &:after {
                     .transform(translateX(16px));
-                    background: @blue;
+                    background: @themeColor;
                 }
             }
         }
@@ -103,7 +103,7 @@
 
 //Buttons
 .button {
-    color:@blue;
+    color:@themeColor;
     text-decoration: none;
     text-align: center;
     display: block;
@@ -209,7 +209,7 @@
         height: 20px;
         width: 20px;
         position: relative;
-        background: @blue;
+        background: @themeColor;
         border-radius: 20px;
     }
 
@@ -221,7 +221,7 @@
         height: 2px;
         margin-top: -1px;
         z-index: 1;
-        background: @blue;
+        background: @themeColor;
         content: ' ';
     }
 }
@@ -257,8 +257,8 @@ label.label-checkbox {
         display: none;
         &:checked + .item-media, &:checked ~ .item-after, &:checked ~ .item-inner{
             i.icon-form-checkbox {
-                border-color: @blue;
-                background-color: @blue;
+                border-color: @themeColor;
+                background-color: @themeColor;
             }
             i.icon-form-checkbox:after {
                 opacity: 1;
@@ -285,7 +285,7 @@ label.label-radio {
             top: 50%;
             margin-left: -5px;
             margin-top: -5px;
-            background-color: @blue;
+            background-color: @themeColor;
             border-radius: 100%;
             .transform(scale(0));
             .transition(300ms);
@@ -295,10 +295,10 @@ label.label-radio {
         display: none;
         &:checked + .item-media, &:checked ~ .item-after, &:checked ~ .item-inner{
             i.icon-form-radio {
-                border-color: @blue;
+                border-color: @themeColor;
             }
             i.icon-form-radio:after {
-                background-color: @blue;
+                background-color: @themeColor;
                 .transform(scale(1));
             }
         }
