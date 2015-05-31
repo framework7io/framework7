@@ -36,6 +36,9 @@ var Messages = function (container, params) {
     // Autolayout
     if (m.params.autoLayout) m.container.addClass('messages-auto-layout');
 
+    // New messages first
+    if (m.params.newMessagesFirst) m.container.addClass('messages-new-first');
+
     // Is In Page
     m.pageContainer = m.container.parents('.page').eq(0);
     m.pageContent = m.pageContainer.find('.page-content');
@@ -103,9 +106,16 @@ var Messages = function (container, params) {
 
             newMessagesHTML += m.template(props);
         }
+        var heightBefore, scrollBefore;
+        if (method === 'prepend') {
+            heightBefore = m.pageContent[0].scrollHeight;
+            scrollBefore = m.pageContent[0].scrollTop;
+        }
         m.container[method](newMessagesHTML);
-
         if (m.params.autoLayout) m.layout();
+        if (method === 'prepend') {
+            m.pageContent[0].scrollTop = scrollBefore + (m.pageContent[0].scrollHeight - heightBefore);
+        }
         if ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
             m.scrollMessages(animate ? undefined : 0);
         }
@@ -148,11 +158,15 @@ var Messages = function (container, params) {
     };
 
     // Scroll
-    m.scrollMessages = function (duration) {
+    m.scrollMessages = function (duration, scrollTop) {
         if (typeof duration === 'undefined') duration = 400;
         var currentScroll = m.pageContent[0].scrollTop;
-        var newScroll = m.params.newMessagesFirst ? 0 : m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight;
-        if (newScroll === currentScroll) return;
+        var newScroll;
+        if (typeof scrollTop !== 'undefined') newScroll = scrollTop;
+        else {
+            newScroll = m.params.newMessagesFirst ? 0 : m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight;
+            if (newScroll === currentScroll) return;
+        }
         m.pageContent.scrollTop(newScroll, duration);
     };
 
