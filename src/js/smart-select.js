@@ -214,7 +214,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         inPopup: openIn === 'popup',
         inPage: openIn === 'page',
         leftTemplate: openIn === 'popup' ? 
-            app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : 
+            app.params[app.params.material ? 'smartSelectPopupCloseTemplateMaterial' : 'smartSelectPopupCloseTemplate'].replace(/{{closeText}}/g, closeText) : 
             app.params[app.params.material ? 'smartSelectBackTemplateMaterial' : 'smartSelectBackTemplate'].replace(/{{backText}}/g, backText)
     });
 

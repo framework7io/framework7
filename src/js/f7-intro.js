@@ -69,6 +69,7 @@ window.Framework7 = function (params) {
         smartSelectBackText: 'Back',
         smartSelectInPopup: false,
         smartSelectPopupCloseTemplate: '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>',
+        smartSelectPopupCloseTemplateMaterial: '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i></a></div>',
         smartSelectPopupCloseText: 'Close',
         smartSelectSearchbar: false,
         smartSelectBackOnSelect: false,
