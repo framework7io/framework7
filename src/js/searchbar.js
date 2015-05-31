@@ -196,7 +196,7 @@ var Searchbar = function (container, params) {
     // Enable/disalbe
     s.enable = function () {
         function _enable() {
-            if (s.searchList.length && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+            if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
             if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
             s.triggerEvent('enableSearch');
@@ -217,7 +217,7 @@ var Searchbar = function (container, params) {
         s.container.removeClass('searchbar-active searchbar-not-empty');
         if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
         
-        if (s.searchList.length) s.overlay.removeClass('searchbar-overlay-active');
+        if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
         function _disable() {
             s.input.blur();
             s.triggerEvent('disableSearch');
@@ -243,7 +243,7 @@ var Searchbar = function (container, params) {
     s.handleInput = function () {
         setTimeout(function () {
             var value = s.input.val().trim();
-            if (s.searchList.length > 0 && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
+            if ((s.searchList.length > 0 || s.params.customSearch) && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
         }, 0);
     };
 

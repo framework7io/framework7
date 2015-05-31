@@ -75,7 +75,7 @@ app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
 // On Page Init Callback
 app.pageInitCallback = function (view, params) {
     var pageContainer = params.pageContainer;
-    if (pageContainer.f7PageInitialized && !view.params.domCache) return;
+    if (pageContainer.f7PageInitialized && view && !view.params.domCache) return;
 
     // Page Data
     var pageData = {
@@ -93,7 +93,7 @@ app.pageInitCallback = function (view, params) {
         params.fromPage.navbarInnerContainer = params.oldNavbarInnerContainer;
     }
 
-    if (pageContainer.f7PageInitialized && view.params.domCache) {
+    if (pageContainer.f7PageInitialized && ((view && view.params.domCache) || (!view && $(pageContainer).parents('.popup, .popover, .login-screen, .modal, .actions-modal, .picker-modal').length > 0))) {
         // Reinit Page
         app.reinitPage(pageContainer);
 

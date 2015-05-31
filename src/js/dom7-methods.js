@@ -413,6 +413,14 @@ Dom7.prototype = {
         }
         return this;
     },
+    filter: function (callback) {
+        var matchedItems = [];
+        var dom = this;
+        for (var i = 0; i < dom.length; i++) {
+            if (callback.call(dom[i], i, dom[i])) matchedItems.push(dom[i]);
+        }
+        return new Dom7(matchedItems);
+    },
     html: function (html) {
         if (typeof html === 'undefined') {
             return this[0] ? this[0].innerHTML : undefined;

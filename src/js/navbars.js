@@ -4,7 +4,7 @@
 // On Navbar Init Callback
 app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarInnerContainer) {
     if (!navbarContainer && navbarInnerContainer) navbarContainer = $(navbarInnerContainer).parent('.navbar')[0];
-    if (navbarInnerContainer.f7NavbarInitialized && !view.params.domCache) return;
+    if (navbarInnerContainer.f7NavbarInitialized && view && !view.params.domCache) return;
     var navbarData = {
         container: navbarContainer,
         innerContainer: navbarInnerContainer
@@ -16,7 +16,7 @@ app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarI
         navbar: navbarData
     };
 
-    if (navbarInnerContainer.f7NavbarInitialized && view.params.domCache) {
+    if (navbarInnerContainer.f7NavbarInitialized && ((view && view.params.domCache) || (!view && $(navbarContainer).parents('.popup, .popover, .login-screen, .modal, .actions-modal, .picker-modal').length > 0))) {
         // Reinit Navbar
         app.reinitNavbar(navbarContainer, navbarInnerContainer);
 

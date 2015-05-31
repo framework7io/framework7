@@ -423,10 +423,6 @@ app.popover = function (modal, target, removeOnClose) {
         $(window).off('resize', sizePopover);
     });
 
-    if (modal.find('.' + app.params.viewClass).length > 0) {
-        app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
-    }
-
     app.openModal(modal);
     return modal[0];
 };
@@ -445,9 +441,7 @@ app.popup = function (modal, removeOnClose) {
     modal = $(modal);
     if (modal.length === 0) return false;
     modal.show();
-    if (modal.find('.' + app.params.viewClass).length > 0) {
-        app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
-    }
+    
     app.openModal(modal);
     return modal[0];
 };
@@ -472,9 +466,7 @@ app.loginScreen = function (modal) {
     modal = $(modal);
     if (modal.length === 0) return false;
     modal.show();
-    if (modal.find('.' + app.params.viewClass).length > 0) {
-        app.sizeNavbars(modal.find('.' + app.params.viewClass)[0]);
-    }
+    
     app.openModal(modal);
     return modal[0];
 };
@@ -526,6 +518,16 @@ app.openModal = function (modal) {
     // Picker modal body class
     if (isPickerModal) {
         $('body').addClass('with-picker-modal');
+    }
+
+    // Init Pages and Navbars in modal
+    if (modal.find('.' + app.params.viewClass).length > 0) {
+        modal.find('.page').each(function () {
+            app.initPageWithCallback(this);
+        });
+        modal.find('.navbar').each(function () {
+            app.initNavbarWithCallback(this); 
+        });
     }
 
     // Classes for transition in
