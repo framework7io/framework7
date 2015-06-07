@@ -31,6 +31,8 @@ var PhotoBrowser = function (params) {
         onLazyImageReady(pb, slide, img)
         onOpen(pb)
         onClose(pb)
+        onSlideTransitionStart(swiper)
+        onSlideTransitionEnd(swiper)
         onSlideChangeStart(swiper)
         onSlideChangeEnd(swiper)
         onTap(swiper, e)
@@ -248,7 +250,7 @@ var PhotoBrowser = function (params) {
             if ('pause' in previousSlideVideo[0]) previousSlideVideo[0].pause();
         }
         // Callback
-        if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(swiper);
+        if (pb.params.onTransitionStart) pb.params.onTransitionStart(swiper);
     };
     pb.onSliderTransitionEnd = function (swiper) {
         // Reset zoom
@@ -258,7 +260,7 @@ var PhotoBrowser = function (params) {
             gestureSlide = gestureImg = gestureImgWrap = undefined;
             scale = currentScale = 1;
         }
-        if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(swiper);
+        if (pb.params.onTransitionEnd) pb.params.onTransitionEnd(swiper);
     };
     
     pb.layout = function (index) {
@@ -307,6 +309,8 @@ var PhotoBrowser = function (params) {
             onTransitionEnd: function (swiper) {
                 pb.onSliderTransitionEnd(swiper);  
             },
+            onSlideChangeStart: pb.params.onSlideChangeStart,
+            onSlideChangeEnd: pb.params.onSlideChangeEnd,
             onLazyImageLoad: function (swiper, slide, img) {
                 if (pb.params.onLazyImageLoad) pb.params.onLazyImageLoad(pb, slide, img);
             },
