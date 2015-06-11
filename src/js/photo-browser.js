@@ -54,7 +54,6 @@ var PhotoBrowser = function (params) {
     var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
 
     var navbarTemplate = pb.params.navbarTemplate ||
-                        '<div class="navbar">' +
                             '<div class="navbar-inner">' +
                                 '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
                                 '<div class="center sliding"><span class="photo-browser-current"></span> <span class="photo-browser-of">' + pb.params.ofText + '</span> <span class="photo-browser-total"></span></div>' +
@@ -62,7 +61,6 @@ var PhotoBrowser = function (params) {
                             '</div>' +
                         '</div>';
     var toolbarTemplate = pb.params.toolbarTemplate ||
-                        '<div class="toolbar tabbar">' +
                             '<div class="toolbar-inner">' +
                                 '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev ' + iconColor + '"></i></a>' +
                                 '<a href="#" class="link photo-browser-next"><i class="icon icon-next ' + iconColor + '"></i></a>' +
@@ -85,8 +83,8 @@ var PhotoBrowser = function (params) {
                         '</div>' +
                     '</div>';
 
-    var photoTemplate = !pb.params.lazyLoading ? 
-        (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
+    var photoTemplate = !pb.params.lazyLoading ?
+        (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') :
         (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
 
     var captionsTheme = pb.params.captionsTheme || pb.params.theme;
