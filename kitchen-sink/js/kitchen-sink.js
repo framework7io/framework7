@@ -290,29 +290,35 @@ var photoBrowserPhotos = [
 ];
 var photoBrowserStandalone = myApp.photoBrowser({
     photos: photoBrowserPhotos,
+    blurred: true
 });
 var photoBrowserPopup = myApp.photoBrowser({
     photos: photoBrowserPhotos,
     type: 'popup',
+    blurred: true
 });
 var photoBrowserPage = myApp.photoBrowser({
     photos: photoBrowserPhotos,
     type: 'page',
     backLinkText: 'Back',
+    blurred: true
 });
 var photoBrowserDark = myApp.photoBrowser({
     photos: photoBrowserPhotos,
     theme: 'dark',
+    blurred: true
 });
 var photoBrowserPopupDark = myApp.photoBrowser({
     photos: photoBrowserPhotos,
     theme: 'dark',
     type: 'popup',
+    blurred: true
 });
 var photoBrowserLazy = myApp.photoBrowser({
     photos: photoBrowserPhotos,
     lazyLoading: true,
     theme: 'dark',
+    blurred: true
 });
 myApp.onPageInit('photo-browser', function (page) {
     $$('.ks-pb-standalone').on('click', function () {
