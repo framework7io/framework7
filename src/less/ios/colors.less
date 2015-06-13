@@ -101,6 +101,11 @@
     // Border rule
     .border-@{colorName} {
         border-color: @color;
+        .list-block &.item-inner, .list-block ul&, & {
+            &:after, &:before {
+                background-color: @color;
+            }
+        }
     }
 }
 .theme-mixin(e('gray'), #8e8e93, '8e8e93');

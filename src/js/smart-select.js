@@ -69,11 +69,16 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var view = smartSelect.parents('.' + app.params.viewClass);
     if (view.length === 0) return;
     view = view[0].f7View;
-    if (!view) return;
 
     // Parameters
     var openIn = smartSelect.attr('data-open-in');
     if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
+    if (openIn === 'popup') {
+        if ($('.popup.smart-select-popup').length > 0) return;
+    }
+    else {
+        if (!view) return;
+    }
 
     var smartSelectData = smartSelect.dataset();
     var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
