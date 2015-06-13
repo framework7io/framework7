@@ -16,7 +16,14 @@ var Searchbar = function (container, params) {
         customSearch: false,
         removeDiacritics: false,
         searchbarHideDividers: true,
-        searchbarHideGroups: true
+        searchbarHideGroups: true,
+        /* Callbacks
+        onSearch
+        onEnable
+        onDisable
+        onClear
+        */
+
     };
     params = params || {};
     for (var def in defaults) {
@@ -188,9 +195,10 @@ var Searchbar = function (container, params) {
     }
 
     // Trigger
-    s.triggerEvent = function (eventName, eventData) {
+    s.triggerEvent = function (eventName, callbackName, eventData) {
         s.container.trigger(eventName, eventData);
         if (s.searchList.length > 0) s.searchList.trigger(eventName, eventData);
+        if (callbackName && s.params[callbackName]) s.params[callbackName](s, eventData);
     };
 
     // Enable/disalbe
@@ -199,7 +207,7 @@ var Searchbar = function (container, params) {
             if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
             if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
-            s.triggerEvent('enableSearch');
+            s.triggerEvent('enableSearch', 'onSearch');
             s.active = true;
         }
         if (app.device.ios) {
@@ -220,7 +228,7 @@ var Searchbar = function (container, params) {
         if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
         function _disable() {
             s.input.blur();
-            s.triggerEvent('disableSearch');
+            s.triggerEvent('disableSearch', 'onDisable');
             s.active = false;
         }
         if (app.device.ios) {
@@ -236,7 +244,7 @@ var Searchbar = function (container, params) {
     // Clear
     s.clear = function () {
         s.input.val('').trigger('change').focus();
-        s.triggerEvent('clearSearch');
+        s.triggerEvent('clearSearch', 'onClear');
     };
 
     // Search
@@ -261,6 +269,7 @@ var Searchbar = function (container, params) {
                 s.input.val(query);
             }
         }
+        s.query = s.value = query;
         // Add active/inactive classes on overlay
         if (query.length === 0) {
             s.container.removeClass('searchbar-not-empty');
@@ -272,7 +281,7 @@ var Searchbar = function (container, params) {
         }
 
         if (s.params.customSearch) {
-            s.triggerEvent('search', {query: query});
+            s.triggerEvent('search', 'onSearch', {query: query});
             return;
         }
         
@@ -354,7 +363,7 @@ var Searchbar = function (container, params) {
                 });
             }
         }
-        s.triggerEvent('search', {query: query, foundItems: foundItems});
+        s.triggerEvent('search', 'onSearch', {query: query, foundItems: foundItems});
         if (foundItems.length === 0) {
             s.notFound.show();
             s.found.hide();
