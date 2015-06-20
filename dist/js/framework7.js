@@ -1001,8 +1001,8 @@
                 ignore: '.searchbar-ignore',
                 customSearch: false,
                 removeDiacritics: false,
-                searchbarHideDividers: true,
-                searchbarHideGroups: true,
+                hideDividers: true,
+                hideGroups: true,
                 /* Callbacks
                 onSearch
                 onEnable
@@ -1318,7 +1318,7 @@
                         }
                     });
         
-                    if (s.params.searchbarHideDividers) {
+                    if (s.params.hideDividers) {
                         s.searchList.find('.item-divider, .list-group-title').each(function () {
                             var title = $(this);
                             var nextElements = title.nextAll('li');
@@ -1335,7 +1335,7 @@
                             else title.removeClass('hidden-by-searchbar');
                         });
                     }
-                    if (s.params.searchbarHideGroups) {
+                    if (s.params.hideGroups) {
                         s.searchList.find('.list-group').each(function () {
                             var group = $(this);
                             var ignore = s.params.ignore && group.is(s.params.ignore);
