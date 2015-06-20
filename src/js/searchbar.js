@@ -207,7 +207,7 @@ var Searchbar = function (container, params) {
             if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
             if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
-            s.triggerEvent('enableSearch', 'onSearch');
+            s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
         }
         if (app.device.ios) {
