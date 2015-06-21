@@ -155,7 +155,7 @@
           </div>
         </div>
         <div class="toolbar">
-          <div class="toolbar-inner"><a href="#" class="link">Dummy Link</a><a href="#" data-popover=".popover-menu" class="open-popover link">Menu</a></div>
+          <div class="toolbar-inner"><a href="#" data-popup=".demo-view-source" class="open-popup link">View Source</a><a href="#" data-popover=".popover-menu" class="open-popover link">Menu</a></div>
         </div>
         <div class="pages navbar-through toolbar-through">
           <div data-page="index" class="page">
@@ -380,6 +380,36 @@
               <div class="content-block-title">Core Features</div>
               <div class="content-block">
                 <p> <a href="core-features.html" class="button">Read About Core Features</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup demo-view-source">
+      <div class="view navbar-fixed">
+        <div class="pages">
+          <div class="page">
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="center sliding">
+                  <div class="buttons-row"><a href="#tab-view-source-html" class="button tab-link active">HTML</a><a href="#tab-view-source-jade" class="button tab-link">JADE</a></div>
+                </div>
+                <div class="right"><a href="#" class="link close-popup">Done</a></div>
+              </div>
+            </div>
+            <div class="page-content">
+              <div class="tabs">
+                <div id="tab-view-source-html" class="tab active">
+                  <div class="content-block">
+                    <pre class="source-raw-content-html">View source html content goes here.</pre>
+                  </div>
+                </div>
+                <div id="tab-view-source-jade" class="tab">
+                  <div class="content-block">
+                    <pre class="source-raw-content-jade">View source jade content goes here.</pre>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

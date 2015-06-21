@@ -145,7 +145,7 @@ html
                 i.icon.icon-bars
         .toolbar
           .toolbar-inner
-            a(href="#").link Dummy Link
+            a(href="#", data-popup=".demo-view-source").open-popup.link View Source
             a(href="#", data-popover=".popover-menu").open-popover.link Menu
         .pages.navbar-through.toolbar-through
           .page(data-page="index")
@@ -377,6 +377,26 @@ html
               .content-block
                 p 
                   a(href="core-features.html").button Read About Core Features
+    .popup.demo-view-source
+      .view.navbar-fixed
+        .pages
+          .page
+            .navbar
+              .navbar-inner
+                .center.sliding
+                  .buttons-row
+                    a(href="#tab-view-source-html").button.tab-link.active HTML
+                    a(href="#tab-view-source-jade").button.tab-link JADE
+                .right
+                  a(href="#").link.close-popup Done
+            .page-content
+                .tabs
+                    .tab(id="tab-view-source-html").active
+                      .content-block
+                        pre.source-raw-content-html View source html content goes here.
+                    .tab(id="tab-view-source-jade")
+                      .content-block
+                        pre.source-raw-content-jade View source jade content goes here.
     .popup.demo-popup
       .view.navbar-fixed
         .pages
