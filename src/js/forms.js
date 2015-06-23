@@ -59,14 +59,14 @@ app.initMaterialWatchInputs = function () {
         var i = $(this);
         var type = $(this).attr('type');
         if (notInputs.indexOf(type) >= 0) return;
-        var els = i.parents('.item-input').add(i.parents('.item-inner').eq(0));
+        var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
         els.addClass('focus-state');
     }
     function removeFocusState() {
         var i = $(this), value = i.val();
         var type = $(this).attr('type');
         if (notInputs.indexOf(type) >= 0) return;
-        var els = i.parents('.item-input').add(i.parents('.item-inner').eq(0));
+        var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
         els.removeClass('focus-state');
         if (value && value.trim() !== '') {
             els.addClass('not-empty-state');
@@ -75,6 +75,6 @@ app.initMaterialWatchInputs = function () {
             els.removeClass('not-empty-state');
         }
     }
-    $(document).on('focus', '.item-input input, .item-input select, .item-input textarea', addFocusState, true);
-    $(document).on('blur', '.item-input input, .item-input select, .item-input textarea', removeFocusState, true);
+    $(document).on('focus', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', addFocusState, true);
+    $(document).on('blur', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', removeFocusState, true);
 };
