@@ -81,7 +81,7 @@
     height: 48px;
     padding: 6px 8px;
     overflow: hidden;
-    .border-box();
+    box-sizing:border-box;
     .flexbox();
     .justify-content(flex-end);
     &.modal-buttons-vertical {
@@ -144,7 +144,7 @@
     font-weight: normal;
     margin: 0;
     background: @actionsModalButtonBg;
-    .border-box();
+    box-sizing:border-box;
     display: block;
     position: relative;
     .hairline(bottom, #d2d2d6);
@@ -197,33 +197,28 @@
 }
 // Prompt
 input.modal-text-input {
-    .border-box();
-    height: 30px;
+    box-sizing:border-box;
+    height: 36px;
     background: #fff;
     margin: 0;
     margin-top: 15px;
-    padding: 0 5px;
-    border: 1px solid #a0a0a0;
-    border-radius: 5px;
+    padding: 0;
+    border: none;
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
     display: block;
-    .box-shadow(0 0 0 rgba(0,0,0,0));
+    box-shadow: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
     appearance: none;
-    + input.modal-text-input {
-        margin-top: 5px;
+    .transition(200ms);
+    &::-webkit-input-placeholder {
+       color: rgba(0,0,0,0.35);
     }
-    &.modal-text-input-double {
-        border-radius: 5px 5px 0 0;
-        + input.modal-text-input {
-            margin-top: 0;
-            border-top: 0;
-            border-radius: 0 0 5px 5px;
-        }
+    + input.modal-text-input {
+        margin-top: 16px;
     }
 }
 // Popover
@@ -320,7 +315,7 @@ input.modal-text-input {
     height: 100%;
     z-index: 10400;
     background: #fff;
-    .border-box();
+    box-sizing:border-box;
     display: none;
     .scrollable();
     -webkit-transition-property: -webkit-transform;
