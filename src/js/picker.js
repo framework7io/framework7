@@ -489,7 +489,10 @@ var Picker = function (params) {
     // Open
     function onPickerClose() {
         p.opened = false;
-        if (p.input && p.input.length > 0) p.input.parents('.page-content').css({'padding-bottom': ''});
+        if (p.input && p.input.length > 0) {
+            p.input.parents('.page-content').css({'padding-bottom': ''});
+            if (app.params.material) p.input.trigger('blur');
+        }
         if (p.params.onClose) p.params.onClose(p);
 
         // Destroy events
@@ -547,6 +550,11 @@ var Picker = function (params) {
             }
             else {
                 if (p.value) p.setValue(p.value, 0);
+            }
+
+            // Material Focus
+            if (p.input && p.input.length > 0 && app.params.material) {
+                p.input.trigger('focus');
             }
         }
 
