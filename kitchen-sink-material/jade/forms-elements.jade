@@ -11,7 +11,7 @@
           i.icon.icon-bars
   .page-content
     .content-block-title Full Layout
-    .list-block
+    .list-block.inputs-list
       ul
         li
           .item-content
@@ -103,11 +103,73 @@
             .item-media
               i.icon.icon-form-comment
             .item-inner 
-              .item-title.label Textarea
+              .item-title.label Resizeable Textarea
               .item-input
-                textarea
+                textarea.resizeable
+    .content-block-title With Floating Labels
+    .list-block.inputs-list
+      ul
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-name
+            .item-inner 
+              .item-title.floating-label Your name
+              .item-input
+                input(type="text", placeholder="")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-email
+            .item-inner 
+              .item-title.floating-label E-mail
+              .item-input
+                input(type="email", placeholder="")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-url
+            .item-inner 
+              .item-title.floating-label URL
+              .item-input
+                input(type="url", placeholder="")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-password
+            .item-inner 
+              .item-title.floating-label Password
+              .item-input
+                input(type="password", placeholder="")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-tel
+            .item-inner 
+              .item-title.floating-label Phone
+              .item-input
+                input(type="tel", placeholder="")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-gender
+            .item-inner 
+              .item-title.floating-label Gender
+              .item-input
+                select
+                  option 
+                  option Male
+                  option Female
+        li.align-top
+          .item-content
+            .item-media
+              i.icon.icon-form-comment
+            .item-inner 
+              .item-title.floating-label Resizeable Textarea
+              .item-input
+                textarea.resizeable
     .content-block-title Icons and inputs
-    .list-block
+    .list-block.inputs-list
       ul
         li
           .item-content
@@ -149,7 +211,7 @@
                   input(type="checkbox")
                   .checkbox
     .content-block-title Labels and inputs
-    .list-block
+    .list-block.inputs-list
       ul
         li
           .item-content
@@ -186,7 +248,7 @@
                   input(type="checkbox")
                   .checkbox
     .content-block-title Just inputs
-    .list-block
+    .list-block.inputs-list
       ul
         li
           .item-content
@@ -211,7 +273,7 @@
               .item-input
                 input(type="date", placeholder="Birth day", value="2014-04-30")
     .content-block-title Inset, just inputs
-    .list-block.inset
+    .list-block.inset.inputs-list
       ul
         ul
         li

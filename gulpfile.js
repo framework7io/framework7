@@ -88,6 +88,7 @@
                 'src/js/fast-clicks.js',
                 'src/js/clicks.js',
                 'src/js/resize.js',
+                'src/js/forms.js',
                 'src/js/forms-handler.js',
                 'src/js/push-state.js',
                 'src/js/swiper-init.js',

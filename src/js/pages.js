@@ -280,10 +280,14 @@ app.initPage = function (pageContainer) {
     if (app.initPageMessagebar) app.initPageMessagebar(pageContainer);
     // Init scroll toolbars
     if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
-    // Init scroll toolbars
+    // Init lazy images
     if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
+    // Init resizeable textareas
+    if (app.initPageResizeableTextareas) app.initPageResizeableTextareas(pageContainer);
     // Init Material preloader
-    if (app.params.material && app.materialPreloader) app.materialPreloader(pageContainer);
+    if (app.params.material && app.initPageMaterialPreloader) app.initPageMaterialPreloader(pageContainer);
+    // Init Material Inputs
+    if (app.params.material && app.initPageMaterialInputs) app.initPageMaterialInputs(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     pageContainer = $(pageContainer);

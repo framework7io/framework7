@@ -58,7 +58,7 @@
 
     // List items
     li {
-        .border-box();
+        box-sizing:border-box;
         position: relative;
     }
     
@@ -66,9 +66,9 @@
         .flexbox();
         .flex-shrink(0);
         .flex-wrap(nowrap);
-        .border-box();
         .align-items(center);
-        padding-top: 7px;
+        box-sizing:border-box;
+        padding-top: 8px;
         padding-bottom: 8px;
         min-width: 40px;
         i + i {
@@ -87,9 +87,9 @@
         .hairline(bottom, @listBlockBorderColor);
         width: 100%;
         padding-top: 8px;
-        padding-bottom: 7px;
+        padding-bottom: 8px;
         min-height: 48px;
-        .border-box();
+        box-sizing:border-box;
         .flexbox();
         -webkit-box-flex:1;
         -ms-flex:1;
@@ -103,21 +103,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 100%;
-
-        &.label {
-            width: 35%;
-            .flex-shrink(0);
-        }
     }
-    .item-input {
-        width: 100%;
-        margin-top: -8px;
-        margin-bottom: -7px;
-        -webkit-box-flex:1;
-        -ms-flex:1;
-        .flex-shrink(1);
-        font-size: 0;
-    }
+    
     .item-after {
         white-space: nowrap;
         color: #757575;
@@ -165,7 +152,7 @@
         }
     }
     .item-content {
-        .border-box();
+        box-sizing:border-box;
         padding-left: 16px;
         min-height: 48px;
         .flexbox();
