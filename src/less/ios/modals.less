@@ -99,7 +99,7 @@
     text-overflow:ellipsis;
     overflow: hidden;
     cursor: pointer;
-    .border-box();
+    box-sizing: border-box;
     .hairline(right, #b5b5b5);
     -webkit-box-flex:1;
     -ms-flex:1;
@@ -166,7 +166,7 @@
     font-weight: normal;
     margin: 0;
     background: @actionsModalButtonBg;
-    .border-box();
+    box-sizing: border-box;
     display: block;
     position: relative;
     .hairline(bottom, #d2d2d6);
@@ -219,7 +219,7 @@
 }
 // Prompt
 input.modal-text-input {
-    .border-box();
+    box-sizing: border-box;
     height: 30px;
     background: #fff;
     margin: 0;
@@ -231,7 +231,7 @@ input.modal-text-input {
     font-size: 14px;
     font-family: inherit;
     display: block;
-    .box-shadow(0 0 0 rgba(0,0,0,0));
+    box-shadow: 0 0 0 rgba(0,0,0,0);
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
@@ -389,7 +389,7 @@ input.modal-text-input {
     height: 100%;
     z-index: 10400;
     background: #fff;
-    .border-box();
+    box-sizing: border-box;
     display: none;
     .scrollable();
     -webkit-transition-property: -webkit-transform;

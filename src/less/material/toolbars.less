@@ -22,7 +22,7 @@
     width: 100%;
     height: 100%;
     padding: 0 16px;
-    .border-box();
+    box-sizing: border-box;
     .flexbox();
     .align-items(center);
 }
@@ -38,7 +38,7 @@
 .navbar, .toolbar {
     height: @toolbarSize;
     width: 100%;
-    .border-box();
+    box-sizing: border-box;
     font-size: 17px;
     position: relative;
     margin: 0;
@@ -131,7 +131,7 @@
     top: 100%;
     background: @toolbarBg;
     z-index: 20;
-    .border-box();
+    box-sizing: border-box;
     padding: 0 16px;
     .flexbox();
     .justify-content(space-between);
@@ -197,7 +197,7 @@
     a.tab-link, a.link {
         height: 100%;
         width: 100%;
-        .border-box();
+        box-sizing: border-box;
         .flexbox();
         .justify-content(center);
         .align-items(center);

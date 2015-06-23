@@ -6,11 +6,11 @@
         -moz-appearance: none;
         -ms-appearance: none;
         appearance: none;
-        .border-box();
+        box-sizing: border-box;
         border: none;
         background: none;
         border-radius: 0 0 0 0;
-        .box-shadow(none);
+        box-shadow: none;
         display: block;
         padding: 0px;
         margin: 0;
@@ -63,7 +63,7 @@
     vertical-align: middle;
     width: 52px;
     border-radius: 16px;
-    .border-box();
+    box-sizing: border-box;
     height: 32px;
     position: relative;
     cursor: pointer;
@@ -71,7 +71,7 @@
     .checkbox {
         width: 52px; 
         border-radius: 16px;
-        .border-box();
+        box-sizing: border-box;
         height: 32px;
         background: #e5e5e5;
         z-index: 0;
@@ -92,7 +92,7 @@
             top: 2px;
             width: 48px;
             border-radius: 16px;
-            .border-box();
+            box-sizing: border-box;
             height: 28px;
             background: #fff;
             z-index: 1;
@@ -109,7 +109,7 @@
             z-index: 2;
             top: 2px;
             left: 2px;
-            .box-shadow(0 2px 5px rgba(0,0,0,0.4));
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
             .transform(translateX(0px));
             .transition(300ms);
         }
@@ -148,7 +148,7 @@ html.android {
     display: block;
     border-radius: 5px;
     line-height: 27px;
-    .border-box();
+    box-sizing: border-box;
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
@@ -288,7 +288,7 @@ html.android {
         border-radius: 28px;
         background: #fff;
         z-index: 10;
-        .box-shadow(0 2px 4px rgba(0,0,0,0.4));
+        box-shadow: 0 2px 4px rgba(0,0,0,0.4);
         position: absolute;
         left: 0;
         top: 0;
@@ -317,7 +317,7 @@ label.label-checkbox {
         position: relative;
         border-radius: 22px;
         border: 1px solid #c7c7cc;
-        .border-box();
+        box-sizing: border-box;
 
         &:after {
             content:' ';
