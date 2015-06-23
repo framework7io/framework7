@@ -240,9 +240,9 @@ input.modal-text-input {
     display: none;
     box-shadow: 0px 3px 8px rgba(0,0,0,0.45);
     .transform(scale(0.9, 0.7));
-    -webkit-transition-property: opacity -webkit-transform;
-    -moz-transition-property: opacity -moz-transform;
-    transition-property: opacity transform;
+    -webkit-transition-property: opacity, -webkit-transform;
+    -moz-transition-property: opacity, -moz-transform;
+    transition-property: opacity, transform;
     &.popover-on-top {
         .transform-origin(center bottom);
     }
