@@ -129,7 +129,6 @@
     padding: 0 8px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.45);
     
     .transition(300ms);
     input[type="submit"]&, input[type="button"]&{
@@ -137,7 +136,6 @@
     }
     html:not(.watch-active-state) &:active, &.active-state {
         background: rgba(0,0,0,0.1);
-        box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
     }
     
     i.icon {
@@ -153,14 +151,12 @@
         }
     }
 }
-.button-flat {
-    .button;
-    box-shadow: none;
+.button-raised {
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.45);
     html:not(.watch-active-state) &:active, &.active-state {
-        box-shadow: none;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
     }
 }
-
 .buttons-row {
     .align-self(center);
     .flexbox();
