@@ -15,8 +15,8 @@ var Searchbar = function (container, params) {
         ignore: '.searchbar-ignore',
         customSearch: false,
         removeDiacritics: false,
-        searchbarHideDividers: true,
-        searchbarHideGroups: true,
+        hideDividers: true,
+        hideGroups: true,
         /* Callbacks
         onSearch
         onEnable
@@ -207,7 +207,7 @@ var Searchbar = function (container, params) {
             if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
             if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
-            s.triggerEvent('enableSearch', 'onSearch');
+            s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
         }
         if (app.device.ios) {
@@ -332,7 +332,7 @@ var Searchbar = function (container, params) {
                 }
             });
 
-            if (s.params.searchbarHideDividers) {
+            if (s.params.hideDividers) {
                 s.searchList.find('.item-divider, .list-group-title').each(function () {
                     var title = $(this);
                     var nextElements = title.nextAll('li');
@@ -349,7 +349,7 @@ var Searchbar = function (container, params) {
                     else title.removeClass('hidden-by-searchbar');
                 });
             }
-            if (s.params.searchbarHideGroups) {
+            if (s.params.hideGroups) {
                 s.searchList.find('.list-group').each(function () {
                     var group = $(this);
                     var ignore = s.params.ignore && group.is(s.params.ignore);

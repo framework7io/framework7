@@ -97,6 +97,7 @@ window.Template7 = (function () {
                 // Helpers
                 var helperSlices = helperToSlices(block);
                 var helperName = helperSlices[0];
+                var isPartial = helperName === '>';
                 var helperContext = [];
                 var helperHash = {};
                 for (j = 1; j < helperSlices.length; j++) {
@@ -164,6 +165,10 @@ window.Template7 = (function () {
                     }
                 }
                 else if (block.indexOf(' ') > 0) {
+                    if (isPartial) {
+                        helperName = '_partial';
+                        if (helperContext[0]) helperContext[0] = '"' + helperContext[0].replace(/"|'/g, '') + '"';
+                    }
                     blocks.push({
                         type: 'helper',
                         helperName: helperName,
@@ -310,7 +315,30 @@ window.Template7 = (function () {
     };
     Template7.prototype = {
         options: {},
+        partials: {},
         helpers: {
+            '_partial' : function (partialName, options) {
+                var p = Template7.prototype.partials[partialName];
+                if (!p || (p && !p.template)) return '';
+                if (!p.compiled) {
+                    p.compiled = t7.compile(p.template);
+                }
+                var ctx = this;
+                for (var hashName in options.hash) {
+                    ctx[hashName] = options.hash[hashName];
+                }
+                return p.compiled(ctx);
+            },
+            'escape': function (context, options) {
+                if (typeof context !== 'string') {
+                    throw new Error('Template7: Passed context to "escape" helper should be a string');
+                }
+                return context
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;');
+            },
             'if': function (context, options) {
                 if (isFunction(context)) { context = context.call(this); }
                 if (context) {
@@ -404,6 +432,15 @@ window.Template7 = (function () {
         Template7.prototype.helpers[name] = undefined;  
         delete Template7.prototype.helpers[name];
     };
+    t7.registerPartial = function (name, template) {
+        Template7.prototype.partials[name] = {template: template};
+    };
+    t7.unregisterPartial = function (name, template) {
+        if (Template7.prototype.partials[name]) {
+            Template7.prototype.partials[name] = undefined;
+            delete Template7.prototype.partials[name];
+        }
+    };
     
     t7.compile = function (template, options) {
         var instance = new Template7(template, options);
@@ -412,5 +449,6 @@ window.Template7 = (function () {
     
     t7.options = Template7.prototype.options;
     t7.helpers = Template7.prototype.helpers;
+    t7.partials = Template7.prototype.partials;
     return t7;
 })();

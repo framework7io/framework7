@@ -48,6 +48,8 @@ window.Swiper = function (container, params) {
         // Keyboard Mousewheel
         keyboardControl: false,
         mousewheelControl: false,
+        mousewheelReleaseOnEdges: false,
+        mousewheelInvert: false,
         mousewheelForceToAxis: false,
         // Hash Navigation
         hashnav: false,
@@ -132,7 +134,7 @@ window.Swiper = function (container, params) {
         firstSlideMessage: 'This is the first slide',
         lastSlideMessage: 'This is the last slide',
         // Callbacks
-        runCallbacksOnInit: true,
+        runCallbacksOnInit: true
         /*
         Callbacks:
         onInit: function (swiper)
@@ -182,7 +184,7 @@ window.Swiper = function (container, params) {
     var s = this;
     
     // Version
-    s.version = '3.0.7';
+    s.version = '3.0.8';
     
     // Params
     s.params = params;
@@ -519,6 +521,9 @@ window.Swiper = function (container, params) {
     
         // Calc slides
         var slideSize;
+        var slidesPerColumn = s.params.slidesPerColumn;
+        var slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
+        var numFullColumns = slidesPerRow - (s.params.slidesPerColumn * slidesPerRow - s.slides.length);
         for (i = 0; i < s.slides.length; i++) {
             slideSize = 0;
             var slide = s.slides.eq(i);
@@ -526,11 +531,15 @@ window.Swiper = function (container, params) {
                 // Set slides order
                 var newSlideOrderIndex;
                 var column, row;
-                var slidesPerColumn = s.params.slidesPerColumn;
-                var slidesPerRow;
                 if (s.params.slidesPerColumnFill === 'column') {
                     column = Math.floor(i / slidesPerColumn);
                     row = i - column * slidesPerColumn;
+                    if (column > numFullColumns || (column === numFullColumns && row === slidesPerColumn-1)) {
+                        if (++row >= slidesPerColumn) {
+                            row = 0;
+                            column++;
+                        }
+                    }
                     newSlideOrderIndex = column + row * slidesNumberEvenToRows / slidesPerColumn;
                     slide
                         .css({
@@ -542,10 +551,8 @@ window.Swiper = function (container, params) {
                         });
                 }
                 else {
-                    slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
                     row = Math.floor(i / slidesPerRow);
                     column = i - row * slidesPerRow;
-    
                 }
                 slide
                     .css({
@@ -974,7 +981,7 @@ window.Swiper = function (container, params) {
     s.preventClicks = function (e) {
         if (!s.allowClick) {
             if (s.params.preventClicks) e.preventDefault();
-            if (s.params.preventClicksPropagation) {
+            if (s.params.preventClicksPropagation && s.animating) {
                 e.stopPropagation();
                 e.stopImmediatePropagation();
             }
@@ -1027,7 +1034,7 @@ window.Swiper = function (container, params) {
                 if (s.slides[i] === slide) slideFound = true;
             }
         }
-        
+    
         if (slide && slideFound) {
             s.clickedSlide = slide;
             s.clickedIndex = $(slide).index();
@@ -1320,7 +1327,7 @@ window.Swiper = function (container, params) {
     
         lastClickTime = Date.now();
         setTimeout(function () {
-            if (s && s.allowClick) s.allowClick = true;
+            if (s) s.allowClick = true;
         }, 0);
     
         if (!isTouched || !isMoved || !s.swipeDirection || s.touches.diff === 0 || currentTranslate === startTranslate) {
@@ -1343,7 +1350,7 @@ window.Swiper = function (container, params) {
             }
             else if (currentPos > -s.maxTranslate()) {
                 if (s.slides.length < s.snapGrid.length) {
-                    s.slideTo(s.snapGrid.length - 1);    
+                    s.slideTo(s.snapGrid.length - 1);
                 }
                 else {
                     s.slideTo(s.slides.length - 1);
@@ -1414,7 +1421,7 @@ window.Swiper = function (container, params) {
                             nextSlide = j;
                             break;
                         }
-                            
+    
                     }
                     if (Math.abs(s.snapGrid[nextSlide] - newPosition) < Math.abs(s.snapGrid[nextSlide - 1] - newPosition) || s.swipeDirection === 'next') {
                         newPosition = s.snapGrid[nextSlide];
@@ -1545,17 +1552,16 @@ window.Swiper = function (container, params) {
         if (s.snapIndex >= s.snapGrid.length) s.snapIndex = s.snapGrid.length - 1;
     
         var translate = - s.snapGrid[s.snapIndex];
-    
+        
         // Directions locks
-        if (!s.params.allowSwipeToNext && translate < s.translate) {
+        if (!s.params.allowSwipeToNext && translate < s.translate && translate < s.minTranslate()) {
             return false;
         }
-        if (!s.params.allowSwipeToPrev && translate > s.translate) {
+        if (!s.params.allowSwipeToPrev && translate > s.translate && translate > s.maxTranslate()) {
             return false;
         }
     
         // Stop autoplay
-    
         if (s.params.autoplay && s.autoplaying) {
             if (internal || !s.params.autoplayDisableOnInteraction) {
                 s.pauseAutoplay(speed);
@@ -1935,7 +1941,7 @@ window.Swiper = function (container, params) {
         else {
             s.slideTo(newActiveIndex, 0, false);
         }
-            
+    
     };
     s.removeAllSlides = function () {
         var slidesIndexes = [];
@@ -1951,7 +1957,6 @@ window.Swiper = function (container, params) {
       ===========================*/
     s.effects = {
         fade: {
-            fadeIndex: null,
             setTranslate: function () {
                 for (var i = 0; i < s.slides.length; i++) {
                     var slide = s.slides.eq(i);
@@ -1966,9 +1971,6 @@ window.Swiper = function (container, params) {
                     var slideOpacity = s.params.fade.crossFade ?
                             Math.max(1 - Math.abs(slide[0].progress), 0) :
                             1 + Math.min(Math.max(slide[0].progress, -1), 0);
-                    if (slideOpacity > 0 && slideOpacity < 1) {
-                        s.effects.fade.fadeIndex = i;
-                    }
                     slide
                         .css({
                             opacity: slideOpacity
@@ -1976,16 +1978,17 @@ window.Swiper = function (container, params) {
                         .transform('translate3d(' + tx + 'px, ' + ty + 'px, 0px)');
     
                 }
+    
             },
             setTransition: function (duration) {
                 s.slides.transition(duration);
                 if (s.params.virtualTranslate && duration !== 0) {
-                    var fadeIndex = s.effects.fade.fadeIndex !== null ? s.effects.fade.fadeIndex : s.activeIndex;
-                    if (!(s.params.loop || s.params.fade.crossFade) && fadeIndex === 0) {
-                        fadeIndex = s.slides.length - 1;
-                    }
-                    s.slides.eq(fadeIndex).transitionEnd(function () {
+                    var eventTriggered = false;
+                    s.slides.transitionEnd(function () {
+                        if (eventTriggered) return;
                         if (!s) return;
+                        eventTriggered = true;
+                        s.animating = false;
                         var triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
                         for (var i = 0; i < triggerEvents.length; i++) {
                             s.wrapper.trigger(triggerEvents[i]);
@@ -2216,6 +2219,7 @@ window.Swiper = function (container, params) {
                 
         },
         load: function () {
+            var i;
             if (s.params.watchSlidesVisibility) {
                 s.wrapper.children('.' + s.params.slideVisibleClass).each(function () {
                     s.lazy.loadImageInSlide($(this).index());
@@ -2223,7 +2227,7 @@ window.Swiper = function (container, params) {
             }
             else {
                 if (s.params.slidesPerView > 1) {
-                    for (var i = s.activeIndex; i < s.activeIndex + s.params.slidesPerView ; i++) {
+                    for (i = s.activeIndex; i < s.activeIndex + s.params.slidesPerView ; i++) {
                         if (s.slides[i]) s.lazy.loadImageInSlide(i);
                     }
                 }
@@ -2232,11 +2236,23 @@ window.Swiper = function (container, params) {
                 }
             }
             if (s.params.lazyLoadingInPrevNext) {
-                var nextSlide = s.wrapper.children('.' + s.params.slideNextClass);
-                if (nextSlide.length > 0) s.lazy.loadImageInSlide(nextSlide.index());
+                if (s.params.slidesPerView > 1) {
+                    // Next Slides
+                    for (i = s.activeIndex + s.params.slidesPerView; i < s.activeIndex + s.params.slidesPerView + s.params.slidesPerView; i++) {
+                        if (s.slides[i]) s.lazy.loadImageInSlide(i);
+                    }
+                    // Prev Slides
+                    for (i = s.activeIndex - s.params.slidesPerView; i < s.activeIndex ; i++) {
+                        if (s.slides[i]) s.lazy.loadImageInSlide(i);
+                    }
+                }
+                else {
+                    var nextSlide = s.wrapper.children('.' + s.params.slideNextClass);
+                    if (nextSlide.length > 0) s.lazy.loadImageInSlide(nextSlide.index());
     
-                var prevSlide = s.wrapper.children('.' + s.params.slidePrevClass);
-                if (prevSlide.length > 0) s.lazy.loadImageInSlide(prevSlide.index());
+                    var prevSlide = s.wrapper.children('.' + s.params.slidePrevClass);
+                    if (prevSlide.length > 0) s.lazy.loadImageInSlide(prevSlide.index());
+                }
             }
         },
         onTransitionStart: function () {

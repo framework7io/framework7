@@ -1,5 +1,46 @@
 # Change Log
 
+## Framework7 v1.0.7 - Updated on June 20, 2015
+  * Dom7
+    * New `.removeData(key)` method to remove element data
+    * New `.filter(func)` method to filter elements collections
+    * Now initial XHR request parameters are available in `xhr.requestParameters` property
+  * Push State
+    * Fixed issues in FireFox/IE when going back produces infinite transition to first page in history
+  * Searchbar
+    * Fixed issue with not fully active Search Bar when using `customSearch:true`
+    * `searchbarHideDividers` and `searchbarHideGroups` parameters are moved from global app parameters to Searchbar instance parameters
+    * Now support callback parameters on initialization: `onSearch`, `onEnable`, `onDisable`, `onClear`
+    * Searchbar instance has new `.query` property with current seaarch query
+  * Accordion
+    * Fixed issue when using Accordion with media lists
+  * Messages
+    * Improved "auto-scroll" behavior when adding new message
+  * Photo Browser
+    * Fixed issues with `onSlideChangeStart`, `onSlideChangeEnd` callbacks which actually were `onTransitionStart`, `onTransitionEnd`
+    * Added support for Swiper's `onTransitionStart`, `onTransitionEnd` callbacks
+  * Color Themes
+    * Now `border-@color` class will set correct border color on elements that use pseudo-elements (:after, :before) as a borders
+  * Overlays
+    * Now pages and navbars in modals/popups should be initialized as normal pages on overlay open/creation
+  * Template7 updated to latest 1.0.6 version:
+    * Partials support:
+        * `registerPartial(name, template)` method to register partial
+        * `unregisterPartial(name, template)` method to unregister partial
+        * `>` helper to include partials like `{{> list}}`
+    * New `escape` helper for escaping strings 
+  * Swiper updated to latest 3.0.8 version:
+    * Fixed issue with wrong active index and callbacks in Fade effect
+    * New mousewheel parameters:
+      * `mousewheelReleaseOnEdges` - will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end)
+      * `mousewheelInvert` - option to invert mousewheel slides
+    * Fixed issue with lazy loading in next slides when `slidesPerView` > 1
+    * Fixed issue with resistance bounds when swiping is locked
+    * Fixed issue with wrong slides order in multi-row mode (when `slidesPerColumn` > 1)
+    * Fixed issue with not working keyboard control in RTL mode
+    * Fixed issue with nested fade-effect swipers
+  * Lot of minor fixes
+
 ## Framework7 v1.0.6 - Updated on May 1, 2015
   * Dom7
     * Improved performance for `outerWidth` and `outerHeight` methods

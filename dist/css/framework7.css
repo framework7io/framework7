@@ -1,5 +1,5 @@
 /**
- * Framework7 1.0.6
+ * Framework7 1.0.7
  * Full Featured Mobile HTML Framework For Building iOS Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 1, 2015
+ * Released on: June 20, 2015
  */
 html,
 body {
@@ -925,7 +925,8 @@ html.android .page-from-center-to-right:before {
   font-weight: 500;
 }
 .navbar a.link,
-.toolbar a.link {
+.toolbar a.link,
+.subnavbar a.link {
   line-height: 44px;
   height: 44px;
   text-decoration: none;
@@ -947,24 +948,31 @@ html.android .page-from-center-to-right:before {
 }
 html:not(.watch-active-state) .navbar a.link:active,
 html:not(.watch-active-state) .toolbar a.link:active,
+html:not(.watch-active-state) .subnavbar a.link:active,
 .navbar a.link.active-state,
-.toolbar a.link.active-state {
+.toolbar a.link.active-state,
+.subnavbar a.link.active-state {
   opacity: 0.3;
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
 }
 .navbar a.link i + span,
 .toolbar a.link i + span,
+.subnavbar a.link i + span,
 .navbar a.link i + i,
 .toolbar a.link i + i,
+.subnavbar a.link i + i,
 .navbar a.link span + i,
 .toolbar a.link span + i,
+.subnavbar a.link span + i,
 .navbar a.link span + span,
-.toolbar a.link span + span {
+.toolbar a.link span + span,
+.subnavbar a.link span + span {
   margin-left: 7px;
 }
 .navbar a.icon-only,
-.toolbar a.icon-only {
+.toolbar a.icon-only,
+.subnavbar a.icon-only {
   min-width: 44px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -981,7 +989,8 @@ html:not(.watch-active-state) .toolbar a.link:active,
   margin: 0;
 }
 .navbar i.icon,
-.toolbar i.icon {
+.toolbar i.icon,
+.subnavbar i.icon {
   display: block;
 }
 .navbar {
@@ -1812,7 +1821,7 @@ i.icon.icon-camera {
 i.icon.icon-f7 {
   width: 29px;
   height: 29px;
-  background-image: url("../img/i-f7.png");
+  background-image: url("../img/i-f7-ios.png");
 }
 i.icon.icon-form-name {
   width: 29px;
@@ -2715,13 +2724,19 @@ html.ios-gt-6.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
   -webkit-box-shadow: none;
   box-shadow: none;
   display: block;
-  padding: 0 0 0 5px;
+  padding: 0px;
   margin: 0;
   width: 100%;
   height: 43px;
   color: #000;
   font-size: 17px;
   font-family: inherit;
+}
+.list-block .item-title.label {
+  vertical-align: top;
+}
+.list-block .item-title.label + .item-input {
+  margin-left: 5px;
 }
 .list-block input[type="date"],
 .list-block input[type="datetime-local"] {
@@ -2732,9 +2747,6 @@ html.ios-gt-6.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
   -moz-appearance: none;
   -ms-appearance: none;
   appearance: none;
-}
-.list-block .label {
-  vertical-align: top;
 }
 .list-block textarea {
   height: 100px;
@@ -2933,6 +2945,9 @@ html:not(.watch-active-state) .button.button-fill:active,
 .buttons-row .button:last-child {
   border-radius: 0 5px 5px 0;
 }
+.buttons-row .button:first-child:last-child {
+  border-radius: 5px;
+}
 .buttons-row .button.button-round:first-child {
   border-radius: 27px 0 0 27px;
 }
@@ -3129,8 +3144,12 @@ html:not(.watch-active-state) .list-block .accordion-item-toggle:active > .item-
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
-.list-block .accordion-item-expanded .accordion-item-toggle .item-inner,
-.list-block .accordion-item-expanded > .item-link .item-inner {
+.list-block:not(.media-list) .accordion-item-expanded:not(.media-item) .accordion-item-toggle .item-inner,
+.list-block:not(.media-list) .accordion-item-expanded:not(.media-item) > .item-link .item-inner,
+.list-block.media-list .accordion-item-expanded .accordion-item-toggle .item-title-row,
+.list-block.media-list .accordion-item-expanded > .item-link .item-title-row,
+.list-block .accordion-item-expanded.media-item .accordion-item-toggle .item-title-row,
+.list-block .accordion-item-expanded.media-item > .item-link .item-title-row {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D'0%200%2060%20120'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'm60%2061.5-38.25%2038.25-9.75-9.75%2029.25-28.5-29.25-28.5%209.75-9.75z'%20transform%3D'translate(115%2C%2030)%20rotate(90)'%20fill%3D'%23c7c7cc'%2F%3E%3C%2Fsvg%3E");
   background-size: 20px 20px;
 }
@@ -5044,9 +5063,9 @@ body > .photo-browser .toolbar {
   background: none;
 }
 .photo-browser .navbar,
-.view[data-page="photo-browser-slides"] .navbar,
+.views .view[data-page="photo-browser-slides"] .navbar,
 .photo-browser .toolbar,
-.view[data-page="photo-browser-slides"] .toolbar {
+.views .view[data-page="photo-browser-slides"] .toolbar {
   background: rgba(247, 247, 247, 0.95);
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
@@ -6004,6 +6023,14 @@ a.bg-gray,
 .border-gray {
   border-color: #8e8e93;
 }
+.list-block .border-gray.item-inner:after,
+.list-block ul.border-gray:after,
+.border-gray:after,
+.list-block .border-gray.item-inner:before,
+.list-block ul.border-gray:before,
+.border-gray:before {
+  background-color: #8e8e93;
+}
 .color-white {
   color: #ffffff;
 }
@@ -6134,6 +6161,14 @@ a.bg-white,
 }
 .border-white {
   border-color: #ffffff;
+}
+.list-block .border-white.item-inner:after,
+.list-block ul.border-white:after,
+.border-white:after,
+.list-block .border-white.item-inner:before,
+.list-block ul.border-white:before,
+.border-white:before {
+  background-color: #ffffff;
 }
 .color-black {
   color: #000000;
@@ -6266,6 +6301,14 @@ a.bg-black,
 .border-black {
   border-color: #000000;
 }
+.list-block .border-black.item-inner:after,
+.list-block ul.border-black:after,
+.border-black:after,
+.list-block .border-black.item-inner:before,
+.list-block ul.border-black:before,
+.border-black:before {
+  background-color: #000000;
+}
 .color-lightblue {
   color: #5ac8fa;
 }
@@ -6396,6 +6439,14 @@ a.bg-lightblue,
 }
 .border-lightblue {
   border-color: #5ac8fa;
+}
+.list-block .border-lightblue.item-inner:after,
+.list-block ul.border-lightblue:after,
+.border-lightblue:after,
+.list-block .border-lightblue.item-inner:before,
+.list-block ul.border-lightblue:before,
+.border-lightblue:before {
+  background-color: #5ac8fa;
 }
 .color-yellow {
   color: #ffcc00;
@@ -6528,6 +6579,14 @@ a.bg-yellow,
 .border-yellow {
   border-color: #ffcc00;
 }
+.list-block .border-yellow.item-inner:after,
+.list-block ul.border-yellow:after,
+.border-yellow:after,
+.list-block .border-yellow.item-inner:before,
+.list-block ul.border-yellow:before,
+.border-yellow:before {
+  background-color: #ffcc00;
+}
 .color-orange {
   color: #ff9500;
 }
@@ -6658,6 +6717,14 @@ a.bg-orange,
 }
 .border-orange {
   border-color: #ff9500;
+}
+.list-block .border-orange.item-inner:after,
+.list-block ul.border-orange:after,
+.border-orange:after,
+.list-block .border-orange.item-inner:before,
+.list-block ul.border-orange:before,
+.border-orange:before {
+  background-color: #ff9500;
 }
 .color-pink {
   color: #ff2d55;
@@ -6790,6 +6857,14 @@ a.bg-pink,
 .border-pink {
   border-color: #ff2d55;
 }
+.list-block .border-pink.item-inner:after,
+.list-block ul.border-pink:after,
+.border-pink:after,
+.list-block .border-pink.item-inner:before,
+.list-block ul.border-pink:before,
+.border-pink:before {
+  background-color: #ff2d55;
+}
 .color-blue {
   color: #007aff;
 }
@@ -6920,6 +6995,14 @@ a.bg-blue,
 }
 .border-blue {
   border-color: #007aff;
+}
+.list-block .border-blue.item-inner:after,
+.list-block ul.border-blue:after,
+.border-blue:after,
+.list-block .border-blue.item-inner:before,
+.list-block ul.border-blue:before,
+.border-blue:before {
+  background-color: #007aff;
 }
 .color-green {
   color: #4cd964;
@@ -7052,6 +7135,14 @@ a.bg-green,
 .border-green {
   border-color: #4cd964;
 }
+.list-block .border-green.item-inner:after,
+.list-block ul.border-green:after,
+.border-green:after,
+.list-block .border-green.item-inner:before,
+.list-block ul.border-green:before,
+.border-green:before {
+  background-color: #4cd964;
+}
 .color-red {
   color: #ff3b30;
 }
@@ -7182,4 +7273,12 @@ a.bg-red,
 }
 .border-red {
   border-color: #ff3b30;
+}
+.list-block .border-red.item-inner:after,
+.list-block ul.border-red:after,
+.border-red:after,
+.list-block .border-red.item-inner:before,
+.list-block ul.border-red:before,
+.border-red:before {
+  background-color: #ff3b30;
 }
