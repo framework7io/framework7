@@ -239,12 +239,16 @@ input.modal-text-input {
     + input.modal-text-input {
         margin-top: 5px;
     }
-    &.modal-text-input-double {
-        border-radius: 5px 5px 0 0;
-        + input.modal-text-input {
-            margin-top: 0;
+}
+.modal-input-double {
+    input.modal-text-input {
+        border-radius: 5px 5px 0 0
+    }
+    .modal-input-double + & {
+        input.modal-text-input {
             border-top: 0;
             border-radius: 0 0 5px 5px;
+            margin-top: 0;
         }
     }
 }
