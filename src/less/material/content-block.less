@@ -3,7 +3,12 @@
 .content-block {
     margin: 32px 0;
     padding: 0 16px;
-
+    > p:first-child {
+        margin-top: 0;
+    }
+    > p:last-child {
+        margin-bottom: 0;
+    }
 }
 .content-block-title {
     position: relative;
@@ -18,9 +23,11 @@
     height: 48px;
     line-height: 48px;
     font-weight: 500;
+    color: rgba(0,0,0,0.54);
     + .list-block, + .content-block, +.card {
         margin-top: 0px;
     }
+
 }
 .content-block-inner {
     background: #fff;
@@ -30,7 +37,12 @@
     position: relative;
     .hairline(top, @contentBlockBorderColor);
     .hairline(bottom, @contentBlockBorderColor);
-    color: #000;
+    > p:first-child {
+        margin-top: 0;
+    }
+    > p:last-child {
+        margin-bottom: 0;
+    }
 }
 .content-block.inset {
     margin-left: 16px;
