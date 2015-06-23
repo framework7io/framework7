@@ -427,7 +427,7 @@ html.with-statusbar-overlay {
     -ms-transition-property: -ms-transform;
     -o-transition-property: -o-transform;
     transition-property: transform;
-    background: #cfd5da;
+    background: #fff;
     .translate3d(0,100%,0);
     &.modal-in, &.modal-out {
         .transition(400ms);
@@ -443,7 +443,6 @@ html.with-statusbar-overlay {
         position: relative;
     }
     .toolbar {
-        .hairline(top, #929499);
         position: relative;
         width: 100%;
         + .picker-modal-inner {
@@ -459,7 +458,6 @@ html.with-statusbar-overlay {
         z-index: inherit;
         .translate3d(0,0,0);
         .toolbar {
-            .hairline-remove(top);
             .hairline(bottom, #929499);
         }
     }
