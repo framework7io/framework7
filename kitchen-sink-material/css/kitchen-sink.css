@@ -1,9 +1,5 @@
-.panel {
-  background: #222;
-  color: #dddddd;
-}
 .popover {
-  width: 240px;
+  width: 200px;
 }
 .ks-grid div[class*="col-"] {
   background: #fff;
