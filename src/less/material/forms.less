@@ -131,11 +131,19 @@
     overflow: hidden;
     
     .transition(300ms);
+
     input[type="submit"]&, input[type="button"]&{
         width: 100%;
     }
     html:not(.watch-active-state) &:active, &.active-state {
         background: rgba(0,0,0,0.1);
+    }
+    &.button-fill {
+        background-color: @themeColor;
+        color: #fff;
+        html:not(.watch-active-state) &:active, &.active-state {
+            background: darken(@themeColor, 8%);
+        }
     }
     
     i.icon {
