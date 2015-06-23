@@ -82,7 +82,7 @@ app.prompt = function (text, title, callbackOk, callbackCancel) {
     return app.modal({
         text: text || '',
         title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        afterText: '<input type="text" class="modal-text-input">',
+        afterText: '<div class="input-field"><input type="text" class="modal-text-input"></div>',
         buttons: [
             {
                 text: app.params.modalButtonCancel
@@ -107,7 +107,7 @@ app.modalLogin = function (text, title, callbackOk, callbackCancel) {
     return app.modal({
         text: text || '',
         title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        afterText: '<input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input modal-text-input-double"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input modal-text-input-double">',
+        afterText: '<div class="input-field modal-input-double"><input type="text" name="modal-username" placeholder="' + app.params.modalUsernamePlaceholder + '" class="modal-text-input"></div><div class="input-field modal-input-double"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input"></div>',
         buttons: [
             {
                 text: app.params.modalButtonCancel
@@ -134,7 +134,7 @@ app.modalPassword = function (text, title, callbackOk, callbackCancel) {
     return app.modal({
         text: text || '',
         title: typeof title === 'undefined' ? app.params.modalTitle : title,
-        afterText: '<input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input">',
+        afterText: '<div class="input-field"><input type="password" name="modal-password" placeholder="' + app.params.modalPasswordPlaceholder + '" class="modal-text-input"></div>',
         buttons: [
             {
                 text: app.params.modalButtonCancel
@@ -154,7 +154,7 @@ app.modalPassword = function (text, title, callbackOk, callbackCancel) {
 app.showPreloader = function (title) {
     return app.modal({
         title: title || app.params.modalPreloaderTitle,
-        text: '<div class="preloader"></div>',
+        text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</div>',
         cssClass: 'modal-preloader'
     });
 };
@@ -162,7 +162,7 @@ app.hidePreloader = function () {
     app.closeModal('.modal.modal-in');
 };
 app.showIndicator = function () {
-    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white"></span></div>');
+    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</span></div>');
 };
 app.hideIndicator = function () {
     $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();

@@ -11,6 +11,9 @@ app.openPanel = function (panelPosition) {
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open');
+    if (app.params.material) {
+        $('.panel-overlay').show();
+    }
     if (panel.find('.' + app.params.viewClass).length > 0) {
         if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
     }
@@ -31,6 +34,7 @@ app.openPanel = function (panelPosition) {
                 else {
                     panel.trigger('closed');
                 }
+                if (app.params.material) $('.panel-overlay').css({display: ''});
                 app.allowPanelOpen = true;
             }
             else panelTransitionEnd();
@@ -79,7 +83,7 @@ app.initSwipePanels = function () {
     }
     
     var panelOverlay = $('.panel-overlay');
-    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction;
+    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, overlayOpacity, opened, panelWidth, effect, direction;
     var views = $('.' + app.params.viewsClass);
 
     function handleTouchStart(e) {
@@ -207,11 +211,17 @@ app.initSwipePanels = function () {
         }
         if (effect === 'reveal') {
             views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
-            panelOverlay.transform('translate3d(' + translate + 'px,0,0)');
+            panelOverlay.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+            
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
         else {
             panel.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+            if (app.params.material) {
+                panelOverlay.transition(0);
+                overlayOpacity = Math.abs(translate/panelWidth);
+                panelOverlay.css({opacity: overlayOpacity});
+            }
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
     }
@@ -297,7 +307,7 @@ app.initSwipePanels = function () {
             views.transform('');
         }
         panel.transition('').transform('');
-        panelOverlay.css({display: ''}).transform('');
+        panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');
     }
     $(document).on(app.touchEvents.start, handleTouchStart);
     $(document).on(app.touchEvents.move, handleTouchMove);

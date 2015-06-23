@@ -65,9 +65,11 @@ window.Framework7 = function (params) {
         swipeoutNoFollow: false,
         // Smart Select Back link template
         smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
+        smartSelectBackTemplateMaterial: '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>',
         smartSelectBackText: 'Back',
         smartSelectInPopup: false,
         smartSelectPopupCloseTemplate: '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>',
+        smartSelectPopupCloseTemplateMaterial: '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i></a></div>',
         smartSelectPopupCloseText: 'Close',
         smartSelectSearchbar: false,
         smartSelectBackOnSelect: false,
@@ -110,6 +112,9 @@ window.Framework7 = function (params) {
         template7Data: {},
         template7Pages: false,
         precompileTemplates: false,
+        // Material
+        material: false,
+        materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
         // Auto init
         init: true,
     };

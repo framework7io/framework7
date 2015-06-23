@@ -53,6 +53,8 @@ var PhotoBrowser = function (params) {
     
     var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
 
+    var material = app.params.material;
+
     var navbarTemplate = pb.params.navbarTemplate ||
                         '<div class="navbar">' +
                             '<div class="navbar-inner">' +
@@ -87,7 +89,7 @@ var PhotoBrowser = function (params) {
 
     var photoTemplate = !pb.params.lazyLoading ? 
         (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
-        (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
+        (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '">'+(app.params.material ? app.params.materialPreloaderSvg : '')+'</div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
 
     var captionsTheme = pb.params.captionsTheme || pb.params.theme;
     var captionsTemplate = pb.params.captionsTemplate || '<div class="photo-browser-captions photo-browser-captions-' + captionsTheme + '">{{captions}}</div>';

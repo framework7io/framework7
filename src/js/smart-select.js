@@ -154,16 +154,38 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             '<li{{#if className}} class="{{className}}"{{/if}}>' +
                 '<label class="label-{{inputType}} item-content">' +
                     '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
-                    '{{#if hasMedia}}' +
-                    '<div class="item-media">' +
-                        '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
-                        '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
-                        '{{#if image}}<img src="{{image}}">{{/if}}' +
-                    '</div>' +
+                    '{{#if material}}' +
+                        '{{#if hasMedia}}' +
+                        '<div class="item-media">' +
+                            '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
+                            '{{#if image}}<img src="{{image}}">{{/if}}' +
+                        '</div>' +
+                        '<div class="item-inner">' +
+                            '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                        '</div>' +
+                        '<div class="item-after">' +
+                            '<i class="icon icon-form-{{inputType}}"></i>' +
+                        '</div>' +
+                        '{{else}}' +
+                        '<div class="item-media">' +
+                            '<i class="icon icon-form-{{inputType}}"></i>' +
+                        '</div>' +
+                        '<div class="item-inner">' +
+                            '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                        '</div>' +
+                        '{{/if}}' +
+                    '{{else}}' +
+                        '{{#if hasMedia}}' +
+                        '<div class="item-media">' +
+                            '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
+                            '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
+                            '{{#if image}}<img src="{{image}}">{{/if}}' +
+                        '</div>' +
+                        '{{/if}}' +
+                        '<div class="item-inner">' +
+                            '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                        '</div>' +
                     '{{/if}}' +
-                    '<div class="item-inner">' +
-                        '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
-                    '</div>' +
                 '</label>' +
             '</li>'
         );
@@ -196,7 +218,9 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         navbarTheme: navbarTheme,
         inPopup: openIn === 'popup',
         inPage: openIn === 'page',
-        leftTemplate: openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText)
+        leftTemplate: openIn === 'popup' ? 
+            app.params[app.params.material ? 'smartSelectPopupCloseTemplateMaterial' : 'smartSelectPopupCloseTemplate'].replace(/{{closeText}}/g, closeText) : 
+            app.params[app.params.material ? 'smartSelectBackTemplateMaterial' : 'smartSelectBackTemplate'].replace(/{{backText}}/g, backText)
     });
 
     

@@ -1,0 +1,180 @@
+/* === Color Themes === */
+.theme-mixin(@colorName, @color) {
+    @colorHex: `'@{color}'.replace('#','')`;
+    //Plain color and links
+    .color-@{colorName} {
+        color: @color;
+        .list-block .item-link.list-button&, .tabbar a.active&, a& {
+            color: @color;
+        }
+        .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
+            background-color: @color;
+        }
+    }
+    //Buttons
+    .button {
+        &.color-@{colorName}:not(.button-fill), .color-@{colorName}.buttons-row & {
+            color: @color;            
+        }
+        .theme-@{colorName} &.button-fill, &.button-fill.bg-@{colorName}, &.button-fill.color-@{colorName} {
+            background: @color;
+            color:#fff;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: darken(@color, 8%);
+            }
+        }
+        .theme-@{colorName} & {
+            &:not(.button-fill) {
+                color:@color;
+            }
+        }
+    }
+    .color-@{colorName}.button:not(.button-fill), .color-@{colorName}.buttons-row .button, .theme-@{colorName} .button:not(.button-fill) {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
+        }
+        &.active {
+            background-color: @color;
+            color:#fff;
+        }
+    }
+    .theme-@{colorName} .button.button-fill, .button.button-fill.color-@{colorName} {
+        background: @color;
+        color:#fff;
+    }
+    //Icons
+    .color-@{colorName}, .theme-@{colorName} {
+        i.icon, i.icon& {
+            color:@color;
+        }
+    }
+    i.icon-next.color-@{colorName}, i.icon-next.theme-@{colorName}, .theme-@{colorName} i.icon-next {
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' fill='#@{colorHex}' width='24' height='24' viewBox='0 0 24 24'><path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    }
+    i.icon-prev.color-@{colorName}, i.icon-prev.theme-@{colorName}, .theme-@{colorName} i.icon-prev {
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' fill='#@{colorHex}' width='24' height='24' viewBox='0 0 24 24'><path d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    }
+    i.icon-back.color-@{colorName}, i.icon-back.theme-@{colorName}, .theme-@{colorName} i.icon-back {
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z' fill='#@{colorHex}'/></svg>");
+    }
+    i.icon-forward.color-@{colorName}, i.icon-forward.theme-@{colorName}, .theme-@{colorName} i.icon-forward {
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z' fill='#@{colorHex}'/></svg>");
+    }
+    i.icon-bars.color-@{colorName}, i.icon-bars.theme-@{colorName}, .theme-@{colorName} i.icon-bars {
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' fill='#@{colorHex}'/></svg>");
+    }
+    // Theme
+    .theme-@{colorName} {
+        a, .item-link.list-button {
+            color: @color;
+        }
+        .tabbar, .tabbar& {
+            a, a i {
+                color:inherit;
+            }
+            a.active, a.active i {
+                color:@color;
+            }
+        }
+        .range-slider, .range-slider& {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+                background-color: @color;
+            }
+        }
+        .label-switch, .label-switch& {
+            input[type="checkbox"] {
+                &:checked {
+                    &+ .checkbox {
+                        background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
+                        &:after {
+                            background-color: @color;
+                        }
+                    }
+                }
+            }
+        }
+        label.label-checkbox, label.label-checkbox& {
+            cursor: pointer;
+            i.icon-form-checkbox {
+                &:after {
+                    .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' fill='#ffffff' width='24' height='24' viewBox='0 0 24 24'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>");
+                }
+            }
+            input[type="checkbox"], input[type="radio"] {
+                &:checked + .item-media, &:checked ~ .item-after, &:checked ~ .item-inner{
+                    i.icon-form-checkbox {
+                        border-color: @color;
+                        background-color: @color;
+                    }
+                }
+            }
+        }
+        label.label-radio, label.label-radio& {
+            i.icon-form-radio:after {
+                background-color: @color;       
+            }
+            input[type="checkbox"], input[type="radio"] {
+                &:checked + .item-media, &:checked ~ .item-after, &:checked ~ .item-inner{
+                    i.icon-form-radio {
+                        border-color: @color;
+                    }
+                    i.icon-form-radio:after {
+                        background-color: @color;
+                    }
+                }
+            }
+        }
+        .picker-calendar-day.picker-calendar-day-selected span {
+            background-color: @color !important;
+        }
+    }
+    .swiper-pagination {
+        &.color-@{colorName}, .theme-@{colorName} & {
+            .swiper-pagination-bullet-active {
+                background-color: @color;
+            }
+        }
+    }
+    .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+        &.color-@{colorName}, .theme-@{colorName} & {
+            .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#@{colorHex}'/></svg>");
+        }
+    }
+    .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+        &.color-@{colorName}, .theme-@{colorName} & {
+            .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#@{colorHex}'/></svg>");
+        }
+    }
+    // Bg rule
+    .bg-@{colorName}, a.bg-@{colorName}, .list-block .swipeout-actions-left a.bg-@{colorName}, .list-block .swipeout-actions-right a.bg-@{colorName} {
+        background-color: @color;
+    }
+    // Border rule
+    .border-@{colorName} {
+        border-color: @color;
+    }
+}
+.theme-mixin(e('red'), @red);
+.theme-mixin(e('pink'), @pink);
+.theme-mixin(e('purple'), @purple);
+.theme-mixin(e('deeppurple'), @deeppurple);
+.theme-mixin(e('indigo'), @indigo);
+.theme-mixin(e('blue'), @blue);
+.theme-mixin(e('lightblue'), @lightblue);
+.theme-mixin(e('cyan'), @cyan);
+.theme-mixin(e('teal'), @teal);
+.theme-mixin(e('green'), @green);
+.theme-mixin(e('lightgreen'), @lightgreen);
+.theme-mixin(e('lime'), @lime);
+.theme-mixin(e('yellow'), @yellow);
+.theme-mixin(e('amber'), @amber);
+.theme-mixin(e('orange'), @orange);
+.theme-mixin(e('deeporange'), @deeporange);
+.theme-mixin(e('brown'), @brown);
+.theme-mixin(e('gray'), @gray);
+.theme-mixin(e('bluegray'), @bluegray);
+.theme-mixin(e('white'), @white);
+.theme-mixin(e('black'), @black);
