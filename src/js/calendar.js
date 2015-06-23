@@ -731,7 +731,10 @@ var Calendar = function (params) {
     // Open
     function onPickerClose() {
         p.opened = false;
-        if (p.input && p.input.length > 0) p.input.parents('.page-content').css({'padding-bottom': ''});
+        if (p.input && p.input.length > 0) {
+            p.input.parents('.page-content').css({'padding-bottom': ''});
+            if (app.params.material) p.input.trigger('blur');
+        }
         if (p.params.onClose) p.params.onClose(p);
 
         // Destroy events
@@ -795,6 +798,11 @@ var Calendar = function (params) {
 
             // Update input value
             if (updateValue) p.updateValue();
+
+            // Material Focus
+            if (p.input && p.input.length > 0 && app.params.material) {
+                p.input.trigger('focus');
+            }
             
         }
 
