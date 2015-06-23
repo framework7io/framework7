@@ -232,7 +232,7 @@ app.actions = function (target, params) {
                     if (button.color) buttonClass += ' color-' + button.color;
                     if (button.bg) buttonClass += ' bg-' + button.bg;
                     if (button.disabled) buttonClass += ' disabled';
-                    buttonsHTML += '<span class="' + buttonClass + '">' + button.text + '</span>';
+                    buttonsHTML += '<div class="' + buttonClass + '">' + button.text + '</div>';
                     if (j === params[i].length - 1) buttonsHTML += '</div>';
                 }
             }

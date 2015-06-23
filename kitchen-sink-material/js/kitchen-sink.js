@@ -112,7 +112,7 @@ myApp.onPageInit('swipe-delete modals media-lists', function (page) {
         [
             // Group Label
             {
-                text: 'Here comes some optional description or warning for actions below',
+                text: 'Choose some action',
                 label: true
             },
             // First button
@@ -120,6 +120,13 @@ myApp.onPageInit('swipe-delete modals media-lists', function (page) {
                 text: 'Alert',
                 onClick: function () {
                     myApp.alert('He Hoou!');
+                }
+            },
+            // Second button
+            {
+                text: 'Second Alert',
+                onClick: function () {
+                    myApp.alert('Second Alert!');
                 }
             },
             // Another red button
@@ -134,8 +141,7 @@ myApp.onPageInit('swipe-delete modals media-lists', function (page) {
         // Second group
         [
             {
-                text: 'Cancel',
-                bold: true
+                text: 'Cancel'
             }
         ]
     ];
