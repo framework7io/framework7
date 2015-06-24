@@ -20,11 +20,18 @@
         &.color-@{colorName}:not(.button-fill), .color-@{colorName}.buttons-row &:not(.button-fill) {
             color: @color !important;
         }
-        .theme-@{colorName} &.button-fill, &.button-fill.bg-@{colorName}, &.button-fill.color-@{colorName} {
+        .theme-@{colorName} &.button-fill {
             background: @color;
             color:#fff;
             html:not(.watch-active-state) &:active, &.active-state {
                 background: @pressColor;
+            }
+        }
+        &.button-fill.bg-@{colorName}, &.button-fill.color-@{colorName} {
+            background: @color !important;
+            color:#fff;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: @pressColor !important;
             }
         }
         
