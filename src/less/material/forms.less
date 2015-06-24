@@ -198,16 +198,13 @@ textarea.resizeable {
     text-overflow:ellipsis;
     font-size: 14px;
     text-transform: uppercase;
-    font-weight: 500;
     font-family: inherit;
     cursor: pointer;
     min-width: 64px;
     padding: 0 8px;
     position: relative;
     overflow: hidden;
-    
     .transition(300ms);
-
     input[type="submit"]&, input[type="button"]&{
         width: 100%;
     }
@@ -220,6 +217,11 @@ textarea.resizeable {
         html:not(.watch-active-state) &:active, &.active-state {
             background: darken(@themeColor, 8%);
         }
+    }
+    &.button-big {
+        height: 48px;
+        line-height: 48px;
+        border-radius: 3px;
     }
     
     i.icon {
@@ -236,9 +238,9 @@ textarea.resizeable {
     }
 }
 .button-raised {
-    box-shadow: 0px 1px 2px rgba(0,0,0,0.45);
+    .depth(1);
     html:not(.watch-active-state) &:active, &.active-state {
-        box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+        .depth(2);
     }
 }
 .buttons-row {
