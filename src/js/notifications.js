@@ -15,7 +15,6 @@ app.addNotification = function (params) {
         text: app.params.notificationCloseButtonText,
         close: true
     };
-    console.log(params.button);
 
     if (!_tempNotificationElement) _tempNotificationElement = document.createElement('div');
 
@@ -70,7 +69,6 @@ app.addNotification = function (params) {
     if (!app._compiledTemplates.notification) {
         app._compiledTemplates.notification = t7.compile(notificationTemplate);
     }
-    console.log(app._compiledTemplates.notification);
     _tempNotificationElement.innerHTML = app._compiledTemplates.notification(params);
 
     var item = $(_tempNotificationElement).children();
