@@ -105,6 +105,7 @@ window.Framework7 = function (params) {
         // Notifications defaults
         notificationCloseOnClick: false,
         notificationCloseIcon: true,
+        notificationCloseButtonText: 'Close',
         // Animate Pages
         animatePages: true,
         // Template7
