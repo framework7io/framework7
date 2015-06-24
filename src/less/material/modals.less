@@ -2,10 +2,8 @@
 @modalBgColor:#fff;
 @modalButonColor : #4285f4;
 @modalButonBg: @modalBgColor;
-@modalButonActiveBg:#d4d4d4;
 @modalDuration:400ms;
 @actionsModalDuration:300ms;
-@actionsModalActiveButtonBg:#dcdcdc;
 @popoverDuration: 300ms;
 @popupDuration: 400ms;
 .modal-overlay, .preloader-indicator-overlay, .popup-overlay {
@@ -47,7 +45,7 @@
     display: none;
     background: #fff;
     font-size: 16px;
-    box-shadow: 0px 12px 24px rgba(0,0,0,0.5);
+    .depth(5);
     &.modal-in {
         opacity: 1;
         .transition(@modalDuration);
@@ -86,7 +84,7 @@
     &.modal-buttons-vertical {
         display: block;
         height: auto;
-        padding: 0;
+        padding: 0 0 8px 0;
         .modal-button {
             margin-left: 0;
             text-align: right;
@@ -174,6 +172,7 @@
     line-height: 48px;
     font-size: 16px;
     color: rgba(0,0,0,0.87);
+    .transition(300ms);
     a, & {
         position: relative;
         overflow: hidden;
@@ -181,7 +180,8 @@
         text-overflow: ellipsis;    
     }
     html:not(.watch-active-state) &:active, &.active-state {
-        background: @actionsModalActiveButtonBg;
+        .transition(0ms);
+        background: rgba(0,0,0,0.1);
     }
 }
 .actions-modal-label {
@@ -233,7 +233,7 @@ input.modal-text-input {
     border-radius: 3px;
     position: absolute;
     display: none;
-    box-shadow: 0px 3px 8px rgba(0,0,0,0.45);
+    .depth(2);
     .transform(scale(0.9, 0.7));
     -webkit-transition-property: opacity, -webkit-transform;
     -moz-transition-property: opacity, -moz-transform;
