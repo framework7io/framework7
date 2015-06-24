@@ -41,6 +41,9 @@ var PhotoBrowser = function (params) {
         onSwipeToClose(pb)
         */
     };
+    if (!params.backLinkText && app.params.material) {
+        defaults.backLinkText = '';
+    }
     
     params = params || {};
     for (var def in defaults) {
@@ -54,11 +57,11 @@ var PhotoBrowser = function (params) {
     var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
 
     var material = app.params.material;
-
+    var iconOnly = pb.params.backLinkText === '';
     var navbarTemplate = pb.params.navbarTemplate ||
                         '<div class="navbar">' +
                             '<div class="navbar-inner">' +
-                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
+                                '<div class="left sliding"><a href="#" class="link' + (pb.params.type === 'page' && ' back') + (iconOnly ? ' icon-only' : '') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i>'+ (iconOnly ? '' : '<span>' + pb.params.backLinkText + '</span>') + '</a></div>' +
                                 '<div class="center sliding"><span class="photo-browser-current"></span> <span class="photo-browser-of">' + pb.params.ofText + '</span> <span class="photo-browser-total"></span></div>' +
                                 '<div class="right"></div>' +
                             '</div>' +
