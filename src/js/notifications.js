@@ -39,7 +39,7 @@ app.addNotification = function (params) {
                         '<div class="item-title">{{js "this.message || this.title || this.subtitle"}}</div>' +
                         '{{#if ../button}}{{#button}}' +
                         '<div class="item-after">' +
-                            '<a href="#" class="button {{#if color}}color-{{color}}{{/if}} {{#if close}}close-notification{{/if}}">{{text}}</a>' +
+                            '<a href="#" class="button {{#if color}}color-{{color}}{{/if}} {{#js_compare "this.close !== false"}}close-notification{{/js_compare}}">{{text}}</a>' +
                         '</div>' +
                         '{{/button}}{{/if}}' +
                     '</div>' +
