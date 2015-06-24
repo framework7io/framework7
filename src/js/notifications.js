@@ -9,20 +9,13 @@ app.addNotification = function (params) {
     if (typeof params.title === 'undefined') params.title = app.params.notificationTitle;
     if (typeof params.subtitle === 'undefined') params.subtitle = app.params.notificationSubtitle;
     if (typeof params.closeIcon === 'undefined') params.closeIcon = app.params.notificationCloseIcon;
-    if (typeof params.closeButtonText === 'undefined') params.closeButtonText = app.params.notificationCloseButtonText;
     if (typeof params.hold === 'undefined') params.hold = app.params.notificationHold;
     if (typeof params.closeOnClick === 'undefined') params.closeOnClick = app.params.notificationCloseOnClick;
-
-    params.buttons = 
-        params.buttons || 
-        (
-            (params.closeButtonText && params.closeButtonText.length > 0) ? 
-            [{
-                text: params.closeButtonText,
-                close: true
-            }] :
-            []
-        );
+    if (typeof params.button === 'undefined') params.button = app.params.notificationCloseButtonText && {
+        text: app.params.notificationCloseButtonText,
+        close: true
+    };
+    console.log(params.button);
 
     if (!_tempNotificationElement) _tempNotificationElement = document.createElement('div');
 
@@ -44,13 +37,11 @@ app.addNotification = function (params) {
                 '{{#if material}}' +
                     '<div class="item-inner">' +
                         '<div class="item-title">{{js "this.message || this.title || this.subtitle"}}</div>' +
-                        '{{#if ../buttons.length}}' +
+                        '{{#if ../button}}{{#button}}' +
                         '<div class="item-after">' +
-                            '{{#each buttons}}' +
-                            '<a href="#" class="button {{#if color}}color-{{color}}{{/if}} {{#js_compare "this.close !== false"}}close-notification{{/js_compare}}">{{text}}</a>' +
-                            '{{/each}}' +
+                            '<a href="#" class="button {{#if color}}color-{{color}}{{/if}} {{#if close}}close-notification{{/if}}">{{text}}</a>' +
                         '</div>' +
-                        '{{/if}}' +
+                        '{{/button}}{{/if}}' +
                     '</div>' +
                 '{{else}}' +
                     '{{#if media}}' +
@@ -79,9 +70,8 @@ app.addNotification = function (params) {
     if (!app._compiledTemplates.notification) {
         app._compiledTemplates.notification = t7.compile(notificationTemplate);
     }
-    var itemHTML = app._compiledTemplates.notification(params);
-    
-    _tempNotificationElement.innerHTML = itemHTML;
+    console.log(app._compiledTemplates.notification);
+    _tempNotificationElement.innerHTML = app._compiledTemplates.notification(params);
 
     var item = $(_tempNotificationElement).children();
 
@@ -89,7 +79,7 @@ app.addNotification = function (params) {
         var close = false;
         var target = $(e.target);
         if (params.material && target.hasClass('button')) {
-            if (params.buttons && params.buttons[target.index()].onClick) params.buttons[target.index()].onClick.call(target[0], e, item[0]);
+            if (params.button && params.button.onClick) params.button.onClick.call(target[0], e, item[0]);
         }
         if (target.is('.close-notification') || $(e.target).parents('.close-notification').length > 0) {
             close = true;
