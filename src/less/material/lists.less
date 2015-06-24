@@ -139,14 +139,13 @@
         }
         html:not(.watch-active-state) &:active, &.active-state {
             .transition(0ms);
-            background-color: #d9d9d9;
+            background-color: rgba(0,0,0,0.1);
             .item-inner {
                 .hairline-color(bottom, transparent);
             }
         }
         &.list-button {
             padding: 0 16px;
-            color: @themeColor;
             font-size: 16px;
             display: block;
             line-height: 48px;
@@ -165,7 +164,7 @@
         margin: 10px 0 35px;
         padding: 0 16px;
         font-size: 14px;
-        color: #8f8f94;
+        color: rgba(0,0,0,0.54);
     }
 
     // Swipe outs
