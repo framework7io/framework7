@@ -406,7 +406,7 @@ myApp.onPageInit('notifications', function (page) {
 
 /* ===== Login screen page events ===== */
 myApp.onPageInit('login-screen-embedded', function (page) {
-    $$(page.container).find('.list-button').on('click', function () {
+    $$(page.container).find('.button').on('click', function () {
         var username = $$(page.container).find('input[name="username"]').val();
         var password = $$(page.container).find('input[name="password"]').val();
         myApp.alert('Username: ' + username + ', password: ' + password, function () {
@@ -414,7 +414,7 @@ myApp.onPageInit('login-screen-embedded', function (page) {
         });
     });
 });
-$$('.login-screen').find('.list-button').on('click', function () {
+$$('.login-screen').find('.button').on('click', function () {
     var username = $$('.login-screen').find('input[name="username"]').val();
     var password = $$('.login-screen').find('input[name="password"]').val();
     myApp.alert('Username: ' + username + ', password: ' + password, function () {
@@ -474,7 +474,7 @@ myApp.onPageInit('virtual-list', function (page) {
                     '</a>' +
                   '</li>',
         // Item height
-        height: 63,
+        height: 73,
     });
 });
 /* ===== Swiper Two Way Control Gallery ===== */
