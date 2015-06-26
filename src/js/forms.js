@@ -55,16 +55,18 @@ app.initPageMaterialInputs = function (pageContainer) {
 ======================================================*/
 app.initMaterialWatchInputs = function () {
     var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
-    function addFocusState() {
+    function addFocusState(e) {
+        /*jshint validthis:true*/
         var i = $(this);
-        var type = $(this).attr('type');
+        var type = i.attr('type');
         if (notInputs.indexOf(type) >= 0) return;
         var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
         els.addClass('focus-state');
     }
-    function removeFocusState() {
+    function removeFocusState(e) {
+        /*jshint validthis:true*/
         var i = $(this), value = i.val();
-        var type = $(this).attr('type');
+        var type = i.attr('type');
         if (notInputs.indexOf(type) >= 0) return;
         var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
         els.removeClass('focus-state');
