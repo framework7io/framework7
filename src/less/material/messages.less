@@ -86,8 +86,10 @@
     word-break: break-word;
     color:#333;
     min-height: @messagesAvatarSize;
-    -webkit-filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.1));
     position: relative;
+    -webkit-filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
+    .translate3d(0,0,0);
     .message-pic & {
         padding: 8px;
     }
@@ -122,7 +124,6 @@
             bottom: 0;
             width: 0;
             height: 0;
-            z-index: -1;
         }
     }
     &.message-with-avatar {
