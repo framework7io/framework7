@@ -35,10 +35,10 @@
             },
             ks: {
                 ios : {
-                    root: 'kitchen-sink/',
-                    css: 'kitchen-sink/css/',
-                    jade: 'kitchen-sink/jade/*.jade',
-                    less: 'kitchen-sink/less/*.less',
+                    root: 'kitchen-sink-ios/',
+                    css: 'kitchen-sink-ios/css/',
+                    jade: 'kitchen-sink-ios/jade/*.jade',
+                    less: 'kitchen-sink-ios/less/*.less',
                 },
                 material : {
                     root: 'kitchen-sink-material/',
@@ -204,7 +204,7 @@
         
     });
     gulp.task('styles-ios', function (cb) {
-        gulp.src([paths.source.styles.ios + 'framework7.less', paths.source.styles.ios + 'framework7.rtl.less', paths.source.styles.ios + 'framework7.themes.less'])
+        gulp.src([paths.source.styles.ios + 'framework7.ios.less', paths.source.styles.ios + 'framework7.ios.rtl.less', paths.source.styles.ios + 'framework7.ios.colors.less'])
             .pipe(less({
                 paths: [ path.join(__dirname, 'less', 'includes') ]
             }))
@@ -216,7 +216,7 @@
             });
     });
     gulp.task('styles-material', function (cb) {
-        gulp.src([paths.source.styles.material + 'framework7.material.less', paths.source.styles.material + 'framework7.material.rtl.less', paths.source.styles.material + 'framework7.material.themes.less'])
+        gulp.src([paths.source.styles.material + 'framework7.material.less', paths.source.styles.material + 'framework7.material.rtl.less', paths.source.styles.material + 'framework7.material.colors.less'])
             .pipe(less({
                 paths: [ path.join(__dirname, 'less', 'includes') ]
             }))
@@ -357,12 +357,12 @@
 
                 // Minify CSS
                 var minifiedCSS = [
-                    paths.dist.styles + f7.filename + '.css', 
-                    paths.dist.styles + f7.filename + '.rtl.css', 
-                    paths.dist.styles + f7.filename + '.themes.css',
+                    paths.dist.styles + f7.filename + '.ios.css', 
+                    paths.dist.styles + f7.filename + '.ios.rtl.css', 
+                    paths.dist.styles + f7.filename + '.ios.colors.css',
                     paths.dist.styles + f7.filename + '.material.css', 
                     paths.dist.styles + f7.filename + '.material.rtl.css', 
-                    paths.dist.styles + f7.filename + '.material.themes.css'
+                    paths.dist.styles + f7.filename + '.material.colors.css'
                 ];
                 gulp.src(minifiedCSS)
                     .pipe(minifyCSS({
