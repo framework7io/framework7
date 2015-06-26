@@ -126,8 +126,21 @@ Framework7 Color Themes
                 }
             }
         }
+        .focus-state {
+            .label, .floating-label {
+                color: @color;
+            }
+        }
+        .item-input-field, .input-field {
+            &.focus-state:after, &.not-empty-state:after {
+                background: @color;
+            }
+        }
         .picker-calendar-day.picker-calendar-day-selected span {
             background-color: @color !important;
+        }
+        .modal-button {
+            color: @color;
         }
     }
     .swiper-pagination {
