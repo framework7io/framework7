@@ -135,7 +135,6 @@
             background-position: calc(~"100% - 16px") center;
         }
         html:not(.watch-active-state) &:active, &.active-state {
-            .transition(0ms);
             background-color: rgba(0,0,0,0.1);
             .item-inner {
                 .hairline-color(bottom, transparent);
@@ -293,7 +292,7 @@
         }
     }
     .item-divider, .list-group-title {
-        background: #eaeaea;
+        background: #f2f2f2;
         .hairline-remove(top);
         margin-top: -1px;
         padding: 0px 16px;
