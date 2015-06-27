@@ -5,15 +5,15 @@ app.swiper = function (container, params) {
     return new Swiper(container, params);
 };
 app.initPageSwiper = function (pageContainer) {
-    var page = $(pageContainer);
-    var swipers = page.find('.swiper-init');
+    pageContainer = $(pageContainer);
+    var swipers = pageContainer.find('.swiper-init');
     if (swipers.length === 0) return;
     function destroySwiperOnRemove(slider) {
         function destroySwiper() {
             slider.destroy();
-            page.off('pageBeforeRemove', destroySwiper);
+            pageContainer.off('pageBeforeRemove', destroySwiper);
         }
-        page.on('pageBeforeRemove', destroySwiper);
+        pageContainer.on('pageBeforeRemove', destroySwiper);
     }
     for (var i = 0; i < swipers.length; i++) {
         var swiper = swipers.eq(i);
@@ -29,8 +29,8 @@ app.initPageSwiper = function (pageContainer) {
     }
 };
 app.reinitPageSwiper = function (pageContainer) {
-    var page = $(pageContainer);
-    var sliders = page.find('.swiper-init');
+    pageContainer = $(pageContainer);
+    var sliders = pageContainer.find('.swiper-init');
     if (sliders.length === 0) return;
     for (var i = 0; i < sliders.length; i++) {
         var sliderInstance = sliders[0].swiper;

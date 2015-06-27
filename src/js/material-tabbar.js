@@ -2,7 +2,7 @@
 ************   Material Preloader   ************
 ======================================================*/
 app.initPageMaterialTabbar = function (pageContainer) {
-    console.log('x');
+    pageContainer = $(pageContainer);
     var tabbar = $(pageContainer).find('.tabbar');
     if (tabbar.find('.tab-link-highlight').length === 0) {
         tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');

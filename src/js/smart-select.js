@@ -2,14 +2,13 @@
 ************   Smart Select   ************
 ===============================================================================*/
 app.initSmartSelects = function (pageContainer) {
-    var page = $(pageContainer);
-    if (page.length === 0) return;
+    pageContainer = $(pageContainer);
     var selects;
-    if (page.is('.smart-select')) {
-        selects = page;
+    if (pageContainer.is('.smart-select')) {
+        selects = pageContainer;
     }
     else {
-        selects = page.find('.smart-select');
+        selects = pageContainer.find('.smart-select');
     }
     if (selects.length === 0) return;
 
