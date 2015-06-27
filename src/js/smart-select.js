@@ -102,7 +102,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
     var selectName = select.name;
-    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName, optionData;
+    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionIsLabel, previousGroup, optionColor, optionClassName, optionData;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
         if (option[0].disabled) continue;
@@ -115,11 +115,15 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         optionClassName = optionData.optionClass;
         optionGroup = option.parent('optgroup')[0];
         optionGroupLabel = optionGroup && optionGroup.label;
-        optionShowGroupLabel = false;
+        optionIsLabel = false;
         if (optionGroup) {
             if (optionGroup !== previousGroup) {
-                optionShowGroupLabel = true;
+                optionIsLabel = true;
                 previousGroup = optionGroup;
+                values.push({
+                    groupLabel: optionGroupLabel,
+                    isLabel: optionIsLabel
+                });
             }
         }
         values.push({
@@ -128,7 +132,6 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             selected: option[0].selected,
             group: optionGroup,
             groupLabel: optionGroupLabel,
-            showGroupLabel: optionShowGroupLabel,
             image: optionImage,
             icon: optionIcon,
             color: optionColor,
@@ -139,7 +142,6 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             hasMedia: optionHasMedia,
             checkbox: inputType === 'checkbox',
             inputName: inputName,
-            test: this,
             material: app.params.material
         });
     }
@@ -148,9 +150,9 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     // Item template/HTML
     if (!app._compiledTemplates.smartSelectItem) {
         app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate || 
-            '{{#if showGroupLabel}}' +
+            '{{#if isLabel}}' +
             '<li class="item-divider">{{groupLabel}}</li>' +
-            '{{/if}}' +
+            '{{else}}' +
             '<li{{#if className}} class="{{className}}"{{/if}}>' +
                 '<label class="label-{{inputType}} item-content">' +
                     '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
@@ -187,7 +189,8 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                         '</div>' +
                     '{{/if}}' +
                 '</label>' +
-            '</li>'
+            '</li>' +
+            '{{/if}}'
         );
     }
     var smartSelectItemTemplate = app._compiledTemplates.smartSelectItem;
