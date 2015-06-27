@@ -180,7 +180,6 @@
         text-overflow: ellipsis;    
     }
     html:not(.watch-active-state) &:active, &.active-state {
-        .transition(0ms);
         background: rgba(0,0,0,0.1);
     }
 }
@@ -432,6 +431,7 @@ html.with-statusbar-overlay {
     .toolbar {
         position: relative;
         width: 100%;
+        top: 0;
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize})";
             height: ~"-moz-calc(100% - @{toolbarSize})";
@@ -445,6 +445,7 @@ html.with-statusbar-overlay {
         z-index: inherit;
         .translate3d(0,0,0);
         .toolbar {
+            top: 0;
             .hairline(bottom, #929499);
         }
     }
