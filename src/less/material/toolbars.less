@@ -202,7 +202,6 @@
         .flexbox();
         .justify-content(center);
         .align-items(center);
-        color: @tabbarLinksColor;
         -webkit-box-flex: 1;
         -ms-flex: 1;
         -webkit-box-orient: vertical;
@@ -212,15 +211,18 @@
         flex-direction: column;
         font-size: 14px;
         text-transform: uppercase;
-        &.active {
-            color: @tabbarActiveLinksColor;
-        }
     }
     i.icon {
         height: 24px;
     }
     a.tab-link {
         .transition(200ms);
+        overflow: hidden;
+        color: @tabbarLinksColor;
+        position: relative;
+        &.active, html:not(.watch-active-state) &:active, &.active-state {
+            color: @tabbarActiveLinksColor;
+        }
     }
     .tab-link-highlight {
         position: absolute;
