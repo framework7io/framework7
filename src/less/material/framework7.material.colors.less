@@ -20,6 +20,12 @@ Framework7 Color Themes
             &:not(.button-fill) {
                 color:@color;
             }
+            
+        }
+        .theme-@{colorName} .navbar &, .theme-@{colorName}.navbar &, .theme-@{colorName} .toolbar &, .theme-@{colorName}.toolbar &, .theme-@{colorName} .subnavbar &, .theme-@{colorName}.subnavbar & {
+            &:not(.button-fill) {
+                color:#fff;
+            }
         }
         &.color-@{colorName}:not(.button-fill), .color-@{colorName}.buttons-row &:not(.button-fill) {
             color: @color !important;
@@ -69,12 +75,18 @@ Framework7 Color Themes
     }
     // Theme
     .theme-@{colorName} {
+        // Links
         a {
             color: @color;
         }
+        // Toolbars
         .navbar, .navbar& , .toolbar, .toolbar&, .subnavbar, .subnavbar& {
             background-color: @color;
         }
+        .tabbar .tab-link-highlight {
+            background: darken(@color, 15%);
+        }
+        // Forms
         .range-slider, .range-slider& {
             input[type="range"]::-webkit-slider-thumb:before {
                 background-color: @color;
@@ -136,9 +148,11 @@ Framework7 Color Themes
                 background: @color;
             }
         }
+        // Calendar
         .picker-calendar-day.picker-calendar-day-selected span {
             background-color: @color !important;
         }
+        // Modal buttons
         .modal-button {
             color: @color;
         }
@@ -201,7 +215,7 @@ Framework7 Layouts Themes
 ==========================*/
 /* === Dark layout === */
 .layout-dark {
-    @pageBg: #222426;
+    @pageBg: #222;
     @barsBg: #131313;
     @barsBorder: #333;
     @barsText: #fff;
@@ -225,34 +239,20 @@ Framework7 Layouts Themes
         background-color: @pageBg;
         color:rgba(255,255,255,0.87);
     }
+    // Content Block
     .content-block-title {
         color:rgba(255,255,255,0.87);
     }
-    .content-block, .content-block& {
-        color: rgba(255,255,255,0.7);
-    }
+    
     .content-block-inner {
-        background: @blockStrongBg;
-        color:rgba(255,255,255,0.87);
         .hairline-color(top, @blockBorder);
         .hairline-color(bottom, @blockBorder);
     }
-    .list-block, .list-block& {
-        ul {
-            background: @blockBg;
-            .hairline-color(top, @blockBorder);
-            .hairline-color(bottom, @blockBorder);
-        }
-        &.inset ul{
-            background: @blockStrongBg;
-        }
-        &.notifications > ul {
-            background: none;
-        }
-    }
+    // Popover
     .popover .list-block ul {
         background: none;
     }
+    // Card
     .card {
         background: @blockBg;
     }
@@ -263,7 +263,19 @@ Framework7 Layouts Themes
         .hairline-color(top, @blockBorder);
         color:@lightText;
     }
-    
+    // List
+    .list-block, .list-block& {
+        ul {
+            .hairline-color(top, @blockBorder);
+            .hairline-color(bottom, @blockBorder);
+        }
+        &.inset ul{
+            background: @blockStrongBg;
+        }
+        &.notifications > ul {
+            background: none;
+        }
+    }
     li.sorting {
         background-color: @activeLink;
     }
@@ -276,9 +288,26 @@ Framework7 Layouts Themes
     .item-after, .item-text {
         color: rgba(255,255,255,0.7);
     }
+    .list-block-label {
+        color:@lightText;
+    }
+    .item-divider, .list-group-title {
+        background: @dividerBg;
+        color:@lightText;        
+        .hairline-color(top, @blockBorder);
+    }
+    // Forms
     .item-link, label.label-checkbox, label.label-radio {
         html:not(.watch-active-state) &:active, &.active-state {
             background-color: @activeLink;
+        }
+    }
+    .list-block {
+        input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
+            color:@strongText;
+            &::-webkit-input-placeholder {
+                color: rgba(255,255,255,0.35);
+            }
         }
     }
     .label-switch {
@@ -286,6 +315,13 @@ Framework7 Layouts Themes
             background: rgba(255,255,255,0.3);
         }
     }
+    .item-inner:not(.focus-state) .label, .item-inner:not(.focus-state) .floating-label {
+        color: rgba(255,255,255,0.7);
+    }
+    .item-inner:not(.focus-state, .not-empty-state) .item-input-field, .item-inner:not(.focus-state, .not-empty-state) .input-field {
+        .hairline-color(bottom, rgba(255, 255, 255, 0.12));
+    }
+    
     label.label-checkbox {
         i.icon-form-checkbox {
             border-color: rgba(255,255,255,0.7);
@@ -299,14 +335,6 @@ Framework7 Layouts Themes
     .item-link.list-button {
         .hairline-color(bottom, @blockBorder);
     }
-    .list-block-label {
-        color:@lightText;
-    }
-    .item-divider, .list-group-title {
-        background: @dividerBg;
-        color:@lightText;        
-        .hairline-color(top, @blockBorder);
-    }
     
     // Searchbar
     .searchbar {
@@ -314,10 +342,4 @@ Framework7 Layouts Themes
         .hairline-color(bottom, @searchbarBorder);
     }
 
-    // Forms
-    .list-block, .list-block& {
-        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
-            color:@strongText;
-        }
-    }
 }
