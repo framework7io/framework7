@@ -88,7 +88,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var navbarTheme = smartSelectData.navbarTheme || app.params.smartSelectNavbarTheme;
     var virtualList = smartSelectData.virtualList;
     var virtualListHeight = smartSelectData.virtualListHeight;
-
+    var material = app.params.material;
     // Collect all options/values
     var select = smartSelect.find('select')[0];
     var $select = $(select);
@@ -109,7 +109,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         optionImage = optionData.optionImage || $selectData.optionImage;
         optionIcon = optionData.optionIcon || $selectData.optionIcon;
         optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
-        if (app.params.material) optionHasMedia = optionImage || optionIcon;
+        if (material) optionHasMedia = optionImage || optionIcon;
         optionColor = optionData.optionColor;
         optionClassName = optionData.optionClass;
         optionGroup = option.parent('optgroup')[0];
@@ -221,10 +221,9 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         inPopup: openIn === 'popup',
         inPage: openIn === 'page',
         leftTemplate: openIn === 'popup' ? 
-            app.params[app.params.material ? 'smartSelectPopupCloseTemplateMaterial' : 'smartSelectPopupCloseTemplate'].replace(/{{closeText}}/g, closeText) : 
-            app.params[app.params.material ? 'smartSelectBackTemplateMaterial' : 'smartSelectBackTemplate'].replace(/{{backText}}/g, backText)
+            (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
+            (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
     });
-
     
     // Determine navbar layout type - static/fixed/through
     var noNavbar = '', noToolbar = '', navbarLayout;
@@ -256,7 +255,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                                 '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
                                 '<a href="#" class="searchbar-clear"></a>' +
                             '</div>' +
-                            '<a href="#" class="searchbar-cancel">' + searchbarCancel + '</a>' +
+                            (material ? '' : '<a href="#" class="searchbar-cancel">' + searchbarCancel + '</a>') +
                           '</form>' +
                           '<div class="searchbar-overlay"></div>';
 

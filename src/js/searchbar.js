@@ -35,6 +35,9 @@ var Searchbar = function (container, params) {
     // Instance
     var s = this;
 
+    // Material
+    s.material = app.params.material;
+
     // Params
     s.params = params;
 
@@ -82,7 +85,7 @@ var Searchbar = function (container, params) {
 
     // Cancel button
     var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-    if (s.cancelButton.length > 0) {
+    if (s.cancelButton.length > 0 && !s.material) {
         s.cancelButton.transition(0).show();
         s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
         setTimeout(function () {
@@ -206,7 +209,7 @@ var Searchbar = function (container, params) {
         function _enable() {
             if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
-            if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
+            if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, '0px');
             s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
         }
@@ -223,7 +226,7 @@ var Searchbar = function (container, params) {
     s.disable = function () {
         s.input.val('').trigger('change');
         s.container.removeClass('searchbar-active searchbar-not-empty');
-        if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
+        if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
         
         if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
         function _disable() {
@@ -242,7 +245,11 @@ var Searchbar = function (container, params) {
     };
 
     // Clear
-    s.clear = function () {
+    s.clear = function (e) {
+        if (!s.query && e && $(e.target).hasClass('searchbar-clear')) {
+            s.disable();
+            return;
+        }
         s.input.val('').trigger('change').focus();
         s.triggerEvent('clearSearch', 'onClear');
     };
@@ -385,7 +392,7 @@ var Searchbar = function (container, params) {
     s.attachEvents = function (destroy) {
         var method = destroy ? 'off' : 'on';
         s.container[method]('submit', preventSubmit);
-        s.cancelButton[method]('click', s.disable);
+        if (!s.material) s.cancelButton[method]('click', s.disable);
         s.overlay[method]('click', s.disable);
         s.input[method]('focus', s.enable);
         s.input[method]('change keydown keypress keyup', s.handleInput);
