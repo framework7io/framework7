@@ -427,13 +427,19 @@ $$('.popover a').on('click', function () {
 
 /* ===== Color themes ===== */
 myApp.onPageInit('color-themes', function (page) {
-    var themes = 'theme-white theme-black theme-yellow theme-red theme-blue theme-green theme-pink theme-lightblue theme-orange theme-gray';
-    var layouts = 'layout-dark layout-white';
     $$(page.container).find('.ks-color-theme').click(function () {
-        $$('body').removeClass(themes).addClass('theme-' + $$(this).attr('data-theme'));
+        var classList = $$('body')[0].classList;
+        for (var i = 0; i < classList.length; i++) {
+            if (classList[i].indexOf('theme') === 0) classList.remove(classList[i]);
+        }
+        classList.add('theme-' + $$(this).attr('data-theme'));
     });
     $$(page.container).find('.ks-layout-theme').click(function () {
-        $$('body').removeClass(layouts).addClass('layout-' + $$(this).attr('data-theme'));
+        var classList = $$('body')[0].classList;
+        for (var i = 0; i < classList.length; i++) {
+            if (classList[i].indexOf('layout-') === 0) classList.remove(classList[i]);
+        }
+        classList.add('layout-' + $$(this).attr('data-theme')); 
     });
 });
 
