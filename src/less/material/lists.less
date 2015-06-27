@@ -1,7 +1,5 @@
 /* === Lists === */
 @listBlockBorderColor: rgba(0,0,0,0.12);
-@dividerBg: #F7F7F7;
-@dividerColor: #8e8e93;
 .list-block {
     margin: 32px 0;
     font-size: 16px;
@@ -295,7 +293,7 @@
         }
     }
     .item-divider, .list-group-title {
-        background: @dividerBg;
+        background: #eaeaea;
         .hairline-remove(top);
         margin-top: -1px;
         padding: 0px 16px;
@@ -304,10 +302,11 @@
         max-width: 100%;
         text-overflow: ellipsis;
         overflow: hidden;
-        color: @dividerColor;
+        color: rgba(0,0,0,0.54);
         height: 48px;
         box-sizing: border-box;
         line-height: 48px;
+        font-size: 14px;
     }
     .list-group-title {
         position: relative;
