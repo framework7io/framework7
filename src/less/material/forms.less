@@ -236,7 +236,7 @@ textarea.resizeable {
             margin-right: 0;
         }
     }
-    .navbar &, .toolbar &, .subnavbar & {
+    .navbar &, .toolbar &, .subnavbar &, .notifications & {
         &:not(.button-fill) {
             color:#fff;
             html:not(.watch-active-state) &:active, &.active-state {
@@ -409,7 +409,6 @@ label.label-checkbox, label.label-radio {
         }
     }
     html:not(.watch-active-state) &:active, &.active-state {
-        .transition(0ms);
         background-color: rgba(0,0,0,0.1);
         .item-inner {
             .hairline-color(bottom, transparent);
