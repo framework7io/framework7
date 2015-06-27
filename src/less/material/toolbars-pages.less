@@ -17,6 +17,12 @@
         padding-top: @tabbarLabelsSize;
     }
 }
+.toolbar:not(.messagebar) ~ .page-content {
+    padding-top: @toolbarSize;
+}
+.tabbar-labels ~ .page-content {
+    padding-top: @tabbarLabelsSize;
+}
 .navbar-fixed {
     .page-content {
         padding-top: @navbarSize;
@@ -37,13 +43,13 @@
             padding-top: @navbarSize + @tabbarLabelsSize;
         }
     }
-    .toolbar ~ .page-content {
+    .toolbar:not(.messagebar) ~ .page-content {
         padding-top: @navbarSize + @toolbarSize;
     }
     .tabbar-labels ~ .page-content {
         padding-top: @navbarSize + @tabbarLabelsSize;
     }
-    .toolbar {
+    .toolbar:not(.messagebar) {
         top: @navbarSize;
     }
 }
