@@ -13,9 +13,9 @@ app.initFastClicks = function () {
 
     var touchStartX, touchStartY, touchStartTime, targetElement, trackClick, activeSelection, scrollParent, lastClickTime, isMoved, tapHoldFired, tapHoldTimeout;
     var activableElement, activeTimeout, needsFastClick, needsFastClickTimeOut;
-
-    function findActivableElement(e) {
-        var target = $(e.target);
+    var rippleWave, rippleTarget, rippleTransform, rippleTimeout;
+    function findActivableElement(el) {
+        var target = $(el);
         var parents = target.parents(app.params.activeStateElements);
         var activable;
         if (target.is(app.params.activeStateElements)) {
@@ -26,8 +26,8 @@ app.initFastClicks = function () {
         }
         return activable ? activable : target;
     }
-    function isInsideScrollableView() {
-        var pageContent = activableElement.parents('.page-content, .panel');
+    function isInsideScrollableView(el) {
+        var pageContent = el.parents('.page-content, .panel');
         
         if (pageContent.length === 0) {
             return false;
@@ -37,6 +37,7 @@ app.initFastClicks = function () {
         if (pageContent.prop('scrollHandlerSet') !== 'yes') {
             pageContent.on('scroll', function() {
               clearTimeout(activeTimeout);
+              clearTimeout(rippleTimeout);
             });
             pageContent.prop('scrollHandlerSet', 'yes');
         }
@@ -105,18 +106,109 @@ app.initFastClicks = function () {
 
     // Mouse Handlers
     function handleMouseDown (e) {
-        findActivableElement(e).addClass('active-state');
+        findActivableElement(e.target).addClass('active-state');
         if ('which' in e && e.which === 3) {
             setTimeout(function () {
                 $('.active-state').removeClass('active-state');
             }, 0);
         }
+        if (app.params.material && app.params.materialRipple) {
+            touchStartX = e.pageX;
+            touchStartY = e.pageY;
+            rippleTouchStart(e.target, e.pageX, e.pageY);
+        }
     }
     function handleMouseMove (e) {
         $('.active-state').removeClass('active-state');
+        if (app.params.material && app.params.materialRipple) {
+            rippleTouchMove();
+        }
     }
     function handleMouseUp (e) {
         $('.active-state').removeClass('active-state');
+        if (app.params.material && app.params.materialRipple) {
+            rippleTouchEnd();
+        }
+    }
+
+    // Material Touch Ripple Effect
+    function findRippleElement(el) {
+        var needsRipple = app.params.materialRippleElements;
+        var $el = $(el);
+        if ($el.is(needsRipple)) {
+            return $el;
+        }
+        else if ($el.parents(needsRipple).length > 0) {
+            return $el.parents(needsRipple).eq(0);
+        }
+        else return false;
+    }
+    function createRipple(x, y, el) {
+        var offset = el.offset();
+        
+        var center = {
+            x: x - offset.left,
+            y: y - offset.top
+        };
+        var targetHeight = el[0].clientHeight;
+        var targetWidth = el[0].clientWidth;
+        var diameter = Math.pow((Math.pow(targetHeight, 2) + Math.pow(targetWidth, 2)), 0.5);
+        rippleWave = $('<div class="material-ripple" style="width: ' + diameter + 'px; height: '+diameter+'px; margin-top:-'+diameter/2+'px; margin-left:-'+diameter/2+'px; left:'+center.x+'px; top:'+center.y+'px;"></div>');
+        el.prepend(rippleWave);
+        var clientLeft = rippleWave[0].clientLeft;
+        rippleTransform = 'translate3d('+(-center.x + targetWidth/2)+'px, '+(-center.y + targetHeight/2)+'px, 0) scale(1)';
+        rippleWave.transform(rippleTransform);
+    }
+
+    function removeRipple() {
+        if (!rippleWave) return;
+        rippleWave
+            .addClass('material-ripple-fast')
+            .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
+            .transitionEnd(function () {
+                var rippleWave = $(this)
+                    .addClass('material-ripple-out')
+                    .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
+                setTimeout(function () {
+                    rippleWave.transitionEnd(function(){
+                        $(this).remove();
+                    });
+                }, 0);
+                    
+        });
+        rippleWave = rippleTarget = undefined;
+    }
+    function rippleTouchStart (el, x, y) {
+        rippleTarget = findRippleElement(el);
+        if (!rippleTarget || rippleTarget.length === 0) {
+            rippleTarget = undefined;
+            return;
+        }
+        if (!isInsideScrollableView(rippleTarget)) {
+            createRipple(touchStartX, touchStartY, rippleTarget);
+        }
+        else {
+            rippleTimeout = setTimeout(function () {
+                createRipple(touchStartX, touchStartY, rippleTarget);
+            }, 80);
+        }
+    }
+    function rippleTouchMove() {
+        clearTimeout(rippleTimeout);
+        removeRipple();
+    }
+    function rippleTouchEnd() {
+        if (rippleWave) {
+            removeRipple();
+        }
+        else if (rippleTarget && !isMoved) {
+            clearTimeout(rippleTimeout);
+            createRipple(touchStartX, touchStartY, rippleTarget);
+            setTimeout(removeRipple, 0);
+        }
+        else {
+            removeRipple();   
+        }
     }
 
     // Touch Handlers
@@ -177,16 +269,20 @@ app.initFastClicks = function () {
         if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
             e.preventDefault();
         }
+        
         if (app.params.activeState) {
-            activableElement = findActivableElement(e);
+            activableElement = findActivableElement(targetElement);
             // If it's inside a scrollable view, we don't trigger active-state yet,
             // because it can be a scroll instead. Based on the link:
             // http://labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
-            if (!isInsideScrollableView(e)) {
+            if (!isInsideScrollableView(activableElement)) {
                 addActive();
             } else {
                 activeTimeout = setTimeout(addActive, 80);
             }
+        }
+        if (app.params.material && app.params.materialRipple) {
+            rippleTouchStart(targetElement, touchStartX, touchStartY);
         }
     }
     function handleTouchMove(e) {
@@ -214,6 +310,9 @@ app.initFastClicks = function () {
 				clearTimeout(activeTimeout);
 				removeActive();
 			}
+            if (app.params.material && app.params.materialRipple) {
+                rippleTouchMove();
+            }
         }
     }
     function handleTouchEnd(e) {
@@ -258,6 +357,10 @@ app.initFastClicks = function () {
         if (app.params.activeState) {
             addActive();
             setTimeout(removeActive, 0);
+        }
+        // Remove Ripple
+        if (app.params.material && app.params.materialRipple) {
+            rippleTouchEnd();
         }
 
         // Trigger focus when required
