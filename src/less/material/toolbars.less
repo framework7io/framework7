@@ -4,13 +4,14 @@
 @toolbarBg : @themeColor;
 @toolbarColor: #fff;
 @toolbarLinksColor: #fff;
-@toolbarSize: 56px;
+@navbarSize: 56px;
+@toolbarSize: 48px;
 
 //Tab bar
-@tabbarLabelsSize: 56px;
-@tabbarLinksColor: rgba(255,255,255,0.6);
-@tabbarActiveLinksColor: #fff;
-@tabbarLabelsSizeTablet: 56px;
+@tabbarSize: 48px;
+@tabbarLabelsSize: 72px;
+@tabbarLinksColor: rgba(255,255,255,0.7);
+@tabbarActiveLinksColor: rgba(255,255,255,1);
 
 // Toolbars animations
 @toolbarDuration: 300ms;
@@ -36,7 +37,6 @@
     display: none;
 }
 .navbar, .toolbar {
-    height: @toolbarSize;
     width: 100%;
     box-sizing: border-box;
     font-size: 17px;
@@ -51,9 +51,8 @@
     }
 }
 .navbar, .toolbar, .subnavbar {
+    background: @toolbarBg;
     a.link {
-        line-height: @toolbarSize;
-        height: @toolbarSize;
         text-decoration: none;
         position: relative;
         color: @toolbarLinksColor;
@@ -61,16 +60,11 @@
         .justify-content(flex-start);
         .align-items(center);
         .transition(300ms);
-        html:not(.watch-active-state) &:active, &.active-state {
-            opacity: 0.3;
-            .transition(0ms);
-        }
         i+span, i+i, span+i, span+span {
             margin-left: 8px;
         }
     }
     a.icon-only {
-        // min-width: @toolbarSize;
         .flexbox();
         .justify-content(center);
         .align-items(center);
@@ -83,7 +77,11 @@
 .navbar {
     left: 0;
     top: 0;
-    background: @toolbarBg;
+    height: @navbarSize;
+    a.link {
+        line-height: @navbarSize;
+        height: @navbarSize;
+    }
     .center {
         font-size: 17px;
         font-weight: 500;
@@ -93,7 +91,7 @@
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
-        line-height: @toolbarSize;
+        line-height: @navbarSize;
         .flex-shrink(10);
         .flexbox();
         .align-items(center);
@@ -129,7 +127,6 @@
     position: absolute;
     left: 0;
     top: 100%;
-    background: @toolbarBg;
     z-index: 20;
     box-sizing: border-box;
     padding: 0 16px;
@@ -137,6 +134,10 @@
     .justify-content(space-between);
     .align-items(center);
     overflow: hidden;
+    a.link {
+        line-height: @toolbarSize;
+        height: @toolbarSize;
+    }
     .navbar.no-border & {
         margin-top: 0;
     }
@@ -167,7 +168,11 @@
 .toolbar {
     left: 0;
     bottom: 0;
-    background: @toolbarBg;
+    height: @toolbarSize;
+    a.link {
+        line-height: @toolbarSize;
+        height: @toolbarSize;
+    }
     a {
         .flex-shrink(1);
         position: relative;
@@ -178,18 +183,13 @@
 
 // Tabbar
 .tabbar {
-    color: @tabbarLinksColor;
     z-index: 5001;
     overflow: hidden;
+    bottom: auto;
+    top: 0;
     .toolbar-inner {
         padding-left: 0;
         padding-right: 0;
-    }
-    a {
-        color: @tabbarLinksColor;
-    }
-    a.active {
-        color: @tabbarActiveLinksColor;
     }
     a.link {
         line-height: 1.4;
@@ -201,6 +201,7 @@
         .flexbox();
         .justify-content(center);
         .align-items(center);
+        color: @tabbarLinksColor;
         -webkit-box-flex: 1;
         -ms-flex: 1;
         -webkit-box-orient: vertical;
@@ -208,151 +209,44 @@
         -ms-flex-direction: column;
         -webkit-flex-direction: column;
         flex-direction: column;
+        font-size: 14px;
+        text-transform: uppercase;
+        &.active {
+            color: @tabbarActiveLinksColor;
+        }
     }
     i.icon {
-        height: 30px;
+        height: 24px;
+    }
+    a.tab-link {
+        .transition(200ms);
+    }
+    .tab-link-highlight {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        background: darken(@themeColor, 15%);
+        .transition(200ms);
     }
 }
 .tabbar-labels {
     height: @tabbarLabelsSize;
     a.tab-link, a.link {
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding-top: 12px;
+        padding-bottom: 12px;
         height: 100%;
         .justify-content(space-between);
-        i + span {
-            margin: 0;
-        }
     }
     span.tabbar-label {
         line-height: 1;
         display: block;
         margin: 0;
-        letter-spacing: 0.01em;
-        font-size: 10px;
+        margin-top: 10px;
         position: relative;
         text-overflow: ellipsis;
         white-space: nowrap;
-    }
-}
-@media all and (min-width:768px) {
-    .tabbar {
-        .toolbar-inner {
-            .justify-content(center);
-        }
-        a.tab-link, a.link {
-            width: auto;
-            min-width: 105px;
-        }
-    }
-    .tabbar-labels {
-        height: @tabbarLabelsSizeTablet;
-        span.tabbar-label {
-            font-size: 14px;
-        }
-    }
-}
-
-.navbar-from-right-to-center {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeIn @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 1;
-    }
-    
-}
-.navbar-from-center-to-right {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeOut @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        opacity: 1;
-    }
-}
-@-webkit-keyframes navbarElementFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-@keyframes navbarElementFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-.navbar-from-center-to-left {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeOut @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        opacity: 1;
-    }
-}
-.navbar-from-left-to-center {
-    .left, .right, .center, .subnavbar, .fading {
-        .animation(navbarElementFadeIn @toolbarDuration forwards);
-    }
-    .sliding {
-        opacity: 1;
-    }
-}
-.navbar-on-left {
-    .left, .right, .center, .subnavbar, .fading {
-        opacity: 0;
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        opacity: 1;
-        .translate3d(-100%,0,0);
-    }
-}
-.navbar-on-right {
-    .left, .right, .center, .subnavbar, .fading {
-        opacity: 0;
-    }
-    .sliding {
-        opacity: 0;
-    }
-    .subnavbar.sliding {
-        .translate3d(100%,0,0);
-    }
-}
-@-webkit-keyframes navbarElementFadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-@keyframes navbarElementFadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-.navbar-from-right-to-center, .navbar-from-center-to-right, .navbar-from-center-to-left, .navbar-from-left-to-center {
-    .left.sliding .back.link .icon {
-        .transition(@toolbarDuration);
-    }
-    .sliding {
-        .transition(@toolbarDuration);
-        .animation(none);
+        overflow: hidden;
+        max-width: 100%;
     }
 }

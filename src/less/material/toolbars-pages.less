@@ -7,29 +7,44 @@
 .subnavbar ~ .page-content {
     padding-top: @toolbarSize;
 }
-.navbar-through, .navbar-fixed {
+.toolbar-fixed, .tabbar-fixed {
     .page-content {
         padding-top: @toolbarSize;
     }
+}
+.tabbar-labels-fixed {
+    .page-content {
+        padding-top: @tabbarLabelsSize;
+    }
+}
+.navbar-fixed {
+    .page-content {
+        padding-top: @navbarSize;
+    }
     .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
-        padding-top: @toolbarSize * 2;
+        padding-top: @navbarSize + @toolbarSize;
     }
     .page .subnavbar, &.page .subnavbar {
-        top: @toolbarSize;
+        top: @navbarSize;
     }
-}
-
-.toolbar-through, .toolbar-fixed, .tabbar-through, .tabbar-fixed {
-    .page-content {
-        padding-bottom: @toolbarSize;
-    }
-}
-.tabbar-labels-fixed, .tabbar-labels-through {
-    .page-content {
-        padding-bottom: @tabbarLabelsSize;
-        @media all and (min-width:768px) {
-            padding-bottom: @tabbarLabelsSizeTablet;
+    &.toolbar-fixed, &.tabbar-fixed, .toolbar-fixed, .tabbar-fixed, .toolbar-fixed &, .tabbar-fixed & {
+        .page-content {
+            padding-top: @navbarSize + @toolbarSize;
         }
+    }
+    &.tabbar-labels-fixed, .tabbar-labels-fixed, .tabbar-labels-fixed & {
+        .page-content {
+            padding-top: @navbarSize + @tabbarLabelsSize;
+        }
+    }
+    .toolbar ~ .page-content {
+        padding-top: @navbarSize + @toolbarSize;
+    }
+    .tabbar-labels ~ .page-content {
+        padding-top: @navbarSize + @tabbarLabelsSize;
+    }
+    .toolbar {
+        top: @navbarSize;
     }
 }
 // Page Hidden Navbar
@@ -52,7 +67,7 @@
         & ~ .page-content, & ~ .pages, & ~ .page {
             .list-group-title {
                 .transition(400ms);
-                top:-@toolbarSize;
+                top:-@navbarSize;
             }
             .subnavbar {
                 .translate3d(0,-100%,0);

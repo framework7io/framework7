@@ -32,8 +32,8 @@
     a.link {
         color: #333;
         .align-self(flex-end);
-        height: 48px;
-        line-height: 48px;
+        height: @toolbarSize;
+        line-height: @toolbarSize;
     }
     .link.icon-only:first-child {
         margin-left: -6px;
@@ -48,10 +48,10 @@
         .flex-shrink(0);
     }
     ~ .page-content {
-        padding-bottom: 48px;
+        padding-bottom: @toolbarSize;
     }
     .page.no-toolbar & ~.page-content {
-        padding-bottom: 48px;
+        padding-bottom: @toolbarSize;
     }
     .hidden-toolbar & {
         .translate3d(0,0,0);

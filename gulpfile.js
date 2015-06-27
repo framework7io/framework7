@@ -83,6 +83,7 @@
                 'src/js/pull-to-refresh.js',
                 'src/js/infinite-scroll.js',
                 'src/js/scroll-toolbars.js',
+                'src/js/material-tabbar.js',
                 'src/js/tabs.js',
                 'src/js/accordion.js',
                 'src/js/fast-clicks.js',
