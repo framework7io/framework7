@@ -14,6 +14,7 @@
   "strict"       : true,
   "smarttabs"    : true,
   "quotmark"     : "single",
+  "scripturl"    : true,
   "indent"       : 4,
   "globals":{
     "document": true,
