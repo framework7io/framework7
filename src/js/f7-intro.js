@@ -30,7 +30,7 @@ window.Framework7 = function (params) {
         pushStatePreventOnLoad: true,
         // Fast clicks
         fastClicks: true,
-        fastClicksDistanceThreshold: 0,
+        fastClicksDistanceThreshold: 10,
         fastClicksDelayBetweenClicks: 50,
         // Tap Hold
         tapHold: false,
@@ -113,7 +113,7 @@ window.Framework7 = function (params) {
         material: false,
         materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
         materialRipple: true,
-        materialRippleElements: 'a.link, a.item-link, .button, .modal-button, .tab-link, .swipeout-actions-right a, .swipeout-actions-left a, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .picker-calendar-day span, .label-switch',
+        materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .swipeout-actions-right a, .swipeout-actions-left a, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .picker-calendar-day span',
         // Auto init
         init: true,
     };
