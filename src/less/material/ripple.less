@@ -1,11 +1,11 @@
 /* === Touch ripple === */
 // Ripple Elements
-a.link, a.item-link, .button, .modal-button, .tab-link, .swipeout-actions-right a, .swipeout-actions-left a, .label-radio, .label-checkbox, .actions-modal-button, .picker-calendar-day span {
+.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .swipeout-actions-right a, .swipeout-actions-left a, .label-radio, .label-checkbox, .actions-modal-button, .picker-calendar-day span {
     -webkit-user-select: none;
     user-select: none;
 }
 // Ripple
-.material-ripple {
+.ripple-wave {
     left: 0;
     top: 0;
     position: absolute !important; 
@@ -17,12 +17,13 @@ a.link, a.item-link, .button, .modal-button, .tab-link, .swipeout-actions-right 
     margin: 0;
     font-size: 0;
     .transform(translate3d(0px, 0px, 0) scale(0));
-    .transition(1600ms);
-    &.material-ripple-fast {
+    .transition(1400ms);
+    &.ripple-wave-fill {
         .transition(300ms);
-        opacity: 0.5;
+        opacity: 0.35;
     }
-    &.material-ripple-out {
+    &.ripple-wave-out {
+        .transition(600ms);
         opacity: 0;
     }
     .button-fill &,  .picker-calendar-day &{
@@ -30,12 +31,12 @@ a.link, a.item-link, .button, .modal-button, .tab-link, .swipeout-actions-right 
     }
 }
 .button-fill, .navbar, .toolbar, .subnavbar, .searchbar, .notifications {
-    .material-ripple {
-        background:rgba(255,255,255,0.2);
+    .ripple-wave {
+        background:rgba(255,255,255,0.3);
     }
 }
 .messagebar {
-    .material-ripple {
+    .ripple-wave {
         background:rgba(0,0,0,0.1);
     }   
 }
