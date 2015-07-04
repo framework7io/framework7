@@ -144,38 +144,39 @@ app.initFastClicks = function () {
         else return false;
     }
     function createRipple(x, y, el) {
-        var offset = el.offset();
-        
+        var box = el[0].getBoundingClientRect();
         var center = {
-            x: x - offset.left,
-            y: y - offset.top
-        };
-        var targetHeight = el[0].clientHeight;
-        var targetWidth = el[0].clientWidth;
-        var diameter = Math.pow((Math.pow(targetHeight, 2) + Math.pow(targetWidth, 2)), 0.5);
-        rippleWave = $('<div class="material-ripple" style="width: ' + diameter + 'px; height: '+diameter+'px; margin-top:-'+diameter/2+'px; margin-left:-'+diameter/2+'px; left:'+center.x+'px; top:'+center.y+'px;"></div>');
+            x: x - box.left,
+            y: y - box.top
+        },
+            height = box.height,
+            width = box.width;
+        var diameter = Math.max(Math.pow((Math.pow(height, 2) + Math.pow(width, 2)), 0.5), 48);
+
+        rippleWave = $(
+            '<div class="ripple-wave" style="width: ' + diameter + 'px; height: '+diameter+'px; margin-top:-'+diameter/2+'px; margin-left:-'+diameter/2+'px; left:'+center.x+'px; top:'+center.y+'px;"></div>'
+        );
         el.prepend(rippleWave);
         var clientLeft = rippleWave[0].clientLeft;
-        rippleTransform = 'translate3d('+(-center.x + targetWidth/2)+'px, '+(-center.y + targetHeight/2)+'px, 0) scale(1)';
+        rippleTransform = 'translate3d('+(-center.x + width/2)+'px, '+(-center.y + height/2)+'px, 0) scale(1)';
         rippleWave.transform(rippleTransform);
     }
 
     function removeRipple() {
         if (!rippleWave) return;
         rippleWave
-            .addClass('material-ripple-fast')
+            .addClass('ripple-wave-fill')
             .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
             .transitionEnd(function () {
                 var rippleWave = $(this)
-                    .addClass('material-ripple-out')
+                    .addClass('ripple-wave-out')
                     .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
                 setTimeout(function () {
                     rippleWave.transitionEnd(function(){
                         $(this).remove();
                     });
                 }, 0);
-                    
-        });
+            });
         rippleWave = rippleTarget = undefined;
     }
     function rippleTouchStart (el, x, y) {
