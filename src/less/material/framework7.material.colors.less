@@ -187,6 +187,12 @@ Framework7 Color Themes
             }
         }
     }
+    // Ripple
+    .ripple-@{colorName} {
+        .ripple-wave {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.3);
+        }
+    }
 }
 .theme-mixin(e('red'), @red, #D32F2F);
 .theme-mixin(e('pink'), @pink, #C2185B);
