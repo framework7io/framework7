@@ -86,6 +86,13 @@ app.initSwipeout = function (swipeoutEl) {
         if (translate > 0 && actionsLeft.length === 0 || translate < 0 && actionsRight.length === 0) {
             if (!opened) {
                 isTouched = isMoved = false;
+                swipeOutContent.transform('');
+                if (buttonsRight && buttonsRight.length > 0) {
+                    buttonsRight.transform('');
+                }
+                if (buttonsLeft && buttonsLeft.length > 0) {
+                    buttonsLeft.transform('');
+                }
                 return;
             }
             translate = 0;
