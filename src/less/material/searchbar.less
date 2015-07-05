@@ -13,7 +13,9 @@
     .align-items(center);
     color:#fff;
     a {
+        position: relative;
         color:#fff;
+        .active-highlight();
     }
     .searchbar-input {
         width: 100%;
@@ -36,7 +38,7 @@
         color: #fff;
         font-size: 16px;
         font-weight: 400;
-        padding: 0 30px 0 24px;
+        padding: 0 36px 0 24px;
         background-color: transparent;
         background-repeat: no-repeat;
         background-position: 0 center;
@@ -56,9 +58,9 @@
     }
     .searchbar-clear {
         position: absolute;
-        width: 36px;
+        width: 56px;
         height: 100%;
-        right: 0;
+        right: -16px;
         top: 0;
         opacity: 0;
         pointer-events:none;
