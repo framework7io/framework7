@@ -157,6 +157,10 @@ app.initClickEvents = function () {
             if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside)
                 app.closeModal('.popup.modal-in');
         }
+        if (clicked.hasClass('picker-modal-overlay')) {
+            if ($('.picker-modal.modal-in').length > 0)
+                app.closeModal('.picker-modal.modal-in');
+        }
 
         // Picker
         if (clicked.hasClass('close-picker')) {
@@ -306,7 +310,7 @@ app.initClickEvents = function () {
             else view.router.load(options);
         }
     }
-    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker', handleClicks);
+    $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .modal-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker, .picker-modal-overlay', handleClicks);
     if (app.params.scrollTopOnNavbarClick || app.params.scrollTopOnStatusbarClick) {
         $(document).on('click', '.statusbar-overlay, .navbar .center', handleScrollTop);
     }
