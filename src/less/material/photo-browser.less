@@ -49,6 +49,12 @@
         .transform(translate3d(0,0,0));
     }
 }
+.view[data-page="photo-browser-slides"] .page[data-page="photo-browser-slides"], .photo-browser .page[data-page="photo-browser-slides"] {
+    .toolbar {
+        bottom: 0;
+        top:auto;
+    }
+}
 .photo-browser-exposed {
     .navbar, .toolbar {
         opacity: 0;
@@ -96,7 +102,6 @@
     padding:4px 5px;
     width:100%;
     text-align:center;
-    color:#fff;
     background: rgba(0,0,0,0.8);
     &:empty {
         display: none;
@@ -106,6 +111,9 @@
     }
     .photo-browser-captions-light & {
         background: rgba(255,255,255,0.8);
+    }
+    .photo-browser-captions-dark & {
+        color: #fff;
     }
     .photo-browser-exposed & {
         color:#fff;
