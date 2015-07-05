@@ -385,10 +385,15 @@ i.icon {
             .encoded-svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc' transform='translate(60,120) rotate(180)'/></svg>");
         }
     }
-    .accordion-item-expanded {
-        .accordion-toggle .item-inner, > .item-link .item-inner {
-            .encoded-svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' transform='translate(70, 30) rotate(90)' fill='#c7c7cc'/></svg>");
-        }
+    &:not(.media-list) .accordion-item-expanded:not(.media-item) .accordion-item-toggle .item-inner, 
+    &:not(.media-list) .accordion-item-expanded:not(.media-item) > .item-link .item-inner,
+    &.media-list .accordion-item-expanded .accordion-item-toggle .item-title-row,
+    &.media-list .accordion-item-expanded > .item-link .item-title-row,
+    .accordion-item-expanded.media-item .accordion-item-toggle .item-title-row,
+    .accordion-item-expanded.media-item > .item-link .item-title-row,
+    {
+        .encoded-svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' transform='translate(70, 30) rotate(90)' fill='#c7c7cc'/></svg>");
+        background-size: 20px 20px;
     }
     .accordion-item ul {
         padding-right: 0;
