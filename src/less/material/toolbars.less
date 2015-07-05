@@ -22,8 +22,8 @@
     top: 0;
     width: 100%;
     height: 100%;
-    padding: 0 16px;
     box-sizing: border-box;
+    overflow: hidden;
     .flexbox();
     .align-items(center);
 }
@@ -55,15 +55,19 @@
         text-decoration: none;
         position: relative;
         color: @toolbarLinksColor;
+        box-sizing: border-box;
         .flexbox();
         .justify-content(flex-start);
         .align-items(center);
-        .transition(300ms);
+        padding: 0 16px;
+        min-width: 48px;
+        .active-highlight();
         i+span, i+i, span+i, span+span {
             margin-left: 8px;
         }
     }
     a.icon-only {
+        min-width: 0;
         .flexbox();
         .justify-content(center);
         .align-items(center);
@@ -86,7 +90,7 @@
         font-size: 20px;
         font-weight: 500;
         text-align: center;
-        margin: 0;
+        margin: 0 16px;
         position: relative;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -102,12 +106,6 @@
         .justify-content(flex-start);
         .align-items(center);
         .translate3d(0,0,0);
-        a+a {
-            margin-left: 16px;
-        }
-    }
-    .left {
-        margin-right: 16px;
     }
     .right {
         margin-left: auto;
@@ -199,6 +197,8 @@
         height: 100%;
         width: 100%;
         box-sizing: border-box;
+        padding-left: 0;
+        padding-right: 0;
         .flexbox();
         .justify-content(center);
         .align-items(center);
@@ -216,7 +216,7 @@
         height: 24px;
     }
     a.tab-link {
-        .transition(200ms);
+        .transition(300ms);
         overflow: hidden;
         color: @tabbarLinksColor;
         position: relative;
@@ -230,7 +230,8 @@
         bottom: 0;
         height: 3px;
         background: darken(@themeColor, 15%);
-        .transition(200ms);
+        background: rgba(255,255,255,0.5);
+        .transition(300ms);
     }
 }
 .tabbar-labels {
