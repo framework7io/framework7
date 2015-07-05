@@ -361,7 +361,7 @@ div.ks-demo-lazy {
 }
 .ks-layout-theme {
   height: 44px;
-  border: 1px solid #aaa;
+  border: 1px solid rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
 .ks-layout-theme.ks-layout-default {
@@ -375,7 +375,7 @@ div.ks-demo-lazy {
 }
 .ks-color-theme {
   height: 44px;
-  border: 1px solid #aaa;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
   margin-bottom: 10px;
 }
