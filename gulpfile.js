@@ -508,7 +508,7 @@
     });
     
     gulp.task('open', function () {
-        return gulp.src(paths.ks.ios.root + 'index.html').pipe(open('', { url: 'http://localhost:3000/' + paths.ks.ios.root + 'index.html'}));
+        return gulp.src('./index.html').pipe(open('', { url: 'http://localhost:3000/index.html'}));
     });
 
     gulp.task('server', [ 'watch', 'connect', 'open' ]);
