@@ -241,7 +241,7 @@ textarea.resizeable {
         &:not(.button-fill) {
             color:#fff;
             html:not(.watch-active-state) &:active, &.active-state {
-                background: rgba(255,255,255,0.1);
+                background: rgba(255,255,255,0.15);
             }
         }
     }
@@ -407,6 +407,13 @@ label.label-checkbox, label.label-radio {
         i.icon-form-checkbox, i.icon-form-radio {
             margin-left: 8px;
             margin-right: 16px;
+        }
+    }
+    .media-list &, .media-item & {
+        .item-media {
+            i.icon-form-checkbox, i.icon-form-radio {
+                margin-top: 4px;
+            }       
         }
     }
     html:not(.watch-active-state) &:active, &.active-state {
