@@ -390,6 +390,18 @@ app.initFastClicks = function () {
     function handleTouchCancel(e) {
         trackClick = false;
         targetElement = null;
+        
+        // Remove Active State
+        clearTimeout(activeTimeout);
+        clearTimeout(tapHoldTimeout);
+        if (app.params.activeState) {
+            removeActive();
+        }
+        
+        // Remove Ripple
+        if (app.params.material && app.params.materialRipple) {
+            rippleTouchEnd();
+        }
     }
 
     function handleClick(e) {
