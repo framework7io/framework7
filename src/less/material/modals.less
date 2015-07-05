@@ -6,7 +6,7 @@
 @actionsModalDuration:300ms;
 @popoverDuration: 300ms;
 @popupDuration: 400ms;
-.modal-overlay, .preloader-indicator-overlay, .popup-overlay {
+.modal-overlay, .preloader-indicator-overlay, .popup-overlay, .picker-modal-overlay {
     position: absolute;
     left: 0;
     top: 0;
@@ -96,7 +96,7 @@
         }
     }
 }
-.modal-button {
+.modal-button, .modal-buttons .button {
     .button;
     &.modal-button-bold {
         font-weight: 700;
@@ -233,7 +233,7 @@ input.modal-text-input {
     position: absolute;
     display: none;
     .depth(2);
-    .transform(scale(0.9, 0.7));
+    .transform(scale(0.85, 0.6));
     -webkit-transition-property: opacity, -webkit-transform;
     -moz-transition-property: opacity, -moz-transform;
     transition-property: opacity, transform;
@@ -247,6 +247,11 @@ input.modal-text-input {
         .transform(scale(1));
         .transition(@popoverDuration);
         opacity: 1;
+    }
+    &.modal-out {
+        .transform(scale(1));
+        .transition(@popoverDuration);
+        opacity: 0;
     }
     .list-block {
         margin: 0;
@@ -437,6 +442,43 @@ html.with-statusbar-overlay {
             height: ~"-moz-calc(100% - @{toolbarSize})";
             height: ~"calc(100% - @{toolbarSize})";    
         }
+        a.link {
+            .flex-shrink(0);
+        }
+    }
+    .picker-header, .picker-footer {
+        height: @toolbarSize;
+    }
+    .picker-header {
+        background: @themeColor;
+        + .toolbar .toolbar-inner {
+            overflow: visible;
+        }
+        + .picker-footer + .toolbar + .picker-modal-inner {
+            height: ~"-webkit-calc(100% - @{toolbarSize} * 3)";
+            height: ~"-moz-calc(100% - @{toolbarSize} * 3)";
+            height: ~"calc(100% - @{toolbarSize} * 3)";
+        }
+    }
+    .picker-footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        .modal-buttons;
+        
+    }
+    .picker-header, .picker-footer {
+        + .picker-modal-inner {
+            height: ~"-webkit-calc(100% - @{toolbarSize})";
+            height: ~"-moz-calc(100% - @{toolbarSize})";
+            height: ~"calc(100% - @{toolbarSize})";    
+        }
+        + .toolbar + .picker-modal-inner {
+            height: ~"-webkit-calc(100% - @{toolbarSize} * 2)";
+            height: ~"-moz-calc(100% - @{toolbarSize} * 2)";
+            height: ~"calc(100% - @{toolbarSize} * 2)";
+        }
     }
     &.picker-modal-inline, .popover & {
         display: block;
@@ -446,12 +488,11 @@ html.with-statusbar-overlay {
         .translate3d(0,0,0);
         .toolbar {
             top: 0;
-            .hairline(bottom, #929499);
         }
     }
     .popover & {
         width: auto;
-        .toolbar {
+        .toolbar:first-child, .picker-header:first-child {
             border-radius: 2px 2px 0 0;
         }
     }
