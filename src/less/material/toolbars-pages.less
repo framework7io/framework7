@@ -20,7 +20,7 @@
 .toolbar:not(.messagebar) ~ .page-content {
     padding-top: @toolbarSize;
 }
-.tabbar-labels ~ .page-content {
+.tabbar-labels:not(.messagebar) ~ .page-content {
     padding-top: @tabbarLabelsSize;
 }
 .navbar-fixed {
@@ -46,7 +46,7 @@
     .toolbar:not(.messagebar) ~ .page-content {
         padding-top: @navbarSize + @toolbarSize;
     }
-    .tabbar-labels ~ .page-content {
+    .tabbar-labels:not(.messagebar) ~ .page-content {
         padding-top: @navbarSize + @tabbarLabelsSize;
     }
     .toolbar:not(.messagebar) {
