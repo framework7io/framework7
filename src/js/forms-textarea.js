@@ -1,9 +1,9 @@
 /*===============================================================================
-************   Resizeable textarea   ************
+************   Resizable textarea   ************
 ===============================================================================*/
 app.resizeTextarea = function (textarea) {
     textarea = $(textarea);
-    if (!textarea.hasClass('resizeable')) {
+    if (!textarea.hasClass('resizable')) {
         return;
     }
     textarea.css({'height': ''});
@@ -16,7 +16,7 @@ app.resizeTextarea = function (textarea) {
         textarea.css('height', newAreaHeight + 'px');
     }
 };
-app.resizeableTextarea = function (textarea) {
+app.resizableTextarea = function (textarea) {
     textarea = $(textarea);
     if (textarea.length === 0) return;
     var textareaTimeout;
@@ -28,10 +28,10 @@ app.resizeableTextarea = function (textarea) {
     }
     return textarea.on('change keydown keypress keyup paste cut', handleTextarea);
 };
-app.initPageResizeableTextareas = function (pageContainer) {
+app.initPageResizableTextareas = function (pageContainer) {
     pageContainer = $(pageContainer);
-    var textareas = pageContainer.find('textarea.resizeable');
+    var textareas = pageContainer.find('textarea.resizable');
     textareas.each(function () {
-        app.resizeableTextarea(this);
+        app.resizableTextarea(this);
     });
 };

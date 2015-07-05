@@ -284,7 +284,7 @@ app.initPage = function (pageContainer) {
     // Init lazy images
     if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
     // Init resizeable textareas
-    if (app.initPageResizeableTextareas) app.initPageResizeableTextareas(pageContainer);
+    if (app.initPageResizableTextareas) app.initPageResizableTextareas(pageContainer);
     // Init Material Preloader
     if (app.params.material && app.initPageMaterialPreloader) app.initPageMaterialPreloader(pageContainer);
     // Init Material Inputs

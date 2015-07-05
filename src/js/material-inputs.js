@@ -3,7 +3,7 @@
 ======================================================*/
 app.initPageMaterialInputs = function (pageContainer) {
     pageContainer = $(pageContainer);
-    var textareas = pageContainer.find('textarea.resizeable');
+    var textareas = pageContainer.find('textarea.resizable');
     pageContainer.find('.item-input').each(function () {
         var i = $(this);
         var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
