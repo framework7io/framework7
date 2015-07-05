@@ -249,55 +249,6 @@ i.ks-tabbar-icon-3 {
 .page[data-page="virtual-list"] .virtual-list li {
   height: 73px;
 }
-.custom-accordion {
-  padding-left: 0;
-  padding-right: 0;
-}
-.custom-accordion .accordion-item-toggle {
-  padding: 0px 15px;
-  height: 44px;
-  line-height: 44px;
-  font-size: 17px;
-  color: #000;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-}
-.custom-accordion .accordion-item-toggle:active {
-  background: rgba(0, 0, 0, 0.15);
-}
-.custom-accordion .accordion-item-toggle span {
-  display: inline-block;
-  margin-left: 15px;
-}
-html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
-  margin-left: 0;
-  margin-right: 15px;
-}
-.custom-accordion .accordion-item:last-child .accordion-item-toggle {
-  border-bottom: none;
-}
-.custom-accordion .icon-ks-plus,
-.custom-accordion .icon-ks-minus {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  border: 1px solid #000;
-  border-radius: 100%;
-  line-height: 20px;
-  text-align: center;
-}
-.custom-accordion .icon-ks-minus {
-  display: none;
-}
-.custom-accordion .accordion-item-expanded .icon-ks-minus {
-  display: inline-block;
-}
-.custom-accordion .accordion-item-expanded .icon-ks-plus {
-  display: none;
-}
-.custom-accordion .accordion-item-content {
-  padding: 0px 15px;
-}
 #ks-picker-date-container .picker-item {
   color: #999;
 }

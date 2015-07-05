@@ -1,10 +1,12 @@
+// Init App
 var myApp = new Framework7({
     modalTitle: 'Framework7',
-    material: true
+    // Enable Material theme
+    material: true,
 });
+
 // Expose Internal DOM library
 var $$ = Dom7;
-
 
 // Add main view
 var mainView = myApp.addView('.view-main', {
@@ -732,27 +734,23 @@ $$('.panel-left, .panel-right').on('close', function () {
 var dynamicPageIndex = 0;
 function createContentPage() {
     mainView.router.loadContent(
-        '<!-- Top Navbar-->' +
-        '<div class="navbar">' +
-        '  <div class="navbar-inner">' +
-        '    <div class="left"><a href="#" class="back link">Back</a></div>' +
-        '    <div class="center sliding">Dynamic Page ' + (++dynamicPageIndex) + '</div>' +
-        '  </div>' +
-        '</div>' +
-        '<div class="pages">' +
         '  <!-- Page, data-page contains page name-->' +
         '  <div data-page="dynamic-content" class="page">' +
+        '    <!-- Top Navbar-->' +
+        '    <div class="navbar">' +
+        '      <div class="navbar-inner">' +
+        '        <div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' +
+        '        <div class="center">Dynamic Page ' + (++dynamicPageIndex) + '</div>' +
+        '      </div>' +
+        '    </div>' +
         '    <!-- Scrollable page content-->' +
         '    <div class="page-content">' +
         '      <div class="content-block">' +
-        '        <div class="content-block-inner">' +
-        '          <p>Here is a dynamic page created on ' + new Date() + ' !</p>' +
-        '          <p>Go <a href="#" class="back">back</a> or generate <a href="#" class="ks-generate-page">one more page</a>.</p>' +
-        '        </div>' +
+        '        <p>Here is a dynamic page created on ' + new Date() + ' !</p>' +
+        '        <p>Go <a href="#" class="back">back</a> or generate <a href="#" class="ks-generate-page">one more page</a>.</p>' +
         '      </div>' +
         '    </div>' +
-        '  </div>' +
-        '</div>'
+        '  </div>'
     );
     return;
 }

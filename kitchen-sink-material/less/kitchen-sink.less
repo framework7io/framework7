@@ -260,57 +260,6 @@ i.ks-tabbar-icon-3 {
 .page[data-page="virtual-list"] .virtual-list li {
     height: 73px;
 }
-// Custom Accordion
-.custom-accordion {
-    padding-left: 0;
-    padding-right: 0;
-    .accordion-item-toggle {
-        padding: 0px 15px;
-        height: 44px;
-        line-height: 44px;
-        font-size: 17px;
-        color:#000;
-        border-bottom: 1px solid rgba(0,0,0,0.15);
-        cursor: pointer;
-        &:active {
-            background: rgba(0,0,0,0.15);
-        }
-        span {
-            display: inline-block;
-            margin-left: 15px;
-            html[dir="rtl"] & {
-                margin-left: 0;
-                margin-right: 15px;
-            }
-        }
-    }
-    .accordion-item:last-child .accordion-item-toggle {
-        border-bottom: none;
-    }
-    .icon-ks-plus, .icon-ks-minus {
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        border: 1px solid #000;
-        border-radius: 100%;
-        line-height: 20px;
-        text-align: center;
-    }
-    .icon-ks-minus {
-        display: none;
-    }
-    .accordion-item-expanded {
-        .icon-ks-minus {
-            display: inline-block;
-        }
-        .icon-ks-plus {
-            display: none;
-        }
-    }
-    .accordion-item-content {
-        padding: 0px 15px;
-    }
-}
 
 // Demo Pickers
 #ks-picker-date-container {

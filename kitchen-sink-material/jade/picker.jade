@@ -10,8 +10,8 @@
           i.icon.icon-bars
   .page-content
     .content-block
-        p Picker is a powerful component that allows you to create custom overlay pickers which looks like iOS native picker.
-        p Picker could be used as inline component or as overlay. Overlay Picker will be automatically converted to Popover on tablets (iPad).
+        p Picker is a powerful component that allows you to create custom overlay pickers which looks like iOS picker.
+        p Picker could be used as inline component or as overlay. Overlay Picker will be automatically converted to Popover on tablets.
     .content-block-title Picker with single value
     .list-block
       ul
@@ -45,14 +45,11 @@
               .item-input
                 input(type="text", placeholder="Describe yourself", readonly)#ks-picker-custom-toolbar
     .content-block-title Inline Picker / Date-time
-    .content-block
-      .content-block-inner(style="padding:0; margin-right:-15px; width:auto")
-        .list-block(style="margin:0")
-          ul(style="border-top:none")
-            li
-              .item-content
-                .item-inner 
-                  .item-input
-                    input(type="text", placeholder="Date Time", readonly)#ks-picker-date
-        #ks-picker-date-container
-    
+    .list-block(style="margin:0")
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Date Time", readonly)#ks-picker-date
+    #ks-picker-date-container
