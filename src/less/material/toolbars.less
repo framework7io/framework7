@@ -74,15 +74,7 @@
         display: block;
     }
 }
-.navbar {
-    left: 0;
-    top: 0;
-    height: @navbarSize;
-    font-size: 20px;
-    a.link {
-        line-height: @navbarSize;
-        height: @navbarSize;
-    }
+.navbar, .subnavbar {
     .center {
         font-size: 20px;
         font-weight: 500;
@@ -112,6 +104,16 @@
         right: 16px;
         height: 100%;
     }
+}
+.navbar {
+    left: 0;
+    top: 0;
+    height: @navbarSize;
+    font-size: 20px;
+    a.link {
+        line-height: @navbarSize;
+        height: @navbarSize;
+    }
     .popup & {
         .translate3d(0,0,0);
     }
@@ -132,6 +134,12 @@
     a.link {
         line-height: @toolbarSize;
         height: @toolbarSize;
+    }
+    .center {
+        line-height: @toolbarSize;
+        &:first-child {
+            margin-left: 56px;
+        }
     }
     .navbar.no-border & {
         margin-top: 0;
@@ -158,6 +166,9 @@
     .searchbar {
         left: 0;
         top: 0;
+    }
+    .center {
+
     }
 }
 .toolbar {
