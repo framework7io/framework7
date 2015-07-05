@@ -83,9 +83,6 @@ Framework7 Color Themes
         .navbar, .navbar& , .toolbar, .toolbar&, .subnavbar, .subnavbar& {
             background-color: @color;
         }
-        .tabbar .tab-link-highlight {
-            background: darken(@color, 15%);
-        }
         // Forms
         .range-slider, .range-slider& {
             input[type="range"]::-webkit-slider-thumb:before {
@@ -149,8 +146,17 @@ Framework7 Color Themes
             }
         }
         // Calendar
+
+        .picker-calendar-day.picker-calendar-day-today span {
+            color: @color;
+        }
         .picker-calendar-day.picker-calendar-day-selected span {
-            background-color: @color !important;
+            background-color: @color;
+            color:#fff;
+        }
+        // Picker Header
+        .picker-header {
+            background-color: @color;
         }
         // Modal buttons
         .modal-button {
@@ -184,6 +190,19 @@ Framework7 Color Themes
         .list-block &.item-inner, .list-block ul&, & {
             &:after, &:before {
                 background-color: @color;
+            }
+        }
+    }
+    // Floating Button
+    .floating-button {
+        .theme-@{colorName} &, &.theme-@{colorName}, &.color-@{colorName} {
+            color:#fff;
+            background: @color;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: @pressColor;
+            }
+            i {
+                color: inherit;
             }
         }
     }
@@ -229,10 +248,10 @@ Framework7 Layouts Themes
     @text: #ddd;
     @lightText: #bbb;
     @strongText: #fff;
-    @activeLink: #29292f;
-    @blockBg: #1c1d1f;
+    @activeLink: rgba(255,255,255,0.05);
+    @blockBg: #1c1c1c;
     @blockBorder: #393939;
-    @blockStrongBg: #1c1d1f;
+    @blockStrongBg: #1c1c1c;
     @dividerBg: #1a1a1a;
     @itemAfterText: @lightText;
     @searchbarBg: #333;
@@ -283,7 +302,7 @@ Framework7 Layouts Themes
         }
     }
     li.sorting {
-        background-color: @activeLink;
+        background-color: rgba(34,34,34,0.8);
     }
     .swipeout-actions-left a, .swipeout-actions-right a {
         background-color: @swipeoutButton;
@@ -324,7 +343,7 @@ Framework7 Layouts Themes
     .item-inner:not(.focus-state) .label, .item-inner:not(.focus-state) .floating-label {
         color: rgba(255,255,255,0.7);
     }
-    .item-inner:not(.focus-state, .not-empty-state) .item-input-field, .item-inner:not(.focus-state, .not-empty-state) .input-field {
+    .item-inner:not(.focus-state):not(.not-empty-state) .item-input-field, .item-inner:not(.focus-state):not(.not-empty-state) .input-field {
         .hairline-color(bottom, rgba(255, 255, 255, 0.12));
     }
     
