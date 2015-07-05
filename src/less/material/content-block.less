@@ -4,12 +4,6 @@
     margin: 32px 0;
     padding: 0 16px;
     box-sizing: border-box;
-    > p:first-child {
-        margin-top: 0;
-    }
-    > p:last-child {
-        margin-bottom: 0;
-    }
 }
 .content-block-title {
     position: relative;
@@ -19,10 +13,10 @@
     text-overflow: ellipsis;
     font-size: 14px;
     line-height: 1;
-    margin: 16px 16px 0px;
-    margin-bottom: 0;
-    height: 48px;
-    line-height: 48px;
+    margin: 16px 16px 16px;
+    padding-top: 16px;
+    height: 16px;
+    line-height: 16px;
     font-weight: 500;
     color: rgba(0,0,0,0.54);
     + .list-block, + .content-block, +.card {
@@ -37,10 +31,10 @@
     position: relative;
     .hairline(top, @contentBlockBorderColor);
     .hairline(bottom, @contentBlockBorderColor);
-    > p:first-child {
+    >p:first-child {
         margin-top: 0;
     }
-    > p:last-child {
+    >p:last-child {
         margin-bottom: 0;
     }
 }
