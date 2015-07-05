@@ -3,7 +3,7 @@
     width: 100%;
     height: 260px;
     z-index: 11500;
-    &.picker-modal-inline, .popover & {
+    &.picker-modal-inline {
         height: 200px;
     }
     @media (orientation: landscape) and (max-height: 415px) {
@@ -14,6 +14,9 @@
 }
 .popover.popover-picker-columns {
     width: 280px;
+    .toolbar {
+        border-radius: 2px 2px 0 0;
+    }
 }
 .picker-items {
     .flexbox();
@@ -87,8 +90,8 @@
     width: 100%;
     top: 50%;
     margin-top: -18px;
-    .hairline(top, #a8abb0);
-    .hairline(bottom, #a8abb0);
+    .hairline(top, rgba(0,0,0,0.15));
+    .hairline(bottom, rgba(0,0,0,0.15));
     pointer-events: none;
 }
 // 3D Picker
