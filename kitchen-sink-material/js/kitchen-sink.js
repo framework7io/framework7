@@ -521,6 +521,8 @@ myApp.onPageInit('calendar', function (page) {
         container: '#ks-calendar-inline-container',
         value: [new Date()],
         weekHeader: false,
+        header: false,
+        footer: false,
         toolbarTemplate: 
             '<div class="toolbar calendar-custom-toolbar">' +
                 '<div class="toolbar-inner">' +

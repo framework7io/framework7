@@ -40,14 +40,25 @@ var Calendar = function (params) {
         onlyInPopover: false,
         toolbar: true,
         toolbarCloseText: 'Done',
+        headerPlaceholder: 'Select date',
+        header: app.params.material,
+        footer: app.params.material,
         toolbarTemplate: 
             '<div class="toolbar">' +
                 '<div class="toolbar-inner">' +
                     '{{monthPicker}}' +
                     '{{yearPicker}}' +
-                    // '<a href="#" class="link close-picker">{{closeText}}</a>' +
                 '</div>' +
             '</div>',
+        headerTemplate: 
+            '<div class="picker-header">' +
+                '<div class="picker-calendar-selected-date">{{placeholder}}</div>' +
+            '</div>',
+        footerTemplate: 
+            '<div class="picker-footer">' +
+                '<a href="#" class="button close-picker">{{closeText}}</a>' +
+            '</div>',
+        
         /* Callbacks
         onMonthAdd
         onChange
@@ -151,7 +162,7 @@ var Calendar = function (params) {
         p.value = arrValues;
         p.updateValue();   
     };
-    p.updateValue = function () {
+    p.updateValue = function (onlyHeader) {
         p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
         var i, inputValue;
         for (i = 0; i < p.value.length; i++) {
@@ -161,7 +172,7 @@ var Calendar = function (params) {
         if (p.params.onChange) {
             p.params.onChange(p, p.value);
         }
-        if (p.input && p.input.length > 0) {
+        if ((p.input && p.input.length > 0) || (app.params.material && p.params.header)) {
             if (p.params.formatValue) inputValue = p.params.formatValue(p, p.value);
             else {
                 inputValue = [];
@@ -170,8 +181,14 @@ var Calendar = function (params) {
                 }
                 inputValue = inputValue.join(', ');
             } 
-            $(p.input).val(inputValue);
-            $(p.input).trigger('change');
+            if (app.params.material && p.params.header) {
+                p.container.find('.picker-calendar-selected-date').text(inputValue);
+            }
+            if (p.input && p.input.length > 0 && !onlyHeader) {
+                $(p.input).val(inputValue);
+                $(p.input).trigger('change');
+            }
+                
         }
     };
 
@@ -657,9 +674,13 @@ var Calendar = function (params) {
                 .replace(/{{monthPicker}}/g, (p.params.monthPicker ? p.params.monthPickerTemplate : ''))
                 .replace(/{{yearPicker}}/g, (p.params.yearPicker ? p.params.yearPickerTemplate : ''));
         }
+        var headerHTML = p.params.header ? p.params.headerTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText).replace(/{{placeholder}}/g, p.params.headerPlaceholder) : '';
+        var footerHTML = p.params.footer ? p.params.footerTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText) : '';
 
         pickerHTML =
             '<div class="' + (pickerClass) + '">' +
+                headerHTML +
+                footerHTML +
                 toolbarHTML +
                 '<div class="picker-modal-inner">' +
                     weekHeaderHTML +
@@ -676,7 +697,7 @@ var Calendar = function (params) {
         e.preventDefault();
         if (p.opened) return;
         p.open();
-        if (p.params.scrollToInput && !isPopover()) {
+        if (p.params.scrollToInput && !isPopover() && !app.params.material) {
             var pageContent = p.input.parents('.page-content');
             if (pageContent.length === 0) return;
 
@@ -798,6 +819,7 @@ var Calendar = function (params) {
 
             // Update input value
             if (updateValue) p.updateValue();
+            else if (app.params.material && p.value) p.updateValue(true);
 
             // Material Focus
             if (p.input && p.input.length > 0 && app.params.material) {
