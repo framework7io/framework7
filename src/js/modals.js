@@ -302,7 +302,6 @@ app.popover = function (modal, target, removeOnClose) {
             modal.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({left: '', top: ''});
         }
 
-
         var targetWidth = target.outerWidth();
         var targetHeight = target.outerHeight();
         var targetOffset = target.offset();
@@ -318,16 +317,17 @@ app.popover = function (modal, target, removeOnClose) {
         var modalLeft = 0;
         var diff = 0;
         // Top Position
-        var modalPosition = 'top';
+        var modalPosition = 'bottom';
         if (material) {
-            if (modalHeight < targetOffset.top) {
-                // On top
-                modalTop = targetOffset.top - modalHeight + targetHeight;
-            }
-            else if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
+            if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
                 // On bottom
                 modalPosition = 'bottom';
                 modalTop = targetOffset.top;
+            }
+            else if (modalHeight < targetOffset.top) {
+                // On top
+                modalTop = targetOffset.top - modalHeight + targetHeight;
+                modalPosition = 'top';
             }
             else {
                 // On middle
@@ -336,17 +336,19 @@ app.popover = function (modal, target, removeOnClose) {
             }
 
             if (modalTop <= 0) {
-                modalTop = 5;
+                modalTop = 8;
             }
             else if (modalTop + modalHeight >= windowHeight) {
-                modalTop = windowHeight - modalHeight - 5;
+                modalTop = windowHeight - modalHeight - 8;
             }
 
             // Horizontal Position
             modalLeft = targetOffset.left;
-            if (modalLeft < 5) modalLeft = 5;
-            if (modalLeft + modalWidth > windowWidth) {
-                modalLeft = targetOffset.left + targetWidth - modalWidth;
+            if (modalLeft + modalWidth >= windowWidth - 8) {
+                modalLeft = targetOffset.left + targetWidth - modalWidth - 8;
+            }
+            if (modalLeft < 8) {
+                modalLeft = 8;
             }
             if (modalPosition === 'top') {
                 modal.addClass('popover-on-top');
@@ -508,6 +510,14 @@ app.openModal = function (modal) {
         }
         overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
     }
+    if (app.params.material && isPickerModal) {
+        if (modal.hasClass('picker-calendar')) {
+            if ($('.picker-modal-overlay').length === 0 && !isPopup) {
+                $('body').append('<div class="picker-modal-overlay"></div>');
+            }
+            overlay = $('.picker-modal-overlay');
+        }
+    }
 
     //Make sure that styles are applied, trigger relayout;
     var clientLeft = modal[0].clientLeft;
@@ -532,6 +542,7 @@ app.openModal = function (modal) {
 
     // Classes for transition in
     if (!isLoginScreen && !isPickerModal) overlay.addClass('modal-overlay-visible');
+    if (app.params.material && isPickerModal && overlay) overlay.addClass('modal-overlay-visible');
     modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
         if (modal.hasClass('modal-out')) modal.trigger('closed');
         else modal.trigger('opened');
@@ -551,13 +562,13 @@ app.closeModal = function (modal) {
 
     var removeOnClose = modal.hasClass('remove-on-close');
 
-    var overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
+    var overlay = isPopup ? $('.popup-overlay') : (isPickerModal && app.params.material ? $('.picker-modal-overlay') : $('.modal-overlay'));
     if (isPopup){
         if (modal.length === $('.popup.modal-in').length) {
             overlay.removeClass('modal-overlay-visible');
         }
     }
-    else if (!isPickerModal) {
+    else if (overlay && overlay.length > 0) {
         overlay.removeClass('modal-overlay-visible');
     }
 
@@ -569,7 +580,7 @@ app.closeModal = function (modal) {
         $('body').addClass('picker-modal-closing');
     }
 
-    if (!isPopover) {
+    if (!(isPopover && !app.params.material)) {
         modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
             if (modal.hasClass('modal-out')) modal.trigger('closed');
             else modal.trigger('opened');
@@ -577,7 +588,7 @@ app.closeModal = function (modal) {
             if (isPickerModal) {
                 $('body').removeClass('picker-modal-closing');
             }
-            if (isPopup || isLoginScreen || isPickerModal) {
+            if (isPopup || isLoginScreen || isPickerModal || isPopover) {
                 modal.removeClass('modal-out').hide();
                 if (removeOnClose && modal.length > 0) {
                     modal.remove();
