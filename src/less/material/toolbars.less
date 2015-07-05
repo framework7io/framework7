@@ -57,7 +57,7 @@
         color: @toolbarLinksColor;
         box-sizing: border-box;
         .flexbox();
-        .justify-content(flex-start);
+        .justify-content(center);
         .align-items(center);
         padding: 0 16px;
         min-width: 48px;
@@ -68,10 +68,7 @@
     }
     a.icon-only {
         min-width: 0;
-        .flexbox();
-        .justify-content(center);
-        .align-items(center);
-        margin: 0;
+        .flex-shrink(0);
     }
     i.icon {
         display: block;
