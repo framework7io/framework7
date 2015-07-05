@@ -8,7 +8,7 @@ app.initPullToRefresh = function (pageContainer) {
     }
     if (!eventsTarget || eventsTarget.length === 0) return;
 
-    var isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer, triggerDistance, dynamicTriggerDistance;
+    var touchId, isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer, triggerDistance, dynamicTriggerDistance;
     var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
     var hasNavbar = false;
     if (page.find('.navbar').length > 0 || page.parents('.navbar-fixed, .navbar-through').length > 0 || page.hasClass('navbar-fixed') || page.hasClass('navbar-through')) hasNavbar = true;
@@ -24,7 +24,7 @@ app.initPullToRefresh = function (pageContainer) {
     else {
         triggerDistance = 44;   
     }
-
+    
     function handleTouchStart(e) {
         if (isTouched) {
             if (app.device.os === 'android') {
@@ -32,10 +32,12 @@ app.initPullToRefresh = function (pageContainer) {
             }
             else return;
         }
+        
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
         wasScrolled = undefined;
+        if (e.type === 'touchstart') touchId = e.targetTouches[0].identifier;
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
@@ -45,8 +47,26 @@ app.initPullToRefresh = function (pageContainer) {
     
     function handleTouchMove(e) {
         if (!isTouched) return;
-        var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-        var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        var pageX, pageY, touch;
+        if (e.type === 'touchmove') {
+            if (touchId && e.touches) {
+                for (var i = 0; i < e.touches.length; i++) {
+                    if (e.touches[i].identifier === touchId) {
+                        touch = e.touches[i];
+                    }
+                }
+            }
+            if (!touch) touch = e.targetTouches[0];
+            pageX = touch.pageX;
+            pageY = touch.pageY;
+        }
+        else {
+            pageX = e.pageX;
+            pageY = e.pageY;
+        }
+        if (!pageX || !pageY) return;
+            
+
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
@@ -108,6 +128,9 @@ app.initPullToRefresh = function (pageContainer) {
         }
     }
     function handleTouchEnd(e) {
+        if (e.type === 'touchend' && e.changedTouches && e.changedTouches.length > 0 && touchId) {
+            if (e.changedTouches[0].identifier !== touchId) return;
+        }
         if (!isTouched || !isMoved) {
             isTouched = false;
             isMoved = false;
