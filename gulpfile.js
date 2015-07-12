@@ -75,6 +75,7 @@
                 'src/js/modals.js',
                 'src/js/panels.js',
                 'src/js/lazy-load.js',
+                'src/js/material-preloader.js',
                 'src/js/messages.js',
                 'src/js/swipeout.js',
                 'src/js/sortable.js',
@@ -99,7 +100,6 @@
                 'src/js/picker.js',
                 'src/js/calendar.js',
                 'src/js/notifications.js',
-                'src/js/material-preloader.js',
                 'src/js/template7-templates.js',
                 'src/js/plugins.js',
                 'src/js/init.js',
@@ -139,6 +139,7 @@
                 '/**',
                 ' * <%= pkg.name %> <%= pkg.version %> - Custom Build',
                 ' * <%= pkg.description %>',
+                '<% if(typeof(theme) !== "undefined") {%> * \n * <%= theme %>\n *<% } else { %> * <% } %>',
                 ' * ',
                 ' * Included modules: <%= modulesList %>',
                 ' * ',
@@ -393,10 +394,11 @@
             modules = modules.substring(1).replace(/ /g, '').replace(/,,/g, ',');
             modules = modules.split(',');
         }
-        var modulesJsList = [], modulesLessList = [];
+        var modulesJs = [], modulesLessIOS = [], modulesLessMaterial = [];
         var i, module;
-        modulesJsList.push.apply(modulesJsList, f7.modules.core_intro.js);
-        modulesLessList.push.apply(modulesLessList, f7.modules.core_intro.less);
+        modulesJs.push.apply(modulesJs, f7.modules.core_intro.js);
+        modulesLessIOS.push.apply(modulesLessIOS, f7.modules.core_intro.less.ios);
+        modulesLessMaterial.push.apply(modulesLessMaterial, f7.modules.core_intro.less.material);
         for (i = 0; i < modules.length; i++) {
             module = f7.modules[modules[i]];
             if (module.dependencies.length > 0) {
@@ -408,25 +410,34 @@
             if (!(module)) continue;
 
             if (module.js.length > 0) {
-                modulesJsList.push.apply(modulesJsList, module.js);
+                modulesJs.push.apply(modulesJs, module.js);
             }
-            if (module.less.length > 0) {
-                modulesLessList.push.apply(modulesLessList, module.less);
+            if (module.less.ios && module.less.ios.length > 0) {
+                modulesLessIOS.push.apply(modulesLessIOS, module.less.ios);
+            }
+            if (module.less.material && module.less.material.length > 0) {
+                modulesLessMaterial.push.apply(modulesLessMaterial, module.less.material);
             }
         }
-        modulesJsList.push.apply(modulesJsList, f7.modules.core_outro.js);
-        modulesLessList.push.apply(modulesLessList, f7.modules.core_outro.less);
+        modulesJs.push.apply(modulesJs, f7.modules.core_outro.js);
+        modulesLessIOS.push.apply(modulesLessIOS, f7.modules.core_outro.less.ios);
+        modulesLessMaterial.push.apply(modulesLessMaterial, f7.modules.core_outro.less.material);
 
         // Unique
         var customJsList = [];
-        var customLessList = [];
-        for (i = 0; i < modulesJsList.length; i++) {
-            if (customJsList.indexOf(modulesJsList[i]) < 0) customJsList.push(modulesJsList[i]);
+        var customLessIOS = [];
+        var customLessMaterial = [];
+        for (i = 0; i < modulesJs.length; i++) {
+            if (customJsList.indexOf(modulesJs[i]) < 0) customJsList.push(modulesJs[i]);
         }
-        for (i = 0; i < modulesLessList.length; i++) {
-            if (customLessList.indexOf(modulesLessList[i]) < 0) customLessList.push(modulesLessList[i]);
+        for (i = 0; i < modulesLessIOS.length; i++) {
+            if (customLessIOS.indexOf(modulesLessIOS[i]) < 0) customLessIOS.push(modulesLessIOS[i]);
+        }
+        for (i = 0; i < modulesLessMaterial.length; i++) {
+            if (customLessMaterial.indexOf(modulesLessMaterial[i]) < 0) customLessMaterial.push(modulesLessMaterial[i]);
         }
 
+        // JS
         gulp.src(customJsList)
             .pipe(tap(function (file, t){
                 addJSIndent (file, t);
@@ -443,24 +454,29 @@
                 path.basename = path.basename + '.min';
             }))
             .pipe(gulp.dest(paths.custom.scripts));
+        
+        // CSSes
+        [customLessIOS, customLessMaterial].forEach(function (customLessList) {
+            var theme = customLessList === customLessIOS ? 'ios' : 'material';
+            var themeName = theme === 'ios' ? 'iOS Theme' : 'Google Material Theme';
+            gulp.src(customLessList)
+                .pipe(concat(f7.filename + '.' + theme + '.custom.less'))
+                .pipe(less({
+                    paths: [ path.join(__dirname, 'less', 'includes') ]
+                }))
+                .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, theme: themeName, modulesList: modules.join(',') } ))
+                .pipe(gulp.dest(paths.custom.styles))
 
-        gulp.src(customLessList)
-            .pipe(concat(f7.filename + '.custom.less'))
-            .pipe(less({
-                paths: [ path.join(__dirname, 'less', 'includes') ]
-            }))
-            .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, modulesList: modules.join(',') } ))
-            .pipe(gulp.dest(paths.custom.styles))
-
-            .pipe(minifyCSS({
-                advanced: false,
-                aggressiveMerging: false,
-            }))
-            .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, modulesList: modules.join(',') }))
-            .pipe(rename(function(path) {
-                path.basename = path.basename + '.min';
-            }))
-            .pipe(gulp.dest(paths.custom.styles));
+                .pipe(minifyCSS({
+                    advanced: false,
+                    aggressiveMerging: false,
+                }))
+                .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, theme: themeName, modulesList: modules.join(',') }))
+                .pipe(rename(function(path) {
+                    path.basename = path.basename + '.min';
+                }))
+                .pipe(gulp.dest(paths.custom.styles));
+        });
     });
     /* =================================
     Watch
