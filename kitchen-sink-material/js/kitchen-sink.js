@@ -302,8 +302,7 @@ var photoBrowserPopup = myApp.photoBrowser({
 });
 var photoBrowserPage = myApp.photoBrowser({
     photos: photoBrowserPhotos,
-    type: 'page',
-    backLinkText: 'Back'
+    type: 'page'
 });
 var photoBrowserDark = myApp.photoBrowser({
     photos: photoBrowserPhotos,
