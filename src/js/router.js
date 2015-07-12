@@ -545,7 +545,14 @@ app.router._load = function (view, options) {
     }
     if (animatePages) {
         // Set pages before animation
-        app.router.animatePages(oldPage, newPage, 'to-left', view);
+        if (app.params.material && app.params.materialPageLoadDelay) {
+            setTimeout(function () {
+                app.router.animatePages(oldPage, newPage, 'to-left', view);            
+            }, app.params.materialPageLoadDelay);
+        }
+        else {
+            app.router.animatePages(oldPage, newPage, 'to-left', view);    
+        }
 
         // Dynamic navbar animation
         if (dynamicNavbar) {
