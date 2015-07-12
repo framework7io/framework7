@@ -1,6 +1,141 @@
 @import url('_mixins.less');
 @import url('_colors-vars.less');
 /*==========================
+Framework7 Layouts Themes
+==========================*/
+/* === Dark layout === */
+.layout-dark {
+    @pageBg: #222;
+    @barsBg: #131313;
+    @barsBorder: #333;
+    @barsText: #fff;
+    @tabBarText: #fff;
+    @text: #ddd;
+    @lightText: #bbb;
+    @strongText: #fff;
+    @activeLink: rgba(255,255,255,0.05);
+    @blockBg: #1c1c1c;
+    @blockBorder: #393939;
+    @blockStrongBg: #1c1c1c;
+    @dividerBg: #1a1a1a;
+    @itemAfterText: @lightText;
+    @searchbarBg: #333;
+    @searchbarBorder: #333;
+    @swipeoutButton: #444;
+    @checkboxBorder: @blockBorder;
+    
+    // Photo Browser
+    .page, .login-screen-content, .page&, .panel, .panel& {
+        background-color: @pageBg;
+        color:rgba(255,255,255,0.87);
+    }
+    // Content Block
+    .content-block-title {
+        color:rgba(255,255,255,0.87);
+    }
+    
+    .content-block-inner {
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
+    }
+    // Popover
+    .popover .list-block ul {
+        background: none;
+    }
+    // Card
+    .card {
+        background: @blockBg;
+    }
+    .card-header{
+        .hairline-color(bottom, @blockBorder);
+    }
+    .card-footer {
+        .hairline-color(top, @blockBorder);
+        color:@lightText;
+    }
+    // List
+    .list-block, .list-block& {
+        ul {
+            .hairline-color(top, @blockBorder);
+            .hairline-color(bottom, @blockBorder);
+        }
+        &.inset ul{
+            background: @blockStrongBg;
+        }
+        &.notifications > ul {
+            background: none;
+        }
+    }
+    li.sorting {
+        background-color: rgba(34,34,34,0.8);
+    }
+    .swipeout-actions-left a, .swipeout-actions-right a {
+        background-color: @swipeoutButton;
+    }
+    .item-inner, .list-block ul ul li:last-child .item-inner {
+        .hairline-color(bottom, @blockBorder);
+    }
+    .item-after, .item-text {
+        color: rgba(255,255,255,0.7);
+    }
+    .list-block-label {
+        color:@lightText;
+    }
+    .item-divider, .list-group-title {
+        background: @dividerBg;
+        color:@lightText;        
+        .hairline-color(top, @blockBorder);
+    }
+    // Forms
+    .item-link, label.label-checkbox, label.label-radio {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: @activeLink;
+        }
+    }
+    .list-block {
+        input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
+            color:@strongText;
+            &::-webkit-input-placeholder {
+                color: rgba(255,255,255,0.35);
+            }
+        }
+    }
+    .label-switch {
+        .checkbox {
+            background: rgba(255,255,255,0.3);
+        }
+    }
+    .item-inner:not(.focus-state) .label, .item-inner:not(.focus-state) .floating-label {
+        color: rgba(255,255,255,0.7);
+    }
+    .item-inner:not(.focus-state):not(.not-empty-state) .item-input-field, .item-inner:not(.focus-state):not(.not-empty-state) .input-field {
+        .hairline-color(bottom, rgba(255, 255, 255, 0.12));
+    }
+    
+    label.label-checkbox {
+        i.icon-form-checkbox {
+            border-color: rgba(255,255,255,0.7);
+        }
+    }
+    label.label-radio {
+        i.icon-form-radio {
+            border-color: rgba(255,255,255,0.7);
+        }
+    }
+    .item-link.list-button {
+        .hairline-color(bottom, @blockBorder);
+    }
+    .page-content .ripple-wave {
+        background:rgba(255,255,255,0.3);
+    }
+    .button:not(.button-fill) {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background:rgba(255,255,255,0.1);
+        }
+    }
+}
+
+/*==========================
 Framework7 Color Themes
 ==========================*/
 .theme-mixin(@colorName, @color, @pressColor) {
@@ -234,137 +369,3 @@ Framework7 Color Themes
 .theme-mixin(e('bluegray'), @bluegray, #455A64);
 .theme-mixin(e('white'), @white, rgba(0,0,0,0.1));
 .theme-mixin(e('black'), @black, #333);
-
-/*==========================
-Framework7 Layouts Themes
-==========================*/
-/* === Dark layout === */
-.layout-dark {
-    @pageBg: #222;
-    @barsBg: #131313;
-    @barsBorder: #333;
-    @barsText: #fff;
-    @tabBarText: #fff;
-    @text: #ddd;
-    @lightText: #bbb;
-    @strongText: #fff;
-    @activeLink: rgba(255,255,255,0.05);
-    @blockBg: #1c1c1c;
-    @blockBorder: #393939;
-    @blockStrongBg: #1c1c1c;
-    @dividerBg: #1a1a1a;
-    @itemAfterText: @lightText;
-    @searchbarBg: #333;
-    @searchbarBorder: #333;
-    @swipeoutButton: #444;
-    @checkboxBorder: @blockBorder;
-    
-    // Photo Browser
-    .page, .login-screen-content, .page&, .panel, .panel& {
-        background-color: @pageBg;
-        color:rgba(255,255,255,0.87);
-    }
-    // Content Block
-    .content-block-title {
-        color:rgba(255,255,255,0.87);
-    }
-    
-    .content-block-inner {
-        .hairline-color(top, @blockBorder);
-        .hairline-color(bottom, @blockBorder);
-    }
-    // Popover
-    .popover .list-block ul {
-        background: none;
-    }
-    // Card
-    .card {
-        background: @blockBg;
-    }
-    .card-header{
-        .hairline-color(bottom, @blockBorder);
-    }
-    .card-footer {
-        .hairline-color(top, @blockBorder);
-        color:@lightText;
-    }
-    // List
-    .list-block, .list-block& {
-        ul {
-            .hairline-color(top, @blockBorder);
-            .hairline-color(bottom, @blockBorder);
-        }
-        &.inset ul{
-            background: @blockStrongBg;
-        }
-        &.notifications > ul {
-            background: none;
-        }
-    }
-    li.sorting {
-        background-color: rgba(34,34,34,0.8);
-    }
-    .swipeout-actions-left a, .swipeout-actions-right a {
-        background-color: @swipeoutButton;
-    }
-    .item-inner, .list-block ul ul li:last-child .item-inner {
-        .hairline-color(bottom, @blockBorder);
-    }
-    .item-after, .item-text {
-        color: rgba(255,255,255,0.7);
-    }
-    .list-block-label {
-        color:@lightText;
-    }
-    .item-divider, .list-group-title {
-        background: @dividerBg;
-        color:@lightText;        
-        .hairline-color(top, @blockBorder);
-    }
-    // Forms
-    .item-link, label.label-checkbox, label.label-radio {
-        html:not(.watch-active-state) &:active, &.active-state {
-            background-color: @activeLink;
-        }
-    }
-    .list-block {
-        input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
-            color:@strongText;
-            &::-webkit-input-placeholder {
-                color: rgba(255,255,255,0.35);
-            }
-        }
-    }
-    .label-switch {
-        .checkbox {
-            background: rgba(255,255,255,0.3);
-        }
-    }
-    .item-inner:not(.focus-state) .label, .item-inner:not(.focus-state) .floating-label {
-        color: rgba(255,255,255,0.7);
-    }
-    .item-inner:not(.focus-state):not(.not-empty-state) .item-input-field, .item-inner:not(.focus-state):not(.not-empty-state) .input-field {
-        .hairline-color(bottom, rgba(255, 255, 255, 0.12));
-    }
-    
-    label.label-checkbox {
-        i.icon-form-checkbox {
-            border-color: rgba(255,255,255,0.7);
-        }
-    }
-    label.label-radio {
-        i.icon-form-radio {
-            border-color: rgba(255,255,255,0.7);
-        }
-    }
-    .item-link.list-button {
-        .hairline-color(bottom, @blockBorder);
-    }
-    
-    // Searchbar
-    .searchbar {
-        background: @searchbarBg;
-        .hairline-color(bottom, @searchbarBorder);
-    }
-
-}
