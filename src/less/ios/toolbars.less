@@ -78,6 +78,9 @@
     top: 0;
     background: @toolbarBg;
     .hairline(bottom, @toolbarBorderColor);
+    &:after {
+        backface-visibility: hidden;
+    }
     &.no-border {
         .hairline-remove(bottom);
     }
