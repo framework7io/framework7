@@ -46,9 +46,11 @@
 }
 // From/to Right To/from Center animations
 .page-from-right-to-center {
+    pointer-events: none;
     .animation(pageFromRightToCenter @pageDuration forwards);
 }
 .page-from-center-to-right {
+    pointer-events: none;
     .animation(pageFromCenterToRight @pageDuration forwards);
 }
 @-webkit-keyframes pageFromRightToCenter {
