@@ -1,7 +1,7 @@
 {
   "name": "framework7",
-  "version": "1.0.7",
-  "description": "Full Featured Mobile HTML Framework For Building iOS Apps",
+  "version": "1.2.0",
+  "description": "Full Featured Mobile HTML Framework For Building iOS & Android Apps",
   "main": "dist/js/framework7.js",
   "repository": {
     "type": "git",
@@ -22,7 +22,12 @@
     "touch", 
     "appstore", 
     "app", 
-    "f7"
+    "f7", 
+    "material", 
+    "android", 
+    "google", 
+    "googleplay"
+
   ],
   "author": "Vladimir Kharlampidi",
   "license": [
