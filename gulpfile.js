@@ -524,7 +524,7 @@
     });
     
     gulp.task('open', function () {
-        return gulp.src('./index.html').pipe(open('', { url: 'http://localhost:3000/index.html'}));
+        return gulp.src('./index.html').pipe(open({ uri: 'http://localhost:3000/index.html'}));
     });
 
     gulp.task('server', [ 'watch', 'connect', 'open' ]);
