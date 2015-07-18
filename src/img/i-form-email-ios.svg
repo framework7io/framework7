@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="29px" height="29px" viewBox="0 0 29 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2 (9961) - http://www.bohemiancoding.com/sketch -->
+    <title>Email</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Email" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-1" fill="#8E8E93" sketch:type="MSShapeGroup" x="0" y="0" width="29" height="29" rx="6"></rect>
+            <g id="ios-email" transform="translate(5.000000, 8.000000)" fill="#FFFFFF" sketch:type="MSShapeGroup">
+                <g id="Group">
+                    <path d="M19,13 L19,0.70078125 L12.5132813,5.76875 L15.8828125,9.69921875 L15.7838542,9.80078125 L11.8799479,6.26640625 L9.5,8.125 L7.12005208,6.26640625 L3.21614583,9.80078125 L3.1171875,9.69921875 L6.48177083,5.76875 L0,0.7109375 L0,13 L19,13 Z" id="Shape"></path>
+                    <path d="M18.5893229,0 L0.395833333,0 L9.5,7.10429687 L18.5893229,0 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
