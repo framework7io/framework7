@@ -1,15 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="29px" height="29px" viewBox="0 0 29 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.2 (9961) - http://www.bohemiancoding.com/sketch -->
-    <title>Switch</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="Switch" sketch:type="MSLayerGroup">
-            <rect id="Rectangle-1" fill="#8E8E93" sketch:type="MSShapeGroup" x="0" y="0" width="29" height="29" rx="6"></rect>
-            <g id="Rectangle-15-+-Oval-1" transform="translate(4.000000, 10.000000)" sketch:type="MSShapeGroup">
-                <rect id="Rectangle-15" stroke="#FFFFFF" x="0" y="0" width="21" height="9" rx="6"></rect>
-                <circle id="Oval-1" fill="#FFFFFF" cx="4.5" cy="4.5" r="2.5"></circle>
+<svg width="29px" height="29px" viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <rect  fill="#8E8E93" x="0" y="0" width="29" height="29" rx="6"></rect>
+            <g transform="translate(4.000000, 10.000000)">
+                <rect stroke="#FFFFFF" x="0" y="0" width="21" height="9" rx="6"></rect>
+                <circle fill="#FFFFFF" cx="4.5" cy="4.5" r="2.5"></circle>
             </g>
         </g>
     </g>
