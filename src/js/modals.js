@@ -317,7 +317,7 @@ app.popover = function (modal, target, removeOnClose) {
         var modalLeft = 0;
         var diff = 0;
         // Top Position
-        var modalPosition = 'bottom';
+        var modalPosition = material ? 'bottom' : 'top';
         if (material) {
             if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
                 // On bottom
