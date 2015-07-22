@@ -88,11 +88,12 @@ Dom7.prototype = {
         }
     },
     data: function (key, value) {
+        var dom7ElementDataStorage = 'dom7ElementDataStorage';
         if (typeof value === 'undefined') {
             // Get value
             if (this[0]) {
                 // For best perfomance we may to get element's property
-                if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
+                if (this[0][dom7ElementDataStorage] && (key in this[0][dom7ElementDataStorage])) return this[0][dom7ElementDataStorage][key];
                 var dataKey = this[0].getAttribute('data-' + key);
                 if (dataKey) {
                     // Set data cache
@@ -107,8 +108,8 @@ Dom7.prototype = {
             // Set value
             for (var i = 0; i < this.length; i++) {
                 var el = this[i];
-                if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
-                el.dom7ElementDataStorage[key] = value;
+                if (!el[dom7ElementDataStorage]) el[dom7ElementDataStorage] = {};
+                el[dom7ElementDataStorage][key] = value;
                 // Set data- attribute
                 el.setAttribute('data-' + key, value);
             }
