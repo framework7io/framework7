@@ -91,9 +91,11 @@ Dom7.prototype = {
         if (typeof value === 'undefined') {
             // Get value
             if (this[0]) {
-                var dataKey = this[0].getAttribute('data-' + key);
-                if (dataKey) return dataKey;
-                else if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
+                // For best perfomance we may to get element's property
+                if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
+                else if (var dataKey = this[0].getAttribute('data-' + key)) {
+                    return dataKey;
+                }
                 else return undefined;
             }
             else return undefined;
@@ -104,6 +106,8 @@ Dom7.prototype = {
                 var el = this[i];
                 if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
                 el.dom7ElementDataStorage[key] = value;
+                // Set data- attribute
+                el.setAttribute('data-' + key, value);
             }
             return this;
         }
@@ -114,6 +118,9 @@ Dom7.prototype = {
             if (el.dom7ElementDataStorage && el.dom7ElementDataStorage[key]) {
                 el.dom7ElementDataStorage[key] = null;
                 delete el.dom7ElementDataStorage[key];
+            }
+            if(el.getAttribute('data-' + key)) {
+                el.removeAttribute('data-' + key);
             }
         }
     },
@@ -714,9 +721,9 @@ Dom7.prototype = {
     var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
     var notTrigger = ('resize scroll').split(' ');
     function createMethod(name) {
-        Dom7.prototype[name] = function (handler) {
+        Dom7.prototype[name] = function (targetSelector, listener, capture) {
             var i;
-            if (typeof handler === 'undefined') {
+            if (typeof targetSelector === 'undefined') {
                 for (i = 0; i < this.length; i++) {
                     if (notTrigger.indexOf(name) < 0) {
                         if (name in this[i]) this[i][name]();
@@ -728,7 +735,7 @@ Dom7.prototype = {
                 return this;
             }
             else {
-                return this.on(name, handler);
+                return this.on(name, targetSelector, listener, capture);
             }
         };
     }
