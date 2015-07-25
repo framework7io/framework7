@@ -238,7 +238,8 @@
             .pipe(jade({
                 pretty: true,
                 locals: {
-                    stylesheetFilename: 'framework7',
+                    stylesheetFilename: 'framework7.ios',
+                    stylesheetColorsFilename: 'framework7.ios.colors',
                     scriptFilename: 'framework7',
                 }
             }))
@@ -343,7 +344,8 @@
                     .pipe(jade({
                         pretty: true,
                         locals: {
-                            stylesheetFilename: 'framework7.min',
+                            stylesheetFilename: 'framework7.ios.min',
+                            stylesheetColorsFilename: 'framework7.ios.colors.min',
                             scriptFilename: 'framework7.min',
                         }
                     }))
