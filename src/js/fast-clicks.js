@@ -330,6 +330,10 @@ app.initFastClicks = function () {
         }
 
         if (document.activeElement === e.target) {
+            if (app.params.activeState) removeActive();
+            if (app.params.material && app.params.materialRipple) {
+                rippleTouchEnd();
+            }
             return true;
         }
 
@@ -474,6 +478,12 @@ app.initFastClicks = function () {
             document.addEventListener('mousemove', handleMouseMove);
             document.addEventListener('mouseup', handleMouseUp);
         }
+    }
+    if (app.params.material && app.params.materialRipple) {
+        document.addEventListener('contextmenu', function (e) {
+            removeActive();
+            rippleTouchEnd();
+        });
     }
         
 };
