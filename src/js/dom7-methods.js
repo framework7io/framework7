@@ -88,19 +88,13 @@ Dom7.prototype = {
         }
     },
     data: function (key, value) {
-        var dom7ElementDataStorage = 'dom7ElementDataStorage';
         if (typeof value === 'undefined') {
             // Get value
             if (this[0]) {
-                // For best perfomance we may to get element's property
-                if (this[0][dom7ElementDataStorage] && (key in this[0][dom7ElementDataStorage])) return this[0][dom7ElementDataStorage][key];
                 var dataKey = this[0].getAttribute('data-' + key);
-                if (dataKey) {
-                    // Set data cache
-                    if (!this[0][dom7ElementDataStorage]) this[0][dom7ElementDataStorage] = {};
-                    return this[0][dom7ElementDataStorage][key] = dataKey;
-                }
-                return undefined;
+                if (dataKey) return dataKey;
+                else if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
+                else return undefined;
             }
             else return undefined;
         }
@@ -108,10 +102,8 @@ Dom7.prototype = {
             // Set value
             for (var i = 0; i < this.length; i++) {
                 var el = this[i];
-                if (!el[dom7ElementDataStorage]) el[dom7ElementDataStorage] = {};
-                el[dom7ElementDataStorage][key] = value;
-                // Set data- attribute
-                el.setAttribute('data-' + key, value);
+                if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
+                el.dom7ElementDataStorage[key] = value;
             }
             return this;
         }
@@ -122,9 +114,6 @@ Dom7.prototype = {
             if (el.dom7ElementDataStorage && el.dom7ElementDataStorage[key]) {
                 el.dom7ElementDataStorage[key] = null;
                 delete el.dom7ElementDataStorage[key];
-            }
-            if(el.getAttribute('data-' + key)) {
-                el.removeAttribute('data-' + key);
             }
         }
     },
