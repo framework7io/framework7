@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Framework7 Kitchen Sink</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-width: 900px;
+            font-family: Helvetica Neue, Roboto, Arial, sans-serif;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: none;
+        }
+        .devices {
+            padding-top: 100px;
+            padding-bottom: 40px;
+            overflow: hidden;
+            width: 840px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .device-ios, .device-android {
+            float: left;
+        }
+        .device-ios {
+            width: 320px;
+            height: 548px;
+            background: #111;
+            border-radius: 55px;
+            box-shadow: 0px 0px 0px 2px #aaa;
+            padding: 105px 20px;
+            position: relative;
+            margin-right: 80px;
+        }
+        .device-ios:before {
+            content: '';
+            width: 60px;
+            height: 10px;
+            border-radius: 10px;
+            position: absolute;
+            left: 50%;
+            margin-left: -30px;
+            background: #333;
+            top: 50px;
+        }
+        .device-ios:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            left: 50%;
+            margin-left: -30px;
+            bottom: 20px;
+            border-radius: 100%;
+            box-sizing: border-box;
+            border: 5px solid #333;
+        }
+        .device-android {
+            width: 360px;
+            height: 640px;
+            position: relative;
+            background: #111;
+            padding: 60px 20px;
+            box-shadow: 0px 0px 0px 2px #aaa;
+            border-radius: 20px;
+        }
+        .device-android:before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            margin-left: -7px;
+            background: #666;
+            top: 25px;
+        }
+        .device-android:after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50px;
+            background: #444;
+            top: 30px;
+        }
+        .button {
+            position: absolute;
+            width: 200px;
+            margin-left: -100px;
+            left: 50%;
+            top: -44px;
+            margin-top: -30px;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 44px;
+            border-radius: 3px;
+            text-decoration: none;
+            color: blue;
+            font-size: 14px;
+        }
+        .device-ios .button {
+            border: 1px solid #007aff;
+            color: #007aff;
+        }
+        .device-ios .button:active {
+            background: rgba(0, 122, 255, 0.15);
+        }
+        .device-android .button {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            color: #2196f3;
+            text-transform: uppercase;
+        }
+        .device-android .button:active {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            background: rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="devices">
+        <div class="device device-ios">
+            <a href="./kitchen-sink-ios/" class="button">Full Screen Preview</a>
+            <iframe src="./kitchen-sink-ios/" scrolling="no" frameborder="0"></iframe>
+        </div>
+        <div class="device device-android">
+            <a href="./kitchen-sink-material/" class="button">Full Screen Preview</a>
+            <iframe src="./kitchen-sink-material/" scrolling="no" frameborder="0"></iframe>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,19 @@
+.page(data-page="swiper-custom")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="swiper.html").back.link.icon-only
+          i.icon.icon-back
+      .center Custom Controls
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+    .ks-slider-custom
+      .swiper-container.swiper-init(data-pagination=".swiper-pagination", data-spaceBetween="0", data-nextButton=".swiper-button-next", data-prevButton=".swiper-button-prev", data-paginationClickable="true")
+        .swiper-pagination
+        .swiper-wrapper
+          - for (var i = 1; i < 8; i++)
+            .swiper-slide(style="background-image:url(http://lorempixel.com/1024/1024/nightlife/#{i})")
+        .swiper-button-prev
+        .swiper-button-next

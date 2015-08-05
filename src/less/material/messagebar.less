@@ -1,0 +1,60 @@
+/* === Message Bar === */
+.toolbar.messagebar {
+    .translate3d(0,0,0);
+    .transition(0ms);
+    background: #fff;
+    .hairline(top, #d1d1d1);
+    height: 48px;
+    top: auto;
+    bottom: 0;
+    font-size: 16px;
+    overflow: hidden;
+    &.toolbar {
+        background: #fff;
+    }
+    textarea {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: none;
+        background: none;
+        border-radius: 0;
+        box-shadow: none;
+        display: block;
+        padding: 3px 8px 3px;
+        margin: 0;
+        width: 100%;
+        height: 28px;
+        color: #333;
+        font-size: 16px;
+        line-height: 22px;
+        font-family: inherit;
+        resize:none;
+        .flex-shrink(1);
+    }
+    a.link {
+        color: #333;
+        .align-self(flex-end);
+        height: @toolbarSize;
+        line-height: @toolbarSize;
+        .active-highlight-color(rgba(0,0,0,0.1));
+        
+    }
+    .link {
+        .flex-shrink(0);
+    }
+    ~ .page-content {
+        padding-bottom: @toolbarSize;
+    }
+    .page.no-toolbar & ~.page-content {
+        padding-bottom: @toolbarSize;
+    }
+    .hidden-toolbar & {
+        .translate3d(0,0,0);
+        .transition(0ms);
+    }
+}

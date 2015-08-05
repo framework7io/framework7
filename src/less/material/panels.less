@@ -1,0 +1,112 @@
+/* === Panels === */
+@panelWidth:260px;
+@panelsDuration: 300ms;
+.panel-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    opacity: 0;
+    z-index: 5999;
+    display: none;
+    .transform(translate3d(0,0,0));
+    .transition(@panelsDuration);
+}
+.panel {
+    z-index: 1000;
+    display: none;
+    background: #fff;
+    box-sizing: border-box;
+    .scrollable();
+    position: absolute;
+    width: @panelWidth;
+    top: 0;
+    height: 100%;
+    .translate3d(0);
+    .transition(@panelsDuration);
+
+    &.panel-left {
+
+        &.panel-cover {
+            z-index: 6000;
+            left: -@panelWidth;
+        }
+        &.panel-reveal {
+            left: 0;
+        }
+    }
+    &.panel-right {
+        &.panel-cover {
+            z-index: 6000;
+            right: -@panelWidth;
+        }
+        &.panel-reveal {
+            right: 0;
+        }
+    }
+}
+body.with-panel-left-cover, body.with-panel-right-cover {
+    .panel {
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+    }
+    .views {
+        .translate3d(0);
+    }
+    .panel-overlay {
+        display: block;
+        opacity: 1;
+    }
+}
+body.with-panel-left-reveal, body.with-panel-right-reveal {
+    .views {
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+        .transition(@panelsDuration);
+        -webkit-transition-property: -webkit-transform, box-shadow;
+        -moz-transition-property: -moz-transform, box-shadow;
+        transition-property: transform, box-shadow;
+    }
+    .panel-overlay {
+        background: rgba(0,0,0,0);
+        display: block;
+        opacity: 0;
+    }
+}
+body.with-panel-left-reveal {
+    .views {
+        .translate3d(@panelWidth);
+    }
+    .panel-overlay {
+        .translate3d(@panelWidth);
+    }
+}
+body.with-panel-left-cover {
+    .panel-left {
+        .translate3d(@panelWidth);
+    }
+}
+body.with-panel-right-reveal {
+    .views {
+        .translate3d(-@panelWidth);
+    }
+    .panel-overlay {
+        .translate3d(-@panelWidth);
+    }
+}
+body.with-panel-right-cover {
+    .panel-right {
+        .translate3d(-@panelWidth);
+    }
+}
+body.panel-closing {
+    .panel-overlay {
+        display: block;
+    }
+    .views {
+        .transition(@panelsDuration);
+        -webkit-transition-property: -webkit-transform, box-shadow;
+        -moz-transition-property: -moz-transform, box-shadow;
+        transition-property: transform, box-shadow;
+    }
+}

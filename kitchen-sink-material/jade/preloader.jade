@@ -1,0 +1,29 @@
+.page(data-page="preloader")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="index.html").back.link.icon-only
+          i.icon.icon-back
+      .center Preloader
+      .right
+        a(href="#").link.open-panel.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+      p How about an activity indicator? Framework 7 has a nice one. The F7 preloader is made with SVG and animated with CSS so it can be easily resized. Two options are available: the default is for light background and another one is for dark background. The HTML is pretty easy, just add a .preloader class to any element. For the dark background option, also add a .preloader-white class. Here are some examples:
+    .content-block.row.ks-preloaders
+      .col-25 Default:<br>
+        span.preloader
+      .col-25(style="background-color: #222; color:#fff") White:<br>
+        span.preloader.preloader-white
+      .col-25 Big:<br>
+        span.preloader.ks-preloader-big
+      .col-25(style="background-color: #222; color:#fff") White:<br>
+        span.preloader.preloader-white.ks-preloader-big
+    .content-block
+      p With <b>app.showIndicator()</b> you can call small overlay with indicator:
+      a(href="#").button.button-raised.demo-indicator Open small indicator overlay
+      p With <b>app.showPreloader()</b> you can call modal window with preloader:
+      a(href="#").button.button-raised.demo-preloader Open preloader modal
+      p With <b>app.showPreloader('My text...')</b> you can call it with custom title:
+      a(href="#").button.button-raised.demo-preloader-custom Open custom preloader

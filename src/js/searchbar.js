@@ -14,7 +14,16 @@ var Searchbar = function (container, params) {
         overlay: null,
         ignore: '.searchbar-ignore',
         customSearch: false,
-        removeDiacritics: false
+        removeDiacritics: false,
+        hideDividers: true,
+        hideGroups: true,
+        /* Callbacks
+        onSearch
+        onEnable
+        onDisable
+        onClear
+        */
+
     };
     params = params || {};
     for (var def in defaults) {
@@ -25,6 +34,9 @@ var Searchbar = function (container, params) {
     
     // Instance
     var s = this;
+
+    // Material
+    s.material = app.params.material;
 
     // Params
     s.params = params;
@@ -73,7 +85,7 @@ var Searchbar = function (container, params) {
 
     // Cancel button
     var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-    if (s.cancelButton.length > 0) {
+    if (s.cancelButton.length > 0 && !s.material) {
         s.cancelButton.transition(0).show();
         s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
         setTimeout(function () {
@@ -186,18 +198,19 @@ var Searchbar = function (container, params) {
     }
 
     // Trigger
-    s.triggerEvent = function (eventName, eventData) {
+    s.triggerEvent = function (eventName, callbackName, eventData) {
         s.container.trigger(eventName, eventData);
         if (s.searchList.length > 0) s.searchList.trigger(eventName, eventData);
+        if (callbackName && s.params[callbackName]) s.params[callbackName](s, eventData);
     };
 
     // Enable/disalbe
     s.enable = function () {
         function _enable() {
-            if (s.searchList.length && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+            if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
-            if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, '0px');
-            s.triggerEvent('enableSearch');
+            if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, '0px');
+            s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
         }
         if (app.device.ios) {
@@ -213,12 +226,12 @@ var Searchbar = function (container, params) {
     s.disable = function () {
         s.input.val('').trigger('change');
         s.container.removeClass('searchbar-active searchbar-not-empty');
-        if (s.cancelButton.length > 0) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
+        if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
         
-        if (s.searchList.length) s.overlay.removeClass('searchbar-overlay-active');
+        if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
         function _disable() {
             s.input.blur();
-            s.triggerEvent('disableSearch');
+            s.triggerEvent('disableSearch', 'onDisable');
             s.active = false;
         }
         if (app.device.ios) {
@@ -232,16 +245,20 @@ var Searchbar = function (container, params) {
     };
 
     // Clear
-    s.clear = function () {
+    s.clear = function (e) {
+        if (!s.query && e && $(e.target).hasClass('searchbar-clear')) {
+            s.disable();
+            return;
+        }
         s.input.val('').trigger('change').focus();
-        s.triggerEvent('clearSearch');
+        s.triggerEvent('clearSearch', 'onClear');
     };
 
     // Search
     s.handleInput = function () {
         setTimeout(function () {
             var value = s.input.val().trim();
-            if (s.searchList.length > 0 && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
+            if ((s.searchList.length > 0 || s.params.customSearch) && (s.params.searchIn || s.isVirtualList)) s.search(value, true);
         }, 0);
     };
 
@@ -259,6 +276,7 @@ var Searchbar = function (container, params) {
                 s.input.val(query);
             }
         }
+        s.query = s.value = query;
         // Add active/inactive classes on overlay
         if (query.length === 0) {
             s.container.removeClass('searchbar-not-empty');
@@ -269,8 +287,8 @@ var Searchbar = function (container, params) {
             if (s.searchList.length && s.container.hasClass('searchbar-active')) s.overlay.removeClass('searchbar-overlay-active');
         }
 
-        if (s.params.externalSearch) {
-            s.triggerEvent('search', {query: query});
+        if (s.params.customSearch) {
+            s.triggerEvent('search', 'onSearch', {query: query});
             return;
         }
         
@@ -321,7 +339,7 @@ var Searchbar = function (container, params) {
                 }
             });
 
-            if (app.params.searchbarHideDividers) {
+            if (s.params.hideDividers) {
                 s.searchList.find('.item-divider, .list-group-title').each(function () {
                     var title = $(this);
                     var nextElements = title.nextAll('li');
@@ -338,7 +356,7 @@ var Searchbar = function (container, params) {
                     else title.removeClass('hidden-by-searchbar');
                 });
             }
-            if (app.params.searchbarHideGroups) {
+            if (s.params.hideGroups) {
                 s.searchList.find('.list-group').each(function () {
                     var group = $(this);
                     var ignore = s.params.ignore && group.is(s.params.ignore);
@@ -352,7 +370,7 @@ var Searchbar = function (container, params) {
                 });
             }
         }
-        s.triggerEvent('search', {query: query, foundItems: foundItems});
+        s.triggerEvent('search', 'onSearch', {query: query, foundItems: foundItems});
         if (foundItems.length === 0) {
             s.notFound.show();
             s.found.hide();
@@ -374,7 +392,7 @@ var Searchbar = function (container, params) {
     s.attachEvents = function (destroy) {
         var method = destroy ? 'off' : 'on';
         s.container[method]('submit', preventSubmit);
-        s.cancelButton[method]('click', s.disable);
+        if (!s.material) s.cancelButton[method]('click', s.disable);
         s.overlay[method]('click', s.disable);
         s.input[method]('focus', s.enable);
         s.input[method]('change keydown keypress keyup', s.handleInput);

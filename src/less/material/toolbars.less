@@ -1,0 +1,264 @@
+/* === Toolbars === */
+
+//Toolbar/Navbar
+@toolbarBg : @themeColor;
+@toolbarColor: #fff;
+@toolbarLinksColor: #fff;
+@navbarSize: 56px;
+@toolbarSize: 48px;
+
+//Tab bar
+@tabbarSize: 48px;
+@tabbarLabelsSize: 72px;
+@tabbarLinksColor: rgba(255,255,255,0.7);
+@tabbarActiveLinksColor: rgba(255,255,255,1);
+
+// Toolbars animations
+@toolbarDuration: 300ms;
+
+.navbar-inner, .toolbar-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    .flexbox();
+    .align-items(center);
+}
+.navbar-inner {
+    .justify-content(flex-start);
+}
+.toolbar-inner {
+    .justify-content(space-between);   
+}
+.navbar-inner.cached {
+    display: none;
+}
+.navbar, .toolbar {
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    margin: 0;
+    z-index: 500;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    color: @toolbarColor;
+    b {
+        font-weight: 500;
+    }
+}
+.navbar, .toolbar, .subnavbar {
+    background: @toolbarBg;
+    a.link {
+        text-decoration: none;
+        position: relative;
+        color: @toolbarLinksColor;
+        box-sizing: border-box;
+        .flexbox();
+        .justify-content(center);
+        .align-items(center);
+        padding: 0 16px;
+        min-width: 48px;
+        .active-highlight();
+        i+span, i+i, span+i, span+span {
+            margin-left: 8px;
+        }
+    }
+    a.icon-only {
+        min-width: 0;
+        .flex-shrink(0);
+    }
+    i.icon {
+        display: block;
+    }
+}
+.navbar, .subnavbar {
+    .center {
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+        margin: 0 16px;
+        position: relative;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        line-height: @navbarSize;
+        .flex-shrink(10);
+        .flexbox();
+        .align-items(center);
+    }
+    .left, .right {
+        .flex-shrink(0);
+        .flexbox();
+        .justify-content(flex-start);
+        .align-items(center);
+        .translate3d(0,0,0);
+    }
+    .right {
+        margin-left: auto;
+    }
+    .right:first-child {
+        position: absolute;
+        right: 16px;
+        height: 100%;
+    }
+}
+.navbar {
+    left: 0;
+    top: 0;
+    height: @navbarSize;
+    font-size: 20px;
+    a.link {
+        line-height: @navbarSize;
+        height: @navbarSize;
+    }
+    .popup & {
+        .translate3d(0,0,0);
+    }
+}
+.subnavbar {
+    height: @toolbarSize;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 20;
+    box-sizing: border-box;
+    padding: 0 16px;
+    .flexbox();
+    .justify-content(space-between);
+    .align-items(center);
+    overflow: hidden;
+    a.link {
+        line-height: @toolbarSize;
+        height: @toolbarSize;
+    }
+    .center {
+        line-height: @toolbarSize;
+        &:first-child {
+            margin-left: 56px;
+        }
+    }
+    .navbar.no-border & {
+        margin-top: 0;
+    }
+    .navbar-on-left &, .navbar-on-right &{
+        pointer-events: none;
+    }
+    .navbar &, .page & {
+        position: absolute;
+    }
+    .page > & {
+        top: 0;
+        margin-top: 0;
+    }
+    > .buttons-row {
+        width: 100%;
+    }
+    .searchbar, &.searchbar {
+        position: absolute;
+    }
+    &.searchbar, .searchbar {
+        position: absolute;
+    }
+    .searchbar {
+        left: 0;
+        top: 0;
+    }
+    .center {
+
+    }
+}
+.toolbar {
+    left: 0;
+    bottom: 0;
+    height: @toolbarSize;
+    font-size: 14px;
+    a.link {
+        line-height: @toolbarSize;
+        height: @toolbarSize;
+    }
+    a {
+        .flex-shrink(1);
+        position: relative;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+    }
+}
+
+// Tabbar
+.tabbar {
+    z-index: 5001;
+    overflow: hidden;
+    bottom: auto;
+    top: 0;
+    .toolbar-inner {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    a.link {
+        line-height: 1.4;
+    }
+    a.tab-link, a.link {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 0;
+        padding-right: 0;
+        .flexbox();
+        .justify-content(center);
+        .align-items(center);
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+    i.icon {
+        height: 24px;
+    }
+    a.tab-link {
+        .transition(300ms);
+        overflow: hidden;
+        color: @tabbarLinksColor;
+        position: relative;
+        &.active, html:not(.watch-active-state) &:active, &.active-state {
+            color: @tabbarActiveLinksColor;
+        }
+    }
+    .tab-link-highlight {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        background: darken(@themeColor, 15%);
+        background: rgba(255,255,255,0.5);
+        .transition(300ms);
+    }
+}
+.tabbar-labels {
+    height: @tabbarLabelsSize;
+    a.tab-link, a.link {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        height: 100%;
+        .justify-content(space-between);
+    }
+    span.tabbar-label {
+        line-height: 1;
+        display: block;
+        margin: 0;
+        margin-top: 10px;
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 100%;
+    }
+}

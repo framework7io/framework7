@@ -1,0 +1,42 @@
+.page(data-page="calendar")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="index.html").back.link.icon-only
+          i.icon.icon-back
+      .center Calendar
+      .right
+        a(href="#").link.open-panel.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+        p Calendar is a touch optimized component that provides an easy way to handle dates.
+        p Calendar could be used as inline component or as overlay. Overlay Calendar will be automatically converted to Popover on tablets.
+    .content-block-title Default setup
+    .list-block
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Your birth date", readonly)#ks-calendar-default
+    .content-block-title Custom date format
+    .list-block
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Select date", readonly)#ks-calendar-date-format
+    .content-block-title Multiple Values
+    .list-block
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Select multiple dates", readonly)#ks-calendar-multiple
+    .content-block-title Inline with custom toolbar
+    .content-block
+      #ks-calendar-inline-container(style="margin-right:-16px; margin-left:-16px; width:auto")
+    

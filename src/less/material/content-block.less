@@ -1,0 +1,63 @@
+/* === Content Block === */
+@contentBlockBorderColor: rgba(0,0,0,0.12);
+.content-block {
+    margin: 32px 0;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+.content-block-title {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    line-height: 1;
+    margin: 16px 16px 16px;
+    padding-top: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-weight: 500;
+    color: rgba(0,0,0,0.54);
+    + .list-block, + .content-block, +.card {
+        margin-top: 0px;
+    }
+
+}
+.content-block-inner {
+    padding: 16px 16px;
+    margin-left: -16px;
+    width: 100%;
+    position: relative;
+    .hairline(top, @contentBlockBorderColor);
+    .hairline(bottom, @contentBlockBorderColor);
+    >p:first-child {
+        margin-top: 0;
+    }
+    >p:last-child {
+        margin-bottom: 0;
+    }
+}
+.content-block.inset {
+    margin-left: 16px;
+    margin-right: 16px;
+    border-radius: 7px;
+    .content-block-inner {
+        .hairline-remove(top);
+        .hairline-remove(bottom);
+        border-radius: 4px;
+    }
+}
+@media all and (min-width:768px) {
+    .content-block.tablet-inset {
+        margin-left: 16px;
+        margin-right: 16px;
+        border-radius: 4px
+    }
+    
+    .content-block.tablet-inset .content-block-inner {
+    	.hairline-remove(top);
+        .hairline-remove(bottom);
+    	border-radius: 4px;
+    }
+}

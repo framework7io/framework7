@@ -2,14 +2,13 @@
 ************   Smart Select   ************
 ===============================================================================*/
 app.initSmartSelects = function (pageContainer) {
-    var page = $(pageContainer);
-    if (page.length === 0) return;
+    pageContainer = $(pageContainer);
     var selects;
-    if (page.is('.smart-select')) {
-        selects = page;
+    if (pageContainer.is('.smart-select')) {
+        selects = pageContainer;
     }
     else {
-        selects = page.find('.smart-select');
+        selects = pageContainer.find('.smart-select');
     }
     if (selects.length === 0) return;
 
@@ -69,11 +68,16 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var view = smartSelect.parents('.' + app.params.viewClass);
     if (view.length === 0) return;
     view = view[0].f7View;
-    if (!view) return;
 
     // Parameters
     var openIn = smartSelect.attr('data-open-in');
     if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
+    if (openIn === 'popup') {
+        if ($('.popup.smart-select-popup').length > 0) return;
+    }
+    else {
+        if (!view) return;
+    }
 
     var smartSelectData = smartSelect.dataset();
     var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
@@ -84,7 +88,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var navbarTheme = smartSelectData.navbarTheme || app.params.smartSelectNavbarTheme;
     var virtualList = smartSelectData.virtualList;
     var virtualListHeight = smartSelectData.virtualListHeight;
-
+    var material = app.params.material;
     // Collect all options/values
     var select = smartSelect.find('select')[0];
     var $select = $(select);
@@ -97,7 +101,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
     var selectName = select.name;
-    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionShowGroupLabel, previousGroup, optionColor, optionClassName, optionData;
+    var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionIsLabel, previousGroup, optionColor, optionClassName, optionData;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
         if (option[0].disabled) continue;
@@ -105,15 +109,20 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         optionImage = optionData.optionImage || $selectData.optionImage;
         optionIcon = optionData.optionIcon || $selectData.optionIcon;
         optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
+        if (material) optionHasMedia = optionImage || optionIcon;
         optionColor = optionData.optionColor;
         optionClassName = optionData.optionClass;
         optionGroup = option.parent('optgroup')[0];
         optionGroupLabel = optionGroup && optionGroup.label;
-        optionShowGroupLabel = false;
+        optionIsLabel = false;
         if (optionGroup) {
             if (optionGroup !== previousGroup) {
-                optionShowGroupLabel = true;
+                optionIsLabel = true;
                 previousGroup = optionGroup;
+                values.push({
+                    groupLabel: optionGroupLabel,
+                    isLabel: optionIsLabel
+                });
             }
         }
         values.push({
@@ -122,7 +131,6 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             selected: option[0].selected,
             group: optionGroup,
             groupLabel: optionGroupLabel,
-            showGroupLabel: optionShowGroupLabel,
             image: optionImage,
             icon: optionIcon,
             color: optionColor,
@@ -133,7 +141,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             hasMedia: optionHasMedia,
             checkbox: inputType === 'checkbox',
             inputName: inputName,
-            test: this
+            material: app.params.material
         });
     }
 
@@ -141,24 +149,47 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     // Item template/HTML
     if (!app._compiledTemplates.smartSelectItem) {
         app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate || 
-            '{{#if showGroupLabel}}' +
+            '{{#if isLabel}}' +
             '<li class="item-divider">{{groupLabel}}</li>' +
-            '{{/if}}' +
+            '{{else}}' +
             '<li{{#if className}} class="{{className}}"{{/if}}>' +
                 '<label class="label-{{inputType}} item-content">' +
                     '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
-                    '{{#if hasMedia}}' +
-                    '<div class="item-media">' +
-                        '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
-                        '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
-                        '{{#if image}}<img src="{{image}}">{{/if}}' +
-                    '</div>' +
+                    '{{#if material}}' +
+                        '{{#if hasMedia}}' +
+                        '<div class="item-media">' +
+                            '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
+                            '{{#if image}}<img src="{{image}}">{{/if}}' +
+                        '</div>' +
+                        '<div class="item-inner">' +
+                            '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                        '</div>' +
+                        '<div class="item-after">' +
+                            '<i class="icon icon-form-{{inputType}}"></i>' +
+                        '</div>' +
+                        '{{else}}' +
+                        '<div class="item-media">' +
+                            '<i class="icon icon-form-{{inputType}}"></i>' +
+                        '</div>' +
+                        '<div class="item-inner">' +
+                            '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                        '</div>' +
+                        '{{/if}}' +
+                    '{{else}}' +
+                        '{{#if hasMedia}}' +
+                        '<div class="item-media">' +
+                            '{{#if checkbox}}<i class="icon icon-form-checkbox"></i>{{/if}}' +
+                            '{{#if icon}}<i class="icon {{icon}}"></i>{{/if}}' +
+                            '{{#if image}}<img src="{{image}}">{{/if}}' +
+                        '</div>' +
+                        '{{/if}}' +
+                        '<div class="item-inner">' +
+                            '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
+                        '</div>' +
                     '{{/if}}' +
-                    '<div class="item-inner">' +
-                        '<div class="item-title{{#if color}} color-{{color}}{{/if}}">{{text}}</div>' +
-                    '</div>' +
                 '</label>' +
-            '</li>'
+            '</li>' +
+            '{{/if}}'
         );
     }
     var smartSelectItemTemplate = app._compiledTemplates.smartSelectItem;
@@ -189,9 +220,10 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         navbarTheme: navbarTheme,
         inPopup: openIn === 'popup',
         inPage: openIn === 'page',
-        leftTemplate: openIn === 'popup' ? app.params.smartSelectPopupCloseTemplate.replace(/{{closeText}}/g, closeText) : app.params.smartSelectBackTemplate.replace(/{{backText}}/g, backText)
+        leftTemplate: openIn === 'popup' ? 
+            (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
+            (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
     });
-
     
     // Determine navbar layout type - static/fixed/through
     var noNavbar = '', noToolbar = '', navbarLayout;
@@ -223,7 +255,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                                 '<input type="search" placeholder="' + searchbarPlaceholder + '">' +
                                 '<a href="#" class="searchbar-clear"></a>' +
                             '</div>' +
-                            '<a href="#" class="searchbar-cancel">' + searchbarCancel + '</a>' +
+                            (material ? '' : '<a href="#" class="searchbar-cancel">' + searchbarCancel + '</a>') +
                           '</form>' +
                           '<div class="searchbar-overlay"></div>';
 

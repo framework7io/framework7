@@ -1,0 +1,137 @@
+/* === Pages === */
+
+// Pages animations
+@pageDuration: 300ms;
+@newPageOffset: 56px;
+
+.pages {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.page {
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    .translate3d(0,0,0);
+    &.cached {
+        display: none;
+    }
+}
+.page-on-left {
+    opacity: 1;
+    .translate3d(0,0,0);
+}
+.page-on-right {
+    opacity: 0;
+    pointer-events: none;
+    .translate3d(0, @newPageOffset, 0);
+}
+.page-content {
+    .scrollable();
+    box-sizing: border-box;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+//Class that will trigger transition during page custom transitions (like swipe-back)
+.page-transitioning {
+    .transition(@pageDuration);
+}
+// From/to Right To/from Center animations
+.page-from-right-to-center {
+    pointer-events: none;
+    .animation(pageFromRightToCenter @pageDuration forwards);
+}
+.page-from-center-to-right {
+    pointer-events: none;
+    .animation(pageFromCenterToRight @pageDuration forwards);
+}
+@-webkit-keyframes pageFromRightToCenter {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, @newPageOffset,0);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@keyframes pageFromRightToCenter {
+    from {
+        opacity: 0;
+        transform: translate3d(0, @newPageOffset,0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
+}
+@-webkit-keyframes pageFromCenterToRight {
+    from {
+        opacity: 1;
+        -webkit-transform: translate3d(0,0,0);
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(0, @newPageOffset,0);
+    }
+}
+@keyframes pageFromCenterToRight {
+    from {
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, @newPageOffset,0);
+    }
+}
+
+
+// From/to Center To/from Left animations
+.page-from-center-to-left {
+    .animation(pageFromCenterToLeft @pageDuration forwards);
+}
+.page-from-left-to-center {
+    .animation(pageFromLeftToCenter @pageDuration forwards);
+}
+
+@-webkit-keyframes pageFromCenterToLeft {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes pageFromCenterToLeft {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes pageFromLeftToCenter {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes pageFromLeftToCenter {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 1;
+    }
+}

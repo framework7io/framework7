@@ -1,0 +1,33 @@
+/* === Contacts === */
+.contacts-content {
+    background: #fff;
+}
+.contacts-block {
+    margin: 0;
+    .list-group-title {
+        padding: 0 16px;
+        pointer-events: none;
+        background: none;
+        color:#888888;
+        font-weight: 500;
+        line-height: 48px;
+        height: 48px;
+        font-size: 20px;
+        font-weight: 500;
+        overflow: visible;
+        width: 56px;
+        top: 0;
+        + li {
+            margin-top: -48px;
+        }
+    }
+    .list-group:first-child ul {
+        .hairline-remove(top);
+    }
+    .list-group:last-child ul {
+        .hairline-remove(bottom);
+    }
+    li:not(.list-group-title) {
+        padding-left: 40px + 16px;
+    }
+}

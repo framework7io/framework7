@@ -108,6 +108,15 @@ Dom7.prototype = {
             return this;
         }
     },
+    removeData: function(key) {
+        for (var i = 0; i < this.length; i++) {
+            var el = this[i];
+            if (el.dom7ElementDataStorage && el.dom7ElementDataStorage[key]) {
+                el.dom7ElementDataStorage[key] = null;
+                delete el.dom7ElementDataStorage[key];
+            }
+        }
+    },
     dataset: function () {
         var el = this[0];
         if (el) {
@@ -403,6 +412,14 @@ Dom7.prototype = {
             callback.call(this[i], i, this[i]);
         }
         return this;
+    },
+    filter: function (callback) {
+        var matchedItems = [];
+        var dom = this;
+        for (var i = 0; i < dom.length; i++) {
+            if (callback.call(dom[i], i, dom[i])) matchedItems.push(dom[i]);
+        }
+        return new Dom7(matchedItems);
     },
     html: function (html) {
         if (typeof html === 'undefined') {

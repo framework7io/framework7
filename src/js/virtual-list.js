@@ -4,7 +4,7 @@
 var VirtualList = function (listBlock, params) {
     var defaults = {
         cols: 1,
-        height: 44,
+        height: app.params.material ? 48 : 44,
         cache: true,
         dynamicHeightBufferSize: 1
     };

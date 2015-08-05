@@ -1,0 +1,102 @@
+/* === 
+    Preloader
+    By Rudi Theunissen (https://github.com/rtheunissen/md-preloader)
+=== */
+ 
+.preloader {
+    @easing:      cubic-bezier(.8,.0,.4,.8);
+
+    @speed:      1320ms;       // animation time for each loop
+    @color:      #757575;      // Blue A200 in the Material Design color palette
+    @linecap:    square;       // could be 'round', but the official one is square
+    @loops:      5;            // number of points where the arc meets
+    @arc:        0.72;         // fraction of the circumference that the arc grows to
+    @perimeter:  67px * pi();  // circumference of the raw svg inner cricle
+
+    font-size: 0;
+
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    -webkit-animation: preloader-outer @speed * @loops linear infinite;
+    animation: preloader-outer @speed * @loops linear infinite;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        -webkit-animation: preloader-inner @speed linear infinite;
+        animation: preloader-inner @speed linear infinite;
+
+        circle {
+            fill: none;
+            stroke: @color;
+            stroke-linecap: @linecap;
+            -webkit-animation: preloader-arc @speed @easing infinite;
+            animation: preloader-arc @speed @easing infinite;
+        }
+    }
+    &.preloader-white svg circle {
+        stroke: #fff;
+    }
+    @-webkit-keyframes preloader-outer {
+        0% {
+            -webkit-transform: rotate(0);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    @keyframes preloader-outer {
+        0% {
+            transform: rotate(0);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes preloader-inner {
+        0% {
+            -webkit-transform: rotate(-360deg * (1 - @arc));
+        }
+        100% {
+            -webkit-transform: rotate(0);
+        }
+    }
+    @keyframes preloader-inner {
+        0% {
+            transform: rotate(-360deg * (1 - @arc));
+        }
+        100% {
+            transform: rotate(0);
+        }
+    }
+    @-webkit-keyframes preloader-arc {
+        0% {
+            stroke-dasharray: 1 @perimeter;
+            stroke-dashoffset: 0;
+        }
+        40% {
+            stroke-dasharray: @arc * @perimeter, @perimeter;
+            stroke-dashoffset: 0;
+        }
+        100% {
+            stroke-dasharray: 1 @perimeter;
+            stroke-dashoffset: -@arc * @perimeter;
+        }
+    }
+    @keyframes preloader-arc {
+        0% {
+            stroke-dasharray: 1 @perimeter;
+            stroke-dashoffset: 0;
+        }
+        40% {
+            stroke-dasharray: @arc * @perimeter, @perimeter;
+            stroke-dashoffset: 0;
+        }
+        100% {
+            stroke-dasharray: 1 @perimeter;
+            stroke-dashoffset: -@arc * @perimeter;
+        }
+    }
+}

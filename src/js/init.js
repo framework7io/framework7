@@ -40,6 +40,9 @@ app.init = function () {
     // Init Live Swipe Panels
     if (app.initSwipePanels && (app.params.swipePanel || app.params.swipePanelOnlyClose)) app.initSwipePanels();
     
+    // Init Material Inputs
+    if (app.params.material && app.initMaterialWatchInputs) app.initMaterialWatchInputs();
+    
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
 

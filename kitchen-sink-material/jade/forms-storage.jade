@@ -1,0 +1,132 @@
+.page(data-page="form-storage")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="forms.html").back.link.icon-only
+          i.icon.icon-back
+      .center Form Storage
+      .right
+        a(href="#").link.open-panel.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+      p With forms storage it is easy to store and parse forms data, especially on Ajax loaded pages. All you need to make it work is to add "store-data" class to your &lt;form&gt; and Framework7 will store form data with every input change. And the most awesome part is that when you load this page again Framework7 will parse this data and fill all form fields automatically! Just try to fill the form below and then go to any other page, or even you may close this site, and when you will back here form fields will keep your data.
+    .content-block-title Personal Details
+    form.store-data.list-block(id="demoform-1")
+      ul
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-name
+            .item-inner 
+              .item-title.label Name
+              .item-input
+                input(type="text", placeholder="Your name", name="name")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-email
+            .item-inner 
+              .item-title.label E-mail
+              .item-input
+                input(type="email", placeholder="E-mail", name="email")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-url
+            .item-inner 
+              .item-title.label URL
+              .item-input
+                input(type="url", placeholder="URL", name="url")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-password
+            .item-inner 
+              .item-title.label Password
+              .item-input
+                input(type="password", placeholder="Password", name="password")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-tel
+            .item-inner 
+              .item-title.label Phone
+              .item-input
+                input(type="tel", placeholder="Phone", name="phone")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-gender
+            .item-inner 
+              .item-title.label Gender
+              .item-input
+                select
+                  option Male
+                  option Female
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-calendar
+            .item-inner 
+              .item-title.label Birth date
+              .item-input
+                input(type="date", placeholder="Birth day", value="2014-04-30", name="birth-date")
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-toggle
+            .item-inner 
+              .item-title.label Switch
+              .item-input
+                label.label-switch
+                  input(type="checkbox", name="switch")
+                  .checkbox
+        li
+          .item-content
+            .item-media
+              i.icon.icon-form-settings
+            .item-inner
+              .item-title.label Slider
+              .item-input
+                .range-slider
+                  input(type="range", min="0", max="100", value="50", step="0.1", name="slider")
+        li.align-top
+          .item-content
+            .item-media
+              i.icon.icon-form-comment
+            .item-inner 
+              .item-title.label About Me
+              .item-input
+                textarea(name="about-me").resizable
+    .content-block-title I like
+    form.store-data.list-block(id="demoform-2")
+      ul
+        li
+          label.label-checkbox.item-content
+            input(type="checkbox", name="ks-checkbox", value="Books", checked=true)
+            .item-media
+              i.icon.icon-form-checkbox
+            .item-inner
+              .item-title Books
+        li
+          label.label-checkbox.item-content
+            input(type="checkbox", name="ks-checkbox", value="Movies")
+            .item-media
+              i.icon.icon-form-checkbox
+            .item-inner
+              .item-title Movies
+        li
+          label.label-checkbox.item-content
+            input(type="checkbox", name="ks-checkbox", value="Food")
+            .item-media
+              i.icon.icon-form-checkbox
+            .item-inner
+              .item-title Food
+        li
+          label.label-checkbox.item-content
+            input(type="checkbox", name="ks-checkbox", value="Drinks")
+            .item-media
+              i.icon.icon-form-checkbox
+            .item-inner
+              .item-title Drinks

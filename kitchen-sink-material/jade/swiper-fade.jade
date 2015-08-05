@@ -1,0 +1,17 @@
+.page(data-page="swiper-fade")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="swiper.html").back.link.icon-only
+          i.icon.icon-back
+      .center Fade Effect
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+    .swiper-container.swiper-init.ks-demo-slider.ks-fade-slider(data-pagination=".swiper-pagination", data-effect="fade")
+      .swiper-pagination
+      .swiper-wrapper
+        - for (var i = 1; i < 5; i++)
+          .swiper-slide(style="background-image:url(http://lorempixel.com/1024/1024/people/#{i})")
+    

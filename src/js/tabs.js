@@ -69,9 +69,25 @@ app.showTab = function (tab, tabLink, force) {
             });
         }
     }
-
+    
     // Update links' classes
-    if (tabLink && tabLink.length > 0) tabLink.addClass('active');
+    if (tabLink && tabLink.length > 0) {
+        tabLink.addClass('active');
+        // Material Highlight
+        if (app.params.material) {
+            var tabbar = tabLink.parents('.tabbar');
+            if (tabbar.length > 0) {
+                if (tabbar.find('.tab-link-highlight').length === 0) {
+                    tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+                    var clientLeft = tabbar[0].clientLeft;
+                }
+                var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
+                tabbar.find('.tab-link-highlight')
+                    .css({width: tabLinkWidth + '%'})
+                    .transform('translate3d(' + tabLink.index() * 100 + '%,0,0)');
+            }
+        }
+    }
     if (oldTabLink && oldTabLink.length > 0) oldTabLink.removeClass('active');
     
     return true;

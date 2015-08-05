@@ -130,6 +130,7 @@ $.ajax = function (options) {
 
     // Save Request URL
     xhr.requestUrl = options.url;
+    xhr.requestParameters = options;
 
     // Open XHR
     xhr.open(_method, options.url, options.async, options.user, options.password);

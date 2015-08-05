@@ -1,0 +1,137 @@
+/* === Search Bar === */
+@searchbarBg: #c9c9ce;
+@searchbarBorderColor: #b4b4b4;
+@searchbarSize: 44px;
+.searchbar {
+    height: @searchbarSize;
+    width: 100%;
+    background: @searchbarBg;
+    box-sizing: border-box;
+    .hairline(bottom, @searchbarBorderColor);
+    padding: 0 8px;
+    overflow: hidden;
+    position: relative;
+    .flexbox();
+    .align-items(center);
+    .searchbar-input {
+        width: 100%;
+        height: 28px;
+        position: relative;
+        .flex-shrink(1);
+    }
+    input[type="search"] {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        display: block;
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        border-radius: 5px;
+        font-family: inherit;
+        color:#000;
+        font-size: 14px;
+        font-weight: normal;
+        padding: 0 28px;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: 8px center;
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13' enable-background='new 0 0 13 13'><g><path fill='#939398' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/></g><line stroke='#939398' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>");
+        -webkit-background-size: 13px 13px;
+        background-size: 13px 13px;
+        &::-webkit-input-placeholder {
+            color: #939398;
+            opacity: 1;
+        }
+        &::-webkit-search-cancel-button {
+            -webkit-appearance:none;
+        }
+    }
+    .searchbar-clear {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        pointer-events:none;
+        background-position: center;
+        background-repeat: no-repeat;
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#8e8e93'/><line stroke='#ffffff' stroke-width='2' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#ffffff' stroke-width='2' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
+        -webkit-background-size: 14px 14px;
+        background-size: 14px 14px;
+        .transition(300ms);
+        cursor: pointer;
+    }
+    .searchbar-cancel {
+        .transition(300ms);
+        .translate3d(0,0,0);
+        font-size: 17px;
+        cursor: pointer;
+        opacity: 0;
+        .flex-shrink(0);
+        margin-left: 0;
+        pointer-events:none;
+        display: none;
+    }
+    &.searchbar-active {
+        .searchbar-cancel {
+            margin-left: 8px;
+            opacity: 1;
+            pointer-events: auto;
+            html:not(.watch-active-state) &:active, &.active-state {
+                opacity: 0.3;
+                .transition(0ms);
+            }
+        }
+    }
+    &.searchbar-not-empty {
+        .searchbar-clear {
+            pointer-events: auto;
+            opacity: 1;
+        }
+    }
+}
+.searchbar-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    opacity: 0;
+    pointer-events:none;
+    background: rgba(0,0,0,0.4);
+    .transition(300ms);
+    .translate3d(0,0,0);
+    &.searchbar-overlay-active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+.searchbar-not-found {
+    display: none;
+}
+.hidden-by-searchbar, .list-block .hidden-by-searchbar, .list-block li.hidden-by-searchbar {
+    display: none;
+}
+.page > .searchbar {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    & ~ .page-content {
+        padding-top: @searchbarSize;
+    }
+}
+.navbar-fixed, .navbar-through {
+    .page > .searchbar, > .searchbar {
+        top: @toolbarSize;
+        & ~ .page-content {
+            padding-top: @searchbarSize + @toolbarSize;
+        }
+    }
+}

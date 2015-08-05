@@ -1,0 +1,239 @@
+/* === Messages === */
+.messages-content {
+    background: #fff;
+}
+.messages {
+    .flexbox();
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+.messages-date {
+    text-align: center;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 1;
+    margin: 10px 15px;
+    color: #8e8e93;
+    span {
+        font-weight: 400;
+    }
+}
+.message {
+    box-sizing: border-box;
+    margin: 1px 10px 0;
+    max-width: 70%;
+    .flexbox();
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    &:first-child {
+        margin-top: 10px;
+    }
+    .message-text {
+        box-sizing: border-box;
+        border-radius: 16px;
+        padding: 6px 16px 9px;
+        min-width: 48px;
+        min-height: 35px;
+        font-size: 17px;
+        line-height: 1.2;
+        word-break: break-word;
+    }
+    &.message-pic {
+        .message-text {
+            padding: 0;
+            background: none;
+        }
+        img {
+            display: block;
+            height: auto;
+            max-width: 100%;
+            border-radius: 16px;
+        }
+    }
+}
+.message-name {
+    font-size: 12px;
+    line-height: 1;
+    color: #8e8e93;
+    margin-bottom: 2px;
+    margin-top: 7px;
+    .message-hide-name & {
+        display: none;
+    }
+}
+.message-label {
+    font-size: 12px;
+    line-height: 1;
+    color: #8e8e93;
+    margin-top: 4px;
+    .message-hide-label & {
+        display: none;
+    }
+}
+.message-avatar {
+    width: 29px;
+    height: 29px;
+    border-radius: 100%;
+    margin-top: -29px;
+    position: relative;
+    top: 1px;
+    background-size: cover;
+    opacity: 1;
+    .transition(400ms);
+    .message-hide-avatar & {
+        opacity: 0;
+    }
+}
+.message-sent {
+    -ms-flex-item-align: end;
+    -webkit-align-self: flex-end;
+    align-self: flex-end;
+    .align-items(flex-end);
+    .message-name {
+        margin-right: 16px;
+    }
+    .message-label {
+        margin-right: 6px;
+    }
+    &.message-with-avatar {
+        .message-text {
+            margin-right: 29px;
+        }
+        .message-name {
+            margin-right: 45px;
+        }
+        .message-label {
+            margin-right: 34px;
+        }
+    }
+    .message-text {
+        padding-right: 22px;
+        background-color: #00d449;
+        color: white;
+        margin-left: auto;
+        -webkit-mask-box-image: url("data:image/svg+xml;charset=utf-8,<svg height='35' viewBox='0 0 96 70' width='48' xmlns='http://www.w3.org/2000/svg'><path d='m84 35c1 7-5 37-42 35-37 2-43-28-42-35-1-7 5-37 42-35 37-2 43 28 42 35z'/></svg>") 50% 56% 46% 42%;
+    }
+    &.message-last, &.message-with-tail {
+        .message-text {
+            border-radius: 16px 16px 0 16px;
+            -webkit-mask-box-image: url("data:image/svg+xml;charset=utf-8,<svg height='35' viewBox='0 0 96 70' width='48' xmlns='http://www.w3.org/2000/svg'><path d='m84 35c1 7-5 37-42 35-37 2-43-28-42-35-1-7 5-37 42-35 37-2 43 28 42 35z'/><path d='m96 70c-6-2-12-10-12-19v-16l-14 27s8 8 26 8z'/></svg>") 50% 56% 46% 42%;
+        }
+        &.message-pic img{
+            border-radius: 16px 16px 0 16px;
+        }
+    }
+}
+.message-received {
+    -ms-flex-item-align: start;
+    -webkit-align-self: flex-start;
+    align-self: flex-start;
+    .align-items(flex-start);
+    .message-text {
+        padding-left: 22px;
+        background-color: #e5e5ea;
+        color: #000;
+        -webkit-mask-box-image: url("data:image/svg+xml;charset=utf-8,<svg height='35' viewBox='0 0 96 70' width='48' xmlns='http://www.w3.org/2000/svg'><path d='m96 35c1 7-5 37-42 35-37 2-43-28-42-35-1-7 5-37 42-35 37-2 43 28 42 35z'/></svg>") 50% 42% 46% 56%;
+    }
+    .message-name {
+        margin-left: 16px;
+    }
+    .message-label {
+        margin-left: 6px;
+    }
+    &.message-with-avatar {
+        .message-text {
+            margin-left: 29px;
+        }
+        .message-name {
+            margin-left: 45px;
+        }
+        .message-label {
+            margin-left: 34px;
+        }
+    }    
+    &.message-last, &.message-with-tail {
+        .message-text {
+            border-radius: 16px 16px 16px 0;
+            -webkit-mask-box-image: url("data:image/svg+xml;charset=utf-8,<svg height='35' viewBox='0 0 96 70' width='48' xmlns='http://www.w3.org/2000/svg'><path d='m96 35c1 7-5 37-42 35-37 2-43-28-42-35-1-7 5-37 42-35 37-2 43 28 42 35z'/><path d='m0 70c6-2 12-10 12-19v-16l14 27s-8 8-26 8z'/></svg>") 50% 42% 46% 56%;
+        }
+        &.message-pic img{
+            border-radius: 16px 16px 16px 0;
+        }
+    }
+}
+.message-last {
+    margin-bottom: 8px;
+}
+.message-appear-from-bottom {
+    -webkit-animation: messageAppearFromBottom 400ms;
+    animation: messageAppearFromBottom 400ms;
+}
+.message-appear-from-top {
+    -webkit-animation: messageAppearFromTop 400ms;
+    animation: messageAppearFromTop 400ms;   
+}
+.messages-auto-layout {
+    .message-name, .message-label {
+        display: none;
+    }
+    .message-avatar {
+        opacity: 0;
+    }
+    .message-first {
+        .message-name {
+            display: block;
+        }
+    }
+    .message-last {
+        .message-avatar {
+            opacity: 1;
+        }
+        .message-label {
+            display: block;
+        }
+    }
+}
+html.retina.ios-6 {
+    .message, .message.message-pic img {
+        -webkit-mask-box-image:none;
+        border-radius: 16px;
+    }
+}
+@-webkit-keyframes messageAppearFromBottom {
+    from {
+        -webkit-transform: translate3d(0,100%,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@keyframes messageAppearFromBottom {
+    from {
+        transform: translate3d(0,100%,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
+}
+@-webkit-keyframes messageAppearFromTop {
+    from {
+        -webkit-transform: translate3d(0,-100%,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@keyframes messageAppearFromTop {
+    from {
+        transform: translate3d(0,-100%,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
+}

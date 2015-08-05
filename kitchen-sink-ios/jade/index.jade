@@ -1,0 +1,462 @@
+doctype
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
+    meta(name='mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
+    title Framework7 iOS
+    link(rel="stylesheet", href="../build/css/framework7.ios.css")
+    link(rel="stylesheet", href="../build/css/framework7.ios.colors.css")
+    link(rel="stylesheet", href="css/kitchen-sink.css")
+    link(rel="icon", href="img/icon.png")
+    link(rel="apple-touch-icon", href="img/icon.png")
+  body
+    .statusbar-overlay
+    .panel-overlay
+    .panel.panel-left.panel-cover.layout-dark
+      .content-block-title Left Panel
+      .content-block
+        p This is a side panel. You can close it by clicking outsite or on this link: 
+          a(href="#").close-panel close me
+          | . You can put here anything, even another isolated view like in 
+          a(href="#", data-panel="right").open-panel Right Panel
+      .content-block-title Framework7 Kitchen Sink
+      .list-block
+        ul
+          li
+            a(href="forms.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Forms
+          li
+            a(href="list-view.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title List View
+          li
+            a(href="media-lists.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Media Lists
+          li
+            a(href="modals.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Modals
+          li
+            a(href="bars.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Navbars And Toolbars
+          li
+            a(href="popover.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Popover
+          li
+            a(href="panels.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Side Panels
+          li
+            a(href="swipe-delete.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Swipe To Delete
+          li
+            a(href="swiper.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Swiper Slider
+          li
+            a(href="tabs.html").item-link.close-panel 
+              .item-content
+                .item-media
+                  i.icon.icon-f7
+                .item-inner 
+                  .item-title Tabs
+      .content-block
+        p Long text block goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sem urna, gravida non scelerisque id, fringilla ac velit. Phasellus elementum a ipsum at ornare. Mauris sagittis rhoncus euismod. Integer convallis augue eu lacus ultrices, in dictum elit consequat. Nulla faucibus massa id felis egestas eleifend. Proin consequat dignissim magna ut scelerisque. Vestibulum ac lorem semper, posuere sapien nec, pharetra massa. Nulla a tellus facilisis, sollicitudin quam porta, aliquam lorem. Fusce dignissim eros ac diam molestie, ut ultrices lorem tristique. Ut facilisis augue ac nisi egestas malesuada. Nunc posuere tortor quis eleifend mollis. Aliquam erat volutpat. Donec feugiat elit tellus, nec convallis orci elementum in. Sed urna mi, vestibulum id tempus id, pretium et ante. Pellentesque eget sollicitudin ligula. Phasellus pellentesque velit eu porta suscipit.
+    .panel.panel-right.panel-reveal.layout-dark
+      .view.view-right
+        .navbar
+          .navbar-inner
+            .center.sliding Right Panel
+        .pages.navbar-through
+          .page(data-page="panel-right1")
+            .page-content 
+              .content-block
+                p This is a right side panel. You can close it by clicking outsite or on this link: 
+                  a(href="#").close-panel close me
+                  | . You can put here anything, even another isolated view, try it:
+              .list-block
+                ul
+                  li
+                    a(href="panel-right2.html").item-link 
+                      .item-content
+                        .item-inner 
+                          .item-title Right panel page 2
+                  li
+                    a(href="panel-right3.html").item-link
+                      .item-content
+                        .item-inner 
+                          .item-title Right panel page 3
+    .views
+      .view.view-main
+        .navbar
+          .navbar-inner
+            //- .left
+            .center.sliding Framework7
+            .right
+              a(href="#").open-panel.link.icon-only
+                i.icon.icon-bars
+        .toolbar
+          .toolbar-inner
+            a(href="#").link Dummy Link
+            a(href="#", data-popover=".popover-menu").open-popover.link Menu
+        .pages.navbar-through.toolbar-through
+          .page(data-page="index")
+            .page-content
+              .content-block-title Welcome To Framework7
+              .content-block
+                a(href="about.html").button About Framework7
+              .content-block-title Framework7 Kitchen Sink
+              .list-block
+                ul
+                  li
+                    a(href="accordion.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Accordion
+                  li
+                    a(href="calendar.html").item-link
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Calendar / Datepicker
+                  li
+                    a(href="cards.html").item-link
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Cards
+                  li
+                    a(href="contacts.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Contacts List
+                  li
+                    a(href="forms.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Forms
+                  li
+                    a(href="grid.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Grid
+                  li
+                    a(href="infinite-scroll.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Infinite Scroll
+                  li
+                    a(href="lazy-load.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Lazy Load Images
+                  li
+                    a(href="list-view.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title List View
+                  li
+                    a(href="login-screen.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Login Screen
+                  li
+                    a(href="media-lists.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Media Lists
+                  li
+                    a(href="messages.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Messages
+                  li
+                    a(href="modals.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Modals
+                  li
+                    a(href="bars.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Navbars And Toolbars
+                  li
+                    a(href="notifications.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Notifications
+                  li
+                    a(href="photo-browser.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Photo Browser
+                  li
+                    a(href="picker.html").item-link
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Picker
+                  li
+                    a(href="popover.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Popover
+                  li
+                    a(href="preloader.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Preloader
+                  li
+                    a(href="pull-to-refresh.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Pull To Refresh
+                  li
+                    a(href="searchbar.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Search Bar  
+                  li
+                    a(href="panels.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Side Panels
+                  li
+                    a(href="sortable-list.html").item-link
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Sortable List
+                  li
+                    a(href="swipe-delete.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Swipe To Delete
+                  li
+                    a(href="swiper.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Swiper Slider
+                  li
+                    a(href="tabs.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Tabs
+                  li
+                    a(href="virtual-list.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Virtual List
+              .list-block
+                ul
+                  li
+                    a(href="color-themes.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Color Themes
+                  li
+                    a(href="#").item-link.ks-generate-page
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Dynamically Generated Content
+              .list-block
+                ul
+                  li
+                    a(href="transitions.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Transitions And Effects
+                  li
+                    a(href="core-features.html").item-link 
+                      .item-content
+                        .item-media
+                          i.icon.icon-f7
+                        .item-inner 
+                          .item-title Core Features
+    .popup.demo-popup
+      .view.navbar-fixed
+        .pages
+          .page
+            .navbar
+              .navbar-inner
+                .center Popup Title
+                .right
+                  a(href="#").link.close-popup Done
+            .page-content
+              .content-block
+                p Here comes popup. You can put here anything, even independent view with its own navigation. Also not, that by default popup looks a bit different on iPhone/iPod and iPad, on iPhone it is fullscreen.
+                p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac urna. Maecenas in lacus faucibus, viverra ipsum pulvinar, molestie arcu. Etiam lacinia venenatis dignissim. Suspendisse non nisl semper tellus malesuada suscipit eu et eros. Nulla eu enim quis quam elementum vulputate. Mauris ornare consequat nunc viverra pellentesque. Aenean semper eu massa sit amet aliquam. Integer et neque sed libero mollis elementum at vitae ligula. Vestibulum pharetra sed libero sed porttitor. Suspendisse a faucibus lectus.
+                p Duis ut mauris sollicitudin, venenatis nisi sed, luctus ligula. Phasellus blandit nisl ut lorem semper pharetra. Nullam tortor nibh, suscipit in consequat vel, feugiat sed quam. Nam risus libero, auctor vel tristique ac, malesuada ut ante. Sed molestie, est in eleifend sagittis, leo tortor ullamcorper erat, at vulputate eros sapien nec libero. Mauris dapibus laoreet nibh quis bibendum. Fusce dolor sem, suscipit in iaculis id, pharetra at urna. Pellentesque tempor congue massa quis faucibus. Vestibulum nunc eros, convallis blandit dui sit amet, gravida adipiscing libero.
+                p Morbi posuere ipsum nisl, accumsan tincidunt nibh lobortis sit amet. Proin felis lorem, dictum vel nulla quis, lobortis dignissim nunc. Pellentesque dapibus urna ut imperdiet mattis. Proin purus diam, accumsan ut mollis ac, vulputate nec metus. Etiam at risus neque. Fusce tincidunt, risus in faucibus lobortis, diam mi blandit nunc, quis molestie dolor tellus ac enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse interdum turpis a velit vestibulum pharetra. Vivamus blandit dapibus cursus. Aenean lorem augue, vehicula in eleifend ut, imperdiet quis felis.
+                p Duis non erat vel lacus consectetur ultricies. Sed non velit dolor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel varius mi, a tristique ante. Vivamus eget nibh ac elit tempor bibendum sit amet vitae velit. Proin sit amet dapibus nunc, non porta tellus. Fusce interdum vulputate imperdiet. Sed faucibus metus at pharetra fringilla. Fusce mattis orci et massa congue, eget dapibus ante rhoncus. Morbi semper sed tellus vel dignissim. Cras vestibulum, sapien in suscipit tincidunt, lectus mi sodales purus, at egestas ligula dui vel erat. Etiam cursus neque eu lectus eleifend accumsan vitae non leo. Aliquam scelerisque nisl sed lacus suscipit, ac consectetur sapien volutpat. Etiam nulla diam, accumsan ut enim vel, hendrerit venenatis sem. Vestibulum convallis justo vitae pharetra consequat. Mauris sollicitudin ac quam non congue.
+    .popover.popover-menu
+      .popover-angle
+      .popover-inner
+        .list-block
+          ul
+            li
+              a(href="modals.html").list-button.item-link Modals
+            li
+              a(href="popover.html").list-button.item-link Popover
+            li
+              a(href="tabs.html").list-button.item-link Tabs
+            li
+              a(href="panels.html").list-button.item-link Side Panels
+            li
+              a(href="list-view.html").list-button.item-link List View
+            li
+              a(href="forms.html").list-button.item-link Forms
+    .popover.popover-music
+      .popover-angle
+      .popover-inner
+        .list-block.media-list
+          ul
+            li
+              a(href="#").item-link.item-content
+                .item-media
+                  img(src="http://lorempixel.com/88/88/people/1", width="44")
+                .item-inner
+                  .item-title-row
+                    .item-title Yellow Submarine
+                  .item-subtitle Beatles
+            li
+              a(href="#").item-link.item-content
+                .item-media
+                  img(src="http://lorempixel.com/88/88/people/2", width="44")
+                .item-inner
+                  .item-title-row
+                    .item-title Don't Stop Me Now
+                  .item-subtitle Queen
+            li
+              a(href="#").item-link.item-content
+                .item-media
+                  img(src="http://lorempixel.com/88/88/people/3", width="44")
+                .item-inner
+                  .item-title-row
+                    .item-title Billie Jean
+                  .item-subtitle Michael Jackson
+    .login-screen
+      .view
+        .page
+          .page-content.login-screen-content
+            .login-screen-title Framework7
+            form
+              .list-block
+                ul
+                  li.item-content
+                    .item-inner 
+                      .item-title.label Username
+                      .item-input
+                        input(type="text", name="username", placeholder="Your username")
+                  li.item-content
+                    .item-inner 
+                      .item-title.label Password
+                      .item-input
+                        input(type="password", name="password", placeholder="Your password")
+              .list-block
+                ul
+                  li
+                    a(href="#").item-link.list-button Sign In
+                .list-block-label Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    .picker-modal.picker-modal-demo
+      .toolbar
+        .toolbar-inner
+          .left
+          .right
+            a(href="#").link.close-picker Done
+      .picker-modal-inner
+        .content-block
+          p Integer mollis nulla id nibh elementum finibus. Maecenas eget fermentum ipsum. Sed sagittis condimentum nisl at tempus. Duis lacus libero, laoreet vitae ligula a, aliquet eleifend sapien. Nullam sodales viverra sodales. Nulla hendrerit condimentum dolor facilisis tempor. Donec at est malesuada, sagittis nisi et, accumsan enim.
+    script(type="text/javascript", src="../build/js/framework7.js")
+    script(type="text/javascript", src="js/kitchen-sink.js")

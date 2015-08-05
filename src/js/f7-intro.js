@@ -3,12 +3,11 @@
 Framework 7
 ===========================*/
 window.Framework7 = function (params) {
-
     // App
     var app = this;
 
     // Version
-    app.version = '1.0.5';
+    app.version = '1.2.0';
 
     // Default Parameters
     app.params = {
@@ -30,7 +29,7 @@ window.Framework7 = function (params) {
         pushStatePreventOnLoad: true,
         // Fast clicks
         fastClicks: true,
-        fastClicksDistanceThreshold: 0,
+        fastClicksDistanceThreshold: 10,
         fastClicksDelayBetweenClicks: 50,
         // Tap Hold
         tapHold: false,
@@ -64,16 +63,11 @@ window.Framework7 = function (params) {
         swipeoutActionsNoFold: false,
         swipeoutNoFollow: false,
         // Smart Select Back link template
-        smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>',
         smartSelectBackText: 'Back',
         smartSelectInPopup: false,
-        smartSelectPopupCloseTemplate: '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>',
         smartSelectPopupCloseText: 'Close',
         smartSelectSearchbar: false,
         smartSelectBackOnSelect: false,
-        // Searchbar
-        searchbarHideDividers: true,
-        searchbarHideGroups: true,
         // Tap Navbar or Statusbar to scroll to top
         scrollTopOnNavbarClick: false,
         scrollTopOnStatusbarClick: false,
@@ -106,6 +100,7 @@ window.Framework7 = function (params) {
         // Notifications defaults
         notificationCloseOnClick: false,
         notificationCloseIcon: true,
+        notificationCloseButtonText: 'Close',
         // Animate Pages
         animatePages: true,
         // Template7
@@ -113,6 +108,12 @@ window.Framework7 = function (params) {
         template7Data: {},
         template7Pages: false,
         precompileTemplates: false,
+        // Material
+        material: false,
+        materialPageLoadDelay: 0,
+        materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
+        materialRipple: true,
+        materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .floating-button',
         // Auto init
         init: true,
     };

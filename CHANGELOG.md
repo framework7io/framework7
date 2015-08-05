@@ -1,5 +1,136 @@
 # Change Log
 
+## Framework7 v1.2.0 - Updated on July 18, 2015
+  * New full featured Material theme designed according to Google guidelines
+  * New Material-specific App' parameters:
+    * `material` - should be set to `true` to enable Material-specific JS logic
+    * `materialPageLoadDelay` - option to add page loading delay (in ms)
+    * `materialPreloaderSvg` - HTML code for Material preloader
+    * `materialRipple` - option to enable Material-specific touch ripple effect (enabled by default)
+    * `materialRippleElements` - list of elements to apply touch ripple effect
+  * New CSS files structure
+    * All color-specific styles (color themes) are moved to separate `*.colors.css` file
+    * `*.themes.css` file has beend removed and its content merged into `*.colors.css` file
+    * Each theme has its own CSS files:
+      * `framework7.ios.css` - main styles for iOS theme
+      * `framework7.ios.colors.css` - color-specific styles for iOS theme
+      * `framework7.ios.rtl.css` - RTL layout styles for iOS theme
+      * `framework7.material.css` - main styles for Material theme
+      * `framework7.material.colors.css` - color-specific styles for Material theme
+      * `framework7.material.rtl.css` - RTL layout styles for Material theme
+  * Kitchen Sink has been splitted into two platform specific Kitchen Sinks 
+  * Material theme breaking changes:
+    * Material theme doesn't support Dynamic Navbar
+    * Material theme doesn't support Through-type layout for Navbars/Toolbars
+    * A bit different layout for Checkboxes/Radios (check Kitchen Sink examples)
+    * Notifications are now displayed as so called Snackbars & Toasts
+    * Toolbar/Tabbar is now on the top of the page, under the Navbar
+  * Photo Browser
+    * Photo Browser main template changed to Template7 template
+  * Smart Select
+    * Fixed issue with using of optgroup with only one option with Virtual List enabled
+  * Calendar
+    * Fixed issue with wrong date formatting
+  * Notifications
+    * New global `notificationCloseButtonText` and local `closeButtonText` parameters for button on notifcation (toast) (Used in material theme only)  
+  * Swipeout
+    * Fixed issue with none closing swipeout using a fast swipe
+  * Forms
+    * New Resizable textareas
+    * All form icons are converted to SVG
+  * Pull To Refresh
+    * Fixed "jumping" effect during multi-touch pull on iOS
+  * RTL
+    * Fixed issue with back pages navigation
+  * Swiper updated to latest 3.1.0 version:
+    * Accessibility (a11y)
+      * Fixed issue with wrong buttons labels
+      * Added support for pagination bullets
+      * New accessibility parameter for pagination label `paginationBulletMessage: 'Go to slide {{index}}'`
+    * Controler
+      * New parameter `controlBy` which can be 'slide' (by default) or 'container'. Defines a way how to control another slider: slide by slide or depending on all slides/container (like before)
+      * Now controllers in `controlBy: 'slide'` (default) mode will respect grid of each other
+    * Pagination
+      * New `paginationElement` parameter defines which HTML tag will be use to represent single pagination bullet. By default it is `span`
+    * New `roundLengths` parameter (by default is `false`) to round values of slides width and height to prevent blurry texts on usual resolution screens
+    * New `slidesOffsetBefore: 0` and `slidesOffsetAfter: 0` (in px) parameters to add additional slide offset within a container
+    * Correct calculation for slides size when use CSS padding on `.swiper-container`
+    * Fixed issue with not working onResize handler when swipes are locked
+    * Fixed issue with "jumping" effect when you disable `onlyExternal` during touchmove
+    * Fixed issue when slider goes to previos slide from last slide after window resize
+  * Custom builder will build both iOS and Android specific CSS files
+  * Lot of minor fixes and improvements
+
+## Framework7 v1.0.7 - Updated on June 20, 2015
+  * Dom7
+    * New `.removeData(key)` method to remove element data
+    * New `.filter(func)` method to filter elements collections
+    * Now initial XHR request parameters are available in `xhr.requestParameters` property
+  * Push State
+    * Fixed issues in FireFox/IE when going back produces infinite transition to first page in history
+  * Searchbar
+    * Fixed issue with not fully active Search Bar when using `customSearch:true`
+    * `searchbarHideDividers` and `searchbarHideGroups` parameters are moved from global app parameters to Searchbar instance parameters
+    * Now support callback parameters on initialization: `onSearch`, `onEnable`, `onDisable`, `onClear`
+    * Searchbar instance has new `.query` property with current seaarch query
+  * Accordion
+    * Fixed issue when using Accordion with media lists
+  * Messages
+    * Improved "auto-scroll" behavior when adding new message
+  * Photo Browser
+    * Fixed issues with `onSlideChangeStart`, `onSlideChangeEnd` callbacks which actually were `onTransitionStart`, `onTransitionEnd`
+    * Added support for Swiper's `onTransitionStart`, `onTransitionEnd` callbacks
+  * Color Themes
+    * Now `border-@color` class will set correct border color on elements that use pseudo-elements (:after, :before) as a borders
+  * Overlays
+    * Now pages and navbars in modals/popups should be initialized as normal pages on overlay open/creation
+  * Template7 updated to latest 1.0.6 version:
+    * Partials support:
+        * `registerPartial(name, template)` method to register partial
+        * `unregisterPartial(name, template)` method to unregister partial
+        * `>` helper to include partials like `{{> list}}`
+    * New `escape` helper for escaping strings 
+  * Swiper updated to latest 3.0.8 version:
+    * Fixed issue with wrong active index and callbacks in Fade effect
+    * New mousewheel parameters:
+      * `mousewheelReleaseOnEdges` - will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end)
+      * `mousewheelInvert` - option to invert mousewheel slides
+    * Fixed issue with lazy loading in next slides when `slidesPerView` > 1
+    * Fixed issue with resistance bounds when swiping is locked
+    * Fixed issue with wrong slides order in multi-row mode (when `slidesPerColumn` > 1)
+    * Fixed issue with not working keyboard control in RTL mode
+    * Fixed issue with nested fade-effect swipers
+  * Lot of minor fixes
+
+## Framework7 v1.0.6 - Updated on May 1, 2015
+  * Dom7
+    * Improved performance for `outerWidth` and `outerHeight` methods
+    * `.serializeObject` method will apply encode uri to serialized string
+  * Searchbar
+    * Fixed search when using groups
+    * New option `removeDiacritics` to remove/replace diacritics characters (á, í, ó, etc.) during search
+  * Push State
+    * New `pushStatePreventOnLoad` option to prevent pop state on app load
+  * Navbars / Toolbars
+    * New option `showBarsOnPageScrollTop` to show bars when scoll page to top
+  * View
+    * More swipe back callbacks/events on View: `swipebackmove` -> `swipeBackMove`, `swipeBackBeforeChange`, `swipeBackBeforeReset`, `swipeBackAfterChange`, `swipeBackAfterReset`
+  * Calendar, Picker
+    * Fixed issues when `input` is not specified
+  * Grid
+    * New auto layout columns (equal width) with `col-auto` class
+  * Swiper updated to latest 3.0.7 version:
+    * New `width` and `height` parameters to force Swiper size, useful when it is hidden on intialization
+    * Better support for "Scroll Container". So now Swiper can be used as a scroll container with one single "scrollable"/"swipeable" slide
+    * Added lazy loading for background images with `data-background` attribute on required elements
+    * New "Sticky Free Mode" (with `freeModeSticky` parameter) which will snap to slides positions in free mode
+    * Fixed issues with lazy loading  
+    * Fixed slide removing when loop mode is enabled
+    * Fixed issues with Autoplay and Fade effect
+  * Custom Build
+    * Fixed issues with not working custom build
+  * Lot of minor fixes
+
 ## Framework7 v1.0.5 - Updated on March 28, 2015
   * Dom7
     * `$.camelCase` utilite renamed to `$.toCamelCase`

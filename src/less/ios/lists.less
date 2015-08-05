@@ -1,0 +1,392 @@
+/* === Lists === */
+@listBlockBorderColor: #c8c7cc;
+@listBlockBg: #fff;
+@dividerBg: #F7F7F7;
+@dividerColor: #8e8e93;
+.list-block {
+    margin: 35px 0;
+    font-size: 17px;
+    ul {
+        background: @listBlockBg;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        .hairline(top, @listBlockBorderColor);
+        .hairline(bottom, @listBlockBorderColor);
+        ul {
+            .hairline-remove(top);
+            .hairline-remove(bottom);
+            padding-left: 45px;
+        }
+    }
+
+    .align-top, .align-top .item-content, .align-top .item-inner {
+        .align-items(flex-start);
+    }
+    
+    .inset() {
+        margin-left: 15px;
+        margin-right: 15px;
+        border-radius: 7px;
+        .content-block-title {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        ul {
+            border-radius: 7px;
+            .hairline-remove(top);
+            .hairline-remove(bottom);
+        }
+        li:first-child > a{
+            border-radius: 7px 7px 0 0;
+        }
+        li:last-child > a{
+            border-radius: 0 0 7px 7px;
+        }
+        li:first-child:last-child > a {
+            border-radius: 7px;
+        }
+    }
+    &.inset {
+        .inset()
+    }
+    &.tablet-inset {
+        @media all and (min-width:768px) {
+            .inset();
+        }
+    }
+
+    // List items
+    li {
+        box-sizing: border-box;
+        position: relative;
+    }
+    
+    .item-media {
+        .flexbox();
+        .flex-shrink(0);
+        .flex-wrap(nowrap);
+        box-sizing: border-box;
+        .align-items(center);
+        padding-top: 7px;
+        padding-bottom: 8px;
+        i + i {
+            margin-left: 5px;
+        }
+        i + img {
+            margin-left: 5px;
+        }
+    }
+    .item-media + .item-inner {
+        margin-left: 15px;
+    }
+    .item-inner {
+        padding-right: 15px;
+        position: relative;
+        .hairline(bottom, @listBlockBorderColor);
+        width: 100%;
+        padding-top: 8px;
+        padding-bottom: 7px;
+        min-height: 44px;
+        box-sizing: border-box;
+        .flexbox();
+        -webkit-box-flex:1;
+        -ms-flex:1;
+        .justify-content(space-between);
+        .align-items(center);
+        .align-self(stretch);
+    }
+    .item-title {
+        .flex-shrink(1);
+        white-space: nowrap;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+    .item-after {
+        white-space: nowrap;
+        color: #8e8e93;
+        .flex-shrink(0);
+        margin-left: 5px;
+        .flexbox();
+        max-height: 28px;
+    }
+    .smart-select .item-after {
+        max-width: 70%;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        position: relative;
+    }
+    .item-link {
+        .transition(300ms);
+        display: block;
+        color: inherit;
+
+        .item-inner {
+            padding-right: 35px;
+            .encoded-svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
+            background-size: 10px 20px;
+            background-repeat: no-repeat;
+            background-position: 95% center;
+            background-position: -webkit-calc(~"100% - 15px") center;
+            background-position: calc(~"100% - 15px") center;
+        }
+        html:not(.watch-active-state) &:active, &.active-state {
+            .transition(0ms);
+            background-color: #d9d9d9;
+            .item-inner {
+                .hairline-color(bottom, transparent);
+            }
+        }
+        &.list-button {
+            padding: 0 15px;
+            text-align: center;
+            color: @blue;
+            display: block;
+            .hairline(bottom, @listBlockBorderColor);
+            line-height: 43px;
+        }
+    }
+    .item-content {
+        box-sizing: border-box;
+        padding-left: 15px;
+        min-height: 44px;
+        .flexbox();
+        .justify-content(space-between);
+        .align-items(center);
+    }
+    // Label after List block
+    .list-block-label {
+        margin: 10px 0 35px;
+        padding: 0 15px;
+        font-size: 14px;
+        color: #8f8f94;
+    }
+
+    // Swipe outs
+    .swipeout {
+        overflow: hidden;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+    .swipeout.deleting {
+        .transition(300ms);
+        .swipeout-content {
+            .transform(translateX(-100%));
+        }
+    }
+    .swipeout.transitioning {
+        .swipeout-content, .swipeout-actions-right a, .swipeout-actions-left a, .swipeout-overswipe {
+            -webkit-transition: 300ms;
+            transition: 300ms;
+        }    
+    }
+    .swipeout-content {
+        position: relative;
+        z-index: 10;
+    }
+    .swipeout-overswipe {
+        -webkit-transition: 200ms left;
+        transition: 200ms left;
+    }
+    .swipeout-actions-left, .swipeout-actions-right {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        .flexbox();
+        a {
+            padding: 0 30px;
+            color:#fff;
+            background: #c7c7cc;
+            .flexbox();
+            .align-items(center);
+            position: relative;
+            left: 0;
+            &:after {
+                content:'';
+                position: absolute;
+                top: 0;
+                width: 600%;
+                height: 100%;
+                background: inherit;
+                z-index: -1;
+            }
+        }
+        a.swipeout-delete {
+            background: @red;
+        }
+    }
+    .swipeout-actions-right {
+        right: 0%;
+        .transform(translateX(100%));
+        a:after {
+            left: 100%;
+            margin-left: -1px;
+        }
+    }
+    .swipeout-actions-left {
+        left: 0%;
+        .transform(translateX(-100%));
+        a:after {
+            right: 100%;
+            margin-right: -1px;
+        }
+    }
+    .item-subtitle {
+        font-size: 15px;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 100%;
+        text-overflow:ellipsis;
+    }
+    .item-text {
+        font-size: 15px;
+        color: #8e8e93;
+        line-height: 21px;
+        position: relative;
+        overflow: hidden;
+        height: 42px;
+        text-overflow:ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+    }
+    &.media-list, li.media-item {
+        .item-title {
+            font-weight: 500;
+        }
+        .item-inner {
+            display: block;
+            padding-top: 10px;
+            padding-bottom: 9px;
+            .align-self(stretch);
+        }
+        .item-link .item-inner {
+            background: none;
+            padding-right: 15px;
+        }
+        .item-link .item-title-row {
+            padding-right: 20px;
+            background: no-repeat right center;
+            .encoded-svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
+            background-size: 10px 20px;
+        }
+        .item-media {
+            padding-top: 9px;
+            padding-bottom: 10px;
+            img {
+                display: block;
+            }
+        }
+        .item-title-row {
+            .flexbox();
+            .justify-content(space-between);
+        }
+        .item-content > .item-after {
+            margin-right: 15px;
+            margin-left: 15px;
+        }
+    }
+    .list-group {
+        ul {
+            &:after, &:before {
+                z-index: 11;
+            }
+        }
+        + .list-group ul {
+            .hairline-remove(top);   
+        }
+    }
+    .item-divider, .list-group-title {
+        background: @dividerBg;
+        .hairline(top, @listBlockBorderColor);
+        margin-top: -1px;
+        padding: 4px 15px;
+        white-space: nowrap;
+        position: relative;
+        max-width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        color: @dividerColor;
+    }
+    .list-group-title {
+        position: relative;
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: sticky;
+        top: 0px;
+        z-index: 20;
+        margin-top: 0;
+        .hairline-remove(top);
+    }
+    // Sortable
+    .sortable-handler {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 1px;
+        z-index: 10;
+        background-repeat: no-repeat;
+        background-size: 18px 12px;
+        background-position: center;
+        width: 35px;
+        .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' fill='#c7c7cc'><path d='M0,2V0h22v2H0z'/><path d='M0,7V5h22v2H0z'/><path d='M0,12v-2h22v2H0z'/></svg>");
+        opacity: 0;
+        visibility: hidden;
+        cursor: pointer;
+        .transition(300ms);
+    }
+    &.sortable {
+        .item-inner {
+            .transition(300ms);       
+        }
+    }
+    &.sortable-opened {
+        .sortable-handler {
+            visibility: visible;
+            opacity: 1;
+        }
+        .item-inner, .item-link .item-inner {
+            padding-right: 35px;
+        }
+        .item-link .item-inner, .item-link .item-title-row {
+            background-image: none;
+        }
+    }
+    &.sortable-sorting {
+        li {
+            .transition(300ms);
+        }
+    }
+    li.sorting {
+        z-index: 50;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.6);
+        .transition(0ms);
+        .item-inner {
+            .hairline-remove(bottom);
+        }
+    }
+
+    // Last-childs
+    li {
+        &:last-child {
+            .list-button {
+                .hairline-remove(bottom);
+            }
+        }
+        &:last-child, &:last-child li:last-child {
+            .item-inner {
+                .hairline-remove(bottom);
+            }
+        }
+        li:last-child, &:last-child li {
+            .item-inner {
+                .hairline(bottom, @listBlockBorderColor);
+            }
+        }
+    }
+}

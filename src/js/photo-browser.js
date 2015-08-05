@@ -25,12 +25,16 @@ var PhotoBrowser = function (params) {
         lazyLoading: false,
         lazyLoadingInPrevNext: false,
         lazyLoadingOnTransitionStart: false,
+        material: app.params.material,
+        materialPreloaderSvg: app.params.materialPreloaderSvg,
         /*
         Callbacks:
         onLazyImageLoad(pb, slide, img)
         onLazyImageReady(pb, slide, img)
         onOpen(pb)
         onClose(pb)
+        onTransitionStart(swiper)
+        onTransitionEnd(swiper)
         onSlideChangeStart(swiper)
         onSlideChangeEnd(swiper)
         onTap(swiper, e)
@@ -41,6 +45,7 @@ var PhotoBrowser = function (params) {
     };
     
     params = params || {};
+    if (!params.backLinkText && app.params.material) defaults.backLinkText = '';
     for (var def in defaults) {
         if (typeof params[def] === 'undefined') {
             params[def] = defaults[def];
@@ -48,95 +53,93 @@ var PhotoBrowser = function (params) {
     }
 
     pb.params = params;
-    
-    var iconColor = pb.params.theme === 'dark' ? 'color-white' : '';
+    pb.params.iconsColorClass = pb.params.iconsColor ? 'color-' + pb.params.iconsColor : (pb.params.theme === 'dark' ? 'color-white' : '');
+    pb.params.preloaderColorClass = pb.params.theme === 'dark' ? 'preloader-white' : '';
 
+    // Templates
+    var photoTemplate = pb.params.photoTemplate || 
+        '<div class="photo-browser-slide swiper-slide">' +
+            '<span class="photo-browser-zoom-container">' +
+                '<img src="{{js "this.url || this"}}">' +
+            '</span>' +
+        '</div>';
+    var photoLazyTemplate = pb.params.lazyPhotoTemplate ||
+        '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide">' +
+            '<div class="preloader {{@root.preloaderColorClass}}">{{#if @root.material}}{{@root.materialPreloaderSvg}}{{/if}}</div>' +
+            '<span class="photo-browser-zoom-container">' +
+                '<img data-src="{{js "this.url || this"}}" class="swiper-lazy">' +
+            '</span>' +
+        '</div>';
+    var objectTemplate = pb.params.objectTemplate ||
+        '<div class="photo-browser-slide photo-browser-object-slide swiper-slide">{{js "this.html || this"}}</div>';
+    var captionTemplate = pb.params.captionTemplate ||
+        '<div class="photo-browser-caption" data-caption-index="{{@index}}">' +
+            '{{caption}}' +
+        '</div>';
     var navbarTemplate = pb.params.navbarTemplate ||
-                        '<div class="navbar">' +
-                            '<div class="navbar-inner">' +
-                                '<div class="left sliding"><a href="#" class="link ' + (pb.params.type === 'page' && 'back') + ' close-popup photo-browser-close-link" data-popup=".photo-browser-popup"><i class="icon icon-back ' + iconColor + '"></i><span>' + pb.params.backLinkText + '</span></a></div>' +
-                                '<div class="center sliding"><span class="photo-browser-current"></span> <span class="photo-browser-of">' + pb.params.ofText + '</span> <span class="photo-browser-total"></span></div>' +
-                                '<div class="right"></div>' +
-                            '</div>' +
-                        '</div>';
+        '<div class="navbar">' +
+            '<div class="navbar-inner">' +
+                '<div class="left sliding">' +
+                    '<a href="#" class="link close-popup photo-browser-close-link {{#unless backLinkText}}icon-only{{/unless}} {{js "this.type === \'page\' ? \'back\' : \'\'"}}">' +
+                        '<i class="icon icon-back {{iconsColorClass}}"></i>' +
+                        '{{#if backLinkText}}<span>{{backLinkText}}</span>{{/if}}' +
+                    '</a>' +
+                '</div>' +
+                '<div class="center sliding">' +
+                    '<span class="photo-browser-current"></span> ' +
+                    '<span class="photo-browser-of">{{ofText}}</span> ' +
+                    '<span class="photo-browser-total"></span>' +
+                '</div>' +
+                '<div class="right"></div>' +
+            '</div>' +
+        '</div>';
     var toolbarTemplate = pb.params.toolbarTemplate ||
-                        '<div class="toolbar tabbar">' +
-                            '<div class="toolbar-inner">' +
-                                '<a href="#" class="link photo-browser-prev"><i class="icon icon-prev ' + iconColor + '"></i></a>' +
-                                '<a href="#" class="link photo-browser-next"><i class="icon icon-next ' + iconColor + '"></i></a>' +
-                            '</div>' +
-                        '</div>';
+        '<div class="toolbar tabbar">' +
+            '<div class="toolbar-inner">' +
+                '<a href="#" class="link photo-browser-prev">' +
+                    '<i class="icon icon-prev {{iconsColorClass}}"></i>' +
+                '</a>' +
+                '<a href="#" class="link photo-browser-next">' +
+                    '<i class="icon icon-next {{iconsColorClass}}"></i>' +
+                '</a>' +
+            '</div>' +
+        '</div>';
 
-    var template = pb.params.template ||
-                    '<div class="photo-browser photo-browser-' + pb.params.theme + '">' +
-                        '<div class="view navbar-fixed toolbar-fixed">' +
-                            '{{navbar}}' +
-                            '<div data-page="photo-browser-slides" class="page no-toolbar {{noNavbar}} toolbar-fixed navbar-fixed">' +
-                                '{{toolbar}}' +
-                                '{{captions}}' +
-                                '<div class="photo-browser-swiper-container swiper-container">' +
-                                    '<div class="photo-browser-swiper-wrapper swiper-wrapper">' +
-                                        '{{photos}}' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
+    var htmlTemplate = t7.compile('<div class="photo-browser photo-browser-{{theme}}">' +
+            '<div class="view navbar-fixed toolbar-fixed">' +
+                '{{#unless material}}{{#if navbar}}' +
+                navbarTemplate +
+                '{{/if}}{{/unless}}' +
+                '<div class="page no-toolbar {{#unless navbar}}no-navbar{{/unless}} toolbar-fixed navbar-fixed" data-page="photo-browser-slides">' +
+                    '{{#if material}}{{#if navbar}}' +
+                    navbarTemplate +
+                    '{{/if}}{{/if}}' +
+                    '{{#if toolbar}}' +
+                    toolbarTemplate +
+                    '{{/if}}' +
+                    '<div class="photo-browser-captions photo-browser-captions-{{js "this.captionsTheme || this.theme"}}">' +
+                        '{{#each photos}}{{#if caption}}' +
+                        captionTemplate +
+                        '{{/if}}{{/each}}' +
+                    '</div>' +
+                    '<div class="photo-browser-swiper-container swiper-container">' +
+                        '<div class="photo-browser-swiper-wrapper swiper-wrapper">' +
+                            '{{#each photos}}' +
+                            '{{#js_compare "this.html || ((typeof this === \'string\' || this instanceof String) && (this.indexOf(\'<\') >= 0 || this.indexOf(\'>\') >= 0))"}}' +
+                                objectTemplate +
+                            '{{else}}' +
+                                '{{#if @root.lazyLoading}}' +
+                                photoLazyTemplate +
+                                '{{else}}' +
+                                photoTemplate +
+                                '{{/if}}' +
+                            '{{/js_compare}}' +
+                            '{{/each}}' +
                         '</div>' +
-                    '</div>';
-
-    var photoTemplate = !pb.params.lazyLoading ? 
-        (pb.params.photoTemplate || '<div class="photo-browser-slide swiper-slide"><span class="photo-browser-zoom-container"><img src="{{url}}"></span></div>') : 
-        (pb.params.photoLazyTemplate || '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide"><div class="preloader' + (pb.params.theme === 'dark' ? ' preloader-white' : '') + '"></div><span class="photo-browser-zoom-container"><img data-src="{{url}}" class="swiper-lazy"></span></div>');
-
-    var captionsTheme = pb.params.captionsTheme || pb.params.theme;
-    var captionsTemplate = pb.params.captionsTemplate || '<div class="photo-browser-captions photo-browser-captions-' + captionsTheme + '">{{captions}}</div>';
-    var captionTemplate = pb.params.captionTemplate || '<div class="photo-browser-caption" data-caption-index="{{captionIndex}}">{{caption}}</div>';
-
-    var objectTemplate = pb.params.objectTemplate || '<div class="photo-browser-slide photo-browser-object-slide swiper-slide">{{html}}</div>';
-    var photosHtml = '';
-    var captionsHtml = '';
-    for (i = 0; i < pb.params.photos.length; i ++) {
-        var photo = pb.params.photos[i];
-        var thisTemplate = '';
-
-        //check if photo is a string or string-like object, for backwards compatibility 
-        if (typeof(photo) === 'string' || photo instanceof String) {
-
-            //check if "photo" is html object
-            if (photo.indexOf('<') >= 0 || photo.indexOf('>') >= 0) {
-                thisTemplate = objectTemplate.replace(/{{html}}/g, photo);
-            } else {
-                thisTemplate = photoTemplate.replace(/{{url}}/g, photo);
-            }
-
-            //photo is a string, thus has no caption, so remove the caption template placeholder
-            //otherwise check if photo is an object with a url property
-        } else if (typeof(photo) === 'object') {
-
-            //check if "photo" is html object
-            if (photo.hasOwnProperty('html') && photo.html.length > 0) {
-                thisTemplate = objectTemplate.replace(/{{html}}/g, photo.html);
-            } else if (photo.hasOwnProperty('url') && photo.url.length > 0) {
-                thisTemplate = photoTemplate.replace(/{{url}}/g, photo.url);
-            }
-
-            //check if photo has a caption
-            if (photo.hasOwnProperty('caption') && photo.caption.length > 0) {
-                captionsHtml += captionTemplate.replace(/{{caption}}/g, photo.caption).replace(/{{captionIndex}}/g, i);
-            } else {
-                thisTemplate = thisTemplate.replace(/{{caption}}/g, '');
-            }
-        }
-
-        photosHtml += thisTemplate;
-
-    }
-
-    var htmlTemplate = template
-                        .replace('{{navbar}}', (pb.params.navbar ? navbarTemplate : ''))
-                        .replace('{{noNavbar}}', (pb.params.navbar ? '' : 'no-navbar'))
-                        .replace('{{photos}}', photosHtml)
-                        .replace('{{captions}}', captionsTemplate.replace(/{{captions}}/g, captionsHtml))
-                        .replace('{{toolbar}}', (pb.params.toolbar ? toolbarTemplate : ''));
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</div>')(pb.params);
 
     pb.activeIndex = pb.params.initialSlide;
     pb.openIndex = pb.activeIndex;
@@ -151,7 +154,6 @@ var PhotoBrowser = function (params) {
         }
         pb.opened = true;
         pb.openIndex = index;
-        // pb.initialLazyLoaded = false;
         if (pb.params.type === 'standalone') {
             $('body').append(htmlTemplate);
         }
@@ -248,7 +250,7 @@ var PhotoBrowser = function (params) {
             if ('pause' in previousSlideVideo[0]) previousSlideVideo[0].pause();
         }
         // Callback
-        if (pb.params.onSlideChangeStart) pb.params.onSlideChangeStart(swiper);
+        if (pb.params.onTransitionStart) pb.params.onTransitionStart(swiper);
     };
     pb.onSliderTransitionEnd = function (swiper) {
         // Reset zoom
@@ -258,7 +260,7 @@ var PhotoBrowser = function (params) {
             gestureSlide = gestureImg = gestureImgWrap = undefined;
             scale = currentScale = 1;
         }
-        if (pb.params.onSlideChangeEnd) pb.params.onSlideChangeEnd(swiper);
+        if (pb.params.onTransitionEnd) pb.params.onTransitionEnd(swiper);
     };
     
     pb.layout = function (index) {
@@ -307,6 +309,8 @@ var PhotoBrowser = function (params) {
             onTransitionEnd: function (swiper) {
                 pb.onSliderTransitionEnd(swiper);  
             },
+            onSlideChangeStart: pb.params.onSlideChangeStart,
+            onSlideChangeEnd: pb.params.onSlideChangeEnd,
             onLazyImageLoad: function (swiper, slide, img) {
                 if (pb.params.onLazyImageLoad) pb.params.onLazyImageLoad(pb, slide, img);
             },

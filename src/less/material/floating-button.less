@@ -1,0 +1,21 @@
+/* === Floating Action Button === */
+.floating-button {
+    color: #fff;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    z-index: 1500;
+    overflow: hidden;
+    .transition(300ms);
+    .depth(3);
+    .flexbox();
+    .align-items(center);
+    .justify-content(center);
+    background-color: @themeColor;
+    html:not(.watch-active-state) &:active, &.active-state {
+        background: darken(@themeColor, 8%);
+    }
+}

@@ -1,0 +1,51 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Modals
+    .right
+      a(href="#").link.open-panel.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="modals")
+    .page-content
+      .content-block
+        .content-block-inner
+          p There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy api and can be combined with each other. Check these examples:
+          p.row
+              span.col-33
+                  a.button(href="#").demo-alert Alert
+              span.col-33
+                  a.button(href="#").demo-confirm Confirm
+              span.col-33
+                a.button(href="#").demo-prompt Prompt
+          p.row
+              span.col-50
+                  a.button(href="#").demo-login Login Modal
+              span.col-50
+                  a.button(href="#").demo-password Password Modal
+          p.row
+              span.col-50
+                  a.button(href="#").demo-actions Action Sheet
+              span.col-50
+                  a.button(href="#", data-popup=".demo-popup").open-popup Popup  
+      .content-block-title Action Sheet To Popover
+      .content-block
+        .content-block-inner
+          p Action Sheet could be automatically converted to Popover (for tablets). This button will open Popover on tablets and Action Sheet on phones: 
+            a.button(href="#", style="display:inline-block; vertical-align:middle").demo-actions-popover Action/Popover
+      .content-block-title Picker Modal
+      .content-block
+        .content-block-inner
+          p Such overlay type is similar to <a href="picker.html">Picker's</a> overlay, but also allows to create custom picker overlays
+          p
+            a.button(href="#").demo-picker-modal Picker Modal With Custom HTML
+      .content-block-title Modals Stack
+      .content-block
+        .content-block-inner
+          p This feature doesn't allow to open multiple modals at the same time, and will automatically open next modal when you close the current one. Such behavior is similar to browser native alerts: 
+          p
+            a.button(href="#").demo-modals-stack Open Multiple Alerts
+            

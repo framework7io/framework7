@@ -38,6 +38,14 @@ var View = function (selector, params) {
     var container = $(selector);
     view.container = container[0];
 
+    // Fix Selector
+
+    if (typeof selector !== 'string') {
+        // Supposed to be HTMLElement or Dom7
+        selector = (container.attr('id') ? '#' + container.attr('id') : '') + (container.attr('class') ? '.' + container.attr('class').replace(/ /g, '.').replace('.active', '') : '');
+        view.selector = selector;
+    }
+
     // Is main
     view.main = container.hasClass(app.params.viewMainClass);
 
@@ -421,7 +429,7 @@ var View = function (selector, params) {
     };
 
     // Init
-    if (view.params.swipeBackPage) {
+    if (view.params.swipeBackPage && !app.params.material) {
         view.attachEvents();
     }
 

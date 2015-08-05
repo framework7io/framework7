@@ -4,7 +4,7 @@
 // On Navbar Init Callback
 app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarInnerContainer) {
     if (!navbarContainer && navbarInnerContainer) navbarContainer = $(navbarInnerContainer).parent('.navbar')[0];
-    if (navbarInnerContainer.f7NavbarInitialized && !view.params.domCache) return;
+    if (navbarInnerContainer.f7NavbarInitialized && view && !view.params.domCache) return;
     var navbarData = {
         container: navbarContainer,
         innerContainer: navbarInnerContainer
@@ -16,7 +16,7 @@ app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarI
         navbar: navbarData
     };
 
-    if (navbarInnerContainer.f7NavbarInitialized && view.params.domCache) {
+    if (navbarInnerContainer.f7NavbarInitialized && ((view && view.params.domCache) || (!view && $(navbarContainer).parents('.popup, .popover, .login-screen, .modal, .actions-modal, .picker-modal').length > 0))) {
         // Reinit Navbar
         app.reinitNavbar(navbarContainer, navbarInnerContainer);
 
@@ -28,7 +28,6 @@ app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarI
         return;
     }
     navbarInnerContainer.f7NavbarInitialized = true;
-
     // Before Init
     app.pluginHook('navbarBeforeInit', navbarData, pageData);
     $(navbarInnerContainer).trigger('navbarBeforeInit', eventData);
@@ -68,23 +67,36 @@ app.initNavbarWithCallback = function (navbarContainer) {
     var viewContainer = navbarContainer.parents('.' + app.params.viewClass);
     var view;
     if (viewContainer.length === 0) return;
+    if (navbarContainer.parents('.navbar-through').length === 0 && viewContainer.find('.navbar-through').length === 0) return;
     view = viewContainer[0].f7View || undefined;
 
     navbarContainer.find('.navbar-inner').each(function () {
         var navbarInnerContainer = this;
         var pageContainer;
-        viewContainer.find('.page').each(function () {
-            if (this.f7PageData && this.f7PageData.navbarInnerContainer === navbarInnerContainer) {
-                pageContainer = this;
-
+        if ($(navbarInnerContainer).attr('data-page')) {
+            // For dom cache
+            pageContainer = viewContainer.find('.page[data-page="' + $(navbarInnerContainer).attr('data-page') + '"]')[0];
+        }
+        if (!pageContainer) {
+            var pages = viewContainer.find('.page');
+            if (pages.length === 1) {
+                pageContainer = pages[0];
             }
-        });
+            else {
+                viewContainer.find('.page').each(function () {
+                    if (this.f7PageData && this.f7PageData.navbarInnerContainer === navbarInnerContainer) {
+                        pageContainer = this;
+                    }
+                });
+            }
+        }
         app.navbarInitCallback(view, pageContainer, navbarContainer[0], navbarInnerContainer);
     });
 };
 
 // Size Navbars
 app.sizeNavbars = function (viewContainer) {
+    if (app.params.material) return;
     var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
     navbarInner.each(function () {
         var n = $(this);

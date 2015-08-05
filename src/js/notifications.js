@@ -11,43 +11,75 @@ app.addNotification = function (params) {
     if (typeof params.closeIcon === 'undefined') params.closeIcon = app.params.notificationCloseIcon;
     if (typeof params.hold === 'undefined') params.hold = app.params.notificationHold;
     if (typeof params.closeOnClick === 'undefined') params.closeOnClick = app.params.notificationCloseOnClick;
+    if (typeof params.button === 'undefined') params.button = app.params.notificationCloseButtonText && {
+        text: app.params.notificationCloseButtonText,
+        close: true
+    };
 
     if (!_tempNotificationElement) _tempNotificationElement = document.createElement('div');
 
+    params.material = app.params.material;
+
     var container = $('.notifications');
     if (container.length === 0) {
-        $('body').append('<div class="notifications list-block media-list"><ul></ul></div>');
+        $('body').append('<div class="notifications list-block' + (params.material ? '' : ' media-list') + '"><ul></ul></div>');
         container = $('.notifications');
     }
     var list = container.children('ul');
-
-    var itemHTML;
-    if (params.custom) {
-        itemHTML = '<li>' + params.custom + '</li>';
-    }
-    else {
-        itemHTML = '<li class="notification-item notification-hidden"><div class="item-content">' +
-                        (params.media ?
-                        '<div class="item-media">' +
-                            params.media +
-                        '</div>' : '') +
-                        '<div class="item-inner">' +
-                            '<div class="item-title-row">' +
-                                (params.title ? '<div class="item-title">' + params.title + '</div>' : '') +
-                                (params.closeIcon ? '<div class="item-after"><a href="#" class="close-notification"><span></span></a></div>' : '') +
-                            '</div>' +
-                            (params.subtitle ? '<div class="item-subtitle">' + params.subtitle + '</div>' : '') +
-                            (params.message ? '<div class="item-text">' + params.message + '</div>' : '') +
+    
+    var notificationTemplate = app.params.notificationTemplate || 
+        '{{#if custom}}' +
+        '<li>{{custom}}</li>' +
+        '{{else}}' +
+        '<li class="notification-item notification-hidden">' +
+            '<div class="item-content">' +
+                '{{#if material}}' +
+                    '<div class="item-inner">' +
+                        '<div class="item-title">{{js "this.message || this.title || this.subtitle"}}</div>' +
+                        '{{#if ../button}}{{#button}}' +
+                        '<div class="item-after">' +
+                            '<a href="#" class="button {{#if color}}color-{{color}}{{/if}} {{#js_compare "this.close !== false"}}close-notification{{/js_compare}}">{{text}}</a>' +
                         '</div>' +
-                    '</div></li>';
+                        '{{/button}}{{/if}}' +
+                    '</div>' +
+                '{{else}}' +
+                    '{{#if media}}' +
+                    '<div class="item-media">{{media}}</div>' +
+                    '{{/if}}' +
+                    '<div class="item-inner">' +
+                        '<div class="item-title-row">' +
+                            '{{#if title}}' +
+                            '<div class="item-title">{{title}}</div>' +
+                            '{{/if}}' +
+                            '{{#if closeIcon}}' +
+                            '<div class="item-after"><a href="#" class="close-notification"><span></span></a></div>' +
+                            '{{/if}}' +
+                        '</div>' +
+                        '{{#if subtitle}}' +
+                        '<div class="item-subtitle">{{subtitle}}</div>' +
+                        '{{/if}}' +
+                        '{{#if message}}' +
+                        '<div class="item-text">{{message}}</div>' +
+                        '</div>' +
+                    '{{/if}}' +
+                '{{/if}}' +
+            '</div>' +
+        '</li>' +
+        '{{/if}}';
+    if (!app._compiledTemplates.notification) {
+        app._compiledTemplates.notification = t7.compile(notificationTemplate);
     }
-    _tempNotificationElement.innerHTML = itemHTML;
+    _tempNotificationElement.innerHTML = app._compiledTemplates.notification(params);
 
     var item = $(_tempNotificationElement).children();
 
     item.on('click', function (e) {
         var close = false;
-        if ($(e.target).is('.close-notification') || $(e.target).parents('.close-notification').length > 0) {
+        var target = $(e.target);
+        if (params.material && target.hasClass('button')) {
+            if (params.button && params.button.onClick) params.button.onClick.call(target[0], e, item[0]);
+        }
+        if (target.is('.close-notification') || $(e.target).parents('.close-notification').length > 0) {
             close = true;
         }
         else {
@@ -70,16 +102,28 @@ app.addNotification = function (params) {
         }, params.hold);
     }
 
-    list.prepend(item[0]);
+    list[params.material ? 'append' : 'prepend'](item[0]);
     container.show();
     
-    var itemHeight = item.outerHeight();
-    item.css('marginTop', -itemHeight + 'px');
-    item.transition(0);
+    var itemHeight = item.outerHeight(), clientLeft;
+    if (params.material) {
+        container.transform('translate3d(0, '+itemHeight+'px, 0)');
+        container.transition(0);
 
-    var clientLeft = item[0].clientLeft;
-    item.transition('');
-    item.css('marginTop', '0px');
+        clientLeft = item[0].clientLeft;
+
+        container.transform('translate3d(0, 0, 0)');
+        container.transition('');
+    }
+    else {
+        item.css('marginTop', -itemHeight + 'px');
+        item.transition(0);
+
+        clientLeft = item[0].clientLeft;
+
+        item.transition('');
+        item.css('marginTop', '0px');
+    }
 
     container.transform('translate3d(0, 0,0)');
     item.removeClass('notification-hidden');

@@ -1,0 +1,106 @@
+/* === Relation between toolbar/navbar types and pages === */
+.page, .view, .views{
+    >.navbar, >.toolbar {
+        position: absolute;
+    }
+}
+.subnavbar ~ .page-content {
+    padding-top: @toolbarSize;
+}
+.toolbar-fixed, .tabbar-fixed {
+    .page-content {
+        padding-top: @toolbarSize;
+    }
+}
+.tabbar-labels-fixed {
+    .page-content {
+        padding-top: @tabbarLabelsSize;
+    }
+}
+.toolbar:not(.messagebar) ~ .page-content {
+    padding-top: @toolbarSize;
+}
+.tabbar-labels:not(.messagebar) ~ .page-content {
+    padding-top: @tabbarLabelsSize;
+}
+.navbar-fixed {
+    .page-content {
+        padding-top: @navbarSize;
+    }
+    .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
+        padding-top: @navbarSize + @toolbarSize;
+    }
+    .page .subnavbar, &.page .subnavbar {
+        top: @navbarSize;
+    }
+    &.toolbar-fixed, &.tabbar-fixed, .toolbar-fixed, .tabbar-fixed, .toolbar-fixed &, .tabbar-fixed & {
+        .page-content {
+            padding-top: @navbarSize + @toolbarSize;
+        }
+    }
+    &.tabbar-labels-fixed, .tabbar-labels-fixed, .tabbar-labels-fixed & {
+        .page-content {
+            padding-top: @navbarSize + @tabbarLabelsSize;
+        }
+    }
+    .toolbar:not(.messagebar) ~ .page-content {
+        padding-top: @navbarSize + @toolbarSize;
+    }
+    .tabbar-labels:not(.messagebar) ~ .page-content {
+        padding-top: @navbarSize + @tabbarLabelsSize;
+    }
+    .toolbar:not(.messagebar) {
+        top: @navbarSize;
+    }
+}
+// Page Hidden Navbar
+.navbar {
+    &.navbar-hiding {
+        .transition(400ms);
+        .translate3d(0,0,0);
+        & ~ .page-content, & ~ .pages, & ~ .page {
+            .list-group-title {
+                .transition(400ms);
+            }
+            .subnavbar {
+                .transition(400ms);
+            }
+        }
+    }
+    &.navbar-hidden {
+        .transition(400ms);
+        .translate3d(0,-100%,0);
+        & ~ .page-content, & ~ .pages, & ~ .page {
+            .list-group-title {
+                .transition(400ms);
+                top:-@navbarSize;
+            }
+            .subnavbar {
+                .translate3d(0,-100%,0);
+                .transition(400ms);
+            }
+        }
+    }
+}
+.page.no-navbar {
+    .page-content {
+        padding-top: 0;
+    }
+    &.with-subnavbar .page-content, .with-subnavbar & .page-content, .page-content.with-subnavbar {
+        padding-top: @toolbarSize;
+    }
+}
+// Page Hidden Toolbar
+.toolbar, .tabbar {
+    &.toolbar-hiding, &.tabbar-hiding {
+        .transition(400ms);
+        .translate3d(0,0,0);
+    }
+    &.toolbar-hidden, &.tabbar-hidden {
+        .transition(400ms);
+        .translate3d(0,100%,0);
+    }
+}
+.page.no-toolbar .page-content, .page.no-tabbar .page-content {
+    padding-bottom: 0;
+}
