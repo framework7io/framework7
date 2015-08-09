@@ -136,10 +136,17 @@ app.initFastClicks = function () {
         var needsRipple = app.params.materialRippleElements;
         var $el = $(el);
         if ($el.is(needsRipple)) {
+            if ($el.hasClass('no-ripple')) {
+                return false;
+            }
             return $el;
         }
         else if ($el.parents(needsRipple).length > 0) {
-            return $el.parents(needsRipple).eq(0);
+            var rippleParent = $el.parents(needsRipple).eq(0);
+            if (rippleParent.hasClass('no-ripple')) {
+                return false;
+            }
+            return rippleParent;
         }
         else return false;
     }
