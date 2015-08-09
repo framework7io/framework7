@@ -74,7 +74,9 @@ $.ajax = function (options) {
             // Should be key=value object
             stringData = $.serializeObject(options.data);
         }
-        options.url += paramsPrefix + stringData;
+        if (stringData.length) {
+            options.url += paramsPrefix + stringData;
+        }
     }
     // JSONP
     if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
