@@ -34,6 +34,7 @@ var Calendar = function (params) {
             '</div>',
         weekHeader: true,
         // Common settings
+        closeByOutsideClick: true,
         scrollToInput: true,
         inputReadOnly: true,
         convertToPopover: true,
@@ -747,7 +748,7 @@ var Calendar = function (params) {
             
     }
     
-    if (!p.inline) $('html').on('click', closeOnHTMLClick);
+    if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
 
     // Open
     function onPickerClose() {

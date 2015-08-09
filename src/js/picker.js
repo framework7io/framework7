@@ -10,6 +10,7 @@ var Picker = function (params) {
         momentumRatio: 7,
         freeMode: false,
         // Common settings
+        closeByOutsideClick: true,
         scrollToInput: true,
         inputReadOnly: true,
         convertToPopover: true,
@@ -483,7 +484,7 @@ var Picker = function (params) {
             
     }
     
-    if (!p.inline) $('html').on('click', closeOnHTMLClick);
+    if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
 
     // Open
     function onPickerClose() {
