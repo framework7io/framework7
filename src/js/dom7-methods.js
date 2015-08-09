@@ -245,9 +245,9 @@ Dom7.prototype = {
     once: function (eventName, targetSelector, listener, capture) {
         var dom = this;
         if (typeof targetSelector === 'function') {
-            targetSelector = false;
             listener = arguments[1];
             capture = arguments[2];
+            targetSelector = false;
         }
         function proxy(e) {
             listener(e);
