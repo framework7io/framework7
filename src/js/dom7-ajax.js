@@ -76,6 +76,7 @@ $.ajax = function (options) {
         }
         if (stringData.length) {
             options.url += paramsPrefix + stringData;
+            if (paramsPrefix === "?") paramsPrefix = "&";
         }
     }
     // JSONP
