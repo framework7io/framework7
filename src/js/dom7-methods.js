@@ -536,6 +536,10 @@ Dom7.prototype = {
         }
         return this;
     },
+    appendTo: function (parent) {
+        $(parent).append(this);
+        return this;
+    },
     prepend: function (newChild) {
         var i, j;
         for (i = 0; i < this.length; i++) {
@@ -556,6 +560,10 @@ Dom7.prototype = {
                 this[i].insertBefore(newChild, this[i].childNodes[0]);
             }
         }
+        return this;
+    },
+    prependTo: function (parent) {
+        $(parent).prepend(this);
         return this;
     },
     insertBefore: function (selector) {
