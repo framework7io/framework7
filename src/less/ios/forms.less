@@ -249,7 +249,7 @@ html.android {
     .align-self(center);
     input[type="range"] {
         position: relative;
-        height: 28px;
+        height: 29px;
         width: 100%;
         margin: 4px 0 5px 0;
         -webkit-appearance: none;
@@ -262,6 +262,8 @@ html.android {
         background-size: 100% 2px;
         background-repeat: no-repeat;
         outline: 0;
+        box-sizing: content-box;
+        -ms-background-position-y: 500px;
     }
     input[type="range"]:after {
         height: 2px;
@@ -309,6 +311,86 @@ html.android {
         background: @themeColor;
         content: ' ';
     }
+
+    // Common across browsers
+
+    input[type='range'], input[type='range']:focus, input[type='range']:active, input[type='range']::-moz-focus-inner, input[type='range']::-moz-focusring {
+        border: 0;
+        outline: none;
+    }
+
+    // Slider styles for Firefox
+
+    input[type="range"]::-moz-range-track {
+        width: 100%;
+        height: 2px;
+        background: #b7b8b7;
+        border: none;
+    }
+    input[type="range"]::-moz-range-thumb {
+        height: 28px;
+        width: 28px;
+        border-radius: 28px;
+        background: #fff;
+        z-index: 10;
+        border: 0;
+        -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+
+
+
+    // Slider styles for IE
+
+    input[type="range"]::-ms-thumb {
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        width: 2000px;
+        height: 2px;
+        margin-top: -1px;
+        z-index: 1;
+        background: @themeColor;
+        content:' ';
+    }
+    input[type="range"]::-ms-track {
+        width: 300px;
+        height: 5px;
+        /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+        background: transparent;
+        /*leave room for the larger thumb to overflow with a transparent border */
+        border-color: transparent;
+        border-width: 6px 0;
+        /*remove default tick marks*/
+        color: transparent;
+    }
+
+    input[type="range"]::-ms-track {
+      width: 100%;
+      height: 2px;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+    input[type="range"]::-ms-thumb {
+        cursor: pointer;
+        border: none;
+        height: 28px;
+        width: 28px;
+        border-radius: 28px;
+        background: #fff;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4), 0px 0px 2px rgba(13, 13, 13, 0.4);
+    }
+
+    input[type="range"]::-ms-fill-lower {
+        background: @themeColor;
+    }
+    input[type="range"]::-ms-fill-upper {
+        background: #b7b8b7;
+    }
+
 }
 
 // Checkboxes
