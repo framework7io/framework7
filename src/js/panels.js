@@ -293,11 +293,13 @@ app.initSwipePanels = function () {
                 }
                 else {
                     var target = effect === 'reveal' ? views : panel;
+                    panel.trigger('close');
                     $('body').addClass('panel-closing');
                     target.transitionEnd(function () {
-                        app.allowPanelOpen = true;
+                        panel.trigger('closed');
                         panel.css({display: ''});
                         $('body').removeClass('panel-closing');
+                        app.allowPanelOpen = true;
                     });
                 }
             }
