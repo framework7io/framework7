@@ -56,9 +56,10 @@ var Messagebar = function (container, params) {
             }
             m.textarea.css('height', newAreaHeight + 'px');
             m.container.css('height', newBarHeight + 'px');
+            var onBottom = (m.pageContent[0].scrollTop === m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight);
             if (m.pageContent.length > 0) {
                 m.pageContent.css('padding-bottom', newBarHeight + 'px');
-                if (m.pageContent.find('.messages-new-first').length === 0) {
+                if (m.pageContent.find('.messages-new-first').length === 0 && onBottom) {
                     m.pageContent.scrollTop(m.pageContent[0].scrollHeight - m.pageContent[0].offsetHeight);
                 }
             }
