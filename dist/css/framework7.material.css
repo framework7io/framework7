@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: August 17, 2015
+ * Released on: July 18, 2015
  */
 html,
 body {
@@ -2539,7 +2539,6 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 }
 .list-block .focus-state .floating-label,
 .list-block .not-empty-state .floating-label {
-  color: rgba(0, 0, 0, 0.65);
   -webkit-transform: scale(1) translateY(0);
   transform: scale(1) translateY(0);
 }

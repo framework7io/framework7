@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: August 17, 2015
+ * Released on: July 18, 2015
  */
 (function () {
 
@@ -192,13 +192,7 @@
             };
             var i;
         
-            // Params
             params = params || {};
-        
-            // Disable dynamic navbar for material theme
-            if (params.dynamicNavbar && app.params.material) params.dynamicNavbar = false;
-        
-            // Extend params with defaults
             for (var def in defaults) {
                 if (typeof params[def] === 'undefined') {
                     params[def] = defaults[def];
@@ -4114,9 +4108,6 @@
                 lazyLoadImages = pageContainer.find('.lazy');
                 lazyLoadImages.each(function(index, el) {
                     el = $(el);
-                    if (el.parents('.tab:not(.active)').length > 0) {
-                        return;
-                    }
                     if (isElementInViewport(el[0])) {
                         loadImage(el);
                     }
@@ -4137,7 +4128,6 @@
             function attachEvents(destroy) {
                 var method = destroy ? 'off' : 'on';
                 lazyLoadImages[method]('lazy', lazyHandler);
-                lazyLoadImages.parents('.tab')[method]('show', lazyHandler);
                 pageContainer[method]('lazy', lazyHandler);
                 pageContent[method]('lazy', lazyHandler);
                 pageContent[method]('scroll', lazyHandler);
@@ -5805,12 +5795,6 @@
                 if (!pageX || !pageY) return;
                     
         
-                // workaround for issue with PTR and on-screen keyboard iOS https://github.com/nolimits4web/Framework7/issues/586
-                if(pageY >= window.innerHeight || pageX >= window.innerWidth || pageX <= 0 || pageY <= 0) {
-                    eventsTarget.trigger(app.touchEvents.end);
-                    return;
-                }
-        
                 if (typeof isScrolling === 'undefined') {
                     isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
                 }
@@ -6427,17 +6411,10 @@
                 var needsRipple = app.params.materialRippleElements;
                 var $el = $(el);
                 if ($el.is(needsRipple)) {
-                    if ($el.hasClass('no-ripple')) {
-                        return false;
-                    }
                     return $el;
                 }
                 else if ($el.parents(needsRipple).length > 0) {
-                    var rippleParent = $el.parents(needsRipple).eq(0);
-                    if (rippleParent.hasClass('no-ripple')) {
-                        return false;
-                    }
-                    return rippleParent;
+                    return $el.parents(needsRipple).eq(0);
                 }
                 else return false;
             }
@@ -6628,10 +6605,6 @@
                 }
         
                 if (document.activeElement === e.target) {
-                    if (app.params.activeState) removeActive();
-                    if (app.params.material && app.params.materialRipple) {
-                        rippleTouchEnd();
-                    }
                     return true;
                 }
         
@@ -6777,12 +6750,6 @@
                     document.addEventListener('mouseup', handleMouseUp);
                 }
             }
-            if (app.params.material && app.params.materialRipple) {
-                document.addEventListener('contextmenu', function (e) {
-                    removeActive();
-                    rippleTouchEnd();
-                });
-            }
                 
         };
         
@@ -6857,8 +6824,8 @@
                 
                 // Check if link is external 
                 if (isLink) {
-                    if (clicked.is(app.params.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
-                        if(url && clicked.attr('target') === '_system') {
+                    if (clicked.is(app.params.externalLinks) || url.indexOf('javascript:') >= 0) {
+                        if(clicked.attr('target') === '_system') {
                             e.preventDefault();
                             window.open(url, '_system');
                         }
@@ -7192,7 +7159,7 @@
                 var tag = this.nodeName.toLowerCase();
                 if (skipTypes.indexOf(type) >= 0) return;
                 if (skipNames.indexOf(name) >= 0 || !name) return;
-                if (tag === 'select' && input.prop('multiple')) {
+                if (tag === 'select' && input.attr('multiple')) {
                     skipNames.push(name);
                     formData[name] = [];
                     form.find('select[name="' + name + '"] option').each(function () {
@@ -7241,7 +7208,7 @@
                 if (!formData[name]) return;
                 if (skipTypes.indexOf(type) >= 0) return;
                 if (skipNames.indexOf(name) >= 0 || !name) return;
-                if (tag === 'select' && input.prop('multiple')) {
+                if (tag === 'select' && input.attr('multiple')) {
                     skipNames.push(name);
                     form.find('select[name="' + name + '"] option').each(function () {
                         if (formData[name].indexOf(this.value) >= 0) this.selected = true;
@@ -7389,19 +7356,15 @@
             pageContainer = $(pageContainer);
             var textareas = pageContainer.find('textarea.resizable');
             pageContainer.find('.item-input').each(function () {
-                var itemInput = $(this);
+                var i = $(this);
                 var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
-                itemInput.find('input, select, textarea').each(function () {
-                    var input = $(this);
-                    if (notInputs.indexOf(input.attr('type')) < 0) {
-                        itemInput.addClass('item-input-field');
-                        if (input.val().trim() !== '') {
-                            input.parents('.item-input, .input-field').add(input.parents('.item-inner')).addClass('not-empty-state');
-                        }
+                i.find('input, select, textarea').each(function () {
+                    if (notInputs.indexOf($(this).attr('type')) < 0) {
+                        i.addClass('item-input-field');
                     }
                 });
-                if (itemInput.parents('.input-item, .inputs-list').length > 0) return;
-                itemInput.parents('.list-block').eq(0).addClass('inputs-list');
+                if (i.parents('.input-item, .inputs-list').length > 0) return;
+                i.parents('.list-block').eq(0).addClass('inputs-list');
             });
         };
         /*======================================================
@@ -8216,7 +8179,6 @@
                 momentumRatio: 7,
                 freeMode: false,
                 // Common settings
-                closeByOutsideClick: true,
                 scrollToInput: true,
                 inputReadOnly: true,
                 convertToPopover: true,
@@ -8400,11 +8362,12 @@
                     if (activeIndex >= col.items.length) activeIndex = col.items.length - 1;
                     var previousActiveIndex = col.activeIndex;
                     col.activeIndex = activeIndex;
-                    col.wrapper.find('.picker-selected').removeClass('picker-selected');
+                    col.wrapper.find('.picker-selected, .picker-after-selected, .picker-before-selected').removeClass('picker-selected picker-after-selected picker-before-selected');
         
                     col.items.transition(transition);
-                    
                     var selectedItem = col.items.eq(activeIndex).addClass('picker-selected').transform('');
+                    var prevItems = selectedItem.prevAll().addClass('picker-before-selected');
+                    var nextItems = selectedItem.nextAll().addClass('picker-after-selected');
                         
                     // Set 3D rotate effect
                     if (p.params.rotateEffect) {
@@ -8690,7 +8653,7 @@
                     
             }
             
-            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
+            if (!p.inline) $('html').on('click', closeOnHTMLClick);
         
             // Open
             function onPickerClose() {
@@ -8840,7 +8803,6 @@
                     '</div>',
                 weekHeader: true,
                 // Common settings
-                closeByOutsideClick: true,
                 scrollToInput: true,
                 inputReadOnly: true,
                 convertToPopover: true,
@@ -9554,7 +9516,7 @@
                     
             }
             
-            if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
+            if (!p.inline) $('html').on('click', closeOnHTMLClick);
         
             // Open
             function onPickerClose() {
@@ -10119,16 +10081,10 @@
                 if (typeof value === 'undefined') {
                     // Get value
                     if (this[0]) {
-                        if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) {
-                            return this[0].dom7ElementDataStorage[key];
-                        }
-                        else {
-                            var dataKey = this[0].getAttribute('data-' + key);    
-                            if (dataKey) {
-                                return dataKey;
-                            }
-                            else return undefined;
-                        }
+                        var dataKey = this[0].getAttribute('data-' + key);
+                        if (dataKey) return dataKey;
+                        else if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
+                        else return undefined;
                     }
                     else return undefined;
                 }
@@ -10273,9 +10229,9 @@
             once: function (eventName, targetSelector, listener, capture) {
                 var dom = this;
                 if (typeof targetSelector === 'function') {
+                    targetSelector = false;
                     listener = arguments[1];
                     capture = arguments[2];
-                    targetSelector = false;
                 }
                 function proxy(e) {
                     listener(e);
@@ -10564,10 +10520,6 @@
                 }
                 return this;
             },
-            appendTo: function (parent) {
-                $(parent).append(this);
-                return this;
-            },
             prepend: function (newChild) {
                 var i, j;
                 for (i = 0; i < this.length; i++) {
@@ -10588,10 +10540,6 @@
                         this[i].insertBefore(newChild, this[i].childNodes[0]);
                     }
                 }
-                return this;
-            },
-            prependTo: function (parent) {
-                $(parent).prepend(this);
                 return this;
             },
             insertBefore: function (selector) {
@@ -10756,9 +10704,9 @@
             var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
             var notTrigger = ('resize scroll').split(' ');
             function createMethod(name) {
-                Dom7.prototype[name] = function (targetSelector, listener, capture) {
+                Dom7.prototype[name] = function (handler) {
                     var i;
-                    if (typeof targetSelector === 'undefined') {
+                    if (typeof handler === 'undefined') {
                         for (i = 0; i < this.length; i++) {
                             if (notTrigger.indexOf(name) < 0) {
                                 if (name in this[i]) this[i][name]();
@@ -10770,7 +10718,7 @@
                         return this;
                     }
                     else {
-                        return this.on(name, targetSelector, listener, capture);
+                        return this.on(name, handler);
                     }
                 };
             }
@@ -10856,10 +10804,7 @@
                     // Should be key=value object
                     stringData = $.serializeObject(options.data);
                 }
-                if (stringData.length) {
-                    options.url += paramsPrefix + stringData;
-                    if (paramsPrefix === '?') paramsPrefix = '&';
-                }
+                options.url += paramsPrefix + stringData;
             }
             // JSONP
             if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
