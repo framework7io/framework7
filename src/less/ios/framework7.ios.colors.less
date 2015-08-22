@@ -70,6 +70,9 @@ Framework7 Color Themes
             input[type="range"]::-webkit-slider-thumb:before {
                 background-color: @color;
             }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
         }
         label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
             background-color: @color;
@@ -311,6 +314,9 @@ Framework7 Layouts Themes
     }
     .range-slider input[type="range"]:after {
         background: @blockBg;
+    }
+    .range-slider input[type="range"]::-ms-thumb {
+        border: none;
     }
 
 }
