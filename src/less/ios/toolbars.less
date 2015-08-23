@@ -50,7 +50,7 @@
 }
 .navbar, .toolbar, .subnavbar {
     background: @toolbarBg;
-    @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
         background: @toolbarBgBlured;
         .backdrop-blur(15px);
     }

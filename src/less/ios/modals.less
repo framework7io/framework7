@@ -78,7 +78,7 @@
     position: relative;
     background: #fff;
     .hairline(bottom, @modalHairlineColor);
-    @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
         background: @modalBg;
         .backdrop-blur(10px);
     }
@@ -161,7 +161,7 @@
     html:not(.watch-active-state) &:active, &.active-state {
         background: @modalButonActiveBgNoBlur;
     }
-    @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
         background: @modalBg;
         .backdrop-blur(10px);
         html:not(.watch-active-state) &:active, &.active-state {
@@ -229,7 +229,7 @@
     position: relative;
     overflow: hidden;
     .hairline(bottom, @actionsModalHairlineColor);
-    @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
         background: @actionsModalBg;
         .backdrop-blur(10px);
     }
@@ -279,7 +279,7 @@
     html:not(.watch-active-state) &:active, &.active-state {
         background: @actionsModalButtonActiveBgNoBlur;
     }
-    @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
         html:not(.watch-active-state) &:active, &.active-state {
             background: @actionsModalButtonActiveBg;
         }
