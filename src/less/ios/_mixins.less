@@ -238,6 +238,12 @@
     background-image: url("data:image/svg+xml;charset=utf-8,@{url}");
 }
 
+// Backdrop Blur
+.backdrop-blur(@blur) {
+    -webkit-backdrop-filter: blur(@blur);
+    backdrop-filter: blur(@blur);
+}
+
 // Preserve3D
 .preserve3d() {
     -webkit-transform-style: preserve-3d;
