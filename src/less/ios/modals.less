@@ -88,6 +88,9 @@
     font-weight: 500;
     font-size: 18px;
     text-align: center;
+    html.ios-gt-8 & {
+        font-weight: 600;
+    }
     +.modal-text {
         margin-top: 5px;
     }
@@ -151,6 +154,9 @@
     }
     &.modal-button-bold {
         font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
     }
     html:not(.watch-active-state) &:active, &.active-state {
         background: @modalButonActiveBgNoBlur;
@@ -234,9 +240,15 @@
     }
     b {
         font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
     }
     &.actions-modal-button-bold {
         font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
     }
     &.actions-modal-button-red {
         color: @red;
