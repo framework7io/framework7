@@ -159,7 +159,20 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
+    .navbar, .navbar&, .subnavbar, .subnavbar&, .toolbar, .toolbar& {
+        @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+            background: rgba(20,20,20,0.8);
+        }
+    }
     // Picker
+    .picker-modal {
+        .toolbar {
+            background-color: @barsBg;
+        }
+    }
+    .popover .picker-modal .toolbar {
+        background: none;
+    }
     .picker-calendar-week-days {
         color:#fff;
         background-color: @barsBg;
@@ -201,11 +214,22 @@ Framework7 Layouts Themes
         }
     }
     // Photo Browser
-    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+    .photo-browser, .views .view[data-page="photo-browser-slides"] {
         .navbar, .toolbar {
-            background: rgba(30,30,30,0.8);
+            color:#000;
+            background: rgba(247,247,247,0.95);
+            @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+                background: rgba(247,247,247,0.8);
+            }
         }
     }
+    .photo-browser-dark {
+        .navbar, .toolbar {
+            background: rgba(30,30,30,0.8);
+            color:#fff;
+        }
+    }
+
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
@@ -351,7 +375,20 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
+    .navbar, .navbar&, .subnavbar, .subnavbar&, .toolbar, .toolbar& {
+        @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+            background: rgba(255,255,255,0.85);
+        }
+    }
     // Picker
+    .picker-modal {
+        .toolbar {
+            background-color: @barsBg;
+        }
+    }
+    .popover .picker-modal .toolbar {
+        background: none;
+    }
     .popover .picker-modal, .picker-modal.picker-modal-inline {
         .picker-center-highlight {
             .hairline-color(top, @barsBorder);
@@ -370,15 +407,19 @@ Framework7 Layouts Themes
         }
     }
     // Photo Browser
-    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+    .photo-browser, .views .view[data-page="photo-browser-slides"] {
         .navbar, .toolbar {
-            background: rgba(red(@barsBg), green(@barsBg), blue(@barsBg), 0.95);
+            color:#000;
+            background: rgba(247,247,247,0.95);
+            @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+                background: rgba(247,247,247,0.8);
+            }
         }
     }
-    .photo-browser-dark, .photo-browser-dark& {
+    .photo-browser-dark {
         .navbar, .toolbar {
-            color:#fff;
             background: rgba(30,30,30,0.8);
+            color:#fff;
         }
     }
     .tabbar a:not(.active) {
