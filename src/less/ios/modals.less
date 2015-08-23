@@ -18,6 +18,8 @@
 @popoverBg: rgba(255,255,255,0.95);
 
 @popupDuration: 400ms;
+
+@actionsPopoverHairline: rgba(0,0,0,0.2);
 .modal-overlay, .preloader-indicator-overlay, .popup-overlay {
     position: absolute;
     left: 0;
@@ -332,7 +334,7 @@ input.modal-text-input {
     top: 0;
     opacity: 0;
     left: 0;
-    border-radius: 7px;
+    border-radius: 13px;
     position: absolute;
     display: none;
     .transform(none);
@@ -353,24 +355,24 @@ input.modal-text-input {
         &:first-child {
             ul {
                 .hairline-remove(top);
-                border-radius: 7px 7px 0 0;
+                border-radius: 13px 13px 0 0;
             }
             li:first-child a{
-                border-radius: 7px 7px 0 0;
+                border-radius: 13px 13px 0 0;
             }
         }
         &:last-child {
             ul {
                 .hairline-remove(bottom);
-                border-radius: 0 0 7px 7px;
+                border-radius: 0 0 13px 13px;
             }
             li:last-child a{
-                border-radius: 0 0 7px 7px;
+                border-radius: 0 0 13px 13px;
             }
         }
         &:first-child:last-child {
             li:first-child:last-child a, ul:first-child:last-child {
-                border-radius: 7px;
+                border-radius: 13px;
             }
         }
         + .list-block {
@@ -446,7 +448,7 @@ input.modal-text-input {
     line-height: 1.3;
     text-align: center;
     position: relative;
-    .hairline(bottom, #d2d2d6);
+    .hairline(bottom, @actionsPopoverHairline);
     &:last-child {
         .hairline-remove(bottom);
     }
@@ -579,6 +581,8 @@ html.with-statusbar-overlay {
         .hairline(top, #929499);
         position: relative;
         width: 100%;
+        background: #f7f7f8;
+        -webkit-backdrop-filter: none;
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize})";
             height: ~"-moz-calc(100% - @{toolbarSize})";
@@ -600,6 +604,7 @@ html.with-statusbar-overlay {
         width: auto;
         .toolbar {
             background: none;
+            -webkit-backdrop-filter: none;
         }
     }
 }
