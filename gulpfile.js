@@ -208,28 +208,39 @@
         
     });
     gulp.task('styles-ios', function (cb) {
-        gulp.src([paths.source.styles.ios + 'framework7.ios.less', paths.source.styles.ios + 'framework7.ios.rtl.less', paths.source.styles.ios + 'framework7.ios.colors.less'])
-            .pipe(less({
-                paths: [ path.join(__dirname, 'less', 'includes') ]
-            }))
-            .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date, theme: 'iOS Theme' }))
-            .pipe(gulp.dest(paths.build.styles))
-            .pipe(connect.reload())
-            .on('end', function () {
-                cb();
-            });
+        var cbs = 0;
+        ['framework7.ios.less', 'framework7.ios.rtl.less', 'framework7.ios.colors.less'].forEach(function(lessFilePath, b){
+            lessFilePath = paths.source.styles.ios + lessFilePath;
+            gulp.src([lessFilePath])
+                .pipe(less({
+                    paths: [ path.join(__dirname, 'less', 'includes') ]
+                }))
+                .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date, theme: 'iOS Theme' }))
+                .pipe(gulp.dest(paths.build.styles))
+                .pipe(connect.reload())
+                .on('end', function () {
+                    cbs ++;
+                    if (cbs === 3) cb();
+                });
+        });
     });
     gulp.task('styles-material', function (cb) {
-        gulp.src([paths.source.styles.material + 'framework7.material.less', paths.source.styles.material + 'framework7.material.rtl.less', paths.source.styles.material + 'framework7.material.colors.less'])
-            .pipe(less({
-                paths: [ path.join(__dirname, 'less', 'includes') ]
-            }))
-            .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date, theme: 'Google Material Theme' }))
-            .pipe(gulp.dest(paths.build.styles))
-            .pipe(connect.reload())
-            .on('end', function () {
-                cb();
-            });
+        var cbs = 0;
+        ['framework7.material.less', 'framework7.material.rtl.less', 'framework7.material.colors.less'].forEach(function(lessFilePath, b){
+            lessFilePath = paths.source.styles.material + lessFilePath;
+            gulp.src([lessFilePath])
+                .pipe(less({
+                    paths: [ path.join(__dirname, 'less', 'includes') ]
+                }))
+                .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date, theme: 'Google Material Theme' }))
+                .pipe(gulp.dest(paths.build.styles))
+                .pipe(connect.reload())
+                .on('end', function () {
+                    cbs ++;
+                    if (cbs === 3) cb();
+                });
+        });
+            
     });
 
     // F7 Demo App
