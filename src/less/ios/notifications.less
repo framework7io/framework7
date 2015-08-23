@@ -19,7 +19,10 @@
     background: rgba(0,0,0,0.85);
     -webkit-perspective:1200px;
     perspective:1200px;
-    
+    @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+        background: rgba(0,0,0,0.75);
+        .backdrop-blur(10px);
+    }
     &.list-block > ul {
         .hairline-remove(top);
         .hairline-remove(bottom);
@@ -39,6 +42,9 @@
     }
     .item-title {
         font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
     }
     .item-text {
         height: auto;
