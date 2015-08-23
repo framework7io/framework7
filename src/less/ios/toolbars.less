@@ -2,6 +2,7 @@
 
 //Toolbar/Navbar
 @toolbarBg : #f7f7f8;
+@toolbarBgBlured: rgba(248,248,249, 0.85);
 @toolbarBorderColor: #c4c4c4;
 @toolbarLinksColor: @themeColor;
 @toolbarSize: 44px;
@@ -45,6 +46,11 @@
     }
 }
 .navbar, .toolbar, .subnavbar {
+    background: @toolbarBg;
+    @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
+        background: @toolbarBgBlured;
+        .backdrop-blur(15px);
+    }
     a.link {
         line-height: @toolbarSize;
         height: @toolbarSize;
@@ -76,7 +82,6 @@
 .navbar {
     left: 0;
     top: 0;
-    background: @toolbarBg;
     .hairline(bottom, @toolbarBorderColor);
     &:after {
         backface-visibility: hidden;
@@ -130,7 +135,6 @@
     left: 0;
     top: 100%;
     margin-top: -1px;
-    background: @toolbarBg;
     z-index: 20;
     box-sizing: border-box;
     padding: 0 8px;
@@ -171,7 +175,6 @@
 .toolbar {
     left: 0;
     bottom: 0;
-    background: @toolbarBg;
     .hairline(top, @toolbarBorderColor);
     &.no-border {
         .hairline-remove(top);
