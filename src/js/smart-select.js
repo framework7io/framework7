@@ -104,7 +104,6 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionIsLabel, previousGroup, optionColor, optionClassName, optionData;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
-        if (option[0].disabled) continue;
         optionData = option.dataset();
         optionImage = optionData.optionImage || $selectData.optionImage;
         optionIcon = optionData.optionIcon || $selectData.optionIcon;
@@ -112,6 +111,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         if (material) optionHasMedia = optionImage || optionIcon;
         optionColor = optionData.optionColor;
         optionClassName = optionData.optionClass;
+        if (option[0].disabled) optionClassName += ' disabled';
         optionGroup = option.parent('optgroup')[0];
         optionGroupLabel = optionGroup && optionGroup.label;
         optionIsLabel = false;
