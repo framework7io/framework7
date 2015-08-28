@@ -28,7 +28,7 @@ app.pluginPrevent = function (action) {
     return prevent;
 };
 // Preprocess content by plugin
-app.pluginProcess = function (action, data) {
+app.pluginProcess = function (process, data) {
     var processed = data;
     for (var i = 0; i < _plugins.length; i++) {
         if (_plugins[i].preprocess && process in _plugins[i].preprocess) {
