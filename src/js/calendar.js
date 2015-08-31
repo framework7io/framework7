@@ -385,6 +385,7 @@ var Calendar = function (params) {
                 var col = j;
                 dayIndex ++;
                 var dayNumber = dayIndex - firstDayOfMonthIndex;
+                var weekDayIndex = (col - 1 + p.params.firstDay > 6) ? (col - 1 - 7 + p.params.firstDay) : (col - 1 + p.params.firstDay);
                 var addClass = '';
                 if (dayNumber < 0) {
                     dayNumber = daysInPrevMonth + dayNumber + 1;
@@ -407,7 +408,7 @@ var Calendar = function (params) {
                 // Selected
                 if (currentValues.indexOf(dayDate) >= 0) addClass += ' picker-calendar-day-selected';
                 // Weekend
-                if (p.params.weekendDays.indexOf(col - 1) >= 0) {
+                if (p.params.weekendDays.indexOf(weekDayIndex) >= 0) {
                     addClass += ' picker-calendar-day-weekend';
                 }
                 // Disabled
