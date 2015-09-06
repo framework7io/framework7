@@ -33,6 +33,13 @@ app.initPullToRefresh = function (pageContainer) {
             else return;
         }
         
+        /*jshint validthis:true */
+        container = $(this);
+
+        if (container.hasClass('refreshing')) {
+            return;
+        }
+        
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -41,8 +48,7 @@ app.initPullToRefresh = function (pageContainer) {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
-        /*jshint validthis:true */
-        container = $(this);
+        
     }
     
     function handleTouchMove(e) {
