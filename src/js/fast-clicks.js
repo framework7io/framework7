@@ -488,7 +488,7 @@ app.initFastClicks = function () {
     }
     if (app.params.material && app.params.materialRipple) {
         document.addEventListener('contextmenu', function (e) {
-            removeActive();
+            if (activableElement) removeActive();
             rippleTouchEnd();
         });
     }
