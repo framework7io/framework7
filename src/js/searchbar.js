@@ -212,6 +212,7 @@ var Searchbar = function (container, params) {
             if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, '0px');
             s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
+            s.input.on('blur', s.disable);
         }
         if (app.device.ios) {
             setTimeout(function () {
@@ -224,6 +225,7 @@ var Searchbar = function (container, params) {
     };
 
     s.disable = function () {
+        s.input.off('blur', s.disable);
         s.input.val('').trigger('change');
         s.container.removeClass('searchbar-active searchbar-not-empty');
         if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
