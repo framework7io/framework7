@@ -204,6 +204,12 @@ var Searchbar = function (container, params) {
         if (callbackName && s.params[callbackName]) s.params[callbackName](s, eventData);
     };
 
+    function onBlur() {
+        if (!s.container.hasClass('searchbar-not-empty')) {
+            s.disable();
+        }
+    }
+
     // Enable/disalbe
     s.enable = function () {
         function _enable() {
@@ -212,7 +218,7 @@ var Searchbar = function (container, params) {
             if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, '0px');
             s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
-            s.input.on('blur', s.disable);
+            s.input.on('blur', onBlur);
         }
         if (app.device.ios) {
             setTimeout(function () {
@@ -225,7 +231,7 @@ var Searchbar = function (container, params) {
     };
 
     s.disable = function () {
-        s.input.off('blur', s.disable);
+        s.input.off('blur', onBlur);
         s.input.val('').trigger('change');
         s.container.removeClass('searchbar-active searchbar-not-empty');
         if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
