@@ -40,27 +40,48 @@ $.unique = function (arr) {
     }
     return unique;
 };
-$.serializeObject = function (obj) {
+$.serializeObject = function (obj, parents) {
     if (typeof obj === 'string') return obj;
     var resultArray = [];
     var separator = '&';
+    parents = parents || [];
+    function var_name(name) {
+        if (parents.length > 0) {
+            var _parents = '';
+            for (var j = 0; j < parents.length; j++) {
+                if (j === 0) _parents += parents[j];
+                else _parents += '[' + encodeURIComponent(parents[j]) + ']';
+            }
+            return _parents + '[' + encodeURIComponent(name) + ']';
+        }
+        else {
+            return encodeURIComponent(name);
+        }
+    }
+    function var_value(value) {
+        return encodeURIComponent(value);
+    }
     for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
             if ($.isArray(obj[prop])) {
                 var toPush = [];
                 for (var i = 0; i < obj[prop].length; i ++) {
-                    toPush.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop][i]));
+                    toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
                 }
                 if (toPush.length > 0) resultArray.push(toPush.join(separator));
             }
+            else if (typeof obj[prop] !== 'string') {
+                // Object, convert to named array
+                var _newParents = parents.slice();
+                _newParents.push(prop);
+                resultArray.push($.serializeObject(obj[prop], _newParents));
+            }
             else {
                 // Should be string
-                resultArray.push(encodeURIComponent(prop) + '=' + encodeURIComponent(obj[prop]));
+                resultArray.push(var_name(prop) + '=' + var_value(obj[prop]));
             }
         }
-            
     }
-
     return resultArray.join(separator);
 };
 $.toCamelCase = function (string) {
