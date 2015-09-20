@@ -50,10 +50,6 @@
 }
 .navbar, .toolbar, .subnavbar {
     background: @toolbarBg;
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: @toolbarBgBlured;
-        .backdrop-blur(15px);
-    }
     a.link {
         line-height: @toolbarSize;
         height: @toolbarSize;

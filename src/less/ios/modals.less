@@ -78,10 +78,6 @@
     position: relative;
     background: #fff;
     .hairline(bottom, @modalHairlineColor);
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: @modalBg;
-        .backdrop-blur(10px);
-    }
         
 }
 .modal-title {
@@ -161,13 +157,6 @@
     html:not(.watch-active-state) &:active, &.active-state {
         background: @modalButonActiveBgNoBlur;
     }
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: @modalBg;
-        .backdrop-blur(10px);
-        html:not(.watch-active-state) &:active, &.active-state {
-            background: @modalButonActiveBg;
-        }
-    }
     .modal-buttons-vertical & {
         border-radius: 0;
         .hairline-remove(right);
@@ -229,10 +218,6 @@
     position: relative;
     overflow: hidden;
     .hairline(bottom, @actionsModalHairlineColor);
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: @actionsModalBg;
-        .backdrop-blur(10px);
-    }
     a {
         text-decoration: none;
         color: inherit;
@@ -278,11 +263,6 @@
     text-overflow: ellipsis;
     html:not(.watch-active-state) &:active, &.active-state {
         background: @actionsModalButtonActiveBgNoBlur;
-    }
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        html:not(.watch-active-state) &:active, &.active-state {
-            background: @actionsModalButtonActiveBg;
-        }
     }
 }
 .actions-modal-label {
@@ -594,7 +574,6 @@ html.with-statusbar-overlay {
         position: relative;
         width: 100%;
         background: #f7f7f8;
-        -webkit-backdrop-filter: none;
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize})";
             height: ~"-moz-calc(100% - @{toolbarSize})";
@@ -616,7 +595,6 @@ html.with-statusbar-overlay {
         width: auto;
         .toolbar {
             background: none;
-            -webkit-backdrop-filter: none;
         }
     }
 }

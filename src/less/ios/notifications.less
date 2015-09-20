@@ -19,10 +19,6 @@
     background: rgba(0,0,0,0.85);
     -webkit-perspective:1200px;
     perspective:1200px;
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: rgba(0,0,0,0.75);
-        .backdrop-blur(10px);
-    }
     &.list-block > ul {
         .hairline-remove(top);
         .hairline-remove(bottom);

@@ -41,9 +41,6 @@
     .navbar, .toolbar {
         background: rgba(247,247,247,0.95);
         .transition(400ms);
-        @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-            background: rgba(247,247,247,0.8);
-        }
     }
 }
 
@@ -115,17 +112,6 @@
     .photo-browser-exposed & {
         color:#fff;
         background: rgba(0,0,0,0.8);
-    }
-    @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-        background: rgba(30,30,30,0.6);
-        .backdrop-blur(10px);
-        .photo-browser-captions-light & {
-            background: rgba(247,247,247,0.6);
-        }
-        .photo-browser-exposed & {
-            background: rgba(30,30,30,0.6);
-        }
-        
     }
 }
 

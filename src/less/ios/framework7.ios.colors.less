@@ -159,11 +159,6 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
-    .navbar, .navbar&, .subnavbar, .subnavbar&, .toolbar, .toolbar& {
-        @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-            background: rgba(20,20,20,0.8);
-        }
-    }
     // Picker
     .picker-modal {
         .toolbar {
@@ -218,9 +213,6 @@ Framework7 Layouts Themes
         .navbar, .toolbar {
             color:#000;
             background: rgba(247,247,247,0.95);
-            @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-                background: rgba(247,247,247,0.8);
-            }
         }
     }
     .photo-browser-dark {
@@ -375,11 +367,7 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
-    .navbar, .navbar&, .subnavbar, .subnavbar&, .toolbar, .toolbar& {
-        @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-            background: rgba(255,255,255,0.85);
-        }
-    }
+    
     // Picker
     .picker-modal {
         .toolbar {
@@ -411,9 +399,6 @@ Framework7 Layouts Themes
         .navbar, .toolbar {
             color:#000;
             background: rgba(247,247,247,0.95);
-            @supports ( (backdrop-filter: blur()) or (-webkit-backdrop-filter: blur()) ) {
-                background: rgba(247,247,247,0.8);
-            }
         }
     }
     .photo-browser-dark {
