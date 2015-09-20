@@ -70,10 +70,15 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     view = view[0].f7View;
 
     // Parameters
-    var openIn = smartSelect.attr('data-open-in');
-    if (!openIn) openIn = app.params.smartSelectInPopup ? 'popup' : 'page';
+    var openIn = smartSelect.attr('data-open-in') || app.params.smartSelectOpenIn;
     if (openIn === 'popup') {
         if ($('.popup.smart-select-popup').length > 0) return;
+    }
+    else if (openIn === 'picker') {
+        if ($('.picker-modal.modal-in').length > 0 && !reLayout){
+            if (smartSelect[0].f7SmartSelectPicker !== $('.picker-modal.modal-in:not(.modal-out)')[0]) app.closeModal($('.picker-modal.modal-in:not(.modal-out)'));
+            else return;
+        }
     }
     else {
         if (!view) return;
@@ -82,10 +87,17 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var smartSelectData = smartSelect.dataset();
     var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
     var backText = smartSelectData.backText || app.params.smartSelectBackText;
-    var closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;
+    var closeText;
+    if (openIn === 'picker') {
+        closeText = smartSelectData.pickerCloseText || smartSelectData.backText || app.params.smartSelectPickerCloseText ;   
+    }
+    else {
+        closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;      
+    }
     var backOnSelect = smartSelectData.backOnSelect !== undefined ? smartSelectData.backOnSelect : app.params.smartSelectBackOnSelect;
     var formTheme = smartSelectData.formTheme || app.params.smartSelectFormTheme;
     var navbarTheme = smartSelectData.navbarTheme || app.params.smartSelectNavbarTheme;
+    var toolbarTheme = smartSelectData.toolbarTheme || app.params.smartSelectToolbarTheme;
     var virtualList = smartSelectData.virtualList;
     var virtualListHeight = smartSelectData.virtualListHeight;
     var material = app.params.material;
@@ -201,41 +213,65 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         }
     }
 
-    // Navbar HTML
-    if (!app._compiledTemplates.smartSelectNavbar) {
-        app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate || 
-            '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
-                '<div class="navbar-inner">' +
-                    '{{leftTemplate}}' +
-                    '<div class="center sliding">{{pageTitle}}</div>' +
-                '</div>' +
-            '</div>'
-        );
-    }
-    var navbarHTML = app._compiledTemplates.smartSelectNavbar({
-        pageTitle: pageTitle,
-        backText: backText,
-        closeText: closeText,
-        openIn: openIn,
-        navbarTheme: navbarTheme,
-        inPopup: openIn === 'popup',
-        inPage: openIn === 'page',
-        leftTemplate: openIn === 'popup' ? 
-            (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
-            (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
-    });
-    
-    // Determine navbar layout type - static/fixed/through
+    // Toolbar / Navbar
+    var toolbarHTML = '', navbarHTML;
     var noNavbar = '', noToolbar = '', navbarLayout;
-    if (openIn === 'page') {
-        navbarLayout = 'static';
-        if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
-        if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
-        noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
-        noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+
+    if (openIn === 'picker') {
+        if (!app._compiledTemplates.smartSelectToolbar) {
+            app._compiledTemplates.smartSelectToolbar = t7.compile(app.params.smartSelectToolbarTemplate || 
+                '<div class="toolbar {{#if toolbarTheme}}theme-{{toolbarTheme}}{{/if}}">' +
+                  '<div class="toolbar-inner">' +
+                    '<div class="left"></div>' +
+                    '<div class="right"><a href="#" class="link close-picker"><span>{{closeText}}</span></a></div>' +
+                '</div>' +
+              '</div>'
+            );
+        }
+
+        toolbarHTML = app._compiledTemplates.smartSelectToolbar({
+            pageTitle: pageTitle,
+            closeText: closeText,
+            openIn: openIn,
+            toolbarTheme: toolbarTheme,
+            inPicker: openIn === 'picker'              
+        });
     }
     else {
-        navbarLayout = 'fixed';
+        // Navbar HTML
+        if (!app._compiledTemplates.smartSelectNavbar) {
+            app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate || 
+                '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
+                    '<div class="navbar-inner">' +
+                        '{{leftTemplate}}' +
+                        '<div class="center sliding">{{pageTitle}}</div>' +
+                    '</div>' +
+                '</div>'
+            );
+        }
+        navbarHTML = app._compiledTemplates.smartSelectNavbar({
+            pageTitle: pageTitle,
+            backText: backText,
+            closeText: closeText,
+            openIn: openIn,
+            navbarTheme: navbarTheme,
+            inPopup: openIn === 'popup',
+            inPage: openIn === 'page',
+            leftTemplate: openIn === 'popup' ? 
+                (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
+                (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
+        });
+        // Determine navbar layout type - static/fixed/through
+        if (openIn === 'page') {
+            navbarLayout = 'static';
+            if (smartSelect.parents('.navbar-through').length > 0) navbarLayout = 'through';
+            if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
+            noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
+            noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+        }
+        else {
+            navbarLayout = 'fixed';
+        }
     }
         
 
@@ -260,13 +296,13 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                           '<div class="searchbar-overlay"></div>';
 
     var pageHTML =
-        (navbarLayout === 'through' ? navbarHTML : '') +
+        (openIn !== 'picker' && navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
         '  <div data-page="' + pageName + '" data-select-name="' + selectName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
-             (navbarLayout === 'fixed' ? navbarHTML : '') +
+             (openIn !== 'picker' && navbarLayout === 'fixed' ? navbarHTML : '') +
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
-               (navbarLayout === 'static' ? navbarHTML : '') +
+               (openIn !== 'picker' && navbarLayout === 'static' ? navbarHTML : '') +
         '      <div class="list-block ' + (virtualList ? 'virtual-list' : '') + ' smart-select-list-' + id + ' ' + (formTheme ? 'theme-' + formTheme : '') + '">' +
         '        <ul>' +
                     (virtualList ? '' : inputsHTML) +
@@ -276,8 +312,44 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         '  </div>' +
         '</div>';
 
-    // Define popup
-    var popup;
+    // Define popup and picker
+    var popup, picker;
+
+    // Scroll SS Picker To Input
+    function scrollToInput() {
+        var pageContent = smartSelect.parents('.page-content');
+        if (pageContent.length === 0) return;
+        var paddingTop = parseInt(pageContent.css('padding-top'), 10),
+            paddingBottom = parseInt(pageContent.css('padding-bottom'), 10),
+            pageHeight = pageContent[0].offsetHeight - paddingTop - picker.height(),
+            pageScrollHeight = pageContent[0].scrollHeight - paddingTop - picker.height(),
+            newPaddingBottom;
+        var inputTop = smartSelect.offset().top - paddingTop + smartSelect[0].offsetHeight;
+        if (inputTop > pageHeight) {
+            var scrollTop = pageContent.scrollTop() + inputTop - pageHeight;
+            if (scrollTop + pageHeight > pageScrollHeight) {
+                newPaddingBottom = scrollTop + pageHeight - pageScrollHeight + paddingBottom;
+                if (pageHeight === pageScrollHeight) {
+                    newPaddingBottom = picker.height();
+                }
+                pageContent.css({'padding-bottom': (newPaddingBottom) + 'px'});
+            }
+            pageContent.scrollTop(scrollTop, 300);
+        }
+    }
+    // Close SS Picker on HTML Click
+    function closeOnHTMLClick(e) {
+        var close = true;
+        if (e.target === smartSelect[0] || $(e.target).parents(smartSelect[0]).length > 0) {
+            close = false;
+        }
+        if ($(e.target).parents('.picker-modal').length > 0) {
+            close = false;
+        }
+        if (close) {
+            app.closeModal('.smart-select-picker.modal-in');   
+        }
+    }
 
     // Event Listeners on new page
     function handleInputs(container) {
@@ -291,10 +363,11 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                     return false;
                 }
             });
-            $(container).once(openIn === 'popup' ? 'closed': 'pageBeforeRemove', function () {
+            $(container).once(openIn === 'popup' || openIn === 'picker' ? 'closed': 'pageBeforeRemove', function () {
                 if (virtualListInstance && virtualListInstance.destroy) virtualListInstance.destroy();
             });
         }
+        
         $(container).on('change', 'input[name="' + inputName + '"]', function () {
             var input = this;
             var value = input.value;
@@ -320,6 +393,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             smartSelect.find('.item-after').text(optionText.join(', '));
             if (backOnSelect && inputType === 'radio') {
                 if (openIn === 'popup') app.closeModal(popup);
+                else if (openIn === 'picker') app.closeModal(picker);
                 else view.router.back();
             }
         });
@@ -347,6 +421,52 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         }
         app.initPage(popup.find('.page'));
         handleInputs(popup);
+    }
+    else if (openIn === 'picker') {
+        if (reLayout) {
+            picker = $('.picker-modal.smart-select-picker .view');
+            picker.html(pageHTML);
+        }
+        else {
+            picker = app.pickerModal(
+                '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '">' +
+                    toolbarHTML +
+                    '<div class="picker-modal-inner">' +
+                        '<div class="view">' +
+                            pageHTML +
+                        '</div>' +
+                    '</div>' +
+                '</div>'
+                );
+            picker = $(picker);
+
+            // Scroll To Input
+            scrollToInput();
+
+            // Close On Click
+            $('html').on('click', closeOnHTMLClick);
+
+            // On Close
+            picker.once('close', function () {
+                // Reset linked picker
+                smartSelect[0].f7SmartSelectPicker = undefined;
+                
+                // Detach html click
+                $('html').off('click', closeOnHTMLClick);    
+                
+                // Restore page padding bottom
+                smartSelect.parents('.page-content').css({paddingBottom: ''});
+            });
+
+            // Link Picker
+            smartSelect[0].f7SmartSelectPicker = picker[0];
+        }
+
+        // Init Page
+        app.initPage(picker.find('.page'));
+
+        // Attach events
+        handleInputs(picker);
     }
     else {
         $(document).once('pageInit', '.smart-select-page', pageInit);
