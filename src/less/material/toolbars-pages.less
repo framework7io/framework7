@@ -66,6 +66,9 @@
                 .transition(400ms);
             }
         }
+        & ~ .subnavbar, & ~ .toolbar {
+            .transition(400ms);
+        }
     }
     &.navbar-hidden {
         .transition(400ms);
@@ -76,9 +79,13 @@
                 top:-@navbarSize;
             }
             .subnavbar {
-                .translate3d(0,-100%,0);
+                .translate3d(0,-@navbarSize,0);
                 .transition(400ms);
             }
+        }
+        & ~ .subnavbar, & ~ .toolbar:not(.messagebar) {
+            .translate3d(0,-@navbarSize,0);
+            .transition(400ms);
         }
     }
 }
@@ -98,7 +105,19 @@
     }
     &.toolbar-hidden, &.tabbar-hidden {
         .transition(400ms);
-        .translate3d(0,100%,0);
+    }
+
+    &.toolbar-hidden:not(.messagebar), &.tabbar-hidden {
+        .translate3d(0,-100%,0);
+    }
+    .navbar ~ &.toolbar-hidden:not(.messagebar), .navbar ~ &.tabbar-hidden {
+        .translate3d(0,-104px,0);
+    }
+    .navbar ~ &.tabbar-labels.toolbar-hidden {
+        .translate3d(0,-128px,0);
+    }
+    &.toolbar-hidden.messagebar {
+        .translate3d(0, 100%,0);   
     }
 }
 .page.no-toolbar .page-content, .page.no-tabbar .page-content {
