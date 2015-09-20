@@ -149,6 +149,12 @@ app.initSwipeout = function (swipeoutEl) {
                 $button = $(buttonsRight[i]);
                 if (overswipeRightButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
                     $button.css({left: (overswipeRight ? -buttonOffset : 0) + 'px'});
+                    if (overswipeRight) {
+                        $button.addClass('swipeout-overswipe-active');
+                    }
+                    else {
+                        $button.removeClass('swipeout-overswipe-active');   
+                    }
                 }
                 $button.transform('translate3d(' + (translate - buttonOffset * (1 + Math.max(progress, -1))) + 'px,0,0)');
             }
@@ -170,6 +176,12 @@ app.initSwipeout = function (swipeoutEl) {
                 $button = $(buttonsLeft[i]);
                 if (overswipeLeftButton.length > 0 && $button.hasClass('swipeout-overswipe')) {
                     $button.css({left: (overswipeLeft ? buttonOffset : 0) + 'px'});
+                    if (overswipeLeft) {
+                        $button.addClass('swipeout-overswipe-active');
+                    }
+                    else {
+                        $button.removeClass('swipeout-overswipe-active');   
+                    }
                 }
                 if (buttonsLeft.length > 1) {
                     $button.css('z-index', buttonsLeft.length - i); 
@@ -357,7 +369,7 @@ app.swipeoutClose = function (el, callback) {
         else {
             $(buttons[i]).transform('translate3d(' + (swipeOutActionsWidth - buttons[i].offsetWidth - buttons[i].offsetLeft) + 'px,0,0)');
         }
-        $(buttons[i]).css({left:0 + 'px'});
+        $(buttons[i]).css({left:0 + 'px'}).removeClass('swipeout-overswipe-active');
     }
     if (app.swipeoutOpenedEl && app.swipeoutOpenedEl[0] === el[0]) app.swipeoutOpenedEl = undefined;
 };
