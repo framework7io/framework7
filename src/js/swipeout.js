@@ -354,12 +354,14 @@ app.swipeoutClose = function (el, callback) {
     var closeTO;
     function onSwipeoutClose() {
         app.allowSwipeout = true;
+        if (el.hasClass('swipeout-opened')) return;
+        el.removeClass('transitioning');
         buttons.transform('');
         el.trigger('closed');
         if (callback) callback.call(el[0]);
         if (closeTO) clearTimeout(closeTO);
     }
-    el.find('.swipeout-content').transform('translate3d(' + 0 + 'px,0,0)').transitionEnd(onSwipeoutClose);
+    el.find('.swipeout-content').transform('').transitionEnd(onSwipeoutClose);
     closeTO = setTimeout(onSwipeoutClose, 500);
     
     for (var i = 0; i < buttons.length; i++) {
