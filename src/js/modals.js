@@ -396,7 +396,7 @@ app.popover = function (modal, target, removeOnClose) {
                 }
                 diff = diff - modalLeft;
                 modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
-                modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
+                modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 13), 13);
                 modalAngle.css({left: modalAngleLeft + 'px'});
 
             }
@@ -409,7 +409,7 @@ app.popover = function (modal, target, removeOnClose) {
                     modalAngle.removeClass('on-right').addClass('on-left');
                 }
                 modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
-                modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 6), 6);
+                modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 13), 13);
                 modalAngle.css({top: modalAngleTop + 'px'});
             }
         }
