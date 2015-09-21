@@ -68,6 +68,11 @@ var Picker = function (params) {
     // Value
     p.setValue = function (arrValues, transition) {
         var valueIndex = 0;
+        if (p.cols.length === 0) {
+            p.value = arrValues;
+            p.updateValue(arrValues);
+            return;
+        }
         for (var i = 0; i < p.cols.length; i++) {
             if (p.cols[i] && !p.cols[i].divider) {
                 p.cols[i].setValue(arrValues[valueIndex], transition);
@@ -75,8 +80,8 @@ var Picker = function (params) {
             }
         }
     };
-    p.updateValue = function () {
-        var newValue = [];
+    p.updateValue = function (forceValues) {
+        var newValue = forceValues || [];
         var newDisplayValue = [];
         for (var i = 0; i < p.cols.length; i++) {
             if (!p.cols[i].divider) {
@@ -544,7 +549,8 @@ var Picker = function (params) {
             
             // Set value
             if (!p.initialized) {
-                if (p.params.value) {
+                if (p.value) p.setValue(p.value, 0);
+                else if (p.params.value) {
                     p.setValue(p.params.value, 0);
                 }
             }
@@ -590,6 +596,9 @@ var Picker = function (params) {
 
     if (p.inline) {
         p.open();
+    }
+    else {
+        if (!p.initialized && p.params.value) p.setValue(p.params.value);
     }
 
     return p;
