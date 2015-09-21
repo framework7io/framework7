@@ -63,8 +63,9 @@ $.serializeObject = function (obj, parents) {
     }
     for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
+            var toPush;
             if ($.isArray(obj[prop])) {
-                var toPush = [];
+                toPush = [];
                 for (var i = 0; i < obj[prop].length; i ++) {
                     toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
                 }
@@ -74,10 +75,11 @@ $.serializeObject = function (obj, parents) {
                 // Object, convert to named array
                 var _newParents = parents.slice();
                 _newParents.push(prop);
-                resultArray.push($.serializeObject(obj[prop], _newParents));
+                toPush = $.serializeObject(obj[prop], _newParents);
+                if (toPush !== '') resultArray.push(toPush);
             }
-            else {
-                // Should be string
+            else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
+                // Should be string or plain value
                 resultArray.push(var_name(prop) + '=' + var_value(obj[prop]));
             }
         }
