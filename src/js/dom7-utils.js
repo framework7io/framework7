@@ -70,7 +70,7 @@ $.serializeObject = function (obj, parents) {
                 }
                 if (toPush.length > 0) resultArray.push(toPush.join(separator));
             }
-            else if (typeof obj[prop] !== 'string') {
+            else if (typeof obj[prop] === 'object') {
                 // Object, convert to named array
                 var _newParents = parents.slice();
                 _newParents.push(prop);
