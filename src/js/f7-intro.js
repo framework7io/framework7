@@ -58,6 +58,8 @@ window.Framework7 = function (params) {
         hideTabbarOnPageScroll: false,
         showBarsOnPageScrollEnd: true,
         showBarsOnPageScrollTop: true,
+        // Searchbar
+        disableSearchbarOnInputBlur: false,
         // Swipeout
         swipeout: true,
         swipeoutActionsNoFold: false,
@@ -115,7 +117,7 @@ window.Framework7 = function (params) {
         materialRipple: true,
         materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .floating-button',
         // Auto init
-        init: true,
+        init: true
     };
 
     // Extend defaults with parameters
