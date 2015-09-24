@@ -101,6 +101,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var virtualList = smartSelectData.virtualList;
     var virtualListHeight = smartSelectData.virtualListHeight;
     var material = app.params.material;
+    var pickerHeight = smartSelectData.pickerHeight || app.params.smartSelectPickerHeight;
     // Collect all options/values
     var select = smartSelect.find('select')[0];
     var $select = $(select);
@@ -429,7 +430,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         }
         else {
             picker = app.pickerModal(
-                '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '">' +
+                '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '"' + (pickerHeight ? ' style="height:' + pickerHeight + '"' : '') + '>' +
                     toolbarHTML +
                     '<div class="picker-modal-inner">' +
                         '<div class="view">' +
