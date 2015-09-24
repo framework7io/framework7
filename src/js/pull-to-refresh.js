@@ -48,7 +48,7 @@ app.initPullToRefresh = function (pageContainer) {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
-        
+        container.trigger('pullstart');
     }
     
     function handleTouchMove(e) {
@@ -114,6 +114,10 @@ app.initPullToRefresh = function (pageContainer) {
                 e.preventDefault();
                 translate = (Math.pow(touchesDiff, 0.85) + startTranslate);
                 container.transform('translate3d(0,' + translate + 'px,0)');
+                container.trigger('pulldown', {
+                    source: e,
+                    translate: translate
+                });
             }
             else {
             }
@@ -160,6 +164,7 @@ app.initPullToRefresh = function (pageContainer) {
         }
         isTouched = false;
         isMoved = false;
+        container.trigger('pullend');
     }
 
     // Attach Events
@@ -189,6 +194,7 @@ app.pullToRefreshDone = function (container) {
     container.removeClass('refreshing').addClass('transitioning');
     container.transitionEnd(function () {
         container.removeClass('transitioning pull-up pull-down');
+        container.trigger('pulldone');
     });
 };
 app.pullToRefreshTrigger = function (container) {
