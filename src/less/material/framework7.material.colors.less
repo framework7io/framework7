@@ -86,6 +86,9 @@ Framework7 Layouts Themes
         color:@lightText;        
         .hairline-color(top, @blockBorder);
     }
+    .contacts-block .list-group-title {
+        background: none;
+    }
     // Forms
     .item-link, label.label-checkbox, label.label-radio {
         html:not(.watch-active-state) &:active, &.active-state {
@@ -224,6 +227,15 @@ Framework7 Color Themes
                 background-color: @color;
             }
             input[type="range"]::-webkit-slider-thumb {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-thumb {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
+            input[type="range"]::-moz-range-thumb {
                 background-color: @color;
             }
         }

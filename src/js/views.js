@@ -21,7 +21,13 @@ var View = function (selector, params) {
     };
     var i;
 
+    // Params
     params = params || {};
+
+    // Disable dynamic navbar for material theme
+    if (params.dynamicNavbar && app.params.material) params.dynamicNavbar = false;
+
+    // Extend params with defaults
     for (var def in defaults) {
         if (typeof params[def] === 'undefined') {
             params[def] = defaults[def];

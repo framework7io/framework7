@@ -10,6 +10,7 @@ var Picker = function (params) {
         momentumRatio: 7,
         freeMode: false,
         // Common settings
+        closeByOutsideClick: true,
         scrollToInput: true,
         inputReadOnly: true,
         convertToPopover: true,
@@ -67,6 +68,11 @@ var Picker = function (params) {
     // Value
     p.setValue = function (arrValues, transition) {
         var valueIndex = 0;
+        if (p.cols.length === 0) {
+            p.value = arrValues;
+            p.updateValue(arrValues);
+            return;
+        }
         for (var i = 0; i < p.cols.length; i++) {
             if (p.cols[i] && !p.cols[i].divider) {
                 p.cols[i].setValue(arrValues[valueIndex], transition);
@@ -74,8 +80,8 @@ var Picker = function (params) {
             }
         }
     };
-    p.updateValue = function () {
-        var newValue = [];
+    p.updateValue = function (forceValues) {
+        var newValue = forceValues || [];
         var newDisplayValue = [];
         for (var i = 0; i < p.cols.length; i++) {
             if (!p.cols[i].divider) {
@@ -193,12 +199,11 @@ var Picker = function (params) {
             if (activeIndex >= col.items.length) activeIndex = col.items.length - 1;
             var previousActiveIndex = col.activeIndex;
             col.activeIndex = activeIndex;
-            col.wrapper.find('.picker-selected, .picker-after-selected, .picker-before-selected').removeClass('picker-selected picker-after-selected picker-before-selected');
+            col.wrapper.find('.picker-selected').removeClass('picker-selected');
 
             col.items.transition(transition);
+            
             var selectedItem = col.items.eq(activeIndex).addClass('picker-selected').transform('');
-            var prevItems = selectedItem.prevAll().addClass('picker-before-selected');
-            var nextItems = selectedItem.nextAll().addClass('picker-after-selected');
                 
             // Set 3D rotate effect
             if (p.params.rotateEffect) {
@@ -484,7 +489,7 @@ var Picker = function (params) {
             
     }
     
-    if (!p.inline) $('html').on('click', closeOnHTMLClick);
+    if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
 
     // Open
     function onPickerClose() {
@@ -544,7 +549,8 @@ var Picker = function (params) {
             
             // Set value
             if (!p.initialized) {
-                if (p.params.value) {
+                if (p.value) p.setValue(p.value, 0);
+                else if (p.params.value) {
                     p.setValue(p.params.value, 0);
                 }
             }
@@ -590,6 +596,9 @@ var Picker = function (params) {
 
     if (p.inline) {
         p.open();
+    }
+    else {
+        if (!p.initialized && p.params.value) p.setValue(p.params.value);
     }
 
     return p;

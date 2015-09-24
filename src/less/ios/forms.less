@@ -126,7 +126,7 @@
                     .transform(scale(0));
                 }
                 &:after {
-                    .transform(translateX(22px));
+                    .transform(translateX(20px));
                 }
             }
         }
@@ -167,6 +167,7 @@ html.android {
     font-size: 14px;
     font-family: inherit;
     cursor: pointer;
+    outline: 0;
     input[type="submit"]&, input[type="button"]&{
         width: 100%;
     }
@@ -262,7 +263,35 @@ html.android {
         background-size: 100% 2px;
         background-repeat: no-repeat;
         outline: 0;
+        border: none;
+        box-sizing: content-box;
+        -ms-background-position-y: 500px;
+        &:focus, &:active {
+            border: 0;
+            outline: 0;
+        }
     }
+    
+
+    
+    // Range thumb mixin
+    .range-thumb() {
+        height: 28px;
+        width: 28px;
+        border-radius: 28px;
+        background: #fff;
+        z-index: 10;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        border: 0;
+        outline: 0;
+        position: absolute;
+        box-sizing: border-box;
+        content: ' ';
+    }
+    
+    // ======= WebKit/Blink ========
+
+    // Before Track
     input[type="range"]:after {
         height: 2px;
         background: #fff;
@@ -274,6 +303,7 @@ html.android {
         z-index: 1;
         position: absolute;
     }
+    // Thumb
     input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -286,18 +316,11 @@ html.android {
         background: none;
     }
     input[type="range"]::-webkit-slider-thumb:after {
-        height: 28px;
-        width: 28px;
-        border-radius: 28px;
-        background: #fff;
-        z-index: 10;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        position: absolute;
+        .range-thumb();
         left: 0;
         top: 0;
-        content: ' ';
     }
-
+    // Track Active Highlight
     input[type="range"]::-webkit-slider-thumb:before {
         position: absolute;
         top: 50%;
@@ -308,6 +331,43 @@ html.android {
         z-index: 1;
         background: @themeColor;
         content: ' ';
+    }
+
+    // ======= FireFox ========
+    input[type="range"]::-moz-range-track {
+        width: 100%;
+        height: 2px;
+        background: #b7b8b7;
+        border: none;
+        outline: 0;
+    }
+    input[type="range"]::-moz-range-thumb {
+        .range-thumb();
+    }
+    
+    // ======= IE ========
+    input[type="range"]::-ms-track {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+    input[type="range"]::-ms-thumb {
+        .range-thumb();
+        box-shadow: none;
+        border: 1px solid rgba(0,0,0,0.2);
+        box-sizing: border-box;
+        margin-top: 0;
+        top: 50%;
+    }
+
+    input[type="range"]::-ms-fill-lower {
+        background: @themeColor;
+    }
+    input[type="range"]::-ms-fill-upper {
+        background: #b7b8b7;
     }
 }
 

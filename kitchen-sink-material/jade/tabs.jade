@@ -1,4 +1,4 @@
-.page(data-page="tabs")
+.page(data-page="tabs").toolbar-fixed
   .navbar
     .navbar-inner
       .left
@@ -10,9 +10,9 @@
           i.icon.icon-bars
   .toolbar.tabbar
     .toolbar-inner
-      a(href="#tab1").button.active.tab-link Tab 1
-          a(href="#tab2").button.tab-link Tab 2
-          a(href="#tab3").button.tab-link Tab 3
+      a(href="#tab1").active.tab-link Tab 1
+      a(href="#tab2").tab-link Tab 2
+      a(href="#tab3").tab-link Tab 3
   .tabs-animated-wrap
     .tabs
       .page-content.tab(id="tab1").active

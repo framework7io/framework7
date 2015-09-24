@@ -70,6 +70,9 @@ Framework7 Color Themes
             input[type="range"]::-webkit-slider-thumb:before {
                 background-color: @color;
             }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
         }
         label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
             background-color: @color;
@@ -157,6 +160,14 @@ Framework7 Layouts Themes
         color:@barsText;
     }
     // Picker
+    .picker-modal {
+        .toolbar {
+            background-color: @barsBg;
+        }
+    }
+    .popover .picker-modal .toolbar {
+        background: none;
+    }
     .picker-calendar-week-days {
         color:#fff;
         background-color: @barsBg;
@@ -198,11 +209,19 @@ Framework7 Layouts Themes
         }
     }
     // Photo Browser
-    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+    .photo-browser, .views .view[data-page="photo-browser-slides"] {
         .navbar, .toolbar {
-            background: rgba(red(@barsBg), green(@barsBg), blue(@barsBg), 0.95);
+            color:#000;
+            background: rgba(247,247,247,0.95);
         }
     }
+    .photo-browser-dark {
+        .navbar, .toolbar {
+            background: rgba(30,30,30,0.8);
+            color:#fff;
+        }
+    }
+
     .tabbar a:not(.active) {
         color:@tabBarText;
     }
@@ -312,6 +331,9 @@ Framework7 Layouts Themes
     .range-slider input[type="range"]:after {
         background: @blockBg;
     }
+    .range-slider input[type="range"]::-ms-thumb {
+        border: none;
+    }
 
 }
 
@@ -345,7 +367,16 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
+    
     // Picker
+    .picker-modal {
+        .toolbar {
+            background-color: @barsBg;
+        }
+    }
+    .popover .picker-modal .toolbar {
+        background: none;
+    }
     .popover .picker-modal, .picker-modal.picker-modal-inline {
         .picker-center-highlight {
             .hairline-color(top, @barsBorder);
@@ -364,9 +395,16 @@ Framework7 Layouts Themes
         }
     }
     // Photo Browser
-    .photo-browser, .photo-browser&, .view[data-page="photo-browser-slides"], .view[data-page="photo-browser-slides"]& {
+    .photo-browser, .views .view[data-page="photo-browser-slides"] {
         .navbar, .toolbar {
-            background: rgba(red(@barsBg), green(@barsBg), blue(@barsBg), 0.95);
+            color:#000;
+            background: rgba(247,247,247,0.95);
+        }
+    }
+    .photo-browser-dark {
+        .navbar, .toolbar {
+            background: rgba(30,30,30,0.8);
+            color:#fff;
         }
     }
     .tabbar a:not(.active) {

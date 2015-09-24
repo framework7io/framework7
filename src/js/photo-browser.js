@@ -300,7 +300,7 @@ var PhotoBrowser = function (params) {
                 if (pb.params.onClick) pb.params.onClick(swiper, e);
             },
             onDoubleTap: function (swiper, e) {
-                pb.toggleZoom($(e.target).parents('.photo-browser-slide'));
+                pb.toggleZoom(e);
                 if (pb.params.onDoubleTap) pb.params.onDoubleTap(swiper, e);
             },
             onTransitionStart: function (swiper) {
@@ -407,21 +407,73 @@ var PhotoBrowser = function (params) {
         isScaling = false;
         if (scale === 1) gestureSlide = undefined;
     };
-    pb.toggleZoom = function () {
+    pb.toggleZoom = function (e) {
         if (!gestureSlide) {
             gestureSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
             gestureImg = gestureSlide.find('img, svg, canvas');
             gestureImgWrap = gestureImg.parent('.photo-browser-zoom-container');
         }
         if (!gestureImg || gestureImg.length === 0) return;
-        gestureImgWrap.transition(300).transform('translate3d(0,0,0)');
+        
+        var touchX, touchY, offsetX, offsetY, diffX, diffY, translateX, translateY, imageWidth, imageHeight, scaledWidth, scaledHeight, translateMinX, translateMinY, translateMaxX, translateMaxY;
+
+        if (typeof imageTouchesStart.x === 'undefined' && e) {
+            touchX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
+            touchY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
+        }
+        else {
+            touchX = imageTouchesStart.x;
+            touchY = imageTouchesStart.y;
+        }
+        
         if (scale && scale !== 1) {
+            // Zoom Out
             scale = currentScale = 1;
+            gestureImgWrap.transition(300).transform('translate3d(0,0,0)');
             gestureImg.transition(300).transform('translate3d(0,0,0) scale(1)');
             gestureSlide = undefined;
         }
         else {
+            // Zoom In
             scale = currentScale = pb.params.maxZoom;
+            if (e) {
+                offsetX = pb.container.offset().left;
+                offsetY = pb.container.offset().top;
+                diffX = offsetX + pb.container[0].offsetWidth/2 - touchX;
+                diffY = offsetY + pb.container[0].offsetHeight/2 - touchY;
+
+                imageWidth = gestureImg[0].offsetWidth;
+                imageHeight = gestureImg[0].offsetHeight;
+                scaledWidth = imageWidth * scale;
+                scaledHeight = imageHeight * scale;
+
+                translateMinX = Math.min((pb.swiper.width / 2 - scaledWidth / 2), 0);
+                translateMinY = Math.min((pb.swiper.height / 2 - scaledHeight / 2), 0);
+                translateMaxX = -translateMinX;
+                translateMaxY = -translateMinY;
+
+                translateX = diffX * scale;
+                translateY = diffY * scale;
+                
+                if (translateX < translateMinX) {
+                    translateX =  translateMinX;
+                }
+                if (translateX > translateMaxX) {
+                    translateX = translateMaxX;
+                }
+                
+                if (translateY < translateMinY) {
+                    translateY =  translateMinY;
+                }
+                if (translateY > translateMaxY) {
+                    translateY = translateMaxY;
+                }
+            }
+            else {
+                translateX = 0;
+                translateY = 0;
+            }
+            gestureImgWrap.transition(300).transform('translate3d(' + translateX + 'px, ' + translateY + 'px,0)');
             gestureImg.transition(300).transform('translate3d(0,0,0) scale(' + scale + ')');
         }
     };

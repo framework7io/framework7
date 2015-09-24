@@ -19,7 +19,6 @@
     background: rgba(0,0,0,0.85);
     -webkit-perspective:1200px;
     perspective:1200px;
-    
     &.list-block > ul {
         .hairline-remove(top);
         .hairline-remove(bottom);
@@ -39,6 +38,9 @@
     }
     .item-title {
         font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
     }
     .item-text {
         height: auto;

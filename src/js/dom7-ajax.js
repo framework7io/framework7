@@ -74,7 +74,10 @@ $.ajax = function (options) {
             // Should be key=value object
             stringData = $.serializeObject(options.data);
         }
-        options.url += paramsPrefix + stringData;
+        if (stringData.length) {
+            options.url += paramsPrefix + stringData;
+            if (paramsPrefix === '?') paramsPrefix = '&';
+        }
     }
     // JSONP
     if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
@@ -215,7 +218,8 @@ $.ajax = function (options) {
                 }
             }
             else {
-                fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', xhr.responseText, xhr.status, xhr);
+                responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
+                fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
             }
         }
         else {

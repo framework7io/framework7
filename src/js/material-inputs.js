@@ -5,15 +5,19 @@ app.initPageMaterialInputs = function (pageContainer) {
     pageContainer = $(pageContainer);
     var textareas = pageContainer.find('textarea.resizable');
     pageContainer.find('.item-input').each(function () {
-        var i = $(this);
+        var itemInput = $(this);
         var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
-        i.find('input, select, textarea').each(function () {
-            if (notInputs.indexOf($(this).attr('type')) < 0) {
-                i.addClass('item-input-field');
+        itemInput.find('input, select, textarea').each(function () {
+            var input = $(this);
+            if (notInputs.indexOf(input.attr('type')) < 0) {
+                itemInput.addClass('item-input-field');
+                if (input.val().trim() !== '') {
+                    input.parents('.item-input, .input-field').add(input.parents('.item-inner')).addClass('not-empty-state');
+                }
             }
         });
-        if (i.parents('.input-item, .inputs-list').length > 0) return;
-        i.parents('.list-block').eq(0).addClass('inputs-list');
+        if (itemInput.parents('.input-item, .inputs-list').length > 0) return;
+        itemInput.parents('.list-block').eq(0).addClass('inputs-list');
     });
 };
 /*======================================================
