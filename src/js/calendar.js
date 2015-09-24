@@ -34,6 +34,7 @@ var Calendar = function (params) {
             '</div>',
         weekHeader: true,
         // Common settings
+        closeByOutsideClick: true,
         scrollToInput: true,
         inputReadOnly: true,
         convertToPopover: true,
@@ -384,6 +385,7 @@ var Calendar = function (params) {
                 var col = j;
                 dayIndex ++;
                 var dayNumber = dayIndex - firstDayOfMonthIndex;
+                var weekDayIndex = (col - 1 + p.params.firstDay > 6) ? (col - 1 - 7 + p.params.firstDay) : (col - 1 + p.params.firstDay);
                 var addClass = '';
                 if (dayNumber < 0) {
                     dayNumber = daysInPrevMonth + dayNumber + 1;
@@ -406,7 +408,7 @@ var Calendar = function (params) {
                 // Selected
                 if (currentValues.indexOf(dayDate) >= 0) addClass += ' picker-calendar-day-selected';
                 // Weekend
-                if (p.params.weekendDays.indexOf(col - 1) >= 0) {
+                if (p.params.weekendDays.indexOf(weekDayIndex) >= 0) {
                     addClass += ' picker-calendar-day-weekend';
                 }
                 // Disabled
@@ -747,7 +749,7 @@ var Calendar = function (params) {
             
     }
     
-    if (!p.inline) $('html').on('click', closeOnHTMLClick);
+    if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
 
     // Open
     function onPickerClose() {

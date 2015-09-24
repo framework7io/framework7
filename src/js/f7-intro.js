@@ -63,9 +63,10 @@ window.Framework7 = function (params) {
         swipeoutActionsNoFold: false,
         swipeoutNoFollow: false,
         // Smart Select Back link template
+        smartSelectOpenIn: 'page', // or 'popup' or 'picker'
         smartSelectBackText: 'Back',
-        smartSelectInPopup: false,
         smartSelectPopupCloseText: 'Close',
+        smartSelectPickerCloseText: 'Done',
         smartSelectSearchbar: false,
         smartSelectBackOnSelect: false,
         // Tap Navbar or Statusbar to scroll to top

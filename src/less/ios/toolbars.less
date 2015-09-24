@@ -2,6 +2,7 @@
 
 //Toolbar/Navbar
 @toolbarBg : #f7f7f8;
+@toolbarBgBlured: rgba(248,248,249, 0.85);
 @toolbarBorderColor: #c4c4c4;
 @toolbarLinksColor: @themeColor;
 @toolbarSize: 44px;
@@ -42,9 +43,13 @@
     backface-visibility: hidden;
     b {
         font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
     }
 }
 .navbar, .toolbar, .subnavbar {
+    background: @toolbarBg;
     a.link {
         line-height: @toolbarSize;
         height: @toolbarSize;
@@ -76,7 +81,6 @@
 .navbar {
     left: 0;
     top: 0;
-    background: @toolbarBg;
     .hairline(bottom, @toolbarBorderColor);
     &:after {
         backface-visibility: hidden;
@@ -87,6 +91,9 @@
     .center {
         font-size: 17px;
         font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
         text-align: center;
         margin: 0;
         position: relative;
@@ -130,7 +137,6 @@
     left: 0;
     top: 100%;
     margin-top: -1px;
-    background: @toolbarBg;
     z-index: 20;
     box-sizing: border-box;
     padding: 0 8px;
@@ -171,7 +177,6 @@
 .toolbar {
     left: 0;
     bottom: 0;
-    background: @toolbarBg;
     .hairline(top, @toolbarBorderColor);
     &.no-border {
         .hairline-remove(top);

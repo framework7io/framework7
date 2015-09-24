@@ -22,7 +22,8 @@ app.showTab = function (tab, tabLink, force) {
     // Animated tabs
     var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
     if (isAnimatedTabs) {
-        tabs.transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
+        var tabTranslate = (app.rtl ? newTab.index() : -newTab.index()) * 100;
+        tabs.transform('translate3d(' + tabTranslate + '%,0,0)');
     }
 
     // Remove active class from old tabs
@@ -82,9 +83,10 @@ app.showTab = function (tab, tabLink, force) {
                     var clientLeft = tabbar[0].clientLeft;
                 }
                 var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
+                var highlightTranslate = (app.rtl ? - tabLink.index() : tabLink.index()) * 100;
                 tabbar.find('.tab-link-highlight')
                     .css({width: tabLinkWidth + '%'})
-                    .transform('translate3d(' + tabLink.index() * 100 + '%,0,0)');
+                    .transform('translate3d(' + highlightTranslate + '%,0,0)');
             }
         }
     }

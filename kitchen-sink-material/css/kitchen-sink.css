@@ -25,21 +25,6 @@
   max-width: 40px;
   border-radius: 50%;
 }
-.page[data-page="tabbar"] .tabbar,
-.page[data-page="tabbar-labels"] .tabbar,
-.page[data-page="messages"] .tabbar,
-.page[data-page="tabbar"] .toolbar,
-.page[data-page="tabbar-labels"] .toolbar,
-.page[data-page="messages"] .toolbar {
-  -webkit-transform: none;
-  -moz-transform: none;
-  -ms-transform: none;
-  -o-transform: none;
-  transform: none;
-  -webkit-transition: 0ms;
-  -o-transition: 0ms;
-  transition: 0ms;
-}
 .tabbar i.icon {
   -webkit-transition: 200ms;
   transition: 200ms;

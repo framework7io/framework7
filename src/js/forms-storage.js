@@ -47,7 +47,7 @@ app.formToJSON = function (form) {
         var tag = this.nodeName.toLowerCase();
         if (skipTypes.indexOf(type) >= 0) return;
         if (skipNames.indexOf(name) >= 0 || !name) return;
-        if (tag === 'select' && input.attr('multiple')) {
+        if (tag === 'select' && input.prop('multiple')) {
             skipNames.push(name);
             formData[name] = [];
             form.find('select[name="' + name + '"] option').each(function () {
@@ -96,7 +96,7 @@ app.formFromJSON = function (form, formData) {
         if (!formData[name]) return;
         if (skipTypes.indexOf(type) >= 0) return;
         if (skipNames.indexOf(name) >= 0 || !name) return;
-        if (tag === 'select' && input.attr('multiple')) {
+        if (tag === 'select' && input.prop('multiple')) {
             skipNames.push(name);
             form.find('select[name="' + name + '"] option').each(function () {
                 if (formData[name].indexOf(this.value) >= 0) this.selected = true;

@@ -167,7 +167,7 @@ app.router = {
         var t7_ctx, t7_template;
         if (typeof content === 'string') {
             if (url) {
-                if (app.template7Cache[url]) t7_template = t7.cache[url];
+                if (app.template7Cache[url] && !options.ignoreCache) t7_template = t7.cache[url];
                 else {
                     t7_template = t7.compile(content);
                     t7.cache[url] = t7_template;

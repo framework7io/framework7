@@ -26,8 +26,8 @@ app.modal = function (params) {
         var textHTML = params.text ? '<div class="modal-text">' + params.text + '</div>' : '';
         var afterTextHTML = params.afterText ? params.afterText : '';
         var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
-        var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical' : '';
-        modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
+        var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical': '';
+        modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
     }
 
     _modalTemplateTempDiv.innerHTML = modalHTML;
@@ -396,7 +396,7 @@ app.popover = function (modal, target, removeOnClose) {
                 }
                 diff = diff - modalLeft;
                 modalAngleLeft = (modalWidth / 2 - modalAngleSize + diff);
-                modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 6), 6);
+                modalAngleLeft = Math.max(Math.min(modalAngleLeft, modalWidth - modalAngleSize * 2 - 13), 13);
                 modalAngle.css({left: modalAngleLeft + 'px'});
 
             }
@@ -409,7 +409,7 @@ app.popover = function (modal, target, removeOnClose) {
                     modalAngle.removeClass('on-right').addClass('on-left');
                 }
                 modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
-                modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 6), 6);
+                modalAngleTop = Math.max(Math.min(modalAngleTop, modalHeight - modalAngleSize * 2 - 13), 13);
                 modalAngle.css({top: modalAngleTop + 'px'});
             }
         }
