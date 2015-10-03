@@ -447,26 +447,32 @@ app.popup = function (modal, removeOnClose) {
     app.openModal(modal);
     return modal[0];
 };
-app.pickerModal = function (pickerModal, removeOnClose) {
+app.pickerModal = function (modal, removeOnClose) {
     if (typeof removeOnClose === 'undefined') removeOnClose = true;
-    if (typeof pickerModal === 'string' && pickerModal.indexOf('<') >= 0) {
-        pickerModal = $(pickerModal);
-        if (pickerModal.length > 0) {
-            if (removeOnClose) pickerModal.addClass('remove-on-close');
-            $('body').append(pickerModal[0]);
+    if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
+        modal = $(modal);
+        if (modal.length > 0) {
+            if (removeOnClose) modal.addClass('remove-on-close');
+            $('body').append(modal[0]);
         }
         else return false; //nothing found
     }
-    pickerModal = $(pickerModal);
-    if (pickerModal.length === 0) return false;
-    pickerModal.show();
-    app.openModal(pickerModal);
-    return pickerModal[0];
+    modal = $(modal);
+    if (modal.length === 0) return false;
+    if ($('.picker-modal.modal-in:not(.modal-out)').length > 0 && !modal.hasClass('modal-in')) {
+        app.closeModal('.picker-modal.modal-in:not(.modal-out)');
+    }
+    modal.show();
+    app.openModal(modal);
+    return modal[0];
 };
 app.loginScreen = function (modal) {
     if (!modal) modal = '.login-screen';
     modal = $(modal);
     if (modal.length === 0) return false;
+    if ($('.login-screen.modal-in:not(.modal-out)').length > 0 && !modal.hasClass('modal-in')) {
+        app.closeModal('.login-screen.modal-in:not(.modal-out)');
+    }
     modal.show();
     
     app.openModal(modal);
