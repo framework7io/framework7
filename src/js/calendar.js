@@ -15,6 +15,8 @@ var Calendar = function (params) {
         direction: 'horizontal', // or 'vertical'
         minDate: null,
         maxDate: null,
+        disabled: null, // dates range of disabled days
+        events: null, // dates range of days with events
         touchMove: true,
         animate: true,
         closeOnSelect: false,
@@ -337,6 +339,40 @@ var Calendar = function (params) {
         if ('f7DestroyCalendarEvents' in p.container[0]) p.container[0].f7DestroyCalendarEvents();
     };
 
+    // Scan Dates Range
+    p.dateInRange = function (range, dayDate) {
+        var match = false;
+        var i;
+        if (!range) return false;
+        if ($.isArray(range)) {
+            for (i = 0; i < range.length; i ++) {
+                if (dayDate === new Date(range[i]).getTime()) {
+                    match = true;
+                }
+            }
+        }
+        else if (range.from || range.to) {
+            if (range.from && range.to) {
+                if ((dayDate <= new Date(range.to).getTime()) && (dayDate >= new Date(range.from).getTime())) {
+                    match = true;   
+                }
+            }
+            else if (range.from) {
+                if (dayDate >= new Date(range.from).getTime()) {
+                    match = true;   
+                }
+            }
+            else if (range.to) {
+                if (dayDate <= new Date(range.to).getTime()) {
+                    match = true;   
+                }
+            }
+        }
+        else if (typeof range === 'function') {
+            match = range(new Date(dayDate));
+        }
+        return match;
+    };
     // Calendar Methods
     p.daysInMonth = function (date) {
         var d = new Date(date);
@@ -364,13 +400,15 @@ var Calendar = function (params) {
             firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay();
         if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7;
         
-        var dayDate, currentValues = [], i, j,
+        var dayDate, currentValues = [], i, j, k,
             rows = 6, cols = 7,
             monthHTML = '',
             dayIndex = 0 + (p.params.firstDay - 1),    
             today = new Date().setHours(0,0,0,0),
             minDate = p.params.minDate ? new Date(p.params.minDate).getTime() : null,
-            maxDate = p.params.maxDate ? new Date(p.params.maxDate).getTime() : null;
+            maxDate = p.params.maxDate ? new Date(p.params.maxDate).getTime() : null,
+            disabled,
+            hasEvent;
 
         if (p.value && p.value.length) {
             for (i = 0; i < p.value.length; i++) {
@@ -411,10 +449,30 @@ var Calendar = function (params) {
                 if (p.params.weekendDays.indexOf(weekDayIndex) >= 0) {
                     addClass += ' picker-calendar-day-weekend';
                 }
+                // Has Events
+                hasEvent = false;
+                if (p.params.events) {
+                    if (p.dateInRange(p.params.events, dayDate)) {
+                        hasEvent = true;
+                    }
+                }
+                if (hasEvent) {
+                    addClass += ' picker-calendar-day-has-events';
+                }
                 // Disabled
+                disabled = false;
                 if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
+                    disabled = true;   
+                }
+                if (p.params.disabled) {
+                    if (p.dateInRange(p.params.disabled, dayDate)) {
+                        disabled = true;
+                    }
+                }
+                if (disabled) {
                     addClass += ' picker-calendar-day-disabled';   
                 }
+                
 
                 dayDate = new Date(dayDate);
                 var dayYear = dayDate.getFullYear();
