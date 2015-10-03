@@ -44,6 +44,9 @@
   -o-transition: 0ms;
   transition: 0ms;
 }
+.page[data-page="tabbar"] .page-content {
+  padding-bottom: 44px;
+}
 .page[data-page="tabbar-labels"] .page-content {
   padding-bottom: 50px;
 }
