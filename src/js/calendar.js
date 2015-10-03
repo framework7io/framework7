@@ -17,6 +17,7 @@ var Calendar = function (params) {
         maxDate: null,
         disabled: null, // dates range of disabled days
         events: null, // dates range of days with events
+        rangesClasses: null, //array with custom classes date ranges
         touchMove: true,
         animate: true,
         closeOnSelect: false,
@@ -340,7 +341,7 @@ var Calendar = function (params) {
     };
 
     // Scan Dates Range
-    p.dateInRange = function (range, dayDate) {
+    p.dateInRange = function (dayDate, range) {
         var match = false;
         var i;
         if (!range) return false;
@@ -452,12 +453,20 @@ var Calendar = function (params) {
                 // Has Events
                 hasEvent = false;
                 if (p.params.events) {
-                    if (p.dateInRange(p.params.events, dayDate)) {
+                    if (p.dateInRange(dayDate, p.params.events)) {
                         hasEvent = true;
                     }
                 }
                 if (hasEvent) {
                     addClass += ' picker-calendar-day-has-events';
+                }
+                // Custom Ranges
+                if (p.params.rangesClasses) {
+                    for (k = 0; k < p.params.rangesClasses.length; k++) {
+                        if (p.dateInRange(dayDate, p.params.rangesClasses[k].range)) {
+                            addClass += ' ' + p.params.rangesClasses[k].cssClass;
+                        }
+                    }
                 }
                 // Disabled
                 disabled = false;
@@ -465,7 +474,7 @@ var Calendar = function (params) {
                     disabled = true;   
                 }
                 if (p.params.disabled) {
-                    if (p.dateInRange(p.params.disabled, dayDate)) {
+                    if (p.dateInRange(dayDate, p.params.disabled)) {
                         disabled = true;
                     }
                 }
