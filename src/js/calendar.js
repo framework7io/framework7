@@ -164,15 +164,18 @@ var Calendar = function (params) {
     };
     p.setValue = function (arrValues) {
         p.value = arrValues;
-        p.updateValue();   
+        p.updateValue();
     };
     p.updateValue = function (onlyHeader) {
-        p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
         var i, inputValue;
-        for (i = 0; i < p.value.length; i++) {
-            var valueDate = new Date(p.value[i]);
-            p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
+        if (p.container && p.container.length > 0) {
+            p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
+            for (i = 0; i < p.value.length; i++) {
+                var valueDate = new Date(p.value[i]);
+                p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
+            }
         }
+            
         if (p.params.onChange) {
             p.params.onChange(p, p.value);
         }
@@ -185,7 +188,7 @@ var Calendar = function (params) {
                 }
                 inputValue = inputValue.join(', ');
             } 
-            if (app.params.material && p.params.header) {
+            if (app.params.material && p.params.header && p.container && p.container.length > 0) {
                 p.container.find('.picker-calendar-selected-date').text(inputValue);
             }
             if (p.input && p.input.length > 0 && !onlyHeader) {
@@ -932,6 +935,9 @@ var Calendar = function (params) {
 
     if (p.inline) {
         p.open();
+    }
+    else {
+        if (!p.initialized && p.params.value) p.setValue(p.params.value);
     }
 
     return p;
