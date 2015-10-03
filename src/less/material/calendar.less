@@ -142,6 +142,22 @@
         background: @themeColor;
         color:#fff;
     }
+    &.picker-calendar-day-has-events span {
+        &:after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: @themeColor;
+            position: absolute;
+            margin-left: -2px;
+            left: 50%;
+            bottom: 2px;
+        }
+    }
+    &.picker-calendar-day-has-events.picker-calendar-day-selected span:after {
+        display: none;
+    }
     span {
         display: inline-block;
         border-radius: 100%;
