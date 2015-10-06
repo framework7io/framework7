@@ -70,10 +70,16 @@ body.with-panel-left-reveal {
     .panel-overlay {
         margin-left: @panelWidth;
     }
+    .statusbar-overlay {
+        .translate3d(@panelWidth);
+    }
 }
 body.with-panel-left-cover {
     .panel-left {
         .translate3d(@panelWidth);
+    }
+    .statusbar-overlay {
+        .translate3d(-@panelWidth);
     }
 }
 body.with-panel-right-reveal {
@@ -83,10 +89,16 @@ body.with-panel-right-reveal {
     .panel-overlay {
         margin-left: -@panelWidth;
     }
+    .statusbar-overlay {
+        .translate3d(-@panelWidth);
+    }
 }
 body.with-panel-right-cover {
     .panel-right {
         .translate3d(-@panelWidth);
+    }
+    .statusbar-overlay {
+        .translate3d(@panelWidth);
     }
 }
 body.panel-closing {
