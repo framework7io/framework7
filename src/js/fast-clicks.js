@@ -45,10 +45,13 @@ app.initFastClicks = function () {
         return true;
     }
     function addActive() {
+        if (!activableElement) return;
         activableElement.addClass('active-state');
     }
     function removeActive(el) {
+        if (!activableElement) return;
         activableElement.removeClass('active-state');
+        activableElement = null;
     }
     function isFormElement(el) {
         var nodes = ('input select textarea label').split(' ');
@@ -237,7 +240,11 @@ app.initFastClicks = function () {
         isMoved = false;
         tapHoldFired = false;
         if (e.targetTouches.length > 1) {
+            if (activableElement) removeActive();
             return true;
+        }
+        if (e.touches.length > 1 && activableElement) {
+            removeActive();
         }
         if (app.params.tapHold) {
             if (tapHoldTimeout) clearTimeout(tapHoldTimeout);

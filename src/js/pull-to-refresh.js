@@ -8,7 +8,7 @@ app.initPullToRefresh = function (pageContainer) {
     }
     if (!eventsTarget || eventsTarget.length === 0) return;
 
-    var touchId, isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer, triggerDistance, dynamicTriggerDistance;
+    var touchId, isTouched, isMoved, touchesStart = {}, isScrolling, touchesDiff, touchStartTime, container, refresh = false, useTranslate = false, startTranslate = 0, translate, scrollTop, wasScrolled, layer, triggerDistance, dynamicTriggerDistance, pullStarted;
     var page = eventsTarget.hasClass('page') ? eventsTarget : eventsTarget.parents('.page');
     var hasNavbar = false;
     if (page.find('.navbar').length > 0 || page.parents('.navbar-fixed, .navbar-through').length > 0 || page.hasClass('navbar-fixed') || page.hasClass('navbar-through')) hasNavbar = true;
@@ -35,12 +35,12 @@ app.initPullToRefresh = function (pageContainer) {
         
         /*jshint validthis:true */
         container = $(this);
-
         if (container.hasClass('refreshing')) {
             return;
         }
         
         isMoved = false;
+        pullStarted = false;
         isTouched = true;
         isScrolling = undefined;
         wasScrolled = undefined;
@@ -115,8 +115,6 @@ app.initPullToRefresh = function (pageContainer) {
                 translate = (Math.pow(touchesDiff, 0.85) + startTranslate);
                 container.transform('translate3d(0,' + translate + 'px,0)');
             }
-            else {
-            }
             if ((useTranslate && Math.pow(touchesDiff, 0.85) > triggerDistance) || (!useTranslate && touchesDiff >= triggerDistance * 2)) {
                 refresh = true;
                 container.addClass('pull-up').removeClass('pull-down');
@@ -125,9 +123,19 @@ app.initPullToRefresh = function (pageContainer) {
                 refresh = false;
                 container.removeClass('pull-up').addClass('pull-down');
             }
+            if (!pullStarted) {
+                container.trigger('pullstart');
+                pullStarted = true;
+            }
+            container.trigger('pullmove', {
+                event: e,
+                scrollTop: scrollTop,
+                translate: translate,
+                touchesDiff: touchesDiff
+            });
         }
         else {
-            
+            pullStarted = false;
             container.removeClass('pull-up pull-down');
             refresh = false;
             return;
@@ -160,6 +168,7 @@ app.initPullToRefresh = function (pageContainer) {
         }
         isTouched = false;
         isMoved = false;
+        if (pullStarted) container.trigger('pullend');
     }
 
     // Attach Events
@@ -189,6 +198,7 @@ app.pullToRefreshDone = function (container) {
     container.removeClass('refreshing').addClass('transitioning');
     container.transitionEnd(function () {
         container.removeClass('transitioning pull-up pull-down');
+        container.trigger('refreshdone');
     });
 };
 app.pullToRefreshTrigger = function (container) {

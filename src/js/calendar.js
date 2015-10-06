@@ -15,6 +15,9 @@ var Calendar = function (params) {
         direction: 'horizontal', // or 'vertical'
         minDate: null,
         maxDate: null,
+        disabled: null, // dates range of disabled days
+        events: null, // dates range of days with events
+        rangesClasses: null, //array with custom classes date ranges
         touchMove: true,
         animate: true,
         closeOnSelect: false,
@@ -161,15 +164,18 @@ var Calendar = function (params) {
     };
     p.setValue = function (arrValues) {
         p.value = arrValues;
-        p.updateValue();   
+        p.updateValue();
     };
     p.updateValue = function (onlyHeader) {
-        p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
         var i, inputValue;
-        for (i = 0; i < p.value.length; i++) {
-            var valueDate = new Date(p.value[i]);
-            p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
+        if (p.container && p.container.length > 0) {
+            p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
+            for (i = 0; i < p.value.length; i++) {
+                var valueDate = new Date(p.value[i]);
+                p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
+            }
         }
+            
         if (p.params.onChange) {
             p.params.onChange(p, p.value);
         }
@@ -182,7 +188,7 @@ var Calendar = function (params) {
                 }
                 inputValue = inputValue.join(', ');
             } 
-            if (app.params.material && p.params.header) {
+            if (app.params.material && p.params.header && p.container && p.container.length > 0) {
                 p.container.find('.picker-calendar-selected-date').text(inputValue);
             }
             if (p.input && p.input.length > 0 && !onlyHeader) {
@@ -337,6 +343,40 @@ var Calendar = function (params) {
         if ('f7DestroyCalendarEvents' in p.container[0]) p.container[0].f7DestroyCalendarEvents();
     };
 
+    // Scan Dates Range
+    p.dateInRange = function (dayDate, range) {
+        var match = false;
+        var i;
+        if (!range) return false;
+        if ($.isArray(range)) {
+            for (i = 0; i < range.length; i ++) {
+                if (dayDate === new Date(range[i]).getTime()) {
+                    match = true;
+                }
+            }
+        }
+        else if (range.from || range.to) {
+            if (range.from && range.to) {
+                if ((dayDate <= new Date(range.to).getTime()) && (dayDate >= new Date(range.from).getTime())) {
+                    match = true;   
+                }
+            }
+            else if (range.from) {
+                if (dayDate >= new Date(range.from).getTime()) {
+                    match = true;   
+                }
+            }
+            else if (range.to) {
+                if (dayDate <= new Date(range.to).getTime()) {
+                    match = true;   
+                }
+            }
+        }
+        else if (typeof range === 'function') {
+            match = range(new Date(dayDate));
+        }
+        return match;
+    };
     // Calendar Methods
     p.daysInMonth = function (date) {
         var d = new Date(date);
@@ -364,13 +404,15 @@ var Calendar = function (params) {
             firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay();
         if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7;
         
-        var dayDate, currentValues = [], i, j,
+        var dayDate, currentValues = [], i, j, k,
             rows = 6, cols = 7,
             monthHTML = '',
             dayIndex = 0 + (p.params.firstDay - 1),    
             today = new Date().setHours(0,0,0,0),
             minDate = p.params.minDate ? new Date(p.params.minDate).getTime() : null,
-            maxDate = p.params.maxDate ? new Date(p.params.maxDate).getTime() : null;
+            maxDate = p.params.maxDate ? new Date(p.params.maxDate).getTime() : null,
+            disabled,
+            hasEvent;
 
         if (p.value && p.value.length) {
             for (i = 0; i < p.value.length; i++) {
@@ -411,10 +453,38 @@ var Calendar = function (params) {
                 if (p.params.weekendDays.indexOf(weekDayIndex) >= 0) {
                     addClass += ' picker-calendar-day-weekend';
                 }
+                // Has Events
+                hasEvent = false;
+                if (p.params.events) {
+                    if (p.dateInRange(dayDate, p.params.events)) {
+                        hasEvent = true;
+                    }
+                }
+                if (hasEvent) {
+                    addClass += ' picker-calendar-day-has-events';
+                }
+                // Custom Ranges
+                if (p.params.rangesClasses) {
+                    for (k = 0; k < p.params.rangesClasses.length; k++) {
+                        if (p.dateInRange(dayDate, p.params.rangesClasses[k].range)) {
+                            addClass += ' ' + p.params.rangesClasses[k].cssClass;
+                        }
+                    }
+                }
                 // Disabled
+                disabled = false;
                 if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
+                    disabled = true;   
+                }
+                if (p.params.disabled) {
+                    if (p.dateInRange(dayDate, p.params.disabled)) {
+                        disabled = true;
+                    }
+                }
+                if (disabled) {
                     addClass += ' picker-calendar-day-disabled';   
                 }
+                
 
                 dayDate = new Date(dayDate);
                 var dayYear = dayDate.getFullYear();
@@ -865,6 +935,9 @@ var Calendar = function (params) {
 
     if (p.inline) {
         p.open();
+    }
+    else {
+        if (!p.initialized && p.params.value) p.setValue(p.params.value);
     }
 
     return p;

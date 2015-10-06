@@ -250,10 +250,10 @@ Dom7.prototype = {
             targetSelector = false;
         }
         function proxy(e) {
-            listener(e);
+            listener.call(e.target, e);
             dom.off(eventName, targetSelector, proxy, capture);
         }
-        dom.on(eventName, targetSelector, proxy, capture);
+        return dom.on(eventName, targetSelector, proxy, capture);
     },
     trigger: function (eventName, eventData) {
         for (var i = 0; i < this.length; i++) {

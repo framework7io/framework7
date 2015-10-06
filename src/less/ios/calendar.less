@@ -1,7 +1,7 @@
 /* === Calendar === */
 .picker-calendar {
     background: #fff;
-    height: 300px;
+    height: 320px;
     width: 100%;
     overflow: hidden;
     @media (orientation: landscape) and (max-height: 415px) {
@@ -113,12 +113,29 @@
         background: @themeColor;
         color:#fff;
     }
+    &.picker-calendar-day-has-events span {
+        &:after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #ccc;
+            position: absolute;
+            margin-left: -2px;
+            left: 50%;
+            bottom: 1px;
+        }
+    }
+    &.picker-calendar-day-has-events.picker-calendar-day-selected span:after {
+        display: none;
+    }
     span {
         display: inline-block;
         border-radius: 100%;
         width: 30px;
         height: 30px;
         line-height: 30px;
+        position: relative;
 
     }
 }

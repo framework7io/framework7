@@ -101,6 +101,8 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var virtualList = smartSelectData.virtualList;
     var virtualListHeight = smartSelectData.virtualListHeight;
     var material = app.params.material;
+    var pickerHeight = smartSelectData.pickerHeight || app.params.smartSelectPickerHeight;
+
     // Collect all options/values
     var select = smartSelect.find('select')[0];
     var $select = $(select);
@@ -112,13 +114,14 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var id = (new Date()).getTime();
     var inputType = select.multiple ? 'checkbox' : 'radio';
     var inputName = inputType + '-' + id;
+    var maxLength = $select.attr('maxlength');
     var selectName = select.name;
     var option, optionHasMedia, optionImage, optionIcon, optionGroup, optionGroupLabel, optionPreviousGroup, optionIsLabel, previousGroup, optionColor, optionClassName, optionData;
     for (var i = 0; i < select.length; i++) {
         option = $(select[i]);
         optionData = option.dataset();
-        optionImage = optionData.optionImage || $selectData.optionImage;
-        optionIcon = optionData.optionIcon || $selectData.optionIcon;
+        optionImage = optionData.optionImage || $selectData.optionImage || smartSelectData.optionImage;
+        optionIcon = optionData.optionIcon || $selectData.optionIcon || smartSelectData.optionIcon;
         optionHasMedia = optionImage || optionIcon || inputType === 'checkbox';
         if (material) optionHasMedia = optionImage || optionIcon;
         optionColor = optionData.optionColor;
@@ -353,8 +356,9 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
 
     // Event Listeners on new page
     function handleInputs(container) {
+        container = $(container);
         if (virtualList) {
-            var virtualListInstance = app.virtualList($(container).find('.virtual-list'), {
+            var virtualListInstance = app.virtualList(container.find('.virtual-list'), {
                 items: values,
                 template: smartSelectItemTemplate,
                 height: virtualListHeight || undefined,
@@ -363,12 +367,12 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                     return false;
                 }
             });
-            $(container).once(openIn === 'popup' || openIn === 'picker' ? 'closed': 'pageBeforeRemove', function () {
+            container.once(openIn === 'popup' || openIn === 'picker' ? 'closed': 'pageBeforeRemove', function () {
                 if (virtualListInstance && virtualListInstance.destroy) virtualListInstance.destroy();
             });
         }
-        
-        $(container).on('change', 'input[name="' + inputName + '"]', function () {
+
+        container.on('change', 'input[name="' + inputName + '"]', function () {
             var input = this;
             var value = input.value;
             var optionText = [];
@@ -381,6 +385,22 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                     }
                     if (option.selected) {
                         optionText.push(option.textContent.trim());
+                    }
+                }
+                if (maxLength) {
+                    if (select.selectedOptions.length >= maxLength && input.checked) {
+                        container.find('input[type="checkbox"]').each(function () {
+                            if (!this.checked) {
+                                $(this).parents('li').addClass('disabled');
+                            }
+                            else {
+                                $(this).parents('li').removeClass('disabled');   
+                            }
+                        });
+                        return;
+                    }
+                    else {
+                        container.find('.disabled').removeClass('disabled');
                     }
                 }
             }
@@ -429,7 +449,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         }
         else {
             picker = app.pickerModal(
-                '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '">' +
+                '<div class="picker-modal smart-select-picker smart-select-picker-' + inputName + '"' + (pickerHeight ? ' style="height:' + pickerHeight + '"' : '') + '>' +
                     toolbarHTML +
                     '<div class="picker-modal-inner">' +
                         '<div class="view">' +
