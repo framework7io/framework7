@@ -5,7 +5,9 @@
 Framework7
 ==========
 
-Full Featured Mobile HTML Framework For Building iOS Apps
+[![Join the chat at https://gitter.im/nolimits4web/Framework7](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nolimits4web/Framework7?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Full Featured Mobile HTML Framework For Building iOS & Android Apps
 
 ## Getting Started
   * [Getting Started Guide](http://www.idangero.us/framework7/get-started/)
@@ -81,8 +83,10 @@ After that you will find created `custom/` folder with generated JS and CSS file
 * swipeout
 * sortable
 * smart-select
+* virtual-list
 * pull-to-refresh
 * infinite-scroll
+* scroll-toolbars
 * tabs
 * fast-clicks
 * forms (means Ajax forms and forms storage)
