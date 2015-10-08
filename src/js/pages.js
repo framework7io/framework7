@@ -99,7 +99,7 @@ app.pageInitCallback = function (view, params) {
 
         // Callbacks
         app.pluginHook('pageReinit', pageData);
-        if (app.params.onPageReinit) app.params.onPageBeforeInit(app, pageData);
+        if (app.params.onPageReinit) app.params.onPageReinit(app, pageData);
         app.triggerPageCallbacks('reinit', pageData.name, pageData);
         $(pageData.container).trigger('pageReinit', {page: pageData});
         return;
