@@ -83,15 +83,7 @@ var Searchbar = function (container, params) {
         s.notFound = $(s.params.notFound);
     }
 
-    // Cancel button
-    var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-    if (s.cancelButton.length > 0 && !s.material) {
-        s.cancelButton.transition(0).show();
-        s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
-        setTimeout(function () {
-            s.cancelButton.transition('');    
-        }, 0);
-    }
+    
 
     // Diacritics
     var defaultDiacriticsRemovalap = [
@@ -197,6 +189,26 @@ var Searchbar = function (container, params) {
         });
     }
 
+    // Set Cancel button
+    var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
+    var cancelButtonHidden = false;
+    s.setCancelButton = function () {
+        s.cancelButton.transition(0).show();
+        s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
+        setTimeout(function () {
+            s.cancelButton.transition('');    
+        }, 0);
+    };
+    if (s.cancelButton.length > 0 && !s.material) {
+        // s.cancelButton.show();
+        if (s.cancelButton[0].offsetWidth) {
+            s.setCancelButton();
+        }
+        else {
+            cancelButtonHidden = true;
+        }
+    }
+
     // Trigger
     s.triggerEvent = function (eventName, callbackName, eventData) {
         s.container.trigger(eventName, eventData);
@@ -209,7 +221,9 @@ var Searchbar = function (container, params) {
         function _enable() {
             if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
-            if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, '0px');
+            if (s.cancelButton.length > 0 && !s.material) {
+                s.cancelButton.css(cancelMarginProp, '0px');
+            }
             s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
         }
@@ -397,6 +411,16 @@ var Searchbar = function (container, params) {
         s.input[method]('focus', s.enable);
         s.input[method]('change keydown keypress keyup', s.handleInput);
         s.clearButton[method]('click', s.clear);
+        if (cancelButtonHidden) {
+            if (destroy) {
+                s.container.parents('.tab').eq(0).off('show', s.setCancelButton);
+            }
+            else {
+                s.container.parents('.tab').eq(0).once('show', s.setCancelButton);
+            }
+        }
+            
+            
     };
     s.detachEvents = function() {
         s.attachEvents(true);
