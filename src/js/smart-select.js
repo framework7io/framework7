@@ -354,6 +354,22 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         }
     }
 
+    // Check max length
+    function checkMaxLength(container) {
+        if (select.selectedOptions.length >= maxLength) {
+            container.find('input[type="checkbox"]').each(function () {
+                if (!this.checked) {
+                    $(this).parents('li').addClass('disabled');
+                }
+                else {
+                    $(this).parents('li').removeClass('disabled');   
+                }
+            });
+        }
+        else {
+            container.find('.disabled').removeClass('disabled');
+        }
+    }
     // Event Listeners on new page
     function handleInputs(container) {
         container = $(container);
@@ -371,7 +387,9 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                 if (virtualListInstance && virtualListInstance.destroy) virtualListInstance.destroy();
             });
         }
-
+        if (maxLength) {
+            checkMaxLength(container);
+        }
         container.on('change', 'input[name="' + inputName + '"]', function () {
             var input = this;
             var value = input.value;
@@ -388,20 +406,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                     }
                 }
                 if (maxLength) {
-                    if (select.selectedOptions.length >= maxLength && input.checked) {
-                        container.find('input[type="checkbox"]').each(function () {
-                            if (!this.checked) {
-                                $(this).parents('li').addClass('disabled');
-                            }
-                            else {
-                                $(this).parents('li').removeClass('disabled');   
-                            }
-                        });
-                        return;
-                    }
-                    else {
-                        container.find('.disabled').removeClass('disabled');
-                    }
+                    checkMaxLength(container);
                 }
             }
             else {
