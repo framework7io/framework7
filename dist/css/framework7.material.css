@@ -4162,6 +4162,12 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
 .picker-modal.smart-select-picker .list-block {
   margin: 0;
 }
+.picker-modal.smart-select-picker .list-block ul:before {
+  display: none;
+}
+.picker-modal.smart-select-picker .list-block ul:after {
+  display: none;
+}
 /* === Panels === */
 .panel-overlay {
   position: absolute;

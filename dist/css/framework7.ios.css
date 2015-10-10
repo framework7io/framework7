@@ -4224,6 +4224,9 @@ html.pixel-ratio-3 .popover .picker-modal .toolbar:after {
 .popover .picker-modal .toolbar {
   background: none;
 }
+.picker-modal.smart-select-picker .page {
+  background: #fff;
+}
 .picker-modal.smart-select-picker .toolbar:after {
   content: '';
   position: absolute;
@@ -4249,6 +4252,12 @@ html.pixel-ratio-3 .picker-modal.smart-select-picker .toolbar:after {
 }
 .picker-modal.smart-select-picker .list-block {
   margin: 0;
+}
+.picker-modal.smart-select-picker .list-block ul:before {
+  display: none;
+}
+.picker-modal.smart-select-picker .list-block ul:after {
+  display: none;
 }
 /* === Panels === */
 .panel-overlay {
