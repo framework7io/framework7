@@ -1,5 +1,77 @@
 # Change Log
 
+## Framework7 v1.3.0 - Updated on October 10, 2015
+  * iOS Theme
+    * New appearence to match new iOS 9 design, mostly for Overlays: Modal, Popover and Action Sheet
+    * Support for new San Francisco font:
+      * For desktops - using San Francisco font that can be downloaded from https://developer.apple.com/fonts/
+      * For iOS - using system San Francisco font
+    * Fixed issue with switch toggle in RTL layout
+  * Material Theme
+    * `dynamicNavbar` will be disabled automatically for this theme
+    * Added `no-ripple` class to disable ripple effect on specific elements
+    * Fixed issue with floating labels with predefined values
+    * Fixed behavior of hidden toolbars/tabbars
+    * Fixed issue in RTL layout for tab bar
+  * Smart Select
+    * App's `smartSelectInPopup` parameter is removed
+    * Added new app's `smartSelectOpenIn` parameter. Can be `page`, `popup` or `picker`. By default is `page`
+    * Added option to open it in picker:
+      * Using `data-open-in="picker"` attribute or `smartSelectOpenIn` app's parameter
+      * Picker close button text can be specified:
+        * Using `data-picker-close-text` attribute
+        * New app's `smartSelectPickerCloseText` parameter. By default is `Done`
+      * Smart Select picker height can be controlled using `data-picker-height` attribute
+    * Added support for none-standard `maxlength` attribute on `<select>` element to limit amount of selected items for "multiple" select
+  * Dom7
+    * New `prependTo(parent)` method to prepend element to parent
+    * New `appendTo(parent)` method to append element to parent
+    * Ajax: added support for data types different from "text", like "arraybuffer" and others
+    * `$.serializeObject` method now supports deep objects with objects and arrays
+  * Swipeout
+    * Now overswipe-button will have additonal "swipeout-overswipe-active" class during overswipe
+    * New `data-close-on-cancel="true"` attribute for "swipeout-delete" buttons with `data-confirm` to close swipeout element in case of user canceled confirm dialog
+  * Photo Browser
+    * Double tap to zoom now zooms to the tapped position, not only to the center of picture
+  * Messagebar
+    * Now when you type new message it will scroll messages pages to bottom only in case if you are in the bottom of this page 
+  * Picker
+    * Added `closeByOutsideClick` parameter to close picker automatically when you click outside of related input or picker. By default is `true`
+    * Now it will set related input's value on initialization with specified value
+  * Calendar
+    * Added `closeByOutsideClick` parameter to close picker automatically when you click outside of related input or picker. By default is `true`
+    * Now it will set related input's value on initialization with specified value
+    * New `disabled` parameter to specify additional "disabled" days
+    * New `events` parameter to specify dates with "events" (will be marked with additional dots)
+    * New `rangesClasses` parameter to easily add custom classes to specified dates
+  * Pull To Refresh
+    * New events `pullstart`, `pullmove`, `pullend` and `refreshdone`
+  * Forms
+    * Better cross-browser support for `input[type="range"]` element
+  * Virtual List
+    * Fixed issue with size and scroll calculating when initialized in hidden tab
+    * Fixed issue with size and scroll calculating when used not in page
+  * Searchbar
+    * Fixed issue with close button when initialized in hidden tab
+  * Lazy Loading
+    * Fixed issue with lazy loading in hidden tab
+  * Template7 update to latest 1.1.0 version:
+    * Fixed access to data (`@index`, `@key`) and root context (`@root`) in partials
+    * Fixed `null` variables not to be outputed
+  * Swiper updated to latest 3.1.7 version:
+    * Fixed issue with wrong slides fill when number of slides less than `slidesPerView * slidesPerColumn` with `slidesPerColumnFill: 'row'`
+    * Added support for images `srcset` with lazy loading using `data-srcset` attribute
+    * Fixed new Chrome errors with `WebkitCSSMatrix`
+    * Fixed issue with `slideToClickedSlide` with `loop` and `centeredSlides`
+    * New `freeModeMinimumVelocity` parameter to set minimum required touch velocity to trigger free mode momentum
+    * Ability to make the Scrollbar draggable using new paramaters:
+      * `scrollbarDraggable` - (boolean) by default is `false`. Allows to enable draggable scrollbar
+      * `scrollbarSnapOnRelease` - (boolean) by default is `false`. Control slider snap on scrollbar release
+  * Router
+    * Now precompiled/cached tamplates will be ignored in case of `ignoreCache: true` parameter
+    * Fixed issue with `domCache` when going back with `force:true` to home page
+  * Lot of minor fixes and improvements
+
 ## Framework7 v1.2.0 - Updated on July 18, 2015
   * New full featured Material theme designed according to Google guidelines
   * New Material-specific App' parameters:
