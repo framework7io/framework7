@@ -202,11 +202,15 @@ app.initClickEvents = function () {
                 if (title) {
                     app.confirm(text, title, function () {
                         app.swipeoutDelete(clicked.parents('.swipeout'));
+                    }, function () {
+                        clicked.parents('.swipeout').trigger('canceled');
                     });
                 }
                 else {
                     app.confirm(text, function () {
                         app.swipeoutDelete(clicked.parents('.swipeout'));
+                    }, function () {
+                        clicked.parents('.swipeout').trigger('canceled');
                     });
                 }
             }
