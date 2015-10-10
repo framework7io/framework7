@@ -126,6 +126,9 @@ var View = function (selector, params) {
     if (currentPageData) {
         currentPageData.view = view;
         currentPageData.url = view.url;
+        if (view.params.domCache && view.params.dynamicNavbar && !currentPageData.navbarInnerContainer) {
+            currentPageData.navbarInnerContainer = view.initialNavbars[view.initialPages.indexOf(currentPageData.container)];
+        }
         view.activePage = currentPageData;
         currentPage[0].f7PageData = currentPageData;
     }

@@ -918,6 +918,12 @@ app.router._back = function (view, options) {
             newPage = $(viewContainer).find('.page[data-page="' + pageName + '"]');
             if (view.params.dynamicNavbar) {
                 newNavbarInner = $(viewContainer).find('.navbar-inner[data-page="' + pageName + '"]');
+                if (newNavbarInner.length === 0 && newPage[0].f7RelatedNavbar) {
+                    newNavbarInner = $(newPage[0].f7RelatedNavbar);
+                }
+                if (newNavbarInner.length === 0 && newPage[0].f7PageData) {
+                    newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);   
+                }
             }
             setPages();
             return;
@@ -947,8 +953,11 @@ app.router._back = function (view, options) {
             }
             if (view.params.dynamicNavbar) {
                 newNavbarInner = $(viewContainer).find('.navbar-inner[data-page="' + pageName + '"]');
-                if (newNavbarInner.length === 0) {
+                if (newNavbarInner.length === 0 && newPage[0].f7RelatedNavbar) {
                     newNavbarInner = $(newPage[0].f7RelatedNavbar);
+                }
+                if (newNavbarInner.length === 0 && newPage[0].f7PageData) {
+                    newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);   
                 }
             }
             setPages();
