@@ -198,9 +198,9 @@ var Searchbar = function (container, params) {
         setTimeout(function () {
             s.cancelButton.transition('');    
         }, 0);
+        cancelButtonHidden = false;
     };
     if (s.cancelButton.length > 0 && !s.material) {
-        // s.cancelButton.show();
         if (s.cancelButton[0].offsetWidth) {
             s.setCancelButton();
         }
@@ -226,6 +226,9 @@ var Searchbar = function (container, params) {
             }
             s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
+        }
+        if (cancelButtonHidden) {
+            s.setCancelButton();
         }
         if (app.device.ios) {
             setTimeout(function () {
