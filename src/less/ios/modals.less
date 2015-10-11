@@ -575,11 +575,18 @@ html.with-statusbar-overlay {
         }
     }
     &.smart-select-picker {
+        .page {
+            background: #fff;
+        }
         .toolbar {
             .hairline(bottom, #c4c4c4);
         }
         .list-block {
             margin: 0;
+            ul {
+                .hairline-remove(top);
+                .hairline-remove(bottom);
+            }
         }
     }
 }

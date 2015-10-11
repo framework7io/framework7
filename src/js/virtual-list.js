@@ -256,6 +256,7 @@ var VirtualList = function (listBlock, params) {
     vl.attachEvents = function (detach) {
         var action = detach ? 'off' : 'on';
         vl.pageContent[action]('scroll', vl.handleScroll);
+        vl.listBlock.parents('.tab').eq(0)[action]('show', vl.handleResize);
         $(window)[action]('resize', vl.handleResize);
     };
 

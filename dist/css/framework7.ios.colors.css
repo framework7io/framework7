@@ -1,5 +1,5 @@
 /**
- * Framework7 1.2.0
+ * Framework7 1.3.0
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * iOS Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: July 18, 2015
+ * Released on: October 10, 2015
  */
 /*==========================
 Framework7 Color Themes
@@ -109,6 +109,10 @@ i.icon-bars.theme-gray,
 }
 .theme-gray .range-slider input[type="range"]::-webkit-slider-thumb:before,
 .range-slider.theme-gray input[type="range"]::-webkit-slider-thumb:before {
+  background-color: #8e8e93;
+}
+.theme-gray .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-gray input[type="range"]::-ms-fill-lower {
   background-color: #8e8e93;
 }
 .theme-gray label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
@@ -250,6 +254,10 @@ i.icon-bars.theme-white,
 .range-slider.theme-white input[type="range"]::-webkit-slider-thumb:before {
   background-color: #ffffff;
 }
+.theme-white .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-white input[type="range"]::-ms-fill-lower {
+  background-color: #ffffff;
+}
 .theme-white label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
 .theme-white label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
   background-color: #ffffff;
@@ -387,6 +395,10 @@ i.icon-bars.theme-black,
 }
 .theme-black .range-slider input[type="range"]::-webkit-slider-thumb:before,
 .range-slider.theme-black input[type="range"]::-webkit-slider-thumb:before {
+  background-color: #000000;
+}
+.theme-black .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-black input[type="range"]::-ms-fill-lower {
   background-color: #000000;
 }
 .theme-black label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
@@ -528,6 +540,10 @@ i.icon-bars.theme-lightblue,
 .range-slider.theme-lightblue input[type="range"]::-webkit-slider-thumb:before {
   background-color: #5ac8fa;
 }
+.theme-lightblue .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-lightblue input[type="range"]::-ms-fill-lower {
+  background-color: #5ac8fa;
+}
 .theme-lightblue label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
 .theme-lightblue label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
   background-color: #5ac8fa;
@@ -665,6 +681,10 @@ i.icon-bars.theme-yellow,
 }
 .theme-yellow .range-slider input[type="range"]::-webkit-slider-thumb:before,
 .range-slider.theme-yellow input[type="range"]::-webkit-slider-thumb:before {
+  background-color: #ffcc00;
+}
+.theme-yellow .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-yellow input[type="range"]::-ms-fill-lower {
   background-color: #ffcc00;
 }
 .theme-yellow label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
@@ -806,6 +826,10 @@ i.icon-bars.theme-orange,
 .range-slider.theme-orange input[type="range"]::-webkit-slider-thumb:before {
   background-color: #ff9500;
 }
+.theme-orange .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-orange input[type="range"]::-ms-fill-lower {
+  background-color: #ff9500;
+}
 .theme-orange label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
 .theme-orange label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
   background-color: #ff9500;
@@ -943,6 +967,10 @@ i.icon-bars.theme-pink,
 }
 .theme-pink .range-slider input[type="range"]::-webkit-slider-thumb:before,
 .range-slider.theme-pink input[type="range"]::-webkit-slider-thumb:before {
+  background-color: #ff2d55;
+}
+.theme-pink .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-pink input[type="range"]::-ms-fill-lower {
   background-color: #ff2d55;
 }
 .theme-pink label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
@@ -1084,6 +1112,10 @@ i.icon-bars.theme-blue,
 .range-slider.theme-blue input[type="range"]::-webkit-slider-thumb:before {
   background-color: #007aff;
 }
+.theme-blue .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-blue input[type="range"]::-ms-fill-lower {
+  background-color: #007aff;
+}
 .theme-blue label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
 .theme-blue label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
   background-color: #007aff;
@@ -1221,6 +1253,10 @@ i.icon-bars.theme-green,
 }
 .theme-green .range-slider input[type="range"]::-webkit-slider-thumb:before,
 .range-slider.theme-green input[type="range"]::-webkit-slider-thumb:before {
+  background-color: #4cd964;
+}
+.theme-green .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-green input[type="range"]::-ms-fill-lower {
   background-color: #4cd964;
 }
 .theme-green label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
@@ -1362,6 +1398,10 @@ i.icon-bars.theme-red,
 .range-slider.theme-red input[type="range"]::-webkit-slider-thumb:before {
   background-color: #ff3b30;
 }
+.theme-red .range-slider input[type="range"]::-ms-fill-lower,
+.range-slider.theme-red input[type="range"]::-ms-fill-lower {
+  background-color: #ff3b30;
+}
 .theme-red label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
 .theme-red label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
   background-color: #ff3b30;
@@ -1433,6 +1473,12 @@ Framework7 Layouts Themes
 .toolbar.layout-dark:before {
   background-color: #333333;
 }
+.layout-dark .picker-modal .toolbar {
+  background-color: #131313;
+}
+.layout-dark .popover .picker-modal .toolbar {
+  background: none;
+}
 .layout-dark .picker-calendar-week-days {
   color: #fff;
   background-color: #131313;
@@ -1469,7 +1515,11 @@ Framework7 Layouts Themes
 }
 .layout-dark .popover .picker-modal .picker-calendar-day.picker-calendar-day-today span,
 .layout-dark .picker-modal.picker-modal-inline .picker-calendar-day.picker-calendar-day-today span {
-  background: #444;
+  background: #333;
+}
+.layout-dark .popover .picker-modal .picker-calendar-day.picker-calendar-day-has-events span:after,
+.layout-dark .picker-modal.picker-modal-inline .picker-calendar-day.picker-calendar-day-has-events span:after {
+  background: #555;
 }
 .layout-dark .popover .picker-modal .picker-calendar-week-days:after,
 .layout-dark .picker-modal.picker-modal-inline .picker-calendar-week-days:after,
@@ -1487,14 +1537,16 @@ Framework7 Layouts Themes
   background-color: #333333;
 }
 .layout-dark .photo-browser .navbar,
-.photo-browser.layout-dark .navbar,
-.layout-dark .view[data-page="photo-browser-slides"] .navbar,
-.view[data-page="photo-browser-slides"].layout-dark .navbar,
+.layout-dark .views .view[data-page="photo-browser-slides"] .navbar,
 .layout-dark .photo-browser .toolbar,
-.photo-browser.layout-dark .toolbar,
-.layout-dark .view[data-page="photo-browser-slides"] .toolbar,
-.view[data-page="photo-browser-slides"].layout-dark .toolbar {
-  background: rgba(19, 19, 19, 0.95);
+.layout-dark .views .view[data-page="photo-browser-slides"] .toolbar {
+  color: #000;
+  background: rgba(247, 247, 247, 0.95);
+}
+.layout-dark .photo-browser-dark .navbar,
+.layout-dark .photo-browser-dark .toolbar {
+  background: rgba(30, 30, 30, 0.8);
+  color: #fff;
 }
 .layout-dark .tabbar a:not(.active) {
   color: #ffffff;
@@ -1651,6 +1703,9 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-dark .range-slider input[type="range"]:after {
   background: #1c1d1f;
 }
+.layout-dark .range-slider input[type="range"]::-ms-thumb {
+  border: none;
+}
 /* === White layout === */
 .layout-white .navbar,
 .navbar.layout-white,
@@ -1673,6 +1728,12 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-white .toolbar:before,
 .toolbar.layout-white:before {
   background-color: #dddddd;
+}
+.layout-white .picker-modal .toolbar {
+  background-color: #ffffff;
+}
+.layout-white .popover .picker-modal .toolbar {
+  background: none;
 }
 .layout-white .popover .picker-modal .picker-center-highlight:before,
 .layout-white .picker-modal.picker-modal-inline .picker-center-highlight:before {
@@ -1698,14 +1759,16 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
   background-color: #dddddd;
 }
 .layout-white .photo-browser .navbar,
-.photo-browser.layout-white .navbar,
-.layout-white .view[data-page="photo-browser-slides"] .navbar,
-.view[data-page="photo-browser-slides"].layout-white .navbar,
+.layout-white .views .view[data-page="photo-browser-slides"] .navbar,
 .layout-white .photo-browser .toolbar,
-.photo-browser.layout-white .toolbar,
-.layout-white .view[data-page="photo-browser-slides"] .toolbar,
-.view[data-page="photo-browser-slides"].layout-white .toolbar {
-  background: rgba(255, 255, 255, 0.95);
+.layout-white .views .view[data-page="photo-browser-slides"] .toolbar {
+  color: #000;
+  background: rgba(247, 247, 247, 0.95);
+}
+.layout-white .photo-browser-dark .navbar,
+.layout-white .photo-browser-dark .toolbar {
+  background: rgba(30, 30, 30, 0.8);
+  color: #fff;
 }
 .layout-white .tabbar a:not(.active) {
   color: #777777;

@@ -1,5 +1,5 @@
 /**
- * Framework7 1.2.0
+ * Framework7 1.3.0
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * iOS Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: July 18, 2015
+ * Released on: October 10, 2015
  */
 /*=============
   Framework 7 RTL Additions
@@ -151,7 +151,8 @@ html {
 }
 .label-switch input[type="checkbox"]:checked + .checkbox:after {
   left: auto;
-  right: 22px;
+  -webkit-transform: translateX(-20px);
+  transform: translateX(-20px);
 }
 .range-slider {
   padding-left: 0;
