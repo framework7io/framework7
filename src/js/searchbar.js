@@ -191,23 +191,14 @@ var Searchbar = function (container, params) {
 
     // Set Cancel button
     var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-    var cancelButtonHidden = false;
-    s.setCancelButton = function () {
+    var cancelButtonHasMargin = false;
+    s.setCancelButtonMargin = function () {
         s.cancelButton.transition(0).show();
         s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
-        setTimeout(function () {
-            s.cancelButton.transition('');    
-        }, 0);
+        var clientLeft = s.cancelButton[0].clientLeft;
+        s.cancelButton.transition('');
+        cancelButtonHasMargin = true;
     };
-    if (s.cancelButton.length > 0 && !s.material) {
-        // s.cancelButton.show();
-        if (s.cancelButton[0].offsetWidth) {
-            s.setCancelButton();
-        }
-        else {
-            cancelButtonHidden = true;
-        }
-    }
 
     // Trigger
     s.triggerEvent = function (eventName, callbackName, eventData) {
@@ -222,6 +213,9 @@ var Searchbar = function (container, params) {
             if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
             if (s.cancelButton.length > 0 && !s.material) {
+                if (!cancelButtonHasMargin) {
+                    s.setCancelButtonMargin();
+                }
                 s.cancelButton.css(cancelMarginProp, '0px');
             }
             s.triggerEvent('enableSearch', 'onEnable');
@@ -411,15 +405,6 @@ var Searchbar = function (container, params) {
         s.input[method]('focus', s.enable);
         s.input[method]('change keydown keypress keyup', s.handleInput);
         s.clearButton[method]('click', s.clear);
-        if (cancelButtonHidden) {
-            if (destroy) {
-                s.container.parents('.tab').eq(0).off('show', s.setCancelButton);
-            }
-            else {
-                s.container.parents('.tab').eq(0).once('show', s.setCancelButton);
-            }
-        }
-            
             
     };
     s.detachEvents = function() {
