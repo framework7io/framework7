@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.0
+ * Framework7 1.3.1
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 10, 2015
+ * Released on: October 12, 2015
  */
 html,
 body {
@@ -1686,6 +1686,7 @@ i.icon.icon-prev {
 i.icon.icon-plus {
   width: 24px;
   height: 24px;
+  font-size: 0;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23FFFFFF'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M19%2013h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'%2F%3E%3Cpath%20d%3D'M0%200h24v24H0z'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
 }
 .badge {

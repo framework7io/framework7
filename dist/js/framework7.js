@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.0
+ * Framework7 1.3.1
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 10, 2015
+ * Released on: October 12, 2015
  */
 (function () {
 
@@ -23,7 +23,7 @@
         var app = this;
     
         // Version
-        app.version = '1.3.0';
+        app.version = '1.3.1';
     
         // Default Parameters
         app.params = {
@@ -1191,23 +1191,14 @@
         
             // Set Cancel button
             var cancelMarginProp = app.rtl ? 'margin-left' : 'margin-right';
-            var cancelButtonHidden = false;
-            s.setCancelButton = function () {
+            var cancelButtonHasMargin = false;
+            s.setCancelButtonMargin = function () {
                 s.cancelButton.transition(0).show();
                 s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
-                setTimeout(function () {
-                    s.cancelButton.transition('');    
-                }, 0);
+                var clientLeft = s.cancelButton[0].clientLeft;
+                s.cancelButton.transition('');
+                cancelButtonHasMargin = true;
             };
-            if (s.cancelButton.length > 0 && !s.material) {
-                // s.cancelButton.show();
-                if (s.cancelButton[0].offsetWidth) {
-                    s.setCancelButton();
-                }
-                else {
-                    cancelButtonHidden = true;
-                }
-            }
         
             // Trigger
             s.triggerEvent = function (eventName, callbackName, eventData) {
@@ -1222,6 +1213,9 @@
                     if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
                     s.container.addClass('searchbar-active');
                     if (s.cancelButton.length > 0 && !s.material) {
+                        if (!cancelButtonHasMargin) {
+                            s.setCancelButtonMargin();
+                        }
                         s.cancelButton.css(cancelMarginProp, '0px');
                     }
                     s.triggerEvent('enableSearch', 'onEnable');
@@ -1411,15 +1405,6 @@
                 s.input[method]('focus', s.enable);
                 s.input[method]('change keydown keypress keyup', s.handleInput);
                 s.clearButton[method]('click', s.clear);
-                if (cancelButtonHidden) {
-                    if (destroy) {
-                        s.container.parents('.tab').eq(0).off('show', s.setCancelButton);
-                    }
-                    else {
-                        s.container.parents('.tab').eq(0).once('show', s.setCancelButton);
-                    }
-                }
-                    
                     
             };
             s.detachEvents = function() {
@@ -3166,7 +3151,8 @@
                 var afterTextHTML = params.afterText ? params.afterText : '';
                 var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
                 var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical': '';
-                modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
+                var modalButtonsHTML = params.buttons && params.buttons.length > 0 ? '<div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div>' : '';
+                modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div>' + modalButtonsHTML + '</div>';
             }
         
             _modalTemplateTempDiv.innerHTML = modalHTML;

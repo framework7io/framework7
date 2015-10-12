@@ -1,5 +1,9 @@
 # Change Log
 
+## Framework7 v1.3.1 - Updated on October 12, 2015
+  * Fixed issue with not showing "Cancel" button in Searchbar
+  * Fixed issue with Modal without buttons (liek Preloader modal)
+
 ## Framework7 v1.3.0 - Updated on October 10, 2015
   * iOS Theme
     * New appearence to match new iOS 9 design, mostly for Overlays: Modal, Popover and Action Sheet
