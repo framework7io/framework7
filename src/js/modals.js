@@ -27,8 +27,9 @@ app.modal = function (params) {
         var afterTextHTML = params.afterText ? params.afterText : '';
         var noButtons = !params.buttons || params.buttons.length === 0 ? 'modal-no-buttons' : '';
         var verticalButtons = params.verticalButtons ? 'modal-buttons-vertical': '';
-        modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="modal-buttons modal-buttons-' + params.buttons.length + ' ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
-    }
+        var modalButtons = params.buttons && params.buttons.length > 0 ? 'modal-buttons modal-buttons-' + params.buttons.length : '';
+        modalHTML = '<div class="modal ' + noButtons + ' ' + (params.cssClass || '') + '"><div class="modal-inner">' + (titleHTML + textHTML + afterTextHTML) + '</div><div class="' + modalButtons + ' ' + verticalButtons + '">' + buttonsHTML + '</div></div>';
+   }
 
     _modalTemplateTempDiv.innerHTML = modalHTML;
 
