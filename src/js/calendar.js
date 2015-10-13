@@ -352,6 +352,22 @@ var Calendar = function (params) {
             for (i = 0; i < range.length; i ++) {
                 if (dayDate === new Date(range[i]).getTime()) {
                     match = true;
+                } else if (range[i].from || range[i].to) {
+                    if (range[i].from && range[i].to) {
+                        if ((dayDate <= new Date(range[i].to).getTime()) && (dayDate >= new Date(range[i].from).getTime())) {
+                            match = true;   
+                        }
+                    }
+                    else if (range[i].from) {
+                        if (dayDate >= new Date(range[i].from).getTime()) {
+                            match = true;   
+                        }
+                    }
+                    else if (range[i].to) {
+                        if (dayDate <= new Date(range[i].to).getTime()) {
+                            match = true;   
+                        }
+                    }
                 }
             }
         }
