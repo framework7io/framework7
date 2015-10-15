@@ -262,7 +262,7 @@ app.router._load = function (view, options) {
 
     // Parse DOM
     if (!pageName) {
-        if (url || (typeof content === 'string')) {
+        if ((typeof content === 'string') || (url && (typeof content === 'string'))) {
             app.router.temporaryDom.innerHTML = t7_rendered.content;
         } else {
             if ('length' in content && content.length > 1) {
@@ -716,7 +716,7 @@ app.router._back = function (view, options) {
     function parseNewPage() {
         app.router.temporaryDom.innerHTML = '';
         // Parse DOM
-        if (url || (typeof content === 'string')) {
+        if ((typeof content === 'string') || (url && (typeof content === 'string'))) {
             app.router.temporaryDom.innerHTML = t7_rendered.content;
         } else {
             if ('length' in content && content.length > 1) {
