@@ -350,9 +350,7 @@ var Calendar = function (params) {
         if (!range) return false;
         if ($.isArray(range)) {
             for (i = 0; i < range.length; i ++) {
-                if (dayDate === new Date(range[i]).getTime()) {
-                    match = true;
-                } else if (range[i].from || range[i].to) {
+                if (range[i].from || range[i].to) {
                     if (range[i].from && range[i].to) {
                         if ((dayDate <= new Date(range[i].to).getTime()) && (dayDate >= new Date(range[i].from).getTime())) {
                             match = true;   
@@ -368,7 +366,9 @@ var Calendar = function (params) {
                             match = true;   
                         }
                     }
-                }
+                } else if (dayDate === new Date(range[i]).getTime()) {
+                    match = true;
+                } 
             }
         }
         else if (range.from || range.to) {
