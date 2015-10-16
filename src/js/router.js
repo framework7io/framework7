@@ -424,7 +424,7 @@ app.router._load = function (view, options) {
             lastUrl.indexOf('#') === 0 &&
             lastUrl in view.contentCache &&
             lastUrl !== url &&
-            // If the same page is in the history multiple times, don't remove it.
+            // Leave content if the url is still in the history.
             view.history.indexOf(lastUrl) === -1) {
 
             view.contentCache[lastUrl] = null;
@@ -1127,7 +1127,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
     // Check previous page is content based only and remove it from content cache
     if (!view.params.domCache &&
         previousURL &&
-        previousURL.indexOf('#') === -1 &&
+        previousURL.indexOf('#') === 0 &&
         previousURL in view.contentCache &&
         // Don't delete if the page is still in the history
         view.history.indexOf(previousURL) === -1) {
