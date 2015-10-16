@@ -394,13 +394,24 @@ app.router._load = function (view, options) {
         var method = options.reload ? 'replaceState' : 'pushState';
         if (pushState) {
             if (!isDynamicPage && !pageName) {
-                history[method]({url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
+                history[method]({
+                    url      : url,
+                    viewIndex: app.views.indexOf(view)
+                }, '', pushStateRoot + app.params.pushStateSeparator + url.replace(/^\#/, ''));
             }
             else if (isDynamicPage && content) {
-                history[method]({content: content, url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
+                history[method]({
+                    content  : content,
+                    url      : url,
+                    viewIndex: app.views.indexOf(view)
+                }, '', pushStateRoot + app.params.pushStateSeparator + url.replace(/^\#/, ''));
             }
             else if (pageName) {
-                history[method]({pageName: pageName, url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
+                history[method]({
+                    pageName : pageName,
+                    url      : url,
+                    viewIndex: app.views.indexOf(view)
+                }, '', pushStateRoot + app.params.pushStateSeparator + url.replace(/^\#/, ''));
             }
         }
     }
