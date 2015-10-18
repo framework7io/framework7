@@ -553,14 +553,17 @@ var View = function (selector, params) {
             pushStateUrl = docLocation.split(pushStateSeparator)[1];
         }
         var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
+        var historyState = history.state;
 
         if (pushStateUrl) {
-            app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
+            if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && historyState.pageName && 'viewIndex' in historyState) {
+                app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+            }
+            else app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
         }
         else if (docLocation.indexOf(pushStateSeparator + '#') >= 0) {
-            var state = history.state;
-            if (state.pageName && 'viewIndex' in state) {
-                app.router.load(view, {pageName: state.pageName, pushState: false});
+            if (historyState.pageName && 'viewIndex' in historyState) {
+                app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
             }
         }
 
