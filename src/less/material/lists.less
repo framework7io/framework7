@@ -89,12 +89,14 @@
         box-sizing:border-box;
         -webkit-box-flex:1;
         -ms-flex:1;
+        overflow: hidden;
         .flexbox();
         .justify-content(space-between);
         .align-items(center);
         .align-self(stretch);
     }
     .item-title {
+        min-width: 0;
         .flex-shrink(1);
         white-space: nowrap;
         position: relative;
