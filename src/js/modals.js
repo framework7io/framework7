@@ -569,7 +569,14 @@ app.closeModal = function (modal) {
 
     var removeOnClose = modal.hasClass('remove-on-close');
 
-    var overlay = isPopup ? $('.popup-overlay') : (isPickerModal && app.params.material ? $('.picker-modal-overlay') : $('.modal-overlay'));
+    var overlay;
+    
+    if (isPopup) overlay = $('.popup-overlay');
+    else {
+        if (isPickerModal && app.params.material) overlay = $('.picker-modal-overlay');
+        else if (!isPickerModal) overlay = $('.modal-overlay');
+    }
+
     if (isPopup){
         if (modal.length === $('.popup.modal-in').length) {
             overlay.removeClass('modal-overlay-visible');

@@ -22,7 +22,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.4);
-    z-index: 10600;
+    z-index: 13000;
     visibility: hidden;
     opacity: 0;
     .transition(@modalDuration);
@@ -32,12 +32,12 @@
     }
 }
 .popup-overlay {
-    z-index: 10200;
+    z-index: 10500;
 }
 .modal {
     width: 270px;
     position: absolute;
-    z-index: 11000;
+    z-index: 13500;
     left: 50%;
     margin-left: -135px;
     margin-top: 0;
@@ -62,7 +62,7 @@
     }
     &.modal-out {
         opacity: 0;
-        z-index: 11000-1;
+        z-index: 13500-1;
         .transition(@modalDuration);
         .transform(translate3d(0,0,0) scale(1));
     }
@@ -159,7 +159,7 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    z-index: 11000;
+    z-index: 13500;
     width: 100%;
     .transform(translate3d(0,100%,0));
     @media (min-width:496px) {
@@ -172,7 +172,7 @@
         .transform(translate3d(0,0,0));
     }
     &.modal-out {
-        z-index: 11000-1;
+        z-index: 13500-1;
         .transition(@actionsModalDuration);
         .transform(translate3d(0,100%,0));
     }
@@ -298,7 +298,7 @@ input.modal-text-input {
 .popover {
     width: 320px;
     background:@popoverBg;
-    z-index: 11000;
+    z-index: 13500;
     margin: 0;
     top: 0;
     opacity: 0;
@@ -429,7 +429,7 @@ input.modal-text-input {
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 10400;
+    z-index: 11000;
     background: #fff;
     box-sizing: border-box;
     display: none;
@@ -480,7 +480,7 @@ html.with-statusbar-overlay {
             top: 20px;
         }
         .popup-overlay {
-            z-index: 9800;
+            z-index: 9500;
         }
     }
     .login-screen, .popup.tablet-fullscreen {
@@ -508,7 +508,7 @@ html.with-statusbar-overlay {
     margin-left: -25px;
     margin-top: -25px;
     background: rgba(0,0,0,0.8);
-    z-index: 11000;
+    z-index: 13500;
     border-radius: 5px;
     .preloader {
         display: block;
@@ -524,7 +524,7 @@ html.with-statusbar-overlay {
     bottom: 0;
     width: 100%;
     height: 260px;
-    z-index: 11500;
+    z-index: 12500;
     display: none;
     -webkit-transition-property: -webkit-transform;
     -moz-transition-property: -moz-transform;
