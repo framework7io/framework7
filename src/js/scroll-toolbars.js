@@ -40,7 +40,7 @@ app.initScrollToolbars = function (pageContainer) {
         currentScroll = scrollContent[0].scrollTop;
         scrollHeight = scrollContent[0].scrollHeight;
         offsetHeight = scrollContent[0].offsetHeight;
-        reachEnd =  (currentScroll + offsetHeight >= scrollHeight - bottomBarHeight);
+        reachEnd =  currentScroll + offsetHeight >= scrollHeight - bottomBarHeight;
         navbarHidden = navbar.hasClass('navbar-hidden');
         toolbarHidden = toolbar.hasClass('toolbar-hidden');
         tabbarHidden = tabbar && tabbar.hasClass('toolbar-hidden');
