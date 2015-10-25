@@ -7,7 +7,7 @@ var VirtualList = function (listBlock, params) {
         height: app.params.material ? 48 : 44,
         cache: true,
         dynamicHeightBufferSize: 1,
-        showFilteredListOnly: false
+        showFilteredItemsOnly: false
     };
     params = params || {};
     for (var def in defaults) {
@@ -20,10 +20,13 @@ var VirtualList = function (listBlock, params) {
     var vl = this;
     vl.listBlock = $(listBlock);
     vl.params = params;
-    vl.items = params.items;
-    if (params.template) {
-        if (typeof params.template === 'string') vl.template = t7.compile(params.template);
-        else if (typeof params.template === 'function') vl.template = params.template;
+    vl.items = vl.params.items;
+    if (vl.params.showFilteredItemsOnly) {
+        vl.filteredItems = [];
+    }
+    if (vl.params.template) {
+        if (typeof vl.params.template === 'string') vl.template = t7.compile(vl.params.template);
+        else if (typeof vl.params.template === 'function') vl.template = vl.params.template;
     }
     vl.pageContent = vl.listBlock.parents('.page-content');
 
@@ -74,8 +77,13 @@ var VirtualList = function (listBlock, params) {
         vl.update();
     };
     vl.resetFilter = function () {
-        vl.filteredItems = null;
-        delete vl.filteredItems;
+        if (vl.params.showFilteredItemsOnly) {
+            vl.filteredItems = [];
+        }
+        else {
+            vl.filteredItems = null;
+            delete vl.filteredItems;    
+        }
         vl.update();
     };
 
@@ -218,11 +226,9 @@ var VirtualList = function (listBlock, params) {
         if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
         vl.ul[0].innerHTML = '';
 
-        if (vl.filteredItems != null && vl.filteredItems.length > 0 || !params.showFilteredListOnly) {
-            if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
-            vl.ul[0].appendChild(vl.fragment);
-            if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
-        }
+        if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
+        vl.ul[0].appendChild(vl.fragment);
+        if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
 
         if (typeof forceScrollTop !== 'undefined' && force) {
             vl.pageContent.scrollTop(forceScrollTop, 0);
