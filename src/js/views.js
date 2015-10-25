@@ -67,11 +67,13 @@ var View = function (selector, params) {
     // Pages
     view.pagesContainer = container.find('.pages')[0];
     view.initialPages = [];
+    view.initialPagesUrl = [];
     view.initialNavbars = [];
     if (view.params.domCache) {
         var initialPages = container.find('.page');
         for (i = 0; i < initialPages.length; i++) {
             view.initialPages.push(initialPages[i]);
+            view.initialPagesUrl.push('#' + initialPages.eq(i).attr('data-page'));
         }
         if (view.params.dynamicNavbar) {
             var initialNavbars = container.find('.navbar-inner');
@@ -546,27 +548,35 @@ var View = function (selector, params) {
     // Push State on load
     if (app.params.pushState && view.main) {
         var pushStateUrl;
+        var pushStateUrlSplit = docLocation.split(pushStateSeparator)[1];
         if (pushStateRoot) {
             pushStateUrl = docLocation.split(app.params.pushStateRoot + pushStateSeparator)[1];
         }
-        else if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
-            pushStateUrl = docLocation.split(pushStateSeparator)[1];
+        else if (pushStateSeparator && docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
+            pushStateUrl = pushStateUrlSplit;
         }
         var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
         var historyState = history.state;
 
         if (pushStateUrl) {
-            if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && historyState.pageName && 'viewIndex' in historyState) {
+            if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && historyState && historyState.pageName && 'viewIndex' in historyState) {
                 app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+            }
+            else if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && view.initialPagesUrl.indexOf(pushStateUrl) >= 0) {
+                app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});   
             }
             else app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
         }
-        else if (docLocation.indexOf(pushStateSeparator + '#') >= 0) {
-            if (historyState.pageName && 'viewIndex' in historyState) {
+        else if (view.params.domCache && docLocation.indexOf(pushStateSeparator + '#') >= 0) {
+            if (historyState && historyState.pageName && 'viewIndex' in historyState) {
                 app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
             }
+            else if (pushStateSeparator && pushStateUrlSplit.indexOf('#') === 0) {
+                if (view.initialPagesUrl.indexOf(pushStateUrlSplit)) {
+                    app.router.load(view, {pageName: pushStateUrlSplit.replace('#', ''), animatePages: pushStateAnimatePages, pushState: false});
+                }
+            }
         }
-
     }
 
     // Destroy
