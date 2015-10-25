@@ -77,11 +77,24 @@ app.pageInitCallback = function (view, params) {
     var pageContainer = params.pageContainer;
     if (pageContainer.f7PageInitialized && view && !view.params.domCache) return;
 
+    var pageQuery = params.query;
+    if (!pageQuery) {
+        if (params.url && params.url.indexOf('?') > 0) {
+            pageQuery = $.parseUrlQuery(params.url || '');
+        }
+        else if (pageContainer.f7PageData && pageContainer.f7PageData.query) {
+            pageQuery = pageContainer.f7PageData.query;
+        }
+        else {
+            pageQuery = {};
+        }
+    }
+
     // Page Data
     var pageData = {
         container: pageContainer,
         url: params.url,
-        query: params.query || $.parseUrlQuery(params.url || ''),
+        query: pageQuery,
         name: $(pageContainer).attr('data-page'),
         view: view,
         from: params.position,
@@ -188,11 +201,24 @@ app.pageAnimCallback = function (callback, view, params) {
     var pageContainer = params.pageContainer;
     var pageContext;
     if (pageContainer.f7PageData) pageContext = pageContainer.f7PageData.context;
+
+    var pageQuery = params.query;
+    if (!pageQuery) {
+        if (params.url && params.url.indexOf('?') > 0) {
+            pageQuery = $.parseUrlQuery(params.url || '');
+        }
+        else if (pageContainer.f7PageData && pageContainer.f7PageData.query) {
+            pageQuery = pageContainer.f7PageData.query;
+        }
+        else {
+            pageQuery = {};
+        }
+    }
     // Page Data
     var pageData = {
         container: pageContainer,
         url: params.url,
-        query: params.query || $.parseUrlQuery(params.url || ''),
+        query: pageQuery,
         name: $(pageContainer).attr('data-page'),
         view: view,
         from: params.position,
