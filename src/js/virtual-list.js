@@ -6,7 +6,8 @@ var VirtualList = function (listBlock, params) {
         cols: 1,
         height: app.params.material ? 48 : 44,
         cache: true,
-        dynamicHeightBufferSize: 1
+        dynamicHeightBufferSize: 1,
+        showFilteredListOnly: false
     };
     params = params || {};
     for (var def in defaults) {
@@ -37,7 +38,7 @@ var VirtualList = function (listBlock, params) {
             updatableScroll = false;
         }
     }
-        
+
     // Append <ul>
     vl.ul = vl.params.ul ? $(vl.params.ul) : vl.listBlock.children('ul');
     if (vl.ul.length === 0) {
@@ -113,7 +114,7 @@ var VirtualList = function (listBlock, params) {
         if (force) vl.lastRepaintY = null;
 
         var scrollTop = -(vl.listBlock[0].getBoundingClientRect().top - vl.pageContent[0].getBoundingClientRect().top);
-        
+
         if (typeof forceScrollTop !== 'undefined') scrollTop = forceScrollTop;
 
         if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (vl.pageContent[0].scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
@@ -128,14 +129,14 @@ var VirtualList = function (listBlock, params) {
         if (dynamicHeight) {
             var itemTop = 0, j, itemHeight; 
             maxBufferHeight = pageHeight;
-            
+
             for (j = 0; j < vl.heights.length; j++) {
                 itemHeight = vl.heights[j];
                 if (typeof fromIndex === 'undefined') {
                     if (itemTop + itemHeight >= scrollTop - pageHeight * 2 * vl.params.dynamicHeightBufferSize) fromIndex = j;
                     else heightBeforeFirstItem += itemHeight;
                 }
-                
+
                 if (typeof toIndex === 'undefined') {
                     if (itemTop + itemHeight >= scrollTop + pageHeight * 2 * vl.params.dynamicHeightBufferSize || j === vl.heights.length - 1) toIndex = j + 1;
                     heightBeforeLastItem += itemHeight;
@@ -162,7 +163,7 @@ var VirtualList = function (listBlock, params) {
             if (i === fromIndex) vl.currentFromIndex = index;
             if (i === toIndex - 1) vl.currentToIndex = index;
             if (index === vl.items.length - 1) vl.reachEnd = true;
-            
+
             // Find items
             if (vl.domCache[index]) {
                 item = vl.domCache[index];
@@ -192,14 +193,14 @@ var VirtualList = function (listBlock, params) {
                 }
             }
             item.style.top = topPosition + 'px';
-            
+
             // Before item insert
             if (vl.params.onItemBeforeInsert) vl.params.onItemBeforeInsert(vl, item);
 
             // Append item to fragment
             vl.fragment.appendChild(item);
 
-        
+
         }
 
         // Update list height with not updatable scroll
@@ -211,15 +212,17 @@ var VirtualList = function (listBlock, params) {
                 vl.ul[0].style.height = i * vl.params.height / vl.params.cols + 'px';
             }
         }
-            
+
 
         // Update list html
         if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
         vl.ul[0].innerHTML = '';
 
-        if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
-        vl.ul[0].appendChild(vl.fragment);
-        if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
+        if (vl.filteredItems != null && vl.filteredItems.length > 0 || !params.showFilteredListOnly) {
+            if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
+            vl.ul[0].appendChild(vl.fragment);
+            if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
+        }
 
         if (typeof forceScrollTop !== 'undefined' && force) {
             vl.pageContent.scrollTop(forceScrollTop, 0);
@@ -375,7 +378,7 @@ var VirtualList = function (listBlock, params) {
             prevIndex = indexes[i];
             // Delete item
             var deletedItem = vl.items.splice(index, 1)[0];
-            
+
             // Delete from filtered
             if (vl.filteredItems && vl.filteredItems.indexOf(deletedItem) >= 0) {
                 vl.filteredItems.splice(vl.filteredItems.indexOf(deletedItem), 1);
