@@ -394,13 +394,24 @@ app.router._load = function (view, options) {
         var method = options.reload ? 'replaceState' : 'pushState';
         if (pushState) {
             if (!isDynamicPage && !pageName) {
-                history[method]({url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
+                history[method]({
+                    url      : url,
+                    viewIndex: app.views.indexOf(view)
+                }, '', pushStateRoot + app.params.pushStateSeparator + url.replace(/^\#/, ''));
             }
             else if (isDynamicPage && content) {
-                history[method]({content: content, url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
+                history[method]({
+                    content  : content,
+                    url      : url,
+                    viewIndex: app.views.indexOf(view)
+                }, '', pushStateRoot + app.params.pushStateSeparator + url.replace(/^\#/, ''));
             }
             else if (pageName) {
-                history[method]({pageName: pageName, url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
+                history[method]({
+                    pageName : pageName,
+                    url      : url,
+                    viewIndex: app.views.indexOf(view)
+                }, '', pushStateRoot + app.params.pushStateSeparator + url.replace(/^\#/, ''));
             }
         }
     }
@@ -409,7 +420,13 @@ app.router._load = function (view, options) {
     view.url = url;
     if (options.reload) {
         var lastUrl = view.history[view.history.length - (options.reloadPrevious ? 2 : 1)];
-        if (lastUrl && lastUrl.indexOf('#') === 0 && lastUrl in view.contentCache && lastUrl !== url) {
+        if (lastUrl &&
+            lastUrl.indexOf('#') === 0 &&
+            lastUrl in view.contentCache &&
+            lastUrl !== url &&
+            // Leave content if the url is still in the history.
+            view.history.indexOf(lastUrl) === -1) {
+
             view.contentCache[lastUrl] = null;
             delete view.contentCache[lastUrl];
         }
@@ -1108,7 +1125,13 @@ app.router.afterBack = function (view, oldPage, newPage) {
     }
     
     // Check previous page is content based only and remove it from content cache
-    if (!view.params.domCache && previousURL && previousURL.indexOf('#') > -1 && (previousURL in view.contentCache)) {
+    if (!view.params.domCache &&
+        previousURL &&
+        previousURL.indexOf('#') === 0 &&
+        previousURL in view.contentCache &&
+        // Don't delete if the page is still in the history
+        view.history.indexOf(previousURL) === -1) {
+
         view.contentCache[previousURL] = null;
         delete view.contentCache[previousURL];
     }
