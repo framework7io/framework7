@@ -154,7 +154,7 @@ myApp.onPageInit('swipe-delete modals media-lists', function (page) {
         // We need to pass additional target parameter (this) for popover
         myApp.actions(this, actionSheetButtons);
     });
-    
+
 });
 
 /* ===== Messages Page ===== */
@@ -183,7 +183,7 @@ myApp.onPageInit('messages', function (page) {
             name: 'Blue Ninja',
             avatar: 'http://lorempixel.com/output/people-q-c-100-100-7.jpg'
         },
-        
+
     ];
     var answerTimeout, isFocused;
 
@@ -192,7 +192,7 @@ myApp.onPageInit('messages', function (page) {
 
     // Initialize Messagebar
     var myMessagebar = myApp.messagebar('.messagebar');
-    
+
     $$('.messagebar a.send-message').on('touchstart mousedown', function () {
         isFocused = document.activeElement && document.activeElement === myMessagebar.textarea[0];
     });
@@ -291,7 +291,7 @@ var photoBrowserPhotos = [
         url: 'img/mountains.jpg',
         caption: 'Beautiful mountains in Zhangjiajie, China'
     }
-    
+
 ];
 var photoBrowserStandalone = myApp.photoBrowser({
     photos: photoBrowserPhotos
@@ -440,7 +440,7 @@ myApp.onPageInit('color-themes', function (page) {
         for (var i = 0; i < classList.length; i++) {
             if (classList[i].indexOf('layout-') === 0) classList.remove(classList[i]);
         }
-        classList.add('layout-' + $$(this).attr('data-theme')); 
+        classList.add('layout-' + $$(this).attr('data-theme'));
     });
 });
 
@@ -524,7 +524,7 @@ myApp.onPageInit('calendar', function (page) {
         weekHeader: false,
         header: false,
         footer: false,
-        toolbarTemplate: 
+        toolbarTemplate:
             '<div class="toolbar calendar-custom-toolbar">' +
                 '<div class="toolbar-inner">' +
                     '<div class="left">' +
@@ -614,7 +614,7 @@ myApp.onPageInit('pickers', function (page) {
     var pickerCustomToolbar = myApp.picker({
         input: '#ks-picker-custom-toolbar',
         rotateEffect: true,
-        toolbarTemplate: 
+        toolbarTemplate:
             '<div class="toolbar">' +
                 '<div class="toolbar-inner">' +
                     '<div class="left">' +
@@ -647,7 +647,7 @@ myApp.onPageInit('pickers', function (page) {
 
                 var col2Values = picker.cols[2].values;
                 var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
-                
+
                 picker.setValue([col0Random, col1Random, col2Random]);
             });
         }
