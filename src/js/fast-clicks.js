@@ -174,21 +174,37 @@ app.initFastClicks = function () {
 
     function removeRipple() {
         if (!rippleWave) return;
+        var toRemove = rippleWave;
+
+        var removeTimeout = setTimeout(function () {
+            toRemove.remove();
+        }, 400);
+
         rippleWave
             .addClass('ripple-wave-fill')
             .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
             .transitionEnd(function () {
+                clearTimeout(removeTimeout);
+
                 var rippleWave = $(this)
                     .addClass('ripple-wave-out')
                     .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
+
+                removeTimeout = setTimeout(function () {
+                    rippleWave.remove();
+                }, 700);
+
                 setTimeout(function () {
                     rippleWave.transitionEnd(function(){
+                        clearTimeout(removeTimeout);
                         $(this).remove();
                     });
                 }, 0);
             });
+
         rippleWave = rippleTarget = undefined;
     }
+
     function rippleTouchStart (el, x, y) {
         rippleTarget = findRippleElement(el);
         if (!rippleTarget || rippleTarget.length === 0) {
