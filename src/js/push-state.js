@@ -31,7 +31,7 @@ app.initPushState = function () {
             }, 0);
         });
     }
-        
+
     function handlePopState(e) {
         if (blockPopstate) return;
         var mainView = app.mainView;
@@ -49,9 +49,9 @@ app.initPushState = function () {
         var stateContent = state && state.content || undefined;
         var statePageName = state && state.pageName || undefined;
         var animatePages;
-        
+
         if (app.params.pushStateNoAnimation === true) animatePages = false;
-        
+
         if (stateUrl !== view.url) {
             if (view.history.indexOf(stateUrl) >= 0) {
                 // Go Back
@@ -77,7 +77,7 @@ app.initPushState = function () {
                         view: view
                     });
                 }
-                
+
             }
             else if (statePageName) {
                 // Load Page by page name with Dom Cache
