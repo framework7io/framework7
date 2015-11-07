@@ -718,6 +718,17 @@ myApp.onPageInit('pickers', function (page) {
     });
 });
 
+/* ===== Chips  ===== */
+myApp.onPageInit('chips', function (page) {
+    $$(page.container).find('.chip-delete').on('click', function (e) {
+        e.preventDefault();
+        var chip = $$(this).parents('.chip');
+        myApp.confirm('Do you want to delete this tiny demo Chip?', function () {
+            chip.remove();
+        });
+    });
+});
+
 /* ===== Change statusbar bg when panel opened/closed ===== */
 $$('.panel-left').on('open', function () {
     $$('.statusbar-overlay').addClass('with-panel-left');
