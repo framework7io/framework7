@@ -516,6 +516,12 @@ myApp.onPageInit('calendar', function (page) {
         dateFormat: 'M dd yyyy',
         multiple: true
     });
+    // Range Picker
+    var calendarRange = myApp.calendar({
+        input: '#ks-calendar-range',
+        dateFormat: 'M dd yyyy',
+        rangePicker: true
+    });
     // Inline with custom toolbar
     var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
     var calendarInline = myApp.calendar({
