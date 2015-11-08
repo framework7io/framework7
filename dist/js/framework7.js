@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.1
+ * Framework7 1.3.5
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 12, 2015
+ * Released on: November 8, 2015
  */
 (function () {
 
@@ -23,7 +23,7 @@
         var app = this;
     
         // Version
-        app.version = '1.3.1';
+        app.version = '1.3.5';
     
         // Default Parameters
         app.params = {
@@ -239,11 +239,13 @@
             // Pages
             view.pagesContainer = container.find('.pages')[0];
             view.initialPages = [];
+            view.initialPagesUrl = [];
             view.initialNavbars = [];
             if (view.params.domCache) {
                 var initialPages = container.find('.page');
                 for (i = 0; i < initialPages.length; i++) {
                     view.initialPages.push(initialPages[i]);
+                    view.initialPagesUrl.push('#' + initialPages.eq(i).attr('data-page'));
                 }
                 if (view.params.dynamicNavbar) {
                     var initialNavbars = container.find('.navbar-inner');
@@ -718,24 +720,35 @@
             // Push State on load
             if (app.params.pushState && view.main) {
                 var pushStateUrl;
+                var pushStateUrlSplit = docLocation.split(pushStateSeparator)[1];
                 if (pushStateRoot) {
                     pushStateUrl = docLocation.split(app.params.pushStateRoot + pushStateSeparator)[1];
                 }
-                else if (docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
-                    pushStateUrl = docLocation.split(pushStateSeparator)[1];
+                else if (pushStateSeparator && docLocation.indexOf(pushStateSeparator) >= 0 && docLocation.indexOf(pushStateSeparator + '#') < 0) {
+                    pushStateUrl = pushStateUrlSplit;
                 }
                 var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
+                var historyState = history.state;
         
                 if (pushStateUrl) {
-                    app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
+                    if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && historyState && historyState.pageName && 'viewIndex' in historyState) {
+                        app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+                    }
+                    else if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && view.initialPagesUrl.indexOf(pushStateUrl) >= 0) {
+                        app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});   
+                    }
+                    else app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
                 }
-                else if (docLocation.indexOf(pushStateSeparator + '#') >= 0) {
-                    var state = history.state;
-                    if (state.pageName && 'viewIndex' in state) {
-                        app.router.load(view, {pageName: state.pageName, pushState: false});
+                else if (view.params.domCache && docLocation.indexOf(pushStateSeparator + '#') >= 0) {
+                    if (historyState && historyState.pageName && 'viewIndex' in historyState) {
+                        app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+                    }
+                    else if (pushStateSeparator && pushStateUrlSplit.indexOf('#') === 0) {
+                        if (view.initialPagesUrl.indexOf(pushStateUrlSplit)) {
+                            app.router.load(view, {pageName: pushStateUrlSplit.replace('#', ''), animatePages: pushStateAnimatePages, pushState: false});
+                        }
                     }
                 }
-        
             }
         
             // Destroy
@@ -1737,11 +1750,24 @@
             var pageContainer = params.pageContainer;
             if (pageContainer.f7PageInitialized && view && !view.params.domCache) return;
         
+            var pageQuery = params.query;
+            if (!pageQuery) {
+                if (params.url && params.url.indexOf('?') > 0) {
+                    pageQuery = $.parseUrlQuery(params.url || '');
+                }
+                else if (pageContainer.f7PageData && pageContainer.f7PageData.query) {
+                    pageQuery = pageContainer.f7PageData.query;
+                }
+                else {
+                    pageQuery = {};
+                }
+            }
+        
             // Page Data
             var pageData = {
                 container: pageContainer,
                 url: params.url,
-                query: params.query || $.parseUrlQuery(params.url || ''),
+                query: pageQuery,
                 name: $(pageContainer).attr('data-page'),
                 view: view,
                 from: params.position,
@@ -1848,11 +1874,24 @@
             var pageContainer = params.pageContainer;
             var pageContext;
             if (pageContainer.f7PageData) pageContext = pageContainer.f7PageData.context;
+        
+            var pageQuery = params.query;
+            if (!pageQuery) {
+                if (params.url && params.url.indexOf('?') > 0) {
+                    pageQuery = $.parseUrlQuery(params.url || '');
+                }
+                else if (pageContainer.f7PageData && pageContainer.f7PageData.query) {
+                    pageQuery = pageContainer.f7PageData.query;
+                }
+                else {
+                    pageQuery = {};
+                }
+            }
             // Page Data
             var pageData = {
                 container: pageContainer,
                 url: params.url,
-                query: params.query || $.parseUrlQuery(params.url || ''),
+                query: pageQuery,
                 name: $(pageContainer).attr('data-page'),
                 view: view,
                 from: params.position,
@@ -2017,7 +2056,7 @@
                 if (direction === 'to-right') {
                     leftPage.removeClass(removeClasses).addClass('page-from-left-to-center');
                     rightPage.removeClass(removeClasses).addClass('page-from-center-to-right');
-                    
+        
                 }
             },
         
@@ -2101,7 +2140,7 @@
             preprocess: function(view, content, url, next) {
                 // Plugin hook
                 app.pluginHook('routerPreprocess', view, content, url, next);
-                
+        
                 // Preprocess by plugin
                 content = app.pluginProcess('preprocess', content);
         
@@ -2110,12 +2149,12 @@
                     if (typeof content !== 'undefined') {
                         next(content);
                     }
-                } 
+                }
                 else if (app.params.preprocess) {
                     content = app.params.preprocess(content, url, next);
                     if (typeof content !== 'undefined') {
                         next(content);
-                    }  
+                    }
                 }
                 else {
                     next(content);
@@ -2136,7 +2175,7 @@
                     content = options.content, //initial content
                     t7_rendered_content = options.content, // will be rendered using Template7
                     context = options.context, // Context data for Template7
-                    contextName = options.contextName, 
+                    contextName = options.contextName,
                     template = options.template, // Template 7 compiled template
                     pageName = options.pageName;
         
@@ -2208,17 +2247,17 @@
         
         app.router._load = function (view, options) {
             options = options || {};
-            
+        
             var url = options.url,
                 content = options.content, //initial content
                 t7_rendered = {content: options.content},
                 template = options.template, // Template 7 compiled template
                 pageName = options.pageName,
-                viewContainer = $(view.container), 
+                viewContainer = $(view.container),
                 pagesContainer = $(view.pagesContainer),
                 animatePages = options.animatePages,
                 newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar, reloadPosition,
-                isDynamicPage = typeof url === 'undefined' && content || template, 
+                isDynamicPage = typeof url === 'undefined' && content || template,
                 pushState = options.pushState;
         
             if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
@@ -2238,7 +2277,7 @@
         
             // Parse DOM
             if (!pageName) {
-                if (url || (typeof content === 'string')) {
+                if ((typeof content === 'string') || (url && (typeof content === 'string'))) {
                     app.router.temporaryDom.innerHTML = t7_rendered.content;
                 } else {
                     if ('length' in content && content.length > 1) {
@@ -2310,7 +2349,7 @@
                     newNavbarInner = viewContainer.find('.navbar-inner[data-page="' + pageName + '"]');
                 }
                 else {
-                    newNavbarInner = app.router.findElement('.navbar-inner', app.router.temporaryDom, view);    
+                    newNavbarInner = app.router.findElement('.navbar-inner', app.router.temporaryDom, view);
                 }
                 if (!newNavbarInner || newNavbarInner.length === 0) {
                     dynamicNavbar = false;
@@ -2320,8 +2359,8 @@
                     oldNavbarInner = navbar.find('.navbar-inner:not(.cached):last-child');
                 }
                 else {
-                    oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');    
-                
+                    oldNavbarInner = navbar.find('.navbar-inner:not(.cached)');
+        
                     if (oldNavbarInner.length > 0) {
                         for (i = 0; i < oldNavbarInner.length - 1; i++) {
                             if (!view.params.domCache) {
@@ -2373,7 +2412,7 @@
                         history[method]({url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
                     }
                     else if (isDynamicPage && content) {
-                        history[method]({content: content, url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
+                        history[method]({content: typeof content === 'string' ? content : '', url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
                     }
                     else if (pageName) {
                         history[method]({pageName: pageName, url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
@@ -2385,7 +2424,11 @@
             view.url = url;
             if (options.reload) {
                 var lastUrl = view.history[view.history.length - (options.reloadPrevious ? 2 : 1)];
-                if (lastUrl && lastUrl.indexOf('#') === 0 && lastUrl in view.contentCache && lastUrl !== url) {
+                if (lastUrl &&
+                    lastUrl.indexOf('#') === 0 &&
+                    lastUrl in view.contentCache &&
+                    lastUrl !== url &&
+                    view.history.indexOf(lastUrl) === -1) {
                     view.contentCache[lastUrl] = null;
                     delete view.contentCache[lastUrl];
                 }
@@ -2407,7 +2450,7 @@
                         _history.push(view.history[i].split('?')[0]);
                     }
                 }
-                
+        
                 if (_history.indexOf(_url) !== _history.lastIndexOf(_url)) {
                     view.history = view.history.slice(0, _history.indexOf(_url));
                     view.history.push(url);
@@ -2443,10 +2486,10 @@
         
             // Page Init Events
             app.pageInitCallback(view, {
-                pageContainer: newPage[0], 
-                url: url, 
-                position: options.reload ? reloadPosition : 'right', 
-                navbarInnerContainer: dynamicNavbar ? newNavbarInner && newNavbarInner[0] : undefined, 
+                pageContainer: newPage[0],
+                url: url,
+                position: options.reload ? reloadPosition : 'right',
+                navbarInnerContainer: dynamicNavbar ? newNavbarInner && newNavbarInner[0] : undefined,
                 oldNavbarInnerContainer: dynamicNavbar ? oldNavbarInner && oldNavbarInner[0] : undefined,
                 context: t7_rendered.context,
                 query: options.query,
@@ -2474,11 +2517,11 @@
         
             // Before Anim Callback
             app.pageAnimCallback('before', view, {
-                pageContainer: newPage[0], 
-                url: url, 
-                position: 'right', 
-                oldPage: oldPage, 
-                newPage: newPage, 
+                pageContainer: newPage[0],
+                url: url,
+                position: 'right',
+                oldPage: oldPage,
+                newPage: newPage,
                 query: options.query,
                 fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
             });
@@ -2492,11 +2535,11 @@
                     oldNavbarInner.removeClass('navbar-from-center-to-left navbar-on-center navbar-on-right').addClass('navbar-on-left');
                 }
                 app.pageAnimCallback('after', view, {
-                    pageContainer: newPage[0], 
-                    url: url, 
-                    position: 'right', 
-                    oldPage: oldPage, 
-                    newPage: newPage, 
+                    pageContainer: newPage[0],
+                    url: url,
+                    position: 'right',
+                    oldPage: oldPage,
+                    newPage: newPage,
                     query: options.query,
                     fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
                 });
@@ -2511,7 +2554,7 @@
                             app.pageRemoveCallback(view, oldPage[0], 'left');
                             if (dynamicNavbar) app.navbarRemoveCallback(view, oldPage[0], navbar[0], oldNavbarInner[0]);
                             oldPage.remove();
-                            if (dynamicNavbar) oldNavbarInner.remove();    
+                            if (dynamicNavbar) oldNavbarInner.remove();
                         }
                     }
                 }
@@ -2523,11 +2566,11 @@
                 // Set pages before animation
                 if (app.params.material && app.params.materialPageLoadDelay) {
                     setTimeout(function () {
-                        app.router.animatePages(oldPage, newPage, 'to-left', view);            
+                        app.router.animatePages(oldPage, newPage, 'to-left', view);
                     }, app.params.materialPageLoadDelay);
                 }
                 else {
-                    app.router.animatePages(oldPage, newPage, 'to-left', view);    
+                    app.router.animatePages(oldPage, newPage, 'to-left', view);
                 }
         
                 // Dynamic navbar animation
@@ -2602,12 +2645,12 @@
         app.router._back = function (view, options) {
             options = options || {};
             var url = options.url,
-                content = options.content, 
+                content = options.content,
                 t7_rendered = {content: options.content}, // will be rendered using Template7
                 template = options.template, // Template 7 compiled template
-                animatePages = options.animatePages, 
-                preloadOnly = options.preloadOnly, 
-                pushState = options.pushState, 
+                animatePages = options.animatePages,
+                preloadOnly = options.preloadOnly,
+                pushState = options.pushState,
                 ignoreCache = options.ignoreCache,
                 force = options.force,
                 pageName = options.pageName;
@@ -2632,18 +2675,18 @@
             // Animation
             function afterAnimation() {
                 app.pageBackCallback('after', view, {
-                    pageContainer: oldPage[0], 
-                    url: url, 
-                    position: 'center', 
-                    oldPage: oldPage, 
-                    newPage: newPage, 
+                    pageContainer: oldPage[0],
+                    url: url,
+                    position: 'center',
+                    oldPage: oldPage,
+                    newPage: newPage,
                 });
                 app.pageAnimCallback('after', view, {
-                    pageContainer: newPage[0], 
-                    url: url, 
-                    position: 'left', 
-                    oldPage: oldPage, 
-                    newPage: newPage, 
+                    pageContainer: newPage[0],
+                    url: url,
+                    position: 'left',
+                    oldPage: oldPage,
+                    newPage: newPage,
                     query: options.query,
                     fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
                 });
@@ -2652,18 +2695,18 @@
             function animateBack() {
                 // Page before animation callback
                 app.pageBackCallback('before', view, {
-                    pageContainer: oldPage[0], 
-                    url: url, 
-                    position: 'center', 
-                    oldPage: oldPage, 
-                    newPage: newPage, 
+                    pageContainer: oldPage[0],
+                    url: url,
+                    position: 'center',
+                    oldPage: oldPage,
+                    newPage: newPage,
                 });
                 app.pageAnimCallback('before', view, {
-                    pageContainer: newPage[0], 
-                    url: url, 
-                    position: 'left', 
-                    oldPage: oldPage, 
-                    newPage: newPage, 
+                    pageContainer: newPage[0],
+                    url: url,
+                    position: 'left',
+                    oldPage: oldPage,
+                    newPage: newPage,
                     query: options.query,
                     fromPage: oldPage && oldPage.length && oldPage[0].f7PageData
                 });
@@ -2678,7 +2721,7 @@
                             app.router.animateNavbars(newNavbarInner, oldNavbarInner, 'to-right', view);
                         }, 0);
                     }
-                    
+        
                     newPage.animationEnd(function () {
                         afterAnimation();
                     });
@@ -2692,7 +2735,7 @@
             function parseNewPage() {
                 app.router.temporaryDom.innerHTML = '';
                 // Parse DOM
-                if (url || (typeof content === 'string')) {
+                if ((typeof content === 'string') || (url && (typeof content === 'string'))) {
                     app.router.temporaryDom.innerHTML = t7_rendered.content;
                 } else {
                     if ('length' in content && content.length > 1) {
@@ -2735,7 +2778,7 @@
                 if (force) {
                     var pageToRemove, navbarToRemove;
                     pageToRemove = $(pagesInView[pagesInView.length - 2]);
-                    
+        
                     if (dynamicNavbar) navbarToRemove = $(pageToRemove[0] && pageToRemove[0].f7RelatedNavbar || navbarInners[navbarInners.length - 2]);
                     if (view.params.domCache && view.initialPages.indexOf(pageToRemove[0]) >= 0) {
                         if (pageToRemove.length && pageToRemove[0] !== newPage[0]) pageToRemove.addClass('cached');
@@ -2749,14 +2792,14 @@
                             app.pageRemoveCallback(view, pageToRemove[0], 'right');
                             if (removeNavbar) {
                                 app.navbarRemoveCallback(view, pageToRemove[0], navbar[0], navbarToRemove[0]);
-                            }    
+                            }
                             pageToRemove.remove();
                             if (removeNavbar) navbarToRemove.remove();
                         }
                         else if (removeNavbar) {
                             app.navbarRemoveCallback(view, pageToRemove[0], navbar[0], navbarToRemove[0]);
                             navbarToRemove.remove();
-                        } 
+                        }
                     }
                     pagesInView = pagesContainer.children('.page:not(.cached)');
                     if (dynamicNavbar) {
@@ -2767,7 +2810,7 @@
                     }
                     else {
                         if (view.history[[view.history.length - 2]]) {
-                            view.history[view.history.length - 2] = url;    
+                            view.history[view.history.length - 2] = url;
                         }
                         else {
                             view.history.unshift(url);
@@ -2782,7 +2825,7 @@
                         if (oldPage.length === 0 && view.activePage) oldPage = $(view.activePage.container);
                     }
                 }
-                    
+        
                 if (dynamicNavbar && !oldNavbarInner) {
                     oldNavbarInner = $(navbarInners[navbarInners.length - 1]);
                     if (view.params.domCache) {
@@ -2805,10 +2848,10 @@
         
                 // Page Init Events
                 app.pageInitCallback(view, {
-                    pageContainer: newPage[0], 
-                    url: url, 
-                    position: 'left', 
-                    navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined, 
+                    pageContainer: newPage[0],
+                    url: url,
+                    position: 'left',
+                    navbarInnerContainer: dynamicNavbar ? newNavbarInner[0] : undefined,
                     oldNavbarInnerContainer: dynamicNavbar ? oldNavbarInner && oldNavbarInner[0] : undefined,
                     context: t7_rendered.context,
                     query: options.query,
@@ -2827,7 +2870,7 @@
                     view.allowPageChange = true;
                     return;
                 }
-                
+        
                 // Update View's URL
                 view.url = url;
         
@@ -2876,14 +2919,14 @@
                 setPages();
                 return;
             }
-            
+        
             if (!force) {
                 // Go back when there is no pages on left
                 if (!preloadOnly) {
                     view.url = view.history[view.history.length - 2];
                     url = view.url;
                 }
-                    
+        
                 if (content) {
                     parseNewPage();
                     setPages();
@@ -2898,7 +2941,7 @@
                             newNavbarInner = $(newPage[0].f7RelatedNavbar);
                         }
                         if (newNavbarInner.length === 0 && newPage[0].f7PageData) {
-                            newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);   
+                            newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);
                         }
                     }
                     setPages();
@@ -2922,7 +2965,7 @@
                 }
                 else if (pageName && view.params.domCache) {
                     if (pageName) url = '#' + pageName;
-                    
+        
                     newPage = $(viewContainer).find('.page[data-page="' + pageName + '"]');
                     if (newPage[0].f7PageData && newPage[0].f7PageData.url) {
                         url = newPage[0].f7PageData.url;
@@ -2933,7 +2976,7 @@
                             newNavbarInner = $(newPage[0].f7RelatedNavbar);
                         }
                         if (newNavbarInner.length === 0 && newPage[0].f7PageData) {
-                            newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);   
+                            newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);
                         }
                     }
                     setPages();
@@ -2944,7 +2987,7 @@
                     return;
                 }
             }
-            
+        
         };
         app.router.back = function (view, options) {
             if (app.router.preroute(view, options)) {
@@ -2968,7 +3011,7 @@
                 app.xhr = false;
             }
             var pagesInView = $(view.pagesContainer).find('.page:not(.cached)');
-            
+        
             function proceed(content) {
                 app.router.preprocess(view, content, url, function (content) {
                     options.content = content;
@@ -3037,7 +3080,7 @@
             // Remove old page and set classes on new one
             oldPage = $(oldPage);
             newPage = $(newPage);
-            
+        
             if (view.params.domCache && view.initialPages.indexOf(oldPage[0]) >= 0) {
                 oldPage.removeClass('page-from-center-to-right').addClass('cached');
             }
@@ -3045,7 +3088,7 @@
                 app.pageRemoveCallback(view, oldPage[0], 'right');
                 oldPage.remove();
             }
-                
+        
             newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
             view.allowPageChange = true;
         
@@ -3082,13 +3125,18 @@
                     }
                 });
             }
-            
+        
             // Check previous page is content based only and remove it from content cache
-            if (!view.params.domCache && previousURL && previousURL.indexOf('#') > -1 && (previousURL in view.contentCache)) {
+            if (!view.params.domCache &&
+                previousURL &&
+                previousURL.indexOf('#') > -1 &&
+                (previousURL in view.contentCache) &&
+                // If the same page is in the history multiple times, don't remove it.
+                view.history.indexOf(previousURL) === -1) {
                 view.contentCache[previousURL] = null;
                 delete view.contentCache[previousURL];
             }
-            
+        
             if (app.params.pushState && view.main) app.pushStateClearQueue();
         
             // Preload previous page
@@ -3116,7 +3164,7 @@
                     if (previousNavbar && previousNavbar.length > 0) previousNavbar.removeClass('cached navbar-on-right navbar-on-center').addClass('navbar-on-left');
                 }
                 else {
-                    app.router.back(view, {preloadOnly: true}); 
+                    app.router.back(view, {preloadOnly: true});
                 }
             }
         };
@@ -3693,7 +3741,14 @@
         
             var removeOnClose = modal.hasClass('remove-on-close');
         
-            var overlay = isPopup ? $('.popup-overlay') : (isPickerModal && app.params.material ? $('.picker-modal-overlay') : $('.modal-overlay'));
+            var overlay;
+            
+            if (isPopup) overlay = $('.popup-overlay');
+            else {
+                if (isPickerModal && app.params.material) overlay = $('.picker-modal-overlay');
+                else if (!isPickerModal) overlay = $('.modal-overlay');
+            }
+        
             if (isPopup){
                 if (modal.length === $('.popup.modal-in').length) {
                     overlay.removeClass('modal-overlay-visible');
@@ -5482,7 +5537,8 @@
                 cols: 1,
                 height: app.params.material ? 48 : 44,
                 cache: true,
-                dynamicHeightBufferSize: 1
+                dynamicHeightBufferSize: 1,
+                showFilteredItemsOnly: false
             };
             params = params || {};
             for (var def in defaults) {
@@ -5495,10 +5551,13 @@
             var vl = this;
             vl.listBlock = $(listBlock);
             vl.params = params;
-            vl.items = params.items;
-            if (params.template) {
-                if (typeof params.template === 'string') vl.template = t7.compile(params.template);
-                else if (typeof params.template === 'function') vl.template = params.template;
+            vl.items = vl.params.items;
+            if (vl.params.showFilteredItemsOnly) {
+                vl.filteredItems = [];
+            }
+            if (vl.params.template) {
+                if (typeof vl.params.template === 'string') vl.template = t7.compile(vl.params.template);
+                else if (typeof vl.params.template === 'function') vl.template = vl.params.template;
             }
             vl.pageContent = vl.listBlock.parents('.page-content');
         
@@ -5513,7 +5572,7 @@
                     updatableScroll = false;
                 }
             }
-                
+        
             // Append <ul>
             vl.ul = vl.params.ul ? $(vl.params.ul) : vl.listBlock.children('ul');
             if (vl.ul.length === 0) {
@@ -5549,8 +5608,13 @@
                 vl.update();
             };
             vl.resetFilter = function () {
-                vl.filteredItems = null;
-                delete vl.filteredItems;
+                if (vl.params.showFilteredItemsOnly) {
+                    vl.filteredItems = [];
+                }
+                else {
+                    vl.filteredItems = null;
+                    delete vl.filteredItems;    
+                }
                 vl.update();
             };
         
@@ -5589,7 +5653,7 @@
                 if (force) vl.lastRepaintY = null;
         
                 var scrollTop = -(vl.listBlock[0].getBoundingClientRect().top - vl.pageContent[0].getBoundingClientRect().top);
-                
+        
                 if (typeof forceScrollTop !== 'undefined') scrollTop = forceScrollTop;
         
                 if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > maxBufferHeight || (!updatableScroll && (vl.pageContent[0].scrollTop + pageHeight >= vl.pageContent[0].scrollHeight))) {
@@ -5604,14 +5668,14 @@
                 if (dynamicHeight) {
                     var itemTop = 0, j, itemHeight; 
                     maxBufferHeight = pageHeight;
-                    
+        
                     for (j = 0; j < vl.heights.length; j++) {
                         itemHeight = vl.heights[j];
                         if (typeof fromIndex === 'undefined') {
                             if (itemTop + itemHeight >= scrollTop - pageHeight * 2 * vl.params.dynamicHeightBufferSize) fromIndex = j;
                             else heightBeforeFirstItem += itemHeight;
                         }
-                        
+        
                         if (typeof toIndex === 'undefined') {
                             if (itemTop + itemHeight >= scrollTop + pageHeight * 2 * vl.params.dynamicHeightBufferSize || j === vl.heights.length - 1) toIndex = j + 1;
                             heightBeforeLastItem += itemHeight;
@@ -5638,7 +5702,7 @@
                     if (i === fromIndex) vl.currentFromIndex = index;
                     if (i === toIndex - 1) vl.currentToIndex = index;
                     if (index === vl.items.length - 1) vl.reachEnd = true;
-                    
+        
                     // Find items
                     if (vl.domCache[index]) {
                         item = vl.domCache[index];
@@ -5668,14 +5732,14 @@
                         }
                     }
                     item.style.top = topPosition + 'px';
-                    
+        
                     // Before item insert
                     if (vl.params.onItemBeforeInsert) vl.params.onItemBeforeInsert(vl, item);
         
                     // Append item to fragment
                     vl.fragment.appendChild(item);
         
-                
+        
                 }
         
                 // Update list height with not updatable scroll
@@ -5687,7 +5751,7 @@
                         vl.ul[0].style.height = i * vl.params.height / vl.params.cols + 'px';
                     }
                 }
-                    
+        
         
                 // Update list html
                 if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
@@ -5851,7 +5915,7 @@
                     prevIndex = indexes[i];
                     // Delete item
                     var deletedItem = vl.items.splice(index, 1)[0];
-                    
+        
                     // Delete from filtered
                     if (vl.filteredItems && vl.filteredItems.indexOf(deletedItem) >= 0) {
                         vl.filteredItems.splice(vl.filteredItems.indexOf(deletedItem), 1);
@@ -6247,13 +6311,15 @@
                 currentScroll = scrollContent[0].scrollTop;
                 scrollHeight = scrollContent[0].scrollHeight;
                 offsetHeight = scrollContent[0].offsetHeight;
-                reachEnd = app.params.showBarsOnPageScrollEnd && (currentScroll + offsetHeight >= scrollHeight - bottomBarHeight);
+                reachEnd =  currentScroll + offsetHeight >= scrollHeight - bottomBarHeight;
                 navbarHidden = navbar.hasClass('navbar-hidden');
                 toolbarHidden = toolbar.hasClass('toolbar-hidden');
                 tabbarHidden = tabbar && tabbar.hasClass('toolbar-hidden');
         
                 if (reachEnd) {
-                    action = 'show';
+                    if (app.params.showBarsOnPageScrollEnd) {
+                        action = 'show';
+                    }
                 }
                 else if (previousScroll > currentScroll) {
                     if (app.params.showBarsOnPageScrollTop || currentScroll <= 44) {
@@ -6526,11 +6592,11 @@
             }
             function isInsideScrollableView(el) {
                 var pageContent = el.parents('.page-content, .panel');
-                
+        
                 if (pageContent.length === 0) {
                     return false;
                 }
-                
+        
                 // This event handler covers the "tap to stop scrolling".
                 if (pageContent.prop('scrollHandlerSet') !== 'yes') {
                     pageContent.on('scroll', function() {
@@ -6539,7 +6605,7 @@
                     });
                     pageContent.prop('scrollHandlerSet', 'yes');
                 }
-                
+        
                 return true;
             }
             function addActive() {
@@ -6672,21 +6738,37 @@
         
             function removeRipple() {
                 if (!rippleWave) return;
+                var toRemove = rippleWave;
+        
+                var removeTimeout = setTimeout(function () {
+                    toRemove.remove();
+                }, 400);
+        
                 rippleWave
                     .addClass('ripple-wave-fill')
                     .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
                     .transitionEnd(function () {
+                        clearTimeout(removeTimeout);
+        
                         var rippleWave = $(this)
                             .addClass('ripple-wave-out')
                             .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
+        
+                        removeTimeout = setTimeout(function () {
+                            rippleWave.remove();
+                        }, 700);
+        
                         setTimeout(function () {
                             rippleWave.transitionEnd(function(){
+                                clearTimeout(removeTimeout);
                                 $(this).remove();
                             });
                         }, 0);
                     });
+        
                 rippleWave = rippleTarget = undefined;
             }
+        
             function rippleTouchStart (el, x, y) {
                 rippleTarget = findRippleElement(el);
                 if (!rippleTarget || rippleTarget.length === 0) {
@@ -6716,7 +6798,7 @@
                     setTimeout(removeRipple, 0);
                 }
                 else {
-                    removeRipple();   
+                    removeRipple();
                 }
             }
         
@@ -6795,7 +6877,7 @@
                 if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
                     e.preventDefault();
                 }
-                
+        
                 if (app.params.activeState) {
                     activableElement = findActivableElement(targetElement);
                     // If it's inside a scrollable view, we don't trigger active-state yet,
@@ -6882,7 +6964,7 @@
                 }
         
                 // Add active-state here because, in a very fast tap, the timeout didn't
-                // have the chance to execute. Removing active-state in a timeout gives 
+                // have the chance to execute. Removing active-state in a timeout gives
                 // the chance to the animation execute.
                 if (app.params.activeState) {
                     addActive();
@@ -6921,14 +7003,14 @@
             function handleTouchCancel(e) {
                 trackClick = false;
                 targetElement = null;
-                
+        
                 // Remove Active State
                 clearTimeout(activeTimeout);
                 clearTimeout(tapHoldTimeout);
                 if (app.params.activeState) {
                     removeActive();
                 }
-                
+        
                 // Remove Ripple
                 if (app.params.material && app.params.materialRipple) {
                     rippleTouchEnd();
@@ -6937,7 +7019,7 @@
         
             function handleClick(e) {
                 var allowClick = false;
-                
+        
                 if (trackClick) {
                     targetElement = null;
                     trackClick = false;
@@ -6988,12 +7070,12 @@
                         tapHoldFired = false;
                     }, (app.device.ios || app.device.androidChrome ? 100 : 400));
                 }
-                    
+        
                 return allowClick;
             }
             if (app.support.touch) {
                 document.addEventListener('click', handleClick, true);
-                
+        
                 document.addEventListener('touchstart', handleTouchStart);
                 document.addEventListener('touchmove', handleTouchMove);
                 document.addEventListener('touchend', handleTouchEnd);
@@ -7012,7 +7094,7 @@
                     rippleTouchEnd();
                 });
             }
-                
+        
         };
         
 
@@ -7701,7 +7783,7 @@
                     }, 0);
                 });
             }
-                
+        
             function handlePopState(e) {
                 if (blockPopstate) return;
                 var mainView = app.mainView;
@@ -7719,9 +7801,9 @@
                 var stateContent = state && state.content || undefined;
                 var statePageName = state && state.pageName || undefined;
                 var animatePages;
-                
+        
                 if (app.params.pushStateNoAnimation === true) animatePages = false;
-                
+        
                 if (stateUrl !== view.url) {
                     if (view.history.indexOf(stateUrl) >= 0) {
                         // Go Back
@@ -7747,7 +7829,7 @@
                                 view: view
                             });
                         }
-                        
+        
                     }
                     else if (statePageName) {
                         // Load Page by page name with Dom Cache
@@ -9111,6 +9193,7 @@
                 firstDay: 1, // First day of the week, Monday
                 weekendDays: [0, 6], // Sunday and Saturday
                 multiple: false,
+                rangePicker: false,
                 dateFormat: 'yyyy-mm-dd',
                 direction: 'horizontal', // or 'vertical'
                 minDate: null,
@@ -9122,14 +9205,14 @@
                 animate: true,
                 closeOnSelect: false,
                 monthPicker: true,
-                monthPickerTemplate: 
+                monthPickerTemplate:
                     '<div class="picker-calendar-month-picker">' +
                         '<a href="#" class="link icon-only picker-calendar-prev-month"><i class="icon icon-prev"></i></a>' +
                         '<span class="current-month-value"></span>' +
                         '<a href="#" class="link icon-only picker-calendar-next-month"><i class="icon icon-next"></i></a>' +
                     '</div>',
                 yearPicker: true,
-                yearPickerTemplate: 
+                yearPickerTemplate:
                     '<div class="picker-calendar-year-picker">' +
                         '<a href="#" class="link icon-only picker-calendar-prev-year"><i class="icon icon-prev"></i></a>' +
                         '<span class="current-year-value"></span>' +
@@ -9147,22 +9230,22 @@
                 headerPlaceholder: 'Select date',
                 header: app.params.material,
                 footer: app.params.material,
-                toolbarTemplate: 
+                toolbarTemplate:
                     '<div class="toolbar">' +
                         '<div class="toolbar-inner">' +
                             '{{monthPicker}}' +
                             '{{yearPicker}}' +
                         '</div>' +
                     '</div>',
-                headerTemplate: 
+                headerTemplate:
                     '<div class="picker-header">' +
                         '<div class="picker-calendar-selected-date">{{placeholder}}</div>' +
                     '</div>',
-                footerTemplate: 
+                footerTemplate:
                     '<div class="picker-footer">' +
                         '<a href="#" class="button close-picker">{{closeText}}</a>' +
                     '</div>',
-                
+        
                 /* Callbacks
                 onMonthAdd
                 onChange
@@ -9208,8 +9291,8 @@
                             if ($(window).width() >= 768) toPopover = true;
                         }
                     }
-                } 
-                return toPopover; 
+                }
+                return toPopover;
             }
             function inPopover() {
                 if (p.opened && p.container && p.container.length > 0 && p.container.parents('.popover').length > 0) return true;
@@ -9257,6 +9340,18 @@
                     }
                     p.updateValue();
                 }
+                else if (p.params.rangePicker) {
+                    if (!p.value) p.value = [];
+                    if (p.value.length === 2 || p.value.length === 0) {
+                        p.value = [];
+                    }
+                    if (p.value[0] !== value) p.value.push(value);
+                    else p.value = [];
+                    p.value.sort(function (a,b) {
+                        return a > b;
+                    });
+                    p.updateValue();
+                }
                 else {
                     p.value = [value];
                     p.updateValue();
@@ -9270,12 +9365,21 @@
                 var i, inputValue;
                 if (p.container && p.container.length > 0) {
                     p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
-                    for (i = 0; i < p.value.length; i++) {
-                        var valueDate = new Date(p.value[i]);
-                        p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
+                    var valueDate;
+                    if (p.params.rangePicker && p.value.length === 2) {
+                        for (i = p.value[0]; i <= p.value[1]; i += 24*60*60*1000) {
+                            valueDate = new Date(i);
+                            p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
+                        }
+                    }
+                    else {
+                        for (i = 0; i < p.value.length; i++) {
+                            valueDate = new Date(p.value[i]);
+                            p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
+                        }
                     }
                 }
-                    
+        
                 if (p.params.onChange) {
                     p.params.onChange(p, p.value);
                 }
@@ -9286,8 +9390,8 @@
                         for (i = 0; i < p.value.length; i++) {
                             inputValue.push(formatDate(p.value[i]));
                         }
-                        inputValue = inputValue.join(', ');
-                    } 
+                        inputValue = inputValue.join(p.params.rangePicker ? ' - ' : ', ');
+                    }
                     if (app.params.material && p.params.header && p.container && p.container.length > 0) {
                         p.container.find('.picker-calendar-selected-date').text(inputValue);
                     }
@@ -9295,7 +9399,7 @@
                         $(p.input).val(inputValue);
                         $(p.input).trigger('change');
                     }
-                        
+        
                 }
             };
         
@@ -9318,7 +9422,7 @@
                 }
                 function handleTouchMove (e) {
                     if (!isTouched) return;
-                    
+        
                     touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
                     touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
                     if (typeof isScrolling === 'undefined') {
@@ -9331,7 +9435,7 @@
                     e.preventDefault();
                     if (p.animating) {
                         isTouched = false;
-                        return;   
+                        return;
                     }
                     allowItemClick = false;
                     if (!isMoved) {
@@ -9357,7 +9461,7 @@
                         return;
                     }
                     isTouched = isMoved = false;
-                    
+        
                     touchEndTime = new Date().getTime();
                     if (touchEndTime - touchStartTime < 300) {
                         if (Math.abs(touchesDiff) < 10) {
@@ -9369,7 +9473,7 @@
                         }
                         else {
                             if (app.rtl) p.prevMonth();
-                            else p.nextMonth();   
+                            else p.nextMonth();
                         }
                     }
                     else {
@@ -9399,10 +9503,12 @@
                         day = $(e.target);
                     }
                     if (day.length === 0) return;
-                    if (day.hasClass('picker-calendar-day-selected') && !p.params.multiple) return;
+                    if (day.hasClass('picker-calendar-day-selected') && !(p.params.multiple || p.params.rangePicker)) return;
                     if (day.hasClass('picker-calendar-day-disabled')) return;
-                    if (day.hasClass('picker-calendar-day-next')) p.nextMonth();
-                    if (day.hasClass('picker-calendar-day-prev')) p.prevMonth();
+                    if (!p.params.rangePicker) {
+                        if (day.hasClass('picker-calendar-day-next')) p.nextMonth();
+                        if (day.hasClass('picker-calendar-day-prev')) p.prevMonth();
+                    }
                     var dateYear = day.attr('data-year');
                     var dateMonth = day.attr('data-month');
                     var dateDay = day.attr('data-day');
@@ -9410,7 +9516,9 @@
                         p.params.onDayClick(p, day[0], dateYear, dateMonth, dateDay);
                     }
                     p.addValue(new Date(dateYear, dateMonth, dateDay).getTime());
-                    if (p.params.closeOnSelect) p.close();
+                    if (p.params.closeOnSelect) {
+                        if (p.params.rangePicker && p.value.length === 2 || !p.params.rangePicker) p.close();
+                    }
                 }
         
                 p.container.find('.picker-calendar-prev-month').on('click', p.prevMonth);
@@ -9423,7 +9531,7 @@
                     p.wrapper.on(app.touchEvents.move, handleTouchMove);
                     p.wrapper.on(app.touchEvents.end, handleTouchEnd);
                 }
-                    
+        
                 p.container[0].f7DestroyCalendarEvents = function () {
                     p.container.find('.picker-calendar-prev-month').off('click', p.prevMonth);
                     p.container.find('.picker-calendar-next-month').off('click', p.nextMonth);
@@ -9436,7 +9544,7 @@
                         p.wrapper.off(app.touchEvents.end, handleTouchEnd);
                     }
                 };
-                
+        
         
             };
             p.destroyCalendarEvents = function (colContainer) {
@@ -9450,7 +9558,23 @@
                 if (!range) return false;
                 if ($.isArray(range)) {
                     for (i = 0; i < range.length; i ++) {
-                        if (dayDate === new Date(range[i]).getTime()) {
+                        if (range[i].from || range[i].to) {
+                            if (range[i].from && range[i].to) {
+                                if ((dayDate <= new Date(range[i].to).getTime()) && (dayDate >= new Date(range[i].from).getTime())) {
+                                    match = true;
+                                }
+                            }
+                            else if (range[i].from) {
+                                if (dayDate >= new Date(range[i].from).getTime()) {
+                                    match = true;
+                                }
+                            }
+                            else if (range[i].to) {
+                                if (dayDate <= new Date(range[i].to).getTime()) {
+                                    match = true;
+                                }
+                            }
+                        } else if (dayDate === new Date(range[i]).getTime()) {
                             match = true;
                         }
                     }
@@ -9458,17 +9582,17 @@
                 else if (range.from || range.to) {
                     if (range.from && range.to) {
                         if ((dayDate <= new Date(range.to).getTime()) && (dayDate >= new Date(range.from).getTime())) {
-                            match = true;   
+                            match = true;
                         }
                     }
                     else if (range.from) {
                         if (dayDate >= new Date(range.from).getTime()) {
-                            match = true;   
+                            match = true;
                         }
                     }
                     else if (range.to) {
                         if (dayDate <= new Date(range.to).getTime()) {
-                            match = true;   
+                            match = true;
                         }
                     }
                 }
@@ -9503,11 +9627,11 @@
                     daysInMonth = p.daysInMonth(date),
                     firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay();
                 if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7;
-                
+        
                 var dayDate, currentValues = [], i, j, k,
                     rows = 6, cols = 7,
                     monthHTML = '',
-                    dayIndex = 0 + (p.params.firstDay - 1),    
+                    dayIndex = 0 + (p.params.firstDay - 1),
                     today = new Date().setHours(0,0,0,0),
                     minDate = p.params.minDate ? new Date(p.params.minDate).getTime() : null,
                     maxDate = p.params.maxDate ? new Date(p.params.maxDate).getTime() : null,
@@ -9519,7 +9643,7 @@
                         currentValues.push(new Date(p.value[i]).setHours(0,0,0,0));
                     }
                 }
-                    
+        
                 for (i = 1; i <= rows; i++) {
                     var rowHTML = '';
                     var row = i;
@@ -9542,13 +9666,18 @@
                                 dayDate = new Date(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime();
                             }
                             else {
-                                dayDate = new Date(year, month, dayNumber).getTime();    
+                                dayDate = new Date(year, month, dayNumber).getTime();
                             }
                         }
                         // Today
                         if (dayDate === today) addClass += ' picker-calendar-day-today';
                         // Selected
-                        if (currentValues.indexOf(dayDate) >= 0) addClass += ' picker-calendar-day-selected';
+                        if (p.params.rangePicker && currentValues.length === 2) {
+                            if (dayDate >= currentValues[0] && dayDate <= currentValues[1]) addClass += ' picker-calendar-day-selected';
+                        }
+                        else {
+                            if (currentValues.indexOf(dayDate) >= 0) addClass += ' picker-calendar-day-selected';
+                        }
                         // Weekend
                         if (p.params.weekendDays.indexOf(weekDayIndex) >= 0) {
                             addClass += ' picker-calendar-day-weekend';
@@ -9574,7 +9703,7 @@
                         // Disabled
                         disabled = false;
                         if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
-                            disabled = true;   
+                            disabled = true;
                         }
                         if (p.params.disabled) {
                             if (p.dateInRange(dayDate, p.params.disabled)) {
@@ -9582,9 +9711,9 @@
                             }
                         }
                         if (disabled) {
-                            addClass += ' picker-calendar-day-disabled';   
+                            addClass += ' picker-calendar-day-disabled';
                         }
-                        
+        
         
                         dayDate = new Date(dayDate);
                         var dayYear = dayDate.getFullYear();
@@ -9600,7 +9729,7 @@
             p.updateCurrentMonthYear = function (dir) {
                 if (typeof dir === 'undefined') {
                     p.currentMonth = parseInt(p.months.eq(1).attr('data-month'), 10);
-                    p.currentYear = parseInt(p.months.eq(1).attr('data-year'), 10);   
+                    p.currentYear = parseInt(p.months.eq(1).attr('data-year'), 10);
                 }
                 else {
                     p.currentMonth = parseInt(p.months.eq(dir === 'next' ? (p.months.length - 1) : 0).attr('data-month'), 10);
@@ -9608,7 +9737,7 @@
                 }
                 p.container.find('.current-month-value').text(p.params.monthNames[p.currentMonth]);
                 p.container.find('.current-year-value').text(p.currentYear);
-                    
+        
             };
             p.onMonthChangeStart = function (dir) {
                 p.updateCurrentMonthYear(dir);
@@ -9626,7 +9755,7 @@
                 p.animating = false;
                 var nextMonthHTML, prevMonthHTML, newMonthHTML;
                 p.wrapper.find('.picker-calendar-month:not(.picker-calendar-month-prev):not(.picker-calendar-month-current):not(.picker-calendar-month-next)').remove();
-                
+        
                 if (typeof dir === 'undefined') {
                     dir = 'next';
                     rebuildBoth = true;
@@ -9802,7 +9931,7 @@
                 if (transitionEndCallback) {
                    p.wrapper.transitionEnd(function () {
                         p.onMonthChangeEnd(dir, true);
-                    }); 
+                    });
                 }
                 if (!p.params.animate) {
                     p.onMonthChangeEnd(dir);
@@ -9814,14 +9943,14 @@
             p.prevYear = function () {
                 p.setYearMonth(p.currentYear - 1);
             };
-            
+        
         
             // HTML Layout
             p.layout = function () {
                 var pickerHTML = '';
                 var pickerClass = '';
                 var i;
-                
+        
                 var layoutDate = p.value && p.value.length ? p.value[0] : new Date().setHours(0,0,0,0);
                 var prevMonthHTML = p.monthHTML(layoutDate, 'prev');
                 var currentMonthHTML = p.monthHTML(layoutDate);
@@ -9834,11 +9963,13 @@
                         var weekDayIndex = (i + p.params.firstDay > 6) ? (i - 7 + p.params.firstDay) : (i + p.params.firstDay);
                         var dayName = p.params.dayNamesShort[weekDayIndex];
                         weekHeaderHTML += '<div class="picker-calendar-week-day ' + ((p.params.weekendDays.indexOf(weekDayIndex) >= 0) ? 'picker-calendar-week-day-weekend' : '') + '"> ' + dayName + '</div>';
-                        
+        
                     }
                     weekHeaderHTML = '<div class="picker-calendar-week-days">' + weekHeaderHTML + '</div>';
                 }
-                pickerClass = 'picker-modal picker-calendar ' + (p.params.cssClass || '');
+                pickerClass = 'picker-modal picker-calendar' +
+                            (p.params.rangePicker ? ' picker-calendar-range' : '') +
+                            (p.params.cssClass ? ' ' + p.params.cssClass : '');
                 var toolbarHTML = p.params.toolbar ? p.params.toolbarTemplate.replace(/{{closeText}}/g, p.params.toolbarCloseText) : '';
                 if (p.params.toolbar) {
                     toolbarHTML = p.params.toolbarTemplate
@@ -9859,9 +9990,9 @@
                             monthsHTML +
                         '</div>' +
                     '</div>';
-                    
-                    
-                p.pickerHTML = pickerHTML;    
+        
+        
+                p.pickerHTML = pickerHTML;
             };
         
             // Input Events
@@ -9899,7 +10030,7 @@
                     if (e.target !== p.input[0] && $(e.target).parents('.picker-modal').length === 0) p.close();
                 }
                 else {
-                    if ($(e.target).parents('.picker-modal').length === 0) p.close();   
+                    if ($(e.target).parents('.picker-modal').length === 0) p.close();
                 }
             }
         
@@ -9908,7 +10039,7 @@
                 if (p.input.length > 0) {
                     if (p.params.inputReadOnly) p.input.prop('readOnly', true);
                     if (!p.inline) {
-                        p.input.on('click', openOnInput);    
+                        p.input.on('click', openOnInput);
                     }
                     if (p.params.inputReadOnly) {
                         p.input.on('focus mousedown', function (e) {
@@ -9916,9 +10047,9 @@
                         });
                     }
                 }
-                    
+        
             }
-            
+        
             if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
         
             // Open
@@ -9997,7 +10128,7 @@
                     if (p.input && p.input.length > 0 && app.params.material) {
                         p.input.trigger('focus');
                     }
-                    
+        
                 }
         
                 // Set flag
@@ -11045,11 +11176,13 @@
             parent: function (selector) {
                 var parents = [];
                 for (var i = 0; i < this.length; i++) {
-                    if (selector) {
-                        if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
-                    }
-                    else {
-                        parents.push(this[i].parentNode);
+                    if (this[i].parentNode !== null) {
+                        if (selector) {
+                            if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
+                        }
+                        else {
+                           parents.push(this[i].parentNode);
+                        }
                     }
                 }
                 return $($.unique(parents));
@@ -11213,7 +11346,7 @@
             // UC method
             var _method = options.method.toUpperCase();
             // Data to modify GET URL
-            if ((_method === 'GET' || _method === 'HEAD') && options.data) {
+            if ((_method === 'GET' || _method === 'HEAD' || _method === 'OPTIONS' || _method === 'DELETE') && options.data) {
                 var stringData;
                 if (typeof options.data === 'string') {
                     // Should be key=value string
@@ -11272,7 +11405,7 @@
             }
         
             // Cache for GET/HEAD requests
-            if (_method === 'GET' || _method === 'HEAD') {
+            if (_method === 'GET' || _method === 'HEAD' || _method === 'OPTIONS' || _method === 'DELETE') {
                 if (options.cache === false) {
                     options.url += (paramsPrefix + '_nocache=' + Date.now());
                 }
@@ -11291,7 +11424,7 @@
             // Create POST Data
             var postData = null;
         
-            if ((_method === 'POST' || _method === 'PUT') && options.data) {
+            if ((_method === 'POST' || _method === 'PUT' || _method === 'PATCH') && options.data) {
                 if (options.processData) {
                     var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
                     // Post Data
@@ -11397,6 +11530,9 @@
         
             // Timeout
             if (options.timeout > 0) {
+                xhr.onabort = function () {
+                    if (xhrTimeout) clearTimeout(xhrTimeout);
+                };
                 xhrTimeout = setTimeout(function () {
                     xhr.abort();
                     fireAjaxCallback('ajaxError', {xhr: xhr, timeout: true}, 'error', xhr, 'timeout');
@@ -11469,11 +11605,12 @@
             }
             return unique;
         };
-        $.serializeObject = function (obj, parents) {
+        $.serializeObject = $.param = function (obj, parents) {
             if (typeof obj === 'string') return obj;
             var resultArray = [];
             var separator = '&';
             parents = parents || [];
+            var newParents;
             function var_name(name) {
                 if (parents.length > 0) {
                     var _parents = '';
@@ -11496,15 +11633,24 @@
                     if ($.isArray(obj[prop])) {
                         toPush = [];
                         for (var i = 0; i < obj[prop].length; i ++) {
-                            toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
+                            if (!$.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
+                                newParents = parents.slice();
+                                newParents.push(prop);
+                                newParents.push(i + '');
+                                toPush.push($.serializeObject(obj[prop][i], newParents));
+                            }
+                            else {
+                                toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
+                            }
+                            
                         }
                         if (toPush.length > 0) resultArray.push(toPush.join(separator));
                     }
                     else if (typeof obj[prop] === 'object') {
                         // Object, convert to named array
-                        var _newParents = parents.slice();
-                        _newParents.push(prop);
-                        toPush = $.serializeObject(obj[prop], _newParents);
+                        newParents = parents.slice();
+                        newParents.push(prop);
+                        toPush = $.serializeObject(obj[prop], newParents);
                         if (toPush !== '') resultArray.push(toPush);
                     }
                     else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
@@ -12364,6 +12510,8 @@
             mousewheelSensitivity: 1,
             // Hash Navigation
             hashnav: false,
+            // Breakpoints
+            breakpoints: undefined,
             // Slides grid
             spaceBetween: 0,
             slidesPerView: 1,
@@ -12485,6 +12633,18 @@
         var initialVirtualTranslate = params && params.virtualTranslate;
         
         params = params || {};
+        var originalParams = {};
+        for (var param in params) {
+            if (typeof params[param] === 'object') {
+                originalParams[param] = {};
+                for (var deepParam in params[param]) {
+                    originalParams[param][deepParam] = params[param][deepParam];
+                }
+            }
+            else {
+                originalParams[param] = params[param];
+            }
+        }
         for (var def in defaults) {
             if (typeof params[def] === 'undefined') {
                 params[def] = defaults[def];
@@ -12503,6 +12663,7 @@
         
         // Params
         s.params = params;
+        s.originalParams = originalParams;
         
         // Classname
         s.classNames = [];
@@ -12511,7 +12672,7 @@
           ===========================*/
         if (typeof $ !== 'undefined' && typeof Dom7 !== 'undefined'){
             $ = Dom7;
-        }  
+        }
         if (typeof $ === 'undefined') {
             if (typeof Dom7 === 'undefined') {
                 $ = window.Dom7 || window.Zepto || window.jQuery;
@@ -12523,6 +12684,39 @@
         }
         // Export it to Swiper instance
         s.$ = $;
+        
+        /*=========================
+          Breakpoints
+          ===========================*/
+        s.currentBreakpoint = undefined;
+        s.getActiveBreakpoint = function () {
+            //Get breakpoint for window width
+            if (!s.params.breakpoints) return false;
+            var breakpoint = false;
+            for ( var point in s.params.breakpoints ) {
+                if (s.params.breakpoints.hasOwnProperty(point)) {
+                    if (point >= $(window).width() && !breakpoint) {
+                        breakpoint = point;
+                    }
+                }
+            }
+            return breakpoint || 'max';
+        };
+        s.setBreakpoint = function () {
+            //Set breakpoint for window width and update parameters
+            var breakpoint = s.getActiveBreakpoint();
+            if (breakpoint && s.currentBreakpoint !== breakpoint) {
+                var breakPointsParams = breakpoint in s.params.breakpoints ? s.params.breakpoints[breakpoint] : s.originalParams;
+                for ( var param in breakPointsParams ) {
+                    s.params[param] = breakPointsParams[param];
+                }
+                s.currentBreakpoint = breakpoint;
+            }
+        };
+        // Set breakpoint on load
+        if (s.params.breakpoints) {
+            s.setBreakpoint();
+        }
         
         /*=========================
           Preparation - Define Container, Wrapper and Pagination
@@ -12668,7 +12862,7 @@
           ===========================*/
         function round(a) {
             return Math.floor(a);
-        }  
+        }
         /*=========================
           Set grab cursor
           ===========================*/
@@ -12815,11 +13009,11 @@
             if (width === 0 && isH() || height === 0 && !isH()) {
                 return;
             }
-            
+        
             //Subtract paddings
             width = width - parseInt(s.container.css('padding-left'), 10) - parseInt(s.container.css('padding-right'), 10);
             height = height - parseInt(s.container.css('padding-top'), 10) - parseInt(s.container.css('padding-bottom'), 10);
-            
+        
             // Store values
             s.width = width;
             s.height = height;
@@ -13012,9 +13206,6 @@
             if (s.rtl) offsetCenter = translate;
         
             // Visible Slides
-            var containerBox = s.container[0].getBoundingClientRect();
-            var sideBefore = isH() ? 'left' : 'top';
-            var sideAfter = isH() ? 'right' : 'bottom';
             s.slides.removeClass(s.params.slideVisibleClass);
             for (var i = 0; i < s.slides.length; i++) {
                 var slide = s.slides[i];
@@ -13223,6 +13414,11 @@
           Resize Handler
           ===========================*/
         s.onResize = function (forceUpdatePagination) {
+            //Breakpoints
+            if (s.params.breakpoints) {
+                s.setBreakpoint();
+            }
+        
             // Disable locks on resize
             var allowSwipeToPrev = s.params.allowSwipeToPrev;
             var allowSwipeToNext = s.params.allowSwipeToNext;
@@ -13434,7 +13630,6 @@
                             s.slideTo(slideToIndex);
                         }
                     }
-                        
                 }
                 else {
                     s.slideTo(slideToIndex);
@@ -13444,6 +13639,7 @@
         
         var isTouched,
             isMoved,
+            allowTouchCallbacks,
             touchStartTime,
             isScrolling,
             currentTranslate,
@@ -13485,7 +13681,7 @@
         
             var startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
             var startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-            
+        
             // Do NOT start if iOS edge swipe is detected. Otherwise iOS app (UIWebView) cannot swipe-to-go-back anymore
             if(s.device.ios && s.params.iOSEdgeSwipeDetection && startX <= s.params.iOSEdgeSwipeThreshold) {
                 return;
@@ -13493,6 +13689,7 @@
         
             isTouched = true;
             isMoved = false;
+            allowTouchCallbacks = true;
             isScrolling = undefined;
             startMoving = undefined;
             s.touches.startX = startX;
@@ -13536,9 +13733,9 @@
                     return;
                 }
             }
-        
-            s.emit('onTouchMove', s, e);
-        
+            if (allowTouchCallbacks) {
+                s.emit('onTouchMove', s, e);
+            }
             if (e.targetTouches && e.targetTouches.length > 1) return;
         
             s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
@@ -13600,7 +13797,7 @@
             isMoved = true;
         
             var diff = s.touches.diff = isH() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
-            
+        
             diff = diff * s.params.touchRatio;
             if (s.rtl) diff = -diff;
         
@@ -13672,7 +13869,10 @@
         };
         s.onTouchEnd = function (e) {
             if (e.originalEvent) e = e.originalEvent;
-            s.emit('onTouchEnd', s, e);
+            if (allowTouchCallbacks) {
+                s.emit('onTouchEnd', s, e);
+            }
+            allowTouchCallbacks = false;
             if (!isTouched) return;
             //Return Grab Cursor
             if (s.params.grabCursor && isMoved && isTouched) {
@@ -14002,7 +14202,14 @@
                 s.emit('onTransitionStart', s);
                 if (s.activeIndex !== s.previousIndex) {
                     s.emit('onSlideChangeStart', s);
+                    if (s.activeIndex > s.previousIndex) {
+                        s.emit('onSlideNextStart', s);
+                    }
+                    else {
+                        s.emit('onSlidePrevStart', s);
+                    }
                 }
+        
             }
         };
         s.onTransitionEnd = function (runCallbacks) {
@@ -14014,6 +14221,12 @@
                 s.emit('onTransitionEnd', s);
                 if (s.activeIndex !== s.previousIndex) {
                     s.emit('onSlideChangeEnd', s);
+                    if (s.activeIndex > s.previousIndex) {
+                        s.emit('onSlideNextEnd', s);
+                    }
+                    else {
+                        s.emit('onSlidePrevEnd', s);
+                    }
                 }
             }
             if (s.params.hashnav && s.hashnav) {
@@ -14444,12 +14657,12 @@
                         if (s.rtl) {
                             tx = -tx;
                         }
-                        
+        
                         if (!isH()) {
                             ty = tx;
                             tx = 0;
                         }
-                        
+        
                         var transform = 'rotateX(' + (isH() ? 0 : -slideAngle) + 'deg) rotateY(' + (isH() ? slideAngle : 0) + 'deg) translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px)';
                         if (progress <= 1 && progress > -1) {
                             wrapperRotate = i * 90 + progress * 90;
@@ -14479,7 +14692,7 @@
                         '-ms-transform-origin': '50% 50% -' + (s.size / 2) + 'px',
                         'transform-origin': '50% 50% -' + (s.size / 2) + 'px'
                     });
-                        
+        
                     if (s.params.cube.shadow) {
                         if (isH()) {
                             cubeShadow.transform('translate3d(0px, ' + (s.width / 2 + s.params.cube.shadowOffset) + 'px, ' + (-s.width / 2) + 'px) rotateX(90deg) rotateZ(0deg) scale(' + (s.params.cube.shadowScale) + ')');
@@ -14573,7 +14786,7 @@
                 if (typeof index === 'undefined') return;
                 if (typeof loadInDuplicate === 'undefined') loadInDuplicate = true;
                 if (s.slides.length === 0) return;
-                
+        
                 var slide = s.slides.eq(index);
                 var img = slide.find('.swiper-lazy:not(.swiper-lazy-loaded):not(.swiper-lazy-loading)');
                 if (slide.hasClass('swiper-lazy') && !slide.hasClass('swiper-lazy-loaded') && !slide.hasClass('swiper-lazy-loading')) {
@@ -14595,15 +14808,15 @@
                         else {
                             if (srcset) {
                                 _img.attr('srcset', srcset);
-                                _img.removeAttr('data-srcset');    
+                                _img.removeAttr('data-srcset');
                             }
                             if (src) {
-                                _img.attr('src', src);    
+                                _img.attr('src', src);
                                 _img.removeAttr('data-src');
                             }
-                            
+        
                         }
-                            
+        
                         _img.addClass('swiper-lazy-loaded').removeClass('swiper-lazy-loading');
                         slide.find('.swiper-lazy-preloader, .preloader').remove();
                         if (s.params.loop && loadInDuplicate) {
@@ -14619,10 +14832,10 @@
                         }
                         s.emit('onLazyImageReady', s, slide[0], _img[0]);
                     });
-                    
+        
                     s.emit('onLazyImageLoad', s, slide[0], _img[0]);
                 });
-                    
+        
             },
             load: function () {
                 var i;
@@ -14638,7 +14851,7 @@
                         }
                     }
                     else {
-                        s.lazy.loadImageInSlide(s.activeIndex);    
+                        s.lazy.loadImageInSlide(s.activeIndex);
                     }
                 }
                 if (s.params.lazyLoadingInPrevNext) {
@@ -14685,7 +14898,7 @@
                 var sb = s.scrollbar;
                 var x = 0, y = 0;
                 var translate;
-                var pointerPosition = isH() ? 
+                var pointerPosition = isH() ?
                     ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].pageX : e.pageX || e.clientX) :
                     ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].pageY : e.pageY || e.clientY) ;
                 var position = (pointerPosition) - sb.track.offset()[isH() ? 'left' : 'top'] - sb.dragSize / 2;
@@ -14772,7 +14985,7 @@
                 sb.drag[0].style.width = '';
                 sb.drag[0].style.height = '';
                 sb.trackSize = isH() ? sb.track[0].offsetWidth : sb.track[0].offsetHeight;
-                
+        
                 sb.divider = s.size / s.virtualSize;
                 sb.moveDivider = sb.divider * (sb.trackSize / s.size);
                 sb.dragSize = sb.trackSize * sb.divider;
@@ -14800,7 +15013,7 @@
                 var sb = s.scrollbar;
                 var translate = s.translate || 0;
                 var newPos;
-                
+        
                 var newSize = sb.dragSize;
                 newPos = (sb.trackSize - sb.dragSize) * s.progress;
                 if (s.rtl && isH()) {
@@ -14827,7 +15040,7 @@
                         sb.drag.transform('translate3d(' + (newPos) + 'px, 0, 0)');
                     }
                     else {
-                        sb.drag.transform('translateX(' + (newPos) + 'px)');   
+                        sb.drag.transform('translateX(' + (newPos) + 'px)');
                     }
                     sb.drag[0].style.width = newSize + 'px';
                 }
@@ -14836,7 +15049,7 @@
                         sb.drag.transform('translate3d(0px, ' + (newPos) + 'px, 0)');
                     }
                     else {
-                        sb.drag.transform('translateY(' + (newPos) + 'px)');   
+                        sb.drag.transform('translateY(' + (newPos) + 'px)');
                     }
                     sb.drag[0].style.height = newSize + 'px';
                 }
@@ -14896,9 +15109,9 @@
                     };
                 })();
             },
-            //xxx: for now i will just save one spline function to to 
+            //xxx: for now i will just save one spline function to to
             getInterpolateFunction: function(c){
-                if(!s.controller.spline) s.controller.spline = s.params.loop ? 
+                if(!s.controller.spline) s.controller.spline = s.params.loop ?
                     new s.controller.LinearSpline(s.slidesGrid, c.slidesGrid) :
                     new s.controller.LinearSpline(s.snapGrid, c.snapGrid);
             },
@@ -14909,7 +15122,7 @@
                     // this will create an Interpolate function based on the snapGrids
                     // x is the Grid of the scrolled scroller and y will be the controlled scroller
                     // it makes sense to create this only once and recall it for the interpolation
-                    // the function does a lot of value caching for performance 
+                    // the function does a lot of value caching for performance
                     translate = c.rtl && c.params.direction === 'horizontal' ? -s.translate : s.translate;
                     if (s.params.controlBy === 'slide') {
                         s.controller.getInterpolateFunction(c);
@@ -14917,12 +15130,12 @@
                         // but it did not work out
                         controlledTranslate = -s.controller.spline.interpolate(-translate);
                     }
-                        
+        
                     if(!controlledTranslate || s.params.controlBy === 'container'){
                         multiplier = (c.maxTranslate() - c.minTranslate()) / (s.maxTranslate() - s.minTranslate());
                         controlledTranslate = (translate - s.minTranslate()) * multiplier + c.minTranslate();
                     }
-                   
+        
                     if (s.params.controlInverse) {
                         controlledTranslate = c.maxTranslate() - controlledTranslate;
                     }
@@ -14955,7 +15168,7 @@
                                 c.fixLoop();
                             }
                             c.onTransitionEnd();
-                            
+        
                         });
                     }
                 }
@@ -14978,7 +15191,7 @@
         function setParallaxTransform(el, progress) {
             el = $(el);
             var p, pX, pY;
-            
+        
             p = el.attr('data-swiper-parallax') || '0';
             pX = el.attr('data-swiper-parallax-x');
             pY = el.attr('data-swiper-parallax-y');
@@ -15009,12 +15222,12 @@
                 pY = pY * progress + 'px' ;
             }
             el.transform('translate3d(' + pX + ', ' + pY + ',0px)');
-        }   
+        }
         s.parallax = {
             setTranslate: function () {
                 s.container.children('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]').each(function(){
                     setParallaxTransform(this, s.progress);
-                    
+        
                 });
                 s.slides.each(function () {
                     var slide = $(this);
@@ -15410,7 +15623,6 @@
         ====================================================*/
         plugins: {}
     };
-    
 
 })();
 

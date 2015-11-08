@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.1
+ * Framework7 1.3.5
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 12, 2015
+ * Released on: November 8, 2015
  */
 /*==========================
 Framework7 Layouts Themes
@@ -159,6 +159,9 @@ html:not(.watch-active-state) .layout-dark .button:not(.button-fill):active,
 .layout-dark .button:not(.button-fill).active-state {
   background: rgba(255, 255, 255, 0.1);
 }
+.layout-dark .chip {
+  background: rgba(255, 255, 255, 0.87);
+}
 /*==========================
 Framework7 Color Themes
 ==========================*/
@@ -244,7 +247,9 @@ i.icon-bars.theme-red {
 .theme-red .toolbar,
 .toolbar.theme-red,
 .theme-red .subnavbar,
-.subnavbar.theme-red {
+.subnavbar.theme-red,
+.theme-red .searchbar,
+.searchbar.theme-red {
   background-color: #f44336;
 }
 .theme-red .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -493,7 +498,9 @@ i.icon-bars.theme-pink {
 .theme-pink .toolbar,
 .toolbar.theme-pink,
 .theme-pink .subnavbar,
-.subnavbar.theme-pink {
+.subnavbar.theme-pink,
+.theme-pink .searchbar,
+.searchbar.theme-pink {
   background-color: #e91e63;
 }
 .theme-pink .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -742,7 +749,9 @@ i.icon-bars.theme-purple {
 .theme-purple .toolbar,
 .toolbar.theme-purple,
 .theme-purple .subnavbar,
-.subnavbar.theme-purple {
+.subnavbar.theme-purple,
+.theme-purple .searchbar,
+.searchbar.theme-purple {
   background-color: #9c27b0;
 }
 .theme-purple .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -991,7 +1000,9 @@ i.icon-bars.theme-deeppurple {
 .theme-deeppurple .toolbar,
 .toolbar.theme-deeppurple,
 .theme-deeppurple .subnavbar,
-.subnavbar.theme-deeppurple {
+.subnavbar.theme-deeppurple,
+.theme-deeppurple .searchbar,
+.searchbar.theme-deeppurple {
   background-color: #673ab7;
 }
 .theme-deeppurple .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -1240,7 +1251,9 @@ i.icon-bars.theme-indigo {
 .theme-indigo .toolbar,
 .toolbar.theme-indigo,
 .theme-indigo .subnavbar,
-.subnavbar.theme-indigo {
+.subnavbar.theme-indigo,
+.theme-indigo .searchbar,
+.searchbar.theme-indigo {
   background-color: #3f51b5;
 }
 .theme-indigo .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -1489,7 +1502,9 @@ i.icon-bars.theme-blue {
 .theme-blue .toolbar,
 .toolbar.theme-blue,
 .theme-blue .subnavbar,
-.subnavbar.theme-blue {
+.subnavbar.theme-blue,
+.theme-blue .searchbar,
+.searchbar.theme-blue {
   background-color: #2196f3;
 }
 .theme-blue .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -1738,7 +1753,9 @@ i.icon-bars.theme-lightblue {
 .theme-lightblue .toolbar,
 .toolbar.theme-lightblue,
 .theme-lightblue .subnavbar,
-.subnavbar.theme-lightblue {
+.subnavbar.theme-lightblue,
+.theme-lightblue .searchbar,
+.searchbar.theme-lightblue {
   background-color: #03a9f4;
 }
 .theme-lightblue .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -1987,7 +2004,9 @@ i.icon-bars.theme-cyan {
 .theme-cyan .toolbar,
 .toolbar.theme-cyan,
 .theme-cyan .subnavbar,
-.subnavbar.theme-cyan {
+.subnavbar.theme-cyan,
+.theme-cyan .searchbar,
+.searchbar.theme-cyan {
   background-color: #00bcd4;
 }
 .theme-cyan .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -2236,7 +2255,9 @@ i.icon-bars.theme-teal {
 .theme-teal .toolbar,
 .toolbar.theme-teal,
 .theme-teal .subnavbar,
-.subnavbar.theme-teal {
+.subnavbar.theme-teal,
+.theme-teal .searchbar,
+.searchbar.theme-teal {
   background-color: #009688;
 }
 .theme-teal .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -2485,7 +2506,9 @@ i.icon-bars.theme-green {
 .theme-green .toolbar,
 .toolbar.theme-green,
 .theme-green .subnavbar,
-.subnavbar.theme-green {
+.subnavbar.theme-green,
+.theme-green .searchbar,
+.searchbar.theme-green {
   background-color: #4caf50;
 }
 .theme-green .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -2734,7 +2757,9 @@ i.icon-bars.theme-lightgreen {
 .theme-lightgreen .toolbar,
 .toolbar.theme-lightgreen,
 .theme-lightgreen .subnavbar,
-.subnavbar.theme-lightgreen {
+.subnavbar.theme-lightgreen,
+.theme-lightgreen .searchbar,
+.searchbar.theme-lightgreen {
   background-color: #8bc34a;
 }
 .theme-lightgreen .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -2983,7 +3008,9 @@ i.icon-bars.theme-lime {
 .theme-lime .toolbar,
 .toolbar.theme-lime,
 .theme-lime .subnavbar,
-.subnavbar.theme-lime {
+.subnavbar.theme-lime,
+.theme-lime .searchbar,
+.searchbar.theme-lime {
   background-color: #cddc39;
 }
 .theme-lime .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -3232,7 +3259,9 @@ i.icon-bars.theme-yellow {
 .theme-yellow .toolbar,
 .toolbar.theme-yellow,
 .theme-yellow .subnavbar,
-.subnavbar.theme-yellow {
+.subnavbar.theme-yellow,
+.theme-yellow .searchbar,
+.searchbar.theme-yellow {
   background-color: #ffeb3b;
 }
 .theme-yellow .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -3481,7 +3510,9 @@ i.icon-bars.theme-amber {
 .theme-amber .toolbar,
 .toolbar.theme-amber,
 .theme-amber .subnavbar,
-.subnavbar.theme-amber {
+.subnavbar.theme-amber,
+.theme-amber .searchbar,
+.searchbar.theme-amber {
   background-color: #ffc107;
 }
 .theme-amber .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -3730,7 +3761,9 @@ i.icon-bars.theme-orange {
 .theme-orange .toolbar,
 .toolbar.theme-orange,
 .theme-orange .subnavbar,
-.subnavbar.theme-orange {
+.subnavbar.theme-orange,
+.theme-orange .searchbar,
+.searchbar.theme-orange {
   background-color: #ff9800;
 }
 .theme-orange .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -3979,7 +4012,9 @@ i.icon-bars.theme-deeporange {
 .theme-deeporange .toolbar,
 .toolbar.theme-deeporange,
 .theme-deeporange .subnavbar,
-.subnavbar.theme-deeporange {
+.subnavbar.theme-deeporange,
+.theme-deeporange .searchbar,
+.searchbar.theme-deeporange {
   background-color: #ff5722;
 }
 .theme-deeporange .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -4228,7 +4263,9 @@ i.icon-bars.theme-brown {
 .theme-brown .toolbar,
 .toolbar.theme-brown,
 .theme-brown .subnavbar,
-.subnavbar.theme-brown {
+.subnavbar.theme-brown,
+.theme-brown .searchbar,
+.searchbar.theme-brown {
   background-color: #795548;
 }
 .theme-brown .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -4477,7 +4514,9 @@ i.icon-bars.theme-gray {
 .theme-gray .toolbar,
 .toolbar.theme-gray,
 .theme-gray .subnavbar,
-.subnavbar.theme-gray {
+.subnavbar.theme-gray,
+.theme-gray .searchbar,
+.searchbar.theme-gray {
   background-color: #9e9e9e;
 }
 .theme-gray .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -4726,7 +4765,9 @@ i.icon-bars.theme-bluegray {
 .theme-bluegray .toolbar,
 .toolbar.theme-bluegray,
 .theme-bluegray .subnavbar,
-.subnavbar.theme-bluegray {
+.subnavbar.theme-bluegray,
+.theme-bluegray .searchbar,
+.searchbar.theme-bluegray {
   background-color: #607d8b;
 }
 .theme-bluegray .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -4975,7 +5016,9 @@ i.icon-bars.theme-white {
 .theme-white .toolbar,
 .toolbar.theme-white,
 .theme-white .subnavbar,
-.subnavbar.theme-white {
+.subnavbar.theme-white,
+.theme-white .searchbar,
+.searchbar.theme-white {
   background-color: #ffffff;
 }
 .theme-white .range-slider input[type="range"]::-webkit-slider-thumb:before,
@@ -5224,7 +5267,9 @@ i.icon-bars.theme-black {
 .theme-black .toolbar,
 .toolbar.theme-black,
 .theme-black .subnavbar,
-.subnavbar.theme-black {
+.subnavbar.theme-black,
+.theme-black .searchbar,
+.searchbar.theme-black {
   background-color: #000000;
 }
 .theme-black .range-slider input[type="range"]::-webkit-slider-thumb:before,

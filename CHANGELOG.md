@@ -1,5 +1,33 @@
 # Change Log
 
+## Framework7 v1.3.5 - Updated on November 8, 2015
+  * Material Theme:
+    * Fixed issue with not disappearing "ripples" in hidden elements
+    * Fixed Searchbar color when using color themes
+    * New "Chips" component
+  * Calendar
+    * New Date Range Picker mode, can be simple enabled by passing `rangePicker: true` parameter
+    * "Date range"-type parameter now accepts mixed types (single date + date range)
+  * Push State
+    * Fixed issue for dynamic pages loaded with passing DOM directly
+    * Fixed issue with Push State on start from inline-pages
+    * Imporved behavior with empty `pushStateSeparator` and `pushStateRoot`
+  * Virtual List
+    * New `showFilteredItemsOnly` parameter to show filtered items only when using filter
+  * Modals
+    * Reworked overlay's z-indexes
+  * Router
+    * Added support for passing DOM content in `preprocess` callback
+    * Fixed issue with `page.query` getting lost for deep Inline pages navigation
+  * Dom7
+    * Added support for XHR `DELETE`, `OPTIONS` and `PATCH` methods
+    * `$.serializeObject` now serialize deep objects and arrays
+  * Swiper updated to latest 3.2.0 version:
+    * Added responsive breakpoints support using new `breakpoints` parameter. Now you can specify different `slidesPerView` and other similar parameters for different sizes
+    * New callbacks: `onSlideNextStart`, `onSlideNextEnd`, `onSlidePrevStart`, `onSlidePrevEnd`
+    * Minor fixes
+  * Numerous minor fixes and improvements
+
 ## Framework7 v1.3.1 - Updated on October 12, 2015
   * Fixed issue with not showing "Cancel" button in Searchbar
   * Fixed issue with Modal without buttons (liek Preloader modal)

@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.1
+ * Framework7 1.3.5
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * iOS Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 12, 2015
+ * Released on: November 8, 2015
  */
 html,
 body {
@@ -1912,6 +1912,7 @@ i.icon.icon-plus {
   font-size: 10px;
   line-height: 16px;
   height: 16px;
+  border-radius: 16px;
   padding: 0px 4px;
   min-width: 16px;
 }
@@ -2225,6 +2226,7 @@ html.pixel-ratio-3 .list-block ul:after {
   display: flex;
   -webkit-box-flex: 1;
   -ms-flex: 1;
+  overflow: hidden;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   -webkit-justify-content: space-between;
@@ -2264,6 +2266,7 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
+  min-width: 0;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -3451,7 +3454,7 @@ html.pixel-ratio-3 .card-footer:before {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 10600;
+  z-index: 13000;
   visibility: hidden;
   opacity: 0;
   -webkit-transition-duration: 400ms;
@@ -3464,12 +3467,12 @@ html.pixel-ratio-3 .card-footer:before {
   opacity: 1;
 }
 .popup-overlay {
-  z-index: 10200;
+  z-index: 10500;
 }
 .modal {
   width: 270px;
   position: absolute;
-  z-index: 11000;
+  z-index: 13500;
   left: 50%;
   margin-left: -135px;
   margin-top: 0;
@@ -3497,7 +3500,7 @@ html.pixel-ratio-3 .card-footer:before {
 }
 .modal.modal-out {
   opacity: 0;
-  z-index: 10999;
+  z-index: 13499;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
   -webkit-transform: translate3d(0, 0, 0) scale(1);
@@ -3674,7 +3677,7 @@ html.pixel-ratio-3 .modal-buttons-vertical .modal-button:after {
   position: absolute;
   left: 0;
   bottom: 0;
-  z-index: 11000;
+  z-index: 13500;
   width: 100%;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
@@ -3693,7 +3696,7 @@ html.pixel-ratio-3 .modal-buttons-vertical .modal-button:after {
   transform: translate3d(0, 0, 0);
 }
 .actions-modal.modal-out {
-  z-index: 10999;
+  z-index: 13499;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
   -webkit-transform: translate3d(0, 100%, 0);
@@ -3862,7 +3865,7 @@ input.modal-text-input + input.modal-text-input {
 .popover {
   width: 320px;
   background: rgba(255, 255, 255, 0.95);
-  z-index: 11000;
+  z-index: 13500;
   margin: 0;
   top: 0;
   opacity: 0;
@@ -4016,7 +4019,7 @@ html.pixel-ratio-3 .actions-popover-label:after {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 10400;
+  z-index: 11000;
   background: #fff;
   box-sizing: border-box;
   display: none;
@@ -4078,7 +4081,7 @@ html.pixel-ratio-3 .actions-popover-label:after {
     top: 20px;
   }
   html.with-statusbar-overlay .popup-overlay {
-    z-index: 9800;
+    z-index: 9500;
   }
 }
 html.with-statusbar-overlay .login-screen,
@@ -4104,7 +4107,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   margin-left: -25px;
   margin-top: -25px;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 11000;
+  z-index: 13500;
   border-radius: 5px;
 }
 .preloader-indicator-modal .preloader {
@@ -4118,7 +4121,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   bottom: 0;
   width: 100%;
   height: 260px;
-  z-index: 11500;
+  z-index: 12500;
   display: none;
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
@@ -5135,7 +5138,7 @@ html.with-statusbar-overlay body .panel {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 10500;
+  z-index: 11500;
 }
 body > .photo-browser {
   opacity: 0;
@@ -5737,6 +5740,7 @@ html.pixel-ratio-3 .picker-calendar-row:after {
   font-size: 15px;
   cursor: pointer;
   z-index: 20;
+  height: 100%;
 }
 .picker-calendar-day.picker-calendar-day-prev,
 .picker-calendar-day.picker-calendar-day-next {
@@ -5774,6 +5778,33 @@ html.pixel-ratio-3 .picker-calendar-row:after {
   height: 30px;
   line-height: 30px;
   position: relative;
+}
+.picker-calendar-range .picker-calendar-day.picker-calendar-day-selected {
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  align-items: stretch;
+  -ms-flex-line-pack: stretch;
+  -webkit-align-content: stretch;
+  align-content: stretch;
+}
+.picker-calendar-range .picker-calendar-day.picker-calendar-day-selected span {
+  width: 100%;
+  border-radius: 0;
+  height: auto;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
 }
 .picker-calendar-month-picker,
 .picker-calendar-year-picker {

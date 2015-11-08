@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.1
+ * Framework7 1.3.5
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: October 12, 2015
+ * Released on: November 8, 2015
  */
 html,
 body {
@@ -1707,6 +1707,102 @@ i.icon.icon-plus {
   line-height: 1.4;
   padding: 1px 5px;
 }
+/* === Chips === */
+.chip {
+  font-size: 13px;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.87);
+  background: rgba(0, 0, 0, 0.12);
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  margin: 2px 0;
+}
+.chip .chip-media {
+  width: 32px;
+  height: 32px;
+  margin-left: -12px;
+  vertical-align: top;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  color: #fff;
+  -webkit-box-flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex: 0 0 auto;
+  flex-shrink: 0;
+  font-size: 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.chip .chip-media img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  display: block;
+}
+.chip .chip-media + .chip-label {
+  margin-left: 8px;
+}
+.chip .chip-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex-shrink: 1;
+  -ms-flex: 0 1 auto;
+  flex-shrink: 1;
+  min-width: 0;
+}
+.chip .chip-label + .chip-delete {
+  margin-left: 4px;
+}
+.chip .chip-delete {
+  margin-right: -8px;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  cursor: pointer;
+  -webkit-box-flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex: 0 0 auto;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23000'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M12%202C6.47%202%202%206.47%202%2012s4.47%2010%2010%2010%2010-4.47%2010-10S17.53%202%2012%202zm5%2013.59L15.59%2017%2012%2013.41%208.41%2017%207%2015.59%2010.59%2012%207%208.41%208.41%207%2012%2010.59%2015.59%207%2017%208.41%2013.41%2012%2017%2015.59z'%2F%3E%3Cpath%20d%3D'M0%200h24v24H0z'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+  opacity: 0.54;
+}
+html:not(.watch-active-state) .chip .chip-delete:active,
+.chip .chip-delete.active-state {
+  opacity: 1;
+}
 /* === Content Block === */
 .content-block {
   margin: 32px 0;
@@ -2020,6 +2116,7 @@ html.pixel-ratio-3 .list-block ul:after {
   box-sizing: border-box;
   -webkit-box-flex: 1;
   -ms-flex: 1;
+  overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -2060,6 +2157,7 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   transform: scaleY(0.33);
 }
 .list-block .item-title {
+  min-width: 0;
   -webkit-box-flex: 1;
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
@@ -3447,7 +3545,7 @@ html.pixel-ratio-3 .card-footer:before {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 10600;
+  z-index: 13000;
   visibility: hidden;
   opacity: 0;
   -webkit-transition-duration: 400ms;
@@ -3461,12 +3559,15 @@ html.pixel-ratio-3 .card-footer:before {
   opacity: 1;
 }
 .popup-overlay {
-  z-index: 10200;
+  z-index: 10500;
+}
+.picker-modal-overlay {
+  z-index: 12000;
 }
 .modal {
   width: 280px;
   position: absolute;
-  z-index: 11000;
+  z-index: 13500;
   left: 50%;
   margin-left: -140px;
   margin-top: 0;
@@ -3495,7 +3596,7 @@ html.pixel-ratio-3 .card-footer:before {
 }
 .modal.modal-out {
   opacity: 0;
-  z-index: 10999;
+  z-index: 13499;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
   -webkit-transform: translate3d(0, 0, 0) scale(0.815);
@@ -3666,7 +3767,7 @@ html:not(.watch-active-state) .notifications .modal-buttons .button:not(.button-
   position: absolute;
   left: 0;
   bottom: 0;
-  z-index: 11000;
+  z-index: 13500;
   width: 100%;
   background: #fff;
   -webkit-transform: translate3d(0, 100%, 0);
@@ -3679,7 +3780,7 @@ html:not(.watch-active-state) .notifications .modal-buttons .button:not(.button-
   transform: translate3d(0, 0, 0);
 }
 .actions-modal.modal-out {
-  z-index: 10999;
+  z-index: 13499;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
   -webkit-transform: translate3d(0, 100%, 0);
@@ -3815,7 +3916,7 @@ input.modal-text-input + input.modal-text-input {
 .popover {
   width: 320px;
   background: #fff;
-  z-index: 11000;
+  z-index: 13500;
   margin: 0;
   top: 0;
   opacity: 0;
@@ -3935,7 +4036,7 @@ html.pixel-ratio-3 .actions-popover-label:after {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 10400;
+  z-index: 11000;
   background: #fff;
   box-sizing: border-box;
   display: none;
@@ -3999,7 +4100,7 @@ html.pixel-ratio-3 .actions-popover-label:after {
     top: 20px;
   }
   html.with-statusbar-overlay .popup-overlay {
-    z-index: 9800;
+    z-index: 9500;
   }
 }
 html.with-statusbar-overlay .login-screen,
@@ -4025,7 +4126,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   margin-left: -24px;
   margin-top: -24px;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 11000;
+  z-index: 13500;
   border-radius: 4px;
 }
 .preloader-indicator-modal .preloader {
@@ -4037,7 +4138,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   bottom: 0;
   width: 100%;
   height: 260px;
-  z-index: 11500;
+  z-index: 12000;
   display: none;
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
@@ -5100,7 +5201,7 @@ html.with-statusbar-overlay body .panel {
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 10500;
+  z-index: 11500;
 }
 body > .photo-browser {
   opacity: 0;
@@ -5591,6 +5692,9 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   top: 0;
   box-shadow: none;
 }
+.picker-calendar.picker-modal {
+  z-index: 12500;
+}
 .popover.popover-picker-calendar {
   width: 320px;
 }
@@ -5728,6 +5832,10 @@ html.pixel-ratio-3 .picker-center-highlight:after {
 .picker-calendar-day.picker-calendar-day-selected span {
   background: #2196f3;
   color: #fff;
+}
+.picker-calendar-range .picker-calendar-day.picker-calendar-day-selected span {
+  border-radius: 0;
+  width: 100%;
 }
 .picker-calendar-day.picker-calendar-day-has-events span:after {
   content: '';
