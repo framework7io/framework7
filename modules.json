@@ -1,0 +1,233 @@
+{
+    "core_intro" : {
+        "js" : [
+            "src/js/wrap-start.js",
+            "src/js/f7-intro.js",
+            "src/js/views.js",
+            "src/js/navbars.js",
+            "src/js/xhr.js",
+            "src/js/pages.js",
+            "src/js/router.js",
+            "src/js/clicks.js",
+            "src/js/resize.js",
+            "src/js/panels.js",
+            "src/js/lazy-load.js",
+            "src/js/material-preloader.js"
+        ],
+        "less" : {
+            "ios" : [
+                "src/less/ios/_mixins.less",
+                "src/less/ios/_colors-vars.less",
+                "src/less/ios/intro.less",
+                "src/less/ios/grid.less",
+                "src/less/ios/views.less",
+                "src/less/ios/pages.less",
+                "src/less/ios/toolbars.less",
+                "src/less/ios/toolbars-pages.less",
+                "src/less/ios/icons.less",
+                "src/less/ios/badges.less",
+                "src/less/ios/content-block.less",
+                "src/less/ios/lists.less",
+                "src/less/ios/contacts.less",
+                "src/less/ios/forms.less",
+                "src/less/ios/panels.less",
+                "src/less/ios/lazy-load.less",
+                "src/less/ios/statusbar.less",
+                "src/less/ios/preloader.less"
+            ],
+            "material" : [
+                "src/less/material/_mixins.less",
+                "src/less/material/_colors-vars.less",
+                "src/less/material/intro.less",
+                "src/less/material/grid.less",
+                "src/less/material/views.less",
+                "src/less/material/pages.less",
+                "src/less/material/toolbars.less",
+                "src/less/material/toolbars-pages.less",
+                "src/less/material/icons.less",
+                "src/less/material/badges.less",
+                "src/less/material/content-block.less",
+                "src/less/material/lists.less",
+                "src/less/material/contacts.less",
+                "src/less/material/forms.less",
+                "src/less/material/floating-button.less",
+                "src/less/material/panels.less",
+                "src/less/material/lazy-load.less",
+                "src/less/material/statusbar.less",
+                "src/less/material/preloader.less"
+            ]
+        }
+    },
+    "core_outro" : {
+        "js" : [
+            "src/js/template7-templates.js",
+            "src/js/plugins.js",
+            "src/js/init.js",
+            "src/js/f7-outro.js",
+            "src/js/dom7-intro.js",
+            "src/js/dom7-methods.js",
+            "src/js/dom7-utils.js",
+            "src/js/dom7-ajax.js",
+            "src/js/dom7-outro.js",
+            "src/js/proto-support.js",
+            "src/js/proto-device.js",
+            "src/js/proto-plugins.js",
+            "src/js/template7.js",
+            "src/js/wrap-end.js"
+        ],
+        "less" :  {
+            "ios" : [
+                "src/less/ios/login-screen.less",
+                "src/less/ios/disabled.less"
+            ],
+            "material" : [
+                "src/less/material/login-screen.less",
+                "src/less/material/ripple.less",
+                "src/less/material/disabled.less"
+            ]
+        }
+            
+    },
+
+    "accordion": {
+        "js" : ["src/js/accordion.js"],
+        "less": {
+            "ios": ["src/less/ios/accordion.less"],
+            "material": ["src/less/material/accordion.less"]
+        },
+        "dependencies" : []
+    },
+    "searchbar": {
+        "js" : ["src/js/searchbar.js"],
+        "less": {
+            "ios": ["src/less/ios/searchbar.less"],
+            "material": ["src/less/material/searchbar.less"]
+        },
+        "dependencies" : []
+    },
+    "messages": {
+        "js" : ["src/js/messagebar.js", "src/js/messages.js"],
+        "less": {
+            "ios": ["src/less/ios/messagebar.less", "src/less/ios/messages.less"],
+            "material": ["src/less/material/messagebar.less", "src/less/material/messages.less"]
+        },
+        "dependencies" : []
+    },
+    "modals": {
+        "js" : ["src/js/modals.js"],
+        "less": {
+            "ios": ["src/less/ios/modals.less"],
+            "material": ["src/less/material/modals.less"]
+        },
+        "dependencies" : []
+    },
+    "swipeout": {
+        "js" : ["src/js/swipeout.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "sortable": {
+        "js" : ["src/js/sortable.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "cards": {
+        "js" : [],
+        "less": {
+            "ios": ["src/less/ios/cards.less"],
+            "material": ["src/less/material/cards.less"]
+        },
+        "dependencies" : []
+    },
+    "smart-select": {
+        "js" : ["src/js/smart-select.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "virtual-list": {
+        "js" : ["src/js/virtual-list.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "pull-to-refresh": {
+        "js" : ["src/js/pull-to-refresh.js"],
+        "less": {
+            "ios": ["src/less/ios/pull-to-refresh.less"],
+            "material": ["src/less/material/pull-to-refresh.less"]
+        },
+        "dependencies" : []
+    },
+    "infinite-scroll": {
+        "js" : ["src/js/infinite-scroll.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "scroll-toolbars": {
+        "js" : ["src/js/scroll-toolbars.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "tabs": {
+        "js" : ["src/js/material-tabbar.js","src/js/tabs.js"],
+        "less": {
+            "ios": ["src/less/ios/tabs.less"],
+            "material": ["src/less/material/tabs.less"]
+        },
+        "dependencies" : []
+    },
+    "fast-clicks": {
+        "js" : ["src/js/fast-clicks.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "forms": {
+        "js" : ["src/js/forms-storage.js", "src/js/forms-ajax.js", "src/js/forms-textarea.js", "src/js/material-inputs.js"],
+        "less": {},
+        "dependencies" : []
+    },
+    "push-state": {
+        "js" : ["src/js/push-state.js"],
+        "less" : {},
+        "dependencies" : []
+    },
+    "swiper": {
+        "js" : ["src/js/swiper.js", "src/js/swiper-init.js"],
+        "less": {
+            "ios": ["src/less/ios/swiper.less"],
+            "material": ["src/less/material/swiper.less"]
+        },
+        "dependencies" : []
+    },
+    "photo-browser": {
+        "js" : ["src/js/photo-browser.js"],
+        "less": {
+            "ios": ["src/less/ios/photo-browser.less"],
+            "material": ["src/less/material/photo-browser.less"]
+        },
+        "dependencies" : ["swiper"]
+    },
+    "notifications": {
+        "js" : ["src/js/notifications.js"],
+        "less": {
+            "ios": ["src/less/ios/notifications.less"],
+            "material": ["src/less/material/notifications.less"]
+        },
+        "dependencies" : []
+    },
+    "picker": {
+        "js" : ["src/js/picker.js"],
+        "less": {
+            "ios": ["src/less/ios/picker.less"],
+            "material": ["src/less/material/picker.less"]
+        },
+        "dependencies" : ["modals"]
+    },
+    "calendar": {
+        "js" : ["src/js/calendar.js"],
+        "less": {
+            "ios": ["src/less/ios/calendar.less"],
+            "material": ["src/less/material/calendar.less"]
+        },
+        "dependencies" : ["modals"]
+    }
+}

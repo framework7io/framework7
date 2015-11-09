@@ -1,0 +1,54 @@
+/* === Message Bar === */
+.messagebar {
+    .translate3d(0,0,0);
+    .transition(0ms);
+    textarea {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #c8c8cd;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: none;
+        display: block;
+        padding: 3px 8px 3px;
+        margin: 0;
+        width: 100%;
+        height: 28px;
+        color: #000;
+        font-size: 17px;
+        line-height: 20px;
+        font-family: inherit;
+        resize:none;
+        .flex-shrink(1);
+    }
+    .link {
+        .align-self(flex-end);
+    }
+    .link.icon-only:first-child {
+        margin-left: -6px;
+    }
+    .link:not(.icon-only) + textarea {
+        margin-left: 8px;
+    }
+    textarea + .link {
+        margin-left: 8px;
+    }
+    .link {
+        .flex-shrink(0);
+    }
+    ~ .page-content {
+        padding-bottom: @toolbarSize;
+    }
+    .page.no-toolbar & ~.page-content {
+        padding-bottom: @toolbarSize;
+    }
+    .hidden-toolbar & {
+        .translate3d(0,0,0);
+        .transition(0ms);
+    }
+}

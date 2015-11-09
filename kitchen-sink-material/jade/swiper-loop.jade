@@ -1,0 +1,16 @@
+.page(data-page="swiper-loop")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="swiper.html").back.link.icon-only
+          i.icon.icon-back
+      .center Infinite Loop Mode
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+    .swiper-container.swiper-init.ks-demo-slider(data-pagination=".swiper-pagination", data-loop="true")
+      .swiper-pagination
+      .swiper-wrapper
+        - for (var i = 1; i < 11; i++)
+          .swiper-slide Slide #{i}

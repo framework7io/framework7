@@ -4,13 +4,13 @@
   .navbar-inner
     .left
       a(href="#").back.link 
-        i.icon.icon-back-blue
+        i.icon.icon-back
         span Back
     .center.sliding Form
     .right
       // Right link contains only icon - additional "icon-only" class
       a(href="#").link.icon-only.open-panel 
-        i.icon.icon-bars-blue
+        i.icon.icon-bars
 .pages
   // Page, data-page contains page name
   .page(data-page="form")
@@ -107,9 +107,9 @@
       .content-block
         .row
           .col-50
-            a(href="#").button.button-big.button-cancel Cancel
+            a(href="#").button.button-big.button-fill.color-red Cancel
           .col-50
-            input(type="submit", value="Submit").button.button-big.button-submit
+            input(type="submit", value="Submit").button.button-big.button-fill.color-green
           
       .content-block-title Checkbox group
       .list-block

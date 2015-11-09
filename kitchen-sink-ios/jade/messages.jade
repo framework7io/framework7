@@ -1,0 +1,75 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Messages
+    .right
+      a(href="#").link.open-panel.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="messages").no-toolbar.toolbar-fixed
+    .toolbar.messagebar
+      .toolbar-inner
+        a(href="#").link.icon-only
+          i.icon.icon-camera
+        textarea(placeholder="Message")
+        a(href="#").link.send-message Send
+    .page-content.messages-content
+      .messages
+        .messages-date Sunday, Feb 9,
+          span 12:58
+        .message.message-sent
+          .message-text Hi, Kate
+        .message.message-sent
+          .message-text How are you?
+        .message.message-received.message-with-avatar
+          .message-name Kate Johnson
+          .message-text Hi, i am good
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-9.jpg)")
+        .message.message-received.message-with-avatar
+          .message-name Blue Ninja
+          .message-text Hi there, I am also fine, thanks! And how are you?
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-sent
+          .message-text Hey, Blue Ninja! Glad to see you ;)
+        .message.message-sent
+          .message-text What do you think about my new logo?
+        .messages-date Wednesday, Feb 12,
+          span 19:33
+        .message.message-sent
+          .message-text Hey? Any thoughts about my new logo?
+        .messages-date Thursday, Feb 13,
+          span 11:20
+        .message.message-sent
+          .message-text Alo...
+        .message.message-sent
+          .message-text Are you there?
+        .message.message-received.message-with-avatar
+          .message-name Blue Ninja
+          .message-text Hi, i am here
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-received.message-with-avatar
+          .message-name Blue Ninja
+          .message-text Your logo is great
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-received.message-with-avatar
+          .message-name Kate Johnson
+          .message-text Leave me alone!
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-9.jpg)")
+        .message.message-sent
+          .message-text :(
+        .message.message-sent
+          .message-text Hey, look, cutest kitten ever!
+        .message.message-sent.message-pic
+          .message-text
+            img(src="http://lorempixel.com/300/400/cats/4/")
+        .message.message-received.message-with-avatar
+          .message-name Blue Ninja
+          .message-text Yep
+          .message-avatar(style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-7.jpg)")
+        .message.message-sent
+          .message-text Cool
+          .message-label Delivered 1 week ago
+        

@@ -1,0 +1,55 @@
+.page(data-page="pickers")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="index.html").back.link.icon-only
+          i.icon.icon-back
+      .center Picker
+      .right
+        a(href="#").link.open-panel.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+        p Picker is a powerful component that allows you to create custom overlay pickers which looks like iOS picker.
+        p Picker could be used as inline component or as overlay. Overlay Picker will be automatically converted to Popover on tablets.
+    .content-block-title Picker with single value
+    .list-block
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Your iOS device", readonly)#ks-picker-device
+    .content-block-title 2 values and 3d-rotate effect
+    .list-block
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Describe yourself", readonly)#ks-picker-describe
+    .content-block-title Dependent values
+    .list-block
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Your car", readonly)#ks-picker-dependent
+    .content-block-title Custom toolbar
+    .list-block
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Describe yourself", readonly)#ks-picker-custom-toolbar
+    .content-block-title Inline Picker / Date-time
+    .list-block(style="margin:0")
+      ul
+        li
+          .item-content
+            .item-inner 
+              .item-input
+                input(type="text", placeholder="Date Time", readonly)#ks-picker-date
+    #ks-picker-date-container

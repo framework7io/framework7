@@ -1,0 +1,15 @@
+.page(data-page="swiper-3d-cube")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="swiper.html").back.link.icon-only
+          i.icon.icon-back
+      .center 3D Cube
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+    .swiper-container.swiper-init.ks-demo-slider.ks-cube-slider(data-effect="cube")
+      .swiper-wrapper
+        - for (var i = 1; i < 10; i++)
+          .swiper-slide(style="background-image:url(http://lorempixel.com/800/800/people/#{i})") Slide #{i}

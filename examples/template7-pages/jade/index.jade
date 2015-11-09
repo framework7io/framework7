@@ -1,0 +1,104 @@
+doctype
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui")
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
+    title My App
+    // Path to Framework7 Library CSS
+    link(rel="stylesheet", href="../../dist/css/framework7.ios.min.css")
+    // Path to your custom app styles
+    link(rel="stylesheet", href="css/my-app.css")
+  body
+    // Status bar overlay for fullscreen mode
+    .statusbar-overlay
+
+    // Panels overlay
+    .panel-overlay
+    // Left panel with reveal effect
+    .panel.panel-left.panel-reveal
+      .content-block
+        p Left panel content goes here
+    // Right panel with cover effect
+    .panel.panel-right.panel-cover
+      .content-block
+        p Right panel content goes here
+
+    // Views
+    .views
+      // Your main view, should have "view-main" class
+      .view.view-main
+        // Top Navbar
+        .navbar
+          .navbar-inner
+            .center.sliding Template7 Pages
+            .right
+              a(href="#").link.icon-only.open-panel 
+                i.icon.icon-bars
+        // Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes
+        .pages.navbar-through.toolbar-through
+          // Index Page
+          .page(data-page="index")
+            .page-content
+              .content-block-title Welcome To My Awesome App
+              .content-block
+                .content-block-inner
+                  p This app illustrates how you can use built-in template engine Template7 to render pages with required data.
+              .list-block
+                ul
+                  li
+                    a(href="#", data-template="about", data-context-name="about").item-link.item-content
+                      .item-inner 
+                        .item-title About Me
+                  li
+                    a(href="projects.html").item-link.item-content
+                      .item-inner 
+                        .item-title My Projects
+                  li
+                    a(href="cars.html", data-context-name="cars").item-link.item-content
+                      .item-inner
+                        .item-title My Cars
+                  li
+                    a(href="contacts.html").item-link.item-content
+                      .item-inner
+                          .item-title Contacts
+
+              .content-block-title Side panels
+              .content-block
+                .row
+                  .col-50
+                    a(href="#", data-panel="left").button.open-panel Left Panel
+                  .col-50
+                    a(href="#", data-panel="right").button.open-panel Right Panel
+          
+        // Bottom Toolbar
+        .toolbar
+          .toolbar-inner
+            a(href="#").link Link 1
+            a(href="#").link Link 2
+            
+    // Template7 templates
+    script(type="text/template7", id="about")
+      .navbar
+        .navbar-inner
+          .left.sliding
+            a(href="#").back.link 
+              i.icon.icon-back
+              span Back
+          .center.sliding About Me
+          .right
+            a(href="#").link.icon-only.open-panel 
+              i.icon.icon-bars
+      .pages
+        .page(data-page="about")
+          .page-content
+            .content-block
+              .content-block-inner
+                p Hello, my name is {{name}}. I am {{age}} years old and i am working as {{position}} at {{company}}.
+                p I have a lot of interests: {{#if interests}}{{join interests delimeter=", "}}{{/if}}
+
+    // Path to Framework7 Library JS
+    script(type="text/javascript", src="../../dist/js/framework7.min.js")
+    // Path to your app js
+    script(type="text/javascript", src="js/my-app.js")

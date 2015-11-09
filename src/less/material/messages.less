@@ -1,0 +1,204 @@
+/* === Messages === */
+@messagesAvatarSize: 48px;
+.messages-content {
+    background: #eee;
+}
+.messages {
+    .flexbox();
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+.messages-date {
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1;
+    margin: 10px 15px;
+    span {
+        font-weight: 400;
+    }
+}
+.message {
+    box-sizing: border-box;
+    margin: 0px 8px 8px 8px;
+    max-width: 80%;
+    .flexbox();
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    &:first-child {
+        margin-top: 8px;
+    }
+    &.message-pic {
+        img {
+            display: block;
+            height: auto;
+            max-width: 100%;
+        }
+    }
+}
+.message-name, .message-label, .message-date, .messages-date {
+    color:rgba(0,0,0,0.51);
+}
+.message-name {
+    font-size: 12px;
+    line-height: 1;
+    margin-bottom: 2px;
+    margin-top: 7px;
+    .message-hide-name & {
+        display: none;
+    }
+}
+.message-label {
+    font-size: 12px;
+    line-height: 1;
+    margin-top: 4px;
+    .message-hide-label & {
+        display: none;
+    }
+}
+.message-avatar {
+    width: @messagesAvatarSize;
+    height: @messagesAvatarSize;
+    border-radius: 100%;
+    margin-top: -@messagesAvatarSize;
+    position: relative;
+    top: 1px;
+    background-size: cover;
+    opacity: 1;
+    .transition(400ms);
+    .message-hide-avatar & {
+        opacity: 0;
+    }
+}
+.message-text {
+    box-sizing: border-box;
+    border-radius: 2px;
+    padding: 6px 8px;
+    min-width: 48px;
+    font-size: 16px;
+    line-height: 1.2;
+    word-break: break-word;
+    color:#333;
+    min-height: @messagesAvatarSize;
+    position: relative;
+    .translate3d(0,0,0);
+    .message-pic & {
+        padding: 8px;
+    }
+}
+.message-date {
+    font-size: 12px;
+    margin-top: 4px;
+    .message-pic img + & {
+        margin-top: 8px;
+    }
+}
+.message-sent {
+    -ms-flex-item-align: end;
+    -webkit-align-self: flex-end;
+    align-self: flex-end;
+    .align-items(flex-end);
+    .message-name, .message-label {
+        margin-right: 8px;
+    }
+    .message-text {
+        background-color: #C8E6C9;
+        margin-left: auto;
+        border-radius: 2px 2px 0 2px;
+        margin-right: 8px;
+        &:before {
+            position: absolute;
+            content: '';
+            border-left: 0px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid #C8E6C9;
+            left: 100%;
+            bottom: 0;
+            width: 0;
+            height: 0;
+        }
+    }
+    &.message-with-avatar {
+        .message-text, .message-name, .message-label {
+            margin-right: @messagesAvatarSize + 8px;
+        }
+    }
+}
+.message-received {
+    -ms-flex-item-align: start;
+    -webkit-align-self: flex-start;
+    align-self: flex-start;
+    .align-items(flex-start);
+    .message-text {
+        background-color: #fff;
+        border-radius: 2px 2px 2px 0px;
+        margin-left: 8px;
+        &:before {
+            position: absolute;
+            content: '';
+            border-left: 8px solid transparent;
+            border-right: 0px solid transparent;
+            border-bottom: 8px solid #fff;
+            right: 100%;
+            bottom: 0;
+            width: 0;
+            height: 0;
+        }
+    }
+    .message-name, .message-label {
+        margin-left: 8px;
+    }
+    &.message-with-avatar {
+        .message-text, .message-name, .message-label {
+            margin-left: @messagesAvatarSize + 8px;
+        }
+    }    
+}
+
+.message-appear-from-bottom {
+    -webkit-animation: messageAppearFromBottom 400ms;
+    animation: messageAppearFromBottom 400ms;
+}
+.message-appear-from-top {
+    -webkit-animation: messageAppearFromTop 400ms;
+    animation: messageAppearFromTop 400ms;   
+}
+
+@-webkit-keyframes messageAppearFromBottom {
+    from {
+        -webkit-transform: translate3d(0,100%,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@keyframes messageAppearFromBottom {
+    from {
+        transform: translate3d(0,100%,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
+}
+@-webkit-keyframes messageAppearFromTop {
+    from {
+        -webkit-transform: translate3d(0,-100%,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+@keyframes messageAppearFromTop {
+    from {
+        transform: translate3d(0,-100%,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
+}

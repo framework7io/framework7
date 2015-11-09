@@ -1,0 +1,138 @@
+.page(data-page="cards")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="index.html").back.link.icon-only
+          i.icon.icon-back
+      .center Cards
+      .right
+        a(href="#").link.open-panel.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+      p Cards, along with List View, is a one more great way to contain and orginize your information. Cards contains unique related data, for example, a photo, text, and link all about a single subject. Cards are typically an entry point to more complex and detailed information.
+    .content-block-title Simple Cards
+    .card
+      .card-content 
+        .card-content-inner This is simple card with plain text. But card could contain its own header, footer, list view, image, and any elements inside.
+    .card
+      .card-header Card header
+      .card-content 
+        .card-content-inner Card with header and footer. Card header is used to display card title and footer for some additional information or for custom actions.
+      .card-footer Card Footer
+    .card
+      .card-content
+        .card-content-inner Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. 
+
+    .content-block-title Styled Cards
+    .card.ks-card-header-pic
+      .card-header.color-white.no-border(style="background-image:url(http://lorempixel.com/1000/600/nature/3/)", valign="bottom") Journey To Mountains
+      .card-content 
+        .card-content-inner 
+          p.color-gray Posted on January 21, 2015
+          p Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...
+      .card-footer
+        a(href="#").link Like
+        a(href="#").link Read more
+    .card.ks-card-header-pic
+      .card-header.color-white.no-border(style="background-image:url(http://lorempixel.com/1000/600/people/6/)", valign="bottom") Lorem Ipsum
+      .card-content 
+        .card-content-inner 
+          p.color-gray Posted on January 21, 2015
+          p Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...
+      .card-footer
+        a(href="#").link Like
+        a(href="#").link Read more
+    
+    .content-block-title Facebook Cards
+    .card.ks-facebook-card
+      .card-header.no-border
+        .ks-facebook-avatar
+          img(src="http://lorempixel.com/68/68/people/1/", width="34" height="34")
+        .ks-facebook-name John Doe
+        .ks-facebook-date Monday at 3:47 PM
+      .card-content 
+        img(src="http://lorempixel.com/1000/700/nature/8/", width="100%")
+      .card-footer.no-border
+        a(href="#").link Like
+        a(href="#").link Comment
+        a(href="#").link Share
+    .card.ks-facebook-card
+      .card-header
+        .ks-facebook-avatar
+          img(src="http://lorempixel.com/68/68/people/1/", width="34" height="34")
+        .ks-facebook-name John Doe
+        .ks-facebook-date Monday at 2:15 PM
+      .card-content 
+        .card-content-inner
+          p What a nice photo i took yesterday!
+          img(src="http://lorempixel.com/1000/700/nature/8/", width="100%")
+          p.color-gray Likes: 112 &nbsp;&nbsp; Comments: 43
+      .card-footer
+        a(href="#").link Like
+        a(href="#").link Comment
+        a(href="#").link Share
+    .content-block-title Cards With List View
+    .card
+      .card-content 
+        .list-block
+          ul
+            li
+              a.item-link.item-content(href="#")
+                .item-media
+                  i.icon.icon-f7
+                .item-inner
+                  .item-title Link 1
+            li
+              a.item-link.item-content(href="#")
+                .item-media
+                  i.icon.icon-f7
+                .item-inner
+                  .item-title Link 2
+            li
+              a.item-link.item-content(href="#")
+                .item-media
+                  i.icon.icon-f7
+                .item-inner
+                  .item-title Link 3
+            li
+              a.item-link.item-content(href="#")
+                .item-media
+                  i.icon.icon-f7
+                .item-inner
+                  .item-title Link 4
+            li
+              a.item-link.item-content(href="#")
+                .item-media
+                  i.icon.icon-f7
+                .item-inner
+                  .item-title Link 5
+    .card
+      .card-header New Releases:
+      .card-content 
+        .list-block.media-list
+          ul
+            li.item-content
+              .item-media
+                img(src="http://lorempixel.com/88/88/fashion/4", width="44")
+              .item-inner
+                .item-title-row
+                  .item-title Yellow Submarine
+                .item-subtitle Beatles
+            li.item-content
+              .item-media
+                img(src="http://lorempixel.com/88/88/fashion/5", width="44")
+              .item-inner
+                .item-title-row
+                  .item-title Don't Stop Me Now
+                .item-subtitle Queen
+            li.item-content
+              .item-media
+                img(src="http://lorempixel.com/88/88/fashion/6", width="44")
+              .item-inner
+                .item-title-row
+                  .item-title Billie Jean
+                .item-subtitle Michael Jackson
+      .card-footer 
+        span January 20, 2015
+        span 5 comments

@@ -7,77 +7,101 @@ app.pushStateClearQueue = function () {
     var queue = app.pushStateQueue.pop();
     var animatePages;
     if (app.params.pushStateNoAnimation === true) animatePages = false;
-    if (queue.action === 'goBack') {
-        app.goBack(queue.view, undefined, animatePages, false, false);
+    if (queue.action === 'back') {
+        app.router.back(queue.view, {animatePages: animatePages});
     }
     if (queue.action === 'loadPage') {
-        app.loadPage(queue.view, queue.stateUrl, animatePages, false);
+        app.router.load(queue.view, {url: queue.stateUrl, animatePages: animatePages, pushState: false});
     }
     if (queue.action === 'loadContent') {
-        app.loadContent(queue.view, queue.stateContent, animatePages, false);
+        app.router.load(queue.view, {content: queue.stateContent, animatePages: animatePages, pushState: false});
+    }
+    if (queue.action === 'loadPageName') {
+        app.router.load(queue.view, {pageName: queue.statePageName, animatePages: animatePages, pushState: false});
     }
 };
 
 app.initPushState = function () {
-    var blockPopstate = true;
-    $(window).on('load', function () {
-        setTimeout(function () {
-            blockPopstate = false;
-        }, 0);
-    });
+    var blockPopstate;
+    if (app.params.pushStatePreventOnLoad) {
+        blockPopstate = true;
+        $(window).on('load', function () {
+            setTimeout(function () {
+                blockPopstate = false;
+            }, 0);
+        });
+    }
+
     function handlePopState(e) {
         if (blockPopstate) return;
-        var mainView;
-        for (var i = 0; i < app.views.length; i++) {
-            if (app.views[i].main) mainView = app.views[i];
-        }
+        var mainView = app.mainView;
         if (!mainView) return;
         var state = e.state;
         if (!state) {
             state = {
+                viewIndex: app.views.indexOf(mainView),
                 url : mainView.history[0]
             };
         }
+        if (state.viewIndex < 0) return;
+        var view = app.views[state.viewIndex];
         var stateUrl = state && state.url || undefined;
         var stateContent = state && state.content || undefined;
+        var statePageName = state && state.pageName || undefined;
         var animatePages;
+
         if (app.params.pushStateNoAnimation === true) animatePages = false;
-        if (stateUrl !== mainView.url) {
-            if (mainView.history.indexOf(stateUrl) >= 0) {
+
+        if (stateUrl !== view.url) {
+            if (view.history.indexOf(stateUrl) >= 0) {
                 // Go Back
-                if (app.allowPageChange) {
-                    app.goBack(mainView, undefined, animatePages, false, false);
+                if (view.allowPageChange) {
+                    app.router.back(view, {url:undefined, animatePages: animatePages, pushState: false, preloadOnly:false});
                 }
                 else {
                     app.pushStateQueue.push({
-                        action: 'goBack',
-                        view: mainView
-                    });
-                }
-            }
-            else if (stateUrl && !stateContent) {
-                // Load Page
-                if (app.allowPageChange) {
-                    app.loadPage(mainView, stateUrl, animatePages, false);
-                }
-                else {
-                    app.pushStateQueue.unshift({
-                        action: 'loadPage',
-                        stateUrl: stateUrl,
-                        view: mainView
+                        action: 'back',
+                        view: view
                     });
                 }
             }
             else if (stateContent) {
                 // Load Page
-                if (app.allowPageChange) {
-                    app.loadContent(mainView, stateContent, animatePages, false);
+                if (view.allowPageChange) {
+                    app.router.load(view, {content:stateContent, animatePages: animatePages, pushState: false});
                 }
                 else {
                     app.pushStateQueue.unshift({
                         action: 'loadContent',
                         stateContent: stateContent,
-                        view: mainView
+                        view: view
+                    });
+                }
+
+            }
+            else if (statePageName) {
+                // Load Page by page name with Dom Cache
+                if (view.allowPageChange) {
+                    app.router.load(view, {pageName:statePageName, animatePages: animatePages, pushState: false});
+                }
+                else {
+                    app.pushStateQueue.unshift({
+                        action: 'loadPageName',
+                        statePageName: statePageName,
+                        view: view
+                    });
+                }
+            }
+            else  {
+                // Load Page
+                if (view.allowPageChange) {
+                    app.router.load(view, {url:stateUrl, animatePages: animatePages, pushState: false});
+                }
+                else {
+                    app.pushStateQueue.unshift({
+                        action: 'loadPage',
+                        stateUrl: stateUrl,
+                        view: view
                     });
                 }
             }

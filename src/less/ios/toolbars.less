@@ -1,0 +1,369 @@
+/* === Toolbars === */
+
+//Toolbar/Navbar
+@toolbarBg : #f7f7f8;
+@toolbarBgBlured: rgba(248,248,249, 0.85);
+@toolbarBorderColor: #c4c4c4;
+@toolbarLinksColor: @themeColor;
+@toolbarSize: 44px;
+
+//Tab bar
+@tabbarLabelsSize: 50px;
+@tabbarLinksColor: #929292;
+@tabbarActiveLinksColor: @themeColor;
+@tabbarLabelsSizeTablet: 56px;
+
+// Toolbars animations
+@toolbarDuration: 400ms;
+
+.navbar-inner, .toolbar-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+    .flexbox();
+    .justify-content(space-between);
+    .align-items(center);
+}
+.navbar-inner.cached {
+    display: none;
+}
+.navbar, .toolbar {
+    height: @toolbarSize;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 17px;
+    position: relative;
+    margin: 0;
+    z-index: 500;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    b {
+        font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
+    }
+}
+.navbar, .toolbar, .subnavbar {
+    background: @toolbarBg;
+    a.link {
+        line-height: @toolbarSize;
+        height: @toolbarSize;
+        text-decoration: none;
+        position: relative;
+        .flexbox();
+        .justify-content(flex-start);
+        .align-items(center);
+        .transition(300ms);
+        .transform(translateZ(0px));
+        html:not(.watch-active-state) &:active, &.active-state {
+            opacity: 0.3;
+            .transition(0ms);
+        }
+        i+span, i+i, span+i, span+span {
+            margin-left: 7px;
+        }
+    }
+    a.icon-only {
+        min-width: @toolbarSize;
+        .flexbox();
+        .justify-content(center);
+        .align-items(center);
+        margin: 0;
+    }
+    i.icon {
+        display: block;
+    }
+}
+.navbar {
+    left: 0;
+    top: 0;
+    .hairline(bottom, @toolbarBorderColor);
+    &:after {
+        backface-visibility: hidden;
+    }
+    &.no-border {
+        .hairline-remove(bottom);
+    }
+    .center {
+        font-size: 17px;
+        font-weight: 500;
+        html.ios-gt-8 & {
+            font-weight: 600;
+        }
+        text-align: center;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        line-height: @toolbarSize;
+        .flex-shrink(10);
+        .flexbox();
+        .align-items(center);
+    }
+    .left, .right {
+        .flex-shrink(0);
+        .flexbox();
+        .justify-content(flex-start);
+        .align-items(center);
+        .translate3d(0,0,0);
+        a+a {
+            margin-left: 15px;
+        }
+    }
+    .left {
+        margin-right: 10px;
+    }
+    .right {
+        margin-left: 10px;
+    }
+    .right:first-child {
+        position: absolute;
+        right: 8px;
+        height: 100%;
+    }
+    .popup & {
+        .translate3d(0,0,0);
+    }
+}
+.subnavbar {
+    height: @toolbarSize;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: -1px;
+    z-index: 20;
+    box-sizing: border-box;
+    padding: 0 8px;
+    .flexbox();
+    .justify-content(space-between);
+    .align-items(center);
+    .hairline(bottom, @toolbarBorderColor);
+    &.no-border {
+        .hairline-remove(bottom);
+    }
+    .navbar.no-border & {
+        margin-top: 0;
+    }
+    .navbar-on-left &, .navbar-on-right &{
+        pointer-events: none;
+    }
+    .navbar &, .page & {
+        position: absolute;
+    }
+    .page > & {
+        top: 0;
+        margin-top: 0;
+    }
+    > .buttons-row {
+        width: 100%;
+    }
+    .searchbar, &.searchbar {
+        position: absolute;
+    }
+    &.searchbar, .searchbar {
+        position: absolute;
+    }
+    .searchbar {
+        left: 0;
+        top: 0;
+    }
+}
+.toolbar {
+    left: 0;
+    bottom: 0;
+    .hairline(top, @toolbarBorderColor);
+    &.no-border {
+        .hairline-remove(top);
+    }
+    a {
+        .flex-shrink(1);
+        position: relative;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+        overflow: hidden;
+    }
+}
+
+// Tabbar
+.tabbar {
+    color: @tabbarLinksColor;
+    z-index: 5001;
+    a {
+        color: @tabbarLinksColor;
+    }
+    a.active {
+        color: @tabbarActiveLinksColor;
+    }
+    a.link {
+        line-height: 1.4;
+    }
+    a.tab-link, a.link {
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        .flexbox();
+        .justify-content(center);
+        .align-items(center);
+        overflow: visible;
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+    i.icon {
+        height: 30px;
+    }
+}
+.tabbar-labels {
+    height: @tabbarLabelsSize;
+    a.tab-link, a.link {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        height: 100%;
+        .justify-content(space-between);
+        i + span {
+            margin: 0;
+        }
+    }
+    span.tabbar-label {
+        line-height: 1;
+        display: block;
+        margin: 0;
+        letter-spacing: 0.01em;
+        font-size: 10px;
+        position: relative;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+@media all and (min-width:768px) {
+    .tabbar {
+        .toolbar-inner {
+            .justify-content(center);
+        }
+        a.tab-link, a.link {
+            width: auto;
+            min-width: 105px;
+        }
+    }
+    .tabbar-labels {
+        height: @tabbarLabelsSizeTablet;
+        span.tabbar-label {
+            font-size: 14px;
+        }
+    }
+}
+
+.navbar-from-right-to-center {
+    .left, .right, .center, .subnavbar, .fading {
+        .animation(navbarElementFadeIn @toolbarDuration forwards);
+    }
+    .sliding {
+        opacity: 1;
+    }
+    
+}
+.navbar-from-center-to-right {
+    .left, .right, .center, .subnavbar, .fading {
+        .animation(navbarElementFadeOut @toolbarDuration forwards);
+    }
+    .sliding {
+        opacity: 0;
+    }
+    .subnavbar.sliding {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes navbarElementFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes navbarElementFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.navbar-from-center-to-left {
+    .left, .right, .center, .subnavbar, .fading {
+        .animation(navbarElementFadeOut @toolbarDuration forwards);
+    }
+    .sliding {
+        opacity: 0;
+    }
+    .subnavbar.sliding {
+        opacity: 1;
+    }
+}
+.navbar-from-left-to-center {
+    .left, .right, .center, .subnavbar, .fading {
+        .animation(navbarElementFadeIn @toolbarDuration forwards);
+    }
+    .sliding {
+        opacity: 1;
+    }
+}
+.navbar-on-left {
+    .left, .right, .center, .subnavbar, .fading {
+        opacity: 0;
+    }
+    .sliding {
+        opacity: 0;
+    }
+    .subnavbar.sliding {
+        opacity: 1;
+        .translate3d(-100%,0,0);
+    }
+}
+.navbar-on-right {
+    .left, .right, .center, .subnavbar, .fading {
+        opacity: 0;
+    }
+    .sliding {
+        opacity: 0;
+    }
+    .subnavbar.sliding {
+        .translate3d(100%,0,0);
+    }
+}
+@-webkit-keyframes navbarElementFadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes navbarElementFadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.navbar-from-right-to-center, .navbar-from-center-to-right, .navbar-from-center-to-left, .navbar-from-left-to-center {
+    .left.sliding .back.link .icon {
+        .transition(@toolbarDuration);
+    }
+    .sliding {
+        .transition(@toolbarDuration);
+        .animation(none);
+    }
+}

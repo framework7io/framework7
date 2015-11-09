@@ -3,70 +3,97 @@
 Framework 7
 ===========================*/
 window.Framework7 = function (params) {
-
     // App
     var app = this;
 
     // Version
-    app.version = '0.9.0';
+    app.version = '1.3.5';
 
     // Default Parameters
     app.params = {
         cache: true,
         cacheIgnore: [],
+        cacheIgnoreGetParameters: false,
         cacheDuration: 1000 * 60 * 10, // Ten minutes 
         preloadPreviousPage: true,
+        uniqueHistory: false,
+        uniqueHistoryIgnoreGetParameters: false,
+        dynamicPageUrl: 'content-{{index}}',
+        allowDuplicateUrls: false,
+        router: true,
         // Push State
         pushState: false,
         pushStateRoot: undefined,
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',
+        pushStatePreventOnLoad: true,
         // Fast clicks
-        fastClicks : true,
+        fastClicks: true,
+        fastClicksDistanceThreshold: 10,
+        fastClicksDelayBetweenClicks: 50,
+        // Tap Hold
+        tapHold: false,
+        tapHoldDelay: 750,
+        tapHoldPreventClicks: true,
+        // Active State
+        activeState: true,
+        activeStateElements: 'a, button, label, span',
         // Animate Nav Back Icon
         animateNavBackIcon: false,
         // Swipe Back
         swipeBackPage: true,
         swipeBackPageThreshold: 0,
         swipeBackPageActiveArea: 30,
-        swipeBackPageBoxShadow: true,
+        swipeBackPageAnimateShadow: true,
+        swipeBackPageAnimateOpacity: true,
         // Ajax
         ajaxLinks: undefined, // or CSS selector
+        // External Links
+        externalLinks: '.external', // CSS selector
         // Sortable
         sortable: true,
+        // Scroll toolbars
+        hideNavbarOnPageScroll: false,
+        hideToolbarOnPageScroll: false,
+        hideTabbarOnPageScroll: false,
+        showBarsOnPageScrollEnd: true,
+        showBarsOnPageScrollTop: true,
         // Swipeout
         swipeout: true,
+        swipeoutActionsNoFold: false,
         swipeoutNoFollow: false,
         // Smart Select Back link template
-        smartSelectBackTemplate: '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>{{backText}}</span></a></div>',
+        smartSelectOpenIn: 'page', // or 'popup' or 'picker'
         smartSelectBackText: 'Back',
+        smartSelectPopupCloseText: 'Close',
+        smartSelectPickerCloseText: 'Done',
         smartSelectSearchbar: false,
+        smartSelectBackOnSelect: false,
+        // Tap Navbar or Statusbar to scroll to top
+        scrollTopOnNavbarClick: false,
+        scrollTopOnStatusbarClick: false,
         // Panels
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,
+        swipePanelCloseOpposite: true,
+        swipePanelOnlyClose: false,
         swipePanelNoFollow: false,
         swipePanelThreshold: 0,
         panelsCloseByOutside: true,
-        panelsVisibleZIndex: 6000,
         // Modals
-        modalTemplate: '<div class="modal {{noButtons}}">' +
-                            '<div class="modal-inner">' +
-                                '{{if title}}<div class="modal-title">{{title}}</div>{{/if title}}' +
-                                '<div class="modal-text">{{text}}</div>' +
-                                '{{afterText}}' +
-                            '</div>' +
-                            '<div class="modal-buttons">{{buttons}}</div>' +
-                        '</div>',
-        modalActionsTemplate: '<div class="actions-modal">{{buttons}}</div>',
         modalButtonOk: 'OK',
         modalButtonCancel: 'Cancel',
+        modalUsernamePlaceholder: 'Username',
+        modalPasswordPlaceholder: 'Password',
         modalTitle: 'Framework7',
         modalCloseByOutside: false,
         actionsCloseByOutside: true,
         popupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
-        // Auto init
-        init: true,
+        modalStack: true,
+        // Lazy Load
+        imagesLazyLoadThreshold: 0,
+        imagesLazyLoadSequential: true,
         // Name space
         viewClass: 'view',
         viewMainClass: 'view-main',
@@ -74,9 +101,22 @@ window.Framework7 = function (params) {
         // Notifications defaults
         notificationCloseOnClick: false,
         notificationCloseIcon: true,
+        notificationCloseButtonText: 'Close',
         // Animate Pages
-        animatePages: true
-
+        animatePages: true,
+        // Template7
+        templates: {},
+        template7Data: {},
+        template7Pages: false,
+        precompileTemplates: false,
+        // Material
+        material: false,
+        materialPageLoadDelay: 0,
+        materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
+        materialRipple: true,
+        materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .floating-button',
+        // Auto init
+        init: true,
     };
 
     // Extend defaults with parameters
@@ -84,8 +124,12 @@ window.Framework7 = function (params) {
         app.params[param] = params[param];
     }
 
-    // Expose DOM lib
-    app.$ = $;
+    // DOM lib
+    var $ = Dom7;
+
+    // Template7 lib
+    var t7 = Template7;
+    app._compiledTemplates = {};
 
     // Touch events
     app.touchEvents = {
@@ -95,10 +139,16 @@ window.Framework7 = function (params) {
     };
 
     // Link to local storage
-    app.ls = localStorage;
+    app.ls = window.localStorage;
 
     // RTL
     app.rtl = $('body').css('direction') === 'rtl';
     if (app.rtl) $('html').attr('dir', 'rtl');
+
+    // Overwrite statusbar overlay
+    if (typeof app.params.statusbarOverlay !== 'undefined') {
+        if (app.params.statusbarOverlay) $('html').addClass('with-statusbar-overlay');
+        else $('html').removeClass('with-statusbar-overlay');
+    }
 
     

@@ -1,0 +1,60 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="forms.html").back.link
+        i.icon.icon-back
+        span Forms
+    .center.sliding Smart Selects
+    .right
+      a(href="#").link.open-panel.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="form-selects")
+    .page-content
+      .content-block Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
+      .list-block
+        ul
+          li
+            a(href="#").item-link.smart-select
+              select(name="fruits")
+                option(value="apple", selected=true) Apple
+                option(value="pineapple") Pineapple
+                option(value="pear") Pear
+                option(value="orange") Orange
+                option(value="melon") Melon
+                option(value="peach") Peach
+                option(value="banana") Banana
+              .item-content
+                .item-inner
+                  .item-title Fruit
+          li
+            a(href="#").item-link.smart-select
+              select(name="car", multiple)
+                optgroup(label="Japanese")
+                  option(value="honda", selected=true) Honda
+                  option(value="lexus") Lexus
+                  option(value="mazda") Mazda
+                  option(value="nissan") Nissan
+                  option(value="toyota") Toyota
+                optgroup(label="German")
+                  option(value="audi", selected=true) Audi
+                  option(value="bmw") BMW
+                  option(value="mercedes") Mercedes
+                  option(value="vw") Volkswagen
+                  option(value="volvo") Volvo
+                optgroup(label="American")
+                  option(value="cadillac") Cadillac
+                  option(value="chrysler") Chrysler
+                  option(value="dodge") Dodge
+                  option(value="ford", selected=true) Ford
+              .item-content
+                .item-inner
+                  .item-title Car
+          li
+            a(href="#").item-link.smart-select
+              select(name="mac-windows")
+                option(value="mac", selected=true) Mac
+                option(value="windows") Windows
+              .item-content
+                .item-inner
+                  .item-title Mac or Windows

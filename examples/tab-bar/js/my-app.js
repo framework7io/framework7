@@ -2,7 +2,7 @@
 var myApp = new Framework7();
 
 // Export selectors engine
-var $$ = Framework7.$;
+var $$ = Dom7;
 
 // Add views
 var view1 = myApp.addView('#view-1');

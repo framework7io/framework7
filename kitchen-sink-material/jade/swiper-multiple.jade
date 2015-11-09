@@ -1,0 +1,52 @@
+.page(data-page="swiper-multiple")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="swiper.html").back.link.icon-only
+          i.icon.icon-back
+      .center Multiple Sliders
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+
+    .content-block-title 1 Slide Per View, 50px Between
+    .swiper-container.swiper-init.ks-carousel-slider(data-pagination=".swiper-pagination-c1", data-spaceBetween="50")
+      .swiper-pagination.swiper-pagination-c1
+      .swiper-wrapper
+        - for (var i = 1; i < 11; i++)
+          .swiper-slide Slide #{i}
+
+    .content-block-title 2 Slides Per View, 20px Between
+    .swiper-container.swiper-init.ks-carousel-slider(data-pagination=".swiper-pagination-c2", data-spaceBetween="20", data-slidesPerView="2")
+      .swiper-pagination.swiper-pagination-c2
+      .swiper-wrapper
+        - for (var i = 1; i < 11; i++)
+          .swiper-slide Slide #{i}
+
+    .content-block-title 3 Slides Per View, 10px Between
+    .swiper-container.swiper-init.ks-carousel-slider(data-pagination=".swiper-pagination-c3", data-spaceBetween="10", data-slidesPerView="3")
+      .swiper-pagination.swiper-pagination-c3
+      .swiper-wrapper
+        - for (var i = 1; i < 11; i++)
+          .swiper-slide Slide #{i}
+    .content-block-title Auto Slides Per View + Centered
+    .swiper-container.swiper-init.ks-carousel-slider.ks-carousel-slider-auto(data-pagination=".swiper-pagination-c4", data-spaceBetween="10", data-slidesPerView="auto", data-centeredSlides="true")
+      .swiper-pagination.swiper-pagination-c4
+      .swiper-wrapper
+        - for (var i = 1; i < 11; i++)
+          .swiper-slide Slide #{i}
+
+    .content-block-title Vertical, 10px Between
+    .swiper-container.swiper-init.ks-carousel-slider(data-pagination=".swiper-pagination-c5", data-spaceBetween="10", data-direction="vertical")
+      .swiper-pagination.swiper-pagination-c5
+      .swiper-wrapper
+        - for (var i = 1; i < 6; i++)
+          .swiper-slide Slide #{i}
+
+    .content-block-title Slow speed
+    .swiper-container.swiper-init.ks-carousel-slider(data-speed="900", data-pagination=".swiper-pagination-c6", data-spaceBetween="50")
+      .swiper-pagination.swiper-pagination-c6
+      .swiper-wrapper
+        - for (var i = 1; i < 11; i++)
+          .swiper-slide Slide #{i}

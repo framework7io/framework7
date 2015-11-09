@@ -11,6 +11,9 @@ app.openPanel = function (panelPosition) {
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open');
+    if (app.params.material) {
+        $('.panel-overlay').show();
+    }
     if (panel.find('.' + app.params.viewClass).length > 0) {
         if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
     }
@@ -31,6 +34,7 @@ app.openPanel = function (panelPosition) {
                 else {
                     panel.trigger('closed');
                 }
+                if (app.params.material) $('.panel-overlay').css({display: ''});
                 app.allowPanelOpen = true;
             }
             else panelTransitionEnd();
@@ -65,24 +69,48 @@ app.closePanel = function () {
 ************   Swipe panels   ************
 ======================================================*/
 app.initSwipePanels = function () {
-    var panel = $('.panel.panel-' + app.params.swipePanel);
-    if (panel.length === 0) return;
-
+    var panel, side;
+    if (app.params.swipePanel) {
+        panel = $('.panel.panel-' + app.params.swipePanel);
+        side = app.params.swipePanel;
+        if (panel.length === 0) return;
+    }
+    else {
+        if (app.params.swipePanelOnlyClose) {
+            if ($('.panel').length === 0) return;
+        }
+        else return;
+    }
+    
     var panelOverlay = $('.panel-overlay');
-    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, opened, panelWidth, effect, direction, side;
+    var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, translate, overlayOpacity, opened, panelWidth, effect, direction;
     var views = $('.' + app.params.viewsClass);
-    side = app.params.swipePanel;
 
     function handleTouchStart(e) {
-        if (!app.allowPanelOpen || !app.params.swipePanel) return;
+        if (!app.allowPanelOpen || (!app.params.swipePanel && !app.params.swipePanelOnlyClose) || isTouched) return;
         if ($('.modal-in, .photo-browser-in').length > 0) return;
+        if (!(app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose)) {
+            if ($('.panel.active').length > 0 && !panel.hasClass('active')) return;
+        }
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-        if (app.params.swipePanelActiveArea) {
-            if (app.params.swipePanel === 'left') {
+        if (app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose) {
+            if ($('.panel.active').length > 0) {
+                side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
+            }
+            else {
+                if (app.params.swipePanelOnlyClose) return;
+                side = app.params.swipePanel;
+            }
+            if (!side) return;
+        }
+        panel = $('.panel.panel-' + side);
+        opened = panel.hasClass('active');
+        if (app.params.swipePanelActiveArea && !opened) {
+            if (side === 'left') {
                 if (touchesStart.x > app.params.swipePanelActiveArea) return;
             }
-            if (app.params.swipePanel === 'right') {
+            if (side === 'right') {
                 if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) return;
             }
         }
@@ -148,10 +176,11 @@ app.initSwipePanels = function () {
 
         if (!isMoved) {
             effect = panel.hasClass('panel-cover') ? 'cover' : 'reveal';
-            panel.show();
-            panelOverlay.show();
-            opened = panel.hasClass('active');
-            panelWidth = panel.width();
+            if (!opened) {
+                panel.show();
+                panelOverlay.show();
+            }
+            panelWidth = panel[0].offsetWidth;
             panel.transition(0);
             if (panel.find('.' + app.params.viewClass).length > 0) {
                 if (app.sizeNavbars) app.sizeNavbars(panel.find('.' + app.params.viewClass)[0]);
@@ -182,11 +211,17 @@ app.initSwipePanels = function () {
         }
         if (effect === 'reveal') {
             views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
-            panelOverlay.transform('translate3d(' + translate + 'px,0,0)');
+            panelOverlay.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+            
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
         else {
             panel.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+            if (app.params.material) {
+                panelOverlay.transition(0);
+                overlayOpacity = Math.abs(translate/panelWidth);
+                panelOverlay.css({opacity: overlayOpacity});
+            }
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
     }
@@ -258,11 +293,13 @@ app.initSwipePanels = function () {
                 }
                 else {
                     var target = effect === 'reveal' ? views : panel;
+                    panel.trigger('close');
                     $('body').addClass('panel-closing');
                     target.transitionEnd(function () {
-                        app.allowPanelOpen = true;
+                        panel.trigger('closed');
                         panel.css({display: ''});
                         $('body').removeClass('panel-closing');
+                        app.allowPanelOpen = true;
                     });
                 }
             }
@@ -272,7 +309,7 @@ app.initSwipePanels = function () {
             views.transform('');
         }
         panel.transition('').transform('');
-        panelOverlay.css({display: ''}).transform('');
+        panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');
     }
     $(document).on(app.touchEvents.start, handleTouchStart);
     $(document).on(app.touchEvents.move, handleTouchMove);

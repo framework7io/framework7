@@ -1,0 +1,42 @@
+/* === Touch ripple === */
+// Ripple Elements
+.ripple, .floating-button, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button {
+    -webkit-user-select: none;
+    user-select: none;
+}
+// Ripple
+.ripple-wave {
+    left: 0;
+    top: 0;
+    position: absolute !important; 
+    border-radius: 50%;
+    pointer-events: none; 
+    z-index:-1; 
+    background:rgba(0,0,0,0.1);
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+    .transform(translate3d(0px, 0px, 0) scale(0));
+    .transition(1400ms);
+    &.ripple-wave-fill {
+        .transition(300ms);
+        opacity: 0.35;
+    }
+    &.ripple-wave-out {
+        .transition(600ms);
+        opacity: 0;
+    }
+    .button-fill &,  .picker-calendar-day &{
+        z-index: 1;
+    }
+}
+.button-fill, .navbar, .toolbar, .subnavbar, .searchbar, .notifications, .floating-button {
+    .ripple-wave {
+        background:rgba(255,255,255,0.3);
+    }
+}
+.messagebar {
+    .ripple-wave {
+        background:rgba(0,0,0,0.1);
+    }   
+}

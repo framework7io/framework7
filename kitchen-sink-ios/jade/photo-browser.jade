@@ -1,0 +1,40 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Photo Browser
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="photo-browser")
+    .page-content
+      .content-block
+        p Photo Browser is a standalone and highly configurable component that allows to open window with photo viewer and navigation elements with the following features:
+        ul
+          li Swiper between photos
+          li Multi-gestures support for zooming
+          li Toggle zoom by double tap on photo
+          li Single click on photo to toggle Exposition mode
+        p Photo Browser could be opened in a three ways - as a Standalone component, in Popup, and as separate Page:
+        .row
+          .col-33
+            a(href="#").button.ks-pb-standalone Standalone
+          .col-33
+            a(href="#").button.ks-pb-popup Popup
+          .col-33
+            a(href="#").button.ks-pb-page Page
+      .content-block
+        p For Popup and Standalone types, Photo Browser suppots 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:
+        .row
+          .col-50
+            a(href="#").button.ks-pb-standalone-dark Standalone
+          .col-50
+            a(href="#").button.ks-pb-popup-dark Popup
+      .content-block
+        p Photo Browser also supports lazy loading for passed images:
+        p
+          a(href="#").button.ks-pb-lazy Lazy Loading Images
+          

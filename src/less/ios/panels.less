@@ -1,0 +1,99 @@
+/* === Panels === */
+@panelWidth:260px;
+@panelsDuration: 400ms;
+.panel-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0);
+    opacity: 0;
+    z-index: 5999;
+    display: none;
+}
+.panel {
+    z-index: 1000;
+    display: none;
+    background: #111;
+    box-sizing: border-box;
+    .scrollable();
+    position: absolute;
+    width: @panelWidth;
+    top: 0;
+    height: 100%;
+    .translate3d(0);
+    .transition(@panelsDuration);
+
+    &.panel-left {
+        &.panel-cover {
+            z-index: 6000;
+            left: -@panelWidth;
+        }
+        &.panel-reveal {
+            left: 0;
+        }
+    }
+    &.panel-right {
+        &.panel-cover {
+            z-index: 6000;
+            right: -@panelWidth;
+        }
+        &.panel-reveal {
+            right: 0;
+        }
+    }
+}
+body.with-panel-left-cover, body.with-panel-right-cover {
+    .views {
+        .translate3d(0);
+    }
+    .panel-overlay {
+        display: block;
+    }
+}
+body.with-panel-left-reveal, body.with-panel-right-reveal {
+    .views {
+        .transition(@panelsDuration);
+        -webkit-transition-property: -webkit-transform;
+        -moz-transition-property: -moz-transform;
+        transition-property: transform;
+    }
+    .panel-overlay {
+        display: block;
+    }
+}
+body.with-panel-left-reveal {
+    .views {
+        .translate3d(@panelWidth);
+    }
+    .panel-overlay {
+        margin-left: @panelWidth;
+    }
+}
+body.with-panel-left-cover {
+    .panel-left {
+        .translate3d(@panelWidth);
+    }
+}
+body.with-panel-right-reveal {
+    .views {
+        .translate3d(-@panelWidth);
+    }
+    .panel-overlay {
+        margin-left: -@panelWidth;
+    }
+}
+body.with-panel-right-cover {
+    .panel-right {
+        .translate3d(-@panelWidth);
+    }
+}
+body.panel-closing {
+    .views {
+        .transition(@panelsDuration);
+        -webkit-transition-property: -webkit-transform;
+        -moz-transition-property: -moz-transform;
+        transition-property: transform;
+    }
+}

@@ -1,0 +1,18 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="swiper.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Space Between Slides
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="swiper-horizontal")
+    .page-content
+      .swiper-container.swiper-init.ks-demo-slider(data-pagination=".swiper-pagination", data-space-between="50", data-pagination-hide="true")
+        .swiper-pagination
+        .swiper-wrapper
+          - for (var i = 1; i < 11; i++)
+            .swiper-slide.ks-slide-white Slide #{i}

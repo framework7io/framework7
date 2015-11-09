@@ -2,6 +2,9 @@
 ************   App Init   ************
 ======================================================*/
 app.init = function () {
+    // Compile Template7 templates on app load
+    if (app.initTemplate7Templates) app.initTemplate7Templates();
+    
     // Init Plugins
     if (app.initPlugins) app.initPlugins();
     
@@ -13,15 +16,13 @@ app.init = function () {
     if (app.initClickEvents) app.initClickEvents();
 
     // Init each page callbacks
-    $('.page').each(function () {
-        var pageContainer = $(this);
-        var viewContainer = pageContainer.parents('.' + app.params.viewClass);
-        var view = viewContainer[0].f7View || false;
-        var url = view && view.url ? view.url : false;
-        if (viewContainer) {
-            viewContainer.attr('data-page', pageContainer.attr('data-page') || undefined);
-        }
-        app.pageInitCallback(view, this, url, 'center');
+    $('.page:not(.cached)').each(function () {
+        app.initPageWithCallback(this);
+    });
+
+    // Init each navbar callbacks
+    $('.navbar:not(.cached)').each(function () {
+        app.initNavbarWithCallback(this); 
     });
     
     // Init resize events
@@ -37,7 +38,10 @@ app.init = function () {
     if (app.initSortable && app.params.sortable) app.initSortable();
 
     // Init Live Swipe Panels
-    if (app.initSwipePanels && app.params.swipePanel) app.initSwipePanels();
+    if (app.initSwipePanels && (app.params.swipePanel || app.params.swipePanelOnlyClose)) app.initSwipePanels();
+    
+    // Init Material Inputs
+    if (app.params.material && app.initMaterialWatchInputs) app.initMaterialWatchInputs();
     
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();

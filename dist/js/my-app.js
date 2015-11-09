@@ -2,7 +2,7 @@
 var myApp = new Framework7();
 
 // Export selectors engine
-var $$ = Framework7.$;
+var $$ = Dom7;
 
 // Add view
 var mainView = myApp.addView('.view-main', {
@@ -21,11 +21,11 @@ myApp.onPageInit('about', function (page) {
 // Generate dynamic page
 var dynamicPageIndex = 0;
 function createContentPage() {
-	mainView.loadContent(
+	mainView.router.loadContent(
         '<!-- Top Navbar-->' +
         '<div class="navbar">' +
         '  <div class="navbar-inner">' +
-        '    <div class="left"><a href="#" class="back link"><i class="icon icon-back-blue"></i><span>Back</span></a></div>' +
+        '    <div class="left"><a href="#" class="back link"><i class="icon icon-back"></i><span>Back</span></a></div>' +
         '    <div class="center sliding">Dynamic Page ' + (++dynamicPageIndex) + '</div>' +
         '  </div>' +
         '</div>' +

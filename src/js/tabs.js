@@ -1,10 +1,18 @@
 /* ===============================================================================
 ************   Tabs   ************
 =============================================================================== */
-app.showTab = function (tab, tabLink) {
+app.showTab = function (tab, tabLink, force) {
     var newTab = $(tab);
-    if (newTab.hasClass('active')) return false;
+    if (arguments.length === 2) {
+        if (typeof tabLink === 'boolean') {
+            force = tabLink;
+        }
+    }
     if (newTab.length === 0) return false;
+    if (newTab.hasClass('active')) {
+        if (force) newTab.trigger('show');
+        return false;
+    }
     var tabs = newTab.parent('.tabs');
     if (tabs.length === 0) return false;
 
@@ -14,11 +22,12 @@ app.showTab = function (tab, tabLink) {
     // Animated tabs
     var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
     if (isAnimatedTabs) {
-        tabs.transform('translate3d(' + -newTab.index() * 100 + '%,0,0)');
+        var tabTranslate = (app.rtl ? newTab.index() : -newTab.index()) * 100;
+        tabs.transform('translate3d(' + tabTranslate + '%,0,0)');
     }
 
     // Remove active class from old tabs
-    tabs.children('.tab.active').removeClass('active');
+    var oldTab = tabs.children('.tab.active').removeClass('active');
     // Add active class to new tab
     newTab.addClass('active');
     // Trigger 'show' event on new tab
@@ -33,16 +42,55 @@ app.showTab = function (tab, tabLink) {
         app.sizeNavbars(viewContainer);
     }
 
-    // Update class on tab-links
+    // Find related link for new tab
     if (tabLink) tabLink = $(tabLink);
     else {
+        // Search by id
         if (typeof tab === 'string') tabLink = $('.tab-link[href="' + tab + '"]');
         else tabLink = $('.tab-link[href="#' + newTab.attr('id') + '"]');
+        // Search by data-tab
+        if (!tabLink || tabLink && tabLink.length === 0) {
+            $('[data-tab]').each(function () {
+                if (newTab.is($(this).attr('data-tab'))) tabLink = $(this);
+            });
+        }
     }
     if (tabLink.length === 0) return;
 
-    tabLink.parent().find('.active').removeClass('active');
-    tabLink.addClass('active');
+    // Find related link for old tab
+    var oldTabLink;
+    if (oldTab && oldTab.length > 0) {
+        // Search by id
+        var oldTabId = oldTab.attr('id');
+        if (oldTabId) oldTabLink = $('.tab-link[href="#' + oldTabId + '"]');
+        // Search by data-tab
+        if (!oldTabLink || oldTabLink && oldTabLink.length === 0) {
+            $('[data-tab]').each(function () {
+                if (oldTab.is($(this).attr('data-tab'))) oldTabLink = $(this);
+            });
+        }
+    }
+    
+    // Update links' classes
+    if (tabLink && tabLink.length > 0) {
+        tabLink.addClass('active');
+        // Material Highlight
+        if (app.params.material) {
+            var tabbar = tabLink.parents('.tabbar');
+            if (tabbar.length > 0) {
+                if (tabbar.find('.tab-link-highlight').length === 0) {
+                    tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+                    var clientLeft = tabbar[0].clientLeft;
+                }
+                var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
+                var highlightTranslate = (app.rtl ? - tabLink.index() : tabLink.index()) * 100;
+                tabbar.find('.tab-link-highlight')
+                    .css({width: tabLinkWidth + '%'})
+                    .transform('translate3d(' + highlightTranslate + '%,0,0)');
+            }
+        }
+    }
+    if (oldTabLink && oldTabLink.length > 0) oldTabLink.removeClass('active');
     
     return true;
 };
