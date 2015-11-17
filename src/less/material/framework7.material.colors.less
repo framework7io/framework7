@@ -366,6 +366,11 @@ Framework7 Color Themes
             background-color: rgba(red(@color), green(@color), blue(@color), 0.3);
         }
     }
+    //Badges
+    .badge.color-@{colorName}, .badge.theme-@{colorName} {
+    	background-color:@color;
+    	color: #fff;
+    }
 }
 .theme-mixin(e('red'), @red, #D32F2F);
 .theme-mixin(e('pink'), @pink, #C2185B);
