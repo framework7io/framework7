@@ -46,6 +46,7 @@
                 "src/less/material/toolbars-pages.less",
                 "src/less/material/icons.less",
                 "src/less/material/badges.less",
+                "src/less/material/chips.less",
                 "src/less/material/content-block.less",
                 "src/less/material/lists.less",
                 "src/less/material/contacts.less",
@@ -86,7 +87,7 @@
                 "src/less/material/disabled.less"
             ]
         }
-            
+
     },
 
     "accordion": {

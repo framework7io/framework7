@@ -532,7 +532,7 @@ app.router._load = function (view, options) {
         if (!(view.params.swipeBackPage || view.params.preloadPreviousPage)) {
             if (view.params.domCache) {
                 oldPage.addClass('cached');
-                oldNavbarInner.addClass('cached');
+                if (dynamicNavbar) oldNavbarInner.addClass('cached');
             }
             else {
                 if (!(url.indexOf('#') === 0 && newPage.attr('data-page').indexOf('smart-select-') === 0)) {
