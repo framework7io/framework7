@@ -29,7 +29,7 @@ app.init = function () {
     if (app.initResize) app.initResize();
 
     // Init push state
-    if (app.initPushState && app.params.pushState) app.initPushState();
+    if (app.initPushState && app.params.initPushState) app.initPushState();
 
     // Init Live Swipeouts events
     if (app.initSwipeout && app.params.swipeout) app.initSwipeout();

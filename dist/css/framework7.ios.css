@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2015
+ * Released on: November 21, 2015
  */
 html,
 body {
@@ -2030,7 +2030,7 @@ html.pixel-ratio-3 .content-block-inner:after {
   font-size: 17px;
 }
 .list-block ul {
-  background: #ffffff;
+  background: #fff;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -2539,7 +2539,7 @@ html.ios-gt-8 .list-block li.media-item .item-title {
 }
 .list-block .item-divider,
 .list-block .list-group-title {
-  background: #f7f7f7;
+  background: #F7F7F7;
   margin-top: -1px;
   padding: 4px 15px;
   white-space: nowrap;
@@ -5697,7 +5697,7 @@ html.pixel-ratio-3 .picker-calendar-week-days:after {
   top: auto;
   height: 1px;
   width: 100%;
-  background-color: #cccccc;
+  background-color: #ccc;
   display: block;
   z-index: 15;
   -webkit-transform-origin: 50% 100%;

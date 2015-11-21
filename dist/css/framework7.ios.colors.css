@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2015
+ * Released on: November 21, 2015
  */
 /*==========================
 Framework7 Color Themes
@@ -1456,22 +1456,22 @@ Framework7 Layouts Themes
 .layout-dark .subnavbar,
 .subnavbar.layout-dark {
   background-color: #131313;
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .navbar:after,
 .navbar.layout-dark:after,
 .layout-dark .subnavbar:after,
 .subnavbar.layout-dark:after {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .toolbar,
 .toolbar.layout-dark {
   background-color: #131313;
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .toolbar:before,
 .toolbar.layout-dark:before {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .picker-modal .toolbar {
   background-color: #131313;
@@ -1485,11 +1485,11 @@ Framework7 Layouts Themes
 }
 .layout-dark .popover .picker-modal .picker-center-highlight:before,
 .layout-dark .picker-modal.picker-modal-inline .picker-center-highlight:before {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .popover .picker-modal .picker-center-highlight:after,
 .layout-dark .picker-modal.picker-modal-inline .picker-center-highlight:after {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .popover .picker-modal .picker-item.picker-selected,
 .layout-dark .picker-modal.picker-modal-inline .picker-item.picker-selected {
@@ -1525,16 +1525,16 @@ Framework7 Layouts Themes
 .layout-dark .picker-modal.picker-modal-inline .picker-calendar-week-days:after,
 .layout-dark .popover .picker-modal .picker-calendar-row:after,
 .layout-dark .picker-modal.picker-modal-inline .picker-calendar-row:after {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .popover .picker-modal .toolbar ~ .picker-modal-inner .picker-calendar-months:before,
 .layout-dark .picker-modal.picker-modal-inline .toolbar ~ .picker-modal-inner .picker-calendar-months:before,
 .layout-dark .popover .picker-modal .picker-calendar-week-days ~ .picker-calendar-months:before,
 .layout-dark .picker-modal.picker-modal-inline .picker-calendar-week-days ~ .picker-calendar-months:before {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .popover .picker-modal .toolbar:after {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .photo-browser .navbar,
 .layout-dark .views .view[data-page="photo-browser-slides"] .navbar,
@@ -1549,7 +1549,7 @@ Framework7 Layouts Themes
   color: #fff;
 }
 .layout-dark .tabbar a:not(.active) {
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .page,
 .layout-dark .login-screen-content,
@@ -1557,18 +1557,18 @@ Framework7 Layouts Themes
 .layout-dark .panel,
 .panel.layout-dark {
   background-color: #222426;
-  color: #dddddd;
+  color: #ddd;
 }
 .layout-dark .content-block-title {
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .content-block,
 .content-block.layout-dark {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .content-block-inner {
   background: #1c1d1f;
-  color: #dddddd;
+  color: #ddd;
 }
 .layout-dark .content-block-inner:before {
   background-color: #393939;
@@ -1603,7 +1603,7 @@ Framework7 Layouts Themes
   background-color: #393939;
 }
 .layout-dark .card-footer {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .card-footer:before {
   background-color: #393939;
@@ -1634,14 +1634,14 @@ Framework7 Layouts Themes
 }
 .layout-dark .swipeout-actions-left a,
 .layout-dark .swipeout-actions-right a {
-  background-color: #444444;
+  background-color: #444;
 }
 .layout-dark .item-inner:after,
 .layout-dark .list-block ul ul li:last-child .item-inner:after {
   background-color: #393939;
 }
 .layout-dark .item-after {
-  color: #bbbbbb;
+  color: #bbb;
 }
 html:not(.watch-active-state) .layout-dark .item-link:active,
 html:not(.watch-active-state) .layout-dark label.label-checkbox:active,
@@ -1655,22 +1655,22 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
   background-color: #393939;
 }
 .layout-dark .list-block-label {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider,
 .layout-dark .list-group-title {
   background: #1a1a1a;
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider:before,
 .layout-dark .list-group-title:before {
   background-color: #393939;
 }
 .layout-dark .searchbar {
-  background: #333333;
+  background: #333;
 }
 .layout-dark .searchbar:after {
-  background-color: #333333;
+  background-color: #333;
 }
 .layout-dark .list-block input[type="text"],
 .list-block.layout-dark input[type="text"],
@@ -1692,7 +1692,7 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .list-block.layout-dark select,
 .layout-dark .list-block textarea,
 .list-block.layout-dark textarea {
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .label-switch .checkbox {
   background-color: #393939;
@@ -1711,52 +1711,52 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .navbar.layout-white,
 .layout-white .subnavbar,
 .subnavbar.layout-white {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #fff;
+  color: #000;
 }
 .layout-white .navbar:after,
 .navbar.layout-white:after,
 .layout-white .subnavbar:after,
 .subnavbar.layout-white:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .toolbar,
 .toolbar.layout-white {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #fff;
+  color: #000;
 }
 .layout-white .toolbar:before,
 .toolbar.layout-white:before {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .picker-modal .toolbar {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .layout-white .popover .picker-modal .toolbar {
   background: none;
 }
 .layout-white .popover .picker-modal .picker-center-highlight:before,
 .layout-white .picker-modal.picker-modal-inline .picker-center-highlight:before {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .popover .picker-modal .picker-center-highlight:after,
 .layout-white .picker-modal.picker-modal-inline .picker-center-highlight:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .popover .picker-modal .picker-calendar-week-days:after,
 .layout-white .picker-modal.picker-modal-inline .picker-calendar-week-days:after,
 .layout-white .popover .picker-modal .picker-calendar-row:after,
 .layout-white .picker-modal.picker-modal-inline .picker-calendar-row:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .popover .picker-modal .toolbar ~ .picker-modal-inner .picker-calendar-months:before,
 .layout-white .picker-modal.picker-modal-inline .toolbar ~ .picker-modal-inner .picker-calendar-months:before,
 .layout-white .popover .picker-modal .picker-calendar-week-days ~ .picker-calendar-months:before,
 .layout-white .picker-modal.picker-modal-inline .picker-calendar-week-days ~ .picker-calendar-months:before {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .popover .picker-modal .toolbar:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .photo-browser .navbar,
 .layout-white .views .view[data-page="photo-browser-slides"] .navbar,
@@ -1771,44 +1771,44 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
   color: #fff;
 }
 .layout-white .tabbar a:not(.active) {
-  color: #777777;
+  color: #777;
 }
 .layout-white .page,
 .layout-white .login-screen-content,
 .page.layout-white,
 .layout-white .panel,
 .panel.layout-white {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #fff;
+  color: #000;
 }
 .layout-white .content-block-title {
-  color: #777777;
+  color: #777;
 }
 .layout-white .content-block,
 .content-block.layout-white {
-  color: #777777;
+  color: #777;
 }
 .layout-white .content-block-inner {
   background: #fafafa;
-  color: #000000;
+  color: #000;
 }
 .layout-white .content-block-inner:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .content-block-inner:before {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .list-block ul,
 .list-block.layout-white ul {
-  background: #ffffff;
+  background: #fff;
 }
 .layout-white .list-block ul:after,
 .list-block.layout-white ul:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .list-block ul:before,
 .list-block.layout-white ul:before {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .list-block.inset ul,
 .list-block.layout-white.inset ul {
@@ -1822,7 +1822,7 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
   background: none;
 }
 .layout-white li.sorting {
-  background-color: #eeeeee;
+  background-color: #eee;
 }
 .layout-white .swipeout-actions-left a,
 .layout-white .swipeout-actions-right a {
@@ -1830,11 +1830,11 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 }
 .layout-white .item-inner,
 .layout-white .list-block ul ul li:last-child .item-inner {
-  border-color: #dddddd;
+  border-color: #ddd;
 }
 .layout-white .item-inner:after,
 .layout-white .list-block ul ul li:last-child .item-inner:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .item-after {
   color: #8e8e93;
@@ -1845,22 +1845,22 @@ html:not(.watch-active-state) .layout-white label.label-radio:active,
 .layout-white .item-link.active-state,
 .layout-white label.label-checkbox.active-state,
 .layout-white label.label-radio.active-state {
-  background-color: #eeeeee;
+  background-color: #eee;
 }
 .layout-white .item-link.list-button:after {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .list-block-label {
-  color: #777777;
+  color: #777;
 }
 .layout-white .item-divider,
 .layout-white .list-group-title {
   background: #f7f7f7;
-  color: #777777;
+  color: #777;
 }
 .layout-white .item-divider:before,
 .layout-white .list-group-title:before {
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .layout-white .searchbar {
   background: #c9c9ce;
@@ -1888,14 +1888,14 @@ html:not(.watch-active-state) .layout-white label.label-radio:active,
 .list-block.layout-white select,
 .layout-white .list-block textarea,
 .list-block.layout-white textarea {
-  color: #777777;
+  color: #777;
 }
 .layout-white .label-switch .checkbox {
   background-color: #e5e5e5;
 }
 .layout-white .label-switch .checkbox:before {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .layout-white .range-slider input[type="range"]:after {
-  background: #ffffff;
+  background: #fff;
 }
