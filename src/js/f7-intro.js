@@ -7,7 +7,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '1.3.5';
+    app.version = '1.3.6';
 
     // Default Parameters
     app.params = {
@@ -23,6 +23,7 @@ window.Framework7 = function (params) {
         router: true,
         // Push State
         pushState: false,
+        initPushState: undefined,
         pushStateRoot: undefined,
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',

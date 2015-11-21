@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2015
+ * Released on: November 21, 2015
  */
 /*==========================
 Framework7 Layouts Themes
@@ -23,7 +23,7 @@ Framework7 Layouts Themes
 .page.layout-dark,
 .layout-dark .panel,
 .panel.layout-dark {
-  background-color: #222222;
+  background-color: #222;
   color: rgba(255, 255, 255, 0.87);
 }
 .layout-dark .content-block-title {
@@ -45,7 +45,7 @@ Framework7 Layouts Themes
   background-color: #393939;
 }
 .layout-dark .card-footer {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .card-footer:before {
   background-color: #393939;
@@ -71,7 +71,7 @@ Framework7 Layouts Themes
 }
 .layout-dark .swipeout-actions-left a,
 .layout-dark .swipeout-actions-right a {
-  background-color: #444444;
+  background-color: #444;
 }
 .layout-dark .item-inner:after,
 .layout-dark .list-block ul ul li:last-child .item-inner:after {
@@ -82,12 +82,12 @@ Framework7 Layouts Themes
   color: rgba(255, 255, 255, 0.7);
 }
 .layout-dark .list-block-label {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider,
 .layout-dark .list-group-title {
   background: #1a1a1a;
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider:before,
 .layout-dark .list-group-title:before {
@@ -116,7 +116,7 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-dark .list-block input[type="number"],
 .layout-dark .list-block select,
 .layout-dark .list-block textarea {
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .list-block input[type="text"]::-webkit-input-placeholder,
 .layout-dark .list-block input[type="password"]::-webkit-input-placeholder,
@@ -198,7 +198,7 @@ a.color-red {
 }
 html:not(.watch-active-state) .theme-red .button.button-fill:active,
 .theme-red .button.button-fill.active-state {
-  background: #d32f2f;
+  background: #D32F2F;
 }
 .button.button-fill.bg-red,
 .button.button-fill.color-red {
@@ -209,7 +209,7 @@ html:not(.watch-active-state) .button.button-fill.bg-red:active,
 html:not(.watch-active-state) .button.button-fill.color-red:active,
 .button.button-fill.bg-red.active-state,
 .button.button-fill.color-red.active-state {
-  background: #d32f2f !important;
+  background: #D32F2F !important;
 }
 .color-red i.icon,
 i.icon.color-red {
@@ -406,7 +406,7 @@ html:not(.watch-active-state) .floating-button.color-red:active,
 .theme-red .floating-button.active-state,
 .floating-button.theme-red.active-state,
 .floating-button.color-red.active-state {
-  background: #d32f2f;
+  background: #D32F2F;
 }
 .theme-red .floating-button i,
 .floating-button.theme-red i,
@@ -449,7 +449,7 @@ a.color-pink {
 }
 html:not(.watch-active-state) .theme-pink .button.button-fill:active,
 .theme-pink .button.button-fill.active-state {
-  background: #c2185b;
+  background: #C2185B;
 }
 .button.button-fill.bg-pink,
 .button.button-fill.color-pink {
@@ -460,7 +460,7 @@ html:not(.watch-active-state) .button.button-fill.bg-pink:active,
 html:not(.watch-active-state) .button.button-fill.color-pink:active,
 .button.button-fill.bg-pink.active-state,
 .button.button-fill.color-pink.active-state {
-  background: #c2185b !important;
+  background: #C2185B !important;
 }
 .color-pink i.icon,
 i.icon.color-pink {
@@ -657,7 +657,7 @@ html:not(.watch-active-state) .floating-button.color-pink:active,
 .theme-pink .floating-button.active-state,
 .floating-button.theme-pink.active-state,
 .floating-button.color-pink.active-state {
-  background: #c2185b;
+  background: #C2185B;
 }
 .theme-pink .floating-button i,
 .floating-button.theme-pink i,
@@ -700,7 +700,7 @@ a.color-purple {
 }
 html:not(.watch-active-state) .theme-purple .button.button-fill:active,
 .theme-purple .button.button-fill.active-state {
-  background: #7b1fa2;
+  background: #7B1FA2;
 }
 .button.button-fill.bg-purple,
 .button.button-fill.color-purple {
@@ -711,7 +711,7 @@ html:not(.watch-active-state) .button.button-fill.bg-purple:active,
 html:not(.watch-active-state) .button.button-fill.color-purple:active,
 .button.button-fill.bg-purple.active-state,
 .button.button-fill.color-purple.active-state {
-  background: #7b1fa2 !important;
+  background: #7B1FA2 !important;
 }
 .color-purple i.icon,
 i.icon.color-purple {
@@ -908,7 +908,7 @@ html:not(.watch-active-state) .floating-button.color-purple:active,
 .theme-purple .floating-button.active-state,
 .floating-button.theme-purple.active-state,
 .floating-button.color-purple.active-state {
-  background: #7b1fa2;
+  background: #7B1FA2;
 }
 .theme-purple .floating-button i,
 .floating-button.theme-purple i,
@@ -951,7 +951,7 @@ a.color-deeppurple {
 }
 html:not(.watch-active-state) .theme-deeppurple .button.button-fill:active,
 .theme-deeppurple .button.button-fill.active-state {
-  background: #512da8;
+  background: #512DA8;
 }
 .button.button-fill.bg-deeppurple,
 .button.button-fill.color-deeppurple {
@@ -962,7 +962,7 @@ html:not(.watch-active-state) .button.button-fill.bg-deeppurple:active,
 html:not(.watch-active-state) .button.button-fill.color-deeppurple:active,
 .button.button-fill.bg-deeppurple.active-state,
 .button.button-fill.color-deeppurple.active-state {
-  background: #512da8 !important;
+  background: #512DA8 !important;
 }
 .color-deeppurple i.icon,
 i.icon.color-deeppurple {
@@ -1159,7 +1159,7 @@ html:not(.watch-active-state) .floating-button.color-deeppurple:active,
 .theme-deeppurple .floating-button.active-state,
 .floating-button.theme-deeppurple.active-state,
 .floating-button.color-deeppurple.active-state {
-  background: #512da8;
+  background: #512DA8;
 }
 .theme-deeppurple .floating-button i,
 .floating-button.theme-deeppurple i,
@@ -1202,7 +1202,7 @@ a.color-indigo {
 }
 html:not(.watch-active-state) .theme-indigo .button.button-fill:active,
 .theme-indigo .button.button-fill.active-state {
-  background: #303f9f;
+  background: #303F9F;
 }
 .button.button-fill.bg-indigo,
 .button.button-fill.color-indigo {
@@ -1213,7 +1213,7 @@ html:not(.watch-active-state) .button.button-fill.bg-indigo:active,
 html:not(.watch-active-state) .button.button-fill.color-indigo:active,
 .button.button-fill.bg-indigo.active-state,
 .button.button-fill.color-indigo.active-state {
-  background: #303f9f !important;
+  background: #303F9F !important;
 }
 .color-indigo i.icon,
 i.icon.color-indigo {
@@ -1410,7 +1410,7 @@ html:not(.watch-active-state) .floating-button.color-indigo:active,
 .theme-indigo .floating-button.active-state,
 .floating-button.theme-indigo.active-state,
 .floating-button.color-indigo.active-state {
-  background: #303f9f;
+  background: #303F9F;
 }
 .theme-indigo .floating-button i,
 .floating-button.theme-indigo i,
@@ -1453,7 +1453,7 @@ a.color-blue {
 }
 html:not(.watch-active-state) .theme-blue .button.button-fill:active,
 .theme-blue .button.button-fill.active-state {
-  background: #1976d2;
+  background: #1976D2;
 }
 .button.button-fill.bg-blue,
 .button.button-fill.color-blue {
@@ -1464,7 +1464,7 @@ html:not(.watch-active-state) .button.button-fill.bg-blue:active,
 html:not(.watch-active-state) .button.button-fill.color-blue:active,
 .button.button-fill.bg-blue.active-state,
 .button.button-fill.color-blue.active-state {
-  background: #1976d2 !important;
+  background: #1976D2 !important;
 }
 .color-blue i.icon,
 i.icon.color-blue {
@@ -1661,7 +1661,7 @@ html:not(.watch-active-state) .floating-button.color-blue:active,
 .theme-blue .floating-button.active-state,
 .floating-button.theme-blue.active-state,
 .floating-button.color-blue.active-state {
-  background: #1976d2;
+  background: #1976D2;
 }
 .theme-blue .floating-button i,
 .floating-button.theme-blue i,
@@ -1704,7 +1704,7 @@ a.color-lightblue {
 }
 html:not(.watch-active-state) .theme-lightblue .button.button-fill:active,
 .theme-lightblue .button.button-fill.active-state {
-  background: #0288d1;
+  background: #0288D1;
 }
 .button.button-fill.bg-lightblue,
 .button.button-fill.color-lightblue {
@@ -1715,7 +1715,7 @@ html:not(.watch-active-state) .button.button-fill.bg-lightblue:active,
 html:not(.watch-active-state) .button.button-fill.color-lightblue:active,
 .button.button-fill.bg-lightblue.active-state,
 .button.button-fill.color-lightblue.active-state {
-  background: #0288d1 !important;
+  background: #0288D1 !important;
 }
 .color-lightblue i.icon,
 i.icon.color-lightblue {
@@ -1912,7 +1912,7 @@ html:not(.watch-active-state) .floating-button.color-lightblue:active,
 .theme-lightblue .floating-button.active-state,
 .floating-button.theme-lightblue.active-state,
 .floating-button.color-lightblue.active-state {
-  background: #0288d1;
+  background: #0288D1;
 }
 .theme-lightblue .floating-button i,
 .floating-button.theme-lightblue i,
@@ -1955,7 +1955,7 @@ a.color-cyan {
 }
 html:not(.watch-active-state) .theme-cyan .button.button-fill:active,
 .theme-cyan .button.button-fill.active-state {
-  background: #0097a7;
+  background: #0097A7;
 }
 .button.button-fill.bg-cyan,
 .button.button-fill.color-cyan {
@@ -1966,7 +1966,7 @@ html:not(.watch-active-state) .button.button-fill.bg-cyan:active,
 html:not(.watch-active-state) .button.button-fill.color-cyan:active,
 .button.button-fill.bg-cyan.active-state,
 .button.button-fill.color-cyan.active-state {
-  background: #0097a7 !important;
+  background: #0097A7 !important;
 }
 .color-cyan i.icon,
 i.icon.color-cyan {
@@ -2163,7 +2163,7 @@ html:not(.watch-active-state) .floating-button.color-cyan:active,
 .theme-cyan .floating-button.active-state,
 .floating-button.theme-cyan.active-state,
 .floating-button.color-cyan.active-state {
-  background: #0097a7;
+  background: #0097A7;
 }
 .theme-cyan .floating-button i,
 .floating-button.theme-cyan i,
@@ -2206,7 +2206,7 @@ a.color-teal {
 }
 html:not(.watch-active-state) .theme-teal .button.button-fill:active,
 .theme-teal .button.button-fill.active-state {
-  background: #00897b;
+  background: #00897B;
 }
 .button.button-fill.bg-teal,
 .button.button-fill.color-teal {
@@ -2217,7 +2217,7 @@ html:not(.watch-active-state) .button.button-fill.bg-teal:active,
 html:not(.watch-active-state) .button.button-fill.color-teal:active,
 .button.button-fill.bg-teal.active-state,
 .button.button-fill.color-teal.active-state {
-  background: #00897b !important;
+  background: #00897B !important;
 }
 .color-teal i.icon,
 i.icon.color-teal {
@@ -2414,7 +2414,7 @@ html:not(.watch-active-state) .floating-button.color-teal:active,
 .theme-teal .floating-button.active-state,
 .floating-button.theme-teal.active-state,
 .floating-button.color-teal.active-state {
-  background: #00897b;
+  background: #00897B;
 }
 .theme-teal .floating-button i,
 .floating-button.theme-teal i,
@@ -2457,7 +2457,7 @@ a.color-green {
 }
 html:not(.watch-active-state) .theme-green .button.button-fill:active,
 .theme-green .button.button-fill.active-state {
-  background: #388e3c;
+  background: #388E3C;
 }
 .button.button-fill.bg-green,
 .button.button-fill.color-green {
@@ -2468,7 +2468,7 @@ html:not(.watch-active-state) .button.button-fill.bg-green:active,
 html:not(.watch-active-state) .button.button-fill.color-green:active,
 .button.button-fill.bg-green.active-state,
 .button.button-fill.color-green.active-state {
-  background: #388e3c !important;
+  background: #388E3C !important;
 }
 .color-green i.icon,
 i.icon.color-green {
@@ -2665,7 +2665,7 @@ html:not(.watch-active-state) .floating-button.color-green:active,
 .theme-green .floating-button.active-state,
 .floating-button.theme-green.active-state,
 .floating-button.color-green.active-state {
-  background: #388e3c;
+  background: #388E3C;
 }
 .theme-green .floating-button i,
 .floating-button.theme-green i,
@@ -2708,7 +2708,7 @@ a.color-lightgreen {
 }
 html:not(.watch-active-state) .theme-lightgreen .button.button-fill:active,
 .theme-lightgreen .button.button-fill.active-state {
-  background: #689f38;
+  background: #689F38;
 }
 .button.button-fill.bg-lightgreen,
 .button.button-fill.color-lightgreen {
@@ -2719,7 +2719,7 @@ html:not(.watch-active-state) .button.button-fill.bg-lightgreen:active,
 html:not(.watch-active-state) .button.button-fill.color-lightgreen:active,
 .button.button-fill.bg-lightgreen.active-state,
 .button.button-fill.color-lightgreen.active-state {
-  background: #689f38 !important;
+  background: #689F38 !important;
 }
 .color-lightgreen i.icon,
 i.icon.color-lightgreen {
@@ -2916,7 +2916,7 @@ html:not(.watch-active-state) .floating-button.color-lightgreen:active,
 .theme-lightgreen .floating-button.active-state,
 .floating-button.theme-lightgreen.active-state,
 .floating-button.color-lightgreen.active-state {
-  background: #689f38;
+  background: #689F38;
 }
 .theme-lightgreen .floating-button i,
 .floating-button.theme-lightgreen i,
@@ -2959,7 +2959,7 @@ a.color-lime {
 }
 html:not(.watch-active-state) .theme-lime .button.button-fill:active,
 .theme-lime .button.button-fill.active-state {
-  background: #afb42b;
+  background: #AFB42B;
 }
 .button.button-fill.bg-lime,
 .button.button-fill.color-lime {
@@ -2970,7 +2970,7 @@ html:not(.watch-active-state) .button.button-fill.bg-lime:active,
 html:not(.watch-active-state) .button.button-fill.color-lime:active,
 .button.button-fill.bg-lime.active-state,
 .button.button-fill.color-lime.active-state {
-  background: #afb42b !important;
+  background: #AFB42B !important;
 }
 .color-lime i.icon,
 i.icon.color-lime {
@@ -3167,7 +3167,7 @@ html:not(.watch-active-state) .floating-button.color-lime:active,
 .theme-lime .floating-button.active-state,
 .floating-button.theme-lime.active-state,
 .floating-button.color-lime.active-state {
-  background: #afb42b;
+  background: #AFB42B;
 }
 .theme-lime .floating-button i,
 .floating-button.theme-lime i,
@@ -3210,7 +3210,7 @@ a.color-yellow {
 }
 html:not(.watch-active-state) .theme-yellow .button.button-fill:active,
 .theme-yellow .button.button-fill.active-state {
-  background: #fbc02d;
+  background: #FBC02D;
 }
 .button.button-fill.bg-yellow,
 .button.button-fill.color-yellow {
@@ -3221,7 +3221,7 @@ html:not(.watch-active-state) .button.button-fill.bg-yellow:active,
 html:not(.watch-active-state) .button.button-fill.color-yellow:active,
 .button.button-fill.bg-yellow.active-state,
 .button.button-fill.color-yellow.active-state {
-  background: #fbc02d !important;
+  background: #FBC02D !important;
 }
 .color-yellow i.icon,
 i.icon.color-yellow {
@@ -3418,7 +3418,7 @@ html:not(.watch-active-state) .floating-button.color-yellow:active,
 .theme-yellow .floating-button.active-state,
 .floating-button.theme-yellow.active-state,
 .floating-button.color-yellow.active-state {
-  background: #fbc02d;
+  background: #FBC02D;
 }
 .theme-yellow .floating-button i,
 .floating-button.theme-yellow i,
@@ -3461,7 +3461,7 @@ a.color-amber {
 }
 html:not(.watch-active-state) .theme-amber .button.button-fill:active,
 .theme-amber .button.button-fill.active-state {
-  background: #ffa000;
+  background: #FFA000;
 }
 .button.button-fill.bg-amber,
 .button.button-fill.color-amber {
@@ -3472,7 +3472,7 @@ html:not(.watch-active-state) .button.button-fill.bg-amber:active,
 html:not(.watch-active-state) .button.button-fill.color-amber:active,
 .button.button-fill.bg-amber.active-state,
 .button.button-fill.color-amber.active-state {
-  background: #ffa000 !important;
+  background: #FFA000 !important;
 }
 .color-amber i.icon,
 i.icon.color-amber {
@@ -3669,7 +3669,7 @@ html:not(.watch-active-state) .floating-button.color-amber:active,
 .theme-amber .floating-button.active-state,
 .floating-button.theme-amber.active-state,
 .floating-button.color-amber.active-state {
-  background: #ffa000;
+  background: #FFA000;
 }
 .theme-amber .floating-button i,
 .floating-button.theme-amber i,
@@ -3712,7 +3712,7 @@ a.color-orange {
 }
 html:not(.watch-active-state) .theme-orange .button.button-fill:active,
 .theme-orange .button.button-fill.active-state {
-  background: #f57c00;
+  background: #F57C00;
 }
 .button.button-fill.bg-orange,
 .button.button-fill.color-orange {
@@ -3723,7 +3723,7 @@ html:not(.watch-active-state) .button.button-fill.bg-orange:active,
 html:not(.watch-active-state) .button.button-fill.color-orange:active,
 .button.button-fill.bg-orange.active-state,
 .button.button-fill.color-orange.active-state {
-  background: #f57c00 !important;
+  background: #F57C00 !important;
 }
 .color-orange i.icon,
 i.icon.color-orange {
@@ -3920,7 +3920,7 @@ html:not(.watch-active-state) .floating-button.color-orange:active,
 .theme-orange .floating-button.active-state,
 .floating-button.theme-orange.active-state,
 .floating-button.color-orange.active-state {
-  background: #f57c00;
+  background: #F57C00;
 }
 .theme-orange .floating-button i,
 .floating-button.theme-orange i,
@@ -3963,7 +3963,7 @@ a.color-deeporange {
 }
 html:not(.watch-active-state) .theme-deeporange .button.button-fill:active,
 .theme-deeporange .button.button-fill.active-state {
-  background: #e64a19;
+  background: #E64A19;
 }
 .button.button-fill.bg-deeporange,
 .button.button-fill.color-deeporange {
@@ -3974,7 +3974,7 @@ html:not(.watch-active-state) .button.button-fill.bg-deeporange:active,
 html:not(.watch-active-state) .button.button-fill.color-deeporange:active,
 .button.button-fill.bg-deeporange.active-state,
 .button.button-fill.color-deeporange.active-state {
-  background: #e64a19 !important;
+  background: #E64A19 !important;
 }
 .color-deeporange i.icon,
 i.icon.color-deeporange {
@@ -4171,7 +4171,7 @@ html:not(.watch-active-state) .floating-button.color-deeporange:active,
 .theme-deeporange .floating-button.active-state,
 .floating-button.theme-deeporange.active-state,
 .floating-button.color-deeporange.active-state {
-  background: #e64a19;
+  background: #E64A19;
 }
 .theme-deeporange .floating-button i,
 .floating-button.theme-deeporange i,
@@ -4214,7 +4214,7 @@ a.color-brown {
 }
 html:not(.watch-active-state) .theme-brown .button.button-fill:active,
 .theme-brown .button.button-fill.active-state {
-  background: #5d4037;
+  background: #5D4037;
 }
 .button.button-fill.bg-brown,
 .button.button-fill.color-brown {
@@ -4225,7 +4225,7 @@ html:not(.watch-active-state) .button.button-fill.bg-brown:active,
 html:not(.watch-active-state) .button.button-fill.color-brown:active,
 .button.button-fill.bg-brown.active-state,
 .button.button-fill.color-brown.active-state {
-  background: #5d4037 !important;
+  background: #5D4037 !important;
 }
 .color-brown i.icon,
 i.icon.color-brown {
@@ -4422,7 +4422,7 @@ html:not(.watch-active-state) .floating-button.color-brown:active,
 .theme-brown .floating-button.active-state,
 .floating-button.theme-brown.active-state,
 .floating-button.color-brown.active-state {
-  background: #5d4037;
+  background: #5D4037;
 }
 .theme-brown .floating-button i,
 .floating-button.theme-brown i,
@@ -4716,7 +4716,7 @@ a.color-bluegray {
 }
 html:not(.watch-active-state) .theme-bluegray .button.button-fill:active,
 .theme-bluegray .button.button-fill.active-state {
-  background: #455a64;
+  background: #455A64;
 }
 .button.button-fill.bg-bluegray,
 .button.button-fill.color-bluegray {
@@ -4727,7 +4727,7 @@ html:not(.watch-active-state) .button.button-fill.bg-bluegray:active,
 html:not(.watch-active-state) .button.button-fill.color-bluegray:active,
 .button.button-fill.bg-bluegray.active-state,
 .button.button-fill.color-bluegray.active-state {
-  background: #455a64 !important;
+  background: #455A64 !important;
 }
 .color-bluegray i.icon,
 i.icon.color-bluegray {
@@ -4924,7 +4924,7 @@ html:not(.watch-active-state) .floating-button.color-bluegray:active,
 .theme-bluegray .floating-button.active-state,
 .floating-button.theme-bluegray.active-state,
 .floating-button.color-bluegray.active-state {
-  background: #455a64;
+  background: #455A64;
 }
 .theme-bluegray .floating-button i,
 .floating-button.theme-bluegray i,
@@ -5218,7 +5218,7 @@ a.color-black {
 }
 html:not(.watch-active-state) .theme-black .button.button-fill:active,
 .theme-black .button.button-fill.active-state {
-  background: #333333;
+  background: #333;
 }
 .button.button-fill.bg-black,
 .button.button-fill.color-black {
@@ -5229,7 +5229,7 @@ html:not(.watch-active-state) .button.button-fill.bg-black:active,
 html:not(.watch-active-state) .button.button-fill.color-black:active,
 .button.button-fill.bg-black.active-state,
 .button.button-fill.color-black.active-state {
-  background: #333333 !important;
+  background: #333 !important;
 }
 .color-black i.icon,
 i.icon.color-black {
@@ -5426,7 +5426,7 @@ html:not(.watch-active-state) .floating-button.color-black:active,
 .theme-black .floating-button.active-state,
 .floating-button.theme-black.active-state,
 .floating-button.color-black.active-state {
-  background: #333333;
+  background: #333;
 }
 .theme-black .floating-button i,
 .floating-button.theme-black i,

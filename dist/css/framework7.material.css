@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2015
+ * Released on: November 21, 2015
  */
 html,
 body {
@@ -827,7 +827,7 @@ p {
   z-index: 500;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  color: #ffffff;
+  color: #fff;
 }
 .navbar b,
 .toolbar b {
@@ -846,7 +846,7 @@ p {
 .subnavbar a.link {
   text-decoration: none;
   position: relative;
-  color: #ffffff;
+  color: #fff;
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
