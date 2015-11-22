@@ -22,6 +22,8 @@ window.Swiper = function (container, params) {
         freeModeMomentumBounceRatio: 1,
         freeModeSticky: false,
         freeModeMinimumVelocity: 0.02,
+        // Autoheight
+        autoHeight: false,
         // Set wrapper width
         setWrapperSize: false,
         // Virtual Translate
@@ -243,11 +245,19 @@ window.Swiper = function (container, params) {
         //Get breakpoint for window width
         if (!s.params.breakpoints) return false;
         var breakpoint = false;
-        for ( var point in s.params.breakpoints ) {
+        var points = [], point;
+        for ( point in s.params.breakpoints ) {
             if (s.params.breakpoints.hasOwnProperty(point)) {
-                if (point >= $(window).width() && !breakpoint) {
-                    breakpoint = point;
-                }
+                points.push(point);
+            }
+        }
+        points.sort(function (a, b) {
+            return parseInt(a, 10) > parseInt(b, 10);
+        });
+        for (var i = 0; i < points.length; i++) {
+            point = points[i];
+            if (point >= window.innerWidth && !breakpoint) {
+                breakpoint = point;
             }
         }
         return breakpoint || 'max';
@@ -292,6 +302,9 @@ window.Swiper = function (container, params) {
     if (!s.support.flexbox) {
         s.classNames.push('swiper-container-no-flexbox');
         s.params.slidesPerColumn = 1;
+    }
+    if (s.params.autoHeight) {
+        s.classNames.push('swiper-container-autoheight');
     }
     // Enable slides progress when required
     if (s.params.parallax || s.params.watchSlidesVisibility) {
@@ -542,6 +555,11 @@ window.Swiper = function (container, params) {
     /*=========================
       Slider/slides sizes
       ===========================*/
+    s.updateAutoHeight = function () {
+        // Update Height
+        var newHeight = s.slides.eq(s.activeIndex)[0].offsetHeight;
+        if (newHeight) s.wrapper.css('height', s.slides.eq(s.activeIndex)[0].offsetHeight + 'px');
+    };
     s.updateContainerSize = function () {
         var width, height;
         if (typeof s.params.width !== 'undefined') {
@@ -779,6 +797,8 @@ window.Swiper = function (container, params) {
             translate = s.translate || 0;
         }
         var translatesDiff = s.maxTranslate() - s.minTranslate();
+        var wasBeginning = s.isBeginning;
+        var wasEnd = s.isEnd;
         if (translatesDiff === 0) {
             s.progress = 0;
             s.isBeginning = s.isEnd = true;
@@ -788,8 +808,8 @@ window.Swiper = function (container, params) {
             s.isBeginning = s.progress <= 0;
             s.isEnd = s.progress >= 1;
         }
-        if (s.isBeginning) s.emit('onReachBeginning', s);
-        if (s.isEnd) s.emit('onReachEnd', s);
+        if (s.isBeginning && !wasBeginning) s.emit('onReachBeginning', s);
+        if (s.isEnd && !wasEnd) s.emit('onReachEnd', s);
     
         if (s.params.watchSlidesProgress) s.updateSlidesProgress(translate);
         s.emit('onProgress', s, s.progress);
@@ -944,6 +964,9 @@ window.Swiper = function (container, params) {
             }
             if (s.params.freeMode) {
                 forceSetTranslate();
+                if (s.params.autoHeight) {
+                    s.updateAutoHeight();
+                }
             }
             else {
                 if ((s.params.slidesPerView === 'auto' || s.params.slidesPerView > 1) && s.isEnd && !s.params.centeredSlides) {
@@ -956,7 +979,9 @@ window.Swiper = function (container, params) {
                     forceSetTranslate();
                 }
             }
-    
+        }
+        else if (s.params.autoHeight) {
+            s.updateAutoHeight();
         }
     };
     
@@ -988,6 +1013,10 @@ window.Swiper = function (container, params) {
             s.setWrapperTranslate(newTranslate);
             s.updateActiveIndex();
             s.updateClasses();
+    
+            if (s.params.autoHeight) {
+                s.updateAutoHeight();
+            }
         }
         else {
             s.updateClasses();
@@ -1717,13 +1746,21 @@ window.Swiper = function (container, params) {
         s.previousIndex = s.activeIndex || 0;
         s.activeIndex = slideIndex;
     
+        // Update Height
+        if (s.params.autoHeight) {
+            s.updateAutoHeight();
+        }
+    
         if (translate === s.translate) {
             s.updateClasses();
+            if (s.params.effect !== 'slide') {
+                s.setWrapperTranslate(translate);
+            }
             return false;
         }
         s.updateClasses();
         s.onTransitionStart(runCallbacks);
-        var translateX = isH() ? translate : 0, translateY = isH() ? 0 : translate;
+    
         if (speed === 0) {
             s.setWrapperTransition(0);
             s.setWrapperTranslate(translate);
@@ -1851,6 +1888,19 @@ window.Swiper = function (container, params) {
         }
     
         s.translate = isH() ? x : y;
+    
+        // Check if we need to update progress
+        var progress;
+        var translatesDiff = s.maxTranslate() - s.minTranslate();
+        if (translatesDiff === 0) {
+            progress = 0;
+        }
+        else {
+            progress = (translate - s.minTranslate()) / (translatesDiff);
+        }
+        if (progress !== s.progress) {
+            s.updateProgress(translate);
+        }
     
         if (updateActiveIndex) s.updateActiveIndex();
         if (s.params.effect !== 'slide' && s.effects[s.params.effect]) {

@@ -28,7 +28,6 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    .preserve3d();
 
     -webkit-transition-property:-webkit-transform;
     -moz-transition-property:-moz-transform;
@@ -50,7 +49,7 @@
 .swiper-container-multirow > .swiper-wrapper {
     -webkit-box-lines: multiple;
     -moz-box-lines: multiple;
-    -ms-fles-wrap: wrap;
+    -ms-flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
@@ -63,7 +62,6 @@
     margin: 0 auto;
 }
 .swiper-slide {
-    .preserve3d();
     -webkit-flex-shrink: 0;
     -ms-flex: 0 0 auto;
     flex-shrink: 0;
@@ -71,7 +69,21 @@
     height: 100%;
     position: relative;
 }
-
+/* Auto Height */
+.swiper-container-autoheight, .swiper-container-autoheight .swiper-slide {
+    height: auto;
+}
+.swiper-container-autoheight .swiper-wrapper {
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -webkit-transition-property: -webkit-transform, height;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    -ms-transition-property: -ms-transform;
+    transition-property: transform, height;
+}
 /* a11y */
 .swiper-container .swiper-notification {
     position: absolute;
@@ -243,9 +255,14 @@
     }
     .swiper-slide {
         pointer-events: none;
+        .swiper-slide {
+            pointer-events: none;
+        }
     }
     .swiper-slide-active {
-        pointer-events: auto;
+        &, & .swiper-slide-active {
+            pointer-events: auto;
+        }
     }
 }
 /* Cube */
@@ -264,6 +281,7 @@
         backface-visibility: hidden;
         width: 100%;
         height: 100%;
+        z-index: 1;
     }
     &.swiper-container-rtl .swiper-slide{
         -webkit-transform-origin: 100% 0;
@@ -275,6 +293,13 @@
         pointer-events: auto;
         visibility: visible;
     }
+    .swiper-slide-shadow-top, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left, .swiper-slide-shadow-right {
+        z-index: 0;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
     .swiper-cube-shadow {
         position: absolute;
         left: 0;
@@ -285,8 +310,6 @@
         opacity: 0.6;
         -webkit-filter: blur(50px);
         filter: blur(50px);
-    }
-    &.swiper-container-vertical .swiper-cube-shadow {
         z-index: 0;
     }
 }
