@@ -166,7 +166,7 @@ var Calendar = function (params) {
             if (p.value[0] !== value) p.value.push(value);
             else p.value = [];
             p.value.sort(function (a,b) {
-                return a > b;
+                return a - b;
             });
             p.updateValue();
         }
