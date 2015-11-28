@@ -6,7 +6,7 @@ app.swiper = function (container, params) {
 };
 app.initPageSwiper = function (pageContainer) {
     pageContainer = $(pageContainer);
-    var swipers = pageContainer.find('.swiper-init');
+    var swipers = pageContainer.find('.swiper-init, .tabs-swipeable-wrap');
     if (swipers.length === 0) return;
     function destroySwiperOnRemove(slider) {
         function destroySwiper() {
@@ -15,8 +15,11 @@ app.initPageSwiper = function (pageContainer) {
         }
         pageContainer.on('pageBeforeRemove', destroySwiper);
     }
-    for (var i = 0; i < swipers.length; i++) {
-        var swiper = swipers.eq(i);
+    swipers.each(function () {
+        var swiper = $(this);
+        if (swiper.hasClass('tabs-swipeable-wrap')) {
+            swiper.addClass('swiper-container').children('.tabs').addClass('swiper-wrapper').children('.tab').addClass('swiper-slide');
+        }
         var params;
         if (swiper.data('swiper')) {
             params = JSON.parse(swiper.data('swiper'));
@@ -24,13 +27,18 @@ app.initPageSwiper = function (pageContainer) {
         else {
             params = swiper.dataset();
         }
+        if (swiper.hasClass('tabs-swipeable-wrap')) {
+            params.onSlideChangeStart = function (s) {
+                app.showTab(s.slides.eq(s.activeIndex));
+            };
+        }
         var _slider = app.swiper(swiper[0], params);
         destroySwiperOnRemove(_slider);
-    }
+    });
 };
 app.reinitPageSwiper = function (pageContainer) {
     pageContainer = $(pageContainer);
-    var sliders = pageContainer.find('.swiper-init');
+    var sliders = pageContainer.find('.swiper-init, .tabs-swipeable-wrap');
     if (sliders.length === 0) return;
     for (var i = 0; i < sliders.length; i++) {
         var sliderInstance = sliders[0].swiper;
