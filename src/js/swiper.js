@@ -1713,7 +1713,6 @@ window.Swiper = function (container, params) {
         if (s.snapIndex >= s.snapGrid.length) s.snapIndex = s.snapGrid.length - 1;
     
         var translate = - s.snapGrid[s.snapIndex];
-    
         // Stop autoplay
         if (s.params.autoplay && s.autoplaying) {
             if (internal || !s.params.autoplayDisableOnInteraction) {
@@ -1751,7 +1750,7 @@ window.Swiper = function (container, params) {
             s.updateAutoHeight();
         }
     
-        if (translate === s.translate) {
+        if ((s.rtl && -translate === s.translate) || (!s.rtl && translate === s.translate)) {
             s.updateClasses();
             if (s.params.effect !== 'slide') {
                 s.setWrapperTranslate(translate);
@@ -2791,6 +2790,7 @@ window.Swiper = function (container, params) {
     function setParallaxTransform(el, progress) {
         el = $(el);
         var p, pX, pY;
+        var rtlFactor = s.rtl ? -1 : 1;
     
         p = el.attr('data-swiper-parallax') || '0';
         pX = el.attr('data-swiper-parallax-x');
@@ -2809,11 +2809,12 @@ window.Swiper = function (container, params) {
                 pX = '0';
             }
         }
+    
         if ((pX).indexOf('%') >= 0) {
-            pX = parseInt(pX, 10) * progress + '%';
+            pX = parseInt(pX, 10) * progress * rtlFactor + '%';
         }
         else {
-            pX = pX * progress + 'px' ;
+            pX = pX * progress * rtlFactor + 'px' ;
         }
         if ((pY).indexOf('%') >= 0) {
             pY = parseInt(pY, 10) * progress + '%';
@@ -2821,6 +2822,7 @@ window.Swiper = function (container, params) {
         else {
             pY = pY * progress + 'px' ;
         }
+    
         el.transform('translate3d(' + pX + ', ' + pY + ',0px)');
     }
     s.parallax = {
