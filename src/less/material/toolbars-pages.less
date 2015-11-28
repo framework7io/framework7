@@ -17,11 +17,17 @@
         padding-top: @tabbarLabelsSize;
     }
 }
-.toolbar:not(.messagebar) ~ .page-content {
+.toolbar:not(.messagebar):not(.toolbar-bottom) ~ .page-content {
     padding-top: @toolbarSize;
 }
-.tabbar-labels:not(.messagebar) ~ .page-content {
+.tabbar-labels:not(.messagebar):not(.toolbar-bottom) ~ .page-content {
     padding-top: @tabbarLabelsSize;
+}
+.toolbar-bottom ~ .page-content {
+    padding-bottom: @toolbarSize;
+}
+.tabbar-labels.toolbar-bottom ~ .page-content {
+    padding-bottom: @tabbarLabelsSize;
 }
 .navbar-fixed {
     .page-content {
@@ -30,6 +36,7 @@
     .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
         padding-top: @navbarSize + @toolbarSize;
     }
+
     .page .subnavbar, &.page .subnavbar {
         top: @navbarSize;
     }
@@ -43,13 +50,13 @@
             padding-top: @navbarSize + @tabbarLabelsSize;
         }
     }
-    .toolbar:not(.messagebar) ~ .page-content {
+    .toolbar:not(.messagebar):not(.toolbar-bottom) ~ .page-content {
         padding-top: @navbarSize + @toolbarSize;
     }
-    .tabbar-labels:not(.messagebar) ~ .page-content {
+    .tabbar-labels:not(.messagebar):not(.toolbar-bottom) ~ .page-content {
         padding-top: @navbarSize + @tabbarLabelsSize;
     }
-    .toolbar:not(.messagebar) {
+    .toolbar:not(.messagebar):not(.toolbar-bottom) {
         top: @navbarSize;
     }
 }
@@ -83,7 +90,7 @@
                 .transition(400ms);
             }
         }
-        & ~ .subnavbar, & ~ .toolbar:not(.messagebar) {
+        & ~ .subnavbar, & ~ .toolbar:not(.messagebar):not(.toolbar-bottom) {
             .translate3d(0,-@navbarSize,0);
             .transition(400ms);
         }
@@ -107,10 +114,10 @@
         .transition(400ms);
     }
 
-    &.toolbar-hidden:not(.messagebar), &.tabbar-hidden {
+    &.toolbar-hidden:not(.messagebar):not(.toolbar-bottom), &.tabbar-hidden {
         .translate3d(0,-100%,0);
     }
-    .navbar ~ &.toolbar-hidden:not(.messagebar), .navbar ~ &.tabbar-hidden {
+    .navbar ~ &.toolbar-hidden:not(.messagebar):not(.toolbar-bottom), .navbar ~ &.tabbar-hidden {
         .translate3d(0,-104px,0);
     }
     .navbar ~ &.tabbar-labels.toolbar-hidden {
