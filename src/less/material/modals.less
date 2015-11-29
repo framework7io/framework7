@@ -107,10 +107,6 @@
     + .modal-button {
         margin-left: 4px;
     }
-    .modal-buttons-vertical & {
-        // &:last-child {
-        // }
-    }
 }
 .modal-no-buttons {
     .modal-buttons {
@@ -237,9 +233,9 @@ input.modal-text-input {
     display: none;
     .depth(2);
     .transform(scale(0.85, 0.6));
-    -webkit-transition-property: opacity, -webkit-transform;
-    -moz-transition-property: opacity, -moz-transform;
-    transition-property: opacity, transform;
+    -webkit-transition-property: opacity, -webkit-transform, border-radius;
+    -moz-transition-property: opacity, -moz-transform, border-radius;
+    transition-property: opacity, transform, border-radius;
     &.popover-on-top {
         .transform-origin(center bottom);
     }
@@ -289,9 +285,52 @@ input.modal-text-input {
             }
         }
     }
+    &.popover-floating-button {
+        .transform-origin(center center);
+        .transform(scale(0.7));
+        border-radius: 50%;
+        box-shadow: none;
+        .depth(3);
+        &.modal-in {
+            border-radius: 0%;
+            .transform(scale(1));
+            .delay(200ms);
+            .transition(200ms);
+        }
+        &.modal-out {
+            border-radius: 50%;
+            .transform(scale(0.7));
+            .delay(0ms);
+            .transition(100ms);
+        }
+        .list-block {
+            margin: 0;
+            &:first-child {
+                ul {
+                    border-radius: 0;
+                }
+                li:first-child a {
+                    border-radius: 0;
+                }
+            }
+            &:last-child {
+                ul {
+                    border-radius: 0;
+                }
+                li:last-child a {
+                    border-radius: 0;
+                }
+            }
+            &:first-child:last-child {
+                li:first-child:last-child a, ul:first-child:last-child {
+                    border-radius: 0;
+                }
+            }
+        }
+    }
 }
 .popover-inner {
-    .scrollable();    
+    .scrollable();
 }
 .actions-popover {
     .list-block {

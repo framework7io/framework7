@@ -1,6 +1,6 @@
 /* === Touch ripple === */
 // Ripple Elements
-.ripple, .floating-button, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button {
+.ripple, a.floating-button, .floating-button > a, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, .speed-dial-buttons a {
     -webkit-user-select: none;
     user-select: none;
 }
@@ -8,10 +8,10 @@
 .ripple-wave {
     left: 0;
     top: 0;
-    position: absolute !important; 
+    position: absolute !important;
     border-radius: 50%;
-    pointer-events: none; 
-    z-index:-1; 
+    pointer-events: none;
+    z-index:-1;
     background:rgba(0,0,0,0.1);
     padding: 0;
     margin: 0;
@@ -30,7 +30,7 @@
         z-index: 1;
     }
 }
-.button-fill, .navbar, .toolbar, .subnavbar, .searchbar, .notifications, .floating-button {
+.button-fill, .navbar, .toolbar, .subnavbar, .searchbar, .notifications, .floating-button, .speed-dial-buttons a {
     .ripple-wave {
         background:rgba(255,255,255,0.3);
     }
@@ -38,5 +38,5 @@
 .messagebar {
     .ripple-wave {
         background:rgba(0,0,0,0.1);
-    }   
+    }
 }
