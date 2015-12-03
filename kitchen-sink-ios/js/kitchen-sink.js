@@ -714,6 +714,66 @@ myApp.onPageInit('pickers', function (page) {
     });
 });
 
+/* ===== Progress Bars ===== */
+
+myApp.onPageInit('progressbar', function (page) {
+    $$('.ks-demo-progressbar-inline .button').on('click', function () {
+        var progress = $$(this).attr('data-progress');
+        var progressbar = $$('.ks-demo-progressbar-inline .progressbar');
+        myApp.setProgressbar(progressbar, progress);
+    });
+    $$('.ks-demo-progressbar-load-hide .button').on('click', function () {
+        var container = $$('.ks-demo-progressbar-load-hide p:first-child');
+        if (container.children('.progressbar').length) return; //don't run all this if there is a current progressbar loading
+
+        myApp.showProgressbar(container, 0);
+
+        // Simluate Loading Something
+        var progress = 0;
+        function simulateLoading() {
+            setTimeout(function () {
+                var progressBefore = progress;
+                progress += Math.random() * 20;
+                myApp.setProgressbar(container, progress);
+                if (progressBefore < 100) {
+                    simulateLoading(); //keep "loading"
+                }
+                else myApp.hideProgressbar(container); //hide
+            }, Math.random() * 200 + 200);
+        }
+        simulateLoading();
+    });
+    $$('.ks-demo-progressbar-overlay .button').on('click', function () {
+        // Add Directly To Body
+        var container = $$('body');
+        if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+
+        myApp.showProgressbar(container, 0);
+
+        // Simluate Loading Something
+        var progress = 0;
+        function simulateLoading() {
+            setTimeout(function () {
+                var progressBefore = progress;
+                progress += Math.random() * 20;
+                myApp.setProgressbar(container, progress);
+                if (progressBefore < 100) {
+                    simulateLoading(); //keep "loading"
+                }
+                else myApp.hideProgressbar(container); //hide
+            }, Math.random() * 200 + 200);
+        }
+        simulateLoading();
+    });
+    $$('.ks-demo-progressbar-infinite-overlay .button').on('click', function () {
+        if ($$('body').children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+        myApp.showProgressbar();
+        setTimeout(function () {
+            myApp.hideProgressbar();
+        }, 3000);
+    });
+});
+
 /* ===== Change statusbar bg when panel opened/closed ===== */
 $$('.panel-left').on('open', function () {
     $$('.statusbar-overlay').addClass('with-panel-left');

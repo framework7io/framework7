@@ -1,0 +1,45 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Progress Bar
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="progressbar")
+    .page-content
+      .progressbar.progressbar-infinite
+      .content-block-title Inline Determinate Progress Bar
+      .content-block.ks-demo-progressbar-inline
+        .content-block-inner
+          p
+            span.progressbar(data-progress="10")
+          p.buttons-row
+            a(href="#", data-progress="10").button 10%
+            a(href="#", data-progress="30").button 30%
+            a(href="#", data-progress="50").button 50%
+            a(href="#", data-progress="100").button 100%
+      .content-block-title Inline Determinate Load & Hide
+      .content-block.ks-demo-progressbar-load-hide
+        .content-block-inner
+          p(style="height:2px")
+          p
+            a(href="#").button Start Loading
+      .content-block-title Overlay Determinate Progress Bar
+      .content-block.ks-demo-progressbar-overlay
+        .content-block-inner
+          p
+            a(href="#").button Start Loading
+      .content-block-title Inline Infinite Progress Bar
+      .content-block
+        .content-block-inner
+          p
+            span.progressbar-infinite(style="position:relative")
+      .content-block-title Overlay Infinite Progress Bar
+      .content-block.ks-demo-progressbar-infinite-overlay
+        .content-block-inner
+          p
+            a(href="#").button Start Loading

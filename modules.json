@@ -122,6 +122,14 @@
         },
         "dependencies" : []
     },
+    "progressbar": {
+        "js" : ["src/js/progressbar.js"],
+        "less": {
+            "ios": ["src/less/ios/progressbar.less"],
+            "material": ["src/less/material/progressbar.less"]
+        },
+        "dependencies" : []
+    },
     "swipeout": {
         "js" : ["src/js/swipeout.js"],
         "less": {},

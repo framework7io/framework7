@@ -73,6 +73,7 @@
                 'src/js/pages.js',
                 'src/js/router.js',
                 'src/js/modals.js',
+                'src/js/progressbar.js',
                 'src/js/panels.js',
                 'src/js/lazy-load.js',
                 'src/js/material-preloader.js',
