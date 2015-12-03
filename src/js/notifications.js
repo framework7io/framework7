@@ -104,7 +104,7 @@ app.addNotification = function (params) {
 
     list[params.material ? 'append' : 'prepend'](item[0]);
     container.show();
-    
+
     var itemHeight = item.outerHeight(), clientLeft;
     if (params.material) {
         container.transform('translate3d(0, '+itemHeight+'px, 0)');
@@ -137,10 +137,10 @@ app.closeNotification = function (item) {
     var container = $('.notifications');
 
     var itemHeight = item.outerHeight();
-    item.css('height', itemHeight + 'px').transition(0);
+    item.css('height', itemHeight + 'px').transition(0).addClass('notification-item-removing');
     var clientLeft = item[0].clientLeft;
 
-    item.css('height', '0px').transition('').addClass('notification-item-removing');
+    item.css('height', '0px').transition('');
     if (item.data('f7NotificationOnClose')) item.data('f7NotificationOnClose')();
 
     if (container.find('.notification-item:not(.notification-item-removing)').length === 0) {
