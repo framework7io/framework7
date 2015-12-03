@@ -28,7 +28,7 @@ app.resizableTextarea = function (textarea) {
     }
     return textarea.on('change keydown keypress keyup paste cut', handleTextarea);
 };
-app.initPageResizableTextareas = function (pageContainer) {
+app.initPageResizableTextarea = function (pageContainer) {
     pageContainer = $(pageContainer);
     var textareas = pageContainer.find('textarea.resizable');
     textareas.each(function () {
