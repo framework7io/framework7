@@ -29,6 +29,14 @@ Framework7 Color Themes
         background: @color;
         color:#fff;
     }
+    // Progress bar
+    .progressbar {
+        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+            span {
+                background-color: @color;
+            }
+        }
+    }
     //Icons
     .color-@{colorName}, .theme-@{colorName} {
         i.icon, i.icon& {
@@ -279,7 +287,7 @@ Framework7 Layouts Themes
         }
         .list-block ul {
             background: none;
-        }    
+        }
 
     }
     .actions-popover .list-block ul {
@@ -314,10 +322,10 @@ Framework7 Layouts Themes
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        color:@lightText;        
+        color:@lightText;
         .hairline-color(top, @blockBorder);
     }
-    
+
     // Searchbar
     .searchbar {
         background: @searchbarBg;
@@ -342,7 +350,6 @@ Framework7 Layouts Themes
     .range-slider input[type="range"]::-ms-thumb {
         border: none;
     }
-
 }
 
 /* === White layout === */
@@ -375,7 +382,7 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
-    
+
     // Picker
     .picker-modal {
         .toolbar {
@@ -479,7 +486,7 @@ Framework7 Layouts Themes
         color:@lightText;
         .hairline-color(top, @blockBorder);
     }
-    
+
     // Searchbar
     .searchbar {
         background: @searchbarBg;
