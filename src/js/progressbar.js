@@ -33,7 +33,6 @@ app.showProgressbar = function (container, progress) {
     else {
         progressbar = container.children('.progressbar:not(.progressbar-out), .progressbar-infinite:not(.progressbar-out)');
         if (progressbar.length === 0) {
-            console.log('wtf?!');
             // Create one
             if (typeof progress !== 'undefined') {
                 // Determined
