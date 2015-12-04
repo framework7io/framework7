@@ -12,6 +12,8 @@
     position: relative;
     display: block;
     vertical-align: middle;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
     span {
         content: '';
         width: 100%;
@@ -20,10 +22,8 @@
         position: absolute;
         left: 0;
         top: 0;
-        // -webkit-transition-timing-function: linear;
-        // transition-timing-function: linear;
         .translate3d(-100%, 0, 0);
-        .transition(200ms);
+        .transition(150ms);
     }
 }
 body, .view, .views, .page, .panel, .popup {
