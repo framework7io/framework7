@@ -27,6 +27,7 @@ var PhotoBrowser = function (params) {
         lazyLoadingOnTransitionStart: false,
         material: app.params.material,
         materialPreloaderSvg: app.params.materialPreloaderSvg,
+        materialPreloaderHtml: app.params.materialPreloaderHtml,
         /*
         Callbacks:
         onLazyImageLoad(pb, slide, img)
@@ -65,7 +66,7 @@ var PhotoBrowser = function (params) {
         '</div>';
     var photoLazyTemplate = pb.params.lazyPhotoTemplate ||
         '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide">' +
-            '<div class="preloader {{@root.preloaderColorClass}}">{{#if @root.material}}{{@root.materialPreloaderSvg}}{{/if}}</div>' +
+            '<div class="preloader {{@root.preloaderColorClass}}">{{#if @root.material}}{{@root.materialPreloaderHtml}}{{/if}}</div>' +
             '<span class="photo-browser-zoom-container">' +
                 '<img data-src="{{js "this.url || this"}}" class="swiper-lazy">' +
             '</span>' +

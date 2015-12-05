@@ -113,6 +113,16 @@ window.Framework7 = function (params) {
         material: false,
         materialPageLoadDelay: 0,
         materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
+        materialPreloaderHtml:
+            '<span class="preloader-inner">' +
+                '<span class="preloader-inner-gap"></span>' +
+                '<span class="preloader-inner-left">' +
+                    '<span class="preloader-inner-half-circle"></span>' +
+                '</span>' +
+                '<span class="preloader-inner-right">' +
+                    '<span class="preloader-inner-half-circle"></span>' +
+                '</span>' +
+            '</span>',
         materialRipple: true,
         materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a',
         // Auto init

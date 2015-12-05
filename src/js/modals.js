@@ -155,7 +155,7 @@ app.modalPassword = function (text, title, callbackOk, callbackCancel) {
 app.showPreloader = function (title) {
     return app.modal({
         title: title || app.params.modalPreloaderTitle,
-        text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</div>',
+        text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</div>',
         cssClass: 'modal-preloader'
     });
 };
@@ -163,7 +163,7 @@ app.hidePreloader = function () {
     app.closeModal('.modal.modal-in');
 };
 app.showIndicator = function () {
-    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</span></div>');
+    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</span></div>');
 };
 app.hideIndicator = function () {
     $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
