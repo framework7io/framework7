@@ -21,10 +21,15 @@ app.setProgressbar = function (container, progress, speed) {
     }
     return progressbar[0];
 };
-app.showProgressbar = function (container, progress) {
+app.showProgressbar = function (container, progress, color) {
     if (typeof container === 'number') {
         container = 'body';
         progress = arguments[0];
+        color = arguments[1];
+    }
+    if (progress && typeof progress === 'string' && parseFloat(progress) !== progress * 1) {
+        color = progress;
+        progress = undefined;
     }
     container = $(container || 'body');
     if (container.length === 0) return;
@@ -36,11 +41,11 @@ app.showProgressbar = function (container, progress) {
             // Create one
             if (typeof progress !== 'undefined') {
                 // Determined
-                progressbar = $('<span class="progressbar progressbar-in"><span></span></span>');
+                progressbar = $('<span class="progressbar progressbar-in' + (color ? ' color-' + color : '') + '"><span></span></span>');
             }
             else {
                 // Infinite
-                progressbar = $('<span class="progressbar progressbar-infinite progressbar-in"></span>');
+                progressbar = $('<span class="progressbar-infinite progressbar-in' + (color ? ' color-' + color : '') + '"></span>');
             }
             container.append(progressbar);
         }

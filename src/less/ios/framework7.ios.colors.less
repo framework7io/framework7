@@ -37,6 +37,13 @@ Framework7 Color Themes
             }
         }
     }
+    .progressbar-infinite {
+        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+            &:before {
+                background-color: @color;
+            }
+        }
+    }
     //Icons
     .color-@{colorName}, .theme-@{colorName} {
         i.icon, i.icon& {

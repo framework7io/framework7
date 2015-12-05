@@ -187,6 +187,23 @@ Framework7 Color Themes
         }
 
     }
+    // Progress bar
+    .progressbar {
+        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
+            span {
+                background-color: @color;
+            }
+        }
+    }
+    .progressbar-infinite{
+        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
+            &:after, &:before {
+                background-color: @color;
+            }
+        }
+    }
     //Icons
     .color-@{colorName} {
         i.icon, i.icon& {
@@ -212,6 +229,9 @@ Framework7 Color Themes
     .preloader.color-@{colorName}, .preloader.preloader-@{colorName} {
         svg circle {
             stroke: @color;
+        }
+        .preloader-inner-gap, .preloader-inner-half-circle {
+            border-color: @color;
         }
     }
     // Theme
