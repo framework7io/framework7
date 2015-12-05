@@ -34,20 +34,24 @@
             p
               a(href="#").button Start Loading
           p Overlay with determinate progress bar on top of the app:
-          .ks-demo-progressbar-overlay
-            p
-              a(href="#").button Start Loading
+          p.ks-demo-progressbar-overlay
+            a(href="#").button Start Loading
       .content-block-title Infinite Progress Bar
       .content-block
         .content-block-inner
           p When progress bar is infinite/indeterminate it requests that the user wait while something finishes when it’s not necessary to indicate how long it will take.
           p Inline infinite progress bar
           p
-            span.progressbar-infinite(style="position:relative")
+            span.progressbar-infinite
+          p Multi-color infinite progress bar
+          p
+            span.progressbar-infinite.color-multi
           p Overlay with infinite progress bar on top of the app
-          .ks-demo-progressbar-infinite-overlay
-            p
-              a(href="#").button Start Loading
+          p.ks-demo-progressbar-infinite-overlay
+            a(href="#").button Start Loading
+          p Overlay with infinite multi-color progress bar on top of the app
+          p.ks-demo-progressbar-infinite-multi-overlay
+            a(href="#").button Start Loading
       .content-block-title Colored
       .list-block
         ul

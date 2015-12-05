@@ -43,7 +43,6 @@
         .animation(progressbar-infinite-1 2s linear infinite);
     }
     &:after {
-        // display: none;
         .animation(progressbar-infinite-2 2s linear infinite);
     }
     html.with-statusbar-overlay body > & {
@@ -54,13 +53,14 @@
 
 // Multicolor
 .progressbar-infinite.color-multi {
+    background: none !important;
     &:before, &:after {
         width: 100%;
         animation: none;
     }
     &:before {
         background: none;
-        .animation(progressbar-infinite-multicolor-bg 3s linear infinite);
+        .animation(progressbar-infinite-multicolor-bg 3s step-end infinite);
     }
     &:after {
         background: none;
@@ -196,25 +196,13 @@ html.with-statusbar-overlay body > .progressbar {
     0% {
         background-color: @green;
     }
-    24.9999% {
-        background-color: @green;
-    }
     25% {
-        background-color: @red;
-    }
-    49.9999% {
         background-color: @red;
     }
     50% {
         background-color: @blue;
     }
-    74.9999% {
-        background-color: @blue;
-    }
     75% {
-        background-color: @yellow;
-    }
-    100% {
         background-color: @yellow;
     }
 }
@@ -222,25 +210,13 @@ html.with-statusbar-overlay body > .progressbar {
     0% {
         background-color: @green;
     }
-    24.9999% {
-        background-color: @green;
-    }
     25% {
-        background-color: @red;
-    }
-    49.9999% {
         background-color: @red;
     }
     50% {
         background-color: @blue;
     }
-    74.9999% {
-        background-color: @blue;
-    }
     75% {
-        background-color: @yellow;
-    }
-    100% {
         background-color: @yellow;
     }
 }
@@ -249,23 +225,23 @@ html.with-statusbar-overlay body > .progressbar {
         -webkit-transform: scaleX(0);
         background-color: @red;
     }
-    24.99999999% {
+    24.9% {
         -webkit-transform: scaleX(1);
         background-color: @red;
     }
     25% {
         -webkit-transform: scaleX(0);
-        background-color: @lightblue;
+        background-color: @blue;
     }
-    49.99999999% {
+    49.9% {
         -webkit-transform: scaleX(1);
-        background-color: @lightblue;
+        background-color: @blue;
     }
     50% {
         -webkit-transform: scaleX(0);
         background-color: @yellow;
     }
-    74.99999999% {
+    74.9% {
         -webkit-transform: scaleX(1);
         background-color: @yellow;
     }
@@ -283,23 +259,23 @@ html.with-statusbar-overlay body > .progressbar {
         transform: scaleX(0);
         background-color: @red;
     }
-    24.99999999% {
+    24.9% {
         transform: scaleX(1);
         background-color: @red;
     }
     25% {
         transform: scaleX(0);
-        background-color: @lightblue;
+        background-color: @blue;
     }
-    49.99999999% {
+    49.9% {
         transform: scaleX(1);
-        background-color: @lightblue;
+        background-color: @blue;
     }
     50% {
         transform: scaleX(0);
         background-color: @yellow;
     }
-    74.99999999% {
+    74.9% {
         transform: scaleX(1);
         background-color: @yellow;
     }

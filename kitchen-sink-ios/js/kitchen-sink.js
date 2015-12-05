@@ -715,7 +715,6 @@ myApp.onPageInit('pickers', function (page) {
 });
 
 /* ===== Progress Bars ===== */
-
 myApp.onPageInit('progressbar', function (page) {
     $$('.ks-demo-progressbar-inline .button').on('click', function () {
         var progress = $$(this).attr('data-progress');
@@ -766,8 +765,18 @@ myApp.onPageInit('progressbar', function (page) {
         simulateLoading();
     });
     $$('.ks-demo-progressbar-infinite-overlay .button').on('click', function () {
-        if ($$('body').children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
-        myApp.showProgressbar();
+        // Add Directly To Body
+        var container = $$('body');
+        if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+        myApp.showProgressbar(container);
+        setTimeout(function () {
+            myApp.hideProgressbar();
+        }, 3000);
+    });
+    $$('.ks-demo-progressbar-infinite-multi-overlay .button').on('click', function () {
+        var container = $$('body');
+        if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+        myApp.showProgressbar(container, 'multi');
         setTimeout(function () {
             myApp.hideProgressbar();
         }, 3000);
