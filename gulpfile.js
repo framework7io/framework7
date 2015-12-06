@@ -1,5 +1,5 @@
 (function(){
-    'use strict';    
+    'use strict';
     var gulp = require('gulp'),
         connect = require('gulp-connect'),
         open = require('gulp-open'),
@@ -98,6 +98,7 @@
                 'src/js/push-state.js',
                 'src/js/swiper-init.js',
                 'src/js/photo-browser.js',
+                'src/js/autocomplete.js',
                 'src/js/picker.js',
                 'src/js/calendar.js',
                 'src/js/notifications.js',

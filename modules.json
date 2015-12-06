@@ -215,6 +215,14 @@
         },
         "dependencies" : ["swiper"]
     },
+    "autocomplete": {
+        "js" : ["src/js/autocomplete.js"],
+        "less": {
+            "ios": ["src/less/ios/autocomplete.less"],
+            "material": ["src/less/material/autocomplete.less"]
+        },
+        "dependencies" : ["searchbar"]
+    },
     "notifications": {
         "js" : ["src/js/notifications.js"],
         "less": {

@@ -104,7 +104,7 @@
         text-overflow: ellipsis;
         max-width: 100%;
     }
-    
+
     .item-after {
         white-space: nowrap;
         color: #757575;
@@ -114,11 +114,12 @@
         max-height: 28px;
         font-size: 14px;
     }
-    .smart-select .item-after {
+    .smart-select .item-after, .autocomplete-opener .item-after {
         max-width: 70%;
         overflow: hidden;
-        text-overflow:ellipsis;
+        text-overflow: ellipsis;
         position: relative;
+        display: block;
     }
     .item-link {
         .transition(300ms);
