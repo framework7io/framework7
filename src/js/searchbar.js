@@ -221,7 +221,7 @@ var Searchbar = function (container, params) {
             s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
         }
-        if (app.device.ios) {
+        if (app.device.ios && !app.params.material) {
             setTimeout(function () {
                 _enable();
             }, 400);
