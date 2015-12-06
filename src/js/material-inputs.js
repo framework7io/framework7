@@ -47,6 +47,20 @@ app.initMaterialWatchInputs = function () {
             els.removeClass('not-empty-state');
         }
     }
+    function watchChangeState(e) {
+        /*jshint validthis:true*/
+        var i = $(this), value = i.val();
+        var type = i.attr('type');
+        if (notInputs.indexOf(type) >= 0) return;
+        var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
+        if (value && value.trim() !== '') {
+            els.addClass('not-empty-state');
+        }
+        else {
+            els.removeClass('not-empty-state');
+        }
+    }
+    $(document).on('change', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', watchChangeState, true);
     $(document).on('focus', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', addFocusState, true);
     $(document).on('blur', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', removeFocusState, true);
 };
