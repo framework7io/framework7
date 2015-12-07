@@ -5035,8 +5035,7 @@ html.with-statusbar-overlay body .panel {
   width: 50%;
   overflow: hidden;
 }
-.preloader-inner .preloader-inner-left .preloader-inner-half-circle,
-.preloader-inner .preloader-inner-right .preloader-inner-half-circle {
+.preloader-inner .preloader-inner-half-circle {
   position: absolute;
   top: 0;
   height: 100%;
@@ -5548,6 +5547,9 @@ html.with-statusbar-overlay body > .progressbar {
 .autocomplete-page .list-block ul:empty {
   display: none;
 }
+.autocomplete-page .navbar .autocomplete-preloader {
+  margin-right: 16px;
+}
 .autocomplete-preloader:not(.autocomplete-preloader-visible) {
   -webkit-animation: none;
   animation: none;
@@ -5572,9 +5574,15 @@ html.with-statusbar-overlay body > .progressbar {
 .autocomplete-dropdown .autocomplete-preloader {
   display: none;
   position: absolute;
-  right: 15px;
+  right: 16px;
   bottom: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  width: 20px;
+  height: 20px;
+}
+.autocomplete-dropdown .autocomplete-preloader .preloader-inner-gap,
+.autocomplete-dropdown .autocomplete-preloader .preloader-inner-half-circle {
+  border-width: 3px;
 }
 .autocomplete-dropdown .autocomplete-preloader-visible {
   display: block;

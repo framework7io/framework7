@@ -4983,6 +4983,8 @@ html.with-statusbar-overlay body > .progressbar {
   right: 15px;
   bottom: 100%;
   margin-bottom: 12px;
+  width: 20px;
+  height: 20px;
 }
 .autocomplete-dropdown .autocomplete-preloader-visible {
   display: block;
