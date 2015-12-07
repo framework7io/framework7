@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.5
+ * Framework7 1.4.0
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * http://www.idangero.us/framework7
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2015
+ * Released on: December 7, 2015
  */
 (function () {
 
@@ -23,14 +23,14 @@
         var app = this;
     
         // Version
-        app.version = '1.3.5';
+        app.version = '1.4.0';
     
         // Default Parameters
         app.params = {
             cache: true,
             cacheIgnore: [],
             cacheIgnoreGetParameters: false,
-            cacheDuration: 1000 * 60 * 10, // Ten minutes 
+            cacheDuration: 1000 * 60 * 10, // Ten minutes
             preloadPreviousPage: true,
             uniqueHistory: false,
             uniqueHistoryIgnoreGetParameters: false,
@@ -129,8 +129,18 @@
             material: false,
             materialPageLoadDelay: 0,
             materialPreloaderSvg: '<svg xmlns="http://www.w3.org/2000/svg" height="75" width="75" viewbox="0 0 75 75"><circle cx="37.5" cy="37.5" r="33.5" stroke-width="8"/></svg>',
+            materialPreloaderHtml:
+                '<span class="preloader-inner">' +
+                    '<span class="preloader-inner-gap"></span>' +
+                    '<span class="preloader-inner-left">' +
+                        '<span class="preloader-inner-half-circle"></span>' +
+                    '</span>' +
+                    '<span class="preloader-inner-right">' +
+                        '<span class="preloader-inner-half-circle"></span>' +
+                    '</span>' +
+                '</span>',
             materialRipple: true,
-            materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, .floating-button',
+            materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a',
             // Auto init
             init: true,
         };
@@ -1234,7 +1244,7 @@
                     s.triggerEvent('enableSearch', 'onEnable');
                     s.active = true;
                 }
-                if (app.device.ios) {
+                if (app.device.ios && !app.params.material) {
                     setTimeout(function () {
                         _enable();
                     }, 400);
@@ -1645,7 +1655,7 @@
                 beforeSend: app.params.onAjaxStart,
                 complete: function (xhr) {
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
-                        if (app.params.cache && !ignoreCache) {
+                        if (app.params.cache) {
                             app.removeFromCache(_url);
                             app.cache.push({
                                 url: _url,
@@ -1973,17 +1983,19 @@
             // Init pull to refres
             if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
             // Init infinite scroll
-            if (app.initInfiniteScroll) app.initInfiniteScroll(pageContainer);
+            if (app.initPageInfiniteScroll) app.initPageInfiniteScroll(pageContainer);
             // Init searchbar
             if (app.initSearchbar) app.initSearchbar(pageContainer);
             // Init message bar
             if (app.initPageMessagebar) app.initPageMessagebar(pageContainer);
             // Init scroll toolbars
-            if (app.initScrollToolbars) app.initScrollToolbars(pageContainer);
+            if (app.initPageScrollToolbars) app.initPageScrollToolbars(pageContainer);
             // Init lazy images
             if (app.initImagesLazyLoad) app.initImagesLazyLoad(pageContainer);
+            // Init progress bars
+            if (app.initPageProgressbar) app.initPageProgressbar(pageContainer);
             // Init resizeable textareas
-            if (app.initPageResizableTextareas) app.initPageResizableTextareas(pageContainer);
+            if (app.initPageResizableTextarea) app.initPageResizableTextarea(pageContainer);
             // Init Material Preloader
             if (app.params.material && app.initPageMaterialPreloader) app.initPageMaterialPreloader(pageContainer);
             // Init Material Inputs
@@ -2547,7 +2559,7 @@
                 if (!(view.params.swipeBackPage || view.params.preloadPreviousPage)) {
                     if (view.params.domCache) {
                         oldPage.addClass('cached');
-                        oldNavbarInner.addClass('cached');
+                        if (dynamicNavbar) oldNavbarInner.addClass('cached');
                     }
                     else {
                         if (!(url.indexOf('#') === 0 && newPage.attr('data-page').indexOf('smart-select-') === 0)) {
@@ -3327,7 +3339,7 @@
         app.showPreloader = function (title) {
             return app.modal({
                 title: title || app.params.modalPreloaderTitle,
-                text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</div>',
+                text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</div>',
                 cssClass: 'modal-preloader'
             });
         };
@@ -3335,7 +3347,7 @@
             app.closeModal('.modal.modal-in');
         };
         app.showIndicator = function () {
-            $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</span></div>');
+            $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</span></div>');
         };
         app.hideIndicator = function () {
             $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
@@ -3529,6 +3541,33 @@
                     if (modalPosition === 'bottom') {
                         modal.addClass('popover-on-bottom');
                     }
+                    if (target.hasClass('floating-button-to-popover') && !modal.hasClass('modal-in')) {
+                        modal.addClass('popover-floating-button');
+                        var diffX = (modalLeft + modalWidth / 2) - (targetOffset.left + targetWidth / 2),
+                            diffY = (modalTop + modalHeight / 2) - (targetOffset.top + targetHeight / 2);
+                        target
+                            .addClass('floating-button-to-popover-in')
+                            .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0)')
+                            .transitionEnd(function (e) {
+                                if (!target.hasClass('floating-button-to-popover-in')) return;
+                                target
+                                    .addClass('floating-button-to-popover-scale')
+                                    .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0) scale(' + (modalWidth/targetWidth) + ', ' + (modalHeight/targetHeight) + ')');
+                            });
+        
+                        modal.once('close', function () {
+                            target
+                                .removeClass('floating-button-to-popover-in floating-button-to-popover-scale')
+                                .addClass('floating-button-to-popover-out')
+                                .transform('')
+                                .transitionEnd(function (e) {
+                                    target.removeClass('floating-button-to-popover-out');
+                                });
+                        });
+                        modal.once('closed', function () {
+                            modal.removeClass('popover-floating-button');
+                        });
+                    }
         
                 }
                 else {
@@ -3591,9 +3630,11 @@
                 // Apply Styles
                 modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
             }
+        
             sizePopover();
         
             $(window).on('resize', sizePopover);
+        
             modal.on('close', function () {
                 $(window).off('resize', sizePopover);
             });
@@ -3616,7 +3657,7 @@
             modal = $(modal);
             if (modal.length === 0) return false;
             modal.show();
-            
+        
             app.openModal(modal);
             return modal[0];
         };
@@ -3769,7 +3810,10 @@
             if (!(isPopover && !app.params.material)) {
                 modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
                     if (modal.hasClass('modal-out')) modal.trigger('closed');
-                    else modal.trigger('opened');
+                    else {
+                        modal.trigger('opened');
+                        if (isPopover) return;
+                    }
         
                     if (isPickerModal) {
                         $('body').removeClass('picker-modal-closing');
@@ -3797,6 +3841,85 @@
             return true;
         };
         
+
+        /*===============================================================================
+        ************   Progress Bar   ************
+        ===============================================================================*/
+        app.setProgressbar = function (container, progress, speed) {
+            container = $(container || 'body');
+            if (container.length === 0) return;
+            if (progress) progress = Math.min(Math.max(progress, 0), 100);
+            var progressbar;
+            if (container.hasClass('progressbar')) progressbar = container;
+            else {
+                progressbar = container.children('.progressbar');
+            }
+            if (progressbar.length === 0 || progressbar.hasClass('progressbar-infinite')) return;
+            var clientLeft = progressbar[0].clientLeft;
+            progressbar.children('span').transform('translate3d(' + (-100 + progress) + '%,0,0)');
+            if (typeof speed !== 'undefined') {
+                progressbar.children('span').transition(speed);
+            }
+            else {
+                progressbar.children('span').transition('');
+            }
+            return progressbar[0];
+        };
+        app.showProgressbar = function (container, progress, color) {
+            if (typeof container === 'number') {
+                container = 'body';
+                progress = arguments[0];
+                color = arguments[1];
+            }
+            if (progress && typeof progress === 'string' && parseFloat(progress) !== progress * 1) {
+                color = progress;
+                progress = undefined;
+            }
+            container = $(container || 'body');
+            if (container.length === 0) return;
+            var progressbar;
+            if (container.hasClass('progressbar')) progressbar = container;
+            else {
+                progressbar = container.children('.progressbar:not(.progressbar-out), .progressbar-infinite:not(.progressbar-out)');
+                if (progressbar.length === 0) {
+                    // Create one
+                    if (typeof progress !== 'undefined') {
+                        // Determined
+                        progressbar = $('<span class="progressbar progressbar-in' + (color ? ' color-' + color : '') + '"><span></span></span>');
+                    }
+                    else {
+                        // Infinite
+                        progressbar = $('<span class="progressbar-infinite progressbar-in' + (color ? ' color-' + color : '') + '"></span>');
+                    }
+                    container.append(progressbar);
+                }
+            }
+            if (progress) app.setProgressbar(container, progress);
+            return progressbar[0];
+        };
+        app.hideProgressbar = function (container) {
+            container = $(container || 'body');
+            if (container.length === 0) return;
+            var progressbar;
+            if (container.hasClass('progressbar')) progressbar = container;
+            else {
+                progressbar = container.children('.progressbar, .progressbar-infinite');
+            }
+            if (progressbar.length === 0 || !progressbar.hasClass('progressbar-in') || progressbar.hasClass('progressbar-out')) return;
+            progressbar.removeClass('progressbar-in').addClass('progressbar-out').animationEnd(function () {
+                progressbar.remove();
+                progressbar = null;
+            });
+            return;
+        };
+        app.initPageProgressbar = function (pageContainer) {
+            pageContainer = $(pageContainer);
+            pageContainer.find('.progressbar').each(function () {
+                var p = $(this);
+                if (p.children('span').length === 0) p.append('<span></span>');
+                if (p.attr('data-progress')) app.setProgressbar(p, p.attr('data-progress'));
+            });
+        };
 
         /*======================================================
         ************   Panels   ************
@@ -4269,8 +4392,8 @@
         ======================================================*/
         app.initPageMaterialPreloader = function (pageContainer) {
             $(pageContainer).find('.preloader').each(function () {
-                if ($(this).children('svg').length === 0) {
-                    $(this).html(app.params.materialPreloaderSvg);
+                if ($(this).children().length === 0) {
+                    $(this).html(app.params.materialPreloaderHtml);
                 }
             });
         };
@@ -6248,7 +6371,7 @@
                     inf.trigger('infinite');
                 }
             }
-                
+        
         }
         app.attachInfiniteScroll = function (infiniteContent) {
             $(infiniteContent).on('scroll', handleInfiniteScroll);
@@ -6257,7 +6380,7 @@
             $(infiniteContent).off('scroll', handleInfiniteScroll);
         };
         
-        app.initInfiniteScroll = function (pageContainer) {
+        app.initPageInfiniteScroll = function (pageContainer) {
             pageContainer = $(pageContainer);
             var infiniteContent = pageContainer.find('.infinite-scroll');
             if (infiniteContent.length === 0) return;
@@ -6272,7 +6395,7 @@
         /*=============================================================
         ************   Hide/show Toolbar/Navbar on scroll   ************
         =============================================================*/
-        app.initScrollToolbars = function (pageContainer) {
+        app.initPageScrollToolbars = function (pageContainer) {
             pageContainer = $(pageContainer);
             var scrollContent = pageContainer.find('.page-content');
             if (scrollContent.length === 0) return;
@@ -6388,19 +6511,43 @@
         };
 
         /*======================================================
-        ************   Material Preloader   ************
+        ************   Material Tabbar   ************
         ======================================================*/
+        app.materialTabbarSetHighlight = function (tabbar, activeLink) {
+            tabbar = $(tabbar);
+            activeLink = activeLink || tabbar.find('.tab-link.active');
+        
+            var tabLinkWidth, highlightTranslate;
+            if (tabbar.hasClass('tabbar-scrollable')) {
+                tabLinkWidth = activeLink[0].offsetWidth + 'px';
+                highlightTranslate = (app.rtl ? - activeLink[0].offsetLeft: activeLink[0].offsetLeft) + 'px';
+            }
+            else {
+                tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100 + '%';
+                highlightTranslate = (app.rtl ? - activeLink.index(): activeLink.index()) * 100 + '%';
+            }
+        
+            tabbar.find('.tab-link-highlight')
+                .css({width: tabLinkWidth})
+                .transform('translate3d(' + highlightTranslate + ',0,0)');
+        };
         app.initPageMaterialTabbar = function (pageContainer) {
             pageContainer = $(pageContainer);
             var tabbar = $(pageContainer).find('.tabbar');
         
-            if (tabbar.length > 0 && tabbar.find('.tab-link-highlight').length === 0) {
-                tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
-                var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
-                var highlightTranslate = (app.rtl ? - tabbar.find('.tab-link.active').index(): tabbar.find('.tab-link.active').index()) * 100;
-                tabbar.find('.tab-link-highlight')
-                    .css({width: tabLinkWidth + '%'})
-                    .transform('translate3d(' + highlightTranslate + '%,0,0)');
+            function tabbarSetHighlight() {
+                app.materialTabbarSetHighlight(tabbar);
+            }
+            if (tabbar.length > 0) {
+                if (tabbar.find('.tab-link-highlight').length === 0) {
+                    tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+                }
+        
+                tabbarSetHighlight();
+                $(window).on('resize', tabbarSetHighlight);
+                pageContainer.once('pageBeforeRemove', function () {
+                    $(window).off('resize', tabbarSetHighlight);
+                });
             }
         };
 
@@ -6432,6 +6579,13 @@
                 tabs.transform('translate3d(' + tabTranslate + '%,0,0)');
             }
         
+            // Swipeable tabs
+            var isSwipeableTabs = tabs.parent().hasClass('tabs-swipeable-wrap'), swiper;
+            if (isSwipeableTabs) {
+                swiper = tabs.parent()[0].swiper;
+                if (swiper.activeIndex !== newTab.index()) swiper.slideTo(newTab.index(), undefined, false);
+            }
+        
             // Remove active class from old tabs
             var oldTab = tabs.children('.tab.active').removeClass('active');
             // Add active class to new tab
@@ -6440,7 +6594,7 @@
             newTab.trigger('show');
         
             // Update navbars in new tab
-            if (!isAnimatedTabs && newTab.find('.navbar').length > 0) {
+            if (!isAnimatedTabs && !isSwipeableTabs && newTab.find('.navbar').length > 0) {
                 // Find tab's view
                 var viewContainer;
                 if (newTab.hasClass(app.params.viewClass)) viewContainer = newTab[0];
@@ -6476,7 +6630,7 @@
                     });
                 }
             }
-            
+        
             // Update links' classes
             if (tabLink && tabLink.length > 0) {
                 tabLink.addClass('active');
@@ -6486,18 +6640,13 @@
                     if (tabbar.length > 0) {
                         if (tabbar.find('.tab-link-highlight').length === 0) {
                             tabbar.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
-                            var clientLeft = tabbar[0].clientLeft;
                         }
-                        var tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100;
-                        var highlightTranslate = (app.rtl ? - tabLink.index() : tabLink.index()) * 100;
-                        tabbar.find('.tab-link-highlight')
-                            .css({width: tabLinkWidth + '%'})
-                            .transform('translate3d(' + highlightTranslate + '%,0,0)');
+                        app.materialTabbarSetHighlight(tabbar, tabLink);
                     }
                 }
             }
             if (oldTabLink && oldTabLink.length > 0) oldTabLink.removeClass('active');
-            
+        
             return true;
         };
 
@@ -7110,7 +7259,7 @@
                              clicked.parents('a').length > 0 ||
                              target[0].nodeName.toLowerCase() === 'a' ||
                              target.parents('a').length > 0;
-                             
+        
                 if (isLink) return;
                 var pageContent, page;
                 if (app.params.scrollTopOnNavbarClick && clicked.is('.navbar .center')) {
@@ -7148,7 +7297,7 @@
                     }
                     else {
                         // Usual case
-                        pageContent = $('.views').find('.page:not(.page-on-left):not(.page-on-right):not(.cached)').find('.page-content');   
+                        pageContent = $('.views').find('.page:not(.page-on-left):not(.page-on-right):not(.cached)').find('.page-content');
                     }
                 }
         
@@ -7165,8 +7314,8 @@
                 var clicked = $(this);
                 var url = clicked.attr('href');
                 var isLink = clicked[0].nodeName.toLowerCase() === 'a';
-                
-                // Check if link is external 
+        
+                // Check if link is external
                 if (isLink) {
                     if (clicked.is(app.params.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
                         if(url && clicked.attr('target') === '_system') {
@@ -7184,7 +7333,7 @@
                 if (clicked.hasClass('smart-select')) {
                     if (app.smartSelectOpen) app.smartSelectOpen(clicked);
                 }
-                
+        
                 // Open Panel
                 if (clicked.hasClass('open-panel')) {
                     if ($('.panel').length === 1) {
@@ -7250,7 +7399,7 @@
                         app.closeModal('.modal.modal-in');
                     if ($('.actions-modal.modal-in').length > 0 && app.params.actionsCloseByOutside)
                         app.closeModal('.actions-modal.modal-in');
-                    
+        
                     if ($('.popover.modal-in').length > 0) app.closeModal('.popover.modal-in');
                 }
                 if (clicked.hasClass('popup-overlay')) {
@@ -7317,7 +7466,7 @@
                     else {
                         app.swipeoutDelete(clicked.parents('.swipeout'));
                     }
-                        
+        
                 }
                 // Sortable
                 if (clicked.hasClass('toggle-sortable')) {
@@ -7335,6 +7484,16 @@
                     if (accordionItem.length === 0) accordionItem = clicked.parents('.accordion-item');
                     if (accordionItem.length === 0) accordionItem = clicked.parents('li');
                     app.accordionToggle(accordionItem);
+                }
+        
+                // Speed Dial
+                if (app.params.material) {
+                    if (clicked.hasClass('floating-button') && clicked.parent().hasClass('speed-dial')) {
+                        clicked.parent().toggleClass('speed-dial-opened');
+                    }
+                    if (clicked.hasClass('close-speed-dial')) {
+                        $('.speed-dial-opened').removeClass('speed-dial-opened');
+                    }
                 }
         
                 // Load Page
@@ -7387,7 +7546,7 @@
                         if (clicked.hasClass('with-animation')) animatePages = true;
                         if (clicked.hasClass('no-animation')) animatePages = false;
                     }
-                    
+        
                     var options = {
                         animatePages: animatePages,
                         ignoreCache: clickedData.ignoreCache,
@@ -7689,7 +7848,7 @@
             }
             return textarea.on('change keydown keypress keyup paste cut', handleTextarea);
         };
-        app.initPageResizableTextareas = function (pageContainer) {
+        app.initPageResizableTextarea = function (pageContainer) {
             pageContainer = $(pageContainer);
             var textareas = pageContainer.find('textarea.resizable');
             textareas.each(function () {
@@ -7746,6 +7905,20 @@
                     els.removeClass('not-empty-state');
                 }
             }
+            function watchChangeState(e) {
+                /*jshint validthis:true*/
+                var i = $(this), value = i.val();
+                var type = i.attr('type');
+                if (notInputs.indexOf(type) >= 0) return;
+                var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
+                if (value && value.trim() !== '') {
+                    els.addClass('not-empty-state');
+                }
+                else {
+                    els.removeClass('not-empty-state');
+                }
+            }
+            $(document).on('change', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', watchChangeState, true);
             $(document).on('focus', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', addFocusState, true);
             $(document).on('blur', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', removeFocusState, true);
         };
@@ -7871,7 +8044,7 @@
         };
         app.initPageSwiper = function (pageContainer) {
             pageContainer = $(pageContainer);
-            var swipers = pageContainer.find('.swiper-init');
+            var swipers = pageContainer.find('.swiper-init, .tabs-swipeable-wrap');
             if (swipers.length === 0) return;
             function destroySwiperOnRemove(slider) {
                 function destroySwiper() {
@@ -7880,8 +8053,11 @@
                 }
                 pageContainer.on('pageBeforeRemove', destroySwiper);
             }
-            for (var i = 0; i < swipers.length; i++) {
-                var swiper = swipers.eq(i);
+            swipers.each(function () {
+                var swiper = $(this);
+                if (swiper.hasClass('tabs-swipeable-wrap')) {
+                    swiper.addClass('swiper-container').children('.tabs').addClass('swiper-wrapper').children('.tab').addClass('swiper-slide');
+                }
                 var params;
                 if (swiper.data('swiper')) {
                     params = JSON.parse(swiper.data('swiper'));
@@ -7889,13 +8065,18 @@
                 else {
                     params = swiper.dataset();
                 }
+                if (swiper.hasClass('tabs-swipeable-wrap')) {
+                    params.onSlideChangeStart = function (s) {
+                        app.showTab(s.slides.eq(s.activeIndex));
+                    };
+                }
                 var _slider = app.swiper(swiper[0], params);
                 destroySwiperOnRemove(_slider);
-            }
+            });
         };
         app.reinitPageSwiper = function (pageContainer) {
             pageContainer = $(pageContainer);
-            var sliders = pageContainer.find('.swiper-init');
+            var sliders = pageContainer.find('.swiper-init, .tabs-swipeable-wrap');
             if (sliders.length === 0) return;
             for (var i = 0; i < sliders.length; i++) {
                 var sliderInstance = sliders[0].swiper;
@@ -7935,6 +8116,7 @@
                 lazyLoadingOnTransitionStart: false,
                 material: app.params.material,
                 materialPreloaderSvg: app.params.materialPreloaderSvg,
+                materialPreloaderHtml: app.params.materialPreloaderHtml,
                 /*
                 Callbacks:
                 onLazyImageLoad(pb, slide, img)
@@ -7973,7 +8155,7 @@
                 '</div>';
             var photoLazyTemplate = pb.params.lazyPhotoTemplate ||
                 '<div class="photo-browser-slide photo-browser-slide-lazy swiper-slide">' +
-                    '<div class="preloader {{@root.preloaderColorClass}}">{{#if @root.material}}{{@root.materialPreloaderSvg}}{{/if}}</div>' +
+                    '<div class="preloader {{@root.preloaderColorClass}}">{{#if @root.material}}{{@root.materialPreloaderHtml}}{{/if}}</div>' +
                     '<span class="photo-browser-zoom-container">' +
                         '<img data-src="{{js "this.url || this"}}" class="swiper-lazy">' +
                     '</span>' +
@@ -8570,6 +8752,597 @@
             return new PhotoBrowser(params);
         };
         
+
+        /*===============================================================================
+        ************   Autocomplete   ************
+        ===============================================================================*/
+        var Autocomplete = function (params) {
+            var a = this;
+        
+            // Params
+            var defaults = {
+                // Standalone Options
+                // opener: undefined,
+                popupCloseText: 'Close',
+                backText: 'Back',
+                searchbarPlaceholderText: 'Search...',
+                searchbarCancelText: 'Cancel',
+                openIn: 'page',
+                backOnSelect: false,
+                notFoundText: 'Nothing found',
+                // pageTitle: undefined,
+        
+                // Handle Data
+                // source: undefined,
+                // limit: undefined,
+                valueProperty: 'id',
+                textProperty: 'text',
+        
+                // Dropdown Options
+                // dropdownPlaceholderText: 'Type anything...',
+                updateInputValueOnSelect: true,
+                expandInput: false,
+        
+                // Preloader
+                preloaderColor: false,
+                preloader: false,
+        
+                // Templates
+                // itemTemplate: undefined,
+                // naavbarTemplate: undefined,
+                // pageTemplate: undefined,
+                // searchbarTemplate: undefined,
+                // dropD: undefined,
+                // dropdownItemTemplate: undefined,
+                // dropdownPlaceholderTemplate: undefined
+        
+                // Color themes
+                // toolbarTheme: undefined,
+                // navbarTheme: undefined,
+                // formTheme: undefined,
+        
+                // Callbacks
+                //onChange: function (a, value) - for not dropdown
+                //onOpen: function (a)
+                //onClose: function (a)
+            };
+        
+            params = params || {};
+            for (var def in defaults) {
+                if (typeof params[def] === 'undefined') {
+                    params[def] = defaults[def];
+                }
+            }
+            a.params = params;
+        
+            // Opener Link & View
+            if (a.params.opener) {
+                a.opener = $(a.params.opener);
+            }
+            var view = a.params.view;
+            if (!a.params.view && a.opener && a.opener.length) {
+                // Find related view
+                view = a.opener.parents('.' + app.params.viewClass);
+                if (view.length === 0) return;
+                view = view[0].f7View;
+            }
+        
+            // Input
+            if (a.params.input) {
+                a.input = $(a.params.input);
+                if (a.input.length === 0 && a.params.openIn === 'dropdown') return;
+            }
+        
+            // Array with selected items
+            a.value = a.params.value || [];
+        
+            // ID & Inputs
+            a.id = (new Date()).getTime();
+            a.inputType = a.params.multiple ? 'checkbox' : 'radio';
+            a.inputName = a.inputType + '-' + a.id;
+        
+            // Is Material
+            var material = app.params.material;
+        
+            // Back On Select
+            var backOnSelect = a.params.backOnSelect;
+        
+            if (a.params.openIn !== 'dropdown') {
+                // Item Template
+                a.itemTemplate = t7.compile(a.params.itemTemplate ||
+                    '<li>' +
+                        '<label class="label-{{inputType}} item-content">' +
+                            '<input type="{{inputType}}" name="{{inputName}}" value="{{value}}" {{#if selected}}checked{{/if}}>' +
+                            '{{#if material}}' +
+                                '<div class="item-media">' +
+                                    '<i class="icon icon-form-{{inputType}}"></i>' +
+                                '</div>' +
+                                '<div class="item-inner">' +
+                                    '<div class="item-title">{{text}}</div>' +
+                                '</div>' +
+                            '{{else}}' +
+                                '{{#if checkbox}}' +
+                                '<div class="item-media">' +
+                                    '<i class="icon icon-form-checkbox"></i>' +
+                                '</div>' +
+                                '{{/if}}' +
+                                '<div class="item-inner">' +
+                                    '<div class="item-title">{{text}}</div>' +
+                                '</div>' +
+                            '{{/if}}' +
+                        '</label>' +
+                    '</li>'
+                );
+                // Page Layout
+                var pageTitle = a.params.pageTitle || '';
+                if (!pageTitle && a.opener && a.opener.length) {
+                    pageTitle = a.opener.find('.item-title').text();
+                }
+                var pageName = 'autocomplete-' + a.inputName;
+        
+                var navbarTheme = a.params.navbarTheme,
+                    formTheme = a.params.formTheme;
+        
+                // Navbar HTML
+                var navbarHTML;
+                var noNavbar = '', noToolbar = '', navbarLayout;
+        
+                a.navbarTemplate = t7.compile(a.params.navbarTemplate ||
+                    '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
+                        '<div class="navbar-inner">' +
+                            '<div class="left sliding">' +
+                                '{{#if material}}' +
+                                '<a href="#" class="link {{#if inPopup}}close-popup{{else}}back{{/if}} icon-only"><i class="icon icon-back"></i></a>' +
+                                '{{else}}' +
+                                '<a href="#" class="link {{#if inPopup}}close-popup{{else}}back{{/if}}">' +
+                                    '<i class="icon icon-back"></i>' +
+                                    '{{#if inPopup}}' +
+                                    '<span>{{popupCloseText}}</span>' +
+                                    '{{else}}' +
+                                    '<span>{{backText}}</span>' +
+                                    '{{/if}}' +
+                                '</a>' +
+                                '{{/if}}' +
+                            '</div>' +
+                            '<div class="center sliding">{{pageTitle}}</div>' +
+                            '{{#if preloader}}' +
+                            '<div class="right">' +
+                                '<div class="autocomplete-preloader preloader {{#if preloaderColor}}preloader-{{preloaderColor}}{{/if}}"></div>' +
+                            '</div>' +
+                            '{{/if}}' +
+                        '</div>' +
+                    '</div>'
+                );
+                navbarHTML = a.navbarTemplate({
+                    pageTitle: pageTitle,
+                    backText: a.params.backText,
+                    popupCloseText: a.params.popupCloseText,
+                    openIn: a.params.openIn,
+                    navbarTheme: navbarTheme,
+                    inPopup: a.params.openIn === 'popup',
+                    inPage: a.params.openIn === 'page',
+                    material: material,
+                    preloader: a.params.preloader,
+                    preloaderColor: a.params.preloaderColor,
+                });
+        
+                // Determine navbar layout type - static/fixed/through
+                if (a.params.openIn === 'page') {
+                    navbarLayout = 'static';
+                    if (a.opener) {
+                        if (a.opener.parents('.navbar-through').length > 0) navbarLayout = 'through';
+                        if (a.opener.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
+                        noToolbar = a.opener.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
+                        noNavbar  = a.opener.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+                    }
+                    else if (view.container) {
+                        if ($(view.container).hasClass('navbar-through') || $(view.container).find('.navbar-through').length > 0) navbarLayout = 'through';
+                        if ($(view.container).hasClass('navbar-fixed') || $(view.container).find('.navbar-fixed').length > 0) navbarLayout = 'fixed';
+                        noToolbar = $(view.activePage.container).hasClass('no-toolbar') ? 'no-toolbar' : '';
+                        noNavbar  = $(view.activePage.container).hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+                    }
+                }
+                else {
+                    navbarLayout = 'fixed';
+                }
+                var searchbarHTML =
+                    '<form class="searchbar">' +
+                        '<div class="searchbar-input">' +
+                            '<input type="search" placeholder="' + a.params.searchbarPlaceholderText + '">' +
+                            '<a href="#" class="searchbar-clear"></a>' +
+                        '</div>' +
+                        (material ? '' : '<a href="#" class="searchbar-cancel">' + a.params.searchbarCancelText + '</a>') +
+                    '</form>' +
+                    '<div class="searchbar-overlay"></div>';
+                var pageHTML =
+                    (navbarLayout === 'through' ? navbarHTML : '') +
+                    '<div class="pages">' +
+                        '<div data-page="' + pageName + '" class="page autocomplete-page ' + noNavbar + ' ' + noToolbar + '">' +
+                            (navbarLayout === 'fixed' ? navbarHTML : '') +
+                            searchbarHTML +
+                            '<div class="page-content">' +
+                                (navbarLayout === 'static' ? navbarHTML : '') +
+                                '<div class="list-block autocomplete-found autocomplete-list-' + a.id + ' ' + (formTheme ? 'theme-' + formTheme : '') + '">' +
+                                    '<ul></ul>' +
+                                '</div>' +
+                                '<div class="list-block autocomplete-not-found">' +
+                                    '<ul><li class="item-content"><div class="item-inner"><div class="item-title">' + a.params.notFoundText + '</div></div></li></ul>' +
+                                '</div>' +
+                                '<div class="list-block autocomplete-values">' +
+                                    '<ul></ul>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+            }
+            else {
+                a.dropdownItemTemplate = t7.compile(a.params.dropdownItemTemplate ||
+                    '<li>' +
+                        '<label class="{{#unless placeholder}}label-radio{{/unless}} item-content" data-value="{{value}}">' +
+                            '<div class="item-inner">' +
+                                '<div class="item-title">{{text}}</div>' +
+                            '</div>' +
+                        '</label>' +
+                    '</li>'
+                );
+                a.dropdownPlaceholderTemplate = t7.compile(a.params.dropdownPlaceholderTemplate ||
+                    '<li class="autocomplete-dropdown-placeholder">' +
+                        '<div class="item-content">' +
+                            '<div class="item-inner">' +
+                                '<div class="item-title">{{text}}</div>' +
+                            '</div>' +
+                        '</label>' +
+                    '</li>'
+                );
+                a.dropdownTemplate = t7.compile(a.params.dropdownTemplate ||
+                    '<div class="autocomplete-dropdown">' +
+                        '<div class="autocomplete-dropdown-inner">' +
+                            '<div class="list-block">' +
+                                '<ul></ul>' +
+                            '</div>' +
+                        '</div>' +
+                        '{{#if preloader}}' +
+                        '<div class="autocomplete-preloader preloader {{#if preloaderColor}}preloader-{{preloaderColor}}{{/if}}"></div>' +
+                        '{{/if}}' +
+                    '</div>'
+                );
+            }
+        
+            // Define popup
+            a.popup = undefined;
+        
+            // Define Dropdown
+            a.dropdown = undefined;
+        
+            // Handle Input Value Change
+            a.handleInputValue = function (e) {
+                var query = a.input.val();
+                if (a.params.source) {
+                    a.params.source(a, query, function (items) {
+                        var itemsHTML = '';
+                        var limit = a.params.limit ? Math.min(a.params.limit, items.length) : items.length;
+                        a.items = items;
+                        var i, j;
+                        var regExp = new RegExp('('+query+')', 'i');
+                        for (i = 0; i < limit; i++) {
+                            var itemValue = typeof items[i] === 'object' ? items[i][a.params.valueProperty] : items[i];
+                            itemsHTML += a.dropdownItemTemplate({
+                                value: itemValue,
+                                text: (typeof items[i] !== 'object' ? items[i] : items[i][a.params.textProperty]).replace(regExp, '<b>$1</b>')
+                            });
+                        }
+                        if (itemsHTML === '' && query === '' && a.params.dropdownPlaceholderText) {
+                            itemsHTML += a.dropdownPlaceholderTemplate({
+                                text: a.params.dropdownPlaceholderText,
+                            });
+                        }
+                        a.dropdown.find('ul').html(itemsHTML);
+                    });
+                }
+            };
+            // Handle Drop Down Click
+            a.handleDropdownClick = function (e) {
+                var clicked = $(this);
+                var clickedItem;
+                for (var i = 0; i < a.items.length; i++) {
+                    var itemValue = typeof a.items[i] === 'object' ? a.items[i][a.params.valueProperty] : a.items[i];
+                    var value = clicked.attr('data-value');
+                    if (itemValue === value || itemValue * 1 === value * 1) {
+                        clickedItem = a.items[i];
+                    }
+                }
+                if (a.params.updateInputValueOnSelect) {
+                    a.input.val(typeof clickedItem === 'object' ? clickedItem[a.params.textProperty] : clickedItem);
+                    a.input.trigger('input change');
+                }
+        
+                if (a.params.onChange) {
+                    a.params.onChange(a, clickedItem);
+                }
+        
+                a.close();
+            };
+            a.positionDropDown = function () {
+                var listBlock = a.input.parents('.list-block'),
+                    pageContent = a.input.parents('.page-content'),
+                    paddingTop = parseInt(pageContent.css('padding-top'), 10),
+                    paddingBottom = parseInt(pageContent.css('padding-top'), 10),
+                    inputOffset = a.input.offset(),
+                    listBlockOffset = listBlock.length > 0 ? listBlock.offset() : 0,
+                    maxHeight = pageContent[0].scrollHeight - paddingBottom - (inputOffset.top + pageContent[0].scrollTop) - a.input[0].offsetHeight;
+        
+                a.dropdown.css({
+                    left: (listBlock.length > 0 ? listBlockOffset.left : inputOffset.left) + 'px',
+                    top: inputOffset.top + pageContent[0].scrollTop + a.input[0].offsetHeight + 'px',
+                    width: (listBlock.length > 0 ? listBlock[0].offsetWidth : a.input[0].offsetWidth) + 'px'
+                });
+                a.dropdown.children('.autocomplete-dropdown-inner').css({
+                    maxHeight: maxHeight + 'px',
+                    paddingLeft: listBlock.length > 0 && !a.params.expandInput ? inputOffset.left - (material ? 16 : 15) + 'px' : ''
+                });
+            };
+        
+            // Event Listeners on new page
+            a.pageInit = function (e) {
+                var page = e.detail.page;
+                if (page.name !== pageName) {
+                    return;
+                }
+                var container = $(page.container);
+                // Init Search Bar
+                var searchBar = app.searchbar(container.find('.searchbar'), {
+                    customSearch: true,
+                    onSearch: function (searchbar, data) {
+                        if (data.query.length === 0) {
+                            searchbar.overlay.addClass('searchbar-overlay-active');
+                        }
+                        else {
+                            searchbar.overlay.removeClass('searchbar-overlay-active');
+                        }
+        
+                        var i, j, k;
+        
+                        if (a.params.source) {
+                            a.params.source(a, data.query, function(items) {
+                                var itemsHTML = '';
+                                var limit = a.params.limit ? Math.min(a.params.limit, items.length) : items.length;
+                                a.items = items;
+                                for (i = 0; i < limit; i++) {
+                                    var selected = false;
+                                    var itemValue = typeof items[i] === 'object' ? items[i][a.params.valueProperty] : items[i];
+                                    for (j = 0; j < a.value.length; j++) {
+                                        var aValue = typeof a.value[j] === 'object' ? a.value[j][a.params.valueProperty] : a.value[j];
+                                        if (aValue === itemValue || aValue * 1 === itemValue * 1) selected = true;
+                                    }
+                                    itemsHTML += a.itemTemplate({
+                                        value: itemValue,
+                                        text: typeof items[i] !== 'object' ? items[i] : items[i][a.params.textProperty],
+                                        inputType: a.inputType,
+                                        id: a.id,
+                                        inputName: a.inputName,
+                                        selected: selected,
+                                        checkbox: a.inputType === 'checkbox',
+                                        material: material
+                                    });
+                                }
+                                container.find('.autocomplete-found ul').html(itemsHTML);
+                                if (items.length === 0) {
+                                    if (data.query.length !== 0) {
+                                        container.find('.autocomplete-not-found').show();
+                                        container.find('.autocomplete-found, .autocomplete-values').hide();
+                                    }
+                                    else {
+                                        container.find('.autocomplete-values').show();
+                                        container.find('.autocomplete-found, .autocomplete-not-found').hide();
+                                    }
+                                }
+                                else {
+                                    container.find('.autocomplete-found').show();
+                                    container.find('.autocomplete-not-found, .autocomplete-values').hide();
+                                }
+                            });
+                        }
+                    }
+                });
+        
+                function updateValues() {
+                    var valuesHTML = '';
+                    var i;
+                    for (i = 0; i < a.value.length; i++) {
+        
+                        valuesHTML += a.itemTemplate({
+                            value: typeof a.value[i] === 'object' ? a.value[i][a.params.valueProperty] : a.value[i],
+                            text: typeof a.value[i] === 'object' ? a.value[i][a.params.textProperty]: a.value[i],
+                            inputType: a.inputType,
+                            id: a.id,
+                            inputName: a.inputName + '-checked',
+                            checkbox: a.inputType === 'checkbox',
+                            material: material,
+                            selected: true
+                        });
+                    }
+                    container.find('.autocomplete-values ul').html(valuesHTML);
+                }
+        
+                // Handle Inputs
+                container.on('change', 'input[type="radio"], input[type="checkbox"]', function () {
+                    var i;
+                    var input = this;
+                    var value = input.value;
+                    var text = $(input).parents('li').find('.item-title').text();
+                    var isValues = $(input).parents('.autocomplete-values').length > 0;
+                    var item, itemValue, aValue;
+                    if (isValues) {
+                        if (a.inputType === 'checkbox' && !input.checked) {
+                            for (i = 0; i < a.value.length; i++) {
+                                aValue = typeof a.value[i] === 'string' ? a.value[i] : a.value[i][a.params.valueProperty];
+                                if (aValue === value || aValue * 1 === value * 1) {
+                                    a.value.splice(i, 1);
+                                }
+                            }
+                            updateValues();
+                            if (a.params.onChange) a.params.onChange(a, a.value);
+                        }
+                        return;
+                    }
+        
+                    // Find Related Item
+                    for (i = 0; i < a.items.length; i++) {
+                        itemValue = typeof a.items[i] === 'string' ? a.items[i] : a.items[i][a.params.valueProperty];
+                        if (itemValue === value || itemValue * 1 === value * 1) item = a.items[i];
+                    }
+                    // Update Selected Value
+                    if (a.inputType === 'radio') {
+                        a.value = [item];
+                    }
+                    else {
+                        if (input.checked) {
+                            a.value.push(item);
+                        }
+                        else {
+                            for (i = 0; i < a.value.length; i++) {
+                                aValue = typeof a.value[i] === 'string' ? a.value[i] : a.value[i][a.params.valueProperty];
+                                if (aValue === value || aValue * 1 === value * 1) {
+                                    a.value.splice(i, 1);
+                                }
+                            }
+                        }
+                    }
+        
+                    // Update Values Block
+                    updateValues();
+        
+                    // On Select Callback
+                    if ((a.inputType === 'radio' && input.checked || a.inputType === 'checkbox') && a.params.onChange ) {
+                        a.params.onChange(a, a.value);
+                    }
+                    if (backOnSelect && a.inputType === 'radio') {
+                        if (a.params.openIn === 'popup') app.closeModal(a.popup);
+                        else view.router.back();
+                    }
+                });
+        
+                // Update Values On Page Init
+                updateValues();
+        
+                if (a.params.onOpen) a.params.onOpen(a);
+            };
+        
+            // Show Hide Preloader
+            a.showPreloader = function () {
+                if (a.params.openIn === 'dropdown') {
+                    if (a.dropdown) a.dropdown.find('.autocomplete-preloader').addClass('autocomplete-preloader-visible');
+                }
+                else $('.autocomplete-preloader').addClass('autocomplete-preloader-visible');
+            };
+        
+            a.hidePreloader = function () {
+                if (a.params.openIn === 'dropdown') {
+                    if (a.dropdown) a.dropdown.find('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
+                }
+                else $('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
+            };
+        
+            // Open Autocomplete Page/Popup
+            a.open = function () {
+                if (a.opened) return;
+                a.opened = true;
+                if (a.params.openIn === 'dropdown') {
+                    if (!a.dropdown) {
+                        a.dropdown = $(a.dropdownTemplate({
+                            preloader: a.params.preloader,
+                            preloaderColor: a.params.preloaderColor,
+                        }));
+                        a.dropdown.on('click', 'label', a.handleDropdownClick);
+        
+                    }
+                    var listBlock = a.input.parents('.list-block');
+                    if (listBlock.length && a.input.parents('.item-content').length > 0 && a.params.expandInput) {
+                        a.input.parents('.item-content').addClass('item-content-dropdown-expand');
+                    }
+                    a.positionDropDown();
+                    a.input.parents('.page-content').append(a.dropdown);
+                    a.dropdown.addClass('autocomplete-dropdown-in');
+                    a.input.trigger('input');
+                    $(window).on('resize', a.positionDropDown);
+                    if (a.params.onOpen) a.params.onOpen(a);
+                }
+                else {
+                    $(document).once('pageInit', '.autocomplete-page', a.pageInit);
+                    if (a.params.openIn === 'popup') {
+                        a.popup = app.popup(
+                            '<div class="popup autocomplete-popup autocomplete-popup-' + a.inputName + '">' +
+                                '<div class="view navbar-fixed">' +
+                                    pageHTML +
+                                '</div>' +
+                            '</div>'
+                            );
+                        a.popup = $(a.popup);
+                        a.popup.once('closed', function () {
+                            a.popup = undefined;
+                            a.opened = false;
+                            if (a.params.onClose) a.params.onClose(a);
+                        });
+                    }
+                    else {
+                        view.router.load({
+                            content: pageHTML
+                        });
+                        $(document).once('pageBack', '.autocomplete-page', function () {
+                            a.opened = false;
+                            if (a.params.onClose) a.params.onClose(a);
+                        });
+                    }
+                }
+            };
+            a.close = function (e) {
+                if (!a.opened) return;
+                if (a.params.openIn === 'dropdown') {
+                    if (e && e.type === 'blur' && a.dropdown.find('label.active-state').length > 0) return;
+                    a.dropdown.removeClass('autocomplete-dropdown-in').remove();
+                    a.input.parents('.item-content-dropdown-expand').removeClass('item-content-dropdown-expand');
+                    a.opened = false;
+                    $(window).off('resize', a.positionDropDown);
+                    if (a.params.onClose) a.params.onClose(a);
+                }
+                if (a.params.openIn === 'popup') {
+                    if (a.popup) app.closeModal(a.popup);
+                }
+            };
+        
+            // Init Events
+            a.initEvents = function (detach) {
+                var method = detach ? 'off' : 'on';
+                if (a.params.openIn !== 'dropdown' && a.opener) {
+                    a.opener[method]('click', a.open);
+                }
+                if (a.params.openIn === 'dropdown' && a.input) {
+                    a.input[method]('focus', a.open);
+                    a.input[method]('input', a.handleInputValue);
+                    a.input[method]('blur', a.close);
+                }
+                if (detach && a.dropdown) {
+                    a.dropdown = null;
+                }
+            };
+        
+            // Init/Destroy Methods
+            a.init = function () {
+                a.initEvents();
+            };
+            a.destroy = function () {
+                a.initEvents(true);
+                a = null;
+            };
+        
+            // Init
+            a.init();
+        
+            return a;
+        };
+        app.autocomplete = function (params) {
+            return new Autocomplete(params);
+        };
 
         /*======================================================
         ************   Picker   ************
@@ -9348,7 +10121,7 @@
                     if (p.value[0] !== value) p.value.push(value);
                     else p.value = [];
                     p.value.sort(function (a,b) {
-                        return a > b;
+                        return a - b;
                     });
                     p.updateValue();
                 }
@@ -10284,7 +11057,7 @@
         
             list[params.material ? 'append' : 'prepend'](item[0]);
             container.show();
-            
+        
             var itemHeight = item.outerHeight(), clientLeft;
             if (params.material) {
                 container.transform('translate3d(0, '+itemHeight+'px, 0)');
@@ -10317,10 +11090,10 @@
             var container = $('.notifications');
         
             var itemHeight = item.outerHeight();
-            item.css('height', itemHeight + 'px').transition(0);
+            item.css('height', itemHeight + 'px').transition(0).addClass('notification-item-removing');
             var clientLeft = item[0].clientLeft;
         
-            item.css('height', '0px').transition('').addClass('notification-item-removing');
+            item.css('height', '0px').transition('');
             if (item.data('f7NotificationOnClose')) item.data('f7NotificationOnClose')();
         
             if (container.find('.notification-item:not(.notification-item-removing)').length === 0) {
@@ -10783,17 +11556,20 @@
                 return dom.on(eventName, targetSelector, proxy, capture);
             },
             trigger: function (eventName, eventData) {
-                for (var i = 0; i < this.length; i++) {
-                    var evt;
-                    try {
-                        evt = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
+                var events = eventName.split(' ');
+                for (var i = 0; i < events.length; i++) {
+                    for (var j = 0; j < this.length; j++) {
+                        var evt;
+                        try {
+                            evt = new CustomEvent(events[i], {detail: eventData, bubbles: true, cancelable: true});
+                        }
+                        catch (e) {
+                            evt = document.createEvent('Event');
+                            evt.initEvent(events[i], true, true);
+                            evt.detail = eventData;
+                        }
+                        this[j].dispatchEvent(evt);
                     }
-                    catch (e) {
-                        evt = document.createEvent('Event');
-                        evt.initEvent(eventName, true, true);
-                        evt.detail = eventData;
-                    }
-                    this[i].dispatchEvent(evt);
                 }
                 return this;
             },
@@ -12472,6 +13248,8 @@
             freeModeMomentumBounceRatio: 1,
             freeModeSticky: false,
             freeModeMinimumVelocity: 0.02,
+            // Autoheight
+            autoHeight: false,
             // Set wrapper width
             setWrapperSize: false,
             // Virtual Translate
@@ -12635,7 +13413,7 @@
         params = params || {};
         var originalParams = {};
         for (var param in params) {
-            if (typeof params[param] === 'object') {
+            if (typeof params[param] === 'object' && !(params[param].nodeType || params[param] === window || params[param] === document || (typeof Dom7 !== 'undefined' && params[param] instanceof Dom7) || (typeof jQuery !== 'undefined' && params[param] instanceof jQuery))) {
                 originalParams[param] = {};
                 for (var deepParam in params[param]) {
                     originalParams[param][deepParam] = params[param][deepParam];
@@ -12693,11 +13471,19 @@
             //Get breakpoint for window width
             if (!s.params.breakpoints) return false;
             var breakpoint = false;
-            for ( var point in s.params.breakpoints ) {
+            var points = [], point;
+            for ( point in s.params.breakpoints ) {
                 if (s.params.breakpoints.hasOwnProperty(point)) {
-                    if (point >= $(window).width() && !breakpoint) {
-                        breakpoint = point;
-                    }
+                    points.push(point);
+                }
+            }
+            points.sort(function (a, b) {
+                return parseInt(a, 10) > parseInt(b, 10);
+            });
+            for (var i = 0; i < points.length; i++) {
+                point = points[i];
+                if (point >= window.innerWidth && !breakpoint) {
+                    breakpoint = point;
                 }
             }
             return breakpoint || 'max';
@@ -12742,6 +13528,9 @@
         if (!s.support.flexbox) {
             s.classNames.push('swiper-container-no-flexbox');
             s.params.slidesPerColumn = 1;
+        }
+        if (s.params.autoHeight) {
+            s.classNames.push('swiper-container-autoheight');
         }
         // Enable slides progress when required
         if (s.params.parallax || s.params.watchSlidesVisibility) {
@@ -12992,6 +13781,11 @@
         /*=========================
           Slider/slides sizes
           ===========================*/
+        s.updateAutoHeight = function () {
+            // Update Height
+            var newHeight = s.slides.eq(s.activeIndex)[0].offsetHeight;
+            if (newHeight) s.wrapper.css('height', s.slides.eq(s.activeIndex)[0].offsetHeight + 'px');
+        };
         s.updateContainerSize = function () {
             var width, height;
             if (typeof s.params.width !== 'undefined') {
@@ -13229,6 +14023,8 @@
                 translate = s.translate || 0;
             }
             var translatesDiff = s.maxTranslate() - s.minTranslate();
+            var wasBeginning = s.isBeginning;
+            var wasEnd = s.isEnd;
             if (translatesDiff === 0) {
                 s.progress = 0;
                 s.isBeginning = s.isEnd = true;
@@ -13238,8 +14034,8 @@
                 s.isBeginning = s.progress <= 0;
                 s.isEnd = s.progress >= 1;
             }
-            if (s.isBeginning) s.emit('onReachBeginning', s);
-            if (s.isEnd) s.emit('onReachEnd', s);
+            if (s.isBeginning && !wasBeginning) s.emit('onReachBeginning', s);
+            if (s.isEnd && !wasEnd) s.emit('onReachEnd', s);
         
             if (s.params.watchSlidesProgress) s.updateSlidesProgress(translate);
             s.emit('onProgress', s, s.progress);
@@ -13394,6 +14190,9 @@
                 }
                 if (s.params.freeMode) {
                     forceSetTranslate();
+                    if (s.params.autoHeight) {
+                        s.updateAutoHeight();
+                    }
                 }
                 else {
                     if ((s.params.slidesPerView === 'auto' || s.params.slidesPerView > 1) && s.isEnd && !s.params.centeredSlides) {
@@ -13406,7 +14205,9 @@
                         forceSetTranslate();
                     }
                 }
-        
+            }
+            else if (s.params.autoHeight) {
+                s.updateAutoHeight();
             }
         };
         
@@ -13438,6 +14239,10 @@
                 s.setWrapperTranslate(newTranslate);
                 s.updateActiveIndex();
                 s.updateClasses();
+        
+                if (s.params.autoHeight) {
+                    s.updateAutoHeight();
+                }
             }
             else {
                 s.updateClasses();
@@ -14134,7 +14939,6 @@
             if (s.snapIndex >= s.snapGrid.length) s.snapIndex = s.snapGrid.length - 1;
         
             var translate = - s.snapGrid[s.snapIndex];
-        
             // Stop autoplay
             if (s.params.autoplay && s.autoplaying) {
                 if (internal || !s.params.autoplayDisableOnInteraction) {
@@ -14167,21 +14971,28 @@
             s.previousIndex = s.activeIndex || 0;
             s.activeIndex = slideIndex;
         
-            if (translate === s.translate) {
+            if ((s.rtl && -translate === s.translate) || (!s.rtl && translate === s.translate)) {
+                // Update Height
+                if (s.params.autoHeight) {
+                    s.updateAutoHeight();
+                }
                 s.updateClasses();
+                if (s.params.effect !== 'slide') {
+                    s.setWrapperTranslate(translate);
+                }
                 return false;
             }
             s.updateClasses();
             s.onTransitionStart(runCallbacks);
-            var translateX = isH() ? translate : 0, translateY = isH() ? 0 : translate;
+        
             if (speed === 0) {
-                s.setWrapperTransition(0);
                 s.setWrapperTranslate(translate);
+                s.setWrapperTransition(0);
                 s.onTransitionEnd(runCallbacks);
             }
             else {
-                s.setWrapperTransition(speed);
                 s.setWrapperTranslate(translate);
+                s.setWrapperTransition(speed);
                 if (!s.animating) {
                     s.animating = true;
                     s.wrapper.transitionEnd(function () {
@@ -14197,6 +15008,9 @@
         
         s.onTransitionStart = function (runCallbacks) {
             if (typeof runCallbacks === 'undefined') runCallbacks = true;
+            if (s.params.autoHeight) {
+                s.updateAutoHeight();
+            }
             if (s.lazy) s.lazy.onTransitionStart();
             if (runCallbacks) {
                 s.emit('onTransitionStart', s);
@@ -14301,6 +15115,19 @@
             }
         
             s.translate = isH() ? x : y;
+        
+            // Check if we need to update progress
+            var progress;
+            var translatesDiff = s.maxTranslate() - s.minTranslate();
+            if (translatesDiff === 0) {
+                progress = 0;
+            }
+            else {
+                progress = (translate - s.minTranslate()) / (translatesDiff);
+            }
+            if (progress !== s.progress) {
+                s.updateProgress(translate);
+            }
         
             if (updateActiveIndex) s.updateActiveIndex();
             if (s.params.effect !== 'slide' && s.effects[s.params.effect]) {
@@ -15191,6 +16018,7 @@
         function setParallaxTransform(el, progress) {
             el = $(el);
             var p, pX, pY;
+            var rtlFactor = s.rtl ? -1 : 1;
         
             p = el.attr('data-swiper-parallax') || '0';
             pX = el.attr('data-swiper-parallax-x');
@@ -15209,11 +16037,12 @@
                     pX = '0';
                 }
             }
+        
             if ((pX).indexOf('%') >= 0) {
-                pX = parseInt(pX, 10) * progress + '%';
+                pX = parseInt(pX, 10) * progress * rtlFactor + '%';
             }
             else {
-                pX = pX * progress + 'px' ;
+                pX = pX * progress * rtlFactor + 'px' ;
             }
             if ((pY).indexOf('%') >= 0) {
                 pY = parseInt(pY, 10) * progress + '%';
@@ -15221,6 +16050,7 @@
             else {
                 pY = pY * progress + 'px' ;
             }
+        
             el.transform('translate3d(' + pX + ', ' + pY + ',0px)');
         }
         s.parallax = {

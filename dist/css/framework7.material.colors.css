@@ -1,5 +1,5 @@
 /**
- * Framework7 1.3.5
+ * Framework7 1.4.0
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2015
+ * Released on: December 7, 2015
  */
 /*==========================
 Framework7 Layouts Themes
@@ -23,7 +23,7 @@ Framework7 Layouts Themes
 .page.layout-dark,
 .layout-dark .panel,
 .panel.layout-dark {
-  background-color: #222222;
+  background-color: #222;
   color: rgba(255, 255, 255, 0.87);
 }
 .layout-dark .content-block-title {
@@ -45,7 +45,7 @@ Framework7 Layouts Themes
   background-color: #393939;
 }
 .layout-dark .card-footer {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .card-footer:before {
   background-color: #393939;
@@ -71,7 +71,7 @@ Framework7 Layouts Themes
 }
 .layout-dark .swipeout-actions-left a,
 .layout-dark .swipeout-actions-right a {
-  background-color: #444444;
+  background-color: #444;
 }
 .layout-dark .item-inner:after,
 .layout-dark .list-block ul ul li:last-child .item-inner:after {
@@ -82,12 +82,12 @@ Framework7 Layouts Themes
   color: rgba(255, 255, 255, 0.7);
 }
 .layout-dark .list-block-label {
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider,
 .layout-dark .list-group-title {
   background: #1a1a1a;
-  color: #bbbbbb;
+  color: #bbb;
 }
 .layout-dark .item-divider:before,
 .layout-dark .list-group-title:before {
@@ -95,6 +95,15 @@ Framework7 Layouts Themes
 }
 .layout-dark .contacts-block .list-group-title {
   background: none;
+}
+.layout-dark .autocomplete-dropdown {
+  background: #1c1c1c;
+}
+.layout-dark .autocomplete-dropdown .list-block {
+  color: rgba(255, 255, 255, 0.54);
+}
+.layout-dark .autocomplete-dropdown .list-block b {
+  color: rgba(255, 255, 255, 0.87);
 }
 html:not(.watch-active-state) .layout-dark .item-link:active,
 html:not(.watch-active-state) .layout-dark label.label-checkbox:active,
@@ -116,7 +125,7 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-dark .list-block input[type="number"],
 .layout-dark .list-block select,
 .layout-dark .list-block textarea {
-  color: #ffffff;
+  color: #fff;
 }
 .layout-dark .list-block input[type="text"]::-webkit-input-placeholder,
 .layout-dark .list-block input[type="password"]::-webkit-input-placeholder,
@@ -169,6 +178,7 @@ Framework7 Color Themes
   color: #f44336;
 }
 .list-block .item-link.list-button.color-red,
+.list-block .item-link.color-red,
 .tabbar a.active.color-red,
 a.color-red {
   color: #f44336;
@@ -198,7 +208,7 @@ a.color-red {
 }
 html:not(.watch-active-state) .theme-red .button.button-fill:active,
 .theme-red .button.button-fill.active-state {
-  background: #d32f2f;
+  background: #D32F2F;
 }
 .button.button-fill.bg-red,
 .button.button-fill.color-red {
@@ -209,7 +219,35 @@ html:not(.watch-active-state) .button.button-fill.bg-red:active,
 html:not(.watch-active-state) .button.button-fill.color-red:active,
 .button.button-fill.bg-red.active-state,
 .button.button-fill.color-red.active-state {
-  background: #d32f2f !important;
+  background: #D32F2F !important;
+}
+.progressbar.color-red,
+.progressbar.theme-red,
+.theme-red .progressbar,
+.progressbar.bg-red {
+  background-color: rgba(244, 67, 54, 0.5);
+}
+.progressbar.color-red span,
+.progressbar.theme-red span,
+.theme-red .progressbar span,
+.progressbar.bg-red span {
+  background-color: #f44336;
+}
+.progressbar-infinite.color-red,
+.progressbar-infinite.theme-red,
+.theme-red .progressbar-infinite,
+.progressbar-infinite.bg-red {
+  background-color: rgba(244, 67, 54, 0.5);
+}
+.progressbar-infinite.color-red:after,
+.progressbar-infinite.theme-red:after,
+.theme-red .progressbar-infinite:after,
+.progressbar-infinite.bg-red:after,
+.progressbar-infinite.color-red:before,
+.progressbar-infinite.theme-red:before,
+.theme-red .progressbar-infinite:before,
+.progressbar-infinite.bg-red:before {
+  background-color: #f44336;
 }
 .color-red i.icon,
 i.icon.color-red {
@@ -238,6 +276,12 @@ i.icon-bars.theme-red {
 .preloader.color-red svg circle,
 .preloader.preloader-red svg circle {
   stroke: #f44336;
+}
+.preloader.color-red .preloader-inner-gap,
+.preloader.preloader-red .preloader-inner-gap,
+.preloader.color-red .preloader-inner-half-circle,
+.preloader.preloader-red .preloader-inner-half-circle {
+  border-color: #f44336;
 }
 .theme-red a {
   color: #f44336;
@@ -383,6 +427,32 @@ a.bg-red,
 .list-block .swipeout-actions-right a.bg-red {
   background-color: #f44336;
 }
+html:not(.watch-active-state) .list-block .bg-red .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-red .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-red .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-red .item-link:active,
+html:not(.watch-active-state) .list-block.bg-red .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-red .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-red .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-red .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-red:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-red:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-red:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-red:active,
+.list-block .bg-red .item-link.active-state,
+.list-block a.bg-red .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-red .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-red .item-link.active-state,
+.list-block.bg-red .item-link.active-state,
+.list-blocka.bg-red .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-red .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-red .item-link.active-state,
+.list-block .item-link.bg-red.active-state,
+.list-block .item-linka.bg-red.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-red.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-red.active-state {
+  background: #D32F2F;
+}
 .border-red {
   border-color: #f44336;
 }
@@ -395,31 +465,49 @@ a.bg-red,
   background-color: #f44336;
 }
 .theme-red .floating-button,
+.theme-red .speed-dial-buttons a,
 .floating-button.theme-red,
-.floating-button.color-red {
+.speed-dial-buttons a.theme-red,
+.floating-button.color-red,
+.speed-dial-buttons a.color-red {
   color: #fff;
   background: #f44336;
 }
 html:not(.watch-active-state) .theme-red .floating-button:active,
+html:not(.watch-active-state) .theme-red .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-red:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-red:active,
 html:not(.watch-active-state) .floating-button.color-red:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-red:active,
 .theme-red .floating-button.active-state,
+.theme-red .speed-dial-buttons a.active-state,
 .floating-button.theme-red.active-state,
-.floating-button.color-red.active-state {
-  background: #d32f2f;
+.speed-dial-buttons a.theme-red.active-state,
+.floating-button.color-red.active-state,
+.speed-dial-buttons a.color-red.active-state {
+  background: #D32F2F;
 }
 .theme-red .floating-button i,
+.theme-red .speed-dial-buttons a i,
 .floating-button.theme-red i,
-.floating-button.color-red i {
+.speed-dial-buttons a.theme-red i,
+.floating-button.color-red i,
+.speed-dial-buttons a.color-red i {
   color: inherit;
 }
 .ripple-red .ripple-wave {
   background-color: rgba(244, 67, 54, 0.3);
 }
+.badge.color-red,
+.badge.theme-red {
+  background-color: #f44336;
+  color: #fff;
+}
 .color-pink {
   color: #e91e63;
 }
 .list-block .item-link.list-button.color-pink,
+.list-block .item-link.color-pink,
 .tabbar a.active.color-pink,
 a.color-pink {
   color: #e91e63;
@@ -449,7 +537,7 @@ a.color-pink {
 }
 html:not(.watch-active-state) .theme-pink .button.button-fill:active,
 .theme-pink .button.button-fill.active-state {
-  background: #c2185b;
+  background: #C2185B;
 }
 .button.button-fill.bg-pink,
 .button.button-fill.color-pink {
@@ -460,7 +548,35 @@ html:not(.watch-active-state) .button.button-fill.bg-pink:active,
 html:not(.watch-active-state) .button.button-fill.color-pink:active,
 .button.button-fill.bg-pink.active-state,
 .button.button-fill.color-pink.active-state {
-  background: #c2185b !important;
+  background: #C2185B !important;
+}
+.progressbar.color-pink,
+.progressbar.theme-pink,
+.theme-pink .progressbar,
+.progressbar.bg-pink {
+  background-color: rgba(233, 30, 99, 0.5);
+}
+.progressbar.color-pink span,
+.progressbar.theme-pink span,
+.theme-pink .progressbar span,
+.progressbar.bg-pink span {
+  background-color: #e91e63;
+}
+.progressbar-infinite.color-pink,
+.progressbar-infinite.theme-pink,
+.theme-pink .progressbar-infinite,
+.progressbar-infinite.bg-pink {
+  background-color: rgba(233, 30, 99, 0.5);
+}
+.progressbar-infinite.color-pink:after,
+.progressbar-infinite.theme-pink:after,
+.theme-pink .progressbar-infinite:after,
+.progressbar-infinite.bg-pink:after,
+.progressbar-infinite.color-pink:before,
+.progressbar-infinite.theme-pink:before,
+.theme-pink .progressbar-infinite:before,
+.progressbar-infinite.bg-pink:before {
+  background-color: #e91e63;
 }
 .color-pink i.icon,
 i.icon.color-pink {
@@ -489,6 +605,12 @@ i.icon-bars.theme-pink {
 .preloader.color-pink svg circle,
 .preloader.preloader-pink svg circle {
   stroke: #e91e63;
+}
+.preloader.color-pink .preloader-inner-gap,
+.preloader.preloader-pink .preloader-inner-gap,
+.preloader.color-pink .preloader-inner-half-circle,
+.preloader.preloader-pink .preloader-inner-half-circle {
+  border-color: #e91e63;
 }
 .theme-pink a {
   color: #e91e63;
@@ -634,6 +756,32 @@ a.bg-pink,
 .list-block .swipeout-actions-right a.bg-pink {
   background-color: #e91e63;
 }
+html:not(.watch-active-state) .list-block .bg-pink .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-pink .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-pink .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-pink .item-link:active,
+html:not(.watch-active-state) .list-block.bg-pink .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-pink .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-pink .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-pink .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-pink:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-pink:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-pink:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-pink:active,
+.list-block .bg-pink .item-link.active-state,
+.list-block a.bg-pink .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-pink .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-pink .item-link.active-state,
+.list-block.bg-pink .item-link.active-state,
+.list-blocka.bg-pink .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-pink .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-pink .item-link.active-state,
+.list-block .item-link.bg-pink.active-state,
+.list-block .item-linka.bg-pink.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-pink.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-pink.active-state {
+  background: #C2185B;
+}
 .border-pink {
   border-color: #e91e63;
 }
@@ -646,31 +794,49 @@ a.bg-pink,
   background-color: #e91e63;
 }
 .theme-pink .floating-button,
+.theme-pink .speed-dial-buttons a,
 .floating-button.theme-pink,
-.floating-button.color-pink {
+.speed-dial-buttons a.theme-pink,
+.floating-button.color-pink,
+.speed-dial-buttons a.color-pink {
   color: #fff;
   background: #e91e63;
 }
 html:not(.watch-active-state) .theme-pink .floating-button:active,
+html:not(.watch-active-state) .theme-pink .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-pink:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-pink:active,
 html:not(.watch-active-state) .floating-button.color-pink:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-pink:active,
 .theme-pink .floating-button.active-state,
+.theme-pink .speed-dial-buttons a.active-state,
 .floating-button.theme-pink.active-state,
-.floating-button.color-pink.active-state {
-  background: #c2185b;
+.speed-dial-buttons a.theme-pink.active-state,
+.floating-button.color-pink.active-state,
+.speed-dial-buttons a.color-pink.active-state {
+  background: #C2185B;
 }
 .theme-pink .floating-button i,
+.theme-pink .speed-dial-buttons a i,
 .floating-button.theme-pink i,
-.floating-button.color-pink i {
+.speed-dial-buttons a.theme-pink i,
+.floating-button.color-pink i,
+.speed-dial-buttons a.color-pink i {
   color: inherit;
 }
 .ripple-pink .ripple-wave {
   background-color: rgba(233, 30, 99, 0.3);
 }
+.badge.color-pink,
+.badge.theme-pink {
+  background-color: #e91e63;
+  color: #fff;
+}
 .color-purple {
   color: #9c27b0;
 }
 .list-block .item-link.list-button.color-purple,
+.list-block .item-link.color-purple,
 .tabbar a.active.color-purple,
 a.color-purple {
   color: #9c27b0;
@@ -700,7 +866,7 @@ a.color-purple {
 }
 html:not(.watch-active-state) .theme-purple .button.button-fill:active,
 .theme-purple .button.button-fill.active-state {
-  background: #7b1fa2;
+  background: #7B1FA2;
 }
 .button.button-fill.bg-purple,
 .button.button-fill.color-purple {
@@ -711,7 +877,35 @@ html:not(.watch-active-state) .button.button-fill.bg-purple:active,
 html:not(.watch-active-state) .button.button-fill.color-purple:active,
 .button.button-fill.bg-purple.active-state,
 .button.button-fill.color-purple.active-state {
-  background: #7b1fa2 !important;
+  background: #7B1FA2 !important;
+}
+.progressbar.color-purple,
+.progressbar.theme-purple,
+.theme-purple .progressbar,
+.progressbar.bg-purple {
+  background-color: rgba(156, 39, 176, 0.5);
+}
+.progressbar.color-purple span,
+.progressbar.theme-purple span,
+.theme-purple .progressbar span,
+.progressbar.bg-purple span {
+  background-color: #9c27b0;
+}
+.progressbar-infinite.color-purple,
+.progressbar-infinite.theme-purple,
+.theme-purple .progressbar-infinite,
+.progressbar-infinite.bg-purple {
+  background-color: rgba(156, 39, 176, 0.5);
+}
+.progressbar-infinite.color-purple:after,
+.progressbar-infinite.theme-purple:after,
+.theme-purple .progressbar-infinite:after,
+.progressbar-infinite.bg-purple:after,
+.progressbar-infinite.color-purple:before,
+.progressbar-infinite.theme-purple:before,
+.theme-purple .progressbar-infinite:before,
+.progressbar-infinite.bg-purple:before {
+  background-color: #9c27b0;
 }
 .color-purple i.icon,
 i.icon.color-purple {
@@ -740,6 +934,12 @@ i.icon-bars.theme-purple {
 .preloader.color-purple svg circle,
 .preloader.preloader-purple svg circle {
   stroke: #9c27b0;
+}
+.preloader.color-purple .preloader-inner-gap,
+.preloader.preloader-purple .preloader-inner-gap,
+.preloader.color-purple .preloader-inner-half-circle,
+.preloader.preloader-purple .preloader-inner-half-circle {
+  border-color: #9c27b0;
 }
 .theme-purple a {
   color: #9c27b0;
@@ -885,6 +1085,32 @@ a.bg-purple,
 .list-block .swipeout-actions-right a.bg-purple {
   background-color: #9c27b0;
 }
+html:not(.watch-active-state) .list-block .bg-purple .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-purple .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-purple .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-purple .item-link:active,
+html:not(.watch-active-state) .list-block.bg-purple .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-purple .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-purple .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-purple .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-purple:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-purple:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-purple:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-purple:active,
+.list-block .bg-purple .item-link.active-state,
+.list-block a.bg-purple .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-purple .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-purple .item-link.active-state,
+.list-block.bg-purple .item-link.active-state,
+.list-blocka.bg-purple .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-purple .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-purple .item-link.active-state,
+.list-block .item-link.bg-purple.active-state,
+.list-block .item-linka.bg-purple.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-purple.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-purple.active-state {
+  background: #7B1FA2;
+}
 .border-purple {
   border-color: #9c27b0;
 }
@@ -897,31 +1123,49 @@ a.bg-purple,
   background-color: #9c27b0;
 }
 .theme-purple .floating-button,
+.theme-purple .speed-dial-buttons a,
 .floating-button.theme-purple,
-.floating-button.color-purple {
+.speed-dial-buttons a.theme-purple,
+.floating-button.color-purple,
+.speed-dial-buttons a.color-purple {
   color: #fff;
   background: #9c27b0;
 }
 html:not(.watch-active-state) .theme-purple .floating-button:active,
+html:not(.watch-active-state) .theme-purple .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-purple:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-purple:active,
 html:not(.watch-active-state) .floating-button.color-purple:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-purple:active,
 .theme-purple .floating-button.active-state,
+.theme-purple .speed-dial-buttons a.active-state,
 .floating-button.theme-purple.active-state,
-.floating-button.color-purple.active-state {
-  background: #7b1fa2;
+.speed-dial-buttons a.theme-purple.active-state,
+.floating-button.color-purple.active-state,
+.speed-dial-buttons a.color-purple.active-state {
+  background: #7B1FA2;
 }
 .theme-purple .floating-button i,
+.theme-purple .speed-dial-buttons a i,
 .floating-button.theme-purple i,
-.floating-button.color-purple i {
+.speed-dial-buttons a.theme-purple i,
+.floating-button.color-purple i,
+.speed-dial-buttons a.color-purple i {
   color: inherit;
 }
 .ripple-purple .ripple-wave {
   background-color: rgba(156, 39, 176, 0.3);
 }
+.badge.color-purple,
+.badge.theme-purple {
+  background-color: #9c27b0;
+  color: #fff;
+}
 .color-deeppurple {
   color: #673ab7;
 }
 .list-block .item-link.list-button.color-deeppurple,
+.list-block .item-link.color-deeppurple,
 .tabbar a.active.color-deeppurple,
 a.color-deeppurple {
   color: #673ab7;
@@ -951,7 +1195,7 @@ a.color-deeppurple {
 }
 html:not(.watch-active-state) .theme-deeppurple .button.button-fill:active,
 .theme-deeppurple .button.button-fill.active-state {
-  background: #512da8;
+  background: #512DA8;
 }
 .button.button-fill.bg-deeppurple,
 .button.button-fill.color-deeppurple {
@@ -962,7 +1206,35 @@ html:not(.watch-active-state) .button.button-fill.bg-deeppurple:active,
 html:not(.watch-active-state) .button.button-fill.color-deeppurple:active,
 .button.button-fill.bg-deeppurple.active-state,
 .button.button-fill.color-deeppurple.active-state {
-  background: #512da8 !important;
+  background: #512DA8 !important;
+}
+.progressbar.color-deeppurple,
+.progressbar.theme-deeppurple,
+.theme-deeppurple .progressbar,
+.progressbar.bg-deeppurple {
+  background-color: rgba(103, 58, 183, 0.5);
+}
+.progressbar.color-deeppurple span,
+.progressbar.theme-deeppurple span,
+.theme-deeppurple .progressbar span,
+.progressbar.bg-deeppurple span {
+  background-color: #673ab7;
+}
+.progressbar-infinite.color-deeppurple,
+.progressbar-infinite.theme-deeppurple,
+.theme-deeppurple .progressbar-infinite,
+.progressbar-infinite.bg-deeppurple {
+  background-color: rgba(103, 58, 183, 0.5);
+}
+.progressbar-infinite.color-deeppurple:after,
+.progressbar-infinite.theme-deeppurple:after,
+.theme-deeppurple .progressbar-infinite:after,
+.progressbar-infinite.bg-deeppurple:after,
+.progressbar-infinite.color-deeppurple:before,
+.progressbar-infinite.theme-deeppurple:before,
+.theme-deeppurple .progressbar-infinite:before,
+.progressbar-infinite.bg-deeppurple:before {
+  background-color: #673ab7;
 }
 .color-deeppurple i.icon,
 i.icon.color-deeppurple {
@@ -991,6 +1263,12 @@ i.icon-bars.theme-deeppurple {
 .preloader.color-deeppurple svg circle,
 .preloader.preloader-deeppurple svg circle {
   stroke: #673ab7;
+}
+.preloader.color-deeppurple .preloader-inner-gap,
+.preloader.preloader-deeppurple .preloader-inner-gap,
+.preloader.color-deeppurple .preloader-inner-half-circle,
+.preloader.preloader-deeppurple .preloader-inner-half-circle {
+  border-color: #673ab7;
 }
 .theme-deeppurple a {
   color: #673ab7;
@@ -1136,6 +1414,32 @@ a.bg-deeppurple,
 .list-block .swipeout-actions-right a.bg-deeppurple {
   background-color: #673ab7;
 }
+html:not(.watch-active-state) .list-block .bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-block.bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-deeppurple .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-deeppurple:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-deeppurple:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-deeppurple:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-deeppurple:active,
+.list-block .bg-deeppurple .item-link.active-state,
+.list-block a.bg-deeppurple .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-deeppurple .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-deeppurple .item-link.active-state,
+.list-block.bg-deeppurple .item-link.active-state,
+.list-blocka.bg-deeppurple .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-deeppurple .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-deeppurple .item-link.active-state,
+.list-block .item-link.bg-deeppurple.active-state,
+.list-block .item-linka.bg-deeppurple.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-deeppurple.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-deeppurple.active-state {
+  background: #512DA8;
+}
 .border-deeppurple {
   border-color: #673ab7;
 }
@@ -1148,31 +1452,49 @@ a.bg-deeppurple,
   background-color: #673ab7;
 }
 .theme-deeppurple .floating-button,
+.theme-deeppurple .speed-dial-buttons a,
 .floating-button.theme-deeppurple,
-.floating-button.color-deeppurple {
+.speed-dial-buttons a.theme-deeppurple,
+.floating-button.color-deeppurple,
+.speed-dial-buttons a.color-deeppurple {
   color: #fff;
   background: #673ab7;
 }
 html:not(.watch-active-state) .theme-deeppurple .floating-button:active,
+html:not(.watch-active-state) .theme-deeppurple .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-deeppurple:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-deeppurple:active,
 html:not(.watch-active-state) .floating-button.color-deeppurple:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-deeppurple:active,
 .theme-deeppurple .floating-button.active-state,
+.theme-deeppurple .speed-dial-buttons a.active-state,
 .floating-button.theme-deeppurple.active-state,
-.floating-button.color-deeppurple.active-state {
-  background: #512da8;
+.speed-dial-buttons a.theme-deeppurple.active-state,
+.floating-button.color-deeppurple.active-state,
+.speed-dial-buttons a.color-deeppurple.active-state {
+  background: #512DA8;
 }
 .theme-deeppurple .floating-button i,
+.theme-deeppurple .speed-dial-buttons a i,
 .floating-button.theme-deeppurple i,
-.floating-button.color-deeppurple i {
+.speed-dial-buttons a.theme-deeppurple i,
+.floating-button.color-deeppurple i,
+.speed-dial-buttons a.color-deeppurple i {
   color: inherit;
 }
 .ripple-deeppurple .ripple-wave {
   background-color: rgba(103, 58, 183, 0.3);
 }
+.badge.color-deeppurple,
+.badge.theme-deeppurple {
+  background-color: #673ab7;
+  color: #fff;
+}
 .color-indigo {
   color: #3f51b5;
 }
 .list-block .item-link.list-button.color-indigo,
+.list-block .item-link.color-indigo,
 .tabbar a.active.color-indigo,
 a.color-indigo {
   color: #3f51b5;
@@ -1202,7 +1524,7 @@ a.color-indigo {
 }
 html:not(.watch-active-state) .theme-indigo .button.button-fill:active,
 .theme-indigo .button.button-fill.active-state {
-  background: #303f9f;
+  background: #303F9F;
 }
 .button.button-fill.bg-indigo,
 .button.button-fill.color-indigo {
@@ -1213,7 +1535,35 @@ html:not(.watch-active-state) .button.button-fill.bg-indigo:active,
 html:not(.watch-active-state) .button.button-fill.color-indigo:active,
 .button.button-fill.bg-indigo.active-state,
 .button.button-fill.color-indigo.active-state {
-  background: #303f9f !important;
+  background: #303F9F !important;
+}
+.progressbar.color-indigo,
+.progressbar.theme-indigo,
+.theme-indigo .progressbar,
+.progressbar.bg-indigo {
+  background-color: rgba(63, 81, 181, 0.5);
+}
+.progressbar.color-indigo span,
+.progressbar.theme-indigo span,
+.theme-indigo .progressbar span,
+.progressbar.bg-indigo span {
+  background-color: #3f51b5;
+}
+.progressbar-infinite.color-indigo,
+.progressbar-infinite.theme-indigo,
+.theme-indigo .progressbar-infinite,
+.progressbar-infinite.bg-indigo {
+  background-color: rgba(63, 81, 181, 0.5);
+}
+.progressbar-infinite.color-indigo:after,
+.progressbar-infinite.theme-indigo:after,
+.theme-indigo .progressbar-infinite:after,
+.progressbar-infinite.bg-indigo:after,
+.progressbar-infinite.color-indigo:before,
+.progressbar-infinite.theme-indigo:before,
+.theme-indigo .progressbar-infinite:before,
+.progressbar-infinite.bg-indigo:before {
+  background-color: #3f51b5;
 }
 .color-indigo i.icon,
 i.icon.color-indigo {
@@ -1242,6 +1592,12 @@ i.icon-bars.theme-indigo {
 .preloader.color-indigo svg circle,
 .preloader.preloader-indigo svg circle {
   stroke: #3f51b5;
+}
+.preloader.color-indigo .preloader-inner-gap,
+.preloader.preloader-indigo .preloader-inner-gap,
+.preloader.color-indigo .preloader-inner-half-circle,
+.preloader.preloader-indigo .preloader-inner-half-circle {
+  border-color: #3f51b5;
 }
 .theme-indigo a {
   color: #3f51b5;
@@ -1387,6 +1743,32 @@ a.bg-indigo,
 .list-block .swipeout-actions-right a.bg-indigo {
   background-color: #3f51b5;
 }
+html:not(.watch-active-state) .list-block .bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-block.bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-indigo .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-indigo:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-indigo:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-indigo:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-indigo:active,
+.list-block .bg-indigo .item-link.active-state,
+.list-block a.bg-indigo .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-indigo .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-indigo .item-link.active-state,
+.list-block.bg-indigo .item-link.active-state,
+.list-blocka.bg-indigo .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-indigo .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-indigo .item-link.active-state,
+.list-block .item-link.bg-indigo.active-state,
+.list-block .item-linka.bg-indigo.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-indigo.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-indigo.active-state {
+  background: #303F9F;
+}
 .border-indigo {
   border-color: #3f51b5;
 }
@@ -1399,31 +1781,49 @@ a.bg-indigo,
   background-color: #3f51b5;
 }
 .theme-indigo .floating-button,
+.theme-indigo .speed-dial-buttons a,
 .floating-button.theme-indigo,
-.floating-button.color-indigo {
+.speed-dial-buttons a.theme-indigo,
+.floating-button.color-indigo,
+.speed-dial-buttons a.color-indigo {
   color: #fff;
   background: #3f51b5;
 }
 html:not(.watch-active-state) .theme-indigo .floating-button:active,
+html:not(.watch-active-state) .theme-indigo .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-indigo:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-indigo:active,
 html:not(.watch-active-state) .floating-button.color-indigo:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-indigo:active,
 .theme-indigo .floating-button.active-state,
+.theme-indigo .speed-dial-buttons a.active-state,
 .floating-button.theme-indigo.active-state,
-.floating-button.color-indigo.active-state {
-  background: #303f9f;
+.speed-dial-buttons a.theme-indigo.active-state,
+.floating-button.color-indigo.active-state,
+.speed-dial-buttons a.color-indigo.active-state {
+  background: #303F9F;
 }
 .theme-indigo .floating-button i,
+.theme-indigo .speed-dial-buttons a i,
 .floating-button.theme-indigo i,
-.floating-button.color-indigo i {
+.speed-dial-buttons a.theme-indigo i,
+.floating-button.color-indigo i,
+.speed-dial-buttons a.color-indigo i {
   color: inherit;
 }
 .ripple-indigo .ripple-wave {
   background-color: rgba(63, 81, 181, 0.3);
 }
+.badge.color-indigo,
+.badge.theme-indigo {
+  background-color: #3f51b5;
+  color: #fff;
+}
 .color-blue {
   color: #2196f3;
 }
 .list-block .item-link.list-button.color-blue,
+.list-block .item-link.color-blue,
 .tabbar a.active.color-blue,
 a.color-blue {
   color: #2196f3;
@@ -1453,7 +1853,7 @@ a.color-blue {
 }
 html:not(.watch-active-state) .theme-blue .button.button-fill:active,
 .theme-blue .button.button-fill.active-state {
-  background: #1976d2;
+  background: #1976D2;
 }
 .button.button-fill.bg-blue,
 .button.button-fill.color-blue {
@@ -1464,7 +1864,35 @@ html:not(.watch-active-state) .button.button-fill.bg-blue:active,
 html:not(.watch-active-state) .button.button-fill.color-blue:active,
 .button.button-fill.bg-blue.active-state,
 .button.button-fill.color-blue.active-state {
-  background: #1976d2 !important;
+  background: #1976D2 !important;
+}
+.progressbar.color-blue,
+.progressbar.theme-blue,
+.theme-blue .progressbar,
+.progressbar.bg-blue {
+  background-color: rgba(33, 150, 243, 0.5);
+}
+.progressbar.color-blue span,
+.progressbar.theme-blue span,
+.theme-blue .progressbar span,
+.progressbar.bg-blue span {
+  background-color: #2196f3;
+}
+.progressbar-infinite.color-blue,
+.progressbar-infinite.theme-blue,
+.theme-blue .progressbar-infinite,
+.progressbar-infinite.bg-blue {
+  background-color: rgba(33, 150, 243, 0.5);
+}
+.progressbar-infinite.color-blue:after,
+.progressbar-infinite.theme-blue:after,
+.theme-blue .progressbar-infinite:after,
+.progressbar-infinite.bg-blue:after,
+.progressbar-infinite.color-blue:before,
+.progressbar-infinite.theme-blue:before,
+.theme-blue .progressbar-infinite:before,
+.progressbar-infinite.bg-blue:before {
+  background-color: #2196f3;
 }
 .color-blue i.icon,
 i.icon.color-blue {
@@ -1493,6 +1921,12 @@ i.icon-bars.theme-blue {
 .preloader.color-blue svg circle,
 .preloader.preloader-blue svg circle {
   stroke: #2196f3;
+}
+.preloader.color-blue .preloader-inner-gap,
+.preloader.preloader-blue .preloader-inner-gap,
+.preloader.color-blue .preloader-inner-half-circle,
+.preloader.preloader-blue .preloader-inner-half-circle {
+  border-color: #2196f3;
 }
 .theme-blue a {
   color: #2196f3;
@@ -1638,6 +2072,32 @@ a.bg-blue,
 .list-block .swipeout-actions-right a.bg-blue {
   background-color: #2196f3;
 }
+html:not(.watch-active-state) .list-block .bg-blue .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-blue .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-blue .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-blue .item-link:active,
+html:not(.watch-active-state) .list-block.bg-blue .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-blue .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-blue .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-blue .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-blue:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-blue:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-blue:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-blue:active,
+.list-block .bg-blue .item-link.active-state,
+.list-block a.bg-blue .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-blue .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-blue .item-link.active-state,
+.list-block.bg-blue .item-link.active-state,
+.list-blocka.bg-blue .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-blue .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-blue .item-link.active-state,
+.list-block .item-link.bg-blue.active-state,
+.list-block .item-linka.bg-blue.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-blue.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-blue.active-state {
+  background: #1976D2;
+}
 .border-blue {
   border-color: #2196f3;
 }
@@ -1650,31 +2110,49 @@ a.bg-blue,
   background-color: #2196f3;
 }
 .theme-blue .floating-button,
+.theme-blue .speed-dial-buttons a,
 .floating-button.theme-blue,
-.floating-button.color-blue {
+.speed-dial-buttons a.theme-blue,
+.floating-button.color-blue,
+.speed-dial-buttons a.color-blue {
   color: #fff;
   background: #2196f3;
 }
 html:not(.watch-active-state) .theme-blue .floating-button:active,
+html:not(.watch-active-state) .theme-blue .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-blue:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-blue:active,
 html:not(.watch-active-state) .floating-button.color-blue:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-blue:active,
 .theme-blue .floating-button.active-state,
+.theme-blue .speed-dial-buttons a.active-state,
 .floating-button.theme-blue.active-state,
-.floating-button.color-blue.active-state {
-  background: #1976d2;
+.speed-dial-buttons a.theme-blue.active-state,
+.floating-button.color-blue.active-state,
+.speed-dial-buttons a.color-blue.active-state {
+  background: #1976D2;
 }
 .theme-blue .floating-button i,
+.theme-blue .speed-dial-buttons a i,
 .floating-button.theme-blue i,
-.floating-button.color-blue i {
+.speed-dial-buttons a.theme-blue i,
+.floating-button.color-blue i,
+.speed-dial-buttons a.color-blue i {
   color: inherit;
 }
 .ripple-blue .ripple-wave {
   background-color: rgba(33, 150, 243, 0.3);
 }
+.badge.color-blue,
+.badge.theme-blue {
+  background-color: #2196f3;
+  color: #fff;
+}
 .color-lightblue {
   color: #03a9f4;
 }
 .list-block .item-link.list-button.color-lightblue,
+.list-block .item-link.color-lightblue,
 .tabbar a.active.color-lightblue,
 a.color-lightblue {
   color: #03a9f4;
@@ -1704,7 +2182,7 @@ a.color-lightblue {
 }
 html:not(.watch-active-state) .theme-lightblue .button.button-fill:active,
 .theme-lightblue .button.button-fill.active-state {
-  background: #0288d1;
+  background: #0288D1;
 }
 .button.button-fill.bg-lightblue,
 .button.button-fill.color-lightblue {
@@ -1715,7 +2193,35 @@ html:not(.watch-active-state) .button.button-fill.bg-lightblue:active,
 html:not(.watch-active-state) .button.button-fill.color-lightblue:active,
 .button.button-fill.bg-lightblue.active-state,
 .button.button-fill.color-lightblue.active-state {
-  background: #0288d1 !important;
+  background: #0288D1 !important;
+}
+.progressbar.color-lightblue,
+.progressbar.theme-lightblue,
+.theme-lightblue .progressbar,
+.progressbar.bg-lightblue {
+  background-color: rgba(3, 169, 244, 0.5);
+}
+.progressbar.color-lightblue span,
+.progressbar.theme-lightblue span,
+.theme-lightblue .progressbar span,
+.progressbar.bg-lightblue span {
+  background-color: #03a9f4;
+}
+.progressbar-infinite.color-lightblue,
+.progressbar-infinite.theme-lightblue,
+.theme-lightblue .progressbar-infinite,
+.progressbar-infinite.bg-lightblue {
+  background-color: rgba(3, 169, 244, 0.5);
+}
+.progressbar-infinite.color-lightblue:after,
+.progressbar-infinite.theme-lightblue:after,
+.theme-lightblue .progressbar-infinite:after,
+.progressbar-infinite.bg-lightblue:after,
+.progressbar-infinite.color-lightblue:before,
+.progressbar-infinite.theme-lightblue:before,
+.theme-lightblue .progressbar-infinite:before,
+.progressbar-infinite.bg-lightblue:before {
+  background-color: #03a9f4;
 }
 .color-lightblue i.icon,
 i.icon.color-lightblue {
@@ -1744,6 +2250,12 @@ i.icon-bars.theme-lightblue {
 .preloader.color-lightblue svg circle,
 .preloader.preloader-lightblue svg circle {
   stroke: #03a9f4;
+}
+.preloader.color-lightblue .preloader-inner-gap,
+.preloader.preloader-lightblue .preloader-inner-gap,
+.preloader.color-lightblue .preloader-inner-half-circle,
+.preloader.preloader-lightblue .preloader-inner-half-circle {
+  border-color: #03a9f4;
 }
 .theme-lightblue a {
   color: #03a9f4;
@@ -1889,6 +2401,32 @@ a.bg-lightblue,
 .list-block .swipeout-actions-right a.bg-lightblue {
   background-color: #03a9f4;
 }
+html:not(.watch-active-state) .list-block .bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-block.bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-lightblue .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-lightblue:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-lightblue:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-lightblue:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-lightblue:active,
+.list-block .bg-lightblue .item-link.active-state,
+.list-block a.bg-lightblue .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-lightblue .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-lightblue .item-link.active-state,
+.list-block.bg-lightblue .item-link.active-state,
+.list-blocka.bg-lightblue .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-lightblue .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-lightblue .item-link.active-state,
+.list-block .item-link.bg-lightblue.active-state,
+.list-block .item-linka.bg-lightblue.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-lightblue.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-lightblue.active-state {
+  background: #0288D1;
+}
 .border-lightblue {
   border-color: #03a9f4;
 }
@@ -1901,31 +2439,49 @@ a.bg-lightblue,
   background-color: #03a9f4;
 }
 .theme-lightblue .floating-button,
+.theme-lightblue .speed-dial-buttons a,
 .floating-button.theme-lightblue,
-.floating-button.color-lightblue {
+.speed-dial-buttons a.theme-lightblue,
+.floating-button.color-lightblue,
+.speed-dial-buttons a.color-lightblue {
   color: #fff;
   background: #03a9f4;
 }
 html:not(.watch-active-state) .theme-lightblue .floating-button:active,
+html:not(.watch-active-state) .theme-lightblue .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-lightblue:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-lightblue:active,
 html:not(.watch-active-state) .floating-button.color-lightblue:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-lightblue:active,
 .theme-lightblue .floating-button.active-state,
+.theme-lightblue .speed-dial-buttons a.active-state,
 .floating-button.theme-lightblue.active-state,
-.floating-button.color-lightblue.active-state {
-  background: #0288d1;
+.speed-dial-buttons a.theme-lightblue.active-state,
+.floating-button.color-lightblue.active-state,
+.speed-dial-buttons a.color-lightblue.active-state {
+  background: #0288D1;
 }
 .theme-lightblue .floating-button i,
+.theme-lightblue .speed-dial-buttons a i,
 .floating-button.theme-lightblue i,
-.floating-button.color-lightblue i {
+.speed-dial-buttons a.theme-lightblue i,
+.floating-button.color-lightblue i,
+.speed-dial-buttons a.color-lightblue i {
   color: inherit;
 }
 .ripple-lightblue .ripple-wave {
   background-color: rgba(3, 169, 244, 0.3);
 }
+.badge.color-lightblue,
+.badge.theme-lightblue {
+  background-color: #03a9f4;
+  color: #fff;
+}
 .color-cyan {
   color: #00bcd4;
 }
 .list-block .item-link.list-button.color-cyan,
+.list-block .item-link.color-cyan,
 .tabbar a.active.color-cyan,
 a.color-cyan {
   color: #00bcd4;
@@ -1955,7 +2511,7 @@ a.color-cyan {
 }
 html:not(.watch-active-state) .theme-cyan .button.button-fill:active,
 .theme-cyan .button.button-fill.active-state {
-  background: #0097a7;
+  background: #0097A7;
 }
 .button.button-fill.bg-cyan,
 .button.button-fill.color-cyan {
@@ -1966,7 +2522,35 @@ html:not(.watch-active-state) .button.button-fill.bg-cyan:active,
 html:not(.watch-active-state) .button.button-fill.color-cyan:active,
 .button.button-fill.bg-cyan.active-state,
 .button.button-fill.color-cyan.active-state {
-  background: #0097a7 !important;
+  background: #0097A7 !important;
+}
+.progressbar.color-cyan,
+.progressbar.theme-cyan,
+.theme-cyan .progressbar,
+.progressbar.bg-cyan {
+  background-color: rgba(0, 188, 212, 0.5);
+}
+.progressbar.color-cyan span,
+.progressbar.theme-cyan span,
+.theme-cyan .progressbar span,
+.progressbar.bg-cyan span {
+  background-color: #00bcd4;
+}
+.progressbar-infinite.color-cyan,
+.progressbar-infinite.theme-cyan,
+.theme-cyan .progressbar-infinite,
+.progressbar-infinite.bg-cyan {
+  background-color: rgba(0, 188, 212, 0.5);
+}
+.progressbar-infinite.color-cyan:after,
+.progressbar-infinite.theme-cyan:after,
+.theme-cyan .progressbar-infinite:after,
+.progressbar-infinite.bg-cyan:after,
+.progressbar-infinite.color-cyan:before,
+.progressbar-infinite.theme-cyan:before,
+.theme-cyan .progressbar-infinite:before,
+.progressbar-infinite.bg-cyan:before {
+  background-color: #00bcd4;
 }
 .color-cyan i.icon,
 i.icon.color-cyan {
@@ -1995,6 +2579,12 @@ i.icon-bars.theme-cyan {
 .preloader.color-cyan svg circle,
 .preloader.preloader-cyan svg circle {
   stroke: #00bcd4;
+}
+.preloader.color-cyan .preloader-inner-gap,
+.preloader.preloader-cyan .preloader-inner-gap,
+.preloader.color-cyan .preloader-inner-half-circle,
+.preloader.preloader-cyan .preloader-inner-half-circle {
+  border-color: #00bcd4;
 }
 .theme-cyan a {
   color: #00bcd4;
@@ -2140,6 +2730,32 @@ a.bg-cyan,
 .list-block .swipeout-actions-right a.bg-cyan {
   background-color: #00bcd4;
 }
+html:not(.watch-active-state) .list-block .bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-block.bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-cyan .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-cyan:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-cyan:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-cyan:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-cyan:active,
+.list-block .bg-cyan .item-link.active-state,
+.list-block a.bg-cyan .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-cyan .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-cyan .item-link.active-state,
+.list-block.bg-cyan .item-link.active-state,
+.list-blocka.bg-cyan .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-cyan .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-cyan .item-link.active-state,
+.list-block .item-link.bg-cyan.active-state,
+.list-block .item-linka.bg-cyan.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-cyan.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-cyan.active-state {
+  background: #0097A7;
+}
 .border-cyan {
   border-color: #00bcd4;
 }
@@ -2152,31 +2768,49 @@ a.bg-cyan,
   background-color: #00bcd4;
 }
 .theme-cyan .floating-button,
+.theme-cyan .speed-dial-buttons a,
 .floating-button.theme-cyan,
-.floating-button.color-cyan {
+.speed-dial-buttons a.theme-cyan,
+.floating-button.color-cyan,
+.speed-dial-buttons a.color-cyan {
   color: #fff;
   background: #00bcd4;
 }
 html:not(.watch-active-state) .theme-cyan .floating-button:active,
+html:not(.watch-active-state) .theme-cyan .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-cyan:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-cyan:active,
 html:not(.watch-active-state) .floating-button.color-cyan:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-cyan:active,
 .theme-cyan .floating-button.active-state,
+.theme-cyan .speed-dial-buttons a.active-state,
 .floating-button.theme-cyan.active-state,
-.floating-button.color-cyan.active-state {
-  background: #0097a7;
+.speed-dial-buttons a.theme-cyan.active-state,
+.floating-button.color-cyan.active-state,
+.speed-dial-buttons a.color-cyan.active-state {
+  background: #0097A7;
 }
 .theme-cyan .floating-button i,
+.theme-cyan .speed-dial-buttons a i,
 .floating-button.theme-cyan i,
-.floating-button.color-cyan i {
+.speed-dial-buttons a.theme-cyan i,
+.floating-button.color-cyan i,
+.speed-dial-buttons a.color-cyan i {
   color: inherit;
 }
 .ripple-cyan .ripple-wave {
   background-color: rgba(0, 188, 212, 0.3);
 }
+.badge.color-cyan,
+.badge.theme-cyan {
+  background-color: #00bcd4;
+  color: #fff;
+}
 .color-teal {
   color: #009688;
 }
 .list-block .item-link.list-button.color-teal,
+.list-block .item-link.color-teal,
 .tabbar a.active.color-teal,
 a.color-teal {
   color: #009688;
@@ -2206,7 +2840,7 @@ a.color-teal {
 }
 html:not(.watch-active-state) .theme-teal .button.button-fill:active,
 .theme-teal .button.button-fill.active-state {
-  background: #00897b;
+  background: #00897B;
 }
 .button.button-fill.bg-teal,
 .button.button-fill.color-teal {
@@ -2217,7 +2851,35 @@ html:not(.watch-active-state) .button.button-fill.bg-teal:active,
 html:not(.watch-active-state) .button.button-fill.color-teal:active,
 .button.button-fill.bg-teal.active-state,
 .button.button-fill.color-teal.active-state {
-  background: #00897b !important;
+  background: #00897B !important;
+}
+.progressbar.color-teal,
+.progressbar.theme-teal,
+.theme-teal .progressbar,
+.progressbar.bg-teal {
+  background-color: rgba(0, 150, 136, 0.5);
+}
+.progressbar.color-teal span,
+.progressbar.theme-teal span,
+.theme-teal .progressbar span,
+.progressbar.bg-teal span {
+  background-color: #009688;
+}
+.progressbar-infinite.color-teal,
+.progressbar-infinite.theme-teal,
+.theme-teal .progressbar-infinite,
+.progressbar-infinite.bg-teal {
+  background-color: rgba(0, 150, 136, 0.5);
+}
+.progressbar-infinite.color-teal:after,
+.progressbar-infinite.theme-teal:after,
+.theme-teal .progressbar-infinite:after,
+.progressbar-infinite.bg-teal:after,
+.progressbar-infinite.color-teal:before,
+.progressbar-infinite.theme-teal:before,
+.theme-teal .progressbar-infinite:before,
+.progressbar-infinite.bg-teal:before {
+  background-color: #009688;
 }
 .color-teal i.icon,
 i.icon.color-teal {
@@ -2246,6 +2908,12 @@ i.icon-bars.theme-teal {
 .preloader.color-teal svg circle,
 .preloader.preloader-teal svg circle {
   stroke: #009688;
+}
+.preloader.color-teal .preloader-inner-gap,
+.preloader.preloader-teal .preloader-inner-gap,
+.preloader.color-teal .preloader-inner-half-circle,
+.preloader.preloader-teal .preloader-inner-half-circle {
+  border-color: #009688;
 }
 .theme-teal a {
   color: #009688;
@@ -2391,6 +3059,32 @@ a.bg-teal,
 .list-block .swipeout-actions-right a.bg-teal {
   background-color: #009688;
 }
+html:not(.watch-active-state) .list-block .bg-teal .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-teal .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-teal .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-teal .item-link:active,
+html:not(.watch-active-state) .list-block.bg-teal .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-teal .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-teal .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-teal .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-teal:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-teal:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-teal:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-teal:active,
+.list-block .bg-teal .item-link.active-state,
+.list-block a.bg-teal .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-teal .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-teal .item-link.active-state,
+.list-block.bg-teal .item-link.active-state,
+.list-blocka.bg-teal .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-teal .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-teal .item-link.active-state,
+.list-block .item-link.bg-teal.active-state,
+.list-block .item-linka.bg-teal.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-teal.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-teal.active-state {
+  background: #00897B;
+}
 .border-teal {
   border-color: #009688;
 }
@@ -2403,31 +3097,49 @@ a.bg-teal,
   background-color: #009688;
 }
 .theme-teal .floating-button,
+.theme-teal .speed-dial-buttons a,
 .floating-button.theme-teal,
-.floating-button.color-teal {
+.speed-dial-buttons a.theme-teal,
+.floating-button.color-teal,
+.speed-dial-buttons a.color-teal {
   color: #fff;
   background: #009688;
 }
 html:not(.watch-active-state) .theme-teal .floating-button:active,
+html:not(.watch-active-state) .theme-teal .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-teal:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-teal:active,
 html:not(.watch-active-state) .floating-button.color-teal:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-teal:active,
 .theme-teal .floating-button.active-state,
+.theme-teal .speed-dial-buttons a.active-state,
 .floating-button.theme-teal.active-state,
-.floating-button.color-teal.active-state {
-  background: #00897b;
+.speed-dial-buttons a.theme-teal.active-state,
+.floating-button.color-teal.active-state,
+.speed-dial-buttons a.color-teal.active-state {
+  background: #00897B;
 }
 .theme-teal .floating-button i,
+.theme-teal .speed-dial-buttons a i,
 .floating-button.theme-teal i,
-.floating-button.color-teal i {
+.speed-dial-buttons a.theme-teal i,
+.floating-button.color-teal i,
+.speed-dial-buttons a.color-teal i {
   color: inherit;
 }
 .ripple-teal .ripple-wave {
   background-color: rgba(0, 150, 136, 0.3);
 }
+.badge.color-teal,
+.badge.theme-teal {
+  background-color: #009688;
+  color: #fff;
+}
 .color-green {
   color: #4caf50;
 }
 .list-block .item-link.list-button.color-green,
+.list-block .item-link.color-green,
 .tabbar a.active.color-green,
 a.color-green {
   color: #4caf50;
@@ -2457,7 +3169,7 @@ a.color-green {
 }
 html:not(.watch-active-state) .theme-green .button.button-fill:active,
 .theme-green .button.button-fill.active-state {
-  background: #388e3c;
+  background: #388E3C;
 }
 .button.button-fill.bg-green,
 .button.button-fill.color-green {
@@ -2468,7 +3180,35 @@ html:not(.watch-active-state) .button.button-fill.bg-green:active,
 html:not(.watch-active-state) .button.button-fill.color-green:active,
 .button.button-fill.bg-green.active-state,
 .button.button-fill.color-green.active-state {
-  background: #388e3c !important;
+  background: #388E3C !important;
+}
+.progressbar.color-green,
+.progressbar.theme-green,
+.theme-green .progressbar,
+.progressbar.bg-green {
+  background-color: rgba(76, 175, 80, 0.5);
+}
+.progressbar.color-green span,
+.progressbar.theme-green span,
+.theme-green .progressbar span,
+.progressbar.bg-green span {
+  background-color: #4caf50;
+}
+.progressbar-infinite.color-green,
+.progressbar-infinite.theme-green,
+.theme-green .progressbar-infinite,
+.progressbar-infinite.bg-green {
+  background-color: rgba(76, 175, 80, 0.5);
+}
+.progressbar-infinite.color-green:after,
+.progressbar-infinite.theme-green:after,
+.theme-green .progressbar-infinite:after,
+.progressbar-infinite.bg-green:after,
+.progressbar-infinite.color-green:before,
+.progressbar-infinite.theme-green:before,
+.theme-green .progressbar-infinite:before,
+.progressbar-infinite.bg-green:before {
+  background-color: #4caf50;
 }
 .color-green i.icon,
 i.icon.color-green {
@@ -2497,6 +3237,12 @@ i.icon-bars.theme-green {
 .preloader.color-green svg circle,
 .preloader.preloader-green svg circle {
   stroke: #4caf50;
+}
+.preloader.color-green .preloader-inner-gap,
+.preloader.preloader-green .preloader-inner-gap,
+.preloader.color-green .preloader-inner-half-circle,
+.preloader.preloader-green .preloader-inner-half-circle {
+  border-color: #4caf50;
 }
 .theme-green a {
   color: #4caf50;
@@ -2642,6 +3388,32 @@ a.bg-green,
 .list-block .swipeout-actions-right a.bg-green {
   background-color: #4caf50;
 }
+html:not(.watch-active-state) .list-block .bg-green .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-green .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-green .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-green .item-link:active,
+html:not(.watch-active-state) .list-block.bg-green .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-green .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-green .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-green .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-green:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-green:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-green:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-green:active,
+.list-block .bg-green .item-link.active-state,
+.list-block a.bg-green .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-green .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-green .item-link.active-state,
+.list-block.bg-green .item-link.active-state,
+.list-blocka.bg-green .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-green .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-green .item-link.active-state,
+.list-block .item-link.bg-green.active-state,
+.list-block .item-linka.bg-green.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-green.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-green.active-state {
+  background: #388E3C;
+}
 .border-green {
   border-color: #4caf50;
 }
@@ -2654,31 +3426,49 @@ a.bg-green,
   background-color: #4caf50;
 }
 .theme-green .floating-button,
+.theme-green .speed-dial-buttons a,
 .floating-button.theme-green,
-.floating-button.color-green {
+.speed-dial-buttons a.theme-green,
+.floating-button.color-green,
+.speed-dial-buttons a.color-green {
   color: #fff;
   background: #4caf50;
 }
 html:not(.watch-active-state) .theme-green .floating-button:active,
+html:not(.watch-active-state) .theme-green .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-green:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-green:active,
 html:not(.watch-active-state) .floating-button.color-green:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-green:active,
 .theme-green .floating-button.active-state,
+.theme-green .speed-dial-buttons a.active-state,
 .floating-button.theme-green.active-state,
-.floating-button.color-green.active-state {
-  background: #388e3c;
+.speed-dial-buttons a.theme-green.active-state,
+.floating-button.color-green.active-state,
+.speed-dial-buttons a.color-green.active-state {
+  background: #388E3C;
 }
 .theme-green .floating-button i,
+.theme-green .speed-dial-buttons a i,
 .floating-button.theme-green i,
-.floating-button.color-green i {
+.speed-dial-buttons a.theme-green i,
+.floating-button.color-green i,
+.speed-dial-buttons a.color-green i {
   color: inherit;
 }
 .ripple-green .ripple-wave {
   background-color: rgba(76, 175, 80, 0.3);
 }
+.badge.color-green,
+.badge.theme-green {
+  background-color: #4caf50;
+  color: #fff;
+}
 .color-lightgreen {
   color: #8bc34a;
 }
 .list-block .item-link.list-button.color-lightgreen,
+.list-block .item-link.color-lightgreen,
 .tabbar a.active.color-lightgreen,
 a.color-lightgreen {
   color: #8bc34a;
@@ -2708,7 +3498,7 @@ a.color-lightgreen {
 }
 html:not(.watch-active-state) .theme-lightgreen .button.button-fill:active,
 .theme-lightgreen .button.button-fill.active-state {
-  background: #689f38;
+  background: #689F38;
 }
 .button.button-fill.bg-lightgreen,
 .button.button-fill.color-lightgreen {
@@ -2719,7 +3509,35 @@ html:not(.watch-active-state) .button.button-fill.bg-lightgreen:active,
 html:not(.watch-active-state) .button.button-fill.color-lightgreen:active,
 .button.button-fill.bg-lightgreen.active-state,
 .button.button-fill.color-lightgreen.active-state {
-  background: #689f38 !important;
+  background: #689F38 !important;
+}
+.progressbar.color-lightgreen,
+.progressbar.theme-lightgreen,
+.theme-lightgreen .progressbar,
+.progressbar.bg-lightgreen {
+  background-color: rgba(139, 195, 74, 0.5);
+}
+.progressbar.color-lightgreen span,
+.progressbar.theme-lightgreen span,
+.theme-lightgreen .progressbar span,
+.progressbar.bg-lightgreen span {
+  background-color: #8bc34a;
+}
+.progressbar-infinite.color-lightgreen,
+.progressbar-infinite.theme-lightgreen,
+.theme-lightgreen .progressbar-infinite,
+.progressbar-infinite.bg-lightgreen {
+  background-color: rgba(139, 195, 74, 0.5);
+}
+.progressbar-infinite.color-lightgreen:after,
+.progressbar-infinite.theme-lightgreen:after,
+.theme-lightgreen .progressbar-infinite:after,
+.progressbar-infinite.bg-lightgreen:after,
+.progressbar-infinite.color-lightgreen:before,
+.progressbar-infinite.theme-lightgreen:before,
+.theme-lightgreen .progressbar-infinite:before,
+.progressbar-infinite.bg-lightgreen:before {
+  background-color: #8bc34a;
 }
 .color-lightgreen i.icon,
 i.icon.color-lightgreen {
@@ -2748,6 +3566,12 @@ i.icon-bars.theme-lightgreen {
 .preloader.color-lightgreen svg circle,
 .preloader.preloader-lightgreen svg circle {
   stroke: #8bc34a;
+}
+.preloader.color-lightgreen .preloader-inner-gap,
+.preloader.preloader-lightgreen .preloader-inner-gap,
+.preloader.color-lightgreen .preloader-inner-half-circle,
+.preloader.preloader-lightgreen .preloader-inner-half-circle {
+  border-color: #8bc34a;
 }
 .theme-lightgreen a {
   color: #8bc34a;
@@ -2893,6 +3717,32 @@ a.bg-lightgreen,
 .list-block .swipeout-actions-right a.bg-lightgreen {
   background-color: #8bc34a;
 }
+html:not(.watch-active-state) .list-block .bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-block.bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-lightgreen .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-lightgreen:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-lightgreen:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-lightgreen:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-lightgreen:active,
+.list-block .bg-lightgreen .item-link.active-state,
+.list-block a.bg-lightgreen .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-lightgreen .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-lightgreen .item-link.active-state,
+.list-block.bg-lightgreen .item-link.active-state,
+.list-blocka.bg-lightgreen .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-lightgreen .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-lightgreen .item-link.active-state,
+.list-block .item-link.bg-lightgreen.active-state,
+.list-block .item-linka.bg-lightgreen.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-lightgreen.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-lightgreen.active-state {
+  background: #689F38;
+}
 .border-lightgreen {
   border-color: #8bc34a;
 }
@@ -2905,31 +3755,49 @@ a.bg-lightgreen,
   background-color: #8bc34a;
 }
 .theme-lightgreen .floating-button,
+.theme-lightgreen .speed-dial-buttons a,
 .floating-button.theme-lightgreen,
-.floating-button.color-lightgreen {
+.speed-dial-buttons a.theme-lightgreen,
+.floating-button.color-lightgreen,
+.speed-dial-buttons a.color-lightgreen {
   color: #fff;
   background: #8bc34a;
 }
 html:not(.watch-active-state) .theme-lightgreen .floating-button:active,
+html:not(.watch-active-state) .theme-lightgreen .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-lightgreen:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-lightgreen:active,
 html:not(.watch-active-state) .floating-button.color-lightgreen:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-lightgreen:active,
 .theme-lightgreen .floating-button.active-state,
+.theme-lightgreen .speed-dial-buttons a.active-state,
 .floating-button.theme-lightgreen.active-state,
-.floating-button.color-lightgreen.active-state {
-  background: #689f38;
+.speed-dial-buttons a.theme-lightgreen.active-state,
+.floating-button.color-lightgreen.active-state,
+.speed-dial-buttons a.color-lightgreen.active-state {
+  background: #689F38;
 }
 .theme-lightgreen .floating-button i,
+.theme-lightgreen .speed-dial-buttons a i,
 .floating-button.theme-lightgreen i,
-.floating-button.color-lightgreen i {
+.speed-dial-buttons a.theme-lightgreen i,
+.floating-button.color-lightgreen i,
+.speed-dial-buttons a.color-lightgreen i {
   color: inherit;
 }
 .ripple-lightgreen .ripple-wave {
   background-color: rgba(139, 195, 74, 0.3);
 }
+.badge.color-lightgreen,
+.badge.theme-lightgreen {
+  background-color: #8bc34a;
+  color: #fff;
+}
 .color-lime {
   color: #cddc39;
 }
 .list-block .item-link.list-button.color-lime,
+.list-block .item-link.color-lime,
 .tabbar a.active.color-lime,
 a.color-lime {
   color: #cddc39;
@@ -2959,7 +3827,7 @@ a.color-lime {
 }
 html:not(.watch-active-state) .theme-lime .button.button-fill:active,
 .theme-lime .button.button-fill.active-state {
-  background: #afb42b;
+  background: #AFB42B;
 }
 .button.button-fill.bg-lime,
 .button.button-fill.color-lime {
@@ -2970,7 +3838,35 @@ html:not(.watch-active-state) .button.button-fill.bg-lime:active,
 html:not(.watch-active-state) .button.button-fill.color-lime:active,
 .button.button-fill.bg-lime.active-state,
 .button.button-fill.color-lime.active-state {
-  background: #afb42b !important;
+  background: #AFB42B !important;
+}
+.progressbar.color-lime,
+.progressbar.theme-lime,
+.theme-lime .progressbar,
+.progressbar.bg-lime {
+  background-color: rgba(205, 220, 57, 0.5);
+}
+.progressbar.color-lime span,
+.progressbar.theme-lime span,
+.theme-lime .progressbar span,
+.progressbar.bg-lime span {
+  background-color: #cddc39;
+}
+.progressbar-infinite.color-lime,
+.progressbar-infinite.theme-lime,
+.theme-lime .progressbar-infinite,
+.progressbar-infinite.bg-lime {
+  background-color: rgba(205, 220, 57, 0.5);
+}
+.progressbar-infinite.color-lime:after,
+.progressbar-infinite.theme-lime:after,
+.theme-lime .progressbar-infinite:after,
+.progressbar-infinite.bg-lime:after,
+.progressbar-infinite.color-lime:before,
+.progressbar-infinite.theme-lime:before,
+.theme-lime .progressbar-infinite:before,
+.progressbar-infinite.bg-lime:before {
+  background-color: #cddc39;
 }
 .color-lime i.icon,
 i.icon.color-lime {
@@ -2999,6 +3895,12 @@ i.icon-bars.theme-lime {
 .preloader.color-lime svg circle,
 .preloader.preloader-lime svg circle {
   stroke: #cddc39;
+}
+.preloader.color-lime .preloader-inner-gap,
+.preloader.preloader-lime .preloader-inner-gap,
+.preloader.color-lime .preloader-inner-half-circle,
+.preloader.preloader-lime .preloader-inner-half-circle {
+  border-color: #cddc39;
 }
 .theme-lime a {
   color: #cddc39;
@@ -3144,6 +4046,32 @@ a.bg-lime,
 .list-block .swipeout-actions-right a.bg-lime {
   background-color: #cddc39;
 }
+html:not(.watch-active-state) .list-block .bg-lime .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-lime .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-lime .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-lime .item-link:active,
+html:not(.watch-active-state) .list-block.bg-lime .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-lime .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-lime .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-lime .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-lime:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-lime:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-lime:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-lime:active,
+.list-block .bg-lime .item-link.active-state,
+.list-block a.bg-lime .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-lime .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-lime .item-link.active-state,
+.list-block.bg-lime .item-link.active-state,
+.list-blocka.bg-lime .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-lime .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-lime .item-link.active-state,
+.list-block .item-link.bg-lime.active-state,
+.list-block .item-linka.bg-lime.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-lime.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-lime.active-state {
+  background: #AFB42B;
+}
 .border-lime {
   border-color: #cddc39;
 }
@@ -3156,31 +4084,49 @@ a.bg-lime,
   background-color: #cddc39;
 }
 .theme-lime .floating-button,
+.theme-lime .speed-dial-buttons a,
 .floating-button.theme-lime,
-.floating-button.color-lime {
+.speed-dial-buttons a.theme-lime,
+.floating-button.color-lime,
+.speed-dial-buttons a.color-lime {
   color: #fff;
   background: #cddc39;
 }
 html:not(.watch-active-state) .theme-lime .floating-button:active,
+html:not(.watch-active-state) .theme-lime .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-lime:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-lime:active,
 html:not(.watch-active-state) .floating-button.color-lime:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-lime:active,
 .theme-lime .floating-button.active-state,
+.theme-lime .speed-dial-buttons a.active-state,
 .floating-button.theme-lime.active-state,
-.floating-button.color-lime.active-state {
-  background: #afb42b;
+.speed-dial-buttons a.theme-lime.active-state,
+.floating-button.color-lime.active-state,
+.speed-dial-buttons a.color-lime.active-state {
+  background: #AFB42B;
 }
 .theme-lime .floating-button i,
+.theme-lime .speed-dial-buttons a i,
 .floating-button.theme-lime i,
-.floating-button.color-lime i {
+.speed-dial-buttons a.theme-lime i,
+.floating-button.color-lime i,
+.speed-dial-buttons a.color-lime i {
   color: inherit;
 }
 .ripple-lime .ripple-wave {
   background-color: rgba(205, 220, 57, 0.3);
 }
+.badge.color-lime,
+.badge.theme-lime {
+  background-color: #cddc39;
+  color: #fff;
+}
 .color-yellow {
   color: #ffeb3b;
 }
 .list-block .item-link.list-button.color-yellow,
+.list-block .item-link.color-yellow,
 .tabbar a.active.color-yellow,
 a.color-yellow {
   color: #ffeb3b;
@@ -3210,7 +4156,7 @@ a.color-yellow {
 }
 html:not(.watch-active-state) .theme-yellow .button.button-fill:active,
 .theme-yellow .button.button-fill.active-state {
-  background: #fbc02d;
+  background: #FBC02D;
 }
 .button.button-fill.bg-yellow,
 .button.button-fill.color-yellow {
@@ -3221,7 +4167,35 @@ html:not(.watch-active-state) .button.button-fill.bg-yellow:active,
 html:not(.watch-active-state) .button.button-fill.color-yellow:active,
 .button.button-fill.bg-yellow.active-state,
 .button.button-fill.color-yellow.active-state {
-  background: #fbc02d !important;
+  background: #FBC02D !important;
+}
+.progressbar.color-yellow,
+.progressbar.theme-yellow,
+.theme-yellow .progressbar,
+.progressbar.bg-yellow {
+  background-color: rgba(255, 235, 59, 0.5);
+}
+.progressbar.color-yellow span,
+.progressbar.theme-yellow span,
+.theme-yellow .progressbar span,
+.progressbar.bg-yellow span {
+  background-color: #ffeb3b;
+}
+.progressbar-infinite.color-yellow,
+.progressbar-infinite.theme-yellow,
+.theme-yellow .progressbar-infinite,
+.progressbar-infinite.bg-yellow {
+  background-color: rgba(255, 235, 59, 0.5);
+}
+.progressbar-infinite.color-yellow:after,
+.progressbar-infinite.theme-yellow:after,
+.theme-yellow .progressbar-infinite:after,
+.progressbar-infinite.bg-yellow:after,
+.progressbar-infinite.color-yellow:before,
+.progressbar-infinite.theme-yellow:before,
+.theme-yellow .progressbar-infinite:before,
+.progressbar-infinite.bg-yellow:before {
+  background-color: #ffeb3b;
 }
 .color-yellow i.icon,
 i.icon.color-yellow {
@@ -3250,6 +4224,12 @@ i.icon-bars.theme-yellow {
 .preloader.color-yellow svg circle,
 .preloader.preloader-yellow svg circle {
   stroke: #ffeb3b;
+}
+.preloader.color-yellow .preloader-inner-gap,
+.preloader.preloader-yellow .preloader-inner-gap,
+.preloader.color-yellow .preloader-inner-half-circle,
+.preloader.preloader-yellow .preloader-inner-half-circle {
+  border-color: #ffeb3b;
 }
 .theme-yellow a {
   color: #ffeb3b;
@@ -3395,6 +4375,32 @@ a.bg-yellow,
 .list-block .swipeout-actions-right a.bg-yellow {
   background-color: #ffeb3b;
 }
+html:not(.watch-active-state) .list-block .bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-block.bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-yellow .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-yellow:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-yellow:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-yellow:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-yellow:active,
+.list-block .bg-yellow .item-link.active-state,
+.list-block a.bg-yellow .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-yellow .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-yellow .item-link.active-state,
+.list-block.bg-yellow .item-link.active-state,
+.list-blocka.bg-yellow .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-yellow .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-yellow .item-link.active-state,
+.list-block .item-link.bg-yellow.active-state,
+.list-block .item-linka.bg-yellow.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-yellow.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-yellow.active-state {
+  background: #FBC02D;
+}
 .border-yellow {
   border-color: #ffeb3b;
 }
@@ -3407,31 +4413,49 @@ a.bg-yellow,
   background-color: #ffeb3b;
 }
 .theme-yellow .floating-button,
+.theme-yellow .speed-dial-buttons a,
 .floating-button.theme-yellow,
-.floating-button.color-yellow {
+.speed-dial-buttons a.theme-yellow,
+.floating-button.color-yellow,
+.speed-dial-buttons a.color-yellow {
   color: #fff;
   background: #ffeb3b;
 }
 html:not(.watch-active-state) .theme-yellow .floating-button:active,
+html:not(.watch-active-state) .theme-yellow .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-yellow:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-yellow:active,
 html:not(.watch-active-state) .floating-button.color-yellow:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-yellow:active,
 .theme-yellow .floating-button.active-state,
+.theme-yellow .speed-dial-buttons a.active-state,
 .floating-button.theme-yellow.active-state,
-.floating-button.color-yellow.active-state {
-  background: #fbc02d;
+.speed-dial-buttons a.theme-yellow.active-state,
+.floating-button.color-yellow.active-state,
+.speed-dial-buttons a.color-yellow.active-state {
+  background: #FBC02D;
 }
 .theme-yellow .floating-button i,
+.theme-yellow .speed-dial-buttons a i,
 .floating-button.theme-yellow i,
-.floating-button.color-yellow i {
+.speed-dial-buttons a.theme-yellow i,
+.floating-button.color-yellow i,
+.speed-dial-buttons a.color-yellow i {
   color: inherit;
 }
 .ripple-yellow .ripple-wave {
   background-color: rgba(255, 235, 59, 0.3);
 }
+.badge.color-yellow,
+.badge.theme-yellow {
+  background-color: #ffeb3b;
+  color: #fff;
+}
 .color-amber {
   color: #ffc107;
 }
 .list-block .item-link.list-button.color-amber,
+.list-block .item-link.color-amber,
 .tabbar a.active.color-amber,
 a.color-amber {
   color: #ffc107;
@@ -3461,7 +4485,7 @@ a.color-amber {
 }
 html:not(.watch-active-state) .theme-amber .button.button-fill:active,
 .theme-amber .button.button-fill.active-state {
-  background: #ffa000;
+  background: #FFA000;
 }
 .button.button-fill.bg-amber,
 .button.button-fill.color-amber {
@@ -3472,7 +4496,35 @@ html:not(.watch-active-state) .button.button-fill.bg-amber:active,
 html:not(.watch-active-state) .button.button-fill.color-amber:active,
 .button.button-fill.bg-amber.active-state,
 .button.button-fill.color-amber.active-state {
-  background: #ffa000 !important;
+  background: #FFA000 !important;
+}
+.progressbar.color-amber,
+.progressbar.theme-amber,
+.theme-amber .progressbar,
+.progressbar.bg-amber {
+  background-color: rgba(255, 193, 7, 0.5);
+}
+.progressbar.color-amber span,
+.progressbar.theme-amber span,
+.theme-amber .progressbar span,
+.progressbar.bg-amber span {
+  background-color: #ffc107;
+}
+.progressbar-infinite.color-amber,
+.progressbar-infinite.theme-amber,
+.theme-amber .progressbar-infinite,
+.progressbar-infinite.bg-amber {
+  background-color: rgba(255, 193, 7, 0.5);
+}
+.progressbar-infinite.color-amber:after,
+.progressbar-infinite.theme-amber:after,
+.theme-amber .progressbar-infinite:after,
+.progressbar-infinite.bg-amber:after,
+.progressbar-infinite.color-amber:before,
+.progressbar-infinite.theme-amber:before,
+.theme-amber .progressbar-infinite:before,
+.progressbar-infinite.bg-amber:before {
+  background-color: #ffc107;
 }
 .color-amber i.icon,
 i.icon.color-amber {
@@ -3501,6 +4553,12 @@ i.icon-bars.theme-amber {
 .preloader.color-amber svg circle,
 .preloader.preloader-amber svg circle {
   stroke: #ffc107;
+}
+.preloader.color-amber .preloader-inner-gap,
+.preloader.preloader-amber .preloader-inner-gap,
+.preloader.color-amber .preloader-inner-half-circle,
+.preloader.preloader-amber .preloader-inner-half-circle {
+  border-color: #ffc107;
 }
 .theme-amber a {
   color: #ffc107;
@@ -3646,6 +4704,32 @@ a.bg-amber,
 .list-block .swipeout-actions-right a.bg-amber {
   background-color: #ffc107;
 }
+html:not(.watch-active-state) .list-block .bg-amber .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-amber .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-amber .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-amber .item-link:active,
+html:not(.watch-active-state) .list-block.bg-amber .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-amber .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-amber .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-amber .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-amber:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-amber:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-amber:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-amber:active,
+.list-block .bg-amber .item-link.active-state,
+.list-block a.bg-amber .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-amber .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-amber .item-link.active-state,
+.list-block.bg-amber .item-link.active-state,
+.list-blocka.bg-amber .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-amber .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-amber .item-link.active-state,
+.list-block .item-link.bg-amber.active-state,
+.list-block .item-linka.bg-amber.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-amber.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-amber.active-state {
+  background: #FFA000;
+}
 .border-amber {
   border-color: #ffc107;
 }
@@ -3658,31 +4742,49 @@ a.bg-amber,
   background-color: #ffc107;
 }
 .theme-amber .floating-button,
+.theme-amber .speed-dial-buttons a,
 .floating-button.theme-amber,
-.floating-button.color-amber {
+.speed-dial-buttons a.theme-amber,
+.floating-button.color-amber,
+.speed-dial-buttons a.color-amber {
   color: #fff;
   background: #ffc107;
 }
 html:not(.watch-active-state) .theme-amber .floating-button:active,
+html:not(.watch-active-state) .theme-amber .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-amber:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-amber:active,
 html:not(.watch-active-state) .floating-button.color-amber:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-amber:active,
 .theme-amber .floating-button.active-state,
+.theme-amber .speed-dial-buttons a.active-state,
 .floating-button.theme-amber.active-state,
-.floating-button.color-amber.active-state {
-  background: #ffa000;
+.speed-dial-buttons a.theme-amber.active-state,
+.floating-button.color-amber.active-state,
+.speed-dial-buttons a.color-amber.active-state {
+  background: #FFA000;
 }
 .theme-amber .floating-button i,
+.theme-amber .speed-dial-buttons a i,
 .floating-button.theme-amber i,
-.floating-button.color-amber i {
+.speed-dial-buttons a.theme-amber i,
+.floating-button.color-amber i,
+.speed-dial-buttons a.color-amber i {
   color: inherit;
 }
 .ripple-amber .ripple-wave {
   background-color: rgba(255, 193, 7, 0.3);
 }
+.badge.color-amber,
+.badge.theme-amber {
+  background-color: #ffc107;
+  color: #fff;
+}
 .color-orange {
   color: #ff9800;
 }
 .list-block .item-link.list-button.color-orange,
+.list-block .item-link.color-orange,
 .tabbar a.active.color-orange,
 a.color-orange {
   color: #ff9800;
@@ -3712,7 +4814,7 @@ a.color-orange {
 }
 html:not(.watch-active-state) .theme-orange .button.button-fill:active,
 .theme-orange .button.button-fill.active-state {
-  background: #f57c00;
+  background: #F57C00;
 }
 .button.button-fill.bg-orange,
 .button.button-fill.color-orange {
@@ -3723,7 +4825,35 @@ html:not(.watch-active-state) .button.button-fill.bg-orange:active,
 html:not(.watch-active-state) .button.button-fill.color-orange:active,
 .button.button-fill.bg-orange.active-state,
 .button.button-fill.color-orange.active-state {
-  background: #f57c00 !important;
+  background: #F57C00 !important;
+}
+.progressbar.color-orange,
+.progressbar.theme-orange,
+.theme-orange .progressbar,
+.progressbar.bg-orange {
+  background-color: rgba(255, 152, 0, 0.5);
+}
+.progressbar.color-orange span,
+.progressbar.theme-orange span,
+.theme-orange .progressbar span,
+.progressbar.bg-orange span {
+  background-color: #ff9800;
+}
+.progressbar-infinite.color-orange,
+.progressbar-infinite.theme-orange,
+.theme-orange .progressbar-infinite,
+.progressbar-infinite.bg-orange {
+  background-color: rgba(255, 152, 0, 0.5);
+}
+.progressbar-infinite.color-orange:after,
+.progressbar-infinite.theme-orange:after,
+.theme-orange .progressbar-infinite:after,
+.progressbar-infinite.bg-orange:after,
+.progressbar-infinite.color-orange:before,
+.progressbar-infinite.theme-orange:before,
+.theme-orange .progressbar-infinite:before,
+.progressbar-infinite.bg-orange:before {
+  background-color: #ff9800;
 }
 .color-orange i.icon,
 i.icon.color-orange {
@@ -3752,6 +4882,12 @@ i.icon-bars.theme-orange {
 .preloader.color-orange svg circle,
 .preloader.preloader-orange svg circle {
   stroke: #ff9800;
+}
+.preloader.color-orange .preloader-inner-gap,
+.preloader.preloader-orange .preloader-inner-gap,
+.preloader.color-orange .preloader-inner-half-circle,
+.preloader.preloader-orange .preloader-inner-half-circle {
+  border-color: #ff9800;
 }
 .theme-orange a {
   color: #ff9800;
@@ -3897,6 +5033,32 @@ a.bg-orange,
 .list-block .swipeout-actions-right a.bg-orange {
   background-color: #ff9800;
 }
+html:not(.watch-active-state) .list-block .bg-orange .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-orange .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-orange .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-orange .item-link:active,
+html:not(.watch-active-state) .list-block.bg-orange .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-orange .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-orange .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-orange .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-orange:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-orange:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-orange:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-orange:active,
+.list-block .bg-orange .item-link.active-state,
+.list-block a.bg-orange .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-orange .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-orange .item-link.active-state,
+.list-block.bg-orange .item-link.active-state,
+.list-blocka.bg-orange .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-orange .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-orange .item-link.active-state,
+.list-block .item-link.bg-orange.active-state,
+.list-block .item-linka.bg-orange.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-orange.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-orange.active-state {
+  background: #F57C00;
+}
 .border-orange {
   border-color: #ff9800;
 }
@@ -3909,31 +5071,49 @@ a.bg-orange,
   background-color: #ff9800;
 }
 .theme-orange .floating-button,
+.theme-orange .speed-dial-buttons a,
 .floating-button.theme-orange,
-.floating-button.color-orange {
+.speed-dial-buttons a.theme-orange,
+.floating-button.color-orange,
+.speed-dial-buttons a.color-orange {
   color: #fff;
   background: #ff9800;
 }
 html:not(.watch-active-state) .theme-orange .floating-button:active,
+html:not(.watch-active-state) .theme-orange .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-orange:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-orange:active,
 html:not(.watch-active-state) .floating-button.color-orange:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-orange:active,
 .theme-orange .floating-button.active-state,
+.theme-orange .speed-dial-buttons a.active-state,
 .floating-button.theme-orange.active-state,
-.floating-button.color-orange.active-state {
-  background: #f57c00;
+.speed-dial-buttons a.theme-orange.active-state,
+.floating-button.color-orange.active-state,
+.speed-dial-buttons a.color-orange.active-state {
+  background: #F57C00;
 }
 .theme-orange .floating-button i,
+.theme-orange .speed-dial-buttons a i,
 .floating-button.theme-orange i,
-.floating-button.color-orange i {
+.speed-dial-buttons a.theme-orange i,
+.floating-button.color-orange i,
+.speed-dial-buttons a.color-orange i {
   color: inherit;
 }
 .ripple-orange .ripple-wave {
   background-color: rgba(255, 152, 0, 0.3);
 }
+.badge.color-orange,
+.badge.theme-orange {
+  background-color: #ff9800;
+  color: #fff;
+}
 .color-deeporange {
   color: #ff5722;
 }
 .list-block .item-link.list-button.color-deeporange,
+.list-block .item-link.color-deeporange,
 .tabbar a.active.color-deeporange,
 a.color-deeporange {
   color: #ff5722;
@@ -3963,7 +5143,7 @@ a.color-deeporange {
 }
 html:not(.watch-active-state) .theme-deeporange .button.button-fill:active,
 .theme-deeporange .button.button-fill.active-state {
-  background: #e64a19;
+  background: #E64A19;
 }
 .button.button-fill.bg-deeporange,
 .button.button-fill.color-deeporange {
@@ -3974,7 +5154,35 @@ html:not(.watch-active-state) .button.button-fill.bg-deeporange:active,
 html:not(.watch-active-state) .button.button-fill.color-deeporange:active,
 .button.button-fill.bg-deeporange.active-state,
 .button.button-fill.color-deeporange.active-state {
-  background: #e64a19 !important;
+  background: #E64A19 !important;
+}
+.progressbar.color-deeporange,
+.progressbar.theme-deeporange,
+.theme-deeporange .progressbar,
+.progressbar.bg-deeporange {
+  background-color: rgba(255, 87, 34, 0.5);
+}
+.progressbar.color-deeporange span,
+.progressbar.theme-deeporange span,
+.theme-deeporange .progressbar span,
+.progressbar.bg-deeporange span {
+  background-color: #ff5722;
+}
+.progressbar-infinite.color-deeporange,
+.progressbar-infinite.theme-deeporange,
+.theme-deeporange .progressbar-infinite,
+.progressbar-infinite.bg-deeporange {
+  background-color: rgba(255, 87, 34, 0.5);
+}
+.progressbar-infinite.color-deeporange:after,
+.progressbar-infinite.theme-deeporange:after,
+.theme-deeporange .progressbar-infinite:after,
+.progressbar-infinite.bg-deeporange:after,
+.progressbar-infinite.color-deeporange:before,
+.progressbar-infinite.theme-deeporange:before,
+.theme-deeporange .progressbar-infinite:before,
+.progressbar-infinite.bg-deeporange:before {
+  background-color: #ff5722;
 }
 .color-deeporange i.icon,
 i.icon.color-deeporange {
@@ -4003,6 +5211,12 @@ i.icon-bars.theme-deeporange {
 .preloader.color-deeporange svg circle,
 .preloader.preloader-deeporange svg circle {
   stroke: #ff5722;
+}
+.preloader.color-deeporange .preloader-inner-gap,
+.preloader.preloader-deeporange .preloader-inner-gap,
+.preloader.color-deeporange .preloader-inner-half-circle,
+.preloader.preloader-deeporange .preloader-inner-half-circle {
+  border-color: #ff5722;
 }
 .theme-deeporange a {
   color: #ff5722;
@@ -4148,6 +5362,32 @@ a.bg-deeporange,
 .list-block .swipeout-actions-right a.bg-deeporange {
   background-color: #ff5722;
 }
+html:not(.watch-active-state) .list-block .bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-block.bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-deeporange .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-deeporange:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-deeporange:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-deeporange:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-deeporange:active,
+.list-block .bg-deeporange .item-link.active-state,
+.list-block a.bg-deeporange .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-deeporange .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-deeporange .item-link.active-state,
+.list-block.bg-deeporange .item-link.active-state,
+.list-blocka.bg-deeporange .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-deeporange .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-deeporange .item-link.active-state,
+.list-block .item-link.bg-deeporange.active-state,
+.list-block .item-linka.bg-deeporange.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-deeporange.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-deeporange.active-state {
+  background: #E64A19;
+}
 .border-deeporange {
   border-color: #ff5722;
 }
@@ -4160,31 +5400,49 @@ a.bg-deeporange,
   background-color: #ff5722;
 }
 .theme-deeporange .floating-button,
+.theme-deeporange .speed-dial-buttons a,
 .floating-button.theme-deeporange,
-.floating-button.color-deeporange {
+.speed-dial-buttons a.theme-deeporange,
+.floating-button.color-deeporange,
+.speed-dial-buttons a.color-deeporange {
   color: #fff;
   background: #ff5722;
 }
 html:not(.watch-active-state) .theme-deeporange .floating-button:active,
+html:not(.watch-active-state) .theme-deeporange .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-deeporange:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-deeporange:active,
 html:not(.watch-active-state) .floating-button.color-deeporange:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-deeporange:active,
 .theme-deeporange .floating-button.active-state,
+.theme-deeporange .speed-dial-buttons a.active-state,
 .floating-button.theme-deeporange.active-state,
-.floating-button.color-deeporange.active-state {
-  background: #e64a19;
+.speed-dial-buttons a.theme-deeporange.active-state,
+.floating-button.color-deeporange.active-state,
+.speed-dial-buttons a.color-deeporange.active-state {
+  background: #E64A19;
 }
 .theme-deeporange .floating-button i,
+.theme-deeporange .speed-dial-buttons a i,
 .floating-button.theme-deeporange i,
-.floating-button.color-deeporange i {
+.speed-dial-buttons a.theme-deeporange i,
+.floating-button.color-deeporange i,
+.speed-dial-buttons a.color-deeporange i {
   color: inherit;
 }
 .ripple-deeporange .ripple-wave {
   background-color: rgba(255, 87, 34, 0.3);
 }
+.badge.color-deeporange,
+.badge.theme-deeporange {
+  background-color: #ff5722;
+  color: #fff;
+}
 .color-brown {
   color: #795548;
 }
 .list-block .item-link.list-button.color-brown,
+.list-block .item-link.color-brown,
 .tabbar a.active.color-brown,
 a.color-brown {
   color: #795548;
@@ -4214,7 +5472,7 @@ a.color-brown {
 }
 html:not(.watch-active-state) .theme-brown .button.button-fill:active,
 .theme-brown .button.button-fill.active-state {
-  background: #5d4037;
+  background: #5D4037;
 }
 .button.button-fill.bg-brown,
 .button.button-fill.color-brown {
@@ -4225,7 +5483,35 @@ html:not(.watch-active-state) .button.button-fill.bg-brown:active,
 html:not(.watch-active-state) .button.button-fill.color-brown:active,
 .button.button-fill.bg-brown.active-state,
 .button.button-fill.color-brown.active-state {
-  background: #5d4037 !important;
+  background: #5D4037 !important;
+}
+.progressbar.color-brown,
+.progressbar.theme-brown,
+.theme-brown .progressbar,
+.progressbar.bg-brown {
+  background-color: rgba(121, 85, 72, 0.5);
+}
+.progressbar.color-brown span,
+.progressbar.theme-brown span,
+.theme-brown .progressbar span,
+.progressbar.bg-brown span {
+  background-color: #795548;
+}
+.progressbar-infinite.color-brown,
+.progressbar-infinite.theme-brown,
+.theme-brown .progressbar-infinite,
+.progressbar-infinite.bg-brown {
+  background-color: rgba(121, 85, 72, 0.5);
+}
+.progressbar-infinite.color-brown:after,
+.progressbar-infinite.theme-brown:after,
+.theme-brown .progressbar-infinite:after,
+.progressbar-infinite.bg-brown:after,
+.progressbar-infinite.color-brown:before,
+.progressbar-infinite.theme-brown:before,
+.theme-brown .progressbar-infinite:before,
+.progressbar-infinite.bg-brown:before {
+  background-color: #795548;
 }
 .color-brown i.icon,
 i.icon.color-brown {
@@ -4254,6 +5540,12 @@ i.icon-bars.theme-brown {
 .preloader.color-brown svg circle,
 .preloader.preloader-brown svg circle {
   stroke: #795548;
+}
+.preloader.color-brown .preloader-inner-gap,
+.preloader.preloader-brown .preloader-inner-gap,
+.preloader.color-brown .preloader-inner-half-circle,
+.preloader.preloader-brown .preloader-inner-half-circle {
+  border-color: #795548;
 }
 .theme-brown a {
   color: #795548;
@@ -4399,6 +5691,32 @@ a.bg-brown,
 .list-block .swipeout-actions-right a.bg-brown {
   background-color: #795548;
 }
+html:not(.watch-active-state) .list-block .bg-brown .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-brown .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-brown .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-brown .item-link:active,
+html:not(.watch-active-state) .list-block.bg-brown .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-brown .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-brown .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-brown .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-brown:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-brown:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-brown:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-brown:active,
+.list-block .bg-brown .item-link.active-state,
+.list-block a.bg-brown .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-brown .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-brown .item-link.active-state,
+.list-block.bg-brown .item-link.active-state,
+.list-blocka.bg-brown .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-brown .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-brown .item-link.active-state,
+.list-block .item-link.bg-brown.active-state,
+.list-block .item-linka.bg-brown.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-brown.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-brown.active-state {
+  background: #5D4037;
+}
 .border-brown {
   border-color: #795548;
 }
@@ -4411,31 +5729,49 @@ a.bg-brown,
   background-color: #795548;
 }
 .theme-brown .floating-button,
+.theme-brown .speed-dial-buttons a,
 .floating-button.theme-brown,
-.floating-button.color-brown {
+.speed-dial-buttons a.theme-brown,
+.floating-button.color-brown,
+.speed-dial-buttons a.color-brown {
   color: #fff;
   background: #795548;
 }
 html:not(.watch-active-state) .theme-brown .floating-button:active,
+html:not(.watch-active-state) .theme-brown .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-brown:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-brown:active,
 html:not(.watch-active-state) .floating-button.color-brown:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-brown:active,
 .theme-brown .floating-button.active-state,
+.theme-brown .speed-dial-buttons a.active-state,
 .floating-button.theme-brown.active-state,
-.floating-button.color-brown.active-state {
-  background: #5d4037;
+.speed-dial-buttons a.theme-brown.active-state,
+.floating-button.color-brown.active-state,
+.speed-dial-buttons a.color-brown.active-state {
+  background: #5D4037;
 }
 .theme-brown .floating-button i,
+.theme-brown .speed-dial-buttons a i,
 .floating-button.theme-brown i,
-.floating-button.color-brown i {
+.speed-dial-buttons a.theme-brown i,
+.floating-button.color-brown i,
+.speed-dial-buttons a.color-brown i {
   color: inherit;
 }
 .ripple-brown .ripple-wave {
   background-color: rgba(121, 85, 72, 0.3);
 }
+.badge.color-brown,
+.badge.theme-brown {
+  background-color: #795548;
+  color: #fff;
+}
 .color-gray {
   color: #9e9e9e;
 }
 .list-block .item-link.list-button.color-gray,
+.list-block .item-link.color-gray,
 .tabbar a.active.color-gray,
 a.color-gray {
   color: #9e9e9e;
@@ -4478,6 +5814,34 @@ html:not(.watch-active-state) .button.button-fill.color-gray:active,
 .button.button-fill.color-gray.active-state {
   background: #616161 !important;
 }
+.progressbar.color-gray,
+.progressbar.theme-gray,
+.theme-gray .progressbar,
+.progressbar.bg-gray {
+  background-color: rgba(158, 158, 158, 0.5);
+}
+.progressbar.color-gray span,
+.progressbar.theme-gray span,
+.theme-gray .progressbar span,
+.progressbar.bg-gray span {
+  background-color: #9e9e9e;
+}
+.progressbar-infinite.color-gray,
+.progressbar-infinite.theme-gray,
+.theme-gray .progressbar-infinite,
+.progressbar-infinite.bg-gray {
+  background-color: rgba(158, 158, 158, 0.5);
+}
+.progressbar-infinite.color-gray:after,
+.progressbar-infinite.theme-gray:after,
+.theme-gray .progressbar-infinite:after,
+.progressbar-infinite.bg-gray:after,
+.progressbar-infinite.color-gray:before,
+.progressbar-infinite.theme-gray:before,
+.theme-gray .progressbar-infinite:before,
+.progressbar-infinite.bg-gray:before {
+  background-color: #9e9e9e;
+}
 .color-gray i.icon,
 i.icon.color-gray {
   color: #9e9e9e;
@@ -4505,6 +5869,12 @@ i.icon-bars.theme-gray {
 .preloader.color-gray svg circle,
 .preloader.preloader-gray svg circle {
   stroke: #9e9e9e;
+}
+.preloader.color-gray .preloader-inner-gap,
+.preloader.preloader-gray .preloader-inner-gap,
+.preloader.color-gray .preloader-inner-half-circle,
+.preloader.preloader-gray .preloader-inner-half-circle {
+  border-color: #9e9e9e;
 }
 .theme-gray a {
   color: #9e9e9e;
@@ -4650,6 +6020,32 @@ a.bg-gray,
 .list-block .swipeout-actions-right a.bg-gray {
   background-color: #9e9e9e;
 }
+html:not(.watch-active-state) .list-block .bg-gray .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-gray .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-gray .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-gray .item-link:active,
+html:not(.watch-active-state) .list-block.bg-gray .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-gray .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-gray .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-gray .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-gray:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-gray:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-gray:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-gray:active,
+.list-block .bg-gray .item-link.active-state,
+.list-block a.bg-gray .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-gray .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-gray .item-link.active-state,
+.list-block.bg-gray .item-link.active-state,
+.list-blocka.bg-gray .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-gray .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-gray .item-link.active-state,
+.list-block .item-link.bg-gray.active-state,
+.list-block .item-linka.bg-gray.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-gray.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-gray.active-state {
+  background: #616161;
+}
 .border-gray {
   border-color: #9e9e9e;
 }
@@ -4662,31 +6058,49 @@ a.bg-gray,
   background-color: #9e9e9e;
 }
 .theme-gray .floating-button,
+.theme-gray .speed-dial-buttons a,
 .floating-button.theme-gray,
-.floating-button.color-gray {
+.speed-dial-buttons a.theme-gray,
+.floating-button.color-gray,
+.speed-dial-buttons a.color-gray {
   color: #fff;
   background: #9e9e9e;
 }
 html:not(.watch-active-state) .theme-gray .floating-button:active,
+html:not(.watch-active-state) .theme-gray .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-gray:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-gray:active,
 html:not(.watch-active-state) .floating-button.color-gray:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-gray:active,
 .theme-gray .floating-button.active-state,
+.theme-gray .speed-dial-buttons a.active-state,
 .floating-button.theme-gray.active-state,
-.floating-button.color-gray.active-state {
+.speed-dial-buttons a.theme-gray.active-state,
+.floating-button.color-gray.active-state,
+.speed-dial-buttons a.color-gray.active-state {
   background: #616161;
 }
 .theme-gray .floating-button i,
+.theme-gray .speed-dial-buttons a i,
 .floating-button.theme-gray i,
-.floating-button.color-gray i {
+.speed-dial-buttons a.theme-gray i,
+.floating-button.color-gray i,
+.speed-dial-buttons a.color-gray i {
   color: inherit;
 }
 .ripple-gray .ripple-wave {
   background-color: rgba(158, 158, 158, 0.3);
 }
+.badge.color-gray,
+.badge.theme-gray {
+  background-color: #9e9e9e;
+  color: #fff;
+}
 .color-bluegray {
   color: #607d8b;
 }
 .list-block .item-link.list-button.color-bluegray,
+.list-block .item-link.color-bluegray,
 .tabbar a.active.color-bluegray,
 a.color-bluegray {
   color: #607d8b;
@@ -4716,7 +6130,7 @@ a.color-bluegray {
 }
 html:not(.watch-active-state) .theme-bluegray .button.button-fill:active,
 .theme-bluegray .button.button-fill.active-state {
-  background: #455a64;
+  background: #455A64;
 }
 .button.button-fill.bg-bluegray,
 .button.button-fill.color-bluegray {
@@ -4727,7 +6141,35 @@ html:not(.watch-active-state) .button.button-fill.bg-bluegray:active,
 html:not(.watch-active-state) .button.button-fill.color-bluegray:active,
 .button.button-fill.bg-bluegray.active-state,
 .button.button-fill.color-bluegray.active-state {
-  background: #455a64 !important;
+  background: #455A64 !important;
+}
+.progressbar.color-bluegray,
+.progressbar.theme-bluegray,
+.theme-bluegray .progressbar,
+.progressbar.bg-bluegray {
+  background-color: rgba(96, 125, 139, 0.5);
+}
+.progressbar.color-bluegray span,
+.progressbar.theme-bluegray span,
+.theme-bluegray .progressbar span,
+.progressbar.bg-bluegray span {
+  background-color: #607d8b;
+}
+.progressbar-infinite.color-bluegray,
+.progressbar-infinite.theme-bluegray,
+.theme-bluegray .progressbar-infinite,
+.progressbar-infinite.bg-bluegray {
+  background-color: rgba(96, 125, 139, 0.5);
+}
+.progressbar-infinite.color-bluegray:after,
+.progressbar-infinite.theme-bluegray:after,
+.theme-bluegray .progressbar-infinite:after,
+.progressbar-infinite.bg-bluegray:after,
+.progressbar-infinite.color-bluegray:before,
+.progressbar-infinite.theme-bluegray:before,
+.theme-bluegray .progressbar-infinite:before,
+.progressbar-infinite.bg-bluegray:before {
+  background-color: #607d8b;
 }
 .color-bluegray i.icon,
 i.icon.color-bluegray {
@@ -4756,6 +6198,12 @@ i.icon-bars.theme-bluegray {
 .preloader.color-bluegray svg circle,
 .preloader.preloader-bluegray svg circle {
   stroke: #607d8b;
+}
+.preloader.color-bluegray .preloader-inner-gap,
+.preloader.preloader-bluegray .preloader-inner-gap,
+.preloader.color-bluegray .preloader-inner-half-circle,
+.preloader.preloader-bluegray .preloader-inner-half-circle {
+  border-color: #607d8b;
 }
 .theme-bluegray a {
   color: #607d8b;
@@ -4901,6 +6349,32 @@ a.bg-bluegray,
 .list-block .swipeout-actions-right a.bg-bluegray {
   background-color: #607d8b;
 }
+html:not(.watch-active-state) .list-block .bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-block.bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-bluegray .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-bluegray:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-bluegray:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-bluegray:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-bluegray:active,
+.list-block .bg-bluegray .item-link.active-state,
+.list-block a.bg-bluegray .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-bluegray .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-bluegray .item-link.active-state,
+.list-block.bg-bluegray .item-link.active-state,
+.list-blocka.bg-bluegray .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-bluegray .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-bluegray .item-link.active-state,
+.list-block .item-link.bg-bluegray.active-state,
+.list-block .item-linka.bg-bluegray.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-bluegray.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-bluegray.active-state {
+  background: #455A64;
+}
 .border-bluegray {
   border-color: #607d8b;
 }
@@ -4913,31 +6387,49 @@ a.bg-bluegray,
   background-color: #607d8b;
 }
 .theme-bluegray .floating-button,
+.theme-bluegray .speed-dial-buttons a,
 .floating-button.theme-bluegray,
-.floating-button.color-bluegray {
+.speed-dial-buttons a.theme-bluegray,
+.floating-button.color-bluegray,
+.speed-dial-buttons a.color-bluegray {
   color: #fff;
   background: #607d8b;
 }
 html:not(.watch-active-state) .theme-bluegray .floating-button:active,
+html:not(.watch-active-state) .theme-bluegray .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-bluegray:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-bluegray:active,
 html:not(.watch-active-state) .floating-button.color-bluegray:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-bluegray:active,
 .theme-bluegray .floating-button.active-state,
+.theme-bluegray .speed-dial-buttons a.active-state,
 .floating-button.theme-bluegray.active-state,
-.floating-button.color-bluegray.active-state {
-  background: #455a64;
+.speed-dial-buttons a.theme-bluegray.active-state,
+.floating-button.color-bluegray.active-state,
+.speed-dial-buttons a.color-bluegray.active-state {
+  background: #455A64;
 }
 .theme-bluegray .floating-button i,
+.theme-bluegray .speed-dial-buttons a i,
 .floating-button.theme-bluegray i,
-.floating-button.color-bluegray i {
+.speed-dial-buttons a.theme-bluegray i,
+.floating-button.color-bluegray i,
+.speed-dial-buttons a.color-bluegray i {
   color: inherit;
 }
 .ripple-bluegray .ripple-wave {
   background-color: rgba(96, 125, 139, 0.3);
 }
+.badge.color-bluegray,
+.badge.theme-bluegray {
+  background-color: #607d8b;
+  color: #fff;
+}
 .color-white {
   color: #ffffff;
 }
 .list-block .item-link.list-button.color-white,
+.list-block .item-link.color-white,
 .tabbar a.active.color-white,
 a.color-white {
   color: #ffffff;
@@ -4980,6 +6472,34 @@ html:not(.watch-active-state) .button.button-fill.color-white:active,
 .button.button-fill.color-white.active-state {
   background: rgba(0, 0, 0, 0.1) !important;
 }
+.progressbar.color-white,
+.progressbar.theme-white,
+.theme-white .progressbar,
+.progressbar.bg-white {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.progressbar.color-white span,
+.progressbar.theme-white span,
+.theme-white .progressbar span,
+.progressbar.bg-white span {
+  background-color: #ffffff;
+}
+.progressbar-infinite.color-white,
+.progressbar-infinite.theme-white,
+.theme-white .progressbar-infinite,
+.progressbar-infinite.bg-white {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.progressbar-infinite.color-white:after,
+.progressbar-infinite.theme-white:after,
+.theme-white .progressbar-infinite:after,
+.progressbar-infinite.bg-white:after,
+.progressbar-infinite.color-white:before,
+.progressbar-infinite.theme-white:before,
+.theme-white .progressbar-infinite:before,
+.progressbar-infinite.bg-white:before {
+  background-color: #ffffff;
+}
 .color-white i.icon,
 i.icon.color-white {
   color: #ffffff;
@@ -5007,6 +6527,12 @@ i.icon-bars.theme-white {
 .preloader.color-white svg circle,
 .preloader.preloader-white svg circle {
   stroke: #ffffff;
+}
+.preloader.color-white .preloader-inner-gap,
+.preloader.preloader-white .preloader-inner-gap,
+.preloader.color-white .preloader-inner-half-circle,
+.preloader.preloader-white .preloader-inner-half-circle {
+  border-color: #ffffff;
 }
 .theme-white a {
   color: #ffffff;
@@ -5152,6 +6678,32 @@ a.bg-white,
 .list-block .swipeout-actions-right a.bg-white {
   background-color: #ffffff;
 }
+html:not(.watch-active-state) .list-block .bg-white .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-white .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-white .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-white .item-link:active,
+html:not(.watch-active-state) .list-block.bg-white .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-white .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-white .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-white .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-white:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-white:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-white:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-white:active,
+.list-block .bg-white .item-link.active-state,
+.list-block a.bg-white .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-white .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-white .item-link.active-state,
+.list-block.bg-white .item-link.active-state,
+.list-blocka.bg-white .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-white .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-white .item-link.active-state,
+.list-block .item-link.bg-white.active-state,
+.list-block .item-linka.bg-white.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-white.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-white.active-state {
+  background: rgba(0, 0, 0, 0.1);
+}
 .border-white {
   border-color: #ffffff;
 }
@@ -5164,31 +6716,49 @@ a.bg-white,
   background-color: #ffffff;
 }
 .theme-white .floating-button,
+.theme-white .speed-dial-buttons a,
 .floating-button.theme-white,
-.floating-button.color-white {
+.speed-dial-buttons a.theme-white,
+.floating-button.color-white,
+.speed-dial-buttons a.color-white {
   color: #fff;
   background: #ffffff;
 }
 html:not(.watch-active-state) .theme-white .floating-button:active,
+html:not(.watch-active-state) .theme-white .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-white:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-white:active,
 html:not(.watch-active-state) .floating-button.color-white:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-white:active,
 .theme-white .floating-button.active-state,
+.theme-white .speed-dial-buttons a.active-state,
 .floating-button.theme-white.active-state,
-.floating-button.color-white.active-state {
+.speed-dial-buttons a.theme-white.active-state,
+.floating-button.color-white.active-state,
+.speed-dial-buttons a.color-white.active-state {
   background: rgba(0, 0, 0, 0.1);
 }
 .theme-white .floating-button i,
+.theme-white .speed-dial-buttons a i,
 .floating-button.theme-white i,
-.floating-button.color-white i {
+.speed-dial-buttons a.theme-white i,
+.floating-button.color-white i,
+.speed-dial-buttons a.color-white i {
   color: inherit;
 }
 .ripple-white .ripple-wave {
   background-color: rgba(255, 255, 255, 0.3);
 }
+.badge.color-white,
+.badge.theme-white {
+  background-color: #ffffff;
+  color: #fff;
+}
 .color-black {
   color: #000000;
 }
 .list-block .item-link.list-button.color-black,
+.list-block .item-link.color-black,
 .tabbar a.active.color-black,
 a.color-black {
   color: #000000;
@@ -5218,7 +6788,7 @@ a.color-black {
 }
 html:not(.watch-active-state) .theme-black .button.button-fill:active,
 .theme-black .button.button-fill.active-state {
-  background: #333333;
+  background: #333;
 }
 .button.button-fill.bg-black,
 .button.button-fill.color-black {
@@ -5229,7 +6799,35 @@ html:not(.watch-active-state) .button.button-fill.bg-black:active,
 html:not(.watch-active-state) .button.button-fill.color-black:active,
 .button.button-fill.bg-black.active-state,
 .button.button-fill.color-black.active-state {
-  background: #333333 !important;
+  background: #333 !important;
+}
+.progressbar.color-black,
+.progressbar.theme-black,
+.theme-black .progressbar,
+.progressbar.bg-black {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.progressbar.color-black span,
+.progressbar.theme-black span,
+.theme-black .progressbar span,
+.progressbar.bg-black span {
+  background-color: #000000;
+}
+.progressbar-infinite.color-black,
+.progressbar-infinite.theme-black,
+.theme-black .progressbar-infinite,
+.progressbar-infinite.bg-black {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.progressbar-infinite.color-black:after,
+.progressbar-infinite.theme-black:after,
+.theme-black .progressbar-infinite:after,
+.progressbar-infinite.bg-black:after,
+.progressbar-infinite.color-black:before,
+.progressbar-infinite.theme-black:before,
+.theme-black .progressbar-infinite:before,
+.progressbar-infinite.bg-black:before {
+  background-color: #000000;
 }
 .color-black i.icon,
 i.icon.color-black {
@@ -5258,6 +6856,12 @@ i.icon-bars.theme-black {
 .preloader.color-black svg circle,
 .preloader.preloader-black svg circle {
   stroke: #000000;
+}
+.preloader.color-black .preloader-inner-gap,
+.preloader.preloader-black .preloader-inner-gap,
+.preloader.color-black .preloader-inner-half-circle,
+.preloader.preloader-black .preloader-inner-half-circle {
+  border-color: #000000;
 }
 .theme-black a {
   color: #000000;
@@ -5403,6 +7007,32 @@ a.bg-black,
 .list-block .swipeout-actions-right a.bg-black {
   background-color: #000000;
 }
+html:not(.watch-active-state) .list-block .bg-black .item-link:active,
+html:not(.watch-active-state) .list-block a.bg-black .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-left a.bg-black .item-link:active,
+html:not(.watch-active-state) .list-block .list-block .swipeout-actions-right a.bg-black .item-link:active,
+html:not(.watch-active-state) .list-block.bg-black .item-link:active,
+html:not(.watch-active-state) .list-blocka.bg-black .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-left a.bg-black .item-link:active,
+html:not(.watch-active-state) .list-block.list-block .swipeout-actions-right a.bg-black .item-link:active,
+html:not(.watch-active-state) .list-block .item-link.bg-black:active,
+html:not(.watch-active-state) .list-block .item-linka.bg-black:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-left a.bg-black:active,
+html:not(.watch-active-state) .list-block .item-link.list-block .swipeout-actions-right a.bg-black:active,
+.list-block .bg-black .item-link.active-state,
+.list-block a.bg-black .item-link.active-state,
+.list-block .list-block .swipeout-actions-left a.bg-black .item-link.active-state,
+.list-block .list-block .swipeout-actions-right a.bg-black .item-link.active-state,
+.list-block.bg-black .item-link.active-state,
+.list-blocka.bg-black .item-link.active-state,
+.list-block.list-block .swipeout-actions-left a.bg-black .item-link.active-state,
+.list-block.list-block .swipeout-actions-right a.bg-black .item-link.active-state,
+.list-block .item-link.bg-black.active-state,
+.list-block .item-linka.bg-black.active-state,
+.list-block .item-link.list-block .swipeout-actions-left a.bg-black.active-state,
+.list-block .item-link.list-block .swipeout-actions-right a.bg-black.active-state {
+  background: #333;
+}
 .border-black {
   border-color: #000000;
 }
@@ -5415,24 +7045,41 @@ a.bg-black,
   background-color: #000000;
 }
 .theme-black .floating-button,
+.theme-black .speed-dial-buttons a,
 .floating-button.theme-black,
-.floating-button.color-black {
+.speed-dial-buttons a.theme-black,
+.floating-button.color-black,
+.speed-dial-buttons a.color-black {
   color: #fff;
   background: #000000;
 }
 html:not(.watch-active-state) .theme-black .floating-button:active,
+html:not(.watch-active-state) .theme-black .speed-dial-buttons a:active,
 html:not(.watch-active-state) .floating-button.theme-black:active,
+html:not(.watch-active-state) .speed-dial-buttons a.theme-black:active,
 html:not(.watch-active-state) .floating-button.color-black:active,
+html:not(.watch-active-state) .speed-dial-buttons a.color-black:active,
 .theme-black .floating-button.active-state,
+.theme-black .speed-dial-buttons a.active-state,
 .floating-button.theme-black.active-state,
-.floating-button.color-black.active-state {
-  background: #333333;
+.speed-dial-buttons a.theme-black.active-state,
+.floating-button.color-black.active-state,
+.speed-dial-buttons a.color-black.active-state {
+  background: #333;
 }
 .theme-black .floating-button i,
+.theme-black .speed-dial-buttons a i,
 .floating-button.theme-black i,
-.floating-button.color-black i {
+.speed-dial-buttons a.theme-black i,
+.floating-button.color-black i,
+.speed-dial-buttons a.color-black i {
   color: inherit;
 }
 .ripple-black .ripple-wave {
   background-color: rgba(0, 0, 0, 0.3);
+}
+.badge.color-black,
+.badge.theme-black {
+  background-color: #000000;
+  color: #fff;
 }

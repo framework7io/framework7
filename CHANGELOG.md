@@ -1,5 +1,28 @@
 # Change Log
 
+## Framework7 v1.4.0 - Updated on December 7, 2015
+  * New mobile-friendly "Autocomplete" component. Comes with 2 modifications as Dropdown or Standalone autocomplete
+  * New "Progress Bar" component. Includes 3 different types of progress bar for each theme: "Determinate", "Indeterminate" and "Indeterminate Multi-color"
+  * New "Swipeable Tabs" component which allows you to change Tabs by swiping left/right
+  * Material Theme
+    * Fixed issue with Notifications closing without animation in webkit browsers
+    * New "Scrollable Tabbar" Tabbar modification. Allows to swipe/scroll through tab links if they all don't fit into view
+    * New "Bottom Toolbar" Toolbar modification. It allows to use Toolbar on the bottom of screen instead of only on the top
+    * New "Speed dial" Floating Action Button transition when it shows additional action buttons by tapping on it
+    * New "Popover Morph" Floating Action Button transition when it morphs to Popover by tapping on it
+    * Reworked "Preloader" in favor of plain HTML elements animation instead of SVG which has visual issues on "slow" devices.
+      * `materialPreloaderSvg` parameter is deprectated and replaced with the new one `materialPreloaderHtml`
+  * Dom7
+    * Added option to trigger multiple events using space separated syntax `.trigger('event1 event2 event3')`
+  * Calendar
+    * Fixed Calendar dates ordering on iOS in Date Range Picker mode
+  * Swiper updated to latest 3.2.7 version:
+    * New "Auto Height" mode when container/wrapper adopts to the height of currently active slide. Can be enabled with `autoHeight: true` parameter
+    * Numerous minor improvements
+  * Custom Build
+    * Added "progressbar" and "autcomplete" modules
+  * Numerous minor fixes and improvements
+
 ## Framework7 v1.3.5 - Updated on November 8, 2015
   * Material Theme:
     * Fixed issue with not disappearing "ripples" in hidden elements
