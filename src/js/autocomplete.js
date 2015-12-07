@@ -247,7 +247,7 @@ var Autocomplete = function (params) {
                     '</div>' +
                 '</div>' +
                 '{{#if preloader}}' +
-                '<div class="autocomplete-preloader preloader {{#if preloaderColor}}preloader-{{preloaderColor}}{{/if}}"></div>' +
+                '<div class="autocomplete-preloader preloader {{#if preloaderColor}}preloader-{{preloaderColor}}{{/if}}">{{#if material}}{{materialPreloaderHtml}}{{/if}}</div>' +
                 '{{/if}}' +
             '</div>'
         );
@@ -497,6 +497,8 @@ var Autocomplete = function (params) {
                 a.dropdown = $(a.dropdownTemplate({
                     preloader: a.params.preloader,
                     preloaderColor: a.params.preloaderColor,
+                    material: material,
+                    materialPreloaderHtml: app.params.materialPreloaderHtml
                 }));
                 a.dropdown.on('click', 'label', a.handleDropdownClick);
 
