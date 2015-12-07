@@ -996,6 +996,7 @@ myApp.onPageInit('autocomplete', function (page) {
         textProperty: 'name', //object's "text" property name
         limit: 50,
         preloader: true, //enable preloader
+        preloaderColor: 'white', //preloader color
         source: function (autocomplete, query, render) {
             var results = [];
             if (query.length === 0) {
