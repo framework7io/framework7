@@ -15,13 +15,24 @@ var myApp = new Framework7({
     onPageInit: function (app, page) {
       if (page.name === 'contacts-rerendered') {
         page.render({
-          street: 'Lenina',
-          city: 'Minsk',
-          country: 'Belarus',
+          street: 'Marx',
+          city: 'Moscow',
+          country: 'Russia',
           zip: '112233',
           email: 'bulba@tut.by',
           tel: '+375291112233'
         });
+
+        setTimeout(function () {
+          page.render({
+            street: 'Lenina',
+            city: 'Minsk',
+            country: 'Belarus',
+            zip: '112233',
+            email: 'bulba@tut.by',
+            tel: '+375291112233'
+          });
+        }, 3000);
       }
     },
 
