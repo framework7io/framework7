@@ -102,6 +102,7 @@ var Messages = function (container, params) {
             props.type = props.type || 'sent';
             if (!props.text) continue;
             props.hasImage = props.text.indexOf('<img') >= 0;
+            props.onlyImage = props.text.indexOf('<img') == 0;
             if (animate) props.position = method === 'append' ? 'bottom' : 'top';
 
             newMessagesHTML += m.template(props);
