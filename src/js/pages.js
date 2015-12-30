@@ -301,6 +301,8 @@ app.initPage = function (pageContainer) {
     if (app.initPullToRefresh) app.initPullToRefresh(pageContainer);
     // Init infinite scroll
     if (app.initPageInfiniteScroll) app.initPageInfiniteScroll(pageContainer);
+    // Contacts list
+    if (app.initContactsList) app.initContactsList(pageContainer);
     // Init searchbar
     if (app.initSearchbar) app.initSearchbar(pageContainer);
     // Init message bar

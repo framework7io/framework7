@@ -80,6 +80,7 @@
                 'src/js/messages.js',
                 'src/js/swipeout.js',
                 'src/js/sortable.js',
+                'src/js/contacts-list.js',
                 'src/js/smart-select.js',
                 'src/js/virtual-list.js',
                 'src/js/pull-to-refresh.js',
