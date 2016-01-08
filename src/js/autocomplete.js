@@ -334,7 +334,7 @@ var Autocomplete = function (params) {
         }
         var container = $(page.container);
         // Init Search Bar
-        var searchBar = app.searchbar(container.find('.searchbar'), {
+        var searchbar = app.searchbar(container.find('.searchbar'), {
             customSearch: true,
             onSearch: function (searchbar, data) {
                 if (data.query.length === 0) {
@@ -389,6 +389,10 @@ var Autocomplete = function (params) {
             }
         });
 
+        // Save searchbar instance
+        a.searchbar = searchbar;
+
+        // Update values
         function updateValues() {
             var valuesHTML = '';
             var i;
