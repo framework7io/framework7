@@ -327,7 +327,8 @@ var Autocomplete = function (params) {
     // Event Listeners on new page
     a.pageInit = function (e) {
         var page = e.detail.page;
-        a.page = page;
+        a.page = $(page.container);
+        a.pageData = page;
         if (page.name !== pageName) {
             return;
         }
