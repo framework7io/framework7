@@ -360,7 +360,7 @@ var Autocomplete = function (params) {
         var searchbar = app.searchbar(container.find('.searchbar'), {
             customSearch: true,
             onSearch: function (searchbar, data) {
-                if (data.query.length === 0) {
+                if (data.query.length === 0 && searchbar.active) {
                     searchbar.overlay.addClass('searchbar-overlay-active');
                 }
                 else {
