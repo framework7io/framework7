@@ -7,7 +7,9 @@ var Autocomplete = function (params) {
     // Params
     var defaults = {
         // Standalone Options
-        // opener: undefined,
+        /*
+        opener: undefined,
+        */
         popupCloseText: 'Close',
         backText: 'Back',
         searchbarPlaceholderText: 'Search...',
@@ -15,16 +17,22 @@ var Autocomplete = function (params) {
         openIn: 'page',
         backOnSelect: false,
         notFoundText: 'Nothing found',
-        // pageTitle: undefined,
+        /*
+        pageTitle: undefined,
+        */
 
         // Handle Data
-        // source: undefined,
-        // limit: undefined,
+        /*
+        source: undefined,
+        limit: undefined,
+        */
         valueProperty: 'id',
         textProperty: 'text',
 
         // Dropdown Options
-        // dropdownPlaceholderText: 'Type anything...',
+        /*
+        dropdownPlaceholderText: 'Type anything...',
+        */
         updateInputValueOnSelect: true,
         expandInput: false,
 
@@ -33,20 +41,26 @@ var Autocomplete = function (params) {
         preloader: false,
 
         // Templates
-        // itemTemplate: undefined,
-        // navbarTemplate: undefined,
-        // dropdownTemplate: undefined
-        // dropdownItemTemplate: undefined,
-        // dropdownPlaceholderTemplate: undefined
+        /*
+        itemTemplate: undefined,
+        navbarTemplate: undefined,
+        dropdownTemplate: undefined
+        dropdownItemTemplate: undefined,
+        dropdownPlaceholderTemplate: undefined
+        */
 
         // Color themes
-        // navbarTheme: undefined,
-        // formTheme: undefined,
+        /*
+        navbarTheme: undefined,
+        formTheme: undefined,
+        */
 
         // Callbacks
-        //onChange: function (a, value) - for not dropdown
-        //onOpen: function (a)
-        //onClose: function (a)
+        /*
+        onChange: function (a, value) - for not dropdown
+        onOpen: function (a)
+        onClose: function (a)
+        */
     };
 
     params = params || {};
@@ -257,7 +271,7 @@ var Autocomplete = function (params) {
     a.dropdown = undefined;
 
     // Handle Input Value Change
-    a.handleInputValue = function (e) {
+    function handleInputValue (e) {
         var query = a.input.val();
         if (a.params.source) {
             a.params.source(a, query, function (items) {
@@ -281,9 +295,9 @@ var Autocomplete = function (params) {
                 a.dropdown.find('ul').html(itemsHTML);
             });
         }
-    };
+    }
     // Handle Drop Down Click
-    a.handleDropdownClick = function (e) {
+    function handleDropdownClick (e) {
         var clicked = $(this);
         var clickedItem;
         for (var i = 0; i < a.items.length; i++) {
@@ -303,7 +317,16 @@ var Autocomplete = function (params) {
         }
 
         a.close();
-    };
+    }
+
+    // Handle HTML Click to close Dropdown
+    function closeOnHTMLClick (e) {
+        var target = $(e.target);
+        if (!(target.is(a.input[0]) || a.dropdown && target.parents(a.dropdown[0]).length > 0)) {
+            a.close();
+        }
+    }
+
     a.positionDropDown = function () {
         var listBlock = a.input.parents('.list-block'),
             pageContent = a.input.parents('.page-content'),
@@ -503,7 +526,7 @@ var Autocomplete = function (params) {
                     material: material,
                     materialPreloaderHtml: app.params.materialPreloaderHtml
                 }));
-                a.dropdown.on('click', 'label', a.handleDropdownClick);
+                a.dropdown.on('click', 'label', handleDropdownClick);
 
             }
             var listBlock = a.input.parents('.list-block');
@@ -568,8 +591,13 @@ var Autocomplete = function (params) {
         }
         if (a.params.openIn === 'dropdown' && a.input) {
             a.input[method]('focus', a.open);
-            a.input[method]('input', a.handleInputValue);
-            a.input[method]('blur', a.close);
+            a.input[method]('input', handleInputValue);
+            if (app.device.android) {
+                $('html')[method]('click', closeOnHTMLClick);
+            }
+            else {
+                a.input[method]('blur', a.close);
+            }
         }
         if (detach && a.dropdown) {
             a.dropdown = null;
