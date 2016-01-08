@@ -1057,7 +1057,7 @@ $$('.panel-left, .panel-right').on('close', function () {
 var dynamicPageIndex = 0;
 function createContentPage() {
     mainView.router.loadContent(
-        $$('<!-- Top Navbar-->' +
+        '<!-- Top Navbar-->' +
         '<div class="navbar">' +
         '  <div class="navbar-inner">' +
         '    <div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>Back</span></a></div>' +
@@ -1077,7 +1077,7 @@ function createContentPage() {
         '      </div>' +
         '    </div>' +
         '  </div>' +
-        '</div>')
+        '</div>'
     );
     return;
 }
