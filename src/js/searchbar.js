@@ -208,9 +208,9 @@ var Searchbar = function (container, params) {
     };
 
     // Enable/disalbe
-    s.enable = function () {
+    s.enable = function (e) {
         function _enable() {
-            if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active')) s.overlay.addClass('searchbar-overlay-active');
+            if ((s.searchList.length || s.params.customSearch) && !s.container.hasClass('searchbar-active') && !s.query) s.overlay.addClass('searchbar-overlay-active');
             s.container.addClass('searchbar-active');
             if (s.cancelButton.length > 0 && !s.material) {
                 if (!cancelButtonHasMargin) {
@@ -221,7 +221,7 @@ var Searchbar = function (container, params) {
             s.triggerEvent('enableSearch', 'onEnable');
             s.active = true;
         }
-        if (app.device.ios && !app.params.material) {
+        if (app.device.ios && !app.params.material && e && e.type === 'focus') {
             setTimeout(function () {
                 _enable();
             }, 400);
@@ -235,12 +235,12 @@ var Searchbar = function (container, params) {
         s.input.val('').trigger('change');
         s.container.removeClass('searchbar-active searchbar-not-empty');
         if (s.cancelButton.length > 0 && !s.material) s.cancelButton.css(cancelMarginProp, -s.cancelButton[0].offsetWidth + 'px');
-        
+
         if (s.searchList.length || s.params.customSearch) s.overlay.removeClass('searchbar-overlay-active');
+
+        s.active = false;
         function _disable() {
             s.input.blur();
-            s.triggerEvent('disableSearch', 'onDisable');
-            s.active = false;
         }
         if (app.device.ios) {
             setTimeout(function () {
@@ -250,6 +250,7 @@ var Searchbar = function (container, params) {
         else {
             _disable();
         }
+        s.triggerEvent('disableSearch', 'onDisable');
     };
 
     // Clear
@@ -280,9 +281,7 @@ var Searchbar = function (container, params) {
             if (!s.active) {
                 s.enable();
             }
-            if (!internal) {
-                s.input.val(query);
-            }
+            s.input.val(query);
         }
         s.query = s.value = query;
         // Add active/inactive classes on overlay
