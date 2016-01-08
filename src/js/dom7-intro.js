@@ -22,7 +22,8 @@ var Dom7 = (function () {
         if (selector) {
             // String
             if (typeof selector === 'string') {
-                var els, tempParent, html = selector.trim();
+                var els, tempParent, html;
+                selector = html = selector.trim();
                 if (html.indexOf('<') >= 0 && html.indexOf('>') >= 0) {
                     var toCreate = 'div';
                     if (html.indexOf('<li') === 0) toCreate = 'ul';
@@ -31,7 +32,7 @@ var Dom7 = (function () {
                     if (html.indexOf('<tbody') === 0) toCreate = 'table';
                     if (html.indexOf('<option') === 0) toCreate = 'select';
                     tempParent = document.createElement(toCreate);
-                    tempParent.innerHTML = selector;
+                    tempParent.innerHTML = html;
                     for (i = 0; i < tempParent.childNodes.length; i++) {
                         arr.push(tempParent.childNodes[i]);
                     }
