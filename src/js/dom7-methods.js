@@ -452,6 +452,7 @@ Dom7.prototype = {
             for (var i = 0; i < this.length; i++) {
                 this[i].textContent = text;
             }
+            return this;
         }
     },
     is: function (selector) {
