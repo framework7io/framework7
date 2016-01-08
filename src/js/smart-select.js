@@ -218,7 +218,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
 
     // Toolbar / Navbar
     var toolbarHTML = '', navbarHTML;
-    var noNavbar = '', noToolbar = '', navbarLayout;
+    var noNavbar = '', noToolbar = '', noTabbar = '', navbarLayout;
 
     if (openIn === 'picker') {
         if (!app._compiledTemplates.smartSelectToolbar) {
@@ -271,6 +271,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             if (smartSelect.parents('.navbar-fixed').length > 0) navbarLayout = 'fixed';
             noToolbar = smartSelect.parents('.page').hasClass('no-toolbar') ? 'no-toolbar' : '';
             noNavbar  = smartSelect.parents('.page').hasClass('no-navbar')  ? 'no-navbar'  : 'navbar-' + navbarLayout;
+            noTabbar = smartSelect.parents('.page').hasClass('no-tabbar') ? 'no-tabbar' : '';
         }
         else {
             navbarLayout = 'fixed';
@@ -301,7 +302,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var pageHTML =
         (openIn !== 'picker' && navbarLayout === 'through' ? navbarHTML : '') +
         '<div class="pages">' +
-        '  <div data-page="' + pageName + '" data-select-name="' + selectName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + '">' +
+        '  <div data-page="' + pageName + '" data-select-name="' + selectName + '" class="page smart-select-page ' + noNavbar + ' ' + noToolbar + ' ' + noTabbar + '">' +
              (openIn !== 'picker' && navbarLayout === 'fixed' ? navbarHTML : '') +
              (useSearchbar ? searchbarHTML : '') +
         '    <div class="page-content">' +
