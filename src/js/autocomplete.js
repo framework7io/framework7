@@ -34,15 +34,12 @@ var Autocomplete = function (params) {
 
         // Templates
         // itemTemplate: undefined,
-        // naavbarTemplate: undefined,
-        // pageTemplate: undefined,
-        // searchbarTemplate: undefined,
-        // dropD: undefined,
+        // navbarTemplate: undefined,
+        // dropdownTemplate: undefined
         // dropdownItemTemplate: undefined,
         // dropdownPlaceholderTemplate: undefined
 
         // Color themes
-        // toolbarTheme: undefined,
         // navbarTheme: undefined,
         // formTheme: undefined,
 
