@@ -298,6 +298,7 @@ var Autocomplete = function (params) {
     }
     // Handle Drop Down Click
     function handleDropdownClick (e) {
+        /*jshint validthis:true */
         var clicked = $(this);
         var clickedItem;
         for (var i = 0; i < a.items.length; i++) {
