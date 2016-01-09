@@ -17,7 +17,7 @@ app.pushStateClearQueue = function () {
         app.router.load(queue.view, {content: queue.stateContent, animatePages: animatePages, pushState: false});
     }
     if (queue.action === 'loadPageName') {
-        app.router.load(queue.view, {pageName: queue.statePageName, animatePages: animatePages, pushState: false});
+        app.router.load(queue.view, {pageName: queue.statePageName, url: queue.stateUrl, animatePages: animatePages, pushState: false});
     }
 };
 
@@ -82,7 +82,7 @@ app.initPushState = function () {
             else if (statePageName) {
                 // Load Page by page name with Dom Cache
                 if (view.allowPageChange) {
-                    app.router.load(view, {pageName:statePageName, animatePages: animatePages, pushState: false});
+                    app.router.load(view, {pageName:statePageName, url: stateUrl, animatePages: animatePages, pushState: false});
                 }
                 else {
                     app.pushStateQueue.unshift({
