@@ -546,7 +546,7 @@ var View = function (selector, params) {
     };
 
     // Push State on load
-    if (app.params.pushState && view.main) {
+    if (app.params.pushState && app.params.pushStateOnLoad && view.main) {
         var pushStateUrl;
         var pushStateUrlSplit = docLocation.split(pushStateSeparator)[1];
         if (pushStateRoot) {
