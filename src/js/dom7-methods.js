@@ -680,6 +680,16 @@ Dom7.prototype = {
         }
         return $($.unique(parents));
     },
+    closest: function (selector) {
+        var closest = this;
+        if (typeof selector === 'undefined') {
+            return new Dom7([]);
+        }
+        if (!closest.is(selector)) {
+            closest = closest.parents(selector).eq(0);
+        }
+        return closest;
+    },
     find : function (selector) {
         var foundElements = [];
         for (var i = 0; i < this.length; i++) {
