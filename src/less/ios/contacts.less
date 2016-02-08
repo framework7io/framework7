@@ -22,3 +22,29 @@
         .hairline-remove(bottom);
     }
 }
+
+.contacts-block-index {
+  position: absolute;
+  margin: 0;
+  padding: 15px 0;
+  right: 0;
+  top: 50%;
+  transform: translate3d(0,-50%,0);
+  z-index: 100;
+  list-style: none;
+  text-align: right;
+  font-size: 12px;
+  color: @blue;
+
+  li {
+    display: block;
+    width: 30px;
+    text-align: right;
+  }
+
+  strong {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+  }
+}
