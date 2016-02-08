@@ -143,7 +143,15 @@ app.sizeNavbars = function (viewContainer) {
         if (center.hasClass('sliding')) {
             center[0].f7NavbarLeftOffset = -(currLeft + diff) * inverter;
             center[0].f7NavbarRightOffset = (navbarWidth - currLeft - diff - centerWidth) * inverter;
-            if (onLeft) center.transform('translate3d(' + center[0].f7NavbarLeftOffset + 'px, 0, 0)');
+            if (onLeft) {
+                if (app.params.animateNavBackIcon) {
+                    var activeNavbarBackLink = n.parent().find('.navbar-on-center').find('.left.sliding .back .icon ~ span');
+                    if (activeNavbarBackLink.length > 0) {
+                        center[0].f7NavbarLeftOffset += activeNavbarBackLink[0].offsetLeft;
+                    }
+                }
+                center.transform('translate3d(' + center[0].f7NavbarLeftOffset + 'px, 0, 0)');
+            }
         }
         if (!noLeft && left.hasClass('sliding')) {
             if (app.rtl) {
@@ -153,6 +161,9 @@ app.sizeNavbars = function (viewContainer) {
             else {
                 left[0].f7NavbarLeftOffset = -leftWidth;
                 left[0].f7NavbarRightOffset = (navbarWidth - left[0].offsetWidth) / 2;
+                if (app.params.animateNavBackIcon && left.find('.back .icon').length > 0) {
+                    left[0].f7NavbarRightOffset -= left.find('.back .icon')[0].offsetWidth;
+                }
             }
             if (onLeft) left.transform('translate3d(' + left[0].f7NavbarLeftOffset + 'px, 0, 0)');
         }
