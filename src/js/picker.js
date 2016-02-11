@@ -437,11 +437,14 @@ var Picker = function (params) {
 
     // Input Events
     function openOnInput(e) {
-        e.preventDefault();
+        if(e){
+            e.preventDefault();
+            e.stopPropagation();
+        }
         if (p.opened) return;
         p.open();
         if (p.params.scrollToInput && !isPopover()) {
-            var pageContent = p.input.parents('.page-content');
+            var pageContent = p.input.parents('.page-content, .popup');
             if (pageContent.length === 0) return;
 
             var paddingTop = parseInt(pageContent.css('padding-top'), 10),
@@ -507,6 +510,8 @@ var Picker = function (params) {
     }
 
     p.opened = false;
+    p.openOnInput = openOnInput;
+    p.closeOnHTMLClick = closeOnHTMLClick;
     p.open = function () {
         var toPopover = isPopover();
 
