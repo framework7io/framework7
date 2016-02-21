@@ -55,11 +55,7 @@ app.router = {
                 if (sliding.hasClass('left') && sliding.find('.back .icon').length > 0) {
                     sliding.find('.back .icon').transform('translate3d(' + (-slidingOffset) + 'px,0,0)');
                 }
-                if (newNavbarPosition === 'left' && sliding.hasClass('center') && $(oldNavbarInner).find('.left .back .icon ~ span').length > 0) {
-                    slidingOffset += $(oldNavbarInner).find('.left .back span')[0].offsetLeft;
-                }
             }
-
             sliding.transform('translate3d(' + slidingOffset + 'px,0,0)');
         });
     },

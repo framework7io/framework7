@@ -1,0 +1,90 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Autocomplete
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="autocomplete")
+    .page-content
+      .content-block-title Dropdown Autocomplete
+      .content-block
+        p Dropdown autocomplete is good to use as a quick and simple solution to provide more options in addition to free-type value.
+      .content-block-title Simple Dropdown Autocomplete
+      .list-block
+        ul
+          li.item-content
+            .item-title.label Fruit
+            .item-input
+              input(type="text", placeholder="Fruit")#autocomplete-dropdown
+      .content-block-title Dropdown With Input Expand
+      .list-block
+        ul
+          li.item-content
+            .item-title.label Fruit
+            .item-input
+              input(type="text", placeholder="Fruit")#autocomplete-dropdown-expand
+      .content-block-title Dropdown With All Values
+      .list-block
+        ul
+          li.item-content
+            .item-title.label Fruit
+            .item-input
+              input(type="text", placeholder="Fruit")#autocomplete-dropdown-all
+      .content-block-title Dropdown With Placeholder
+      .list-block
+        ul
+          li.item-content
+            .item-title.label Fruit
+            .item-input
+              input(type="text", placeholder="Fruit")#autocomplete-dropdown-placeholder
+      .content-block-title Dropdown With Ajax-Data
+      .list-block
+        ul
+          li.item-content
+            .item-title.label Language
+            .item-input
+              input(type="text", placeholder="Language")#autocomplete-dropdown-ajax
+      .content-block-title Standalone Autocomplete
+      .content-block
+        p Standalone autocomplete provides better mobile UX by opening it in a new page or popup. Good to use when you need to get strict values without allowing free-type values.
+      .content-block-title Simple Standalone Autocomplete
+      .list-block
+        ul
+          li
+            a(href="#").item-link.item-content.autocomplete-opener#autocomplete-standalone
+              input(type="hidden")
+              .item-inner
+                .item-title Favorite Fruite
+                .item-after
+      .content-block-title Popup Standalone Autocomplete
+      .list-block
+        ul
+          li
+            a(href="#").item-link.item-content.autocomplete-opener#autocomplete-standalone-popup
+              input(type="hidden")
+              .item-inner
+                .item-title Favorite Fruite
+                .item-after
+      .content-block-title Multiple Values Standalone Autocomplete
+      .list-block
+        ul
+          li
+            a(href="#").item-link.item-content.autocomplete-opener#autocomplete-standalone-multiple
+              input(type="hidden")
+              .item-inner
+                .item-title Favorite Fruite
+                .item-after
+      .content-block-title Standalone With Ajax-Data
+      .list-block
+        ul
+          li
+            a(href="#").item-link.item-content.autocomplete-opener#autocomplete-standalone-ajax
+              input(type="hidden")
+              .item-inner
+                .item-title Language
+                .item-after

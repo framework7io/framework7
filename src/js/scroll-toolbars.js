@@ -1,7 +1,7 @@
 /*=============================================================
 ************   Hide/show Toolbar/Navbar on scroll   ************
 =============================================================*/
-app.initScrollToolbars = function (pageContainer) {
+app.initPageScrollToolbars = function (pageContainer) {
     pageContainer = $(pageContainer);
     var scrollContent = pageContainer.find('.page-content');
     if (scrollContent.length === 0) return;

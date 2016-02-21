@@ -122,6 +122,14 @@
         },
         "dependencies" : []
     },
+    "progressbar": {
+        "js" : ["src/js/progressbar.js"],
+        "less": {
+            "ios": ["src/less/ios/progressbar.less"],
+            "material": ["src/less/material/progressbar.less"]
+        },
+        "dependencies" : []
+    },
     "swipeout": {
         "js" : ["src/js/swipeout.js"],
         "less": {},
@@ -206,6 +214,14 @@
             "material": ["src/less/material/photo-browser.less"]
         },
         "dependencies" : ["swiper"]
+    },
+    "autocomplete": {
+        "js" : ["src/js/autocomplete.js"],
+        "less": {
+            "ios": ["src/less/ios/autocomplete.less"],
+            "material": ["src/less/material/autocomplete.less"]
+        },
+        "dependencies" : ["searchbar"]
     },
     "notifications": {
         "js" : ["src/js/notifications.js"],

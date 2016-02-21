@@ -265,6 +265,7 @@ app.initFastClicks = function () {
         if (app.params.tapHold) {
             if (tapHoldTimeout) clearTimeout(tapHoldTimeout);
             tapHoldTimeout = setTimeout(function () {
+                if (e && e.touches && e.touches.length > 1) return;
                 tapHoldFired = true;
                 e.preventDefault();
                 $(e.target).trigger('taphold');

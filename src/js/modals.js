@@ -155,7 +155,7 @@ app.modalPassword = function (text, title, callbackOk, callbackCancel) {
 app.showPreloader = function (title) {
     return app.modal({
         title: title || app.params.modalPreloaderTitle,
-        text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</div>',
+        text: '<div class="preloader">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</div>',
         cssClass: 'modal-preloader'
     });
 };
@@ -163,7 +163,7 @@ app.hidePreloader = function () {
     app.closeModal('.modal.modal-in');
 };
 app.showIndicator = function () {
-    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderSvg : '') + '</span></div>');
+    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</span></div>');
 };
 app.hideIndicator = function () {
     $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
@@ -357,6 +357,33 @@ app.popover = function (modal, target, removeOnClose) {
             if (modalPosition === 'bottom') {
                 modal.addClass('popover-on-bottom');
             }
+            if (target.hasClass('floating-button-to-popover') && !modal.hasClass('modal-in')) {
+                modal.addClass('popover-floating-button');
+                var diffX = (modalLeft + modalWidth / 2) - (targetOffset.left + targetWidth / 2),
+                    diffY = (modalTop + modalHeight / 2) - (targetOffset.top + targetHeight / 2);
+                target
+                    .addClass('floating-button-to-popover-in')
+                    .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0)')
+                    .transitionEnd(function (e) {
+                        if (!target.hasClass('floating-button-to-popover-in')) return;
+                        target
+                            .addClass('floating-button-to-popover-scale')
+                            .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0) scale(' + (modalWidth/targetWidth) + ', ' + (modalHeight/targetHeight) + ')');
+                    });
+
+                modal.once('close', function () {
+                    target
+                        .removeClass('floating-button-to-popover-in floating-button-to-popover-scale')
+                        .addClass('floating-button-to-popover-out')
+                        .transform('')
+                        .transitionEnd(function (e) {
+                            target.removeClass('floating-button-to-popover-out');
+                        });
+                });
+                modal.once('closed', function () {
+                    modal.removeClass('popover-floating-button');
+                });
+            }
 
         }
         else {
@@ -419,9 +446,11 @@ app.popover = function (modal, target, removeOnClose) {
         // Apply Styles
         modal.css({top: modalTop + 'px', left: modalLeft + 'px'});
     }
+
     sizePopover();
 
     $(window).on('resize', sizePopover);
+
     modal.on('close', function () {
         $(window).off('resize', sizePopover);
     });
@@ -444,7 +473,7 @@ app.popup = function (modal, removeOnClose) {
     modal = $(modal);
     if (modal.length === 0) return false;
     modal.show();
-    
+
     app.openModal(modal);
     return modal[0];
 };
@@ -597,7 +626,10 @@ app.closeModal = function (modal) {
     if (!(isPopover && !app.params.material)) {
         modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
             if (modal.hasClass('modal-out')) modal.trigger('closed');
-            else modal.trigger('opened');
+            else {
+                modal.trigger('opened');
+                if (isPopover) return;
+            }
 
             if (isPickerModal) {
                 $('body').removeClass('picker-modal-closing');

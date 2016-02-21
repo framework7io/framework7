@@ -39,7 +39,7 @@ app.get = function (url, view, ignoreCache, callback) {
         beforeSend: app.params.onAjaxStart,
         complete: function (xhr) {
             if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
-                if (app.params.cache && !ignoreCache) {
+                if (app.params.cache) {
                     app.removeFromCache(_url);
                     app.cache.push({
                         url: _url,

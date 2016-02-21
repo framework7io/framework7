@@ -11,10 +11,14 @@
     max-width: 380px;
     .translate3d(-50%,100%,0);
     .depth(5);
-    @media (orientation: landscape) and (max-height: 415px) {
+    @media (orientation: landscape) and (max-height: 460px) {
         &:not(.picker-modal-inline) {
-            height: 220px;
+            height: ~"-webkit-calc(100% - 40px)";
+            height: ~"calc(100% - 40px)";
         }
+    }
+    .popover-picker-calendar & {
+        height: 420px;
     }
     .picker-modal-inner {
         overflow: hidden;

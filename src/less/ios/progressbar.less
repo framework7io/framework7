@@ -1,0 +1,158 @@
+/* === Progress Bar === */
+.progressbar, .progressbar-infinite {
+    height: 2px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    background: #b6b6b6;
+    border-radius: 2px;
+    .transform-origin(center top);
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+// Determined
+.progressbar {
+    vertical-align: middle;
+    span {
+        width: 100%;
+        background: @themeColor;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        .translate3d(-100%, 0, 0);
+        .transition(150ms);
+    }
+}
+// Infinite
+.progressbar-infinite {
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: @themeColor;
+        .translate3d(0, 0, 0);
+        .transform-origin(left center);
+        .animation(progressbar-infinite 1s linear infinite);
+    }
+    html.with-statusbar-overlay body > & {
+        top: 20px;
+    }
+}
+// Multicolor
+.progressbar-infinite.color-multi {
+    background: none;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 400%;
+        height: 100%;
+        background-image: -webkit-linear-gradient(left, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55, #5856d6, #34aadc, #007aff, #5ac8fa, #4cd964);
+        background-image: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55, #5856d6, #34aadc, #007aff, #5ac8fa, #4cd964);
+        background-size: 25% 100%;
+        background-repeat: repeat-x;
+        .translate3d(0, 0, 0);
+        .animation(progressbar-infinite-multicolor 3s linear infinite);
+    }
+    html.with-statusbar-overlay body > & {
+        top: 20px;
+    }
+}
+body, .view, .views, .page, .panel, .popup {
+    > .progressbar, > .progressbar-infinite {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 15000;
+        border-radius: 0;
+    }
+}
+// Animations
+.progressbar-in {
+    .animation(progressbar-in 300ms forwards);
+}
+.progressbar-out {
+    .animation(progressbar-out 300ms forwards);
+}
+
+html.with-statusbar-overlay body > .progressbar {
+    top: 20px;
+}
+@-webkit-keyframes progressbar-in {
+    from {
+        opacity: 0;
+        -webkit-transform: scaleY(0);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: scaleY(1);
+    }
+}
+@keyframes progressbar-in {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+@-webkit-keyframes progressbar-out {
+    from {
+        opacity: 1;
+        -webkit-transform: scaleY(1);
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: scaleY(0);
+    }
+}
+@keyframes progressbar-out {
+    from {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    to {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+}
+@-webkit-keyframes progressbar-infinite {
+    0% {
+        -webkit-transform: translate3d(-50%, 0, 0) scaleX(0.5);
+    }
+    100% {
+        -webkit-transform: translate3d(100%, 0, 0) scaleX(0.5);
+    }
+}
+@keyframes progressbar-infinite {
+    0% {
+        transform: translate3d(-50%, 0, 0) scaleX(0.5);
+    }
+    100% {
+        transform: translate3d(100%, 0, 0) scaleX(0.5);
+    }
+}
+@-webkit-keyframes progressbar-infinite-multicolor {
+    from {
+        -webkit-transform: translate3d(0%, 0, 0);
+    }
+    to {
+        -webkit-transform: translate3d(-50%, 0, 0);
+    }
+}
+@keyframes progressbar-infinite-multicolor {
+    from {
+        transform: translate3d(0%, 0, 0);
+    }
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}

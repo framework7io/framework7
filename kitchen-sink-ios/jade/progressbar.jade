@@ -1,0 +1,87 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="index.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Progress Bar
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="progressbar")
+    .page-content
+      .content-block
+        p In addition to <a href="preloader.html">Preloader</a>, Framework7 also comes with fancy animated determinate and infinite/indeterminate progress bars to indicate some activity.
+      .content-block-title Determinate Progress Bar
+      .content-block
+        .content-block-inner
+          p When progress bar is determinate it indicates how long an operation will take when the percentage complete is detectable.
+
+          p Inline determinate progress bar:
+          .ks-demo-progressbar-inline
+            p
+              span.progressbar(data-progress="10")
+            p.buttons-row
+              a(href="#", data-progress="10").button 10%
+              a(href="#", data-progress="30").button 30%
+              a(href="#", data-progress="50").button 50%
+              a(href="#", data-progress="100").button 100%
+
+          p Inline determinate load & hide:
+          .ks-demo-progressbar-load-hide
+            p(style="height:2px")
+            p
+              a(href="#").button Start Loading
+          p Overlay with determinate progress bar on top of the app:
+          p.ks-demo-progressbar-overlay
+            a(href="#").button Start Loading
+      .content-block-title Infinite Progress Bar
+      .content-block
+        .content-block-inner
+          p When progress bar is infinite/indeterminate it requests that the user wait while something finishes when it’s not necessary to indicate how long it will take.
+          p Inline infinite progress bar
+          p
+            span.progressbar-infinite
+          p Multi-color infinite progress bar
+          p
+            span.progressbar-infinite.color-multi
+          p Overlay with infinite progress bar on top of the app
+          p.ks-demo-progressbar-infinite-overlay
+            a(href="#").button Start Loading
+          p Overlay with infinite multi-color progress bar on top of the app
+          p.ks-demo-progressbar-infinite-multi-overlay
+            a(href="#").button Start Loading
+      .content-block-title Colored
+      .list-block
+        ul
+          li.item-content
+            .item-inner
+              .progressbar.color-blue(data-progress="10")
+          li.item-content
+            .item-inner
+              .progressbar.color-orange(data-progress="20")
+          li.item-content
+            .item-inner
+              .progressbar.color-red(data-progress="30")
+          li.item-content
+            .item-inner
+              .progressbar.color-pink(data-progress="40")
+          li.item-content
+            .item-inner
+              .progressbar.color-green(data-progress="50")
+          li.item-content
+            .item-inner
+              .progressbar.color-lightblue(data-progress="60")
+          li.item-content
+            .item-inner
+              .progressbar.color-yellow(data-progress="70")
+          li.item-content
+            .item-inner
+              .progressbar.color-gray(data-progress="80")
+          li.item-content
+            .item-inner
+              .progressbar.color-black(data-progress="90")
+          li.item-content(style="background-color: #999")
+            .item-inner
+              .progressbar.color-white(data-progress="95")

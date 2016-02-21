@@ -178,13 +178,13 @@ var VirtualList = function (listBlock, params) {
             }
             else {
                 if (vl.template) {
-                    vl.tempDomElement.innerHTML = vl.template(items[i], {index: index});
+                    vl.tempDomElement.innerHTML = vl.template(items[i], {index: index}).trim();
                 }
                 else if (vl.params.renderItem) {
-                    vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]);   
+                    vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]).trim();
                 }
                 else {
-                    vl.tempDomElement.innerHTML = items[i];
+                    vl.tempDomElement.innerHTML = items[i].trim();
                 }
                 item = vl.tempDomElement.childNodes[0];
                 if (vl.params.cache) vl.domCache[index] = item;

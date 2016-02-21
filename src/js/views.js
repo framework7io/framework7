@@ -557,10 +557,9 @@ var View = function (selector, params) {
         }
         var pushStateAnimatePages = app.params.pushStateNoAnimation ? false : undefined;
         var historyState = history.state;
-
         if (pushStateUrl) {
             if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && historyState && historyState.pageName && 'viewIndex' in historyState) {
-                app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+                app.router.load(view, {pageName: historyState.pageName, url: historyState.url, animatePages: pushStateAnimatePages, pushState: false});
             }
             else if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && view.initialPagesUrl.indexOf(pushStateUrl) >= 0) {
                 app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});   
@@ -569,7 +568,7 @@ var View = function (selector, params) {
         }
         else if (view.params.domCache && docLocation.indexOf(pushStateSeparator + '#') >= 0) {
             if (historyState && historyState.pageName && 'viewIndex' in historyState) {
-                app.router.load(view, {pageName: historyState.pageName, animatePages: pushStateAnimatePages, pushState: false});
+                app.router.load(view, {pageName: historyState.pageName, url: historyState.url, animatePages: pushStateAnimatePages, pushState: false});
             }
             else if (pushStateSeparator && pushStateUrlSplit.indexOf('#') === 0) {
                 if (view.initialPagesUrl.indexOf(pushStateUrlSplit)) {

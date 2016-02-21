@@ -257,3 +257,14 @@
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
 }
+
+// No Scrollbar
+.no-scrollbar() {
+    &::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        -webkit-appearance: none;
+        opacity: 0 !important;
+    }
+}

@@ -23,7 +23,7 @@ Framework7 Layouts Themes
     @searchbarBorder: #333;
     @swipeoutButton: #444;
     @checkboxBorder: @blockBorder;
-    
+
     // Photo Browser
     .page, .login-screen-content, .page&, .panel, .panel& {
         background-color: @pageBg;
@@ -33,7 +33,7 @@ Framework7 Layouts Themes
     .content-block-title {
         color:rgba(255,255,255,0.87);
     }
-    
+
     .content-block-inner {
         .hairline-color(top, @blockBorder);
         .hairline-color(bottom, @blockBorder);
@@ -83,11 +83,20 @@ Framework7 Layouts Themes
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        color:@lightText;        
+        color:@lightText;
         .hairline-color(top, @blockBorder);
     }
     .contacts-block .list-group-title {
         background: none;
+    }
+    .autocomplete-dropdown  {
+        background: @blockBg;
+        .list-block {
+            color: rgba(255,255,255,0.54);
+        }
+        .list-block b {
+            color: rgba(255,255,255,0.87);
+        }
     }
     // Forms
     .item-link, label.label-checkbox, label.label-radio {
@@ -114,7 +123,7 @@ Framework7 Layouts Themes
     .item-inner:not(.focus-state):not(.not-empty-state) .item-input-field, .item-inner:not(.focus-state):not(.not-empty-state) .input-field {
         .hairline-color(bottom, rgba(255, 255, 255, 0.12));
     }
-    
+
     label.label-checkbox {
         i.icon-form-checkbox {
             border-color: rgba(255,255,255,0.7);
@@ -149,7 +158,7 @@ Framework7 Color Themes
     //Plain color and links
     .color-@{colorName} {
         color: @color;
-        .list-block .item-link.list-button&, .tabbar a.active&, a& {
+        .list-block .item-link.list-button&, .list-block .item-link&, .tabbar a.active&, a& {
             color: @color;
         }
         .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
@@ -162,7 +171,6 @@ Framework7 Color Themes
             &:not(.button-fill) {
                 color:@color;
             }
-            
         }
         .theme-@{colorName} .navbar &, .theme-@{colorName}.navbar &, .theme-@{colorName} .toolbar &, .theme-@{colorName}.toolbar &, .theme-@{colorName} .subnavbar &, .theme-@{colorName}.subnavbar & {
             &:not(.button-fill) {
@@ -186,7 +194,24 @@ Framework7 Color Themes
                 background: @pressColor !important;
             }
         }
-        
+
+    }
+    // Progress bar
+    .progressbar {
+        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
+            span {
+                background-color: @color;
+            }
+        }
+    }
+    .progressbar-infinite{
+        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
+            &:after, &:before {
+                background-color: @color;
+            }
+        }
     }
     //Icons
     .color-@{colorName} {
@@ -213,6 +238,9 @@ Framework7 Color Themes
     .preloader.color-@{colorName}, .preloader.preloader-@{colorName} {
         svg circle {
             stroke: @color;
+        }
+        .preloader-inner-gap, .preloader-inner-half-circle {
+            border-color: @color;
         }
     }
     // Theme
@@ -273,7 +301,7 @@ Framework7 Color Themes
         }
         label.label-radio, label.label-radio& {
             i.icon-form-radio:after {
-                background-color: @color;       
+                background-color: @color;
             }
             input[type="checkbox"], input[type="radio"] {
                 &:checked + .item-media, &:checked ~ .item-after, &:checked ~ .item-inner{
@@ -322,6 +350,12 @@ Framework7 Color Themes
             .swiper-pagination-bullet-active {
                 background-color: @color;
             }
+            .swiper-pagination-progressbar {
+                background-color: @color;
+            }
+        }
+        &.swiper-pagination-progress.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.25);
         }
     }
     .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
@@ -337,6 +371,11 @@ Framework7 Color Themes
     // Bg rule
     .bg-@{colorName}, a.bg-@{colorName}, .list-block .swipeout-actions-left a.bg-@{colorName}, .list-block .swipeout-actions-right a.bg-@{colorName} {
         background-color: @color;
+        .list-block & .item-link, .list-block& .item-link, .list-block .item-link& {
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: @pressColor;
+            }
+        }
     }
     // Border rule
     .border-@{colorName} {
@@ -348,8 +387,8 @@ Framework7 Color Themes
         }
     }
     // Floating Button
-    .floating-button {
-        .theme-@{colorName} &, &.theme-@{colorName}, &.color-@{colorName} {
+    .floating-button, .speed-dial-buttons a {
+        .theme-@{colorName} &, &.theme-@{colorName}, &.color-@{colorName}, &.bg-@{colorName} {
             color:#fff;
             background: @color;
             html:not(.watch-active-state) &:active, &.active-state {
@@ -365,6 +404,11 @@ Framework7 Color Themes
         .ripple-wave {
             background-color: rgba(red(@color), green(@color), blue(@color), 0.3);
         }
+    }
+    //Badges
+    .badge.color-@{colorName}, .badge.theme-@{colorName} {
+    	background-color:@color;
+    	color: #fff;
     }
 }
 .theme-mixin(e('red'), @red, #D32F2F);

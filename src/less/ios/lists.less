@@ -115,11 +115,12 @@
         .flexbox();
         max-height: 28px;
     }
-    .smart-select .item-after {
+    .smart-select .item-after, .autocomplete-opener .item-after {
         max-width: 70%;
         overflow: hidden;
-        text-overflow:ellipsis;
+        text-overflow: ellipsis;
         position: relative;
+        display: block;
     }
     .item-link {
         .transition(300ms);

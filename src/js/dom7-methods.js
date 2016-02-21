@@ -256,17 +256,20 @@ Dom7.prototype = {
         return dom.on(eventName, targetSelector, proxy, capture);
     },
     trigger: function (eventName, eventData) {
-        for (var i = 0; i < this.length; i++) {
-            var evt;
-            try {
-                evt = new CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
+        var events = eventName.split(' ');
+        for (var i = 0; i < events.length; i++) {
+            for (var j = 0; j < this.length; j++) {
+                var evt;
+                try {
+                    evt = new CustomEvent(events[i], {detail: eventData, bubbles: true, cancelable: true});
+                }
+                catch (e) {
+                    evt = document.createEvent('Event');
+                    evt.initEvent(events[i], true, true);
+                    evt.detail = eventData;
+                }
+                this[j].dispatchEvent(evt);
             }
-            catch (e) {
-                evt = document.createEvent('Event');
-                evt.initEvent(eventName, true, true);
-                evt.detail = eventData;
-            }
-            this[i].dispatchEvent(evt);
         }
         return this;
     },
@@ -449,6 +452,7 @@ Dom7.prototype = {
             for (var i = 0; i < this.length; i++) {
                 this[i].textContent = text;
             }
+            return this;
         }
     },
     is: function (selector) {
@@ -675,6 +679,16 @@ Dom7.prototype = {
             }
         }
         return $($.unique(parents));
+    },
+    closest: function (selector) {
+        var closest = this;
+        if (typeof selector === 'undefined') {
+            return new Dom7([]);
+        }
+        if (!closest.is(selector)) {
+            closest = closest.parents(selector).eq(0);
+        }
+        return closest;
     },
     find : function (selector) {
         var foundElements = [];

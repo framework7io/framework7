@@ -60,7 +60,7 @@
         margin-bottom: 4px;
         min-height: 36px;
     }
-    
+
     // Inputs List
     .input-item, &.inputs-list {
         ul {
@@ -87,6 +87,7 @@
             .transform(scale(16/12) translateY(21px));
             color: rgba(0,0,0,0.35);
             width: auto;
+            max-width: 75%;
             ~.item-input input::-webkit-input-placeholder {
                color: transparent;
             }
@@ -225,19 +226,14 @@ textarea.resizable {
         line-height: 48px;
         border-radius: 3px;
     }
-    
-    i.icon {
-        &:first-child {
-            margin-right: 10px;
-        }
-        &:last-child {
-            margin-left: 10px;
-        }
-        &:first-child:last-child {
-            margin-left: 0;
-            margin-right: 0;
-        }
+
+    i.icon + span,
+    span:not(.ripple-wave) + span,
+    span:not(.ripple-wave) + i.icon,
+    i.icon + i.icon {
+        margin-left: 8px;
     }
+
     .navbar &, .toolbar &, .subnavbar &, .notifications & {
         &:not(.button-fill) {
             color:#fff;

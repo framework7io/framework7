@@ -88,9 +88,8 @@
         text-overflow:ellipsis;
         white-space: nowrap;
         line-height: @navbarSize;
-        .flex-shrink(10);
-        .flexbox();
-        .align-items(center);
+        display: inline-block;
+        text-align: left;
     }
     .left, .right {
         .flex-shrink(0);
@@ -262,5 +261,26 @@
         white-space: nowrap;
         overflow: hidden;
         max-width: 100%;
+    }
+}
+.tabbar-scrollable {
+    .toolbar-inner {
+        .justify-content(flex-start);
+        .no-scrollbar();
+        overflow: auto;
+    }
+    a.tab-link, a.link {
+        width: auto;
+        .flex-shrink(0);
+        -ms-flex: 0;
+        padding: 0 16px;
+    }
+}
+.toolbar-bottom {
+    bottom: 0;
+    top: auto;
+    .tab-link-highlight {
+        bottom: auto;
+        top: 0;
     }
 }

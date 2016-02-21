@@ -17,22 +17,27 @@
         padding-top: @tabbarLabelsSize;
     }
 }
-.toolbar:not(.messagebar) ~ .page-content {
+
+.toolbar ~ .page-content {
     padding-top: @toolbarSize;
 }
-.tabbar-labels:not(.messagebar) ~ .page-content {
+.tabbar-labels ~ .page-content {
     padding-top: @tabbarLabelsSize;
+}
+.toolbar-bottom, .messagebar {
+    ~ .page-content {
+        padding-top: 0;
+        padding-bottom: @toolbarSize;
+    }
+}
+.tabbar-labels.toolbar-bottom ~ .page-content {
+    padding-bottom: @tabbarLabelsSize;
 }
 .navbar-fixed {
     .page-content {
         padding-top: @navbarSize;
     }
-    .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
-        padding-top: @navbarSize + @toolbarSize;
-    }
-    .page .subnavbar, &.page .subnavbar {
-        top: @navbarSize;
-    }
+
     &.toolbar-fixed, &.tabbar-fixed, .toolbar-fixed, .tabbar-fixed, .toolbar-fixed &, .tabbar-fixed & {
         .page-content {
             padding-top: @navbarSize + @toolbarSize;
@@ -43,14 +48,33 @@
             padding-top: @navbarSize + @tabbarLabelsSize;
         }
     }
-    .toolbar:not(.messagebar) ~ .page-content {
+    .toolbar ~ .page-content {
         padding-top: @navbarSize + @toolbarSize;
     }
-    .tabbar-labels:not(.messagebar) ~ .page-content {
+    .messagebar ~ .page-content, .toolbar-bottom ~ .page-content {
+        padding-top: @navbarSize;
+    }
+
+    .tabbar-labels ~ .page-content {
         padding-top: @navbarSize + @tabbarLabelsSize;
     }
-    .toolbar:not(.messagebar) {
+    .tabbar-labels.toolbar-bottom ~ .page-content {
+        padding-top: @navbarSize;
+    }
+
+    .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
+        padding-top: @navbarSize + @toolbarSize;
+    }
+
+    .page .subnavbar, &.page .subnavbar {
         top: @navbarSize;
+    }
+
+    .toolbar {
+        top: @navbarSize;
+    }
+    .messagebar, .toolbar-bottom {
+        top: auto;
     }
 }
 // Page Hidden Navbar
@@ -83,7 +107,7 @@
                 .transition(400ms);
             }
         }
-        & ~ .subnavbar, & ~ .toolbar:not(.messagebar) {
+        & ~ .subnavbar, & ~ .toolbar:not(.messagebar):not(.toolbar-bottom) {
             .translate3d(0,-@navbarSize,0);
             .transition(400ms);
         }
@@ -107,17 +131,17 @@
         .transition(400ms);
     }
 
-    &.toolbar-hidden:not(.messagebar), &.tabbar-hidden {
+    &.toolbar-hidden, &.tabbar-hidden {
         .translate3d(0,-100%,0);
     }
-    .navbar ~ &.toolbar-hidden:not(.messagebar), .navbar ~ &.tabbar-hidden {
+    .navbar ~ &.toolbar-hidden, .navbar ~ &.tabbar-hidden {
         .translate3d(0,-104px,0);
     }
     .navbar ~ &.tabbar-labels.toolbar-hidden {
         .translate3d(0,-128px,0);
     }
-    &.toolbar-hidden.messagebar {
-        .translate3d(0, 100%,0);   
+    &.toolbar-hidden.messagebar, &.toolbar-hidden.toolbar-bottom {
+        .translate3d(0, 100%,0);
     }
 }
 .page.no-toolbar .page-content, .page.no-tabbar .page-content {

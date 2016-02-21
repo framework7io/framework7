@@ -30,7 +30,7 @@ function handleInfiniteScroll() {
             inf.trigger('infinite');
         }
     }
-        
+
 }
 app.attachInfiniteScroll = function (infiniteContent) {
     $(infiniteContent).on('scroll', handleInfiniteScroll);
@@ -39,7 +39,7 @@ app.detachInfiniteScroll = function (infiniteContent) {
     $(infiniteContent).off('scroll', handleInfiniteScroll);
 };
 
-app.initInfiniteScroll = function (pageContainer) {
+app.initPageInfiniteScroll = function (pageContainer) {
     pageContainer = $(pageContainer);
     var infiniteContent = pageContainer.find('.infinite-scroll');
     if (infiniteContent.length === 0) return;
