@@ -282,6 +282,10 @@ app.popover = function (modal, target, removeOnClose) {
     modal = $(modal);
     target = $(target);
     if (modal.length === 0 || target.length === 0) return false;
+    if (modal.parents('body').length === 0) {
+        if (removeOnClose) modal.addClass('remove-on-close');
+        $('body').append(modal[0]);
+    }
     if (modal.find('.popover-angle').length === 0 && !app.params.material) {
         modal.append('<div class="popover-angle"></div>');
     }
@@ -472,6 +476,10 @@ app.popup = function (modal, removeOnClose) {
     }
     modal = $(modal);
     if (modal.length === 0) return false;
+    if (modal.parents('body').length === 0) {
+        if (removeOnClose) modal.addClass('remove-on-close');
+        $('body').append(modal[0]);
+    }
     modal.show();
 
     app.openModal(modal);
@@ -489,6 +497,10 @@ app.pickerModal = function (modal, removeOnClose) {
     }
     modal = $(modal);
     if (modal.length === 0) return false;
+    if (modal.parents('body').length === 0) {
+        if (removeOnClose) modal.addClass('remove-on-close');
+        $('body').append(modal[0]);
+    }
     if ($('.picker-modal.modal-in:not(.modal-out)').length > 0 && !modal.hasClass('modal-in')) {
         app.closeModal('.picker-modal.modal-in:not(.modal-out)');
     }
