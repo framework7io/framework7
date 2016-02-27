@@ -26,7 +26,6 @@ window.Framework7 = function (params) {
         pushStateRoot: undefined,
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',
-        pushStatePreventOnLoad: true,
         pushStateOnLoad: true,
         // Fast clicks
         fastClicks: true,
