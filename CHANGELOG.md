@@ -1,5 +1,43 @@
 # Change Log
 
+## Framework7 v1.4.2 - Updated on February 27, 2015
+  * Material Theme
+    * Added colors support for speed dial buttons
+  * Push State
+    * New `pushStateOnLoad` app parameter (by default is `true`) allows to disable first push state navigation on app load
+    * `preventPushStateOnLoad` app parameter that is used to block initial and falsy `popstate` event in Safari, has been removed now in favor of another fix
+  * Autocomplete
+    * Fixed issue with dropdown autocomplete not being opened on Androids
+    * Fixed issue with standalone autocomplete searchbar overlay on iOS
+    * More standalone autocomplete exposed properties: `page`, `pageData`, `searchbar` with search bar instance
+  * Router
+    * Now it will save URL query for inline page which was ignored before, for URLs like `#about?foo=bar`
+    * A bit more imporved positioning for Dynamic navbar elements animation
+  * Dom7
+    * New `.closest(selector)` method to find elements matching specified selector starting from the element itself
+    * `.text()` method is now "chainable"
+  * Grid
+    * More sizes added. Now all available sizes for columns are: 5, 10, 15, 20, 25, 30, 33, 35, 40, 45, 50, 55, 60, 65, 66, 70, 75, 80, 85, 90, 95, 100
+  * Modals
+    * Now it is supported to pass `HTMLElement` into `.popup`, `.popover` and `.pickerModal` methods
+  * Swiper updated to latest 3.3.1 version:
+    * New 3D Flip effect. Can be enabled with `effect: 'flip' parameter
+    * New types of pagination with new parameters:
+      * `paginationType` - type of pagination. Can be `'bullets'` (default) or `'fraction'` or `'progress'` or `'custom'`
+      * `paginationFractionRender(swiper, currentClass, totalClass)` - custom function to render "fraction" type pagination
+      * `paginationProgressRender(swiper, progressbarClass)` - custom function to render "progress" type pagination
+      * `paginationCustomRender(swiper, current, total)` - custom function to render "custom" type pagination
+    * New `lazyLoadingInPrevNextAmount` parameter allows to lazy load images in specified amount of next/prev slides
+    * New `autoplayStopOnLast` parameter (`true` by default) tells to autoplay should it stop on last slide or start from first slide
+    * New `onAutoplay(swiper)` callback
+    * New `uniqueNavElements` parameter. If enabled (by default) and navigation elements' parameters passed as the string (like `.pagination`) then Swiper will look for such elements through child elements first. Applies for pagination, prev/next buttons and scrollbar
+    * New `onPaginationRendered` callback. Will be fired after pagination elements generated and added to DOM
+    * New `.reLoop()` method, which combines `.destroyLoop()` + `.createLoop()` methods with additional positioning fixes. Useful to call after you have changed `slidesPerView` parameter, it will dynamically recreate duplicated slides required for loop
+    * New `.nextButton` and `.prevButton` properties with Dom7 element with next/prev button HTML element
+  * Forms
+    * New `app.destroyResizableTextarea()` method to destroy resizable textarea
+  * Numerous minor fixes and improvements
+
 ## Framework7 v1.4.0 - Updated on December 7, 2015
   * New mobile-friendly "Autocomplete" component. Comes with 2 modifications as Dropdown or Standalone autocomplete
   * New "Progress Bar" component. Includes 3 different types of progress bar for each theme: "Determinate", "Indeterminate" and "Indeterminate Multi-color"
