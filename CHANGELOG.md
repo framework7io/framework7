@@ -1,6 +1,6 @@
 # Change Log
 
-## Framework7 v1.4.2 - Updated on February 27, 2015
+## Framework7 v1.4.2 - Updated on February 27, 2016
   * Material Theme
     * Added colors support for speed dial buttons
   * Push State
