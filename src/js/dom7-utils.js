@@ -6,7 +6,7 @@ $.parseUrlQuery = function (url) {
     params = url.split('&');
     for (i = 0; i < params.length; i++) {
         param = params[i].split('=');
-        query[param[0]] = param[1];
+        query[param[0]] = decodeURIComponent(param[1]);
     }
     return query;
 };
