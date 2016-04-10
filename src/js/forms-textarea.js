@@ -49,6 +49,10 @@ app.initPageResizableTextarea = function (pageContainer) {
     pageContainer = $(pageContainer);
     var textareas = pageContainer.find('textarea.resizable');
     textareas.each(function () {
-        app.resizableTextarea(this);
+        var textarea = this;
+        app.resizableTextarea(textarea);
+        pageContainer.on('formFromJSON', function() {
+            app.resizeTextarea(textarea);
+        })
     });
 };
