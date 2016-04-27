@@ -971,6 +971,14 @@ app.router._back = function (view, options) {
 
 };
 app.router.back = function (view, options) {
+   if($("body").attr("class").indexOf("with-panel")!=-1){
+     app.closePanel();
+     return false;
+   }
+   if($(".actions-modal").length>0){
+     app.closeModal();
+     return false;
+   }
     if (app.router.preroute(view, options)) {
         return false;
     }
