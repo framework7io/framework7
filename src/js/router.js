@@ -971,13 +971,15 @@ app.router._back = function (view, options) {
 
 };
 app.router.back = function (view, options) {
-   if($("body").attr("class").indexOf("with-panel")!=-1){
+   if($('.panel.active').length != 0){
      app.closePanel();
-     return false;
+     history.go(1);
+        return false;
    }
-   if($(".actions-modal").length>0){
+   if(($(".modal-overlay-visible").length || $(".with-picker-modal").length) != 0){
      app.closeModal();
-     return false;
+     history.go(1);
+        return false;
    }
     if (app.router.preroute(view, options)) {
         return false;
