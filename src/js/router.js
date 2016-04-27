@@ -971,12 +971,12 @@ app.router._back = function (view, options) {
 
 };
 app.router.back = function (view, options) {
-   if($('.panel.active').length != 0){
+   if($('.panel.active').length !== 0){
      app.closePanel();
      history.go(1);
         return false;
    }
-   if(($(".modal-overlay-visible").length || $(".with-picker-modal").length) != 0){
+   if(($(".modal-overlay-visible").length || $(".with-picker-modal").length) !== 0){
      app.closeModal();
      history.go(1);
         return false;
