@@ -650,6 +650,9 @@ Dom7.prototype = {
         }
         return new Dom7(prevEls);
     },
+    siblings: function (selector) {
+        return this.nextAll(selector).add(this.prevAll(selector));
+    },
     parent: function (selector) {
         var parents = [];
         for (var i = 0; i < this.length; i++) {
