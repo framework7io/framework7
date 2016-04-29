@@ -739,6 +739,18 @@ Dom7.prototype = {
             }
         }
         return dom;
+    },
+    empty: function () {
+        for (var i = 0; i < this.length; i++) {
+            var el = this[i];
+            if (el.nodeType === 1) {
+                for (var j = 0; j < el.childNodes.length; j++) {
+                    if (el.childNodes[j].parentNode) el.childNodes[j].parentNode.removeChild(el.childNodes[j]);
+                }
+                el.textContent = '';
+            }
+        }
+        return this;
     }
 };
 
