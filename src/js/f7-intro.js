@@ -31,6 +31,7 @@ window.Framework7 = function (params) {
         fastClicks: true,
         fastClicksDistanceThreshold: 10,
         fastClicksDelayBetweenClicks: 50,
+        fastClicksExclude: '', // CSS selector
         // Tap Hold
         tapHold: false,
         tapHoldDelay: 750,
