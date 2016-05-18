@@ -572,10 +572,10 @@ app.router._load = function (view, options) {
 };
 
 app.router.load = function (view, options) {
+    options = options || {};
     if (app.router.preroute(view, options)) {
         return false;
     }
-    options = options || {};
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
@@ -971,10 +971,10 @@ app.router._back = function (view, options) {
 
 };
 app.router.back = function (view, options) {
+    options = options || {};
     if (app.router.preroute(view, options, true)) {
         return false;
     }
-    options = options || {};
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
