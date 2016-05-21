@@ -3,7 +3,7 @@
 Framework7 loves to welcome your contributions. There are several ways to help out:
 
 * Create an [issue](https://github.com/nolimits4web/Framework7/issues) on GitHub, if you have found a bug
-* Write test cases for open bug issues
+* Write test cases or provide examples for open bug issues
 * Write patches for open bug/feature issues, preferably with test cases included
 * Contribute to the [documentation](https://github.com/nolimits4web/Framework7-Website)
 
