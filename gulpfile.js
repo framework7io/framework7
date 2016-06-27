@@ -163,7 +163,7 @@
             },
 
         };
-        
+
     function addJSIndent (file, t) {
         var addIndent = '        ';
         var filename = file.path.split('src/js/')[1];
@@ -207,7 +207,7 @@
             .on('end', function () {
                 cb();
             });
-        
+
     });
     gulp.task('styles-ios', function (cb) {
         var cbs = 0;
@@ -242,7 +242,7 @@
                     if (cbs === 3) cb();
                 });
         });
-            
+
     });
 
     // F7 Demo App
@@ -376,11 +376,11 @@
 
                 // Minify CSS
                 var minifiedCSS = [
-                    paths.dist.styles + f7.filename + '.ios.css', 
-                    paths.dist.styles + f7.filename + '.ios.rtl.css', 
+                    paths.dist.styles + f7.filename + '.ios.css',
+                    paths.dist.styles + f7.filename + '.ios.rtl.css',
                     paths.dist.styles + f7.filename + '.ios.colors.css',
-                    paths.dist.styles + f7.filename + '.material.css', 
-                    paths.dist.styles + f7.filename + '.material.rtl.css', 
+                    paths.dist.styles + f7.filename + '.material.css',
+                    paths.dist.styles + f7.filename + '.material.rtl.css',
                     paths.dist.styles + f7.filename + '.material.colors.css'
                 ];
                 gulp.src(minifiedCSS)
@@ -395,7 +395,7 @@
                     .pipe(gulp.dest(paths.dist.styles));
             });
     });
-    
+
     /* =================================
     Custom Build
     ================================= */
@@ -414,16 +414,14 @@
         modulesJs.push.apply(modulesJs, f7.modules.core_intro.js);
         modulesLessIOS.push.apply(modulesLessIOS, f7.modules.core_intro.less.ios);
         modulesLessMaterial.push.apply(modulesLessMaterial, f7.modules.core_intro.less.material);
-        for (i = 0; i < modules.length; i++) {
-            module = f7.modules[modules[i]];
-            if (module.dependencies.length > 0) {
-                modules.push.apply(modules, module.dependencies);
-            }
-        }
+
         for (i = 0; i < modules.length; i++) {
             module = f7.modules[modules[i]];
             if (!(module)) continue;
 
+            if (module.dependencies.length > 0) {
+                modules.push.apply(modules, module.dependencies);
+            }
             if (module.js.length > 0) {
                 modulesJs.push.apply(modulesJs, module.js);
             }
@@ -469,7 +467,7 @@
                 path.basename = path.basename + '.min';
             }))
             .pipe(gulp.dest(paths.custom.scripts));
-        
+
         // CSSes
         [customLessIOS, customLessMaterial].forEach(function (customLessList) {
             var theme = customLessList === customLessIOS ? 'ios' : 'material';
@@ -537,7 +535,7 @@
             port:'3000'
         });
     });
-    
+
     gulp.task('open', function () {
         return gulp.src('./index.html').pipe(open({ uri: 'http://localhost:3000/index.html'}));
     });
@@ -545,6 +543,6 @@
     gulp.task('server', [ 'watch', 'connect', 'open' ]);
 
     gulp.task('default', [ 'server' ]);
-    
+
     gulp.task('test', [ 'build' ]);
 })();
