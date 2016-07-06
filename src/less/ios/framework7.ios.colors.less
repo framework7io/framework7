@@ -104,6 +104,12 @@ Framework7 Color Themes
             .swiper-pagination-bullet-active {
                 background-color: @color;
             }
+            .swiper-pagination-progressbar {
+                background-color: @color;
+            }
+        }
+        &.swiper-pagination-progress.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.25);
         }
     }
     .swiper-button-next, .swiper-container-rtl .swiper-button-prev {

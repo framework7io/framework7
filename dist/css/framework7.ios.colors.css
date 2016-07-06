@@ -1,18 +1,18 @@
 /**
- * Framework7 1.4.0
+ * Framework7 1.4.2
  * Full Featured Mobile HTML Framework For Building iOS & Android Apps
  * 
  * iOS Theme
  *
  * http://www.idangero.us/framework7
  * 
- * Copyright 2015, Vladimir Kharlampidi
+ * Copyright 2016, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: December 7, 2015
+ * Released on: February 27, 2016
  */
 /*==========================
 Framework7 Color Themes
@@ -141,6 +141,13 @@ i.icon-bars.theme-gray,
 .swiper-pagination.color-gray .swiper-pagination-bullet-active,
 .theme-gray .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #8e8e93;
+}
+.swiper-pagination.color-gray .swiper-pagination-progressbar,
+.theme-gray .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #8e8e93;
+}
+.swiper-pagination.swiper-pagination-progress.bg-gray {
+  background-color: rgba(142, 142, 147, 0.25);
 }
 .swiper-button-next.color-gray,
 .swiper-container-rtl .swiper-button-prev.color-gray,
@@ -302,6 +309,13 @@ i.icon-bars.theme-white,
 .theme-white .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffffff;
 }
+.swiper-pagination.color-white .swiper-pagination-progressbar,
+.theme-white .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ffffff;
+}
+.swiper-pagination.swiper-pagination-progress.bg-white {
+  background-color: rgba(255, 255, 255, 0.25);
+}
 .swiper-button-next.color-white,
 .swiper-container-rtl .swiper-button-prev.color-white,
 .theme-white .swiper-button-next,
@@ -461,6 +475,13 @@ i.icon-bars.theme-black,
 .swiper-pagination.color-black .swiper-pagination-bullet-active,
 .theme-black .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #000000;
+}
+.swiper-pagination.color-black .swiper-pagination-progressbar,
+.theme-black .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #000000;
+}
+.swiper-pagination.swiper-pagination-progress.bg-black {
+  background-color: rgba(0, 0, 0, 0.25);
 }
 .swiper-button-next.color-black,
 .swiper-container-rtl .swiper-button-prev.color-black,
@@ -622,6 +643,13 @@ i.icon-bars.theme-lightblue,
 .theme-lightblue .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #5ac8fa;
 }
+.swiper-pagination.color-lightblue .swiper-pagination-progressbar,
+.theme-lightblue .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #5ac8fa;
+}
+.swiper-pagination.swiper-pagination-progress.bg-lightblue {
+  background-color: rgba(90, 200, 250, 0.25);
+}
 .swiper-button-next.color-lightblue,
 .swiper-container-rtl .swiper-button-prev.color-lightblue,
 .theme-lightblue .swiper-button-next,
@@ -781,6 +809,13 @@ i.icon-bars.theme-yellow,
 .swiper-pagination.color-yellow .swiper-pagination-bullet-active,
 .theme-yellow .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffcc00;
+}
+.swiper-pagination.color-yellow .swiper-pagination-progressbar,
+.theme-yellow .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ffcc00;
+}
+.swiper-pagination.swiper-pagination-progress.bg-yellow {
+  background-color: rgba(255, 204, 0, 0.25);
 }
 .swiper-button-next.color-yellow,
 .swiper-container-rtl .swiper-button-prev.color-yellow,
@@ -942,6 +977,13 @@ i.icon-bars.theme-orange,
 .theme-orange .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ff9500;
 }
+.swiper-pagination.color-orange .swiper-pagination-progressbar,
+.theme-orange .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ff9500;
+}
+.swiper-pagination.swiper-pagination-progress.bg-orange {
+  background-color: rgba(255, 149, 0, 0.25);
+}
 .swiper-button-next.color-orange,
 .swiper-container-rtl .swiper-button-prev.color-orange,
 .theme-orange .swiper-button-next,
@@ -1101,6 +1143,13 @@ i.icon-bars.theme-pink,
 .swiper-pagination.color-pink .swiper-pagination-bullet-active,
 .theme-pink .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ff2d55;
+}
+.swiper-pagination.color-pink .swiper-pagination-progressbar,
+.theme-pink .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ff2d55;
+}
+.swiper-pagination.swiper-pagination-progress.bg-pink {
+  background-color: rgba(255, 45, 85, 0.25);
 }
 .swiper-button-next.color-pink,
 .swiper-container-rtl .swiper-button-prev.color-pink,
@@ -1262,6 +1311,13 @@ i.icon-bars.theme-blue,
 .theme-blue .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #007aff;
 }
+.swiper-pagination.color-blue .swiper-pagination-progressbar,
+.theme-blue .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #007aff;
+}
+.swiper-pagination.swiper-pagination-progress.bg-blue {
+  background-color: rgba(0, 122, 255, 0.25);
+}
 .swiper-button-next.color-blue,
 .swiper-container-rtl .swiper-button-prev.color-blue,
 .theme-blue .swiper-button-next,
@@ -1422,6 +1478,13 @@ i.icon-bars.theme-green,
 .theme-green .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #4cd964;
 }
+.swiper-pagination.color-green .swiper-pagination-progressbar,
+.theme-green .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #4cd964;
+}
+.swiper-pagination.swiper-pagination-progress.bg-green {
+  background-color: rgba(76, 217, 100, 0.25);
+}
 .swiper-button-next.color-green,
 .swiper-container-rtl .swiper-button-prev.color-green,
 .theme-green .swiper-button-next,
@@ -1581,6 +1644,13 @@ i.icon-bars.theme-red,
 .swiper-pagination.color-red .swiper-pagination-bullet-active,
 .theme-red .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ff3b30;
+}
+.swiper-pagination.color-red .swiper-pagination-progressbar,
+.theme-red .swiper-pagination .swiper-pagination-progressbar {
+  background-color: #ff3b30;
+}
+.swiper-pagination.swiper-pagination-progress.bg-red {
+  background-color: rgba(255, 59, 48, 0.25);
 }
 .swiper-button-next.color-red,
 .swiper-container-rtl .swiper-button-prev.color-red,

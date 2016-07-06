@@ -650,6 +650,9 @@ Dom7.prototype = {
         }
         return new Dom7(prevEls);
     },
+    siblings: function (selector) {
+        return this.nextAll(selector).add(this.prevAll(selector));
+    },
     parent: function (selector) {
         var parents = [];
         for (var i = 0; i < this.length; i++) {
@@ -679,6 +682,16 @@ Dom7.prototype = {
             }
         }
         return $($.unique(parents));
+    },
+    closest: function (selector) {
+        var closest = this;
+        if (typeof selector === 'undefined') {
+            return new Dom7([]);
+        }
+        if (!closest.is(selector)) {
+            closest = closest.parents(selector).eq(0);
+        }
+        return closest;
     },
     find : function (selector) {
         var foundElements = [];
@@ -726,6 +739,18 @@ Dom7.prototype = {
             }
         }
         return dom;
+    },
+    empty: function () {
+        for (var i = 0; i < this.length; i++) {
+            var el = this[i];
+            if (el.nodeType === 1) {
+                for (var j = 0; j < el.childNodes.length; j++) {
+                    if (el.childNodes[j].parentNode) el.childNodes[j].parentNode.removeChild(el.childNodes[j]);
+                }
+                el.textContent = '';
+            }
+        }
+        return this;
     }
 };
 

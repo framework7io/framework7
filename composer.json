@@ -1,0 +1,40 @@
+{
+    "name": "nolimits4web/framework7",
+    "description": "Full Featured Mobile HTML Framework For Building iOS & Android Apps",
+    "keywords": [
+        "mobile",
+        "framework",
+        "ios",
+        "ios 7",
+        "ios7",
+        "ios8",
+        "ios 8",
+        "ios9",
+        "ios 9",
+        "iphone",
+        "ipad",
+        "apple",
+        "phonegap",
+        "native",
+        "touch",
+        "appstore",
+        "app",
+        "f7",
+        "material",
+        "android",
+        "google",
+        "googleplay"
+    ],
+    "homepage": "http://framework7.io/",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/nolimits4web/framework7/issues"
+    },
+    "authors": [
+        {
+            "name": "Vladimir Kharlampidi",
+            "email": "nolimits4web@gmail.com",
+            "homepage": "http://idangero.us"
+        }
+    ]
+}

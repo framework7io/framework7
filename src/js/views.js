@@ -546,7 +546,7 @@ var View = function (selector, params) {
     };
 
     // Push State on load
-    if (app.params.pushState && view.main) {
+    if (app.params.pushState && app.params.pushStateOnLoad && view.main) {
         var pushStateUrl;
         var pushStateUrlSplit = docLocation.split(pushStateSeparator)[1];
         if (pushStateRoot) {
@@ -562,7 +562,7 @@ var View = function (selector, params) {
                 app.router.load(view, {pageName: historyState.pageName, url: historyState.url, animatePages: pushStateAnimatePages, pushState: false});
             }
             else if (pushStateUrl.indexOf('#') >= 0 && view.params.domCache && view.initialPagesUrl.indexOf(pushStateUrl) >= 0) {
-                app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});   
+                app.router.load(view, {pageName: pushStateUrl.replace('#',''), animatePages: pushStateAnimatePages, pushState: false});
             }
             else app.router.load(view, {url: pushStateUrl, animatePages: pushStateAnimatePages, pushState: false});
         }

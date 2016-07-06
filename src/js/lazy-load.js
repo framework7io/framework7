@@ -135,7 +135,7 @@ app.initImagesLazyLoad = function (pageContainer) {
 app.destroyImagesLazyLoad = function (pageContainer) {
     pageContainer = $(pageContainer);
     if (pageContainer.length > 0 && pageContainer[0].f7DestroyImagesLazyLoad) {
-        pageContainer[0].f7DestroyLazyLoad();
+        pageContainer[0].f7DestroyImagesLazyLoad();
     }
 };
 app.reinitImagesLazyLoad = function (pageContainer) {

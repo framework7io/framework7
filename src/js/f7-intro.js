@@ -7,7 +7,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '1.4.0';
+    app.version = '1.4.2';
 
     // Default Parameters
     app.params = {
@@ -26,11 +26,12 @@ window.Framework7 = function (params) {
         pushStateRoot: undefined,
         pushStateNoAnimation: false,
         pushStateSeparator: '#!/',
-        pushStatePreventOnLoad: true,
+        pushStateOnLoad: true,
         // Fast clicks
         fastClicks: true,
         fastClicksDistanceThreshold: 10,
         fastClicksDelayBetweenClicks: 50,
+        fastClicksExclude: '', // CSS selector
         // Tap Hold
         tapHold: false,
         tapHoldDelay: 750,
