@@ -97,7 +97,7 @@ app.initNavbarWithCallback = function (navbarContainer) {
 // Size Navbars
 app.sizeNavbars = function (viewContainer) {
     if (app.params.material) return;
-    var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached)') : $('.navbar .navbar-inner:not(.cached)');
+    var navbarInner = viewContainer ? $(viewContainer).find('.navbar .navbar-inner:not(.cached), .navbar .subnavbar:not(.cached)') : $('.navbar .navbar-inner:not(.cached), .navbar .subnavbar:not(.cached)');
     navbarInner.each(function () {
         var n = $(this);
         if (n.hasClass('cached')) return;
@@ -187,7 +187,7 @@ app.sizeNavbars = function (viewContainer) {
         var centerLeft = diff;
         if (app.rtl && noLeft && noRight && center.length > 0) centerLeft = -centerLeft;
         center.css({left: centerLeft + 'px'});
-        
+
     });
 };
 
