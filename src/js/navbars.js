@@ -187,7 +187,6 @@ app.sizeNavbars = function (viewContainer) {
         var centerLeft = diff;
         if (app.rtl && noLeft && noRight && center.length > 0) centerLeft = -centerLeft;
         center.css({left: centerLeft + 'px'});
-
     });
 };
 
