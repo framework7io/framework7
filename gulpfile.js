@@ -11,6 +11,7 @@
         uglify = require('gulp-uglify'),
         sourcemaps = require('gulp-sourcemaps'),
         minifyCSS = require('gulp-minify-css'),
+        cleanCSS = require('gulp-clean-css'),
         tap = require('gulp-tap'),
         concat = require('gulp-concat'),
         jshint = require('gulp-jshint'),
@@ -384,7 +385,7 @@
                     paths.dist.styles + f7.filename + '.material.colors.css'
                 ];
                 gulp.src(minifiedCSS)
-                    .pipe(minifyCSS({
+                    .pipe(cleanCSS({
                         advanced: false,
                         aggressiveMerging: false,
                     }))
@@ -395,7 +396,7 @@
                     .pipe(gulp.dest(paths.dist.styles));
             });
     });
-    
+
     /* =================================
     Custom Build
     ================================= */
@@ -482,7 +483,7 @@
                 .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, theme: themeName, modulesList: modules.join(',') } ))
                 .pipe(gulp.dest(paths.custom.styles))
 
-                .pipe(minifyCSS({
+                .pipe(cleanCSS({
                     advanced: false,
                     aggressiveMerging: false,
                 }))
