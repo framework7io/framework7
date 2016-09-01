@@ -3,13 +3,13 @@ $.parseUrlQuery = function (url) {
    var url = url || location.href;
     var query = {}, i, params, param;
 
-    if(typeof url === 'string' && url.length)  {
+    if (typeof url === 'string' && url.length)  {
         url = (url.indexOf('#') > -1) ? url.split('#')[0] : url;
-        if(url.indexOf('?') > -1) url = url.split('?')[1];
+        if (url.indexOf('?') > -1) url = url.split('?')[1];
         else return query;
 
         params = url.split('&');
-        for(i = 0; i < params.length; i ++) {
+        for (i = 0; i < params.length; i ++) {
             param = params[i].split('=');
             query[param[0]] = param[1];
         }
