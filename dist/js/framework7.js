@@ -4080,6 +4080,16 @@
                     else {
                         direction = 'to-left';
                     }
+                    //Enable left and right swipePanel
+                    if(side==='both'){
+						if ($('.panel.active').length > 0) {
+								side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
+						}
+						else {
+							side = direction == "to-right" ? "left":"right";
+						}
+						panel = $('.panel.panel-' + side);
+						}
         
                     if (
                         side === 'left' &&
