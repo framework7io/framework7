@@ -49,7 +49,6 @@
     "gulp-open": "~2.0.0",
     "gulp-uglify": "~2.0.0",
     "gulp-sourcemaps": "~1.6.0",
-    "gulp-minify-css": "1.2.4",
     "gulp-clean-css": "2.0.12",
     "gulp-jshint": "~2.0.1",
     "gulp-concat": "~2.6.0",
