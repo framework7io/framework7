@@ -17,6 +17,7 @@ chance of keeping on top of things.
 * Submit an [issue](https://github.com/nolimits4web/Framework7/issues), assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce when it is a bug.
   * Make sure you fill in the earliest version that you know has the issue.
+  * Include live link or JSFiddle/Codepen link with the issue if you want it to be discovered and resolved asap. We have few ready templates for you: iOS [JSFiddle](https://jsfiddle.net/mvs820k0/)/[Codepen](https://codepen.io/nolimits4web/pen/vXmmgG), Material [JSFiddle](https://jsfiddle.net/u8a87yd2/2/)/[Codepen](https://codepen.io/nolimits4web/pen/pEPPPK)
 * Fork the repository on GitHub.
 
 ## Making Changes
