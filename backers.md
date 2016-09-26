@@ -34,4 +34,4 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $10+
 
-[Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=10.0&exp=1&u=4109762&rid=830839)
+Dave Billington
