@@ -26,7 +26,7 @@
             custom: {
                 root: 'custom/',
                 styles: 'custom/css/',
-                scripts: 'custom/js/',
+                scripts: 'custom/js/'
             },
             dist: {
                 root: 'dist/',
@@ -38,13 +38,13 @@
                     root: 'kitchen-sink-ios/',
                     css: 'kitchen-sink-ios/css/',
                     jade: 'kitchen-sink-ios/jade/*.jade',
-                    less: 'kitchen-sink-ios/less/*.less',
+                    less: 'kitchen-sink-ios/less/*.less'
                 },
                 material : {
                     root: 'kitchen-sink-material/',
                     css: 'kitchen-sink-material/css/',
                     jade: 'kitchen-sink-material/jade/*.jade',
-                    less: 'kitchen-sink-material/less/*.less',
+                    less: 'kitchen-sink-material/less/*.less'
                 }
             },
             source: {
@@ -160,7 +160,7 @@
                 year: new Date().getFullYear(),
                 month: ('January February March April May June July August September October November December').split(' ')[new Date().getMonth()],
                 day: new Date().getDate()
-            },
+            }
 
         };
 
@@ -253,7 +253,7 @@
                 locals: {
                     stylesheetFilename: 'framework7.ios',
                     stylesheetColorsFilename: 'framework7.ios.colors',
-                    scriptFilename: 'framework7',
+                    scriptFilename: 'framework7'
                 }
             }))
             .pipe(gulp.dest(paths.build.root));
@@ -279,7 +279,7 @@
     gulp.task('ks-ios-jade', function (cb) {
         gulp.src(paths.ks.ios.jade)
             .pipe(jade({
-                pretty: true,
+                pretty: true
             }))
             .pipe(gulp.dest(paths.ks.ios.root))
             .pipe(connect.reload())
@@ -304,7 +304,7 @@
     gulp.task('ks-material-jade', function (cb) {
         gulp.src(paths.ks.material.jade)
             .pipe(jade({
-                pretty: true,
+                pretty: true
             }))
             .pipe(gulp.dest(paths.ks.material.root))
             .pipe(connect.reload())
@@ -332,7 +332,7 @@
             var exampleRoot = paths.examples.root + paths.examples.list[i] + '/';
             gulp.src(exampleRoot + 'jade/*.jade')
                 .pipe(jade({
-                    pretty: true,
+                    pretty: true
                 }))
                 .pipe(gulp.dest(exampleRoot));
             gulp.src(exampleRoot + 'less/*.less')
@@ -359,7 +359,7 @@
                         locals: {
                             stylesheetFilename: 'framework7.ios.min',
                             stylesheetColorsFilename: 'framework7.ios.colors.min',
-                            scriptFilename: 'framework7.min',
+                            scriptFilename: 'framework7.min'
                         }
                     }))
                     .pipe(gulp.dest(paths.dist.root));
@@ -386,7 +386,7 @@
                 gulp.src(minifiedCSS)
                     .pipe(cleanCSS({
                         advanced: false,
-                        aggressiveMerging: false,
+                        aggressiveMerging: false
                     }))
                     .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date }))
                     .pipe(rename(function(path) {
@@ -482,7 +482,7 @@
 
                 .pipe(cleanCSS({
                     advanced: false,
-                    aggressiveMerging: false,
+                    aggressiveMerging: false
                 }))
                 .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, theme: themeName, modulesList: modules.join(',') }))
                 .pipe(rename(function(path) {
