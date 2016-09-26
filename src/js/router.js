@@ -1005,7 +1005,7 @@ app.router.back = function (view, options) {
         return;
     }
     if (!force) {
-        url = options.url = view.history[view.history.length - 2];
+        url = view.history[view.history.length - 2] || options.url;
         if (!url) {
             view.allowPageChange = true;
             return;
