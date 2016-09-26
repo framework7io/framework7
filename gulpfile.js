@@ -10,7 +10,6 @@
         path = require('path'),
         uglify = require('gulp-uglify'),
         sourcemaps = require('gulp-sourcemaps'),
-        minifyCSS = require('gulp-minify-css'),
         cleanCSS = require('gulp-clean-css'),
         tap = require('gulp-tap'),
         concat = require('gulp-concat'),
