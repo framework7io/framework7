@@ -140,7 +140,11 @@ app.closeNotification = function (item) {
     item.css('height', itemHeight + 'px').transition(0).addClass('notification-item-removing');
     var clientLeft = item[0].clientLeft;
 
-    item.css('height', '0px').transition('');
+    item.css({
+        height: '0px',
+        marginBottom: '0px'
+    }).transition('');
+
     if (item.data('f7NotificationOnClose')) item.data('f7NotificationOnClose')();
 
     if (container.find('.notification-item:not(.notification-item-removing)').length === 0) {
