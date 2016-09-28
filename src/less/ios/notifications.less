@@ -15,9 +15,10 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
     .transition(@notificationsDuration);
-    -webkit-perspective:1200px;
-    perspective:1200px;
+    -webkit-perspective: 1200px;
+    perspective: 1200px;
     padding-top: 8px;
+    padding-bottom: 8px;
     &.list-block > ul {
         .hairline-remove(top);
         .hairline-remove(bottom);
@@ -101,6 +102,7 @@
         }
     }
     li.notification-item {
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
         .item-inner {
             padding-top: 0;
         }
