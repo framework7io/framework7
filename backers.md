@@ -34,6 +34,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $10+
 
+Kris Reddy<br>
 Rick Chang<br>
 plpl<br>
 Dave Billington
@@ -42,4 +43,4 @@ Dave Billington
 
 ### $5+
 
-[Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=5.0&exp=1&rid=845389&u=4109762)
+Sigfrido Rodríguez Santos
