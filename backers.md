@@ -34,8 +34,8 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $10+
 
-Rick Chang
-plpl
+Rick Chang<br>
+plpl<br>
 Dave Billington
 
 ---
