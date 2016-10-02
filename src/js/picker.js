@@ -277,7 +277,6 @@ var Picker = function (params) {
                 startTranslate = currentTranslate = $.getTranslate(col.wrapper[0], 'y');
                 col.wrapper.transition(0);
             }
-            e.preventDefault();
 
             var diff = touchCurrentY - touchStartY;
             currentTranslate = startTranslate + diff;
