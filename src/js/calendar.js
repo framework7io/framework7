@@ -263,7 +263,6 @@ var Calendar = function (params) {
                 wrapperHeight = p.wrapper[0].offsetHeight;
                 p.wrapper.transition(0);
             }
-            e.preventDefault();
 
             touchesDiff = p.isH ? touchCurrentX - touchStartX : touchCurrentY - touchStartY;
             percentage = touchesDiff/(p.isH ? wrapperWidth : wrapperHeight);
