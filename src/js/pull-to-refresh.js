@@ -172,9 +172,10 @@ app.initPullToRefresh = function (pageContainer) {
     }
 
     // Attach Events
-    eventsTarget.on(app.touchEvents.start, handleTouchStart);
+    var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? {passive: true, capture: false} : false;
+    eventsTarget.on(app.touchEvents.start, handleTouchStart, passiveListener);
     eventsTarget.on(app.touchEvents.move, handleTouchMove);
-    eventsTarget.on(app.touchEvents.end, handleTouchEnd);
+    eventsTarget.on(app.touchEvents.end, handleTouchEnd, passiveListener);
 
     // Detach Events on page remove
     if (page.length === 0) return;
