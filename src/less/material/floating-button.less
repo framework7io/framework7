@@ -123,31 +123,3 @@
         }
     }
 }
-
-// Popove Morph
-.floating-button-to-popover {
-    &.floating-button-to-popover {
-        .transition(300ms);
-    }
-    &.floating-button-to-popover-in {
-        .transition(100ms);
-        i {
-            opacity: 0;
-            .transition(100ms);
-        }
-    }
-    &.floating-button-to-popover-scale {
-        border-radius: 0;
-        .transition(300ms);
-        box-shadow: none;
-    }
-    &.floating-button-to-popover-out {
-        .delay(0ms);
-        .transition(300ms);
-        i {
-            opacity: 1;
-            .transition(100ms);
-            .delay(200ms);
-        }
-    }
-}
