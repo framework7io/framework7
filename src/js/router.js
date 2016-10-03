@@ -1006,6 +1006,7 @@ app.router.back = function (view, options) {
     }
     if (!force) {
         url = view.history[view.history.length - 2] || options.url;
+        if (!options.url) options.url = url;
         if (!url) {
             view.allowPageChange = true;
             return;
