@@ -37,12 +37,12 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 Thanakrit Tangtermsak<br>
 Kris Reddy<br>
 Rick Chang<br>
-plpl<br>
 Dave Billington
 
 ---
 
 ### $5+
 
+Bohdan Shulha<br>
 Timo Ernst<br>
 Sigfrido Rodríguez Santos
