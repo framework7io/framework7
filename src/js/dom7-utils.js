@@ -83,9 +83,12 @@ $.serializeObject = $.param = function (obj, parents) {
                     else {
                         toPush.push(var_name(prop) + '[]=' + var_value(obj[prop][i]));
                     }
-                    
+
                 }
                 if (toPush.length > 0) resultArray.push(toPush.join(separator));
+            }
+            else if (obj[prop] === null) {
+                resultArray.push(var_name(prop) + '=');
             }
             else if (typeof obj[prop] === 'object') {
                 // Object, convert to named array
