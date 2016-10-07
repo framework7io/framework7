@@ -72,7 +72,7 @@
     cursor: pointer;
     .align-self(center);
     .checkbox {
-        width: 52px; 
+        width: 52px;
         border-radius: 16px;
         box-sizing: border-box;
         height: 32px;
@@ -271,9 +271,9 @@ html.android {
             outline: 0;
         }
     }
-    
 
-    
+
+
     // Range thumb mixin
     .range-thumb() {
         height: 28px;
@@ -288,7 +288,7 @@ html.android {
         box-sizing: border-box;
         content: ' ';
     }
-    
+
     // ======= WebKit/Blink ========
 
     // Before Track
@@ -309,11 +309,10 @@ html.android {
         -moz-appearance: none;
         -ms-appearance: none;
         appearance: none;
-        border: none;
-        height: 28px;
-        width: 28px;
+        .range-thumb();
         position: relative;
-        background: none;
+        cursor: pointer;
+        margin-top: -1px;
     }
     input[type="range"]::-webkit-slider-thumb:after {
         .range-thumb();
@@ -344,7 +343,7 @@ html.android {
     input[type="range"]::-moz-range-thumb {
         .range-thumb();
     }
-    
+
     // ======= IE ========
     input[type="range"]::-ms-track {
         width: 100%;
