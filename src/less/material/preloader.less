@@ -1,4 +1,4 @@
-/* === 
+/* ===
     Preloader
     By Rudi Theunissen (https://github.com/rtheunissen/md-preloader)
 === */
@@ -33,9 +33,6 @@
             -webkit-animation: preloader-arc @speed @easing infinite;
             animation: preloader-arc @speed @easing infinite;
         }
-    }
-    &.preloader-white svg circle {
-        stroke: #fff;
     }
     @-webkit-keyframes preloader-outer {
         0% {
@@ -167,6 +164,20 @@
             animation-name: preloader-right-rotate;
       }
     }
+    .color-multi & {
+        .preloader-inner-left {
+            .preloader-inner-half-circle {
+                -webkit-animation-name: preloader-left-rotate-multicolor;
+                animation-name: preloader-left-rotate-multicolor;
+            }
+        }
+        .preloader-inner-right {
+            .preloader-inner-half-circle {
+                -webkit-animation-name: preloader-right-rotate-multicolor;
+                animation-name: preloader-right-rotate-multicolor;
+          }
+        }
+    }
 }
 @-webkit-keyframes preloader-left-rotate {
     0%, 100% {
@@ -251,5 +262,85 @@
     }
     100% {
         transform: rotate(1080deg);
+    }
+}
+@-webkit-keyframes preloader-left-rotate-multicolor {
+    0%,
+    100% {
+        border-left-color: #4285F4;
+        -webkit-transform: rotate(130deg);
+    }
+    75% {
+        border-left-color: #1B9A59;
+        border-top-color: #1B9A59;
+    }
+    50% {
+        border-left-color: #F7C223;
+        border-top-color: #F7C223;
+        -webkit-transform: rotate(-5deg);
+    }
+    25% {
+        border-left-color: #DE3E35;
+        border-top-color: #DE3E35;
+    }
+}
+@keyframes preloader-left-rotate-multicolor {
+    0%,
+    100% {
+        border-left-color: #4285F4;
+        transform: rotate(130deg);
+    }
+    75% {
+        border-left-color: #1B9A59;
+        border-top-color: #1B9A59;
+    }
+    50% {
+        border-left-color: #F7C223;
+        border-top-color: #F7C223;
+        transform: rotate(-5deg);
+    }
+    25% {
+        border-left-color: #DE3E35;
+        border-top-color: #DE3E35;
+    }
+}
+@-webkit-keyframes preloader-right-rotate-multicolor {
+    0%,
+    100% {
+        border-right-color: #4285F4;
+        -webkit-transform: rotate(-130deg);
+    }
+    75% {
+        border-right-color: #1B9A59;
+        border-top-color: #1B9A59;
+    }
+    50% {
+        border-right-color: #F7C223;
+        border-top-color: #F7C223;
+        -webkit-transform: rotate(5deg);
+    }
+    25% {
+        border-top-color: #DE3E35;
+        border-right-color: #DE3E35;
+    }
+}
+@keyframes preloader-right-rotate-multicolor {
+    0%,
+    100% {
+        border-right-color: #4285F4;
+        transform: rotate(-130deg);
+    }
+    75% {
+        border-right-color: #1B9A59;
+        border-top-color: #1B9A59;
+    }
+    50% {
+        border-right-color: #F7C223;
+        border-top-color: #F7C223;
+        transform: rotate(5deg);
+    }
+    25% {
+        border-top-color: #DE3E35;
+        border-right-color: #DE3E35;
     }
 }
