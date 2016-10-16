@@ -30,7 +30,7 @@ app.formGetData = function (formId) {
     // Try to get it from formsData obj
     else if (app.formsData[formId]) return app.formsData[formId];
 };
-app.formToJSON = function (form) {
+app.formToData = function (form) {
     form = $(form);
     if (form.length !== 1) return false;
 
@@ -76,11 +76,12 @@ app.formToJSON = function (form) {
         }
             
     });
-    form.trigger('formToJSON', {formData: formData});
+    form.trigger('formToJSON formToData', {formData: formData});
 
     return formData;
 };
-app.formFromJSON = function (form, formData) {
+app.formToJSON = app.formToData;
+app.formFromData = function (form, formData) {
     form = $(form);
     if (form.length !== 1) return false;
 
@@ -124,21 +125,22 @@ app.formFromJSON = function (form, formData) {
                     break;
             }
         }
-            
     });
-    form.trigger('formFromJSON', {formData: formData});
+    form.trigger('formFromJSON formFromData', {formData: formData});
 };
+app.formFromJSON = app.formFromData;
+
 app.initFormsStorage = function (pageContainer) {
     pageContainer = $(pageContainer);
     var forms = pageContainer.find('form.store-data');
     if (forms.length === 0) return;
-    
+
     // Parse forms data and fill form if there is such data
     forms.each(function () {
         var id = this.getAttribute('id');
         if (!id) return;
         var formData = app.formGetData(id);
-        if (formData) app.formFromJSON(this, formData);
+        if (formData) app.formFromData(this, formData);
     });
     // Update forms data on inputs change
     function storeForm() {
@@ -146,7 +148,7 @@ app.initFormsStorage = function (pageContainer) {
         var form = $(this);
         var formId = form[0].id;
         if (!formId) return;
-        var formJSON = app.formToJSON(form);
+        var formJSON = app.formToData(form);
         if (!formJSON) return;
         app.formStoreData(formId, formJSON);
         form.trigger('store', {data: formJSON});
