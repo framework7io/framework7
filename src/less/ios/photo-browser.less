@@ -148,11 +148,9 @@
     .flex-shrink(0);
     box-sizing: border-box;
     &.transitioning {
-       .transition(400ms); 
+       .transition(400ms);
     }
-    span.photo-browser-zoom-container {
-        width: 100%;
-        text-align: center;
+    span.swiper-zoom-container {
         display: none;
     }
     img {
@@ -163,8 +161,8 @@
         display: none;
     }
     &.swiper-slide-active, &.swiper-slide-next, &.swiper-slide-prev {
-        span.photo-browser-zoom-container {
-            display: block;
+        span.swiper-zoom-container {
+            .flexbox();
         }
         img {
             display: inline;
