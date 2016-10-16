@@ -219,7 +219,15 @@ app.router = {
                     t7_ctx.url_query[key] = query[key];
                 }
             }
-            t7_rendered_content = t7_template(t7_ctx);
+            try {
+                t7_rendered_content = t7_template(t7_ctx);
+            }
+            catch (e) {
+                t7_rendered_content = '';
+                if (window.console && window.console.error) {
+                    console.error(e);
+                }
+            }
         }
 
         return {content: t7_rendered_content, context: t7_ctx};
