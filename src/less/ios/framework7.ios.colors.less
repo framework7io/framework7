@@ -94,14 +94,6 @@ Framework7 Color Themes
         .messagebar .messagebar-send-link {
             background-color: @color;
         }
-        .range-slider, .range-slider& {
-            input[type="range"]::-webkit-slider-thumb:before {
-                background-color: @color;
-            }
-            input[type="range"]::-ms-fill-lower {
-                background-color: @color;
-            }
-        }
         label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
             background-color: @color;
         }
@@ -148,7 +140,18 @@ Framework7 Color Themes
             }
         }
     }
-    //Badges
+    // Range Slider
+    .range-slider {
+        .theme-@{colorName} &, &.color-@{colorName}, &.theme-@{colorName} {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
+        }
+    }
+    // Badges
     .badge.color-@{colorName}, .badge.theme-@{colorName} {
     	background-color:@color;
     	color: #fff;

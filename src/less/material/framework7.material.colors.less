@@ -254,23 +254,6 @@ Framework7 Color Themes
             background-color: @color;
         }
         // Forms
-        .range-slider, .range-slider& {
-            input[type="range"]::-webkit-slider-thumb:before {
-                background-color: @color;
-            }
-            input[type="range"]::-webkit-slider-thumb {
-                background-color: @color;
-            }
-            input[type="range"]::-ms-thumb {
-                background-color: @color;
-            }
-            input[type="range"]::-ms-fill-lower {
-                background-color: @color;
-            }
-            input[type="range"]::-moz-range-thumb {
-                background-color: @color;
-            }
-        }
         .label-switch, .label-switch& {
             input[type="checkbox"] {
                 &:checked {
@@ -325,7 +308,6 @@ Framework7 Color Themes
             }
         }
         // Calendar
-
         .picker-calendar-day.picker-calendar-day-today span {
             color: @color;
         }
@@ -405,7 +387,27 @@ Framework7 Color Themes
             background-color: rgba(red(@color), green(@color), blue(@color), 0.3);
         }
     }
-    //Badges
+    // Range Slider
+    .range-slider {
+        .theme-@{colorName} &, &.color-@{colorName}, &.theme-@{colorName} {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-thumb {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
+            input[type="range"]::-moz-range-thumb {
+                background-color: @color;
+            }
+        }
+    }
+    // Badges
     .badge.color-@{colorName}, .badge.theme-@{colorName} {
     	background-color:@color;
     	color: #fff;
