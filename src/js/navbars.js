@@ -54,6 +54,8 @@ app.navbarRemoveCallback = function (view, pageContainer, navbarContainer, navba
     };
     app.pluginHook('navbarBeforeRemove', navbarData, pageData);
     $(navbarInnerContainer).trigger('navbarBeforeRemove', eventData);
+    navbarData = null;
+    pageData = null;
 };
 app.initNavbar = function (navbarContainer, navbarInnerContainer) {
     // Init Subnavbar Searchbar
