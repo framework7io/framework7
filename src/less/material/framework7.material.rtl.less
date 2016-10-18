@@ -176,6 +176,25 @@ label.label-checkbox, label.label-radio {
     align-self: flex-start;
     .align-items(flex-start);
 }
+
+/* === Chips === */
+.chip{
+	.chip-media {
+		margin-left: 0;
+		margin-right: -12px;
+		+ .chip-label{
+			margin-left: 0px;
+			margin-right: 8px;
+		}
+	}
+    .chip-label {
+        + .chip-delete {
+		margin-left: 0px;
+		margin-right: 4px;
+        }
+    }	
+}
+
 /* === Accordion === */
 .list-block {
     .accordion-toggle {
