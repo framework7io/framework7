@@ -22,7 +22,7 @@ app.addNotification = function (params) {
 
     var container = $('.notifications');
     if (container.length === 0) {
-        $('body').append('<div class="notifications list-block' + (params.material ? '' : ' media-list') + '"><ul></ul></div>');
+        app.root.append('<div class="notifications list-block' + (params.material ? '' : ' media-list') + '"><ul></ul></div>');
         container = $('.notifications');
     }
     var list = container.children('ul');

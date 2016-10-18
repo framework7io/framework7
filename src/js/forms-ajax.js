@@ -6,7 +6,7 @@ $(document).on('submit change', 'form.ajax-submit, form.ajax-submit-onchange', f
     var form = $(this);
     if (e.type === 'change' && !form.hasClass('ajax-submit-onchange')) return;
     if (e.type === 'submit') e.preventDefault();
-    
+
     var method = (form.attr('method') || 'GET').toUpperCase();
     var contentType = form.prop('enctype') || form.attr('enctype');
 

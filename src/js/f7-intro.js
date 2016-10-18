@@ -11,6 +11,9 @@ window.Framework7 = function (params) {
 
     // Default Parameters
     app.params = {
+        //
+        root: 'body',
+        //
         cache: true,
         cacheIgnore: [],
         cacheIgnoreGetParameters: false,
@@ -142,6 +145,10 @@ window.Framework7 = function (params) {
     var t7 = Template7;
     app._compiledTemplates = {};
 
+    // App Root
+    app.root = $(app.params.root);
+    app.root.eq(0).addClass('framework7-root');
+
     // Touch events
     app.touchEvents = {
         start: app.support.touch ? 'touchstart' : 'mousedown',
@@ -161,5 +168,3 @@ window.Framework7 = function (params) {
         if (app.params.statusbarOverlay) $('html').addClass('with-statusbar-overlay');
         else $('html').removeClass('with-statusbar-overlay');
     }
-
-    

@@ -2,7 +2,7 @@
 ************   Progress Bar   ************
 ===============================================================================*/
 app.setProgressbar = function (container, progress, speed) {
-    container = $(container || 'body');
+    container = $(container || app.root);
     if (container.length === 0) return;
     if (progress) progress = Math.min(Math.max(progress, 0), 100);
     var progressbar;
@@ -23,7 +23,7 @@ app.setProgressbar = function (container, progress, speed) {
 };
 app.showProgressbar = function (container, progress, color) {
     if (typeof container === 'number') {
-        container = 'body';
+        container = app.root;
         progress = arguments[0];
         color = arguments[1];
     }
@@ -31,7 +31,7 @@ app.showProgressbar = function (container, progress, color) {
         color = progress;
         progress = undefined;
     }
-    container = $(container || 'body');
+    container = $(container || app.root);
     if (container.length === 0) return;
     var progressbar;
     if (container.hasClass('progressbar')) progressbar = container;
@@ -54,7 +54,7 @@ app.showProgressbar = function (container, progress, color) {
     return progressbar[0];
 };
 app.hideProgressbar = function (container) {
-    container = $(container || 'body');
+    container = $(container || app.root);
     if (container.length === 0) return;
     var progressbar;
     if (container.hasClass('progressbar')) progressbar = container;

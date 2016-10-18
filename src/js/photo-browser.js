@@ -162,7 +162,7 @@ var PhotoBrowser = function (params) {
         pb.opened = true;
         pb.openIndex = index;
         if (pb.params.type === 'standalone') {
-            $('body').append(htmlTemplate);
+            app.root.append(htmlTemplate);
         }
         if (pb.params.type === 'popup') {
             pb.popup = app.popup('<div class="popup photo-browser-popup">' + htmlTemplate + '</div>');

@@ -35,7 +35,7 @@ app.modal = function (params) {
 
     var modal = $(_modalTemplateTempDiv).children();
 
-    $('body').append(modal[0]);
+    app.root.append(modal[0]);
 
     // Add events on buttons
     modal.find('.modal-button').each(function (index, el) {
@@ -163,7 +163,7 @@ app.hidePreloader = function () {
     app.closeModal('.modal.modal-in');
 };
 app.showIndicator = function () {
-    $('body').append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</span></div>');
+    app.root.append('<div class="preloader-indicator-overlay"></div><div class="preloader-indicator-modal"><span class="preloader preloader-white">' + (app.params.material ? app.params.materialPreloaderHtml : '') + '</span></div>');
 };
 app.hideIndicator = function () {
     $('.preloader-indicator-overlay, .preloader-indicator-modal').remove();
@@ -241,7 +241,7 @@ app.actions = function (target, params) {
         }
         _modalTemplateTempDiv.innerHTML = modalHTML;
         modal = $(_modalTemplateTempDiv).children();
-        $('body').append(modal[0]);
+        app.root.append(modal[0]);
         groupSelector = '.actions-modal-group';
         buttonSelector = '.actions-modal-button';
     }
@@ -275,7 +275,7 @@ app.popover = function (modal, target, removeOnClose) {
         if (_modal.childNodes.length > 0) {
             modal = _modal.childNodes[0];
             if (removeOnClose) modal.classList.add('remove-on-close');
-            $('body').append(modal);
+            app.root.append(modal);
         }
         else return false; //nothing found
     }
@@ -284,7 +284,7 @@ app.popover = function (modal, target, removeOnClose) {
     if (modal.length === 0 || target.length === 0) return false;
     if (modal.parents('body').length === 0) {
         if (removeOnClose) modal.addClass('remove-on-close');
-        $('body').append(modal[0]);
+        app.root.append(modal[0]);
     }
     if (modal.find('.popover-angle').length === 0 && !app.params.material) {
         modal.append('<div class="popover-angle"></div>');
@@ -470,7 +470,7 @@ app.popup = function (modal, removeOnClose) {
         if (_modal.childNodes.length > 0) {
             modal = _modal.childNodes[0];
             if (removeOnClose) modal.classList.add('remove-on-close');
-            $('body').append(modal);
+            app.root.append(modal);
         }
         else return false; //nothing found
     }
@@ -478,7 +478,7 @@ app.popup = function (modal, removeOnClose) {
     if (modal.length === 0) return false;
     if (modal.parents('body').length === 0) {
         if (removeOnClose) modal.addClass('remove-on-close');
-        $('body').append(modal[0]);
+        app.root.append(modal[0]);
     }
     modal.show();
 
@@ -491,7 +491,7 @@ app.pickerModal = function (modal, removeOnClose) {
         modal = $(modal);
         if (modal.length > 0) {
             if (removeOnClose) modal.addClass('remove-on-close');
-            $('body').append(modal[0]);
+            app.root.append(modal[0]);
         }
         else return false; //nothing found
     }
@@ -499,7 +499,7 @@ app.pickerModal = function (modal, removeOnClose) {
     if (modal.length === 0) return false;
     if (modal.parents('body').length === 0) {
         if (removeOnClose) modal.addClass('remove-on-close');
-        $('body').append(modal[0]);
+        app.root.append(modal[0]);
     }
     if ($('.picker-modal.modal-in:not(.modal-out)').length > 0 && !modal.hasClass('modal-in')) {
         app.closeModal('.picker-modal.modal-in:not(.modal-out)');
@@ -551,17 +551,17 @@ app.openModal = function (modal) {
     var overlay;
     if (!isLoginScreen && !isPickerModal) {
         if ($('.modal-overlay').length === 0 && !isPopup) {
-            $('body').append('<div class="modal-overlay"></div>');
+            app.root.append('<div class="modal-overlay"></div>');
         }
         if ($('.popup-overlay').length === 0 && isPopup) {
-            $('body').append('<div class="popup-overlay"></div>');
+            app.root.append('<div class="popup-overlay"></div>');
         }
         overlay = isPopup ? $('.popup-overlay') : $('.modal-overlay');
     }
     if (app.params.material && isPickerModal) {
         if (modal.hasClass('picker-calendar')) {
             if ($('.picker-modal-overlay').length === 0 && !isPopup) {
-                $('body').append('<div class="picker-modal-overlay"></div>');
+                app.root.append('<div class="picker-modal-overlay"></div>');
             }
             overlay = $('.picker-modal-overlay');
         }
