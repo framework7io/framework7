@@ -25,6 +25,7 @@ app.router = {
             // Try to find non cached
             if (!notCached) found = app.router.findElement(selector, container, view, true);
             if (found && found.length === 1) return found;
+            if (found && found.length > 1) return $(found[0]);
             else return undefined;
         }
     },
@@ -248,7 +249,8 @@ app.router._load = function (view, options) {
         animatePages = options.animatePages,
         newPage, oldPage, pagesInView, i, oldNavbarInner, newNavbarInner, navbar, dynamicNavbar, reloadPosition,
         isDynamicPage = typeof url === 'undefined' && content || template,
-        pushState = options.pushState;
+        pushState = options.pushState,
+        pageElement = options.pageElement;
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
     // Plugin hook
@@ -265,7 +267,7 @@ app.router._load = function (view, options) {
     app.router.temporaryDom.innerHTML = '';
 
     // Parse DOM
-    if (!pageName) {
+    if (!pageName && !pageElement) {
         if ((typeof content === 'string') || (url && (typeof content === 'string'))) {
             app.router.temporaryDom.innerHTML = t7_rendered.content;
         } else {
@@ -285,7 +287,8 @@ app.router._load = function (view, options) {
     // Find new page
     if (pageName) newPage = pagesContainer.find('.page[data-page="' + pageName + '"]');
     else {
-        newPage = app.router.findElement('.page', app.router.temporaryDom, view);
+        if (pageElement) newPage = $(pageElement);
+        else newPage = app.router.findElement('.page', app.router.temporaryDom, view);
     }
 
     // If page not found exit
@@ -328,7 +331,7 @@ app.router._load = function (view, options) {
         }
         oldPage = pagesContainer.children('.page:not(.cached)');
     }
-    if(view.params.domCache) newPage.removeClass('cached');
+    if(view.params.domCache || pageElement) newPage.removeClass('cached');
 
     // Dynamic navbar
     if (view.params.dynamicNavbar) {
@@ -341,9 +344,22 @@ app.router._load = function (view, options) {
             newNavbarInner = app.router.findElement('.navbar-inner', app.router.temporaryDom, view);
         }
         if (!newNavbarInner || newNavbarInner.length === 0) {
-            dynamicNavbar = false;
+            // Look in page
+            newNavbarInner = newPage.find('.navbar-inner');
+            if (!newNavbarInner || newNavbarInner.length === 0) {
+                // Set false
+                dynamicNavbar = false;
+            }
+            else {
+                if (newNavbarInner.parent('.navbar').length > 0) {
+                    newNavbarInner.prependTo(newPage).nextAll('.navbar').remove();
+                }
+            }
         }
-        navbar = viewContainer.find('.navbar');
+        if (dynamicNavbar && newPage.children('.navbar').length > 0) {
+            newPage.children('.navbar').remove();
+        }
+        navbar = viewContainer.children('.navbar');
         if (options.reload) {
             oldNavbarInner = navbar.find('.navbar-inner:not(.cached):last-child');
         }
@@ -373,7 +389,7 @@ app.router._load = function (view, options) {
     }
     if (dynamicNavbar) {
         newNavbarInner.addClass(options.reload ? 'navbar-on-' + reloadPosition : 'navbar-on-right');
-        if(view.params.domCache) newNavbarInner.removeClass('cached');
+        if(view.params.domCache || pageElement) newNavbarInner.removeClass('cached');
         newPage[0].f7RelatedNavbar = newNavbarInner[0];
         newNavbarInner[0].f7RelatedPage = newPage[0];
     }
@@ -389,6 +405,12 @@ app.router._load = function (view, options) {
         if (view.params.domCache && pageName) {
             view.pagesCache[url] = pageName;
         }
+    }
+    else if (url && pageElement) {
+        view.pageElementsCache[url] = {
+            page: newPage,
+            navbarInner: newNavbarInner
+        };
     }
 
     // Push State
@@ -587,6 +609,7 @@ app.router.load = function (view, options) {
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
+    var pageElement = options.pageElement;
     if (pageName) {
         if (pageName.indexOf('?') > 0) {
             options.query = $.parseUrlQuery(pageName);
@@ -609,7 +632,7 @@ app.router.load = function (view, options) {
             app.router._load(view, options);
         });
     }
-    if (content || pageName) {
+    if (content || pageName || pageElement) {
         proceed(content);
         return;
     }
@@ -642,7 +665,8 @@ app.router._back = function (view, options) {
         pushState = options.pushState,
         ignoreCache = options.ignoreCache,
         force = options.force,
-        pageName = options.pageName;
+        pageName = options.pageName,
+        pageElement = options.pageElement;
 
     var viewContainer = $(view.container),
         pagesContainer = $(view.pagesContainer),
@@ -735,7 +759,8 @@ app.router._back = function (view, options) {
                 $(app.router.temporaryDom).append(content);
             }
         }
-        newPage = app.router.findElement('.page', app.router.temporaryDom, view);
+        if (pageElement) newPage = $(pageElement);
+        else newPage = app.router.findElement('.page', app.router.temporaryDom, view);
 
         if (view.params.dynamicNavbar) {
             // Find navbar
@@ -759,8 +784,8 @@ app.router._back = function (view, options) {
 
         newPage.addClass('page-on-left').removeClass('cached');
         if (dynamicNavbar) {
-            navbar = viewContainer.find('.navbar');
-            navbarInners = viewContainer.find('.navbar-inner:not(.cached)');
+            navbar = viewContainer.children('.navbar');
+            navbarInners = navbar.find('.navbar-inner:not(.cached)');
             newNavbarInner.addClass('navbar-on-left').removeClass('cached');
         }
         // Remove/hide previous page in force mode
@@ -792,7 +817,7 @@ app.router._back = function (view, options) {
             }
             pagesInView = pagesContainer.children('.page:not(.cached)');
             if (dynamicNavbar) {
-                navbarInners = viewContainer.find('.navbar-inner:not(.cached)');
+                navbarInners = viewContainer.children('.navbar').find('.navbar-inner:not(.cached)');
             }
             if (view.history.indexOf(url) >= 0) {
                 view.history = view.history.slice(0, view.history.indexOf(url) + 2);
@@ -897,7 +922,7 @@ app.router._back = function (view, options) {
         if (view.params.dynamicNavbar) {
             dynamicNavbar = true;
             // Find navbar
-            navbarInners = viewContainer.find('.navbar-inner:not(.cached)');
+            navbarInners = viewContainer.children('.navbar').find('.navbar-inner:not(.cached)');
             newNavbarInner = $(navbarInners[0]);
             oldNavbarInner = $(navbarInners[1]);
             if (newNavbarInner.length === 0 || oldNavbarInner.length === 0 || oldNavbarInner[0] === newNavbarInner[0]) {
@@ -925,7 +950,7 @@ app.router._back = function (view, options) {
             // Get dom cached pages
             newPage = $(viewContainer).find('.page[data-page="' + pageName + '"]');
             if (view.params.dynamicNavbar) {
-                newNavbarInner = $(viewContainer).find('.navbar-inner[data-page="' + pageName + '"]');
+                newNavbarInner = $(viewContainer).children('.navbar').find('.navbar-inner[data-page="' + pageName + '"]');
                 if (newNavbarInner.length === 0 && newPage[0].f7RelatedNavbar) {
                     newNavbarInner = $(newPage[0].f7RelatedNavbar);
                 }
@@ -933,6 +958,12 @@ app.router._back = function (view, options) {
                     newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);
                 }
             }
+            setPages();
+            return;
+        }
+        else if (url && url in view.pageElementsCache) {
+            newPage = view.pageElementsCache[url].page;
+            newNavbarInner = view.pageElementsCache[url].navbarInner;
             setPages();
             return;
         }
@@ -960,13 +991,22 @@ app.router._back = function (view, options) {
                 url = newPage[0].f7PageData.url;
             }
             if (view.params.dynamicNavbar) {
-                newNavbarInner = $(viewContainer).find('.navbar-inner[data-page="' + pageName + '"]');
+                newNavbarInner = $(viewContainer).children('.navbar').find('.navbar-inner[data-page="' + pageName + '"]');
                 if (newNavbarInner.length === 0 && newPage[0].f7RelatedNavbar) {
                     newNavbarInner = $(newPage[0].f7RelatedNavbar);
                 }
                 if (newNavbarInner.length === 0 && newPage[0].f7PageData) {
                     newNavbarInner = $(newPage[0].f7PageData.navbarInnerContainer);
                 }
+            }
+            setPages();
+            return;
+        }
+        else if (pageElement && url) {
+            newPage = $(pageElement);
+            newNavbarInner = newPage.find('.navbar-inner');
+            if (newNavbarInner.length > 0) {
+                newPage.prepend(newNavbarInner).nextAll('.navbar').remove();
             }
             setPages();
             return;
@@ -986,6 +1026,7 @@ app.router.back = function (view, options) {
     var url = options.url;
     var content = options.content;
     var pageName = options.pageName;
+    var pageElement = options.pageElement;
     if (pageName) {
         if (pageName.indexOf('?') > 0) {
             options.query = $.parseUrlQuery(pageName);
@@ -1028,6 +1069,9 @@ app.router.back = function (view, options) {
             proceed();
             return;
         }
+        else if (url && url in view.pageElementsCache) {
+            proceed();
+        }
         else if (url.indexOf('#') !== 0) {
             // Load ajax page
             app.get(options.url, view, options.ignoreCache, function (content, error) {
@@ -1048,6 +1092,10 @@ app.router.back = function (view, options) {
         }
         else if (!url && pageName) {
             if (pageName) url = '#' + pageName;
+            proceed();
+            return;
+        }
+        else if (url && pageElement) {
             proceed();
             return;
         }
@@ -1089,7 +1137,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
 
     // Updated dynamic navbar
     if (view.params.dynamicNavbar) {
-        var inners = $(view.container).find('.navbar-inner:not(.cached)');
+        var inners = $(view.container).children('.navbar').find('.navbar-inner:not(.cached)');
         var oldNavbar = $(oldPage[0].f7RelatedNavbar || inners[1]);
         if (view.params.domCache && view.initialNavbars.indexOf(oldNavbar[0]) >= 0) {
             oldNavbar.removeClass('navbar-from-center-to-right').addClass('cached');
@@ -1126,6 +1174,14 @@ app.router.afterBack = function (view, oldPage, newPage) {
         view.contentCache[previousURL] = null;
         delete view.contentCache[previousURL];
     }
+    if (!view.params.domCache &&
+        previousURL &&
+        (previousURL in view.pageElementsCache) &&
+        // If the same page is in the history multiple times, don't remove it.
+        view.history.indexOf(previousURL) === -1) {
+        view.pageElementsCache[previousURL] = null;
+        delete view.pageElementsCache[previousURL];
+    }
 
     if (app.params.pushState && view.main) app.pushStateClearQueue();
 
@@ -1140,7 +1196,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
                 previousPage = $(view.container).find('.page[data-page="' + view.pagesCache[preloadUrl] + '"]');
                 if (previousPage.next('.page')[0] !== newPage[0]) previousPage.insertBefore(newPage);
                 if (newNavbar) {
-                    previousNavbar = $(view.container).find('.navbar-inner[data-page="' + view.pagesCache[preloadUrl] + '"]');
+                    previousNavbar = $(view.container).children('.navbar').find('.navbar-inner[data-page="' + view.pagesCache[preloadUrl] + '"]');
                     if(!previousNavbar || previousNavbar.length === 0) previousNavbar = newNavbar.prev('.navbar-inner.cached');
                     if (previousNavbar.next('.navbar-inner')[0] !== newNavbar[0]) previousNavbar.insertBefore(newNavbar);
                 }

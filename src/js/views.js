@@ -60,6 +60,7 @@ var View = function (selector, params) {
 
     // Pages cache
     view.pagesCache = {};
+    view.pageElementsCache = {};
 
     // Store View in element for easy access
     container[0].f7View = view;
@@ -449,13 +450,13 @@ var View = function (selector, params) {
     app.views.push(view);
     if (view.main) app.mainView = view;
 
-    // Router 
+    // Router
     view.router = {
         load: function (options) {
             return app.router.load(view, options);
         },
         back: function (options) {
-            return app.router.back(view, options);  
+            return app.router.back(view, options);
         },
         // Shortcuts
         loadPage: function (options) {
