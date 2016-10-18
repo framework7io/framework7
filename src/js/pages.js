@@ -164,6 +164,7 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
     if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
     app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
     $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
+    pageData = null;
 };
 app.pageBackCallback = function (callback, view, params) {
     // Page Data
