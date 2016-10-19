@@ -24,6 +24,7 @@ window.Framework7 = function (params) {
         dynamicPageUrl: 'content-{{index}}',
         allowDuplicateUrls: false,
         router: true,
+        routerRemoveTimeout: false,
         // Push State
         pushState: false,
         pushStateRoot: undefined,

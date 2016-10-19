@@ -2,6 +2,14 @@
 ************   Navigation / Router   ************
 ======================================================*/
 app.router = {
+    _remove: function (el) {
+        if (app.params.routerRemoveTimeout) {
+            setTimeout(function () {
+                $(el).remove();
+            }, 0);
+        }
+        else $(el).remove();
+    },
     // Temporary DOM Element
     temporaryDom: document.createElement('div'),
 
@@ -315,7 +323,7 @@ app.router._load = function (view, options) {
             for (i = 0; i < pagesInView.length - 2; i++) {
                 if (!view.params.domCache) {
                     app.pageRemoveCallback(view, pagesInView[i], 'left');
-                    $(pagesInView[i]).remove();
+                    app.router._remove(pagesInView[i]);
                 }
                 else {
                     $(pagesInView[i]).addClass('cached');
@@ -323,7 +331,7 @@ app.router._load = function (view, options) {
             }
             if (!view.params.domCache) {
                 app.pageRemoveCallback(view, pagesInView[i], 'left');
-                $(pagesInView[i]).remove();
+                app.router._remove(pagesInView[i]);
             }
             else {
                 $(pagesInView[i]).addClass('cached');
@@ -352,12 +360,12 @@ app.router._load = function (view, options) {
             }
             else {
                 if (newNavbarInner.parent('.navbar').length > 0) {
-                    newNavbarInner.prependTo(newPage).nextAll('.navbar').remove();
+                    newNavbarInner.prependTo(newPage);
                 }
             }
         }
-        if (dynamicNavbar && newPage.children('.navbar').length > 0) {
-            newPage.children('.navbar').remove();
+        if (dynamicNavbar && newPage.find('.navbar').length > 0) {
+            app.router._remove(newPage.find('.navbar'));
         }
         navbar = viewContainer.children('.navbar');
         if (options.reload) {
@@ -370,7 +378,7 @@ app.router._load = function (view, options) {
                 for (i = 0; i < oldNavbarInner.length - 1; i++) {
                     if (!view.params.domCache) {
                         app.navbarRemoveCallback(view, pagesInView[i], navbar[0], oldNavbarInner[i]);
-                        $(oldNavbarInner[i]).remove();
+                        app.router._remove(oldNavbarInner[i]);
                     }
                     else
                         $(oldNavbarInner[i]).addClass('cached');
@@ -378,7 +386,7 @@ app.router._load = function (view, options) {
                 if (!newNavbarInner && oldNavbarInner.length === 1) {
                     if (!view.params.domCache) {
                         app.navbarRemoveCallback(view, pagesInView[0], navbar[0], oldNavbarInner[0]);
-                        $(oldNavbarInner[0]).remove();
+                        app.router._remove(oldNavbarInner[0]);
                     }
                     else
                         $(oldNavbarInner[0]).addClass('cached');
@@ -490,8 +498,8 @@ app.router._load = function (view, options) {
         else {
             app.pageRemoveCallback(view, oldPage[0], reloadPosition);
             if (dynamicNavbar) app.navbarRemoveCallback(view, oldPage[0], navbar[0], oldNavbarInner[0]);
-            oldPage.remove();
-            if (dynamicNavbar) oldNavbarInner.remove();
+            app.router._remove(oldPage);
+            if (dynamicNavbar) app.router._remove(oldNavbarInner);
         }
     }
 
@@ -564,8 +572,8 @@ app.router._load = function (view, options) {
                 if (!(url.indexOf('#') === 0 && newPage.attr('data-page').indexOf('smart-select-') === 0)) {
                     app.pageRemoveCallback(view, oldPage[0], 'left');
                     if (dynamicNavbar) app.navbarRemoveCallback(view, oldPage[0], navbar[0], oldNavbarInner[0]);
-                    oldPage.remove();
-                    if (dynamicNavbar) oldNavbarInner.remove();
+                    app.router._remove(oldPage);
+                    if (dynamicNavbar) app.router._remove(oldNavbarInner);
                 }
             }
         }
@@ -807,12 +815,12 @@ app.router._back = function (view, options) {
                     if (removeNavbar) {
                         app.navbarRemoveCallback(view, pageToRemove[0], navbar[0], navbarToRemove[0]);
                     }
-                    pageToRemove.remove();
-                    if (removeNavbar) navbarToRemove.remove();
+                    app.router._remove(pageToRemove);
+                    if (removeNavbar) app.router._remove(navbarToRemove);
                 }
                 else if (removeNavbar) {
                     app.navbarRemoveCallback(view, pageToRemove[0], navbar[0], navbarToRemove[0]);
-                    navbarToRemove.remove();
+                    app.router._remove(navbarToRemove);
                 }
             }
             pagesInView = pagesContainer.children('.page:not(.cached)');
@@ -1004,9 +1012,12 @@ app.router._back = function (view, options) {
         }
         else if (pageElement && url) {
             newPage = $(pageElement);
-            newNavbarInner = newPage.find('.navbar-inner');
-            if (newNavbarInner.length > 0) {
-                newPage.prepend(newNavbarInner).nextAll('.navbar').remove();
+            if (view.params.dynamicNavbar) {
+                newNavbarInner = newPage.find('.navbar-inner');
+                if (newNavbarInner.length > 0) {
+                    newPage.prepend(newNavbarInner);
+                    app.router._remove(newPage.find('.navbar'));
+                }
             }
             setPages();
             return;
@@ -1124,7 +1135,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
     }
     else {
         app.pageRemoveCallback(view, oldPage[0], 'right');
-        oldPage.remove();
+        app.router._remove(oldPage);
     }
 
     newPage.removeClass('page-from-left-to-center page-on-left').addClass('page-on-center');
@@ -1144,7 +1155,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
         }
         else {
             app.navbarRemoveCallback(view, oldPage[0], undefined, oldNavbar[0]);
-            oldNavbar.remove();
+            app.router._remove(oldNavbar);
         }
         newNavbar = $(inners[0]).removeClass('navbar-on-left navbar-from-left-to-center').addClass('navbar-on-center');
     }
@@ -1158,8 +1169,8 @@ app.router.afterBack = function (view, oldPage, newPage) {
             if (pageUrl && view.history.indexOf(pageUrl) < 0 && view.initialPages.indexOf(this) < 0) {
                 app.pageRemoveCallback(view, page[0], 'right');
                 if (page[0].f7RelatedNavbar && view.params.dynamicNavbar) app.navbarRemoveCallback(view, page[0], undefined, page[0].f7RelatedNavbar);
-                page.remove();
-                if (page[0].f7RelatedNavbar && view.params.dynamicNavbar) $(page[0].f7RelatedNavbar).remove();
+                app.router._remove(page);
+                if (page[0].f7RelatedNavbar && view.params.dynamicNavbar) app.router._remove(page[0].f7RelatedNavbar);
             }
         });
     }
