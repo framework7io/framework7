@@ -75,6 +75,7 @@ app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
 // On Page Init Callback
 app.pageInitCallback = function (view, params) {
     var pageContainer = params.pageContainer;
+    if (!pageContainer) return;
     if (pageContainer.f7PageInitialized && view && !view.params.domCache) return;
 
     var pageQuery = params.query;
@@ -147,6 +148,7 @@ app.pageInitCallback = function (view, params) {
 };
 app.pageRemoveCallback = function (view, pageContainer, position) {
     var pageContext;
+    if (!pageContainer) return;
     if (pageContainer.f7PageData) pageContext = pageContainer.f7PageData.context;
     // Page Data
     var pageData = {
@@ -170,6 +172,7 @@ app.pageBackCallback = function (callback, view, params) {
     // Page Data
     var pageContainer = params.pageContainer;
     var pageContext;
+    if (!pageContainer) return;
     if (pageContainer.f7PageData) pageContext = pageContainer.f7PageData.context;
 
     var pageData = {
@@ -201,6 +204,7 @@ app.pageBackCallback = function (callback, view, params) {
 app.pageAnimCallback = function (callback, view, params) {
     var pageContainer = params.pageContainer;
     var pageContext;
+    if (!pageContainer) return;
     if (pageContainer.f7PageData) pageContext = pageContainer.f7PageData.context;
 
     var pageQuery = params.query;

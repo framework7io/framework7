@@ -4,7 +4,7 @@
 // On Navbar Init Callback
 app.navbarInitCallback = function (view, pageContainer, navbarContainer, navbarInnerContainer) {
     if (!navbarContainer && navbarInnerContainer) navbarContainer = $(navbarInnerContainer).parent('.navbar')[0];
-    if (navbarInnerContainer.f7NavbarInitialized && view && !view.params.domCache) return;
+    if (!navbarInnerContainer || navbarInnerContainer.f7NavbarInitialized && view && !view.params.domCache) return;
     var navbarData = {
         container: navbarContainer,
         innerContainer: navbarInnerContainer
@@ -46,7 +46,10 @@ app.navbarRemoveCallback = function (view, pageContainer, navbarContainer, navba
         container: navbarContainer,
         innerContainer: navbarInnerContainer
     };
-    var pageData = pageContainer.f7PageData;
+    var pageData;
+    if (pageContainer) {
+        pageData = pageContainer.f7PageData;
+    }
 
     var eventData = {
         page: pageData,
