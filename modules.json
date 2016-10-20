@@ -168,7 +168,10 @@
     },
     "infinite-scroll": {
         "js" : ["src/js/infinite-scroll.js"],
-        "less": {},
+        "less": {
+            "ios": ["src/less/ios/infinite-scroll.less"],
+            "material": ["src/less/material/infinite-scroll.less"]
+        },
         "dependencies" : []
     },
     "scroll-toolbars": {
