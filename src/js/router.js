@@ -309,6 +309,11 @@ app.router._load = function (view, options) {
 
     // Find old page (should be the last one) and remove older pages
     pagesInView = pagesContainer.children('.page:not(.cached)');
+    if (pageElement) {
+        pagesInView = pagesInView.filter(function (index, page) {
+            if (page !== pageElement) return page;
+        });
+    }
 
     if (options.reload && options.reloadPrevious && pagesInView.length === 1)  {
         view.allowPageChange = true;
@@ -338,6 +343,11 @@ app.router._load = function (view, options) {
             }
         }
         oldPage = pagesContainer.children('.page:not(.cached)');
+    }
+    if (pageElement && oldPage.length > 1) {
+        oldPage = oldPage.filter(function (index, page) {
+            if (page !== pageElement) return page;
+        });
     }
     if(view.params.domCache || pageElement) newPage.removeClass('cached');
 
@@ -1185,8 +1195,7 @@ app.router.afterBack = function (view, oldPage, newPage) {
         view.contentCache[previousURL] = null;
         delete view.contentCache[previousURL];
     }
-    if (!view.params.domCache &&
-        previousURL &&
+    if (previousURL &&
         (previousURL in view.pageElementsCache) &&
         // If the same page is in the history multiple times, don't remove it.
         view.history.indexOf(previousURL) === -1) {
