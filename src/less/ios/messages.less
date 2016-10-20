@@ -93,6 +93,17 @@
         opacity: 0;
     }
 }
+.message-date {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.8;
+    .message-pic img + & {
+        margin-top: 8px;
+    }
+    .message-sent & {
+        text-align: right;
+    }
+}
 .message-sent {
     -ms-flex-item-align: end;
     -webkit-align-self: flex-end;
