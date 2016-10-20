@@ -30,7 +30,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 Bart DJ
 
-[Join here!](https://www.patreon.com/bePatron?patAmt=50.0&exp=1&u=4109762&rid=830841)
+[Join here!](https://www.patreon.com/bePatron?exp=1&rid=830842&u=4109762&patAmt=50.0)
 
 ---
 
@@ -41,7 +41,7 @@ Kris Reddy<br>
 Rick Chang<br>
 Dave Billington
 
-[Join here!](https://www.patreon.com/bePatron?patAmt=10.0&exp=1&u=4109762&rid=830841)
+[Join here!](https://www.patreon.com/bePatron?exp=1&rid=830839&u=4109762&patAmt=10.0)
 
 ---
 
@@ -52,4 +52,4 @@ Bohdan Shulha<br>
 Timo Ernst<br>
 Sigfrido Rodríguez Santos
 
-[Join here!](https://www.patreon.com/bePatron?patAmt=5.0&exp=1&u=4109762&rid=830841)
+[Join here!](https://www.patreon.com/bePatron?exp=1&rid=845389&u=4109762&patAmt=5.0)
