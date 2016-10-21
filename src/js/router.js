@@ -461,6 +461,13 @@ app.router._load = function (view, options) {
             view.contentCache[lastUrl] = null;
             delete view.contentCache[lastUrl];
         }
+        else if (lastUrl &&
+            lastUrl in view.pageElementsCache &&
+            lastUrl !== url &&
+            (view.history.indexOf(lastUrl) === -1 || view.history.indexOf(lastUrl) === view.history.length - 1)) {
+            view.pageElementsCache[lastUrl] = null;
+            delete view.pageElementsCache[lastUrl];
+        }
         view.history[view.history.length - (options.reloadPrevious ? 2 : 1)] = url;
     }
     else {
