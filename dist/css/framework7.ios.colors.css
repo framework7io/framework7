@@ -48,10 +48,13 @@ html:not(.watch-active-state) .theme-gray .button:not(.button-fill):active,
   background-color: #8e8e93;
   color: #fff;
 }
-.theme-gray .button.button-fill,
-.button.button-fill.color-gray {
+.theme-gray .button.button-fill {
   background: #8e8e93;
   color: #fff;
+}
+.button.button-fill.color-gray {
+  background: #8e8e93 !important;
+  color: #fff !important;
 }
 .progressbar.color-gray span,
 .progressbar.theme-gray span,
@@ -215,10 +218,13 @@ html:not(.watch-active-state) .theme-white .button:not(.button-fill):active,
   background-color: #ffffff;
   color: #fff;
 }
-.theme-white .button.button-fill,
-.button.button-fill.color-white {
+.theme-white .button.button-fill {
   background: #ffffff;
   color: #fff;
+}
+.button.button-fill.color-white {
+  background: #ffffff !important;
+  color: #fff !important;
 }
 .progressbar.color-white span,
 .progressbar.theme-white span,
@@ -382,10 +388,13 @@ html:not(.watch-active-state) .theme-black .button:not(.button-fill):active,
   background-color: #000000;
   color: #fff;
 }
-.theme-black .button.button-fill,
-.button.button-fill.color-black {
+.theme-black .button.button-fill {
   background: #000000;
   color: #fff;
+}
+.button.button-fill.color-black {
+  background: #000000 !important;
+  color: #fff !important;
 }
 .progressbar.color-black span,
 .progressbar.theme-black span,
@@ -549,10 +558,13 @@ html:not(.watch-active-state) .theme-lightblue .button:not(.button-fill):active,
   background-color: #5ac8fa;
   color: #fff;
 }
-.theme-lightblue .button.button-fill,
-.button.button-fill.color-lightblue {
+.theme-lightblue .button.button-fill {
   background: #5ac8fa;
   color: #fff;
+}
+.button.button-fill.color-lightblue {
+  background: #5ac8fa !important;
+  color: #fff !important;
 }
 .progressbar.color-lightblue span,
 .progressbar.theme-lightblue span,
@@ -716,10 +728,13 @@ html:not(.watch-active-state) .theme-yellow .button:not(.button-fill):active,
   background-color: #ffcc00;
   color: #fff;
 }
-.theme-yellow .button.button-fill,
-.button.button-fill.color-yellow {
+.theme-yellow .button.button-fill {
   background: #ffcc00;
   color: #fff;
+}
+.button.button-fill.color-yellow {
+  background: #ffcc00 !important;
+  color: #fff !important;
 }
 .progressbar.color-yellow span,
 .progressbar.theme-yellow span,
@@ -883,10 +898,13 @@ html:not(.watch-active-state) .theme-orange .button:not(.button-fill):active,
   background-color: #ff9500;
   color: #fff;
 }
-.theme-orange .button.button-fill,
-.button.button-fill.color-orange {
+.theme-orange .button.button-fill {
   background: #ff9500;
   color: #fff;
+}
+.button.button-fill.color-orange {
+  background: #ff9500 !important;
+  color: #fff !important;
 }
 .progressbar.color-orange span,
 .progressbar.theme-orange span,
@@ -1050,10 +1068,13 @@ html:not(.watch-active-state) .theme-pink .button:not(.button-fill):active,
   background-color: #ff2d55;
   color: #fff;
 }
-.theme-pink .button.button-fill,
-.button.button-fill.color-pink {
+.theme-pink .button.button-fill {
   background: #ff2d55;
   color: #fff;
+}
+.button.button-fill.color-pink {
+  background: #ff2d55 !important;
+  color: #fff !important;
 }
 .progressbar.color-pink span,
 .progressbar.theme-pink span,
@@ -1217,10 +1238,13 @@ html:not(.watch-active-state) .theme-blue .button:not(.button-fill):active,
   background-color: #007aff;
   color: #fff;
 }
-.theme-blue .button.button-fill,
-.button.button-fill.color-blue {
+.theme-blue .button.button-fill {
   background: #007aff;
   color: #fff;
+}
+.button.button-fill.color-blue {
+  background: #007aff !important;
+  color: #fff !important;
 }
 .progressbar.color-blue span,
 .progressbar.theme-blue span,
@@ -1384,10 +1408,13 @@ html:not(.watch-active-state) .theme-green .button:not(.button-fill):active,
   background-color: #4cd964;
   color: #fff;
 }
-.theme-green .button.button-fill,
-.button.button-fill.color-green {
+.theme-green .button.button-fill {
   background: #4cd964;
   color: #fff;
+}
+.button.button-fill.color-green {
+  background: #4cd964 !important;
+  color: #fff !important;
 }
 .progressbar.color-green span,
 .progressbar.theme-green span,
@@ -1551,10 +1578,13 @@ html:not(.watch-active-state) .theme-red .button:not(.button-fill):active,
   background-color: #ff3b30;
   color: #fff;
 }
-.theme-red .button.button-fill,
-.button.button-fill.color-red {
+.theme-red .button.button-fill {
   background: #ff3b30;
   color: #fff;
+}
+.button.button-fill.color-red {
+  background: #ff3b30 !important;
+  color: #fff !important;
 }
 .progressbar.color-red span,
 .progressbar.theme-red span,
