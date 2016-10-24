@@ -280,7 +280,7 @@ app.initFastClicks = function () {
             trackClick = false;
             return true;
         }
-        if (app.device.ios) {
+        if (app.device.ios || (app.device.android && 'getSelection' in window)) {
             var selection = window.getSelection();
             if (selection.rangeCount && selection.focusNode !== document.body && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
                 activeSelection = true;
