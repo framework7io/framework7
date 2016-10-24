@@ -155,16 +155,6 @@ Framework7 Layouts Themes
 Framework7 Color Themes
 ==========================*/
 .theme-mixin(@colorName, @color, @pressColor) {
-    //Plain color and links
-    .color-@{colorName} {
-        color: @color;
-        .list-block .item-link.list-button&, .list-block .item-link&, .tabbar a.active&, a& {
-            color: @color;
-        }
-        .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
-            background-color: @color;
-        }
-    }
     //Buttons
     .button {
         .theme-@{colorName} & {
@@ -177,9 +167,6 @@ Framework7 Color Themes
                 color:#fff;
             }
         }
-        &.color-@{colorName}:not(.button-fill), .color-@{colorName}.buttons-row &:not(.button-fill) {
-            color: @color !important;
-        }
         .theme-@{colorName} &.button-fill {
             background: @color;
             color:#fff;
@@ -187,18 +174,10 @@ Framework7 Color Themes
                 background: @pressColor;
             }
         }
-        &.button-fill.bg-@{colorName}, &.button-fill.color-@{colorName} {
-            background: @color !important;
-            color:#fff;
-            html:not(.watch-active-state) &:active, &.active-state {
-                background: @pressColor !important;
-            }
-        }
-
     }
     // Progress bar
     .progressbar {
-        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+        &.theme-@{colorName}, .theme-@{colorName} & {
             background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
             span {
                 background-color: @color;
@@ -206,7 +185,7 @@ Framework7 Color Themes
         }
     }
     .progressbar-infinite{
-        &.color-@{colorName}, &.theme-@{colorName}, .theme-@{colorName} &, &.bg-@{colorName} {
+        &.theme-@{colorName}, .theme-@{colorName} & {
             background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
             &:after, &:before {
                 background-color: @color;
@@ -234,15 +213,7 @@ Framework7 Color Themes
     i.icon-bars.color-@{colorName}, i.icon-bars.theme-@{colorName} {
         .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z' fill='@{color}'/></svg>");
     }
-    // Preloader
-    .preloader.color-@{colorName}, .preloader.preloader-@{colorName} {
-        svg circle {
-            stroke: @color;
-        }
-        .preloader-inner-gap, .preloader-inner-half-circle {
-            border-color: @color;
-        }
-    }
+
     // Theme
     .theme-@{colorName} {
         // Links
@@ -350,27 +321,9 @@ Framework7 Color Themes
             .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='@{color}'/></svg>");
         }
     }
-    // Bg rule
-    .bg-@{colorName}, a.bg-@{colorName}, .list-block .swipeout-actions-left a.bg-@{colorName}, .list-block .swipeout-actions-right a.bg-@{colorName} {
-        background-color: @color;
-        .list-block & .item-link, .list-block& .item-link, .list-block .item-link& {
-            html:not(.watch-active-state) &:active, &.active-state {
-                background: @pressColor;
-            }
-        }
-    }
-    // Border rule
-    .border-@{colorName} {
-        border-color: @color;
-        .list-block &.item-inner, .list-block ul&, & {
-            &:after, &:before {
-                background-color: @color;
-            }
-        }
-    }
     // Floating Button
     .floating-button, .speed-dial-buttons a {
-        .theme-@{colorName} &, &.theme-@{colorName}, &.color-@{colorName}, &.bg-@{colorName} {
+        .theme-@{colorName} &, &.theme-@{colorName} {
             color:#fff;
             background: @color;
             html:not(.watch-active-state) &:active, &.active-state {
@@ -381,15 +334,10 @@ Framework7 Color Themes
             }
         }
     }
-    // Ripple
-    .ripple-@{colorName} {
-        .ripple-wave {
-            background-color: rgba(red(@color), green(@color), blue(@color), 0.3);
-        }
-    }
+
     // Range Slider
     .range-slider {
-        .theme-@{colorName} &, &.color-@{colorName}, &.theme-@{colorName} {
+        .theme-@{colorName} &, &.theme-@{colorName} {
             input[type="range"]::-webkit-slider-thumb:before {
                 background-color: @color;
             }
@@ -408,9 +356,9 @@ Framework7 Color Themes
         }
     }
     // Badges
-    .badge.color-@{colorName}, .badge.theme-@{colorName} {
-    	background-color:@color;
-    	color: #fff;
+    .badge.theme-@{colorName} {
+        background-color:@color;
+        color: #fff;
     }
 }
 .theme-mixin(e('red'), @red, #D32F2F);
@@ -434,3 +382,148 @@ Framework7 Color Themes
 .theme-mixin(e('bluegray'), @bluegray, #455A64);
 .theme-mixin(e('white'), @white, rgba(0,0,0,0.1));
 .theme-mixin(e('black'), @black, #333);
+
+/*==========================
+Framework7 Color + Bg + Border
+==========================*/
+.color-mixin(@colorName, @color, @pressColor) {
+    //Plain color and links
+    .color-@{colorName} {
+        color: @color;
+        .list-block .item-link.list-button&, .list-block .item-link&, .tabbar a.active&, a& {
+            color: @color;
+        }
+        .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
+            background-color: @color;
+        }
+    }
+    //Buttons
+    .button {
+        &.color-@{colorName}:not(.button-fill), .color-@{colorName}.buttons-row &:not(.button-fill) {
+            color: @color !important;
+        }
+        &.button-fill.bg-@{colorName}, &.button-fill.color-@{colorName} {
+            background: @color !important;
+            color:#fff;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: @pressColor !important;
+            }
+        }
+
+    }
+    // Progress bar
+    .progressbar {
+        &.color-@{colorName}, &.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
+            span {
+                background-color: @color;
+            }
+        }
+    }
+    .progressbar-infinite{
+        &.color-@{colorName}, &.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.5);
+            &:after, &:before {
+                background-color: @color;
+            }
+        }
+    }
+    //Icons
+    .color-@{colorName} {
+        i.icon, i.icon& {
+            color:@color;
+        }
+    }
+    // Preloader
+    .preloader.color-@{colorName}, .preloader.preloader-@{colorName} {
+        svg circle {
+            stroke: @color;
+        }
+        .preloader-inner-gap, .preloader-inner-half-circle {
+            border-color: @color;
+        }
+    }
+    // Bg rule
+    .bg-@{colorName}, a.bg-@{colorName}, .list-block .swipeout-actions-left a.bg-@{colorName}, .list-block .swipeout-actions-right a.bg-@{colorName} {
+        background-color: @color;
+        .list-block & .item-link, .list-block& .item-link, .list-block .item-link& {
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: @pressColor;
+            }
+        }
+    }
+    // Border rule
+    .border-@{colorName} {
+        border-color: @color;
+        .list-block &.item-inner, .list-block ul&, & {
+            &:after, &:before {
+                background-color: @color;
+            }
+        }
+    }
+    // Floating Button
+    .floating-button, .speed-dial-buttons a {
+        &.color-@{colorName}, &.bg-@{colorName} {
+            color:#fff;
+            background: @color;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: @pressColor;
+            }
+            i {
+                color: inherit;
+            }
+        }
+    }
+    // Ripple
+    .ripple-@{colorName} {
+        .ripple-wave {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.3);
+        }
+    }
+    // Range Slider
+    .range-slider {
+        &.color-@{colorName} {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-thumb {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
+            input[type="range"]::-moz-range-thumb {
+                background-color: @color;
+            }
+        }
+    }
+    // Badges
+    .badge.color-@{colorName} {
+        background-color:@color;
+        color: #fff;
+    }
+}
+.color-mixin(e('red'), @red, #D32F2F);
+.color-mixin(e('pink'), @pink, #C2185B);
+.color-mixin(e('purple'), @purple, #7B1FA2);
+.color-mixin(e('deeppurple'), @deeppurple, #512DA8);
+.color-mixin(e('indigo'), @indigo, #303F9F);
+.color-mixin(e('blue'), @blue, #1976D2);
+.color-mixin(e('lightblue'), @lightblue, #0288D1);
+.color-mixin(e('cyan'), @cyan, #0097A7);
+.color-mixin(e('teal'), @teal, #00897B);
+.color-mixin(e('green'), @green, #388E3C);
+.color-mixin(e('lightgreen'), @lightgreen, #689F38);
+.color-mixin(e('lime'), @lime, #AFB42B);
+.color-mixin(e('yellow'), @yellow, #FBC02D);
+.color-mixin(e('amber'), @amber, #FFA000);
+.color-mixin(e('orange'), @orange, #F57C00);
+.color-mixin(e('deeporange'), @deeporange, #E64A19);
+.color-mixin(e('brown'), @brown, #5D4037);
+.color-mixin(e('gray'), @gray, #616161);
+.color-mixin(e('bluegray'), @bluegray, #455A64);
+.color-mixin(e('white'), @white, rgba(0,0,0,0.1));
+.color-mixin(e('black'), @black, #333);
