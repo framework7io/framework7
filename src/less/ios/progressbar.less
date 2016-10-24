@@ -39,7 +39,7 @@
         .transform-origin(left center);
         .animation(progressbar-infinite 1s linear infinite);
     }
-    html.with-statusbar-overlay body > & {
+    html.with-statusbar-overlay body > &, html.with-statusbar-overlay .framework7-root > & {
         top: 20px;
     }
 }
@@ -60,11 +60,11 @@
         .translate3d(0, 0, 0);
         .animation(progressbar-infinite-multicolor 3s linear infinite);
     }
-    html.with-statusbar-overlay body > & {
+    html.with-statusbar-overlay body > & , html.with-statusbar-overlay .framework7-root > & {
         top: 20px;
     }
 }
-body, .view, .views, .page, .panel, .popup {
+body, .view, .views, .page, .panel, .popup, .framework7-root {
     > .progressbar, > .progressbar-infinite {
         position: absolute;
         left: 0;
