@@ -287,3 +287,16 @@
     padding: 0 8px;
     background-color: #fff;
 }
+.no-hairlines() {
+    &.no-hairlines, &.no-hairlines ul, &.no-hairlines .content-block-inner {
+        .hairline-remove(top);
+        .hairline-remove(bottom);
+    }
+}
+.no-hairlines-between() {
+    &.no-hairlines-between {
+        .item-inner, .list-button, .item-divider, .list-group-title, .list-group-title {
+            .hairline-remove(bottom);
+        }
+    }
+}
