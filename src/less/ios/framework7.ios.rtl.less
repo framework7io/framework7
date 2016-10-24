@@ -334,7 +334,28 @@ label.label-radio {
     align-self: flex-start;
     .align-items(flex-start);
 }
+/* === Chips === */
+.chip {
 
+}
+.chip-media {
+    margin-left: 0;
+    margin-right: -8px;
+    + .chip-label{
+        margin-left: 0px;
+        margin-right: 4px;
+    }
+}
+.chip-label {
+    + .chip-delete {
+        margin-left: -8px;
+        margin-right: 4px;
+    }
+}
+.chip-delete {
+    margin-right: 0;
+    margin-left: -8px;
+}
 /* === Back Icons === */
 i.icon {
     &.icon-back {

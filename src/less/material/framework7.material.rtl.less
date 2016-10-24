@@ -179,22 +179,25 @@ label.label-checkbox, label.label-radio {
 
 /* === Chips === */
 .chip{
-	.chip-media {
-		margin-left: 0;
-		margin-right: -12px;
-		+ .chip-label{
-			margin-left: 0px;
-			margin-right: 8px;
-		}
-	}
-    .chip-label {
-        + .chip-delete {
-		margin-left: 0px;
-		margin-right: 4px;
-        }
-    }	
-}
 
+}
+.chip-media {
+    margin-left: 0;
+    margin-right: -12px;
+    + .chip-label{
+        margin-left: 0px;
+        margin-right: 8px;
+    }
+}
+.chip-label {
+    + .chip-delete {
+        margin-left: -8px;
+        margin-right: 4px;
+    }
+}
+.chip-delete {
+    margin-left: -8px;
+}
 /* === Accordion === */
 .list-block {
     .accordion-toggle {
