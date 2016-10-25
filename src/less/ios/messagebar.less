@@ -17,7 +17,7 @@
         border-radius: 17px;
         box-shadow: none;
         display: block;
-        padding: 6px 8px 6px 15px;
+        padding: 6px 15px;
         margin: 0;
         width: 100%;
         height: 34px;
@@ -39,31 +39,6 @@
     }
     textarea + .link {
         margin-left: 8px;
-    }
-    .messagebar-send-link {
-        position: absolute;
-        right: 8px;
-        height: 27px;
-        width: 27px;
-        border-radius: 50%;
-        background: @themeColor;
-        margin-right: 4px;
-        bottom: 9px;
-        text-align: center;
-        line-height: 27px;
-        font-size: 0;
-        html:not(.watch-active-state) &:active, &.active-state {
-            opacity: 0.3;
-        }
-        i.icon {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            .transform(translate3d(-50%, -50%, 0));
-        }
-        + textarea {
-            padding-right: 27px + 4px + 8px;
-        }
     }
     .link {
         .flex-shrink(0);
