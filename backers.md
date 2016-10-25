@@ -28,6 +28,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $50+
 
+Kris Reddy<br>
 Bart DJ
 
 [Join here!](https://www.patreon.com/bePatron?exp=1&rid=830842&u=4109762&patAmt=50.0)
@@ -36,8 +37,8 @@ Bart DJ
 
 ### $10+
 
+Todd Crowe<br>
 Thanakrit Tangtermsak<br>
-Kris Reddy<br>
 Rick Chang<br>
 Dave Billington
 
@@ -47,6 +48,7 @@ Dave Billington
 
 ### $5+
 
+Ruslan Skorynin<br>
 Dmitry Akinin<br>
 Bohdan Shulha<br>
 Timo Ernst<br>
