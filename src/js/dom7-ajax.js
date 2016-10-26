@@ -241,10 +241,6 @@ $.ajax = function (options) {
     fireAjaxCallback('ajaxStart', {xhr: xhr}, 'start', xhr);
     fireAjaxCallback(undefined, undefined, 'beforeSend', xhr);
 
-
-    // Send XHR
-    xhr.send(postData);
-
     // Timeout
     if (options.timeout > 0) {
         xhr.onabort = function () {
@@ -256,6 +252,9 @@ $.ajax = function (options) {
             fireAjaxCallback('ajaxComplete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
         }, options.timeout);
     }
+
+    // Send XHR
+    xhr.send(postData);
 
     // Return XHR object
     return xhr;
