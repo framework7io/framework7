@@ -1,0 +1,33 @@
+@font-face {
+  font-family: 'Framework7 Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Framework7Icons-Regular.eot");
+  src: local('Framework7 Icons'),
+       local('Framework7Icons-Regular'),
+       url("../fonts/Framework7Icons-Regular.woff2") format("woff2"),
+       url("../fonts/Framework7Icons-Regular.woff") format("woff"),
+       url("../fonts/Framework7Icons-Regular.ttf") format("truetype"),
+       url("../fonts/Framework7Icons-Regular.svg") format("svg");
+}
+
+.f7-icons, .framework7-icons {
+  font-family: 'Framework7 Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 25px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+}
