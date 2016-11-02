@@ -395,3 +395,18 @@ form .f7-icons {
   text-align: center;
   opacity: 0.5;
 }
+.ks-demo-icon {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #333;
+}
+.ks-demo-icon .icon-name {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #666;
+}
+code {
+  background: #f3f3f3;
+  padding: 5px;
+}

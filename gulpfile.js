@@ -279,7 +279,10 @@
     gulp.task('ks-ios-jade', function (cb) {
         gulp.src(paths.ks.ios.jade)
             .pipe(jade({
-                pretty: true
+                pretty: true,
+                data: {
+                    icons: require('./manifest-icons-ios.json').icons
+                }
             }))
             .pipe(gulp.dest(paths.ks.ios.root))
             .pipe(connect.reload())
@@ -304,7 +307,10 @@
     gulp.task('ks-material-jade', function (cb) {
         gulp.src(paths.ks.material.jade)
             .pipe(jade({
-                pretty: true
+                pretty: true,
+                data: {
+                    icons: require('./manifest-icons-material.json').icons
+                }
             }))
             .pipe(gulp.dest(paths.ks.material.root))
             .pipe(connect.reload())
