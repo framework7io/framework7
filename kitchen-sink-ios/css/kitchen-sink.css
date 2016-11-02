@@ -388,3 +388,10 @@ div.ks-demo-lazy {
 .ks-facebook-card .card-content-inner {
   padding: 15px 10px;
 }
+form .f7-icons {
+  width: 29px;
+  font-size: 29px;
+  height: 29px;
+  text-align: center;
+  opacity: 0.5;
+}
