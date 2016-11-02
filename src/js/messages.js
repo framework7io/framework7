@@ -5,7 +5,9 @@ var Messages = function (container, params) {
     var defaults = {
         autoLayout: true,
         newMessagesFirst: false,
-        messageTemplate: 
+        scrollMessages: true,
+        scrollMessagesOnlyOnEdge: false,
+        messageTemplate:
             '{{#if day}}' +
             '<div class="messages-date">{{day}} {{#if time}}, <span>{{time}}</span>{{/if}}</div>' +
             '{{/if}}' +
@@ -76,7 +78,6 @@ var Messages = function (container, params) {
                 }
             }
         });
-        
     };
 
     // Add Message
@@ -106,18 +107,26 @@ var Messages = function (container, params) {
 
             newMessagesHTML += m.template(props);
         }
-        var heightBefore, scrollBefore;
-        if (method === 'prepend') {
-            heightBefore = m.pageContent[0].scrollHeight;
+        var scrollHeightBefore = m.pageContent[0].scrollHeight,
+            heightBefore = m.pageContent[0].offsetHeight,
             scrollBefore = m.pageContent[0].scrollTop;
-        }
         m.container[method](newMessagesHTML);
         if (m.params.autoLayout) m.layout();
         if (method === 'prepend') {
-            m.pageContent[0].scrollTop = scrollBefore + (m.pageContent[0].scrollHeight - heightBefore);
+            m.pageContent[0].scrollTop = scrollBefore + (m.pageContent[0].scrollHeight - scrollHeightBefore);
         }
-        if ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
-            m.scrollMessages(animate ? undefined : 0);
+        if (m.params.scrollMessages && (method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst)) {
+            if (m.params.scrollMessagesOnlyOnEdge) {
+                var onEdge = false;
+                if (m.params.newMessagesFirst) {
+                    if (scrollBefore === 0) onEdge = true;
+                }
+                else {
+                    if (scrollBefore - (scrollHeightBefore - heightBefore) >= -10) onEdge = true;
+                }
+                if (onEdge) m.scrollMessages(animate ? undefined : 0);
+            }
+            else m.scrollMessages(animate ? undefined : 0);
         }
         var messages = m.container.find('.message');
         if (newMessages.length === 1) {
@@ -133,11 +142,11 @@ var Messages = function (container, params) {
             else {
                 for (i = 0; i < newMessages.length; i++) {
                     messagesToReturn.push(messages[i]);
-                }   
+                }
             }
             return messagesToReturn;
         }
-        
+
     };
     m.removeMessage = function (message) {
         message = $(message);
@@ -176,10 +185,10 @@ var Messages = function (container, params) {
             m.addMessages(m.params.messages, undefined, false);
         }
         else {
-            if (m.params.autoLayout) m.layout();    
+            if (m.params.autoLayout) m.layout();
             m.scrollMessages(0);
         }
-        
+
     };
     m.destroy = function () {
         m = null;
