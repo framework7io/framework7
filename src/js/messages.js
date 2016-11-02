@@ -53,7 +53,16 @@ var Messages = function (container, params) {
         if (!m.container.hasClass('messages-auto-layout')) m.container.addClass('messages-auto-layout');
         m.container.find('.message').each(function () {
             var message = $(this);
-            if (message.find('.message-text img').length > 0) message.addClass('message-pic');
+            if (message.find('.message-text img').length > 0) {
+                var childNodes = message.find('.message-text')[0].childNodes;
+                var onlyPic = true;
+                for (var i = 0 ; i < childNodes.length; i++) {
+                    if (childNodes[i].nodeType === 1 && childNodes[i].nodeName.toLowerCase() !== 'img') onlyPic = false;
+                    if (childNodes[i].nodeType === 3 && childNodes[i].textContent.trim() !== '') onlyPic = false;
+                }
+                if (onlyPic) message.addClass('message-pic');
+                else message.removeClass('message-pic');
+            }
             if (message.find('.message-avatar').length > 0) message.addClass('message-with-avatar');
         });
         m.container.find('.message').each(function () {
@@ -103,6 +112,7 @@ var Messages = function (container, params) {
             props.type = props.type || 'sent';
             if (!props.text) continue;
             props.hasImage = props.text.indexOf('<img') >= 0;
+            if (props.onlyImage === false) props.hasImage = false;
             if (animate) props.position = method === 'append' ? 'bottom' : 'top';
 
             newMessagesHTML += m.template(props);

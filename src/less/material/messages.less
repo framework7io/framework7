@@ -37,8 +37,6 @@
     &.message-pic {
         img {
             display: block;
-            height: auto;
-            max-width: 100%;
         }
     }
 }
@@ -88,6 +86,10 @@
     min-height: @messagesAvatarSize;
     position: relative;
     .translate3d(0,0,0);
+    img {
+        max-width: 100%;
+        height: auto;
+    }
     .message-pic & {
         padding: 8px;
     }
