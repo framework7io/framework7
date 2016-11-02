@@ -240,7 +240,7 @@ window.Template7 = (function () {
                         variable += '[' + part + ']';
                     }
                     else {
-                        if (part.indexOf('this') === 0) {
+                        if (part === 'this' || part.indexOf('this.') >= 0 || part.indexOf('this[') >= 0 || part.indexOf('this(') >= 0) {
                             variable = part.replace('this', ctx);
                         }
                         else {
