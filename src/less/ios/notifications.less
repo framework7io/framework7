@@ -12,8 +12,6 @@
     display: none;
     box-sizing: border-box;
     max-height: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
     .transition(@notificationsDuration);
     -webkit-perspective: 1200px;
     perspective: 1200px;
@@ -23,7 +21,8 @@
         .hairline-remove(top);
         .hairline-remove(bottom);
         background: none;
-        margin: 0;
+        margin: 0 auto;
+        max-width: 568px + 16px;
     }
     .with-statusbar-overlay & {
         padding-top: 20px;
@@ -146,6 +145,9 @@
         width: ~"-webkit-calc(100% - 16px)";
         width: ~"-moz-calc(100% - 16px)";
         width: ~"calc(100% - 16px)";
+        position: absolute;
+        left: 8px;
+        top: 0;
         &:last-child {
             margin-bottom: 0;
         }

@@ -102,7 +102,10 @@ app.addNotification = function (params) {
         }, params.hold);
     }
 
-    list[params.material ? 'append' : 'prepend'](item[0]);
+    if (!app.params.material) {
+        app.closeNotification(list.children('li.notification-item:last-child'));
+    }
+    list.append(item[0]);
     container.show();
 
     var itemHeight = item.outerHeight(), clientLeft;
@@ -116,13 +119,13 @@ app.addNotification = function (params) {
         container.transition('');
     }
     else {
-        item.css('marginTop', -itemHeight + 'px');
+        item.transform('translate3d(0,' + (-itemHeight) + 'px,0)');
         item.transition(0);
 
         clientLeft = item[0].clientLeft;
 
         item.transition('');
-        item.css('marginTop', '0px');
+        item.transform('translate3d(0,0px,0)');
     }
 
     container.transform('translate3d(0, 0,0)');
