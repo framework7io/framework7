@@ -108,6 +108,19 @@ Framework7 Color Themes
             .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#@{colorHex}'/></svg>");
         }
     }
+    // Floating Button
+    .floating-button, .speed-dial-buttons a {
+        .theme-@{colorName} &, &.theme-@{colorName} {
+            color:#fff;
+            background: @color;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: darken(@color, 8%);
+            }
+            i {
+                color: inherit;
+            }
+        }
+    }
     // Range Slider
     .range-slider {
         .theme-@{colorName} &, &.theme-@{colorName} {
@@ -201,6 +214,19 @@ Framework7 Color + Bg + Border
         .list-block &.item-inner, .list-block ul&, & {
             &:after, &:before {
                 background-color: @color;
+            }
+        }
+    }
+    // Floating Button
+    .floating-button, .speed-dial-buttons a {
+        &.color-@{colorName}, &.bg-@{colorName} {
+            color:#fff;
+            background: @color;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: darken(@color, 8%);
+            }
+            i {
+                color: inherit;
             }
         }
     }

@@ -30,6 +30,7 @@
                 "src/less/ios/lists.less",
                 "src/less/ios/contacts.less",
                 "src/less/ios/forms.less",
+                "src/less/ios/floating-button.less",
                 "src/less/ios/panels.less",
                 "src/less/ios/lazy-load.less",
                 "src/less/ios/statusbar.less",
