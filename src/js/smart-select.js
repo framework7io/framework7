@@ -40,9 +40,17 @@ app.initSmartSelects = function (pageContainer) {
                 itemAfter.text(valueText.join(', '));
             }
         }
-        
+
+        $select.on('change', function () {
+            var valueText = [];
+            for (var i = 0; i < select.length; i++) {
+                if (select[i].selected) valueText.push(select[i].textContent.trim());
+            }
+            smartSelect.find('.item-after').text(valueText.join(', '));
+        });
+
     });
-    
+
 };
 app.smartSelectAddOption = function (select, option, index) {
     select = $(select);

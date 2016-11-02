@@ -125,6 +125,9 @@ app.formFromData = function (form, formData) {
                     break;
             }
         }
+        if (tag === 'select' && input.parents('.smart-select').length > 0) {
+            input.trigger('change');
+        }
     });
     form.trigger('formFromJSON formFromData', {formData: formData});
 };
