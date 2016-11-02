@@ -333,18 +333,20 @@ var Autocomplete = function (params) {
             pageContent = a.input.parents('.page-content'),
             paddingTop = parseInt(pageContent.css('padding-top'), 10),
             paddingBottom = parseInt(pageContent.css('padding-top'), 10),
-            inputOffset = a.input.offset(),
-            listBlockOffset = listBlock.length > 0 ? listBlock.offset() : 0,
-            maxHeight = pageContent[0].scrollHeight - paddingBottom - (inputOffset.top + pageContent[0].scrollTop) - a.input[0].offsetHeight;
+            // inputOffset = a.input.offset(),
+            listBlockOffsetLeft = listBlock.length > 0 ? listBlock.offset().left - listBlock.parent().offset().left : 0,
+            inputOffsetLeft = a.input.offset().left - (listBlock.length > 0 ? listBlock.offset().left : 0),
+            inputOffsetTop = a.input.offset().top - (pageContent.offset().top - pageContent[0].scrollTop),
+            maxHeight = pageContent[0].scrollHeight - paddingBottom - (inputOffsetTop + pageContent[0].scrollTop) - a.input[0].offsetHeight;
 
         a.dropdown.css({
-            left: (listBlock.length > 0 ? listBlockOffset.left : inputOffset.left) + 'px',
-            top: inputOffset.top + pageContent[0].scrollTop + a.input[0].offsetHeight + 'px',
+            left: (listBlock.length > 0 ? listBlockOffsetLeft : inputOffsetLeft) + 'px',
+            top: inputOffsetTop + pageContent[0].scrollTop + a.input[0].offsetHeight + 'px',
             width: (listBlock.length > 0 ? listBlock[0].offsetWidth : a.input[0].offsetWidth) + 'px'
         });
         a.dropdown.children('.autocomplete-dropdown-inner').css({
             maxHeight: maxHeight + 'px',
-            paddingLeft: listBlock.length > 0 && !a.params.expandInput ? inputOffset.left - (material ? 16 : 15) + 'px' : ''
+            paddingLeft: listBlock.length > 0 && !a.params.expandInput ? inputOffsetLeft - (material ? 16 : 15) + 'px' : ''
         });
     };
 
