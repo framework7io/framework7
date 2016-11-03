@@ -58,6 +58,9 @@ var View = function (selector, params) {
     // Content cache
     view.contentCache = {};
 
+    // Context cache
+    view.contextCache = {};
+
     // Pages cache
     view.pagesCache = {};
     view.pageElementsCache = {};

@@ -185,7 +185,12 @@ app.router = {
             t7_template = template;
         }
 
-        if (context) t7_ctx = context;
+        if (context) {
+            t7_ctx = context;
+            if (context && url) {
+                view.contextCache[url] = context;
+            }
+        }
         else {
             if (contextName) {
                 if (contextName.indexOf('.') >= 0) {
@@ -215,7 +220,12 @@ app.router = {
                     if (t7.templates[templateName] === template) t7_ctx = t7.data[templateName];
                 }
             }
-            if (!t7_ctx) t7_ctx = {};
+            if (!t7_ctx && url && url in view.contextCache) {
+                t7_ctx = view.contextCache[url];
+            }
+            if (!t7_ctx) {
+                t7_ctx = {};
+            }
         }
 
         if (t7_template && t7_ctx) {
@@ -467,6 +477,13 @@ app.router._load = function (view, options) {
             (view.history.indexOf(lastUrl) === -1 || view.history.indexOf(lastUrl) === view.history.length - 1)) {
             view.pageElementsCache[lastUrl] = null;
             delete view.pageElementsCache[lastUrl];
+        }
+        if (lastUrl &&
+            lastUrl in view.contextCache &&
+            lastUrl !== url &&
+            (view.history.indexOf(lastUrl) === -1 || view.history.indexOf(lastUrl) === view.history.length - 1)) {
+            view.contextCache[lastUrl] = null;
+            delete view.contextCache[lastUrl];
         }
         view.history[view.history.length - (options.reloadPrevious ? 2 : 1)] = url;
     }
@@ -1208,6 +1225,14 @@ app.router.afterBack = function (view, oldPage, newPage) {
         view.history.indexOf(previousURL) === -1) {
         view.pageElementsCache[previousURL] = null;
         delete view.pageElementsCache[previousURL];
+    }
+    // Check for context cache
+    if (previousURL &&
+        (previousURL in view.contextCache) &&
+        // If the same page is in the history multiple times, don't remove it.
+        view.history.indexOf(previousURL) === -1) {
+        view.contextCache[previousURL] = null;
+        delete view.contextCache[previousURL];
     }
 
     if (app.params.pushState && view.main) app.pushStateClearQueue();
