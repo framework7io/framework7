@@ -3,7 +3,8 @@ Animate7 Animate Engine
 ==========================*/
 var Animate7 = function (elements, props, params) {
     props = props || {};
-    params = params || {
+    params = params || {};
+    var defaults = {
         duration: 300,
         easing: 'swing', // or 'linear'
         /* Callbacks
@@ -12,6 +13,12 @@ var Animate7 = function (elements, props, params) {
         progress(elements, complete, remaining, start, tweenValue)
         */
     };
+
+    for (var def in defaults) {
+        if (typeof params[def] === 'undefined') {
+            params[def] = defaults[def];
+        }
+    }
 
     var a = this;
     a.params = params;
