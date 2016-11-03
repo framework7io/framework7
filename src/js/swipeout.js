@@ -392,7 +392,12 @@ app.swipeoutDelete = function (el, callback) {
             if (virtualList && typeof virtualIndex !== 'undefined') virtualList.deleteItem(virtualIndex);
         }
         else {
-            el.remove();
+            if (app.params.swipeoutRemoveWithTimeout) {
+                setTimeout(function () {
+                    el.remove();
+                }, 0);
+            }
+            else el.remove();
         }
     });
     var translate = '-100%';

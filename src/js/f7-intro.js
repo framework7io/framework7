@@ -25,6 +25,7 @@ window.Framework7 = function (params) {
         allowDuplicateUrls: false,
         router: true,
         routerRemoveTimeout: false,
+        routerRemoveWithTimeout: false,
         // Push State
         pushState: false,
         pushStateRoot: undefined,
@@ -67,6 +68,7 @@ window.Framework7 = function (params) {
         swipeout: true,
         swipeoutActionsNoFold: false,
         swipeoutNoFollow: false,
+        swipeoutRemoveWithTimeout: false,
         // Smart Select Back link template
         smartSelectOpenIn: 'page', // or 'popup' or 'picker'
         smartSelectBackText: 'Back',

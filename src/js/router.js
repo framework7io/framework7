@@ -3,7 +3,7 @@
 ======================================================*/
 app.router = {
     _remove: function (el) {
-        if (app.params.routerRemoveTimeout) {
+        if (app.params.routerRemoveTimeout || app.params.routerRemoveWithTimeout) {
             setTimeout(function () {
                 $(el).remove();
             }, 0);
