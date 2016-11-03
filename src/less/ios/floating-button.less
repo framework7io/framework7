@@ -103,9 +103,6 @@
         z-index: 1;
         overflow: hidden;
         background-color: @themeColor;
-        html:not(.watch-active-state) &:active, &.active-state {
-            background: darken(@themeColor, 8%);
-        }
         .transition(300ms);
         .flexbox();
         .align-items(center);
@@ -114,6 +111,10 @@
         .transform-origin(center bottom);
         + a {
             margin-bottom: 16px;
+        }
+        html:not(.watch-active-state) &:active, &.active-state {
+            .transition(0ms);
+            background: darken(@themeColor, 8%);
         }
     }
     .speed-dial-opened & {
