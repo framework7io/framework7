@@ -111,6 +111,7 @@
                 'src/js/dom7-ajax.js',
                 'src/js/dom7-utils.js',
                 'src/js/dom7-outro.js',
+                'src/js/animate7.js',
                 'src/js/proto-support.js',
                 'src/js/proto-device.js',
                 'src/js/proto-plugins.js',
