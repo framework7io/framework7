@@ -324,7 +324,7 @@ app.router._load = function (view, options) {
         oldPage = pagesInView.eq(pagesInView.length - 1);
     }
     else {
-        if (pagesInView.length > 1) {
+        if (!view.params.domCache && pagesInView.length > 1) {
             for (i = 0; i < pagesInView.length - 2; i++) {
                 if (!view.params.domCache) {
                     app.pageRemoveCallback(view, pagesInView[i], 'left');

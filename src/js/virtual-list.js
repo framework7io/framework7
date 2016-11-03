@@ -258,8 +258,12 @@ var VirtualList = function (listBlock, params) {
     };
     // Handle resize event
     vl.handleResize = function (e) {
-        vl.setListSize();
-        vl.render(true);
+        if ((function (elem) {
+                return !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+            })(vl.listBlock[0])) {
+            vl.setListSize();
+            vl.render(true);
+        }
     };
 
     vl.attachEvents = function (detach) {
