@@ -12511,7 +12511,7 @@
                         toPush = $.serializeObject(obj[prop], newParents);
                         if (toPush !== '') resultArray.push(toPush);
                     }
-                    else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
+                    else if (typeof obj[prop] !== 'undefined') {
                         // Should be string or plain value
                         resultArray.push(var_name(prop) + '=' + var_value(obj[prop]));
                     }
