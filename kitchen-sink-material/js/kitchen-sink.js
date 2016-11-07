@@ -1076,3 +1076,49 @@ function createContentPage() {
     return;
 }
 $$(document).on('click', '.ks-generate-page', createContentPage);
+
+/* ===== Animation ===== */
+myApp.onPageInit('animation', function (page) {
+    $$(page.container).find('.start').on('click', function () {
+        $$('#animate-me')
+            .animate(
+                {
+                    'width': 200,
+                    'height': 50,
+                    'margin-left': 50,
+                    'margin-top': 0,
+                },
+                {
+                    duration: 600,
+                    easing: 'swing'
+                }
+            )
+            .animate(
+                {
+                    'width': 50,
+                    'height': 200,
+                    'margin-left': 0,
+                    'margin-top': 50,
+                },
+                {
+                    duration: 600,
+                    easing: 'swing'
+                }
+            )
+            .animate(
+                {
+                    'width': 100,
+                    'height': 100,
+                    'margin-left': 0,
+                    'margin-top': 0,
+                },
+                {
+                    duration: 600,
+                    easing: 'swing',
+                    complete: function () {
+                        myApp.alert('Animation completed');
+                    }
+                }
+            );
+    });
+});

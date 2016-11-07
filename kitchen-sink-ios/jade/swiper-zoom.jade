@@ -1,0 +1,22 @@
+.navbar
+  .navbar-inner
+    .left.sliding
+      a(href="swiper.html").back.link
+        i.icon.icon-back
+        span Back
+    .center.sliding Zoom
+    .right
+      a(href="#").open-panel.link.icon-only
+        i.icon.icon-bars
+.pages.navbar-through
+  .page(data-page="swiper-zoom")
+    .page-content
+      .swiper-container.swiper-init.ks-demo-slider(data-pagination=".swiper-pagination", data-zoom="true", data-next-button=".swiper-button-next", data-prev-button=".swiper-button-prev")
+        .swiper-wrapper
+          - for (var i = 1; i < 10; i++)
+            .swiper-slide
+              .swiper-zoom-container
+                img(src="http://lorempixel.com/800/800/nature/#{i}")
+        .swiper-button-next
+        .swiper-button-prev
+        .swiper-pagination
