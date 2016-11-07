@@ -120,10 +120,10 @@
                 'src/js/wrap-end.js'
             ],
             modules: require('./modules.json'),
-            pkg: require('./bower.json'),
+            pkg: require('./package.json'),
             banner: [
                 '/**',
-                ' * <%= pkg.name %> <%= pkg.version %>',
+                ' * Framework7 <%= pkg.version %>',
                 ' * <%= pkg.description %>',
                 '<% if(typeof(theme) !== "undefined") {%> * \n * <%= theme %>\n *<% } else { %> * <% } %>',
                 // ' * ',
@@ -133,14 +133,14 @@
                 ' * The iDangero.us',
                 ' * http://www.idangero.us/',
                 ' * ',
-                ' * Licensed under <%= pkg.license.join(" & ") %>',
+                ' * Licensed under <%= pkg.license %>',
                 ' * ',
                 ' * Released on: <%= date.month %> <%= date.day %>, <%= date.year %>',
                 ' */',
                 ''].join('\n'),
             customBanner: [
                 '/**',
-                ' * <%= pkg.name %> <%= pkg.version %> - Custom Build',
+                ' * Framework7 <%= pkg.version %> - Custom Build',
                 ' * <%= pkg.description %>',
                 '<% if(typeof(theme) !== "undefined") {%> * \n * <%= theme %>\n *<% } else { %> * <% } %>',
                 ' * ',
@@ -152,7 +152,7 @@
                 ' * The iDangero.us',
                 ' * http://www.idangero.us/',
                 ' * ',
-                ' * Licensed under <%= pkg.license.join(" & ") %>',
+                ' * Licensed under <%= pkg.license %>',
                 ' * ',
                 ' * Released on: <%= date.month %> <%= date.day %>, <%= date.year %>',
                 ' */',
@@ -171,7 +171,7 @@
         if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
             addIndent = '';
         }
-        var add4spaces = ('f7-intro.js f7-outro.js proto-device.js proto-plugins.js proto-support.js dom7-intro.js dom7-outro.js template7.js swiper.js').split(' ');
+        var add4spaces = ('f7-intro.js f7-outro.js proto-device.js proto-plugins.js proto-support.js dom7-intro.js dom7-outro.js animate7.js template7.js swiper.js').split(' ');
         if (add4spaces.indexOf(filename) >= 0) {
             addIndent = '    ';
         }
