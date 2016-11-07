@@ -55,7 +55,7 @@ var Animate7 = function (elements, props, params) {
         });
         if (complete) complete(elements);
         if (a.que.length > 0) {
-            var que = a.que.pop();
+            var que = a.que.shift();
             a.animate(que[0], que[1]);
         }
     };
@@ -99,6 +99,7 @@ var Animate7 = function (elements, props, params) {
         var startTime = null,
             time,
             elementsDone = 0,
+            propsDone = 0,
             done,
             began = false;
 
@@ -123,13 +124,12 @@ var Animate7 = function (elements, props, params) {
                 );
             }
 
-            for (var prop in props) {
+            for (var i = 0; i < _elements.length; i++) {
                 if (done) continue;
+                el = _elements[i];
+                if (el.done) continue;
 
-                for (var i = 0; i < _elements.length; i++) {
-                    el = _elements[i];
-                    if (el.done) continue;
-
+                for (var prop in props) {
                     progress = Math.max(Math.min((time - startTime) / params.duration, 1), 0);
                     easeProgress = a.easingProgress(params.easing, progress);
 
@@ -137,8 +137,11 @@ var Animate7 = function (elements, props, params) {
 
                     if (el[prop].finalValue > el[prop].initialValue && el[prop].currentValue >= el[prop].finalValue || el[prop].finalValue < el[prop].initialValue && el[prop].currentValue <= el[prop].finalValue)  {
                         el._container.style[prop] = el[prop].finalValue + el[prop].unit;
-                        el.done = true;
-                        elementsDone++;
+                        propsDone ++;
+                        if (propsDone === Object.keys(props).length) {
+                            el.done = true;
+                            elementsDone++;
+                        }
                         if (elementsDone === _elements.length) {
                             done = true;
                         }
@@ -174,5 +177,6 @@ window.Animate7 = function (elements, props, params){
     return new Animate7(elements, props, params);
 };
 Dom7.fn.animate = function (props, params) {
-    return new Animate7(this, props, params);
+    new Animate7(this, props, params);
+    return this;
 };
