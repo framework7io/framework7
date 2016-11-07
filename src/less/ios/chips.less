@@ -1,15 +1,15 @@
 /* === Chips === */
-@chipSize: 25px;
+@chipSize: 23px;
 .chip {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
-    color: #000;
-    background: rgba(0,0,0,0.1);
+    color: #fff;
+    background: rgba(0,0,0,0.37);
     display: inline-block;
     height: @chipSize;
     line-height: @chipSize;
-    border-radius: 16px;
-    padding: 0 10px;
+    border-radius: 5px;
+    padding: 0 6px;
     box-sizing: border-box;
     vertical-align: middle;
     .flexbox-inline();
@@ -17,15 +17,15 @@
     margin: 2px 0;
 }
 .chip-media {
-    width: @chipSize - 4px;
-    height: @chipSize - 4px;
-    margin-left: -8px;
-    vertical-align: top;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
     border-radius: 50%;
     text-align: center;
-    line-height: @chipSize - 4px;
+    line-height: 16px;
     color: #fff;
-    font-size: 14px;
+    font-size: 12px;
+    box-sizing: border-box;
     .flex-shrink(0);
     .flexbox();
     .align-items(center);
@@ -41,6 +41,10 @@
     + .chip-label {
         margin-left: 4px;
     }
+    i.icon {
+        font-size: 16px;
+        height: 16px;
+    }
 }
 .chip-label {
     white-space: nowrap;
@@ -49,19 +53,16 @@
     position: relative;
     .flex-shrink(1);
     min-width: 0;
-    + .chip-delete {
-        margin-left: 4px;
-    }
 }
 .chip-delete {
-    margin-right: -8px;
-    width: @chipSize - 2px;
-    height: @chipSize - 2px;
+    margin-right: -6px;
+    width: @chipSize;
+    height: @chipSize;
     text-align: center;
-    line-height: @chipSize - 2px;
+    line-height: @chipSize;
     cursor: pointer;
     .flex-shrink(0);
-    .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#8e8e93'/><line stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
+    .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#fff'/><line stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
     background-repeat: no-repeat;
     background-position: center;
     -webkit-background-size: 13px 13px;
