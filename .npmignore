@@ -2,7 +2,6 @@
 .github
 build
 custom
-examples
 kitchen-sink-ios
 kitchen-sink-material
 node_modules
