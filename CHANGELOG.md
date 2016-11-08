@@ -1,5 +1,109 @@
 # Change Log
 
+## Framework7 v1.5.0 - Updated on November 8, 2016
+  * App Root
+    * New `root` app parameter to specify app root element, by default is `'body'`. Useful when using F7 with libraries like Vue or React that doesn't allow to bind app to the body.
+  * Icons
+    * Brand new [Framework7 Icons](https://github.com/nolimits4web/Framework7-Icons) font with lot of precious and designed from scratch iOS icons
+    * Default "Form" icons removed in favor of using F7 or Material icons fonts instead
+  * Animate7 (beta) - new built-in animation helper library to help with custom animation. Also avaialble as Dom7 method
+    * `Animate7(elements, properties, parameters)`
+    * `Dom7(elements).animate(properties, parameters)`
+    ```js
+    Animate7('#animate-me',
+      {
+        height: 200,
+        width: 100
+      },
+      {
+        duration: 400,
+        easing: 'swing',
+        complete: function () {
+          console.log('Animation completed')
+        }
+      }
+    )
+    ```
+  * iOS Theme
+    * iOS 10 style Notifications
+    * iOS 10 style Messagebar
+    * Notifications in iOS theme now doesn't support more than one notification at a time
+  * Chips
+    * Now also supported by iOS theme to keep consistency with Material theme
+  * Floating Action Button
+    * Now also supported by iOS theme to keep consistency with Material theme
+  * Messages
+    * New `scrollMessages` parameter to enable/disable messages autoscrolling when adding new message. Enabled (`true`) by default
+    * New `scrollMessagesOnlyOnEdge` parameter to autoscroll messages only when user is on top/bottom of the messages view. Disabled (`false`) by default
+    * Added "message-date" element for message bubble for iOS theme to keep consistency with Material theme messages
+  * Hairlines
+    * New `no-hairlines` and `no-hairlines-between` classes for list-blocks and content-blocks to remove block hairlines and hairlines between list items
+  * Forms
+    * `formToJSON` renamed to `formToData` method. `formToJSON` is still supported for compatibility
+    * `formFromJSON` renamed to `formFromData` method. `formFromJSON` is still supported for compatibility
+  * Color Themes
+    * `.colors.css` stylesheets are refactored to make higher priority for `color-` rules over `theme-` rules
+    * Color preloaders now also supported by iOS theme with all default colors by adding `preloader-[color]` or `color-[color]` class, e.g. `preloader-green` or `preloader-orange` etc.
+  * Sortable
+    * `sort` event now receives additional `event.detail` object with `startIndex` and `newIndex` properties of sorted element
+  * Photo Browser
+    * Added `pinch to zoom` support for Android
+  * Panels
+    * Now it supports both left and right panels to be swipeable by setting `swipePanel: 'both'`
+  * Tabs
+    * Tab that becomes inactive will also trigger `hide` event
+  * Swipeout
+    * New `swipeoutRemoveWithTimeout` app parameter. By default is `false`. When specified, then framework will remove element after `0` timeout instead of immediately. Useful to enable if you use another library like Vue or React to manage (remove) swipeout items
+  * Router
+    * Page data and Navbar data are not available anymore in `BeforeRestroy` events
+    * `.router.load` method supports new `pageElement` parameter to specify page HTMLElement to load if it is already added to the `.pages` container manually or by different means/library
+    * Added context cache for pages rendered with Template7 to keep context when navigating deep in history and then going back
+    * New `routerRemoveWithTimeout` app parameter. By default is `false`. When specified, then framework will remove element after `0` timeout instead of immediately. Useful to enable if you use another library like Vue or React to manage (remove) pages
+    * Now you can keep dynamic navbar inside of page when loading pages dynamically (not inline pages) and router will place it automatically to the correct place. It helps to keep consistency with Material theme page layout
+  * Dom7
+    * New `.siblings(selector)` method to select all previous and next elements
+    * New `.empty()` method to clear element inner HTML
+    * New `.removeDiacritics(text)` helper method to remove/replace diacritics in passed text
+  * Fast Clicks
+    * New `fastClicksExclude` app parameter to specify elements not handled by fast clicks
+    * Fixed issue with not-working `<select>` element on Android
+    * Fixed issue with text selection on Android
+  * Touch
+    * Now framework uses passive event listeners for touch events in many components to improve scrolling performance on mobile devices
+  * Template7 update to latest 1.1.3 version:
+    * Added number, boolean, and single-quote-strings argument types support for template helpers
+    * Ability to use single/double quotes in helpers and mix them
+  * Swiper update to latest 3.4.0 version:
+    * New **zoom** functionality that enables double tap and pinch to zoom slide's inner image:
+      * Required slide layout for zoom:
+        ```
+        <div class="swiper-slide">
+          <div class="swiper-zoom-container">
+            <img src="path/to/image">
+          </div>
+        </div>
+        ```
+      * New zoom parameters:
+        * `zoom` - enable zoom functionality
+        * `zoomMax` - maximum image zoom multiplier, by default is `3`
+        * `zoomMin` - minimum image zoom multiplier, by default is `1`
+        * `zoomToggle` - enable/disable zoom-in by slide's double tap
+      * `zoomMax` can be also overridden for specific slide by using `data-swiper-zoom` attribute
+    * New `swiper.enableTouchControl()` and `swiper.disableTouchControl()` methods to enable disable touch control (it toggles `onlyExternal` parameter)
+    * New `swiper.realIndex` property in addition to `swiper.activeIndex` that returns index of active slide considering loop
+    * New methods `s.unsetGrabCursor()` and `s.setGrabCursor()` to enable/disable grab cursor
+    * Draggable Scrollbar now works when `simulateTouch:false `
+    * New `normalizeSlideIndex` parameter to improve work of controller (see #1766)
+    * `lazyLoadingInPrevNextAmount` now works with `slidesPerView: 'auto'`
+    * New `passiveListeners` parameter to use passive event listeners to improve scrolling performance on mobile devices. Enabled by default
+    * New `freeModeMomentumVelocityRatio` parameter to control moment velocity
+    * Now it is possible to specify autoplay delay for every (or specific) slides by using `data-swiper-autoplay` attribute on them
+    * Lazy loading now also respects `sizes` responsive images attribute
+    * New `touchReleaseOnEdges` parameter to release touch events on slider edge position (beginning, end) and allow for further page scrolling
+    * Multirow (slidesPerColumn) support for vertical direction, which is in this case becomes multicolumn
+    * `paginationBulletRender` now accepts `swiper` instance as a first argument, `paginationBulletRender(index, className)` -> `paginationBulletRender(swiper, index, className)`
+  * Lot of minor fixes and improvements
+
 ## Framework7 v1.4.2 - Updated on February 27, 2016
   * Material Theme
     * Added colors support for speed dial buttons
