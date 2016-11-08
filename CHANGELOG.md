@@ -3,10 +3,11 @@
 ## Framework7 v1.5.0 - Updated on November 8, 2016
   * App Root
     * New `root` app parameter to specify app root element, by default is `'body'`. Useful when using F7 with libraries like Vue or React that doesn't allow to bind app to the body.
-  * Icons
+  * **Icons**
     * Brand new [Framework7 Icons](https://github.com/nolimits4web/Framework7-Icons) font with lot of precious and designed from scratch iOS icons
     * Default "Form" icons removed in favor of using F7 or Material icons fonts instead
-  * Animate7 (beta) - new built-in animation helper library to help with custom animation. Also avaialble as Dom7 method
+  * **Vue.js** support (beta) with official [Framework7 Vue](https://github.com/nolimits4web/Framework7-Vue) plugin
+  * **Animate7** (beta) - new built-in animation helper library to help with custom animation. Also avaialble as Dom7 method
     * `Animate7(elements, properties, parameters)`
     * `Dom7(elements).animate(properties, parameters)`
     ```js
