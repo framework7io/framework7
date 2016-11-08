@@ -1,10 +1,10 @@
 /**
- * Framework7 1.4.2
- * Full Featured Mobile HTML Framework For Building iOS & Android Apps
+ * Framework7 1.5.0
+ * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * Google Material Theme
  *
- * http://www.idangero.us/framework7
+ * http://framework7.io/
  * 
  * Copyright 2016, Vladimir Kharlampidi
  * The iDangero.us
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 27, 2016
+ * Released on: November 8, 2016
  */
 /*=============
   Framework 7 RTL Additions
@@ -179,6 +179,22 @@ label.label-radio .item-after i.icon-form-radio {
   -ms-flex-align: start;
   -webkit-align-items: flex-start;
   align-items: flex-start;
+}
+/* === Chips === */
+.chip-media {
+  margin-left: 0;
+  margin-right: -12px;
+}
+.chip-media + .chip-label {
+  margin-left: 0px;
+  margin-right: 8px;
+}
+.chip-label + .chip-delete {
+  margin-left: -8px;
+  margin-right: 4px;
+}
+.chip-delete {
+  margin-left: -8px;
 }
 /* === Accordion === */
 .list-block .accordion-toggle .item-inner {
