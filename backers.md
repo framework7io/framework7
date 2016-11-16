@@ -48,6 +48,7 @@ Dave Billington
 
 ### $5+
 
+Daniel Dingemanse<br>
 Henry Blackman<br>
 Ruslan Skorynin<br>
 Dmitry Akinin<br>
