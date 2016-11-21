@@ -97,10 +97,10 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var backText = smartSelectData.backText || app.params.smartSelectBackText;
     var closeText;
     if (openIn === 'picker') {
-        closeText = smartSelectData.pickerCloseText || smartSelectData.backText || app.params.smartSelectPickerCloseText ;   
+        closeText = smartSelectData.pickerCloseText || smartSelectData.backText || app.params.smartSelectPickerCloseText ;
     }
     else {
-        closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;      
+        closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;
     }
     var backOnSelect = smartSelectData.backOnSelect !== undefined ? smartSelectData.backOnSelect : app.params.smartSelectBackOnSelect;
     var formTheme = smartSelectData.formTheme || app.params.smartSelectFormTheme;
@@ -171,7 +171,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
 
     // Item template/HTML
     if (!app._compiledTemplates.smartSelectItem) {
-        app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate || 
+        app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate ||
             '{{#if isLabel}}' +
             '<li class="item-divider">{{groupLabel}}</li>' +
             '{{else}}' +
@@ -216,7 +216,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         );
     }
     var smartSelectItemTemplate = app._compiledTemplates.smartSelectItem;
-    
+
     var inputsHTML = '';
     if (!virtualList) {
         for (var j = 0; j < values.length; j++) {
@@ -230,7 +230,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
 
     if (openIn === 'picker') {
         if (!app._compiledTemplates.smartSelectToolbar) {
-            app._compiledTemplates.smartSelectToolbar = t7.compile(app.params.smartSelectToolbarTemplate || 
+            app._compiledTemplates.smartSelectToolbar = t7.compile(app.params.smartSelectToolbarTemplate ||
                 '<div class="toolbar {{#if toolbarTheme}}theme-{{toolbarTheme}}{{/if}}">' +
                   '<div class="toolbar-inner">' +
                     '<div class="left"></div>' +
@@ -245,13 +245,13 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             closeText: closeText,
             openIn: openIn,
             toolbarTheme: toolbarTheme,
-            inPicker: openIn === 'picker'              
+            inPicker: openIn === 'picker'
         });
     }
     else {
         // Navbar HTML
         if (!app._compiledTemplates.smartSelectNavbar) {
-            app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate || 
+            app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate ||
                 '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
                     '<div class="navbar-inner">' +
                         '{{leftTemplate}}' +
@@ -268,7 +268,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             navbarTheme: navbarTheme,
             inPopup: openIn === 'popup',
             inPage: openIn === 'page',
-            leftTemplate: openIn === 'popup' ? 
+            leftTemplate: openIn === 'popup' ?
                 (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
                 (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
         });
@@ -285,14 +285,14 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             navbarLayout = 'fixed';
         }
     }
-        
+
 
     // Page Layout
     var pageName = 'smart-select-' + inputName;
 
     var useSearchbar = typeof smartSelect.data('searchbar') === 'undefined' ? app.params.smartSelectSearchbar : (smartSelect.data('searchbar') === 'true' ? true : false);
     var searchbarPlaceholder, searchbarCancel;
-        
+
     if (useSearchbar) {
         searchbarPlaceholder = smartSelect.data('searchbar-placeholder') || 'Search';
         searchbarCancel = smartSelect.data('searchbar-cancel') || 'Cancel';
@@ -359,7 +359,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             close = false;
         }
         if (close) {
-            app.closeModal('.smart-select-picker.modal-in');   
+            app.closeModal('.smart-select-picker.modal-in');
         }
     }
 
@@ -371,7 +371,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                     $(this).parents('li').addClass('disabled');
                 }
                 else {
-                    $(this).parents('li').removeClass('disabled');   
+                    $(this).parents('li').removeClass('disabled');
                 }
             });
         }
@@ -388,7 +388,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                 template: smartSelectItemTemplate,
                 height: virtualListHeight || undefined,
                 searchByItem: function (query, index, item) {
-                    if (item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
+                    if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
                     return false;
                 }
             });
@@ -491,10 +491,10 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             picker.once('close', function () {
                 // Reset linked picker
                 smartSelect[0].f7SmartSelectPicker = undefined;
-                
+
                 // Detach html click
-                $('html').off('click', closeOnHTMLClick);    
-                
+                $('html').off('click', closeOnHTMLClick);
+
                 // Restore page padding bottom
                 smartSelect.parents('.page-content').css({paddingBottom: ''});
             });
