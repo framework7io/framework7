@@ -261,7 +261,6 @@ var View = function (selector, params) {
         if (view.params.onSwipeBackMove) {
             view.params.onSwipeBackMove(callbackData);
         }
-        container.trigger('swipeBackMove', callbackData);
 
         // Transform pages
         var activePageTranslate = touchesDiff * inverter;
@@ -276,6 +275,8 @@ var View = function (selector, params) {
 
         previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
         if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
+
+		container.trigger('swipeBackMove', callbackData);
 
         // Dynamic Navbars Animation
         if (dynamicNavbar) {
