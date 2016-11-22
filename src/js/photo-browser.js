@@ -166,11 +166,11 @@ var PhotoBrowser = function (params) {
         }
         if (pb.params.type === 'popup') {
             pb.popup = app.popup('<div class="popup photo-browser-popup">' + htmlTemplate + '</div>');
-            $(pb.popup).on('closed', pb.onPopupClose);
+            $(pb.popup).on('popup:closed', pb.onPopupClose);
         }
         if (pb.params.type === 'page') {
-            $(document).on('pageBeforeInit', pb.onPageBeforeInit);
-            $(document).on('pageBeforeRemove', pb.onPageBeforeRemove);
+            $(document).on('page:beforeinit', pb.onPageBeforeInit);
+            $(document).on('page:beforeremove', pb.onPageBeforeRemove);
             if (!pb.params.view) pb.params.view = app.mainView;
             pb.params.view.loadContent(htmlTemplate);
             return;
@@ -205,19 +205,19 @@ var PhotoBrowser = function (params) {
 
     pb.onPopupClose = function (e) {
         pb.close();
-        $(pb.popup).off('pageBeforeInit', pb.onPopupClose);
+        $(pb.popup).off('page:beforeinit', pb.onPopupClose);
     };
     pb.onPageBeforeInit = function (e) {
         if (e.detail.page.name === 'photo-browser-slides') {
             pb.layout(pb.openIndex);
         }
-        $(document).off('pageBeforeInit', pb.onPageBeforeInit);
+        $(document).off('page:beforeinit', pb.onPageBeforeInit);
     };
     pb.onPageBeforeRemove = function (e) {
         if (e.detail.page.name === 'photo-browser-slides') {
             pb.close();
         }
-        $(document).off('pageBeforeRemove', pb.onPageBeforeRemove);
+        $(document).off('page:beforeremove', pb.onPageBeforeRemove);
     };
 
     pb.onSliderTransitionStart = function (swiper) {

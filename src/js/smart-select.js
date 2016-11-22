@@ -488,7 +488,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             $('html').on('click', closeOnHTMLClick);
 
             // On Close
-            picker.once('close', function () {
+            picker.once('picker:close', function () {
                 // Reset linked picker
                 smartSelect[0].f7SmartSelectPicker = undefined;
                 
@@ -510,7 +510,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         handleInputs(picker);
     }
     else {
-        $(document).once('pageInit', '.smart-select-page', pageInit);
+        $(document).once('page:init', '.smart-select-page', pageInit);
         view.router.load({
             content: pageHTML,
             reload: reLayout ? true : undefined

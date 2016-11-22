@@ -10,7 +10,7 @@ app.showTab = function (tab, tabLink, force) {
     }
     if (newTab.length === 0) return false;
     if (newTab.hasClass('active')) {
-        if (force) newTab.trigger('show');
+        if (force) newTab.trigger('show tab:show');
         return false;
     }
     var tabs = newTab.parent('.tabs');
@@ -34,11 +34,11 @@ app.showTab = function (tab, tabLink, force) {
     }
 
     // Remove active class from old tabs
-    var oldTab = tabs.children('.tab.active').removeClass('active').trigger('hide');
+    var oldTab = tabs.children('.tab.active').removeClass('active').trigger('hide tab:hide');
     // Add active class to new tab
     newTab.addClass('active');
     // Trigger 'show' event on new tab
-    newTab.trigger('show');
+    newTab.trigger('show tab:show');
 
     // Update navbars in new tab
     if (!isAnimatedTabs && !isSwipeableTabs && newTab.find('.navbar').length > 0) {

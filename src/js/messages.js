@@ -225,9 +225,9 @@ app.initPageMessages = function (pageContainer) {
     // Destroy on page remove
     function pageBeforeRemove() {
         m.destroy();
-        pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+        pageContainer.off('page:beforeremove', pageBeforeRemove);
     }
     if (pageContainer.hasClass('page')) {
-        pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+        pageContainer.on('page:beforeremove', pageBeforeRemove);
     }
 };

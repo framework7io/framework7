@@ -74,9 +74,8 @@ app.formToData = function (form) {
                     break;
             }
         }
-            
     });
-    form.trigger('formToJSON formToData', {formData: formData});
+    form.trigger('formToJSON formToData form:todata', {formData: formData});
 
     return formData;
 };
@@ -129,7 +128,7 @@ app.formFromData = function (form, formData) {
             input.trigger('change');
         }
     });
-    form.trigger('formFromJSON formFromData', {formData: formData});
+    form.trigger('formFromJSON formFromData form:fromdata', {formData: formData});
 };
 app.formFromJSON = app.formFromData;
 
@@ -154,14 +153,14 @@ app.initFormsStorage = function (pageContainer) {
         var formJSON = app.formToData(form);
         if (!formJSON) return;
         app.formStoreData(formId, formJSON);
-        form.trigger('store', {data: formJSON});
+        form.trigger('store form:storedata', {data: formJSON});
     }
     forms.on('change submit', storeForm);
 
     // Detach Listeners
     function pageBeforeRemove() {
         forms.off('change submit', storeForm);
-        pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+        pageContainer.off('page:beforeremove', pageBeforeRemove);
     }
-    pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+    pageContainer.on('page:beforeremove', pageBeforeRemove);
 };

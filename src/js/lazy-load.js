@@ -123,14 +123,14 @@ app.initImagesLazyLoad = function (pageContainer) {
 
     // Destroy on page remove
     if (pageContainer.hasClass('page')) {
-        pageContainer.once('pageBeforeRemove', detachEvents);
+        pageContainer.once('page:beforeremove', detachEvents);
     }
 
     // Run loader on page load/init
     lazyHandler();
 
     // Run after page animation
-    pageContainer.once('pageAfterAnimation', lazyHandler);
+    pageContainer.once('page:afteranimation', lazyHandler);
 };
 app.destroyImagesLazyLoad = function (pageContainer) {
     pageContainer = $(pageContainer);

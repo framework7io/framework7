@@ -46,7 +46,7 @@ app.initPageInfiniteScroll = function (pageContainer) {
     app.attachInfiniteScroll(infiniteContent);
     function detachEvents() {
         app.detachInfiniteScroll(infiniteContent);
-        pageContainer.off('pageBeforeRemove', detachEvents);
+        pageContainer.off('page:beforeremove', detachEvents);
     }
-    pageContainer.on('pageBeforeRemove', detachEvents);
+    pageContainer.on('page:beforeremove', detachEvents);
 };
