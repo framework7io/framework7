@@ -40,6 +40,7 @@ var VirtualList = function (listBlock, params) {
         if (app.device.ios && app.device.osVersion.split('.')[0] < 8) {
             updatableScroll = false;
         }
+        vl.params.updatableScroll = updatableScroll;
     }
 
     // Append <ul>
