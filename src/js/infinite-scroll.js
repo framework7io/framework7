@@ -24,7 +24,7 @@ function handleInfiniteScroll() {
     else {
         if (scrollTop + height >= scrollHeight - distance) {
             if (virtualListContainer.length > 0) {
-                virtualList = virtualListContainer[0].f7VirtualList;
+                virtualList = virtualListContainer.eq(-1)[0].f7VirtualList;
                 if (virtualList && !virtualList.reachEnd) return;
             }
             inf.trigger('infinite');
