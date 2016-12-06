@@ -171,7 +171,12 @@ var VirtualList = function (listBlock, params) {
 
             if (i === fromIndex) vl.currentFromIndex = index;
             if (i === toIndex - 1) vl.currentToIndex = index;
-            if (index === vl.items.length - 1) vl.reachEnd = true;
+            if (vl.filteredItems) {
+                if (vl.items[index] === vl.filteredItems[vl.filteredItems.length - 1]) vl.reachEnd = true;
+            }
+            else {
+                if (index === vl.items.length - 1) vl.reachEnd = true;
+            }
 
             // Find items
             if (vl.domCache[index]) {
