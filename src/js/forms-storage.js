@@ -93,7 +93,7 @@ app.formFromData = function (form, formData) {
         var name = input.attr('name');
         var type = input.attr('type');
         var tag = this.nodeName.toLowerCase();
-        if (!formData[name]) return;
+        if (typeof formData[name] === 'undefined' || formData[name] === null) return;
         if (skipTypes.indexOf(type) >= 0) return;
         if (skipNames.indexOf(name) >= 0 || !name) return;
         if (tag === 'select' && input.prop('multiple')) {
