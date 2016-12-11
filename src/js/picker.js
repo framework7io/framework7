@@ -519,7 +519,7 @@ var Picker = function (params) {
                 p.pickerHTML = '<div class="popover popover-picker-columns"><div class="popover-inner">' + p.pickerHTML + '</div></div>';
                 p.popover = app.popover(p.pickerHTML, p.params.input, true);
                 p.container = $(p.popover).find('.picker-modal');
-                $(p.popover).on('close', function () {
+                $(p.popover).on('popover:close', function () {
                     onPickerClose();
                 });
             }
@@ -531,7 +531,7 @@ var Picker = function (params) {
             else {
                 p.container = $(app.pickerModal(p.pickerHTML));
                 $(p.container)
-                .on('close', function () {
+                .on('picker:close', function () {
                     onPickerClose();
                 });
             }

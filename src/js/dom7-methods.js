@@ -151,7 +151,16 @@ Dom7.prototype = {
     },
     val: function (value) {
         if (typeof value === 'undefined') {
-            if (this[0]) return this[0].value;
+            if (this[0]) {
+                if (this[0].multiple && this[0].nodeName.toLowerCase() === 'select') {
+                    var values = [];
+                    for (var i = 0; i < this[0].selectedOptions.length; i++) {
+                        values.push(this[0].selectedOptions[i].value);
+                    }
+                    return values;
+                }
+                return this[0].value;
+            }
             else return undefined;
         }
         else {

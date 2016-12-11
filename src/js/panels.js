@@ -10,7 +10,7 @@ app.openPanel = function (panelPosition) {
     app.allowPanelOpen = false;
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     panel.css({display: 'block'}).addClass('active');
-    panel.trigger('open');
+    panel.trigger('open panel:open');
     if (app.params.material) {
         $('.panel-overlay').show();
     }
@@ -20,19 +20,19 @@ app.openPanel = function (panelPosition) {
 
     // Trigger reLayout
     var clientLeft = panel[0].clientLeft;
-    
+
     // Transition End;
     var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
     var openedTriggered = false;
-    
+
     function panelTransitionEnd() {
         transitionEndTarget.transitionEnd(function (e) {
             if ($(e.target).is(transitionEndTarget)) {
                 if (panel.hasClass('active')) {
-                    panel.trigger('opened');
+                    panel.trigger('opened panel:opened');
                 }
                 else {
-                    panel.trigger('closed');
+                    panel.trigger('closed panel:closed');
                 }
                 if (app.params.material) $('.panel-overlay').css({display: ''});
                 app.allowPanelOpen = true;
@@ -52,13 +52,13 @@ app.closePanel = function () {
     var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
     activePanel.removeClass('active');
     var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
-    activePanel.trigger('close');
+    activePanel.trigger('close panel:close');
     app.allowPanelOpen = false;
 
     transitionEndTarget.transitionEnd(function () {
         if (activePanel.hasClass('active')) return;
         activePanel.css({display: ''});
-        activePanel.trigger('closed');
+        activePanel.trigger('closed panel:closed');
         $('body').removeClass('panel-closing');
         app.allowPanelOpen = true;
     });
@@ -117,7 +117,7 @@ app.initSwipePanels = function () {
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
-        
+
         touchStartTime = (new Date()).getTime();
         direction = undefined;
     }
@@ -202,7 +202,7 @@ app.initSwipePanels = function () {
         e.preventDefault();
         var threshold = opened ? 0 : -app.params.swipePanelThreshold;
         if (side === 'right') threshold = -threshold;
-        
+
         touchesDiff = pageX - touchesStart.x + threshold;
 
         if (side === 'right') {
@@ -222,7 +222,7 @@ app.initSwipePanels = function () {
         if (effect === 'reveal') {
             views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
             panelOverlay.transform('translate3d(' + translate + 'px,0,0)').transition(0);
-            
+
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
         else {
@@ -303,10 +303,10 @@ app.initSwipePanels = function () {
                 }
                 else {
                     var target = effect === 'reveal' ? views : panel;
-                    panel.trigger('close');
+                    panel.trigger('close panel:close');
                     $('body').addClass('panel-closing');
                     target.transitionEnd(function () {
-                        panel.trigger('closed');
+                        panel.trigger('close panel:closed');
                         panel.css({display: ''});
                         $('body').removeClass('panel-closing');
                         app.allowPanelOpen = true;

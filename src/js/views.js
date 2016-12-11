@@ -261,7 +261,7 @@ var View = function (selector, params) {
         if (view.params.onSwipeBackMove) {
             view.params.onSwipeBackMove(callbackData);
         }
-        container.trigger('swipeBackMove', callbackData);
+        container.trigger('swipeBackMove swipeback:move', callbackData);
 
         // Transform pages
         var activePageTranslate = touchesDiff * inverter;
@@ -393,13 +393,13 @@ var View = function (selector, params) {
             if (view.params.onSwipeBackBeforeChange) {
                 view.params.onSwipeBackBeforeChange(callbackData);
             }
-            container.trigger('swipeBackBeforeChange', callbackData);
+            container.trigger('swipeBackBeforeChange swipeback:beforechange', callbackData);
         }
         else {
             if (view.params.onSwipeBackBeforeReset) {
                 view.params.onSwipeBackBeforeReset(callbackData);
             }
-            container.trigger('swipeBackBeforeReset', callbackData);
+            container.trigger('swipeBackBeforeReset swipeback:beforereset', callbackData);
         }
 
         activePage.transitionEnd(function () {
@@ -422,13 +422,13 @@ var View = function (selector, params) {
                 if (view.params.onSwipeBackAfterChange) {
                     view.params.onSwipeBackAfterChange(callbackData);
                 }
-                container.trigger('swipeBackAfterChange', callbackData);
+                container.trigger('swipeBackAfterChange swipeback:afterchange', callbackData);
             }
             else {
                 if (view.params.onSwipeBackAfterReset) {
                     view.params.onSwipeBackAfterReset(callbackData);
                 }
-                container.trigger('swipeBackAfterReset', callbackData);
+                container.trigger('swipeBackAfterReset swipeback:afterreset', callbackData);
             }
             if (pageShadow && pageShadow.length > 0) pageShadow.remove();
         });

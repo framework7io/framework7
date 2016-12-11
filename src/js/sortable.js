@@ -6,10 +6,10 @@ app.sortableToggle = function (sortableContainer) {
     if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
     sortableContainer.toggleClass('sortable-opened');
     if (sortableContainer.hasClass('sortable-opened')) {
-        sortableContainer.trigger('open');
+        sortableContainer.trigger('open sortable:open');
     }
     else {
-        sortableContainer.trigger('close');
+        sortableContainer.trigger('close sortable:close');
     }
     return sortableContainer;
 };
@@ -17,14 +17,14 @@ app.sortableOpen = function (sortableContainer) {
     sortableContainer = $(sortableContainer);
     if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
     sortableContainer.addClass('sortable-opened');
-    sortableContainer.trigger('open');
+    sortableContainer.trigger('open sortable:open');
     return sortableContainer;
 };
 app.sortableClose = function (sortableContainer) {
     sortableContainer = $(sortableContainer);
     if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
     sortableContainer.removeClass('sortable-opened');
-    sortableContainer.trigger('close');
+    sortableContainer.trigger('close sortable:close');
     return sortableContainer;
 };
 app.initSortable = function () {
@@ -101,11 +101,11 @@ app.initSortable = function () {
         var virtualList, oldIndex, newIndex;
         if (insertAfter) {
             sortingEl.insertAfter(insertAfter);
-            sortingEl.trigger('sort', {startIndex: startIndex, newIndex: sortingEl.index()});
+            sortingEl.trigger('sort sortable:sort', {startIndex: startIndex, newIndex: sortingEl.index()});
         }
         if (insertBefore) {
             sortingEl.insertBefore(insertBefore);
-            sortingEl.trigger('sort', {startIndex: startIndex, newIndex: sortingEl.index()});
+            sortingEl.trigger('sort sortable:sort', {startIndex: startIndex, newIndex: sortingEl.index()});
         }
         if ((insertAfter || insertBefore) && sortableContainer.hasClass('virtual-list')) {
             virtualList = sortableContainer[0].f7VirtualList;

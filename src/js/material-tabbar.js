@@ -33,7 +33,7 @@ app.initPageMaterialTabbar = function (pageContainer) {
 
         tabbarSetHighlight();
         $(window).on('resize', tabbarSetHighlight);
-        pageContainer.once('pageBeforeRemove', function () {
+        pageContainer.once('page:beforeremove', function () {
             $(window).off('resize', tabbarSetHighlight);
         });
     }

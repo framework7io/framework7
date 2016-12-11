@@ -11,9 +11,9 @@ app.initPageSwiper = function (pageContainer) {
     function destroySwiperOnRemove(slider) {
         function destroySwiper() {
             slider.destroy();
-            pageContainer.off('pageBeforeRemove', destroySwiper);
+            pageContainer.off('page:beforeremove', destroySwiper);
         }
-        pageContainer.on('pageBeforeRemove', destroySwiper);
+        pageContainer.on('page:beforeremove', destroySwiper);
     }
     swipers.each(function () {
         var swiper = $(this), initialSlide;

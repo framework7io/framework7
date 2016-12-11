@@ -24,8 +24,10 @@ function handleInfiniteScroll() {
     else {
         if (scrollTop + height >= scrollHeight - distance) {
             if (virtualListContainer.length > 0) {
-                virtualList = virtualListContainer[0].f7VirtualList;
-                if (virtualList && !virtualList.reachEnd) return;
+                virtualList = virtualListContainer.eq(-1)[0].f7VirtualList;
+                if (virtualList && !virtualList.reachEnd && !virtualList.params.updatableScroll) {
+                    return;
+                }
             }
             inf.trigger('infinite');
         }
@@ -46,7 +48,7 @@ app.initPageInfiniteScroll = function (pageContainer) {
     app.attachInfiniteScroll(infiniteContent);
     function detachEvents() {
         app.detachInfiniteScroll(infiniteContent);
-        pageContainer.off('pageBeforeRemove', detachEvents);
+        pageContainer.off('page:beforeremove', detachEvents);
     }
-    pageContainer.on('pageBeforeRemove', detachEvents);
+    pageContainer.on('page:beforeremove', detachEvents);
 };

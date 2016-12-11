@@ -112,7 +112,7 @@ var Searchbar = function (container, params) {
                 }
                 s.cancelButton.css(cancelMarginProp, '0px');
             }
-            s.triggerEvent('enableSearch', 'onEnable');
+            s.triggerEvent('enableSearch searchbar:enable', 'onEnable');
             s.active = true;
         }
         if (app.device.ios && !app.params.material && e && e.type === 'focus') {
@@ -144,7 +144,7 @@ var Searchbar = function (container, params) {
         else {
             _disable();
         }
-        s.triggerEvent('disableSearch', 'onDisable');
+        s.triggerEvent('disableSearch searchbar:disable', 'onDisable');
     };
 
     // Clear
@@ -154,7 +154,7 @@ var Searchbar = function (container, params) {
             return;
         }
         s.input.val('').trigger('change').focus();
-        s.triggerEvent('clearSearch', 'onClear');
+        s.triggerEvent('clearSearch searchbar:clear', 'onClear');
     };
 
     // Search
@@ -189,7 +189,7 @@ var Searchbar = function (container, params) {
         }
 
         if (s.params.customSearch) {
-            s.triggerEvent('search', 'onSearch', {query: query});
+            s.triggerEvent('search searchbar:search', 'onSearch', {query: query});
             return;
         }
 
@@ -272,7 +272,7 @@ var Searchbar = function (container, params) {
                 });
             }
         }
-        s.triggerEvent('search', 'onSearch', {query: query, foundItems: foundItems});
+        s.triggerEvent('search searchbar:search', 'onSearch', {query: query, foundItems: foundItems});
         if (foundItems.length === 0) {
             s.notFound.show();
             s.found.hide();

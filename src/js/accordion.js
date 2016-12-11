@@ -22,14 +22,14 @@ app.accordionOpen = function (item) {
             content.css('height', 'auto');
             var clientLeft = content[0].clientLeft;
             content.transition('');
-            item.trigger('opened');
+            item.trigger('opened accordion:opened');
         }
         else {
             content.css('height', '');
-            item.trigger('closed');
+            item.trigger('closed accordion:closed');
         }
     });
-    item.trigger('open');
+    item.trigger('open accordion:open');
     item.addClass('accordion-item-expanded');
 };
 app.accordionClose = function (item) {
@@ -49,12 +49,12 @@ app.accordionClose = function (item) {
             content.css('height', 'auto');
             var clientLeft = content[0].clientLeft;
             content.transition('');
-            item.trigger('opened');
+            item.trigger('opened accordion:opened');
         }
         else {
             content.css('height', '');
-            item.trigger('closed');
+            item.trigger('closed accordion:closed');
         }
     });
-    item.trigger('close');
+    item.trigger('close accordion:close');
 };

@@ -74,9 +74,8 @@ app.formToData = function (form) {
                     break;
             }
         }
-            
     });
-    form.trigger('formToJSON formToData', {formData: formData});
+    form.trigger('formToJSON formToData form:todata', {formData: formData});
 
     return formData;
 };
@@ -94,7 +93,7 @@ app.formFromData = function (form, formData) {
         var name = input.attr('name');
         var type = input.attr('type');
         var tag = this.nodeName.toLowerCase();
-        if (!formData[name]) return;
+        if (typeof formData[name] === 'undefined' || formData[name] === null) return;
         if (skipTypes.indexOf(type) >= 0) return;
         if (skipNames.indexOf(name) >= 0 || !name) return;
         if (tag === 'select' && input.prop('multiple')) {
@@ -129,7 +128,7 @@ app.formFromData = function (form, formData) {
             input.trigger('change');
         }
     });
-    form.trigger('formFromJSON formFromData', {formData: formData});
+    form.trigger('formFromJSON formFromData form:fromdata', {formData: formData});
 };
 app.formFromJSON = app.formFromData;
 
@@ -154,14 +153,14 @@ app.initFormsStorage = function (pageContainer) {
         var formJSON = app.formToData(form);
         if (!formJSON) return;
         app.formStoreData(formId, formJSON);
-        form.trigger('store', {data: formJSON});
+        form.trigger('store form:storedata', {data: formJSON});
     }
     forms.on('change submit', storeForm);
 
     // Detach Listeners
     function pageBeforeRemove() {
         forms.off('change submit', storeForm);
-        pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+        pageContainer.off('page:beforeremove', pageBeforeRemove);
     }
-    pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+    pageContainer.on('page:beforeremove', pageBeforeRemove);
 };

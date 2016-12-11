@@ -101,6 +101,7 @@ $.serializeObject = $.param = function (obj, parents) {
                 // Should be string or plain value
                 resultArray.push(var_name(prop) + '=' + var_value(obj[prop]));
             }
+            else if (obj[prop] === '') resultArray.push(var_name(prop));
         }
     }
     return resultArray.join(separator);

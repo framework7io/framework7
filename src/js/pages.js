@@ -115,7 +115,7 @@ app.pageInitCallback = function (view, params) {
         app.pluginHook('pageReinit', pageData);
         if (app.params.onPageReinit) app.params.onPageReinit(app, pageData);
         app.triggerPageCallbacks('reinit', pageData.name, pageData);
-        $(pageData.container).trigger('pageReinit', {page: pageData});
+        $(pageData.container).trigger('pageReinit page:reinit', {page: pageData});
         return;
     }
     pageContainer.f7PageInitialized = true;
@@ -135,7 +135,7 @@ app.pageInitCallback = function (view, params) {
     app.pluginHook('pageBeforeInit', pageData);
     if (app.params.onPageBeforeInit) app.params.onPageBeforeInit(app, pageData);
     app.triggerPageCallbacks('beforeInit', pageData.name, pageData);
-    $(pageData.container).trigger('pageBeforeInit', {page: pageData});
+    $(pageData.container).trigger('pageBeforeInit page:beforeinit', {page: pageData});
 
     // Init page
     app.initPage(pageContainer);
@@ -144,7 +144,7 @@ app.pageInitCallback = function (view, params) {
     app.pluginHook('pageInit', pageData);
     if (app.params.onPageInit) app.params.onPageInit(app, pageData);
     app.triggerPageCallbacks('init', pageData.name, pageData);
-    $(pageData.container).trigger('pageInit', {page: pageData});
+    $(pageData.container).trigger('pageInit page:init', {page: pageData});
 };
 app.pageRemoveCallback = function (view, pageContainer, position) {
     var pageContext;
@@ -165,7 +165,7 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
     app.pluginHook('pageBeforeRemove', pageData);
     if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
     app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
-    $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
+    $(pageData.container).trigger('pageBeforeRemove page:beforeremove', {page: pageData});
     pageData = null;
 };
 app.pageBackCallback = function (callback, view, params) {
@@ -191,14 +191,14 @@ app.pageBackCallback = function (callback, view, params) {
         app.pluginHook('pageAfterBack', pageData);
         if (app.params.onPageAfterBack) app.params.onPageAfterBack(app, pageData);
         app.triggerPageCallbacks('afterBack', pageData.name, pageData);
-        $(pageContainer).trigger('pageAfterBack', {page: pageData});
+        $(pageContainer).trigger('pageAfterBack page:afterback', {page: pageData});
 
     }
     if (callback === 'before') {
         app.pluginHook('pageBack', pageData);
         if (app.params.onPageBack) app.params.onPageBack(app, pageData);
         app.triggerPageCallbacks('back', pageData.name, pageData);
-        $(pageData.container).trigger('pageBack', {page: pageData});
+        $(pageData.container).trigger('pageBack page:back', {page: pageData});
     }
 };
 app.pageAnimCallback = function (callback, view, params) {
@@ -242,7 +242,7 @@ app.pageAnimCallback = function (callback, view, params) {
         app.pluginHook('pageAfterAnimation', pageData);
         if (app.params.onPageAfterAnimation) app.params.onPageAfterAnimation(app, pageData);
         app.triggerPageCallbacks('afterAnimation', pageData.name, pageData);
-        $(pageData.container).trigger('pageAfterAnimation', {page: pageData});
+        $(pageData.container).trigger('pageAfterAnimation page:afteranimation', {page: pageData});
 
     }
     if (callback === 'before') {
@@ -284,7 +284,7 @@ app.pageAnimCallback = function (callback, view, params) {
         app.pluginHook('pageBeforeAnimation', pageData);
         if (app.params.onPageBeforeAnimation) app.params.onPageBeforeAnimation(app, pageData);
         app.triggerPageCallbacks('beforeAnimation', pageData.name, pageData);
-        $(pageData.container).trigger('pageBeforeAnimation', {page: pageData});
+        $(pageData.container).trigger('pageBeforeAnimation page:beforeanimation', {page: pageData});
     }
 };
 

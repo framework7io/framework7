@@ -37,6 +37,7 @@ Bart DJ
 
 ### $10+
 
+Michael Kreinbihl<br>
 Todd Crowe<br>
 Thanakrit Tangtermsak<br>
 Rick Chang<br>
@@ -48,6 +49,7 @@ Dave Billington
 
 ### $5+
 
+Daniel Dingemanse<br>
 Henry Blackman<br>
 Ruslan Skorynin<br>
 Dmitry Akinin<br>

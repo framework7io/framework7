@@ -223,7 +223,7 @@ app.initSwipeout = function (swipeoutEl) {
         
         if (action === 'open') {
             app.swipeoutOpenedEl = swipeOutEl;
-            swipeOutEl.trigger('open');
+            swipeOutEl.trigger('open swipeout:open');
             swipeOutEl.addClass('swipeout-opened transitioning');
             var newTranslate = direction === 'to-left' ? -actionsWidth : actionsWidth;
             swipeOutContent.transform('translate3d(' + newTranslate + 'px,0,0)');
@@ -242,7 +242,7 @@ app.initSwipeout = function (swipeoutEl) {
             }
         }
         else {
-            swipeOutEl.trigger('close');
+            swipeOutEl.trigger('close swipeout:close');
             app.swipeoutOpenedEl = undefined;
             swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
             swipeOutContent.transform('');
@@ -311,7 +311,7 @@ app.swipeoutOpen = function (el, dir, callback) {
     var swipeOutActions = el.find('.swipeout-actions-' + dir);
     if (swipeOutActions.length === 0) return;
     var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
-    el.trigger('open').addClass('swipeout-opened').removeClass('transitioning');
+    el.trigger('open swipeout:open').addClass('swipeout-opened').removeClass('transitioning');
     swipeOutActions.addClass('swipeout-actions-opened');
     var buttons = swipeOutActions.children('a');
     var swipeOutActionsWidth = swipeOutActions.outerWidth();
@@ -333,7 +333,7 @@ app.swipeoutOpen = function (el, dir, callback) {
         $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0)');
     }
     el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
-        el.trigger('opened');
+        el.trigger('opened swipeout:opened');
         if (callback) callback.call(el[0]);
     });
     app.swipeoutOpenedEl = el;
@@ -348,7 +348,7 @@ app.swipeoutClose = function (el, callback) {
     var buttons = swipeOutActions.children('a');
     var swipeOutActionsWidth = swipeOutActions.outerWidth();
     app.allowSwipeout = false;
-    el.trigger('close');
+    el.trigger('close swipeout:close');
     el.removeClass('swipeout-opened').addClass('transitioning');
 
     var closeTO;
@@ -357,7 +357,7 @@ app.swipeoutClose = function (el, callback) {
         if (el.hasClass('swipeout-opened')) return;
         el.removeClass('transitioning');
         buttons.transform('');
-        el.trigger('closed');
+        el.trigger('closed swipeout:closed');
         if (callback) callback.call(el[0]);
         if (closeTO) clearTimeout(closeTO);
     }
@@ -380,11 +380,11 @@ app.swipeoutDelete = function (el, callback) {
     if (el.length === 0) return;
     if (el.length > 1) el = $(el[0]);
     app.swipeoutOpenedEl = undefined;
-    el.trigger('delete');
+    el.trigger('delete swipeout:delete');
     el.css({height: el.outerHeight() + 'px'});
     var clientLeft = el[0].clientLeft;
     el.css({height: 0 + 'px'}).addClass('deleting transitioning').transitionEnd(function () {
-        el.trigger('deleted');
+        el.trigger('deleted swipeout:deleted');
         if (callback) callback.call(el[0]);
         if (el.parents('.virtual-list').length > 0) {
             var virtualList = el.parents('.virtual-list')[0].f7VirtualList;
