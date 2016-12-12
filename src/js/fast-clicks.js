@@ -156,6 +156,7 @@ app.initFastClicks = function () {
         else return false;
     }
     function createRipple(x, y, el) {
+        if (!el) return;
         var box = el[0].getBoundingClientRect();
         var center = {
             x: x - box.left,
