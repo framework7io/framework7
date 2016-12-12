@@ -59,13 +59,14 @@ Framework7.prototype.device = (function () {
     // Check for status bar and fullscreen app mode
     var windowWidth = $(window).width();
     var windowHeight = $(window).height();
-    device.statusBar = false;
-    if (device.webView && (windowWidth * windowHeight === screen.width * screen.height)) {
-        device.statusBar = true;
-    }
-    else {
-        device.statusBar = false;
-    }
+
+    device.needsStatusBar = function () {
+        if (device.webView && (windowWidth * windowHeight === screen.width * screen.height)) {
+            return true;
+        }
+        return false;
+    };
+    device.statusBar = device.needsStatusBar();
 
     // Classes
     var classNames = [];
