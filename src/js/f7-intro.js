@@ -171,3 +171,10 @@ window.Framework7 = function (params) {
         if (app.params.statusbarOverlay) $('html').addClass('with-statusbar-overlay');
         else $('html').removeClass('with-statusbar-overlay');
     }
+    else if (app.device.ios && (window.cordova || window.phonegap)) {
+        $(document).on('resume', function () {
+            if (app.device.needsStatusBar()) {
+                $('html').addClass('with-statusbar-overlay');
+            }
+        }, false);
+    }
