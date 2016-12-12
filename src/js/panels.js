@@ -148,6 +148,16 @@ app.initSwipePanels = function () {
                 else {
                     side = direction === 'to-right' ? 'left' : 'right';
                 }
+                if (app.params.swipePanelActiveArea > 0) {
+                    if (side === 'left' && touchesStart.x > app.params.swipePanelActiveArea) {
+                        isTouched = false;
+                        return;
+                    }
+                    if (side === 'right' && touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) {
+                        isTouched = false;
+                        return;
+                    }
+                }
                 panel = $('.panel.panel-' + side);
             }
 
