@@ -59,6 +59,10 @@ window.Template7 = (function () {
                         var hashParts = part.split('=');
                         var hashName = hashParts[0];
                         var hashContent = hashParts[1];
+                        if (!blockQuoteRegExp) {
+                            blockQuoteRegExp = hashContent.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
+                            openingQuote = hashContent.indexOf('"') === 0 ? '"' : '\'';
+                        }
                         if (hashContent.match(blockQuoteRegExp).length !== 2) {
                             shiftIndex = 0;
                             for (j = i + 1; j < helperParts.length; j++) {
