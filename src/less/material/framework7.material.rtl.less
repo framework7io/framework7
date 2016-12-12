@@ -101,6 +101,11 @@ html {
     input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="time"], input[type="number"], select, textarea {
         text-align: right;
     }
+    .input-item, &.inputs-list {
+        .floating-label {
+            .transform-origin(right);
+        }
+    }
 }
 .buttons-row {
     .button {
