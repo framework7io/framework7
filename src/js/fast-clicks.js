@@ -464,7 +464,7 @@ app.initFastClicks = function () {
             trackClick = false;
             return true;
         }
-        if (e.target.type === 'submit' && e.detail === 0) {
+        if (e.target.type === 'submit' && e.detail === 0 || e.target.type === 'file') {
             return true;
         }
         if (!targetElement) {
