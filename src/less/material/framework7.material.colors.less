@@ -149,6 +149,20 @@ Framework7 Layouts Themes
     .chip {
         background: rgba(255,255,255,0.87);
     }
+
+    // Timeline
+    .timeline-item-inner {
+        background: @blockBg;
+    }
+    .timeline-item-divider {
+        background: rgba(255,255,255,0.3);
+    }
+    .content-block-inner .timeline-item-inner {
+        border-color: @blockBorder;
+    }
+    .timeline-item-time {
+        color: rgba(255,255,255,0.7);
+    }
 }
 
 /*==========================
@@ -296,6 +310,13 @@ Framework7 Color Themes
         // Modal buttons
         .modal-button {
             color: @color;
+        }
+        // Timeline
+        .timeline-horizontal .timeline-item-date, .timeline-horizontal& .timeline-item-date {
+            background-color: @color;
+        }
+        .timeline-year-title, .timeline-month-title {
+            background-color: @color;
         }
     }
     .swiper-pagination {

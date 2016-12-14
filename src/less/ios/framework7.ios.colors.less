@@ -475,6 +475,35 @@ Framework7 Layouts Themes
     .range-slider input[type="range"]::-ms-thumb {
         border: none;
     }
+    // Timeline
+    .timeline-item-inner {
+        background: @blockBg;
+    }
+    .timeline-item-divider {
+        background: rgba(255,255,255,0.3);
+    }
+    .content-block-inner .timeline-item-inner {
+        border-color: @blockBorder;
+    }
+    .timeline-item-time {
+        color: #8e8e93;
+    }
+    .timeline-horizontal .timeline-item-date {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+    }
+    .timeline-horizontal .timeline-item {
+        .hairline-color(right, @barsBorder);
+    }
+    .timeline-year-title, .timeline-month-title {
+        background-color: @barsBg;
+    }
+    .timeline-month .timeline-item {
+        .hairline-color(top, @barsBorder);
+    }
+    .timeline-year {
+        .hairline-color(right, @barsBorder);
+    }
 }
 
 /* === White layout === */
@@ -632,6 +661,32 @@ Framework7 Layouts Themes
     }
     .range-slider input[type="range"]:after {
         background: @blockBg;
+    }
+    // Timeline
+    .timeline-item-inner {
+        background: @blockStrongBg;
+    }
+    .content-block-inner .timeline-item-inner {
+        border-color: @blockBorder;
+    }
+    .timeline-item-time {
+        color: #8e8e93;
+    }
+    .timeline-horizontal .timeline-item-date {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+    }
+    .timeline-horizontal .timeline-item {
+        .hairline-color(right, @barsBorder);
+    }
+    .timeline-year-title, .timeline-month-title {
+        background-color: @barsBg;
+    }
+    .timeline-month .timeline-item {
+        .hairline-color(top, @barsBorder);
+    }
+    .timeline-year {
+        .hairline-color(right, @barsBorder);
     }
 }
 
