@@ -1,5 +1,5 @@
 /**
- * Framework7 1.5.0
+ * Framework7 1.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * iOS Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2016
+ * Released on: December 17, 2016
  */
 /*==========================
 Framework7 Color Themes
@@ -2735,6 +2735,37 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-dark .range-slider input[type="range"]::-ms-thumb {
   border: none;
 }
+.layout-dark .timeline-item-inner {
+  background: #1c1d1f;
+}
+.layout-dark .timeline-item-divider {
+  background: rgba(255, 255, 255, 0.3);
+}
+.layout-dark .content-block-inner .timeline-item-inner {
+  border-color: #393939;
+}
+.layout-dark .timeline-item-time {
+  color: #8e8e93;
+}
+.layout-dark .timeline-horizontal .timeline-item-date {
+  background-color: #131313;
+}
+.layout-dark .timeline-horizontal .timeline-item-date:after {
+  background-color: #333;
+}
+.layout-dark .timeline-horizontal .timeline-item:after {
+  background-color: #333;
+}
+.layout-dark .timeline-year-title,
+.layout-dark .timeline-month-title {
+  background-color: #131313;
+}
+.layout-dark .timeline-month .timeline-item:before {
+  background-color: #333;
+}
+.layout-dark .timeline-year:after {
+  background-color: #333;
+}
 /* === White layout === */
 .layout-white .navbar,
 .navbar.layout-white,
@@ -2927,4 +2958,32 @@ html:not(.watch-active-state) .layout-white label.label-radio:active,
 }
 .layout-white .range-slider input[type="range"]:after {
   background: #fff;
+}
+.layout-white .timeline-item-inner {
+  background: #fafafa;
+}
+.layout-white .content-block-inner .timeline-item-inner {
+  border-color: #ddd;
+}
+.layout-white .timeline-item-time {
+  color: #8e8e93;
+}
+.layout-white .timeline-horizontal .timeline-item-date {
+  background-color: #fff;
+}
+.layout-white .timeline-horizontal .timeline-item-date:after {
+  background-color: #ddd;
+}
+.layout-white .timeline-horizontal .timeline-item:after {
+  background-color: #ddd;
+}
+.layout-white .timeline-year-title,
+.layout-white .timeline-month-title {
+  background-color: #fff;
+}
+.layout-white .timeline-month .timeline-item:before {
+  background-color: #ddd;
+}
+.layout-white .timeline-year:after {
+  background-color: #ddd;
 }

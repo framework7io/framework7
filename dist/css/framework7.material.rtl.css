@@ -1,5 +1,5 @@
 /**
- * Framework7 1.5.0
+ * Framework7 1.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2016
+ * Released on: December 17, 2016
  */
 /*=============
   Framework 7 RTL Additions
@@ -115,6 +115,11 @@ html {
 .list-block select,
 .list-block textarea {
   text-align: right;
+}
+.list-block .input-item .floating-label,
+.list-block.inputs-list .floating-label {
+  -webkit-transform-origin: right;
+  transform-origin: right;
 }
 .buttons-row .button {
   margin-left: 0;
@@ -568,4 +573,102 @@ i.icon-next.theme-black {
 i.icon-prev.color-black,
 i.icon-prev.theme-black {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20fill%3D'%23000000'%20width%3D'24'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%3E%3Cpath%20d%3D'M10%206L8.59%207.41%2013.17%2012l-4.58%204.59L10%2018l6-6z'%2F%3E%3Cpath%20d%3D'M0%200h24v24H0z'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
+}
+/* === Timeline === */
+.timeline-sides .timeline-item {
+  margin-right: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-right: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-right: calc(50% - (32px + 10px) / 2 - 50px);
+  margin-left: 0;
+}
+.timeline-sides .timeline-item .timeline-item-date {
+  text-align: left;
+}
+.timeline-sides .timeline-item:not(.timeline-item-right):nth-child(2n) {
+  -webkit-box-direction: reverse;
+  -moz-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  margin-left: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-left: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-left: calc(50% - (32px + 10px) / 2 - 50px);
+  margin-right: 0;
+}
+.timeline-sides .timeline-item:not(.timeline-item-right):nth-child(2n) .timeline-item-date {
+  text-align: right;
+}
+.timeline-sides .timeline-item-left {
+  -webkit-box-direction: reverse;
+  -moz-box-direction: reverse;
+  -ms-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+  margin-left: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-left: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-left: calc(50% - (32px + 10px) / 2 - 50px);
+  margin-right: 0;
+}
+.timeline-sides .timeline-item-left .timeline-item-date {
+  text-align: right;
+}
+.timeline-sides .timeline-item-right {
+  margin-right: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-right: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+  margin-right: calc(50% - (32px + 10px) / 2 - 50px);
+  margin-left: 0;
+}
+.timeline-sides .timeline-item-right .timeline-item-date {
+  text-align: left;
+}
+@media (min-width: 768px) {
+  .tablet-sides .timeline-item {
+    margin-right: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-right: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-right: calc(50% - (32px + 10px) / 2 - 50px);
+    margin-left: 0;
+  }
+  .tablet-sides .timeline-item .timeline-item-date {
+    text-align: left;
+  }
+  .tablet-sides .timeline-item:not(.timeline-item-right):nth-child(2n) {
+    -webkit-box-direction: reverse;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    margin-left: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-left: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-left: calc(50% - (32px + 10px) / 2 - 50px);
+    margin-right: 0;
+  }
+  .tablet-sides .timeline-item:not(.timeline-item-right):nth-child(2n) .timeline-item-date {
+    text-align: right;
+  }
+  .tablet-sides .timeline-item-left {
+    -webkit-box-direction: reverse;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    margin-left: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-left: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-left: calc(50% - (32px + 10px) / 2 - 50px);
+    margin-right: 0;
+  }
+  .tablet-sides .timeline-item-left .timeline-item-date {
+    text-align: right;
+  }
+  .tablet-sides .timeline-item-right {
+    margin-right: -moz-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-right: -webkit-calc(50% - (32px + 10px) / 2 - 50px);
+    margin-right: calc(50% - (32px + 10px) / 2 - 50px);
+    margin-left: 0;
+  }
+  .tablet-sides .timeline-item-right .timeline-item-date {
+    text-align: left;
+  }
+}
+.timeline-horizontal .timeline-item-date {
+  text-align: right;
 }

@@ -1,5 +1,25 @@
 # Change Log
 
+## Framework7 v1.5.2 - Updated on December 17, 2016
+  * **New Timeline Component**
+  * **Renamed Events**
+    * All events are renamed and lowercased to match related components, now all events looks like `page:init`, `page:reinit`, `page:beforeremove`, `popup:open`, `modal:closed`, `accordion:open`, `panel:close`, etc. This can be a breaking change so the old events are still supported/triggered
+  * Virtual List
+    * Fixed issues with Virtual List not triggered Infinite Scroll
+  * Dom7
+    * `.val()` method for multiple select now returns array of selected values
+    * `serializeObject` now keeps empty object properties as empty values
+  * Panels
+    * Fixed issue when `swipePanelActiveArea` was ignored when using `swipePanel: 'both'`
+  * Fast Clicks
+    * Fixed issue with custom click event on input:file
+  * Swiper updated to latest 3.4.1 version
+    * Fixed Zoom for RTL
+    * Improved slideToClickedSlide behavior when loop is enabled
+  * Template7 updated to latest 1.1.4 version
+    * Fixed issue with quotes being added to helpers hash content
+  * Lot of minor fixes
+
 ## Framework7 v1.5.0 - Updated on November 8, 2016
   * App Root
     * New `root` app parameter to specify app root element, by default is `'body'`. Useful when using F7 with libraries like Vue or React that doesn't allow to bind app to the body.

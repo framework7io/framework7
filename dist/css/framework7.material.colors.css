@@ -1,5 +1,5 @@
 /**
- * Framework7 1.5.0
+ * Framework7 1.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2016
+ * Released on: December 17, 2016
  */
 /*==========================
 Framework7 Layouts Themes
@@ -170,6 +170,18 @@ html:not(.watch-active-state) .layout-dark .button:not(.button-fill):active,
 }
 .layout-dark .chip {
   background: rgba(255, 255, 255, 0.87);
+}
+.layout-dark .timeline-item-inner {
+  background: #1c1c1c;
+}
+.layout-dark .timeline-item-divider {
+  background: rgba(255, 255, 255, 0.3);
+}
+.layout-dark .content-block-inner .timeline-item-inner {
+  border-color: #393939;
+}
+.layout-dark .timeline-item-time {
+  color: rgba(255, 255, 255, 0.7);
 }
 /*==========================
 Framework7 Color Themes
@@ -336,6 +348,14 @@ label.label-radio.theme-red input[type="radio"]:checked ~ .item-inner i.icon-for
 }
 .theme-red .modal-button {
   color: #f44336;
+}
+.theme-red .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-red .timeline-item-date {
+  background-color: #f44336;
+}
+.theme-red .timeline-year-title,
+.theme-red .timeline-month-title {
+  background-color: #f44336;
 }
 .swiper-pagination.color-red .swiper-pagination-bullet-active,
 .theme-red .swiper-pagination .swiper-pagination-bullet-active {
@@ -570,6 +590,14 @@ label.label-radio.theme-pink input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-pink .modal-button {
   color: #e91e63;
 }
+.theme-pink .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-pink .timeline-item-date {
+  background-color: #e91e63;
+}
+.theme-pink .timeline-year-title,
+.theme-pink .timeline-month-title {
+  background-color: #e91e63;
+}
 .swiper-pagination.color-pink .swiper-pagination-bullet-active,
 .theme-pink .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #e91e63;
@@ -802,6 +830,14 @@ label.label-radio.theme-purple input[type="radio"]:checked ~ .item-inner i.icon-
 }
 .theme-purple .modal-button {
   color: #9c27b0;
+}
+.theme-purple .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-purple .timeline-item-date {
+  background-color: #9c27b0;
+}
+.theme-purple .timeline-year-title,
+.theme-purple .timeline-month-title {
+  background-color: #9c27b0;
 }
 .swiper-pagination.color-purple .swiper-pagination-bullet-active,
 .theme-purple .swiper-pagination .swiper-pagination-bullet-active {
@@ -1036,6 +1072,14 @@ label.label-radio.theme-deeppurple input[type="radio"]:checked ~ .item-inner i.i
 .theme-deeppurple .modal-button {
   color: #673ab7;
 }
+.theme-deeppurple .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-deeppurple .timeline-item-date {
+  background-color: #673ab7;
+}
+.theme-deeppurple .timeline-year-title,
+.theme-deeppurple .timeline-month-title {
+  background-color: #673ab7;
+}
 .swiper-pagination.color-deeppurple .swiper-pagination-bullet-active,
 .theme-deeppurple .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #673ab7;
@@ -1268,6 +1312,14 @@ label.label-radio.theme-indigo input[type="radio"]:checked ~ .item-inner i.icon-
 }
 .theme-indigo .modal-button {
   color: #3f51b5;
+}
+.theme-indigo .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-indigo .timeline-item-date {
+  background-color: #3f51b5;
+}
+.theme-indigo .timeline-year-title,
+.theme-indigo .timeline-month-title {
+  background-color: #3f51b5;
 }
 .swiper-pagination.color-indigo .swiper-pagination-bullet-active,
 .theme-indigo .swiper-pagination .swiper-pagination-bullet-active {
@@ -1502,6 +1554,14 @@ label.label-radio.theme-blue input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-blue .modal-button {
   color: #2196f3;
 }
+.theme-blue .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-blue .timeline-item-date {
+  background-color: #2196f3;
+}
+.theme-blue .timeline-year-title,
+.theme-blue .timeline-month-title {
+  background-color: #2196f3;
+}
 .swiper-pagination.color-blue .swiper-pagination-bullet-active,
 .theme-blue .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #2196f3;
@@ -1734,6 +1794,14 @@ label.label-radio.theme-lightblue input[type="radio"]:checked ~ .item-inner i.ic
 }
 .theme-lightblue .modal-button {
   color: #03a9f4;
+}
+.theme-lightblue .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-lightblue .timeline-item-date {
+  background-color: #03a9f4;
+}
+.theme-lightblue .timeline-year-title,
+.theme-lightblue .timeline-month-title {
+  background-color: #03a9f4;
 }
 .swiper-pagination.color-lightblue .swiper-pagination-bullet-active,
 .theme-lightblue .swiper-pagination .swiper-pagination-bullet-active {
@@ -1968,6 +2036,14 @@ label.label-radio.theme-cyan input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-cyan .modal-button {
   color: #00bcd4;
 }
+.theme-cyan .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-cyan .timeline-item-date {
+  background-color: #00bcd4;
+}
+.theme-cyan .timeline-year-title,
+.theme-cyan .timeline-month-title {
+  background-color: #00bcd4;
+}
 .swiper-pagination.color-cyan .swiper-pagination-bullet-active,
 .theme-cyan .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #00bcd4;
@@ -2200,6 +2276,14 @@ label.label-radio.theme-teal input[type="radio"]:checked ~ .item-inner i.icon-fo
 }
 .theme-teal .modal-button {
   color: #009688;
+}
+.theme-teal .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-teal .timeline-item-date {
+  background-color: #009688;
+}
+.theme-teal .timeline-year-title,
+.theme-teal .timeline-month-title {
+  background-color: #009688;
 }
 .swiper-pagination.color-teal .swiper-pagination-bullet-active,
 .theme-teal .swiper-pagination .swiper-pagination-bullet-active {
@@ -2434,6 +2518,14 @@ label.label-radio.theme-green input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-green .modal-button {
   color: #4caf50;
 }
+.theme-green .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-green .timeline-item-date {
+  background-color: #4caf50;
+}
+.theme-green .timeline-year-title,
+.theme-green .timeline-month-title {
+  background-color: #4caf50;
+}
 .swiper-pagination.color-green .swiper-pagination-bullet-active,
 .theme-green .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #4caf50;
@@ -2666,6 +2758,14 @@ label.label-radio.theme-lightgreen input[type="radio"]:checked ~ .item-inner i.i
 }
 .theme-lightgreen .modal-button {
   color: #8bc34a;
+}
+.theme-lightgreen .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-lightgreen .timeline-item-date {
+  background-color: #8bc34a;
+}
+.theme-lightgreen .timeline-year-title,
+.theme-lightgreen .timeline-month-title {
+  background-color: #8bc34a;
 }
 .swiper-pagination.color-lightgreen .swiper-pagination-bullet-active,
 .theme-lightgreen .swiper-pagination .swiper-pagination-bullet-active {
@@ -2900,6 +3000,14 @@ label.label-radio.theme-lime input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-lime .modal-button {
   color: #cddc39;
 }
+.theme-lime .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-lime .timeline-item-date {
+  background-color: #cddc39;
+}
+.theme-lime .timeline-year-title,
+.theme-lime .timeline-month-title {
+  background-color: #cddc39;
+}
 .swiper-pagination.color-lime .swiper-pagination-bullet-active,
 .theme-lime .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #cddc39;
@@ -3132,6 +3240,14 @@ label.label-radio.theme-yellow input[type="radio"]:checked ~ .item-inner i.icon-
 }
 .theme-yellow .modal-button {
   color: #ffeb3b;
+}
+.theme-yellow .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-yellow .timeline-item-date {
+  background-color: #ffeb3b;
+}
+.theme-yellow .timeline-year-title,
+.theme-yellow .timeline-month-title {
+  background-color: #ffeb3b;
 }
 .swiper-pagination.color-yellow .swiper-pagination-bullet-active,
 .theme-yellow .swiper-pagination .swiper-pagination-bullet-active {
@@ -3366,6 +3482,14 @@ label.label-radio.theme-amber input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-amber .modal-button {
   color: #ffc107;
 }
+.theme-amber .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-amber .timeline-item-date {
+  background-color: #ffc107;
+}
+.theme-amber .timeline-year-title,
+.theme-amber .timeline-month-title {
+  background-color: #ffc107;
+}
 .swiper-pagination.color-amber .swiper-pagination-bullet-active,
 .theme-amber .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffc107;
@@ -3598,6 +3722,14 @@ label.label-radio.theme-orange input[type="radio"]:checked ~ .item-inner i.icon-
 }
 .theme-orange .modal-button {
   color: #ff9800;
+}
+.theme-orange .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-orange .timeline-item-date {
+  background-color: #ff9800;
+}
+.theme-orange .timeline-year-title,
+.theme-orange .timeline-month-title {
+  background-color: #ff9800;
 }
 .swiper-pagination.color-orange .swiper-pagination-bullet-active,
 .theme-orange .swiper-pagination .swiper-pagination-bullet-active {
@@ -3832,6 +3964,14 @@ label.label-radio.theme-deeporange input[type="radio"]:checked ~ .item-inner i.i
 .theme-deeporange .modal-button {
   color: #ff5722;
 }
+.theme-deeporange .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-deeporange .timeline-item-date {
+  background-color: #ff5722;
+}
+.theme-deeporange .timeline-year-title,
+.theme-deeporange .timeline-month-title {
+  background-color: #ff5722;
+}
 .swiper-pagination.color-deeporange .swiper-pagination-bullet-active,
 .theme-deeporange .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ff5722;
@@ -4064,6 +4204,14 @@ label.label-radio.theme-brown input[type="radio"]:checked ~ .item-inner i.icon-f
 }
 .theme-brown .modal-button {
   color: #795548;
+}
+.theme-brown .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-brown .timeline-item-date {
+  background-color: #795548;
+}
+.theme-brown .timeline-year-title,
+.theme-brown .timeline-month-title {
+  background-color: #795548;
 }
 .swiper-pagination.color-brown .swiper-pagination-bullet-active,
 .theme-brown .swiper-pagination .swiper-pagination-bullet-active {
@@ -4298,6 +4446,14 @@ label.label-radio.theme-gray input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-gray .modal-button {
   color: #9e9e9e;
 }
+.theme-gray .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-gray .timeline-item-date {
+  background-color: #9e9e9e;
+}
+.theme-gray .timeline-year-title,
+.theme-gray .timeline-month-title {
+  background-color: #9e9e9e;
+}
 .swiper-pagination.color-gray .swiper-pagination-bullet-active,
 .theme-gray .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #9e9e9e;
@@ -4530,6 +4686,14 @@ label.label-radio.theme-bluegray input[type="radio"]:checked ~ .item-inner i.ico
 }
 .theme-bluegray .modal-button {
   color: #607d8b;
+}
+.theme-bluegray .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-bluegray .timeline-item-date {
+  background-color: #607d8b;
+}
+.theme-bluegray .timeline-year-title,
+.theme-bluegray .timeline-month-title {
+  background-color: #607d8b;
 }
 .swiper-pagination.color-bluegray .swiper-pagination-bullet-active,
 .theme-bluegray .swiper-pagination .swiper-pagination-bullet-active {
@@ -4764,6 +4928,14 @@ label.label-radio.theme-white input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-white .modal-button {
   color: #ffffff;
 }
+.theme-white .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-white .timeline-item-date {
+  background-color: #ffffff;
+}
+.theme-white .timeline-year-title,
+.theme-white .timeline-month-title {
+  background-color: #ffffff;
+}
 .swiper-pagination.color-white .swiper-pagination-bullet-active,
 .theme-white .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffffff;
@@ -4996,6 +5168,14 @@ label.label-radio.theme-black input[type="radio"]:checked ~ .item-inner i.icon-f
 }
 .theme-black .modal-button {
   color: #000000;
+}
+.theme-black .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.theme-black .timeline-item-date {
+  background-color: #000000;
+}
+.theme-black .timeline-year-title,
+.theme-black .timeline-month-title {
+  background-color: #000000;
 }
 .swiper-pagination.color-black .swiper-pagination-bullet-active,
 .theme-black .swiper-pagination .swiper-pagination-bullet-active {

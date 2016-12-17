@@ -1,5 +1,5 @@
 /**
- * Framework7 1.5.0
+ * Framework7 1.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * http://framework7.io/
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: November 8, 2016
+ * Released on: December 17, 2016
  */
 (function () {
 
@@ -186,6 +186,13 @@
         if (typeof app.params.statusbarOverlay !== 'undefined') {
             if (app.params.statusbarOverlay) $('html').addClass('with-statusbar-overlay');
             else $('html').removeClass('with-statusbar-overlay');
+        }
+        else if (app.device.ios && (window.cordova || window.phonegap)) {
+            $(document).on('resume', function () {
+                if (app.device.needsStatusBar()) {
+                    $('html').addClass('with-statusbar-overlay');
+                }
+            }, false);
         }
     
 
@@ -452,7 +459,7 @@
                 if (view.params.onSwipeBackMove) {
                     view.params.onSwipeBackMove(callbackData);
                 }
-                container.trigger('swipeBackMove', callbackData);
+                container.trigger('swipeBackMove swipeback:move', callbackData);
         
                 // Transform pages
                 var activePageTranslate = touchesDiff * inverter;
@@ -584,13 +591,13 @@
                     if (view.params.onSwipeBackBeforeChange) {
                         view.params.onSwipeBackBeforeChange(callbackData);
                     }
-                    container.trigger('swipeBackBeforeChange', callbackData);
+                    container.trigger('swipeBackBeforeChange swipeback:beforechange', callbackData);
                 }
                 else {
                     if (view.params.onSwipeBackBeforeReset) {
                         view.params.onSwipeBackBeforeReset(callbackData);
                     }
-                    container.trigger('swipeBackBeforeReset', callbackData);
+                    container.trigger('swipeBackBeforeReset swipeback:beforereset', callbackData);
                 }
         
                 activePage.transitionEnd(function () {
@@ -613,13 +620,13 @@
                         if (view.params.onSwipeBackAfterChange) {
                             view.params.onSwipeBackAfterChange(callbackData);
                         }
-                        container.trigger('swipeBackAfterChange', callbackData);
+                        container.trigger('swipeBackAfterChange swipeback:afterchange', callbackData);
                     }
                     else {
                         if (view.params.onSwipeBackAfterReset) {
                             view.params.onSwipeBackAfterReset(callbackData);
                         }
-                        container.trigger('swipeBackAfterReset', callbackData);
+                        container.trigger('swipeBackAfterReset swipeback:afterreset', callbackData);
                     }
                     if (pageShadow && pageShadow.length > 0) pageShadow.remove();
                 });
@@ -854,20 +861,20 @@
                 app.pluginHook('navbarReinit', eventData);
         
                 // Event
-                $(navbarInnerContainer).trigger('navbarReinit', eventData);
+                $(navbarInnerContainer).trigger('navbarReinit navbar:reinit', eventData);
                 return;
             }
             navbarInnerContainer.f7NavbarInitialized = true;
             // Before Init
             app.pluginHook('navbarBeforeInit', navbarData, pageData);
-            $(navbarInnerContainer).trigger('navbarBeforeInit', eventData);
+            $(navbarInnerContainer).trigger('navbarBeforeInit navbar:beforeinit', eventData);
         
             // Initialize Navbar
             app.initNavbar(navbarContainer, navbarInnerContainer);
         
             // On init
             app.pluginHook('navbarInit', navbarData, pageData);
-            $(navbarInnerContainer).trigger('navbarInit', eventData);
+            $(navbarInnerContainer).trigger('navbarInit navbar:init', eventData);
         };
         // Navbar Remove Callback
         app.navbarRemoveCallback = function (view, pageContainer, navbarContainer, navbarInnerContainer) {
@@ -886,7 +893,7 @@
                 navbar: navbarData
             };
             app.pluginHook('navbarBeforeRemove', navbarData, pageData);
-            $(navbarInnerContainer).trigger('navbarBeforeRemove', eventData);
+            $(navbarInnerContainer).trigger('navbarBeforeRemove navbar:beforeremove', eventData);
             navbarData = null;
             pageData = null;
         };
@@ -1164,7 +1171,7 @@
                         }
                         s.cancelButton.css(cancelMarginProp, '0px');
                     }
-                    s.triggerEvent('enableSearch', 'onEnable');
+                    s.triggerEvent('enableSearch searchbar:enable', 'onEnable');
                     s.active = true;
                 }
                 if (app.device.ios && !app.params.material && e && e.type === 'focus') {
@@ -1196,7 +1203,7 @@
                 else {
                     _disable();
                 }
-                s.triggerEvent('disableSearch', 'onDisable');
+                s.triggerEvent('disableSearch searchbar:disable', 'onDisable');
             };
         
             // Clear
@@ -1206,7 +1213,7 @@
                     return;
                 }
                 s.input.val('').trigger('change').focus();
-                s.triggerEvent('clearSearch', 'onClear');
+                s.triggerEvent('clearSearch searchbar:clear', 'onClear');
             };
         
             // Search
@@ -1241,7 +1248,7 @@
                 }
         
                 if (s.params.customSearch) {
-                    s.triggerEvent('search', 'onSearch', {query: query});
+                    s.triggerEvent('search searchbar:search', 'onSearch', {query: query});
                     return;
                 }
         
@@ -1324,7 +1331,7 @@
                         });
                     }
                 }
-                s.triggerEvent('search', 'onSearch', {query: query, foundItems: foundItems});
+                s.triggerEvent('search searchbar:search', 'onSearch', {query: query, foundItems: foundItems});
                 if (foundItems.length === 0) {
                     s.notFound.show();
                     s.found.hide();
@@ -1530,10 +1537,10 @@
             // Destroy on page remove
             function pageBeforeRemove() {
                 mb.destroy();
-                pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+                pageContainer.off('page:beforeremove', pageBeforeRemove);
             }
             if (pageContainer.hasClass('page')) {
-                pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+                pageContainer.on('page:beforeremove', pageBeforeRemove);
             }
         };
 
@@ -1721,7 +1728,7 @@
                 app.pluginHook('pageReinit', pageData);
                 if (app.params.onPageReinit) app.params.onPageReinit(app, pageData);
                 app.triggerPageCallbacks('reinit', pageData.name, pageData);
-                $(pageData.container).trigger('pageReinit', {page: pageData});
+                $(pageData.container).trigger('pageReinit page:reinit', {page: pageData});
                 return;
             }
             pageContainer.f7PageInitialized = true;
@@ -1741,7 +1748,7 @@
             app.pluginHook('pageBeforeInit', pageData);
             if (app.params.onPageBeforeInit) app.params.onPageBeforeInit(app, pageData);
             app.triggerPageCallbacks('beforeInit', pageData.name, pageData);
-            $(pageData.container).trigger('pageBeforeInit', {page: pageData});
+            $(pageData.container).trigger('pageBeforeInit page:beforeinit', {page: pageData});
         
             // Init page
             app.initPage(pageContainer);
@@ -1750,7 +1757,7 @@
             app.pluginHook('pageInit', pageData);
             if (app.params.onPageInit) app.params.onPageInit(app, pageData);
             app.triggerPageCallbacks('init', pageData.name, pageData);
-            $(pageData.container).trigger('pageInit', {page: pageData});
+            $(pageData.container).trigger('pageInit page:init', {page: pageData});
         };
         app.pageRemoveCallback = function (view, pageContainer, position) {
             var pageContext;
@@ -1771,7 +1778,7 @@
             app.pluginHook('pageBeforeRemove', pageData);
             if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
             app.triggerPageCallbacks('beforeRemove', pageData.name, pageData);
-            $(pageData.container).trigger('pageBeforeRemove', {page: pageData});
+            $(pageData.container).trigger('pageBeforeRemove page:beforeremove', {page: pageData});
             pageData = null;
         };
         app.pageBackCallback = function (callback, view, params) {
@@ -1797,14 +1804,14 @@
                 app.pluginHook('pageAfterBack', pageData);
                 if (app.params.onPageAfterBack) app.params.onPageAfterBack(app, pageData);
                 app.triggerPageCallbacks('afterBack', pageData.name, pageData);
-                $(pageContainer).trigger('pageAfterBack', {page: pageData});
+                $(pageContainer).trigger('pageAfterBack page:afterback', {page: pageData});
         
             }
             if (callback === 'before') {
                 app.pluginHook('pageBack', pageData);
                 if (app.params.onPageBack) app.params.onPageBack(app, pageData);
                 app.triggerPageCallbacks('back', pageData.name, pageData);
-                $(pageData.container).trigger('pageBack', {page: pageData});
+                $(pageData.container).trigger('pageBack page:back', {page: pageData});
             }
         };
         app.pageAnimCallback = function (callback, view, params) {
@@ -1848,7 +1855,7 @@
                 app.pluginHook('pageAfterAnimation', pageData);
                 if (app.params.onPageAfterAnimation) app.params.onPageAfterAnimation(app, pageData);
                 app.triggerPageCallbacks('afterAnimation', pageData.name, pageData);
-                $(pageData.container).trigger('pageAfterAnimation', {page: pageData});
+                $(pageData.container).trigger('pageAfterAnimation page:afteranimation', {page: pageData});
         
             }
             if (callback === 'before') {
@@ -1890,7 +1897,7 @@
                 app.pluginHook('pageBeforeAnimation', pageData);
                 if (app.params.onPageBeforeAnimation) app.params.onPageBeforeAnimation(app, pageData);
                 app.triggerPageCallbacks('beforeAnimation', pageData.name, pageData);
-                $(pageData.container).trigger('pageBeforeAnimation', {page: pageData});
+                $(pageData.container).trigger('pageBeforeAnimation page:beforeanimation', {page: pageData});
             }
         };
         
@@ -3601,7 +3608,7 @@
                                     .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0) scale(' + (modalWidth/targetWidth) + ', ' + (modalHeight/targetHeight) + ')');
                             });
         
-                        modal.once('close', function () {
+                        modal.once('popover:close', function () {
                             target
                                 .removeClass('floating-button-to-popover-in floating-button-to-popover-scale')
                                 .addClass('floating-button-to-popover-out')
@@ -3610,7 +3617,7 @@
                                     target.removeClass('floating-button-to-popover-out');
                                 });
                         });
-                        modal.once('closed', function () {
+                        modal.once('popover:closed', function () {
                             modal.removeClass('popover-floating-button');
                         });
                     }
@@ -3681,7 +3688,7 @@
         
             $(window).on('resize', sizePopover);
         
-            modal.on('close', function () {
+            modal.on('popover:close', function () {
                 $(window).off('resize', sizePopover);
             });
         
@@ -3749,6 +3756,20 @@
         app.openModal = function (modal) {
             modal = $(modal);
             var isModal = modal.hasClass('modal');
+            var isPopover = modal.hasClass('popover');
+            var isPopup = modal.hasClass('popup');
+            var isLoginScreen = modal.hasClass('login-screen');
+            var isPickerModal = modal.hasClass('picker-modal');
+            var isActions = modal.hasClass('actions-modal');
+        
+            // Modal Event Prefix
+            var modalType = 'modal';
+            if (isPopover) modalType = 'popover';
+            if (isPopup) modalType = 'popup';
+            if (isLoginScreen) modalType = 'loginscreen';
+            if (isPickerModal) modalType = 'picker';
+            if (isActions) modalType = 'actions';
+        
             if ($('.modal.modal-in:not(.modal-out)').length && app.params.modalStack && isModal) {
                 app.modalStack.push(function () {
                     app.openModal(modal);
@@ -3760,13 +3781,10 @@
                 return;
             }
             modal.data('f7-modal-shown', true);
-            modal.once('close', function() {
+            modal.once(modalType + ':close', function() {
                modal.removeData('f7-modal-shown');
             });
-            var isPopover = modal.hasClass('popover');
-            var isPopup = modal.hasClass('popup');
-            var isLoginScreen = modal.hasClass('login-screen');
-            var isPickerModal = modal.hasClass('picker-modal');
+        
             if (isModal) {
                 modal.show();
                 modal.css({
@@ -3797,7 +3815,7 @@
             var clientLeft = modal[0].clientLeft;
         
             // Trugger open event
-            modal.trigger('open');
+            modal.trigger('open ' + modalType + ':open');
         
             // Picker modal body class
             if (isPickerModal) {
@@ -3810,7 +3828,7 @@
                     app.initPageWithCallback(this);
                 });
                 modal.find('.navbar').each(function () {
-                    app.initNavbarWithCallback(this); 
+                    app.initNavbarWithCallback(this);
                 });
             }
         
@@ -3818,8 +3836,8 @@
             if (!isLoginScreen && !isPickerModal) overlay.addClass('modal-overlay-visible');
             if (app.params.material && isPickerModal && overlay) overlay.addClass('modal-overlay-visible');
             modal.removeClass('modal-out').addClass('modal-in').transitionEnd(function (e) {
-                if (modal.hasClass('modal-out')) modal.trigger('closed');
-                else modal.trigger('opened');
+                if (modal.hasClass('modal-out')) modal.trigger('closed ' + modalType + ':closed');
+                else modal.trigger('opened ' + modalType + ':opened');
             });
             return true;
         };
@@ -3833,11 +3851,23 @@
             var isPopup = modal.hasClass('popup');
             var isLoginScreen = modal.hasClass('login-screen');
             var isPickerModal = modal.hasClass('picker-modal');
+            var isActions = modal.hasClass('actions-modal');
+        
+            // Modal Event Prefix
+            var modalType = 'modal';
+            if (isPopover) modalType = 'popover';
+            if (isPopup) modalType = 'popup';
+            if (isLoginScreen) modalType = 'loginscreen';
+            if (isPickerModal) modalType = 'picker';
+            if (isActions) modalType = 'actions';
         
             var removeOnClose = modal.hasClass('remove-on-close');
         
+            // For Actions
+            var keepOnClose = modal.hasClass('keep-on-close');
+        
             var overlay;
-            
+        
             if (isPopup) overlay = $('.popup-overlay');
             else {
                 if (isPickerModal && app.params.material) overlay = $('.picker-modal-overlay');
@@ -3853,7 +3883,7 @@
                 overlay.removeClass('modal-overlay-visible');
             }
         
-            modal.trigger('close');
+            modal.trigger('close ' + modalType + ':close');
         
             // Picker modal body class
             if (isPickerModal) {
@@ -3863,9 +3893,9 @@
         
             if (!(isPopover && !app.params.material)) {
                 modal.removeClass('modal-in').addClass('modal-out').transitionEnd(function (e) {
-                    if (modal.hasClass('modal-out')) modal.trigger('closed');
+                    if (modal.hasClass('modal-out')) modal.trigger('closed ' + modalType + ':closed');
                     else {
-                        modal.trigger('opened');
+                        modal.trigger('opened ' + modalType + ':opened');
                         if (isPopover) return;
                     }
         
@@ -3878,7 +3908,7 @@
                             modal.remove();
                         }
                     }
-                    else {
+                    else if (!keepOnClose) {
                         modal.remove();
                     }
                 });
@@ -3887,7 +3917,7 @@
                 }
             }
             else {
-                modal.removeClass('modal-in modal-out').trigger('closed').hide();
+                modal.removeClass('modal-in modal-out').trigger('closed ' + modalType + ':closed').hide();
                 if (removeOnClose) {
                     modal.remove();
                 }
@@ -3987,7 +4017,7 @@
             app.allowPanelOpen = false;
             var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
             panel.css({display: 'block'}).addClass('active');
-            panel.trigger('open');
+            panel.trigger('open panel:open');
             if (app.params.material) {
                 $('.panel-overlay').show();
             }
@@ -3997,19 +4027,19 @@
         
             // Trigger reLayout
             var clientLeft = panel[0].clientLeft;
-            
+        
             // Transition End;
             var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
             var openedTriggered = false;
-            
+        
             function panelTransitionEnd() {
                 transitionEndTarget.transitionEnd(function (e) {
                     if ($(e.target).is(transitionEndTarget)) {
                         if (panel.hasClass('active')) {
-                            panel.trigger('opened');
+                            panel.trigger('opened panel:opened');
                         }
                         else {
-                            panel.trigger('closed');
+                            panel.trigger('closed panel:closed');
                         }
                         if (app.params.material) $('.panel-overlay').css({display: ''});
                         app.allowPanelOpen = true;
@@ -4029,13 +4059,13 @@
             var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
             activePanel.removeClass('active');
             var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
-            activePanel.trigger('close');
+            activePanel.trigger('close panel:close');
             app.allowPanelOpen = false;
         
             transitionEndTarget.transitionEnd(function () {
                 if (activePanel.hasClass('active')) return;
                 activePanel.css({display: ''});
-                activePanel.trigger('closed');
+                activePanel.trigger('closed panel:closed');
                 $('body').removeClass('panel-closing');
                 app.allowPanelOpen = true;
             });
@@ -4094,7 +4124,7 @@
                 isMoved = false;
                 isTouched = true;
                 isScrolling = undefined;
-                
+        
                 touchStartTime = (new Date()).getTime();
                 direction = undefined;
             }
@@ -4124,6 +4154,16 @@
                         }
                         else {
                             side = direction === 'to-right' ? 'left' : 'right';
+                        }
+                        if (app.params.swipePanelActiveArea > 0) {
+                            if (side === 'left' && touchesStart.x > app.params.swipePanelActiveArea) {
+                                isTouched = false;
+                                return;
+                            }
+                            if (side === 'right' && touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) {
+                                isTouched = false;
+                                return;
+                            }
                         }
                         panel = $('.panel.panel-' + side);
                     }
@@ -4179,7 +4219,7 @@
                 e.preventDefault();
                 var threshold = opened ? 0 : -app.params.swipePanelThreshold;
                 if (side === 'right') threshold = -threshold;
-                
+        
                 touchesDiff = pageX - touchesStart.x + threshold;
         
                 if (side === 'right') {
@@ -4199,7 +4239,7 @@
                 if (effect === 'reveal') {
                     views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
                     panelOverlay.transform('translate3d(' + translate + 'px,0,0)').transition(0);
-                    
+        
                     app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
                 }
                 else {
@@ -4280,10 +4320,10 @@
                         }
                         else {
                             var target = effect === 'reveal' ? views : panel;
-                            panel.trigger('close');
+                            panel.trigger('close panel:close');
                             $('body').addClass('panel-closing');
                             target.transitionEnd(function () {
-                                panel.trigger('closed');
+                                panel.trigger('close panel:closed');
                                 panel.css({display: ''});
                                 $('body').removeClass('panel-closing');
                                 app.allowPanelOpen = true;
@@ -4430,14 +4470,14 @@
         
             // Destroy on page remove
             if (pageContainer.hasClass('page')) {
-                pageContainer.once('pageBeforeRemove', detachEvents);
+                pageContainer.once('page:beforeremove', detachEvents);
             }
         
             // Run loader on page load/init
             lazyHandler();
         
             // Run after page animation
-            pageContainer.once('pageAfterAnimation', lazyHandler);
+            pageContainer.once('page:afteranimation', lazyHandler);
         };
         app.destroyImagesLazyLoad = function (pageContainer) {
             pageContainer = $(pageContainer);
@@ -4690,10 +4730,10 @@
             // Destroy on page remove
             function pageBeforeRemove() {
                 m.destroy();
-                pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+                pageContainer.off('page:beforeremove', pageBeforeRemove);
             }
             if (pageContainer.hasClass('page')) {
-                pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+                pageContainer.on('page:beforeremove', pageBeforeRemove);
             }
         };
         
@@ -4923,7 +4963,7 @@
                 
                 if (action === 'open') {
                     app.swipeoutOpenedEl = swipeOutEl;
-                    swipeOutEl.trigger('open');
+                    swipeOutEl.trigger('open swipeout:open');
                     swipeOutEl.addClass('swipeout-opened transitioning');
                     var newTranslate = direction === 'to-left' ? -actionsWidth : actionsWidth;
                     swipeOutContent.transform('translate3d(' + newTranslate + 'px,0,0)');
@@ -4942,7 +4982,7 @@
                     }
                 }
                 else {
-                    swipeOutEl.trigger('close');
+                    swipeOutEl.trigger('close swipeout:close');
                     app.swipeoutOpenedEl = undefined;
                     swipeOutEl.addClass('transitioning').removeClass('swipeout-opened');
                     swipeOutContent.transform('');
@@ -5011,7 +5051,7 @@
             var swipeOutActions = el.find('.swipeout-actions-' + dir);
             if (swipeOutActions.length === 0) return;
             var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
-            el.trigger('open').addClass('swipeout-opened').removeClass('transitioning');
+            el.trigger('open swipeout:open').addClass('swipeout-opened').removeClass('transitioning');
             swipeOutActions.addClass('swipeout-actions-opened');
             var buttons = swipeOutActions.children('a');
             var swipeOutActionsWidth = swipeOutActions.outerWidth();
@@ -5033,7 +5073,7 @@
                 $(buttons[i]).transform('translate3d(' + (translate) + 'px,0,0)');
             }
             el.find('.swipeout-content').transform('translate3d(' + translate + 'px,0,0)').transitionEnd(function () {
-                el.trigger('opened');
+                el.trigger('opened swipeout:opened');
                 if (callback) callback.call(el[0]);
             });
             app.swipeoutOpenedEl = el;
@@ -5048,7 +5088,7 @@
             var buttons = swipeOutActions.children('a');
             var swipeOutActionsWidth = swipeOutActions.outerWidth();
             app.allowSwipeout = false;
-            el.trigger('close');
+            el.trigger('close swipeout:close');
             el.removeClass('swipeout-opened').addClass('transitioning');
         
             var closeTO;
@@ -5057,7 +5097,7 @@
                 if (el.hasClass('swipeout-opened')) return;
                 el.removeClass('transitioning');
                 buttons.transform('');
-                el.trigger('closed');
+                el.trigger('closed swipeout:closed');
                 if (callback) callback.call(el[0]);
                 if (closeTO) clearTimeout(closeTO);
             }
@@ -5080,11 +5120,11 @@
             if (el.length === 0) return;
             if (el.length > 1) el = $(el[0]);
             app.swipeoutOpenedEl = undefined;
-            el.trigger('delete');
+            el.trigger('delete swipeout:delete');
             el.css({height: el.outerHeight() + 'px'});
             var clientLeft = el[0].clientLeft;
             el.css({height: 0 + 'px'}).addClass('deleting transitioning').transitionEnd(function () {
-                el.trigger('deleted');
+                el.trigger('deleted swipeout:deleted');
                 if (callback) callback.call(el[0]);
                 if (el.parents('.virtual-list').length > 0) {
                     var virtualList = el.parents('.virtual-list')[0].f7VirtualList;
@@ -5113,10 +5153,10 @@
             if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
             sortableContainer.toggleClass('sortable-opened');
             if (sortableContainer.hasClass('sortable-opened')) {
-                sortableContainer.trigger('open');
+                sortableContainer.trigger('open sortable:open');
             }
             else {
-                sortableContainer.trigger('close');
+                sortableContainer.trigger('close sortable:close');
             }
             return sortableContainer;
         };
@@ -5124,14 +5164,14 @@
             sortableContainer = $(sortableContainer);
             if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
             sortableContainer.addClass('sortable-opened');
-            sortableContainer.trigger('open');
+            sortableContainer.trigger('open sortable:open');
             return sortableContainer;
         };
         app.sortableClose = function (sortableContainer) {
             sortableContainer = $(sortableContainer);
             if (sortableContainer.length === 0) sortableContainer = $('.list-block.sortable');
             sortableContainer.removeClass('sortable-opened');
-            sortableContainer.trigger('close');
+            sortableContainer.trigger('close sortable:close');
             return sortableContainer;
         };
         app.initSortable = function () {
@@ -5208,11 +5248,11 @@
                 var virtualList, oldIndex, newIndex;
                 if (insertAfter) {
                     sortingEl.insertAfter(insertAfter);
-                    sortingEl.trigger('sort', {startIndex: startIndex, newIndex: sortingEl.index()});
+                    sortingEl.trigger('sort sortable:sort', {startIndex: startIndex, newIndex: sortingEl.index()});
                 }
                 if (insertBefore) {
                     sortingEl.insertBefore(insertBefore);
-                    sortingEl.trigger('sort', {startIndex: startIndex, newIndex: sortingEl.index()});
+                    sortingEl.trigger('sort sortable:sort', {startIndex: startIndex, newIndex: sortingEl.index()});
                 }
                 if ((insertAfter || insertBefore) && sortableContainer.hasClass('virtual-list')) {
                     virtualList = sortableContainer[0].f7VirtualList;
@@ -5335,10 +5375,10 @@
             var backText = smartSelectData.backText || app.params.smartSelectBackText;
             var closeText;
             if (openIn === 'picker') {
-                closeText = smartSelectData.pickerCloseText || smartSelectData.backText || app.params.smartSelectPickerCloseText ;   
+                closeText = smartSelectData.pickerCloseText || smartSelectData.backText || app.params.smartSelectPickerCloseText ;
             }
             else {
-                closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;      
+                closeText = smartSelectData.popupCloseText || smartSelectData.backText || app.params.smartSelectPopupCloseText ;
             }
             var backOnSelect = smartSelectData.backOnSelect !== undefined ? smartSelectData.backOnSelect : app.params.smartSelectBackOnSelect;
             var formTheme = smartSelectData.formTheme || app.params.smartSelectFormTheme;
@@ -5409,7 +5449,7 @@
         
             // Item template/HTML
             if (!app._compiledTemplates.smartSelectItem) {
-                app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate || 
+                app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate ||
                     '{{#if isLabel}}' +
                     '<li class="item-divider">{{groupLabel}}</li>' +
                     '{{else}}' +
@@ -5454,7 +5494,7 @@
                 );
             }
             var smartSelectItemTemplate = app._compiledTemplates.smartSelectItem;
-            
+        
             var inputsHTML = '';
             if (!virtualList) {
                 for (var j = 0; j < values.length; j++) {
@@ -5468,7 +5508,7 @@
         
             if (openIn === 'picker') {
                 if (!app._compiledTemplates.smartSelectToolbar) {
-                    app._compiledTemplates.smartSelectToolbar = t7.compile(app.params.smartSelectToolbarTemplate || 
+                    app._compiledTemplates.smartSelectToolbar = t7.compile(app.params.smartSelectToolbarTemplate ||
                         '<div class="toolbar {{#if toolbarTheme}}theme-{{toolbarTheme}}{{/if}}">' +
                           '<div class="toolbar-inner">' +
                             '<div class="left"></div>' +
@@ -5483,13 +5523,13 @@
                     closeText: closeText,
                     openIn: openIn,
                     toolbarTheme: toolbarTheme,
-                    inPicker: openIn === 'picker'              
+                    inPicker: openIn === 'picker'
                 });
             }
             else {
                 // Navbar HTML
                 if (!app._compiledTemplates.smartSelectNavbar) {
-                    app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate || 
+                    app._compiledTemplates.smartSelectNavbar = t7.compile(app.params.smartSelectNavbarTemplate ||
                         '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
                             '<div class="navbar-inner">' +
                                 '{{leftTemplate}}' +
@@ -5506,7 +5546,7 @@
                     navbarTheme: navbarTheme,
                     inPopup: openIn === 'popup',
                     inPage: openIn === 'page',
-                    leftTemplate: openIn === 'popup' ? 
+                    leftTemplate: openIn === 'popup' ?
                         (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
                         (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
                 });
@@ -5523,14 +5563,14 @@
                     navbarLayout = 'fixed';
                 }
             }
-                
+        
         
             // Page Layout
             var pageName = 'smart-select-' + inputName;
         
             var useSearchbar = typeof smartSelect.data('searchbar') === 'undefined' ? app.params.smartSelectSearchbar : (smartSelect.data('searchbar') === 'true' ? true : false);
             var searchbarPlaceholder, searchbarCancel;
-                
+        
             if (useSearchbar) {
                 searchbarPlaceholder = smartSelect.data('searchbar-placeholder') || 'Search';
                 searchbarCancel = smartSelect.data('searchbar-cancel') || 'Cancel';
@@ -5597,7 +5637,7 @@
                     close = false;
                 }
                 if (close) {
-                    app.closeModal('.smart-select-picker.modal-in');   
+                    app.closeModal('.smart-select-picker.modal-in');
                 }
             }
         
@@ -5609,7 +5649,7 @@
                             $(this).parents('li').addClass('disabled');
                         }
                         else {
-                            $(this).parents('li').removeClass('disabled');   
+                            $(this).parents('li').removeClass('disabled');
                         }
                     });
                 }
@@ -5626,7 +5666,7 @@
                         template: smartSelectItemTemplate,
                         height: virtualListHeight || undefined,
                         searchByItem: function (query, index, item) {
-                            if (item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
+                            if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
                             return false;
                         }
                     });
@@ -5726,13 +5766,13 @@
                     $('html').on('click', closeOnHTMLClick);
         
                     // On Close
-                    picker.once('close', function () {
+                    picker.once('picker:close', function () {
                         // Reset linked picker
                         smartSelect[0].f7SmartSelectPicker = undefined;
-                        
+        
                         // Detach html click
-                        $('html').off('click', closeOnHTMLClick);    
-                        
+                        $('html').off('click', closeOnHTMLClick);
+        
                         // Restore page padding bottom
                         smartSelect.parents('.page-content').css({paddingBottom: ''});
                     });
@@ -5748,7 +5788,7 @@
                 handleInputs(picker);
             }
             else {
-                $(document).once('pageInit', '.smart-select-page', pageInit);
+                $(document).once('page:init', '.smart-select-page', pageInit);
                 view.router.load({
                     content: pageHTML,
                     reload: reLayout ? true : undefined
@@ -5799,6 +5839,7 @@
                 if (app.device.ios && app.device.osVersion.split('.')[0] < 8) {
                     updatableScroll = false;
                 }
+                vl.params.updatableScroll = updatableScroll;
             }
         
             // Append <ul>
@@ -5929,7 +5970,12 @@
         
                     if (i === fromIndex) vl.currentFromIndex = index;
                     if (i === toIndex - 1) vl.currentToIndex = index;
-                    if (index === vl.items.length - 1) vl.reachEnd = true;
+                    if (vl.filteredItems) {
+                        if (vl.items[index] === vl.filteredItems[vl.filteredItems.length - 1]) vl.reachEnd = true;
+                    }
+                    else {
+                        if (index === vl.items.length - 1) vl.reachEnd = true;
+                    }
         
                     // Find items
                     if (vl.domCache[index]) {
@@ -6352,10 +6398,10 @@
                         container.removeClass('pull-up').addClass('pull-down');
                     }
                     if (!pullStarted) {
-                        container.trigger('pullstart');
+                        container.trigger('pullstart ptr:pullstart');
                         pullStarted = true;
                     }
-                    container.trigger('pullmove', {
+                    container.trigger('pullmove ptr:pullmove', {
                         event: e,
                         scrollTop: scrollTop,
                         translate: translate,
@@ -6385,7 +6431,7 @@
                 container.transform('');
                 if (refresh) {
                     container.addClass('refreshing');
-                    container.trigger('refresh', {
+                    container.trigger('refresh ptr:refresh', {
                         done: function () {
                             app.pullToRefreshDone(container);
                         }
@@ -6396,7 +6442,7 @@
                 }
                 isTouched = false;
                 isMoved = false;
-                if (pullStarted) container.trigger('pullend');
+                if (pullStarted) container.trigger('pullend ptr:pullend');
             }
         
             // Attach Events
@@ -6415,9 +6461,9 @@
             eventsTarget[0].f7DestroyPullToRefresh = destroyPullToRefresh;
             function detachEvents() {
                 destroyPullToRefresh();
-                page.off('pageBeforeRemove', detachEvents);
+                page.off('page:beforeremove', detachEvents);
             }
-            page.on('pageBeforeRemove', detachEvents);
+            page.on('page:beforeremove', detachEvents);
         
         };
         
@@ -6427,7 +6473,7 @@
             container.removeClass('refreshing').addClass('transitioning');
             container.transitionEnd(function () {
                 container.removeClass('transitioning pull-up pull-down');
-                container.trigger('refreshdone');
+                container.trigger('refreshdone ptr:done');
             });
         };
         app.pullToRefreshTrigger = function (container) {
@@ -6435,7 +6481,7 @@
             if (container.length === 0) container = $('.pull-to-refresh-content');
             if (container.hasClass('refreshing')) return;
             container.addClass('transitioning refreshing');
-            container.trigger('refresh', {
+            container.trigger('refresh ptr:refresh', {
                 done: function () {
                     app.pullToRefreshDone(container);
                 }
@@ -6476,8 +6522,10 @@
             else {
                 if (scrollTop + height >= scrollHeight - distance) {
                     if (virtualListContainer.length > 0) {
-                        virtualList = virtualListContainer[0].f7VirtualList;
-                        if (virtualList && !virtualList.reachEnd) return;
+                        virtualList = virtualListContainer.eq(-1)[0].f7VirtualList;
+                        if (virtualList && !virtualList.reachEnd && !virtualList.params.updatableScroll) {
+                            return;
+                        }
                     }
                     inf.trigger('infinite');
                 }
@@ -6498,9 +6546,9 @@
             app.attachInfiniteScroll(infiniteContent);
             function detachEvents() {
                 app.detachInfiniteScroll(infiniteContent);
-                pageContainer.off('pageBeforeRemove', detachEvents);
+                pageContainer.off('page:beforeremove', detachEvents);
             }
-            pageContainer.on('pageBeforeRemove', detachEvents);
+            pageContainer.on('page:beforeremove', detachEvents);
         };
 
         /*=============================================================
@@ -6656,7 +6704,7 @@
         
                 tabbarSetHighlight();
                 $(window).on('resize', tabbarSetHighlight);
-                pageContainer.once('pageBeforeRemove', function () {
+                pageContainer.once('page:beforeremove', function () {
                     $(window).off('resize', tabbarSetHighlight);
                 });
             }
@@ -6674,7 +6722,7 @@
             }
             if (newTab.length === 0) return false;
             if (newTab.hasClass('active')) {
-                if (force) newTab.trigger('show');
+                if (force) newTab.trigger('show tab:show');
                 return false;
             }
             var tabs = newTab.parent('.tabs');
@@ -6698,11 +6746,11 @@
             }
         
             // Remove active class from old tabs
-            var oldTab = tabs.children('.tab.active').removeClass('active').trigger('hide');
+            var oldTab = tabs.children('.tab.active').removeClass('active').trigger('hide tab:hide');
             // Add active class to new tab
             newTab.addClass('active');
             // Trigger 'show' event on new tab
-            newTab.trigger('show');
+            newTab.trigger('show tab:show');
         
             // Update navbars in new tab
             if (!isAnimatedTabs && !isSwipeableTabs && newTab.find('.navbar').length > 0) {
@@ -6785,14 +6833,14 @@
                     content.css('height', 'auto');
                     var clientLeft = content[0].clientLeft;
                     content.transition('');
-                    item.trigger('opened');
+                    item.trigger('opened accordion:opened');
                 }
                 else {
                     content.css('height', '');
-                    item.trigger('closed');
+                    item.trigger('closed accordion:closed');
                 }
             });
-            item.trigger('open');
+            item.trigger('open accordion:open');
             item.addClass('accordion-item-expanded');
         };
         app.accordionClose = function (item) {
@@ -6812,14 +6860,14 @@
                     content.css('height', 'auto');
                     var clientLeft = content[0].clientLeft;
                     content.transition('');
-                    item.trigger('opened');
+                    item.trigger('opened accordion:opened');
                 }
                 else {
                     content.css('height', '');
-                    item.trigger('closed');
+                    item.trigger('closed accordion:closed');
                 }
             });
-            item.trigger('close');
+            item.trigger('close accordion:close');
         };
 
         /*===============================================================================
@@ -6898,7 +6946,7 @@
             }
             function targetNeedsFastClick(el) {
                 var $el = $(el);
-                if (el.nodeName.toLowerCase() === 'input' && el.type === 'file') return false;
+                if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) return false;
                 if (el.nodeName.toLowerCase() === 'select' && app.device.android) return false;
                 if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) return false;
                 if (app.params.fastClicksExclude && $el.is(app.params.fastClicksExclude)) return false;
@@ -6980,6 +7028,7 @@
                 else return false;
             }
             function createRipple(x, y, el) {
+                if (!el) return;
                 var box = el[0].getBoundingClientRect();
                 var center = {
                     x: x - box.left,
@@ -7288,7 +7337,7 @@
                     trackClick = false;
                     return true;
                 }
-                if (e.target.type === 'submit' && e.detail === 0) {
+                if (e.target.type === 'submit' && e.detail === 0 || e.target.type === 'file') {
                     return true;
                 }
                 if (!targetElement) {
@@ -7804,9 +7853,8 @@
                             break;
                     }
                 }
-                    
             });
-            form.trigger('formToJSON formToData', {formData: formData});
+            form.trigger('formToJSON formToData form:todata', {formData: formData});
         
             return formData;
         };
@@ -7824,7 +7872,7 @@
                 var name = input.attr('name');
                 var type = input.attr('type');
                 var tag = this.nodeName.toLowerCase();
-                if (!formData[name]) return;
+                if (typeof formData[name] === 'undefined' || formData[name] === null) return;
                 if (skipTypes.indexOf(type) >= 0) return;
                 if (skipNames.indexOf(name) >= 0 || !name) return;
                 if (tag === 'select' && input.prop('multiple')) {
@@ -7859,7 +7907,7 @@
                     input.trigger('change');
                 }
             });
-            form.trigger('formFromJSON formFromData', {formData: formData});
+            form.trigger('formFromJSON formFromData form:fromdata', {formData: formData});
         };
         app.formFromJSON = app.formFromData;
         
@@ -7884,16 +7932,16 @@
                 var formJSON = app.formToData(form);
                 if (!formJSON) return;
                 app.formStoreData(formId, formJSON);
-                form.trigger('store', {data: formJSON});
+                form.trigger('store form:storedata', {data: formJSON});
             }
             forms.on('change submit', storeForm);
         
             // Detach Listeners
             function pageBeforeRemove() {
                 forms.off('change submit', storeForm);
-                pageContainer.off('pageBeforeRemove', pageBeforeRemove);
+                pageContainer.off('page:beforeremove', pageBeforeRemove);
             }
-            pageContainer.on('pageBeforeRemove', pageBeforeRemove);
+            pageContainer.on('page:beforeremove', pageBeforeRemove);
         };
 
         /*===============================================================================
@@ -7921,13 +7969,13 @@
                 contentType: contentType,
                 data: data,
                 beforeSend: function (xhr) {
-                    form.trigger('beforeSubmit', {data:data, xhr: xhr});
+                    form.trigger('beforeSubmit form:beforesend', {data:data, xhr: xhr});
                 },
                 error: function (xhr) {
-                    form.trigger('submitError', {data:data, xhr: xhr});  
+                    form.trigger('submitError form:error', {data:data, xhr: xhr});
                 },
                 success: function (data) {
-                    form.trigger('submitted', {data: data, xhr: xhr});
+                    form.trigger('submitted form:success', {data: data, xhr: xhr});
                 }
             });
         });
@@ -8183,9 +8231,9 @@
             function destroySwiperOnRemove(slider) {
                 function destroySwiper() {
                     slider.destroy();
-                    pageContainer.off('pageBeforeRemove', destroySwiper);
+                    pageContainer.off('page:beforeremove', destroySwiper);
                 }
-                pageContainer.on('pageBeforeRemove', destroySwiper);
+                pageContainer.on('page:beforeremove', destroySwiper);
             }
             swipers.each(function () {
                 var swiper = $(this), initialSlide;
@@ -8393,11 +8441,11 @@
                 }
                 if (pb.params.type === 'popup') {
                     pb.popup = app.popup('<div class="popup photo-browser-popup">' + htmlTemplate + '</div>');
-                    $(pb.popup).on('closed', pb.onPopupClose);
+                    $(pb.popup).on('popup:closed', pb.onPopupClose);
                 }
                 if (pb.params.type === 'page') {
-                    $(document).on('pageBeforeInit', pb.onPageBeforeInit);
-                    $(document).on('pageBeforeRemove', pb.onPageBeforeRemove);
+                    $(document).on('page:beforeinit', pb.onPageBeforeInit);
+                    $(document).on('page:beforeremove', pb.onPageBeforeRemove);
                     if (!pb.params.view) pb.params.view = app.mainView;
                     pb.params.view.loadContent(htmlTemplate);
                     return;
@@ -8432,19 +8480,19 @@
         
             pb.onPopupClose = function (e) {
                 pb.close();
-                $(pb.popup).off('pageBeforeInit', pb.onPopupClose);
+                $(pb.popup).off('page:beforeinit', pb.onPopupClose);
             };
             pb.onPageBeforeInit = function (e) {
                 if (e.detail.page.name === 'photo-browser-slides') {
                     pb.layout(pb.openIndex);
                 }
-                $(document).off('pageBeforeInit', pb.onPageBeforeInit);
+                $(document).off('page:beforeinit', pb.onPageBeforeInit);
             };
             pb.onPageBeforeRemove = function (e) {
                 if (e.detail.page.name === 'photo-browser-slides') {
                     pb.close();
                 }
-                $(document).off('pageBeforeRemove', pb.onPageBeforeRemove);
+                $(document).off('page:beforeremove', pb.onPageBeforeRemove);
             };
         
             pb.onSliderTransitionStart = function (swiper) {
@@ -9803,7 +9851,7 @@
                         p.pickerHTML = '<div class="popover popover-picker-columns"><div class="popover-inner">' + p.pickerHTML + '</div></div>';
                         p.popover = app.popover(p.pickerHTML, p.params.input, true);
                         p.container = $(p.popover).find('.picker-modal');
-                        $(p.popover).on('close', function () {
+                        $(p.popover).on('popover:close', function () {
                             onPickerClose();
                         });
                     }
@@ -9815,7 +9863,7 @@
                     else {
                         p.container = $(app.pickerModal(p.pickerHTML));
                         $(p.container)
-                        .on('close', function () {
+                        .on('picker:close', function () {
                             onPickerClose();
                         });
                     }
@@ -10796,7 +10844,7 @@
                         p.pickerHTML = '<div class="popover popover-picker-calendar"><div class="popover-inner">' + p.pickerHTML + '</div></div>';
                         p.popover = app.popover(p.pickerHTML, p.params.input, true);
                         p.container = $(p.popover).find('.picker-modal');
-                        $(p.popover).on('close', function () {
+                        $(p.popover).on('popover:close', function () {
                             onPickerClose();
                         });
                     }
@@ -10808,7 +10856,7 @@
                     else {
                         p.container = $(app.pickerModal(p.pickerHTML));
                         $(p.container)
-                        .on('close', function () {
+                        .on('picker:close', function () {
                             onPickerClose();
                         });
                     }
@@ -11396,7 +11444,16 @@
             },
             val: function (value) {
                 if (typeof value === 'undefined') {
-                    if (this[0]) return this[0].value;
+                    if (this[0]) {
+                        if (this[0].multiple && this[0].nodeName.toLowerCase() === 'select') {
+                            var values = [];
+                            for (var i = 0; i < this[0].selectedOptions.length; i++) {
+                                values.push(this[0].selectedOptions[i].value);
+                            }
+                            return values;
+                        }
+                        return this[0].value;
+                    }
                     else return undefined;
                 }
                 else {
@@ -12200,7 +12257,7 @@
                             postData = '--' + boundary + '\r\n' + _newData.join('--' + boundary + '\r\n') + '--' + boundary + '--\r\n';
                         }
                         else {
-                            postData = options.contentType === 'application/x-www-form-urlencoded' ? _data : _data.replace(/&/g, '\r\n');
+                            postData = _data;
                         }
                     }
                 }
@@ -12241,34 +12298,34 @@
                     if (options.dataType === 'json') {
                         try {
                             responseData = JSON.parse(xhr.responseText);
-                            fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
+                            fireAjaxCallback('ajaxSuccess ajax:success', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
                         }
                         catch (err) {
-                            fireAjaxCallback('ajaxError', {xhr: xhr, parseerror: true}, 'error', xhr, 'parseerror');
+                            fireAjaxCallback('ajaxError ajax:error', {xhr: xhr, parseerror: true}, 'error', xhr, 'parseerror');
                         }
                     }
                     else {
                         responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
-                        fireAjaxCallback('ajaxSuccess', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
+                        fireAjaxCallback('ajaxSuccess ajax:success', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
                     }
                 }
                 else {
-                    fireAjaxCallback('ajaxError', {xhr: xhr}, 'error', xhr, xhr.status);
+                    fireAjaxCallback('ajaxError ajax:error', {xhr: xhr}, 'error', xhr, xhr.status);
                 }
                 if (options.statusCode) {
                     if (globalAjaxOptions.statusCode && globalAjaxOptions.statusCode[xhr.status]) globalAjaxOptions.statusCode[xhr.status](xhr);
                     if (options.statusCode[xhr.status]) options.statusCode[xhr.status](xhr);
                 }
-                fireAjaxCallback('ajaxComplete', {xhr: xhr}, 'complete', xhr, xhr.status);
+                fireAjaxCallback('ajaxComplete ajax:complete', {xhr: xhr}, 'complete', xhr, xhr.status);
             };
         
             xhr.onerror = function (e) {
                 if (xhrTimeout) clearTimeout(xhrTimeout);
-                fireAjaxCallback('ajaxError', {xhr: xhr}, 'error', xhr, xhr.status);
+                fireAjaxCallback('ajaxError ajax:error', {xhr: xhr}, 'error', xhr, xhr.status);
             };
         
             // Ajax start callback
-            fireAjaxCallback('ajaxStart', {xhr: xhr}, 'start', xhr);
+            fireAjaxCallback('ajaxStart ajax:start', {xhr: xhr}, 'start', xhr);
             fireAjaxCallback(undefined, undefined, 'beforeSend', xhr);
         
             // Timeout
@@ -12278,8 +12335,8 @@
                 };
                 xhrTimeout = setTimeout(function () {
                     xhr.abort();
-                    fireAjaxCallback('ajaxError', {xhr: xhr, timeout: true}, 'error', xhr, 'timeout');
-                    fireAjaxCallback('ajaxComplete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
+                    fireAjaxCallback('ajaxError ajax:error', {xhr: xhr, timeout: true}, 'error', xhr, 'timeout');
+                    fireAjaxCallback('ajaxComplete ajax:complete', {xhr: xhr, timeout: true}, 'complete', xhr, 'timeout');
                 }, options.timeout);
             }
         
@@ -12413,6 +12470,7 @@
                         // Should be string or plain value
                         resultArray.push(var_name(prop) + '=' + var_value(obj[prop]));
                     }
+                    else if (obj[prop] === '') resultArray.push(var_name(prop));
                 }
             }
             return resultArray.join(separator);
@@ -12936,9 +12994,9 @@
         var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
         var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
         var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
-        var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+        var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
     
-        device.ios = device.android = device.iphone = device.ipad = device.androidChrome = false;
+        device.ios = device.android = device.iphone = device.ipod = device.ipad = device.androidChrome = false;
         
         // Android
         if (android) {
@@ -12986,13 +13044,14 @@
         // Check for status bar and fullscreen app mode
         var windowWidth = $(window).width();
         var windowHeight = $(window).height();
-        device.statusBar = false;
-        if (device.webView && (windowWidth * windowHeight === screen.width * screen.height)) {
-            device.statusBar = true;
-        }
-        else {
-            device.statusBar = false;
-        }
+    
+        device.needsStatusBar = function () {
+            if (device.webView && (windowWidth * windowHeight === screen.width * screen.height)) {
+                return true;
+            }
+            return false;
+        };
+        device.statusBar = device.needsStatusBar();
     
         // Classes
         var classNames = [];
@@ -13098,6 +13157,10 @@
                             var hashParts = part.split('=');
                             var hashName = hashParts[0];
                             var hashContent = hashParts[1];
+                            if (!blockQuoteRegExp) {
+                                blockQuoteRegExp = hashContent.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
+                                openingQuote = hashContent.indexOf('"') === 0 ? '"' : '\'';
+                            }
                             if (hashContent.match(blockQuoteRegExp).length !== 2) {
                                 shiftIndex = 0;
                                 for (j = i + 1; j < helperParts.length; j++) {
@@ -14084,7 +14147,7 @@
         s.preloadImages = function () {
             s.imagesToLoad = s.container.find('img');
             function _onReady() {
-                if (typeof s === 'undefined' || s === null) return;
+                if (typeof s === 'undefined' || s === null || !s) return;
                 if (s.imagesLoaded !== undefined) s.imagesLoaded++;
                 if (s.imagesLoaded === s.imagesToLoad.length) {
                     if (s.params.updateOnImagesReady) s.update();
@@ -14182,6 +14245,7 @@
         s.updateAutoHeight = function () {
             var activeSlides = [];
             var newHeight = 0;
+            var i;
         
             // Find slides currently in view
             if(s.params.slidesPerView !== 'auto' && s.params.slidesPerView > 1) {
@@ -14409,6 +14473,38 @@
         };
         
         /*=========================
+          Dynamic Slides Per View
+          ===========================*/
+        s.currentSlidesPerView = function () {
+            var spv = 1, i, j;
+            if (s.params.centeredSlides) {
+                var size = s.slides[s.activeIndex].swiperSlideSize;
+                var breakLoop;
+                for (i = s.activeIndex + 1; i < s.slides.length; i++) {
+                    if (s.slides[i] && !breakLoop) {
+                        size += s.slides[i].swiperSlideSize;
+                        spv ++;
+                        if (size > s.size) breakLoop = true;
+                    }
+                }
+                for (j = s.activeIndex - 1; j >= 0; j--) {
+                    if (s.slides[j] && !breakLoop) {
+                        size += s.slides[j].swiperSlideSize;
+                        spv ++;
+                        if (size > s.size) breakLoop = true;
+                    }
+                }
+            }
+            else {
+                for (i = s.activeIndex + 1; i < s.slides.length; i++) {
+                    if (s.slidesGrid[i] - s.slidesGrid[s.activeIndex] < s.size) {
+                        spv++;
+                    }
+                }
+            }
+            return spv;
+        };
+        /*=========================
           Slider/slides progress
           ===========================*/
         s.updateSlidesProgress = function (translate) {
@@ -14502,7 +14598,7 @@
             s.updateRealIndex();
         };
         s.updateRealIndex = function(){
-            s.realIndex = s.slides.eq(s.activeIndex).attr('data-swiper-slide-index') || s.activeIndex;
+            s.realIndex = parseInt(s.slides.eq(s.activeIndex).attr('data-swiper-slide-index') || s.activeIndex, 10);
         };
         
         /*=========================
@@ -14681,6 +14777,7 @@
           Common update method
           ===========================*/
         s.update = function (updateTranslate) {
+            if (!s) return;
             s.updateContainerSize();
             s.updateSlidesSize();
             s.updateProgress();
@@ -14925,12 +15022,13 @@
             if (s.params.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s.activeIndex) {
                 var slideToIndex = s.clickedIndex,
                     realIndex,
-                    duplicatedSlides;
+                    duplicatedSlides,
+                    slidesPerView = s.params.slidesPerView === 'auto' ? s.currentSlidesPerView() : s.params.slidesPerView;
                 if (s.params.loop) {
                     if (s.animating) return;
-                    realIndex = $(s.clickedSlide).attr('data-swiper-slide-index');
+                    realIndex = parseInt($(s.clickedSlide).attr('data-swiper-slide-index'), 10);
                     if (s.params.centeredSlides) {
-                        if ((slideToIndex < s.loopedSlides - s.params.slidesPerView/2) || (slideToIndex > s.slides.length - s.loopedSlides + s.params.slidesPerView/2)) {
+                        if ((slideToIndex < s.loopedSlides - slidesPerView/2) || (slideToIndex > s.slides.length - s.loopedSlides + slidesPerView/2)) {
                             s.fixLoop();
                             slideToIndex = s.wrapper.children('.' + s.params.slideClass + '[data-swiper-slide-index="' + realIndex + '"]:not(.' + s.params.slideDuplicateClass + ')').eq(0).index();
                             setTimeout(function () {
@@ -14942,7 +15040,7 @@
                         }
                     }
                     else {
-                        if (slideToIndex > s.slides.length - s.params.slidesPerView) {
+                        if (slideToIndex > s.slides.length - slidesPerView) {
                             s.fixLoop();
                             slideToIndex = s.wrapper.children('.' + s.params.slideClass + '[data-swiper-slide-index="' + realIndex + '"]:not(.' + s.params.slideDuplicateClass + ')').eq(0).index();
                             setTimeout(function () {
@@ -15089,7 +15187,7 @@
         
             if (typeof isScrolling === 'undefined') {
                 var touchAngle;
-                if (s.isHorizontal() && s.touches.currentY === s.touches.startY || !s.isHorizontal() && s.touches.currentX !== s.touches.startX) {
+                if (s.isHorizontal() && s.touches.currentY === s.touches.startY || !s.isHorizontal() && s.touches.currentX === s.touches.startX) {
                     isScrolling = false;
                 }
                 else {
@@ -16445,9 +16543,9 @@
             disableDraggable: function () {
                 var sb = s.scrollbar;
                 var target = s.support.touch ? sb.track : document;
-                $(sb.track).off(s.draggableEvents.start, sb.dragStart);
-                $(target).off(s.draggableEvents.move, sb.dragMove);
-                $(target).off(s.draggableEvents.end, sb.dragEnd);
+                $(sb.track).off(sb.draggableEvents.start, sb.dragStart);
+                $(target).off(sb.draggableEvents.move, sb.dragMove);
+                $(target).off(sb.draggableEvents.end, sb.dragEnd);
             },
             set: function () {
                 if (!s.params.scrollbar) return;
@@ -16863,6 +16961,8 @@
                     z.gesture.slideWidth = z.gesture.slide[0].offsetWidth;
                     z.gesture.slideHeight = z.gesture.slide[0].offsetHeight;
                     z.gesture.imageWrap.transition(0);
+                    if (s.rtl) z.image.startX = -z.image.startX;
+                    if (s.rtl) z.image.startY = -z.image.startY;
                 }
                 // Define if we need image drag
                 var scaledWidth = z.image.width * z.scale;
@@ -17428,10 +17528,10 @@
     ====================================================*/
     Swiper.prototype = {
         isSafari: (function () {
-            var ua = navigator.userAgent.toLowerCase();
+            var ua = window.navigator.userAgent.toLowerCase();
             return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
         })(),
-        isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent),
+        isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(window.navigator.userAgent),
         isArray: function (arr) {
             return Object.prototype.toString.apply(arr) === '[object Array]';
         },
@@ -17454,11 +17554,11 @@
         Devices
         ====================================================*/
         device: (function () {
-            var ua = navigator.userAgent;
+            var ua = window.navigator.userAgent;
             var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
             var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
             var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
-            var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+            var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
             return {
                 ios: ipad || iphone || ipod,
                 android: android
