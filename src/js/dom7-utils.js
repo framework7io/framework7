@@ -1,4 +1,8 @@
 // DOM Library Utilites
+/**
+ * searchStr: the url need to be parse
+ * name: the key in parse object , defalut empty
+ */
 $.parseUrlQuery= function (searchStr, name) {
     var qObj = {};
     var searchStr = searchStr || location.href;
