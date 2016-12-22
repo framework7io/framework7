@@ -18,7 +18,7 @@ var VirtualList = function (listBlock, params) {
 
     // Preparation
     var vl = this;
-    vl.listBlock = $(listBlock);
+    vl.listBlock = typeof listBlock=="string"?$(listBlock):listBlock;
     vl.params = params;
     vl.items = vl.params.items;
     if (vl.params.showFilteredItemsOnly) {
