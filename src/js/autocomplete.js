@@ -30,6 +30,7 @@ var Autocomplete = function (params) {
         textProperty: 'text',
 
         // Dropdown Options
+        highlightMatches: false,
         /*
         dropdownPlaceholderText: 'Type anything...',
         */
@@ -280,11 +281,13 @@ var Autocomplete = function (params) {
                 a.items = items;
                 var i, j;
                 var regExp = new RegExp('('+query+')', 'i');
+
                 for (i = 0; i < limit; i++) {
                     var itemValue = typeof items[i] === 'object' ? items[i][a.params.valueProperty] : items[i];
+                    var itemText = typeof items[i] !== 'object' ? items[i] : items[i][a.params.textProperty];
                     itemsHTML += a.dropdownItemTemplate({
                         value: itemValue,
-                        text: (typeof items[i] !== 'object' ? items[i] : items[i][a.params.textProperty]).replace(regExp, '<b>$1</b>')
+                        text: a.params.highlightMatches ? itemText.replace(regExp, '<b>$1</b>') : itemText
                     });
                 }
                 if (itemsHTML === '' && query === '' && a.params.dropdownPlaceholderText) {
