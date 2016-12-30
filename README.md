@@ -100,20 +100,20 @@ After that you will find created `custom/` folder with generated JS and CSS file
 
 All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at gulpfile.js for concat files order)
 
-If you want to help in Framework7 development and make it event better visit this page: http://www.idangero.us/framework7/contribute/
+If you want to help in Framework7 development and make it event better visit this page: http://framework7.io/contribute/
 
 ## Forum
 
-If you have questions about Framework7 or want to help others you are welcome to special forum at http://www.idangero.us/framework7/forum/
+If you have questions about Framework7 or want to help others you are welcome to special forum at http://forum.framework7.io/
 
 ## Docs
 
-Documentation available at http://idangero.us/framework7/docs/
+Documentation available at http://framework7.io/docs/
 
 ## Tutorials
 
-Tutorials available at http://idangero.us/framework7/tutorials/
+Tutorials available at http://framework7.io/tutorials/
 
 ## Showcase
 
-Appstore apps made with Framework7: http://idangero.us/framework7/showcase/
+Appstore apps made with Framework7: http://framework7.io/showcase/
