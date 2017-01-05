@@ -1,22 +1,19 @@
 // DOM Library Utilites
-/**
- * searchStr: the url need to be parse
- * name: the key in parse object , defalut empty
- */
-$.parseUrlQuery= function (searchStr, name) {
-    var qObj = {};
-    var searchStr = searchStr || location.href;
-    searchStr = searchStr.indexOf('?')>-1 ? searchStr.replace(/\S*\?/,'') : '';
-    if (searchStr) {
-        var params = searchStr.split('&'),
-            length = params.length, a;
 
-        for (var i = 0; i < length; i++) {
-            a = params[i].replace(/#\S+/g,'').split('=');
-            qObj[decodeURIComponent(a[0])] = decodeURIComponent(a[1] || '');
+$.parseUrlQuery= function (url) {
+    var url = url || location.href;
+    var query = {},i, params, param, length;
+    if (typeof url === 'string' && url.length)  {
+        url = url.indexOf('?')>-1 ? url.replace(/\S*\?/,'') : '';
+        params = url.split('&'), length = params.length;
+
+        for (i = 0; i < length; i++) {
+            param = params[i].replace(/#\S+/g,'').split('=');
+            query[decodeURIComponent(param[0])] = decodeURIComponent(param[1] || '');
         }
     }
-    return name ? qObj[name] : qObj;
+
+    return query;
 },
 $.isArray = function (arr) {
     if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
