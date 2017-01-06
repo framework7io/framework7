@@ -1,7 +1,7 @@
 // DOM Library Utilites
 
 $.parseUrlQuery= function (url) {
-    var url = url || location.href;
+    var url = decodeURIComponent(url || location.href);
     var query = {},i, params, param, length;
     if (typeof url === 'string' && url.length)  {
         url = url.indexOf('?')>-1 ? url.replace(/\S*\?/,'') : '';
@@ -9,7 +9,7 @@ $.parseUrlQuery= function (url) {
 
         for (i = 0; i < length; i++) {
             param = params[i].replace(/#\S+/g,'').split('=');
-            query[decodeURIComponent(param[0])] = decodeURIComponent(param[1] || '');
+            query[(param[0])] = param[1] || '';
         }
     }
 
