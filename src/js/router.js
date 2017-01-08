@@ -38,8 +38,8 @@ app.router = {
         }
     },
 
-    // Set pages classess for animationEnd
-    animatePages: function (leftPage, rightPage, direction, view) {
+    // Set pages classes for animationEnd
+    animatePages: function (leftPage, rightPage, direction) {
         // Loading new page
         var removeClasses = 'page-on-center page-on-right page-on-left';
         if (direction === 'to-left') {
@@ -69,8 +69,8 @@ app.router = {
         });
     },
 
-    // Set navbars classess for animation
-    animateNavbars: function (leftNavbarInner, rightNavbarInner, direction, view) {
+    // Set navbars classes for animation
+    animateNavbars: function (leftNavbarInner, rightNavbarInner, direction) {
         // Loading new page
         var removeClasses = 'navbar-on-right navbar-on-center navbar-on-left';
         if (direction === 'to-left') {
@@ -167,8 +167,7 @@ app.router = {
             t7_rendered_content = options.content, // will be rendered using Template7
             context = options.context, // Context data for Template7
             contextName = options.contextName,
-            template = options.template, // Template 7 compiled template
-            pageName = options.pageName;
+            template = options.template; // Template 7 compiled template
 
         var t7_ctx, t7_template;
         if (typeof content === 'string') {
@@ -255,7 +254,6 @@ app.router = {
 
 
 app.router._load = function (view, options) {
-    options = options || {};
 
     var url = options.url,
         content = options.content, //initial content
@@ -632,7 +630,7 @@ app.router._load = function (view, options) {
                 app.router.animateNavbars(oldNavbarInner, newNavbarInner, 'to-left', view);
             }, 0);
         }
-        newPage.animationEnd(function (e) {
+        newPage.animationEnd(function () {
             afterAnimation();
         });
     }
@@ -1198,7 +1196,6 @@ app.router.afterBack = function (view, oldPage, newPage) {
     if (view.params.domCache) {
         $(view.container).find('.page.cached').each(function () {
             var page = $(this);
-            var index = page.index();
             var pageUrl = page[0].f7PageData && page[0].f7PageData.url;
             if (pageUrl && view.history.indexOf(pageUrl) < 0 && view.initialPages.indexOf(this) < 0) {
                 app.pageRemoveCallback(view, page[0], 'right');
