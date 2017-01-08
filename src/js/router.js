@@ -544,7 +544,7 @@ app.router._load = function (view, options) {
         position: options.reload ? reloadPosition : 'right',
         navbarInnerContainer: dynamicNavbar ? newNavbarInner && newNavbarInner[0] : undefined,
         oldNavbarInnerContainer: dynamicNavbar ? oldNavbarInner && oldNavbarInner[0] : undefined,
-        context: t7_rendered.context,
+        context: t7_rendered.context || options.context,
         query: options.query,
         fromPage: oldPage && oldPage.length && oldPage[0].f7PageData,
         reload: options.reload,
