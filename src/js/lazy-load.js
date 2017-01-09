@@ -62,6 +62,23 @@ app.initImagesLazyLoad = function (pageContainer) {
                 }
             }
         }
+        
+        function onError() {
+            el.removeClass('lazy').addClass('lazy-loaded');
+            if (bg) {
+                el.css('background-image', 'url(' + placeholderSrc + ')');
+            }
+            else {
+                el.attr('src', placeholderSrc);
+            }
+
+            if (app.params.imagesLazyLoadSequential) {
+                imageIsLoading = false;
+                if (imagesSequence.length > 0) {
+                    loadImage(imagesSequence.shift());
+                }
+            }
+        }
 
         if (app.params.imagesLazyLoadSequential) {
             if (imageIsLoading) {
@@ -75,7 +92,7 @@ app.initImagesLazyLoad = function (pageContainer) {
         
         var image = new Image();
         image.onload = onLoad;
-        image.onerror = onLoad;
+        image.onerror = onError;
         image.src =src;
     }
     function lazyHandler() {
