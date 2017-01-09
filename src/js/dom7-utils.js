@@ -1,5 +1,4 @@
 // DOM Library Utilites
-
 $.parseUrlQuery= function (url) {
     var url = decodeURIComponent(url || location.href);
     var query = {},i, params, param, length;
@@ -14,7 +13,7 @@ $.parseUrlQuery= function (url) {
     }
 
     return query;
-},
+};
 $.isArray = function (arr) {
     if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
     else return false;
