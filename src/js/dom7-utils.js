@@ -1,21 +1,20 @@
 // DOM Library Utilites
-$.parseUrlQuery = function (url) {
-   var url = url || location.href;
-    var query = {}, i, params, param;
 
+$.parseUrlQuery= function (url) {
+    var url = decodeURIComponent(url || location.href);
+    var query = {},i, params, param, length;
     if (typeof url === 'string' && url.length)  {
-        url = (url.indexOf('#') > -1) ? url.split('#')[0] : url;
-        if (url.indexOf('?') > -1) url = url.split('?')[1];
-        else return query;
+        url = url.indexOf('?')>-1 ? url.replace(/\S*\?/,'') : '';
+        params = url.split('&'), length = params.length;
 
-        params = url.split('&');
-        for (i = 0; i < params.length; i ++) {
-            param = params[i].split('=');
-            query[param[0]] = param[1];
+        for (i = 0; i < length; i++) {
+            param = params[i].replace(/#\S+/g,'').split('=');
+            query[(param[0])] = param[1] || '';
         }
     }
+
     return query;
-};
+},
 $.isArray = function (arr) {
     if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
     else return false;
