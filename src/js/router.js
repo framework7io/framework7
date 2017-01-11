@@ -1088,6 +1088,7 @@ app.router.back = function (view, options) {
     function proceed(content) {
         app.router.preprocess(view, content, url, function (content) {
             options.content = content;
+            options.context = view.contextCache[options.url];
             app.router._back(view, options);
         });
     }
