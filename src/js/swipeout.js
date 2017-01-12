@@ -101,8 +101,7 @@ app.initSwipeout = function (swipeoutEl) {
         if (translate < 0) direction = 'to-left';
         else if (translate > 0) direction = 'to-right';
         else {
-            if (direction) direction = direction;
-            else direction = 'to-left';
+            if (!direction) direction = 'to-left';
         }
         
         var i, buttonOffset, progress;
@@ -201,9 +200,8 @@ app.initSwipeout = function (swipeoutEl) {
         isTouched = false;
         isMoved = false;
         var timeDiff = (new Date()).getTime() - touchStartTime;
-        var action, actionsWidth, actions, buttons, i, noFold;
-        
-        noFold = direction === 'to-left' ? noFoldRight : noFoldLeft;
+        var action, actionsWidth, actions, buttons, i;
+
         actions = direction === 'to-left' ? actionsRight : actionsLeft;
         actionsWidth = direction === 'to-left' ? actionsRightWidth : actionsLeftWidth;
 
@@ -310,7 +308,6 @@ app.swipeoutOpen = function (el, dir, callback) {
     }
     var swipeOutActions = el.find('.swipeout-actions-' + dir);
     if (swipeOutActions.length === 0) return;
-    var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
     el.trigger('open swipeout:open').addClass('swipeout-opened').removeClass('transitioning');
     swipeOutActions.addClass('swipeout-actions-opened');
     var buttons = swipeOutActions.children('a');
@@ -344,7 +341,6 @@ app.swipeoutClose = function (el, callback) {
     if (!el.hasClass('swipeout-opened')) return;
     var dir = el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
     var swipeOutActions = el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
-    var noFold = swipeOutActions.hasClass('swipeout-actions-no-fold') || app.params.swipeoutActionsNoFold;
     var buttons = swipeOutActions.children('a');
     var swipeOutActionsWidth = swipeOutActions.outerWidth();
     app.allowSwipeout = false;
