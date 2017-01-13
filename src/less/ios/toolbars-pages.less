@@ -76,7 +76,9 @@
         .translate3d(0,0,0);
     }
     &.toolbar-hidden, &.tabbar-hidden {
-        .transition(400ms);
+        &.animated {
+            .transition(400ms);
+        }
         .translate3d(0,100%,0);
     }
 }
