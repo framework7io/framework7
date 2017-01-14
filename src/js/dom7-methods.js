@@ -1,5 +1,5 @@
 Dom7.prototype = {
-    // Classes and attriutes
+    // Classes and attributes
     addClass: function (className) {
         if (typeof className === 'undefined') {
             return this;
@@ -68,7 +68,6 @@ Dom7.prototype = {
         if (arguments.length === 1 && typeof props === 'string') {
             // Get prop
             if (this[0]) return this[0][props];
-            else return undefined;
         }
         else {
             // Set props
@@ -88,14 +87,16 @@ Dom7.prototype = {
         }
     },
     data: function (key, value) {
+        var el;
         if (typeof value === 'undefined') {
+            el = this[0];
             // Get value
-            if (this[0]) {
-                if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) {
-                    return this[0].dom7ElementDataStorage[key];
+            if (el) {
+                if (el.dom7ElementDataStorage && (key in el.dom7ElementDataStorage)) {
+                    return el.dom7ElementDataStorage[key];
                 }
                 else {
-                    var dataKey = this[0].getAttribute('data-' + key);    
+                    var dataKey = el.getAttribute('data-' + key);
                     if (dataKey) {
                         return dataKey;
                     }
@@ -107,7 +108,7 @@ Dom7.prototype = {
         else {
             // Set value
             for (var i = 0; i < this.length; i++) {
-                var el = this[i];
+                el = this[i];
                 if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
                 el.dom7ElementDataStorage[key] = value;
             }
@@ -147,7 +148,6 @@ Dom7.prototype = {
             }
             return dataset;
         }
-        else return undefined;
     },
     val: function (value) {
         if (typeof value === 'undefined') {
@@ -284,7 +284,7 @@ Dom7.prototype = {
     },
     transitionEnd: function (callback) {
         var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
-            i, j, dom = this;
+            i, dom = this;
         function fireCallBack(e) {
             /*jshint validthis:true */
             if (e.target !== this) return;
@@ -302,7 +302,7 @@ Dom7.prototype = {
     },
     animationEnd: function (callback) {
         var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
-            i, j, dom = this;
+            i, dom = this;
         function fireCallBack(e) {
             callback(e);
             for (i = 0; i < events.length; i++) {
@@ -396,9 +396,7 @@ Dom7.prototype = {
         return this;
     },
     styles: function () {
-        var i, styles;
         if (this[0]) return window.getComputedStyle(this[0], null);
-        else return undefined;
     },
     css: function (props, value) {
         var i;
@@ -465,13 +463,9 @@ Dom7.prototype = {
         }
     },
     is: function (selector) {
-        if (!this[0] || typeof selector === 'undefined') return false;
-        var compareWith, i;
+        var compareWith, i, el = this[0];
+        if (!el || typeof selector === 'undefined') return false;
         if (typeof selector === 'string') {
-            var el = this[0];
-            if (el === document) return selector === document;
-            if (el === window) return selector === window;
-
             if (el.matches) return el.matches(selector);
             else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
             else if (el.mozMatchesSelector) return el.mozMatchesSelector(selector);
@@ -479,18 +473,18 @@ Dom7.prototype = {
             else {
                 compareWith = $(selector);
                 for (i = 0; i < compareWith.length; i++) {
-                    if (compareWith[i] === this[0]) return true;
+                    if (compareWith[i] === el) return true;
                 }
                 return false;
             }
         }
-        else if (selector === document) return this[0] === document;
-        else if (selector === window) return this[0] === window;
+        else if (selector === document) return el === document;
+        else if (selector === window) return el === window;
         else {
             if (selector.nodeType || selector instanceof Dom7) {
                 compareWith = selector.nodeType ? [selector] : selector;
                 for (i = 0; i < compareWith.length; i++) {
-                    if (compareWith[i] === this[0]) return true;
+                    if (compareWith[i] === el) return true;
                 }
                 return false;
             }
@@ -504,15 +498,14 @@ Dom7.prototype = {
         }
     },
     index: function () {
-        if (this[0]) {
-            var child = this[0];
-            var i = 0;
+        var i, child = this[0];
+        if (child) {
+            i = 0;
             while ((child = child.previousSibling) !== null) {
                 if (child.nodeType === 1) i++;
             }
             return i;
         }
-        else return undefined;
     },
     eq: function (index) {
         if (typeof index === 'undefined') return this;
@@ -634,12 +627,13 @@ Dom7.prototype = {
     },
     prev: function (selector) {
         if (this.length > 0) {
+            var el = this[0];
             if (selector) {
-                if (this[0].previousElementSibling && $(this[0].previousElementSibling).is(selector)) return new Dom7([this[0].previousElementSibling]);
+                if (el.previousElementSibling && $(el.previousElementSibling).is(selector)) return new Dom7([el.previousElementSibling]);
                 else return new Dom7([]);
             }
             else {
-                if (this[0].previousElementSibling) return new Dom7([this[0].previousElementSibling]);
+                if (el.previousElementSibling) return new Dom7([el.previousElementSibling]);
                 else return new Dom7([]);
             }
         }
