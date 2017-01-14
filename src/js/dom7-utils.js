@@ -1,6 +1,6 @@
-// DOM Library Utilites
+// DOM Library Utilities
 $.parseUrlQuery= function (url) {
-    var url = url || location.href;
+    url = url || location.href;
     var query = {},i, params, param, length;
     if (typeof url === 'string' && url.length)  {
         url = url.indexOf('?')>-1 ? url.replace(/\S*\?/,'') : '';
@@ -332,7 +332,7 @@ $.fn.scrollTo = function (left, top, duration, easing, callback) {
             if (startTime === null) {
                 startTime = time;
             }
-            var doneLeft, doneTop, done;
+            var done;
             var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
             var easeProgress = easing === 'linear' ? progress : (0.5 - Math.cos( progress * Math.PI ) / 2);
             if (animateTop) scrollTop = currentTop + (easeProgress * (newTop - currentTop));
