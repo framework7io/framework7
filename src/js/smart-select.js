@@ -23,7 +23,13 @@ app.initSmartSelects = function (pageContainer) {
 
         var valueText = [];
         for (var i = 0; i < select.length; i++) {
-            if (select[i].selected) valueText.push(select[i].textContent.trim());
+            if (select[i].selected) {
+                if (typeof select[i].dataset.displayAs !== 'undefined') {
+					valueText.push(select[i].dataset.displayAs.trim());
+				} else {
+					valueText.push(select[i].textContent.trim());
+				}
+			}
         }
 
         var itemAfter = smartSelect.find('.item-after');
@@ -44,7 +50,13 @@ app.initSmartSelects = function (pageContainer) {
         $select.on('change', function () {
             var valueText = [];
             for (var i = 0; i < select.length; i++) {
-                if (select[i].selected) valueText.push(select[i].textContent.trim());
+                if (select[i].selected) {
+                	if (typeof select[i].dataset.displayAs !== 'undefined') {
+						valueText.push(select[i].dataset.displayAs.trim());
+					} else {
+						valueText.push(select[i].textContent.trim());
+					}
+				}
             }
             smartSelect.find('.item-after').text(valueText.join(', '));
         });
@@ -407,18 +419,20 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             });
         }
         container.on('change', 'input[name="' + inputName + '"]', function () {
+			var option, text;
             var input = this;
             var value = input.value;
             var optionText = [];
             if (input.type === 'checkbox') {
                 var values = [];
                 for (var i = 0; i < select.options.length; i++) {
-                    var option = select.options[i];
+                    option = select.options[i];
                     if (option.value === value) {
                         option.selected = input.checked;
                     }
                     if (option.selected) {
-                        optionText.push(option.textContent.trim());
+                        text = typeof option.dataset.displayAs !== 'undefined' ? option.dataset.displayAs : option.textContent;
+                        optionText.push(text.trim());
                     }
                 }
                 if (maxLength) {
@@ -426,7 +440,9 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                 }
             }
             else {
-                optionText = [smartSelect.find('option[value="' + value + '"]').text()];
+                option = smartSelect.find('option[value="' + value + '"]')[0];
+                text = typeof option.dataset.displayAs !== 'undefined' ? option.dataset.displayAs : option.textContent;
+                optionText = [text];
                 select.value = value;
             }
 
