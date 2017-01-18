@@ -51,7 +51,7 @@ Dave Billington
 
 ### $5+
 
-Tobby Allen<br>
+Toby Allen - Ballymaloe Cookery School<br>
 Dan Boschen<br>
 Daniel Dingemanse<br>
 Henry Blackman<br>
