@@ -1,22 +1,24 @@
 /* === Statusbar overlay === */
 html.with-statusbar-overlay body{
-    padding-top: 20px;
-    box-sizing: border-box;
-    .statusbar-overlay {
-        display: block;
-    }
     .panel {
         padding-top: 20px;
     }
+    .navbar{
+        height: 64px;
+        .navbar-inner{
+            margin-top: 20px;
+            height: calc(100% - 20px);
+        }
+    }
+    .navbar-fixed .page-content, .navbar-through .page-content, .subnavbar~.page-content{
+        padding-top: 64px;
+    }
 }
-.statusbar-overlay {
-    background: @toolbarBg;
-    z-index: 10000; // A bit lower than .modals-overlay
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 20px;
-    width: 100%;
-    display: none;
-    .transition(@panelsDuration);
+/* === Add glass effect in navbar and toolbar === */
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .statusbar-overlay, .navbar, .subnavbar, .toolbar{
+      background: rgba(247, 247, 247,.7);
+      -webkit-backdrop-filter: brightness(1.5) blur(8px);
+      backdrop-filter: brightness(1.5) blur(8px);
+  }
 }
