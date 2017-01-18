@@ -37,6 +37,7 @@ Bart DJ
 
 ### $10+
 
+Dmitry Akinin<br>
 Adrian Maleska<br>
 Michael Kreinbihl<br>
 Todd Crowe<br>
@@ -50,11 +51,11 @@ Dave Billington
 
 ### $5+
 
+Tobby Allen<br>
 Dan Boschen<br>
 Daniel Dingemanse<br>
 Henry Blackman<br>
 Ruslan Skorynin<br>
-Dmitry Akinin<br>
 Bohdan Shulha<br>
 Timo Ernst<br>
 Sigfrido Rodríguez Santos
