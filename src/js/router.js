@@ -254,6 +254,8 @@ app.router = {
 
 
 app.router._load = function (view, options) {
+    // Plugin hook
+    app.pluginHook('routerLoad', view, options);
 
     var url = options.url,
         content = options.content, //initial content
@@ -269,8 +271,6 @@ app.router._load = function (view, options) {
         pageElement = options.pageElement;
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
-    // Plugin hook
-    app.pluginHook('routerLoad', view, options);
 
     // Render with Template7
     if (app.params.template7Pages && typeof content === 'string' || template) {
@@ -696,6 +696,9 @@ app.router.load = function (view, options) {
 
 app.router._back = function (view, options) {
     options = options || {};
+
+    app.pluginHook('routerBack', view, options);
+
     var url = options.url,
         content = options.content,
         t7_rendered = {content: options.content}, // will be rendered using Template7
@@ -714,8 +717,6 @@ app.router._back = function (view, options) {
         oldPage, newPage, oldNavbarInner, newNavbarInner, navbar, navbarInners, dynamicNavbar, manipulateDom = true;
 
     if (typeof animatePages === 'undefined') animatePages = view.params.animatePages;
-
-    app.pluginHook('routerBack', view, options);
 
     // Render with Template7
     if (app.params.template7Pages && typeof content === 'string' || template) {
