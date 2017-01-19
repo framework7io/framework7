@@ -133,7 +133,7 @@ $.getTranslate = function (el, axis) {
         transformMatrix = new WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
     }
     else {
-        transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform  || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
+        transformMatrix = curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
         matrix = transformMatrix.toString().split(',');
     }
 
@@ -166,7 +166,6 @@ $.getTranslate = function (el, axis) {
 $.requestAnimationFrame = function (callback) {
     if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
     else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
-    else if (window.mozRequestAnimationFrame) return window.mozRequestAnimationFrame(callback);
     else {
         return window.setTimeout(callback, 1000 / 60);
     }
@@ -174,7 +173,6 @@ $.requestAnimationFrame = function (callback) {
 $.cancelAnimationFrame = function (id) {
     if (window.cancelAnimationFrame) return window.cancelAnimationFrame(id);
     else if (window.webkitCancelAnimationFrame) return window.webkitCancelAnimationFrame(id);
-    else if (window.mozCancelAnimationFrame) return window.mozCancelAnimationFrame(id);
     else {
         return window.clearTimeout(id);
     }  
