@@ -537,17 +537,17 @@ var View = function (selector, params) {
     view.back = view.router.back;
 
     // Bars methods
-    view.hideNavbar = function () {
-        return app.hideNavbar(container.find('.navbar'));
+    view.hideNavbar = function (isAnimated) {
+        return app.hideNavbar(container.find('.navbar'), isAnimated);
     };
-    view.showNavbar = function () {
-        return app.showNavbar(container.find('.navbar'));
+    view.showNavbar = function (isAnimated) {
+        return app.showNavbar(container.find('.navbar'), isAnimated);
     };
-    view.hideToolbar = function () {
-        return app.hideToolbar(container.find('.toolbar'));
+    view.hideToolbar = function (isAnimated) {
+        return app.hideToolbar(container.find('.toolbar'), isAnimated);
     };
-    view.showToolbar = function () {
-        return app.showToolbar(container.find('.toolbar'));
+    view.showToolbar = function (isAnimated) {
+        return app.showToolbar(container.find('.toolbar'), isAnimated);
     };
 
     // Push State on load

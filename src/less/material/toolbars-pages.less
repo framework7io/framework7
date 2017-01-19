@@ -112,6 +112,9 @@
             .transition(400ms);
         }
     }
+    &.not-animated {
+        .transition(0ms);
+    }
 }
 .page.no-navbar {
     .page-content {
@@ -130,6 +133,9 @@
     &.toolbar-hidden, &.tabbar-hidden {
         .transition(400ms);
     }
+    &.not-animated {
+        .transition(0ms);
+    }
 
     &.toolbar-hidden, &.tabbar-hidden {
         .translate3d(0,-100%,0);
@@ -143,6 +149,7 @@
     &.toolbar-hidden.messagebar, &.toolbar-hidden.toolbar-bottom {
         .translate3d(0, 100%,0);
     }
+
 }
 .page.no-toolbar .page-content, .page.no-tabbar .page-content {
     padding-bottom: 0;

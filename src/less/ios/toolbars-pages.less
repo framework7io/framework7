@@ -60,6 +60,9 @@
             }
         }
     }
+    &.not-animated {
+        .transition(0ms);
+    }
 }
 .page.no-navbar {
     .page-content {
@@ -78,6 +81,9 @@
     &.toolbar-hidden, &.tabbar-hidden {
         .transition(400ms);
         .translate3d(0,100%,0);
+    }
+    &.not-animated {
+        .transition(0ms);
     }
 }
 .page.no-toolbar .page-content, .page.no-tabbar .page-content {
