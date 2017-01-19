@@ -174,7 +174,7 @@ Dom7.prototype = {
     transform : function (transform) {
         for (var i = 0; i < this.length; i++) {
             var elStyle = this[i].style;
-            elStyle.webkitTransform = elStyle.MsTransform = elStyle.msTransform = elStyle.MozTransform = elStyle.OTransform = elStyle.transform = transform;
+            elStyle.webkitTransform = elStyle.transform = transform;
         }
         return this;
     },
@@ -184,7 +184,7 @@ Dom7.prototype = {
         }
         for (var i = 0; i < this.length; i++) {
             var elStyle = this[i].style;
-            elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration;
+            elStyle.webkitTransitionDuration = elStyle.transitionDuration = duration;
         }
         return this;
     },
@@ -283,7 +283,7 @@ Dom7.prototype = {
         return this;
     },
     transitionEnd: function (callback) {
-        var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
+        var events = ['webkitTransitionEnd', 'transitionend'],
             i, dom = this;
         function fireCallBack(e) {
             /*jshint validthis:true */
@@ -301,7 +301,7 @@ Dom7.prototype = {
         return this;
     },
     animationEnd: function (callback) {
-        var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
+        var events = ['webkitAnimationEnd', 'animationend'],
             i, dom = this;
         function fireCallBack(e) {
             callback(e);
@@ -468,7 +468,6 @@ Dom7.prototype = {
         if (typeof selector === 'string') {
             if (el.matches) return el.matches(selector);
             else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
-            else if (el.mozMatchesSelector) return el.mozMatchesSelector(selector);
             else if (el.msMatchesSelector) return el.msMatchesSelector(selector);
             else {
                 compareWith = $(selector);
