@@ -1,5 +1,18 @@
 # Change Log
 
+## Framework7 v1.5.3 - Updated on January 13, 2017
+  * Added isAnimated parameter to
+    * app.showToolbar( container, **isAnimated** )
+    * app.hideToolbar( container, **isAnimated** )
+    * app.showNavbar( container, **isAnimated** )
+    * app.hideNavbar( container, **isAnimated** )
+    * view.showToolbar( **isAnimated** )
+    * view.hideToolbar( **isAnimated** )
+    * view.showNavbar( **isAnimated** )
+    * view.hideNavbar( **isAnimated** )
+  * Virtual List
+    * Fixed not display when modal opens.
+
 ## Framework7 v1.5.2 - Updated on December 17, 2016
   * **New Timeline Component**
   * **Renamed Events**
