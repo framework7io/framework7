@@ -43,10 +43,7 @@
     .link {
         .flex-shrink(0);
     }
-    ~ .page-content {
-        padding-bottom: @toolbarSize;
-    }
-    .page.no-toolbar & ~.page-content {
+    .page.no-toolbar & ~.page-content, .page.no-tabbar & ~.page-content {
         padding-bottom: @toolbarSize;
     }
     .hidden-toolbar & {
