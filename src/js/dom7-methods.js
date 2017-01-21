@@ -423,10 +423,19 @@ Dom7.prototype = {
     },
 
     //Dom manipulation
+    // Iterate over the collection passing elements to `callback`
     each: function (callback) {
+        // Don't bother continuing without a callback
+        if (!callback) return this;
+        // Iterate over the current collection
         for (var i = 0; i < this.length; i++) {
-            callback.call(this[i], i, this[i]);
+            // If the callback returns false
+            if (callback.call(this[i], i, this[i]) === false) {
+                // End the loop early
+                return this;
+            }
         }
+        // Return `this` to allow chained DOM operations
         return this;
     },
     filter: function (callback) {
