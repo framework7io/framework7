@@ -19,20 +19,34 @@ $.isArray = function (arr) {
     else return false;
 };
 $.each = function (obj, callback) {
+    // Check it's iterable
+    // TODO: Should probably raise a value error here
     if (typeof obj !== 'object') return;
+    // Don't bother continuing without a callback
     if (!callback) return;
-    var i, prop;
     if ($.isArray(obj) || obj instanceof Dom7) {
+        var i;
         // Array
         for (i = 0; i < obj.length; i++) {
-            callback(i, obj[i]);
+            // If callback returns false
+            if (callback(i, obj[i]) === false) {
+                // Break out of the loop
+                return;
+            }
         }
     }
     else {
+        var prop;
         // Object
         for (prop in obj) {
+            // Check the propertie belongs to the object
+            // not it's prototype
             if (obj.hasOwnProperty(prop)) {
-                callback(prop, obj[prop]);
+                // If the callback returns false
+                if (callback(prop, obj[prop]) === false) {
+                    // Break out of the loop;
+                    return;
+                }
             }
         }
     }
