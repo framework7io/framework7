@@ -192,7 +192,7 @@ $.ajax = function (options) {
         options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
     }
 
-    if (!options.crossDomain) {
+    if (options.crossDomain) {
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     }
 
