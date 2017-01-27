@@ -14,7 +14,8 @@ var mainView = myApp.addView('.view-main', {
 // Add another view, which is in right panel
 var rightView = myApp.addView('.view-right', {
     // Enable Dynamic Navbar for this view
-    dynamicNavbar: true
+    dynamicNavbar: true,
+    name: 'right'
 });
 
 // Show/hide preloader for remote ajax loaded pages
