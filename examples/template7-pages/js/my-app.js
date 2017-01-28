@@ -10,6 +10,32 @@ var myApp = new Framework7({
     precompileTemplates: true,
     // Enabled pages rendering using Template7
     template7Pages: true,
+
+    // Render page with custom data
+    onPageInit: function (app, page) {
+      if (page.name === 'contacts-rerendered') {
+        page.render({
+          street: 'Marx',
+          city: 'Moscow',
+          country: 'Russia',
+          zip: '112233',
+          email: 'bulba@tut.by',
+          tel: '+375291112233'
+        });
+
+        setTimeout(function () {
+          page.render({
+            street: 'Lenina',
+            city: 'Minsk',
+            country: 'Belarus',
+            zip: '112233',
+            email: 'bulba@tut.by',
+            tel: '+375291112233'
+          });
+        }, 3000);
+      }
+    },
+
     // Specify Template7 data for pages
     template7Data: {
         // Will be applied for page with "projects.html" url
@@ -80,7 +106,7 @@ var myApp = new Framework7({
             },
         ],
 
-        // Another plain data object, used in "about" link in data-contextName object 
+        // Another plain data object, used in "about" link in data-contextName object
         about: {
             name: 'John Doe',
             age: 32,
