@@ -116,7 +116,7 @@
                 'src/js/framework7/proto-device.js',
                 'src/js/framework7/proto-plugins.js',
                 'src/js/template7/template7.js',
-                'src/js/swiper7/swiper.js',
+                'src/js/swiper/swiper.js',
                 'src/js/wrap-end.js'
             ],
             modules: require('./modules.json'),
