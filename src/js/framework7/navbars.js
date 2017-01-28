@@ -197,15 +197,15 @@ app.sizeNavbars = function (viewContainer) {
 };
 
 // Hide/Show Navbars/Toolbars
-app.hideNavbar = function (navbarContainer, isAnimated) {
-    if (typeof isAnimated === 'undefined') isAnimated = true;
-    $(navbarContainer).addClass('navbar-hidden' + (!isAnimated ? (' not-animated') : ''));
+app.hideNavbar = function (navbarContainer, animated) {
+    if (typeof animated === 'undefined') animated = true;
+    $(navbarContainer).addClass('navbar-hidden' + (!animated ? (' not-animated') : ''));
     return true;
 };
-app.showNavbar = function (navbarContainer, isAnimated) {
-    if (typeof isAnimated === 'undefined') isAnimated = true;
+app.showNavbar = function (navbarContainer, animated) {
+    if (typeof animated === 'undefined') animated = true;
     var navbar = $(navbarContainer);
-    if (isAnimated) {
+    if (animated) {
         navbar.removeClass('not-animated');
         navbar.addClass('navbar-hiding').removeClass('navbar-hidden').transitionEnd(function () {
             navbar.removeClass('navbar-hiding');
@@ -216,18 +216,18 @@ app.showNavbar = function (navbarContainer, isAnimated) {
     }
     return true;
 };
-app.hideToolbar = function (toolbarContainer, isAnimated) {
-    if (typeof isAnimated === 'undefined') isAnimated = true;
-    $(toolbarContainer).addClass('toolbar-hidden' + (!isAnimated ? (' not-animated') : ''));
+app.hideToolbar = function (toolbarContainer, animated) {
+    if (typeof animated === 'undefined') animated = true;
+    $(toolbarContainer).addClass('toolbar-hidden' + (!animated ? (' not-animated') : ''));
     return true;
 };
-app.showToolbar = function (toolbarContainer, isAnimated) {
-    if (typeof isAnimated === 'undefined') isAnimated = true;
+app.showToolbar = function (toolbarContainer, animated) {
+    if (typeof animated === 'undefined') animated = true;
     var toolbar = $(toolbarContainer);
-    if (isAnimated) {
+    if (animated) {
         toolbar.removeClass('not-animated');
         toolbar.addClass('toolbar-hiding').removeClass('toolbar-hidden').transitionEnd(function () {
-            toolbar.removeClass('toolbar-hiding' + (!isAnimated ? (' not-animated') : ''));
+            toolbar.removeClass('toolbar-hiding' + (!animated ? (' not-animated') : ''));
         });
     }
     else {
