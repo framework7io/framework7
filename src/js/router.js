@@ -1014,7 +1014,7 @@ app.router._back = function (view, options) {
         }
     }
     else {
-        if (url && url === view.url || pageName && view.activePage && view.activePage.name === pageName) {
+        if ((url && url === view.url || pageName && view.activePage && view.activePage.name === pageName) && !view.params.allowDuplicateUrls) {
             view.allowPageChange = true;
             return;
         }
