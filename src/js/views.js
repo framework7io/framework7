@@ -450,12 +450,18 @@ var View = function (selector, params) {
     }
 
     // Check view name to delete unwanted characters
-    if (view.params.name) view.params.name = view.params.name.replace(/[^a-zA-Z]/g, "");
+    if (view.params.name) view.params.name = view.params.name.replace(/[^a-zA-Z]/g, '');
   
     // Add view to app
     app.views.push(view);
-    if (view.main) app.mainView = view;
-    else if(view.params.name) app[view.params.name + 'View'] = view;
+    if (view.main) {
+        app.mainView = view;
+        app.views.main = view;
+    }
+    else if(view.params.name) {
+        app[view.params.name + 'View'] = view;
+        app.views[view.params.name] = view;
+    }
 
     // Router
     view.router = {
@@ -590,7 +596,20 @@ var View = function (selector, params) {
     // Destroy
     view.destroy = function () {
         view.detachEvents();
+        if (view.main) {
+            app.mainView = null;
+            delete app.mainView;
+            app.views.main = null;
+            delete app.views.main;
+        }
+        else if(view.params.name) {
+            app[view.params.name + 'View'] = null;
+            delete app[view.params.name + 'View'];
+            app.views[view.params.name] = null;
+            delete app.views[view.params.name];
+        }
         view = undefined;
+
     };
 
     // Plugin hook
