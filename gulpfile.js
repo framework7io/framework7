@@ -53,7 +53,7 @@
                     ios: 'src/less/ios/',
                     material: 'src/less/material/'
                 },
-                scripts: 'src/js/*.js'
+                scripts: ['src/js/*.js', 'src/js/*/*.js']
             },
             examples: {
                 root: 'examples/',
