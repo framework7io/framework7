@@ -1,13 +1,18 @@
 /* ===============================================================================
 ************   Tabs   ************
 =============================================================================== */
-app.showTab = function (tab, tabLink, force) {
+app.showTab = function (tab, tabLink, animated, force) {
     var newTab = $(tab);
-    if (arguments.length === 2) {
-        if (typeof tabLink === 'boolean') {
-            force = tabLink;
-        }
+    if (arguments.length === 2 && typeof arguments[1] === 'boolean') {
+        tab = arguments[0];
+        animated = arguments[1];
     }
+    if (arguments.length === 3 && typeof arguments[1] === 'boolean' && typeof arguments[2] === 'boolean') {
+        tab = arguments[0];
+        animated = arguments[1];
+        force = arguments[2];
+    }
+    if (typeof animated === 'undefined') animated = true;
     if (newTab.length === 0) return false;
     if (newTab.hasClass('active')) {
         if (force) newTab.trigger('show tab:show');
@@ -22,6 +27,7 @@ app.showTab = function (tab, tabLink, force) {
     // Animated tabs
     var isAnimatedTabs = tabs.parent().hasClass('tabs-animated-wrap');
     if (isAnimatedTabs) {
+        tabs.parent()[animated ? 'removeClass' : 'addClass']('not-animated');
         var tabTranslate = (app.rtl ? newTab.index() : -newTab.index()) * 100;
         tabs.transform('translate3d(' + tabTranslate + '%,0,0)');
     }
@@ -30,7 +36,7 @@ app.showTab = function (tab, tabLink, force) {
     var isSwipeableTabs = tabs.parent().hasClass('tabs-swipeable-wrap'), swiper;
     if (isSwipeableTabs) {
         swiper = tabs.parent()[0].swiper;
-        if (swiper.activeIndex !== newTab.index()) swiper.slideTo(newTab.index(), undefined, false);
+        if (swiper.activeIndex !== newTab.index()) swiper.slideTo(newTab.index(), animated ? undefined : 0, false);
     }
 
     // Remove active class from old tabs
