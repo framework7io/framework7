@@ -608,8 +608,20 @@ var View = function (selector, params) {
             app.views[view.params.name] = null;
             delete app.views[view.params.name];
         }
-        view = undefined;
+        container.removeAttr('data-page');
+        container[0].f7View = null;
+        delete container[0].f7View;
+        
+        app.views.splice(app.views.indexOf(view), 1);
 
+        // Delete props & methods
+        for (var prop in view) {
+            if (view.hasOwnProperty(prop)) {
+                view[prop] = null;
+                delete view[prop];
+            }
+        }
+        view = null;
     };
 
     // Plugin hook
