@@ -449,9 +449,13 @@ var View = function (selector, params) {
         view.attachEvents();
     }
 
+    // Check view name to delete unwanted characters
+    if (view.params.name) view.params.name = view.params.name.replace(/[^a-zA-Z]/g, "");
+  
     // Add view to app
     app.views.push(view);
     if (view.main) app.mainView = view;
+    else if(view.params.name) app[view.params.name + 'View'] = view;
 
     // Router
     view.router = {
