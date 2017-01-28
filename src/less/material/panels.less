@@ -26,6 +26,9 @@
     height: 100%;
     .translate3d(0);
     .transition(@panelsDuration);
+    &.not-animated {
+        .transition(0ms);
+    }
 
     &.panel-left {
 
@@ -66,6 +69,9 @@ body.with-panel-left-reveal, body.with-panel-right-reveal {
         -webkit-transition-property: -webkit-transform, box-shadow;
         -moz-transition-property: -moz-transform, box-shadow;
         transition-property: transform, box-shadow;
+    }
+    .panel.not-animated ~ .views {
+        .transition(0ms);
     }
     .panel-overlay {
         background: rgba(0,0,0,0);
@@ -108,5 +114,8 @@ body.panel-closing {
         -webkit-transition-property: -webkit-transform, box-shadow;
         -moz-transition-property: -moz-transform, box-shadow;
         transition-property: transform, box-shadow;
+    }
+    .panel.not-animated ~ .views {
+        .transition(0ms);
     }
 }

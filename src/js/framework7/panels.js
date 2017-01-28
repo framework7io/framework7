@@ -2,13 +2,20 @@
 ************   Panels   ************
 ======================================================*/
 app.allowPanelOpen = true;
-app.openPanel = function (panelPosition) {
+app.openPanel = function (panelPosition, animated) {
+    if (typeof animated === 'undefined') animated = true;
     if (!app.allowPanelOpen) return false;
     var panel = $('.panel-' + panelPosition);
     if (panel.length === 0 || panel.hasClass('active')) return false;
     app.closePanel(); // Close if some panel is opened
     app.allowPanelOpen = false;
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
+    if (!animated) {
+        panel.addClass('not-animated');
+    }
+    else {
+        panel.removeClass('not-animated');
+    }
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open panel:open');
     if (app.params.material) {
@@ -23,7 +30,6 @@ app.openPanel = function (panelPosition) {
 
     // Transition End;
     var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
-    var openedTriggered = false;
 
     function panelTransitionEnd() {
         transitionEndTarget.transitionEnd(function (e) {
@@ -40,30 +46,51 @@ app.openPanel = function (panelPosition) {
             else panelTransitionEnd();
         });
     }
-    panelTransitionEnd();
+    if (animated) {
+        panelTransitionEnd();    
+    }
+    else {
+        panel.trigger('opened panel:opened');
+        if (app.params.material) $('.panel-overlay').css({display: ''});
+        app.allowPanelOpen = true;
+    }
 
     $('body').addClass('with-panel-' + panelPosition + '-' + effect);
     return true;
 };
-app.closePanel = function () {
+app.closePanel = function (animated) {
+    if (typeof animated === 'undefined') animated = true;
     var activePanel = $('.panel.active');
     if (activePanel.length === 0) return false;
     var effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
+    if (!animated) {
+        activePanel.addClass('not-animated');
+    }
+    else {
+        activePanel.removeClass('not-animated');
+    }
     activePanel.removeClass('active');
     var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
     activePanel.trigger('close panel:close');
     app.allowPanelOpen = false;
-
-    transitionEndTarget.transitionEnd(function () {
-        if (activePanel.hasClass('active')) return;
+    if (animated) {
+        transitionEndTarget.transitionEnd(function () {
+            if (activePanel.hasClass('active')) return;
+            activePanel.css({display: ''});
+            activePanel.trigger('closed panel:closed');
+            $('body').removeClass('panel-closing');
+            app.allowPanelOpen = true;
+        });
+        $('body').addClass('panel-closing').removeClass('with-panel-' + panelPosition + '-' + effect);
+    }
+    else {
         activePanel.css({display: ''});
         activePanel.trigger('closed panel:closed');
-        $('body').removeClass('panel-closing');
+        activePanel.removeClass('not-animated');
+        $('body').removeClass('with-panel-' + panelPosition + '-' + effect);
         app.allowPanelOpen = true;
-    });
-
-    $('body').addClass('panel-closing').removeClass('with-panel-' + panelPosition + '-' + effect);
+    }
 };
 /*======================================================
 ************   Swipe panels   ************
