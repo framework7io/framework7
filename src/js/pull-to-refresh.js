@@ -73,6 +73,12 @@ app.initPullToRefresh = function (pageContainer) {
         if (!pageX || !pageY) return;
             
 
+        // workaround for issue with PTR and on-screen keyboard iOS https://github.com/nolimits4web/Framework7/issues/586
+        if(pageY >= window.innerHeight || pageX >= window.innerWidth || pageX <= 0 || pageY <= 0) {
+            eventsTarget.trigger(app.touchEvents.end);
+            return;
+        }
+
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
