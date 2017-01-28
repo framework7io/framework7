@@ -157,7 +157,7 @@ app.closeNotification = function (item) {
     item.addClass('notification-hidden').transitionEnd(function () {
         item.remove();
         if (container.find('.notification-item').length === 0) {
-            container.hide();
+            container.remove();
         }
     });
 };
