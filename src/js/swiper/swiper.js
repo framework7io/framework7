@@ -675,7 +675,7 @@ window.Swiper = function (container, params) {
 
         // Find slides currently in view
         if(s.params.slidesPerView !== 'auto' && s.params.slidesPerView > 1) {
-            for (var i = 0; i < Math.ceil(s.params.slidesPerView); i++) {
+            for (i = 0; i < Math.ceil(s.params.slidesPerView); i++) {
                 var index = s.activeIndex + i;
                 if(index > s.slides.length) break;
                 activeSlides.push(s.slides.eq(index)[0]);
@@ -685,7 +685,7 @@ window.Swiper = function (container, params) {
         }
 
         // Find new height from heighest slide in view
-        for (var i = 0; i < activeSlides.length; i++) {
+        for (i = 0; i < activeSlides.length; i++) {
             if (typeof activeSlides[i] !== 'undefined') {
                 var height = activeSlides[i].offsetHeight;
                 newHeight = height > newHeight ? height : newHeight;
