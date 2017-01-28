@@ -10,15 +10,11 @@ app.openPanel = function (panelPosition, animated) {
     app.closePanel(); // Close if some panel is opened
     app.allowPanelOpen = false;
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
-    if (!animated) {
-        panel.addClass('not-animated');
-    }
-    else {
-        panel.removeClass('not-animated');
-    }
+    panel[animated ? 'removeClass' : 'addClass']('not-animated');
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open panel:open');
     if (app.params.material) {
+        $('.panel-overlay')[animated ? 'removeClass' : 'addClass']('not-animated');
         $('.panel-overlay').show();
     }
     if (panel.find('.' + app.params.viewClass).length > 0) {
@@ -64,13 +60,11 @@ app.closePanel = function (animated) {
     if (activePanel.length === 0) return false;
     var effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
-    if (!animated) {
-        activePanel.addClass('not-animated');
-    }
-    else {
-        activePanel.removeClass('not-animated');
-    }
+    activePanel[animated ? 'removeClass' : 'addClass']('not-animated');
     activePanel.removeClass('active');
+    if (app.params.material) {
+        $('.panel-overlay').removeClass('not-animated');
+    }
     var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
     activePanel.trigger('close panel:close');
     app.allowPanelOpen = false;

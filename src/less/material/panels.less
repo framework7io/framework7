@@ -13,6 +13,9 @@
     display: none;
     .transform(translate3d(0,0,0));
     .transition(@panelsDuration);
+    &.not-animated {
+        .transition(0ms);
+    }
 }
 .panel {
     z-index: 1000;
