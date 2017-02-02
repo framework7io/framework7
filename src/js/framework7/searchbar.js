@@ -27,7 +27,7 @@ var Searchbar = function (container, params) {
     };
     params = params || {};
     for (var def in defaults) {
-        if (typeof params[def] === 'undefined' || params[def] === null) {
+        if (typeof params[def] === 'undefined' || params[def] === null && defaults.hasOwnProperty(def)) {
             params[def] = defaults[def];
         }
     }
