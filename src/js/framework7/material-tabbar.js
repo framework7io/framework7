@@ -23,7 +23,8 @@ app.materialTabbarSetHighlight = function (tabbar, activeLink) {
 };
 app.initPageMaterialTabbar = function (pageContainer) {
     pageContainer = $(pageContainer);
-    var tabbar = $(pageContainer).find('.tabbar');
+    var tabbar = pageContainer.find('.tabbar');
+    if (tabbar.length === 0 && pageContainer.hasClass('tabbar')) tabbar = pageContainer;
 
     function tabbarSetHighlight() {
         app.materialTabbarSetHighlight(tabbar);
@@ -39,4 +40,7 @@ app.initPageMaterialTabbar = function (pageContainer) {
             $(window).off('resize', tabbarSetHighlight);
         });
     }
+};
+app.initMaterialTabbar = function (tabbar) {
+    return app.initPageMaterialTabbar(tabbar);
 };
