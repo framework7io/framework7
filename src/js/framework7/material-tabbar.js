@@ -9,7 +9,7 @@ app.materialTabbarSetHighlight = function (tabbar, activeLink) {
         var tabLinkWidth, highlightTranslate;
         if (tabbar.hasClass('tabbar-scrollable')) {
             tabLinkWidth = activeLink[0].offsetWidth + 'px';
-            highlightTranslate = (app.rtl ? - activeLink[0].offsetLeft: activeLink[0].offsetLeft) + 'px';
+            highlightTranslate = activeLink[0].offsetLeft + 'px';
         }
         else {
             tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100 + '%';
