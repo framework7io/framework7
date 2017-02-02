@@ -153,8 +153,9 @@ var Searchbar = function (container, params) {
             s.disable();
             return;
         }
+        var previousQuery = s.value;
         s.input.val('').trigger('change').focus();
-        s.triggerEvent('clearSearch searchbar:clear', 'onClear');
+        s.triggerEvent('clearSearch searchbar:clear', 'onClear', {previousQuery: previousQuery});
     };
 
     // Search
