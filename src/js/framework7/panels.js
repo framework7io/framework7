@@ -113,6 +113,7 @@ app.initSwipePanels = function () {
         if (!(app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose)) {
             if ($('.panel.active').length > 0 && !panel.hasClass('active')) return;
         }
+        if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         if (app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose) {
