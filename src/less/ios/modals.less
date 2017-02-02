@@ -15,7 +15,7 @@
 @popupDuration: 400ms;
 
 @actionsPopoverHairline: rgba(0,0,0,0.2);
-.modal-overlay, .preloader-indicator-overlay, .popup-overlay {
+.modal-overlay, .preloader-indicator-overlay, .popup-overlay, .picker-modal-overlay {
     position: absolute;
     left: 0;
     top: 0;
@@ -33,6 +33,9 @@
         visibility: visible;
         opacity: 1;
     }
+}
+.picker-modal-overlay {
+    z-index: 12000;
 }
 .popup-overlay {
     z-index: 10500;
