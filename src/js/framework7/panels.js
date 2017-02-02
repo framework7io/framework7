@@ -254,6 +254,7 @@ app.initSwipePanels = function () {
             views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
             panelOverlay.transform('translate3d(' + translate + 'px,0,0)').transition(0);
 
+            panel.trigger('panel:swipe', {progress: Math.abs(translate / panelWidth)});
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
         else {
@@ -263,6 +264,7 @@ app.initSwipePanels = function () {
                 overlayOpacity = Math.abs(translate/panelWidth);
                 panelOverlay.css({opacity: overlayOpacity});
             }
+            panel.trigger('panel:swipe', {progress: Math.abs(translate / panelWidth)});
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
     }
