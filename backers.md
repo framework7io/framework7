@@ -59,7 +59,6 @@ Dan Boschen<br>
 Daniel Dingemanse<br>
 Henry Blackman<br>
 Ruslan Skorynin<br>
-Bohdan Shulha<br>
 Sigfrido Rodríguez Santos
 
 [Join here!](https://www.patreon.com/bePatron?exp=1&rid=845389&u=4109762&patAmt=5.0)
