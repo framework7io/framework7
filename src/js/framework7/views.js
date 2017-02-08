@@ -449,9 +449,19 @@ var View = function (selector, params) {
         view.attachEvents();
     }
 
+    // Check view name to delete unwanted characters
+    if (view.params.name) view.params.name = view.params.name.replace(/[^a-zA-Z]/g, '');
+  
     // Add view to app
     app.views.push(view);
-    if (view.main) app.mainView = view;
+    if (view.main) {
+        app.mainView = view;
+        app.views.main = view;
+    }
+    else if(view.params.name) {
+        app[view.params.name + 'View'] = view;
+        app.views[view.params.name] = view;
+    }
 
     // Router
     view.router = {
@@ -537,17 +547,17 @@ var View = function (selector, params) {
     view.back = view.router.back;
 
     // Bars methods
-    view.hideNavbar = function (isAnimated) {
-        return app.hideNavbar(container.find('.navbar'), isAnimated);
+    view.hideNavbar = function (animated) {
+        return app.hideNavbar(container.find('.navbar'), animated);
     };
-    view.showNavbar = function (isAnimated) {
-        return app.showNavbar(container.find('.navbar'), isAnimated);
+    view.showNavbar = function (animated) {
+        return app.showNavbar(container.find('.navbar'), animated);
     };
-    view.hideToolbar = function (isAnimated) {
-        return app.hideToolbar(container.find('.toolbar'), isAnimated);
+    view.hideToolbar = function (animated) {
+        return app.hideToolbar(container.find('.toolbar'), animated);
     };
-    view.showToolbar = function (isAnimated) {
-        return app.showToolbar(container.find('.toolbar'), isAnimated);
+    view.showToolbar = function (animated) {
+        return app.showToolbar(container.find('.toolbar'), animated);
     };
 
     // Push State on load
@@ -586,7 +596,32 @@ var View = function (selector, params) {
     // Destroy
     view.destroy = function () {
         view.detachEvents();
-        view = undefined;
+        if (view.main) {
+            app.mainView = null;
+            delete app.mainView;
+            app.views.main = null;
+            delete app.views.main;
+        }
+        else if(view.params.name) {
+            app[view.params.name + 'View'] = null;
+            delete app[view.params.name + 'View'];
+            app.views[view.params.name] = null;
+            delete app.views[view.params.name];
+        }
+        container.removeAttr('data-page');
+        container[0].f7View = null;
+        delete container[0].f7View;
+        
+        app.views.splice(app.views.indexOf(view), 1);
+
+        // Delete props & methods
+        for (var prop in view) {
+            if (view.hasOwnProperty(prop)) {
+                view[prop] = null;
+                delete view[prop];
+            }
+        }
+        view = null;
     };
 
     // Plugin hook

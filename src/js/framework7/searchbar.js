@@ -27,7 +27,7 @@ var Searchbar = function (container, params) {
     };
     params = params || {};
     for (var def in defaults) {
-        if (typeof params[def] === 'undefined' || params[def] === null) {
+        if (typeof params[def] === 'undefined' || params[def] === null && defaults.hasOwnProperty(def)) {
             params[def] = defaults[def];
         }
     }
@@ -153,8 +153,9 @@ var Searchbar = function (container, params) {
             s.disable();
             return;
         }
+        var previousQuery = s.value;
         s.input.val('').trigger('change').focus();
-        s.triggerEvent('clearSearch searchbar:clear', 'onClear');
+        s.triggerEvent('clearSearch searchbar:clear', 'onClear', {previousQuery: previousQuery});
     };
 
     // Search

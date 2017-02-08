@@ -2,16 +2,19 @@
 ************   Panels   ************
 ======================================================*/
 app.allowPanelOpen = true;
-app.openPanel = function (panelPosition) {
+app.openPanel = function (panelPosition, animated) {
+    if (typeof animated === 'undefined') animated = true;
     if (!app.allowPanelOpen) return false;
     var panel = $('.panel-' + panelPosition);
     if (panel.length === 0 || panel.hasClass('active')) return false;
     app.closePanel(); // Close if some panel is opened
     app.allowPanelOpen = false;
     var effect = panel.hasClass('panel-reveal') ? 'reveal' : 'cover';
+    panel[animated ? 'removeClass' : 'addClass']('not-animated');
     panel.css({display: 'block'}).addClass('active');
     panel.trigger('open panel:open');
     if (app.params.material) {
+        $('.panel-overlay')[animated ? 'removeClass' : 'addClass']('not-animated');
         $('.panel-overlay').show();
     }
     if (panel.find('.' + app.params.viewClass).length > 0) {
@@ -23,7 +26,6 @@ app.openPanel = function (panelPosition) {
 
     // Transition End;
     var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : panel;
-    var openedTriggered = false;
 
     function panelTransitionEnd() {
         transitionEndTarget.transitionEnd(function (e) {
@@ -40,30 +42,49 @@ app.openPanel = function (panelPosition) {
             else panelTransitionEnd();
         });
     }
-    panelTransitionEnd();
+    if (animated) {
+        panelTransitionEnd();    
+    }
+    else {
+        panel.trigger('opened panel:opened');
+        if (app.params.material) $('.panel-overlay').css({display: ''});
+        app.allowPanelOpen = true;
+    }
 
     $('body').addClass('with-panel-' + panelPosition + '-' + effect);
     return true;
 };
-app.closePanel = function () {
+app.closePanel = function (animated) {
+    if (typeof animated === 'undefined') animated = true;
     var activePanel = $('.panel.active');
     if (activePanel.length === 0) return false;
     var effect = activePanel.hasClass('panel-reveal') ? 'reveal' : 'cover';
     var panelPosition = activePanel.hasClass('panel-left') ? 'left' : 'right';
+    activePanel[animated ? 'removeClass' : 'addClass']('not-animated');
     activePanel.removeClass('active');
+    if (app.params.material) {
+        $('.panel-overlay').removeClass('not-animated');
+    }
     var transitionEndTarget = effect === 'reveal' ? $('.' + app.params.viewsClass) : activePanel;
     activePanel.trigger('close panel:close');
     app.allowPanelOpen = false;
-
-    transitionEndTarget.transitionEnd(function () {
-        if (activePanel.hasClass('active')) return;
+    if (animated) {
+        transitionEndTarget.transitionEnd(function () {
+            if (activePanel.hasClass('active')) return;
+            activePanel.css({display: ''});
+            activePanel.trigger('closed panel:closed');
+            $('body').removeClass('panel-closing');
+            app.allowPanelOpen = true;
+        });
+        $('body').addClass('panel-closing').removeClass('with-panel-' + panelPosition + '-' + effect);
+    }
+    else {
         activePanel.css({display: ''});
         activePanel.trigger('closed panel:closed');
-        $('body').removeClass('panel-closing');
+        activePanel.removeClass('not-animated');
+        $('body').removeClass('with-panel-' + panelPosition + '-' + effect);
         app.allowPanelOpen = true;
-    });
-
-    $('body').addClass('panel-closing').removeClass('with-panel-' + panelPosition + '-' + effect);
+    }
 };
 /*======================================================
 ************   Swipe panels   ************
@@ -92,6 +113,7 @@ app.initSwipePanels = function () {
         if (!(app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose)) {
             if ($('.panel.active').length > 0 && !panel.hasClass('active')) return;
         }
+        if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         if (app.params.swipePanelCloseOpposite || app.params.swipePanelOnlyClose) {
@@ -233,6 +255,7 @@ app.initSwipePanels = function () {
             views.transform('translate3d(' + translate + 'px,0,0)').transition(0);
             panelOverlay.transform('translate3d(' + translate + 'px,0,0)').transition(0);
 
+            panel.trigger('panel:swipe', {progress: Math.abs(translate / panelWidth)});
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
         else {
@@ -242,6 +265,7 @@ app.initSwipePanels = function () {
                 overlayOpacity = Math.abs(translate/panelWidth);
                 panelOverlay.css({opacity: overlayOpacity});
             }
+            panel.trigger('panel:swipe', {progress: Math.abs(translate / panelWidth)});
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
     }

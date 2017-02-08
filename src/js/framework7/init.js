@@ -42,6 +42,15 @@ app.init = function () {
     
     // Init Material Inputs
     if (app.params.material && app.initMaterialWatchInputs) app.initMaterialWatchInputs();
+
+    // Init Material Tabbar
+    if (app.params.material) {
+        $('.tabbar').each(function (index, el) {
+            if ($(el).parents('.page').length === 0) {
+                app.initMaterialTabbar(el);
+            }
+        });
+    }
     
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();

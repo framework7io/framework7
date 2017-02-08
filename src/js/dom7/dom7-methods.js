@@ -529,25 +529,31 @@ Dom7.prototype = {
         }
         return new Dom7([this[index]]);
     },
-    append: function (newChild) {
-        var i, j;
-        for (i = 0; i < this.length; i++) {
-            if (typeof newChild === 'string') {
-                var tempDiv = document.createElement('div');
-                tempDiv.innerHTML = newChild;
-                while (tempDiv.firstChild) {
-                    this[i].appendChild(tempDiv.firstChild);
-                }
-            }
-            else if (newChild instanceof Dom7) {
-                for (j = 0; j < newChild.length; j++) {
-                    this[i].appendChild(newChild[j]);
-                }
-            }
-            else {
-                this[i].appendChild(newChild);
-            }
+    append: function () {
+        var i, j, k, newChild;
+
+        for (k = 0; k < arguments.length; k++) {
+          newChild = arguments[k];
+
+          for (i = 0; i < this.length; i++) {
+              if (typeof newChild === 'string') {
+                  var tempDiv = document.createElement('div');
+                  tempDiv.innerHTML = newChild;
+                  while (tempDiv.firstChild) {
+                      this[i].appendChild(tempDiv.firstChild);
+                  }
+              }
+              else if (newChild instanceof Dom7) {
+                  for (j = 0; j < newChild.length; j++) {
+                      this[i].appendChild(newChild[j]);
+                  }
+              }
+              else {
+                  this[i].appendChild(newChild);
+              }
+          }
         }
+
         return this;
     },
     appendTo: function (parent) {
