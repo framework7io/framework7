@@ -96,14 +96,18 @@ app.initClickEvents = function () {
                 else app.openPanel('left');
             }
         }
+        
         // Close Panel
         if (clicked.hasClass('close-panel')) {
             app.closePanel();
         }
 
-        if (clicked.hasClass('panel-overlay') && app.params.panelsCloseByOutside) {
-            app.closePanel();
+        // Panel Overlay
+        if (clicked.hasClass('panel-overlay')) {
+            $('.panel.active').trigger('panel:overlay-click');
+            if (app.params.panelsCloseByOutside) app.closePanel();
         }
+
         // Popover
         if (clicked.hasClass('open-popover')) {
             var popover;
