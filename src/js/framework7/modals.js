@@ -532,6 +532,7 @@ app.openModal = function (modal, animated) {
     if (typeof animated === 'undefined') animated = true;
     modal = $(modal);
     modal[animated ? 'removeClass' : 'addClass']('not-animated');
+
     var isModal = modal.hasClass('modal');
     var isPopover = modal.hasClass('popover');
     var isPopup = modal.hasClass('popup');
@@ -553,11 +554,22 @@ app.openModal = function (modal, animated) {
         });
         return;
     }
+
     // do nothing if this modal already shown
     if (true === modal.data('f7-modal-shown')) {
         return;
     }
     modal.data('f7-modal-shown', true);
+
+    // Move modal
+    var modalParent = modal.parent();
+    if (app.params.modalsMoveToRoot && !modalParent.is(app.root)) {
+        app.root.append(modal);
+        modal.once(modalType + ':closed', function() {
+           modalParent.append(modal);
+        });
+    }
+
     modal.once(modalType + ':close', function() {
        modal.removeData('f7-modal-shown');
     });
