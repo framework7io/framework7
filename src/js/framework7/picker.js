@@ -82,13 +82,26 @@ var Picker = function (params) {
     };
     p.updateValue = function (forceValues) {
         var newValue = forceValues || [];
-        var newDisplayValue = [];
-        for (var i = 0; i < p.cols.length; i++) {
-            if (!p.cols[i].divider) {
-                newValue.push(p.cols[i].value);
-                newDisplayValue.push(p.cols[i].displayValue);
+        var newDisplayValue = [], i;
+        if (p.cols.length === 0) {
+            for (i = 0; i < p.params.cols.length; i++) {
+                if (p.params.cols[i].displayValues !== undefined) {
+                    newDisplayValue.push(p.params.cols[i].displayValues[newValue[i]]);
+                }
+                else {
+                    newDisplayValue.push(newValue[i]);
+                }
             }
         }
+        else {
+            for (i = 0; i < p.cols.length; i++) {
+                if (!p.cols[i].divider) {
+                    newValue.push(p.cols[i].value);
+                    newDisplayValue.push(p.cols[i].displayValue);
+                }
+            }
+        }
+            
         if (newValue.indexOf(undefined) >= 0) {
             return;
         }
