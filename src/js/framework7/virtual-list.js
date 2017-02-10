@@ -235,13 +235,19 @@ var VirtualList = function (listBlock, params) {
             }
         }
 
-
         // Update list html
         if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
         vl.ul[0].innerHTML = '';
 
         if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
-        vl.ul[0].appendChild(vl.fragment);
+        if (items && items.length === 0) {
+            vl.reachEnd = true;
+            if (vl.params.emptyTemplate) vl.ul[0].innerHTML = vl.params.emptyTemplate;
+        }
+        else {
+            vl.ul[0].appendChild(vl.fragment);
+        }
+        
         if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
 
         if (typeof forceScrollTop !== 'undefined' && force) {
