@@ -30,7 +30,8 @@ var Autocomplete = function (params) {
         textProperty: 'text',
 
         // Dropdown Options
-        highlightMatches: false,
+        highlightMatches: true,
+
         /*
         dropdownPlaceholderText: 'Type anything...',
         */
@@ -279,8 +280,11 @@ var Autocomplete = function (params) {
                 var itemsHTML = '';
                 var limit = a.params.limit ? Math.min(a.params.limit, items.length) : items.length;
                 a.items = items;
-                var i, j;
-                var regExp = new RegExp('('+query+')', 'i');
+                var i, j, regExp;
+                if (a.params.highlightMatches) {
+                    query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+                    regExp = new RegExp('('+query+')', 'i');
+                }
 
                 for (i = 0; i < limit; i++) {
                     var itemValue = typeof items[i] === 'object' ? items[i][a.params.valueProperty] : items[i];
