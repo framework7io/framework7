@@ -1,18 +1,18 @@
 /**
- * Framework7 1.5.2
+ * Framework7 1.5.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * Google Material Theme
  *
  * http://framework7.io/
  * 
- * Copyright 2016, Vladimir Kharlampidi
+ * Copyright 2017, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: December 17, 2016
+ * Released on: February 10, 2017
  */
 html,
 body,
@@ -1579,6 +1579,10 @@ html:not(.watch-active-state) .tabbar a.tab-link:active,
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
+.navbar.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .page.no-navbar .page-content {
   padding-top: 0;
 }
@@ -1602,6 +1606,11 @@ html:not(.watch-active-state) .tabbar a.tab-link:active,
 .tabbar.tabbar-hidden {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
+}
+.toolbar.not-animated,
+.tabbar.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .toolbar.toolbar-hidden,
 .tabbar.toolbar-hidden,
@@ -1886,7 +1895,8 @@ html.pixel-ratio-3 .toolbar.messagebar:before {
 .toolbar.messagebar ~ .page-content {
   padding-bottom: 48px;
 }
-.page.no-toolbar .toolbar.messagebar ~ .page-content {
+.page.no-toolbar .toolbar.messagebar ~ .page-content,
+.page.no-tabbar .toolbar.messagebar ~ .page-content {
   padding-bottom: 48px;
 }
 .hidden-toolbar .toolbar.messagebar {
@@ -3997,6 +4007,13 @@ html.pixel-ratio-3 .card-footer:before {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
+.modal-overlay.not-animated,
+.preloader-indicator-overlay.not-animated,
+.popup-overlay.not-animated,
+.picker-modal-overlay.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .modal-overlay.modal-overlay-visible,
 .preloader-indicator-overlay.modal-overlay-visible,
 .popup-overlay.modal-overlay-visible,
@@ -4219,16 +4236,22 @@ html:not(.watch-active-state) .notifications .modal-buttons .button:not(.button-
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
-.actions-modal.modal-in {
+.actions-modal.modal-in,
+.actions-modal.modal-out {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
+}
+.actions-modal.modal-in.not-animated,
+.actions-modal.modal-out.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
+.actions-modal.modal-in {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .actions-modal.modal-out {
   z-index: 13499;
-  -webkit-transition-duration: 300ms;
-  transition-duration: 300ms;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
@@ -4385,18 +4408,24 @@ input.modal-text-input + input.modal-text-input {
   -webkit-transform-origin: center top;
   transform-origin: center top;
 }
+.popover.modal-in,
+.popover.modal-out {
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.popover.modal-in.not-animated,
+.popover.modal-out.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .popover.modal-in {
   -webkit-transform: scale(1);
   transform: scale(1);
-  -webkit-transition-duration: 300ms;
-  transition-duration: 300ms;
   opacity: 1;
 }
 .popover.modal-out {
   -webkit-transform: scale(1);
   transform: scale(1);
-  -webkit-transition-duration: 300ms;
-  transition-duration: 300ms;
   opacity: 0;
 }
 .popover .list-block {
@@ -4549,6 +4578,13 @@ html.pixel-ratio-3 .actions-popover-label:after {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
+.popup.modal-in.not-animated,
+.login-screen.modal-in.not-animated,
+.popup.modal-out.not-animated,
+.login-screen.modal-out.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .popup.modal-in,
 .login-screen.modal-in {
   -webkit-transform: translate3d(0, 0, 0);
@@ -4645,6 +4681,11 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
 .picker-modal.modal-out {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
+}
+.picker-modal.modal-in.not-animated,
+.picker-modal.modal-out.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .picker-modal.modal-in {
   -webkit-transform: translate3d(0, 0, 0);
@@ -4778,6 +4819,10 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
 }
+.panel-overlay.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .panel {
   z-index: 1000;
   display: none;
@@ -4793,6 +4838,10 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   transform: translate3d(0, 0, 0);
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
+}
+.panel.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .panel.panel-left.panel-cover {
   z-index: 6000;
@@ -4830,6 +4879,11 @@ body.with-panel-right-reveal .views {
   -webkit-transition-property: -webkit-transform, box-shadow;
   -moz-transition-property: -moz-transform, box-shadow;
   transition-property: transform, box-shadow;
+}
+body.with-panel-left-reveal .panel.not-animated ~ .views,
+body.with-panel-right-reveal .panel.not-animated ~ .views {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 body.with-panel-left-reveal .panel-overlay,
 body.with-panel-right-reveal .panel-overlay {
@@ -4870,6 +4924,10 @@ body.panel-closing .views {
   -webkit-transition-property: -webkit-transform, box-shadow;
   -moz-transition-property: -moz-transform, box-shadow;
   transition-property: transform, box-shadow;
+}
+body.panel-closing .panel.not-animated ~ .views {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 /* === Images Lazy Loading === */
 .lazy-loaded.lazy-fadeIn {
@@ -4921,6 +4979,10 @@ body.panel-closing .views {
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
+}
+.tabs-animated-wrap.not-animated > .tabs {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .tabs-swipeable-wrap {
   height: 100%;
@@ -5149,14 +5211,14 @@ body.panel-closing .views {
   }
 }
 /* === Statusbar overlay === */
-html.with-statusbar-overlay body {
+html.with-statusbar-overlay .framework7-root {
   padding-top: 20px;
   box-sizing: border-box;
 }
-html.with-statusbar-overlay body .statusbar-overlay {
+html.with-statusbar-overlay .framework7-root .statusbar-overlay {
   display: block;
 }
-html.with-statusbar-overlay body .panel {
+html.with-statusbar-overlay .framework7-root .panel {
   padding-top: 20px;
 }
 .statusbar-overlay {
@@ -7723,7 +7785,7 @@ html.pixel-ratio-3 .picker-center-highlight:after {
   left: 0;
   bottom: 0;
   width: 100%;
-  z-index: 10900;
+  z-index: 20000;
   color: #fff;
   font-size: 14px;
   margin: 0;
