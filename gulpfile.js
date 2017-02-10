@@ -171,11 +171,11 @@
         if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
             addIndent = '';
         }
-        var add4spaces = ('f7-intro.js f7-outro.js proto-device.js proto-plugins.js proto-support.js dom7-intro.js dom7-outro.js animate7.js template7.js swiper.js').split(' ');
+        var add4spaces = ('framework7/f7-intro.js framework7/f7-outro.js framework7/proto-device.js framework7/proto-plugins.js framework7/proto-support.js dom7/dom7-intro.js dom7/dom7-outro.js animate7/animate7.js template7/template7.js swiper/swiper.js').split(' ');
         if (add4spaces.indexOf(filename) >= 0) {
             addIndent = '    ';
         }
-        var add8spaces = ('dom7-methods.js dom7-ajax.js dom7-utils.js').split(' ');
+        var add8spaces = ('dom7/dom7-methods.js dom7/dom7-ajax.js dom7/dom7-utils.js').split(' ');
         if (add8spaces.indexOf(filename) >= 0) {
             addIndent = '        ';
         }
