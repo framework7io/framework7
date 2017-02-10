@@ -7,8 +7,7 @@
        local('Framework7Icons-Regular'),
        url("../fonts/Framework7Icons-Regular.woff2") format("woff2"),
        url("../fonts/Framework7Icons-Regular.woff") format("woff"),
-       url("../fonts/Framework7Icons-Regular.ttf") format("truetype"),
-       url("../fonts/Framework7Icons-Regular.svg") format("svg");
+       url("../fonts/Framework7Icons-Regular.ttf") format("truetype");
 }
 
 .f7-icons, .framework7-icons {
