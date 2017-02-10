@@ -97,6 +97,7 @@ $.ajax = function (options) {
         script.onerror = function() {
             clearTimeout(abortTimeout);
             fireAjaxCallback(undefined, undefined, 'error', null, 'scripterror');
+            fireAjaxCallback('ajaxComplete ajax:complete', {scripterror: true}, 'complete', null, 'scripterror');
         };
         script.src = requestUrl;
 
@@ -235,6 +236,7 @@ $.ajax = function (options) {
     xhr.onerror = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
         fireAjaxCallback('ajaxError ajax:error', {xhr: xhr}, 'error', xhr, xhr.status);
+        fireAjaxCallback('ajaxComplete ajax:complete', {xhr: xhr}, 'complete', xhr, xhr.status);
     };
 
     // Ajax start callback
