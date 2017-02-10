@@ -17,6 +17,7 @@ var Autocomplete = function (params) {
         openIn: 'page',
         backOnSelect: false,
         notFoundText: 'Nothing found',
+        requestSourceOnOpen: false,
         /*
         pageTitle: undefined,
         */
@@ -366,6 +367,52 @@ var Autocomplete = function (params) {
             return;
         }
         var container = $(page.container);
+
+        // Source
+        function onSource(query) {
+            if (!a.params.source) return;
+            var i, j, k;
+
+            a.params.source(a, query, function(items) {
+                var itemsHTML = '';
+                var limit = a.params.limit ? Math.min(a.params.limit, items.length) : items.length;
+                a.items = items;
+                for (i = 0; i < limit; i++) {
+                    var selected = false;
+                    var itemValue = typeof items[i] === 'object' ? items[i][a.params.valueProperty] : items[i];
+                    for (j = 0; j < a.value.length; j++) {
+                        var aValue = typeof a.value[j] === 'object' ? a.value[j][a.params.valueProperty] : a.value[j];
+                        if (aValue === itemValue || aValue * 1 === itemValue * 1) selected = true;
+                    }
+                    itemsHTML += a.itemTemplate({
+                        value: itemValue,
+                        text: typeof items[i] !== 'object' ? items[i] : items[i][a.params.textProperty],
+                        inputType: a.inputType,
+                        id: a.id,
+                        inputName: a.inputName,
+                        selected: selected,
+                        checkbox: a.inputType === 'checkbox',
+                        material: material
+                    });
+                }
+                container.find('.autocomplete-found ul').html(itemsHTML);
+                if (items.length === 0) {
+                    if (query.length !== 0) {
+                        container.find('.autocomplete-not-found').show();
+                        container.find('.autocomplete-found, .autocomplete-values').hide();
+                    }
+                    else {
+                        container.find('.autocomplete-values').show();
+                        container.find('.autocomplete-found, .autocomplete-not-found').hide();
+                    }
+                }
+                else {
+                    container.find('.autocomplete-found').show();
+                    container.find('.autocomplete-not-found, .autocomplete-values').hide();
+                }
+            });
+        }
+
         // Init Search Bar
         var searchbar = app.searchbar(container.find('.searchbar'), {
             customSearch: true,
@@ -377,48 +424,7 @@ var Autocomplete = function (params) {
                     searchbar.overlay.removeClass('searchbar-overlay-active');
                 }
 
-                var i, j, k;
-
-                if (a.params.source) {
-                    a.params.source(a, data.query, function(items) {
-                        var itemsHTML = '';
-                        var limit = a.params.limit ? Math.min(a.params.limit, items.length) : items.length;
-                        a.items = items;
-                        for (i = 0; i < limit; i++) {
-                            var selected = false;
-                            var itemValue = typeof items[i] === 'object' ? items[i][a.params.valueProperty] : items[i];
-                            for (j = 0; j < a.value.length; j++) {
-                                var aValue = typeof a.value[j] === 'object' ? a.value[j][a.params.valueProperty] : a.value[j];
-                                if (aValue === itemValue || aValue * 1 === itemValue * 1) selected = true;
-                            }
-                            itemsHTML += a.itemTemplate({
-                                value: itemValue,
-                                text: typeof items[i] !== 'object' ? items[i] : items[i][a.params.textProperty],
-                                inputType: a.inputType,
-                                id: a.id,
-                                inputName: a.inputName,
-                                selected: selected,
-                                checkbox: a.inputType === 'checkbox',
-                                material: material
-                            });
-                        }
-                        container.find('.autocomplete-found ul').html(itemsHTML);
-                        if (items.length === 0) {
-                            if (data.query.length !== 0) {
-                                container.find('.autocomplete-not-found').show();
-                                container.find('.autocomplete-found, .autocomplete-values').hide();
-                            }
-                            else {
-                                container.find('.autocomplete-values').show();
-                                container.find('.autocomplete-found, .autocomplete-not-found').hide();
-                            }
-                        }
-                        else {
-                            container.find('.autocomplete-found').show();
-                            container.find('.autocomplete-not-found, .autocomplete-values').hide();
-                        }
-                    });
-                }
+                onSource(data.query);
             }
         });
 
@@ -506,6 +512,10 @@ var Autocomplete = function (params) {
         // Update Values On Page Init
         updateValues();
 
+        // Source on load
+        if (a.params.requestSourceOnOpen) onSource('');
+
+        // On Open Callback
         if (a.params.onOpen) a.params.onOpen(a);
     };
 
