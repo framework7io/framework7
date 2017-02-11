@@ -10,6 +10,7 @@ app.router = {
         }
         else $(el).remove();
     },
+    _modalsSelector: '.popup, .modal, .popover, .actions-modal, .picker-modal, .login-screen',
     // Temporary DOM Element
     temporaryDom: document.createElement('div'),
 
@@ -17,7 +18,9 @@ app.router = {
     findElement: function (selector, container, view, notCached) {
         container = $(container);
         if (notCached) selector = selector + ':not(.cached)';
-        var found = container.find(selector);
+        var found = container.find(selector).filter(function (index, el) {
+            return $(el).parents(app.router._modalsSelector).length === 0;
+        });
         if (found.length > 1) {
             if (typeof view.selector === 'string') {
                 // Search in related view
@@ -306,7 +309,6 @@ app.router._load = function (view, options) {
         if (pageElement) newPage = $(pageElement);
         else newPage = app.router.findElement('.page', app.router.temporaryDom, view);
     }
-
     // If page not found exit
     if (!newPage || newPage.length === 0 || (pageName && view.activePage && view.activePage.name === pageName)) {
         view.allowPageChange = true;
@@ -383,7 +385,9 @@ app.router._load = function (view, options) {
             }
         }
         if (dynamicNavbar && newPage.find('.navbar').length > 0) {
-            app.router._remove(newPage.find('.navbar'));
+            app.router._remove(newPage.find('.navbar').filter(function(index, el){
+                return $(el).parents(app.router._modalsSelector).length === 0;
+            }));
         }
         navbar = viewContainer.children('.navbar');
         if (options.reload) {
@@ -1046,10 +1050,14 @@ app.router._back = function (view, options) {
         else if (pageElement && url) {
             newPage = $(pageElement);
             if (view.params.dynamicNavbar) {
-                newNavbarInner = newPage.find('.navbar-inner');
+                newNavbarInner = newPage.find('.navbar-inner').filter(function (index, el) {
+                    return $(el).parents(app.router._modalsSelector).length === 0;
+                });
                 if (newNavbarInner.length > 0) {
                     newPage.prepend(newNavbarInner);
-                    app.router._remove(newPage.find('.navbar'));
+                    app.router._remove(newPage.find('.navbar').filter(function (index, el) {
+                        return $(el).parents(app.router._modalsSelector).length === 0;
+                    }));
                 }
             }
             setPages();

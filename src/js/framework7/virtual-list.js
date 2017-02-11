@@ -7,7 +7,15 @@ var VirtualList = function (listBlock, params) {
         height: app.params.material ? 48 : 44,
         cache: true,
         dynamicHeightBufferSize: 1,
-        showFilteredItemsOnly: false
+        showFilteredItemsOnly: false,
+        template: 
+            '<li>' +
+                '<div class="item-content">' +
+                    '<div class="item-inner">' +
+                        '<div class="item-title">{{this}}</div>' +
+                    '</div>' +
+                '</div>' +
+            '</li>'
     };
     params = params || {};
     for (var def in defaults) {
@@ -24,7 +32,7 @@ var VirtualList = function (listBlock, params) {
     if (vl.params.showFilteredItemsOnly) {
         vl.filteredItems = [];
     }
-    if (vl.params.template) {
+    if (vl.params.template && !vl.params.renderItem) {
         if (typeof vl.params.template === 'string') vl.template = t7.compile(vl.params.template);
         else if (typeof vl.params.template === 'function') vl.template = vl.params.template;
     }
@@ -183,14 +191,14 @@ var VirtualList = function (listBlock, params) {
                 item = vl.domCache[index];
             }
             else {
-                if (vl.template) {
+                if (vl.template && !vl.params.renderItem) {
                     vl.tempDomElement.innerHTML = vl.template(items[i], {index: index}).trim();
                 }
                 else if (vl.params.renderItem) {
                     vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]).trim();
                 }
                 else {
-                    vl.tempDomElement.innerHTML = items[i].trim();
+                    vl.tempDomElement.innerHTML = items[i].toString().trim();
                 }
                 item = vl.tempDomElement.childNodes[0];
                 if (vl.params.cache) vl.domCache[index] = item;
@@ -227,13 +235,19 @@ var VirtualList = function (listBlock, params) {
             }
         }
 
-
         // Update list html
         if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
         vl.ul[0].innerHTML = '';
 
         if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
-        vl.ul[0].appendChild(vl.fragment);
+        if (items && items.length === 0) {
+            vl.reachEnd = true;
+            if (vl.params.emptyTemplate) vl.ul[0].innerHTML = vl.params.emptyTemplate;
+        }
+        else {
+            vl.ul[0].appendChild(vl.fragment);
+        }
+        
         if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
 
         if (typeof forceScrollTop !== 'undefined' && force) {

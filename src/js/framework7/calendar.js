@@ -320,7 +320,6 @@ var Calendar = function (params) {
                 day = $(e.target);
             }
             if (day.length === 0) return;
-            if (day.hasClass('picker-calendar-day-selected') && !(p.params.multiple || p.params.rangePicker)) return;
             if (day.hasClass('picker-calendar-day-disabled')) return;
             if (!p.params.rangePicker) {
                 if (day.hasClass('picker-calendar-day-next')) p.nextMonth();
@@ -332,7 +331,9 @@ var Calendar = function (params) {
             if (p.params.onDayClick) {
                 p.params.onDayClick(p, day[0], dateYear, dateMonth, dateDay);
             }
-            p.addValue(new Date(dateYear, dateMonth, dateDay).getTime());
+            if (!day.hasClass('picker-calendar-day-selected') || p.params.multiple || p.params.rangePicker) {
+                p.addValue(new Date(dateYear, dateMonth, dateDay).getTime());
+            }
             if (p.params.closeOnSelect) {
                 if (p.params.rangePicker && p.value.length === 2 || !p.params.rangePicker) p.close();
             }

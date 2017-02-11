@@ -98,6 +98,7 @@ window.Framework7 = function (params) {
         popupCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
         modalStack: true,
+        modalsMoveToRoot: true,
         // Lazy Load
         imagesLazyLoadThreshold: 0,
         imagesLazyLoadSequential: true,

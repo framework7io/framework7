@@ -9290,9 +9290,6 @@
                     }
                 });
         
-                // Focus searchbar if configured as such
-                if (a.params.autoFocus) container.find("input[type=search]").focus();
-        
                 // Save searchbar instance
                 a.searchbar = searchbar;
         
@@ -9378,6 +9375,11 @@
                 updateValues();
         
                 if (a.params.onOpen) a.params.onOpen(a);
+        
+            };
+            a.pageAfterAnimation = function (e) {
+                // Focus searchbar if configured as such
+                if (a.params.autoFocus) $(e.detail.page.container).find("input[type=search]").focus();
             };
         
             // Show Hide Preloader
@@ -9423,6 +9425,7 @@
                 }
                 else {
                     $(document).once('pageInit', '.autocomplete-page', a.pageInit);
+                    $(document).once('pageAfterAnimation', '.autocomplete-page', a.pageAfterAnimation);
                     if (a.params.openIn === 'popup') {
                         a.popup = app.popup(
                             '<div class="popup autocomplete-popup autocomplete-popup-' + a.inputName + '">' +

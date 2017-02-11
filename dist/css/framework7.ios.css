@@ -1,18 +1,18 @@
 /**
- * Framework7 1.5.2
+ * Framework7 1.5.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * iOS Theme
  *
  * http://framework7.io/
  * 
- * Copyright 2016, Vladimir Kharlampidi
+ * Copyright 2017, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: December 17, 2016
+ * Released on: February 10, 2017
  */
 html,
 body,
@@ -1131,6 +1131,8 @@ html.android .page-from-center-to-right:before {
   z-index: 500;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .navbar b,
 .toolbar b {
@@ -1770,6 +1772,10 @@ html.pixel-ratio-3 .toolbar:before {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
+.navbar.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .page.no-navbar .page-content {
   padding-top: 0;
 }
@@ -1795,6 +1801,11 @@ html.pixel-ratio-3 .toolbar:before {
   transition-duration: 400ms;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
+}
+.toolbar.not-animated,
+.tabbar.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .page.no-toolbar .page-content,
 .page.no-tabbar .page-content {
@@ -2033,10 +2044,8 @@ html:not(.watch-active-state) .searchbar.searchbar-active .searchbar-cancel:acti
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
 }
-.messagebar ~ .page-content {
-  padding-bottom: 44px;
-}
-.page.no-toolbar .messagebar ~ .page-content {
+.page.no-toolbar .messagebar ~ .page-content,
+.page.no-tabbar .messagebar ~ .page-content {
   padding-bottom: 44px;
 }
 .hidden-toolbar .messagebar {
@@ -2117,6 +2126,14 @@ i.icon.icon-plus {
 .tabbar-labels .framework7-icons,
 .tabbar-labels .f7-icons {
   font-size: 25px;
+}
+.item-media .framework7-icons,
+.item-media .f7-icons {
+  font-size: 29px;
+}
+.button .framework7-icons,
+.button .f7-icons {
+  font-size: 22px;
 }
 .badge {
   font-size: 13px;
@@ -4028,7 +4045,8 @@ html.pixel-ratio-3 .card-footer:before {
 /* === Modals === */
 .modal-overlay,
 .preloader-indicator-overlay,
-.popup-overlay {
+.popup-overlay,
+.picker-modal-overlay {
   position: absolute;
   left: 0;
   top: 0;
@@ -4041,11 +4059,22 @@ html.pixel-ratio-3 .card-footer:before {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
+.modal-overlay.not-animated,
+.preloader-indicator-overlay.not-animated,
+.popup-overlay.not-animated,
+.picker-modal-overlay.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .modal-overlay.modal-overlay-visible,
 .preloader-indicator-overlay.modal-overlay-visible,
-.popup-overlay.modal-overlay-visible {
+.popup-overlay.modal-overlay-visible,
+.picker-modal-overlay.modal-overlay-visible {
   visibility: visible;
   opacity: 1;
+}
+.picker-modal-overlay {
+  z-index: 12000;
 }
 .popup-overlay {
   z-index: 10500;
@@ -4273,16 +4302,22 @@ html.pixel-ratio-3 .modal-buttons-vertical .modal-button:after {
     margin-left: -240px;
   }
 }
-.actions-modal.modal-in {
+.actions-modal.modal-in,
+.actions-modal.modal-out {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
+}
+.actions-modal.modal-in.not-animated,
+.actions-modal.modal-out.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
+.actions-modal.modal-in {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 .actions-modal.modal-out {
   z-index: 13499;
-  -webkit-transition-duration: 300ms;
-  transition-duration: 300ms;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
@@ -4470,6 +4505,10 @@ input.modal-text-input + input.modal-text-input {
   transition-duration: 300ms;
   opacity: 1;
 }
+.popover.modal-in.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .popover .list-block {
   margin: 0;
 }
@@ -4624,6 +4663,13 @@ html.pixel-ratio-3 .actions-popover-label:after {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
+.popup.modal-in.not-animated,
+.login-screen.modal-in.not-animated,
+.popup.modal-out.not-animated,
+.login-screen.modal-out.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .popup.modal-in,
 .login-screen.modal-in {
   -webkit-transform: translate3d(0, 0, 0);
@@ -4720,6 +4766,11 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
 .picker-modal.modal-out {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
+}
+.picker-modal.modal-in.not-animated,
+.picker-modal.modal-out.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .picker-modal.modal-in {
   -webkit-transform: translate3d(0, 0, 0);
@@ -4874,6 +4925,10 @@ html.pixel-ratio-3 .picker-modal.smart-select-picker .toolbar:after {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
+.panel.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
 .panel.panel-left.panel-cover {
   z-index: 6000;
   left: -260px;
@@ -4904,6 +4959,11 @@ body.with-panel-right-reveal .views {
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
   transition-property: transform;
+}
+body.with-panel-left-reveal .panel.not-animated ~ .views,
+body.with-panel-right-reveal .panel.not-animated ~ .views {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 body.with-panel-left-reveal .panel-overlay,
 body.with-panel-right-reveal .panel-overlay {
@@ -4937,6 +4997,10 @@ body.panel-closing .views {
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
   transition-property: transform;
+}
+body.panel-closing .panel.not-animated ~ .views {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 /* === Images Lazy Loading === */
 .lazy-loaded.lazy-fadeIn {
@@ -4987,6 +5051,10 @@ body.panel-closing .views {
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
+}
+.tabs-animated-wrap.not-animated > .tabs {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .tabs-swipeable-wrap {
   height: 100%;
@@ -5251,14 +5319,14 @@ html.retina.ios-6 .message.message-pic img {
   }
 }
 /* === Statusbar overlay === */
-html.with-statusbar-overlay body {
+html.with-statusbar-overlay .framework7-root {
   padding-top: 20px;
   box-sizing: border-box;
 }
-html.with-statusbar-overlay body .statusbar-overlay {
+html.with-statusbar-overlay .framework7-root .statusbar-overlay {
   display: block;
 }
-html.with-statusbar-overlay body .panel {
+html.with-statusbar-overlay .framework7-root .panel {
   padding-top: 20px;
 }
 .statusbar-overlay {
@@ -5395,6 +5463,7 @@ body > .progressbar-infinite,
   -webkit-animation: progressbar-out 300ms forwards;
   animation: progressbar-out 300ms forwards;
 }
+html.with-statusbar-overlay .framework7-root > .progressbar,
 html.with-statusbar-overlay body > .progressbar {
   top: 20px;
 }
