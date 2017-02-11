@@ -936,6 +936,33 @@ myApp.onPageInit('autocomplete', function (page) {
         }
     });
 
+    // Simple Standalone autofocus
+    var autocompleteStandaloneSimpleAuto = myApp.autocomplete({
+        openIn: 'page', //open in page
+        opener: $$('#autocomplete-standalone-auto'), //link that opens autocomplete
+        backOnSelect: true, //go back after we select something
+        autoFocus: true, // Automatically focus the searchbar
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        },
+        onChange: function (autocomplete, value) {
+            // Add item text value to item-after
+            $$('#autocomplete-standalone-auto').find('.item-after').text(value[0]);
+            // Add item value to input value
+            $$('#autocomplete-standalone-auto').find('input').val(value[0]);
+        }
+    });
+
     // Standalone Popup
     var autocompleteStandalonePopup = myApp.autocomplete({
         openIn: 'popup', //open in page
