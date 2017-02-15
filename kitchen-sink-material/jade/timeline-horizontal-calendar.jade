@@ -1,0 +1,48 @@
+.page(data-page="timeline-calendar")
+  .navbar
+    .navbar-inner
+      .left.sliding
+        a(href="index.html").back.link
+          i.icon.icon-back
+      .center.sliding Calendar Timeline
+      .right
+        a(href="#").link.open-panel.icon-only
+          i.icon.icon-bars
+  .page-content
+    .timeline.timeline-horizontal.col-33.tablet-15
+      .timeline-year
+        .timeline-year-title
+          span 2016
+        .timeline-month
+          .timeline-month-title
+            span December
+          - for (var i = 20; i <= 31; i++)
+            .timeline-item
+              .timeline-item-date #{i}
+              .timeline-item-content
+                - for (var j = 1; j <= Math.ceil(Math.random() * 5); j++)
+                  .timeline-item-time #{Math.floor(Math.random()*24)}:00
+                  .timeline-item-text Task #{j}
+      .timeline-year
+        .timeline-year-title
+          span 2017
+        .timeline-month
+          .timeline-month-title
+            span January
+          - for (var i = 1; i <= 31; i++)
+            .timeline-item
+              .timeline-item-date #{i}
+              .timeline-item-content
+                - for (var j = 1; j <= Math.ceil(Math.random() * 5); j++)
+                  .timeline-item-time #{Math.floor(Math.random()*24)}:00
+                  .timeline-item-text Task #{j}
+        .timeline-month
+          .timeline-month-title
+            span February
+          - for (var i = 1; i <= 28; i++)
+            .timeline-item
+              .timeline-item-date #{i}
+              .timeline-item-content
+                - for (var j = 1; j <= Math.ceil(Math.random() * 5); j++)
+                  .timeline-item-time #{Math.floor(Math.random()*24)}:00
+                  .timeline-item-text Task #{j}

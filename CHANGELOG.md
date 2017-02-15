@@ -1,5 +1,64 @@
 # Change Log
 
+## Framework7 v1.5.3 - Updated on February 10, 2017
+  * Autocomplete
+    * New Standalone autocomplete parameter `requestSourceOnOpen` (`false`/disabled by default). Will request source on autocomplete open if enabled
+    * New Dropdown autocomplete paremter `highlightMatches` parameter (`true`/enabled by default)
+    * Fixed issues with special characters in Dropdown autocomplete
+  * Fixed status bar overlay positioning when app root element is used
+  * Smart Select
+    * Added `data-display-as` attribute on option to display selected option value differently
+  * Dom7
+    * `.append` method now supports multiple arguments (elements) to append
+    * `.each` methods will now stop iteration if you do `return false`
+    * Improved `.parseUrlQuery` behavior
+    * All XHR errors will now also trigger `complete` events/callback
+  * Navbars/Toolbars
+    * `.hideNavbar`, `.showNavbar`, `.hideToolbar`, `.showToolbar` methods now accepts boolean parameter to define whether it should be animated or not. By default it will be hidden/shown with animation (as before)
+  * Panels
+    * `.openPanel(position, animated)` and `.closePanel(animated)` now accepts additional `animated` parameter that defines whether the panel should be opened/closed with animation or not. Enabled (with animation) by default
+    * Now swipe panels trigger additional `panel:swipe` event during touch swipe
+    * Click on panel overlay will now trigger additional `panel:overlay-click` event on currently opened panel before it will be closed
+  * Modals
+    * All modal methods now also support new `animated` parameter that defines whether the modal should be opened/closed with animation or not. Enabled (with animation) by default:
+      * `.actions(target, params, animated)`
+      * `.popover(modal, target, removeOnClose, animated)`
+      * `.popup(modal, removeOnClose, animated)`
+      * `.pickerModal(modal, removeOnClose, animated)`
+      * `.loginScreen(modal, removeOnClose, animated)`
+      * `.closeModal(modal, animated)`
+    * New app parameter `modalsMoveToRoot` (`true`/enabled by default). When enabled it will move opened modal to the app root element (or body) if it is not there on the moment of opening and move back after modal closed. It allows to use modals inside of loaded pages
+  * Searchbar
+    * Now it passes `previousQuery` to the `search:clear` event data (or `onClear` callback)
+  * Tabs
+    * `.showTab(tab, animated)` now accepts additional `animated` parameter that defines whether the tab should become visible with animation or not. Actual for animated and swipeable tabs. Enabled (with animation) by default
+  * View
+    * Now views support names with new `name` property on View initialization with `.addView` method and can be accessed later by same named property of `app.views`
+  * Virtual List
+    * Now it has default render template (if not passed anything to `template` or `renderItem` parameters)
+    * New `emptyTemplate` parameter to specify template when no empty data is passed
+  * Lot of minor fixes
+
+## Framework7 v1.5.2 - Updated on December 17, 2016
+  * **New Timeline Component**
+  * **Renamed Events**
+    * All events are renamed and lowercased to match related components, now all events looks like `page:init`, `page:reinit`, `page:beforeremove`, `popup:open`, `modal:closed`, `accordion:open`, `panel:close`, etc. This can be a breaking change so the old events are still supported/triggered
+  * Virtual List
+    * Fixed issues with Virtual List not triggered Infinite Scroll
+  * Dom7
+    * `.val()` method for multiple select now returns array of selected values
+    * `serializeObject` now keeps empty object properties as empty values
+  * Panels
+    * Fixed issue when `swipePanelActiveArea` was ignored when using `swipePanel: 'both'`
+  * Fast Clicks
+    * Fixed issue with custom click event on input:file
+  * Swiper updated to latest 3.4.1 version
+    * Fixed Zoom for RTL
+    * Improved slideToClickedSlide behavior when loop is enabled
+  * Template7 updated to latest 1.1.4 version
+    * Fixed issue with quotes being added to helpers hash content
+  * Lot of minor fixes
+
 ## Framework7 v1.5.0 - Updated on November 8, 2016
   * App Root
     * New `root` app parameter to specify app root element, by default is `'body'`. Useful when using F7 with libraries like Vue or React that doesn't allow to bind app to the body.

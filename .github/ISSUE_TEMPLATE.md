@@ -5,7 +5,7 @@ This is a (multiple allowed):
 
 * Framework7 Version: EXACT RELEASE VERSION OR COMMIT HASH, HERE.
 * Platform and Target: PLATFORM CLIENT YOU ARE TARGETING SUCH AS CORDOVA, IOS, ANDROID, ETC.
-* Live Link or JSFiddle/Codepen: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking one of the templates: iOS [JSFiddle](https://jsfiddle.net/mvs820k0/)/[Codepen](https://codepen.io/nolimits4web/pen/vXmmgG), Material [JSFiddle](https://jsfiddle.net/u8a87yd2/2/)/[Codepen](https://codepen.io/nolimits4web/pen/pEPPPK)
+* Live Link or JSFiddle/Codepen: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking one of the templates: iOS [JSFiddle](https://jsfiddle.net/s2n1p730/)/[Codepen](https://codepen.io/nolimits4web/pen/WRRWwN), Material [JSFiddle](https://jsfiddle.net/0ogxxcvt/)/[Codepen](https://codepen.io/nolimits4web/pen/pEPPPK)
 
 ### What you did
 EXPLAIN WHAT YOU DID, PREFERABLY WITH CODE EXAMPLES, HERE.

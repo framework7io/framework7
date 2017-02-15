@@ -81,7 +81,7 @@ body, .view, .views, .page, .panel, .popup, .framework7-root {
     .animation(progressbar-out 300ms forwards);
 }
 
-html.with-statusbar-overlay body > .progressbar {
+html.with-statusbar-overlay .framework7-root > .progressbar, html.with-statusbar-overlay body > .progressbar {
     top: 20px;
 }
 @-webkit-keyframes progressbar-in {
