@@ -1,5 +1,6 @@
 @import url('_mixins.less');
 @import url('_colors-vars.less');
+@import url('_dark-colors-vars.less');
 /*==========================
 Framework7 Layouts Themes
 ==========================*/
@@ -168,7 +169,7 @@ Framework7 Layouts Themes
 /*==========================
 Framework7 Color Themes
 ==========================*/
-.theme-mixin(@colorName, @color, @pressColor) {
+.theme-mixin(@colorName, @color, @pressColor, @darkcolor) {
     //Buttons
     .button {
         .theme-@{colorName} & {
@@ -318,6 +319,10 @@ Framework7 Color Themes
         .timeline-year-title, .timeline-month-title {
             background-color: @color;
         }
+        // Status Bar Overlay
+        .statusbar-overlay {
+            background-color: @darkcolor;
+        }
     }
     .swiper-pagination {
         &.color-@{colorName}, .theme-@{colorName} & {
@@ -382,27 +387,27 @@ Framework7 Color Themes
         color: #fff;
     }
 }
-.theme-mixin(e('red'), @red, #D32F2F);
-.theme-mixin(e('pink'), @pink, #C2185B);
-.theme-mixin(e('purple'), @purple, #7B1FA2);
-.theme-mixin(e('deeppurple'), @deeppurple, #512DA8);
-.theme-mixin(e('indigo'), @indigo, #303F9F);
-.theme-mixin(e('blue'), @blue, #1976D2);
-.theme-mixin(e('lightblue'), @lightblue, #0288D1);
-.theme-mixin(e('cyan'), @cyan, #0097A7);
-.theme-mixin(e('teal'), @teal, #00897B);
-.theme-mixin(e('green'), @green, #388E3C);
-.theme-mixin(e('lightgreen'), @lightgreen, #689F38);
-.theme-mixin(e('lime'), @lime, #AFB42B);
-.theme-mixin(e('yellow'), @yellow, #FBC02D);
-.theme-mixin(e('amber'), @amber, #FFA000);
-.theme-mixin(e('orange'), @orange, #F57C00);
-.theme-mixin(e('deeporange'), @deeporange, #E64A19);
-.theme-mixin(e('brown'), @brown, #5D4037);
-.theme-mixin(e('gray'), @gray, #616161);
-.theme-mixin(e('bluegray'), @bluegray, #455A64);
-.theme-mixin(e('white'), @white, rgba(0,0,0,0.1));
-.theme-mixin(e('black'), @black, #333);
+.theme-mixin(e('red'), @red, #D32F2F, @darkred);
+.theme-mixin(e('pink'), @pink, #C2185B, @darkpink);
+.theme-mixin(e('purple'), @purple, #7B1FA2, @darkpurple);
+.theme-mixin(e('deeppurple'), @deeppurple, #512DA8, @darkdeeppurple);
+.theme-mixin(e('indigo'), @indigo, #303F9F, @darkindigo);
+.theme-mixin(e('blue'), @blue, #1976D2, @darkblue);
+.theme-mixin(e('lightblue'), @lightblue, #0288D1, @darklightblue);
+.theme-mixin(e('cyan'), @cyan, #0097A7, @darkcyan);
+.theme-mixin(e('teal'), @teal, #00897B, @darkteal);
+.theme-mixin(e('green'), @green, #388E3C, @darkgreen);
+.theme-mixin(e('lightgreen'), @lightgreen, #689F38, @darklightgreen);
+.theme-mixin(e('lime'), @lime, #AFB42B, @darklime);
+.theme-mixin(e('yellow'), @yellow, #FBC02D, @darkyellow);
+.theme-mixin(e('amber'), @amber, #FFA000, @darkamber);
+.theme-mixin(e('orange'), @orange, #F57C00, @darkorange);
+.theme-mixin(e('deeporange'), @deeporange, #E64A19, @darkdeeporange);
+.theme-mixin(e('brown'), @brown, #5D4037, @darkbrown);
+.theme-mixin(e('gray'), @gray, #616161, @gray);
+.theme-mixin(e('bluegray'), @bluegray, #455A64, @darkbluegray);
+.theme-mixin(e('white'), @white, rgba(0,0,0,0.1), @white);
+.theme-mixin(e('black'), @black, #333, @black);
 
 /*==========================
 Framework7 Color + Bg + Border
