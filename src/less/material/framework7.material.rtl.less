@@ -1,5 +1,6 @@
 @import url('_mixins.less');
 @import url('_colors-vars.less');
+@import url('_dark-colors-vars.less');
 /*=============
   Framework 7 RTL Additions
 =============*/
@@ -32,7 +33,7 @@ html {
         }
         & + .item-inner {
             margin-left: 0;
-            margin-right: 16px;    
+            margin-right: 16px;
         }
     }
     .item-link {
@@ -135,7 +136,7 @@ html {
 .range-slider {
     input[type="range"]::-webkit-slider-thumb:before {
         right: auto;
-        left: 100%;        
+        left: 100%;
     }
 }
 
@@ -217,7 +218,7 @@ label.label-checkbox, label.label-radio {
             .encoded-svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc' transform='translate(60,120) rotate(180)'/></svg>");
         }
     }
-    &:not(.media-list) .accordion-item-expanded:not(.media-item) .accordion-item-toggle .item-inner, 
+    &:not(.media-list) .accordion-item-expanded:not(.media-item) .accordion-item-toggle .item-inner,
     &:not(.media-list) .accordion-item-expanded:not(.media-item) > .item-link .item-inner,
     &.media-list .accordion-item-expanded .accordion-item-toggle .item-title-row,
     &.media-list .accordion-item-expanded > .item-link .item-title-row,
