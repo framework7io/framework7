@@ -37,7 +37,7 @@ app.initSortable = function () {
         /*jshint validthis:true */
         sortingEl = $(this).parent();
         startIndex = sortingEl.index();
-        sortingItems = sortingEl.parent().find('li');
+        sortingItems = sortingEl.parent().children('li');
         sortableContainer = sortingEl.parents('.sortable');
         e.preventDefault();
         app.allowPanelOpen = app.allowSwipeout = false;
