@@ -82,11 +82,12 @@ var Picker = function (params) {
     };
     p.updateValue = function (forceValues) {
         var newValue = forceValues || [];
-        var newDisplayValue = [], i;
+        var newDisplayValue = [], i, column;
         if (p.cols.length === 0) {
             for (i = 0; i < p.params.cols.length; i++) {
-                if (p.params.cols[i].displayValues !== undefined) {
-                    newDisplayValue.push(p.params.cols[i].displayValues[newValue[i]]);
+                column = p.params.cols[i];
+                if (column.displayValues !== undefined && column.values !== undefined && column.values.indexOf(newValue[i]) !== undefined) {
+                    newDisplayValue.push(column.displayValues[column.values.indexOf(newValue[i])]);
                 }
                 else {
                     newDisplayValue.push(newValue[i]);
