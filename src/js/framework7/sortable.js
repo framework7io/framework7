@@ -117,13 +117,13 @@ app.initSortable = function () {
         isTouched = false;
         isMoved = false;
     }
-    $(document).on(app.touchEvents.start, '.list-block.sortable .sortable-handler', handleTouchStart);
+    $(document).on(app.touchEvents.start, '.list-block.sortable .sortable-handler', handleTouchStart, {passive: false});
     if (app.support.touch) {
-        $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove);
-        $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd);
+        $(document).on(app.touchEvents.move, '.list-block.sortable .sortable-handler', handleTouchMove, {passive: false});
+        $(document).on(app.touchEvents.end, '.list-block.sortable .sortable-handler', handleTouchEnd, {passive: false});
     }
     else {
-        $(document).on(app.touchEvents.move, handleTouchMove);
-        $(document).on(app.touchEvents.end, handleTouchEnd);
+        $(document).on(app.touchEvents.move, handleTouchMove, {passive: false});
+        $(document).on(app.touchEvents.end, handleTouchEnd, {passive: false});
     }
 };

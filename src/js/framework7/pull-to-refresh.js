@@ -172,17 +172,16 @@ app.initPullToRefresh = function (pageContainer) {
     }
 
     // Attach Events
-    var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? {passive: true, capture: false} : false;
-    eventsTarget.on(app.touchEvents.start, handleTouchStart, passiveListener);
-    eventsTarget.on(app.touchEvents.move, handleTouchMove);
-    eventsTarget.on(app.touchEvents.end, handleTouchEnd, passiveListener);
+    eventsTarget.on(app.touchEvents.start, handleTouchStart, {passive: false});
+    eventsTarget.on(app.touchEvents.move, handleTouchMove, {passive: false});
+    eventsTarget.on(app.touchEvents.end, handleTouchEnd, {passive: false});
 
     // Detach Events on page remove
     if (page.length === 0) return;
     function destroyPullToRefresh() {
-        eventsTarget.off(app.touchEvents.start, handleTouchStart);
-        eventsTarget.off(app.touchEvents.move, handleTouchMove);
-        eventsTarget.off(app.touchEvents.end, handleTouchEnd);
+        eventsTarget.off(app.touchEvents.start, handleTouchStart, {passive: false});
+        eventsTarget.off(app.touchEvents.move, handleTouchMove, {passive: false});
+        eventsTarget.off(app.touchEvents.end, handleTouchEnd, {passive: false});
     }
     eventsTarget[0].f7DestroyPullToRefresh = destroyPullToRefresh;
     function detachEvents() {

@@ -344,11 +344,10 @@ var Calendar = function (params) {
         p.container.find('.picker-calendar-prev-year').on('click', p.prevYear);
         p.container.find('.picker-calendar-next-year').on('click', p.nextYear);
         p.wrapper.on('click', handleDayClick);
-        var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? {passive: true, capture: false} : false;
         if (p.params.touchMove) {
-            p.wrapper.on(app.touchEvents.start, handleTouchStart, passiveListener);
-            p.wrapper.on(app.touchEvents.move, handleTouchMove);
-            p.wrapper.on(app.touchEvents.end, handleTouchEnd, passiveListener);
+            p.wrapper.on(app.touchEvents.start, handleTouchStart, {passive: false});
+            p.wrapper.on(app.touchEvents.move, handleTouchMove, {passive: false});
+            p.wrapper.on(app.touchEvents.end, handleTouchEnd, {passive: false});
         }
 
         p.container[0].f7DestroyCalendarEvents = function () {
@@ -358,9 +357,9 @@ var Calendar = function (params) {
             p.container.find('.picker-calendar-next-year').off('click', p.nextYear);
             p.wrapper.off('click', handleDayClick);
             if (p.params.touchMove) {
-                p.wrapper.off(app.touchEvents.start, handleTouchStart, passiveListener);
-                p.wrapper.off(app.touchEvents.move, handleTouchMove);
-                p.wrapper.off(app.touchEvents.end, handleTouchEnd, passiveListener);
+                p.wrapper.off(app.touchEvents.start, handleTouchStart, {passive: false});
+                p.wrapper.off(app.touchEvents.move, handleTouchMove, {passive: false});
+                p.wrapper.off(app.touchEvents.end, handleTouchEnd, {passive: false});
             }
         };
 
