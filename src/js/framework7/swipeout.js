@@ -280,14 +280,14 @@ app.initSwipeout = function (swipeoutEl) {
         });
     }
     if (swipeoutEl) {
-        $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
-        $(swipeoutEl).on(app.touchEvents.move, handleTouchMove);
-        $(swipeoutEl).on(app.touchEvents.end, handleTouchEnd);
+        $(swipeoutEl).on(app.touchEvents.start, handleTouchStart, {passive: false});
+        $(swipeoutEl).on(app.touchEvents.move, handleTouchMove, {passive: false});
+        $(swipeoutEl).on(app.touchEvents.end, handleTouchEnd, {passive: false});
     }
     else {
-        $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
-        $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
-        $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
+        $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart, {passive: false});
+        $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove, {passive: false});
+        $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd, {passive: false});
     }
         
 };
