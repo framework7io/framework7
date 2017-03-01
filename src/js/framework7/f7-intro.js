@@ -80,6 +80,8 @@ window.Framework7 = function (params) {
         scrollTopOnNavbarClick: false,
         scrollTopOnStatusbarClick: false,
         // Panels
+        panelLeftBreakpoint: null,
+        panelRightBreakpoint: null,
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,
         swipePanelCloseOpposite: true,
