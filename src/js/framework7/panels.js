@@ -428,7 +428,7 @@ app.initSwipePanels = function () {
         panelOverlay.css({display: ''}).transform('').transition('').css('opacity', '');
     }
     var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? {passive: true, capture: false} : false;
-    var activeListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? {passive: false, capture: false} : false;
+    var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
     $(document).on(app.touchEvents.start, handleTouchStart, passiveListener);
     $(document).on(app.touchEvents.move, handleTouchMove, activeListener);
     $(document).on(app.touchEvents.end, handleTouchEnd, passiveListener);

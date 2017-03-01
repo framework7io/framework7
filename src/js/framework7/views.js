@@ -436,8 +436,9 @@ var View = function (selector, params) {
     view.attachEvents = function (detach) {
         var action = detach ? 'off' : 'on';
         var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? {passive: true, capture: false} : false;
+        var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
         container[action](app.touchEvents.start, view.handleTouchStart, passiveListener);
-        container[action](app.touchEvents.move, view.handleTouchMove);
+        container[action](app.touchEvents.move, view.handleTouchMove, activeListener);
         container[action](app.touchEvents.end, view.handleTouchEnd, passiveListener);
     };
     view.detachEvents = function () {

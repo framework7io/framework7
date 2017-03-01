@@ -377,9 +377,10 @@ var Picker = function (params) {
 
         col.initEvents = function (detach) {
             var method = detach ? 'off' : 'on';
-            col.container[method](app.touchEvents.start, handleTouchStart);
-            col.container[method](app.touchEvents.move, handleTouchMove);
-            col.container[method](app.touchEvents.end, handleTouchEnd);
+            var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
+            col.container[method](app.touchEvents.start, handleTouchStart, activeListener);
+            col.container[method](app.touchEvents.move, handleTouchMove, activeListener);
+            col.container[method](app.touchEvents.end, handleTouchEnd, activeListener);
             col.items[method]('click', handleClick);
         };
         col.destroyEvents = function () {
