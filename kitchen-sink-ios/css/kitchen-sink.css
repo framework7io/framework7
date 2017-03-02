@@ -315,6 +315,8 @@ html[dir="rtl"] .custom-accordion .accordion-item-toggle span {
   #ks-picker-date-container .picker-item {
     height: 36px;
     line-height: 36px;
+  }
+  #ks-picker-date-container .picker-item span {
     padding: 0 6px;
   }
 }

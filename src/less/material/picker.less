@@ -49,14 +49,13 @@
 }
 .picker-items-col-wrapper {
     .transition(300ms);
-    
+
     -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
 }
 .picker-item {
     height: 36px;
     line-height: 36px;
-    padding: 0 10px;
     white-space: nowrap;
     position: relative;
     overflow: hidden;
@@ -66,6 +65,9 @@
     top: 0;
     width: 100%;
     box-sizing: border-box;
+    span {
+        padding: 0 10px;
+    }
     .transition(300ms);
     .picker-items-col-absolute &{
         position: absolute;
