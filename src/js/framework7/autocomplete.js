@@ -455,6 +455,12 @@ var Autocomplete = function (params) {
         }
 
         // Handle Inputs
+        if (!a.params.multiple && a.params.backOnSelect) {
+            container.once('click', '.list-block label', function () {
+                if (a.params.openIn === 'popup') app.closeModal(a.popup);
+                else view.router.back({animatePages: a.params.openWithAnimation});
+            });
+        }
         container.on('change', 'input[type="radio"], input[type="checkbox"]', function () {
             var i;
             var input = this;
@@ -505,10 +511,6 @@ var Autocomplete = function (params) {
             // On Select Callback
             if ((a.inputType === 'radio' && input.checked || a.inputType === 'checkbox') && a.params.onChange ) {
                 a.params.onChange(a, a.value);
-            }
-            if (backOnSelect && a.inputType === 'radio') {
-                if (a.params.openIn === 'popup') app.closeModal(a.popup);
-                else view.router.back();
             }
         });
 
