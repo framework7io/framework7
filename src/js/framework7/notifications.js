@@ -86,11 +86,11 @@ app.addNotification = function (params) {
             if (params.onClick) params.onClick(e, item[0]);
             if (params.closeOnClick) close = true;
         }
-        if (close) app.closeNotification(item[0]);
+        if (close) app.closeNotification(item[0], e);
     });
     if (params.onClose) {
-        item.data('f7NotificationOnClose', function () {
-            params.onClose(item[0]);
+        item.data('f7NotificationOnClose', function (e) {
+            params.onClose(item[0], e);
         });
     }
     if (params.additionalClass) {
@@ -133,7 +133,7 @@ app.addNotification = function (params) {
 
     return item[0];
 };
-app.closeNotification = function (item) {
+app.closeNotification = function (item, event) {
     item = $(item);
     if (item.length === 0) return;
     if (item.hasClass('notification-item-removing')) return;
@@ -148,7 +148,7 @@ app.closeNotification = function (item) {
         marginBottom: '0px'
     }).transition('');
 
-    if (item.data('f7NotificationOnClose')) item.data('f7NotificationOnClose')();
+    if (item.data('f7NotificationOnClose')) item.data('f7NotificationOnClose')(event);
 
     if (container.find('.notification-item:not(.notification-item-removing)').length === 0) {
         container.transform('');
