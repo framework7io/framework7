@@ -6,15 +6,21 @@ Framework7.prototype.device = (function () {
     var ua = navigator.userAgent;
     var $ = Dom7;
 
+    var windows = /windows phone/i.test(ua);
     var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
     var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
 
-    device.ios = device.android = device.iphone = device.ipod = device.ipad = device.androidChrome = false;
-    
+    device.ios = device.android = device.windows = device.iphone = device.ipod = device.ipad = device.androidChrome = false;
+
+    // Windows
+    if (windows) {
+        device.os = 'windows';
+        device.windows = true;
+    }
     // Android
-    if (android) {
+    if (android && !windows) {
         device.os = 'android';
         device.osVersion = android[2];
         device.android = true;
@@ -46,7 +52,7 @@ Framework7.prototype.device = (function () {
 
     // Webview
     device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
-        
+
     // Minimal UI
     if (device.os && device.os === 'ios') {
         var osVersionArr = device.osVersion.split('.');
@@ -87,7 +93,7 @@ Framework7.prototype.device = (function () {
                 classNames.push('ios-gt-' + i);
             }
         }
-        
+
     }
     // Status bar classes
     if (device.statusBar) {
