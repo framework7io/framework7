@@ -15,6 +15,8 @@ var Autocomplete = function (params) {
         searchbarPlaceholderText: 'Search...',
         searchbarCancelText: 'Cancel',
         openIn: 'page',
+        // When opened in page should the searchbar be focused by default
+        autoFocus: false,
         backOnSelect: false,
         notFoundText: 'Nothing found',
         requestSourceOnOpen: false,
@@ -517,6 +519,11 @@ var Autocomplete = function (params) {
 
         // On Open Callback
         if (a.params.onOpen) a.params.onOpen(a);
+
+    };
+    a.pageAfterAnimation = function (e) {
+        // Focus searchbar if configured as such
+        if (a.params.autoFocus) $(e.detail.page.container).find("input[type=search]").focus();
     };
 
     // Show Hide Preloader
@@ -562,6 +569,7 @@ var Autocomplete = function (params) {
         }
         else {
             $(document).once('pageInit', '.autocomplete-page', a.pageInit);
+            $(document).once('pageAfterAnimation', '.autocomplete-page', a.pageAfterAnimation);
             if (a.params.openIn === 'popup') {
                 a.popup = app.popup(
                     '<div class="popup autocomplete-popup autocomplete-popup-' + a.inputName + '">' +
