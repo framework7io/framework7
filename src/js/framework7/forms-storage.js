@@ -124,7 +124,7 @@ app.formFromData = function (form, formData) {
                     break;
             }
         }
-        if (tag === 'select' && input.parents('.smart-select').length > 0) {
+        if (tag === 'select' || tag === 'input' || tag === 'textarea') {
             input.trigger('change');
         }
     });
