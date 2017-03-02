@@ -67,7 +67,7 @@ Distributable version will available in `dist/` folder.
 
 ## Custom build
 
-You can build custom version of Framework7 with only required components/modules. For example, if we need to include only Accordion, Modals and Tabs modules in addition to Framework 7 core: 
+You can build custom version of Framework7 with only required components/modules. For example, if we need to include only Accordion, Modals and Tabs modules in addition to Framework 7 core:
 
 ```
 $ gulp custom -accordion,modals,tabs
@@ -99,6 +99,8 @@ After that you will find created `custom/` folder with generated JS and CSS file
 ## Contributing
 
 All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at gulpfile.js for concat files order)
+
+The project uses [.editorconfig](http://editorconfig.org/) to define the coding style of each file. We recommend that you install the Editor Config extension for your preferred IDE.
 
 If you want to help in Framework7 development and make it event better visit this page: http://framework7.io/contribute/
 
