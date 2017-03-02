@@ -7,7 +7,7 @@ window.Framework7 = function (params) {
     var app = this;
 
     // Version
-    app.version = '1.5.0';
+    app.version = '1.5.3';
 
     // Default Parameters
     app.params = {
@@ -80,6 +80,8 @@ window.Framework7 = function (params) {
         scrollTopOnNavbarClick: false,
         scrollTopOnStatusbarClick: false,
         // Panels
+        panelLeftBreakpoint: null,
+        panelRightBreakpoint: null,
         swipePanel: false, // or 'left' or 'right'
         swipePanelActiveArea: 0,
         swipePanelCloseOpposite: true,

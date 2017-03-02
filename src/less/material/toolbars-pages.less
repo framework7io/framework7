@@ -1,3 +1,8 @@
+@toolbarShadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+@subnavbarShadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2), 0px 4px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px 0px rgba(0, 0, 0, 0.12);
+@toolbarBottomShadow: 0px -2px 4px -1px rgba(0, 0, 0, 0.2), 0px -4px 5px 0px rgba(0, 0, 0, 0.14), 0px -1px 10px 0px rgba(0, 0, 0, 0.12);
+@toolbarShadowHidden: 0px 2px 4px -1px rgba(0, 0, 0, 0), 0px 4px 5px 0px rgba(0, 0, 0, 0), 0px 1px 10px 0px rgba(0, 0, 0, 0);
+
 /* === Relation between toolbar/navbar types and pages === */
 .page, .view, .views{
     >.navbar, >.toolbar {
@@ -140,7 +145,7 @@
     &.toolbar-hidden, &.tabbar-hidden {
         .translate3d(0,-100%,0);
     }
-    .navbar ~ &.toolbar-hidden, .navbar ~ &.tabbar-hidden {
+    .navbar ~ &.toolbar-hidden:not(.messagebar):not(.toolbar-bottom), .navbar ~ &.tabbar-hidden {
         .translate3d(0,-104px,0);
     }
     .navbar ~ &.tabbar-labels.toolbar-hidden {
@@ -153,4 +158,46 @@
 }
 .page.no-toolbar .page-content, .page.no-tabbar .page-content {
     padding-bottom: 0;
+}
+
+// Shadows
+.navbar, .toolbar {
+    &.no-shadow {
+        box-shadow: none !important;
+    }
+}
+.navbar-fixed {
+    .subnavbar {
+        box-shadow: @subnavbarShadow;
+    }
+    .navbar {
+        box-shadow: @toolbarShadow;
+        &.navbar-hidden {
+            box-shadow: @toolbarShadowHidden !important;
+        }
+    }
+}
+
+.toolbar-fixed, .tabbar-fixed, .tabbar-labels-fixed {
+    .toolbar {
+        box-shadow: @toolbarShadow;
+        &.toolbar-hidden {
+            box-shadow: @toolbarShadowHidden !important;
+        }
+    }
+}
+.toolbar-bottom {
+    .toolbar-fixed &, .tabbar-fixed &, .tabbar-labels-fixed &, & {
+        box-shadow: @toolbarBottomShadow;
+    }
+    &.toolbar-hidden {
+        box-shadow: @toolbarShadowHidden !important;
+    }
+}
+.navbar-fixed {
+    &.toolbar-fixed, .toolbar-fixed, &.tabbar-fixed, .tabbar-fixed, &.tabbar-labels-fixed, .tabbar-labels-fixed {
+        .navbar {
+            box-shadow: none;
+        }
+    }
 }

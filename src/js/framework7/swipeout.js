@@ -5,6 +5,9 @@ app.swipeoutOpenedEl = undefined;
 app.allowSwipeout = true;
 app.initSwipeout = function (swipeoutEl) {
     var isTouched, isMoved, isScrolling, touchesStart = {}, touchStartTime, touchesDiff, swipeOutEl, swipeOutContent, actionsRight, actionsLeft, actionsLeftWidth, actionsRightWidth, translate, opened, openedActions, buttonsLeft, buttonsRight, direction, overswipeLeftButton, overswipeRightButton, overswipeLeft, overswipeRight, noFoldLeft, noFoldRight;
+
+    var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
+
     $(document).on(app.touchEvents.start, function (e) {
         if (app.swipeoutOpenedEl) {
             var target = $(e.target);
@@ -19,7 +22,7 @@ app.initSwipeout = function (swipeoutEl) {
                 app.swipeoutClose(app.swipeoutOpenedEl);
             }
         }
-    });
+    }, activeListener);
 
     function handleTouchStart(e) {
         if (!app.allowSwipeout) return;
@@ -280,14 +283,14 @@ app.initSwipeout = function (swipeoutEl) {
         });
     }
     if (swipeoutEl) {
-        $(swipeoutEl).on(app.touchEvents.start, handleTouchStart);
-        $(swipeoutEl).on(app.touchEvents.move, handleTouchMove);
-        $(swipeoutEl).on(app.touchEvents.end, handleTouchEnd);
+        $(swipeoutEl).on(app.touchEvents.start, handleTouchStart, activeListener);
+        $(swipeoutEl).on(app.touchEvents.move, handleTouchMove, activeListener);
+        $(swipeoutEl).on(app.touchEvents.end, handleTouchEnd, activeListener);
     }
     else {
-        $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart);
-        $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove);
-        $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd);
+        $(document).on(app.touchEvents.start, '.list-block li.swipeout', handleTouchStart, activeListener);
+        $(document).on(app.touchEvents.move, '.list-block li.swipeout', handleTouchMove, activeListener);
+        $(document).on(app.touchEvents.end, '.list-block li.swipeout', handleTouchEnd, activeListener);
     }
         
 };
