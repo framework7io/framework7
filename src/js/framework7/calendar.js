@@ -329,7 +329,7 @@ var Calendar = function (params) {
             var dateMonth = day.attr('data-month');
             var dateDay = day.attr('data-day');
             if (p.params.onDayClick) {
-                p.params.onDayClick(p, day[0], dateYear, dateMonth, dateDay);
+		p.params.onDayClick(p, day[0], dateYear, dateMonth, dateDay);
             }
             if (!day.hasClass('picker-calendar-day-selected') || p.params.multiple || p.params.rangePicker) {
 		p.addValue(Date.UTC(dateYear, dateMonth, dateDay,0,0,0));
