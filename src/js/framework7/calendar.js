@@ -332,7 +332,7 @@ var Calendar = function (params) {
                 p.params.onDayClick(p, day[0], dateYear, dateMonth, dateDay);
             }
             if (!day.hasClass('picker-calendar-day-selected') || p.params.multiple || p.params.rangePicker) {
-				 p.addValue(Date.UTC(dateYear, dateMonth, dateDay,0,0,0));
+		p.addValue(Date.UTC(dateYear, dateMonth, dateDay,0,0,0));
             }
             if (p.params.closeOnSelect) {
                 if (p.params.rangePicker && p.value.length === 2 || !p.params.rangePicker) p.close();
