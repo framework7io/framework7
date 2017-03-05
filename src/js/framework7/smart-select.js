@@ -27,11 +27,11 @@ app.initSmartSelects = function (pageContainer) {
             if (select[i].selected) {
                 displayAs = select[i].dataset ? select[i].dataset.displayAs : $(select[i]).data('display-as');
                 if (displayAs && typeof displayAs !== 'undefined') {
-					valueText.push(displayAs);
-				} else {
-					valueText.push(select[i].textContent.trim());
-				}
-			}
+                    valueText.push(displayAs);
+                } else {
+                    valueText.push(select[i].textContent.trim());
+                }
+            }
         }
 
         var itemAfter = smartSelect.find('.item-after');
@@ -54,12 +54,12 @@ app.initSmartSelects = function (pageContainer) {
             for (var i = 0; i < select.length; i++) {
                 if (select[i].selected) {
                     var displayAs = select[i].dataset ? select[i].dataset.displayAs : $(select[i]).data('display-as');
-                	if (displayAs && typeof displayAs !== 'undefined') {
-						valueText.push(displayAs);
-					} else {
-						valueText.push(select[i].textContent.trim());
-					}
-				}
+                    if (displayAs && typeof displayAs !== 'undefined') {
+                        valueText.push(displayAs);
+                    } else {
+                        valueText.push(select[i].textContent.trim());
+                    }
+                }
             }
             smartSelect.find('.item-after').text(valueText.join(', '));
         });
@@ -110,6 +110,8 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     var smartSelectData = smartSelect.dataset();
     var pageTitle = smartSelectData.pageTitle || smartSelect.find('.item-title').text();
     var backText = smartSelectData.backText || app.params.smartSelectBackText;
+    var clearSelectText = smartSelectData.smartSelectClearSelectText || app.params.smartSelectClearSelectText;
+    var selectAllText = smartSelectData.smartSelectSelectAllText || app.params.smartSelectSelectAllText;
     var closeText;
     if (openIn === 'picker') {
         closeText = smartSelectData.pickerCloseText || smartSelectData.backText || app.params.smartSelectPickerCloseText ;
@@ -183,7 +185,6 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         });
     }
 
-
     // Item template/HTML
     if (!app._compiledTemplates.smartSelectItem) {
         app._compiledTemplates.smartSelectItem = t7.compile(app.params.smartSelectItemTemplate ||
@@ -239,6 +240,12 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         }
     }
 
+    function getClearSelectAllText() {
+        return select.selectedOptions.length > 0
+            ? clearSelectText.replace(/{{numSelected}}/g, select.selectedOptions.length)
+            : selectAllText;
+    }
+
     // Toolbar / Navbar
     var toolbarHTML = '', navbarHTML;
     var noNavbar = '', noToolbar = '', noTabbar = '', navbarLayout;
@@ -271,10 +278,24 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                     '<div class="navbar-inner">' +
                         '{{leftTemplate}}' +
                         '<div class="center sliding">{{pageTitle}}</div>' +
+                        '{{rightTemplate}}' +
                     '</div>' +
                 '</div>'
             );
         }
+        var clearOrSelectAllText = getClearSelectAllText();
+        var rightTemplate = '<div class="right"></div>';
+        if (!virtualList) {
+            rightTemplate = app.params.smartSelectRightTemplate ||
+                (
+                    (openIn !== 'picker' && select.multiple)
+                    ? (material
+                        ? '<div class="right"><a href="#" class="link clear-select"><span>{{clearOrSelectAllText}}</span></a></div>'
+                        : '<div class="right sliding"><a href="#" class="link clear-select"><span>{{clearOrSelectAllText}}</span></a></div>')
+                    : ''
+                ).replace(/{{clearOrSelectAllText}}/g, clearOrSelectAllText);
+        }
+
         navbarHTML = app._compiledTemplates.smartSelectNavbar({
             pageTitle: pageTitle,
             backText: backText,
@@ -284,8 +305,17 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             inPopup: openIn === 'popup',
             inPage: openIn === 'page',
             leftTemplate: openIn === 'popup' ?
-                (app.params.smartSelectPopupCloseTemplate || (material ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')).replace(/{{closeText}}/g, closeText) :
-                (app.params.smartSelectBackTemplate || (material ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>' : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')).replace(/{{backText}}/g, backText)
+                (app.params.smartSelectPopupCloseTemplate ||
+                    (material
+                        ? '<div class="left"><a href="#" class="link close-popup icon-only"><i class="icon icon-back"></i></a></div>'
+                        : '<div class="left"><a href="#" class="link close-popup"><i class="icon icon-back"></i><span>{{closeText}}</span></a></div>')
+                    ).replace(/{{closeText}}/g, closeText) :
+                (app.params.smartSelectBackTemplate ||
+                    (material
+                        ? '<div class="left"><a href="#" class="back link icon-only"><i class="icon icon-back"></i></a></div>'
+                        : '<div class="left sliding"><a href="#" class="back link"><i class="icon icon-back"></i><span>{{backText}}</span></a></div>')
+                    ).replace(/{{backText}}/g, backText),
+            rightTemplate: rightTemplate
         });
         // Determine navbar layout type - static/fixed/through
         if (openIn === 'page') {
@@ -395,8 +425,30 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
         }
     }
     // Event Listeners on new page
-    function handleInputs(container) {
+    function handleInputs(container, navbarInnerContainer) {
         container = $(container);
+
+        var clearSelectButton;
+        clearSelectButton = container.find('.navbar .clear-select');
+        if (!clearSelectButton.length && navbarInnerContainer) {
+            clearSelectButton = $(navbarInnerContainer).find('.clear-select');
+        }
+        if (clearSelectButton) {
+            $(clearSelectButton).on('click', function(e) {
+                var clearSelection = $$(container).find('input[type="checkbox"]:checked').length > 0;
+                e.target.innerText = clearSelection ? selectAllText : clearSelectText;
+                $$(container).find('label').each(function(i, label) {
+                    if (clearSelection && $$(label).find('input[type="checkbox"]:checked').length) {
+                        $$(label).click();
+                    } else if (!clearSelection && !$$(label).find('input[type="checkbox"]:checked').length) {
+                        $$(label).click();
+                    }
+                });
+                return false;
+            })
+        }
+
+
         if (virtualList) {
             var virtualListInstance = app.virtualList(container.find('.virtual-list'), {
                 items: values,
@@ -422,7 +474,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
             });
         }
         container.on('change', 'input[name="' + inputName + '"]', function () {
-			var option, text;
+            var option, text;
             var input = this;
             var value = input.value;
             var optionText = [];
@@ -452,6 +504,18 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
                 select.value = value;
             }
 
+            if (!virtualList) {
+                var clearSelectButton;
+                clearSelectButton = container.find('.navbar .clear-select');
+                if (!clearSelectButton.length && navbarInnerContainer) {
+                    clearSelectButton = $(navbarInnerContainer).find('.clear-select');
+                }
+                if (clearSelectButton) {
+                    clearSelectButton.text(getClearSelectAllText())
+                }
+            }
+
+
             $select.trigger('change');
             smartSelect.find('.item-after').text(optionText.join(', '));
             if (backOnSelect && inputType === 'radio') {
@@ -464,7 +528,7 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     function pageInit(e) {
         var page = e.detail.page;
         if (page.name === pageName) {
-            handleInputs(page.container);
+            handleInputs(page.container, page.navbarInnerContainer);
         }
     }
     if (openIn === 'popup') {
