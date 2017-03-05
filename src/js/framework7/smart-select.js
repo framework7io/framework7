@@ -428,15 +428,11 @@ app.smartSelectOpen = function (smartSelect, reLayout) {
     function handleInputs(container, navbarInnerContainer) {
         container = $(container);
 
-        var clearSelectButton;
-        clearSelectButton = container.find('.navbar .clear-select');
-        if (!clearSelectButton.length && navbarInnerContainer) {
-            clearSelectButton = $(navbarInnerContainer).find('.clear-select');
-        }
-        if (clearSelectButton) {
-            $(clearSelectButton).on('click', function(e) {
+        var clearSelectButtonContainer = navbarInnerContainer ? $(navbarInnerContainer) : container.find('.navbar');
+        if (clearSelectButtonContainer) {
+            clearSelectButtonContainer.on('click', '.clear-select', function(e) {
+                e.preventDefault();
                 var clearSelection = $$(container).find('input[type="checkbox"]:checked').length > 0;
-                e.target.innerText = clearSelection ? selectAllText : clearSelectText;
                 $$(container).find('label').each(function(i, label) {
                     if (clearSelection && $$(label).find('input[type="checkbox"]:checked').length) {
                         $$(label).click();
