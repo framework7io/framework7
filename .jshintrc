@@ -26,10 +26,12 @@
     "Framework7":true,
     "Template7":true,
     "Dom7":true,
+    "jQuery":true,
     "Swiper":true,
     "Modernizr":true,
     "Event":true,
     "DocumentTouch":true,
+    "View": true,
     "app":true
   }
 }

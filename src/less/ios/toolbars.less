@@ -41,6 +41,7 @@
     z-index: 500;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    .translate3d(0,0,0);
     b {
         font-weight: 500;
         html.ios-gt-8 & {
@@ -105,6 +106,16 @@
         .flex-shrink(10);
         .flexbox();
         .align-items(center);
+        .subtitle {
+            color: #6d6d72;
+	        display: block;
+            line-height: 1;
+            bottom: 3px;
+	        font-size: 10px;
+	        position: absolute;
+	        text-align: center;
+	        width: 100%;
+        }
     }
     .left, .right {
         .flex-shrink(0);
@@ -244,6 +255,11 @@
         position: relative;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+}
+.subnavbar, .navbar {
+    input[type="text"], input[type="password"], input[type="search"], input[type="email"], input[type="tel"], input[type="url"] {
+        .bars-input();
     }
 }
 @media all and (min-width:768px) {

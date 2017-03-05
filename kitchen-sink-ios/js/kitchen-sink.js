@@ -14,15 +14,24 @@ var mainView = myApp.addView('.view-main', {
 // Add another view, which is in right panel
 var rightView = myApp.addView('.view-right', {
     // Enable Dynamic Navbar for this view
-    dynamicNavbar: true
+    dynamicNavbar: true,
+    name: 'right'
 });
 
 // Show/hide preloader for remote ajax loaded pages
 // Probably should be removed on a production/local app
 $$(document).on('ajaxStart', function (e) {
+    if (e.detail.xhr.requestUrl.indexOf('autocomplete-languages.json') >= 0) {
+        // Don't show preloader for autocomplete demo requests
+        return;
+    }
     myApp.showIndicator();
 });
-$$(document).on('ajaxComplete', function () {
+$$(document).on('ajaxComplete', function (e) {
+    if (e.detail.xhr.requestUrl.indexOf('autocomplete-languages.json') >= 0) {
+        // Don't show preloader for autocomplete demo requests
+        return;
+    }
     myApp.hideIndicator();
 });
 
@@ -150,7 +159,7 @@ myApp.onPageInit('swipe-delete modals media-lists', function (page) {
         // We need to pass additional target parameter (this) for popover
         myApp.actions(this, actionSheetButtons);
     });
-    
+
 });
 
 /* ===== Messages Page ===== */
@@ -179,7 +188,7 @@ myApp.onPageInit('messages', function (page) {
             name: 'Blue Ninja',
             avatar: 'http://lorempixel.com/output/people-q-c-100-100-7.jpg'
         },
-        
+
     ];
     var answerTimeout, isFocused;
 
@@ -188,7 +197,7 @@ myApp.onPageInit('messages', function (page) {
 
     // Initialize Messagebar
     var myMessagebar = myApp.messagebar('.messagebar');
-    
+
     $$('.messagebar a.send-message').on('touchstart mousedown', function () {
         isFocused = document.activeElement && document.activeElement === myMessagebar.textarea[0];
     });
@@ -286,7 +295,7 @@ var photoBrowserPhotos = [
         url: 'img/mountains.jpg',
         caption: 'Beautiful mountains in Zhangjiajie, China'
     }
-    
+
 ];
 var photoBrowserStandalone = myApp.photoBrowser({
     photos: photoBrowserPhotos
@@ -385,7 +394,7 @@ myApp.onPageInit('notifications', function (page) {
             title: 'My Awesome App',
             subtitle: 'New message from John Doe',
             message: 'Hello, how are you? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut posuere erat. Pellentesque id elementum urna, a aliquam ante. Donec vitae volutpat orci. Aliquam sed molestie risus, quis tincidunt dui.',
-            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/output/people-q-c-100-100-9.jpg">'
+            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/100/100/people/9/">'
         });
     });
     $$('.ks-notification-callback').on('click', function () {
@@ -393,7 +402,7 @@ myApp.onPageInit('notifications', function (page) {
             title: 'My Awesome App',
             subtitle: 'New message from John Doe',
             message: 'Hello, how are you? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut posuere erat. Pellentesque id elementum urna, a aliquam ante. Donec vitae volutpat orci. Aliquam sed molestie risus, quis tincidunt dui.',
-            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/output/people-q-c-100-100-9.jpg">',
+            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/100/100/people/9/">',
             onClose: function () {
                 myApp.alert('Notification closed');
             }
@@ -508,13 +517,19 @@ myApp.onPageInit('calendar', function (page) {
         dateFormat: 'M dd yyyy',
         multiple: true
     });
+    // Range Picker
+    var calendarRange = myApp.calendar({
+        input: '#ks-calendar-range',
+        dateFormat: 'M dd yyyy',
+        rangePicker: true
+    });
     // Inline with custom toolbar
     var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
     var calendarInline = myApp.calendar({
         container: '#ks-calendar-inline-container',
         value: [new Date()],
         weekHeader: false,
-        toolbarTemplate: 
+        toolbarTemplate:
             '<div class="toolbar calendar-custom-toolbar">' +
                 '<div class="toolbar-inner">' +
                     '<div class="left">' +
@@ -604,7 +619,7 @@ myApp.onPageInit('pickers', function (page) {
     var pickerCustomToolbar = myApp.picker({
         input: '#ks-picker-custom-toolbar',
         rotateEffect: true,
-        toolbarTemplate: 
+        toolbarTemplate:
             '<div class="toolbar">' +
                 '<div class="toolbar-inner">' +
                     '<div class="left">' +
@@ -637,7 +652,7 @@ myApp.onPageInit('pickers', function (page) {
 
                 var col2Values = picker.cols[2].values;
                 var col2Random = col2Values[Math.floor(Math.random() * col2Values.length)];
-                
+
                 picker.setValue([col0Random, col1Random, col2Random]);
             });
         }
@@ -707,6 +722,335 @@ myApp.onPageInit('pickers', function (page) {
         ]
     });
 });
+/* ===== Chips  ===== */
+myApp.onPageInit('chips', function (page) {
+    $$(page.container).find('.chip-delete').on('click', function (e) {
+        e.preventDefault();
+        var chip = $$(this).parents('.chip');
+        myApp.confirm('Do you want to delete this tiny demo Chip?', function () {
+            chip.remove();
+        });
+    });
+});
+/* ===== Progress Bars ===== */
+myApp.onPageInit('progressbar', function (page) {
+    $$('.ks-demo-progressbar-inline .button').on('click', function () {
+        var progress = $$(this).attr('data-progress');
+        var progressbar = $$('.ks-demo-progressbar-inline .progressbar');
+        myApp.setProgressbar(progressbar, progress);
+    });
+    $$('.ks-demo-progressbar-load-hide .button').on('click', function () {
+        var container = $$('.ks-demo-progressbar-load-hide p:first-child');
+        if (container.children('.progressbar').length) return; //don't run all this if there is a current progressbar loading
+
+        myApp.showProgressbar(container, 0);
+
+        // Simluate Loading Something
+        var progress = 0;
+        function simulateLoading() {
+            setTimeout(function () {
+                var progressBefore = progress;
+                progress += Math.random() * 20;
+                myApp.setProgressbar(container, progress);
+                if (progressBefore < 100) {
+                    simulateLoading(); //keep "loading"
+                }
+                else myApp.hideProgressbar(container); //hide
+            }, Math.random() * 200 + 200);
+        }
+        simulateLoading();
+    });
+    $$('.ks-demo-progressbar-overlay .button').on('click', function () {
+        // Add Directly To Body
+        var container = $$('body');
+        if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+
+        myApp.showProgressbar(container, 0);
+
+        // Simluate Loading Something
+        var progress = 0;
+        function simulateLoading() {
+            setTimeout(function () {
+                var progressBefore = progress;
+                progress += Math.random() * 20;
+                myApp.setProgressbar(container, progress);
+                if (progressBefore < 100) {
+                    simulateLoading(); //keep "loading"
+                }
+                else myApp.hideProgressbar(container); //hide
+            }, Math.random() * 200 + 200);
+        }
+        simulateLoading();
+    });
+    $$('.ks-demo-progressbar-infinite-overlay .button').on('click', function () {
+        // Add Directly To Body
+        var container = $$('body');
+        if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+        myApp.showProgressbar(container);
+        setTimeout(function () {
+            myApp.hideProgressbar();
+        }, 3000);
+    });
+    $$('.ks-demo-progressbar-infinite-multi-overlay .button').on('click', function () {
+        var container = $$('body');
+        if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
+        myApp.showProgressbar(container, 'multi');
+        setTimeout(function () {
+            myApp.hideProgressbar();
+        }, 3000);
+    });
+});
+
+/* ===== Autocomplete ===== */
+myApp.onPageInit('autocomplete', function (page) {
+    // Fruits data demo array
+    var fruits = ('Apple Apricot Avocado Banana Melon Orange Peach Pear Pineapple').split(' ');
+
+    // Simple Dropdown
+    var autocompleteDropdownSimple = myApp.autocomplete({
+        input: '#autocomplete-dropdown',
+        openIn: 'dropdown',
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        }
+    });
+
+    // Dropdown with input expand
+    var autocompleteDropdownExpand = myApp.autocomplete({
+        input: '#autocomplete-dropdown-expand',
+        openIn: 'dropdown',
+        expandInput: true, // expand input
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        }
+    });
+
+    // Dropdown with all values
+    var autocompleteDropdownAll = myApp.autocomplete({
+        input: '#autocomplete-dropdown-all',
+        openIn: 'dropdown',
+        source: function (autocomplete, query, render) {
+            var results = [];
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        }
+    });
+
+    // Dropdown with placeholder
+    var autocompleteDropdownPlaceholder = myApp.autocomplete({
+        input: '#autocomplete-dropdown-placeholder',
+        openIn: 'dropdown',
+        dropdownPlaceholderText: 'Try to type "Apple"',
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        }
+    });
+
+    // Dropdown with ajax data
+    var autocompleteDropdownAjax = myApp.autocomplete({
+        input: '#autocomplete-dropdown-ajax',
+        openIn: 'dropdown',
+        preloader: true, //enable preloader
+        valueProperty: 'id', //object's "value" property name
+        textProperty: 'name', //object's "text" property name
+        limit: 20, //limit to 20 results
+        dropdownPlaceholderText: 'Try "JavaScript"',
+        expandInput: true, // expand input
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Show Preloader
+            autocomplete.showPreloader();
+            // Do Ajax request to Autocomplete data
+            $$.ajax({
+                url: 'js/autocomplete-languages.json',
+                method: 'GET',
+                dataType: 'json',
+                //send "query" to server. Useful in case you generate response dynamically
+                data: {
+                    query: query
+                },
+                success: function (data) {
+                    // Find matched items
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(data[i]);
+                    }
+                    // Hide Preoloader
+                    autocomplete.hidePreloader();
+                    // Render items by passing array with result items
+                    render(results);
+                }
+            });
+        }
+    });
+
+    // Simple Standalone
+    var autocompleteStandaloneSimple = myApp.autocomplete({
+        openIn: 'page', //open in page
+        opener: $$('#autocomplete-standalone'), //link that opens autocomplete
+        backOnSelect: true, //go back after we select something
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        },
+        onChange: function (autocomplete, value) {
+            // Add item text value to item-after
+            $$('#autocomplete-standalone').find('.item-after').text(value[0]);
+            // Add item value to input value
+            $$('#autocomplete-standalone').find('input').val(value[0]);
+        }
+    });
+
+    // Standalone Popup
+    var autocompleteStandalonePopup = myApp.autocomplete({
+        openIn: 'popup', //open in page
+        opener: $$('#autocomplete-standalone-popup'), //link that opens autocomplete
+        backOnSelect: true, //go back after we select something
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        },
+        onChange: function (autocomplete, value) {
+            // Add item text value to item-after
+            $$('#autocomplete-standalone-popup').find('.item-after').text(value[0]);
+            // Add item value to input value
+            $$('#autocomplete-standalone-popup').find('input').val(value[0]);
+        }
+    });
+
+    // Multiple Standalone
+    var autocompleteStandaloneMultiple = myApp.autocomplete({
+        openIn: 'page', //open in page
+        opener: $$('#autocomplete-standalone-multiple'), //link that opens autocomplete
+        multiple: true, //allow multiple values
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < fruits.length; i++) {
+                if (fruits[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(fruits[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        },
+        onChange: function (autocomplete, value) {
+            // Add item text value to item-after
+            $$('#autocomplete-standalone-multiple').find('.item-after').text(value.join(', '));
+            // Add item value to input value
+            $$('#autocomplete-standalone-multiple').find('input').val(value.join(', '));
+        }
+    });
+
+    // Standalone With Ajax
+    var autocompleteStandaloneAjax = myApp.autocomplete({
+        openIn: 'page', //open in page
+        opener: $$('#autocomplete-standalone-ajax'), //link that opens autocomplete
+        multiple: true, //allow multiple values
+        valueProperty: 'id', //object's "value" property name
+        textProperty: 'name', //object's "text" property name
+        limit: 50,
+        preloader: true, //enable preloader
+        source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Show Preloader
+            autocomplete.showPreloader();
+            // Do Ajax request to Autocomplete data
+            $$.ajax({
+                url: 'js/autocomplete-languages.json',
+                method: 'GET',
+                dataType: 'json',
+                //send "query" to server. Useful in case you generate response dynamically
+                data: {
+                    query: query
+                },
+                success: function (data) {
+                    // Find matched items
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(data[i]);
+                    }
+                    // Hide Preoloader
+                    autocomplete.hidePreloader();
+                    // Render items by passing array with result items
+                    render(results);
+                }
+            });
+        },
+        onChange: function (autocomplete, value) {
+            var itemText = [],
+                inputValue = [];
+            for (var i = 0; i < value.length; i++) {
+                itemText.push(value[i].name);
+                inputValue.push(value[i].id);
+            }
+            // Add item text value to item-after
+            $$('#autocomplete-standalone-ajax').find('.item-after').text(itemText.join(', '));
+            // Add item value to input value
+            $$('#autocomplete-standalone-ajax').find('input').val(inputValue.join(', '));
+        }
+    });
+});
 
 /* ===== Change statusbar bg when panel opened/closed ===== */
 $$('.panel-left').on('open', function () {
@@ -748,3 +1092,49 @@ function createContentPage() {
     return;
 }
 $$(document).on('click', '.ks-generate-page', createContentPage);
+
+/* ===== Animation ===== */
+myApp.onPageInit('animation', function (page) {
+    $$(page.container).find('.start').on('click', function () {
+        $$('#animate-me')
+            .animate(
+                {
+                    'width': 200,
+                    'height': 50,
+                    'margin-left': 50,
+                    'margin-top': 0,
+                },
+                {
+                    duration: 600,
+                    easing: 'swing'
+                }
+            )
+            .animate(
+                {
+                    'width': 50,
+                    'height': 200,
+                    'margin-left': 0,
+                    'margin-top': 50,
+                },
+                {
+                    duration: 600,
+                    easing: 'swing'
+                }
+            )
+            .animate(
+                {
+                    'width': 100,
+                    'height': 100,
+                    'margin-left': 0,
+                    'margin-top': 0,
+                },
+                {
+                    duration: 600,
+                    easing: 'swing',
+                    complete: function () {
+                        myApp.alert('Animation completed');
+                    }
+                }
+            );
+    });
+});

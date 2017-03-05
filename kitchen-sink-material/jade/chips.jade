@@ -1,0 +1,99 @@
+.page(data-page="chips")
+  .navbar
+    .navbar-inner
+      .left
+        a(href="index.html").back.link.icon-only
+          i.icon.icon-back
+      .center Chips
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+      p Chips represent complex entities in small blocks, such as a contact. They can contain a photo, short title string, and brief information.
+    .content-block-title Chips With Text
+    .content-block
+      .chip
+        .chip-label Example Chip
+      .chip
+        .chip-label Another Chip
+      .chip
+        .chip-label One More Chip
+      .chip
+        .chip-label Fourth Chip
+      .chip
+        .chip-label Last One
+    .content-block-title Icon Chips
+    .content-block
+      .chip
+        .chip-media.bg-blue
+          i.icon.material-icons today
+        .chip-label Set Date
+      .chip
+        .chip-media.bg-purple
+          i.icon.material-icons email
+        .chip-label Sent
+      .chip
+        .chip-media.bg-red
+          i.icon.material-icons file_upload
+        .chip-label Uploaded
+    .content-block-title Contact Chips
+    .content-block
+      .chip
+        .chip-media
+          img(src="http://lorempixel.com/100/100/people/9/")
+        .chip-label Jane Doe
+      .chip
+        .chip-media
+          img(src="http://lorempixel.com/100/100/people/3/")
+        .chip-label John Doe
+      .chip
+        .chip-media
+          img(src="http://lorempixel.com/100/100/people/7/")
+        .chip-label Adam Smith
+      .chip
+        .chip-media.bg-pink J
+        .chip-label Jennifer
+      .chip
+        .chip-media.bg-teal C
+        .chip-label Chris
+      .chip
+        .chip-media.bg-red K
+        .chip-label Kate
+    .content-block-title Deletable Chips / Tags
+    .content-block
+      .chip
+        .chip-label Example Chip
+        a(href="#").chip-delete
+      .chip
+        .chip-media.bg-teal C
+        .chip-label Chris
+        a(href="#").chip-delete
+      .chip
+        .chip-media.bg-purple
+          i.icon.material-icons email
+        .chip-label Sent
+        a(href="#").chip-delete
+      .chip
+        .chip-media
+          img(src="http://lorempixel.com/100/100/people/9/")
+        .chip-label Jane Doe
+        a(href="#").chip-delete
+      .chip
+        .chip-label One More Chip
+        a(href="#").chip-delete
+      .chip
+        .chip-media.bg-pink J
+        .chip-label Jennifer
+        a(href="#").chip-delete
+      .chip
+        .chip-media
+          img(src="http://lorempixel.com/100/100/people/7/")
+        .chip-label Adam Smith
+        a(href="#").chip-delete
+      .chip
+        .chip-media.bg-blue
+          i.icon.material-icons today
+        .chip-label Set Date
+        a(href="#").chip-delete
+      

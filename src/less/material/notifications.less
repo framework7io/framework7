@@ -5,7 +5,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    z-index: 10900;
+    z-index: 20000;
     color: #fff;
     font-size: 14px;
     margin: 0;
@@ -13,12 +13,12 @@
     display: none;
     box-sizing: border-box;
     max-height: 100%;
-    overflow: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
     .transition(@notificationsDuration);
     -webkit-perspective:1200px;
     perspective:1200px;
-    
+
     &.list-block > ul {
         .hairline-remove(top);
         .hairline-remove(bottom);
@@ -61,6 +61,9 @@
         opacity: 0;
         .delay(0ms);
         .translate3d(0,0,0);
+    }
+    .notification-item-removing {
+        .delay(0ms);
     }
     @media (min-width: 569px) {
         &.list-block > ul {

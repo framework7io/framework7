@@ -22,5 +22,13 @@
             .flex-shrink(0);
         }
     }
-    
+    &.not-animated > .tabs {
+        .transition(0ms);
+    }
+}
+.tabs-swipeable-wrap {
+    height: 100%;
+    > .tabs > .tab {
+        display: block;
+    }
 }

@@ -1,21 +1,21 @@
 /* === Statusbar overlay === */
-html.with-statusbar-overlay body{
-    padding-top: 20px;
+html.with-statusbar-overlay .framework7-root {
+    padding-top: 24px;
     box-sizing: border-box;
     .statusbar-overlay {
         display: block;
     }
     .panel {
-        padding-top: 20px;
+        padding-top: 24px;
     }
 }
 .statusbar-overlay {
-    background: @themeColor;
+    background: @darkThemeColor;
     z-index: 10000; // A bit lower than .modals-overlay
     position: absolute;
     left: 0;
     top: 0;
-    height: 20px;
+    height: 24px;
     width: 100%;
     display: none;
     .transition(@panelsDuration);

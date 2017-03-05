@@ -1,5 +1,334 @@
 # Change Log
 
+## Framework7 v1.5.3 - Updated on February 10, 2017
+  * Autocomplete
+    * New Standalone autocomplete parameter `requestSourceOnOpen` (`false`/disabled by default). Will request source on autocomplete open if enabled
+    * New Dropdown autocomplete paremter `highlightMatches` parameter (`true`/enabled by default)
+    * Fixed issues with special characters in Dropdown autocomplete
+  * Fixed status bar overlay positioning when app root element is used
+  * Smart Select
+    * Added `data-display-as` attribute on option to display selected option value differently
+  * Dom7
+    * `.append` method now supports multiple arguments (elements) to append
+    * `.each` methods will now stop iteration if you do `return false`
+    * Improved `.parseUrlQuery` behavior
+    * All XHR errors will now also trigger `complete` events/callback
+  * Navbars/Toolbars
+    * `.hideNavbar`, `.showNavbar`, `.hideToolbar`, `.showToolbar` methods now accepts boolean parameter to define whether it should be animated or not. By default it will be hidden/shown with animation (as before)
+  * Panels
+    * `.openPanel(position, animated)` and `.closePanel(animated)` now accepts additional `animated` parameter that defines whether the panel should be opened/closed with animation or not. Enabled (with animation) by default
+    * Now swipe panels trigger additional `panel:swipe` event during touch swipe
+    * Click on panel overlay will now trigger additional `panel:overlay-click` event on currently opened panel before it will be closed
+  * Modals
+    * All modal methods now also support new `animated` parameter that defines whether the modal should be opened/closed with animation or not. Enabled (with animation) by default:
+      * `.actions(target, params, animated)`
+      * `.popover(modal, target, removeOnClose, animated)`
+      * `.popup(modal, removeOnClose, animated)`
+      * `.pickerModal(modal, removeOnClose, animated)`
+      * `.loginScreen(modal, removeOnClose, animated)`
+      * `.closeModal(modal, animated)`
+    * New app parameter `modalsMoveToRoot` (`true`/enabled by default). When enabled it will move opened modal to the app root element (or body) if it is not there on the moment of opening and move back after modal closed. It allows to use modals inside of loaded pages
+  * Searchbar
+    * Now it passes `previousQuery` to the `search:clear` event data (or `onClear` callback)
+  * Tabs
+    * `.showTab(tab, animated)` now accepts additional `animated` parameter that defines whether the tab should become visible with animation or not. Actual for animated and swipeable tabs. Enabled (with animation) by default
+  * View
+    * Now views support names with new `name` property on View initialization with `.addView` method and can be accessed later by same named property of `app.views`
+  * Virtual List
+    * Now it has default render template (if not passed anything to `template` or `renderItem` parameters)
+    * New `emptyTemplate` parameter to specify template when no empty data is passed
+  * Lot of minor fixes
+
+## Framework7 v1.5.2 - Updated on December 17, 2016
+  * **New Timeline Component**
+  * **Renamed Events**
+    * All events are renamed and lowercased to match related components, now all events looks like `page:init`, `page:reinit`, `page:beforeremove`, `popup:open`, `modal:closed`, `accordion:open`, `panel:close`, etc. This can be a breaking change so the old events are still supported/triggered
+  * Virtual List
+    * Fixed issues with Virtual List not triggered Infinite Scroll
+  * Dom7
+    * `.val()` method for multiple select now returns array of selected values
+    * `serializeObject` now keeps empty object properties as empty values
+  * Panels
+    * Fixed issue when `swipePanelActiveArea` was ignored when using `swipePanel: 'both'`
+  * Fast Clicks
+    * Fixed issue with custom click event on input:file
+  * Swiper updated to latest 3.4.1 version
+    * Fixed Zoom for RTL
+    * Improved slideToClickedSlide behavior when loop is enabled
+  * Template7 updated to latest 1.1.4 version
+    * Fixed issue with quotes being added to helpers hash content
+  * Lot of minor fixes
+
+## Framework7 v1.5.0 - Updated on November 8, 2016
+  * App Root
+    * New `root` app parameter to specify app root element, by default is `'body'`. Useful when using F7 with libraries like Vue or React that doesn't allow to bind app to the body.
+  * **Icons**
+    * Brand new [Framework7 Icons](https://github.com/nolimits4web/Framework7-Icons) font with lot of precious and designed from scratch iOS icons
+    * Default "Form" icons removed in favor of using F7 or Material icons fonts instead
+  * **Vue.js** support (beta) with official [Framework7 Vue](https://github.com/nolimits4web/Framework7-Vue) plugin
+  * **Animate7** (beta) - new built-in animation helper library to help with custom animation. Also avaialble as Dom7 method
+    * `Animate7(elements, properties, parameters)`
+    * `Dom7(elements).animate(properties, parameters)`
+    ```js
+    Animate7('#animate-me',
+      {
+        height: 200,
+        width: 100
+      },
+      {
+        duration: 400,
+        easing: 'swing',
+        complete: function () {
+          console.log('Animation completed')
+        }
+      }
+    )
+    ```
+  * iOS Theme
+    * iOS 10 style Notifications
+    * iOS 10 style Messagebar
+    * Notifications in iOS theme now doesn't support more than one notification at a time
+  * Chips
+    * Now also supported by iOS theme to keep consistency with Material theme
+  * Floating Action Button
+    * Now also supported by iOS theme to keep consistency with Material theme
+  * Messages
+    * New `scrollMessages` parameter to enable/disable messages autoscrolling when adding new message. Enabled (`true`) by default
+    * New `scrollMessagesOnlyOnEdge` parameter to autoscroll messages only when user is on top/bottom of the messages view. Disabled (`false`) by default
+    * Added "message-date" element for message bubble for iOS theme to keep consistency with Material theme messages
+  * Hairlines
+    * New `no-hairlines` and `no-hairlines-between` classes for list-blocks and content-blocks to remove block hairlines and hairlines between list items
+  * Forms
+    * `formToJSON` renamed to `formToData` method. `formToJSON` is still supported for compatibility
+    * `formFromJSON` renamed to `formFromData` method. `formFromJSON` is still supported for compatibility
+  * Color Themes
+    * `.colors.css` stylesheets are refactored to make higher priority for `color-` rules over `theme-` rules
+    * Color preloaders now also supported by iOS theme with all default colors by adding `preloader-[color]` or `color-[color]` class, e.g. `preloader-green` or `preloader-orange` etc.
+  * Sortable
+    * `sort` event now receives additional `event.detail` object with `startIndex` and `newIndex` properties of sorted element
+  * Photo Browser
+    * Added `pinch to zoom` support for Android
+  * Panels
+    * Now it supports both left and right panels to be swipeable by setting `swipePanel: 'both'`
+  * Tabs
+    * Tab that becomes inactive will also trigger `hide` event
+  * Swipeout
+    * New `swipeoutRemoveWithTimeout` app parameter. By default is `false`. When specified, then framework will remove element after `0` timeout instead of immediately. Useful to enable if you use another library like Vue or React to manage (remove) swipeout items
+  * Router
+    * Page data and Navbar data are not available anymore in `BeforeRestroy` events
+    * `.router.load` method supports new `pageElement` parameter to specify page HTMLElement to load if it is already added to the `.pages` container manually or by different means/library
+    * Added context cache for pages rendered with Template7 to keep context when navigating deep in history and then going back
+    * New `routerRemoveWithTimeout` app parameter. By default is `false`. When specified, then framework will remove element after `0` timeout instead of immediately. Useful to enable if you use another library like Vue or React to manage (remove) pages
+    * Now you can keep dynamic navbar inside of page when loading pages dynamically (not inline pages) and router will place it automatically to the correct place. It helps to keep consistency with Material theme page layout
+  * Dom7
+    * New `.siblings(selector)` method to select all previous and next elements
+    * New `.empty()` method to clear element inner HTML
+    * New `.removeDiacritics(text)` helper method to remove/replace diacritics in passed text
+  * Fast Clicks
+    * New `fastClicksExclude` app parameter to specify elements not handled by fast clicks
+    * Fixed issue with not-working `<select>` element on Android
+    * Fixed issue with text selection on Android
+  * Touch
+    * Now framework uses passive event listeners for touch events in many components to improve scrolling performance on mobile devices
+  * Template7 update to latest 1.1.3 version:
+    * Added number, boolean, and single-quote-strings argument types support for template helpers
+    * Ability to use single/double quotes in helpers and mix them
+  * Swiper update to latest 3.4.0 version:
+    * New **zoom** functionality that enables double tap and pinch to zoom slide's inner image:
+      * Required slide layout for zoom:
+        ```
+        <div class="swiper-slide">
+          <div class="swiper-zoom-container">
+            <img src="path/to/image">
+          </div>
+        </div>
+        ```
+      * New zoom parameters:
+        * `zoom` - enable zoom functionality
+        * `zoomMax` - maximum image zoom multiplier, by default is `3`
+        * `zoomMin` - minimum image zoom multiplier, by default is `1`
+        * `zoomToggle` - enable/disable zoom-in by slide's double tap
+      * `zoomMax` can be also overridden for specific slide by using `data-swiper-zoom` attribute
+    * New `swiper.enableTouchControl()` and `swiper.disableTouchControl()` methods to enable disable touch control (it toggles `onlyExternal` parameter)
+    * New `swiper.realIndex` property in addition to `swiper.activeIndex` that returns index of active slide considering loop
+    * New methods `s.unsetGrabCursor()` and `s.setGrabCursor()` to enable/disable grab cursor
+    * Draggable Scrollbar now works when `simulateTouch:false `
+    * New `normalizeSlideIndex` parameter to improve work of controller (see #1766)
+    * `lazyLoadingInPrevNextAmount` now works with `slidesPerView: 'auto'`
+    * New `passiveListeners` parameter to use passive event listeners to improve scrolling performance on mobile devices. Enabled by default
+    * New `freeModeMomentumVelocityRatio` parameter to control moment velocity
+    * Now it is possible to specify autoplay delay for every (or specific) slides by using `data-swiper-autoplay` attribute on them
+    * Lazy loading now also respects `sizes` responsive images attribute
+    * New `touchReleaseOnEdges` parameter to release touch events on slider edge position (beginning, end) and allow for further page scrolling
+    * Multirow (slidesPerColumn) support for vertical direction, which is in this case becomes multicolumn
+    * `paginationBulletRender` now accepts `swiper` instance as a first argument, `paginationBulletRender(index, className)` -> `paginationBulletRender(swiper, index, className)`
+  * Lot of minor fixes and improvements
+
+## Framework7 v1.4.2 - Updated on February 27, 2016
+  * Material Theme
+    * Added colors support for speed dial buttons
+  * Push State
+    * New `pushStateOnLoad` app parameter (by default is `true`) allows to disable first push state navigation on app load
+    * `preventPushStateOnLoad` app parameter that is used to block initial and falsy `popstate` event in Safari, has been removed now in favor of another fix
+  * Autocomplete
+    * Fixed issue with dropdown autocomplete not being opened on Androids
+    * Fixed issue with standalone autocomplete searchbar overlay on iOS
+    * More standalone autocomplete exposed properties: `page`, `pageData`, `searchbar` with search bar instance
+  * Router
+    * Now it will save URL query for inline page which was ignored before, for URLs like `#about?foo=bar`
+    * A bit more imporved positioning for Dynamic navbar elements animation
+  * Dom7
+    * New `.closest(selector)` method to find elements matching specified selector starting from the element itself
+    * `.text()` method is now "chainable"
+  * Grid
+    * More sizes added. Now all available sizes for columns are: 5, 10, 15, 20, 25, 30, 33, 35, 40, 45, 50, 55, 60, 65, 66, 70, 75, 80, 85, 90, 95, 100
+  * Modals
+    * Now it is supported to pass `HTMLElement` into `.popup`, `.popover` and `.pickerModal` methods
+  * Swiper updated to latest 3.3.1 version:
+    * New 3D Flip effect. Can be enabled with `effect: 'flip' parameter
+    * New types of pagination with new parameters:
+      * `paginationType` - type of pagination. Can be `'bullets'` (default) or `'fraction'` or `'progress'` or `'custom'`
+      * `paginationFractionRender(swiper, currentClass, totalClass)` - custom function to render "fraction" type pagination
+      * `paginationProgressRender(swiper, progressbarClass)` - custom function to render "progress" type pagination
+      * `paginationCustomRender(swiper, current, total)` - custom function to render "custom" type pagination
+    * New `lazyLoadingInPrevNextAmount` parameter allows to lazy load images in specified amount of next/prev slides
+    * New `autoplayStopOnLast` parameter (`true` by default) tells to autoplay should it stop on last slide or start from first slide
+    * New `onAutoplay(swiper)` callback
+    * New `uniqueNavElements` parameter. If enabled (by default) and navigation elements' parameters passed as the string (like `.pagination`) then Swiper will look for such elements through child elements first. Applies for pagination, prev/next buttons and scrollbar
+    * New `onPaginationRendered` callback. Will be fired after pagination elements generated and added to DOM
+    * New `.reLoop()` method, which combines `.destroyLoop()` + `.createLoop()` methods with additional positioning fixes. Useful to call after you have changed `slidesPerView` parameter, it will dynamically recreate duplicated slides required for loop
+    * New `.nextButton` and `.prevButton` properties with Dom7 element with next/prev button HTML element
+  * Forms
+    * New `app.destroyResizableTextarea()` method to destroy resizable textarea
+  * Numerous minor fixes and improvements
+
+## Framework7 v1.4.0 - Updated on December 7, 2015
+  * New mobile-friendly "Autocomplete" component. Comes with 2 modifications as Dropdown or Standalone autocomplete
+  * New "Progress Bar" component. Includes 3 different types of progress bar for each theme: "Determinate", "Indeterminate" and "Indeterminate Multi-color"
+  * New "Swipeable Tabs" component which allows you to change Tabs by swiping left/right
+  * Material Theme
+    * Fixed issue with Notifications closing without animation in webkit browsers
+    * New "Scrollable Tabbar" Tabbar modification. Allows to swipe/scroll through tab links if they all don't fit into view
+    * New "Bottom Toolbar" Toolbar modification. It allows to use Toolbar on the bottom of screen instead of only on the top
+    * New "Speed dial" Floating Action Button transition when it shows additional action buttons by tapping on it
+    * New "Popover Morph" Floating Action Button transition when it morphs to Popover by tapping on it
+    * Reworked "Preloader" in favor of plain HTML elements animation instead of SVG which has visual issues on "slow" devices.
+      * `materialPreloaderSvg` parameter is deprectated and replaced with the new one `materialPreloaderHtml`
+  * Dom7
+    * Added option to trigger multiple events using space separated syntax `.trigger('event1 event2 event3')`
+  * Calendar
+    * Fixed Calendar dates ordering on iOS in Date Range Picker mode
+  * Swiper updated to latest 3.2.7 version:
+    * New "Auto Height" mode when container/wrapper adopts to the height of currently active slide. Can be enabled with `autoHeight: true` parameter
+    * Numerous minor improvements
+  * Custom Build
+    * Added "progressbar" and "autcomplete" modules
+  * Numerous minor fixes and improvements
+
+## Framework7 v1.3.5 - Updated on November 8, 2015
+  * Material Theme:
+    * Fixed issue with not disappearing "ripples" in hidden elements
+    * Fixed Searchbar color when using color themes
+    * New "Chips" component
+  * Calendar
+    * New Date Range Picker mode, can be simple enabled by passing `rangePicker: true` parameter
+    * "Date range"-type parameter now accepts mixed types (single date + date range)
+  * Push State
+    * Fixed issue for dynamic pages loaded with passing DOM directly
+    * Fixed issue with Push State on start from inline-pages
+    * Imporved behavior with empty `pushStateSeparator` and `pushStateRoot`
+  * Virtual List
+    * New `showFilteredItemsOnly` parameter to show filtered items only when using filter
+  * Modals
+    * Reworked overlay's z-indexes
+  * Router
+    * Added support for passing DOM content in `preprocess` callback
+    * Fixed issue with `page.query` getting lost for deep Inline pages navigation
+  * Dom7
+    * Added support for XHR `DELETE`, `OPTIONS` and `PATCH` methods
+    * `$.serializeObject` now serialize deep objects and arrays
+  * Swiper updated to latest 3.2.0 version:
+    * Added responsive breakpoints support using new `breakpoints` parameter. Now you can specify different `slidesPerView` and other similar parameters for different sizes
+    * New callbacks: `onSlideNextStart`, `onSlideNextEnd`, `onSlidePrevStart`, `onSlidePrevEnd`
+    * Minor fixes
+  * Numerous minor fixes and improvements
+
+## Framework7 v1.3.1 - Updated on October 12, 2015
+  * Fixed issue with not showing "Cancel" button in Searchbar
+  * Fixed issue with Modal without buttons (liek Preloader modal)
+
+## Framework7 v1.3.0 - Updated on October 10, 2015
+  * iOS Theme
+    * New appearence to match new iOS 9 design, mostly for Overlays: Modal, Popover and Action Sheet
+    * Support for new San Francisco font:
+      * For desktops - using San Francisco font that can be downloaded from https://developer.apple.com/fonts/
+      * For iOS - using system San Francisco font
+    * Fixed issue with switch toggle in RTL layout
+  * Material Theme
+    * `dynamicNavbar` will be disabled automatically for this theme
+    * Added `no-ripple` class to disable ripple effect on specific elements
+    * Fixed issue with floating labels with predefined values
+    * Fixed behavior of hidden toolbars/tabbars
+    * Fixed issue in RTL layout for tab bar
+  * Smart Select
+    * App's `smartSelectInPopup` parameter is removed
+    * Added new app's `smartSelectOpenIn` parameter. Can be `page`, `popup` or `picker`. By default is `page`
+    * Added option to open it in picker:
+      * Using `data-open-in="picker"` attribute or `smartSelectOpenIn` app's parameter
+      * Picker close button text can be specified:
+        * Using `data-picker-close-text` attribute
+        * New app's `smartSelectPickerCloseText` parameter. By default is `Done`
+      * Smart Select picker height can be controlled using `data-picker-height` attribute
+    * Added support for none-standard `maxlength` attribute on `<select>` element to limit amount of selected items for "multiple" select
+  * Dom7
+    * New `prependTo(parent)` method to prepend element to parent
+    * New `appendTo(parent)` method to append element to parent
+    * Ajax: added support for data types different from "text", like "arraybuffer" and others
+    * `$.serializeObject` method now supports deep objects with objects and arrays
+  * Swipeout
+    * Now overswipe-button will have additonal "swipeout-overswipe-active" class during overswipe
+    * New `data-close-on-cancel="true"` attribute for "swipeout-delete" buttons with `data-confirm` to close swipeout element in case of user canceled confirm dialog
+  * Photo Browser
+    * Double tap to zoom now zooms to the tapped position, not only to the center of picture
+  * Messagebar
+    * Now when you type new message it will scroll messages pages to bottom only in case if you are in the bottom of this page 
+  * Picker
+    * Added `closeByOutsideClick` parameter to close picker automatically when you click outside of related input or picker. By default is `true`
+    * Now it will set related input's value on initialization with specified value
+  * Calendar
+    * Added `closeByOutsideClick` parameter to close picker automatically when you click outside of related input or picker. By default is `true`
+    * Now it will set related input's value on initialization with specified value
+    * New `disabled` parameter to specify additional "disabled" days
+    * New `events` parameter to specify dates with "events" (will be marked with additional dots)
+    * New `rangesClasses` parameter to easily add custom classes to specified dates
+  * Pull To Refresh
+    * New events `pullstart`, `pullmove`, `pullend` and `refreshdone`
+  * Forms
+    * Better cross-browser support for `input[type="range"]` element
+  * Virtual List
+    * Fixed issue with size and scroll calculating when initialized in hidden tab
+    * Fixed issue with size and scroll calculating when used not in page
+  * Searchbar
+    * Fixed issue with close button when initialized in hidden tab
+  * Lazy Loading
+    * Fixed issue with lazy loading in hidden tab
+  * Template7 update to latest 1.1.0 version:
+    * Fixed access to data (`@index`, `@key`) and root context (`@root`) in partials
+    * Fixed `null` variables not to be outputed
+  * Swiper updated to latest 3.1.7 version:
+    * Fixed issue with wrong slides fill when number of slides less than `slidesPerView * slidesPerColumn` with `slidesPerColumnFill: 'row'`
+    * Added support for images `srcset` with lazy loading using `data-srcset` attribute
+    * Fixed new Chrome errors with `WebkitCSSMatrix`
+    * Fixed issue with `slideToClickedSlide` with `loop` and `centeredSlides`
+    * New `freeModeMinimumVelocity` parameter to set minimum required touch velocity to trigger free mode momentum
+    * Ability to make the Scrollbar draggable using new paramaters:
+      * `scrollbarDraggable` - (boolean) by default is `false`. Allows to enable draggable scrollbar
+      * `scrollbarSnapOnRelease` - (boolean) by default is `false`. Control slider snap on scrollbar release
+  * Router
+    * Now precompiled/cached tamplates will be ignored in case of `ignoreCache: true` parameter
+    * Fixed issue with `domCache` when going back with `force:true` to home page
+  * Lot of minor fixes and improvements
+
 ## Framework7 v1.2.0 - Updated on July 18, 2015
   * New full featured Material theme designed according to Google guidelines
   * New Material-specific App' parameters:

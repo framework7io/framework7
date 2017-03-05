@@ -1,3 +1,8 @@
+@toolbarShadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+@subnavbarShadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2), 0px 4px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 1px 0px rgba(0, 0, 0, 0.12);
+@toolbarBottomShadow: 0px -2px 4px -1px rgba(0, 0, 0, 0.2), 0px -4px 5px 0px rgba(0, 0, 0, 0.14), 0px -1px 10px 0px rgba(0, 0, 0, 0.12);
+@toolbarShadowHidden: 0px 2px 4px -1px rgba(0, 0, 0, 0), 0px 4px 5px 0px rgba(0, 0, 0, 0), 0px 1px 10px 0px rgba(0, 0, 0, 0);
+
 /* === Relation between toolbar/navbar types and pages === */
 .page, .view, .views{
     >.navbar, >.toolbar {
@@ -17,22 +22,27 @@
         padding-top: @tabbarLabelsSize;
     }
 }
-.toolbar:not(.messagebar) ~ .page-content {
+
+.toolbar ~ .page-content {
     padding-top: @toolbarSize;
 }
-.tabbar-labels:not(.messagebar) ~ .page-content {
+.tabbar-labels ~ .page-content {
     padding-top: @tabbarLabelsSize;
+}
+.toolbar-bottom, .messagebar {
+    ~ .page-content {
+        padding-top: 0;
+        padding-bottom: @toolbarSize;
+    }
+}
+.tabbar-labels.toolbar-bottom ~ .page-content {
+    padding-bottom: @tabbarLabelsSize;
 }
 .navbar-fixed {
     .page-content {
         padding-top: @navbarSize;
     }
-    .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
-        padding-top: @navbarSize + @toolbarSize;
-    }
-    .page .subnavbar, &.page .subnavbar {
-        top: @navbarSize;
-    }
+
     &.toolbar-fixed, &.tabbar-fixed, .toolbar-fixed, .tabbar-fixed, .toolbar-fixed &, .tabbar-fixed & {
         .page-content {
             padding-top: @navbarSize + @toolbarSize;
@@ -43,14 +53,33 @@
             padding-top: @navbarSize + @tabbarLabelsSize;
         }
     }
-    .toolbar:not(.messagebar) ~ .page-content {
+    .toolbar ~ .page-content {
         padding-top: @navbarSize + @toolbarSize;
     }
-    .tabbar-labels:not(.messagebar) ~ .page-content {
+    .messagebar ~ .page-content, .toolbar-bottom ~ .page-content {
+        padding-top: @navbarSize;
+    }
+
+    .tabbar-labels ~ .page-content {
         padding-top: @navbarSize + @tabbarLabelsSize;
     }
-    .toolbar:not(.messagebar) {
+    .tabbar-labels.toolbar-bottom ~ .page-content {
+        padding-top: @navbarSize;
+    }
+
+    .with-subnavbar .page-content, .page-content.with-subnavbar, .subnavbar ~ .page-content {
+        padding-top: @navbarSize + @toolbarSize;
+    }
+
+    .page .subnavbar, &.page .subnavbar {
         top: @navbarSize;
+    }
+
+    .toolbar {
+        top: @navbarSize;
+    }
+    .messagebar, .toolbar-bottom {
+        top: auto;
     }
 }
 // Page Hidden Navbar
@@ -83,10 +112,13 @@
                 .transition(400ms);
             }
         }
-        & ~ .subnavbar, & ~ .toolbar:not(.messagebar) {
+        & ~ .subnavbar, & ~ .toolbar:not(.messagebar):not(.toolbar-bottom) {
             .translate3d(0,-@navbarSize,0);
             .transition(400ms);
         }
+    }
+    &.not-animated {
+        .transition(0ms);
     }
 }
 .page.no-navbar {
@@ -106,20 +138,66 @@
     &.toolbar-hidden, &.tabbar-hidden {
         .transition(400ms);
     }
+    &.not-animated {
+        .transition(0ms);
+    }
 
-    &.toolbar-hidden:not(.messagebar), &.tabbar-hidden {
+    &.toolbar-hidden, &.tabbar-hidden {
         .translate3d(0,-100%,0);
     }
-    .navbar ~ &.toolbar-hidden:not(.messagebar), .navbar ~ &.tabbar-hidden {
+    .navbar ~ &.toolbar-hidden:not(.messagebar):not(.toolbar-bottom), .navbar ~ &.tabbar-hidden {
         .translate3d(0,-104px,0);
     }
     .navbar ~ &.tabbar-labels.toolbar-hidden {
         .translate3d(0,-128px,0);
     }
-    &.toolbar-hidden.messagebar {
-        .translate3d(0, 100%,0);   
+    &.toolbar-hidden.messagebar, &.toolbar-hidden.toolbar-bottom {
+        .translate3d(0, 100%,0);
     }
+
 }
 .page.no-toolbar .page-content, .page.no-tabbar .page-content {
     padding-bottom: 0;
+}
+
+// Shadows
+.navbar, .toolbar {
+    &.no-shadow {
+        box-shadow: none !important;
+    }
+}
+.navbar-fixed {
+    .subnavbar {
+        box-shadow: @subnavbarShadow;
+    }
+    .navbar {
+        box-shadow: @toolbarShadow;
+        &.navbar-hidden {
+            box-shadow: @toolbarShadowHidden !important;
+        }
+    }
+}
+
+.toolbar-fixed, .tabbar-fixed, .tabbar-labels-fixed {
+    .toolbar {
+        box-shadow: @toolbarShadow;
+        &.toolbar-hidden {
+            box-shadow: @toolbarShadowHidden !important;
+        }
+    }
+}
+.toolbar-bottom {
+    .toolbar-fixed &, .tabbar-fixed &, .tabbar-labels-fixed &, & {
+        box-shadow: @toolbarBottomShadow;
+    }
+    &.toolbar-hidden {
+        box-shadow: @toolbarShadowHidden !important;
+    }
+}
+.navbar-fixed {
+    &.toolbar-fixed, .toolbar-fixed, &.tabbar-fixed, .tabbar-fixed, &.tabbar-labels-fixed, .tabbar-labels-fixed {
+        .navbar {
+            box-shadow: none;
+        }
+    }
 }

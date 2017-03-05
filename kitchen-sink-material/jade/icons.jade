@@ -1,0 +1,33 @@
+.page(data-page="icons")
+  .navbar
+    .navbar-inner
+      .left.sliding
+        a(href="index.html").back.link.icon-only
+          i.icon.icon-back
+      .center.sliding Icons
+      .right
+        a(href="#").open-panel.link.icon-only
+          i.icon.icon-bars
+  .page-content
+    .content-block
+      p Framework7 comes with the premium and free <a href="https://github.com/nolimits4web/Framework7-Icons" class="external" target="_blank">Framework7 Icons</a> iOS-icons font developed specially to be used with iOS theme of Framework7, but for Material theme we recommend to use great-designed <a href="https://material.io/icons/" class="external" target="_blank">Material Icons</a> font. Both of these fonts use a typographic feature called <a href="http://alistapart.com/article/the-era-of-symbol-fonts" class="external" target="_blank">ligatures</a>. It’s easy to incorporate icons into your app. Here’s a small example:
+      p
+        code &lt;i class="material-icons"&gt;home&lt;/i&gt;
+        |  - 
+        i.material-icons home
+      p <a href="http://alistapart.com/article/the-era-of-symbol-fonts" class="external" target="_blank">Ligatures</a> allow rendering of an icon glyph simply by using its textual name. The replacement is done automatically by the web browser and provides more readable code than the equivalent numeric character reference.
+      p With ligatures it is also possible to combine icons like:
+      p
+        code &lt;i class="material-icons"&gt;person&lt;sup&gt;add&lt;/sup&gt;&lt;/i&gt;
+        |  - 
+        i.material-icons person<sup>add</sup>
+
+
+    .content-block-title Material Icons Set (#{icons.length})
+    .content-block
+      .row
+        - for icon in icons
+          .ks-demo-icon.col-33.tablet-15
+            .icon
+              i.material-icons #{icon.name}
+            .icon-name #{icon.name}

@@ -29,66 +29,14 @@
   -webkit-transition: 200ms;
   transition: 200ms;
 }
-i.ks-icon-email {
-  width: 24px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg fill='#fff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-}
-.tabbar i.ks-icon-email {
-  opacity: 0.7;
-}
-.active i.ks-icon-email,
-.active-state i.ks-icon-email {
-  opacity: 1;
-}
-i.ks-icon-calendar {
-  width: 24px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg fill='#fff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-}
-.tabbar i.ks-icon-calendar {
-  opacity: 0.7;
-}
-.active i.ks-icon-calendar,
-.active-state i.ks-icon-calendar {
-  opacity: 1;
-}
-i.ks-icon-upload {
-  width: 24px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg fill='#FFFFFF' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='none'/><path d='M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z'/></svg>");
-}
-.tabbar i.ks-icon-upload {
-  opacity: 0.7;
-}
-.active i.ks-icon-upload,
-.active-state i.ks-icon-upload {
-  opacity: 1;
-}
-i.ks-icon-more {
-  width: 10px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,<svg fill='#FFFFFF' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0z' fill='none'/><path d='M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/></svg>");
-  background-size: 24px auto;
-}
-.tabbar i.ks-icon-more {
-  opacity: 0.7;
-}
-.active i.ks-icon-more,
-.active-state i.ks-icon-more {
-  opacity: 1;
-}
 .ks-demo-slider {
   width: 100%;
   height: 100%;
 }
-.ks-demo-slider,
-.ks-carousel-slider {
-  font-size: 25px;
-  font-weight: 300;
-}
 .ks-demo-slider .swiper-slide,
 .ks-carousel-slider .swiper-slide {
+  font-weight: 300;
+  font-size: 25px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -269,6 +217,8 @@ i.ks-icon-more {
   #ks-picker-date-container .picker-item {
     height: 36px;
     line-height: 36px;
+  }
+  #ks-picker-date-container .picker-item span {
     padding: 0 6px;
   }
 }
@@ -336,4 +286,22 @@ div.ks-demo-lazy {
 }
 .ks-facebook-card .card-content-inner {
   padding: 15px 10px;
+}
+form .material-icons {
+  color: #757575;
+}
+.ks-demo-icon {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #333;
+}
+.ks-demo-icon .icon-name {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #666;
+}
+code {
+  background: #f3f3f3;
+  padding: 5px;
 }

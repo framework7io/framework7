@@ -1,6 +1,7 @@
+<a href="https://www.patreon.com/vladimirkharlampidi"><img src="https://cdn.framework7.io/i/support-badge.png" height="20"></a>
+[![Join the chat at https://gitter.im/nolimits4web/Framework7](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nolimits4web/Framework7)
 [![Build Status](https://travis-ci.org/nolimits4web/Framework7.svg?branch=master)](https://travis-ci.org/nolimits4web/Framework7)
 [![devDependency Status](https://david-dm.org/nolimits4web/framework7/dev-status.svg)](https://david-dm.org/nolimits4web/framework7#info=devDependencies)
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=nolimits4web&url=https://github.com/nolimits4web/framework7/&title=Framework7&language=JavaScript&tags=github&category=software)
 
 Framework7
 ==========
@@ -66,7 +67,7 @@ Distributable version will available in `dist/` folder.
 
 ## Custom build
 
-You can build custom version of Framework7 with only required components/modules. For example, if we need to include only Accordion, Modals and Tabs modules in addition to Framework 7 core: 
+You can build custom version of Framework7 with only required components/modules. For example, if we need to include only Accordion, Modals and Tabs modules in addition to Framework 7 core:
 
 ```
 $ gulp custom -accordion,modals,tabs
@@ -99,20 +100,22 @@ After that you will find created `custom/` folder with generated JS and CSS file
 
 All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and concatenated JS files (look at gulpfile.js for concat files order)
 
-If you want to help in Framework7 development and make it event better visit this page: http://www.idangero.us/framework7/contribute/
+The project uses [.editorconfig](http://editorconfig.org/) to define the coding style of each file. We recommend that you install the Editor Config extension for your preferred IDE.
+
+If you want to help in Framework7 development and make it event better visit this page: http://framework7.io/contribute/
 
 ## Forum
 
-If you have questions about Framework7 or want to help others you are welcome to special forum at http://www.idangero.us/framework7/forum/
+If you have questions about Framework7 or want to help others you are welcome to special forum at http://forum.framework7.io/
 
 ## Docs
 
-Documentation available at http://idangero.us/framework7/docs/
+Documentation available at http://framework7.io/docs/
 
 ## Tutorials
 
-Tutorials available at http://idangero.us/framework7/tutorials/
+Tutorials available at http://framework7.io/tutorials/
 
 ## Showcase
 
-Appstore apps made with Framework7: http://idangero.us/framework7/showcase/
+Appstore apps made with Framework7: http://framework7.io/showcase/

@@ -46,6 +46,10 @@
         font-size: 17px;
         line-height: 1.2;
         word-break: break-word;
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     }
     &.message-pic {
         .message-text {
@@ -54,8 +58,6 @@
         }
         img {
             display: block;
-            height: auto;
-            max-width: 100%;
             border-radius: 16px;
         }
     }
@@ -91,6 +93,17 @@
     .transition(400ms);
     .message-hide-avatar & {
         opacity: 0;
+    }
+}
+.message-date {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.8;
+    .message-pic img + & {
+        margin-top: 8px;
+    }
+    .message-sent & {
+        text-align: right;
     }
 }
 .message-sent {

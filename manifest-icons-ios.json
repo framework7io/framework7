@@ -1,0 +1,773 @@
+{
+  "name": "Framework7 Icons",
+  "icons": [
+    {
+      "name": "add"
+    },
+    {
+      "name": "add_round"
+    },
+    {
+      "name": "add_round_fill"
+    },
+    {
+      "name": "alarm"
+    },
+    {
+      "name": "alarm_fill"
+    },
+    {
+      "name": "albums"
+    },
+    {
+      "name": "albums_fill"
+    },
+    {
+      "name": "arrow_down"
+    },
+    {
+      "name": "arrow_down_fill"
+    },
+    {
+      "name": "arrow_left"
+    },
+    {
+      "name": "arrow_left_fill"
+    },
+    {
+      "name": "arrow_right"
+    },
+    {
+      "name": "arrow_right_fill"
+    },
+    {
+      "name": "arrow_up"
+    },
+    {
+      "name": "arrow_up_fill"
+    },
+    {
+      "name": "at"
+    },
+    {
+      "name": "at_fill"
+    },
+    {
+      "name": "bag"
+    },
+    {
+      "name": "bag_fill"
+    },
+    {
+      "name": "bars"
+    },
+    {
+      "name": "bell"
+    },
+    {
+      "name": "bell_fill"
+    },
+    {
+      "name": "bolt"
+    },
+    {
+      "name": "bolt_fill"
+    },
+    {
+      "name": "bolt_round"
+    },
+    {
+      "name": "bolt_round_fill"
+    },
+    {
+      "name": "book"
+    },
+    {
+      "name": "book_fill"
+    },
+    {
+      "name": "bookmark"
+    },
+    {
+      "name": "bookmark_fill"
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "box_fill"
+    },
+    {
+      "name": "briefcase"
+    },
+    {
+      "name": "briefcase_fill"
+    },
+    {
+      "name": "calendar"
+    },
+    {
+      "name": "calendar_fill"
+    },
+    {
+      "name": "camera"
+    },
+    {
+      "name": "camera_fill"
+    },
+    {
+      "name": "card"
+    },
+    {
+      "name": "card_fill"
+    },
+    {
+      "name": "chat"
+    },
+    {
+      "name": "chat_fill"
+    },
+    {
+      "name": "chats"
+    },
+    {
+      "name": "chats_fill"
+    },
+    {
+      "name": "check"
+    },
+    {
+      "name": "check_round"
+    },
+    {
+      "name": "check_round_fill"
+    },
+    {
+      "name": "chevron_down"
+    },
+    {
+      "name": "chevron_left"
+    },
+    {
+      "name": "chevron_right"
+    },
+    {
+      "name": "chevron_up"
+    },
+    {
+      "name": "circle"
+    },
+    {
+      "name": "circle_fill"
+    },
+    {
+      "name": "circle_half"
+    },
+    {
+      "name": "close"
+    },
+    {
+      "name": "close_round"
+    },
+    {
+      "name": "close_round_fill"
+    },
+    {
+      "name": "cloud"
+    },
+    {
+      "name": "cloud_download"
+    },
+    {
+      "name": "cloud_download_fill"
+    },
+    {
+      "name": "cloud_fill"
+    },
+    {
+      "name": "cloud_upload"
+    },
+    {
+      "name": "cloud_upload_fill"
+    },
+    {
+      "name": "collection"
+    },
+    {
+      "name": "collection_fill"
+    },
+    {
+      "name": "compass"
+    },
+    {
+      "name": "compass_fill"
+    },
+    {
+      "name": "compose"
+    },
+    {
+      "name": "compose_fill"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "data_fill"
+    },
+    {
+      "name": "delete"
+    },
+    {
+      "name": "delete_round"
+    },
+    {
+      "name": "delete_round_fill"
+    },
+    {
+      "name": "document"
+    },
+    {
+      "name": "document_fill"
+    },
+    {
+      "name": "document_text"
+    },
+    {
+      "name": "document_text_fill"
+    },
+    {
+      "name": "down"
+    },
+    {
+      "name": "download"
+    },
+    {
+      "name": "download_fill"
+    },
+    {
+      "name": "download_round"
+    },
+    {
+      "name": "download_round_fill"
+    },
+    {
+      "name": "drawer"
+    },
+    {
+      "name": "drawer_fill"
+    },
+    {
+      "name": "drawers"
+    },
+    {
+      "name": "drawers_fill"
+    },
+    {
+      "name": "email"
+    },
+    {
+      "name": "email_fill"
+    },
+    {
+      "name": "eye"
+    },
+    {
+      "name": "eye_fill"
+    },
+    {
+      "name": "fastforward"
+    },
+    {
+      "name": "fastforward_fill"
+    },
+    {
+      "name": "fastforward_round"
+    },
+    {
+      "name": "fastforward_round_fill"
+    },
+    {
+      "name": "favorites"
+    },
+    {
+      "name": "favorites_fill"
+    },
+    {
+      "name": "film"
+    },
+    {
+      "name": "film_fill"
+    },
+    {
+      "name": "filter"
+    },
+    {
+      "name": "filter-fill"
+    },
+    {
+      "name": "flag"
+    },
+    {
+      "name": "flag_fill"
+    },
+    {
+      "name": "folder"
+    },
+    {
+      "name": "folder_fill"
+    },
+    {
+      "name": "forward"
+    },
+    {
+      "name": "forward_fill"
+    },
+    {
+      "name": "gear"
+    },
+    {
+      "name": "gear_fill"
+    },
+    {
+      "name": "graph_round"
+    },
+    {
+      "name": "graph_round_fill"
+    },
+    {
+      "name": "graph_square"
+    },
+    {
+      "name": "graph_square_fill"
+    },
+    {
+      "name": "heart"
+    },
+    {
+      "name": "heart_fill"
+    },
+    {
+      "name": "help"
+    },
+    {
+      "name": "help_fill"
+    },
+    {
+      "name": "home"
+    },
+    {
+      "name": "home_fill"
+    },
+    {
+      "name": "images"
+    },
+    {
+      "name": "images_fill"
+    },
+    {
+      "name": "info"
+    },
+    {
+      "name": "info_fill"
+    },
+    {
+      "name": "keyboard"
+    },
+    {
+      "name": "keyboard_fill"
+    },
+    {
+      "name": "layers"
+    },
+    {
+      "name": "layers_fill"
+    },
+    {
+      "name": "left"
+    },
+    {
+      "name": "list"
+    },
+    {
+      "name": "list_fill"
+    },
+    {
+      "name": "lock"
+    },
+    {
+      "name": "lock_fill"
+    },
+    {
+      "name": "login"
+    },
+    {
+      "name": "login_fill"
+    },
+    {
+      "name": "logout"
+    },
+    {
+      "name": "logout_fill"
+    },
+    {
+      "name": "menu"
+    },
+    {
+      "name": "mic"
+    },
+    {
+      "name": "mic_fill"
+    },
+    {
+      "name": "money_dollar"
+    },
+    {
+      "name": "money_dollar_fill"
+    },
+    {
+      "name": "money_euro"
+    },
+    {
+      "name": "money_euro_fill"
+    },
+    {
+      "name": "money_pound"
+    },
+    {
+      "name": "money_pound_fill"
+    },
+    {
+      "name": "money_rubl"
+    },
+    {
+      "name": "money_rubl_fill"
+    },
+    {
+      "name": "money_yen"
+    },
+    {
+      "name": "money_yen_fill"
+    },
+    {
+      "name": "more"
+    },
+    {
+      "name": "more_round"
+    },
+    {
+      "name": "more_round_fill"
+    },
+    {
+      "name": "more_vertical"
+    },
+    {
+      "name": "more_vertical_round"
+    },
+    {
+      "name": "more_vertical_round_fill"
+    },
+    {
+      "name": "navigation"
+    },
+    {
+      "name": "navigation_fill"
+    },
+    {
+      "name": "paper_plane"
+    },
+    {
+      "name": "paper_plane_fill"
+    },
+    {
+      "name": "pause"
+    },
+    {
+      "name": "pause_fill"
+    },
+    {
+      "name": "pause_round"
+    },
+    {
+      "name": "pause_round_fill"
+    },
+    {
+      "name": "person"
+    },
+    {
+      "name": "person_fill"
+    },
+    {
+      "name": "persons"
+    },
+    {
+      "name": "persons_fill"
+    },
+    {
+      "name": "phone"
+    },
+    {
+      "name": "phone_fill"
+    },
+    {
+      "name": "phone_round"
+    },
+    {
+      "name": "phone_round_fill"
+    },
+    {
+      "name": "photos"
+    },
+    {
+      "name": "photos_fill"
+    },
+    {
+      "name": "pie"
+    },
+    {
+      "name": "pie_fill"
+    },
+    {
+      "name": "play"
+    },
+    {
+      "name": "play_fill"
+    },
+    {
+      "name": "play_round"
+    },
+    {
+      "name": "play_round_fill"
+    },
+    {
+      "name": "radio"
+    },
+    {
+      "name": "redo"
+    },
+    {
+      "name": "refresh"
+    },
+    {
+      "name": "refresh_round"
+    },
+    {
+      "name": "refresh_round_fill"
+    },
+    {
+      "name": "reload"
+    },
+    {
+      "name": "reload_round"
+    },
+    {
+      "name": "reload_round_fill"
+    },
+    {
+      "name": "reply"
+    },
+    {
+      "name": "reply_fill"
+    },
+    {
+      "name": "rewind"
+    },
+    {
+      "name": "rewind_fill"
+    },
+    {
+      "name": "rewind_round"
+    },
+    {
+      "name": "rewind_round_fill"
+    },
+    {
+      "name": "right"
+    },
+    {
+      "name": "search"
+    },
+    {
+      "name": "search_strong"
+    },
+    {
+      "name": "settings"
+    },
+    {
+      "name": "settings_fill"
+    },
+    {
+      "name": "share"
+    },
+    {
+      "name": "share_fill"
+    },
+    {
+      "name": "social_facebook"
+    },
+    {
+      "name": "social_facebook_fill"
+    },
+    {
+      "name": "social_github"
+    },
+    {
+      "name": "social_github_fill"
+    },
+    {
+      "name": "social_googleplus"
+    },
+    {
+      "name": "social_instagram"
+    },
+    {
+      "name": "social_instagram_fill"
+    },
+    {
+      "name": "social_linkedin"
+    },
+    {
+      "name": "social_linkedin_fill"
+    },
+    {
+      "name": "social_rss"
+    },
+    {
+      "name": "social_rss_fill"
+    },
+    {
+      "name": "social_twitter"
+    },
+    {
+      "name": "social_twitter_fill"
+    },
+    {
+      "name": "sort"
+    },
+    {
+      "name": "sort_fill"
+    },
+    {
+      "name": "star"
+    },
+    {
+      "name": "star_fill"
+    },
+    {
+      "name": "star_half"
+    },
+    {
+      "name": "stopwatch"
+    },
+    {
+      "name": "stopwatch_fill"
+    },
+    {
+      "name": "tabs"
+    },
+    {
+      "name": "tabs_fill"
+    },
+    {
+      "name": "tags"
+    },
+    {
+      "name": "tags_fill"
+    },
+    {
+      "name": "tape"
+    },
+    {
+      "name": "tape_fill"
+    },
+    {
+      "name": "ticket"
+    },
+    {
+      "name": "ticket_fill"
+    },
+    {
+      "name": "time"
+    },
+    {
+      "name": "time_fill"
+    },
+    {
+      "name": "timer"
+    },
+    {
+      "name": "timer_fill"
+    },
+    {
+      "name": "today"
+    },
+    {
+      "name": "today_fill"
+    },
+    {
+      "name": "trash"
+    },
+    {
+      "name": "trash_fill"
+    },
+    {
+      "name": "tune"
+    },
+    {
+      "name": "tune_fill"
+    },
+    {
+      "name": "undo"
+    },
+    {
+      "name": "unlock"
+    },
+    {
+      "name": "unlock_fill"
+    },
+    {
+      "name": "up"
+    },
+    {
+      "name": "videocam"
+    },
+    {
+      "name": "videocam_fill"
+    },
+    {
+      "name": "videocam_round"
+    },
+    {
+      "name": "videocam_round_fill"
+    },
+    {
+      "name": "volume"
+    },
+    {
+      "name": "volume_fill"
+    },
+    {
+      "name": "volume_low"
+    },
+    {
+      "name": "volume_low_fill"
+    },
+    {
+      "name": "volume_mute"
+    },
+    {
+      "name": "volume_mute_fill"
+    },
+    {
+      "name": "world"
+    },
+    {
+      "name": "world_fill"
+    },
+    {
+      "name": "zoom_in"
+    },
+    {
+      "name": "zoom_out"
+    }
+  ]
+}

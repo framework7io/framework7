@@ -12,6 +12,9 @@
     .picker-modal-inner {
         overflow: hidden;
     }
+    .popover-picker-calendar & {
+        height: 320px;
+    }
 }
 .popover.popover-picker-calendar {
     width: 320px;
@@ -94,6 +97,7 @@
     font-size: 15px;
     cursor: pointer;
     z-index: 20;
+    height: 100%;
     &.picker-calendar-day-weekend {
     }
     &.picker-calendar-day-prev, &.picker-calendar-day-next {
@@ -137,6 +141,19 @@
         line-height: 30px;
         position: relative;
 
+    }
+    .picker-calendar-range &.picker-calendar-day-selected {
+        .align-items(stretch);
+        .align-content(stretch);
+        span {
+            width: 100%;
+            border-radius: 0;
+            height: auto;
+            text-align: center;
+            .flexbox();
+            .align-items(center);
+            .justify-content(center);
+        }
     }
 }
 .picker-calendar-month-picker, .picker-calendar-year-picker {

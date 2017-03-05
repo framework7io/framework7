@@ -13,6 +13,9 @@
     display: none;
     .transform(translate3d(0,0,0));
     .transition(@panelsDuration);
+    &.not-animated {
+        .transition(0ms);
+    }
 }
 .panel {
     z-index: 1000;
@@ -26,24 +29,33 @@
     height: 100%;
     .translate3d(0);
     .transition(@panelsDuration);
-
+    &.not-animated {
+        .transition(0ms);
+    }
+    &.panel-visible {
+        display: block;
+    }
     &.panel-left {
-
+        left: 0;
         &.panel-cover {
             z-index: 6000;
-            left: -@panelWidth;
+            .translate3d(-100%);
         }
-        &.panel-reveal {
-            left: 0;
-        }
+       
     }
     &.panel-right {
+        right: 0;
         &.panel-cover {
             z-index: 6000;
-            right: -@panelWidth;
+            .translate3d(100%);
         }
-        &.panel-reveal {
-            right: 0;
+    }
+    &.panel-visible-by-breakpoint {
+        display: block;
+        .translate3d(0) !important;
+        box-shadow: none !important;
+        &.panel-cover {
+            z-index: 5900;
         }
     }
 }
@@ -67,6 +79,9 @@ body.with-panel-left-reveal, body.with-panel-right-reveal {
         -moz-transition-property: -moz-transform, box-shadow;
         transition-property: transform, box-shadow;
     }
+    .panel.not-animated ~ .views {
+        .transition(0ms);
+    }
     .panel-overlay {
         background: rgba(0,0,0,0);
         display: block;
@@ -82,8 +97,8 @@ body.with-panel-left-reveal {
     }
 }
 body.with-panel-left-cover {
-    .panel-left {
-        .translate3d(@panelWidth);
+    .panel.panel-left {
+        .translate3d(0);
     }
 }
 body.with-panel-right-reveal {
@@ -95,8 +110,8 @@ body.with-panel-right-reveal {
     }
 }
 body.with-panel-right-cover {
-    .panel-right {
-        .translate3d(-@panelWidth);
+    .panel.panel-right {
+        .translate3d(0);
     }
 }
 body.panel-closing {
@@ -108,5 +123,8 @@ body.panel-closing {
         -webkit-transition-property: -webkit-transform, box-shadow;
         -moz-transition-property: -moz-transform, box-shadow;
         transition-property: transform, box-shadow;
+    }
+    .panel.not-animated ~ .views {
+        .transition(0ms);
     }
 }

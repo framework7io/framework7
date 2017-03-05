@@ -334,7 +334,20 @@ label.label-radio {
     align-self: flex-start;
     .align-items(flex-start);
 }
+/* === Chips === */
+.chip {
 
+}
+.chip-media {
+    + .chip-label{
+        margin-left: 0px;
+        margin-right: 4px;
+    }
+}
+.chip-delete {
+    margin-right: 0;
+    margin-left: -6px;
+}
 /* === Back Icons === */
 i.icon {
     &.icon-back {
@@ -397,5 +410,64 @@ i.icon {
     }
     .accordion-item ul {
         padding-right: 0;
+    }
+}
+
+/* === Timeline === */
+.timelineItemLeft() {
+    -webkit-box-direction: reverse;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    margin-left: ~"-moz-calc(50% - (30px + 10px) / 2 - 50px)";
+    margin-left: ~"-webkit-calc(50% - (30px + 10px) / 2 - 50px)";
+    margin-left: ~"calc(50% - (30px + 10px) / 2 - 50px)";
+    margin-right: 0;
+    .timeline-item-date {
+        text-align: right;
+    }
+}
+.timelineItemRight() {
+    margin-right: ~"-moz-calc(50% - (30px + 10px) / 2 - 50px)";
+    margin-right: ~"-webkit-calc(50% - (30px + 10px) / 2 - 50px)";
+    margin-right: ~"calc(50% - (30px + 10px) / 2 - 50px)";
+    margin-left: 0;
+    .timeline-item-date {
+        text-align: left;
+    }
+}
+.timeline-sides {
+    .timeline-item {
+        .timelineItemRight();
+        &:not(.timeline-item-right):nth-child(2n) {
+            .timelineItemLeft();
+        }
+    }
+    .timeline-item-left {
+        .timelineItemLeft()
+    }
+    .timeline-item-right {
+        .timelineItemRight();
+    }
+}
+@media (min-width:768px) {
+    .tablet-sides {
+        .timeline-sides;
+    }
+}
+
+@toolbarBorderColor: #c4c4c4;
+.timeline-horizontal .timeline-item-date {
+    text-align: right;
+}
+.timeline-horizontal {
+    .timeline-month:last-child .timeline-item:last-child {
+        .hairline(right, @toolbarBorderColor);
+    }
+}
+.timeline-year {
+    &:last-child {
+        .hairline(right, @toolbarBorderColor);
     }
 }

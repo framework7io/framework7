@@ -1,0 +1,273 @@
+/* === Timeline === */
+.timeline {
+    margin: 32px 0;
+    padding: 0 16px;
+    box-sizing: border-box;
+    .content-block-inner & {
+        padding: 0;
+        margin: 0;
+    }
+}
+.timeline-item {
+    .flexbox();
+    .justify-content(flex-start);
+    position: relative;
+    overflow: hidden;
+    padding: 2px 0px 16px;
+    box-sizing: border-box;
+    position: relative;
+    &:last-child {
+        padding-bottom: 2px;
+    }
+}
+.timeline-item-date {
+    .flex-shrink(0);
+    width: 50px;
+    text-align: right;
+    box-sizing: border-box;
+    small {
+        font-size: 10px;
+    }
+}
+.timeline-item-content {
+    margin: 2px;
+    min-width: 0;
+    position: relative;
+    .flex-shrink(10);
+    p, ul, ol, h1, h2, h3, h4 {
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    .card, &.card, .list-block, &.list-block, .content-block, &.content-block {
+        margin: 0;
+        width: 100%;
+    }
+    .card, .list-block, .content-block {
+        + .card, + .list-block, + .content-block {
+            margin: 16px 0 0;
+        }
+    }
+}
+.timeline-item-inner {
+    border-radius: 2px;
+    padding: 8px 16px;
+    background: #fff;
+    box-sizing: border-box;
+    .depth(1);
+    .content-block {
+        padding: 0;
+        color: inherit;
+    }
+    .content-block-inner {
+        .hairline-remove(top);
+        .hairline-remove(bottom);
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+    }
+    .list-block {
+        ul {
+            .hairline-remove(top);
+            .hairline-remove(bottom);
+        }
+    }
+    + .timeline-item-inner {
+        margin-top: 16px;
+    }
+}
+.timeline-item-divider {
+    width: 1px;
+    margin: 0 16px;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    background: #bbb;
+    border-radius: 50%;
+    margin-top: 3px;
+    .flex-shrink(0);
+    &:after, &:before {
+        content: ' ';
+        width: 1px;
+        height: 100vh;
+        position: absolute;
+        left: 50%;
+        background: inherit;
+        .transform(translate3d(-50%, 0, 0));
+    }
+    &:after {
+        top: 100%;
+    }
+    &:before {
+        bottom: 100%;
+    }
+    .timeline-item:last-child &:after {
+        display: none;
+    }
+    .timeline-item:first-child &:before {
+        display: none;
+    }
+}
+.timeline-item-time {
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 16px;
+    font-size: 13px;
+    &:first-child {
+        margin-top: 0;
+    }
+    .timeline-item-title + & {
+        margin-top: 0;
+    }
+}
+.timeline-item-title {
+    font-size: 16px;
+}
+.timelineItemLeft() {
+    -webkit-box-direction: reverse;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    margin-right: ~"-moz-calc(50% - (32px + 10px) / 2 - 50px)";
+    margin-right: ~"-webkit-calc(50% - (32px + 10px) / 2 - 50px)";
+    margin-right: ~"calc(50% - (32px + 10px) / 2 - 50px)";
+    margin-left: 0;
+    .timeline-item-date {
+        text-align: left;
+    }
+}
+.timelineItemRight() {
+    margin-left: ~"-moz-calc(50% - (32px + 10px) / 2 - 50px)";
+    margin-left: ~"-webkit-calc(50% - (32px + 10px) / 2 - 50px)";
+    margin-left: ~"calc(50% - (32px + 10px) / 2 - 50px)";
+    margin-right: 0;
+    .timeline-item-date {
+        text-align: right;
+    }
+}
+.timeline-sides {
+    .timeline-item {
+        .timelineItemRight();
+        &:not(.timeline-item-right):nth-child(2n) {
+            .timelineItemLeft();
+        }
+    }
+    .timeline-item-left {
+        .timelineItemLeft()
+    }
+    .timeline-item-right {
+        .timelineItemRight();
+    }
+}
+@media (min-width:768px) {
+    .tablet-sides {
+        .timeline-sides;
+    }
+}
+.timeline-horizontal {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    .flexbox();
+    position: relative;
+    .timeline-item {
+        display: block;
+        width: 100/3vw;
+        margin: 0;
+        padding: 0;
+        .flex-shrink(0);
+        padding-top: 34px;
+        padding-bottom: 12px;
+        position: relative;
+        height: 100%;
+        .hairline(right, @contentBlockBorderColor);
+        .hairline(top, @contentBlockBorderColor);
+    }
+    .timeline-item-date {
+        background: @toolbarBg;
+        width: auto;
+        text-align: left;
+        padding: 0px 12px;
+        line-height: 34px;
+        .hairline(bottom, @contentBlockBorderColor);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 34px;
+        color:#fff;
+    }
+    .timeline-item-content {
+        padding: 12px;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0;
+        height: ~"-webkit-calc(100% - 12px)";
+        height: ~"-moz-calc(100% - 12px)";
+        height: ~"calc(100% - 12px)";
+    }
+    .timeline-item-divider {
+        display: none;
+    }
+    @cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
+    .-(@i: length(@cols)) when (@i > 0) {
+        @divider: e(extract(@cols, @i));
+        @className: `Math.floor(@{divider})`;
+        &.col-@{className} .timeline-item {
+            width: ~"@{divider}vw";
+        }
+        .-((@i - 1));
+    } .-;
+    @media all and (min-width:768px) {
+        .-(@i: length(@cols)) when (@i > 0) {
+            @divider: e(extract(@cols, @i));
+            @className: `Math.floor(@{divider})`;
+            &.tablet-@{className} .timeline-item {
+                width: ~"@{divider}vw";
+            }
+            .-((@i - 1));
+        } .-;
+    }
+}
+@timelineMonthYearHeight: 24px;
+.timeline-year, .timeline-month {
+    .flexbox();
+    .flex-shrink(0);
+    padding-top: @timelineMonthYearHeight;
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+}
+.timeline-year-title, .timeline-month-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    line-height: @timelineMonthYearHeight;
+    height: @timelineMonthYearHeight;
+    padding: 0 12px;
+    box-sizing: border-box;
+    background: @toolbarBg;
+    color: #fff;
+    span {
+        display: inline-block;
+        position: -webkit-sticky;
+        position: -moz-sticky;
+        position: sticky;
+        left: 12px;
+    }
+}
+.timeline-year-title {
+    font-size: 16px;
+    span {
+        margin-top: 2px;
+    }
+}
+.timeline-month-title {
+    span {
+        margin-top: -2px;
+    }
+}

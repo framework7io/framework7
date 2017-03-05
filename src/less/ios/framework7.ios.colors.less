@@ -4,18 +4,8 @@
 Framework7 Color Themes
 ==========================*/
 .theme-mixin(@colorName, @color, @colorHex) {
-    //Plain color and links
-    .color-@{colorName} {
-        color: @color;
-        .list-block .item-link.list-button&, .tabbar a.active&, a& {
-            color: @color;
-        }
-        .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
-            background-color: @color;
-        }
-    }
     //Buttons
-    .color-@{colorName}.button:not(.button-fill), .color-@{colorName}.buttons-row .button, .theme-@{colorName} .button:not(.button-fill) {
+    .theme-@{colorName} .button:not(.button-fill) {
         border-color: @color;
         html:not(.watch-active-state) &:active, &.active-state {
             background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
@@ -25,12 +15,27 @@ Framework7 Color Themes
             color:#fff;
         }
     }
-    .theme-@{colorName} .button.button-fill, .button.button-fill.color-@{colorName} {
+    .theme-@{colorName} .button.button-fill {
         background: @color;
         color:#fff;
     }
+    // Progress bar
+    .progressbar {
+        &.theme-@{colorName}, .theme-@{colorName} & {
+            span {
+                background-color: @color;
+            }
+        }
+    }
+    .progressbar-infinite {
+        &.theme-@{colorName}, .theme-@{colorName} & {
+            &:before {
+                background-color: @color;
+            }
+        }
+    }
     //Icons
-    .color-@{colorName}, .theme-@{colorName} {
+    .theme-@{colorName} {
         i.icon, i.icon& {
             color:@color;
         }
@@ -53,6 +58,7 @@ Framework7 Color Themes
             .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 26'><path fill='#@{colorHex}' d='M0,0h4v4H0V0z M8,1h34v2H8V1z M0,11h4v4H0V11z M8,12h34v2H8V12z M0,22h4v4H0V22z M8,23h34v2H8V23z'/></svg>");
         }
     }
+
     // Theme
     .theme-@{colorName} {
         a, .item-link.list-button {
@@ -66,13 +72,8 @@ Framework7 Color Themes
                 color:@color;
             }
         }
-        .range-slider, .range-slider& {
-            input[type="range"]::-webkit-slider-thumb:before {
-                background-color: @color;
-            }
-            input[type="range"]::-ms-fill-lower {
-                background-color: @color;
-            }
+        .messagebar .messagebar-send-link {
+            background-color: @color;
         }
         label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
             background-color: @color;
@@ -89,6 +90,12 @@ Framework7 Color Themes
             .swiper-pagination-bullet-active {
                 background-color: @color;
             }
+            .swiper-pagination-progressbar {
+                background-color: @color;
+            }
+        }
+        &.swiper-pagination-progress.bg-@{colorName} {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.25);
         }
     }
     .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
@@ -100,6 +107,102 @@ Framework7 Color Themes
         &.color-@{colorName}, .theme-@{colorName} & {
             .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#@{colorHex}'/></svg>");
         }
+    }
+    // Floating Button
+    .floating-button, .speed-dial-buttons a {
+        .theme-@{colorName} &, &.theme-@{colorName} {
+            color:#fff;
+            background: @color;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: darken(@color, 8%);
+            }
+            i {
+                color: inherit;
+            }
+        }
+    }
+    // Range Slider
+    .range-slider {
+        .theme-@{colorName} &, &.theme-@{colorName} {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
+        }
+    }
+    // Badges
+    .badge.theme-@{colorName} {
+    	background-color:@color;
+    	color: #fff;
+    }
+}
+.theme-mixin(e('gray'), #8e8e93, '8e8e93');
+.theme-mixin(e('white'), #ffffff, 'ffffff');
+.theme-mixin(e('black'), #000000, '000000');
+.theme-mixin(e('lightblue'), #5ac8fa, '5ac8fa');
+.theme-mixin(e('yellow'), #ffcc00, 'ffcc00');
+.theme-mixin(e('orange'), #ff9500, 'ff9500');
+.theme-mixin(e('pink'), #ff2d55, 'ff2d55');
+.theme-mixin(e('blue'), #007aff, '007aff');
+.theme-mixin(e('green'), #4cd964, '4cd964');
+.theme-mixin(e('red'), #ff3b30, 'ff3b30');
+
+/*==========================
+Framework7 Color + Bg + Border
+==========================*/
+.color-mixin(@colorName, @color, @colorHex) {
+    // Overwrite colors for links, icons, buttons, badges, icon, preloader
+    //Plain color and links
+    .color-@{colorName} {
+        color: @color;
+        .list-block .item-link.list-button&, .tabbar a.active&, a& {
+            color: @color;
+        }
+        .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
+            background-color: @color;
+        }
+    }
+    //Buttons
+    .color-@{colorName}.button:not(.button-fill), .color-@{colorName}.buttons-row .button {
+        border-color: @color;
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: rgba(red(@color), green(@color), blue(@color), 0.15);
+        }
+        &.active {
+            background-color: @color;
+            color:#fff;
+        }
+    }
+    .button.button-fill.color-@{colorName} {
+        background: @color;
+        color:#fff;
+    }
+    // Progress bar
+    .progressbar {
+        &.color-@{colorName}, &.bg-@{colorName} {
+            span {
+                background-color: @color;
+            }
+        }
+    }
+    .progressbar-infinite {
+        &.color-@{colorName}, &.bg-@{colorName} {
+            &:before {
+                background-color: @color;
+            }
+        }
+    }
+    //Icons
+    .color-@{colorName} {
+        i.icon, i.icon& {
+            color:@color;
+        }
+    }
+    // Preloader
+    .preloader.color-@{colorName}, .preloader.preloader-@{colorName} {
+        .encoded-svg-background("<svg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><defs><line id='l' x1='60' x2='60' y1='7' y2='27' stroke='#@{colorHex}' stroke-width='11' stroke-linecap='round'/></defs><g><use xlink:href='#l' opacity='.27'/><use xlink:href='#l' opacity='.27' transform='rotate(30 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(60 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(90 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(120 60,60)'/><use xlink:href='#l' opacity='.27' transform='rotate(150 60,60)'/><use xlink:href='#l' opacity='.37' transform='rotate(180 60,60)'/><use xlink:href='#l' opacity='.46' transform='rotate(210 60,60)'/><use xlink:href='#l' opacity='.56' transform='rotate(240 60,60)'/><use xlink:href='#l' opacity='.66' transform='rotate(270 60,60)'/><use xlink:href='#l' opacity='.75' transform='rotate(300 60,60)'/><use xlink:href='#l' opacity='.85' transform='rotate(330 60,60)'/></g></svg>");
     }
     // Bg rule
     .bg-@{colorName}, .button.button-fill.bg-@{colorName}, a.bg-@{colorName}, .list-block .swipeout-actions-left a.bg-@{colorName}, .list-block .swipeout-actions-right a.bg-@{colorName} {
@@ -114,17 +217,46 @@ Framework7 Color Themes
             }
         }
     }
+    // Floating Button
+    .floating-button, .speed-dial-buttons a {
+        &.color-@{colorName}, &.bg-@{colorName} {
+            color:#fff;
+            background: @color;
+            html:not(.watch-active-state) &:active, &.active-state {
+                background: darken(@color, 8%);
+            }
+            i {
+                color: inherit;
+            }
+        }
+    }
+    // Range Slider
+    .range-slider {
+        &.color-@{colorName} {
+            input[type="range"]::-webkit-slider-thumb:before {
+                background-color: @color;
+            }
+            input[type="range"]::-ms-fill-lower {
+                background-color: @color;
+            }
+        }
+    }
+    // Badges
+    .badge.color-@{colorName} {
+        background-color:@color;
+        color: #fff;
+    }
 }
-.theme-mixin(e('gray'), #8e8e93, '8e8e93');
-.theme-mixin(e('white'), #ffffff, 'ffffff');
-.theme-mixin(e('black'), #000000, '000000');
-.theme-mixin(e('lightblue'), #5ac8fa, '5ac8fa');
-.theme-mixin(e('yellow'), #ffcc00, 'ffcc00');
-.theme-mixin(e('orange'), #ff9500, 'ff9500');
-.theme-mixin(e('pink'), #ff2d55, 'ff2d55');
-.theme-mixin(e('blue'), #007aff, '007aff');
-.theme-mixin(e('green'), #4cd964, '4cd964');
-.theme-mixin(e('red'), #ff3b30, 'ff3b30');
+.color-mixin(e('gray'), #8e8e93, '8e8e93');
+.color-mixin(e('white'), #ffffff, 'ffffff');
+.color-mixin(e('black'), #000000, '000000');
+.color-mixin(e('lightblue'), #5ac8fa, '5ac8fa');
+.color-mixin(e('yellow'), #ffcc00, 'ffcc00');
+.color-mixin(e('orange'), #ff9500, 'ff9500');
+.color-mixin(e('pink'), #ff2d55, 'ff2d55');
+.color-mixin(e('blue'), #007aff, '007aff');
+.color-mixin(e('green'), #4cd964, '4cd964');
+.color-mixin(e('red'), #ff3b30, 'ff3b30');
 
 /*==========================
 Framework7 Layouts Themes
@@ -257,6 +389,12 @@ Framework7 Layouts Themes
             background: none;
         }
     }
+    .autocomplete-dropdown  {
+        background: @blockBg;
+        .list-block b {
+            color: #fff;
+        }
+    }
     .card {
         background: @blockBg;
     }
@@ -274,7 +412,7 @@ Framework7 Layouts Themes
         }
         .list-block ul {
             background: none;
-        }    
+        }
 
     }
     .actions-popover .list-block ul {
@@ -309,10 +447,10 @@ Framework7 Layouts Themes
     }
     .item-divider, .list-group-title {
         background: @dividerBg;
-        color:@lightText;        
+        color:@lightText;
         .hairline-color(top, @blockBorder);
     }
-    
+
     // Searchbar
     .searchbar {
         background: @searchbarBg;
@@ -337,7 +475,35 @@ Framework7 Layouts Themes
     .range-slider input[type="range"]::-ms-thumb {
         border: none;
     }
-
+    // Timeline
+    .timeline-item-inner {
+        background: @blockBg;
+    }
+    .timeline-item-divider {
+        background: rgba(255,255,255,0.3);
+    }
+    .content-block-inner .timeline-item-inner {
+        border-color: @blockBorder;
+    }
+    .timeline-item-time {
+        color: #8e8e93;
+    }
+    .timeline-horizontal .timeline-item-date {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+    }
+    .timeline-horizontal .timeline-item {
+        .hairline-color(right, @barsBorder);
+    }
+    .timeline-year-title, .timeline-month-title {
+        background-color: @barsBg;
+    }
+    .timeline-month .timeline-item {
+        .hairline-color(top, @barsBorder);
+    }
+    .timeline-year {
+        .hairline-color(right, @barsBorder);
+    }
 }
 
 /* === White layout === */
@@ -370,7 +536,7 @@ Framework7 Layouts Themes
         background-color: @barsBg;
         color:@barsText;
     }
-    
+
     // Picker
     .picker-modal {
         .toolbar {
@@ -474,7 +640,7 @@ Framework7 Layouts Themes
         color:@lightText;
         .hairline-color(top, @blockBorder);
     }
-    
+
     // Searchbar
     .searchbar {
         background: @searchbarBg;
@@ -495,6 +661,32 @@ Framework7 Layouts Themes
     }
     .range-slider input[type="range"]:after {
         background: @blockBg;
+    }
+    // Timeline
+    .timeline-item-inner {
+        background: @blockStrongBg;
+    }
+    .content-block-inner .timeline-item-inner {
+        border-color: @blockBorder;
+    }
+    .timeline-item-time {
+        color: #8e8e93;
+    }
+    .timeline-horizontal .timeline-item-date {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+    }
+    .timeline-horizontal .timeline-item {
+        .hairline-color(right, @barsBorder);
+    }
+    .timeline-year-title, .timeline-month-title {
+        background-color: @barsBg;
+    }
+    .timeline-month .timeline-item {
+        .hairline-color(top, @barsBorder);
+    }
+    .timeline-year {
+        .hairline-color(right, @barsBorder);
     }
 }
 
