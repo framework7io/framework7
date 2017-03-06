@@ -393,6 +393,10 @@ app.popover = function (modal, target, removeOnClose, animated) {
                     modal.removeClass('popover-floating-button');
                 });
             }
+            else if (target.hasClass('floating-button-to-popover') && modal.hasClass('modal-in')) {
+                modalLeft = targetOffset.left;
+                modalTop = targetOffset.top;
+            }
 
         }
         else {
@@ -524,7 +528,7 @@ app.loginScreen = function (modal, animated) {
         app.closeModal('.login-screen.modal-in:not(.modal-out)');
     }
     modal.show();
-    
+
     app.openModal(modal, animated);
     return modal[0];
 };
