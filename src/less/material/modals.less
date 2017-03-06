@@ -185,7 +185,7 @@
         position: relative;
         overflow: hidden;
         white-space: nowrap;
-        text-overflow: ellipsis;    
+        text-overflow: ellipsis;
     }
     html:not(.watch-active-state) &:active, &.active-state {
         background: rgba(0,0,0,0.1);
@@ -428,11 +428,23 @@ html.with-statusbar-overlay {
         .popup-overlay {
             z-index: 9500;
         }
+        &.ios .popup{
+            height: ~"-webkit-calc(100% - 20px)";
+            height: ~"calc(100% - 20px)";
+            top: 20px;
+        }
     }
     .login-screen, .popup.tablet-fullscreen {
         height: ~"-webkit-calc(100% - 24px)";
         height: ~"calc(100% - 24px)";
         top: 24px;
+    }
+    &.ios {
+        .login-screen, .popup.tablet-fullscreen {
+            height: ~"-webkit-calc(100% - 20px)";
+            height: ~"calc(100% - 20px)";
+            top: 20px;
+        }
     }
 }
 
@@ -501,7 +513,7 @@ html.with-statusbar-overlay {
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize})";
             height: ~"-moz-calc(100% - @{toolbarSize})";
-            height: ~"calc(100% - @{toolbarSize})";    
+            height: ~"calc(100% - @{toolbarSize})";
         }
         a.link {
             .flex-shrink(0);
@@ -527,13 +539,13 @@ html.with-statusbar-overlay {
         bottom: 0;
         width: 100%;
         .modal-buttons;
-        
+
     }
     .picker-header, .picker-footer {
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize})";
             height: ~"-moz-calc(100% - @{toolbarSize})";
-            height: ~"calc(100% - @{toolbarSize})";    
+            height: ~"calc(100% - @{toolbarSize})";
         }
         + .toolbar + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize} * 2)";

@@ -23,6 +23,11 @@
             height: ~"calc(100% - 24px)";
             top: 24px;
         }
+        html.with-statusbar-overlay.ios & {
+            height: ~"-webkit-calc(100% - 20px)";
+            height: ~"calc(100% - 20px)";
+            top: 20px;
+        }
     }
     .popup > &, body > &, .framework7-root > & {
         .navbar, .toolbar {
@@ -154,7 +159,7 @@
     .flex-shrink(0);
     box-sizing: border-box;
     &.transitioning {
-       .transition(400ms); 
+       .transition(400ms);
     }
     span.swiper-zoom-container {
         display: none;
