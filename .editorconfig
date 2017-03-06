@@ -13,3 +13,9 @@ trim_trailing_whitespace = true
 
 [*.json]
 indent_size = 2
+
+[*.html]
+indent_size = 2
+
+[*.jade]
+indent_size = 2
