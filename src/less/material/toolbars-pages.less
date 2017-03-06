@@ -30,27 +30,36 @@
     padding-top: @tabbarLabelsSize;
 }
 .toolbar-bottom, .messagebar {
-    ~ .page-content {
+    ~ .page-content, ~.pages .page-content, ~ .view .page-content {
         padding-top: 0;
         padding-bottom: @toolbarSize;
     }
 }
-.tabbar-labels.toolbar-bottom ~ .page-content {
-    padding-bottom: @tabbarLabelsSize;
+.tabbar-labels.toolbar-bottom {
+    ~ .page-content, ~.pages .page-content, ~.page .page-content, ~ .view .page-content {
+        padding-bottom: @tabbarLabelsSize;
+    }
 }
-.navbar-fixed {
-    .page-content {
+.navbar-fixed, .navbar-through {
+    .page-content, &.pages .page-content, &.view .page-content {
         padding-top: @navbarSize;
     }
 
     &.toolbar-fixed, &.tabbar-fixed, .toolbar-fixed, .tabbar-fixed, .toolbar-fixed &, .tabbar-fixed & {
+
         .page-content {
             padding-top: @navbarSize + @toolbarSize;
+        }
+        .toolbar-bottom ~ .pages .page-content, .toolbar-bottom ~ .view .page-content {
+            padding-top: @navbarSize;
         }
     }
     &.tabbar-labels-fixed, .tabbar-labels-fixed, .tabbar-labels-fixed & {
         .page-content {
             padding-top: @navbarSize + @tabbarLabelsSize;
+        }
+        .toolbar-bottom ~ .pages .page-content, .toolbar-bottom ~ .view .page-content {
+            padding-top: @navbarSize;
         }
     }
     .toolbar ~ .page-content {
@@ -166,7 +175,7 @@
         box-shadow: none !important;
     }
 }
-.navbar-fixed {
+.navbar-fixed, .navbar-through {
     .subnavbar {
         box-shadow: @subnavbarShadow;
     }
@@ -194,7 +203,7 @@
         box-shadow: @toolbarShadowHidden !important;
     }
 }
-.navbar-fixed {
+.navbar-fixed, .navbar-through {
     &.toolbar-fixed, .toolbar-fixed, &.tabbar-fixed, .tabbar-fixed, &.tabbar-labels-fixed, .tabbar-labels-fixed {
         .navbar {
             box-shadow: none;
