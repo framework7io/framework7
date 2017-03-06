@@ -150,7 +150,7 @@ var Autocomplete = function (params) {
         var noNavbar = '', noToolbar = '', navbarLayout;
 
         a.navbarTemplate = t7.compile(a.params.navbarTemplate ||
-            '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
+            '<div class="navbar no-shadow {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
                 '<div class="navbar-inner">' +
                     '<div class="left sliding">' +
                         '{{#if material}}' +
