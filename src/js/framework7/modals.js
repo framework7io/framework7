@@ -190,7 +190,7 @@ app.actions = function (target, params, animated) {
 
     params = params || [];
 
-    if (params.length > 0 && !$.isArray(params[0])) {
+    if (params.length > 0 && !Array.isArray(params[0])) {
         params = [params];
     }
     var modalHTML;

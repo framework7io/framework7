@@ -376,7 +376,7 @@ var Calendar = function (params) {
         var match = false;
         var i;
         if (!range) return false;
-        if ($.isArray(range)) {
+        if (Array.isArray(range)) {
             for (i = 0; i < range.length; i ++) {
                 if (range[i].from || range[i].to) {
                     if (range[i].from && range[i].to) {
