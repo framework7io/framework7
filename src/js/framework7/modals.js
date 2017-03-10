@@ -315,13 +315,14 @@ app.popover = function (modal, target, removeOnClose, animated) {
         var targetWidth = target.outerWidth();
         var targetHeight = target.outerHeight();
         var targetOffset = target.offset();
+        var targetOffsetLeft = targetOffset.left - app.root.offset().left;
         var targetParentPage = target.parents('.page');
         if (targetParentPage.length > 0) {
             targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
         }
 
         var windowHeight = $(window).height();
-        var windowWidth = $(window).width();
+        var applicationWidth = app.root.width();
 
         var modalTop = 0;
         var modalLeft = 0;
@@ -353,9 +354,9 @@ app.popover = function (modal, target, removeOnClose, animated) {
             }
 
             // Horizontal Position
-            modalLeft = targetOffset.left;
-            if (modalLeft + modalWidth >= windowWidth - 8) {
-                modalLeft = targetOffset.left + targetWidth - modalWidth - 8;
+            modalLeft = targetOffsetLeft;
+            if (modalLeft + modalWidth >= applicationWidth - 8) {
+                modalLeft = targetOffsetLeft + targetWidth - modalWidth - 8;
             }
             if (modalLeft < 8) {
                 modalLeft = 8;
@@ -368,7 +369,7 @@ app.popover = function (modal, target, removeOnClose, animated) {
             }
             if (target.hasClass('floating-button-to-popover') && !modal.hasClass('modal-in')) {
                 modal.addClass('popover-floating-button');
-                var diffX = (modalLeft + modalWidth / 2) - (targetOffset.left + targetWidth / 2),
+                var diffX = (modalLeft + modalWidth / 2) - (targetOffsetLeft + targetWidth / 2),
                     diffY = (modalTop + modalHeight / 2) - (targetOffset.top + targetHeight / 2);
                 target
                     .addClass('floating-button-to-popover-in')
@@ -394,7 +395,7 @@ app.popover = function (modal, target, removeOnClose, animated) {
                 });
             }
             else if (target.hasClass('floating-button-to-popover') && modal.hasClass('modal-in')) {
-                modalLeft = targetOffset.left;
+                modalLeft = targetOffsetLeft;
                 modalTop = targetOffset.top;
             }
 
@@ -425,10 +426,10 @@ app.popover = function (modal, target, removeOnClose, animated) {
 
             // Horizontal Position
             if (modalPosition === 'top' || modalPosition === 'bottom') {
-                modalLeft = targetWidth / 2 + targetOffset.left - modalWidth / 2;
+                modalLeft = targetWidth / 2 + targetOffsetLeft - modalWidth / 2;
                 diff = modalLeft;
                 if (modalLeft < 5) modalLeft = 5;
-                if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+                if (modalLeft + modalWidth > applicationWidth) modalLeft = applicationWidth - modalWidth - 5;
                 if (modalPosition === 'top') {
                     modalAngle.addClass('on-bottom');
                 }
@@ -442,11 +443,11 @@ app.popover = function (modal, target, removeOnClose, animated) {
 
             }
             else if (modalPosition === 'middle') {
-                modalLeft = targetOffset.left - modalWidth - modalAngleSize;
+                modalLeft = targetOffsetLeft - modalWidth - modalAngleSize;
                 modalAngle.addClass('on-right');
-                if (modalLeft < 5 || (modalLeft + modalWidth > windowWidth)) {
-                    if (modalLeft < 5) modalLeft = targetOffset.left + targetWidth + modalAngleSize;
-                    if (modalLeft + modalWidth > windowWidth) modalLeft = windowWidth - modalWidth - 5;
+                if (modalLeft < 5 || (modalLeft + modalWidth > applicationWidth)) {
+                    if (modalLeft < 5) modalLeft = targetOffsetLeft + targetWidth + modalAngleSize;
+                    if (modalLeft + modalWidth > applicationWidth) modalLeft = applicationWidth - modalWidth - 5;
                     modalAngle.removeClass('on-right').addClass('on-left');
                 }
                 modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
