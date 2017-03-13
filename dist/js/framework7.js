@@ -23,7 +23,7 @@
         var app = this;
     
         // Version
-        app.version = '1.5.3';
+        app.version = '1.5.4';
     
         // Default Parameters
         app.params = {
