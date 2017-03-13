@@ -13,60 +13,58 @@ html
   body
     // Status bar overlay for fullscreen mode
     .statusbar-overlay
-      
+    // Panels overlay
+    .panel-overlay
+    // Left panel with reveal effect
+    .panel.panel-left.panel-cover
+      // Left view
+      .view.view-left.navbar-through
+        .navbar
+          .navbar-inner
+            .left
+            .center.sliding Left View
+            .right
+        .pages
+          .page(data-page="index-left")
+            .page-content
+              .content-block-title Left View Links
+              .list-block
+                ul
+                  li
+                    a(href="left-page-1.html").item-link
+                      .item-content
+                        .item-inner
+                          .item-title Left Page 1
+                  li
+                    a(href="left-page-2.html").item-link
+                      .item-content
+                        .item-inner
+                          .item-title Left Page 2
+
+              .content-block-title Control Main View
+              .list-block
+                ul
+                  li
+                    a(href="about.html", data-view=".view-main").item-link.close-panel
+                      .item-content
+                        .item-inner
+                          .item-title About
+                  li
+                    a(href="services.html", data-view=".view-main").item-link.close-panel
+                      .item-content
+                        .item-inner
+                          .item-title Services
+                  li
+                    a(href="#", data-view=".view-main").back.item-link.close-panel
+                      .item-content
+                        .item-inner
+                          .item-title Back in history
     // Right panel with cover effect
     .panel.panel-right.panel-reveal
       .content-block
         p Right panel content goes here
     // Views
     .views
-      // Put panels-overlay and left-panel with view inside of views
-      // Panels overlay
-      .panel-overlay
-      // Left panel with reveal effect
-      .panel.panel-left.panel-cover
-        // Left view
-        .view.view-left.navbar-through
-          .navbar
-            .navbar-inner
-              .left
-              .center.sliding Left View
-              .right
-          .pages
-            .page(data-page="index-left")
-              .page-content
-                .content-block-title Left View Links
-                .list-block
-                  ul
-                    li
-                      a(href="left-page-1.html").item-link
-                        .item-content
-                          .item-inner
-                            .item-title Left Page 1
-                    li
-                      a(href="left-page-2.html").item-link
-                        .item-content
-                          .item-inner
-                            .item-title Left Page 2
-                  
-                .content-block-title Control Main View
-                .list-block
-                  ul
-                    li
-                      a(href="about.html", data-view=".view-main").item-link.close-panel
-                        .item-content
-                          .item-inner
-                            .item-title About
-                    li
-                      a(href="services.html", data-view=".view-main").item-link.close-panel
-                        .item-content
-                          .item-inner
-                            .item-title Services
-                    li
-                      a(href="#", data-view=".view-main").back.item-link.close-panel
-                        .item-content
-                          .item-inner
-                            .item-title Back in history
       // Right view, it is main view
       .view.view-main.navbar-through
         .navbar
@@ -100,7 +98,7 @@ html
                       .item-content
                         .item-inner
                           .item-title Services
-                  
+
     // Path to Framework7 Library JS
     script(type="text/javascript", src="../../dist/js/framework7.min.js")
     // Path to your app js
