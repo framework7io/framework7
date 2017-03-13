@@ -11,6 +11,9 @@ app.init = function () {
     // Init Device
     if (app.getDeviceInfo) app.getDeviceInfo();
 
+    // Init resize events and calc app sizes
+    if (app.initResize) app.initResize();
+
     // Init Panels Breakpoints
     if (app.initPanelsBreakpoints && (app.params.panelLeftBreakpoint || app.params.panelRightBreakpoint)) app.initPanelsBreakpoints();
 
@@ -27,9 +30,6 @@ app.init = function () {
     $('.navbar:not(.cached)').each(function () {
         app.initNavbarWithCallback(this);
     });
-
-    // Init resize events
-    if (app.initResize) app.initResize();
 
     // Init push state
     if (app.initPushState && app.params.pushState) app.initPushState();
