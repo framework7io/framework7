@@ -22,9 +22,9 @@ app.initPullToRefresh = function (pageContainer) {
         dynamicTriggerDistance = true;
     }
     else {
-        triggerDistance = 44;   
+        triggerDistance = 44;
     }
-    
+
     function handleTouchStart(e) {
         if (isTouched) {
             if (app.device.os === 'android') {
@@ -32,13 +32,13 @@ app.initPullToRefresh = function (pageContainer) {
             }
             else return;
         }
-        
+
         /*jshint validthis:true */
         container = $(this);
         if (container.hasClass('refreshing')) {
             return;
         }
-        
+
         isMoved = false;
         pullStarted = false;
         isTouched = true;
@@ -48,9 +48,9 @@ app.initPullToRefresh = function (pageContainer) {
         touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
         touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         touchStartTime = (new Date()).getTime();
-        
+
     }
-    
+
     function handleTouchMove(e) {
         if (!isTouched) return;
         var pageX, pageY, touch;
@@ -71,7 +71,7 @@ app.initPullToRefresh = function (pageContainer) {
             pageY = e.pageY;
         }
         if (!pageX || !pageY) return;
-            
+
 
         if (typeof isScrolling === 'undefined') {
             isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
@@ -82,7 +82,7 @@ app.initPullToRefresh = function (pageContainer) {
         }
 
         scrollTop = container[0].scrollTop;
-        if (typeof wasScrolled === 'undefined' && scrollTop !== 0) wasScrolled = true; 
+        if (typeof wasScrolled === 'undefined' && scrollTop !== 0) wasScrolled = true;
 
         if (!isMoved) {
             /*jshint validthis:true */
@@ -105,7 +105,7 @@ app.initPullToRefresh = function (pageContainer) {
         }
         isMoved = true;
         touchesDiff = pageY - touchesStart.y;
-        
+
         if (touchesDiff > 0 && scrollTop <= 0 || scrollTop < 0) {
             // iOS 8 fix
             if (app.device.os === 'ios' && parseInt(app.device.osVersion.split('.')[0], 10) > 7 && scrollTop === 0 && !wasScrolled) useTranslate = true;
