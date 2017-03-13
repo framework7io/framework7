@@ -160,7 +160,7 @@ app.showPreloader = function (title) {
     });
 };
 app.hidePreloader = function () {
-    app.closeModal('.modal.modal-in');
+    app.closeModal('.modal-preloader');
 };
 app.showIndicator = function () {
     if ($('.preloader-indicator-overlay').length > 0) return;
