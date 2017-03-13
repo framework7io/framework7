@@ -8,7 +8,7 @@ var VirtualList = function (listBlock, params) {
         cache: true,
         dynamicHeightBufferSize: 1,
         showFilteredItemsOnly: false,
-        template: 
+        template:
             '<li>' +
                 '<div class="item-content">' +
                     '<div class="item-inner">' +
@@ -91,7 +91,7 @@ var VirtualList = function (listBlock, params) {
         }
         else {
             vl.filteredItems = null;
-            delete vl.filteredItems;    
+            delete vl.filteredItems;
         }
         vl.update();
     };
@@ -141,10 +141,10 @@ var VirtualList = function (listBlock, params) {
             return;
         }
 
-        var items = vl.filteredItems || vl.items, 
+        var items = vl.filteredItems || vl.items,
             fromIndex, toIndex, heightBeforeFirstItem = 0, heightBeforeLastItem = 0;
         if (dynamicHeight) {
-            var itemTop = 0, j, itemHeight; 
+            var itemTop = 0, j, itemHeight;
             maxBufferHeight = pageHeight;
 
             for (j = 0; j < vl.heights.length; j++) {
@@ -247,7 +247,7 @@ var VirtualList = function (listBlock, params) {
         else {
             vl.ul[0].appendChild(vl.fragment);
         }
-        
+
         if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
 
         if (typeof forceScrollTop !== 'undefined' && force) {
@@ -293,7 +293,7 @@ var VirtualList = function (listBlock, params) {
         vl.listBlock.parents('.tab').eq(0)[action]('tab:show', vl.handleResize);
         vl.listBlock.parents('.panel').eq(0)[action]('panel:open', vl.handleResize);
         vl.listBlock.parents('.popup').eq(0)[action]('popup:open', vl.handleResize);
-        $(window)[action]('resize', vl.handleResize);
+        app[action === 'on' ? 'onResize' : 'offResize'](vl.handleResize);
     };
 
     // Init Virtual List
@@ -428,7 +428,7 @@ var VirtualList = function (listBlock, params) {
                         newCache[cachedIndex - 1] = vl.domCache[cached];
                     }
                     else {
-                        newCache[cachedIndex] = vl.domCache[cached];   
+                        newCache[cachedIndex] = vl.domCache[cached];
                     }
                 }
                 vl.domCache = newCache;

@@ -183,7 +183,7 @@ app.actions = function (target, params, animated) {
             if (app.device.ipad) toPopover = true;
         }
         else {
-            if ($(window).width() >= 768) toPopover = true;
+            if (app.width >= 768) toPopover = true;
         }
     }
     if (typeof animated === 'undefined') animated = true;
@@ -315,14 +315,12 @@ app.popover = function (modal, target, removeOnClose, animated) {
         var targetWidth = target.outerWidth();
         var targetHeight = target.outerHeight();
         var targetOffset = target.offset();
-        var targetOffsetLeft = targetOffset.left - app.root.offset().left;
+        var targetOffsetLeft = targetOffset.left - app.left;
+        var targetOffsetTop = targetOffset.top - app.top;
         var targetParentPage = target.parents('.page');
         if (targetParentPage.length > 0) {
-            targetOffset.top = targetOffset.top - targetParentPage[0].scrollTop;
+            targetOffsetTop = targetOffsetTop - targetParentPage[0].scrollTop;
         }
-
-        var windowHeight = $(window).height();
-        var applicationWidth = app.root.width();
 
         var modalTop = 0;
         var modalLeft = 0;
@@ -330,32 +328,32 @@ app.popover = function (modal, target, removeOnClose, animated) {
         // Top Position
         var modalPosition = material ? 'bottom' : 'top';
         if (material) {
-            if (modalHeight < windowHeight - targetOffset.top - targetHeight) {
+            if (modalHeight < app.height - targetOffsetTop - targetHeight) {
                 // On bottom
                 modalPosition = 'bottom';
-                modalTop = targetOffset.top;
+                modalTop = targetOffsetTop;
             }
-            else if (modalHeight < targetOffset.top) {
+            else if (modalHeight < targetOffsetTop) {
                 // On top
-                modalTop = targetOffset.top - modalHeight + targetHeight;
+                modalTop = targetOffsetTop - modalHeight + targetHeight;
                 modalPosition = 'top';
             }
             else {
                 // On middle
                 modalPosition = 'bottom';
-                modalTop = targetOffset.top;
+                modalTop = targetOffsetTop;
             }
 
             if (modalTop <= 0) {
                 modalTop = 8;
             }
-            else if (modalTop + modalHeight >= windowHeight) {
-                modalTop = windowHeight - modalHeight - 8;
+            else if (modalTop + modalHeight >= app.height) {
+                modalTop = app.height - modalHeight - 8;
             }
 
             // Horizontal Position
             modalLeft = targetOffsetLeft;
-            if (modalLeft + modalWidth >= applicationWidth - 8) {
+            if (modalLeft + modalWidth >= app.width - 8) {
                 modalLeft = targetOffsetLeft + targetWidth - modalWidth - 8;
             }
             if (modalLeft < 8) {
@@ -370,7 +368,7 @@ app.popover = function (modal, target, removeOnClose, animated) {
             if (target.hasClass('floating-button-to-popover') && !modal.hasClass('modal-in')) {
                 modal.addClass('popover-floating-button');
                 var diffX = (modalLeft + modalWidth / 2) - (targetOffsetLeft + targetWidth / 2),
-                    diffY = (modalTop + modalHeight / 2) - (targetOffset.top + targetHeight / 2);
+                    diffY = (modalTop + modalHeight / 2) - (targetOffsetTop + targetHeight / 2);
                 target
                     .addClass('floating-button-to-popover-in')
                     .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0)')
@@ -396,30 +394,30 @@ app.popover = function (modal, target, removeOnClose, animated) {
             }
             else if (target.hasClass('floating-button-to-popover') && modal.hasClass('modal-in')) {
                 modalLeft = targetOffsetLeft;
-                modalTop = targetOffset.top;
+                modalTop = targetOffsetTop;
             }
 
         }
         else {
-            if ((modalHeight + modalAngleSize) < targetOffset.top) {
+            if ((modalHeight + modalAngleSize) < targetOffsetTop) {
                 // On top
-                modalTop = targetOffset.top - modalHeight - modalAngleSize;
+                modalTop = targetOffsetTop - modalHeight - modalAngleSize;
             }
-            else if ((modalHeight + modalAngleSize) < windowHeight - targetOffset.top - targetHeight) {
+            else if ((modalHeight + modalAngleSize) < app.height - targetOffsetTop - targetHeight) {
                 // On bottom
                 modalPosition = 'bottom';
-                modalTop = targetOffset.top + targetHeight + modalAngleSize;
+                modalTop = targetOffsetTop + targetHeight + modalAngleSize;
             }
             else {
                 // On middle
                 modalPosition = 'middle';
-                modalTop = targetHeight / 2 + targetOffset.top - modalHeight / 2;
+                modalTop = targetHeight / 2 + targetOffsetTop - modalHeight / 2;
                 diff = modalTop;
                 if (modalTop <= 0) {
                     modalTop = 5;
                 }
-                else if (modalTop + modalHeight >= windowHeight) {
-                    modalTop = windowHeight - modalHeight - 5;
+                else if (modalTop + modalHeight >= app.height) {
+                    modalTop = app.height - modalHeight - 5;
                 }
                 diff = diff - modalTop;
             }
@@ -429,7 +427,7 @@ app.popover = function (modal, target, removeOnClose, animated) {
                 modalLeft = targetWidth / 2 + targetOffsetLeft - modalWidth / 2;
                 diff = modalLeft;
                 if (modalLeft < 5) modalLeft = 5;
-                if (modalLeft + modalWidth > applicationWidth) modalLeft = applicationWidth - modalWidth - 5;
+                if (modalLeft + modalWidth > app.width) modalLeft = app.width - modalWidth - 5;
                 if (modalPosition === 'top') {
                     modalAngle.addClass('on-bottom');
                 }
@@ -445,9 +443,9 @@ app.popover = function (modal, target, removeOnClose, animated) {
             else if (modalPosition === 'middle') {
                 modalLeft = targetOffsetLeft - modalWidth - modalAngleSize;
                 modalAngle.addClass('on-right');
-                if (modalLeft < 5 || (modalLeft + modalWidth > applicationWidth)) {
+                if (modalLeft < 5 || (modalLeft + modalWidth > app.width)) {
                     if (modalLeft < 5) modalLeft = targetOffsetLeft + targetWidth + modalAngleSize;
-                    if (modalLeft + modalWidth > applicationWidth) modalLeft = applicationWidth - modalWidth - 5;
+                    if (modalLeft + modalWidth > app.width) modalLeft = app.width - modalWidth - 5;
                     modalAngle.removeClass('on-right').addClass('on-left');
                 }
                 modalAngleTop = (modalHeight / 2 - modalAngleSize + diff);
@@ -463,10 +461,10 @@ app.popover = function (modal, target, removeOnClose, animated) {
 
     sizePopover();
 
-    $(window).on('resize', sizePopover);
+    app.onResize(sizePopover);
 
     modal.on('popover:close', function () {
-        $(window).off('resize', sizePopover);
+        app.offResize(sizePopover);
     });
 
     app.openModal(modal, animated);

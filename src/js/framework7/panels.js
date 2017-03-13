@@ -148,7 +148,7 @@ app.initPanelsBreakpoints = function () {
             }
         }
     }
-    $(window).on('resize', setPanels);
+    app.onResize(setPanels);
     setPanels();
 };
 /*======================================================

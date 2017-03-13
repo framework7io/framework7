@@ -10,17 +10,31 @@ function _fixIpadBodyScrolLeft() {
         }, 0);
     }
 }
-function _getAppSize() {
+var appResizeCallbacks = [];
+app.getSize = function () {
     var offset = app.root.offset();
     app.width = app.root[0].offsetWidth;
     app.height = app.root[0].offsetHeight;
     app.left = offset.left;
     app.top = offset.top;
-}
+};
+app.onResize = function (callback) {
+    appResizeCallbacks.push(callback);
+};
+app.offResize = function (callback) {
+    for (var i = 0; i < appResizeCallbacks.length; i++) {
+        if (appResizeCallbacks[i] === callback) {
+            appResizeCallbacks.splice(i, 1);
+        }
+    }
+};
 app.resize = function () {
-    if (app.sizeNavbars) app.sizeNavbars();
     _fixIpadBodyScrolLeft();
-    _getAppSize();
+    app.getSize();
+    if (app.sizeNavbars) app.sizeNavbars();
+    for (var i = 0; i < appResizeCallbacks.length; i++) {
+        appResizeCallbacks[i]();
+    }
 };
 app.orientationchange = function () {
     if (app.device && app.device.minimalUi) {
@@ -31,5 +45,5 @@ app.orientationchange = function () {
 app.initResize = function () {
     $(window).on('resize', app.resize);
     $(window).on('orientationchange', app.orientationchange);
-    _getAppSize();
+    app.getSize();
 };
