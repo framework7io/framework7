@@ -2,7 +2,6 @@
 Template7 Template engine
 ===========================*/
 window.Template7 = (function () {
-    'use strict';
     function isArray(arr) {
         return Object.prototype.toString.apply(arr) === '[object Array]';
     }
