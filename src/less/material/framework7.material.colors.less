@@ -164,6 +164,62 @@ Framework7 Layouts Themes
     .timeline-item-time {
         color: rgba(255,255,255,0.7);
     }
+    // Data Table
+    .data-table {
+        tbody {
+            tr.data-table-row-selected {
+                background: rgba(255,255,255,0.05);
+            }
+            td {
+                .hairline(top, @blockBorder);
+            }
+        }
+        html:not(.ios):not(.android) & {
+            tbody tr:hover {
+                background: rgba(255,255,255,0.05);
+            }
+        }
+        thead {
+            th, td {
+                &:not(.sortable-active) {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+        }
+        th, td {
+            &.actions-cell {
+                a.link {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+        }
+        .sortable-cell:not(.numeric-cell):after, .sortable-cell.numeric-cell:before {
+            .encoded-svg-background("<svg fill='#ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z' fill='#ffffff'/></svg>");
+        }
+        .data-table-actions {
+            a.link {
+                color: rgba(255,255,255,0.5);
+            }
+        }
+        // Collapsible
+        @media (max-width:480px) and (orientation:portrait) {
+            &.data-table-collapsible {
+                tr {
+                    position: relative;
+                    .hairline(top, @blockBorder);
+                }
+                tr:hover {
+                    background-color: inherit;
+                }
+                td:not(.checkbox-cell) {
+                    font-size: 16px;
+                    &:before {
+                        color: rgba(255,255,255,0.5);
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*==========================
