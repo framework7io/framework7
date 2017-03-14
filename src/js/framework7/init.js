@@ -4,13 +4,19 @@
 app.init = function () {
     // Compile Template7 templates on app load
     if (app.initTemplate7Templates) app.initTemplate7Templates();
-    
+
     // Init Plugins
     if (app.initPlugins) app.initPlugins();
-    
+
     // Init Device
     if (app.getDeviceInfo) app.getDeviceInfo();
-    
+
+    // Init resize events and calc app sizes
+    if (app.initResize) app.initResize();
+
+    // Init Panels Breakpoints
+    if (app.initPanelsBreakpoints && (app.params.panelLeftBreakpoint || app.params.panelRightBreakpoint)) app.initPanelsBreakpoints();
+
     // Init Click events
     if (app.initFastClicks && app.params.fastClicks) app.initFastClicks();
     if (app.initClickEvents) app.initClickEvents();
@@ -22,11 +28,8 @@ app.init = function () {
 
     // Init each navbar callbacks
     $('.navbar:not(.cached)').each(function () {
-        app.initNavbarWithCallback(this); 
+        app.initNavbarWithCallback(this);
     });
-    
-    // Init resize events
-    if (app.initResize) app.initResize();
 
     // Init push state
     if (app.initPushState && app.params.pushState) app.initPushState();
@@ -40,9 +43,6 @@ app.init = function () {
     // Init Live Swipe Panels
     if (app.initSwipePanels && (app.params.swipePanel || app.params.swipePanelOnlyClose)) app.initSwipePanels();
 
-    // Init Panels Breakpoints
-    if (app.initPanelsBreakpoints && (app.params.panelLeftBreakpoint || app.params.panelRightBreakpoint)) app.initPanelsBreakpoints();
-    
     // Init Material Inputs
     if (app.params.material && app.initMaterialWatchInputs) app.initMaterialWatchInputs();
 
@@ -54,7 +54,7 @@ app.init = function () {
             }
         });
     }
-    
+
     // App Init callback
     if (app.params.onAppInit) app.params.onAppInit();
 

@@ -570,7 +570,7 @@ var Autocomplete = function (params) {
             a.input.parents('.page-content').append(a.dropdown);
             a.dropdown.addClass('autocomplete-dropdown-in');
             a.input.trigger('input');
-            $(window).on('resize', a.positionDropDown);
+            app.onResize(a.positionDropDown);
             if (a.params.onOpen) a.params.onOpen(a);
         }
         else {
@@ -618,7 +618,7 @@ var Autocomplete = function (params) {
             a.dropdown.removeClass('autocomplete-dropdown-in').remove();
             a.input.parents('.item-content-dropdown-expand').removeClass('item-content-dropdown-expand');
             a.opened = false;
-            $(window).off('resize', a.positionDropDown);
+            app.offResize(a.positionDropDown);
             if (a.params.onClose) a.params.onClose(a);
         }
         if (a.params.openIn === 'popup') {

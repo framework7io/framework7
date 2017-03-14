@@ -106,7 +106,7 @@ var Calendar = function (params) {
                     toPopover = app.device.ipad ? true : false;
                 }
                 else {
-                    if ($(window).width() >= 768) toPopover = true;
+                    if (app.width >= 768) toPopover = true;
                 }
             }
         }

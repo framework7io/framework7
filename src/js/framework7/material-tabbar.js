@@ -37,9 +37,9 @@ app.initPageMaterialTabbar = function (pageContainer) {
         }
 
         tabbarSetHighlight();
-        $(window).on('resize', tabbarSetHighlight);
+        app.onResize(tabbarSetHighlight);
         pageContainer.once('page:beforeremove', function () {
-            $(window).off('resize', tabbarSetHighlight);
+            app.offResize(tabbarSetHighlight);
         });
     }
 };

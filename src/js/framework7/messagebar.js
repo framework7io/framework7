@@ -12,7 +12,7 @@ var Messagebar = function (container, params) {
             params[def] = defaults[def];
         }
     }
-    
+
     // Instance
     var m = this;
 
@@ -34,13 +34,13 @@ var Messagebar = function (container, params) {
     m.pageContentPadding = parseInt(m.pageContent.css('padding-bottom'));
     m.initialBarHeight = m.container[0].offsetHeight;
     m.initialAreaHeight = m.textarea[0].offsetHeight;
-    
+
 
     // Resize textarea
     m.sizeTextarea = function () {
         // Reset
         m.textarea.css({'height': ''});
-        
+
         var height = m.textarea[0].offsetHeight;
         var diff = height - m.textarea[0].clientHeight;
         var scrollHeight = m.textarea[0].scrollHeight;
@@ -71,16 +71,16 @@ var Messagebar = function (container, params) {
             }
         }
     };
-    
+
     // Clear
     m.clear = function () {
         m.textarea.val('').trigger('change');
     };
     m.value = function (value) {
         if (typeof value === 'undefined') return m.textarea.val();
-        else m.textarea.val(value).trigger('change');  
+        else m.textarea.val(value).trigger('change');
     };
-    
+
     // Handle textarea
     m.textareaTimeout = undefined;
     m.handleTextarea = function (e) {
@@ -103,7 +103,7 @@ var Messagebar = function (container, params) {
     m.detachEvents = function () {
         m.attachEvents(true);
     };
-    
+
     // Init Destroy
     m.init = function () {
         m.attachEvents();

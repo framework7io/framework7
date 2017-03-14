@@ -1,5 +1,5 @@
 /**
- * Framework7 1.5.3
+ * Framework7 1.5.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * iOS Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 10, 2017
+ * Released on: March 13, 2017
  */
 html,
 body,
@@ -872,7 +872,6 @@ p {
 .views,
 .view {
   position: relative;
-  width: 100%;
   height: 100%;
   z-index: 5000;
 }
@@ -883,6 +882,7 @@ p {
 .view {
   overflow: hidden;
   box-sizing: border-box;
+  width: 100%;
 }
 /* === Pages === */
 .pages {
@@ -2634,7 +2634,8 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   -webkit-flex-shrink: 0;
   -ms-flex: 0 0 auto;
   flex-shrink: 0;
-  margin-left: 5px;
+  margin-left: auto;
+  padding-left: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -3381,11 +3382,20 @@ html:not(.watch-active-state) .button.button-fill:active,
   -moz-appearance: none;
   -ms-appearance: none;
   appearance: none;
-  border: none;
   height: 28px;
   width: 28px;
+  border-radius: 28px;
+  background: #fff;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  border: 0;
+  outline: 0;
+  position: absolute;
+  box-sizing: border-box;
+  content: ' ';
   position: relative;
-  background: none;
+  cursor: pointer;
+  margin-top: -1px;
 }
 .range-slider input[type="range"]::-webkit-slider-thumb:after {
   height: 28px;
@@ -4908,6 +4918,14 @@ html.pixel-ratio-3 .picker-modal.smart-select-picker .toolbar:after {
   opacity: 0;
   z-index: 5999;
   display: none;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition-duration: 400ms;
+  transition-duration: 400ms;
+}
+.panel-overlay.not-animated {
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
 }
 .panel {
   z-index: 1000;
@@ -4929,19 +4947,29 @@ html.pixel-ratio-3 .picker-modal.smart-select-picker .toolbar:after {
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
 }
+.panel.panel-left {
+  left: 0;
+}
 .panel.panel-left.panel-cover {
   z-index: 6000;
-  left: -260px;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
 }
-.panel.panel-left.panel-reveal {
-  left: 0;
+.panel.panel-right {
+  right: 0;
 }
 .panel.panel-right.panel-cover {
   z-index: 6000;
-  right: -260px;
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
 }
-.panel.panel-right.panel-reveal {
-  right: 0;
+.panel.panel-visible-by-breakpoint {
+  display: block;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+.panel.panel-visible-by-breakpoint.panel-cover {
+  z-index: 5900;
 }
 body.with-panel-left-cover .views,
 body.with-panel-right-cover .views {
@@ -4951,6 +4979,7 @@ body.with-panel-right-cover .views {
 body.with-panel-left-cover .panel-overlay,
 body.with-panel-right-cover .panel-overlay {
   display: block;
+  opacity: 1;
 }
 body.with-panel-left-reveal .views,
 body.with-panel-right-reveal .views {
@@ -4967,29 +4996,36 @@ body.with-panel-right-reveal .panel.not-animated ~ .views {
 }
 body.with-panel-left-reveal .panel-overlay,
 body.with-panel-right-reveal .panel-overlay {
+  background: rgba(0, 0, 0, 0);
   display: block;
+  opacity: 0;
 }
 body.with-panel-left-reveal .views {
   -webkit-transform: translate3d(260px, 0, 0);
   transform: translate3d(260px, 0, 0);
 }
 body.with-panel-left-reveal .panel-overlay {
-  margin-left: 260px;
-}
-body.with-panel-left-cover .panel-left {
   -webkit-transform: translate3d(260px, 0, 0);
   transform: translate3d(260px, 0, 0);
+}
+body.with-panel-left-cover .panel.panel-left {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 body.with-panel-right-reveal .views {
   -webkit-transform: translate3d(-260px, 0, 0);
   transform: translate3d(-260px, 0, 0);
 }
 body.with-panel-right-reveal .panel-overlay {
-  margin-left: -260px;
-}
-body.with-panel-right-cover .panel-right {
   -webkit-transform: translate3d(-260px, 0, 0);
   transform: translate3d(-260px, 0, 0);
+}
+body.with-panel-right-cover .panel.panel-right {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+body.panel-closing .panel-overlay {
+  display: block;
 }
 body.panel-closing .views {
   -webkit-transition-duration: 400ms;
@@ -7131,7 +7167,6 @@ body > .photo-browser .toolbar,
 .picker-item {
   height: 36px;
   line-height: 36px;
-  padding: 0 10px;
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -7143,6 +7178,9 @@ body > .photo-browser .toolbar,
   box-sizing: border-box;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
+}
+.picker-item span {
+  padding: 0 10px;
 }
 .picker-items-col-absolute .picker-item {
   position: absolute;

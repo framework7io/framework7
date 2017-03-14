@@ -62,7 +62,7 @@ app.initImagesLazyLoad = function (pageContainer) {
                 }
             }
         }
-        
+
         function onError() {
             el.removeClass('lazy').addClass('lazy-loaded');
             if (bg) {
@@ -89,7 +89,7 @@ app.initImagesLazyLoad = function (pageContainer) {
 
         // Loading flag
         imageIsLoading = true;
-        
+
         var image = new Image();
         image.onload = onLoad;
         image.onerror = onError;
@@ -114,8 +114,8 @@ app.initImagesLazyLoad = function (pageContainer) {
         return (
             rect.top >= (0 - threshold) &&
             rect.left >= (0 - threshold) &&
-            rect.top <= (window.innerHeight + threshold) &&
-            rect.left <= (window.innerWidth + threshold)
+            rect.top <= (app.height + threshold) &&
+            rect.left <= (app.width + threshold)
         );
     }
 
@@ -126,7 +126,7 @@ app.initImagesLazyLoad = function (pageContainer) {
         pageContainer[method]('lazy', lazyHandler);
         pageContent[method]('lazy', lazyHandler);
         pageContent[method]('scroll', lazyHandler);
-        $(window)[method]('resize', lazyHandler);
+        app[method === 'on' ? 'onResize' : 'offResize'](lazyHandler);
     }
     function detachEvents() {
         attachEvents(true);

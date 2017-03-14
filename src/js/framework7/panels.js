@@ -44,7 +44,7 @@ app.openPanel = function (panelPosition, animated) {
         });
     }
     if (animated) {
-        panelTransitionEnd();    
+        panelTransitionEnd();
     }
     else {
         panel.trigger('opened panel:opened');
@@ -95,20 +95,18 @@ app.initPanelsBreakpoints = function () {
     var panelLeft = $('.panel-left');
     var panelRight = $('.panel-right');
     var views = app.root.children('.views');
-    var ww, wasVisible;
+    var wasVisible;
     function setPanels() {
-        ww = $(window).width();
-
         // Left Panel
         if (app.params.panelLeftBreakpoint && panelLeft.length > 0) {
             wasVisible = panelLeft.hasClass('panel-visible-by-breakpoint');
-            if (ww >= app.params.panelLeftBreakpoint) {
+            if (app.width >= app.params.panelLeftBreakpoint) {
                 if (!wasVisible) {
                     $('body').removeClass('with-panel-left-reveal with-panel-left-cover');
                     panelLeft.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('active');
                     panelLeft.trigger('open panel:open opened panel:opened');
                     views.css({
-                        'margin-left': panelLeft.width() + 'px' 
+                        'margin-left': panelLeft.width() + 'px'
                     });
                     app.allowPanelOpen = true;
                 }
@@ -127,13 +125,13 @@ app.initPanelsBreakpoints = function () {
         // Right Panel
         if (app.params.panelRightBreakpoint && panelRight.length > 0) {
             wasVisible = panelRight.hasClass('panel-visible-by-breakpoint');
-            if (ww >= app.params.panelRightBreakpoint) {
+            if (app.width >= app.params.panelRightBreakpoint) {
                 if (!wasVisible) {
                     $('body').removeClass('with-panel-right-reveal with-panel-right-cover');
                     panelRight.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('active');
                     panelRight.trigger('open panel:open opened panel:opened');
                     views.css({
-                        'margin-right': panelRight.width() + 'px' 
+                        'margin-right': panelRight.width() + 'px'
                     });
                     app.allowPanelOpen = true;
                 }
@@ -150,7 +148,7 @@ app.initPanelsBreakpoints = function () {
             }
         }
     }
-    $(window).on('resize', setPanels);
+    app.onResize(setPanels);
     setPanels();
 };
 /*======================================================
@@ -201,7 +199,7 @@ app.initSwipePanels = function () {
                 if (touchesStart.x > app.params.swipePanelActiveArea) return;
             }
             if (side === 'right') {
-                if (touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) return;
+                if (touchesStart.x < app.width - app.params.swipePanelActiveArea) return;
             }
         }
         isMoved = false;
@@ -243,7 +241,7 @@ app.initSwipePanels = function () {
                         isTouched = false;
                         return;
                     }
-                    if (side === 'right' && touchesStart.x < window.innerWidth - app.params.swipePanelActiveArea) {
+                    if (side === 'right' && touchesStart.x < app.width - app.params.swipePanelActiveArea) {
                         isTouched = false;
                         return;
                     }

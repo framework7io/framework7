@@ -54,7 +54,7 @@ var Picker = function (params) {
                     toPopover = app.device.ipad ? true : false;
                 }
                 else {
-                    if ($(window).width() >= 768) toPopover = true;
+                    if (app.width >= 768) toPopover = true;
                 }
             }
         }
@@ -407,7 +407,7 @@ var Picker = function (params) {
             }
         }
     }
-    $(window).on('resize', resizeCols);
+    app.onResize(resizeCols);
 
     // HTML Layout
     p.columnHTML = function (col, onlyItems) {
@@ -604,7 +604,7 @@ var Picker = function (params) {
             p.input.off('click focus', openOnInput);
         }
         $('html').off('click', closeOnHTMLClick);
-        $(window).off('resize', resizeCols);
+        app.offResize(resizeCols);
     };
 
     if (p.inline) {

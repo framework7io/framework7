@@ -1,5 +1,7 @@
 // Initialize your app
-var myApp = new Framework7();
+var myApp = new Framework7({
+    panelLeftBreakpoint: 1024
+});
 
 // Export selectors engine
 var $$ = Dom7;
