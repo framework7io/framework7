@@ -167,6 +167,9 @@
     .data-table-links, .data-table-actions {
         .flexbox();
         .justify-content(space-between);
+        a.link {
+            cursor: pointer;
+        }
         a.link + a.link {
             margin-left: 24px;
         }
@@ -175,6 +178,7 @@
         margin-left: auto;
         .align-items(center);
         a.link {
+            cursor: pointer;
             min-width: 0;
             color: rgba(0,0,0,0.54);
         }
@@ -185,9 +189,6 @@
             overflow: visible;
             &.active-state, html:not(.watch-active-state) &:active {
                 background: none;
-            }
-            + a.link {
-                margin-left: 24px;
             }
         }
     }
