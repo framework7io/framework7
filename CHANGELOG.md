@@ -3,7 +3,7 @@
 ## Framework7 v1.5.4 - Updated on March 13, 2017
   * Panels
     * A bit reworked Panels layout/styling in favor of`translate` CSS property. May required small CSS fixes after update if you have changed panels sizes
-    * Panels Breakpoints to bring Split View easier. Two new app parameters `panelLeftBreakpoint` and `panelRightBreakpoint` where you can specify minimal width to make panels always visible
+    * Panels Breakpoints. Two new app parameters `panelLeftBreakpoint` and `panelRightBreakpoint` where you can specify minimal width to make panels always visible
   * Fixed Chrome issue that now treats most of touch events as "passive"
   * Autocomplete
     * New `autoFocus` parameter to open standalone autcomplete and auto focus search field
