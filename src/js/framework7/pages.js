@@ -324,6 +324,8 @@ app.initPage = function (pageContainer) {
     if (app.params.material && app.initPageMaterialInputs) app.initPageMaterialInputs(pageContainer);
     // Init Material Tabbar
     if (app.params.material && app.initPageMaterialTabbar) app.initPageMaterialTabbar(pageContainer);
+    // Init Data Table
+    if (app.initPageDataTables) app.initPageDataTables(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     pageContainer = $(pageContainer);
