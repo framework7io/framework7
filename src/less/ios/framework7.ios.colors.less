@@ -75,14 +75,33 @@ Framework7 Color Themes
         .messagebar .messagebar-send-link {
             background-color: @color;
         }
-        label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox, label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+        label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+        label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+        .form-checkbox input[type="checkbox"]:checked ~ i,
+        label.label-checkbox& input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+        label.label-checkbox& input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+        .form-checkbox& input[type="checkbox"]:checked ~ i {
             background-color: @color;
         }
-        label.label-radio input[type="checkbox"]:checked ~ .item-inner, label.label-radio input[type="radio"]:checked ~ .item-inner {
+        .form-radio input[type="radio"]:checked ~ i,
+        label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+        label.label-radio input[type="radio"]:checked ~ .item-inner,
+        .form-radio& input[type="radio"]:checked ~ i,
+        label.label-radio& input[type="checkbox"]:checked ~ .item-inner,
+        label.label-radio& input[type="radio"]:checked ~ .item-inner {
             .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='#@{colorHex}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
         }
         .picker-calendar-day.picker-calendar-day-selected span {
             background-color: @color !important;
+        }
+        // Data Tables
+        .data-table, .data-table& {
+            .data-table-header-selected {
+                background: rgba(red(@color), green(@color), blue(@color), 0.1);
+            }
+            .data-table-title-selected {
+                color: @color;
+            }
         }
     }
     .swiper-pagination {
@@ -503,6 +522,37 @@ Framework7 Layouts Themes
     }
     .timeline-year {
         .hairline-color(right, @barsBorder);
+    }
+    // Data Table
+    .data-table {
+        tbody {
+            tr.data-table-row-selected {
+                background: rgba(255,255,255,0.05);
+            }
+            td {
+                .hairline(top, @blockBorder);
+            }
+        }
+        html:not(.ios):not(.android) & {
+            tbody tr:hover {
+                background: rgba(255,255,255,0.05);
+            }
+        }
+        .sortable-cell:not(.numeric-cell):after, .sortable-cell.numeric-cell:before {
+            .encoded-svg-background("<svg fill='#ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z' fill='#ffffff'/></svg>");
+        }
+
+        // Collapsible
+        @media (max-width:480px) and (orientation:portrait) {
+            &.data-table-collapsible {
+                tr {
+                    .hairline(top, @blockBorder);
+                }
+                tr:hover {
+                    background-color: inherit;
+                }
+            }
+        }
     }
 }
 

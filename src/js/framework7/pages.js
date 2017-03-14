@@ -318,6 +318,8 @@ app.initPage = function (pageContainer) {
     if (app.initPageProgressbar) app.initPageProgressbar(pageContainer);
     // Init resizeable textareas
     if (app.initPageResizableTextarea) app.initPageResizableTextarea(pageContainer);
+    // Init Data Table
+    if (app.initPageDataTables) app.initPageDataTables(pageContainer);
     // Init Material Preloader
     if (app.params.material && app.initPageMaterialPreloader) app.initPageMaterialPreloader(pageContainer);
     // Init Material Inputs

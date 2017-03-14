@@ -102,6 +102,7 @@
                 'src/js/framework7/picker.js',
                 'src/js/framework7/calendar.js',
                 'src/js/framework7/notifications.js',
+                'src/js/framework7/data-table.js',
                 'src/js/framework7/template7-templates.js',
                 'src/js/framework7/plugins.js',
                 'src/js/framework7/init.js',
