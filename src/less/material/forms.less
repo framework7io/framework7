@@ -363,6 +363,17 @@ textarea.resizable {
 }
 
 // Checkboxes
+.form-checkbox {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+label.label-checkbox, .form-checkbox {
+    cursor: pointer;
+    input[type="checkbox"], input[type="radio"] {
+        display: none;
+    }
+}
 label.label-checkbox i.icon-form-checkbox, .form-checkbox i {
     width: 18px;
     height: 18px;
@@ -388,19 +399,29 @@ label.label-checkbox i.icon-form-checkbox, .form-checkbox i {
         background-size: 100% auto;
     }
 }
-label.label-checkbox {
+label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox input[type="checkbox"]:checked ~ .item-after i.icon-form-checkbox,
+label.label-checkbox input[type="checkbox"]:checked ~ .item-inner i.icon-form-checkbox,
+label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox input[type="radio"]:checked ~ .item-after i.icon-form-checkbox,
+label.label-checkbox input[type="radio"]:checked ~ .item-inner i.icon-form-checkbox,
+.form-checkbox input[type="checkbox"]:checked ~ i {
+    border-color: @themeColor;
+    background-color: @themeColor;
+    &:after {
+        opacity: 1;
+    }
+}
+// Radio
+.form-radio {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+label.label-radio, .form-radio {
     cursor: pointer;
     input[type="checkbox"], input[type="radio"] {
         display: none;
-        &:checked + .item-media, &:checked ~ .item-after, &:checked ~ .item-inner{
-            i.icon-form-checkbox {
-                border-color: @themeColor;
-                background-color: @themeColor;
-            }
-            i.icon-form-checkbox:after {
-                opacity: 1;
-            }
-        }
     }
 }
 label.label-radio i.icon-form-radio, .form-radio i {
@@ -427,21 +448,20 @@ label.label-radio i.icon-form-radio, .form-radio i {
         .transition(300ms);
     }
 }
-label.label-radio {
-    cursor: pointer;
-    input[type="checkbox"], input[type="radio"] {
-        display: none;
-        &:checked + .item-media, &:checked ~ .item-after, &:checked ~ .item-inner{
-            i.icon-form-radio {
-                border-color: @themeColor;
-            }
-            i.icon-form-radio:after {
-                background-color: @themeColor;
-                .transform(scale(1));
-            }
-        }
+label.label-radio input[type="checkbox"]:checked + .item-media i.icon-form-radio,
+label.label-radio input[type="checkbox"]:checked ~ .item-after i.icon-form-radio,
+label.label-radio input[type="checkbox"]:checked ~ .item-inner i.icon-form-radio,
+label.label-radio input[type="radio"]:checked + .item-media i.icon-form-radio,
+label.label-radio input[type="radio"]:checked ~ .item-after i.icon-form-radio,
+label.label-radio input[type="radio"]:checked ~ .item-inner i.icon-form-radio,
+.form-radio input[type="radio"]:checked ~ i {
+    border-color: @themeColor;
+    &:after {
+        background-color: @themeColor;
+        .transform(scale(1));
     }
 }
+
 label.label-checkbox, label.label-radio {
     position: relative;
     overflow: hidden;
@@ -468,51 +488,8 @@ label.label-checkbox, label.label-radio {
     }
 }
 
-// Form Checkbox
-.form-checkbox {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    input {
-        display: none;
-    }
-    input[type="checkbox"]:checked {
-        ~ i {
-            border-color: @themeColor;
-            background-color: @themeColor;
-        }
-        ~ i:after {
-            opacity: 1;
-        }
-    }
-}
-.form-radio {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    input {
-        display: none;
-    }
-    input[type="radio"]:checked {
-        ~ i {
-            border-color: @themeColor;
-        }
-        ~ i:after {
-            background-color: @themeColor;
-            .transform(scale(1));
-        }
-    }
-}
 // Smart selects
 .smart-select {
-    select {
-        display: none;
-    }
-}
-
-// Dropdown
-.form-dropdown {
-    cursor: pointer;
     select {
         display: none;
     }
