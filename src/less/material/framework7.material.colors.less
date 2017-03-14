@@ -232,7 +232,7 @@ Framework7 Color Themes
     // Theme
     .theme-@{colorName} {
         // Links
-        a {
+        a, .card a {
             color: @color;
         }
         // Toolbars
@@ -253,7 +253,6 @@ Framework7 Color Themes
             }
         }
         label.label-checkbox, label.label-checkbox& {
-            cursor: pointer;
             i.icon-form-checkbox {
                 &:after {
                     .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' fill='#ffffff' width='24' height='24' viewBox='0 0 24 24'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>");
@@ -281,6 +280,29 @@ Framework7 Color Themes
                         background-color: @color;
                     }
                 }
+            }
+        }
+        .form-checkbox, .form-checkbox& {
+            input[type="checkbox"]:checked {
+                ~ i {
+                    border-color: @color;
+                    background-color: @color;
+                }
+            }
+        }
+        .form-radio, .form-radio& {
+            input[type="radio"]:checked {
+                ~ i {
+                    border-color: @color;
+                }
+                ~ i:after {
+                    background-color: @color;
+                }
+            }
+        }
+        .form-checkbox, .form-radio {
+            .ripple-wave {
+                background: rgba(red(@color), green(@color), blue(@color), 0.5);
             }
         }
         .focus-state {
@@ -322,6 +344,15 @@ Framework7 Color Themes
         // Status Bar Overlay
         .statusbar-overlay {
             background-color: @darkcolor;
+        }
+        // Data Tables
+        .data-table, .data-table& {
+            .data-table-header-selected {
+                background: rgba(red(@color), green(@color), blue(@color), 0.1);
+            }
+            .data-table-title-selected {
+                color: @color;
+            }
         }
     }
     .swiper-pagination {
