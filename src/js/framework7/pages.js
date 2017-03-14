@@ -318,14 +318,14 @@ app.initPage = function (pageContainer) {
     if (app.initPageProgressbar) app.initPageProgressbar(pageContainer);
     // Init resizeable textareas
     if (app.initPageResizableTextarea) app.initPageResizableTextarea(pageContainer);
+    // Init Data Table
+    if (app.initPageDataTables) app.initPageDataTables(pageContainer);
     // Init Material Preloader
     if (app.params.material && app.initPageMaterialPreloader) app.initPageMaterialPreloader(pageContainer);
     // Init Material Inputs
     if (app.params.material && app.initPageMaterialInputs) app.initPageMaterialInputs(pageContainer);
     // Init Material Tabbar
     if (app.params.material && app.initPageMaterialTabbar) app.initPageMaterialTabbar(pageContainer);
-    // Init Data Table
-    if (app.initPageDataTables) app.initPageDataTables(pageContainer);
 };
 app.reinitPage = function (pageContainer) {
     pageContainer = $(pageContainer);
