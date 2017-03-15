@@ -94,6 +94,9 @@ app.initImagesLazyLoad = function (pageContainer) {
         image.onload = onLoad;
         image.onerror = onError;
         image.src =src;
+		
+		// Add loaded callback
+		if (app.params.onLazyLoad && !el.hasClass('lazy-loaded')) app.params.onLazyLoad(el);
     }
     function lazyHandler() {
         lazyLoadImages = pageContainer.find('.lazy');
