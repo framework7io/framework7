@@ -61,6 +61,8 @@ app.initImagesLazyLoad = function (pageContainer) {
                     loadImage(imagesSequence.shift());
                 }
             }
+            el.trigger('lazy-loaded');
+            if (app.params.onLazyLoaded) app.params.onLazyLoaded(el);
         }
 
         function onError() {
@@ -78,6 +80,8 @@ app.initImagesLazyLoad = function (pageContainer) {
                     loadImage(imagesSequence.shift());
                 }
             }
+            el.trigger('lazy-error');
+            if (app.params.onLazyError) app.params.onLazyError(el);
         }
 
         if (app.params.imagesLazyLoadSequential) {
@@ -94,9 +98,10 @@ app.initImagesLazyLoad = function (pageContainer) {
         image.onload = onLoad;
         image.onerror = onError;
         image.src =src;
-		
-		// Add loaded callback
-		if (app.params.onLazyLoad && !el.hasClass('lazy-loaded')) app.params.onLazyLoad(el);
+
+        // Add loaded callback and events
+        el.trigger('lazy-load');
+        if (app.params.onLazyLoad && !el.hasClass('lazy-loaded')) app.params.onLazyLoad(el);
     }
     function lazyHandler() {
         lazyLoadImages = pageContainer.find('.lazy');
