@@ -4005,7 +4005,7 @@ Swiper.prototype = {
     ====================================================*/
     support: {
         touch : (window.Modernizr && Modernizr.touch === true) || (function () {
-            return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+            return !!(('ontouchstart' in window && window.ontouchstart != null) || window.DocumentTouch && document instanceof DocumentTouch);
         })(),
 
         transforms3d : (window.Modernizr && Modernizr.csstransforms3d === true) || (function () {
