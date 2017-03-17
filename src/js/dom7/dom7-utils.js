@@ -190,7 +190,7 @@ $.cancelAnimationFrame = function (id) {
         return window.clearTimeout(id);
     }
 };
-$.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+$.supportTouch = !!(('ontouchstart' in window && window.ontouchstart != null) || window.DocumentTouch && document instanceof DocumentTouch);
 
 // Remove Diacritics
 var defaultDiacriticsRemovalap = [
