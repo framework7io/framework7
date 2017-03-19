@@ -452,6 +452,9 @@
       "name": "more"
     },
     {
+      "name": "more_fill"
+    },
+    {
       "name": "more_round"
     },
     {
@@ -459,6 +462,9 @@
     },
     {
       "name": "more_vertical"
+    },
+    {
+      "name": "more_vertical_fill"
     },
     {
       "name": "more_vertical_round"
