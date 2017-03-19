@@ -37,9 +37,9 @@ app.get = function (url, view, ignoreCache, callback) {
         url: url,
         method: 'GET',
         beforeSend: app.params.onAjaxStart,
-        complete: function (xhr) {
-            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
-                if (app.params.cache) {
+        complete: function (xhr, status) {
+            if (status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
+                if (app.params.cache && xhr.responseText !== '') {
                     app.removeFromCache(_url);
                     app.cache.push({
                         url: _url,

@@ -236,7 +236,7 @@ $.ajax = function (options) {
     xhr.onerror = function (e) {
         if (xhrTimeout) clearTimeout(xhrTimeout);
         fireAjaxCallback('ajaxError ajax:error', {xhr: xhr}, 'error', xhr, xhr.status);
-        fireAjaxCallback('ajaxComplete ajax:complete', {xhr: xhr}, 'complete', xhr, xhr.status);
+        fireAjaxCallback('ajaxComplete ajax:complete', {xhr: xhr, error: true}, 'complete', xhr, 'error');
     };
 
     // Ajax start callback
