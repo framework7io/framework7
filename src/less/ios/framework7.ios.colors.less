@@ -61,7 +61,7 @@ Framework7 Color Themes
 
     // Theme
     .theme-@{colorName} {
-        a, .item-link.list-button {
+        a, .item-link.list-button, .list-button {
             color: @color;
         }
         .tabbar, .tabbar& {
@@ -176,7 +176,7 @@ Framework7 Color + Bg + Border
     //Plain color and links
     .color-@{colorName} {
         color: @color;
-        .list-block .item-link.list-button&, .tabbar a.active&, a& {
+        .list-block .item-link.list-button&, .list-button&, .tabbar a.active&, a& {
             color: @color;
         }
         .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{
@@ -458,7 +458,7 @@ Framework7 Layouts Themes
             background-color: @activeLink;
         }
     }
-    .item-link.list-button {
+    .item-link.list-button, .list-button {
         .hairline-color(bottom, @blockBorder);
     }
     .list-block-label {
@@ -679,7 +679,7 @@ Framework7 Layouts Themes
             background-color: @activeLink;
         }
     }
-    .item-link.list-button {
+    .item-link.list-button, .list-button {
         .hairline-color(bottom, @blockBorder);
     }
     .list-block-label {
