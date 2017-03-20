@@ -38,3 +38,7 @@ chance of keeping on top of things.
 
 * Push your changes to a topic branch in your fork of the repository.
 * Submit a pull request to the repository
+
+## Editor Config
+
+The project uses [.editorconfig](http://editorconfig.org/) to define the coding style of each file. We recommend that you install the Editor Config extension for your preferred IDE.

@@ -39,6 +39,8 @@ Bart DJ
 
 ### $10+
 
+Matthew Becker<br>
+Greg Hatt<br>
 Timo Ernst<br>
 Dmitry Akinin<br>
 Adrian Maleska<br>
@@ -54,6 +56,9 @@ Dave Billington
 
 ### $5+
 
+Daniel Wüst<br>
+Tirso Martínez Reyes<br>
+Zafer Ayan<br>
 Amir br<br>
 Toby Allen - Ballymaloe Cookery School<br>
 Dan Boschen<br>

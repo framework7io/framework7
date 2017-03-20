@@ -106,7 +106,7 @@ var Calendar = function (params) {
                     toPopover = app.device.ipad ? true : false;
                 }
                 else {
-                    if ($(window).width() >= 768) toPopover = true;
+                    if (app.width >= 768) toPopover = true;
                 }
             }
         }
@@ -332,7 +332,7 @@ var Calendar = function (params) {
                 p.params.onDayClick(p, day[0], dateYear, dateMonth, dateDay);
             }
             if (!day.hasClass('picker-calendar-day-selected') || p.params.multiple || p.params.rangePicker) {
-                p.addValue(new Date(dateYear, dateMonth, dateDay).getTime());
+                p.addValue(Date.UTC(dateYear, dateMonth, dateDay,0,0,0));
             }
             if (p.params.closeOnSelect) {
                 if (p.params.rangePicker && p.value.length === 2 || !p.params.rangePicker) p.close();
@@ -345,9 +345,10 @@ var Calendar = function (params) {
         p.container.find('.picker-calendar-next-year').on('click', p.nextYear);
         p.wrapper.on('click', handleDayClick);
         var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? {passive: true, capture: false} : false;
+        var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
         if (p.params.touchMove) {
             p.wrapper.on(app.touchEvents.start, handleTouchStart, passiveListener);
-            p.wrapper.on(app.touchEvents.move, handleTouchMove);
+            p.wrapper.on(app.touchEvents.move, handleTouchMove, activeListener);
             p.wrapper.on(app.touchEvents.end, handleTouchEnd, passiveListener);
         }
 
@@ -359,7 +360,7 @@ var Calendar = function (params) {
             p.wrapper.off('click', handleDayClick);
             if (p.params.touchMove) {
                 p.wrapper.off(app.touchEvents.start, handleTouchStart, passiveListener);
-                p.wrapper.off(app.touchEvents.move, handleTouchMove);
+                p.wrapper.off(app.touchEvents.move, handleTouchMove, activeListener);
                 p.wrapper.off(app.touchEvents.end, handleTouchEnd, passiveListener);
             }
         };
@@ -375,7 +376,7 @@ var Calendar = function (params) {
         var match = false;
         var i;
         if (!range) return false;
-        if ($.isArray(range)) {
+        if (Array.isArray(range)) {
             for (i = 0; i < range.length; i ++) {
                 if (range[i].from || range[i].to) {
                     if (range[i].from && range[i].to) {

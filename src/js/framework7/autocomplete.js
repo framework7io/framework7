@@ -14,6 +14,9 @@ var Autocomplete = function (params) {
         backText: 'Back',
         searchbarPlaceholderText: 'Search...',
         searchbarCancelText: 'Cancel',
+        openWithAnimation: true,
+        // When opened in page should the searchbar be focused by default
+        autoFocus: true,
         openIn: 'page',
         backOnSelect: false,
         notFoundText: 'Nothing found',
@@ -147,13 +150,13 @@ var Autocomplete = function (params) {
         var noNavbar = '', noToolbar = '', navbarLayout;
 
         a.navbarTemplate = t7.compile(a.params.navbarTemplate ||
-            '<div class="navbar {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
+            '<div class="navbar no-shadow {{#if navbarTheme}}theme-{{navbarTheme}}{{/if}}">' +
                 '<div class="navbar-inner">' +
                     '<div class="left sliding">' +
                         '{{#if material}}' +
-                        '<a href="#" class="link {{#if inPopup}}close-popup{{else}}back{{/if}} icon-only"><i class="icon icon-back"></i></a>' +
+                        '<a href="#" class="link {{#if inPopup}}close-popup{{else}}back{{/if}} icon-only" {{#unless animated}}data-animate-pages="false"{{/unless}}><i class="icon icon-back"></i></a>' +
                         '{{else}}' +
-                        '<a href="#" class="link {{#if inPopup}}close-popup{{else}}back{{/if}}">' +
+                        '<a href="#" class="link {{#if inPopup}}close-popup{{else}}back{{/if}}" {{#unless animated}}data-animate-pages="false"{{/unless}}>' +
                             '<i class="icon icon-back"></i>' +
                             '{{#if inPopup}}' +
                             '<span>{{popupCloseText}}</span>' +
@@ -183,6 +186,7 @@ var Autocomplete = function (params) {
             material: material,
             preloader: a.params.preloader,
             preloaderColor: a.params.preloaderColor,
+            animated: a.params.openWithAnimation
         });
 
         // Determine navbar layout type - static/fixed/through
@@ -358,7 +362,6 @@ var Autocomplete = function (params) {
         });
     };
 
-    // Event Listeners on new page
     a.pageInit = function (e) {
         var page = e.detail.page;
         a.page = $(page.container);
@@ -452,6 +455,12 @@ var Autocomplete = function (params) {
         }
 
         // Handle Inputs
+        if (!a.params.multiple && a.params.backOnSelect) {
+            container.once('click', '.list-block label', function () {
+                if (a.params.openIn === 'popup') app.closeModal(a.popup);
+                else view.router.back({animatePages: a.params.openWithAnimation});
+            });
+        }
         container.on('change', 'input[type="radio"], input[type="checkbox"]', function () {
             var i;
             var input = this;
@@ -503,10 +512,6 @@ var Autocomplete = function (params) {
             if ((a.inputType === 'radio' && input.checked || a.inputType === 'checkbox') && a.params.onChange ) {
                 a.params.onChange(a, a.value);
             }
-            if (backOnSelect && a.inputType === 'radio') {
-                if (a.params.openIn === 'popup') app.closeModal(a.popup);
-                else view.router.back();
-            }
         });
 
         // Update Values On Page Init
@@ -534,6 +539,14 @@ var Autocomplete = function (params) {
         else $('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
     };
 
+    // Autofocus
+    a.autoFocus = function (e) {
+        var self = this;
+        setTimeout(function () {
+            $(self).find('input[type=search]').focus();
+        }, 0);
+    };
+
     // Open Autocomplete Page/Popup
     a.open = function () {
         if (a.opened) return;
@@ -557,31 +570,41 @@ var Autocomplete = function (params) {
             a.input.parents('.page-content').append(a.dropdown);
             a.dropdown.addClass('autocomplete-dropdown-in');
             a.input.trigger('input');
-            $(window).on('resize', a.positionDropDown);
+            app.onResize(a.positionDropDown);
             if (a.params.onOpen) a.params.onOpen(a);
         }
         else {
-            $(document).once('pageInit', '.autocomplete-page', a.pageInit);
+            $(document).once('page:init', '.autocomplete-page', a.pageInit);
             if (a.params.openIn === 'popup') {
                 a.popup = app.popup(
                     '<div class="popup autocomplete-popup autocomplete-popup-' + a.inputName + '">' +
                         '<div class="view navbar-fixed">' +
                             pageHTML +
                         '</div>' +
-                    '</div>'
-                    );
+                    '</div>',
+                    true,
+                    a.params.openWithAnimation
+                );
                 a.popup = $(a.popup);
-                a.popup.once('closed', function () {
+                if (a.params.autoFocus) {
+                    if (a.params.openWithAnimation) a.popup.once('popup:opened', a.autoFocus);
+                    else a.autoFocus.bind(a.popup)();
+                }
+                a.popup.once('popup:closed', function () {
                     a.popup = undefined;
                     a.opened = false;
                     if (a.params.onClose) a.params.onClose(a);
                 });
             }
             else {
+                if (a.params.autoFocus) {
+                    $(document).once(a.params.openWithAnimation ? 'page:afteranimation' : 'page:init', '.autocomplete-page', a.autoFocus);
+                }
                 view.router.load({
-                    content: pageHTML
+                    content: pageHTML,
+                    animatePages: a.params.openWithAnimation
                 });
-                $(document).once('pageBack', '.autocomplete-page', function () {
+                $(document).once('page:back', '.autocomplete-page', function () {
                     a.opened = false;
                     if (a.params.onClose) a.params.onClose(a);
                 });
@@ -595,7 +618,7 @@ var Autocomplete = function (params) {
             a.dropdown.removeClass('autocomplete-dropdown-in').remove();
             a.input.parents('.item-content-dropdown-expand').removeClass('item-content-dropdown-expand');
             a.opened = false;
-            $(window).off('resize', a.positionDropDown);
+            app.offResize(a.positionDropDown);
             if (a.params.onClose) a.params.onClose(a);
         }
         if (a.params.openIn === 'popup') {

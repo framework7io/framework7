@@ -335,6 +335,7 @@ app.initClickEvents = function () {
         e.preventDefault();
     }
     if (app.support.touch && !app.device.android) {
-        $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-overlay, .modal-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling);
+        var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
+        $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-overlay, .modal-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling, activeListener);
     }
 };

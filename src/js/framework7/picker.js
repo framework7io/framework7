@@ -17,7 +17,7 @@ var Picker = function (params) {
         onlyInPopover: false,
         toolbar: true,
         toolbarCloseText: 'Done',
-        toolbarTemplate: 
+        toolbarTemplate:
             '<div class="toolbar">' +
                 '<div class="toolbar-inner">' +
                     '<div class="left"></div>' +
@@ -36,7 +36,7 @@ var Picker = function (params) {
     p.params = params;
     p.cols = [];
     p.initialized = false;
-    
+
     // Inline flag
     p.inline = p.params.container ? true : false;
 
@@ -54,11 +54,11 @@ var Picker = function (params) {
                     toPopover = app.device.ipad ? true : false;
                 }
                 else {
-                    if ($(window).width() >= 768) toPopover = true;
+                    if (app.width >= 768) toPopover = true;
                 }
             }
-        } 
-        return toPopover; 
+        }
+        return toPopover;
     }
     function inPopover() {
         if (p.opened && p.container && p.container.length > 0 && p.container.parents('.popover').length > 0) return true;
@@ -82,11 +82,12 @@ var Picker = function (params) {
     };
     p.updateValue = function (forceValues) {
         var newValue = forceValues || [];
-        var newDisplayValue = [], i;
+        var newDisplayValue = [], i, column;
         if (p.cols.length === 0) {
             for (i = 0; i < p.params.cols.length; i++) {
-                if (p.params.cols[i].displayValues !== undefined) {
-                    newDisplayValue.push(p.params.cols[i].displayValues[newValue[i]]);
+                column = p.params.cols[i];
+                if (column.displayValues !== undefined && column.values !== undefined && column.values.indexOf(newValue[i]) !== undefined) {
+                    newDisplayValue.push(column.displayValues[column.values.indexOf(newValue[i])]);
                 }
                 else {
                     newDisplayValue.push(newValue[i]);
@@ -101,7 +102,7 @@ var Picker = function (params) {
                 }
             }
         }
-            
+
         if (newValue.indexOf(undefined) >= 0) {
             return;
         }
@@ -125,7 +126,7 @@ var Picker = function (params) {
         col.container = colContainer;
         col.wrapper = col.container.find('.picker-items-col-wrapper');
         col.items = col.wrapper.find('.picker-item');
-        
+
         var i, j;
         var wrapperHeight, itemHeight, itemsHeight, minTranslate, maxTranslate;
         col.replaceValues = function (values, displayValues) {
@@ -139,6 +140,7 @@ var Picker = function (params) {
             col.setValue(col.values[0], 0, true);
             col.initEvents();
         };
+        var resizeTimeout;
         col.calcSize = function () {
             if (p.params.rotateEffect) {
                 col.container.removeClass('picker-items-col-absolute');
@@ -151,7 +153,7 @@ var Picker = function (params) {
             itemHeight = col.items[0].offsetHeight;
             itemsHeight = itemHeight * col.items.length;
             minTranslate = colHeight / 2 - itemsHeight + itemHeight / 2;
-            maxTranslate = colHeight / 2 - itemHeight / 2;    
+            maxTranslate = colHeight / 2 - itemHeight / 2;
             if (col.width) {
                 colWidth = col.width;
                 if (parseInt(colWidth, 10) === colWidth) colWidth = colWidth + 'px';
@@ -160,10 +162,8 @@ var Picker = function (params) {
             if (p.params.rotateEffect) {
                 if (!col.width) {
                     col.items.each(function () {
-                        var item = $(this);
-                        item.css({width:'auto'});
+                        var item = $(this).children('span');
                         colWidth = Math.max(colWidth, item[0].offsetWidth);
-                        item.css({width:''});
                     });
                     col.container.css({width: (colWidth + 2) + 'px'});
                 }
@@ -171,7 +171,7 @@ var Picker = function (params) {
             }
         };
         col.calcSize();
-        
+
         col.wrapper.transform('translate3d(0,' + maxTranslate + 'px,0)').transition(0);
 
 
@@ -189,7 +189,7 @@ var Picker = function (params) {
             // Update wrapper
             col.wrapper.transition(transition);
             col.wrapper.transform('translate3d(0,' + (newTranslate) + 'px,0)');
-                
+
             // Watch items
             if (p.params.updateValuesOnMomentum && col.activeIndex && col.activeIndex !== newActiveIndex ) {
                 $.cancelAnimationFrame(animationFrameId);
@@ -215,13 +215,13 @@ var Picker = function (params) {
             col.wrapper.find('.picker-selected').removeClass('picker-selected');
 
             col.items.transition(transition);
-            
+
             var selectedItem = col.items.eq(activeIndex).addClass('picker-selected').transform('');
-                
+
             // Set 3D rotate effect
             if (p.params.rotateEffect) {
                 var percentage = (translate - (Math.floor((translate - maxTranslate)/itemHeight) * itemHeight + maxTranslate)) / itemHeight;
-                
+
                 col.items.each(function () {
                     var item = $(this);
                     var itemOffsetTop = item.index() * itemHeight;
@@ -230,7 +230,7 @@ var Picker = function (params) {
                     var percentage = itemOffset / itemHeight;
 
                     var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
-                    
+
                     var angle = (-18*percentage);
                     if (angle > 180) angle = 180;
                     if (angle < -180) angle = -180;
@@ -274,7 +274,7 @@ var Picker = function (params) {
             isTouched = true;
             touchStartY = touchCurrentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
             touchStartTime = (new Date()).getTime();
-            
+
             allowItemClick = true;
             startTranslate = currentTranslate = $.getTranslate(col.wrapper[0], 'y');
         }
@@ -309,7 +309,7 @@ var Picker = function (params) {
 
             // Update items
             col.updateItems(undefined, currentTranslate, 0, p.params.updateValuesOnTouchmove);
-            
+
             // Calc velocity
             velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
             velocityTime = (new Date()).getTime();
@@ -376,9 +376,10 @@ var Picker = function (params) {
 
         col.initEvents = function (detach) {
             var method = detach ? 'off' : 'on';
-            col.container[method](app.touchEvents.start, handleTouchStart);
-            col.container[method](app.touchEvents.move, handleTouchMove);
-            col.container[method](app.touchEvents.end, handleTouchEnd);
+            var activeListener = app.support.passiveListener ? {passive: false, capture: false} : false;
+            col.container[method](app.touchEvents.start, handleTouchStart, activeListener);
+            col.container[method](app.touchEvents.move, handleTouchMove, activeListener);
+            col.container[method](app.touchEvents.end, handleTouchEnd, activeListener);
             col.items[method]('click', handleClick);
         };
         col.destroyEvents = function () {
@@ -406,7 +407,7 @@ var Picker = function (params) {
             }
         }
     }
-    $(window).on('resize', resizeCols);
+    app.onResize(resizeCols);
 
     // HTML Layout
     p.columnHTML = function (col, onlyItems) {
@@ -417,7 +418,7 @@ var Picker = function (params) {
         }
         else {
             for (var j = 0; j < col.values.length; j++) {
-                columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '">' + (col.displayValues ? col.displayValues[j] : col.values[j]) + '</div>';
+                columnItemsHTML += '<div class="picker-item" data-picker-value="' + col.values[j] + '"><span>' + (col.displayValues ? col.displayValues[j] : col.values[j]) + '</span></div>';
             }
             columnHTML += '<div class="picker-items-col ' + (col.textAlign ? 'picker-items-col-' + col.textAlign : '') + ' ' + (col.cssClass || '') + '"><div class="picker-items-col-wrapper">' + columnItemsHTML + '</div></div>';
         }
@@ -443,8 +444,8 @@ var Picker = function (params) {
                     '<div class="picker-center-highlight"></div>' +
                 '</div>' +
             '</div>';
-            
-        p.pickerHTML = pickerHTML;    
+
+        p.pickerHTML = pickerHTML;
     };
 
     // Input Events
@@ -481,7 +482,7 @@ var Picker = function (params) {
             if (e.target !== p.input[0] && $(e.target).parents('.picker-modal').length === 0) p.close();
         }
         else {
-            if ($(e.target).parents('.picker-modal').length === 0) p.close();   
+            if ($(e.target).parents('.picker-modal').length === 0) p.close();
         }
     }
 
@@ -490,7 +491,7 @@ var Picker = function (params) {
         if (p.input.length > 0) {
             if (p.params.inputReadOnly) p.input.prop('readOnly', true);
             if (!p.inline) {
-                p.input.on('click', openOnInput);    
+                p.input.on('click', openOnInput);
             }
             if (p.params.inputReadOnly) {
                 p.input.on('focus mousedown', function (e) {
@@ -498,9 +499,9 @@ var Picker = function (params) {
                 });
             }
         }
-            
+
     }
-    
+
     if (!p.inline && p.params.closeByOutsideClick) $('html').on('click', closeOnHTMLClick);
 
     // Open
@@ -558,7 +559,7 @@ var Picker = function (params) {
                 if ((!p.initialized && p.params.value) || (p.initialized && p.value)) updateItems = false;
                 p.initPickerCol(this, updateItems);
             });
-            
+
             // Set value
             if (!p.initialized) {
                 if (p.value) p.setValue(p.value, 0);
@@ -603,7 +604,7 @@ var Picker = function (params) {
             p.input.off('click focus', openOnInput);
         }
         $('html').off('click', closeOnHTMLClick);
-        $(window).off('resize', resizeCols);
+        app.offResize(resizeCols);
     };
 
     if (p.inline) {

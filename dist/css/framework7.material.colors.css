@@ -1,5 +1,5 @@
 /**
- * Framework7 1.5.3
+ * Framework7 1.5.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: February 10, 2017
+ * Released on: March 13, 2017
  */
 /*==========================
 Framework7 Layouts Themes
@@ -357,6 +357,9 @@ label.label-radio.theme-red input[type="radio"]:checked ~ .item-inner i.icon-for
 .theme-red .timeline-month-title {
   background-color: #f44336;
 }
+.theme-red .statusbar-overlay {
+  background-color: #B71C1C;
+}
 .swiper-pagination.color-red .swiper-pagination-bullet-active,
 .theme-red .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #f44336;
@@ -597,6 +600,9 @@ label.label-radio.theme-pink input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-pink .timeline-year-title,
 .theme-pink .timeline-month-title {
   background-color: #e91e63;
+}
+.theme-pink .statusbar-overlay {
+  background-color: #880E4F;
 }
 .swiper-pagination.color-pink .swiper-pagination-bullet-active,
 .theme-pink .swiper-pagination .swiper-pagination-bullet-active {
@@ -839,6 +845,9 @@ label.label-radio.theme-purple input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-purple .timeline-month-title {
   background-color: #9c27b0;
 }
+.theme-purple .statusbar-overlay {
+  background-color: #4A148C;
+}
 .swiper-pagination.color-purple .swiper-pagination-bullet-active,
 .theme-purple .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #9c27b0;
@@ -1079,6 +1088,9 @@ label.label-radio.theme-deeppurple input[type="radio"]:checked ~ .item-inner i.i
 .theme-deeppurple .timeline-year-title,
 .theme-deeppurple .timeline-month-title {
   background-color: #673ab7;
+}
+.theme-deeppurple .statusbar-overlay {
+  background-color: #311B92;
 }
 .swiper-pagination.color-deeppurple .swiper-pagination-bullet-active,
 .theme-deeppurple .swiper-pagination .swiper-pagination-bullet-active {
@@ -1321,6 +1333,9 @@ label.label-radio.theme-indigo input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-indigo .timeline-month-title {
   background-color: #3f51b5;
 }
+.theme-indigo .statusbar-overlay {
+  background-color: #1A237E;
+}
 .swiper-pagination.color-indigo .swiper-pagination-bullet-active,
 .theme-indigo .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #3f51b5;
@@ -1561,6 +1576,9 @@ label.label-radio.theme-blue input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-blue .timeline-year-title,
 .theme-blue .timeline-month-title {
   background-color: #2196f3;
+}
+.theme-blue .statusbar-overlay {
+  background-color: #0D47A1;
 }
 .swiper-pagination.color-blue .swiper-pagination-bullet-active,
 .theme-blue .swiper-pagination .swiper-pagination-bullet-active {
@@ -1803,6 +1821,9 @@ label.label-radio.theme-lightblue input[type="radio"]:checked ~ .item-inner i.ic
 .theme-lightblue .timeline-month-title {
   background-color: #03a9f4;
 }
+.theme-lightblue .statusbar-overlay {
+  background-color: #01579B;
+}
 .swiper-pagination.color-lightblue .swiper-pagination-bullet-active,
 .theme-lightblue .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #03a9f4;
@@ -2043,6 +2064,9 @@ label.label-radio.theme-cyan input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-cyan .timeline-year-title,
 .theme-cyan .timeline-month-title {
   background-color: #00bcd4;
+}
+.theme-cyan .statusbar-overlay {
+  background-color: #006064;
 }
 .swiper-pagination.color-cyan .swiper-pagination-bullet-active,
 .theme-cyan .swiper-pagination .swiper-pagination-bullet-active {
@@ -2285,6 +2309,9 @@ label.label-radio.theme-teal input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-teal .timeline-month-title {
   background-color: #009688;
 }
+.theme-teal .statusbar-overlay {
+  background-color: #004D40;
+}
 .swiper-pagination.color-teal .swiper-pagination-bullet-active,
 .theme-teal .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #009688;
@@ -2525,6 +2552,9 @@ label.label-radio.theme-green input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-green .timeline-year-title,
 .theme-green .timeline-month-title {
   background-color: #4caf50;
+}
+.theme-green .statusbar-overlay {
+  background-color: #1B5E20;
 }
 .swiper-pagination.color-green .swiper-pagination-bullet-active,
 .theme-green .swiper-pagination .swiper-pagination-bullet-active {
@@ -2767,6 +2797,9 @@ label.label-radio.theme-lightgreen input[type="radio"]:checked ~ .item-inner i.i
 .theme-lightgreen .timeline-month-title {
   background-color: #8bc34a;
 }
+.theme-lightgreen .statusbar-overlay {
+  background-color: #33691E;
+}
 .swiper-pagination.color-lightgreen .swiper-pagination-bullet-active,
 .theme-lightgreen .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #8bc34a;
@@ -3007,6 +3040,9 @@ label.label-radio.theme-lime input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-lime .timeline-year-title,
 .theme-lime .timeline-month-title {
   background-color: #cddc39;
+}
+.theme-lime .statusbar-overlay {
+  background-color: #827717;
 }
 .swiper-pagination.color-lime .swiper-pagination-bullet-active,
 .theme-lime .swiper-pagination .swiper-pagination-bullet-active {
@@ -3249,6 +3285,9 @@ label.label-radio.theme-yellow input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-yellow .timeline-month-title {
   background-color: #ffeb3b;
 }
+.theme-yellow .statusbar-overlay {
+  background-color: #F57F17;
+}
 .swiper-pagination.color-yellow .swiper-pagination-bullet-active,
 .theme-yellow .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffeb3b;
@@ -3489,6 +3528,9 @@ label.label-radio.theme-amber input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-amber .timeline-year-title,
 .theme-amber .timeline-month-title {
   background-color: #ffc107;
+}
+.theme-amber .statusbar-overlay {
+  background-color: #FF6F00;
 }
 .swiper-pagination.color-amber .swiper-pagination-bullet-active,
 .theme-amber .swiper-pagination .swiper-pagination-bullet-active {
@@ -3731,6 +3773,9 @@ label.label-radio.theme-orange input[type="radio"]:checked ~ .item-inner i.icon-
 .theme-orange .timeline-month-title {
   background-color: #ff9800;
 }
+.theme-orange .statusbar-overlay {
+  background-color: #E65100;
+}
 .swiper-pagination.color-orange .swiper-pagination-bullet-active,
 .theme-orange .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ff9800;
@@ -3971,6 +4016,9 @@ label.label-radio.theme-deeporange input[type="radio"]:checked ~ .item-inner i.i
 .theme-deeporange .timeline-year-title,
 .theme-deeporange .timeline-month-title {
   background-color: #ff5722;
+}
+.theme-deeporange .statusbar-overlay {
+  background-color: #BF360C;
 }
 .swiper-pagination.color-deeporange .swiper-pagination-bullet-active,
 .theme-deeporange .swiper-pagination .swiper-pagination-bullet-active {
@@ -4213,6 +4261,9 @@ label.label-radio.theme-brown input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-brown .timeline-month-title {
   background-color: #795548;
 }
+.theme-brown .statusbar-overlay {
+  background-color: #3E2723;
+}
 .swiper-pagination.color-brown .swiper-pagination-bullet-active,
 .theme-brown .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #795548;
@@ -4453,6 +4504,9 @@ label.label-radio.theme-gray input[type="radio"]:checked ~ .item-inner i.icon-fo
 .theme-gray .timeline-year-title,
 .theme-gray .timeline-month-title {
   background-color: #9e9e9e;
+}
+.theme-gray .statusbar-overlay {
+  background-color: #212121;
 }
 .swiper-pagination.color-gray .swiper-pagination-bullet-active,
 .theme-gray .swiper-pagination .swiper-pagination-bullet-active {
@@ -4695,6 +4749,9 @@ label.label-radio.theme-bluegray input[type="radio"]:checked ~ .item-inner i.ico
 .theme-bluegray .timeline-month-title {
   background-color: #607d8b;
 }
+.theme-bluegray .statusbar-overlay {
+  background-color: #263238;
+}
 .swiper-pagination.color-bluegray .swiper-pagination-bullet-active,
 .theme-bluegray .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #607d8b;
@@ -4936,6 +4993,9 @@ label.label-radio.theme-white input[type="radio"]:checked ~ .item-inner i.icon-f
 .theme-white .timeline-month-title {
   background-color: #ffffff;
 }
+.theme-white .statusbar-overlay {
+  background-color: #ffffff;
+}
 .swiper-pagination.color-white .swiper-pagination-bullet-active,
 .theme-white .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #ffffff;
@@ -5175,6 +5235,9 @@ label.label-radio.theme-black input[type="radio"]:checked ~ .item-inner i.icon-f
 }
 .theme-black .timeline-year-title,
 .theme-black .timeline-month-title {
+  background-color: #000000;
+}
+.theme-black .statusbar-overlay {
   background-color: #000000;
 }
 .swiper-pagination.color-black .swiper-pagination-bullet-active,

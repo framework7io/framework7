@@ -31,7 +31,7 @@ var Searchbar = function (container, params) {
             params[def] = defaults[def];
         }
     }
-    
+
     // Instance
     var s = this;
 
@@ -300,7 +300,7 @@ var Searchbar = function (container, params) {
         s.input[method]('focus', s.enable);
         s.input[method]('change keydown keypress keyup', s.handleInput);
         s.clearButton[method]('click', s.clear);
-            
+
     };
     s.detachEvents = function() {
         s.attachEvents(true);
@@ -338,7 +338,7 @@ app.initSearchbar = function (container) {
         if (sb) sb.destroy();
     }
     if (container.hasClass('page')) {
-        container.once('pageBeforeRemove', onBeforeRemove);   
+        container.once('pageBeforeRemove', onBeforeRemove);
     }
     else if (container.hasClass('navbar-inner')) {
         container.once('navbarBeforeRemove', onBeforeRemove);

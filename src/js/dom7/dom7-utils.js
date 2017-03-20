@@ -15,8 +15,7 @@ $.parseUrlQuery= function (url) {
     return query;
 };
 $.isArray = function (arr) {
-    if (Object.prototype.toString.apply(arr) === '[object Array]') return true;
-    else return false;
+    return Array.isArray(arr);
 };
 $.each = function (obj, callback) {
     // Check it's iterable
@@ -24,7 +23,7 @@ $.each = function (obj, callback) {
     if (typeof obj !== 'object') return;
     // Don't bother continuing without a callback
     if (!callback) return;
-    if ($.isArray(obj) || obj instanceof Dom7) {
+    if (Array.isArray(obj) || obj instanceof Dom7) {
         var i;
         // Array
         for (i = 0; i < obj.length; i++) {
@@ -83,10 +82,10 @@ $.serializeObject = $.param = function (obj, parents) {
     for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
             var toPush;
-            if ($.isArray(obj[prop])) {
+            if (Array.isArray(obj[prop])) {
                 toPush = [];
                 for (var i = 0; i < obj[prop].length; i ++) {
-                    if (!$.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
+                    if (!Array.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
                         newParents = parents.slice();
                         newParents.push(prop);
                         newParents.push(i + '');
@@ -173,7 +172,7 @@ $.getTranslate = function (el, axis) {
         else
             curTransform = parseFloat(matrix[5]);
     }
-    
+
     return curTransform || 0;
 };
 
@@ -189,9 +188,9 @@ $.cancelAnimationFrame = function (id) {
     else if (window.webkitCancelAnimationFrame) return window.webkitCancelAnimationFrame(id);
     else {
         return window.clearTimeout(id);
-    }  
+    }
 };
-$.supportTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
+$.supportTouch = !!(('ontouchstart' in window && window.ontouchstart != null) || window.DocumentTouch && document instanceof DocumentTouch);
 
 // Remove Diacritics
 var defaultDiacriticsRemovalap = [

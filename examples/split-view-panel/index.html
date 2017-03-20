@@ -14,6 +14,67 @@
   <body>
     <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-cover">
+      <!-- Left view-->
+      <div class="view view-left navbar-through">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left"></div>
+            <div class="center sliding">Left View</div>
+            <div class="right"></div>
+          </div>
+        </div>
+        <div class="pages">
+          <div data-page="index-left" class="page">
+            <div class="page-content">
+              <div class="content-block-title">Left View Links</div>
+              <div class="list-block">
+                <ul>
+                  <li><a href="left-page-1.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Left Page 1</div>
+                        </div>
+                      </div></a></li>
+                  <li><a href="left-page-2.html" class="item-link">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Left Page 2</div>
+                        </div>
+                      </div></a></li>
+                </ul>
+              </div>
+              <div class="content-block-title">Control Main View</div>
+              <div class="list-block">
+                <ul>
+                  <li><a href="about.html" data-view=".view-main" class="item-link close-panel">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">About</div>
+                        </div>
+                      </div></a></li>
+                  <li><a href="services.html" data-view=".view-main" class="item-link close-panel">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Services</div>
+                        </div>
+                      </div></a></li>
+                  <li><a href="#" data-view=".view-main" class="back item-link close-panel">
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Back in history</div>
+                        </div>
+                      </div></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Right panel with cover effect-->
     <div class="panel panel-right panel-reveal">
       <div class="content-block">
@@ -22,68 +83,6 @@
     </div>
     <!-- Views-->
     <div class="views">
-      <!-- Put panels-overlay and left-panel with view inside of views-->
-      <!-- Panels overlay-->
-      <div class="panel-overlay"></div>
-      <!-- Left panel with reveal effect-->
-      <div class="panel panel-left panel-cover">
-        <!-- Left view-->
-        <div class="view view-left navbar-through">
-          <div class="navbar">
-            <div class="navbar-inner">
-              <div class="left"></div>
-              <div class="center sliding">Left View</div>
-              <div class="right"></div>
-            </div>
-          </div>
-          <div class="pages">
-            <div data-page="index-left" class="page">
-              <div class="page-content">
-                <div class="content-block-title">Left View Links</div>
-                <div class="list-block">
-                  <ul>
-                    <li><a href="left-page-1.html" class="item-link">
-                        <div class="item-content">
-                          <div class="item-inner">
-                            <div class="item-title">Left Page 1</div>
-                          </div>
-                        </div></a></li>
-                    <li><a href="left-page-2.html" class="item-link">
-                        <div class="item-content">
-                          <div class="item-inner">
-                            <div class="item-title">Left Page 2</div>
-                          </div>
-                        </div></a></li>
-                  </ul>
-                </div>
-                <div class="content-block-title">Control Main View</div>
-                <div class="list-block">
-                  <ul>
-                    <li><a href="about.html" data-view=".view-main" class="item-link close-panel">
-                        <div class="item-content">
-                          <div class="item-inner">
-                            <div class="item-title">About</div>
-                          </div>
-                        </div></a></li>
-                    <li><a href="services.html" data-view=".view-main" class="item-link close-panel">
-                        <div class="item-content">
-                          <div class="item-inner">
-                            <div class="item-title">Services</div>
-                          </div>
-                        </div></a></li>
-                    <li><a href="#" data-view=".view-main" class="back item-link close-panel">
-                        <div class="item-content">
-                          <div class="item-inner">
-                            <div class="item-title">Back in history</div>
-                          </div>
-                        </div></a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- Right view, it is main view-->
       <div class="view view-main navbar-through">
         <div class="navbar">

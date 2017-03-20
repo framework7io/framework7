@@ -2,24 +2,26 @@
 ************   Material Tabbar   ************
 ======================================================*/
 app.materialTabbarSetHighlight = function (tabbar, activeLink) {
-    tabbar = $(tabbar);
-    activeLink = activeLink || tabbar.find('.tab-link.active');
+    $(tabbar).each(function () {
+        var tabbar = $(this);
+        activeLink = activeLink || tabbar.find('.tab-link.active');
 
-    if (activeLink && activeLink.length > 0) {
-        var tabLinkWidth, highlightTranslate;
-        if (tabbar.hasClass('tabbar-scrollable')) {
-            tabLinkWidth = activeLink[0].offsetWidth + 'px';
-            highlightTranslate = activeLink[0].offsetLeft + 'px';
-        }
-        else {
-            tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100 + '%';
-            highlightTranslate = (app.rtl ? - activeLink.index(): activeLink.index()) * 100 + '%';
-        }
+        if (activeLink && activeLink.length > 0) {
+            var tabLinkWidth, highlightTranslate;
+            if (tabbar.hasClass('tabbar-scrollable')) {
+                tabLinkWidth = activeLink[0].offsetWidth + 'px';
+                highlightTranslate = activeLink[0].offsetLeft + 'px';
+            }
+            else {
+                tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100 + '%';
+                highlightTranslate = (app.rtl ? - activeLink.index(): activeLink.index()) * 100 + '%';
+            }
 
-        tabbar.find('.tab-link-highlight')
-            .css({width: tabLinkWidth})
-            .transform('translate3d(' + highlightTranslate + ',0,0)');
-    }
+            tabbar.find('.tab-link-highlight')
+                .css({width: tabLinkWidth})
+                .transform('translate3d(' + highlightTranslate + ',0,0)');
+        }
+    });
 };
 app.initPageMaterialTabbar = function (pageContainer) {
     pageContainer = $(pageContainer);
@@ -35,9 +37,9 @@ app.initPageMaterialTabbar = function (pageContainer) {
         }
 
         tabbarSetHighlight();
-        $(window).on('resize', tabbarSetHighlight);
+        app.onResize(tabbarSetHighlight);
         pageContainer.once('page:beforeremove', function () {
-            $(window).off('resize', tabbarSetHighlight);
+            app.offResize(tabbarSetHighlight);
         });
     }
 };

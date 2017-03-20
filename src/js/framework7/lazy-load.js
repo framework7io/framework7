@@ -33,7 +33,7 @@ app.initImagesLazyLoad = function (pageContainer) {
         placeholderSrc = app.params.imagesLazyLoadPlaceholder;
     }
     if (app.params.imagesLazyLoadPlaceholder !== false) lazyLoadImages.each(function(){
-        if ($(this).attr('data-src')) $(this).attr('src', placeholderSrc);
+        if ($(this).attr('data-src') && !$(this).attr('src')) $(this).attr('src', placeholderSrc);
     });
 
     // load image
@@ -61,8 +61,10 @@ app.initImagesLazyLoad = function (pageContainer) {
                     loadImage(imagesSequence.shift());
                 }
             }
+            el.trigger('lazy-loaded');
+            if (app.params.onLazyLoaded) app.params.onLazyLoaded(el);
         }
-        
+
         function onError() {
             el.removeClass('lazy').addClass('lazy-loaded');
             if (bg) {
@@ -78,6 +80,8 @@ app.initImagesLazyLoad = function (pageContainer) {
                     loadImage(imagesSequence.shift());
                 }
             }
+            el.trigger('lazy-error');
+            if (app.params.onLazyError) app.params.onLazyError(el);
         }
 
         if (app.params.imagesLazyLoadSequential) {
@@ -89,11 +93,15 @@ app.initImagesLazyLoad = function (pageContainer) {
 
         // Loading flag
         imageIsLoading = true;
-        
+
         var image = new Image();
         image.onload = onLoad;
         image.onerror = onError;
         image.src =src;
+
+        // Add loaded callback and events
+        el.trigger('lazy-load');
+        if (app.params.onLazyLoad && !el.hasClass('lazy-loaded')) app.params.onLazyLoad(el);
     }
     function lazyHandler() {
         lazyLoadImages = pageContainer.find('.lazy');
@@ -114,8 +122,8 @@ app.initImagesLazyLoad = function (pageContainer) {
         return (
             rect.top >= (0 - threshold) &&
             rect.left >= (0 - threshold) &&
-            rect.top <= (window.innerHeight + threshold) &&
-            rect.left <= (window.innerWidth + threshold)
+            rect.top <= (app.height + threshold) &&
+            rect.left <= (app.width + threshold)
         );
     }
 
@@ -126,7 +134,7 @@ app.initImagesLazyLoad = function (pageContainer) {
         pageContainer[method]('lazy', lazyHandler);
         pageContent[method]('lazy', lazyHandler);
         pageContent[method]('scroll', lazyHandler);
-        $(window)[method]('resize', lazyHandler);
+        app[method === 'on' ? 'onResize' : 'offResize'](lazyHandler);
     }
     function detachEvents() {
         attachEvents(true);

@@ -31,7 +31,7 @@
     .justify-content(flex-start);
 }
 .toolbar-inner {
-    .justify-content(space-between);   
+    .justify-content(space-between);
 }
 .navbar-inner.cached {
     display: none;
@@ -261,6 +261,11 @@
         white-space: nowrap;
         overflow: hidden;
         max-width: 100%;
+    }
+    &.toolbar-bottom {
+        span.tabbar-label {
+            text-transform: none;
+        }
     }
 }
 .tabbar-scrollable {

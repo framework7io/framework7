@@ -334,7 +334,7 @@ Dom7.prototype = {
         if (this.length > 0) {
             if (includeMargins) {
                 var styles = this.styles();
-                return this[0].offsetWidth + parseFloat(styles.getPropertyValue('margin-right')) + parseFloat(styles.getPropertyValue('margin-left'));    
+                return this[0].offsetWidth + parseFloat(styles.getPropertyValue('margin-right')) + parseFloat(styles.getPropertyValue('margin-left'));
             }
             else
                 return this[0].offsetWidth;
@@ -358,7 +358,7 @@ Dom7.prototype = {
         if (this.length > 0) {
             if (includeMargins) {
                 var styles = this.styles();
-                return this[0].offsetHeight + parseFloat(styles.getPropertyValue('margin-top')) + parseFloat(styles.getPropertyValue('margin-bottom'));    
+                return this[0].offsetHeight + parseFloat(styles.getPropertyValue('margin-top')) + parseFloat(styles.getPropertyValue('margin-bottom'));
             }
             else
                 return this[0].offsetHeight;
@@ -372,8 +372,8 @@ Dom7.prototype = {
             var body = document.body;
             var clientTop  = el.clientTop  || body.clientTop  || 0;
             var clientLeft = el.clientLeft || body.clientLeft || 0;
-            var scrollTop  = window.pageYOffset || el.scrollTop;
-            var scrollLeft = window.pageXOffset || el.scrollLeft;
+            var scrollTop  = el === window ? window.scrollY : el.scrollTop;
+            var scrollLeft = el === window ? window.scrollX : el.scrollLeft;
             return {
                 top: box.top  + scrollTop  - clientTop,
                 left: box.left + scrollLeft - clientLeft

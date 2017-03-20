@@ -1,5 +1,25 @@
 # Change Log
 
+## Framework7 v1.5.4 - Updated on March 13, 2017
+  * Panels
+    * A bit reworked Panels layout/styling in favor of`translate` CSS property. May required small CSS fixes after update if you have changed panels sizes
+    * Panels Breakpoints. Two new app parameters `panelLeftBreakpoint` and `panelRightBreakpoint` where you can specify minimal width to make panels always visible
+  * Fixed Chrome issue that now treats most of touch events as "passive"
+  * Autocomplete
+    * New `autoFocus` parameter to open standalone autcomplete and auto focus search field
+    * New `openWithAnimation` parameter (enabled by default) brings option to open standalone autocomplete without animation (if required)
+  * Forms
+    * `formFromData` now fires "change" events on form fields
+  * iOS theme
+    * Fixed issue on Chrome with invisible range slider thumb
+  * Material theme:
+    * Better support for bottom Toolbar/Tabbar
+    * Navbars/Toolbars now have shadows by default. Use additional "no-shadow" class on navbar/toolbar to disable shadow on it
+    * Status Bar height increased to 24px in Material theme
+    * Theme color is also applicable to Status Bar overlay for Material theme
+  * Swiper updated to latest 3.4.2 version
+  * Lot of minor fixes
+
 ## Framework7 v1.5.3 - Updated on February 10, 2017
   * Autocomplete
     * New Standalone autocomplete parameter `requestSourceOnOpen` (`false`/disabled by default). Will request source on autocomplete open if enabled
@@ -291,7 +311,7 @@
   * Photo Browser
     * Double tap to zoom now zooms to the tapped position, not only to the center of picture
   * Messagebar
-    * Now when you type new message it will scroll messages pages to bottom only in case if you are in the bottom of this page 
+    * Now when you type new message it will scroll messages pages to bottom only in case if you are in the bottom of this page
   * Picker
     * Added `closeByOutsideClick` parameter to close picker automatically when you click outside of related input or picker. By default is `true`
     * Now it will set related input's value on initialization with specified value
@@ -347,7 +367,7 @@
       * `framework7.material.css` - main styles for Material theme
       * `framework7.material.colors.css` - color-specific styles for Material theme
       * `framework7.material.rtl.css` - RTL layout styles for Material theme
-  * Kitchen Sink has been splitted into two platform specific Kitchen Sinks 
+  * Kitchen Sink has been splitted into two platform specific Kitchen Sinks
   * Material theme breaking changes:
     * Material theme doesn't support Dynamic Navbar
     * Material theme doesn't support Through-type layout for Navbars/Toolbars
@@ -361,7 +381,7 @@
   * Calendar
     * Fixed issue with wrong date formatting
   * Notifications
-    * New global `notificationCloseButtonText` and local `closeButtonText` parameters for button on notifcation (toast) (Used in material theme only)  
+    * New global `notificationCloseButtonText` and local `closeButtonText` parameters for button on notifcation (toast) (Used in material theme only)
   * Swipeout
     * Fixed issue with none closing swipeout using a fast swipe
   * Forms
@@ -418,7 +438,7 @@
         * `registerPartial(name, template)` method to register partial
         * `unregisterPartial(name, template)` method to unregister partial
         * `>` helper to include partials like `{{> list}}`
-    * New `escape` helper for escaping strings 
+    * New `escape` helper for escaping strings
   * Swiper updated to latest 3.0.8 version:
     * Fixed issue with wrong active index and callbacks in Fade effect
     * New mousewheel parameters:
@@ -453,7 +473,7 @@
     * Better support for "Scroll Container". So now Swiper can be used as a scroll container with one single "scrollable"/"swipeable" slide
     * Added lazy loading for background images with `data-background` attribute on required elements
     * New "Sticky Free Mode" (with `freeModeSticky` parameter) which will snap to slides positions in free mode
-    * Fixed issues with lazy loading  
+    * Fixed issues with lazy loading
     * Fixed slide removing when loop mode is enabled
     * Fixed issues with Autoplay and Fade effect
   * Custom Build
@@ -475,7 +495,7 @@
         * `tapHoldDelay: 750` - how long (in ms) the user must hold their tap before the taphold event is fired on the target element
         * `tapHoldPreventClicks: true` - if enabled (by default), then click event will not be fired after tap hold
   * Navbar
-    * Dynamic Navbar now has some events similar to page events: `navbarReinit`, `navbarBeforeInit`, `navbarInit`, `navbarBeforeRemove`. Each event `detail` contains: 
+    * Dynamic Navbar now has some events similar to page events: `navbarReinit`, `navbarBeforeInit`, `navbarInit`, `navbarBeforeRemove`. Each event `detail` contains:
       * `navbar` - object with related navbar elements `navbarContainer` and `navbarInnerContainer`
       * `page` - object with related page data
   * Action Sheet
@@ -565,7 +585,7 @@
       * `data-slidesPerView` on swiper now should be `data-slides-per-view`
       * etc.
   * Cards
-    * Fixed margins when page contains cards only 
+    * Fixed margins when page contains cards only
   * Fast Clicks/Clicks
     * Fixed scroll prevention on overlays when `fastClicks:false`
   * SmartSelect
@@ -728,7 +748,7 @@
     * Fixed `.prevAll` and `.nextAll` methods when passed with selector
   * Forms
     * New `formFromJSON` and `formToJSON` events on forms that use Forms Storage
-    * New `submitError` and `beforeSubmit` events to be used along with `submitted` event on Ajax Forms 
+    * New `submitError` and `beforeSubmit` events to be used along with `submitted` event on Ajax Forms
   * Clicks / Fast Clicks
     * Now active/focused form elements (input, textarea, etc.) will be automatically blured on "click out"
     * Scrolling is now prevented on any kind of overlays (like modal-overlay, popup-overlay, etc.)
@@ -739,9 +759,9 @@
     * `pageData` now has additional `fromPage` property within pageData of previously active page
     * Fixed `context` property in `pageData` that could become empty in some situations
   * Device API
-    * Now it also adds `pixel-ratio-` class to `<html>` with device pixel ratio 
+    * Now it also adds `pixel-ratio-` class to `<html>` with device pixel ratio
   * Messages
-    * `.addMessage(props, messagesContent, addToTop)` method now accepts new arguments: 
+    * `.addMessage(props, messagesContent, addToTop)` method now accepts new arguments:
       * `messagesContent` (optional) to specify container with messages, useful if you have  multiple messages containers/pages at the same time
       * `addToTop` (optional) to specify should new message be appended or prepended
   * Messagebar
@@ -775,7 +795,7 @@
     * Now it is possible to use multiple Virtual Lists on same page
     * Fixed issue with muliple columns and wrong list height on iOS 7
   * Smart Select
-    * Generated Smart Select page/popup can be used with Virtual List by adding `data-virtual-list="true"` and `data-virtual-list-height="44"` attributes to Smart Select. 
+    * Generated Smart Select page/popup can be used with Virtual List by adding `data-virtual-list="true"` and `data-virtual-list-height="44"` attributes to Smart Select.
   * Panels
     * Fixed issue with swipe panel with specified `swipePanelActiveArea` parameter
     * New app parameter `swipePanelOnlyClose` allows to close panels with swipe without `swipePanel`
@@ -795,7 +815,7 @@
     * Updated to latest Template7 version with new support of Global context, that could be specified using `Template7.global` property and used as `@global` keyword in templates
   * Pull To Refresh
     * New `app.destroyPullToRefresh()` method to destroy/disable PTR on page
-    
+
 ## Framework7 v0.9.8 - Updated on November 2, 2014
   * Virtual List
     * New component that allows to render lists with huge amount of items without loss of performance.
@@ -895,7 +915,7 @@
         * `view.router.back()`
       * `options` object now supports the following properties: `url`, `content`, `force`, `reload`, `reloadPrevious`, `ignoreCache`, `pushState`, `animatePages`, `pageName`, `template`, `context`, `contextName`
       * The same options are supported for links as `data-` attributes
-    * Support for Inline Pages by enabling `domCache` View' parameter 
+    * Support for Inline Pages by enabling `domCache` View' parameter
       * Now, Dom cache allows to use Inline Pages in Framework7. So you may set up all your pages in single file, where you need to add `cached` class to initialy hidden pages and navbar inners
       * Such pages could be loaded with usual links by using `<a href="#{pageName}">` format
   * Examples
@@ -904,7 +924,7 @@
 
 
 
-  
+
 ## Framework7 v0.9.6 - Updated on September 12, 2014
   * Template7
     * Now Framework7 comes with its own template engine - Template7. Which has totally the same syntax as Handlebars, but a way faster in templates compilation and rendering, especially in mobile Safari (up to 4 times faster!)
@@ -928,7 +948,7 @@
   * Fast Clicks
     * New "Active state" feature to make :active state behavior like in apps not like in web. With two additional App parameters: `activeState` and `activeStateElements`. It is enabled by default
     * Now fast clicks could be disabled on some specific element with "no-fastclick" class
-    * New `fastClicksDistanceThreshold` app parameter to set distance threshold to prevent short taps 
+    * New `fastClicksDistanceThreshold` app parameter to set distance threshold to prevent short taps
     * Fixed issue with input:file
   * Dom7
     * Support to add event listeners with "capture", so the full syntax now is `.on(eventName, target, listener, capture)` or `.on(eventName, listener, capture)`
@@ -942,7 +962,7 @@
     * New View's `.loadPage(options)` method that accepts object with options: `animatePages`, `ignoreCache`, `url`, `content`, `forceUrl`, `reload`, `reloadPrevious`
     * New View's `.goBack(options)` method that accepts object with options: `animatePages`, `ignoreCache`, `url`, `content`, `forceUrl`, `reload`, `reloadPrevious`
     * Links now also support these options as data- attributes, like `<a href="#" data-animatePages="true" data-ignoreCache="true" ... >`
-    * New View's .loadPage's shortcuts methods: 
+    * New View's .loadPage's shortcuts methods:
       * `.loadPage(url)` - load page by specified url
       * `.loadContent(content)` - load page with specified content
       * `.reloadPage(url)` - reload currently active view's page from specified URL
@@ -957,7 +977,7 @@
 
 ## Framework7 v0.9.5 - Updated on August 15, 2014
   * Colors
-    * Now Framework7 supports color themes: 10 default iOS colors (red, green, blue, lightblue, gray, white, black, orange, yellow, pink) that can be applied to any interactive elements (icons, links, buttons, form elements)  
+    * Now Framework7 supports color themes: 10 default iOS colors (red, green, blue, lightblue, gray, white, black, orange, yellow, pink) that can be applied to any interactive elements (icons, links, buttons, form elements)
     * There are also introduced layout themes (with additional framework7.themes.css file) which contains 2 additional layout themes: dark and white. These themes change look of whole app.
   * Core
     * Links support additional "with-animation" class name to force animation if it is disabled in App/View parameters
@@ -1006,7 +1026,7 @@
     * Fixed Android's "lost focus" bug
   * Grid
     * Now grid is responsive, and number of columns could be changed on Phone/Tablet with additional class like `.col-50.tablet-33`
-  * Tabs 
+  * Tabs
     * Tabs links now support more complex layout, now each tab's link could be placed in different Dom parts and on different level
   * Pages
     * `pageData` now has additional `swipeBack` property within pageBefore/AfterAnimation callback to detect that page was animated after swipe back
@@ -1021,19 +1041,19 @@
   * There is no more `app.allowPageChange` flag. Now this flag is linked to each View
   * Because of Dom7 now globally available, the `Framework7.$` dom export is now deprecated and will be removed in next release
   * Smart select `data-backtext`, `data-pagetitle`, `data-backonselect` attributes are changed to `data-back-text`, `data-page-title`, `data-back-onselect`
-  
+
 
 ## Framework7 v0.9.4 - Updated on July 26, 2014
-  
+
   * New Framework7 grunt custom library builder where you can include only required components
   * Half-pixel (0.5px) borders in iOS 8 for list views, navbars, toolbars, modals, etc.
   * Core
     * New "statusbarOverlay" parameter to overwrite automatic statusbar overlay detection
   * Searchbar
     * Now it may consider and hide item-dividers and grouped list if nothing found there with two new App's options: searchbarHideDividers and searchbarHideGroups. By default, they are enabled (true)
-  * Smart Select 
+  * Smart Select
     * Now it consider and doesn't output "disabled" options and will not be opened if it has "disabled" class or attribute
-  * Dom7 
+  * Dom7
     * New .removeAttr(attrName) method to remove attribute
     * Now it is possible to detach live event listeners with the same "live" syntax `$('something').off('click', '.target', listener)`
   * Icons
@@ -1046,13 +1066,13 @@
     * New "tablet-fullscreen" class on Popup to make fullscreen popup in iPad
 
 ## Framework7 v0.9.3 - Updated on July 20, 2014
-  
+
   * New Accordion component
   * New Login Screen component
-  * Messages 
+  * Messages
     * Avatars now hide/show with transition
     * Fixes white space wrap along long-words messages
-  * Views 
+  * Views
     * New "no-swipeback" class for .page to prevent Swipe Back on this page
   * Grid
     * Grid reworked to flex-box layout
@@ -1151,13 +1171,13 @@
 
 ## Framework7 v0.8.5 - Updated on May 24, 2014
 
-  * Many minor fixes 
+  * Many minor fixes
 
 ## Framework7 v0.8.4 - Updated on May 17, 2014
 
   *  New Slider component
   *  New Photo Browser component
-  *  New arguments for predefined Modals (Alert, Confirm, Prompt) - myApp.alert(text, title, callbackOk, callbackCancel) 
+  *  New arguments for predefined Modals (Alert, Confirm, Prompt) - myApp.alert(text, title, callbackOk, callbackCancel)
   *  "X-Requested-With: XMLHttpRequest" header for non crossdomain Ajax requests
   *  "cacheIgnoreList" app parameter renamed to "cacheIgnore"
   *  New transitional/animated Tabs
@@ -1225,7 +1245,7 @@
   * Fixed and improvements
 
 ## Framework7 v0.7.2 - Updated on April 11, 2014
-  
+
   * improved dist/ app
   * small improvements and fixes in form elements
 
@@ -1237,11 +1257,11 @@
   * size navbar on tab "show"
 
 ## Framework7 v0.7.0 - Updated on April 9, 2014
-  
+
   * new fast clicks library
   * .tap() method removed and deprecated!
   * domCache to keep prev pages in view
   * dynamically generated popup and popover
   * improved device object
   * selectors engine available via Framework7.$
-  
+

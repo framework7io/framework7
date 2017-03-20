@@ -49,18 +49,20 @@ app.initMaterialWatchInputs = function () {
     }
     function watchChangeState(e) {
         /*jshint validthis:true*/
-        var i = $(this), value = i.val();
-        var type = i.attr('type');
+        var input = $(this),
+            value = input.val();
+        var type = input.attr('type');
         if (notInputs.indexOf(type) >= 0) return;
-        var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
-        if (value && value.trim() !== '') {
+        var els = input.add(input.parents('.item-input, .input-field')).add(input.parents('.item-inner').eq(0));
+        if (els.length === 0) return;
+        if (value && (typeof value === 'string' && value.trim() !== '') || (Array.isArray(value) && value.length > 0)) {
             els.addClass('not-empty-state');
         }
         else {
             els.removeClass('not-empty-state');
         }
     }
-    $(document).on('change', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', watchChangeState, true);
-    $(document).on('focus', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', addFocusState, true);
-    $(document).on('blur', '.item-input input, .item-input select, .item-input textarea, input, textarea, select', removeFocusState, true);
+    $(document).on('change', 'input, textarea, select', watchChangeState, true);
+    $(document).on('focus', 'input, textarea, select', addFocusState, true);
+    $(document).on('blur', 'input, textarea, select', removeFocusState, true);
 };

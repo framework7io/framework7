@@ -1,5 +1,6 @@
 @import url('_mixins.less');
 @import url('_colors-vars.less');
+@import url('_dark-colors-vars.less');
 /*==========================
 Framework7 Layouts Themes
 ==========================*/
@@ -163,12 +164,66 @@ Framework7 Layouts Themes
     .timeline-item-time {
         color: rgba(255,255,255,0.7);
     }
+    // Data Table
+    .data-table {
+        tbody {
+            tr.data-table-row-selected {
+                background: rgba(255,255,255,0.05);
+            }
+            td {
+                .hairline(top, @blockBorder);
+            }
+        }
+        html:not(.ios):not(.android) & {
+            tbody tr:hover {
+                background: rgba(255,255,255,0.05);
+            }
+        }
+        thead {
+            th, td {
+                &:not(.sortable-active) {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+        }
+        th, td {
+            &.actions-cell {
+                a.link {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
+        }
+        .sortable-cell:not(.numeric-cell):after, .sortable-cell.numeric-cell:before {
+            .encoded-svg-background("<svg fill='#ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z' fill='#ffffff'/></svg>");
+        }
+        .data-table-actions {
+            a.link {
+                color: rgba(255,255,255,0.5);
+            }
+        }
+        // Collapsible
+        @media (max-width:480px) and (orientation:portrait) {
+            &.data-table-collapsible {
+                tr {
+                    .hairline(top, @blockBorder);
+                }
+                tr:hover {
+                    background-color: inherit;
+                }
+                td:not(.checkbox-cell) {
+                    &:before {
+                        color: rgba(255,255,255,0.5);
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*==========================
 Framework7 Color Themes
 ==========================*/
-.theme-mixin(@colorName, @color, @pressColor) {
+.theme-mixin(@colorName, @color, @pressColor, @darkcolor) {
     //Buttons
     .button {
         .theme-@{colorName} & {
@@ -231,7 +286,7 @@ Framework7 Color Themes
     // Theme
     .theme-@{colorName} {
         // Links
-        a {
+        a, .card a {
             color: @color;
         }
         // Toolbars
@@ -252,7 +307,6 @@ Framework7 Color Themes
             }
         }
         label.label-checkbox, label.label-checkbox& {
-            cursor: pointer;
             i.icon-form-checkbox {
                 &:after {
                     .encoded-svg-background("<svg xmlns='http://www.w3.org/2000/svg' fill='#ffffff' width='24' height='24' viewBox='0 0 24 24'><path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>");
@@ -280,6 +334,29 @@ Framework7 Color Themes
                         background-color: @color;
                     }
                 }
+            }
+        }
+        .form-checkbox, .form-checkbox& {
+            input[type="checkbox"]:checked {
+                ~ i {
+                    border-color: @color;
+                    background-color: @color;
+                }
+            }
+        }
+        .form-radio, .form-radio& {
+            input[type="radio"]:checked {
+                ~ i {
+                    border-color: @color;
+                }
+                ~ i:after {
+                    background-color: @color;
+                }
+            }
+        }
+        .form-checkbox, .form-radio {
+            .ripple-wave {
+                background: rgba(red(@color), green(@color), blue(@color), 0.5);
             }
         }
         .focus-state {
@@ -317,6 +394,19 @@ Framework7 Color Themes
         }
         .timeline-year-title, .timeline-month-title {
             background-color: @color;
+        }
+        // Status Bar Overlay
+        .statusbar-overlay {
+            background-color: @darkcolor;
+        }
+        // Data Tables
+        .data-table, .data-table& {
+            .data-table-header-selected {
+                background: rgba(red(@color), green(@color), blue(@color), 0.1);
+            }
+            .data-table-title-selected {
+                color: @color;
+            }
         }
     }
     .swiper-pagination {
@@ -382,27 +472,27 @@ Framework7 Color Themes
         color: #fff;
     }
 }
-.theme-mixin(e('red'), @red, #D32F2F);
-.theme-mixin(e('pink'), @pink, #C2185B);
-.theme-mixin(e('purple'), @purple, #7B1FA2);
-.theme-mixin(e('deeppurple'), @deeppurple, #512DA8);
-.theme-mixin(e('indigo'), @indigo, #303F9F);
-.theme-mixin(e('blue'), @blue, #1976D2);
-.theme-mixin(e('lightblue'), @lightblue, #0288D1);
-.theme-mixin(e('cyan'), @cyan, #0097A7);
-.theme-mixin(e('teal'), @teal, #00897B);
-.theme-mixin(e('green'), @green, #388E3C);
-.theme-mixin(e('lightgreen'), @lightgreen, #689F38);
-.theme-mixin(e('lime'), @lime, #AFB42B);
-.theme-mixin(e('yellow'), @yellow, #FBC02D);
-.theme-mixin(e('amber'), @amber, #FFA000);
-.theme-mixin(e('orange'), @orange, #F57C00);
-.theme-mixin(e('deeporange'), @deeporange, #E64A19);
-.theme-mixin(e('brown'), @brown, #5D4037);
-.theme-mixin(e('gray'), @gray, #616161);
-.theme-mixin(e('bluegray'), @bluegray, #455A64);
-.theme-mixin(e('white'), @white, rgba(0,0,0,0.1));
-.theme-mixin(e('black'), @black, #333);
+.theme-mixin(e('red'), @red, #D32F2F, @darkred);
+.theme-mixin(e('pink'), @pink, #C2185B, @darkpink);
+.theme-mixin(e('purple'), @purple, #7B1FA2, @darkpurple);
+.theme-mixin(e('deeppurple'), @deeppurple, #512DA8, @darkdeeppurple);
+.theme-mixin(e('indigo'), @indigo, #303F9F, @darkindigo);
+.theme-mixin(e('blue'), @blue, #1976D2, @darkblue);
+.theme-mixin(e('lightblue'), @lightblue, #0288D1, @darklightblue);
+.theme-mixin(e('cyan'), @cyan, #0097A7, @darkcyan);
+.theme-mixin(e('teal'), @teal, #00897B, @darkteal);
+.theme-mixin(e('green'), @green, #388E3C, @darkgreen);
+.theme-mixin(e('lightgreen'), @lightgreen, #689F38, @darklightgreen);
+.theme-mixin(e('lime'), @lime, #AFB42B, @darklime);
+.theme-mixin(e('yellow'), @yellow, #FBC02D, @darkyellow);
+.theme-mixin(e('amber'), @amber, #FFA000, @darkamber);
+.theme-mixin(e('orange'), @orange, #F57C00, @darkorange);
+.theme-mixin(e('deeporange'), @deeporange, #E64A19, @darkdeeporange);
+.theme-mixin(e('brown'), @brown, #5D4037, @darkbrown);
+.theme-mixin(e('gray'), @gray, #616161, @darkgray);
+.theme-mixin(e('bluegray'), @bluegray, #455A64, @darkbluegray);
+.theme-mixin(e('white'), @white, rgba(0,0,0,0.1), @white);
+.theme-mixin(e('black'), @black, #333, @black);
 
 /*==========================
 Framework7 Color + Bg + Border

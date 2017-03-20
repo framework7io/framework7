@@ -46,6 +46,9 @@
         .animation(progressbar-infinite-2 2s linear infinite);
     }
     html.with-statusbar-overlay body > &, html.with-statusbar-overlay .framework7-root > & {
+        top: 24px;
+    }
+    html.with-statusbar-overlay.ios body > &, html.with-statusbar-overlay.ios .framework7-root > & {
         top: 20px;
     }
 }
@@ -87,6 +90,9 @@ body, .view, .views, .page, .panel, .popup, .framework7-root {
 }
 
 html.with-statusbar-overlay body > .progressbar, html.with-statusbar-overlay .framework7-root > .progressbar {
+    top: 24px;
+}
+html.with-statusbar-overlay.ios body > .progressbar, html.with-statusbar-overlay.ios .framework7-root > .progressbar {
     top: 20px;
 }
 @-webkit-keyframes progressbar-in {

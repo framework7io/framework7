@@ -10,12 +10,12 @@ app.initPageScrollToolbars = function (pageContainer) {
     var hideTabbar = (app.params.hideTabbarOnPageScroll || scrollContent.hasClass('hide-tabbar-on-scroll')) && !(scrollContent.hasClass('keep-tabbar-on-scroll'));
 
     if (!(hideNavbar || hideToolbar || hideTabbar)) return;
-    
+
     var viewContainer = scrollContent.parents('.' + app.params.viewClass);
     if (viewContainer.length === 0) return;
 
-    var navbar = viewContainer.find('.navbar'), 
-        toolbar = viewContainer.find('.toolbar'), 
+    var navbar = viewContainer.find('.navbar'),
+        toolbar = viewContainer.find('.toolbar'),
         tabbar;
     if (hideTabbar) {
         tabbar = viewContainer.find('.tabbar');
@@ -70,38 +70,38 @@ app.initPageScrollToolbars = function (pageContainer) {
         if (action === 'show') {
             if (hasNavbar && hideNavbar && navbarHidden) {
                 app.showNavbar(navbar);
-                pageContainer.removeClass('no-navbar-by-scroll'); 
+                pageContainer.removeClass('no-navbar-by-scroll');
                 navbarHidden = false;
             }
             if (hasToolbar && hideToolbar && toolbarHidden) {
                 app.showToolbar(toolbar);
-                pageContainer.removeClass('no-toolbar-by-scroll'); 
+                pageContainer.removeClass('no-toolbar-by-scroll');
                 toolbarHidden = false;
             }
             if (hasTabbar && hideTabbar && tabbarHidden) {
                 app.showToolbar(tabbar);
-                pageContainer.removeClass('no-tabbar-by-scroll'); 
+                pageContainer.removeClass('no-tabbar-by-scroll');
                 tabbarHidden = false;
             }
         }
         else {
             if (hasNavbar && hideNavbar && !navbarHidden) {
                 app.hideNavbar(navbar);
-                pageContainer.addClass('no-navbar-by-scroll'); 
+                pageContainer.addClass('no-navbar-by-scroll');
                 navbarHidden = true;
             }
             if (hasToolbar && hideToolbar && !toolbarHidden) {
                 app.hideToolbar(toolbar);
-                pageContainer.addClass('no-toolbar-by-scroll'); 
+                pageContainer.addClass('no-toolbar-by-scroll');
                 toolbarHidden = true;
             }
             if (hasTabbar && hideTabbar && !tabbarHidden) {
                 app.hideToolbar(tabbar);
-                pageContainer.addClass('no-tabbar-by-scroll'); 
+                pageContainer.addClass('no-tabbar-by-scroll');
                 tabbarHidden = true;
             }
         }
-            
+
         previousScroll = currentScroll;
     }
     scrollContent.on('scroll', handleScroll);

@@ -39,6 +39,7 @@
             "material" : [
                 "src/less/material/_mixins.less",
                 "src/less/material/_colors-vars.less",
+                "src/less/material/_dark-colors-vars.less",
                 "src/less/material/intro.less",
                 "src/less/material/grid.less",
                 "src/less/material/views.less",
