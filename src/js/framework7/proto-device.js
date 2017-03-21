@@ -6,7 +6,7 @@ Framework7.prototype.device = (function () {
     var ua = navigator.userAgent;
     var $ = Dom7;
 
-    var windows = /windows phone/i.test(ua);
+    var windows = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/);
     var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
     var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
@@ -17,6 +17,7 @@ Framework7.prototype.device = (function () {
     // Windows
     if (windows) {
         device.os = 'windows';
+        device.osVersion = windows[2];
         device.windows = true;
     }
     // Android
