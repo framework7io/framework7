@@ -3,9 +3,7 @@
   font-style: normal;
   font-weight: 400;
   src: url("../fonts/Framework7Icons-Regular.eot");
-  src: local('Framework7 Icons'),
-       local('Framework7Icons-Regular'),
-       url("../fonts/Framework7Icons-Regular.woff2") format("woff2"),
+  src: url("../fonts/Framework7Icons-Regular.woff2") format("woff2"),
        url("../fonts/Framework7Icons-Regular.woff") format("woff"),
        url("../fonts/Framework7Icons-Regular.ttf") format("truetype");
 }
@@ -29,4 +27,5 @@
   -moz-font-feature-settings: "liga=1";
   -moz-font-feature-settings: "liga";
   font-feature-settings: "liga";
+  text-align: center;
 }

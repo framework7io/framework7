@@ -135,7 +135,7 @@ Framework7 Layouts Themes
             border-color: rgba(255,255,255,0.7);
         }
     }
-    .item-link.list-button {
+    .item-link.list-button, .list-button {
         .hairline-color(bottom, @blockBorder);
     }
     .page-content .ripple-wave {
@@ -501,7 +501,7 @@ Framework7 Color + Bg + Border
     //Plain color and links
     .color-@{colorName} {
         color: @color;
-        .list-block .item-link.list-button&, .list-block .item-link&, .tabbar a.active&, a& {
+        .list-block .item-link.list-button&, .list-button&, .list-block .item-link&, .tabbar a.active&, a& {
             color: @color;
         }
         .label-switch input[type="checkbox"]:checked + .checkbox&, .label-switch& input[type="checkbox"]:checked + .checkbox{

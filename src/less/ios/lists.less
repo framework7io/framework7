@@ -24,7 +24,7 @@
     .align-top, .align-top .item-content, .align-top .item-inner {
         .align-items(flex-start);
     }
-    
+
     .inset() {
         margin-left: 15px;
         margin-right: 15px;
@@ -62,7 +62,7 @@
         box-sizing: border-box;
         position: relative;
     }
-    
+
     .item-media {
         .flexbox();
         .flex-shrink(0);
@@ -116,6 +116,30 @@
         .flexbox();
         max-height: 28px;
     }
+    .item-actions {
+        margin-left: auto;
+        padding-left: 15px;
+        .flexbox();
+        .align-items(center);
+        .justify-content(space-between);
+        a {
+            min-width: 23px;
+            .flexbox();
+            .align-items(center);
+            .justify-content(center);
+            .transition(300ms);
+            html:not(.watch-active-state) &:active, &.active-state {
+                opacity: 0.3;
+                .transition(0ms);
+            }
+            + a {
+                margin-left: 8px;
+            }
+        }
+    }
+    .item-after + .item-actions {
+        margin-left: 0;
+    }
     .smart-select .item-after, .autocomplete-opener .item-after {
         max-width: 70%;
         overflow: hidden;
@@ -123,7 +147,7 @@
         position: relative;
         display: block;
     }
-    .item-link {
+    .item-link, .list-button {
         .transition(300ms);
         display: block;
         color: inherit;
@@ -144,14 +168,14 @@
                 .hairline-color(bottom, transparent);
             }
         }
-        &.list-button {
-            padding: 0 15px;
-            text-align: center;
-            color: @blue;
-            display: block;
-            .hairline(bottom, @listBlockBorderColor);
-            line-height: 43px;
-        }
+    }
+    .list-button {
+        padding: 0 15px;
+        text-align: center;
+        color: @blue;
+        display: block;
+        .hairline(bottom, @listBlockBorderColor);
+        line-height: 43px;
     }
     .item-content {
         box-sizing: border-box;
@@ -185,7 +209,7 @@
         .swipeout-content, .swipeout-actions-right a, .swipeout-actions-left a, .swipeout-overswipe {
             -webkit-transition: 300ms;
             transition: 300ms;
-        }    
+        }
     }
     .swipeout-content {
         position: relative;
@@ -304,7 +328,7 @@
             }
         }
         + .list-group ul {
-            .hairline-remove(top);   
+            .hairline-remove(top);
         }
     }
     .item-divider, .list-group-title {
@@ -349,7 +373,7 @@
     }
     &.sortable {
         .item-inner {
-            .transition(300ms);       
+            .transition(300ms);
         }
     }
     &.sortable-opened {
