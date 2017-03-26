@@ -308,14 +308,23 @@ app.initSwipePanels = function () {
         touchesDiff = pageX - touchesStart.x + threshold;
 
         if (side === 'right') {
-            translate = touchesDiff  - (opened ? panelWidth : 0);
-            if (translate > 0) translate = 0;
-            if (translate < -panelWidth) {
-                translate = -panelWidth;
+            if (effect === 'cover') {
+                translate = touchesDiff + (opened ? 0 : panelWidth);
+                if (translate < 0) translate = 0;
+                if (translate > panelWidth) {
+                    translate = panelWidth;
+                }
+            }
+            else {
+                translate = touchesDiff - (opened ? panelWidth : 0);
+                if (translate > 0) translate = 0;
+                if (translate < -panelWidth) {
+                    translate = -panelWidth;
+                }
             }
         }
         else {
-            translate = touchesDiff  + (opened ? panelWidth : 0);
+            translate = touchesDiff + (opened ? panelWidth : 0);
             if (translate < 0) translate = 0;
             if (translate > panelWidth) {
                 translate = panelWidth;
@@ -329,7 +338,8 @@ app.initSwipePanels = function () {
             app.pluginHook('swipePanelSetTransform', views[0], panel[0], Math.abs(translate / panelWidth));
         }
         else {
-            panel.transform('translate3d(' + (translate - panelWidth) + 'px,0,0)').transition(0);
+            if (side === 'left') translate = translate - panelWidth;
+            panel.transform('translate3d(' + (translate) + 'px,0,0)').transition(0);
 
             panelOverlay.transition(0);
             overlayOpacity = Math.abs(translate/panelWidth);
@@ -352,32 +362,64 @@ app.initSwipePanels = function () {
         var edge = (translate === 0 || Math.abs(translate) === panelWidth);
 
         if (!opened) {
-            if (translate === 0) {
-                action = 'reset';
-            }
-            else if (
-                timeDiff < 300 && Math.abs(translate) > 0 ||
-                timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2)
-            ) {
-                action = 'swap';
+            if (effect === 'cover') {
+                if (translate === 0) {
+                    action = 'swap'; //open
+                }
+                else if (timeDiff < 300 && Math.abs(translate) > 0) {
+                    action = 'swap'; //open
+                }
+                else if (timeDiff >= 300 && Math.abs(translate) < panelWidth / 2) {
+                    action = 'swap'; //open
+                }
+                else {
+                    action = 'reset'; //close
+                }
             }
             else {
-                action = 'reset';
+                if (translate === 0) {
+                    action = 'reset';
+                }
+                else if (
+                    timeDiff < 300 && Math.abs(translate) > 0 ||
+                    timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2)
+                ) {
+                    action = 'swap';
+                }
+                else {
+                    action = 'reset';
+                }
             }
         }
         else {
-            if (translate === -panelWidth) {
-                action = 'reset';
-            }
-            else if (
-                timeDiff < 300 && Math.abs(translate) >= 0 ||
-                timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
-            ) {
-                if (side === 'left' && translate === panelWidth) action = 'reset';
-                else action = 'swap';
+            if (effect === 'cover') {
+                if (translate === 0) {
+                    action = 'reset'; //open
+                }
+                else if (timeDiff < 300 && Math.abs(translate) > 0) {
+                    action = 'swap'; //open
+                }
+                else if (timeDiff >= 300 && Math.abs(translate) < panelWidth / 2) {
+                    action = 'reset'; //open
+                }
+                else {
+                    action = 'swap'; //close
+                }
             }
             else {
-                action = 'reset';
+                if (translate === -panelWidth) {
+                    action = 'reset';
+                }
+                else if (
+                    timeDiff < 300 && Math.abs(translate) >= 0 ||
+                    timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2)
+                ) {
+                    if (side === 'left' && translate === panelWidth) action = 'reset';
+                    else action = 'swap';
+                }
+                else {
+                    action = 'reset';
+                }
             }
         }
         if (action === 'swap') {

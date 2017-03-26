@@ -98,6 +98,7 @@ window.Framework7 = function (params) {
         modalCloseByOutside: false,
         actionsCloseByOutside: true,
         popupCloseByOutside: true,
+        popoverCloseByOutside: true,
         modalPreloaderTitle: 'Loading... ',
         modalStack: true,
         modalsMoveToRoot: true,
