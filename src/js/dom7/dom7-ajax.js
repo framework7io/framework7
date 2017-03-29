@@ -215,6 +215,7 @@ $.ajax = function (options) {
                     fireAjaxCallback('ajaxSuccess ajax:success', {xhr: xhr}, 'success', responseData, xhr.status, xhr);
                 }
                 catch (err) {
+                    console.error(err.stack);
                     fireAjaxCallback('ajaxError ajax:error', {xhr: xhr, parseerror: true}, 'error', xhr, 'parseerror');
                 }
             }
