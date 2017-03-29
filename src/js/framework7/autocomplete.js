@@ -16,7 +16,7 @@ var Autocomplete = function (params) {
         searchbarCancelText: 'Cancel',
         openWithAnimation: true,
         // When opened in page should the searchbar be focused by default
-        autoFocus: true,
+        autoFocus: false,
         openIn: 'page',
         backOnSelect: false,
         notFoundText: 'Nothing found',
