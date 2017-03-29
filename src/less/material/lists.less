@@ -122,6 +122,26 @@
         position: relative;
         display: block;
     }
+    .item-actions {
+        margin-left: auto;
+        padding-left: 8px;
+        .flexbox();
+        .align-items(center);
+        .justify-content(space-between);
+        a {
+            min-width: 24px;
+            position: relative;
+            .flexbox();
+            .align-items(center);
+            .justify-content(center);
+            + a {
+                margin-left: 8px;
+            }
+        }
+    }
+    .item-after + .item-actions {
+        margin-left: 0;
+    }
     .item-link, .list-button {
         .transition(300ms);
         display: block;
