@@ -13,6 +13,9 @@
     .flexbox();
     .align-items(center);
     color:#fff;
+    &.no-shadow {
+        box-shadow: none;
+    }
     a {
         position: relative;
         color:#fff;
@@ -107,6 +110,9 @@
     box-shadow: @toolbarShadow;
     & ~ .page-content {
         padding-top: @searchbarSize;
+    }
+    &.no-shadow {
+        box-shadow: none;
     }
 }
 .navbar-fixed, .navbar-through {

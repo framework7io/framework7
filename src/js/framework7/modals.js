@@ -271,8 +271,9 @@ app.actions = function (target, params, animated) {
     if (!toPopover) app.openModal(modal, animated);
     return modal[0];
 };
-app.popover = function (modal, target, removeOnClose, animated) {
+app.popover = function (modal, target, removeOnClose, animated, closeByOutside) {
     if (typeof removeOnClose === 'undefined') removeOnClose = true;
+    if (typeof closeByOutside === 'undefined') closeByOutside = true;
     if (typeof animated === 'undefined') animated = true;
     if (typeof modal === 'string' && modal.indexOf('<') >= 0) {
         var _modal = document.createElement('div');
@@ -280,6 +281,7 @@ app.popover = function (modal, target, removeOnClose, animated) {
         if (_modal.childNodes.length > 0) {
             modal = _modal.childNodes[0];
             if (removeOnClose) modal.classList.add('remove-on-close');
+            if (!closeByOutside) modal.classList.add('ignore-close-by-outside');
             app.root.append(modal);
         }
         else return false; //nothing found
@@ -289,6 +291,7 @@ app.popover = function (modal, target, removeOnClose, animated) {
     if (modal.length === 0 || target.length === 0) return false;
     if (modal.parents('body').length === 0) {
         if (removeOnClose) modal.addClass('remove-on-close');
+        if (!closeByOutside) modal.addClass.add('ignore-close-by-outside');
         app.root.append(modal[0]);
     }
     if (modal.find('.popover-angle').length === 0 && !app.params.material) {
@@ -665,6 +668,11 @@ app.closeModal = function (modal, animated) {
     if (isActions) modalType = 'actions';
 
     var removeOnClose = modal.hasClass('remove-on-close');
+    
+    // ignore close popover
+    if (isPopover && modal.hasClass('ignore-close-by-outside')) {
+        return;
+    }
 
     // For Actions
     var keepOnClose = modal.hasClass('keep-on-close');
