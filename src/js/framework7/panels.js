@@ -342,7 +342,7 @@ app.initSwipePanels = function () {
             panel.transform('translate3d(' + (translate) + 'px,0,0)').transition(0);
 
             panelOverlay.transition(0);
-            overlayOpacity = Math.abs(translate/panelWidth);
+            overlayOpacity = 1 - Math.abs(translate/panelWidth);
             panelOverlay.css({opacity: overlayOpacity});
 
             panel.trigger('panel:swipe', {progress: Math.abs(translate / panelWidth)});
