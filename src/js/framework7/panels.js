@@ -342,7 +342,7 @@ app.initSwipePanels = function () {
             panel.transform('translate3d(' + (translate) + 'px,0,0)').transition(0);
 
             panelOverlay.transition(0);
-            overlayOpacity = Math.abs(translate/panelWidth);
+            overlayOpacity = 1 - Math.abs(translate/panelWidth);
             panelOverlay.css({opacity: overlayOpacity});
 
             panel.trigger('panel:swipe', {progress: Math.abs(translate / panelWidth)});
@@ -452,6 +452,7 @@ app.initSwipePanels = function () {
                     panel.trigger('close panel:close');
                     $('body').addClass('panel-closing');
                     target.transitionEnd(function () {
+                        if (panel.hasClass('active')) return;
                         panel.trigger('close panel:closed');
                         panel.css({display: ''});
                         $('body').removeClass('panel-closing');
