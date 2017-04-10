@@ -10564,7 +10564,7 @@
                     p.wrapper.find('.picker-calendar-day-selected').removeClass('picker-calendar-day-selected');
                     var valueDate;
                     if (p.params.rangePicker && p.value.length === 2) {
-                        for (i = p.value[0]; i <= p.value[1]; i += 24*60*60*1000) {
+                        for (i = new Date(p.value[0]).getTime(); i <= new Date(p.value[1]).getTime(); i += 24*60*60*1000) {
                             valueDate = new Date(i);
                             p.wrapper.find('.picker-calendar-day[data-date="' + valueDate.getFullYear() + '-' + valueDate.getMonth() + '-' + valueDate.getDate() + '"]').addClass('picker-calendar-day-selected');
                         }
