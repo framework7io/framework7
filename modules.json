@@ -206,7 +206,7 @@
         "dependencies" : []
     },
     "swiper": {
-        "js" : ["src/js/framework7/swiper.js", "src/js/framework7/swiper-init.js"],
+        "js" : ["src/js/swiper/swiper.js", "src/js/framework7/swiper-init.js"],
         "less": {
             "ios": ["src/less/ios/swiper.less"],
             "material": ["src/less/material/swiper.less"]
