@@ -1,5 +1,16 @@
 # Change Log
 
+## Framework7 v1.6.0 - Updated on April 10, 2017
+  * New Data Table component
+  * Lazy Loading
+    * Lazy image placeholder can be specified in `src` image attribute
+    * New callbacks in app parameters: `onLazyLoad`, `onLazyLoaded`, `onLazyError`
+  * Panels
+    * Fixed issues with swipe panels
+  * Modals
+    * New `popoverCloseByOutside` parameter to define wheter popover should be closed on outside (overlay) click or not. Enabled by default
+  * Minor fixes
+
 ## Framework7 v1.5.4 - Updated on March 13, 2017
   * Panels
     * A bit reworked Panels layout/styling in favor of`translate` CSS property. May required small CSS fixes after update if you have changed panels sizes

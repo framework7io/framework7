@@ -1,5 +1,5 @@
 /**
- * Framework7 1.5.4
+ * Framework7 1.6.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * iOS Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 13, 2017
+ * Released on: April 10, 2017
  */
 /*==========================
 Framework7 Color Themes
@@ -77,7 +77,8 @@ i.icon-bars.theme-gray,
   }
 }
 .theme-gray a,
-.theme-gray .item-link.list-button {
+.theme-gray .item-link.list-button,
+.theme-gray .list-button {
   color: #8e8e93;
 }
 .theme-gray .tabbar a,
@@ -96,15 +97,31 @@ i.icon-bars.theme-gray,
   background-color: #8e8e93;
 }
 .theme-gray label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-gray label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-gray label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-gray .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-gray input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-gray input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-gray input[type="checkbox"]:checked ~ i {
   background-color: #8e8e93;
 }
+.theme-gray .form-radio input[type="radio"]:checked ~ i,
 .theme-gray label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-gray label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-gray label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-gray input[type="radio"]:checked ~ i,
+label.label-radio.theme-gray input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-gray input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%238e8e93'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-gray .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #8e8e93 !important;
+}
+.theme-gray .data-table .data-table-header-selected,
+.data-table.theme-gray .data-table-header-selected {
+  background: rgba(142, 142, 147, 0.1);
+}
+.theme-gray .data-table .data-table-title-selected,
+.data-table.theme-gray .data-table-title-selected {
+  color: #8e8e93;
 }
 .swiper-pagination.color-gray .swiper-pagination-bullet-active,
 .theme-gray .swiper-pagination .swiper-pagination-bullet-active {
@@ -224,7 +241,8 @@ i.icon-bars.theme-white,
   }
 }
 .theme-white a,
-.theme-white .item-link.list-button {
+.theme-white .item-link.list-button,
+.theme-white .list-button {
   color: #ffffff;
 }
 .theme-white .tabbar a,
@@ -243,15 +261,31 @@ i.icon-bars.theme-white,
   background-color: #ffffff;
 }
 .theme-white label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-white label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-white label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-white .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-white input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-white input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-white input[type="checkbox"]:checked ~ i {
   background-color: #ffffff;
 }
+.theme-white .form-radio input[type="radio"]:checked ~ i,
 .theme-white label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-white label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-white label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-white input[type="radio"]:checked ~ i,
+label.label-radio.theme-white input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-white input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23ffffff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-white .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #ffffff !important;
+}
+.theme-white .data-table .data-table-header-selected,
+.data-table.theme-white .data-table-header-selected {
+  background: rgba(255, 255, 255, 0.1);
+}
+.theme-white .data-table .data-table-title-selected,
+.data-table.theme-white .data-table-title-selected {
+  color: #ffffff;
 }
 .swiper-pagination.color-white .swiper-pagination-bullet-active,
 .theme-white .swiper-pagination .swiper-pagination-bullet-active {
@@ -371,7 +405,8 @@ i.icon-bars.theme-black,
   }
 }
 .theme-black a,
-.theme-black .item-link.list-button {
+.theme-black .item-link.list-button,
+.theme-black .list-button {
   color: #000000;
 }
 .theme-black .tabbar a,
@@ -390,15 +425,31 @@ i.icon-bars.theme-black,
   background-color: #000000;
 }
 .theme-black label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-black label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-black label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-black .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-black input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-black input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-black input[type="checkbox"]:checked ~ i {
   background-color: #000000;
 }
+.theme-black .form-radio input[type="radio"]:checked ~ i,
 .theme-black label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-black label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-black label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-black input[type="radio"]:checked ~ i,
+label.label-radio.theme-black input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-black input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23000000'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-black .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #000000 !important;
+}
+.theme-black .data-table .data-table-header-selected,
+.data-table.theme-black .data-table-header-selected {
+  background: rgba(0, 0, 0, 0.1);
+}
+.theme-black .data-table .data-table-title-selected,
+.data-table.theme-black .data-table-title-selected {
+  color: #000000;
 }
 .swiper-pagination.color-black .swiper-pagination-bullet-active,
 .theme-black .swiper-pagination .swiper-pagination-bullet-active {
@@ -518,7 +569,8 @@ i.icon-bars.theme-lightblue,
   }
 }
 .theme-lightblue a,
-.theme-lightblue .item-link.list-button {
+.theme-lightblue .item-link.list-button,
+.theme-lightblue .list-button {
   color: #5ac8fa;
 }
 .theme-lightblue .tabbar a,
@@ -537,15 +589,31 @@ i.icon-bars.theme-lightblue,
   background-color: #5ac8fa;
 }
 .theme-lightblue label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-lightblue label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-lightblue label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-lightblue .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-lightblue input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-lightblue input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-lightblue input[type="checkbox"]:checked ~ i {
   background-color: #5ac8fa;
 }
+.theme-lightblue .form-radio input[type="radio"]:checked ~ i,
 .theme-lightblue label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-lightblue label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-lightblue label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-lightblue input[type="radio"]:checked ~ i,
+label.label-radio.theme-lightblue input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-lightblue input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%235ac8fa'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-lightblue .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #5ac8fa !important;
+}
+.theme-lightblue .data-table .data-table-header-selected,
+.data-table.theme-lightblue .data-table-header-selected {
+  background: rgba(90, 200, 250, 0.1);
+}
+.theme-lightblue .data-table .data-table-title-selected,
+.data-table.theme-lightblue .data-table-title-selected {
+  color: #5ac8fa;
 }
 .swiper-pagination.color-lightblue .swiper-pagination-bullet-active,
 .theme-lightblue .swiper-pagination .swiper-pagination-bullet-active {
@@ -665,7 +733,8 @@ i.icon-bars.theme-yellow,
   }
 }
 .theme-yellow a,
-.theme-yellow .item-link.list-button {
+.theme-yellow .item-link.list-button,
+.theme-yellow .list-button {
   color: #ffcc00;
 }
 .theme-yellow .tabbar a,
@@ -684,15 +753,31 @@ i.icon-bars.theme-yellow,
   background-color: #ffcc00;
 }
 .theme-yellow label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-yellow label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-yellow label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-yellow .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-yellow input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-yellow input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-yellow input[type="checkbox"]:checked ~ i {
   background-color: #ffcc00;
 }
+.theme-yellow .form-radio input[type="radio"]:checked ~ i,
 .theme-yellow label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-yellow label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-yellow label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-yellow input[type="radio"]:checked ~ i,
+label.label-radio.theme-yellow input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-yellow input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23ffcc00'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-yellow .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #ffcc00 !important;
+}
+.theme-yellow .data-table .data-table-header-selected,
+.data-table.theme-yellow .data-table-header-selected {
+  background: rgba(255, 204, 0, 0.1);
+}
+.theme-yellow .data-table .data-table-title-selected,
+.data-table.theme-yellow .data-table-title-selected {
+  color: #ffcc00;
 }
 .swiper-pagination.color-yellow .swiper-pagination-bullet-active,
 .theme-yellow .swiper-pagination .swiper-pagination-bullet-active {
@@ -812,7 +897,8 @@ i.icon-bars.theme-orange,
   }
 }
 .theme-orange a,
-.theme-orange .item-link.list-button {
+.theme-orange .item-link.list-button,
+.theme-orange .list-button {
   color: #ff9500;
 }
 .theme-orange .tabbar a,
@@ -831,15 +917,31 @@ i.icon-bars.theme-orange,
   background-color: #ff9500;
 }
 .theme-orange label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-orange label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-orange label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-orange .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-orange input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-orange input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-orange input[type="checkbox"]:checked ~ i {
   background-color: #ff9500;
 }
+.theme-orange .form-radio input[type="radio"]:checked ~ i,
 .theme-orange label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-orange label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-orange label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-orange input[type="radio"]:checked ~ i,
+label.label-radio.theme-orange input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-orange input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23ff9500'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-orange .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #ff9500 !important;
+}
+.theme-orange .data-table .data-table-header-selected,
+.data-table.theme-orange .data-table-header-selected {
+  background: rgba(255, 149, 0, 0.1);
+}
+.theme-orange .data-table .data-table-title-selected,
+.data-table.theme-orange .data-table-title-selected {
+  color: #ff9500;
 }
 .swiper-pagination.color-orange .swiper-pagination-bullet-active,
 .theme-orange .swiper-pagination .swiper-pagination-bullet-active {
@@ -959,7 +1061,8 @@ i.icon-bars.theme-pink,
   }
 }
 .theme-pink a,
-.theme-pink .item-link.list-button {
+.theme-pink .item-link.list-button,
+.theme-pink .list-button {
   color: #ff2d55;
 }
 .theme-pink .tabbar a,
@@ -978,15 +1081,31 @@ i.icon-bars.theme-pink,
   background-color: #ff2d55;
 }
 .theme-pink label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-pink label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-pink label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-pink .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-pink input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-pink input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-pink input[type="checkbox"]:checked ~ i {
   background-color: #ff2d55;
 }
+.theme-pink .form-radio input[type="radio"]:checked ~ i,
 .theme-pink label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-pink label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-pink label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-pink input[type="radio"]:checked ~ i,
+label.label-radio.theme-pink input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-pink input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23ff2d55'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-pink .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #ff2d55 !important;
+}
+.theme-pink .data-table .data-table-header-selected,
+.data-table.theme-pink .data-table-header-selected {
+  background: rgba(255, 45, 85, 0.1);
+}
+.theme-pink .data-table .data-table-title-selected,
+.data-table.theme-pink .data-table-title-selected {
+  color: #ff2d55;
 }
 .swiper-pagination.color-pink .swiper-pagination-bullet-active,
 .theme-pink .swiper-pagination .swiper-pagination-bullet-active {
@@ -1106,7 +1225,8 @@ i.icon-bars.theme-blue,
   }
 }
 .theme-blue a,
-.theme-blue .item-link.list-button {
+.theme-blue .item-link.list-button,
+.theme-blue .list-button {
   color: #007aff;
 }
 .theme-blue .tabbar a,
@@ -1125,15 +1245,31 @@ i.icon-bars.theme-blue,
   background-color: #007aff;
 }
 .theme-blue label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-blue label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-blue label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-blue .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-blue input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-blue input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-blue input[type="checkbox"]:checked ~ i {
   background-color: #007aff;
 }
+.theme-blue .form-radio input[type="radio"]:checked ~ i,
 .theme-blue label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-blue label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-blue label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-blue input[type="radio"]:checked ~ i,
+label.label-radio.theme-blue input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-blue input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23007aff'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-blue .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #007aff !important;
+}
+.theme-blue .data-table .data-table-header-selected,
+.data-table.theme-blue .data-table-header-selected {
+  background: rgba(0, 122, 255, 0.1);
+}
+.theme-blue .data-table .data-table-title-selected,
+.data-table.theme-blue .data-table-title-selected {
+  color: #007aff;
 }
 .swiper-pagination.color-blue .swiper-pagination-bullet-active,
 .theme-blue .swiper-pagination .swiper-pagination-bullet-active {
@@ -1253,7 +1389,8 @@ i.icon-bars.theme-green,
   }
 }
 .theme-green a,
-.theme-green .item-link.list-button {
+.theme-green .item-link.list-button,
+.theme-green .list-button {
   color: #4cd964;
 }
 .theme-green .tabbar a,
@@ -1272,15 +1409,31 @@ i.icon-bars.theme-green,
   background-color: #4cd964;
 }
 .theme-green label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-green label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-green label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-green .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-green input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-green input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-green input[type="checkbox"]:checked ~ i {
   background-color: #4cd964;
 }
+.theme-green .form-radio input[type="radio"]:checked ~ i,
 .theme-green label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-green label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-green label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-green input[type="radio"]:checked ~ i,
+label.label-radio.theme-green input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-green input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%234cd964'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-green .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #4cd964 !important;
+}
+.theme-green .data-table .data-table-header-selected,
+.data-table.theme-green .data-table-header-selected {
+  background: rgba(76, 217, 100, 0.1);
+}
+.theme-green .data-table .data-table-title-selected,
+.data-table.theme-green .data-table-title-selected {
+  color: #4cd964;
 }
 .swiper-pagination.color-green .swiper-pagination-bullet-active,
 .theme-green .swiper-pagination .swiper-pagination-bullet-active {
@@ -1400,7 +1553,8 @@ i.icon-bars.theme-red,
   }
 }
 .theme-red a,
-.theme-red .item-link.list-button {
+.theme-red .item-link.list-button,
+.theme-red .list-button {
   color: #ff3b30;
 }
 .theme-red .tabbar a,
@@ -1419,15 +1573,31 @@ i.icon-bars.theme-red,
   background-color: #ff3b30;
 }
 .theme-red label.label-checkbox input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
-.theme-red label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox {
+.theme-red label.label-checkbox input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.theme-red .form-checkbox input[type="checkbox"]:checked ~ i,
+label.label-checkbox.theme-red input[type="checkbox"]:checked + .item-media i.icon-form-checkbox,
+label.label-checkbox.theme-red input[type="radio"]:checked + .item-media i.icon-form-checkbox,
+.form-checkbox.theme-red input[type="checkbox"]:checked ~ i {
   background-color: #ff3b30;
 }
+.theme-red .form-radio input[type="radio"]:checked ~ i,
 .theme-red label.label-radio input[type="checkbox"]:checked ~ .item-inner,
-.theme-red label.label-radio input[type="radio"]:checked ~ .item-inner {
+.theme-red label.label-radio input[type="radio"]:checked ~ .item-inner,
+.form-radio.theme-red input[type="radio"]:checked ~ i,
+label.label-radio.theme-red input[type="checkbox"]:checked ~ .item-inner,
+label.label-radio.theme-red input[type="radio"]:checked ~ .item-inner {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23ff3b30'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
 }
 .theme-red .picker-calendar-day.picker-calendar-day-selected span {
   background-color: #ff3b30 !important;
+}
+.theme-red .data-table .data-table-header-selected,
+.data-table.theme-red .data-table-header-selected {
+  background: rgba(255, 59, 48, 0.1);
+}
+.theme-red .data-table .data-table-title-selected,
+.data-table.theme-red .data-table-title-selected {
+  color: #ff3b30;
 }
 .swiper-pagination.color-red .swiper-pagination-bullet-active,
 .theme-red .swiper-pagination .swiper-pagination-bullet-active {
@@ -1494,6 +1664,7 @@ Framework7 Color + Bg + Border
   color: #8e8e93;
 }
 .list-block .item-link.list-button.color-gray,
+.list-button.color-gray,
 .tabbar a.active.color-gray,
 a.color-gray {
   color: #8e8e93;
@@ -1592,6 +1763,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-gray:active,
   color: #ffffff;
 }
 .list-block .item-link.list-button.color-white,
+.list-button.color-white,
 .tabbar a.active.color-white,
 a.color-white {
   color: #ffffff;
@@ -1690,6 +1862,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-white:active,
   color: #000000;
 }
 .list-block .item-link.list-button.color-black,
+.list-button.color-black,
 .tabbar a.active.color-black,
 a.color-black {
   color: #000000;
@@ -1788,6 +1961,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-black:active,
   color: #5ac8fa;
 }
 .list-block .item-link.list-button.color-lightblue,
+.list-button.color-lightblue,
 .tabbar a.active.color-lightblue,
 a.color-lightblue {
   color: #5ac8fa;
@@ -1886,6 +2060,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-lightblue:active,
   color: #ffcc00;
 }
 .list-block .item-link.list-button.color-yellow,
+.list-button.color-yellow,
 .tabbar a.active.color-yellow,
 a.color-yellow {
   color: #ffcc00;
@@ -1984,6 +2159,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-yellow:active,
   color: #ff9500;
 }
 .list-block .item-link.list-button.color-orange,
+.list-button.color-orange,
 .tabbar a.active.color-orange,
 a.color-orange {
   color: #ff9500;
@@ -2082,6 +2258,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-orange:active,
   color: #ff2d55;
 }
 .list-block .item-link.list-button.color-pink,
+.list-button.color-pink,
 .tabbar a.active.color-pink,
 a.color-pink {
   color: #ff2d55;
@@ -2180,6 +2357,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-pink:active,
   color: #007aff;
 }
 .list-block .item-link.list-button.color-blue,
+.list-button.color-blue,
 .tabbar a.active.color-blue,
 a.color-blue {
   color: #007aff;
@@ -2278,6 +2456,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-blue:active,
   color: #4cd964;
 }
 .list-block .item-link.list-button.color-green,
+.list-button.color-green,
 .tabbar a.active.color-green,
 a.color-green {
   color: #4cd964;
@@ -2376,6 +2555,7 @@ html:not(.watch-active-state) .speed-dial-buttons a.bg-green:active,
   color: #ff3b30;
 }
 .list-block .item-link.list-button.color-red,
+.list-button.color-red,
 .tabbar a.active.color-red,
 a.color-red {
   color: #ff3b30;
@@ -2680,7 +2860,8 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 .layout-dark label.label-radio.active-state {
   background-color: #29292f;
 }
-.layout-dark .item-link.list-button:after {
+.layout-dark .item-link.list-button:after,
+.layout-dark .list-button:after {
   background-color: #393939;
 }
 .layout-dark .list-block-label {
@@ -2765,6 +2946,67 @@ html:not(.watch-active-state) .layout-dark label.label-radio:active,
 }
 .layout-dark .timeline-year:after {
   background-color: #333;
+}
+.layout-dark .data-table tbody tr.data-table-row-selected {
+  background: rgba(255, 255, 255, 0.05);
+}
+.layout-dark .data-table tbody td:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: auto;
+  right: auto;
+  height: 1px;
+  width: 100%;
+  background-color: #393939;
+  display: block;
+  z-index: 15;
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+}
+html.pixel-ratio-2 .layout-dark .data-table tbody td:before {
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+html.pixel-ratio-3 .layout-dark .data-table tbody td:before {
+  -webkit-transform: scaleY(0.33);
+  transform: scaleY(0.33);
+}
+html:not(.ios):not(.android) .layout-dark .data-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+.layout-dark .data-table .sortable-cell:not(.numeric-cell):after,
+.layout-dark .data-table .sortable-cell.numeric-cell:before {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23ffffff'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M0%200h24v24H0V0z'%20fill%3D'none'%2F%3E%3Cpath%20d%3D'M20%2012l-1.41-1.41L13%2016.17V4h-2v12.17l-5.58-5.59L4%2012l8%208%208-8z'%20fill%3D'%23ffffff'%2F%3E%3C%2Fsvg%3E");
+}
+@media (max-width: 480px) and (orientation: portrait) {
+  .layout-dark .data-table.data-table-collapsible tr:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    height: 1px;
+    width: 100%;
+    background-color: #393939;
+    display: block;
+    z-index: 15;
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+  }
+  html.pixel-ratio-2 .layout-dark .data-table.data-table-collapsible tr:before {
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+  html.pixel-ratio-3 .layout-dark .data-table.data-table-collapsible tr:before {
+    -webkit-transform: scaleY(0.33);
+    transform: scaleY(0.33);
+  }
+  .layout-dark .data-table.data-table-collapsible tr:hover {
+    background-color: inherit;
+  }
 }
 /* === White layout === */
 .layout-white .navbar,
@@ -2907,7 +3149,8 @@ html:not(.watch-active-state) .layout-white label.label-radio:active,
 .layout-white label.label-radio.active-state {
   background-color: #eee;
 }
-.layout-white .item-link.list-button:after {
+.layout-white .item-link.list-button:after,
+.layout-white .list-button:after {
   background-color: #ddd;
 }
 .layout-white .list-block-label {
