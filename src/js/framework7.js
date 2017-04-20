@@ -7,6 +7,7 @@ import Install from './install';
 import Device from './device';
 import Support from './support';
 import Events from './events';
+import Touch from './touch';
 
 import Demo from './demo-module';
 
@@ -28,6 +29,9 @@ Framework7.install(Support);
 
 // Events
 Framework7.install(Events);
+
+// Touch
+Framework7.install(Touch);
 
 // Demo Module
 Framework7.install(Demo, { foo: 'bar' });
