@@ -66,7 +66,7 @@ function Device() {
   // Minimal UI
   if (device.os && device.os === 'ios') {
     const osVersionArr = device.osVersion.split('.');
-    const metaViewport = document.querySelectorAll('meta[name="viewport"]');
+    const metaViewport = document.querySelector('meta[name="viewport"]');
     device.minimalUi =
       !device.webView &&
       (ipod || iphone) &&
