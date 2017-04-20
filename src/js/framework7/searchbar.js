@@ -298,7 +298,7 @@ var Searchbar = function (container, params) {
         if (!s.material) s.cancelButton[method]('click', s.disable);
         s.overlay[method]('click', s.disable);
         s.input[method]('focus', s.enable);
-        s.input[method]('change keydown keypress keyup', s.handleInput);
+        s.input[method]('change keydown keypress keyup compositionend', s.handleInput);
         s.clearButton[method]('click', s.clear);
 
     };
