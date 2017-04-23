@@ -8,6 +8,7 @@ var VirtualList = function (listBlock, params) {
         cache: true,
         dynamicHeightBufferSize: 1,
         showFilteredItemsOnly: false,
+        renderExternal: undefined,
         template:
             '<li>' +
                 '<div class="item-content">' +
@@ -170,7 +171,7 @@ var VirtualList = function (listBlock, params) {
             toIndex = Math.min(fromIndex + rowsToRender * vl.params.cols, items.length);
         }
 
-        var topPosition;
+        var topPosition, renderExternalItems = [];
         vl.reachEnd = false;
         for (var i = fromIndex; i < toIndex; i++) {
             var item, index;
@@ -187,23 +188,29 @@ var VirtualList = function (listBlock, params) {
             }
 
             // Find items
-            if (vl.domCache[index]) {
-                item = vl.domCache[index];
+            if (vl.params.renderExternal) {
+                renderExternalItems.push(items[i])
             }
             else {
-                if (vl.template && !vl.params.renderItem) {
-                    vl.tempDomElement.innerHTML = vl.template(items[i], {index: index}).trim();
-                }
-                else if (vl.params.renderItem) {
-                    vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]).trim();
+                if (vl.domCache[index]) {
+                    item = vl.domCache[index];
+                    item.f7VirtualListIndex = index;
                 }
                 else {
-                    vl.tempDomElement.innerHTML = items[i].toString().trim();
+                    if (vl.template && !vl.params.renderItem) {
+                        vl.tempDomElement.innerHTML = vl.template(items[i], {index: index}).trim();
+                    }
+                    else if (vl.params.renderItem) {
+                        vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]).trim();
+                    }
+                    else {
+                        vl.tempDomElement.innerHTML = items[i].toString().trim();
+                    }
+                    item = vl.tempDomElement.childNodes[0];
+                    if (vl.params.cache) vl.domCache[index] = item;
+                    item.f7VirtualListIndex = index;
                 }
-                item = vl.tempDomElement.childNodes[0];
-                if (vl.params.cache) vl.domCache[index] = item;
             }
-            item.f7VirtualListIndex = index;
 
             // Set item top position
             if (i === fromIndex) {
@@ -214,15 +221,15 @@ var VirtualList = function (listBlock, params) {
                     topPosition = (i * vl.params.height / vl.params.cols);
                 }
             }
-            item.style.top = topPosition + 'px';
+            if (!vl.params.renderExternal) {
+                item.style.top = topPosition + 'px';
 
-            // Before item insert
-            if (vl.params.onItemBeforeInsert) vl.params.onItemBeforeInsert(vl, item);
+                // Before item insert
+                if (vl.params.onItemBeforeInsert) vl.params.onItemBeforeInsert(vl, item);
 
-            // Append item to fragment
-            vl.fragment.appendChild(item);
-
-
+                // Append item to fragment
+                vl.fragment.appendChild(item);
+            }
         }
 
         // Update list height with not updatable scroll
@@ -236,22 +243,38 @@ var VirtualList = function (listBlock, params) {
         }
 
         // Update list html
-        if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
-        vl.ul[0].innerHTML = '';
-
-        if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
-        if (items && items.length === 0) {
-            vl.reachEnd = true;
-            if (vl.params.emptyTemplate) vl.ul[0].innerHTML = vl.params.emptyTemplate;
+        if (vl.params.renderExternal) {
+            if (items && items.length === 0) {
+                vl.reachEnd = true;
+            }
         }
         else {
-            vl.ul[0].appendChild(vl.fragment);
-        }
+            if (vl.params.onBeforeClear) vl.params.onBeforeClear(vl, vl.fragment);
+            vl.ul[0].innerHTML = '';
 
-        if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
+            if (vl.params.onItemsBeforeInsert) vl.params.onItemsBeforeInsert(vl, vl.fragment);
+            if (items && items.length === 0) {
+                vl.reachEnd = true;
+                if (vl.params.emptyTemplate) vl.ul[0].innerHTML = vl.params.emptyTemplate;
+            }
+            else {
+                vl.ul[0].appendChild(vl.fragment);
+            }
+
+            if (vl.params.onItemsAfterInsert) vl.params.onItemsAfterInsert(vl, vl.fragment);
+        }
 
         if (typeof forceScrollTop !== 'undefined' && force) {
             vl.pageContent.scrollTop(forceScrollTop, 0);
+        }
+        if (vl.params.renderExternal) {
+            vl.params.renderExternal(vl, {
+                fromIndex: fromIndex,
+                toIndex: toIndex,
+                listHeight: listHeight,
+                topPosition: topPosition,
+                items: renderExternalItems
+            });
         }
     };
 

@@ -39,6 +39,7 @@ Bart DJ
 
 ### $10+
 
+Firestream<br>
 Matthew Becker<br>
 Greg Hatt<br>
 Timo Ernst<br>
@@ -56,6 +57,7 @@ Dave Billington
 
 ### $5+
 
+Mnill<br>
 Daniel Wüst<br>
 Tirso Martínez Reyes<br>
 Zafer Ayan<br>
@@ -64,7 +66,6 @@ Toby Allen - Ballymaloe Cookery School<br>
 Dan Boschen<br>
 Daniel Dingemanse<br>
 Henry Blackman<br>
-Ruslan Skorynin<br>
-Sigfrido Rodríguez Santos
+Ruslan Skorynin
 
 [Join here!](https://www.patreon.com/bePatron?exp=1&rid=845389&u=4109762&patAmt=5.0)
