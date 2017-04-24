@@ -1,11 +1,24 @@
+import Support from './support';
+import Device from './device';
 import $ from 'dom7';
+
+class Ripple {
+  constructor($el) {
+    const ripple = this;
+
+    return ripple;
+  }
+}
 
 function initTouch() {
   const app = this;
-  if (app.params.activeState) {
+  const params = app.params;
+  const useRipple = app.theme === 'md' && params.materialRipple;
+
+  if (params.activeState) {
     $('html').addClass('watch-active-state');
   }
-  if (app.device.ios && app.device.webView) {
+  if (Device.ios && Device.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
     window.addEventListener('touchstart', () => {});
   }
@@ -35,9 +48,9 @@ function initTouch() {
 
   function findActivableElement(el) {
     const target = $(el);
-    const parents = target.parents(app.params.activeStateElements);
+    const parents = target.parents(params.activeStateElements);
     let activable;
-    if (target.is(app.params.activeStateElements)) {
+    if (target.is(params.activeStateElements)) {
       activable = target;
     }
     if (parents.length > 0) {
@@ -91,9 +104,9 @@ function initTouch() {
   function targetNeedsFastClick(el) {
     const $el = $(el);
     if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) return false;
-    if (el.nodeName.toLowerCase() === 'select' && app.device.android) return false;
+    if (el.nodeName.toLowerCase() === 'select' && Device.android) return false;
     if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) return false;
-    if (app.params.fastClicksExclude && $el.is(app.params.fastClicksExclude)) return false;
+    if (params.fastClicksExclude && $el.is(params.fastClicksExclude)) return false;
     return true;
   }
   function targetNeedsFocus(el) {
@@ -105,7 +118,7 @@ function initTouch() {
     if (el.disabled || el.readOnly) return false;
     if (tag === 'textarea') return true;
     if (tag === 'select') {
-      if (app.device.android) return false;
+      if (Device.android) return false;
       return true;
     }
     if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
@@ -115,53 +128,26 @@ function initTouch() {
     const $el = $(el);
     let prevent = true;
     if ($el.is('label') || $el.parents('label').length > 0) {
-      if (app.device.android) {
+      if (Device.android) {
         prevent = false;
-      } else if (app.device.ios && $el.is('input')) {
+      } else if (Device.ios && $el.is('input')) {
         prevent = true;
       } else prevent = false;
     }
     return prevent;
   }
 
-  // Mouse Handlers
-  function handleMouseDown(e) {
-    findActivableElement(e.target).addClass('active-state');
-    if ('which' in e && e.which === 3) {
-      setTimeout(() => {
-        $('.active-state').removeClass('active-state');
-      }, 0);
-    }
-    if (app.params.material && app.params.materialRipple) {
-      touchStartX = e.pageX;
-      touchStartY = e.pageY;
-      rippleTouchStart(e.target, e.pageX, e.pageY);
-    }
-  }
-  function handleMouseMove(e) {
-    $('.active-state').removeClass('active-state');
-    if (app.params.material && app.params.materialRipple) {
-      rippleTouchMove();
-    }
-  }
-  function handleMouseUp(e) {
-    $('.active-state').removeClass('active-state');
-    if (app.params.material && app.params.materialRipple) {
-      rippleTouchEnd();
-    }
-  }
-
-  // Material Touch Ripple Effect
+  // Ripple handlers
   function findRippleElement(el) {
-    const needsRipple = app.params.materialRippleElements;
+    const rippleElements = params.materialRippleElements;
     const $el = $(el);
-    if ($el.is(needsRipple)) {
+    if ($el.is(rippleElements)) {
       if ($el.hasClass('no-ripple')) {
         return false;
       }
       return $el;
-    } else if ($el.parents(needsRipple).length > 0) {
-      const rippleParent = $el.parents(needsRipple).eq(0);
+    } else if ($el.parents(rippleElements).length > 0) {
+      const rippleParent = $el.parents(rippleElements).eq(0);
       if (rippleParent.hasClass('no-ripple')) {
         return false;
       }
@@ -220,7 +206,6 @@ function initTouch() {
     rippleWave = undefined;
     rippleTarget = undefined;
   }
-
   function rippleTouchStart(el) {
     rippleTarget = findRippleElement(el);
     if (!rippleTarget || rippleTarget.length === 0) {
@@ -251,12 +236,39 @@ function initTouch() {
     }
   }
 
+  // Mouse Handlers
+  function handleMouseDown(e) {
+    findActivableElement(e.target).addClass('active-state');
+    if ('which' in e && e.which === 3) {
+      setTimeout(() => {
+        $('.active-state').removeClass('active-state');
+      }, 0);
+    }
+    if (useRipple) {
+      touchStartX = e.pageX;
+      touchStartY = e.pageY;
+      rippleTouchStart(e.target, e.pageX, e.pageY);
+    }
+  }
+  function handleMouseMove() {
+    $('.active-state').removeClass('active-state');
+    if (useRipple) {
+      rippleTouchMove();
+    }
+  }
+  function handleMouseUp() {
+    $('.active-state').removeClass('active-state');
+    if (useRipple) {
+      rippleTouchEnd();
+    }
+  }
+
   // Send Click
   function sendClick(e) {
     const touch = e.changedTouches[0];
     const evt = document.createEvent('MouseEvents');
     let eventType = 'click';
-    if (app.device.android && targetElement.nodeName.toLowerCase() === 'select') {
+    if (Device.android && targetElement.nodeName.toLowerCase() === 'select') {
       eventType = 'mousedown';
     }
     evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
@@ -275,14 +287,14 @@ function initTouch() {
     if (e.touches.length > 1 && activableElement) {
       removeActive();
     }
-    if (app.params.tapHold) {
+    if (params.tapHold) {
       if (tapHoldTimeout) clearTimeout(tapHoldTimeout);
       tapHoldTimeout = setTimeout(() => {
         if (e && e.touches && e.touches.length > 1) return;
         tapHoldFired = true;
         e.preventDefault();
         $(e.target).trigger('taphold');
-      }, app.params.tapHoldDelay);
+      }, params.tapHoldDelay);
     }
     if (needsFastClickTimeOut) clearTimeout(needsFastClickTimeOut);
     needsFastClick = targetNeedsFastClick(e.target);
@@ -291,7 +303,7 @@ function initTouch() {
       trackClick = false;
       return true;
     }
-    if (app.device.ios || (app.device.android && 'getSelection' in window)) {
+    if (Device.ios || (Device.android && 'getSelection' in window)) {
       const selection = window.getSelection();
       if (selection.rangeCount && selection.focusNode !== document.body && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
         activeSelection = true;
@@ -300,7 +312,7 @@ function initTouch() {
 
       activeSelection = false;
     }
-    if (app.device.android) {
+    if (Device.android) {
       if (androidNeedsBlur(e.target)) {
         document.activeElement.blur();
       }
@@ -313,7 +325,7 @@ function initTouch() {
     touchStartY = e.targetTouches[0].pageY;
 
       // Detect scroll parent
-    if (app.device.ios) {
+    if (Device.ios) {
       scrollParent = undefined;
       $(targetElement).parents().each(() => {
         const parent = this;
@@ -323,11 +335,11 @@ function initTouch() {
         }
       });
     }
-    if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
+    if ((e.timeStamp - lastClickTime) < params.fastClicksDelayBetweenClicks) {
       e.preventDefault();
     }
 
-    if (app.params.activeState) {
+    if (params.activeState) {
       activableElement = findActivableElement(targetElement);
           // If it's inside a scrollable view, we don't trigger active-state yet,
           // because it can be a scroll instead. Based on the link:
@@ -338,13 +350,13 @@ function initTouch() {
         activeTimeout = setTimeout(addActive, 80);
       }
     }
-    if (app.params.material && app.params.materialRipple) {
+    if (useRipple) {
       rippleTouchStart(targetElement, touchStartX, touchStartY);
     }
   }
   function handleTouchMove(e) {
     if (!trackClick) return;
-    const distance = app.params.fastClicksDistanceThreshold;
+    const distance = params.fastClicksDistanceThreshold;
     if (distance) {
       const pageX = e.targetTouches[0].pageX;
       const pageY = e.targetTouches[0].pageY;
@@ -358,14 +370,14 @@ function initTouch() {
       trackClick = false;
       targetElement = null;
       isMoved = true;
-      if (app.params.tapHold) {
+      if (params.tapHold) {
         clearTimeout(tapHoldTimeout);
       }
-      if (app.params.activeState) {
+      if (params.activeState) {
         clearTimeout(activeTimeout);
         removeActive();
       }
-      if (app.params.material && app.params.materialRipple) {
+      if (useRipple) {
         rippleTouchMove();
       }
     }
@@ -376,7 +388,7 @@ function initTouch() {
 
     if (!trackClick) {
       if (!activeSelection && needsFastClick) {
-        if (!(app.device.android && !e.cancelable)) {
+        if (!(Device.android && !e.cancelable)) {
           e.preventDefault();
         }
       }
@@ -384,8 +396,8 @@ function initTouch() {
     }
 
     if (document.activeElement === e.target) {
-      if (app.params.activeState) removeActive();
-      if (app.params.material && app.params.materialRipple) {
+      if (params.activeState) removeActive();
+      if (useRipple) {
         rippleTouchEnd();
       }
       return true;
@@ -395,7 +407,7 @@ function initTouch() {
       e.preventDefault();
     }
 
-    if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
+    if ((e.timeStamp - lastClickTime) < params.fastClicksDelayBetweenClicks) {
       setTimeout(removeActive, 0);
       return true;
     }
@@ -404,7 +416,7 @@ function initTouch() {
 
     trackClick = false;
 
-    if (app.device.ios && scrollParent) {
+    if (Device.ios && scrollParent) {
       if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
         return false;
       }
@@ -413,18 +425,18 @@ function initTouch() {
     // Add active-state here because, in a very fast tap, the timeout didn't
     // have the chance to execute. Removing active-state in a timeout gives
     // the chance to the animation execute.
-    if (app.params.activeState) {
+    if (params.activeState) {
       addActive();
       setTimeout(removeActive, 0);
     }
     // Remove Ripple
-    if (app.params.material && app.params.materialRipple) {
+    if (useRipple) {
       rippleTouchEnd();
     }
 
       // Trigger focus when required
     if (targetNeedsFocus(targetElement)) {
-      if (app.device.ios && app.device.webView) {
+      if (Device.ios && Device.webView) {
         if ((e.timeStamp - touchStartTime) > 159) {
           targetElement = null;
           return false;
@@ -453,12 +465,12 @@ function initTouch() {
       // Remove Active State
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
-    if (app.params.activeState) {
+    if (params.activeState) {
       removeActive();
     }
 
       // Remove Ripple
-    if (app.params.material && app.params.materialRipple) {
+    if (useRipple) {
       rippleTouchEnd();
     }
   }
@@ -491,7 +503,7 @@ function initTouch() {
     if (!e.cancelable) {
       allowClick = true;
     }
-    if (app.params.tapHold && app.params.tapHoldPreventClicks && tapHoldFired) {
+    if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
       allowClick = false;
     }
     if (!allowClick) {
@@ -508,29 +520,29 @@ function initTouch() {
     }
     needsFastClickTimeOut = setTimeout(() => {
       needsFastClick = false;
-    }, (app.device.ios || app.device.androidChrome ? 100 : 400));
+    }, (Device.ios || Device.androidChrome ? 100 : 400));
 
-    if (app.params.tapHold) {
+    if (params.tapHold) {
       tapHoldTimeout = setTimeout(() => {
         tapHoldFired = false;
-      }, (app.device.ios || app.device.androidChrome ? 100 : 400));
+      }, (Device.ios || Device.androidChrome ? 100 : 400));
     }
 
     return allowClick;
   }
-  if (app.support.touch) {
+  if (Support.touch) {
     document.addEventListener('click', handleClick, true);
 
     document.addEventListener('touchstart', handleTouchStart);
     document.addEventListener('touchmove', handleTouchMove);
     document.addEventListener('touchend', handleTouchEnd);
     document.addEventListener('touchcancel', handleTouchCancel);
-  } else if (app.params.activeState) {
+  } else if (params.activeState) {
     document.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   }
-  if (app.params.material && app.params.materialRipple) {
+  if (useRipple) {
     document.addEventListener('contextmenu', () => {
       if (activableElement) removeActive();
       rippleTouchEnd();
@@ -555,6 +567,13 @@ export default {
     activeStateElements: 'a, button, label, span',
     materialRipple: true,
     materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a, .form-checkbox, .form-radio, .data-table .sortable-cell',
+  },
+  app: {
+    touchEvents: {
+      start: Support.touch ? 'touchstart' : 'mousedown',
+      move: Support.touch ? 'touchmove' : 'mousemove',
+      end: Support.touch ? 'touchend' : 'mouseup',
+    },
   },
   on: {
     init: initTouch,
