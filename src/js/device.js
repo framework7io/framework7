@@ -11,6 +11,8 @@ function Device() {
     iphone: false,
     ipod: false,
     ipad: false,
+    cordova: window.cordova || window.phonegap,
+    phonegap: window.cordova || window.phonegap,
   };
 
   const windows = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/);
