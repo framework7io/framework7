@@ -9,15 +9,43 @@ export default class {
     // Default
     const defaults = {
       root: 'body',
+      theme: 'auto',
     };
 
-    // Install Modules
+    // Extend modules params
     Object.keys(app.modules).forEach((moduleName) => {
       const module = app.modules[moduleName];
       // Extend params
       if (module.params) {
         $.extend(defaults, module.params);
       }
+    });
+
+    // Extend defaults with passed params
+    app.params = $.extend(defaults, params);
+
+    // Root
+    app.root = $(app.params.root);
+    app.root.addClass('framework7-root');
+
+    // Link to local storage
+    app.ls = window.localStorage;
+
+    // RTL
+    app.rtl = app.root.css('direction') === 'rtl';
+    if (app.rtl) $('html').attr('dir', 'rtl');
+
+    // Theme
+    if (app.params.theme === 'auto') {
+      app.theme = app.device.ios ? 'ios' : 'md';
+    } else {
+      app.theme = app.params.theme;
+    }
+    $('html').addClass(app.theme);
+
+    // Install Modules
+    Object.keys(app.modules).forEach((moduleName) => {
+      const module = app.modules[moduleName];
       // Extend app methods and props
       if (module.app) {
         Object.keys(module.app).forEach((modulePropName) => {
@@ -40,20 +68,6 @@ export default class {
         module.create.bind(app)(app);
       }
     });
-
-    // Extend defaults with passed params
-    app.params = $.extend(defaults, params);
-
-    // Root
-    app.root = $(app.params.root);
-    app.root.addClass('framework7-root');
-
-    // Link to local storage
-    app.ls = window.localStorage;
-
-    // RTL
-    app.rtl = app.root.css('direction') === 'rtl';
-    if (app.rtl) $('html').attr('dir', 'rtl');
 
     // Return app instance
     return app;
