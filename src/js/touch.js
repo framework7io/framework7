@@ -1,14 +1,7 @@
+import $ from 'dom7';
 import Support from './support';
 import Device from './device';
-import $ from 'dom7';
-
-class Ripple {
-  constructor($el) {
-    const ripple = this;
-
-    return ripple;
-  }
-}
+import Ripple from './touch-ripple';
 
 function initTouch() {
   const app = this;
@@ -155,53 +148,55 @@ function initTouch() {
     }
     return false;
   }
-  function createRipple(x, y, el) {
-    if (!el) return;
-    const box = el[0].getBoundingClientRect();
-    const center = {
-      x: x - box.left,
-      y: y - box.top,
-    };
-    const width = box.width;
-    const height = box.height;
-    const diameter = Math.max(Math.pow((Math.pow(height, 2) + Math.pow(width, 2)), 0.5), 48);
+  function createRipple($el, x, y) {
+    if (!$el) return;
+    rippleWave = new Ripple($el, x, y);
+    // const box = el[0].getBoundingClientRect();
+    // const center = {
+    //   x: x - box.left,
+    //   y: y - box.top,
+    // };
+    // const width = box.width;
+    // const height = box.height;
+    // const diameter = Math.max(Math.pow((Math.pow(height, 2) + Math.pow(width, 2)), 0.5), 48);
 
-    rippleWave = $(`<div class="ripple-wave" style="width: ${diameter}px; height: ${diameter}px; margin-top:-${diameter / 2}px; margin-left:-${diameter / 2}px; left:${center.x}px; top:${center.y}px;"></div>`);
-    el.prepend(rippleWave);
-    const clientLeft = rippleWave[0].clientLeft;
-    rippleTransform = `translate3d(${-center.x + width / 2}px, ${-center.y + height / 2}px, 0) scale(1)`;
-    rippleWave.transform(rippleTransform);
+    // rippleWave = $(`<div class="ripple-wave" style="width: ${diameter}px; height: ${diameter}px; margin-top:-${diameter / 2}px; margin-left:-${diameter / 2}px; left:${center.x}px; top:${center.y}px;"></div>`);
+    // el.prepend(rippleWave);
+    // const clientLeft = rippleWave[0].clientLeft;
+    // rippleTransform = `translate3d(${-center.x + width / 2}px, ${-center.y + height / 2}px, 0) scale(1)`;
+    // rippleWave.transform(rippleTransform);
   }
 
   function removeRipple() {
     if (!rippleWave) return;
-    const toRemove = rippleWave;
+    rippleWave.remove();
+    // const toRemove = rippleWave;
 
-    let removeTimeout = setTimeout(() => {
-      toRemove.remove();
-    }, 400);
+    // let removeTimeout = setTimeout(() => {
+    //   toRemove.remove();
+    // }, 400);
 
-    rippleWave
-      .addClass('ripple-wave-fill')
-      .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
-      .transitionEnd(() => {
-        clearTimeout(removeTimeout);
+    // rippleWave
+    //   .addClass('ripple-wave-fill')
+    //   .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
+    //   .transitionEnd(() => {
+    //     clearTimeout(removeTimeout);
 
-        const $rippleWave = $(this)
-          .addClass('ripple-wave-out')
-          .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
+    //     const $rippleWave = $(this)
+    //       .addClass('ripple-wave-out')
+    //       .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
-        removeTimeout = setTimeout(() => {
-          $rippleWave.remove();
-        }, 700);
+    //     removeTimeout = setTimeout(() => {
+    //       $rippleWave.remove();
+    //     }, 700);
 
-        setTimeout(() => {
-          $rippleWave.transitionEnd(() => {
-            clearTimeout(removeTimeout);
-            $(this).remove();
-          });
-        }, 0);
-      });
+    //     setTimeout(() => {
+    //       $rippleWave.transitionEnd(() => {
+    //         clearTimeout(removeTimeout);
+    //         $(this).remove();
+    //       });
+    //     }, 0);
+    //   });
 
     rippleWave = undefined;
     rippleTarget = undefined;
@@ -213,10 +208,10 @@ function initTouch() {
       return;
     }
     if (!isInsideScrollableView(rippleTarget)) {
-      createRipple(touchStartX, touchStartY, rippleTarget);
+      createRipple(rippleTarget, touchStartX, touchStartY);
     } else {
       rippleTimeout = setTimeout(() => {
-        createRipple(touchStartX, touchStartY, rippleTarget);
+        createRipple(rippleTarget, touchStartX, touchStartY);
       }, 80);
     }
   }
@@ -229,7 +224,7 @@ function initTouch() {
       removeRipple();
     } else if (rippleTarget && !isMoved) {
       clearTimeout(rippleTimeout);
-      createRipple(touchStartX, touchStartY, rippleTarget);
+      createRipple(rippleTarget, touchStartX, touchStartY);
       setTimeout(removeRipple, 0);
     } else {
       removeRipple();
