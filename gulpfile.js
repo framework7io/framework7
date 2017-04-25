@@ -81,7 +81,7 @@ gulp.task('build', ['js', 'less']);
 
 gulp.task('watch', () => {
   gulp.watch('./src/js/*.js', ['js']);
-  gulp.watch('./src/less/*/*.less', ['less']);
+  gulp.watch('./src/less/**/*.less', ['less']);
 });
 
 gulp.task('connect', () => connect.server({
