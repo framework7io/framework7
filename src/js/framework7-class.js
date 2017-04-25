@@ -47,9 +47,9 @@ export default class {
     Object.keys(app.modules).forEach((moduleName) => {
       const module = app.modules[moduleName];
       // Extend app methods and props
-      if (module.app) {
-        Object.keys(module.app).forEach((modulePropName) => {
-          const moduleProp = module.app[modulePropName];
+      if (module.instance) {
+        Object.keys(module.instance).forEach((modulePropName) => {
+          const moduleProp = module.instance[modulePropName];
           if (typeof moduleProp === 'function') {
             app[modulePropName] = moduleProp.bind(app);
           } else {
@@ -63,7 +63,7 @@ export default class {
           app.on(moduleEventName, module.on[moduleEventName]);
         });
       }
-      // Init
+      // Module create callback
       if (module.create) {
         module.create.bind(app)(app);
       }
