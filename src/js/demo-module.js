@@ -28,7 +28,7 @@ export default {
     demoStatic: 'demo-module-class-static',
   },
   // App Props & Methods
-  app: {
+  instance: {
     demoProp: true,
     demoMethod() {
       return 'demo-method';
