@@ -1,4 +1,4 @@
-function Install(module, params) {
+function Use(module, params) {
   const Class = this;
   if (Class.prototype.modules && module.name) {
     Class.prototype.modules[module.name] = module;
@@ -21,4 +21,4 @@ function Install(module, params) {
   }
 }
 
-export default Install;
+export default Use;
