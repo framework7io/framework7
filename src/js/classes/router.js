@@ -5,6 +5,12 @@ class Router {
   constructor(app, view) {
     const router = this;
 
+    router.useInstanceModules({
+      events: {
+        parents: [typeof view === 'undefined' ? app : view],
+      },
+    });
+
     router.navigate = function navigate(url) {
 
     };
@@ -50,4 +56,3 @@ class Router {
 Use(Router).use(Events);
 
 export default Router;
-
