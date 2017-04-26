@@ -30,12 +30,17 @@ class Framework7 {
 
     // Root
     app.root = $(app.params.root);
+    app.root.addClass('framework7-root');
+    app.root[0].f7 = app;
 
     // Link to local storage
     app.ls = window.localStorage;
 
     // RTL
     app.rtl = app.root.css('direction') === 'rtl';
+    if (app.rtl) {
+      $('html').attr('dir', 'rtl');
+    }
 
     // Theme
     if (app.params.theme === 'auto') {
@@ -43,6 +48,9 @@ class Framework7 {
     } else {
       app.theme = app.params.theme;
     }
+
+    // Theme class
+    $('html').addClass(app.theme);
 
     // Install Modules
     Object.keys(app.modules).forEach((moduleName) => {
@@ -79,16 +87,6 @@ class Framework7 {
   }
   init() {
     const app = this;
-    // Root class
-    app.root.addClass('framework7-root');
-
-    // RTL attr
-    if (app.rtl) {
-      if (app.rtl) $('html').attr('dir', 'rtl');
-    }
-
-    // Theme class
-    $('html').addClass(app.theme);
 
     // Emit, init other modules
     app.emit('init');
