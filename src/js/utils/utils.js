@@ -1,4 +1,4 @@
-export default {
+const Utils = {
   now() {
     return Date.now();
   },
@@ -52,4 +52,5 @@ export default {
     }
     return to;
   },
-}
+};
+export default Utils;
