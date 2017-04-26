@@ -1,7 +1,7 @@
 import $ from 'dom7';
 import Use from '../utils/use';
 import Events from '../modules/events';
-import Router from '../classes/router';
+import Router from '../modules/router';
 import Utils from '../utils/utils';
 
 class View {
@@ -20,20 +20,26 @@ class View {
       el: $el[0],
       name: view.params.name,
       main: view.params.main || $el.hasClass(app.params.viewMainClass),
-      router: new Router(app, view),
     });
 
     $el[0].f7View = view;
 
     // Install Modules
-    view.useInstanceModules();
+    view.useInstanceModules({
+      events: {
+        parents: [app],
+      },
+      router: {
+        app,
+      },
+    });
 
     return view;
   }
 }
 
-// Use Events
-Use(View).use(Events);
+// Use Events and Router
+Use(View).use(Events).use(Router);
 
 
 export default View;
