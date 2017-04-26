@@ -2,6 +2,7 @@ import $ from 'dom7';
 import Use from '../utils/use';
 import Events from '../modules/events';
 import Router from '../classes/router';
+import Utils from '../utils/utils';
 
 class View {
   constructor(app, el, viewParams) {
@@ -9,18 +10,18 @@ class View {
     const $el = $(el);
 
     // Default View params
-    view.params = $.extend({
+    view.params = Utils.extend({
       name: undefined,
       main: false,
     }, viewParams);
 
-    $.extend(view, {
+    Utils.extend(view, {
       $el,
       el: $el[0],
       name: view.params.name,
       main: view.params.main || $el.hasClass(app.params.viewMainClass),
+      router: new Router(app, view),
     });
-    view.router = new Router(app, view);
 
     $el[0].f7View = view;
 
