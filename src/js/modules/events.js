@@ -1,8 +1,9 @@
 export default {
   name: 'events',
-  create() {
-    this.eventsListeners = {};
-    // if (eventsParent) this.prototype.eventsParent = eventsParent;
+  create(params) {
+    const self = this;
+    self.eventsListeners = {};
+    if (params && params.parents) self.eventsParents = params.parents;
   },
   instance: {
     on(event, handler) {
@@ -34,13 +35,16 @@ export default {
     },
     emit(event, ...args) {
       const self = this;
-      // if (self.eventsParent && self.eventsParent.prototype) {
-      //   self.eventsParent.prototype.emit(event, ...args);
-      // }
-      if (!self.eventsListeners[event]) return self;
-      self.eventsListeners[event].forEach((eventHandler) => {
-        eventHandler.apply(self, args);
-      });
+      if (self.eventsListeners[event]) {
+        self.eventsListeners[event].forEach((eventHandler) => {
+          eventHandler.apply(self, args);
+        });
+      }
+      if (self.eventsParents && self.eventsParents.length > 0) {
+        self.eventsParents.forEach((eventsParent) => {
+          eventsParent.emit(event, ...args);
+        });
+      }
       return self;
     },
   },
