@@ -1,11 +1,12 @@
 export default {
   // Module Name
   name: 'demo-module',
-  install(Framework7, params) {
-    console.log(Framework7, params);
+  install(params) {
+    const Class = this;
+    console.log(Class, params);
   },
-  create(app) {
-    console.log('init', app);
+  create(instance) {
+    console.log('init', instance);
   },
   // App Params related to module
   params: {
@@ -13,21 +14,21 @@ export default {
     b: 2,
     c: 3,
   },
-  // Extend F7 Prototype
+  // Extend Prototype
   proto: {
     demo() {
       return 'demo-module-proto-method';
     },
     demoStatic: 'demo-module-proto-static',
   },
-  // Extend F7 Class, e.g. Framework7.myMethod
+  // Extend Class, e.g. Class.myMethod
   class: {
     demo() {
       return 'demo-module-class-method';
     },
     demoStatic: 'demo-module-class-static',
   },
-  // App Props & Methods
+  // Initialized instance Props & Methods
   instance: {
     demoProp: true,
     demoMethod() {
