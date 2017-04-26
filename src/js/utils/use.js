@@ -1,7 +1,8 @@
 import Utils from './utils';
 
-export default function Use(Class) {
-  Class.use = function use(module, ...params) {
+export default function Use(c) {
+  const Class = c;
+  function installModule(module, ...params) {
     const name = module.name || Utils.now();
     if (Class.prototype.modules) {
       Class.prototype.modules[name] = module;
@@ -24,7 +25,15 @@ export default function Use(Class) {
     }
     return Class;
   }
+  Class.use = function use(module, ...params) {
+    if (Array.isArray(module)) {
+      module.forEach((m) => {
+        installModule(m);
+      });
+    } else {
+      installModule(module, ...params);
+    }
+    return Class;
+  };
   return Class;
 }
-
-// export default Use;
