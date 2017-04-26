@@ -23,10 +23,10 @@ Framework7.prototype.$ = $;
 
 // Install Modules
 Framework7
+  .use(Events)
   .use(Support)
   .use(Device)
   .use(Resize)
-  .use(Events)
   .use(Touch)
   .use(Router)
   .use(View);
