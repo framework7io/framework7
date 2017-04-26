@@ -50,13 +50,14 @@ export default function Use(c) {
   };
 
   // Instance Modules
-  Class.prototype.useInstanceModules = function useInstanceModules() {
+  Class.prototype.useInstanceModules = function useInstanceModules(modulesParams = {}) {
     const instance = this;
     Object.keys(instance.modules).forEach((moduleName) => {
       const module = instance.modules[moduleName];
+      const moduleParams = modulesParams[moduleName] || {};
       // Module create callback
       if (module.create) {
-        module.create.bind(instance)(instance);
+        module.create.bind(instance)(moduleParams);
       }
       // Extend instance methods and props
       if (module.instance) {
