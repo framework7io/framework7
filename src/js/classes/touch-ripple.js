@@ -1,6 +1,6 @@
 import $ from 'dom7';
 
-export default class {
+export default class TouchRipple {
   constructor($el, x, y) {
     const ripple = this;
     if (!$el) return;

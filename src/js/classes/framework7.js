@@ -1,7 +1,10 @@
 import t7 from 'template7';
 import $ from 'dom7';
+import Utils from '../utils/utils';
+import Device from '../utils/device';
+import Use from '../utils/use';
 
-export default class {
+class Framework7 {
   constructor(params) {
     // App Instance
     const app = this;
@@ -10,6 +13,7 @@ export default class {
     const defaults = {
       root: 'body',
       theme: 'auto',
+      init: true,
     };
 
     // Extend modules params
@@ -17,31 +21,28 @@ export default class {
       const module = app.modules[moduleName];
       // Extend params
       if (module.params) {
-        $.extend(defaults, module.params);
+        Utils.extend(defaults, module.params);
       }
     });
 
     // Extend defaults with passed params
-    app.params = $.extend(defaults, params);
+    app.params = Utils.extend(defaults, params);
 
     // Root
     app.root = $(app.params.root);
-    app.root.addClass('framework7-root');
 
     // Link to local storage
     app.ls = window.localStorage;
 
     // RTL
     app.rtl = app.root.css('direction') === 'rtl';
-    if (app.rtl) $('html').attr('dir', 'rtl');
 
     // Theme
     if (app.params.theme === 'auto') {
-      app.theme = app.device.ios ? 'ios' : 'md';
+      app.theme = Device.ios ? 'ios' : 'md';
     } else {
       app.theme = app.params.theme;
     }
-    $('html').addClass(app.theme);
 
     // Install Modules
     Object.keys(app.modules).forEach((moduleName) => {
@@ -69,7 +70,33 @@ export default class {
       }
     });
 
+    if (app.params.init) {
+      app.init();
+    }
+
     // Return app instance
     return app;
   }
+  init() {
+    const app = this;
+    // Root class
+    app.root.addClass('framework7-root');
+
+    // RTL attr
+    if (app.rtl) {
+      if (app.rtl) $('html').attr('dir', 'rtl');
+    }
+
+    // Theme class
+    $('html').addClass(app.theme);
+
+    // Emit, init other modules
+    app.emit('init');
+  }
 }
+
+// Modularity
+Framework7.prototype.modules = {};
+Use(Framework7);
+
+export default Framework7;
