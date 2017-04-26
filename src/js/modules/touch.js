@@ -1,7 +1,7 @@
 import $ from 'dom7';
-import Support from './support';
-import Device from './device';
-import Ripple from './touch-ripple';
+import Support from '../utils/support';
+import Device from '../utils/device';
+import TouchRipple from '../classes/touch-ripple';
 
 function initTouch() {
   const app = this;
@@ -150,7 +150,7 @@ function initTouch() {
   }
   function createRipple($el, x, y) {
     if (!$el) return;
-    rippleWave = new Ripple($el, x, y);
+    rippleWave = new TouchRipple($el, x, y);
     // const box = el[0].getBoundingClientRect();
     // const center = {
     //   x: x - box.left,
@@ -562,6 +562,9 @@ export default {
     activeStateElements: 'a, button, label, span',
     materialRipple: true,
     materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a, .form-checkbox, .form-radio, .data-table .sortable-cell',
+  },
+  class: {
+    TouchRipple,
   },
   instance: {
     touchEvents: {
