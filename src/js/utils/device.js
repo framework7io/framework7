@@ -91,45 +91,4 @@ function Device() {
   return device;
 }
 
-export default {
-  name: 'device',
-  proto: {
-    device: Device(),
-  },
-  on: {
-    init() {
-      const app = this;
-      const device = app.device;
-      const classNames = [];
-      const html = document.querySelector('html');
-      // Pixel Ratio
-      classNames.push(`device-pixel-ratio-${Math.floor(device.pixelRatio)}`);
-      if (device.pixelRatio >= 2) {
-        classNames.push('device-retina');
-      }
-      // OS classes
-      if (device.os) {
-        classNames.push(`device-${device.os}`, `device-${device.os}-${device.osVersion.split('.')[0]}`, `device-${device.os}-${device.osVersion.replace(/\./g, '-')}`);
-        if (device.os === 'ios') {
-          const major = parseInt(device.osVersion.split('.')[0], 10);
-          for (let i = major - 1; i >= 6; i -= 1) {
-            classNames.push(`device-ios-gt-${i}`);
-          }
-        }
-      } else if (device.desktop) {
-        classNames.push('device-desktop');
-      }
-      // Status bar classes
-      if (device.statusBar) {
-        classNames.push('with-statusbar-overlay');
-      } else {
-        html.classList.remove('with-statusbar-overlay');
-      }
-
-      // Add html classes
-      classNames.forEach((className) => {
-        html.classList.add(className);
-      });
-    },
-  },
-};
+export default Device();
