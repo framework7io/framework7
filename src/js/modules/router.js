@@ -28,9 +28,15 @@ export default {
   class: {
     Router,
   },
-  create() {
-    const app = this;
-    app.router = new Router(app);
+  create(params) {
+    const instance = this;
+    if (params.app) {
+      // View Router
+      instance.router = new Router(params.app, instance);
+    } else {
+      // App Router
+      instance.router = new Router(instance);
+    }
   },
 };
 
