@@ -23,9 +23,4 @@ function Support() {
     passiveListener: supportsPassiveListener(),
   };
 }
-export default {
-  name: 'support',
-  proto: {
-    support: Support(),
-  },
-};
+export default Support();
