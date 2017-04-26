@@ -1,19 +1,19 @@
 import t7 from 'template7';
 import $ from 'dom7';
 
-import Framework7 from './framework7-class';
-import Use from './use';
+// F7 Class
+import Framework7 from './classes/framework7';
 
-import Device from './device';
-import Support from './support';
-import Events from './events';
-import Touch from './touch';
+// Import Modules
+import Resize from './modules/resize';
+import Device from './modules/device';
+import Support from './modules/support';
+import Events from './modules/events';
+import Touch from './modules/touch';
+import Router from './modules/router';
+import View from './modules/view';
 
-import Demo from './demo-module';
-
-// Modules Install
-Framework7.use = Use.bind(Framework7);
-Framework7.prototype.modules = {};
+// import Demo from './demo-module';
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -21,19 +21,14 @@ Framework7.prototype.t7 = t7;
 // Dom7
 Framework7.prototype.$ = $;
 
-// Device
-Framework7.use(Device);
-
-// Support
-Framework7.use(Support);
-
-// Events
-Framework7.use(Events);
-
-// Touch
-Framework7.use(Touch);
-
-// Demo Module
-// Framework7.use(Demo, { foo: 'bar' });
+// Install Modules
+Framework7
+  .use(Resize)
+  .use(Device)
+  .use(Support)
+  .use(Events)
+  .use(Touch)
+  .use(Router)
+  .use(View);
 
 export default Framework7;
