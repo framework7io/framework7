@@ -25,6 +25,9 @@ class View {
 
     $el[0].f7View = view;
 
+    // Install Modules
+    view.useInstanceModules();
+
     return view;
   }
 }

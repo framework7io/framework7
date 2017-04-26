@@ -16,14 +16,8 @@ class Framework7 {
       init: true,
     };
 
-    // Extend modules params
-    Object.keys(app.modules).forEach((moduleName) => {
-      const module = app.modules[moduleName];
-      // Extend params
-      if (module.params) {
-        Utils.extend(defaults, module.params);
-      }
-    });
+    // Extend defaults with modules params
+    app.useInstanceModulesParams(defaults);
 
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
@@ -53,31 +47,9 @@ class Framework7 {
     $('html').addClass(app.theme);
 
     // Install Modules
-    Object.keys(app.modules).forEach((moduleName) => {
-      const module = app.modules[moduleName];
-      // Extend app methods and props
-      if (module.instance) {
-        Object.keys(module.instance).forEach((modulePropName) => {
-          const moduleProp = module.instance[modulePropName];
-          if (typeof moduleProp === 'function') {
-            app[modulePropName] = moduleProp.bind(app);
-          } else {
-            app[modulePropName] = moduleProp;
-          }
-        });
-      }
-      // Add event listeners
-      if (module.on) {
-        Object.keys(module.on).forEach((moduleEventName) => {
-          app.on(moduleEventName, module.on[moduleEventName]);
-        });
-      }
-      // Module create callback
-      if (module.create) {
-        module.create.bind(app)(app);
-      }
-    });
+    app.useInstanceModules();
 
+    // Init
     if (app.params.init) {
       app.init();
     }
@@ -94,7 +66,6 @@ class Framework7 {
 }
 
 // Modularity
-Framework7.prototype.modules = {};
 Use(Framework7);
 
 export default Framework7;

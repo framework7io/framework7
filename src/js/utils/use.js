@@ -2,11 +2,11 @@ import Utils from './utils';
 
 export default function Use(c) {
   const Class = c;
+
   function installModule(module, ...params) {
     const name = module.name || Utils.now();
-    if (Class.prototype.modules) {
-      Class.prototype.modules[name] = module;
-    }
+    if (!Class.prototype.modules) Class.prototype.modules = {};
+    Class.prototype.modules[name] = module;
     // Prototype
     if (module.proto) {
       Object.keys(module.proto).forEach((key) => {
@@ -25,6 +25,7 @@ export default function Use(c) {
     }
     return Class;
   }
+
   Class.use = function use(module, ...params) {
     if (Array.isArray(module)) {
       module.forEach((m) => {
@@ -35,5 +36,47 @@ export default function Use(c) {
     }
     return Class;
   };
+
+  // Modules Parameters
+  Class.prototype.useInstanceModulesParams = function useInstanceModules(instanceParams) {
+    const instance = this;
+    Object.keys(instance.modules).forEach((moduleName) => {
+      const module = instance.modules[moduleName];
+      // Extend params
+      if (module.params) {
+        Utils.extend(instanceParams, module.params);
+      }
+    });
+  };
+
+  // Instance Modules
+  Class.prototype.useInstanceModules = function useInstanceModules() {
+    const instance = this;
+    Object.keys(instance.modules).forEach((moduleName) => {
+      const module = instance.modules[moduleName];
+      // Module create callback
+      if (module.create) {
+        module.create.bind(instance)(instance);
+      }
+      // Extend instance methods and props
+      if (module.instance) {
+        Object.keys(module.instance).forEach((modulePropName) => {
+          const moduleProp = module.instance[modulePropName];
+          if (typeof moduleProp === 'function') {
+            instance[modulePropName] = moduleProp.bind(instance);
+          } else {
+            instance[modulePropName] = moduleProp;
+          }
+        });
+      }
+      // Add event listeners
+      if (module.on && instance.on) {
+        Object.keys(module.on).forEach((moduleEventName) => {
+          instance.on(moduleEventName, module.on[moduleEventName]);
+        });
+      }
+    });
+  };
+
   return Class;
 }
