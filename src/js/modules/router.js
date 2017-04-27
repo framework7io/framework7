@@ -28,7 +28,7 @@ export default {
     // Animate Nav Back Icon
     animateNavbarBackIcon: true,
   },
-  class: {
+  static: {
     Router,
   },
   instance: {

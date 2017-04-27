@@ -14,9 +14,9 @@ export default function Use(c) {
       });
     }
     // Class
-    if (module.class) {
-      Object.keys(module.class).forEach((key) => {
-        Class[key] = module.class[key];
+    if (module.static) {
+      Object.keys(module.static).forEach((key) => {
+        Class[key] = module.static[key];
       });
     }
     // Callback

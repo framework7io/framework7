@@ -13,7 +13,7 @@ export default {
     swipeBackPageActiveArea: 30,
     swipeBackPageThreshold: 0,
   },
-  class: {
+  static: {
     View,
   },
   instance: {

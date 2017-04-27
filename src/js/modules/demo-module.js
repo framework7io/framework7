@@ -22,7 +22,7 @@ export default {
     demoStatic: 'demo-module-proto-static',
   },
   // Extend Class, e.g. Class.myMethod
-  class: {
+  static: {
     demo() {
       return 'demo-module-class-method';
     },
