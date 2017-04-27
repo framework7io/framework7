@@ -34,9 +34,31 @@
   <script src="build/js/framework7.js"></script>
   <script>
     const app = new Framework7({
-
+      router: {
+        allowDuplicateUrls: true,
+      },
+      routes: [
+        {
+          path: '/test/',
+          url: 'test.html',
+        },
+        {
+          path: '/test2/',
+          url: 'test2.html',
+        },
+      ],
     });
-    const view = app.addView('.view');
+    const view = app.addView('.view', {
+      router: {
+        animateNavBackIcon: 'yes',
+      },
+      routes: [
+        {
+          path: '/test3/',
+          url: 'test3.html',
+        },
+      ],
+    });
   </script>
 </body>
 </html>
