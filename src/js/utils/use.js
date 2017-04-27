@@ -44,7 +44,8 @@ export default function Use(c) {
       const module = instance.modules[moduleName];
       // Extend params
       if (module.params) {
-        Utils.extend(instanceParams, module.params);
+        if (!instanceParams[moduleName]) instanceParams[moduleName] = {};
+        Utils.extend(instanceParams[moduleName], module.params);
       }
     });
   };
@@ -55,10 +56,6 @@ export default function Use(c) {
     Object.keys(instance.modules).forEach((moduleName) => {
       const module = instance.modules[moduleName];
       const moduleParams = modulesParams[moduleName] || {};
-      // Module create callback
-      if (module.create) {
-        module.create.bind(instance)(moduleParams);
-      }
       // Extend instance methods and props
       if (module.instance) {
         Object.keys(module.instance).forEach((modulePropName) => {
@@ -75,6 +72,11 @@ export default function Use(c) {
         Object.keys(module.on).forEach((moduleEventName) => {
           instance.on(moduleEventName, module.on[moduleEventName]);
         });
+      }
+
+      // Module create callback
+      if (module.create) {
+        module.create.bind(instance)(moduleParams);
       }
     });
   };
