@@ -1,21 +1,22 @@
-import Router from '../classes/router';
+import Router from '../classes/router-class';
 
 export default {
   name: 'router',
   params: {
-    routes: [],
-    cache: true,
-    cacheIgnore: [],
-    cacheIgnoreGetParameters: false,
-    cacheDuration: 1000 * 60 * 10, // Ten minutes
+    dynamicNavbar: false,
+    domCache: false,
+    xhrCache: true,
+    xhrCacheIgnore: [],
+    xhrCacheIgnoreGetParameters: false,
+    xhrCacheDuration: 1000 * 60 * 10, // Ten minutes
     preloadPreviousPage: true,
     uniqueHistory: false,
     uniqueHistoryIgnoreGetParameters: false,
     dynamicPageUrl: 'content-{{index}}',
     allowDuplicateUrls: false,
-    router: true,
-    routerRemoveTimeout: false,
-    routerRemoveWithTimeout: false,
+    reloadPages: false,
+    removeWithTimeout: false,
+    removeTimeout: false,
     // Push State
     pushState: false,
     pushStateRoot: undefined,
@@ -24,9 +25,14 @@ export default {
     pushStateOnLoad: true,
     // Animate Pages
     animatePages: true,
+    // Animate Nav Back Icon
+    animateNavbarBackIcon: true,
   },
   class: {
     Router,
+  },
+  instance: {
+    xhrCache: [],
   },
   create(params) {
     const instance = this;
