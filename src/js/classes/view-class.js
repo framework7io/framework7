@@ -5,7 +5,7 @@ import Router from '../modules/router';
 import Utils from '../utils/utils';
 
 class View {
-  constructor(app, el, viewParams) {
+  constructor(app, el, viewParams = {}) {
     const view = this;
     const $el = $(el);
 
@@ -17,7 +17,11 @@ class View {
     };
 
     // Default View params
-    view.params = Utils.extend(defaults, viewParams);
+    view.params = Utils.extend(defaults, app.params.view, viewParams);
+
+    // Router Params
+    view.params.router = Utils.extend({}, app.params.router, view.params.router);
+    view.params.routes = [].concat(app.params.routes, view.params.routes);
 
     // View Props
     Utils.extend(view, {
