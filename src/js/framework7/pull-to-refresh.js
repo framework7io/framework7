@@ -180,14 +180,16 @@ app.initPullToRefresh = function (pageContainer) {
 
     // Detach Events on page remove
     if (page.length === 0) return;
-    function destroyPullToRefresh() {
-        eventsTarget.off(app.touchEvents.start, handleTouchStart, passiveListener);
-        eventsTarget.off(app.touchEvents.move, handleTouchMove, activeListener);
-        eventsTarget.off(app.touchEvents.end, handleTouchEnd, passiveListener);
+    function destroyPullToRefresh(destroyTarget) {
+        destroyTarget.off(app.touchEvents.start, handleTouchStart, passiveListener);
+        destroyTarget.off(app.touchEvents.move, handleTouchMove, activeListener);
+        destroyTarget.off(app.touchEvents.end, handleTouchEnd, passiveListener);
     }
-    eventsTarget[0].f7DestroyPullToRefresh = destroyPullToRefresh;
+    for (var i = 0; i < eventsTarget.length; i++) {
+        eventsTarget[i].f7DestroyPullToRefresh = destroyPullToRefresh;
+    }
     function detachEvents() {
-        destroyPullToRefresh();
+        destroyPullToRefresh(eventsTarget);
         page.off('page:beforeremove', detachEvents);
     }
     page.on('page:beforeremove', detachEvents);
@@ -219,5 +221,5 @@ app.destroyPullToRefresh = function (pageContainer) {
     pageContainer = $(pageContainer);
     var pullToRefreshContent = pageContainer.hasClass('pull-to-refresh-content') ? pageContainer : pageContainer.find('.pull-to-refresh-content');
     if (pullToRefreshContent.length === 0) return;
-    if (pullToRefreshContent[0].f7DestroyPullToRefresh) pullToRefreshContent[0].f7DestroyPullToRefresh();
+    if (pullToRefreshContent[0].f7DestroyPullToRefresh) pullToRefreshContent[0].f7DestroyPullToRefresh(pageContainer);
 };
