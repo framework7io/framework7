@@ -90,9 +90,9 @@ class Router {
       router.routes = app.params.routes;
     } else {
       // View Params
-      router.params = Utils.extend({}, app.params.router, (view.params.router || {}));
+      router.params = view.params.router;
       // View Routes
-      router.routes = [].concat(app.params.routes, view.params.routes);
+      router.routes = view.params.routes;
     }
     router.useInstanceModules({
       events: {
