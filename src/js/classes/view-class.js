@@ -9,17 +9,24 @@ class View {
     const view = this;
     const $el = $(el);
 
-    // Default View params
-    view.params = Utils.extend({
+    const defaults = {
       name: undefined,
       main: false,
-    }, viewParams);
+      routes: [],
+      linksView: undefined,
+    };
 
+    // Default View params
+    view.params = Utils.extend(defaults, viewParams);
+
+    // View Props
     Utils.extend(view, {
       $el,
       el: $el[0],
       name: view.params.name,
       main: view.params.main || $el.hasClass(app.params.viewMainClass),
+      pagesEl: $el.find('.pages')[0],
+
     });
 
     $el[0].f7View = view;

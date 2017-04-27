@@ -14,6 +14,7 @@ class Framework7 {
       root: 'body',
       theme: 'auto',
       init: true,
+      routes: [],
     };
 
     // Extend defaults with modules params
