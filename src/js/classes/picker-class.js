@@ -3,7 +3,7 @@ import Use from '../utils/use';
 import Events from '../modules/events';
 
 class Picker {
-  constructor(params = {}) {
+  constructor(app, params = {}) {
     const picker = this;
     picker.params = Utils.extend({
 

@@ -3,7 +3,7 @@ import Use from '../utils/use';
 import Events from '../modules/events';
 
 class Calendar {
-  constructor(params = {}) {
+  constructor(app, params = {}) {
     const calendar = this;
     calendar.params = Utils.extend({
 
