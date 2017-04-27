@@ -2,6 +2,32 @@ const Utils = {
   now() {
     return Date.now();
   },
+  promise(handler) {
+    const promiseHandlers = {
+      then: undefined,
+      catch: undefined,
+    };
+    const promise = {
+      then(thenHandler) {
+        promiseHandlers.then = thenHandler;
+        return promise;
+      },
+      catch(catchHandler) {
+        promiseHandlers.catch = catchHandler;
+        return promise;
+      },
+    };
+
+    function resolve(...args) {
+      if (promiseHandlers.then) promiseHandlers.then(...args);
+    }
+    function reject(...args) {
+      if (promiseHandlers.catch) promiseHandlers.catch(...args);
+    }
+    handler(resolve, reject);
+
+    return promise;
+  },
   requestAnimationFrame(callback) {
     if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
     else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
