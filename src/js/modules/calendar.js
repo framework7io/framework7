@@ -2,12 +2,12 @@ import Calendar from '../classes/calendar-class';
 
 export default {
   name: 'calendar',
-  class: {
+  static: {
     Calendar,
   },
   instance: {
     calendar(params) {
-      return new Calendar(params);
+      return new Calendar(this, params);
     },
   },
 };
