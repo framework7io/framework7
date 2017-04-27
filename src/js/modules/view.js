@@ -1,4 +1,4 @@
-import View from '../classes/view';
+import View from '../classes/view-class';
 
 export default {
   name: 'view',
@@ -6,6 +6,12 @@ export default {
     viewClass: 'view',
     viewMainClass: 'view-main',
     viewsClass: 'views',
+    // Swipe Back
+    swipeBackPage: true,
+    swipeBackPageAnimateShadow: true,
+    swipeBackPageAnimateOpacity: true,
+    swipeBackPageActiveArea: 30,
+    swipeBackPageThreshold: 0,
   },
   class: {
     View,
