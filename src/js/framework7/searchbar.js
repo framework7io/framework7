@@ -169,7 +169,7 @@ var Searchbar = function (container, params) {
     var previousQuery = '';
     var virtualList;
     s.search = function (query, internal) {
-        if (query.trim() === previousQuery) return;
+        if (previousQuery && query.trim() === previousQuery) return;
         previousQuery = query.trim();
 
         if (!internal) {
