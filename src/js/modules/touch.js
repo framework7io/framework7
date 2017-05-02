@@ -5,7 +5,7 @@ import TouchRipple from '../classes/touch-ripple-class';
 
 function initTouch() {
   const app = this;
-  const params = app.params;
+  const params = app.params.touch;
   const useRipple = app.theme === 'md' && params.materialRipple;
 
   if (params.activeState) {
