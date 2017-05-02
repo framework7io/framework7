@@ -6,45 +6,51 @@ export default {
     if (params && params.parents) self.eventsParents = params.parents;
   },
   instance: {
-    on(event, handler) {
+    on(events, handler) {
       const self = this;
-      if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
-      self.eventsListeners[event].push(handler);
+      events.split(' ').forEach((event) => {
+        if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
+        self.eventsListeners[event].push(handler);
+      });
       return self;
     },
-    once(event, handler) {
+    once(events, handler) {
       const self = this;
       function onceHandler(...args) {
         handler.apply(self, args);
-        self.off(event, onceHandler);
+        self.off(events, onceHandler);
       }
-      return self.on(event, onceHandler);
+      return self.on(events, onceHandler);
     },
-    off(event, handler) {
+    off(events, handler) {
       const self = this;
-      if (typeof handler === 'undefined') {
-        self.eventsListeners[event] = [];
-        return self;
-      }
-      self.eventsListeners[event].forEach((eventHandler, index) => {
-        if (eventHandler === handler) {
-          self.eventsListeners[event].splice(index, 1);
+      events.split(' ').forEach((event) => {
+        if (typeof handler === 'undefined') {
+          self.eventsListeners[event] = [];
+        } else {
+          self.eventsListeners[event].forEach((eventHandler, index) => {
+            if (eventHandler === handler) {
+              self.eventsListeners[event].splice(index, 1);
+            }
+          });
         }
       });
       return self;
     },
-    emit(event, ...args) {
+    emit(events, ...args) {
       const self = this;
-      if (self.eventsListeners[event]) {
-        self.eventsListeners[event].forEach((eventHandler) => {
-          eventHandler.apply(self, args);
-        });
-      }
-      if (self.eventsParents && self.eventsParents.length > 0) {
-        self.eventsParents.forEach((eventsParent) => {
-          eventsParent.emit(event, ...args);
-        });
-      }
+      events.split(' ').forEach((event) => {
+        if (self.eventsListeners[event]) {
+          self.eventsListeners[event].forEach((eventHandler) => {
+            eventHandler.apply(self, args);
+          });
+        }
+        if (self.eventsParents && self.eventsParents.length > 0) {
+          self.eventsParents.forEach((eventsParent) => {
+            eventsParent.emit(event, ...args);
+          });
+        }
+      });
       return self;
     },
   },
