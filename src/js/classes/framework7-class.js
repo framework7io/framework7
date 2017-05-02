@@ -1,4 +1,3 @@
-import t7 from 'template7';
 import $ from 'dom7';
 import Utils from '../utils/utils';
 import Device from '../utils/device';
