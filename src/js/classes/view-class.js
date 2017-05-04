@@ -5,9 +5,10 @@ import Router from '../modules/router';
 import Utils from '../utils/utils';
 
 class View {
-  constructor(app, el, viewParams = {}) {
-    const view = this;
+  constructor(appInstance, el, viewParams = {}) {
+    const app = appInstance;
     const $el = $(el);
+    let view = this;
 
     const defaults = {
       name: undefined,
@@ -23,14 +24,30 @@ class View {
     view.params.router = Utils.extend({}, app.params.router, view.params.router);
     view.params.routes = [].concat(app.params.routes, view.params.routes);
 
+    // Selector
+    let selector;
+    if (typeof el === 'string') selector = el;
+    else {
+      // Supposed to be HTMLElement or Dom7
+      selector = ($el.attr('id') ? `#${$el.attr('id')}` : '') + ($el.attr('class') ? `.${$el.attr('class').replace(/ /g, '.').replace('.active', '')}` : '');
+    }
+
     // View Props
     Utils.extend(view, {
+      app,
       $el,
       el: $el[0],
       name: view.params.name,
       main: view.params.main || $el.hasClass(app.params.viewMainClass),
+      $pagesEl: $el.find('.pages'),
       pagesEl: $el.find('.pages')[0],
-
+      selector,
+      history: [],
+      cache: {
+        content: {},
+        context: {},
+        pages: {},
+      },
     });
 
     $el[0].f7View = view;
@@ -44,6 +61,43 @@ class View {
         app,
       },
     });
+
+    // Add to app
+    app.views.push(view);
+    if (view.main) {
+      app.mainView = view;
+      app.views.main = view;
+    } else if (view.name) {
+      app[`${view.name}View`] = view;
+      app.views[view.name] = view;
+    }
+
+    // Destroy
+    view.destroy = function destroy() {
+      if (view.main) {
+        app.mainView = null;
+        delete app.mainView;
+        app.views.main = null;
+        delete app.views.main;
+      } else if (view.name) {
+        app[`${view.name}View`] = null;
+        delete app[`${view.name}View`];
+        app.views[view.name] = null;
+        delete app.views[view.name];
+      }
+      $el.removeAttr('data-page');
+      $el[0].f7View = null;
+      delete $el[0].f7View;
+
+      app.views.splice(app.views.indexOf(view), 1);
+
+      // Delete props & methods
+      Object.keys(view).forEach((viewProp) => {
+        view[viewProp] = null;
+        delete view[viewProp];
+      });
+      view = null;
+    };
 
     return view;
   }
