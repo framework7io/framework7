@@ -3,26 +3,42 @@ const Utils = {
     return Date.now();
   },
   promise(handler) {
+    let resolved = false;
+    let rejected = false;
+    let resolveArgs;
+    let rejectArgs;
     const promiseHandlers = {
       then: undefined,
       catch: undefined,
     };
     const promise = {
       then(thenHandler) {
-        promiseHandlers.then = thenHandler;
+        if (resolved) {
+          thenHandler(...resolveArgs);
+        } else {
+          promiseHandlers.then = thenHandler;
+        }
         return promise;
       },
       catch(catchHandler) {
-        promiseHandlers.catch = catchHandler;
+        if (rejected) {
+          catchHandler(...rejectArgs);
+        } else {
+          promiseHandlers.catch = catchHandler;
+        }
         return promise;
       },
     };
 
     function resolve(...args) {
+      resolved = true;
       if (promiseHandlers.then) promiseHandlers.then(...args);
+      else resolveArgs = args;
     }
     function reject(...args) {
+      rejected = true;
       if (promiseHandlers.catch) promiseHandlers.catch(...args);
+      else rejectArgs = args;
     }
     handler(resolve, reject);
 
