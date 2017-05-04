@@ -4,7 +4,7 @@ export default {
   name: 'router',
   params: {
     dynamicNavbar: false,
-    domCache: false,
+    stackPages: false,
     xhrCache: true,
     xhrCacheIgnore: [],
     xhrCacheIgnoreGetParameters: false,
@@ -16,12 +16,13 @@ export default {
     allowDuplicateUrls: false,
     reloadPages: false,
     removeWithTimeout: false,
-    removeTimeout: false,
+    // MD Theme delay
+    mdThemePageLoadDelay: 0,
     // Push State
     pushState: false,
     pushStateRoot: undefined,
     pushStateNoAnimation: false,
-    pushStateSeparator: '#!/',
+    pushStateSeparator: '#!',
     pushStateOnLoad: true,
     // Animate Pages
     animatePages: true,
