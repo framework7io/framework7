@@ -322,7 +322,7 @@ app.initFastClicks = function () {
             activableElement = findActivableElement(targetElement);
             // If it's inside a scrollable view, we don't trigger active-state yet,
             // because it can be a scroll instead. Based on the link:
-            // http://labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
+            // //labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
             if (!isInsideScrollableView(activableElement)) {
                 addActive();
             } else {
