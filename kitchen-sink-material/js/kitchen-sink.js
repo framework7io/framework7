@@ -186,11 +186,11 @@ myApp.onPageInit('messages', function (page) {
     var people = [
         {
             name: 'Kate Johnson',
-            avatar: 'https://lorempixel.com/output/people-q-c-100-100-9.jpg'
+            avatar: 'http://lorempixel.com/output/people-q-c-100-100-9.jpg'
         },
         {
             name: 'Blue Ninja',
-            avatar: 'https://lorempixel.com/output/people-q-c-100-100-7.jpg'
+            avatar: 'http://lorempixel.com/output/people-q-c-100-100-7.jpg'
         },
 
     ];
@@ -221,7 +221,7 @@ myApp.onPageInit('messages', function (page) {
         // Add Message
         myMessages.addMessage({
             text: messageText,
-            avatar: 'https://lorempixel.com/output/people-q-c-200-200-6.jpg',
+            avatar: 'http://lorempixel.com/output/people-q-c-200-200-6.jpg',
             type: 'sent',
             date: 'Now'
         });
@@ -253,7 +253,7 @@ myApp.onPageInit('pull-to-refresh', function (page) {
     ptrContent.on('refresh', function (e) {
         // Emulate 2s loading
         setTimeout(function () {
-            var picURL = 'https://lorempixel.com/88/88/abstract/' + Math.round(Math.random() * 10);
+            var picURL = 'http://lorempixel.com/88/88/abstract/' + Math.round(Math.random() * 10);
             var song = songs[Math.floor(Math.random() * songs.length)];
             var author = authors[Math.floor(Math.random() * authors.length)];
             var linkHTML = '<li class="item-content">' +
@@ -290,7 +290,7 @@ var photoBrowserPhotos = [
 		url: 'img/beach.jpg',
 		caption: 'Amazing beach in Goa, India'
 	},
-    'https://placekitten.com/1024/1024',
+    'http://placekitten.com/1024/1024',
     'img/lock.jpg',
     {
         url: 'img/monkey.jpg',

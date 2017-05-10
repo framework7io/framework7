@@ -182,11 +182,11 @@ myApp.onPageInit('messages', function (page) {
     var people = [
         {
             name: 'Kate Johnson',
-            avatar: 'https://lorempixel.com/output/people-q-c-100-100-9.jpg'
+            avatar: 'http://lorempixel.com/output/people-q-c-100-100-9.jpg'
         },
         {
             name: 'Blue Ninja',
-            avatar: 'https://lorempixel.com/output/people-q-c-100-100-7.jpg'
+            avatar: 'http://lorempixel.com/output/people-q-c-100-100-7.jpg'
         },
 
     ];
@@ -248,7 +248,7 @@ myApp.onPageInit('pull-to-refresh', function (page) {
     ptrContent.on('refresh', function (e) {
         // Emulate 2s loading
         setTimeout(function () {
-            var picURL = 'https://lorempixel.com/88/88/abstract/' + Math.round(Math.random() * 10);
+            var picURL = 'http://lorempixel.com/88/88/abstract/' + Math.round(Math.random() * 10);
             var song = songs[Math.floor(Math.random() * songs.length)];
             var author = authors[Math.floor(Math.random() * authors.length)];
             var linkHTML = '<li class="item-content">' +
@@ -285,7 +285,7 @@ var photoBrowserPhotos = [
 		url: 'img/beach.jpg',
 		caption: 'Amazing beach in Goa, India'
 	},
-    'https://placekitten.com/1024/1024',
+    'http://placekitten.com/1024/1024',
     'img/lock.jpg',
     {
         url: 'img/monkey.jpg',
@@ -394,7 +394,7 @@ myApp.onPageInit('notifications', function (page) {
             title: 'My Awesome App',
             subtitle: 'New message from John Doe',
             message: 'Hello, how are you? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut posuere erat. Pellentesque id elementum urna, a aliquam ante. Donec vitae volutpat orci. Aliquam sed molestie risus, quis tincidunt dui.',
-            media: '<img width="44" height="44" style="border-radius:100%" src="https://lorempixel.com/100/100/people/9/">'
+            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/100/100/people/9/">'
         });
     });
     $$('.ks-notification-callback').on('click', function () {
@@ -402,7 +402,7 @@ myApp.onPageInit('notifications', function (page) {
             title: 'My Awesome App',
             subtitle: 'New message from John Doe',
             message: 'Hello, how are you? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut posuere erat. Pellentesque id elementum urna, a aliquam ante. Donec vitae volutpat orci. Aliquam sed molestie risus, quis tincidunt dui.',
-            media: '<img width="44" height="44" style="border-radius:100%" src="https://lorempixel.com/100/100/people/9/">',
+            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/100/100/people/9/">',
             onClose: function () {
                 myApp.alert('Notification closed');
             }
