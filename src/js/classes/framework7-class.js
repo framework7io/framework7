@@ -65,6 +65,7 @@ class Framework7 {
     $('html').addClass(app.theme);
 
     // Emit, init other modules
+    app.initialized = true;
     app.emit('init');
   }
 }
