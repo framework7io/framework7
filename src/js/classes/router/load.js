@@ -196,10 +196,10 @@ function forward(el, forwardOptions = {}) {
   }
 
   if (options.animate) {
-    if (app.theme === 'md' && router.params.mdThemePageLoadDelay) {
+    if (app.theme === 'md' && router.params.materialPageLoadDelay) {
       setTimeout(() => {
         router.animatePages($oldPage, $newPage, 'next', 'current');
-      }, router.params.mdThemePageLoadDelay);
+      }, router.params.materialPageLoadDelay);
     } else {
       router.animatePages($oldPage, $newPage, 'next', 'current');
     }
