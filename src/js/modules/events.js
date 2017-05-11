@@ -4,6 +4,11 @@ export default {
     const self = this;
     self.eventsListeners = {};
     if (params && params.parents) self.eventsParents = params.parents;
+    if (self.params && self.params.on) {
+      Object.keys(self.params.on).forEach((eventName) => {
+        self.on(eventName, self.params.on[eventName]);
+      });
+    }
   },
   instance: {
     on(events, handler) {
