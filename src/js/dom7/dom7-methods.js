@@ -385,7 +385,7 @@ Dom7.prototype = {
     },
     hide: function () {
         for (var i = 0; i < this.length; i++) {
-            this[i].style.display = 'none';
+            this[i].style.display = null;
         }
         return this;
     },
