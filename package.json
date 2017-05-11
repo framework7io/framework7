@@ -35,7 +35,7 @@
   },
   "homepage": "http://framework7.io/",
   "dependencies": {
-    "dom7": "^1.6.1",
+    "dom7": "^1.6.2",
     "template7": "^1.2.1"
   },
   "devDependencies": {
