@@ -4,12 +4,14 @@ function initPageSmartSelect() {
 export default {
   name: 'smartSelect',
   params: {
-    openIn: 'page', // or 'popup' or 'picker'
-    backText: 'Back',
-    popupCloseText: 'Close',
-    pickerCloseText: 'Done',
-    searchbar: false,
-    backOnSelect: false,
+    smartSelect: {
+      openIn: 'page', // or 'popup' or 'picker'
+      backText: 'Back',
+      popupCloseText: 'Close',
+      pickerCloseText: 'Done',
+      searchbar: false,
+      backOnSelect: false,
+    },
   },
   instance: {
     // New API

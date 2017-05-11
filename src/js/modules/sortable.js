@@ -3,7 +3,9 @@ function initSortable() {
 }
 export default {
   name: 'sortable',
-  params: true,
+  params: {
+    sortable: true,
+  },
   instance: {
     // New API
     sortable: {

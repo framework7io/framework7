@@ -548,20 +548,22 @@ function initTouch() {
 export default {
   name: 'touch',
   params: {
-    // Fast clicks
-    fastClicks: true,
-    fastClicksDistanceThreshold: 10,
-    fastClicksDelayBetweenClicks: 50,
-    fastClicksExclude: '', // CSS selector
-    // Tap Hold
-    tapHold: false,
-    tapHoldDelay: 750,
-    tapHoldPreventClicks: true,
-    // Active State
-    activeState: true,
-    activeStateElements: 'a, button, label, span',
-    materialRipple: true,
-    materialRippleElements: '.ripple, a.link, a.item-link, .button, .dialog-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a, .form-checkbox, .form-radio, .data-table .sortable-cell',
+    touch: {
+      // Fast clicks
+      fastClicks: true,
+      fastClicksDistanceThreshold: 10,
+      fastClicksDelayBetweenClicks: 50,
+      fastClicksExclude: '', // CSS selector
+      // Tap Hold
+      tapHold: false,
+      tapHoldDelay: 750,
+      tapHoldPreventClicks: true,
+      // Active State
+      activeState: true,
+      activeStateElements: 'a, button, label, span',
+      materialRipple: true,
+      materialRippleElements: '.ripple, a.link, a.item-link, .button, .dialog-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a, .form-checkbox, .form-radio, .data-table .sortable-cell',
+    },
   },
   static: {
     TouchRipple,

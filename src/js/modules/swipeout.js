@@ -4,9 +4,11 @@ function initSwipeout() {
 export default {
   name: 'swipeout',
   params: {
-    actionsNoFold: false,
-    noFollow: false,
-    removeWithTimeout: false,
+    swipeout: {
+      actionsNoFold: false,
+      noFollow: false,
+      removeWithTimeout: false,
+    },
   },
   instance: {
     allowSwipeout: true,

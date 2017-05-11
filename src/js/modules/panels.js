@@ -1,15 +1,17 @@
 export default {
   name: 'panels',
   params: {
-    panelLeftBreakpoint: null,
-    panelRightBreakpoint: null,
-    swipePanel: false, // or 'left' or 'right'
-    swipePanelActiveArea: 0,
-    swipePanelCloseOpposite: true,
-    swipePanelOnlyClose: false,
-    swipePanelNoFollow: false,
-    swipePanelThreshold: 0,
-    closeByOutsideClick: true,
+    panels: {
+      panelLeftBreakpoint: null,
+      panelRightBreakpoint: null,
+      swipePanel: false, // or 'left' or 'right'
+      swipePanelActiveArea: 0,
+      swipePanelCloseOpposite: true,
+      swipePanelOnlyClose: false,
+      swipePanelNoFollow: false,
+      swipePanelThreshold: 0,
+      closeByOutsideClick: true,
+    },
   },
   instance: {
     panel: {

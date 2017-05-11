@@ -44,8 +44,7 @@ export default function Use(c) {
       const module = instance.modules[moduleName];
       // Extend params
       if (module.params) {
-        if (!instanceParams[moduleName]) instanceParams[moduleName] = {};
-        Utils.extend(instanceParams[moduleName], module.params);
+        Utils.extend(instanceParams, module.params);
       }
     });
   };
