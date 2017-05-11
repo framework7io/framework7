@@ -47,9 +47,38 @@
   <script>
     const app2 = new Framework7({
       root: '#app',
+      on: {
+        pageBeforeRemove(page) {
+          console.log('pageBeforeRemove', page.name);
+        },
+        pageBeforeInit(page) {
+          console.log('pageBeforeInit', page.name);
+        },
+        pageInit(page) {
+          console.log('pageInit', page.name);
+        },
+        pageBeforeIn(page) {
+          console.log('pageBeforeIn', page.name, page.direction);
+        },
+        pageAfterIn(page) {
+          console.log('pageAfterIn', page.name, page.direction);
+        },
+        pageBeforeOut(page) {
+          console.log('pageBeforeOut', page.name, page.direction);
+        },
+        pageAfterOut(page) {
+          console.log('pageAfterOut', page.name, page.direction);
+        },
+        init() {
+          console.log('app init');
+        },
+      },
+
       router: {
         // allowDuplicateUrls: true,
-        pushState: true,
+        // pushState: true,
+        // stackPages: true,
+
       },
       routes: [
         // Load page by URL
@@ -71,6 +100,10 @@
               url: 'about-2.html',
             },
           ],
+        },
+        {
+          path: '/news/',
+          url: 'news.html',
         },
         {
           path: '/tabs/',
