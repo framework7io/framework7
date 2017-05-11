@@ -99,7 +99,18 @@ class View {
       view = null;
     };
 
+    // Init View
+    if (app.initialized) {
+      view.init();
+    } else {
+      app.on('init', view.init);
+    }
+
     return view;
+  }
+  init() {
+    const view = this;
+    view.router.init();
   }
 }
 
