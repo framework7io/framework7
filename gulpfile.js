@@ -34,7 +34,7 @@ const banner = [
 // Build JS Files
 function buildJs(cb) {
   rollup({
-    entry: './src/js/framework7.js',
+    entry: './src/framework7.js',
     plugins: [
       resolve({
         jsnext: true,
@@ -58,7 +58,7 @@ function buildJs(cb) {
 
 // Build Less Files
 function buildLess(cb) {
-  gulp.src('./src/less/framework7.less')
+  gulp.src('./src/framework7.less')
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')],
     }))
@@ -80,8 +80,8 @@ gulp.task('less', (cb) => {
 gulp.task('build', ['js', 'less']);
 
 gulp.task('watch', () => {
-  gulp.watch('./src/js/**/*.js', ['js']);
-  gulp.watch('./src/less/**/*.less', ['less']);
+  gulp.watch('./src/**/**/*.js', ['js']);
+  gulp.watch('./src/**/**/*.less', ['less']);
 });
 
 gulp.task('connect', () => connect.server({

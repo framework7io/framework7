@@ -36,7 +36,7 @@
   "homepage": "http://framework7.io/",
   "dependencies": {
     "dom7": "^1.6.2",
-    "template7": "^1.2.2"
+    "template7": "^1.2.3"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

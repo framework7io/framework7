@@ -18,6 +18,12 @@
               </div>
             </div>
             <div class="page-content">
+              <p>
+                <a href="/news/">News</a>
+              </p>
+              <p>
+                <a href="/about/">About</a>
+              </p>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor fugit, accusantium sed expedita quia, esse illo nulla praesentium tenetur quibusdam itaque, ipsum dolore vero consectetur illum, corporis natus velit dignissimos!</p>
               <p>Repellat saepe nesciunt aliquam corrupti iusto ab, sed quis. Eius, reprehenderit itaque non delectus atque vero perferendis deserunt soluta tenetur modi dolore, quo, facilis voluptatem mollitia perspiciatis quidem consectetur repellendus?</p>
               <p>Suscipit beatae corporis est sint eveniet expedita quibusdam consequuntur aspernatur eum et vero animi optio facere quidem consequatur, obcaecati deserunt explicabo dignissimos, a quis. Neque ea qui saepe impedit ipsam.</p>
@@ -55,7 +61,7 @@
           console.log('pageBeforeInit', page.name);
         },
         pageInit(page) {
-          console.log('pageInit', page.name);
+          console.log('pageInit', page);
         },
         pageBeforeIn(page) {
           console.log('pageBeforeIn', page.name, page.direction);
@@ -160,7 +166,7 @@
         // Async
         {
           path: '/async-page/',
-          async(load) {
+          async(load, release) {
             setTimeout(() => {
               load({
                 url: 'index.html'
