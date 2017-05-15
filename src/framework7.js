@@ -11,6 +11,7 @@ import Support from './modules/support/support';
 import Events from './modules/events/events';
 import Touch from './modules/touch/touch';
 import Router from './modules/router/router';
+import History from './modules/history/history';
 import Clicks from './modules/clicks/clicks';
 
 // Core Components
@@ -41,8 +42,9 @@ Framework7
   .use(Resize)
   .use(Touch)
   .use(Router)
-  .use(View)
+  .use(History)
   .use(Clicks)
+  .use(View)
   // Additional Modules
   .use(Sortable)
   .use(Swipeout)
