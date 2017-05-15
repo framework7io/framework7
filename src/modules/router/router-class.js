@@ -182,6 +182,9 @@ class Router {
     } else {
       initUrl = document.location.href.split(document.location.origin)[1];
     }
+    if (router.params.pushState && initUrl.indexOf(router.params.pushStateSeparator) >= 0) {
+      initUrl = initUrl.split(router.params.pushStateSeparator)[1];
+    }
 
     router.currentRoute = router.findMatchingRoute(initUrl);
     if (!router.currentRoute) {
@@ -361,7 +364,7 @@ class Router {
   removeFromXhrCache(url) {
     const router = this;
     const xhrCache = router.xhrCache;
-    let index;
+    let index = false;
     for (let i = 0; i < xhrCache.length; i += 1) {
       if (xhrCache[i].url === url) index = i;
     }
