@@ -39,7 +39,7 @@ class View {
       $el,
       el: $el[0],
       name: view.params.name,
-      main: view.params.main || $el.hasClass(app.params.viewMainClass),
+      main: view.params.main || $el.hasClass(app.params.view.viewMainClass),
       $pagesEl: $el.find('.pages'),
       pagesEl: $el.find('.pages')[0],
       selector,
