@@ -46,6 +46,10 @@ function buildJs(cb) {
     useStrict: true,
     sourceMap: true,
   })
+  .on('error', (err) => {
+    console.log(err.toString());
+    if (cb) cb();
+  })
   .pipe(source('framework7.js', './src'))
   .pipe(buffer())
   .pipe(sourcemaps.init({ loadMaps: true }))
@@ -62,6 +66,10 @@ function buildLess(cb) {
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')],
     }))
+    .on('error', (err) => {
+      console.log(err.toString());
+      if (cb) cb();
+    })
     .pipe(gulp.dest('./build/css/'))
     .on('end', () => {
       if (cb) cb();
@@ -90,7 +98,7 @@ gulp.task('connect', () => connect.server({
   port: '3000',
 }));
 
-gulp.task('open', () => gulp.src('./index.html').pipe(open({ uri: 'http://localhost:3000/index.html' })));
+gulp.task('open', () => gulp.src('./index.html').pipe(open({ uri: 'http://localhost:3000/' })));
 
 gulp.task('server', ['watch', 'connect', 'open']);
 
