@@ -2,9 +2,6 @@ import $ from 'dom7';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 
-function afterBackward() {
-
-}
 function backward(el, backwardOptions) {
   const router = this;
   const app = router.app;
@@ -31,26 +28,44 @@ function backward(el, backwardOptions) {
     .removeClass('stacked');
 
   // Remove previous page in case of "forced"
+  let backIndex;
   if (options.force) {
-    const $pageToRemove = $oldPage.prev('.page-previous:not(.stacked)');
-    if ($pageToRemove.length > 0) {
-      if (router.params.stackPages && router.initialPages.indexOf($pageToRemove[0]) >= 0) {
-        $pageToRemove.addClass('stacked');
+    if ($oldPage.prev('.page-previous:not(.stacked)').length > 0) {
+      if (router.history.indexOf(options.route.url) >= 0) {
+        backIndex = router.history.length - router.history.indexOf(options.route.url) - 1;
+        router.history = router.history.slice(0, router.history.indexOf(options.route.url) + 2);
+        view.history = router.history;
       } else {
-        router.pageRemoveCallback($pageToRemove, 'previous');
-        router.remove($pageToRemove);
+        if (router.history[[router.history.length - 2]]) {
+          router.history[router.history.length - 2] = options.route.url;
+        } else {
+          router.history.unshift(router.url);
+        }
       }
 
-      if (router.history[[router.history.length - 2]]) {
-        router.history[router.history.length - 2] = router.url;
+      if (backIndex && router.params.stackPages) {
+        $oldPage.prevAll('.page-previous').each((index, pageToRemove) => {
+          const $pageToRemove = $(pageToRemove);
+          if ($pageToRemove[0] !== $newPage[0] && $pageToRemove.index() > $newPage.index()) {
+            if (router.initialPages.indexOf($pageToRemove[0]) >= 0) {
+              $pageToRemove.addClass('stacked');
+            } else {
+              router.pageRemoveCallback($pageToRemove, 'previous');
+              router.remove($pageToRemove);
+            }
+          }
+        });
       } else {
-        router.history.unshift(router.url);
+        const $pageToRemove = $oldPage.prev('.page-previous:not(.stacked)');
+        if (router.params.stackPages && router.initialPages.indexOf($pageToRemove[0]) >= 0) {
+          $pageToRemove.addClass('stacked');
+        } else {
+          router.pageRemoveCallback($pageToRemove, 'previous');
+          router.remove($pageToRemove);
+        }
       }
     }
   }
-
-  // Push/Pop state
-  // TODO
 
   // Insert new page
   $newPage.insertBefore($oldPage);
@@ -64,7 +79,8 @@ function backward(el, backwardOptions) {
 
   // History State
   if (router.params.pushState && options.pushState) {
-    History.back();
+    if (backIndex) History.go(-backIndex);
+    else History.back();
   }
 
   // Update History
@@ -112,6 +128,9 @@ function backward(el, backwardOptions) {
     if (router.params.preloadPreviousPage) {
       router.navigateBack(router.history[router.history.length - 2], { preload: true });
     }
+    if (router.params.pushState) {
+      History.clearQueue();
+    }
   }
 
   if (options.animate) {
@@ -149,11 +168,6 @@ function back(backParams, backOptions, ignorePageChange) {
     options.route = router.findMatchingRoute(url, true);
   }
 
-  // Current Route
-  router.currentRoute = options.route;
-  router.url = router.currentRoute.url;
-  router.emit('routeChange route:change', router.currentRoute, router);
-
   // Proceed
   if (content) {
     router.backward(router.getPageEl(content), options);
@@ -190,37 +204,57 @@ function back(backParams, backOptions, ignorePageChange) {
   }
   return router;
 }
-function navigateBack(url = '', navigateOptions = {}) {
+function navigateBack(...args) {
+  let navigateUrl;
+  let navigateOptions;
+  if (typeof args[0] === 'object') {
+    navigateOptions = args[0] || {};
+  } else {
+    navigateUrl = args[0];
+    navigateOptions = args[1] || {};
+  }
   const router = this;
   const view = router.view;
-  const $previousPage = view.$pagesEl.find('.page-current').prevAll('.page-previous').eq(-1);
+  const $previousPage = view.$pagesEl.find('.page-current').prevAll('.page-previous').eq(0);
   if (!navigateOptions.force && $previousPage.length > 0) {
-    // Load to current previous page
-    router.backward($previousPage, Utils.extend(navigateOptions, {
+    router.back({ el: $previousPage }, Utils.extend(navigateOptions, {
       route: $previousPage[0].f7Page.route,
     }));
     return router;
   }
   // Find page to load
-  let navigateUrl = url;
   if (navigateUrl && navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
     navigateUrl = ((router.path || '/') + navigateUrl).replace('//', '/');
   }
+  if (!navigateUrl && router.history.length > 1) {
+    navigateUrl = router.history[router.history.length - 2];
+  }
   let route = router.findMatchingRoute(navigateUrl);
-  if (!route && navigateUrl) {
-    route = {
-      url: navigateUrl,
-      path: navigateUrl.split('?')[0],
-      query: Utils.parseUrlQuery(navigateUrl),
-      route: {
-        path: navigateUrl.split('?')[0],
+  if (!route) {
+    if (navigateUrl) {
+      route = {
         url: navigateUrl,
-      },
-    };
-  } else if (!route) {
+        path: navigateUrl.split('?')[0],
+        query: Utils.parseUrlQuery(navigateUrl),
+        route: {
+          path: navigateUrl.split('?')[0],
+          url: navigateUrl,
+        },
+      };
+    }
+  }
+  if (!route) {
     return router;
   }
   const options = Utils.extend(navigateOptions, { route });
+
+  if (options.force && router.params.stackPages) {
+    router.$pagesEl.find('.page-previous.stacked').each((index, pageEl) => {
+      if (pageEl.f7Page && pageEl.f7Page.route && pageEl.f7Page.route.url === route.url) {
+        router.back({ el: pageEl }, options);
+      }
+    });
+  }
 
   ('url content name el component template').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
@@ -240,7 +274,7 @@ function navigateBack(url = '', navigateOptions = {}) {
 
     route.route.async(asyncLoad, asyncRelease);
   }
-  // Retur Router
+  // Return Router
   return router;
 }
-export { afterBackward, backward, back, navigateBack };
+export { backward, back, navigateBack };
