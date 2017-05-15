@@ -1,19 +1,22 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
+import History from '../../utils/history';
 
 function forward(el, forwardOptions = {}) {
   const router = this;
   const app = router.app;
   const view = router.view;
-  router.allowPageChange = false;
+
   const options = Utils.extend({
-    animate: true,
+    animate: router.params.animatePages,
     pushState: true,
   }, forwardOptions);
-  const $newPage = $(el);
+
   const $pagesEl = router.$pagesEl;
+  const $newPage = $(el);
   let $oldPage;
 
+  router.allowPageChange = false;
   if ($newPage.length === 0) {
     router.allowPageChange = true;
     return router;
@@ -67,13 +70,13 @@ function forward(el, forwardOptions = {}) {
   // Push State
   if (router.params.pushState && options.pushState && !options.reloadPrevious) {
     const pushStateRoot = router.params.pushStateRoot || '';
-    const method = options.reloadCurrent ? 'replaceState' : 'pushState';
+    // const method = options.reloadCurrent ? 'replaceState' : 'pushState';
 
     // if (!isDynamicPage && !pageName) {
-    window.history[method]({
-      url: options.route.url,
-      viewIndex: app.views.indexOf(view),
-    }, '', pushStateRoot + router.params.pushStateSeparator + options.route.url);
+    History[options.reloadCurrent ? 'replace' : 'push'](
+      { route: options.route,
+        viewIndex: app.views.indexOf(view),
+      }, pushStateRoot + router.params.pushStateSeparator + options.route.url);
     // }
     // else if (isDynamicPage && content) {
     //   history[method]({content: typeof content === 'string' ? content : '', url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
@@ -133,6 +136,12 @@ function forward(el, forwardOptions = {}) {
     }
   }
 
+  // Current Route
+  router.currentRoute = options.route;
+  router.currentPage = $newPage[0];
+  router.url = router.currentRoute.url;
+  router.emit('routeChange route:change', router.currentRoute, router);
+
   // Page init and before init events
   router.pageInitCallback($newPage, newPagePosition, options.route);
   // --- TODO ---
@@ -180,10 +189,10 @@ function forward(el, forwardOptions = {}) {
       router.animatePages($oldPage, $newPage, 'next', 'current');
     }
     $newPage.animationEnd(() => {
-      afterAnimation($oldPage, $newPage);
+      afterAnimation();
     });
   } else {
-    afterAnimation($oldPage, $newPage);
+    afterAnimation();
   }
 
   return router;
@@ -209,11 +218,6 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   if (!options.route && url) {
     options.route = router.findMatchingRoute(url, true);
   }
-
-  // Current Route
-  router.currentRoute = options.route;
-  router.url = router.currentRoute.url;
-  router.emit('routeChange route:change', router.currentRoute, router);
 
   // Proceed
   if (content) {
@@ -251,4 +255,59 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
   return router;
 }
-export { forward, load };
+function navigate(url, navigateOptions = {}) {
+  const router = this;
+  let navigateUrl = url;
+  if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
+    navigateUrl = ((router.path || '/') + navigateUrl).replace('//', '/');
+  }
+  const route = router.findMatchingRoute(navigateUrl);
+  if (!route) {
+    return router;
+    // if (navigateUrl.indexOf('#') === 0) {
+    //   // Load by name
+    //   route = {
+    //     url: navigateUrl,
+    //     path: navigateUrl,
+    //     route: {
+    //       path: navigateUrl,
+    //       name: navigateUrl.replace('#', ''),
+    //     },
+    //   };
+    // } else {
+    //   // Load by URL
+    //   route = {
+    //     url: navigateUrl,
+    //     path: navigateUrl.split('?')[0],
+    //     query: Utils.parseUrlQuery(navigateUrl),
+    //     route: {
+    //       path: navigateUrl.split('?')[0],
+    //       url: navigateUrl,
+    //     },
+    //   };
+    // }
+  }
+  const options = Utils.extend(navigateOptions, { route });
+
+  ('url content name el component template').split(' ').forEach((pageLoadProp) => {
+    if (route.route[pageLoadProp]) {
+      router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+    }
+  });
+  // Async
+  function asyncLoad(loadParams, loadOptions) {
+    router.allowPageChange = false;
+    router.load(loadParams, Utils.extend(options, loadOptions), true);
+  }
+  function asyncRelease() {
+    router.allowPageChange = true;
+  }
+  if (route.route.async) {
+    router.allowPageChange = false;
+
+    route.route.async(asyncLoad, asyncRelease);
+  }
+  // Retur Router
+  return router;
+}
+export { forward, load, navigate };
