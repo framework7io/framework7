@@ -3,9 +3,22 @@ import $ from 'dom7';
 const History = {
   queue: [],
   clearQueue() {
+    if (History.queue.length === 0) return;
+    const currentQueue = History.queue.pop();
+    const router = currentQueue.router;
 
+    let animate = router.params.animatePages;
+    if (router.params.pushStateNoAnimation === true) animate = false;
+
+    if (currentQueue.action === 'back') {
+      router.navigateBack({ animate, pushState: false });
+    }
+    if (currentQueue.action === 'load') {
+      router.navigate(currentQueue.stateUrl, { animate, pushState: false });
+    }
   },
   handle(e) {
+    if (History.blockPopstate) return;
     const app = this;
     const mainView = app.views.main;
     let state = e.state;
@@ -18,36 +31,32 @@ const History = {
     if (state.viewIndex < 0) return;
     const view = app.views[state.viewIndex];
     const router = view.router;
-    const stateUrl = (state && state.route && state.route.url) || undefined;
-    // const stateContent = state && state.content || undefined;
-    // const statePageName = state && state.pageName || undefined;
-    let animate;
+    const stateUrl = (state && state.url) || undefined;
 
+
+    let animate = router.params.animatePages;
     if (router.params.pushStateNoAnimation === true) animate = false;
-    else animate = true;
 
     if (stateUrl !== router.url) {
       if (router.history.indexOf(stateUrl) >= 0) {
         // Go Back
         if (router.allowPageChange) {
-          router.navigateBack(undefined, { animate, pushState: false });
+          router.navigateBack({ animate, pushState: false });
         } else {
           History.queue.push({
             action: 'back',
-            view,
+            router,
           });
         }
+      } else if (router.allowPageChange) {
+        // Load page
+        router.navigate(stateUrl, { animate, pushState: false });
       } else {
-        // Load Page
-        if (router.allowPageChange) {
-          router.navigate(stateUrl, { animate, pushState: false });
-        } else {
-          History.queue.unshift({
-            action: 'loadPage',
-            stateUrl,
-            view,
-          });
-        }
+        History.queue.unshift({
+          action: 'load',
+          stateUrl,
+          router,
+        });
       }
     }
   },
@@ -64,7 +73,18 @@ const History = {
     window.history.back();
   },
   state: window.history.state,
+  blockPopstate: true,
   init(app) {
+    $(window).on('load', () => {
+      setTimeout(() => {
+        History.blockPopstate = false;
+      }, 0);
+    });
+
+    if (document.readyState && document.readyState === 'complete') {
+      History.blockPopstate = false;
+    }
+
     $(window).on('popstate', History.handle.bind(app));
   },
 };
