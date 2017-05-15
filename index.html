@@ -9,7 +9,7 @@
 <body>
   <div id="app">
     <div class="views">
-      <div class="view">
+      <div class="view view-main">
         <div class="pages">
           <div class="page" data-page="home">
             <div class="navbar">
@@ -39,45 +39,36 @@
         </div>
       </div>
     </div>
-    <div class="dialog modal-in" style="display: block; margin-top: -62px;">
-      <div class="dialog-inner">
-        <div class="dialog-title">Framework7</div>
-        <div class="dialog-text">Hello!</div>
-      </div>
-      <div class="dialog-buttons dialog-buttons-1 ">
-        <span class="dialog-button dialog-button-bold">OK</span>
-      </div>
-    </div>
   </div>
   <script src="build/js/framework7.js"></script>
   <script>
     const app2 = new Framework7({
       root: '#app',
       on: {
-        pageBeforeRemove(page) {
-          console.log('pageBeforeRemove', page.name);
-        },
-        pageBeforeInit(page) {
-          console.log('pageBeforeInit', page.name);
-        },
-        pageInit(page) {
-          console.log('pageInit', page);
-        },
-        pageBeforeIn(page) {
-          console.log('pageBeforeIn', page.name, page.direction);
-        },
-        pageAfterIn(page) {
-          console.log('pageAfterIn', page.name, page.direction);
-        },
-        pageBeforeOut(page) {
-          console.log('pageBeforeOut', page.name, page.direction);
-        },
-        pageAfterOut(page) {
-          console.log('pageAfterOut', page.name, page.direction);
-        },
-        init() {
-          console.log('app init');
-        },
+        // pageBeforeRemove(page) {
+        //   console.log('pageBeforeRemove', page.name);
+        // },
+        // pageBeforeInit(page) {
+        //   console.log('pageBeforeInit', page.name);
+        // },
+        // pageInit(page) {
+        //   console.log('pageInit', page);
+        // },
+        // pageBeforeIn(page) {
+        //   console.log('pageBeforeIn', page.name, page.direction);
+        // },
+        // pageAfterIn(page) {
+        //   console.log('pageAfterIn', page.name, page.direction);
+        // },
+        // pageBeforeOut(page) {
+        //   console.log('pageBeforeOut', page.name, page.direction);
+        // },
+        // pageAfterOut(page) {
+        //   console.log('pageAfterOut', page.name, page.direction);
+        // },
+        // init() {
+        //   console.log('app init');
+        // },
       },
 
       router: {
@@ -89,7 +80,7 @@
       routes: [
         // Load page by URL
         {
-          path: '/home/',
+          path: '/',
           url: 'index.html',
         },
         // Load page by URL
@@ -110,6 +101,14 @@
         {
           path: '/news/',
           url: 'news.html',
+        },
+        {
+          path: '/services/',
+          url: 'services.html',
+        },
+        {
+          path: '/blog/',
+          url: 'blog.html',
         },
         {
           path: '/tabs/',
@@ -184,8 +183,11 @@
       ],
     });
     const view = app2.addView('.view', {
+
       router: {
         animateNavBackIcon: 'yes',
+        pushState: true,
+        stackPages: true,
       },
       routes: [
         {
