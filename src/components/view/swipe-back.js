@@ -1,5 +1,6 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
+import History from '../../utils/history';
 import Support from '../../utils/support';
 
 function SwipeBack() {
@@ -178,7 +179,7 @@ function SwipeBack() {
     }
   }
   function handleTouchEnd() {
-    let router = view.router;
+    const router = view.router;
     if (!isTouched || !isMoved) {
       isTouched = false;
       isMoved = false;
@@ -222,7 +223,7 @@ function SwipeBack() {
           const translate = pageChanged ? this.f7NavbarRightOffset : 0;
           const sliding = $(this);
           sliding.transform(`translate3d(${translate}px,0,0)`);
-          if (view.router.params.animateNavbarBackIcon) {
+          if (router.params.animateNavbarBackIcon) {
             if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
               activeNavBackIcon.addClass('page-transitioning').transform(`translate3d(${-translate}px,0,0)`);
             }
@@ -233,7 +234,7 @@ function SwipeBack() {
         const translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
         const sliding = $(this);
         sliding.transform(`translate3d(${translate}px,0,0)`);
-        if (view.router.params.animateNavbarBackIcon) {
+        if (router.params.animateNavbarBackIcon) {
           if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
             previousNavBackIcon.addClass('page-transitioning').transform(`translate3d(${-translate}px,0,0)`);
           }
@@ -258,8 +259,8 @@ function SwipeBack() {
       router.emit('routeChange route:change', router.currentRoute, router);
 
       // Page before animation callback
-      view.router.pageBeforeOutCallback(currentPage[0], 'current', currentPage[0].f7Page.route);
-      view.router.pageBeforeInCallback(previousPage[0], 'previous', previousPage[0].f7Page.route, { from: 'previous', to: 'next' });
+      router.pageBeforeOutCallback(currentPage[0], 'current', currentPage[0].f7Page.route);
+      router.pageBeforeInCallback(previousPage[0], 'previous', previousPage[0].f7Page.route, { from: 'previous', to: 'next' });
 
       view.emit('swipeBackBeforeChange swipeback:beforechange', callbackData);
       $el.trigger('swipeBackBeforeChange swipeback:beforechange', callbackData);
@@ -277,21 +278,37 @@ function SwipeBack() {
         if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning');
       }
       allowViewTouchMove = true;
-      view.router.allowPageChange = true;
+      router.allowPageChange = true;
       if (pageChanged) {
-        // if (app.params.pushState && view.main) history.back();
+        // Update History
+        if (router.history.length === 1) {
+          router.history.unshift(router.url);
+        }
+        router.history.pop();
+
+        // Update push state
+        History.back();
+
         // Page after animation callback
-        view.router.pageAfterOutCallback(currentPage[0], 'current', currentPage[0].f7Page.route);
-        view.router.pageAfterInCallback(previousPage[0], 'previous', previousPage[0].f7Page.route, { from: 'previous', to: 'next' });
+        router.pageAfterOutCallback(currentPage[0], 'current', currentPage[0].f7Page.route);
+        router.pageAfterInCallback(previousPage[0], 'previous', previousPage[0].f7Page.route, { from: 'previous', to: 'next' });
+
+        // Remove Old Page
+        if (router.params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
+          currentPage.addClass('stacked');
+        } else {
+          router.pageRemoveCallback(currentPage, 'next');
+          router.remove(currentPage);
+        }
 
         view.emit('swipeBackAfterChange swipeback:afterchange', callbackData);
         $el.trigger('swipeBackAfterChange swipeback:afterchange', callbackData);
 
         router.emit('routeChanged route:changed', router.currentRoute, router);
-        // TODO
-        // call router.afterBack to remove old page and preload previous page
-        // pushState: history back
-        // Update router history
+
+        if (router.params.preloadPreviousPage) {
+          router.navigateBack(router.history[router.history.length - 2], { preload: true });
+        }
       } else {
         view.emit('swipeBackAfterReset swipeback:afterreset', callbackData);
         $el.trigger('swipeBackAfterReset swipeback:afterreset', callbackData);
