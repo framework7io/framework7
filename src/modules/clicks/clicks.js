@@ -262,7 +262,7 @@ function initClicks(app) {
       }
       if (!view) return;
 
-      if (clicked.hasClass('back')) view.router.back();
+      if (clicked.hasClass('back')) view.router.navigateBack(url, clickedData);
       else view.router.navigate(url, clickedData);
     }
   }
