@@ -70,48 +70,17 @@ function forward(el, forwardOptions = {}) {
   // Push State
   if (router.params.pushState && options.pushState && !options.reloadPrevious) {
     const pushStateRoot = router.params.pushStateRoot || '';
-    // const method = options.reloadCurrent ? 'replaceState' : 'pushState';
 
-    // if (!isDynamicPage && !pageName) {
     History[options.reloadCurrent ? 'replace' : 'push'](
-      { route: options.route,
+      { url: options.route.url,
         viewIndex: app.views.indexOf(view),
       }, pushStateRoot + router.params.pushStateSeparator + options.route.url);
-    // }
-    // else if (isDynamicPage && content) {
-    //   history[method]({content: typeof content === 'string' ? content : '', url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
-    // }
-    // else if (pageName) {
-    //   history[method]({pageName: pageName, url: url, viewIndex: app.views.indexOf(view)}, '', pushStateRoot + app.params.pushStateSeparator + url);
-    // }
   }
 
   // Update router history
   const url = options.route.url;
   router.url = options.route.url;
   if (options.reloadCurrent && router.history.length > 0) {
-    const lastUrl = router.history[router.history.length - (options.reloadPrevious ? 2 : 1)];
-    if (lastUrl &&
-      lastUrl.indexOf('#') === 0 &&
-      lastUrl in router.cache.content &&
-      lastUrl !== url &&
-      router.history.indexOf(lastUrl) === -1) {
-      router.cache.content[lastUrl] = null;
-      delete router.cache.content[lastUrl];
-    } else if (lastUrl &&
-      lastUrl in router.cache.pages &&
-      lastUrl !== url &&
-      (router.history.indexOf(lastUrl) === -1 || router.history.indexOf(lastUrl) === router.history.length - 1)) {
-      router.cache.pages[lastUrl] = null;
-      delete router.cache.pages[lastUrl];
-    }
-    if (lastUrl &&
-      lastUrl in router.cache.context &&
-      lastUrl !== url &&
-      (router.history.indexOf(lastUrl) === -1 || router.history.indexOf(lastUrl) === router.history.length - 1)) {
-      router.cache.context[lastUrl] = null;
-      delete router.cache.context[lastUrl];
-    }
     router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
   } else {
     router.history.push(url);
@@ -126,7 +95,7 @@ function forward(el, forwardOptions = {}) {
 
   // Remove old page
   if (options.reloadCurrent && $oldPage.length > 0) {
-    if (router.params.stackPages && view.initialPages.indexOf($oldPage[0]) >= 0) {
+    if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
       $oldPage.addClass('stacked');
     } else {
       // Page remove event
@@ -178,6 +147,10 @@ function forward(el, forwardOptions = {}) {
     }
     router.allowPageChange = true;
     router.emit('routeChanged route:changed', router.currentRoute, router);
+
+    if (router.params.pushState) {
+      History.clearQueue();
+    }
   }
 
   if (options.animate) {
