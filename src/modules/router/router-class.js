@@ -3,9 +3,9 @@ import Use from '../../utils/use';
 import Utils from '../../utils/utils';
 import Events from '../../modules/events/events';
 
-import RouterNavigate from './navigate';
-import { forward as RouterForward, load as RouterLoad } from './load';
-import { backward as RouterBackward, back as RouterBack } from './back';
+// import RouterNavigate from './navigate';
+import { forward as RouterForward, load as RouterLoad, navigate as RouterNavigate } from './load';
+import { backward as RouterBackward, back as RouterBack, navigateBack as RouterNavigateBack } from './back';
 
 /*
   url
@@ -133,8 +133,6 @@ class Router {
     // AllowPageChage
     router.allowPageChange = true;
 
-    // Navigate
-    router.navigate = RouterNavigate;
     /*
     Types:
       url
@@ -167,10 +165,12 @@ class Router {
     // Load
     router.forward = RouterForward;
     router.load = RouterLoad;
+    router.navigate = RouterNavigate;
 
     // Back
     router.backward = RouterBackward;
     router.back = RouterBack;
+    router.navigateBack = RouterNavigateBack;
 
     return router;
   }
@@ -195,13 +195,22 @@ class Router {
     router.url = initUrl;
     router.path = router.currentRoute.path;
 
+    router.initialPages = [];
+    if (router.params.stackPages) {
+      router.$pagesEl.find('.page').each((index, page) => {
+        router.initialPages.push(page);
+      });
+    }
+
     if (router.$pagesEl.find('.page:not(.stacked)').length === 0 && router.url) {
       router.navigate(initUrl, {
         reloadCurrent: true,
         pushState: false,
       });
     } else {
+      router.history.push(router.currentRoute.url);
       router.$pagesEl.find('.page:not(.stacked)').each((index, pageEl) => {
+        $(pageEl).addClass('page-current');
         router.pageInitCallback(pageEl, 'current', router.currentRoute);
       });
     }
