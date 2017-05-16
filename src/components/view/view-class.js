@@ -73,6 +73,8 @@ class View {
       app.views[view.name] = view;
     }
 
+    view.index = app.views.indexOf(view);
+
     // Init View
     if (app.initialized) {
       view.init();
