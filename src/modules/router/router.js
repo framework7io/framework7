@@ -21,7 +21,8 @@ export default {
       // Push State
       pushState: false,
       pushStateRoot: undefined,
-      pushStateNoAnimation: false,
+      pushStateAnimate: true,
+      pushStateAnimateOnLoad: false,
       pushStateSeparator: '#!',
       pushStateOnLoad: true,
       // Animate Pages

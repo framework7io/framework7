@@ -8,7 +8,7 @@ const History = {
     const router = currentQueue.router;
 
     let animate = router.params.animatePages;
-    if (router.params.pushStateNoAnimation === true) animate = false;
+    if (router.params.pushStateAnimate === false) animate = false;
 
     if (currentQueue.action === 'back') {
       router.navigateBack({ animate, pushState: false });
@@ -24,7 +24,7 @@ const History = {
     let state = e.state;
     if (!state && mainView) {
       state = {
-        viewIndex: app.views.indexOf(mainView),
+        viewIndex: mainView.index,
         url: mainView.router.history[0],
       };
     }
@@ -35,7 +35,7 @@ const History = {
 
 
     let animate = router.params.animatePages;
-    if (router.params.pushStateNoAnimation === true) animate = false;
+    if (router.params.pushStateAnimate === false) animate = false;
 
     if (stateUrl !== router.url) {
       if (router.history.indexOf(stateUrl) >= 0) {
