@@ -1,0 +1,64 @@
+<template>
+  <div class="page" data-page="component">
+    <div class="page-content">
+      <h2>{{title}}</h2>
+      <h3>User is: {{$root.user.firstName}} {{$root.user.lastName}}</h3>
+      <ul>
+        {{#each items}}
+        <li>Item {{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        title: 'Component Test',
+        items: [0, 1, 2, 3, 4],
+      }
+    },
+    methods: {
+
+    },
+    on: {
+      pageAttached: function(page) {
+        var self = this;
+        console.log('pageAttached', self, page);
+      },
+      pageInit: function(page) {
+        var self = this;
+        console.log('pageInit', self, page);
+      },
+      pageBeforeIn: function(page) {
+        var self = this;
+        console.log('pageBeforeIn', self, page);
+      },
+      pageAfterIn: function(page) {
+        var self = this;
+        console.log('pageAfterIn', self, page);
+      },
+      pageBeforeOut: function(page) {
+        var self = this;
+        console.log('pageBeforeOut', self, page);
+      },
+      pageAfterOut: function(page) {
+        var self = this;
+        console.log('pageAfterOut', self, page);
+      },
+      pageBeforeStack: function(page) {
+        var self = this;
+        console.log('pageBeforeStack', self, page);
+      },
+      pageAfterStack: function(page) {
+        var self = this;
+        console.log('pageAfterStack', self, page);
+      },
+      pageBeforeRemove: function(page) {
+        var self = this;
+        console.log('pageBeforeRemove', self, page);
+      },
+    },
+  }
+</script>
