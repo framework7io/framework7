@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Use from '../../utils/use';
 import Utils from '../../utils/utils';
+import Component from '../../utils/component';
 import Events from '../../modules/events/events';
 
 // import RouterNavigate from './navigate';
@@ -173,50 +174,6 @@ class Router {
     router.navigateBack = RouterNavigateBack;
 
     return router;
-  }
-  init() {
-    const router = this;
-    let initUrl;
-    if (router.params.url) {
-      initUrl = router.params.url;
-    } else {
-      initUrl = document.location.href.split(document.location.origin)[1];
-    }
-    if (router.params.pushState && initUrl.indexOf(router.params.pushStateSeparator) >= 0) {
-      initUrl = initUrl.split(router.params.pushStateSeparator)[1];
-    }
-
-    router.currentRoute = router.findMatchingRoute(initUrl);
-    if (!router.currentRoute) {
-      router.currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
-        route: {
-          url: initUrl,
-          path: initUrl.split('?')[0],
-        },
-      });
-    }
-    router.url = initUrl;
-    router.path = router.currentRoute.path;
-
-    router.initialPages = [];
-    if (router.params.stackPages) {
-      router.$pagesEl.find('.page').each((index, page) => {
-        router.initialPages.push(page);
-      });
-    }
-
-    if (router.$pagesEl.find('.page:not(.stacked)').length === 0 && router.url) {
-      router.navigate(initUrl, {
-        reloadCurrent: true,
-        pushState: false,
-      });
-    } else {
-      router.history.push(router.currentRoute.url);
-      router.$pagesEl.find('.page:not(.stacked)').each((index, pageEl) => {
-        $(pageEl).addClass('page-current');
-        router.pageInitCallback(pageEl, 'current', router.currentRoute);
-      });
-    }
   }
   animatePages(oldPage, newPage, from, to) {
     const removeClasses = 'page-current page-next page-previous';
@@ -422,120 +379,204 @@ class Router {
       });
     });
   }
-  getPageData(el, position, route = {}, direction) {
+  componentLoader(component, options, proceed, release) {
+    const router = this;
+    function render(c) {
+      const parsed = Component.render(c, {
+        $root: router.app.data,
+        $route: options.route,
+      });
+      proceed(router.getPageEl(parsed.html), { pageEvents: parsed.component.on });
+    }
+    if (typeof component === 'string') {
+      // Load via XHR
+      Component
+        .get(component)
+        .then((loadedComponent) => {
+          render(loadedComponent);
+        })
+        .catch(() => {
+          release();
+        });
+    } else {
+      render(component);
+    }
+  }
+  getPageData(el, position, route = {}) {
     const router = this;
     const $el = $(el);
     const currentPage = $el[0].f7Page || {};
     const page = {
+      app: router.app,
+      view: router.view,
       $el,
       el: $el[0],
       name: $el.attr('data-page'),
-      view: router.view,
       position,
-      direction,
       route: currentPage.route ? currentPage.route : route,
     };
     $el[0].f7Page = page;
     return page;
   }
   // Callbacks
-  pageRemoveCallback(el, position) {
+  pageCallback(callback, el, position, options = {}) {
     if (!el) return;
     const router = this;
     const $el = $(el);
+    const { route, on = {} } = options;
+
+    const camelName = `page${callback[0].toUpperCase() + callback.slice(1, callback.length)}`;
+    const colonName = `page:${callback.toLowerCase()}`;
+    const callbackName = `${camelName} ${colonName}`;
 
     let page = {};
-    if ($el[0].f7Page) {
+    if (callback === 'beforeRemove' && $el[0].f7Page) {
       page = Utils.extend($el[0].f7Page, { position });
     } else {
-      page = router.getPageData(el, position);
-    }
-    // Emit
-    router.emit('pageBeforeRemove', page);
-    $el.trigger('pageBeforeRemove page:beforeremove', page);
-    $el[0].f7Page = null;
-    page = null;
-  }
-  pageInitCallback(el, position, route) {
-    if (!el) return;
-    const router = this;
-    const $el = $(el);
-
-    const page = router.getPageData(el, position, route);
-
-    if ($el[0].f7PageInitialized) {
-      router.emit('pageReinit page:reinit', page);
-      $el.trigger('pageReinit page:reinit', page);
+      page = router.getPageData(el, position, route);
     }
 
-    // Emit
-    router.emit('pageBeforeInit page:beforeinit', page);
-    $el.trigger('pageBeforeInit page:beforeinit', page);
+    function attachEvents() {
+      if (options.pageEvents) {
+        Object.keys(options.pageEvents).forEach((eventName) => {
+          $el.on(eventName, () => {
+            options.pageEvents[eventName](page);
+          });
+        });
+      }
+    }
 
-    router.emit('pageInit page:init', page);
-    $el.trigger('pageInit page:init', page);
+    if (callback === 'init') {
+      if ($el[0].f7PageInitialized) {
+        if (on.pageReinit) on.pageReinit(page);
+        router.emit('pageReinit page:reinit', page);
+        $el.trigger('pageReinit page:reinit', page);
+        return;
+      }
+      attachEvents();
+      $el[0].f7PageInitialized = true;
+    }
+    if (on[camelName]) on[camelName](page);
+    router.emit(callbackName, page);
+    $el.trigger(callbackName, page);
 
-    $el[0].f7PageInitialized = true;
+    if (callback === 'beforeRemove') {
+      $el[0].f7Page = null;
+      page = null;
+    }
   }
-  pageBeforeInCallback(el, position, route, direction) {
-    if (!el) return;
+  saveHistory() {
     const router = this;
-    const $el = $(el);
-
-    const page = router.getPageData(el, position, route, direction);
-
-    router.emit('pageBeforeIn page:beforein', page);
-    $el.trigger('pageBeforeIn page:beforein', page);
+    router.view.history = router.history;
+    if (router.params.pushState) {
+      window.localStorage[`f7_router_${router.view.index}_history`] = JSON.stringify(router.history);
+    }
   }
-  pageAfterInCallback(el, position, route, direction) {
-    if (!el) return;
+  restoreHistory() {
     const router = this;
-    const $el = $(el);
-
-    const page = router.getPageData(el, position, route, direction);
-
-    router.emit('pageAfterIn page:afterin', page);
-    $el.trigger('pageAfterIn page:afterin', page);
+    if (router.params.pushState && window.localStorage[`f7_router_${router.view.index}_history`]) {
+      router.history = JSON.parse(window.localStorage[`f7_router_${router.view.index}_history`]);
+      router.view.history = router.history;
+    }
   }
-  pageBeforeStackCallback(el, position, route) {
-    if (!el) return;
+  clearHistory() {
     const router = this;
-    const $el = $(el);
-
-    const page = router.getPageData(el, position, route);
-
-    router.emit('pageBeforeStack page:beforestack', page);
-    $el.trigger('pageBeforeStack page:beforestack', page);
+    router.history = [];
+    router.saveHistory();
   }
-  pageAfterStackCallback(el, position, route) {
-    if (!el) return;
+  init() {
     const router = this;
-    const $el = $(el);
+    let initUrl = router.params.url;
+    const documentUrl = document.location.href.split(document.location.origin)[1];
+    let historyRestored;
+    if (!router.params.pushState) {
+      if (!initUrl) {
+        initUrl = documentUrl;
+      }
+    } else {
+      // initUrl = documentUrl;
+      if (documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
+        initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
+      } else {
+        initUrl = documentUrl;
+      }
+      router.restoreHistory();
+      if (router.history.indexOf(initUrl) >= 0) {
+        router.history = router.history.slice(0, router.history.indexOf(initUrl) + 1);
+      } else {
+        router.history = [documentUrl.split(router.params.pushStateSeparator)[0], initUrl];
+      }
+      if (router.history.length > 1) {
+        historyRestored = true;
+      } else {
+        router.history = [];
+      }
+      router.saveHistory();
+    }
+    if (router.history.length > 1) {
+      // Will load page
+      router.currentRoute = router.findMatchingRoute(router.history[0]);
+      if (!router.currentRoute) {
+        router.currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
+          route: {
+            url: router.history[0],
+            path: router.history[0].split('?')[0],
+          },
+        });
+      }
+    } else {
+      // Don't load page
+      router.currentRoute = router.findMatchingRoute(initUrl);
+      if (!router.currentRoute) {
+        router.currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
+          route: {
+            url: initUrl,
+            path: initUrl.split('?')[0],
+          },
+        });
+      }
+    }
 
-    const page = router.getPageData(el, position, route);
+    router.url = router.currentRoute.url;
+    router.path = router.currentRoute.path;
 
-    router.emit('pageAfterStack page:afterstack', page);
-    $el.trigger('pageAfterStack page:afterstack', page);
-  }
-  pageBeforeOutCallback(el, position, route) {
-    if (!el) return;
-    const router = this;
-    const $el = $(el);
+    router.initialPages = [];
+    if (router.params.stackPages) {
+      router.$pagesEl.find('.page').each((index, page) => {
+        router.initialPages.push(page);
+      });
+    }
 
-    const page = router.getPageData(el, position, route);
-
-    router.emit('pageBeforeOut page:beforeout', page);
-    $el.trigger('pageBeforeOut page:beforeout', page);
-  }
-  pageAfterOutCallback(el, position, route) {
-    if (!el) return;
-    const router = this;
-    const $el = $(el);
-
-    const page = router.getPageData(el, position, route);
-
-    router.emit('pageAfterOut page:afterout', page);
-    $el.trigger('pageAfterOut page:afterout', page);
+    if (router.$pagesEl.find('.page:not(.stacked)').length === 0 && initUrl) {
+      // No pages presented in DOM, reload new page
+      router.navigate(initUrl, {
+        reloadCurrent: true,
+        pushState: false,
+      });
+    } else {
+      // Init current DOM page
+      router.$pagesEl.find('.page:not(.stacked)').each((index, pageEl) => {
+        $(pageEl).addClass('page-current');
+        router.pageCallback('init', pageEl, 'current', router.currentRoute);
+      });
+      if (historyRestored) {
+        router.navigate(initUrl, {
+          pushState: false,
+          history: false,
+          animate: router.params.pushStateAnimateOnLoad,
+          on: {
+            pageAfterIn() {
+              if (router.history.length > 2) {
+                router.navigateBack({ preload: true });
+              }
+            },
+          },
+        });
+      } else {
+        router.history.push(initUrl);
+        router.saveHistory();
+      }
+    }
   }
 }
 
