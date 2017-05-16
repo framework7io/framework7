@@ -64,6 +64,12 @@ class Framework7 {
     // Theme class
     $('html').addClass(app.theme);
 
+    // Data
+    app.data = {};
+    if (app.params.data && typeof app.params.data === 'function') {
+      Utils.extend(app.data, app.params.data.bind(app)());
+    }
+
     // Emit, init other modules
     app.initialized = true;
     app.emit('init');
