@@ -10,6 +10,8 @@ function forward(el, forwardOptions = {}) {
   const options = Utils.extend({
     animate: router.params.animatePages,
     pushState: true,
+    history: true,
+    on: {},
   }, forwardOptions);
 
   const $pagesEl = router.$pagesEl;
@@ -56,7 +58,7 @@ function forward(el, forwardOptions = {}) {
           $pagesInView.eq(i).addClass('stacked');
         } else {
           // Page remove event
-          router.pageRemoveCallback($pagesInView[i], 'previous');
+          router.pageCallback('beforeRemove', $pagesInView[i], 'previous', options);
           // --- TODO ---
           router.remove($pagesInView[i]);
         }
@@ -73,24 +75,31 @@ function forward(el, forwardOptions = {}) {
 
     History[options.reloadCurrent ? 'replace' : 'push'](
       { url: options.route.url,
-        viewIndex: app.views.indexOf(view),
+        viewIndex: view.index,
       }, pushStateRoot + router.params.pushStateSeparator + options.route.url);
   }
 
   // Update router history
   const url = options.route.url;
   router.url = options.route.url;
-  if (options.reloadCurrent && router.history.length > 0) {
-    router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
-  } else {
-    router.history.push(url);
+  if (options.history) {
+    if (options.reloadCurrent && router.history.length > 0) {
+      router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
+    } else {
+      router.history.push(url);
+    }
   }
+  router.saveHistory();
 
   // Insert new page
+  const needsAttachedCallback = $newPage.parents(document).length === 0;
   if (options.reloadPrevious) {
     $newPage.insertBefore($oldPage);
   } else if ($oldPage.next('.page')[0] !== $newPage[0]) {
     $pagesEl.append($newPage[0]);
+  }
+  if (needsAttachedCallback) {
+    router.pageCallback('attached', $newPage, newPagePosition, options);
   }
 
   // Remove old page
@@ -99,7 +108,7 @@ function forward(el, forwardOptions = {}) {
       $oldPage.addClass('stacked');
     } else {
       // Page remove event
-      router.pageRemoveCallback($oldPage, 'previous');
+      router.pageCallback('beforeRemove', $oldPage, 'previous', options);
       // --- TODO ---
       router.remove($oldPage);
     }
@@ -112,8 +121,7 @@ function forward(el, forwardOptions = {}) {
   router.emit('routeChange route:change', router.currentRoute, router);
 
   // Page init and before init events
-  router.pageInitCallback($newPage, newPagePosition, options.route);
-  // --- TODO ---
+  router.pageCallback('init', $newPage, newPagePosition, options);
 
   if (options.reloadCurrent) {
     router.allowPageChange = true;
@@ -121,9 +129,8 @@ function forward(el, forwardOptions = {}) {
   }
 
   // Before animation event
-  router.pageBeforeInCallback($newPage, 'next', options.route, { from: 'next', to: 'current' });
-  router.pageBeforeStackCallback($oldPage, 'current', options.route);
-  // --- TODO ---
+  router.pageCallback('beforeIn', $newPage, 'next', options);
+  router.pageCallback('beforeStack', $oldPage, 'current', options);
 
   // Animation
   function afterAnimation() {
@@ -131,21 +138,19 @@ function forward(el, forwardOptions = {}) {
     $newPage.removeClass(pageClasses).addClass('page-current');
     $oldPage.removeClass(pageClasses).addClass('page-previous');
     // After animation event
-    router.pageAfterInCallback($newPage, 'next', options.route, { from: 'next', to: 'current' });
-    router.pageAfterStackCallback($oldPage, 'previous', options.route);
-    // --- TODO ---
+    router.allowPageChange = true;
+    router.pageCallback('afterIn', $newPage, 'next', options);
+    router.pageCallback('afterStack', $oldPage, 'current', options);
 
     if (!(view.params.swipeBackPage || router.params.preloadPreviousPage)) {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
       } else if (!(url.indexOf('#') === 0 && $newPage.attr('data-page').indexOf('smart-select-') === 0)) {
         // Remove event
-        router.pageRemoveCallback($oldPage, 'previous');
-        // --- TODO ---
+        router.pageCallback('beforeRemove', $oldPage, 'previous', options);
         router.remove($oldPage);
       }
     }
-    router.allowPageChange = true;
     router.emit('routeChanged route:changed', router.currentRoute, router);
 
     if (router.params.pushState) {
@@ -192,6 +197,15 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     options.route = router.findMatchingRoute(url, true);
   }
 
+  // Component Callbacks
+  function componentProceed(pageEl, newOptions) {
+    return router.forward(pageEl, Utils.extend(options, newOptions));
+  }
+  function componentRelease() {
+    router.allowPageChange = true;
+    return router;
+  }
+
   // Proceed
   if (content) {
     router.forward(router.getPageEl(content), options);
@@ -204,12 +218,11 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     // Load page by page name in pages container
     router.forward(router.$pagesEl.find(`.page[data-page="${name}"]`).eq(0), options);
   } else if (component) {
-    // Load from component (Vue/React/...)
+    // Load from component (F7/Vue/React/...)
     try {
-      router.componentLoader(router, component, options, (pageEl, newOptions = {}) => {
-        router.forward(pageEl, Utils.extend(options, newOptions));
-      });
+      router.componentLoader(component, options, componentProceed, componentRelease);
     } catch (err) {
+      router.allowPageChange = true;
       throw err;
     }
   } else if (url) {
