@@ -261,8 +261,7 @@ function initClicks(app) {
         if (app.mainView) view = app.mainView;
       }
       if (!view) return;
-
-      if (clicked.hasClass('back')) view.router.navigateBack(url, clickedData);
+      if (clicked.hasClass('back')) view.router.back(url, clickedData);
       else view.router.navigate(url, clickedData);
     }
   }
