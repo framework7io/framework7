@@ -14,9 +14,9 @@
           <div class="page" data-page="home">
             <div class="navbar">
               <div class="navbar-inner">
-                <div class="left">Left</div>
-                <div class="center">Hello!</div>
-                <div class="right">
+                <div class="left sliding">Left</div>
+                <div class="title sliding">Hello!</div>
+                <div class="right sliding">
                   <a href="#" class="link">Link</a>
                 </div>
               </div>
@@ -80,9 +80,9 @@
         // pageBeforeInit(page) {
         //   console.log('pageBeforeInit', page.name);
         // },
-        // pageInit(page) {
-        //   console.log('pageInit', page);
-        // },
+        pageInit(page) {
+          console.log('pageInit', page);
+        },
         // pageBeforeIn(page) {
         //   console.log('pageBeforeIn', page.name, page.direction);
         // },
@@ -226,8 +226,8 @@
     });
     const view = app2.addView('.view-main', {
       router: {
-        animateNavBackIcon: 'yes',
-        pushState: true,
+        // animateNavBackIcon: 'yes',
+        // pushState: true,
       },
     });
   </script>
