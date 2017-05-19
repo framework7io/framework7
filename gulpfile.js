@@ -13,6 +13,8 @@ const less = require('gulp-less');
 const rename = require('gulp-rename');
 const resolve = require('rollup-plugin-node-resolve');
 const pkg = require('./package.json');
+const fs = require('fs');
+const diff = require('diff');
 
 const banner = [
   '/**',
@@ -75,6 +77,24 @@ function buildLess(cb) {
       if (cb) cb();
     });
 }
+
+gulp.task('diff', () => {
+  const ios = fs.readFileSync('./src/_less-old/ios/toolbars.less', 'utf8');
+  const md = fs.readFileSync('./src/_less-old/material/toolbars.less', 'utf8');
+  const result = diff.diffLines(ios, md);
+
+  result.forEach((part) => {
+    // green for additions, red for deletions
+    // grey for common parts
+    let color = '\x1b[37m%s\x1b[0m';
+    if (part.added) {
+      color = '\x1b[31m%s\x1b[0m';
+    } else if (part.removed) {
+      color = '\x1b[32m%s\x1b[0m';
+    }
+    console.log(color, part.value);
+  });
+});
 
 // Tasks
 gulp.task('js', (cb) => {
