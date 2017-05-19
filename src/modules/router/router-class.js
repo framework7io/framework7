@@ -1,21 +1,43 @@
 import $ from 'dom7';
+import t7 from 'template7';
 import Use from '../../utils/use';
 import Utils from '../../utils/utils';
 import Component from '../../utils/component';
 import Events from '../../modules/events/events';
+import SwipeBack from './swipe-back';
 
 // import RouterNavigate from './navigate';
 import { forward as RouterForward, load as RouterLoad, navigate as RouterNavigate } from './load';
-import { backward as RouterBackward, back as RouterBack, navigateBack as RouterNavigateBack } from './back';
+import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterBack } from './back';
 
 /*
-  url
-  content
-  name
-  el
-  component
-  template
-  templateId
+  parameters: {
+    url: String, // load page by XHR request
+    content: String, // load page from string content
+    name: String, // load page by name (inline pages)
+    el: Object (HTMLElement), // load page by passed DOM element
+    component: Object, // f7 component
+    componentUrl: String, // component to load
+    template: String or Function, // t7 template
+    templateUrl: String, // template to load
+  }
+
+  options: {
+    reloadAll: Boolean,
+    reloadCurrent: Boolean
+    reloadPrevious: Boolean,
+
+    effect: String, // TODO
+    animate: Boolean,
+
+    context: Object,
+
+    pushState: Boolean,
+    ignoreCache: Boolean,
+    force: Boolean,
+
+    route: {}
+  }
 
   Routes example:
   [
@@ -102,21 +124,25 @@ class Router {
     router.isAppRouter = typeof view === 'undefined';
 
     if (router.isAppRouter) {
+      // App Router
       Utils.extend(router, {
         app,
         params: app.params.router,
-        routes: app.params.routes,
+        routes: app.routes || [],
+        cache: app.cache,
       });
     } else {
+      // View Router
       Utils.extend(router, {
         app,
         view,
         params: view.params.router,
-        routes: view.params.routes,
+        routes: view.routes || [],
+        $el: view.$el,
         $pagesEl: view.$pagesEl,
         pagesEl: view.$pagesEl[0],
         history: view.history,
-        cache: view.cache,
+        cache: app.cache,
       });
     }
     router.useInstanceModules({
@@ -128,40 +154,32 @@ class Router {
     // Temporary Dom
     router.tempDom = document.createElement('div');
 
-    // XHR Cache
-    router.xhrCache = app.xhrCache;
-
     // AllowPageChage
     router.allowPageChange = true;
 
-    /*
-    Types:
-      url
-      content
-      component
-      name
-      el
-      template
-      templateId
-
-    Router load/ back options:
-      reloadAll: Boolean,
-      reloadCurrent: Boolean
-      reloadPrevious: Boolean,
-
-      effect: String,
-      animate: Boolean,
-
-      templateContext: Object,
-      templateContextName: String,
-
-      pushState: Boolean,
-      ignoreCache: Boolean,
-      force: Boolean,
-
-      route: {}
-
-    */
+    // Current Route
+    let currentRoute = {};
+    let previousRoute = {};
+    Object.defineProperty(router, 'currentRoute', {
+      enumerable: true,
+      configurable: true,
+      set(newRoute = {}) {
+        previousRoute = Utils.extend({}, currentRoute);
+        currentRoute = newRoute;
+        router.url = currentRoute.url;
+        router.emit('routeChange route:change', newRoute, previousRoute, router);
+      },
+      get() {
+        return currentRoute;
+      },
+    });
+    Object.defineProperty(router, 'previousRoute', {
+      enumerable: true,
+      configurable: true,
+      get() {
+        return previousRoute;
+      },
+    });
 
     // Load
     router.forward = RouterForward;
@@ -170,8 +188,8 @@ class Router {
 
     // Back
     router.backward = RouterBackward;
+    router.loadBack = RouterLoadBack;
     router.back = RouterBack;
-    router.navigateBack = RouterNavigateBack;
 
     return router;
   }
@@ -320,7 +338,7 @@ class Router {
   }
   removeFromXhrCache(url) {
     const router = this;
-    const xhrCache = router.xhrCache;
+    const xhrCache = router.cache.xhr;
     let index = false;
     for (let i = 0; i < xhrCache.length; i += 1) {
       if (xhrCache[i].url === url) index = i;
@@ -338,8 +356,8 @@ class Router {
 
     return Utils.promise((resolve, reject) => {
       if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
-        for (let i = 0; i < router.xhrCache.length; i += 1) {
-          const cachedUrl = router.xhrCache[i];
+        for (let i = 0; i < router.cache.xhr.length; i += 1) {
+          const cachedUrl = router.cache.xhr[i];
           if (cachedUrl.url === url) {
             // Check expiration
             if (Utils.now() - cachedUrl.time < params.xhrCacheDuration) {
@@ -360,7 +378,7 @@ class Router {
           if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
-              router.xhrCache.push({
+              router.cache.xhr.push({
                 url,
                 time: Utils.now(),
                 content: xhr.responseText,
@@ -379,27 +397,87 @@ class Router {
       });
     });
   }
+  templateLoader(template, options, proceed, release) {
+    const router = this;
+    function compile(t) {
+      let compiledHtml;
+      let context;
+      try {
+        context = options.context || {};
+        if (typeof context === 'function') context = context();
+        else if (typeof context === 'string') {
+          try {
+            context = JSON.parse(context);
+          } catch (err) {
+            throw (err);
+          }
+        }
+        if (typeof t === 'function') {
+          compiledHtml = t(context);
+        } else {
+          compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
+            $app: router.app,
+            $root: router.app.data,
+            $route: options.route,
+            $router: router,
+          }));
+        }
+      } catch (err) {
+        release();
+        throw (err);
+      }
+      proceed(router.getPageEl(compiledHtml), { context });
+    }
+    if (typeof template === 'string') {
+      if (template.indexOf('<') >= 0 || template.indexOf('>') >= 0) {
+        // Plain template
+        compile(template);
+      } else {
+        // Load via XHR
+        if (router.xhr) {
+          router.xhr.abort();
+          router.xhr = false;
+        }
+        router
+          .xhrRequest(template)
+          .then((templateContent) => {
+            compile(templateContent);
+          })
+          .catch(() => {
+            release();
+          });
+      }
+    } else {
+      compile(template);
+    }
+  }
   componentLoader(component, options, proceed, release) {
     const router = this;
-    function render(c) {
-      const parsed = Component.render(c, {
+    function compile(c) {
+      const compiled = Component.compile(c, {
+        $app: router.app,
         $root: router.app.data,
         $route: options.route,
+        $router: router,
       });
-      proceed(router.getPageEl(parsed.html), { pageEvents: parsed.component.on });
+      proceed(router.getPageEl(compiled.html), { pageEvents: compiled.component.on });
     }
     if (typeof component === 'string') {
       // Load via XHR
-      Component
-        .get(component)
+      if (router.xhr) {
+        router.xhr.abort();
+        router.xhr = false;
+      }
+      router
+        .xhrRequest(component)
         .then((loadedComponent) => {
-          render(loadedComponent);
+          compile(Component.parse(loadedComponent));
         })
         .catch(() => {
           release();
         });
     } else {
-      render(component);
+      compile(component);
     }
   }
   getPageData(el, position, route = {}) {
@@ -486,6 +564,13 @@ class Router {
   }
   init() {
     const router = this;
+    const app = router.app;
+
+    // Init Swipeback
+    if (router.view && router.params.swipeBackPage && app.theme === 'ios') {
+      SwipeBack(router);
+    }
+
     let initUrl = router.params.url;
     const documentUrl = document.location.href.split(document.location.origin)[1];
     let historyRestored;
@@ -494,7 +579,6 @@ class Router {
         initUrl = documentUrl;
       }
     } else {
-      // initUrl = documentUrl;
       if (documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
         initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
       } else {
@@ -513,11 +597,12 @@ class Router {
       }
       router.saveHistory();
     }
+    let currentRoute;
     if (router.history.length > 1) {
       // Will load page
-      router.currentRoute = router.findMatchingRoute(router.history[0]);
-      if (!router.currentRoute) {
-        router.currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
+      currentRoute = router.findMatchingRoute(router.history[0]);
+      if (!currentRoute) {
+        currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -526,9 +611,9 @@ class Router {
       }
     } else {
       // Don't load page
-      router.currentRoute = router.findMatchingRoute(initUrl);
+      currentRoute = router.findMatchingRoute(initUrl);
       if (!router.currentRoute) {
-        router.currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
+        currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
@@ -536,9 +621,6 @@ class Router {
         });
       }
     }
-
-    router.url = router.currentRoute.url;
-    router.path = router.currentRoute.path;
 
     router.initialPages = [];
     if (router.params.stackPages) {
@@ -555,9 +637,10 @@ class Router {
       });
     } else {
       // Init current DOM page
+      router.currentRoute = currentRoute;
       router.$pagesEl.find('.page:not(.stacked)').each((index, pageEl) => {
         $(pageEl).addClass('page-current');
-        router.pageCallback('init', pageEl, 'current', router.currentRoute);
+        router.pageCallback('init', pageEl, 'current', { route: router.currentRoute });
       });
       if (historyRestored) {
         router.navigate(initUrl, {
@@ -567,7 +650,7 @@ class Router {
           on: {
             pageAfterIn() {
               if (router.history.length > 2) {
-                router.navigateBack({ preload: true });
+                router.back({ preload: true });
               }
             },
           },
@@ -577,10 +660,26 @@ class Router {
         router.saveHistory();
       }
     }
+    router.emit('routerInit router:init', router);
+  }
+  destroy() {
+    let router = this;
+
+    router.emit('routerDestroy router:destroy', router);
+
+    // Delete props & methods
+    Object.keys(router).forEach((routerProp) => {
+      router[routerProp] = null;
+      delete router[routerProp];
+    });
+
+    router = null;
   }
 }
 
 // Use Events
-Use(Router).use(Events);
+Use(Router)
+  .use(Events)
+  .use(SwipeBack);
 
 export default Router;
