@@ -11,7 +11,7 @@ const History = {
     if (router.params.pushStateAnimate === false) animate = false;
 
     if (currentQueue.action === 'back') {
-      router.navigateBack({ animate, pushState: false });
+      router.back({ animate, pushState: false });
     }
     if (currentQueue.action === 'load') {
       router.navigate(currentQueue.stateUrl, { animate, pushState: false });
@@ -41,7 +41,7 @@ const History = {
       if (router.history.indexOf(stateUrl) >= 0) {
         // Go Back
         if (router.allowPageChange) {
-          router.navigateBack({ animate, pushState: false });
+          router.back({ animate, pushState: false });
         } else {
           History.queue.push({
             action: 'back',

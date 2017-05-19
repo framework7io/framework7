@@ -4,7 +4,6 @@ import History from '../../utils/history';
 
 function backward(el, backwardOptions) {
   const router = this;
-  const app = router.app;
   const view = router.view;
 
   const options = Utils.extend({
@@ -108,8 +107,6 @@ function backward(el, backwardOptions) {
   // Current Route
   router.currentRoute = options.route;
   router.currentPage = $newPage[0];
-  router.url = router.currentRoute.url;
-  router.emit('routeChange route:change', router.currentRoute, router);
 
   // Page init and before init events
   router.pageCallback('init', $newPage, 'previous');
@@ -138,11 +135,11 @@ function backward(el, backwardOptions) {
     }
 
     router.allowPageChange = true;
-    router.emit('routeChanged route:changed', router.currentRoute, router);
+    router.emit('routeChanged route:changed', router.currentRoute, router.previousRoute, router);
 
     // Preload previous page
     if (router.params.preloadPreviousPage) {
-      router.navigateBack(router.history[router.history.length - 2], { preload: true });
+      router.back(router.history[router.history.length - 2], { preload: true });
     }
     if (router.params.pushState) {
       History.clearQueue();
@@ -162,13 +159,13 @@ function backward(el, backwardOptions) {
   }
   return router;
 }
-function back(backParams, backOptions, ignorePageChange) {
+function loadBack(backParams, backOptions, ignorePageChange) {
   const router = this;
 
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = backParams;
   const options = backOptions;
-  const { url, content, template, templateId, el, name, component } = params;
+  const { url, content, el, name, template, templateUrl, component, componentUrl } = params;
   const { ignoreCache } = options;
 
   if (
@@ -185,10 +182,10 @@ function back(backParams, backOptions, ignorePageChange) {
   }
 
   // Component Callbacks
-  function componentProceed(pageEl, newOptions) {
+  function proceed(pageEl, newOptions) {
     return router.backward(pageEl, Utils.extend(options, newOptions));
   }
-  function componentRelease() {
+  function release() {
     router.allowPageChange = true;
     return router;
   }
@@ -196,18 +193,24 @@ function back(backParams, backOptions, ignorePageChange) {
   // Proceed
   if (content) {
     router.backward(router.getPageEl(content), options);
-  } else if (template || templateId) {
+  } else if (template || templateUrl) {
     // Parse template and send page element
+    try {
+      router.templateLoader((template || templateUrl), options, proceed, release);
+    } catch (err) {
+      router.allowPageChange = true;
+      throw err;
+    }
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
     router.backward(router.getPageEl(el), options);
   } else if (name) {
     // Load page by page name in pages container
     router.backward(router.$pagesEl.find(`.page[data-page="${name}"]`).eq(0), options);
-  } else if (component) {
+  } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.componentLoader(component, options, componentProceed, componentRelease);
+      router.componentLoader((component || componentUrl), options, proceed, release);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -228,7 +231,7 @@ function back(backParams, backOptions, ignorePageChange) {
   }
   return router;
 }
-function navigateBack(...args) {
+function back(...args) {
   let navigateUrl;
   let navigateOptions;
   if (typeof args[0] === 'object') {
@@ -237,15 +240,21 @@ function navigateBack(...args) {
     navigateUrl = args[0];
     navigateOptions = args[1] || {};
   }
+
   const router = this;
-  const view = router.view;
-  const $previousPage = view.$pagesEl.find('.page-current').prevAll('.page-previous').eq(0);
+  const app = router.app;
+  if (!router.view) {
+    app.views.main.router.back(navigateUrl, navigateOptions);
+    return router;
+  }
+
+  const $previousPage = router.$pagesEl.find('.page-current').prevAll('.page-previous').eq(0);
   if (!navigateOptions.force && $previousPage.length > 0) {
     if (router.params.pushState && $previousPage[0].f7Page && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url) {
-      router.navigateBack(router.history[router.history.length - 2], Utils.extend(navigateOptions, { force: true }));
+      router.back(router.history[router.history.length - 2], Utils.extend(navigateOptions, { force: true }));
       return router;
     }
-    router.back({ el: $previousPage }, Utils.extend(navigateOptions, {
+    router.loadBack({ el: $previousPage }, Utils.extend(navigateOptions, {
       route: $previousPage[0].f7Page.route,
     }));
     return router;
@@ -274,25 +283,30 @@ function navigateBack(...args) {
   if (!route) {
     return router;
   }
-  const options = Utils.extend(navigateOptions, { route });
+  const options = {};
+  if (route.route.options) {
+    Utils.extend(options, route.route.options, navigateOptions, { route });
+  } else {
+    Utils.extend(options, navigateOptions, { route });
+  }
 
   if (options.force && router.params.stackPages) {
     router.$pagesEl.find('.page-previous.stacked').each((index, pageEl) => {
       if (pageEl.f7Page && pageEl.f7Page.route && pageEl.f7Page.route.url === route.url) {
-        router.back({ el: pageEl }, options);
+        router.loadBack({ el: pageEl }, options);
       }
     });
   }
 
-  ('url content name el component template').split(' ').forEach((pageLoadProp) => {
+  ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
-      router.back({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+      router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }
   });
   // Async
-  function asyncLoad(loadParams, loadOptions) {
+  function asyncProceed(proceedParams, proceedOptions) {
     router.allowPageChange = false;
-    router.back(loadParams, Utils.extend(options, loadOptions), true);
+    router.loadBack(proceedParams, Utils.extend(options, proceedOptions), true);
   }
   function asyncRelease() {
     router.allowPageChange = true;
@@ -300,9 +314,9 @@ function navigateBack(...args) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncLoad, asyncRelease);
+    route.route.async(asyncProceed, asyncRelease);
   }
   // Return Router
   return router;
 }
-export { backward, back, navigateBack };
+export { backward, loadBack, back };
