@@ -141,8 +141,13 @@ class Router {
         $el: view.$el,
         $pagesEl: view.$pagesEl,
         pagesEl: view.$pagesEl[0],
+        $navbarEl: view.$navbarEl,
+        navbarEl: view.navbarEl,
         history: view.history,
         cache: app.cache,
+        dynamicNavbar: app.theme === 'ios' && view.params.router.iosDynamicNavbar,
+        initialPages: [],
+        initialNavbars: [],
       });
     }
     router.useInstanceModules({
@@ -192,6 +197,118 @@ class Router {
     router.back = RouterBack;
 
     return router;
+  }
+  prepareNavbar(newNavbarInner, from) {
+    const router = this;
+    let slidingEls;
+    if (newNavbarInner.hasClass('sliding')) {
+      slidingEls = newNavbarInner.children('.left, .right, .title, .subnavbar');
+    } else {
+      slidingEls = newNavbarInner.find('.sliding');
+    }
+    if (!slidingEls) return;
+    slidingEls.each((index, slidingEl) => {
+      const $slidingEl = $(slidingEl);
+      const slidingOffset = from === 'next' ? slidingEl.f7NavbarRightOffset : slidingEl.f7NavbarLeftOffset;
+      if (router.params.iosAnimateNavbarBackIcon) {
+        if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+          $slidingEl.find('.back .icon').transform(`translate3d(${-slidingOffset}px,0,0)`);
+        }
+      }
+      $slidingEl.transform(`translate3d(${slidingOffset}px,0,0)`);
+    });
+  }
+  animateNavbars(oldNavbarInner, newNavbarInner, from, to) {
+    const router = this;
+    const removeClasses = 'navbar-current navbar-next navbar-previous';
+    router.prepareNavbar(newNavbarInner, from);
+    const clientLeft = oldNavbarInner[0].clientLeft;
+
+    // New Navbar Sliding
+    let newNavbarSlidingEls;
+    if (newNavbarInner.hasClass('sliding')) {
+      newNavbarSlidingEls = newNavbarInner.children('.left, .right, .title, .subnavbar');
+    } else {
+      newNavbarSlidingEls = newNavbarInner.find('.sliding');
+    }
+
+    // Old Navbar Sliding
+    let oldNavbarSlidingEls;
+    if (oldNavbarInner.hasClass('sliding')) {
+      oldNavbarSlidingEls = oldNavbarInner.children('.left, .right, .title, .subnavbar');
+    } else {
+      oldNavbarSlidingEls = oldNavbarInner.find('.sliding');
+    }
+
+    if (from === 'next' && to === 'current') {
+      oldNavbarInner.removeClass(removeClasses).addClass('navbar-stack');
+      newNavbarInner.removeClass(removeClasses).addClass('navbar-next-in');
+
+      if (newNavbarSlidingEls) {
+        newNavbarSlidingEls.each((index, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          $slidingEl.transform('translate3d(0px,0,0)');
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
+            }
+          }
+        });
+      }
+      if (oldNavbarSlidingEls) {
+        oldNavbarSlidingEls.each((oldElIndex, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('title')) {
+              let iconEl;
+              let iconTextEl;
+              newNavbarSlidingEls.each((newElIndex, el) => {
+                const $el = $(el);
+                if ($el.hasClass('left')) {
+                  iconEl = $el.find('.back .icon').eq(0);
+                  iconTextEl = $el.find('.back span').eq(0);
+                }
+              });
+              if (iconEl && iconTextEl) {
+                slidingEl.f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
+              }
+            }
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarLeftOffset}px,0,0)`);
+            }
+          }
+          $slidingEl.transform(`translate3d(${slidingEl.f7NavbarLeftOffset}px,0,0)`);
+        });
+      }
+    }
+    if (from === 'previous' && to === 'current') {
+      oldNavbarInner.removeClass(removeClasses).addClass('navbar-out');
+      newNavbarInner.removeClass(removeClasses).addClass('navbar-previous-in');
+
+      if (newNavbarSlidingEls) {
+        newNavbarSlidingEls.each((index, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          $slidingEl.transform('translate3d(0px,0,0)');
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
+            }
+          }
+        });
+      }
+
+      if (oldNavbarSlidingEls) {
+        oldNavbarSlidingEls.each((index, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarRightOffset}px,0,0)`);
+            }
+          }
+          $slidingEl.transform(`translate3d(${slidingEl.f7NavbarRightOffset}px,0,0)`);
+        });
+      }
+    }
   }
   animatePages(oldPage, newPage, from, to) {
     const removeClasses = 'page-current page-next page-previous';
@@ -397,7 +514,7 @@ class Router {
       });
     });
   }
-  templateLoader(template, options, proceed, release) {
+  templateLoader(template, templateUrl, options, proceed, release) {
     const router = this;
     function compile(t) {
       let compiledHtml;
@@ -428,30 +545,25 @@ class Router {
       }
       proceed(router.getPageEl(compiledHtml), { context });
     }
-    if (typeof template === 'string') {
-      if (template.indexOf('<') >= 0 || template.indexOf('>') >= 0) {
-        // Plain template
-        compile(template);
-      } else {
-        // Load via XHR
-        if (router.xhr) {
-          router.xhr.abort();
-          router.xhr = false;
-        }
-        router
-          .xhrRequest(template)
-          .then((templateContent) => {
-            compile(templateContent);
-          })
-          .catch(() => {
-            release();
-          });
+    if (templateUrl) {
+      // Load via XHR
+      if (router.xhr) {
+        router.xhr.abort();
+        router.xhr = false;
       }
+      router
+        .xhrRequest(templateUrl)
+        .then((templateContent) => {
+          compile(templateContent);
+        })
+        .catch(() => {
+          release();
+        });
     } else {
       compile(template);
     }
   }
-  componentLoader(component, options, proceed, release) {
+  componentLoader(component, componentUrl, options, proceed, release) {
     const router = this;
     function compile(c) {
       const compiled = Component.compile(c, {
@@ -462,14 +574,14 @@ class Router {
       });
       proceed(router.getPageEl(compiled.html), { pageEvents: compiled.component.on });
     }
-    if (typeof component === 'string') {
+    if (componentUrl) {
       // Load via XHR
       if (router.xhr) {
         router.xhr.abort();
         router.xhr = false;
       }
       router
-        .xhrRequest(component)
+        .xhrRequest(componentUrl)
         .then((loadedComponent) => {
           compile(Component.parse(loadedComponent));
         })
@@ -480,27 +592,30 @@ class Router {
       compile(component);
     }
   }
-  getPageData(el, position, route = {}) {
+  getPageData(pageEl, navbarEl, position, route = {}) {
     const router = this;
-    const $el = $(el);
-    const currentPage = $el[0].f7Page || {};
+    const $pageEl = $(pageEl);
+    const $navbarEl = $(navbarEl);
+    const currentPage = $pageEl[0].f7Page || {};
     const page = {
       app: router.app,
       view: router.view,
-      $el,
-      el: $el[0],
-      name: $el.attr('data-page'),
+      $pageEl,
+      pageEl: $pageEl[0],
+      $navbarEl,
+      navbarEl: $navbarEl[0],
+      name: $pageEl.attr('data-page'),
       position,
       route: currentPage.route ? currentPage.route : route,
     };
-    $el[0].f7Page = page;
+    $pageEl[0].f7Page = page;
     return page;
   }
   // Callbacks
-  pageCallback(callback, el, position, options = {}) {
-    if (!el) return;
+  pageCallback(callback, pageEl, navbarEl, position, options = {}) {
+    if (!pageEl) return;
     const router = this;
-    const $el = $(el);
+    const $pageEl = $(pageEl);
     const { route, on = {} } = options;
 
     const camelName = `page${callback[0].toUpperCase() + callback.slice(1, callback.length)}`;
@@ -508,16 +623,16 @@ class Router {
     const callbackName = `${camelName} ${colonName}`;
 
     let page = {};
-    if (callback === 'beforeRemove' && $el[0].f7Page) {
-      page = Utils.extend($el[0].f7Page, { position });
+    if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
+      page = Utils.extend($pageEl[0].f7Page, { position });
     } else {
-      page = router.getPageData(el, position, route);
+      page = router.getPageData(pageEl, navbarEl, position, route);
     }
 
     function attachEvents() {
       if (options.pageEvents) {
         Object.keys(options.pageEvents).forEach((eventName) => {
-          $el.on(eventName, () => {
+          $pageEl.on(eventName, () => {
             options.pageEvents[eventName](page);
           });
         });
@@ -525,21 +640,21 @@ class Router {
     }
 
     if (callback === 'init') {
-      if ($el[0].f7PageInitialized) {
+      if ($pageEl[0].f7PageInitialized) {
         if (on.pageReinit) on.pageReinit(page);
         router.emit('pageReinit page:reinit', page);
-        $el.trigger('pageReinit page:reinit', page);
+        $pageEl.trigger('pageReinit page:reinit', page);
         return;
       }
       attachEvents();
-      $el[0].f7PageInitialized = true;
+      $pageEl[0].f7PageInitialized = true;
     }
     if (on[camelName]) on[camelName](page);
     router.emit(callbackName, page);
-    $el.trigger(callbackName, page);
+    $pageEl.trigger(callbackName, page);
 
     if (callback === 'beforeRemove') {
-      $el[0].f7Page = null;
+      $pageEl[0].f7Page = null;
       page = null;
     }
   }
@@ -622,10 +737,13 @@ class Router {
       }
     }
 
-    router.initialPages = [];
     if (router.params.stackPages) {
-      router.$pagesEl.find('.page').each((index, page) => {
-        router.initialPages.push(page);
+      router.$pagesEl.find('.page').each((index, pageEl) => {
+        const $pageEl = $(pageEl);
+        router.initialPages.push($pageEl[0]);
+        if (router.dynamicNavbar && $pageEl.children('.navbar').length > 0) {
+          router.initialNavbars.push($pageEl.children('.navbar').find('.navbar-inner')[0]);
+        }
       });
     }
 
@@ -639,8 +757,17 @@ class Router {
       // Init current DOM page
       router.currentRoute = currentRoute;
       router.$pagesEl.find('.page:not(.stacked)').each((index, pageEl) => {
-        $(pageEl).addClass('page-current');
-        router.pageCallback('init', pageEl, 'current', { route: router.currentRoute });
+        const $pageEl = $(pageEl);
+        let $navbarInnerEl;
+        $pageEl.addClass('page-current');
+        if (router.dynamicNavbar) {
+          $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
+          if ($navbarInnerEl.length > 0) {
+            router.$navbarEl.append($navbarInnerEl);
+            $pageEl.children('.navbar').remove();
+          }
+        }
+        router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', { route: router.currentRoute });
       });
       if (historyRestored) {
         router.navigate(initUrl, {

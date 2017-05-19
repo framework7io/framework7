@@ -40,6 +40,16 @@ class View {
       selector = ($el.attr('id') ? `#${$el.attr('id')}` : '') + ($el.attr('class') ? `.${$el.attr('class').replace(/ /g, '.').replace('.active', '')}` : '');
     }
 
+    // DynamicNavbar
+    let $navbarEl;
+    if (app.theme === 'ios' && view.params.router.iosDynamicNavbar) {
+      $navbarEl = $el.children('.navbar').eq(0);
+      if ($navbarEl.length === 0) {
+        $navbarEl = $('<div class="navbar"></div>');
+        $el.prepend($navbarEl);
+      }
+    }
+
     // View Props
     Utils.extend(view, {
       app,
@@ -49,6 +59,8 @@ class View {
       main: view.params.main || $el.hasClass(app.params.view.viewMainClass),
       $pagesEl: $el.find('.pages'),
       pagesEl: $el.find('.pages')[0],
+      $navbarEl,
+      navbarEl: $navbarEl ? $navbarEl[0] : undefined,
       selector,
       history: [],
     });

@@ -4,7 +4,6 @@ export default {
   name: 'router',
   params: {
     router: {
-      dynamicNavbar: false,
       stackPages: false,
       xhrCache: true,
       xhrCacheIgnore: [],
@@ -31,6 +30,8 @@ export default {
       pushStateOnLoad: true,
       // Animate Pages
       animatePages: true,
+      // iOS Dynamic Navbar
+      iosDynamicNavbar: true,
       // Animate iOS Navbar Back Icon
       iosAnimateNavbarBackIcon: true,
       // MD Theme delay

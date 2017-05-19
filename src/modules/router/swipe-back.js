@@ -1,10 +1,11 @@
 import $ from 'dom7';
 import History from '../../utils/history';
 import Support from '../../utils/support';
+import Device from '../../utils/device';
 
 function SwipeBack(r) {
   const router = r;
-  const { $el, app } = router;
+  const { $el, $navbarEl, app } = router;
   let isTouched = false;
   let isMoved = false;
   const touchesStart = {};
@@ -33,7 +34,7 @@ function SwipeBack(r) {
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     touchStartTime = (new Date()).getTime();
-    dynamicNavbar = router.params.dynamicNavbar && $el.find('.navbar-inner').length > 1;
+    dynamicNavbar = app.theme === 'ios' && router.params.iosDynamicNavbar;
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
@@ -48,7 +49,6 @@ function SwipeBack(r) {
     }
     if (!isMoved) {
       // Calc values during first move fired
-
       let cancel = false;
       const target = $(e.target);
 
@@ -92,11 +92,11 @@ function SwipeBack(r) {
       }
 
       if (dynamicNavbar) {
-        currentNavbar = $el.find('.navbar-current:not(.stacked)');
-        previousNavbar = $el.find('.navbar-previous:not(.stacked)');
-        currentNavElements = currentNavbar.find('.left, .center, .right, .subnavbar, .fading');
-        previousNavElements = previousNavbar.find('.left, .center, .right, .subnavbar, .fading');
-        if (app.params.animateNavBackIcon) {
+        currentNavbar = $navbarEl.find('.navbar-current:not(.stacked)');
+        previousNavbar = $navbarEl.find('.navbar-previous:not(.stacked)');
+        currentNavElements = currentNavbar.find('.left, .title, .right, .subnavbar, .fading');
+        previousNavElements = previousNavbar.find('.left, .title, .right, .subnavbar, .fading');
+        if (router.params.iosAnimateNavbarBackIcon) {
           activeNavBackIcon = currentNavbar.find('.left.sliding .back .icon');
           previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
         }
@@ -122,10 +122,10 @@ function SwipeBack(r) {
     // Swipe Back Callback
     const callbackData = {
       percentage,
-      currentPage: currentPage[0],
-      previousPage: previousPage[0],
-      currentNavbar: currentNavbar[0],
-      previousNavbar: previousNavbar[0],
+      currentPageEl: currentPage[0],
+      previousPageEl: previousPage[0],
+      currentNavbarEl: currentNavbar[0],
+      previousNavbarEl: previousNavbar[0],
     };
     router.emit('swipeBackMove swipeback:move', callbackData);
     $el.trigger('swipeBackMove swipeback:move', callbackData);
@@ -133,7 +133,7 @@ function SwipeBack(r) {
     // Transform pages
     let currentPageTranslate = touchesDiff * inverter;
     let previousPageTranslate = ((touchesDiff / 5) - (viewContainerWidth / 5)) * inverter;
-    if (app.device.pixelRatio === 1) {
+    if (Device.pixelRatio === 1) {
       currentPageTranslate = Math.round(currentPageTranslate);
       previousPageTranslate = Math.round(previousPageTranslate);
     }
@@ -148,10 +148,10 @@ function SwipeBack(r) {
     if (dynamicNavbar) {
       currentNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
-        if (!$navEl.is('.subnavbar.sliding')) $el[0].style.opacity = (1 - (percentage * 1.3));
+        if (!$navEl.is('.subnavbar.sliding')) $navEl[0].style.opacity = (1 - (percentage * 1.3));
         if ($navEl[0].className.indexOf('sliding') >= 0) {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
-          if (app.device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
+          if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
           $navEl.transform(`translate3d(${activeNavTranslate}px,0,0)`);
           if (router.params.animateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && activeNavBackIcon.length > 0) {
@@ -165,7 +165,7 @@ function SwipeBack(r) {
         if (!$navEl.is('.subnavbar.sliding')) $navEl[0].style.opacity = (percentage * 1.3) - 0.3;
         if ($navEl[0].className.indexOf('sliding') >= 0) {
           let previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
-          if (app.device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
+          if (Device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
           $navEl.transform(`translate3d(${previousNavTranslate}px,0,0)`);
           if (router.params.animateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && previousNavBackIcon.length > 0) {
@@ -222,10 +222,10 @@ function SwipeBack(r) {
           sliding.transform(`translate3d(${translate}px,0,0)`);
           if (router.params.animateNavbarBackIcon) {
             if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
-              activeNavBackIcon.addClass('page-transitioning').transform(`translate3d(${-translate}px,0,0)`);
+              activeNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${-translate}px,0,0)`);
             }
           }
-        }).addClass('page-transitioning');
+        }).addClass('navbar-transitioning');
 
       previousNavElements.transform('').css({ opacity: '' }).each(() => {
         const translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
@@ -233,10 +233,10 @@ function SwipeBack(r) {
         sliding.transform(`translate3d(${translate}px,0,0)`);
         if (router.params.animateNavbarBackIcon) {
           if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
-            previousNavBackIcon.addClass('page-transitioning').transform(`translate3d(${-translate}px,0,0)`);
+            previousNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${-translate}px,0,0)`);
           }
         }
-      }).addClass('page-transitioning');
+      }).addClass('navbar-transitioning');
     }
     allowViewTouchMove = false;
     router.allowPageChange = false;
@@ -255,8 +255,8 @@ function SwipeBack(r) {
       router.currentPage = previousPage[0];
 
       // Page before animation callback
-      router.pageCallback('beforeOut', currentPage[0], 'current', { route: currentPage[0].f7Page.route });
-      router.pageCallback('beforeIn', previousPage[0], 'previous', { route: previousPage[0].f7Page.route });
+      router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', { route: currentPage[0].f7Page.route });
+      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', { route: previousPage[0].f7Page.route });
 
       router.emit('swipeBackBeforeChange swipeback:beforechange', callbackData);
       $el.trigger('swipeBackBeforeChange swipeback:beforechange', callbackData);
@@ -268,10 +268,10 @@ function SwipeBack(r) {
     currentPage.transitionEnd(() => {
       $([currentPage[0], previousPage[0]]).removeClass('page-transitioning');
       if (dynamicNavbar) {
-        currentNavElements.removeClass('page-transitioning').css({ opacity: '' });
-        previousNavElements.removeClass('page-transitioning').css({ opacity: '' });
-        if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('page-transitioning');
-        if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('page-transitioning');
+        currentNavElements.removeClass('navbar-transitioning').css({ opacity: '' });
+        previousNavElements.removeClass('navbar-transitioning').css({ opacity: '' });
+        if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('navbar-transitioning');
+        if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('navbar-transitioning');
       }
       allowViewTouchMove = true;
       router.allowPageChange = true;
@@ -289,15 +289,21 @@ function SwipeBack(r) {
         }
 
         // Page after animation callback
-        router.pageCallback('afterOut', currentPage[0], 'current', { route: currentPage[0].f7Page.route });
-        router.pageCallback('afterIn', previousPage[0], 'previous', { route: previousPage[0].f7Page.route });
+        router.pageCallback('afterOut', currentPage, currentNavbar, 'current', { route: currentPage[0].f7Page.route });
+        router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', { route: previousPage[0].f7Page.route });
 
         // Remove Old Page
         if (router.params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
           currentPage.addClass('stacked');
+          if (dynamicNavbar) {
+            currentNavbar.addClass('stacked');
+          }
         } else {
-          router.pageCallback('beforeRemove', currentPage, 'next');
+          router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next');
           router.remove(currentPage);
+          if (dynamicNavbar) {
+            router.remove(currentNavbar);
+          }
         }
 
         router.emit('swipeBackAfterChange swipeback:afterchange', callbackData);
