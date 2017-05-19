@@ -14,7 +14,11 @@
           <div class="page" data-page="home">
             <div class="navbar">
               <div class="navbar-inner">
+                <div class="left">Left</div>
                 <div class="center">Hello!</div>
+                <div class="right">
+                  <a href="#" class="link">Link</a>
+                </div>
               </div>
             </div>
             <div class="page-content">
@@ -32,6 +36,9 @@
               <ul>
                 <li>
                   <a href="/component/">Component</a>
+                </li>
+                <li>
+                  <a href="/template/" data-context='[0,1,2]'>Template</a>
                 </li>
               </ul>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor fugit, accusantium sed expedita quia, esse illo nulla praesentium tenetur quibusdam itaque, ipsum dolore vero consectetur illum, corporis natus velit dignissimos!</p>
@@ -64,6 +71,9 @@
         };
       },
       on: {
+        routeChanged(to, from) {
+          console.log(to, from)
+        },
         // pageBeforeRemove(page) {
         //   console.log('pageBeforeRemove', page.name);
         // },
@@ -131,7 +141,16 @@
         },
         {
           path: '/component/',
-          component: 'component.html',
+          componentUrl: 'component.html',
+        },
+        {
+          path: '/template/',
+          templateUrl: 'template.html',
+          options: {
+            context: {
+              title: 'Template test',
+            },
+          },
         },
         {
           path: '/tabs/',
@@ -188,10 +207,10 @@
         // Async
         {
           path: '/async-page/',
-          async(load, release) {
+          async(proceed, release) {
             setTimeout(() => {
-              load({
-                url: 'index.html'
+              proceed({
+                url: 'about.html',
               });
             }, 3000);
           },
@@ -205,18 +224,11 @@
         },
       ],
     });
-    const view = app2.addView('.view', {
-
+    const view = app2.addView('.view-main', {
       router: {
         animateNavBackIcon: 'yes',
         pushState: true,
       },
-      routes: [
-        {
-          path: '/test3/',
-          url: 'test3.html',
-        },
-      ],
     });
   </script>
 </body>
