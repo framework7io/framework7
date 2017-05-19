@@ -1,9 +1,10 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
 import History from '../../utils/history';
 import Support from '../../utils/support';
 
-function SwipeBack() {
+function SwipeBack(r) {
+  const router = r;
+  const { $el, app } = router;
   let isTouched = false;
   let isMoved = false;
   const touchesStart = {};
@@ -23,19 +24,16 @@ function SwipeBack() {
   let dynamicNavbar;
   let pageShadow;
   let pageOpacity;
-  let $el;
-  let view;
-  let app;
 
   function handleTouchStart(e) {
-    if (!allowViewTouchMove || !view.params.swipeBackPage || isTouched || app.swipeoutOpenedEl || !view.router.allowPageChange) return;
+    if (!allowViewTouchMove || !router.params.swipeBackPage || isTouched || app.swipeoutOpenedEl || !router.allowPageChange) return;
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     touchStartTime = (new Date()).getTime();
-    dynamicNavbar = view.router.params.dynamicNavbar && $el.find('.navbar-inner').length > 1;
+    dynamicNavbar = router.params.dynamicNavbar && $el.find('.navbar-inner').length > 1;
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
@@ -64,12 +62,12 @@ function SwipeBack() {
       if (currentPage.hasClass('no-swipeback')) cancel = true;
       previousPage = $el.find('.page-previous:not(.stacked)');
 
-      let notFromBorder = touchesStart.x - $el.offset().left > view.params.swipeBackPageActiveArea;
+      let notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
       viewContainerWidth = $el.width();
       if (app.rtl) {
-        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - view.params.swipeBackPageActiveArea);
+        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.swipeBackPageActiveArea);
       } else {
-        notFromBorder = touchesStart.x - $el.offset().left > view.params.swipeBackPageActiveArea;
+        notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
       }
       if (notFromBorder) cancel = true;
       if (previousPage.length === 0 || currentPage.length === 0) cancel = true;
@@ -78,14 +76,14 @@ function SwipeBack() {
         return;
       }
 
-      if (view.params.swipeBackPageAnimateShadow) {
+      if (router.params.swipeBackPageAnimateShadow) {
         pageShadow = currentPage.find('.swipeback-page-shadow');
         if (pageShadow.length === 0) {
           pageShadow = $('<div class="swipeback-page-shadow"></div>');
           currentPage.append(pageShadow);
         }
       }
-      if (view.params.swipeBackPageAnimateOpacity) {
+      if (router.params.swipeBackPageAnimateOpacity) {
         pageOpacity = previousPage.find('.swipeback-page-opacity');
         if (pageOpacity.length === 0) {
           pageOpacity = $('<div class="swipeback-page-opacity"></div>');
@@ -117,7 +115,7 @@ function SwipeBack() {
     const inverter = app.rtl ? -1 : 1;
 
     // Touches diff
-    touchesDiff = (pageX - touchesStart.x - view.params.swipeBackPageThreshold) * inverter;
+    touchesDiff = (pageX - touchesStart.x - router.params.swipeBackPageThreshold) * inverter;
     if (touchesDiff < 0) touchesDiff = 0;
     const percentage = touchesDiff / viewContainerWidth;
 
@@ -129,7 +127,7 @@ function SwipeBack() {
       currentNavbar: currentNavbar[0],
       previousNavbar: previousNavbar[0],
     };
-    view.emit('swipeBackMove swipeback:move', callbackData);
+    router.emit('swipeBackMove swipeback:move', callbackData);
     $el.trigger('swipeBackMove swipeback:move', callbackData);
 
     // Transform pages
@@ -141,10 +139,10 @@ function SwipeBack() {
     }
 
     currentPage.transform(`translate3d(${currentPageTranslate}px,0,0)`);
-    if (view.params.swipeBackPageAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
+    if (router.params.swipeBackPageAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
 
     previousPage.transform(`translate3d(${previousPageTranslate}px,0,0)`);
-    if (view.params.swipeBackPageAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
+    if (router.params.swipeBackPageAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
 
     // Dynamic Navbars Animation
     if (dynamicNavbar) {
@@ -155,7 +153,7 @@ function SwipeBack() {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
           if (app.device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
           $navEl.transform(`translate3d(${activeNavTranslate}px,0,0)`);
-          if (view.router.params.animateNavbarBackIcon) {
+          if (router.params.animateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && activeNavBackIcon.length > 0) {
               activeNavBackIcon.transform(`translate3d(${-activeNavTranslate}px,0,0)`);
             }
@@ -169,7 +167,7 @@ function SwipeBack() {
           let previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
           if (app.device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
           $navEl.transform(`translate3d(${previousNavTranslate}px,0,0)`);
-          if (view.router.params.animateNavbarBackIcon) {
+          if (router.params.animateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && previousNavBackIcon.length > 0) {
               previousNavBackIcon.transform(`translate3d(${-previousNavTranslate}px,0,0)`);
             }
@@ -179,7 +177,6 @@ function SwipeBack() {
     }
   }
   function handleTouchEnd() {
-    const router = view.router;
     if (!isTouched || !isMoved) {
       isTouched = false;
       isMoved = false;
@@ -242,7 +239,7 @@ function SwipeBack() {
       }).addClass('page-transitioning');
     }
     allowViewTouchMove = false;
-    view.allowPageChange = false;
+    router.allowPageChange = false;
 
     // Swipe Back Callback
     const callbackData = {
@@ -255,17 +252,16 @@ function SwipeBack() {
     if (pageChanged) {
       // Update Route
       router.currentRoute = previousPage[0].f7Page.route;
-      router.url = router.currentRoute.url;
-      router.emit('routeChange route:change', router.currentRoute, router);
+      router.currentPage = previousPage[0];
 
       // Page before animation callback
-      router.pageCallback('beforeOut', currentPage[0], 'current', currentPage[0].f7Page.route);
-      router.pageCallback('beforeIn', previousPage[0], 'previous', previousPage[0].f7Page.route);
+      router.pageCallback('beforeOut', currentPage[0], 'current', { route: currentPage[0].f7Page.route });
+      router.pageCallback('beforeIn', previousPage[0], 'previous', { route: previousPage[0].f7Page.route });
 
-      view.emit('swipeBackBeforeChange swipeback:beforechange', callbackData);
+      router.emit('swipeBackBeforeChange swipeback:beforechange', callbackData);
       $el.trigger('swipeBackBeforeChange swipeback:beforechange', callbackData);
     } else {
-      view.emit('swipeBackBeforeReset swipeback:beforereset', callbackData);
+      router.emit('swipeBackBeforeReset swipeback:beforereset', callbackData);
       $el.trigger('swipeBackBeforeReset swipeback:beforereset', callbackData);
     }
 
@@ -293,8 +289,8 @@ function SwipeBack() {
         }
 
         // Page after animation callback
-        router.pageCallback('afterOut', currentPage[0], 'current', currentPage[0].f7Page.route);
-        router.pageCallback('afterIn', previousPage[0], 'previous', previousPage[0].f7Page.route);
+        router.pageCallback('afterOut', currentPage[0], 'current', { route: currentPage[0].f7Page.route });
+        router.pageCallback('afterIn', previousPage[0], 'previous', { route: previousPage[0].f7Page.route });
 
         // Remove Old Page
         if (router.params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
@@ -304,16 +300,16 @@ function SwipeBack() {
           router.remove(currentPage);
         }
 
-        view.emit('swipeBackAfterChange swipeback:afterchange', callbackData);
+        router.emit('swipeBackAfterChange swipeback:afterchange', callbackData);
         $el.trigger('swipeBackAfterChange swipeback:afterchange', callbackData);
 
-        router.emit('routeChanged route:changed', router.currentRoute, router);
+        router.emit('routeChanged route:changed', router.currentRoute, router.previousRoute, router);
 
         if (router.params.preloadPreviousPage) {
-          router.navigateBack(router.history[router.history.length - 2], { preload: true });
+          router.back(router.history[router.history.length - 2], { preload: true });
         }
       } else {
-        view.emit('swipeBackAfterReset swipeback:afterreset', callbackData);
+        router.emit('swipeBackAfterReset swipeback:afterreset', callbackData);
         $el.trigger('swipeBackAfterReset swipeback:afterreset', callbackData);
       }
       if (pageShadow && pageShadow.length > 0) pageShadow.remove();
@@ -321,10 +317,7 @@ function SwipeBack() {
     });
   }
 
-  function attachEvents(v) {
-    view = v;
-    $el = v.$el;
-    app = v.app;
+  function attachEvents() {
     const passiveListener = (app.touchEvents.start === 'touchstart' && Support.passiveListener) ? { passive: true, capture: false } : false;
     const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
@@ -339,11 +332,9 @@ function SwipeBack() {
     $el.off(app.touchEvents.end, handleTouchEnd, passiveListener);
   }
 
-  return {
-    init: attachEvents,
-    destroy: detachEvents,
-  };
+  attachEvents();
+
+  router.on('routerDestroy', detachEvents);
 }
 
-
-export default SwipeBack();
+export default SwipeBack;

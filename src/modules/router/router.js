@@ -16,8 +16,12 @@ export default {
       allowDuplicateUrls: false,
       reloadPages: false,
       removeWithTimeout: false,
-      // MD Theme delay
-      materialPageLoadDelay: 0,
+      // Swipe Back
+      swipeBackPage: true,
+      swipeBackPageAnimateShadow: true,
+      swipeBackPageAnimateOpacity: true,
+      swipeBackPageActiveArea: 30,
+      swipeBackPageThreshold: 0,
       // Push State
       pushState: false,
       pushStateRoot: undefined,
@@ -27,24 +31,31 @@ export default {
       pushStateOnLoad: true,
       // Animate Pages
       animatePages: true,
-      // Animate Nav Back Icon
-      animateNavbarBackIcon: true,
+      // Animate iOS Navbar Back Icon
+      iosAnimateNavbarBackIcon: true,
+      // MD Theme delay
+      materialPageLoadDelay: 0,
     },
   },
   static: {
     Router,
   },
   instance: {
-    xhrCache: [],
+    cache: {
+      xhr: [],
+      templates: [],
+      components: [],
+    },
   },
   create(params) {
     const instance = this;
-    if (params.app) {
+    const { app, view } = params;
+    if (view) {
       // View Router
-      instance.router = new Router(params.app, instance);
+      instance.router = new Router(app, view);
     } else {
       // App Router
-      instance.router = new Router(instance);
+      instance.router = new Router(app);
     }
   },
 };

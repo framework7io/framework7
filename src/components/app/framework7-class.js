@@ -22,6 +22,9 @@ class Framework7 {
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
 
+    // Routes
+    app.routes = app.params.routes;
+
     // Root
     app.root = $(app.params.root);
     app.root[0].f7 = app;
@@ -40,7 +43,11 @@ class Framework7 {
     }
 
     // Install Modules
-    app.useInstanceModules();
+    app.useInstanceModules({
+      router: {
+        app,
+      },
+    });
 
     // Init
     if (app.params.init) {

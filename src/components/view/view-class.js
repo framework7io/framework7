@@ -3,7 +3,7 @@ import Utils from '../../utils/utils';
 import Use from '../../utils/use';
 import Events from '../../modules/events/events';
 import Router from '../../modules/router/router';
-import SwipeBack from './swipe-back';
+
 
 class View {
   constructor(appInstance, el, viewParams = {}) {
@@ -15,6 +15,7 @@ class View {
       name: undefined,
       main: false,
       routes: [],
+      routesAdd: [],
       linksView: undefined,
     };
 
@@ -23,7 +24,13 @@ class View {
 
     // Router Params
     view.params.router = Utils.extend({}, app.params.router, view.params.router);
-    view.params.routes = [].concat(app.params.routes, view.params.routes);
+
+    // Routes
+    if (view.params.routes.length > 0) {
+      view.routes = view.params.routes;
+    } else {
+      view.routes = [].concat(app.routes, view.params.routesAdd);
+    }
 
     // Selector
     let selector;
@@ -44,11 +51,6 @@ class View {
       pagesEl: $el.find('.pages')[0],
       selector,
       history: [],
-      cache: {
-        content: {},
-        context: {},
-        pages: {},
-      },
     });
 
     $el[0].f7View = view;
@@ -60,6 +62,7 @@ class View {
       },
       router: {
         app,
+        view,
       },
     });
 
@@ -84,15 +87,6 @@ class View {
 
     return view;
   }
-  // handleTouchStart(e) {
-  //   const view = this;
-  // }
-  // handleTouchMove(e) {
-  //   const view = this;
-  // }
-  // handleTouchEnd(e) {
-  //   const view = this;
-  // }
   destroy() {
     let view = this;
     const app = view.app;
@@ -113,24 +107,21 @@ class View {
 
     app.views.splice(app.views.indexOf(view), 1);
 
+    // Destroy Router
+    view.router.destroy();
+
+    view.emit('viewDestroy view:destroy', view);
+
     // Delete props & methods
     Object.keys(view).forEach((viewProp) => {
       view[viewProp] = null;
       delete view[viewProp];
     });
-    // Disable swipe back
-    if (view.params.swipeBackPage && app.theme === 'ios') {
-      SwipeBack.destroy();
-    }
 
     view = null;
   }
   init() {
     const view = this;
-    const app = view.app;
-    if (view.params.swipeBackPage && app.theme === 'ios') {
-      SwipeBack.init(view);
-    }
     view.router.init();
   }
 }

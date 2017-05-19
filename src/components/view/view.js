@@ -7,12 +7,6 @@ export default {
       viewClass: 'view',
       viewMainClass: 'view-main',
       viewsClass: 'views',
-      // Swipe Back
-      swipeBackPage: true,
-      swipeBackPageAnimateShadow: true,
-      swipeBackPageAnimateOpacity: true,
-      swipeBackPageActiveArea: 30,
-      swipeBackPageThreshold: 0,
     },
   },
   static: {
