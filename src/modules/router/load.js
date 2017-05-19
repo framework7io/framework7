@@ -4,13 +4,13 @@ import History from '../../utils/history';
 
 function forward(el, forwardOptions = {}) {
   const router = this;
-  const app = router.app;
   const view = router.view;
 
   const options = Utils.extend({
     animate: router.params.animatePages,
     pushState: true,
     history: true,
+    reloadCurrent: router.params.reloadPages,
     on: {},
   }, forwardOptions);
 
@@ -117,8 +117,6 @@ function forward(el, forwardOptions = {}) {
   // Current Route
   router.currentRoute = options.route;
   router.currentPage = $newPage[0];
-  router.url = router.currentRoute.url;
-  router.emit('routeChange route:change', router.currentRoute, router);
 
   // Page init and before init events
   router.pageCallback('init', $newPage, newPagePosition, options);
@@ -151,7 +149,7 @@ function forward(el, forwardOptions = {}) {
         router.remove($oldPage);
       }
     }
-    router.emit('routeChanged route:changed', router.currentRoute, router);
+    router.emit('routeChanged route:changed', router.currentRoute, router.previousRoute, router);
 
     if (router.params.pushState) {
       History.clearQueue();
@@ -159,7 +157,7 @@ function forward(el, forwardOptions = {}) {
   }
 
   if (options.animate) {
-    if (app.theme === 'md' && router.params.materialPageLoadDelay) {
+    if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
       setTimeout(() => {
         router.animatePages($oldPage, $newPage, 'next', 'current');
       }, router.params.materialPageLoadDelay);
@@ -181,7 +179,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = loadParams;
   const options = loadOptions;
-  const { url, content, template, templateId, el, name, component } = params;
+  const { url, content, el, name, template, templateUrl, component, componentUrl } = params;
   const { ignoreCache } = options;
 
   if (
@@ -198,10 +196,10 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
 
   // Component Callbacks
-  function componentProceed(pageEl, newOptions) {
+  function proceed(pageEl, newOptions) {
     return router.forward(pageEl, Utils.extend(options, newOptions));
   }
-  function componentRelease() {
+  function release() {
     router.allowPageChange = true;
     return router;
   }
@@ -209,18 +207,24 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   // Proceed
   if (content) {
     router.forward(router.getPageEl(content), options);
-  } else if (template || templateId) {
+  } else if (template || templateUrl) {
     // Parse template and send page element
+    try {
+      router.templateLoader((template || templateUrl), options, proceed, release);
+    } catch (err) {
+      router.allowPageChange = true;
+      throw err;
+    }
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
     router.forward(router.getPageEl(el), options);
   } else if (name) {
     // Load page by page name in pages container
     router.forward(router.$pagesEl.find(`.page[data-page="${name}"]`).eq(0), options);
-  } else if (component) {
+  } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.componentLoader(component, options, componentProceed, componentRelease);
+      router.componentLoader((component || componentUrl), options, proceed, release);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -243,47 +247,37 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
 }
 function navigate(url, navigateOptions = {}) {
   const router = this;
+  const app = router.app;
+  if (!router.view) {
+    app.views.main.router.navigate(url, navigateOptions);
+    return router;
+  }
+
   let navigateUrl = url;
   if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
     navigateUrl = ((router.path || '/') + navigateUrl).replace('//', '/');
   }
   const route = router.findMatchingRoute(navigateUrl);
+
   if (!route) {
     return router;
-    // if (navigateUrl.indexOf('#') === 0) {
-    //   // Load by name
-    //   route = {
-    //     url: navigateUrl,
-    //     path: navigateUrl,
-    //     route: {
-    //       path: navigateUrl,
-    //       name: navigateUrl.replace('#', ''),
-    //     },
-    //   };
-    // } else {
-    //   // Load by URL
-    //   route = {
-    //     url: navigateUrl,
-    //     path: navigateUrl.split('?')[0],
-    //     query: Utils.parseUrlQuery(navigateUrl),
-    //     route: {
-    //       path: navigateUrl.split('?')[0],
-    //       url: navigateUrl,
-    //     },
-    //   };
-    // }
   }
-  const options = Utils.extend(navigateOptions, { route });
+  const options = {};
+  if (route.route.options) {
+    Utils.extend(options, route.route.options, navigateOptions, { route });
+  } else {
+    Utils.extend(options, navigateOptions, { route });
+  }
 
-  ('url content name el component template').split(' ').forEach((pageLoadProp) => {
+  ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }
   });
   // Async
-  function asyncLoad(loadParams, loadOptions) {
+  function asyncProceed(prceedParams, proceedOptions) {
     router.allowPageChange = false;
-    router.load(loadParams, Utils.extend(options, loadOptions), true);
+    router.load(prceedParams, Utils.extend(options, proceedOptions), true);
   }
   function asyncRelease() {
     router.allowPageChange = true;
@@ -291,7 +285,7 @@ function navigate(url, navigateOptions = {}) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncLoad, asyncRelease);
+    route.route.async(asyncProceed, asyncRelease);
   }
   // Retur Router
   return router;
