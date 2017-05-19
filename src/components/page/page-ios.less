@@ -6,7 +6,7 @@
     transform: translate3d(0%,0,0);
   }
 }
-@keyframes ios-page-next-in-opacity {
+@keyframes ios-page-next-in-shadow {
   from {
     opacity: 0;
   }
@@ -127,7 +127,7 @@ html.ios {
     &:before {
       // Fake opacity
       .fake-shadow();
-      animation: ios-page-next-in-opacity @duration forwards;
+      animation: ios-page-next-in-shadow @duration forwards;
     }
   }
   .page-previous-in {
