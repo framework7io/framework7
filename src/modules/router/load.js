@@ -18,6 +18,7 @@ function forward(el, forwardOptions = {}) {
 
   const $pagesEl = router.$pagesEl;
   const $newPage = $(el);
+  const reload = options.reloadPrevious || options.reloadCurrent || options.reloadAll;
   let $oldPage;
 
   let $navbarEl;
@@ -100,7 +101,7 @@ function forward(el, forwardOptions = {}) {
           }
         } else {
           // Page remove event
-          router.pageCallback('beforeRemove', $pagesInView[i], $navbarsInView[i], 'previous', options);
+          router.pageCallback('beforeRemove', $pagesInView[i], $navbarsInView[i], 'previous', undefined, options);
           router.remove($pagesInView[i]);
           if (dynamicNavbar) {
             router.remove($navbarsInView[i]);
@@ -154,7 +155,7 @@ function forward(el, forwardOptions = {}) {
     }
   }
   if (needsAttachedCallback) {
-    router.pageCallback('attached', $newPage, $newNavbarInner, newPagePosition, options);
+    router.pageCallback('attached', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
   }
 
   // Remove old page
@@ -166,7 +167,7 @@ function forward(el, forwardOptions = {}) {
       }
     } else {
       // Page remove event
-      router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', options);
+      router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', undefined, options);
       router.remove($oldPage);
       if (dynamicNavbar) {
         router.remove($oldNavbarInner);
@@ -179,7 +180,7 @@ function forward(el, forwardOptions = {}) {
   router.currentPage = $newPage[0];
 
   // Page init and before init events
-  router.pageCallback('init', $newPage, $newNavbarInner, newPagePosition, options);
+  router.pageCallback('init', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
 
   if (options.reloadCurrent) {
     router.allowPageChange = true;
@@ -187,13 +188,13 @@ function forward(el, forwardOptions = {}) {
   }
 
   // Before animation event
-  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'next', options);
-  router.pageCallback('beforeStack', $oldPage, $oldNavbarInner, 'current', options);
+  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'next', 'current', options);
+  router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
   // Animation
   function afterAnimation() {
-    const pageClasses = 'page-previous page-current page-next page-next-in page-out page-previous-in page-stack';
-    const navbarClasses = 'navbar-previous navbar-current navbar-next navbar-next-in navbar-out navbar-previous-in navbar-stack';
+    const pageClasses = 'page-previous page-current page-next page-next-to-current page-current-to-next page-previous-to-current page-current-to-previous';
+    const navbarClasses = 'navbar-previous navbar-current navbar-next navbar-next-to-current navbar-current-to-next navbar-previous-to-current navbar-current-to-previous';
     $newPage.removeClass(pageClasses).addClass('page-current');
     $oldPage.removeClass(pageClasses).addClass('page-previous');
     if (dynamicNavbar) {
@@ -203,8 +204,8 @@ function forward(el, forwardOptions = {}) {
     }
     // After animation event
     router.allowPageChange = true;
-    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', options);
-    router.pageCallback('afterStack', $oldPage, $oldNavbarInner, 'current', options);
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
+    router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
     if (!(view.params.swipeBackPage || router.params.preloadPreviousPage)) {
       if (router.params.stackPages) {
@@ -214,7 +215,7 @@ function forward(el, forwardOptions = {}) {
         }
       } else if (!(url.indexOf('#') === 0 && $newPage.attr('data-page').indexOf('smart-select-') === 0)) {
         // Remove event
-        router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', options);
+        router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
         router.remove($oldPage);
         if (dynamicNavbar) {
           router.remove($oldNavbarInner);

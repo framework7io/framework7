@@ -241,8 +241,8 @@ class Router {
     }
 
     if (from === 'next' && to === 'current') {
-      oldNavbarInner.removeClass(removeClasses).addClass('navbar-stack');
-      newNavbarInner.removeClass(removeClasses).addClass('navbar-next-in');
+      oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-previous');
+      newNavbarInner.removeClass(removeClasses).addClass('navbar-next-to-current');
 
       if (newNavbarSlidingEls) {
         newNavbarSlidingEls.each((index, slidingEl) => {
@@ -269,7 +269,7 @@ class Router {
                   iconTextEl = $el.find('.back span').eq(0);
                 }
               });
-              if (iconEl && iconTextEl) {
+              if (iconEl && iconEl.length && iconTextEl && iconTextEl.length) {
                 slidingEl.f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
               }
             }
@@ -282,8 +282,8 @@ class Router {
       }
     }
     if (from === 'previous' && to === 'current') {
-      oldNavbarInner.removeClass(removeClasses).addClass('navbar-out');
-      newNavbarInner.removeClass(removeClasses).addClass('navbar-previous-in');
+      oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-next');
+      newNavbarInner.removeClass(removeClasses).addClass('navbar-previous-to-current');
 
       if (newNavbarSlidingEls) {
         newNavbarSlidingEls.each((index, slidingEl) => {
@@ -313,12 +313,12 @@ class Router {
   animatePages(oldPage, newPage, from, to) {
     const removeClasses = 'page-current page-next page-previous';
     if (from === 'next' && to === 'current') {
-      oldPage.removeClass(removeClasses).addClass('page-stack');
-      newPage.removeClass(removeClasses).addClass('page-next-in');
+      oldPage.removeClass(removeClasses).addClass('page-current-to-previous');
+      newPage.removeClass(removeClasses).addClass('page-next-to-current');
     }
     if (from === 'previous' && to === 'current') {
-      oldPage.removeClass(removeClasses).addClass('page-out');
-      newPage.removeClass(removeClasses).addClass('page-previous-in');
+      oldPage.removeClass(removeClasses).addClass('page-current-to-next');
+      newPage.removeClass(removeClasses).addClass('page-previous-to-current');
     }
   }
   remove(el) {
@@ -592,7 +592,7 @@ class Router {
       compile(component);
     }
   }
-  getPageData(pageEl, navbarEl, position, route = {}) {
+  getPageData(pageEl, navbarEl, from, to, route = {}) {
     const router = this;
     const $pageEl = $(pageEl);
     const $navbarEl = $(navbarEl);
@@ -605,14 +605,16 @@ class Router {
       $navbarEl,
       navbarEl: $navbarEl[0],
       name: $pageEl.attr('data-page'),
-      position,
+      position: from,
+      from,
+      to,
       route: currentPage.route ? currentPage.route : route,
     };
     $pageEl[0].f7Page = page;
     return page;
   }
   // Callbacks
-  pageCallback(callback, pageEl, navbarEl, position, options = {}) {
+  pageCallback(callback, pageEl, navbarEl, from, to, options = {}) {
     if (!pageEl) return;
     const router = this;
     const $pageEl = $(pageEl);
@@ -624,9 +626,9 @@ class Router {
 
     let page = {};
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
-      page = Utils.extend($pageEl[0].f7Page, { position });
+      page = Utils.extend($pageEl[0].f7Page, { from, to, position: from });
     } else {
-      page = router.getPageData(pageEl, navbarEl, position, route);
+      page = router.getPageData(pageEl, navbarEl, from, to, route);
     }
 
     function attachEvents() {
@@ -767,7 +769,7 @@ class Router {
             $pageEl.children('.navbar').remove();
           }
         }
-        router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', { route: router.currentRoute });
+        router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, { route: router.currentRoute });
       });
       if (historyRestored) {
         router.navigate(initUrl, {

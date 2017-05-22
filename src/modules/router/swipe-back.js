@@ -97,8 +97,16 @@ function SwipeBack(r) {
         currentNavElements = currentNavbar.find('.left, .title, .right, .subnavbar, .fading');
         previousNavElements = previousNavbar.find('.left, .title, .right, .subnavbar, .fading');
         if (router.params.iosAnimateNavbarBackIcon) {
-          activeNavBackIcon = currentNavbar.find('.left.sliding .back .icon');
-          previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
+          if (currentNavbar.hasClass('sliding')) {
+            activeNavBackIcon = currentNavbar.find('.left .back .icon');
+          } else {
+            activeNavBackIcon = currentNavbar.find('.left.sliding .back .icon');
+          }
+          if (previousNavbar.hasClass('sliding')) {
+            previousNavBackIcon = previousNavbar.find('.left .back .icon');
+          } else {
+            previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
+          }
         }
       }
 
@@ -149,11 +157,11 @@ function SwipeBack(r) {
       currentNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
         if (!$navEl.is('.subnavbar.sliding')) $navEl[0].style.opacity = (1 - (percentage * 1.3));
-        if ($navEl[0].className.indexOf('sliding') >= 0) {
+        if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
           if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
           $navEl.transform(`translate3d(${activeNavTranslate}px,0,0)`);
-          if (router.params.animateNavbarBackIcon) {
+          if (router.params.iosAnimateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && activeNavBackIcon.length > 0) {
               activeNavBackIcon.transform(`translate3d(${-activeNavTranslate}px,0,0)`);
             }
@@ -163,11 +171,11 @@ function SwipeBack(r) {
       previousNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
         if (!$navEl.is('.subnavbar.sliding')) $navEl[0].style.opacity = (percentage * 1.3) - 0.3;
-        if ($navEl[0].className.indexOf('sliding') >= 0) {
+        if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           let previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
           if (Device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
           $navEl.transform(`translate3d(${previousNavTranslate}px,0,0)`);
-          if (router.params.animateNavbarBackIcon) {
+          if (router.params.iosAnimateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && previousNavBackIcon.length > 0) {
               previousNavBackIcon.transform(`translate3d(${-previousNavTranslate}px,0,0)`);
             }
@@ -220,7 +228,7 @@ function SwipeBack(r) {
           const translate = pageChanged ? this.f7NavbarRightOffset : 0;
           const sliding = $(this);
           sliding.transform(`translate3d(${translate}px,0,0)`);
-          if (router.params.animateNavbarBackIcon) {
+          if (router.params.iosAnimateNavbarBackIcon) {
             if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
               activeNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${-translate}px,0,0)`);
             }
@@ -231,7 +239,7 @@ function SwipeBack(r) {
         const translate = pageChanged ? 0 : this.f7NavbarLeftOffset;
         const sliding = $(this);
         sliding.transform(`translate3d(${translate}px,0,0)`);
-        if (router.params.animateNavbarBackIcon) {
+        if (router.params.iosAnimateNavbarBackIcon) {
           if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
             previousNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${-translate}px,0,0)`);
           }
@@ -255,8 +263,8 @@ function SwipeBack(r) {
       router.currentPage = previousPage[0];
 
       // Page before animation callback
-      router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', { route: currentPage[0].f7Page.route });
-      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', { route: previousPage[0].f7Page.route });
+      router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route });
+      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
 
       router.emit('swipeBackBeforeChange swipeback:beforechange', callbackData);
       $el.trigger('swipeBackBeforeChange swipeback:beforechange', callbackData);
@@ -289,8 +297,8 @@ function SwipeBack(r) {
         }
 
         // Page after animation callback
-        router.pageCallback('afterOut', currentPage, currentNavbar, 'current', { route: currentPage[0].f7Page.route });
-        router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', { route: previousPage[0].f7Page.route });
+        router.pageCallback('afterOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route });
+        router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
 
         // Remove Old Page
         if (router.params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
