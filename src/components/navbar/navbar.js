@@ -8,11 +8,7 @@ const Navbar = {
     if ($el.hasClass('stacked') || $el.parents('.stacked').length > 0 || $el.parents('.tab:not(.active)').length > 0) {
       return;
     }
-    let router;
     const $viewEl = $el.parents('.view').eq(0);
-    if ($viewEl.length > 0 && $viewEl[0].f7View) {
-      router = $viewEl[0].f7View.router;
-    }
     const left = app.rtl ? $el.find('.right') : $el.find('.left');
     const right = app.rtl ? $el.find('.left') : $el.find('.right');
     const title = $el.find('.title');
@@ -26,6 +22,15 @@ const Navbar = {
     const navbarWidth = $el[0].offsetWidth - parseInt(navbarStyles.paddingLeft, 10) - parseInt(navbarStyles.paddingRight, 10);
     const isPrevious = $el.hasClass('navbar-previous');
     const sliding = $el.hasClass('sliding');
+
+    let router;
+    let dynamicNavbar;
+
+    if ($viewEl.length > 0 && $viewEl[0].f7View) {
+      router = $viewEl[0].f7View.router;
+      dynamicNavbar = router && router.params.iosDynamicNavbar;
+    }
+
     let currLeft;
     let diff;
 
@@ -53,57 +58,73 @@ const Navbar = {
     // RTL inverter
     const inverter = app.rtl ? -1 : 1;
 
-    if (title.hasClass('sliding') || sliding) {
-      title[0].f7NavbarLeftOffset = -(currLeft + diff) * inverter;
-      title[0].f7NavbarRightOffset = (navbarWidth - currLeft - diff - titleWidth) * inverter;
-      if (isPrevious) {
-        if (router && router.params.iosAnimateNavbarBackIcon) {
-          const activeNavbarBackLink = $el.parent().find('.navbar-current').find('.left.sliding .back .icon ~ span');
-          if (activeNavbarBackLink.length > 0) {
-            title[0].f7NavbarLeftOffset += activeNavbarBackLink[0].offsetLeft;
+    if (dynamicNavbar) {
+      if (title.hasClass('sliding') || sliding) {
+        title[0].f7NavbarLeftOffset = -(currLeft + diff) * inverter;
+        title[0].f7NavbarRightOffset = (navbarWidth - currLeft - diff - titleWidth) * inverter;
+        if (isPrevious) {
+          if (router && router.params.iosAnimateNavbarBackIcon) {
+            const activeNavbarBackLink = $el.parent().find('.navbar-current').find('.left.sliding .back .icon ~ span');
+            if (activeNavbarBackLink.length > 0) {
+              title[0].f7NavbarLeftOffset += activeNavbarBackLink[0].offsetLeft;
+            }
           }
         }
       }
-    }
-    if (!noLeft && (left.hasClass('sliding') || sliding)) {
-      if (app.rtl) {
-        left[0].f7NavbarLeftOffset = -(navbarWidth - left[0].offsetWidth) / 2 * inverter;
-        left[0].f7NavbarRightOffset = leftWidth * inverter;
-      } else {
-        left[0].f7NavbarLeftOffset = -leftWidth;
-        left[0].f7NavbarRightOffset = (navbarWidth - left[0].offsetWidth) / 2;
-        if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
-          left[0].f7NavbarRightOffset -= left.find('.back .icon')[0].offsetWidth;
+      if (!noLeft && (left.hasClass('sliding') || sliding)) {
+        if (app.rtl) {
+          left[0].f7NavbarLeftOffset = -(navbarWidth - left[0].offsetWidth) / 2 * inverter;
+          left[0].f7NavbarRightOffset = leftWidth * inverter;
+        } else {
+          left[0].f7NavbarLeftOffset = -leftWidth;
+          left[0].f7NavbarRightOffset = (navbarWidth - left[0].offsetWidth) / 2;
+          if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
+            left[0].f7NavbarRightOffset -= left.find('.back .icon')[0].offsetWidth;
+          }
         }
       }
-    }
-    if (!noRight && (right.hasClass('sliding') || sliding)) {
-      if (app.rtl) {
-        right[0].f7NavbarLeftOffset = -rightWidth * inverter;
-        right[0].f7NavbarRightOffset = (navbarWidth - right[0].offsetWidth) / 2 * inverter;
-      } else {
-        right[0].f7NavbarLeftOffset = -(navbarWidth - right[0].offsetWidth) / 2;
-        right[0].f7NavbarRightOffset = rightWidth;
+      if (!noRight && (right.hasClass('sliding') || sliding)) {
+        if (app.rtl) {
+          right[0].f7NavbarLeftOffset = -rightWidth * inverter;
+          right[0].f7NavbarRightOffset = (navbarWidth - right[0].offsetWidth) / 2 * inverter;
+        } else {
+          right[0].f7NavbarLeftOffset = -(navbarWidth - right[0].offsetWidth) / 2;
+          right[0].f7NavbarRightOffset = rightWidth;
+        }
+      }
+      if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
+        subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : -subnavbar[0].offsetWidth;
+        subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset;
       }
     }
-    if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
-      subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : -subnavbar[0].offsetWidth;
-      subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset;
+
+    // Title left
+    if (app.params.iosCenterTitle) {
+      let titleLeft = diff;
+
+      if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
+      title.css({ left: `${titleLeft}px` });
     }
-
-    // Center left
-    let centerLeft = diff;
-
-    if (app.rtl && noLeft && noRight && title.length > 0) centerLeft = -centerLeft;
-    title.css({ left: `${centerLeft}px` });
   },
   hide(el, animate = true) {
-    const app = this;
     const $el = $(el);
+    if ($el.hasClass('navbar-hidden')) return;
+    const className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
+    $el.transitionEnd(() => {
+      $el.removeClass('navbar-transitioning');
+    });
+    $el.addClass(className);
   },
   show(el, animate = true) {
-    const app = this;
     const $el = $(el);
+    if (!$el.hasClass('navbar-hidden')) return;
+    if (animate) {
+      $el.addClass('navbar-transitioning');
+      $el.transitionEnd(() => {
+        $el.removeClass('navbar-transitioning');
+      });
+    }
+    $el.removeClass('navbar-hidden');
   },
   getEl(page) {
     let $navbarEl;
@@ -112,7 +133,6 @@ const Navbar = {
     return $navbarEl;
   },
 };
-
 export default {
   create() {
     const app = this;
@@ -123,6 +143,11 @@ export default {
         show: Navbar.show.bind(app),
       },
     });
+  },
+  params: {
+    navbar: {
+      iosCenterTitle: true,
+    },
   },
   on: {
     init() {
