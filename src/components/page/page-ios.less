@@ -1,4 +1,4 @@
-@keyframes ios-page-next-in {
+@keyframes ios-page-next-to-current {
   from {
     transform: translate3d(100%,0,0);
   }
@@ -6,7 +6,7 @@
     transform: translate3d(0%,0,0);
   }
 }
-@keyframes ios-page-next-in-shadow {
+@keyframes ios-page-next-to-current-shadow {
   from {
     opacity: 0;
   }
@@ -14,7 +14,7 @@
     opacity: 1;
   }
 }
-@keyframes ios-page-previous-in {
+@keyframes ios-page-previous-to-current {
   from {
     transform: translate3d(-20%,0,0);
   }
@@ -22,7 +22,7 @@
     transform: translate3d(0%,0,0);
   }
 }
-@keyframes ios-page-previous-in-opacity {
+@keyframes ios-page-previous-to-current-opacity {
   from {
     opacity: 1;
   }
@@ -30,7 +30,7 @@
     opacity: 0;
   }
 }
-@keyframes ios-page-stack {
+@keyframes ios-page-current-to-previous {
   from {
     transform: translate3d(0,0,0);
   }
@@ -38,7 +38,7 @@
     transform: translate3d(-20%,0,0);
   }
 }
-@keyframes ios-page-stack-opacity {
+@keyframes ios-page-current-to-previous-opacity {
   from {
     opacity: 0;
   }
@@ -46,7 +46,7 @@
     opacity: 1;
   }
 }
-@keyframes ios-page-out {
+@keyframes ios-page-current-to-next {
   from {
     transform: translate3d(0,0,0);
   }
@@ -54,7 +54,7 @@
     transform: translate3d(100%,0,0);
   }
 }
-@keyframes ios-page-out-shadow {
+@keyframes ios-page-current-to-next-shadow {
   from {
     opacity: 1;
   }
@@ -121,39 +121,39 @@ html.ios {
       opacity: 0 !important;
     }
   }
-  .page-next-in {
+  .page-next-to-current {
     // From next to current
-    animation: ios-page-next-in @duration forwards;
+    animation: ios-page-next-to-current @duration forwards;
     &:before {
       // Fake opacity
       .fake-shadow();
-      animation: ios-page-next-in-shadow @duration forwards;
+      animation: ios-page-next-to-current-shadow @duration forwards;
     }
   }
-  .page-previous-in {
+  .page-previous-to-current {
     // From previous to current
-    animation: ios-page-previous-in @duration forwards;
+    animation: ios-page-previous-to-current @duration forwards;
     &:after {
       // Fake opacity
       .fake-opacity();
-      animation: ios-page-previous-in-opacity @duration forwards;
+      animation: ios-page-previous-to-current-opacity @duration forwards;
     }
   }
-  .page-out {
+  .page-current-to-next {
     // From current to next
-    animation: ios-page-out @duration forwards;
+    animation: ios-page-current-to-next @duration forwards;
     &:before {
       .fake-shadow();
-      animation: ios-page-out-shadow @duration forwards;
+      animation: ios-page-current-to-next-shadow @duration forwards;
     }
   }
-  .page-stack {
+  .page-current-to-previous {
     // From current to previous
-    animation: ios-page-stack @duration forwards;
+    animation: ios-page-current-to-previous @duration forwards;
     &:after {
       // Fake opacity
       .fake-opacity();
-      animation: ios-page-stack-opacity @duration forwards;
+      animation: ios-page-current-to-previous-opacity @duration forwards;
     }
   }
   .page-transitioning {

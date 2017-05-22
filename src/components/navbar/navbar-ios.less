@@ -127,7 +127,14 @@ html.ios {
   .navbar-transitioning {
     transition-duration: @duration;
   }
-  .navbar-next-in, .navbar-previous-in {
+
+  // Hidden
+  .navbar-hidden {
+    transform: translate3d(0, -100%, 0);
+  }
+
+  // Animations
+  .navbar-next-to-current, .navbar-previous-to-current {
     .left, .right, .title, .subnavbar, .fading {
       animation: ios-navbar-element-fade-in @duration forwards;
     }
@@ -140,7 +147,7 @@ html.ios {
       }
     }
   }
-  .navbar-out, .navbar-stack {
+  .navbar-current-to-next, .navbar-current-to-previous {
     .left, .right, .title, .subnavbar, .fading {
       animation: ios-navbar-element-fade-out @duration forwards;
     }
@@ -160,7 +167,7 @@ html.ios {
     }
   }
 
-  .navbar-next-in, .navbar-previous-in, .navbar-out, .navbar-stack {
+  .navbar-next-to-current, .navbar-previous-to-current, .navbar-current-to-next, .navbar-current-to-previous {
     .left.sliding .back.link .icon {
       transition-duration: @duration;
     }
@@ -173,7 +180,7 @@ html.ios {
         transition: @duration;
         animation: none;
       }
-      .left .back.link .icon {
+      .left .back .icon {
         transition-duration: @duration;
       }
     }
