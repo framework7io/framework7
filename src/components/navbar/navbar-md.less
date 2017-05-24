@@ -1,15 +1,51 @@
 html.md {
   @import (multiple) '../../less/colors-md.less';
+  @barSize: 56px;
+  @barBg: @themeColor;
+  @duration: 400ms;
   .navbar {
-    .right {
-      margin-left: auto;
+    height: @barSize;
+    background: @barBg;
+    color: #fff;
+    font-size: 20px;
+    a {
+      color: inherit;
     }
     a.link {
       justify-content: center;
+      padding: 0 16px;
+      min-width: 48px;
+      height: @barSize;
+      line-height: @barSize;
+      .md-link-highlight();
+      i + span, i + i, span + i, span + span {
+        margin-left: 8px;
+      }
+    }
+    a.icon-only {
+      min-width: 0;
+      flex-shrink: 0;
+    }
+    .title {
+      margin: 0 16px;
+      line-height: @barSize;
+      display: inline-block;
+      text-align: left;
+    }
+    .right {
+      margin-left: auto;
+    }
+    .right:first-child {
+      right: 16px;
     }
   }
   .navbar-inner {
     justify-content: flex-start;
     overflow: hidden;
+  }
+
+  // Relation with page
+  .navbar ~ * .page-content, .navbar ~ .page-content {
+    padding-top: @barSize;
   }
 }
