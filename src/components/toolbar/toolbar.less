@@ -1,0 +1,68 @@
+/* === Toolbar === */
+.toolbar {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  z-index: 500;
+  box-sizing: border-box;
+  left: 0;
+  b {
+    font-weight: 500;
+  }
+  a.link {
+    display: flex;
+  }
+  i.icon {
+    display: block;
+  }
+}
+.toolbar-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  align-content: center;
+}
+.tabbar, .tabbar-labels {
+  z-index: 5001;
+  a.link {
+    line-height: 1.4;
+  }
+  a.tab-link, a.link {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+.tabbar-labels {
+  a.tab-link, a.link {
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    .tabbar-label {
+      display: block;
+      line-height: 1;
+      margin: 0;
+      position: relative;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+.views, .view, .page {
+  > .toolbar {
+    position: absolute;
+  }
+}
+@import url('./toolbar-ios.less');
+@import url('./toolbar-md.less');

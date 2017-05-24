@@ -1,0 +1,119 @@
+html.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @barSize: 44px;
+  @barLabelsSize: 50px;
+  @barLabelsSizeTablet: 56px;
+  @tabbarLinkColor: #929292;
+  @barBg: #f7f7f8;
+  @barBgBlured: rgba(248,248,249, 0.85);
+  @barBorderColor: #c4c4c4;
+  @barLinksColor: @themeColor;
+  @tabbarActiveLinkColor: @themeColor;
+  @duration: 400ms;
+  .toolbar {
+    height: @barSize;
+    font-size: 17px;
+    background: @barBg;
+    bottom: 0;
+    &:after {
+      backface-visibility: hidden;
+    }
+    a {
+      flex-shrink: 1;
+      position: relative;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    a.link {
+      line-height: @barSize;
+      height: @barSize;
+      justify-content: flex-start;
+      i+span, i+i, span+i, span+span {
+        margin-left: 7px;
+      }
+    }
+    a.icon-only {
+      min-height: @barSize;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+  }
+  .hairline-root('.toolbar', top, @barBorderColor);
+  &.device-ios-gt-8 .navbar {
+    b {
+      font-weight: 600;
+    }
+  }
+  .toolbar-inner {
+    justify-content: space-between;
+    padding: 0 8px;
+  }
+  .tabbar, .tabbar-labels {
+    color: @tabbarLinkColor;
+    a {
+      color: @tabbarLinkColor;
+    }
+    a.tab-link-active {
+      color: @tabbarActiveLinkColor;
+    }
+    i.icon {
+      height: 30px;
+    }
+  }
+  .tabbar-labels {
+    height: @barLabelsSize;
+    a.tab-link, a.link {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      i + span {
+        margin: 0;
+      }
+    }
+    .tabbar-label {
+      letter-spacing: 0.01em;
+      font-size: 10px;
+    }
+
+  }
+  @media (min-width: 768px) {
+    .tabbar, .tabbar-labels {
+      .toolbar-inner {
+        justify-content: center;
+      }
+      a.tab-link, a.link {
+        width: auto;
+        min-width: 105px;
+      }
+    }
+    .tabbar-labels {
+      height: @barLabelsSizeTablet;
+      .tabbar-label {
+        font-size: 14px;
+      }
+    }
+  }
+
+  // Relation with page
+  .toolbar ~ * .page-content, .toolbar ~ .page-content {
+    padding-bottom: @barSize;
+  }
+  .tabbar-labels ~ * .page-content, .tabbar-labels ~ .page-content {
+    padding-bottom: @barLabelsSize;
+    @media (min-width: 768px) {
+      padding-bottom: @barLabelsSizeTablet;
+    }
+  }
+
+  // Transitions
+  .toolbar-transitioning {
+    transition-duration: @duration;
+  }
+
+  // Hidden
+  .toolbar-hidden {
+    transform: translate3d(0, 100%, 0);
+  }
+}
