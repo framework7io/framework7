@@ -151,53 +151,11 @@ function initTouch() {
   function createRipple($el, x, y) {
     if (!$el) return;
     rippleWave = new TouchRipple($el, x, y);
-    // const box = el[0].getBoundingClientRect();
-    // const center = {
-    //   x: x - box.left,
-    //   y: y - box.top,
-    // };
-    // const width = box.width;
-    // const height = box.height;
-    // const diameter = Math.max(Math.pow((Math.pow(height, 2) + Math.pow(width, 2)), 0.5), 48);
-
-    // rippleWave = $(`<div class="ripple-wave" style="width: ${diameter}px; height: ${diameter}px; margin-top:-${diameter / 2}px; margin-left:-${diameter / 2}px; left:${center.x}px; top:${center.y}px;"></div>`);
-    // el.prepend(rippleWave);
-    // const clientLeft = rippleWave[0].clientLeft;
-    // rippleTransform = `translate3d(${-center.x + width / 2}px, ${-center.y + height / 2}px, 0) scale(1)`;
-    // rippleWave.transform(rippleTransform);
   }
 
   function removeRipple() {
     if (!rippleWave) return;
     rippleWave.remove();
-    // const toRemove = rippleWave;
-
-    // let removeTimeout = setTimeout(() => {
-    //   toRemove.remove();
-    // }, 400);
-
-    // rippleWave
-    //   .addClass('ripple-wave-fill')
-    //   .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
-    //   .transitionEnd(() => {
-    //     clearTimeout(removeTimeout);
-
-    //     const $rippleWave = $(this)
-    //       .addClass('ripple-wave-out')
-    //       .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
-
-    //     removeTimeout = setTimeout(() => {
-    //       $rippleWave.remove();
-    //     }, 700);
-
-    //     setTimeout(() => {
-    //       $rippleWave.transitionEnd(() => {
-    //         clearTimeout(removeTimeout);
-    //         $(this).remove();
-    //       });
-    //     }, 0);
-    //   });
-
     rippleWave = undefined;
     rippleTarget = undefined;
   }
@@ -528,14 +486,14 @@ function initTouch() {
   if (Support.touch) {
     document.addEventListener('click', handleClick, true);
 
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchmove', handleTouchMove);
-    document.addEventListener('touchend', handleTouchEnd);
-    document.addEventListener('touchcancel', handleTouchCancel);
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+    document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
   } else if (params.activeState) {
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mousedown', handleMouseDown, { passive: false });
+    document.addEventListener('mousemove', handleMouseMove, { passive: false });
+    document.addEventListener('mouseup', handleMouseUp, { passive: false });
   }
   if (useRipple) {
     document.addEventListener('contextmenu', () => {
