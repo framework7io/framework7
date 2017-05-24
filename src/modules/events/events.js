@@ -50,12 +50,12 @@ export default {
             eventHandler.apply(self, args);
           });
         }
-        if (self.eventsParents && self.eventsParents.length > 0) {
-          self.eventsParents.forEach((eventsParent) => {
-            eventsParent.emit(event, ...args);
-          });
-        }
       });
+      if (self.eventsParents && self.eventsParents.length > 0) {
+        self.eventsParents.forEach((eventsParent) => {
+          eventsParent.emit(events, ...args);
+        });
+      }
       return self;
     },
   },
