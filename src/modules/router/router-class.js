@@ -492,6 +492,7 @@ class Router {
           router.emit('ajaxStart ajax:start');
         },
         complete(xhr, status) {
+          router.emit('ajaxComplete ajax:complete');
           if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
@@ -505,11 +506,10 @@ class Router {
           } else {
             reject(xhr);
           }
-          router.emit('ajaxComplete ajax:complete');
         },
         error(xhr) {
-          reject(xhr);
           router.emit('ajaxError ajax:error');
+          reject(xhr);
         },
       });
     });
@@ -537,6 +537,7 @@ class Router {
             $root: router.app.data,
             $route: options.route,
             $router: router,
+            $theme: router.app.theme,
           }));
         }
       } catch (err) {
@@ -571,6 +572,7 @@ class Router {
         $root: router.app.data,
         $route: options.route,
         $router: router,
+        $theme: router.app.theme,
       });
       proceed(router.getPageEl(compiled.html), { pageEvents: compiled.component.on });
     }
