@@ -20,6 +20,7 @@
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   }
 }
+// Hairlines
 .hairline-pseudo(@color, @top, @right, @bottom, @left) {
   content: '';
   position: absolute;
@@ -170,4 +171,33 @@
   &:before {
     background-color: @color;
   }
+}
+// MD Active Active Links Highlights
+.md-link-highlight(@color:rgba(255,255,255,0.15)) {
+    &:before {
+        content: '';
+        width: 152%;
+        height: 152%;
+        position: absolute;
+        left: -26%;
+        top: -26%;
+        background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+        background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+        opacity: 0;
+        pointer-events: none;
+        transition-duration: 600ms;
+    }
+    &.active-state:before {
+        opacity: 1;
+        transition-duration: 150ms;
+    }
+}
+.md-link-highlight-color(@color) {
+    &:before {
+        background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+        background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+    }
 }
