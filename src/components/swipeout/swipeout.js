@@ -11,24 +11,12 @@ export default {
     },
   },
   instance: {
-    allowSwipeout: true,
-    swipeoutOpenedEl: undefined,
-    swipeoutOpen() {},
-    swipeoutClose() {},
-    swipeoutDelete() {},
-    // New API
     swipeout: {
-      el: undefined,
       allow: true,
-      open() {
-
-      },
-      close() {
-
-      },
-      delete() {
-
-      },
+      el: undefined,
+      open() {},
+      close() {},
+      delete() {},
     },
   },
   on: {
