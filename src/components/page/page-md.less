@@ -1,129 +1,69 @@
-/* === Pages === */
+@keyframes md-page-next-to-current {
+  from {
+    transform: translate3d(0, 56px, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0px, 0);
+    opacity: 1;
+  }
+}
+@keyframes md-page-previous-to-current {
+  from {
+    transform: translate3d(0,0,0);
+  }
+  to {
+    transform: translate3d(0,0,0);
+  }
+}
+@keyframes md-page-current-to-previous {
+  from {
+    transform: translate3d(0,0,0);
+  }
+  to {
+    transform: translate3d(0,0,0);
+  }
+}
+@keyframes md-page-current-to-next {
+  from {
+    transform: translate3d(0,0,0);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, 56px, 0);
+    opacity: 0;
+  }
+}
 html.md {
+  @duration: 300ms;
   .page {
     background: #fff;
   }
+  .page-next {
+    transform: translate3d(0, 56px, 0);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // Animations
+  .page-next-to-current {
+    pointer-events: none;
+    animation: md-page-next-to-current @duration forwards;
+  }
+  .page-previous-to-current {
+    pointer-events: none;
+    animation: md-page-previous-to-current @duration forwards;
+  }
+  .page-current-to-next {
+    pointer-events: none;
+    animation: md-page-current-to-next @duration forwards;
+  }
+  .page-current-to-previous {
+    pointer-events: none;
+    animation: md-page-current-to-previous @duration forwards;
+  }
+
+  .page-transitioning {
+    transition-duration: @duration;
+  }
 }
-// Pages animations
-// @pageDuration: 300ms;
-// @newPageOffset: 56px;
-
-// .pages {
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-//     overflow: hidden;
-// }
-
-// .page-on-left {
-//     opacity: 1;
-//     .translate3d(0,0,0);
-// }
-// .page-on-right {
-//     opacity: 0;
-//     pointer-events: none;
-//     .translate3d(0, @newPageOffset, 0);
-// }
-// .page-content {
-//     .scrollable();
-//     box-sizing: border-box;
-//     height: 100%;
-//     position: relative;
-//     z-index: 1;
-// }
-
-// //Class that will trigger transition during page custom transitions (like swipe-back)
-// .page-transitioning {
-//     .transition(@pageDuration);
-// }
-// // From/to Right To/from Center animations
-// .page-from-right-to-center {
-//     pointer-events: none;
-//     .animation(pageFromRightToCenter @pageDuration forwards);
-// }
-// .page-from-center-to-right {
-//     pointer-events: none;
-//     .animation(pageFromCenterToRight @pageDuration forwards);
-// }
-// @-webkit-keyframes pageFromRightToCenter {
-//     from {
-//         opacity: 0;
-//         -webkit-transform: translate3d(0, @newPageOffset,0);
-//     }
-//     to {
-//         opacity: 1;
-//         -webkit-transform: translate3d(0,0,0);
-//     }
-// }
-// @keyframes pageFromRightToCenter {
-//     from {
-//         opacity: 0;
-//         transform: translate3d(0, @newPageOffset,0);
-//     }
-//     to {
-//         opacity: 1;
-//         transform: translate3d(0,0,0);
-//     }
-// }
-// @-webkit-keyframes pageFromCenterToRight {
-//     from {
-//         opacity: 1;
-//         -webkit-transform: translate3d(0,0,0);
-//     }
-//     to {
-//         opacity: 0;
-//         -webkit-transform: translate3d(0, @newPageOffset,0);
-//     }
-// }
-// @keyframes pageFromCenterToRight {
-//     from {
-//         opacity: 1;
-//         transform: translate3d(0,0,0);
-//     }
-//     to {
-//         opacity: 0;
-//         transform: translate3d(0, @newPageOffset,0);
-//     }
-// }
-
-
-// // From/to Center To/from Left animations
-// .page-from-center-to-left {
-//     .animation(pageFromCenterToLeft @pageDuration forwards);
-// }
-// .page-from-left-to-center {
-//     .animation(pageFromLeftToCenter @pageDuration forwards);
-// }
-
-// @-webkit-keyframes pageFromCenterToLeft {
-//     from {
-//         opacity: 1;
-//     }
-//     to {
-//         opacity: 1;
-//     }
-// }
-// @keyframes pageFromCenterToLeft {
-//     from {
-//         opacity: 1;
-//     }
-//     to {
-//         opacity: 1;
-//     }
-// }
-// @-webkit-keyframes pageFromLeftToCenter {
-//     from {
-//         opacity: 1;
-//     }
-//     to {
-//         opacity: 1;
-//     }
-// }
-// @keyframes pageFromLeftToCenter {
-//     from {
-//         opacity: 1;
-//     }
-//     to {
-//         opacity: 1;
-//     }
-// }
