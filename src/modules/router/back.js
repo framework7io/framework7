@@ -181,7 +181,8 @@ function backward(el, backwardOptions) {
     if (dynamicNavbar) {
       $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
-      $newNavbarInner.add($oldNavbarInner).find('.sliding').transform('');
+      $newNavbarInner.find('.sliding').transform('');
+      $oldNavbarInner.find('.sliding').transform('');
     }
 
     // After animation event
@@ -217,7 +218,9 @@ function backward(el, backwardOptions) {
   if (options.animate) {
     // Set pages before animation
     router.animatePages($oldPage, $newPage, 'previous', 'current');
-    router.animateNavbars($oldNavbarInner, $newNavbarInner, 'previous', 'current');
+    if (dynamicNavbar) {
+      router.animateNavbars($oldNavbarInner, $newNavbarInner, 'previous', 'current');
+    }
 
     $newPage.animationEnd(() => {
       afterAnimation();
@@ -329,7 +332,7 @@ function back(...args) {
   }
   // Find page to load
   if (navigateUrl === '#') {
-    return router;
+    navigateUrl = undefined;
   }
   if (navigateUrl && navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
     navigateUrl = ((router.path || '/') + navigateUrl).replace('//', '/');

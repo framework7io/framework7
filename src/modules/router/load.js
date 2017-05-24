@@ -106,7 +106,7 @@ function forward(el, forwardOptions = {}) {
           }
         } else {
           // Page remove event
-          router.pageCallback('beforeRemove', $pagesInView[i], $navbarsInView[i], 'previous', undefined, options);
+          router.pageCallback('beforeRemove', $pagesInView[i], $navbarsInView && $navbarsInView[i], 'previous', undefined, options);
           router.remove($pagesInView[i]);
           if (dynamicNavbar) {
             router.remove($navbarsInView[i]);
@@ -191,7 +191,7 @@ function forward(el, forwardOptions = {}) {
         }
       } else {
         // Page remove event
-        router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner.eq(index), 'previous', undefined, options);
+        router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner && $oldNavbarInner.eq(index), 'previous', undefined, options);
         router.remove($oldPageEl);
         if (dynamicNavbar) {
           router.remove($oldNavbarInner.eq(index));
@@ -225,20 +225,21 @@ function forward(el, forwardOptions = {}) {
     if (dynamicNavbar) {
       $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
-      $newNavbarInner.add($oldNavbarInner).find('.sliding').transform('');
+      $newNavbarInner.find('.sliding').transform('');
+      $oldNavbarInner.find('.sliding').transform('');
     }
     // After animation event
     router.allowPageChange = true;
     router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-    if (!(view.params.swipeBackPage || router.params.preloadPreviousPage)) {
+    if (!(router.params.swipeBackPage || router.params.preloadPreviousPage) || router.app.theme === 'md') {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
         if (dynamicNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
-      } else if (!(url.indexOf('#') === 0 && $newPage.attr('data-page').indexOf('smart-select-') === 0)) {
+      } else if (!($newPage.attr('data-page') && $newPage.attr('data-page').indexOf('smart-select-') === 0)) {
         // Remove event
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
         router.remove($oldPage);
@@ -258,11 +259,12 @@ function forward(el, forwardOptions = {}) {
     if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
       setTimeout(() => {
         router.animatePages($oldPage, $newPage, 'next', 'current');
-        router.animateNavbars($oldNavbarInner, $newNavbarInner, 'next', 'current');
       }, router.params.materialPageLoadDelay);
     } else {
       router.animatePages($oldPage, $newPage, 'next', 'current');
-      router.animateNavbars($oldNavbarInner, $newNavbarInner, 'next', 'current');
+      if (dynamicNavbar) {
+        router.animateNavbars($oldNavbarInner, $newNavbarInner, 'next', 'current');
+      }
     }
     $newPage.animationEnd(() => {
       afterAnimation();
