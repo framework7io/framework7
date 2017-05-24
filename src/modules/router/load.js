@@ -56,7 +56,7 @@ function forward(el, forwardOptions = {}) {
       .filter((index, navbarInView) => navbarInView !== $newNavbarInner[0]);
   }
 
-  // Exit when reload previous and only 1 page in view
+  // Exit when reload previous and only 1 page in view so nothing ro reload
   if (options.reloadPrevious && $pagesInView.length < 2) {
     router.allowPageChange = true;
     return router;
@@ -90,6 +90,11 @@ function forward(el, forwardOptions = {}) {
     if (dynamicNavbar) {
       $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 2);
     }
+  } else if (options.reloadAll) {
+    $oldPage = $pagesInView.filter((index, pageEl) => pageEl !== $newPage[0]);
+    if (dynamicNavbar) {
+      $oldNavbarInner = $navbarsInView.filter((index, navbarEl) => navbarEl !== $newNavbarInner[0]);
+    }
   } else {
     if ($pagesInView.length > 1) {
       let i = 0;
@@ -122,11 +127,12 @@ function forward(el, forwardOptions = {}) {
   // Push State
   if (router.params.pushState && options.pushState && !options.reloadPrevious) {
     const pushStateRoot = router.params.pushStateRoot || '';
-
-    History[options.reloadCurrent ? 'replace' : 'push'](
-      { url: options.route.url,
+    History[options.reloadCurrent || options.reloadAll ? 'replace' : 'push'](
+      {
+        url: options.route.url,
         viewIndex: view.index,
-      }, pushStateRoot + router.params.pushStateSeparator + options.route.url);
+      },
+      pushStateRoot + router.params.pushStateSeparator + options.route.url);
   }
 
   // Update router history
@@ -135,6 +141,8 @@ function forward(el, forwardOptions = {}) {
   if (options.history) {
     if (options.reloadCurrent && router.history.length > 0) {
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
+    } else if (options.reloadAll) {
+      router.history = [url];
     } else {
       router.history.push(url);
     }
@@ -173,6 +181,23 @@ function forward(el, forwardOptions = {}) {
         router.remove($oldNavbarInner);
       }
     }
+  } else if (options.reloadAll) {
+    $oldPage.each((index, pageEl) => {
+      const $oldPageEl = $(pageEl);
+      if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
+        $oldPageEl.addClass('stacked');
+        if (dynamicNavbar) {
+          $oldNavbarInner.eq(index).addClass('stacked');
+        }
+      } else {
+        // Page remove event
+        router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner.eq(index), 'previous', undefined, options);
+        router.remove($oldPageEl);
+        if (dynamicNavbar) {
+          router.remove($oldNavbarInner.eq(index));
+        }
+      }
+    });
   }
 
   // Current Route
@@ -182,7 +207,7 @@ function forward(el, forwardOptions = {}) {
   // Page init and before init events
   router.pageCallback('init', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
 
-  if (options.reloadCurrent) {
+  if (options.reloadCurrent || options.reloadAll) {
     router.allowPageChange = true;
     return router;
   }
@@ -327,7 +352,9 @@ function navigate(url, navigateOptions = {}) {
     app.views.main.router.navigate(url, navigateOptions);
     return router;
   }
-
+  if (url === '#' || url === '') {
+    return router;
+  }
   let navigateUrl = url;
   if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
     navigateUrl = ((router.path || '/') + navigateUrl).replace('//', '/');

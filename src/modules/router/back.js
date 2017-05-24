@@ -328,6 +328,9 @@ function back(...args) {
     return router;
   }
   // Find page to load
+  if (navigateUrl === '#') {
+    return router;
+  }
   if (navigateUrl && navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
     navigateUrl = ((router.path || '/') + navigateUrl).replace('//', '/');
   }
@@ -335,6 +338,7 @@ function back(...args) {
     navigateUrl = router.history[router.history.length - 2];
   }
   let route = router.findMatchingRoute(navigateUrl);
+
   if (!route) {
     if (navigateUrl) {
       route = {
