@@ -4,8 +4,8 @@ export default function Use(c) {
   const Class = c;
 
   function installModule(module, ...params) {
-    const name = module.name || Utils.now();
     if (!Class.prototype.modules) Class.prototype.modules = {};
+    const name = module.name || (`${Object.keys(Class.prototype.modules).length}_${Utils.now()}`);
     Class.prototype.modules[name] = module;
     // Prototype
     if (module.proto) {
