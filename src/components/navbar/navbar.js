@@ -33,7 +33,6 @@ const Navbar = {
 
     let currLeft;
     let diff;
-
     if (noRight) {
       currLeft = navbarWidth - titleWidth;
     }
@@ -99,9 +98,8 @@ const Navbar = {
     }
 
     // Title left
-    if (app.params.iosCenterTitle) {
+    if (app.params.navbar.iosCenterTitle) {
       let titleLeft = diff;
-
       if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
       title.css({ left: `${titleLeft}px` });
     }
@@ -134,6 +132,7 @@ const Navbar = {
   },
 };
 export default {
+  name: 'navbar',
   create() {
     const app = this;
     Utils.extend(app, {
@@ -150,9 +149,6 @@ export default {
     },
   },
   on: {
-    init() {
-
-    },
     pageBeforeRemove(page) {
       const app = this;
       if (app.theme === 'md') return;
@@ -174,7 +170,6 @@ export default {
       if (app.theme === 'md') return;
       const $navbarEl = Navbar.getEl(page);
       if (!$navbarEl || $navbarEl.length === 0) return;
-
       $navbarEl[0].f7ResizeHandler = function resizeHandler() {
         app.navbar.size($navbarEl);
       };
