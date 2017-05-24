@@ -17,6 +17,7 @@ import Clicks from './modules/clicks/clicks';
 // Core Components
 import View from './components/view/view';
 import Navbar from './components/navbar/navbar';
+import Toolbar from './components/toolbar/toolbar';
 
 // Additional Modules
 import Sortable from './components/sortable/sortable';
@@ -45,9 +46,11 @@ Framework7
   .use(Router)
   .use(History)
   .use(Clicks)
+  // Core Components
   .use(View)
   .use(Navbar)
-  // Additional Modules
+  .use(Toolbar)
+  // Additional Components
   .use(Sortable)
   .use(Swipeout)
   .use(SmartSelect)
