@@ -57,8 +57,6 @@ class View {
       el: $el[0],
       name: view.params.name,
       main: view.params.main || $el.hasClass(app.params.view.viewMainClass),
-      $pagesEl: $el.find('.pages'),
-      pagesEl: $el.find('.pages')[0],
       $navbarEl,
       navbarEl: $navbarEl ? $navbarEl[0] : undefined,
       selector,
