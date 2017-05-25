@@ -1,67 +1,3 @@
-@keyframes ios-page-next-to-current {
-  from {
-    transform: translate3d(100%,0,0);
-  }
-  to {
-    transform: translate3d(0%,0,0);
-  }
-}
-@keyframes ios-page-next-to-current-shadow {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes ios-page-previous-to-current {
-  from {
-    transform: translate3d(-20%,0,0);
-  }
-  to {
-    transform: translate3d(0%,0,0);
-  }
-}
-@keyframes ios-page-previous-to-current-opacity {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@keyframes ios-page-current-to-previous {
-  from {
-    transform: translate3d(0,0,0);
-  }
-  to {
-    transform: translate3d(-20%,0,0);
-  }
-}
-@keyframes ios-page-current-to-previous-opacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes ios-page-current-to-next {
-  from {
-    transform: translate3d(0,0,0);
-  }
-  to {
-    transform: translate3d(100%,0,0);
-  }
-}
-@keyframes ios-page-current-to-next-shadow {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 html.ios {
   @duration: 400ms;
   .fake-shadow() {
@@ -160,5 +96,69 @@ html.ios {
     &, .swipeback-page-shadow, .swipeback-page-opacity {
       transition-duration: @duration;
     }
+  }
+}
+@keyframes ios-page-next-to-current {
+  from {
+    transform: translate3d(100%,0,0);
+  }
+  to {
+    transform: translate3d(0%,0,0);
+  }
+}
+@keyframes ios-page-next-to-current-shadow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ios-page-previous-to-current {
+  from {
+    transform: translate3d(-20%,0,0);
+  }
+  to {
+    transform: translate3d(0%,0,0);
+  }
+}
+@keyframes ios-page-previous-to-current-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ios-page-current-to-previous {
+  from {
+    transform: translate3d(0,0,0);
+  }
+  to {
+    transform: translate3d(-20%,0,0);
+  }
+}
+@keyframes ios-page-current-to-previous-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ios-page-current-to-next {
+  from {
+    transform: translate3d(0,0,0);
+  }
+  to {
+    transform: translate3d(100%,0,0);
+  }
+}
+@keyframes ios-page-current-to-next-shadow {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

@@ -1,3 +1,36 @@
+html.md {
+  @duration: 300ms;
+  .page {
+    background: #fff;
+  }
+  .page-next {
+    transform: translate3d(0, 56px, 0);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // Animations
+  .page-next-to-current {
+    pointer-events: none;
+    animation: md-page-next-to-current @duration forwards;
+  }
+  .page-previous-to-current {
+    pointer-events: none;
+    animation: md-page-previous-to-current @duration forwards;
+  }
+  .page-current-to-next {
+    pointer-events: none;
+    animation: md-page-current-to-next @duration forwards;
+  }
+  .page-current-to-previous {
+    pointer-events: none;
+    animation: md-page-current-to-previous @duration forwards;
+  }
+
+  .page-transitioning {
+    transition-duration: @duration;
+  }
+}
 @keyframes md-page-next-to-current {
   from {
     transform: translate3d(0, 56px, 0);
@@ -32,38 +65,5 @@
   to {
     transform: translate3d(0, 56px, 0);
     opacity: 0;
-  }
-}
-html.md {
-  @duration: 300ms;
-  .page {
-    background: #fff;
-  }
-  .page-next {
-    transform: translate3d(0, 56px, 0);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  // Animations
-  .page-next-to-current {
-    pointer-events: none;
-    animation: md-page-next-to-current @duration forwards;
-  }
-  .page-previous-to-current {
-    pointer-events: none;
-    animation: md-page-previous-to-current @duration forwards;
-  }
-  .page-current-to-next {
-    pointer-events: none;
-    animation: md-page-current-to-next @duration forwards;
-  }
-  .page-current-to-previous {
-    pointer-events: none;
-    animation: md-page-current-to-previous @duration forwards;
-  }
-
-  .page-transitioning {
-    transition-duration: @duration;
   }
 }
