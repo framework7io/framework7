@@ -1,54 +1,49 @@
 html.ios {
   @import (multiple) '../../less/colors-ios.less';
-  @barSize: 44px;
-  @barLabelsSize: 50px;
-  @barLabelsSizeTablet: 56px;
+  @toolbarSize: 44px;
+  @tabbarLabelsSize: 50px;
+  @tabbarLabelsSizeTablet: 56px;
+  @toolbarBg: #f7f7f8;
+  @toolbarBgBlured: rgba(248,248,249, 0.85);
+  @toolbarBorderColor: #c4c4c4;
+  @toolbarLinksColor: @themeColor;
   @tabbarLinkColor: #929292;
-  @barBg: #f7f7f8;
-  @barBgBlured: rgba(248,248,249, 0.85);
-  @barBorderColor: #c4c4c4;
-  @barLinksColor: @themeColor;
   @tabbarActiveLinkColor: @themeColor;
   @duration: 400ms;
   .toolbar {
-    height: @barSize;
+    height: @toolbarSize;
     font-size: 17px;
-    background: @barBg;
+    background: @toolbarBg;
     bottom: 0;
     &:after {
       backface-visibility: hidden;
     }
-    a {
-      flex-shrink: 1;
-      position: relative;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
     a.link {
-      line-height: @barSize;
-      height: @barSize;
+      line-height: @toolbarSize;
+      height: @toolbarSize;
       justify-content: flex-start;
-      i+span, i+i, span+i, span+span {
+      i + span, i + i, span + i, span + span {
         margin-left: 7px;
       }
     }
     a.icon-only {
-      min-height: @barSize;
+      min-height: @toolbarSize;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
     }
+    &.no-border {
+      .hairline-remove(top);
+    }
   }
-  .hairline-root('.toolbar', top, @barBorderColor);
+  .hairline-root('.toolbar', top, @toolbarBorderColor);
   &.device-ios-gt-8 .navbar {
     b {
       font-weight: 600;
     }
   }
   .toolbar-inner {
-    justify-content: space-between;
     padding: 0 8px;
   }
   .tabbar, .tabbar-labels {
@@ -64,7 +59,7 @@ html.ios {
     }
   }
   .tabbar-labels {
-    height: @barLabelsSize;
+    height: @tabbarLabelsSize;
     a.tab-link, a.link {
       padding-top: 4px;
       padding-bottom: 4px;
@@ -89,21 +84,28 @@ html.ios {
       }
     }
     .tabbar-labels {
-      height: @barLabelsSizeTablet;
+      height: @tabbarLabelsSizeTablet;
       .tabbar-label {
         font-size: 14px;
       }
     }
   }
 
+  // Scrollable
+  .tabbar-scrollable {
+    a.tab-link, a.link {
+      padding: 0 8px;
+    }
+  }
+
   // Relation with page
   .toolbar ~ * .page-content, .toolbar ~ .page-content {
-    padding-bottom: @barSize;
+    padding-bottom: @toolbarSize;
   }
   .tabbar-labels ~ * .page-content, .tabbar-labels ~ .page-content {
-    padding-bottom: @barLabelsSize;
+    padding-bottom: @tabbarLabelsSize;
     @media (min-width: 768px) {
-      padding-bottom: @barLabelsSizeTablet;
+      padding-bottom: @tabbarLabelsSizeTablet;
     }
   }
 
