@@ -1,13 +1,18 @@
 html.md {
   @import (multiple) '../../less/colors-md.less';
-  @barSize: 56px;
-  @barBg: @themeColor;
+  @navbarSize: 56px;
+  @navbarSizeTablet: 64px;
+  @navbarBg: @themeColor;
   @duration: 400ms;
   .navbar {
-    height: @barSize;
-    background: @barBg;
+    height: @navbarSize;
+    background: @navbarBg;
     color: #fff;
     font-size: 20px;
+    .md-bar-shadow-to-bottom();
+    &.no-shadow {
+      box-shadow: none !important;
+    }
     a {
       color: inherit;
     }
@@ -15,8 +20,8 @@ html.md {
       justify-content: center;
       padding: 0 16px;
       min-width: 48px;
-      height: @barSize;
-      line-height: @barSize;
+      height: @navbarSize;
+      line-height: @navbarSize;
       .md-link-highlight();
       i + span, i + i, span + i, span + span {
         margin-left: 8px;
@@ -28,7 +33,7 @@ html.md {
     }
     .title {
       margin: 0 16px;
-      line-height: @barSize;
+      line-height: @navbarSize;
       display: inline-block;
       text-align: left;
     }
@@ -46,6 +51,34 @@ html.md {
 
   // Relation with page
   .navbar ~ * .page-content, .navbar ~ .page-content {
-    padding-top: @barSize;
+    padding-top: @navbarSize;
+  }
+
+  @media (min-width: 768px) {
+    .navbar {
+      height: @navbarSizeTablet;
+      a.link {
+        height: @navbarSizeTablet;
+        line-height: @navbarSizeTablet;
+      }
+      .title {
+        line-height: @navbarSizeTablet;
+      }
+    }
+    // Relation with page
+    .navbar ~ * .page-content, .navbar ~ .page-content {
+      padding-top: @navbarSizeTablet;
+    }
+  }
+
+  // Transitions
+  .navbar-transitioning {
+    transition-duration: @duration;
+  }
+
+  // Hidden
+  .navbar-hidden {
+    box-shadow: none;
+    transform: translate3d(0, -100%, 0);
   }
 }
