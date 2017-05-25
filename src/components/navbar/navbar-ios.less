@@ -1,51 +1,38 @@
-@keyframes ios-navbar-element-fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-@keyframes ios-navbar-element-fade-out {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
 html.ios {
   @import (multiple) '../../less/colors-ios.less';
-  @barSize: 44px;
-  @barBg: #f7f7f8;
-  @barBgBlured: rgba(248,248,249, 0.85);
-  @barBorderColor: #c4c4c4;
-  @barLinksColor: @themeColor;
+  @navbarSize: 44px;
+  @navbarBg: #f7f7f8;
+  @navbarBgBlured: rgba(248,248,249, 0.85);
+  @navbarBorderColor: #c4c4c4;
+  @navbarLinksColor: @themeColor;
   @duration: 400ms;
   .navbar {
-    height: @barSize;
+    height: @navbarSize;
     font-size: 17px;
-    background: @barBg;
+    background: @navbarBg;
+    &.no-border {
+      .hairline-remove(bottom);
+    }
     &:after {
       backface-visibility: hidden;
     }
     a.link {
       justify-content: flex-start;
-      line-height: @barSize;
-      height: @barSize;
+      line-height: @navbarSize;
+      height: @navbarSize;
       i + span, i + i, span + i, span + span {
         margin-left: 7px;
       }
     }
     a.icon-only {
-      min-width: @barSize;
+      min-width: @navbarSize;
       margin: 0;
       justify-content: flex-start;
     }
     .title {
       font-size: 17px;
       margin: 0;
-      line-height: @barSize;
+      line-height: @navbarSize;
     }
     .left, .right {
       a + a {
@@ -62,7 +49,7 @@ html.ios {
       right: 8px;
     }
   }
-  .hairline-root('.navbar', bottom, @barBorderColor);
+  .hairline-root('.navbar', bottom, @navbarBorderColor);
   &.device-ios-gt-8 .navbar {
     b, .title {
       font-weight: 600;
@@ -75,7 +62,7 @@ html.ios {
 
   // Relation with page
   .navbar ~ * .page-content, .navbar ~ .page-content {
-    padding-top: @barSize;
+    padding-top: @navbarSize;
   }
 
   // Positions
@@ -170,4 +157,20 @@ html.ios {
       }
     }
   }
+}
+@keyframes ios-navbar-element-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes ios-navbar-element-fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
