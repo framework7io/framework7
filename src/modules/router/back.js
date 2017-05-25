@@ -13,9 +13,8 @@ function backward(el, backwardOptions) {
 
   const dynamicNavbar = router.app.theme === 'ios' && router.params.iosDynamicNavbar;
 
-  const $pagesEl = router.$pagesEl;
   const $newPage = $(el);
-  const $oldPage = $pagesEl.find('.page-current');
+  const $oldPage = router.$el.children('.page-current');
 
   let $navbarEl;
   let $newNavbarInner;
@@ -277,7 +276,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     router.backward(router.getPageEl(el), options);
   } else if (name) {
     // Load page by page name in pages container
-    router.backward(router.$pagesEl.find(`.page[data-page="${name}"]`).eq(0), options);
+    router.backward(router.$el.children(`.page[data-page="${name}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
@@ -319,7 +318,7 @@ function back(...args) {
     return router;
   }
 
-  const $previousPage = router.$pagesEl.find('.page-current').prevAll('.page-previous').eq(0);
+  const $previousPage = router.$el.children('.page-current').prevAll('.page-previous').eq(0);
   if (!navigateOptions.force && $previousPage.length > 0) {
     if (router.params.pushState && $previousPage[0].f7Page && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url) {
       router.back(router.history[router.history.length - 2], Utils.extend(navigateOptions, { force: true }));
@@ -366,7 +365,7 @@ function back(...args) {
   }
 
   if (options.force && router.params.stackPages) {
-    router.$pagesEl.find('.page-previous.stacked').each((index, pageEl) => {
+    router.$el.children('.page-previous.stacked').each((index, pageEl) => {
       if (pageEl.f7Page && pageEl.f7Page.route && pageEl.f7Page.route.url === route.url) {
         router.loadBack({ el: pageEl }, options);
       }

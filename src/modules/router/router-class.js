@@ -139,8 +139,6 @@ class Router {
         params: view.params.router,
         routes: view.routes || [],
         $el: view.$el,
-        $pagesEl: view.$pagesEl,
-        pagesEl: view.$pagesEl[0],
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
         history: view.history,
@@ -602,6 +600,8 @@ class Router {
     const page = {
       app: router.app,
       view: router.view,
+      $el: $pageEl,
+      el: $pageEl[0],
       $pageEl,
       pageEl: $pageEl[0],
       $navbarEl,
@@ -742,7 +742,7 @@ class Router {
     }
 
     if (router.params.stackPages) {
-      router.$pagesEl.find('.page').each((index, pageEl) => {
+      router.$el.children('.page').each((index, pageEl) => {
         const $pageEl = $(pageEl);
         router.initialPages.push($pageEl[0]);
         if (router.dynamicNavbar && $pageEl.children('.navbar').length > 0) {
@@ -751,7 +751,7 @@ class Router {
       });
     }
 
-    if (router.$pagesEl.find('.page:not(.stacked)').length === 0 && initUrl) {
+    if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl) {
       // No pages presented in DOM, reload new page
       router.navigate(initUrl, {
         reloadCurrent: true,
@@ -760,7 +760,7 @@ class Router {
     } else {
       // Init current DOM page
       router.currentRoute = currentRoute;
-      router.$pagesEl.find('.page:not(.stacked)').each((index, pageEl) => {
+      router.$el.children('.page:not(.stacked)').each((index, pageEl) => {
         const $pageEl = $(pageEl);
         let $navbarInnerEl;
         $pageEl.addClass('page-current');

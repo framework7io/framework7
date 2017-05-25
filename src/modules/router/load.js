@@ -16,7 +16,7 @@ function forward(el, forwardOptions = {}) {
 
   const dynamicNavbar = router.app.theme === 'ios' && router.params.iosDynamicNavbar;
 
-  const $pagesEl = router.$pagesEl;
+  const $viewEl = router.$el;
   const $newPage = $(el);
   const reload = options.reloadPrevious || options.reloadCurrent || options.reloadAll;
   let $oldPage;
@@ -44,7 +44,7 @@ function forward(el, forwardOptions = {}) {
   }
 
   // Pages In View
-  const $pagesInView = $pagesEl
+  const $pagesInView = $viewEl
     .children('.page:not(.stacked)')
     .filter((index, pageInView) => pageInView !== $newPage[0]);
 
@@ -114,7 +114,7 @@ function forward(el, forwardOptions = {}) {
         }
       }
     }
-    $oldPage = $pagesEl
+    $oldPage = $viewEl
       .children('.page:not(.stacked)')
       .filter((index, page) => page !== $newPage[0]);
     if (dynamicNavbar) {
@@ -157,7 +157,7 @@ function forward(el, forwardOptions = {}) {
       $newNavbarInner.insertBefore($oldNavbarInner);
     }
   } else if ($oldPage.next('.page')[0] !== $newPage[0]) {
-    $pagesEl.append($newPage[0]);
+    $viewEl.append($newPage[0]);
     if (dynamicNavbar) {
       $navbarEl.append($newNavbarInner[0]);
     }
@@ -322,7 +322,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     router.forward(router.getPageEl(el), options);
   } else if (name) {
     // Load page by page name in pages container
-    router.forward(router.$pagesEl.find(`.page[data-page="${name}"]`).eq(0), options);
+    router.forward(router.$el.children(`.page[data-page="${name}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
