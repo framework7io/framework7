@@ -18,6 +18,8 @@ import Clicks from './modules/clicks/clicks';
 import View from './components/view/view';
 import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
+import Modal from './components/modal/modal';
+import Dialog from './components/dialog/dialog';
 
 // Additional Modules
 import Sortable from './components/sortable/sortable';
@@ -50,6 +52,8 @@ Framework7
   .use(View)
   .use(Navbar)
   .use(Toolbar)
+  .use(Modal)
+  .use(Dialog)
   // Additional Components
   .use(Sortable)
   .use(Swipeout)
