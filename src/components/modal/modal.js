@@ -8,10 +8,12 @@ export default {
   params: {
     modals: {
       moveToRoot: true,
-      stackDialogs: true,
+      queueDialogs: true,
       dialogTitle: 'Framework7',
       dialogButtonOk: 'Ok',
       dialogButtonCancel: 'Cancel',
+      dialogUsernamePlaceholder: 'Username',
+      dialogPasswordPlaceholder: 'Password',
     },
   },
 };
