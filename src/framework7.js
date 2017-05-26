@@ -18,10 +18,15 @@ import Clicks from './modules/clicks/clicks';
 import View from './components/view/view';
 import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
+import Preloader from './components/preloader/preloader';
+import Progressbar from './components/progressbar/progressbar';
 import Modal from './components/modal/modal';
 import Dialog from './components/dialog/dialog';
+import Popup from './components/popup/popup';
+import Popover from './components/popover/popover';
+import Actions from './components/actions/actions';
 
-// Additional Modules
+// Additional Components
 import Sortable from './components/sortable/sortable';
 import Swipeout from './components/swipeout/swipeout';
 import SmartSelect from './components/smartselect/smartselect';
@@ -52,8 +57,13 @@ Framework7
   .use(View)
   .use(Navbar)
   .use(Toolbar)
+  .use(Preloader)
+  .use(Progressbar)
   .use(Modal)
   .use(Dialog)
+  .use(Popup)
+  .use(Popover)
+  .use(Actions)
   // Additional Components
   .use(Sortable)
   .use(Swipeout)
