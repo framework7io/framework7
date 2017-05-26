@@ -1,4 +1,7 @@
-/* === Modals === */
+/* === Dialog === */
+.dialog-overlay {
+  .modal-overlay();
+}
 .dialog {
   position: absolute;
   z-index: 13500;
@@ -10,15 +13,19 @@
   transform: translate3d(0,0,0) scale(1.185);
   transition-property: transform, opacity;
   display: none;
+  contain: content;
+  will-change: transform, opacity;
+  transition-duration: 400ms;
   &.modal-in {
     opacity: 1;
-    transition-duration: 400ms;
     transform: translate3d(0,0,0) scale(1);
   }
   &.modal-out {
     opacity: 0;
     z-index: 13500 - 1;
-    transition-duration: 400ms;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
   }
 }
 .dialog-inner {
@@ -30,7 +37,7 @@
 .dialog-buttons {
   position: relative;
   display: flex;
-  &.dialog-buttons-vertical {
+  .dialog-buttons-vertical & {
     display: block;
     height: auto;
   }
@@ -39,6 +46,18 @@
   .dialog-buttons {
     display: none;
   }
+}
+
+.dialog-input {
+  box-sizing: border-box;
+  margin: 0;
+  margin-top: 15px;
+  border-radius: 0;
+  appearance: none;
+  width: 100%;
+  display: block;
+  font-family: inherit;
+  box-shadow: none;
 }
 
 @import url('./dialog-ios.less');
