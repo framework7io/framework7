@@ -14,6 +14,11 @@ export default {
       dialogButtonCancel: 'Cancel',
       dialogUsernamePlaceholder: 'Username',
       dialogPasswordPlaceholder: 'Password',
+      dialogPreloaderTitle: 'Loading... ',
+      dialogCloseByOutsideClick: false,
+      popupCloseByOutsideClick: true,
+      actionsCloseByOutsideClick: true,
+      popoverCloseByOutsideClick: true,
     },
   },
 };
