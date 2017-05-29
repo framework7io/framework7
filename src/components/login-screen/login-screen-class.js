@@ -27,6 +27,10 @@ class LoginScreen extends Modal {
       return $el[0].f7Modal;
     }
 
+    if ($el.length === 0) {
+      return loginScreen.destroy();
+    }
+
     Utils.extend(loginScreen, {
       app,
       $el,
