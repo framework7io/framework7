@@ -15,26 +15,6 @@ function initClicks(app) {
 
     if (isLink) return;
     let pageContent;
-    if (app.params.clicks.scrollTopOnNavbarClick && clicked.is('.navbar .center')) {
-      // Find active page
-      const navbar = clicked.parents('.navbar');
-
-      // Static Layout
-      pageContent = navbar.parents('.page-content');
-
-      if (pageContent.length === 0) {
-        // Fixed Layout
-        if (navbar.parents('.page').length > 0) {
-          pageContent = navbar.parents('.page').find('.page-content');
-        }
-        // Through Layout
-        if (pageContent.length === 0) {
-          if (navbar.nextAll('.pages').length > 0) {
-            pageContent = navbar.nextAll('.pages').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-          }
-        }
-      }
-    }
     if (app.params.scrollTopOnStatusbarClick && clicked.is('.statusbar-overlay')) {
       if ($('.popup.modal-in').length > 0) {
         // Check for opened popup
@@ -61,14 +41,16 @@ function initClicks(app) {
   }
 
   function handleClicks(e) {
-    const clicked = $(this);
-    const url = clicked.attr('href');
-    const isLink = clicked[0].nodeName.toLowerCase() === 'a';
+    const clicked = $(e.target);
+    const clickedLink = clicked.closest('a');
+    const isLink = clickedLink.length > 0;
+    const url = isLink && clickedLink.attr('href');
+    const isTabLink = clicked.closest('.tab-link').length > 0;
 
     // Check if link is external
     if (isLink) {
-      if (clicked.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
-        if (url && clicked.attr('target') === '_system') {
+      if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
+        if (url && clickedLink.attr('target') === '_system') {
           e.preventDefault();
           window.open(url, '_system');
         }
@@ -76,8 +58,19 @@ function initClicks(app) {
       }
     }
 
-    // Collect Clicked data- attributes
-    const clickedData = clicked.dataset();
+    // Modules Clicks
+    Object.keys(app.modules).forEach((moduleName) => {
+      const moduleClicks = app.modules[moduleName].clicks;
+      if (!moduleClicks) return;
+      Object.keys(moduleClicks).forEach((clickSelector) => {
+        const matchingClickedElement = clicked.closest(clickSelector).eq(0);
+        if (matchingClickedElement.length > 0) {
+          moduleClicks[clickSelector].call(app, matchingClickedElement, matchingClickedElement.dataset());
+        }
+      });
+    });
+
+    /*
 
     // Smart Select
     if (clicked.hasClass('smart-select')) {
@@ -178,7 +171,6 @@ function initClicks(app) {
     }
 
     // Tabs
-    let isTabLink;
     if (clicked.hasClass('tab-link')) {
       isTabLink = true;
       app.showTab(clickedData.tab || clicked.attr('href'), clicked);
@@ -238,18 +230,21 @@ function initClicks(app) {
     if (clicked.hasClass('close-speed-dial')) {
       $('.speed-dial-opened').removeClass('speed-dial-opened');
     }
+    */
 
     // Load Page
+    let clickedLinkData = {};
     if (isLink) {
       e.preventDefault();
+      clickedLinkData = clickedLink.dataset();
     }
 
     const validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
-    const template = clickedData.template;
+    const template = clickedLinkData.template;
     if (validUrl || clicked.hasClass('back') || template) {
       let view;
-      if (clickedData.view) {
-        view = $(clickedData.view)[0].f7View;
+      if (clickedLinkData.view) {
+        view = $(clickedLinkData.view)[0].f7View;
       } else {
         view = clicked.parents(`.${app.params.view.viewClass}`)[0] && clicked.parents(`.${app.params.view.viewClass}`)[0].f7View;
         if (view && view.params.linksView) {
@@ -261,16 +256,17 @@ function initClicks(app) {
         if (app.mainView) view = app.mainView;
       }
       if (!view) return;
-      if (clicked.hasClass('back')) view.router.back(url, clickedData);
-      else view.router.navigate(url, clickedData);
+      if (clicked.hasClass('back')) view.router.back(url, clickedLinkData);
+      else view.router.navigate(url, clickedLinkData);
     }
   }
 
-  $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .dialog-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker, .picker-overlay', handleClicks);
+  $(document).on('click', handleClicks);
+  // $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .dialog-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker, .picker-overlay', handleClicks);
 
-  if (app.params.scrollTopOnNavbarClick || app.params.scrollTopOnStatusbarClick) {
-    $(document).on('click', '.statusbar-overlay, .navbar .center', handleScrollTop);
-  }
+  // if (app.params.clicks.scrollTopOnNavbarClick || app.params.clicks.scrollTopOnStatusbarClick) {
+  //   $(document).on('click', '.statusbar-overlay, .navbar .title', handleScrollTop);
+  // }
 
   // Prevent scrolling on overlays
   function preventScrolling(e) {
@@ -288,7 +284,6 @@ export default {
       // External Links
       externalLinks: '.external',
       // Tap Navbar or Statusbar to scroll to top
-      scrollTopOnNavbarClick: false,
       scrollTopOnStatusbarClick: false,
     },
   },
