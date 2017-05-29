@@ -1,5 +1,5 @@
 /**
- * Framework7 1.6.0
+ * Framework7 1.6.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * Google Material Theme
@@ -12,7 +12,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: April 10, 2017
+ * Released on: May 29, 2017
  */
 html,
 body,
@@ -3167,9 +3167,24 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
   -webkit-transform: scale(1) translateY(0);
   transform: scale(1) translateY(0);
 }
+.list-block .focus-state.item-inner .label {
+  color: #2196f3;
+}
+.list-block .focus-state.input-field:after,
+.list-block .focus-state .item-input-field:after {
+  background: #2196f3;
+}
 .list-block .focus-state .label,
 .list-block .focus-state .floating-label {
   color: #2196f3;
+}
+.list-block .not-empty-state.item-inner .label {
+  color: rgba(0, 0, 0, 0.65);
+}
+.list-block .not-empty-state.input-field:after,
+.list-block .not-empty-state .item-input-field:after {
+  background: rgba(0, 0, 0, 0.12);
+  transform: none !important;
 }
 .item-input-field,
 .input-field {
