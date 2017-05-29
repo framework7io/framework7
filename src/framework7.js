@@ -23,6 +23,7 @@ import Progressbar from './components/progressbar/progressbar';
 import Modal from './components/modal/modal';
 import Dialog from './components/dialog/dialog';
 import Popup from './components/popup/popup';
+import LoginScreen from './components/login-screen/login-screen';
 import Popover from './components/popover/popover';
 import Actions from './components/actions/actions';
 
@@ -62,6 +63,7 @@ Framework7
   .use(Modal)
   .use(Dialog)
   .use(Popup)
+  .use(LoginScreen)
   .use(Popover)
   .use(Actions)
   // Additional Components
