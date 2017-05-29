@@ -1,0 +1,62 @@
+/* === Login Screen === */
+.login-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  contain: strict;
+  will-change: transform;
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  transform: translate3d(0, 100%, 0);
+  background: #fff;
+  z-index: 11000;
+  &.modal-in, &.modal-out {
+    transition-duration: 400ms;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+  &.modal-in {
+    display: block;
+    transform: translate3d(0, 0, 0);
+  }
+  &.modal-out {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+html.with-statusbar {
+  &.device-ios .login-screen {
+    height: ~"-webkit-calc(100% - 20px)";
+    height: ~"calc(100% - 20px)";
+    top: 20px;
+  }
+  &.device-android .login-screen {
+    height: ~"-webkit-calc(100% - 24px)";
+    height: ~"calc(100% - 24px)";
+    top: 24px;
+  }
+}
+
+.login-screen-content {
+  background: #fff;
+  .login-screen-title, .list-block, .content-block, .list-block-label {
+    max-width: 480px;
+  }
+  .list-block ul {
+    .hairline-remove(top);
+    .hairline-remove(bottom);
+    background: none;
+  }
+  .list-block-label {
+    text-align: center;
+  }
+}
+.login-screen-title {
+  text-align: center;
+}
+
+@import url('./login-screen-ios.less');
+@import url('./login-screen-md.less');
