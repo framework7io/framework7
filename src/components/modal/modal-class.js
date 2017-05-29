@@ -115,7 +115,7 @@ class Modal {
     const $el = modal.$el;
     const $overlayEl = modal.$overlayEl;
 
-    if (!$el || $el.hasClass('modal-in')) {
+    if (!$el || !$el.hasClass('modal-in')) {
       return modal;
     }
 
