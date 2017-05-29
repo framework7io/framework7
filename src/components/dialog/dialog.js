@@ -4,6 +4,9 @@ import Dialog from './dialog-class';
 
 export default {
   name: 'dialog',
+  static: {
+    Dialog,
+  },
   create() {
     const app = this;
     Utils.extend(app, {
@@ -154,8 +157,5 @@ export default {
         progress(...args) {},
       },
     });
-  },
-  static: {
-    Dialog,
   },
 };
