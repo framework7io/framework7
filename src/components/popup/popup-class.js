@@ -27,6 +27,10 @@ class Popup extends Modal {
       return $el[0].f7Modal;
     }
 
+    if ($el.length === 0) {
+      return popup.destroy();
+    }
+
     let $overlayEl = app.root.children('.popup-overlay');
     if ($overlayEl.length === 0) {
       $overlayEl = $('<div class="popup-overlay"></div>');
