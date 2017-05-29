@@ -4,6 +4,9 @@ import Popup from './popup-class';
 
 export default {
   name: 'popup',
+  static: {
+    Popup,
+  },
   create() {
     const app = this;
     Utils.extend(app, {
@@ -11,14 +14,14 @@ export default {
         create(params) {
           return new Popup(app, params);
         },
-        open(dialogEl, animate) {
+        open(popupEl, animate) {
           return new Popup(app, {
-            el: $(dialogEl),
+            el: $(popupEl),
           }).open(animate);
         },
-        close(dialogEl = '.dialog.modal-in', animate) {
+        close(popupEl = '.popup.modal-in', animate) {
           return new Popup(app, {
-            el: $(dialogEl),
+            el: $(popupEl),
           }).close(animate);
         },
       },
