@@ -149,7 +149,7 @@ export default {
         },
         preloader(title) {
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
+            title: typeof title === 'undefined' ? app.params.modals.dialogPreloaderTitle : title,
             text: '<div class="preloader"></div>',
             cssClass: 'dialog-preloader',
           }).open();
@@ -157,5 +157,12 @@ export default {
         progress(...args) {},
       },
     });
+  },
+  clicks: {
+    '.dialog-overlay': function closeDialog() {
+      const app = this;
+      if (!app.params.modals.dialogCloseByOutsideClick) return;
+      app.dialog.close();
+    },
   },
 };
