@@ -1,5 +1,6 @@
 import $ from 'dom7';
 import Use from '../../utils/use';
+import Utils from '../../utils/utils';
 import Events from '../../modules/events/events';
 
 const dialogsQueue = [];
@@ -36,13 +37,10 @@ class Modal {
   }
   onClosed() {
     const modal = this;
-    modal.$el.trigger(`closed ${modal.type}:closed`);
-    modal.emit(`${modal.type}Closed ${modal.type}:closed`);
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
-    if (modal.type === 'dialog') {
-      modal.$el.remove();
-    }
+    modal.$el.trigger(`closed ${modal.type}:closed`);
+    modal.emit(`${modal.type}Closed ${modal.type}:closed`);
   }
   open(animate = true) {
     const modal = this;
@@ -51,19 +49,26 @@ class Modal {
     const $overlayEl = modal.$overlayEl;
     const type = modal.type;
 
+    if (!$el || $el.hasClass('modal-in')) {
+      return modal;
+    }
+
     if (type === 'dialog' && $('.dialog.modal-in').length > 0 && app.params.modals.queueDialogs) {
       dialogsQueue.push(modal);
       return modal;
     }
 
     const $modalParentEl = $el.parent();
+    const wasInDom = $el.parents(document).length > 0;
     if (app.params.modals.moveToRoot && !$modalParentEl.is(app.root)) {
       app.root.append($el);
-      if (type !== 'dialog') {
-        modal.once(`${type}:closed`, () => {
+      modal.once(`${type}:closed`, () => {
+        if (wasInDom) {
           $modalParentEl.append(modal);
-        });
-      }
+        } else {
+          $el.remove();
+        }
+      });
     }
     // Show Modal
     $el.show();
@@ -78,26 +83,28 @@ class Modal {
     // Emit open
     modal.onOpen();
 
-    // Overlay
-    $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
-    $overlayEl.addClass('overlay-in');
+    Utils.nextFrame(() => {
+      // Overlay
+      $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      $overlayEl.addClass('overlay-in');
 
-    // Modal
-    if (animate) {
-      $el
-        .transitionEnd(() => {
-          if ($el.hasClass('modal-out')) {
-            modal.onClosed();
-          } else {
-            modal.onOpened();
-          }
-        })
-        .removeClass('modal-out not-animated')
-        .addClass('modal-in');
-    } else {
-      $el.removeClass('modal-out').addClass('modal-in not-animated');
-      modal.onOpened();
-    }
+      // Modal
+      if (animate) {
+        $el
+          .transitionEnd(() => {
+            if ($el.hasClass('modal-out')) {
+              modal.onClosed();
+            } else {
+              modal.onOpened();
+            }
+          })
+          .removeClass('modal-out not-animated')
+          .addClass('modal-in');
+      } else {
+        $el.removeClass('modal-out').addClass('modal-in not-animated');
+        modal.onOpened();
+      }
+    });
 
     return modal;
   }
@@ -105,6 +112,10 @@ class Modal {
     const modal = this;
     const $el = modal.$el;
     const $overlayEl = modal.$overlayEl;
+
+    if (!$el || $el.hasClass('modal-in')) {
+      return modal;
+    }
 
     // Emit close
     modal.onClose();
@@ -137,6 +148,16 @@ class Modal {
     if (modal.type === 'dialog') {
       clearDialogsQueue();
     }
+
+    return modal;
+  }
+  destroy() {
+    let modal = this;
+    Object.keys(modal).forEach((key) => {
+      modal[key] = null;
+      delete modal[key];
+    });
+    modal = null;
   }
 }
 
