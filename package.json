@@ -35,6 +35,7 @@
   },
   "homepage": "http://framework7.io/",
   "devDependencies": {
+    "dom7": "^1.6.2",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.2.2",
     "gulp-concat": "^2.6.1",
@@ -49,7 +50,8 @@
     "gulp-tap": "^0.1.3",
     "gulp-uglify": "^2.0.0",
     "jshint": "^2.9.4",
-    "jshint-stylish": "^2.2.1"
+    "jshint-stylish": "^2.2.1",
+    "template7": "^1.2.3"
   },
   "scripts": {
     "test": "gulp test"

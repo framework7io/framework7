@@ -271,6 +271,7 @@ window.Swiper = function (container, params) {
     /*=========================
       Dom Library and plugins
       ===========================*/
+    var $ = $;
     if (typeof $ !== 'undefined' && typeof Dom7 !== 'undefined'){
         $ = Dom7;
     }

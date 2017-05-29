@@ -63,6 +63,8 @@
         f7 = {
             filename: 'framework7',
             jsFiles: [
+                './node_modules/dom7/dist/dom7.js',
+                './node_modules/template7/dist/template7.js',
                 'src/js/wrap-start.js',
                 'src/js/framework7/f7-intro.js',
                 'src/js/framework7/views.js',
@@ -107,18 +109,18 @@
                 'src/js/framework7/plugins.js',
                 'src/js/framework7/init.js',
                 'src/js/framework7/f7-outro.js',
-                'src/js/dom7/dom7-intro.js',
-                'src/js/dom7/dom7-methods.js',
-                'src/js/dom7/dom7-ajax.js',
-                'src/js/dom7/dom7-utils.js',
-                'src/js/dom7/dom7-outro.js',
-                'src/js/animate7/animate7.js',
+                // 'src/js/dom7/dom7-intro.js',
+                // 'src/js/dom7/dom7-methods.js',
+                // 'src/js/dom7/dom7-ajax.js',
+                // 'src/js/dom7/dom7-utils.js',
+                // 'src/js/dom7/dom7-outro.js',
+                // 'src/js/animate7/animate7.js',
                 'src/js/framework7/proto-support.js',
                 'src/js/framework7/proto-device.js',
                 'src/js/framework7/proto-plugins.js',
-                'src/js/template7/template7.js',
+                // 'src/js/template7/template7.js',
                 'src/js/swiper/swiper.js',
-                'src/js/wrap-end.js'
+                'src/js/wrap-end.js',
             ],
             modules: require('./modules.json'),
             pkg: require('./package.json'),
@@ -169,7 +171,7 @@
     function addJSIndent (file, t) {
         var addIndent = '        ';
         var filename = file.path.split('src/js/')[1];
-        if (filename === 'wrap-start.js' || filename === 'wrap-end.js') {
+        if (filename === 'wrap-start.js' || filename === 'wrap-end.js' || !filename) {
             addIndent = '';
         }
         var add4spaces = ('framework7/f7-intro.js framework7/f7-outro.js framework7/proto-device.js framework7/proto-plugins.js framework7/proto-support.js dom7/dom7-intro.js dom7/dom7-outro.js animate7/animate7.js template7/template7.js swiper/swiper.js').split(' ');
