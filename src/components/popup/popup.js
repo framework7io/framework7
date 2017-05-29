@@ -32,9 +32,14 @@ export default {
       const app = this;
       app.popup.open(data.popup, data.animate);
     },
-    '.popup-close, .popup-overlay': function closePopup($clickedEl, data = {}) {
+    '.popup-close': function closePopup($clickedEl, data = {}) {
       const app = this;
       app.popup.close(data.popup, data.animate);
+    },
+    '.popup-overlay': function closePopup() {
+      const app = this;
+      if (!app.params.modals.popupCloseByOutsideClick) return;
+      app.popup.close();
     },
   },
 };
