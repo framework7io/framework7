@@ -85,8 +85,10 @@ class Modal {
 
     Utils.nextFrame(() => {
       // Overlay
-      $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
-      $overlayEl.addClass('overlay-in');
+      if ($overlayEl) {
+        $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
+        $overlayEl.addClass('overlay-in');
+      }
 
       // Modal
       if (animate) {
@@ -121,8 +123,10 @@ class Modal {
     modal.onClose();
 
     // Overlay
-    $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
-    $overlayEl.removeClass('overlay-in');
+    if ($overlayEl) {
+      $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      $overlayEl.removeClass('overlay-in');
+    }
 
     // Modal
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
