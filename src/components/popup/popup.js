@@ -27,4 +27,14 @@ export default {
       },
     });
   },
+  clicks: {
+    '.popup-open': function openPopup($clickedEl, data = {}) {
+      const app = this;
+      app.popup.open(data.popup, data.animate);
+    },
+    '.popup-close, .popup-overlay': function closePopup($clickedEl, data = {}) {
+      const app = this;
+      app.popup.close(data.popup, data.animate);
+    },
+  },
 };
