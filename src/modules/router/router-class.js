@@ -220,7 +220,8 @@ class Router {
     const router = this;
     const removeClasses = 'navbar-current navbar-next navbar-previous';
     router.prepareNavbar(newNavbarInner, from);
-    const clientLeft = oldNavbarInner[0].clientLeft;
+
+
 
     // New Navbar Sliding
     let newNavbarSlidingEls;
@@ -238,75 +239,77 @@ class Router {
       oldNavbarSlidingEls = oldNavbarInner.find('.sliding');
     }
 
-    if (from === 'next' && to === 'current') {
-      oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-previous');
-      newNavbarInner.removeClass(removeClasses).addClass('navbar-next-to-current');
+    Utils.nextFrame(() => {
+      if (from === 'next' && to === 'current') {
+        oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-previous');
+        newNavbarInner.removeClass(removeClasses).addClass('navbar-next-to-current');
 
-      if (newNavbarSlidingEls) {
-        newNavbarSlidingEls.each((index, slidingEl) => {
-          const $slidingEl = $(slidingEl);
-          $slidingEl.transform('translate3d(0px,0,0)');
-          if (router.params.iosAnimateNavbarBackIcon) {
-            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-              $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
-            }
-          }
-        });
-      }
-      if (oldNavbarSlidingEls) {
-        oldNavbarSlidingEls.each((oldElIndex, slidingEl) => {
-          const $slidingEl = $(slidingEl);
-          if (router.params.iosAnimateNavbarBackIcon) {
-            if ($slidingEl.hasClass('title')) {
-              let iconEl;
-              let iconTextEl;
-              newNavbarSlidingEls.each((newElIndex, el) => {
-                const $el = $(el);
-                if ($el.hasClass('left')) {
-                  iconEl = $el.find('.back .icon').eq(0);
-                  iconTextEl = $el.find('.back span').eq(0);
-                }
-              });
-              if (iconEl && iconEl.length && iconTextEl && iconTextEl.length) {
-                slidingEl.f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
+        if (newNavbarSlidingEls) {
+          newNavbarSlidingEls.each((index, slidingEl) => {
+            const $slidingEl = $(slidingEl);
+            $slidingEl.transform('translate3d(0px,0,0)');
+            if (router.params.iosAnimateNavbarBackIcon) {
+              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+                $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
               }
             }
-            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-              $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarLeftOffset}px,0,0)`);
+          });
+        }
+        if (oldNavbarSlidingEls) {
+          oldNavbarSlidingEls.each((oldElIndex, slidingEl) => {
+            const $slidingEl = $(slidingEl);
+            if (router.params.iosAnimateNavbarBackIcon) {
+              if ($slidingEl.hasClass('title')) {
+                let iconEl;
+                let iconTextEl;
+                newNavbarSlidingEls.each((newElIndex, el) => {
+                  const $el = $(el);
+                  if ($el.hasClass('left')) {
+                    iconEl = $el.find('.back .icon').eq(0);
+                    iconTextEl = $el.find('.back span').eq(0);
+                  }
+                });
+                if (iconEl && iconEl.length && iconTextEl && iconTextEl.length) {
+                  slidingEl.f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
+                }
+              }
+              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+                $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarLeftOffset}px,0,0)`);
+              }
             }
-          }
-          $slidingEl.transform(`translate3d(${slidingEl.f7NavbarLeftOffset}px,0,0)`);
-        });
+            $slidingEl.transform(`translate3d(${slidingEl.f7NavbarLeftOffset}px,0,0)`);
+          });
+        }
       }
-    }
-    if (from === 'previous' && to === 'current') {
-      oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-next');
-      newNavbarInner.removeClass(removeClasses).addClass('navbar-previous-to-current');
+      if (from === 'previous' && to === 'current') {
+        oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-next');
+        newNavbarInner.removeClass(removeClasses).addClass('navbar-previous-to-current');
 
-      if (newNavbarSlidingEls) {
-        newNavbarSlidingEls.each((index, slidingEl) => {
-          const $slidingEl = $(slidingEl);
-          $slidingEl.transform('translate3d(0px,0,0)');
-          if (router.params.iosAnimateNavbarBackIcon) {
-            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-              $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
+        if (newNavbarSlidingEls) {
+          newNavbarSlidingEls.each((index, slidingEl) => {
+            const $slidingEl = $(slidingEl);
+            $slidingEl.transform('translate3d(0px,0,0)');
+            if (router.params.iosAnimateNavbarBackIcon) {
+              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+                $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
+              }
             }
-          }
-        });
-      }
+          });
+        }
 
-      if (oldNavbarSlidingEls) {
-        oldNavbarSlidingEls.each((index, slidingEl) => {
-          const $slidingEl = $(slidingEl);
-          if (router.params.iosAnimateNavbarBackIcon) {
-            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-              $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarRightOffset}px,0,0)`);
+        if (oldNavbarSlidingEls) {
+          oldNavbarSlidingEls.each((index, slidingEl) => {
+            const $slidingEl = $(slidingEl);
+            if (router.params.iosAnimateNavbarBackIcon) {
+              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+                $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarRightOffset}px,0,0)`);
+              }
             }
-          }
-          $slidingEl.transform(`translate3d(${slidingEl.f7NavbarRightOffset}px,0,0)`);
-        });
+            $slidingEl.transform(`translate3d(${slidingEl.f7NavbarRightOffset}px,0,0)`);
+          });
+        }
       }
-    }
+    });
   }
   animatePages(oldPage, newPage, from, to) {
     const removeClasses = 'page-current page-next page-previous';
