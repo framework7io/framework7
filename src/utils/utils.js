@@ -1,4 +1,9 @@
 const Utils = {
+  nextFrame(callback) {
+    if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
+    else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
+    return window.setTimeout(callback, 1000 / 60);
+  },
   now() {
     return Date.now();
   },
