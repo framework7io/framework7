@@ -50,6 +50,7 @@ function backward(el, backwardOptions) {
       .removeClass('stacked');
   }
 
+
   // Remove previous page in case of "forced"
   let backIndex;
   if (options.force) {
@@ -110,7 +111,9 @@ function backward(el, backwardOptions) {
 
   // Insert new page
   const needsAttachedCallback = $newPage.parents(document).length === 0;
-  $newPage.insertBefore($oldPage);
+  if ($newPage.next($oldPage).length === 0) {
+    $newPage.insertBefore($oldPage);
+  }
   if (dynamicNavbar) {
     $newNavbarInner.insertBefore($oldNavbarInner);
   }
