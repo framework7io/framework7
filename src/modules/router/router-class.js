@@ -337,6 +337,9 @@ class Router {
     if (typeof content === 'string') {
       router.tempDom.innerHTML = content;
     } else {
+      if ($(content).hasClass('page')) {
+        return content;
+      }
       router.tempDom.innerHTML = '';
       $(router.tempDom).append(content);
     }
