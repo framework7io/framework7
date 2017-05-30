@@ -1,0 +1,48 @@
+<template>
+  <div class="page" data-page="about">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">Back</a>
+        </div>
+        <div class="title">Progressbar</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Determinate</div>
+      <div class="content-block">
+        <div class="content-block-inner">
+          <p>
+            <span class="progressbar" data-progress="10"><span></span></span>
+          </p>
+          <p>
+            <a href="#" class="link">As Overlay</a>
+          </p>
+        </div>
+      </div>
+      <div class="block-title">Infinite</div>
+      <div class="content-block">
+        <div class="content-block-inner">
+          <p>
+            <span class="progressbar-infinite"></span>
+          </p>
+          <p>
+            <span class="progressbar-infinite color-multi"></span>
+          </p>
+          <p>
+            <a href="#" class="link">As Overlay</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit() {
+
+      }
+    }
+  }
+</script>
