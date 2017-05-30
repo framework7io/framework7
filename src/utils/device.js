@@ -76,13 +76,13 @@ function Device() {
   }
 
   // Check for status bar and fullscreen app mode
-  device.needsStatusBar = function needsStatusBar() {
+  device.needsStatusbar = function needsStatusbar() {
     if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
       return true;
     }
     return false;
   };
-  device.statusBar = device.needsStatusBar();
+  device.statusbar = device.needsStatusbar();
 
   // Pixel Ratio
   device.pixelRatio = window.devicePixelRatio || 1;

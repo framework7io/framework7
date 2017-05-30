@@ -1,0 +1,35 @@
+/* === Statusbar === */
+.statusbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  box-sizing: border-box;
+  display: none;
+
+  html.device-ios & {
+    height: 20px;
+  }
+  html.device-android & {
+    height: 24px;
+  }
+}
+html.with-statusbar {
+  .statusbar {
+    display: block;
+  }
+  &.device-ios {
+    .framework7-root, .panel {
+      padding-top: 20px;
+    }
+  }
+  &.device-android {
+    .framework7-root, .panel {
+      padding-top: 24px;
+    }
+  }
+}
+
+@import url('./statusbar-ios.less');
+@import url('./statusbar-md.less');
