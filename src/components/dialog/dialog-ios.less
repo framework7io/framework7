@@ -120,9 +120,17 @@ html.ios {
 
   // Preloader
   .dialog-preloader {
-    .prelaoder {
+    .dialog-title ~ .preloader, .dialog-text ~ .preloader {
+      margin-top: 5px;
+    }
+    .preloader {
       width: 34px;
       height: 34px;
+    }
+  }
+  .dialog-progress {
+    .dialog-title ~ .progressbar, .dialog-text ~ .progressbar, .dialog-title ~ .progressbar-infinite, .dialog-text ~ .progressbar-infinite {
+      margin-top: 5px;
     }
   }
 }

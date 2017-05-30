@@ -49,7 +49,7 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
-            contentAfterText: '<div class="dialog-input-field"><input type="text" class="dialog-input"></div>',
+            content: '<div class="dialog-input-field"><input type="text" class="dialog-input"></div>',
             buttons: [
               {
                 text: app.params.modals.dialogButtonCancel,
@@ -95,7 +95,7 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
-            contentAfterText: `
+            content: `
               <div class="dialog-input-field dialog-input-double">
                 <input type="text" name="dialog-username" placeholder="${app.params.modals.dialogUsernamePlaceholder}" class="dialog-input">
               </div>
@@ -127,7 +127,7 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
-            contentAfterText: `
+            content: `
               <div class="dialog-input-field">
                 <input type="password" name="dialog-password" placeholder="${app.params.modals.dialogPasswordPlaceholder}" class="dialog-input">
               </div>`,
@@ -148,13 +148,48 @@ export default {
           }).open();
         },
         preloader(title) {
+          const preloaderInner = app.theme !== 'md' ? '' :
+            '<span class="preloader-inner">' +
+                '<span class="preloader-inner-gap"></span>' +
+                '<span class="preloader-inner-left">' +
+                    '<span class="preloader-inner-half-circle"></span>' +
+                '</span>' +
+                '<span class="preloader-inner-right">' +
+                    '<span class="preloader-inner-half-circle"></span>' +
+                '</span>' +
+            '</span>';
           return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogPreloaderTitle : title,
-            text: '<div class="preloader"></div>',
+            content: `<div class="preloader">${preloaderInner}</div>`,
             cssClass: 'dialog-preloader',
           }).open();
         },
-        progress(...args) {},
+        progress(...args) {
+          let [title, progress, color] = args;
+          if (args.length === 2) {
+            if (typeof args[0] === 'number') {
+              [progress, color, title] = args;
+            } else if (typeof args[0] === 'string' && typeof args[1] === 'string') {
+              [title, color, progress] = args;
+            }
+          } else if (args.length === 1) {
+            if (typeof args[0] === 'number') {
+              [progress, title, color] = args;
+            }
+          }
+          const infinite = typeof progress === 'undefined';
+          const dialog = new Dialog(app, {
+            title: typeof title === 'undefined' ? app.params.modals.dialogProgressTitle : title,
+            cssClass: 'dialog-progress',
+            content: `
+              <div class="progressbar${infinite ? '-infinite' : ''}${color ? ` color-${color}` : ''}">
+                ${!infinite ? '<span></span>' : ''}
+              </div>
+            `,
+          });
+          if (!infinite) dialog.setProgress(progress);
+          return dialog.open();
+        },
       },
     });
   },

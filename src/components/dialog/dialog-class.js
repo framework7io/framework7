@@ -7,7 +7,7 @@ class Dialog extends Modal {
     const extendedParams = Utils.extend({
       title: app.params.modals.dialogTitle,
       text: undefined,
-      contentAfterText: '',
+      content: '',
       buttons: [],
       verticalButtons: false,
       onClick: undefined,
@@ -19,7 +19,7 @@ class Dialog extends Modal {
 
     const dialog = this;
 
-    const { title, text, contentAfterText, buttons, verticalButtons, cssClass } = extendedParams;
+    const { title, text, content, buttons, verticalButtons, cssClass } = extendedParams;
 
     dialog.params = extendedParams;
 
@@ -46,7 +46,7 @@ class Dialog extends Modal {
           <div class="dialog-inner">
             ${title ? `<div class="dialog-title">${title}</div>` : ''}
             ${text ? `<div class="dialog-text">${text}</div>` : ''}
-            ${contentAfterText}
+            ${content}
           </div>
           ${buttonsHTML}
         </div>
@@ -58,6 +58,10 @@ class Dialog extends Modal {
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
       return $el[0].f7Modal;
+    }
+
+    if ($el.length === 0) {
+      return dialog.destroy();
     }
 
     let $overlayEl = app.root.children('.dialog-overlay');
@@ -92,6 +96,34 @@ class Dialog extends Modal {
       $overlayEl,
       overlayEl: $overlayEl[0],
       type: 'dialog',
+      setProgress(progress, duration) {
+        app.progressbar.set($el.find('.progressbar'), progress, duration);
+        return dialog;
+      },
+      setText(newText) {
+        let $textEl = $el.find('.dialog-text');
+        if ($textEl.length === 0) {
+          $textEl = $('<div class="dialog-text"></div>');
+          if (typeof title !== 'undefined') {
+            $textEl.insertAfter($el.find('.dialog-title'));
+          } else {
+            $el.find('.dialog-inner').prepend($textEl);
+          }
+        }
+        $textEl.html(newText);
+        dialog.params.text = newText;
+        return dialog;
+      },
+      setTitle(newTitle) {
+        let $titleEl = $el.find('.dialog-title');
+        if ($titleEl.length === 0) {
+          $titleEl = $('<div class="dialog-title"></div>');
+          $el.find('.dialog-inner').prepend($titleEl);
+        }
+        $titleEl.html(newTitle);
+        dialog.params.title = newTitle;
+        return dialog;
+      },
     });
 
     $el[0].f7Modal = dialog;

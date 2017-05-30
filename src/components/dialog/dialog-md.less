@@ -81,9 +81,19 @@ html.md {
   }
 
   // Preloader
-  .dialog-preloader {
+  .dialog-preloader, .dialog-progress {
     .dialog-title, .dialog-inner {
       text-align: center;
+    }
+  }
+  .dialog-preloader {
+    .dialog-title ~ .preloader, .dialog-text ~ .preloader {
+      margin-top: 20px;
+    }
+  }
+  .dialog-progress {
+    .dialog-title ~ .progressbar, .dialog-text ~ .progressbar, .dialog-title ~ .progressbar-infinite, .dialog-text ~ .progressbar-infinite {
+      margin-top: 16px;
     }
   }
 }
