@@ -15,6 +15,7 @@ import History from './modules/history/history';
 import Clicks from './modules/clicks/clicks';
 
 // Core Components
+import Statusbar from './components/statusbar/statusbar';
 import View from './components/view/view';
 import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
@@ -55,6 +56,7 @@ Framework7
   .use(History)
   .use(Clicks)
   // Core Components
+  .use(Statusbar)
   .use(View)
   .use(Navbar)
   .use(Toolbar)
