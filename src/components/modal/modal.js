@@ -10,7 +10,7 @@ export default {
       moveToRoot: true,
       queueDialogs: true,
       dialogTitle: 'Framework7',
-      dialogButtonOk: 'Ok',
+      dialogButtonOk: 'OK',
       dialogButtonCancel: 'Cancel',
       dialogUsernamePlaceholder: 'Username',
       dialogPasswordPlaceholder: 'Password',
