@@ -79,8 +79,9 @@ function buildLess(cb) {
 }
 
 gulp.task('diff', () => {
-  const ios = fs.readFileSync('./src/_less-old/ios/modals.less', 'utf8');
-  const md = fs.readFileSync('./src/_less-old/material/modals.less', 'utf8');
+  var file = process.argv.slice(3).toString().replace('-', '');
+  const ios = fs.readFileSync('./src/_less-old/ios/' + file + '.less', 'utf8');
+  const md = fs.readFileSync('./src/_less-old/material/' + file + '.less', 'utf8');
   const result = diff.diffLines(ios, md);
 
   result.forEach((part) => {
