@@ -4,41 +4,6 @@ import Support from '../../utils/support';
 import ViewClass from '../../components/view/view-class';
 
 function initClicks(app) {
-  function handleScrollTop(e) {
-    const clicked = $(this);
-    const target = $(e.target);
-    const isLink =
-      clicked[0].nodeName.toLowerCase() === 'a' ||
-      clicked.parents('a').length > 0 ||
-      target[0].nodeName.toLowerCase() === 'a' ||
-      target.parents('a').length > 0;
-
-    if (isLink) return;
-    let pageContent;
-    if (app.params.scrollTopOnStatusbarClick && clicked.is('.statusbar-overlay')) {
-      if ($('.popup.modal-in').length > 0) {
-        // Check for opened popup
-        pageContent = $('.popup.modal-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-      } else if ($('.panel.active').length > 0) {
-        // Check for opened panel
-        pageContent = $('.panel.active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-      } else if ($('.views > .view.active').length > 0) {
-        // View in tab bar app layout
-        pageContent = $('.views > .view.active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-      } else {
-        // Usual case
-        pageContent = $('.views').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-      }
-    }
-
-    if (pageContent && pageContent.length > 0) {
-      // Check for tab
-      if (pageContent.hasClass('tab')) {
-        pageContent = pageContent.parent('.tabs').children('.page-content.active');
-      }
-      if (pageContent.length > 0) pageContent.scrollTop(0, 300);
-    }
-  }
 
   function handleClicks(e) {
     const clicked = $(e.target);
@@ -264,9 +229,6 @@ function initClicks(app) {
   $(document).on('click', handleClicks);
   // $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .dialog-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker, .picker-overlay', handleClicks);
 
-  // if (app.params.clicks.scrollTopOnNavbarClick || app.params.clicks.scrollTopOnStatusbarClick) {
-  //   $(document).on('click', '.statusbar-overlay, .navbar .title', handleScrollTop);
-  // }
 
   // Prevent scrolling on overlays
   function preventScrolling(e) {
