@@ -15,6 +15,7 @@ export default {
       dialogUsernamePlaceholder: 'Username',
       dialogPasswordPlaceholder: 'Password',
       dialogPreloaderTitle: 'Loading... ',
+      dialogProgressTitle: 'Loading... ',
       dialogCloseByOutsideClick: false,
       popupCloseByOutsideClick: true,
       actionsCloseByOutsideClick: true,
