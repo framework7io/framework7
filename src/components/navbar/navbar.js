@@ -179,7 +179,7 @@ export default {
     },
   },
   clicks: {
-    '.navbar .title': function onTitle($clickedEl) {
+    '.navbar .title': function onTitleClick($clickedEl) {
       const app = this;
       if (!app.params.navbar.scrollTopOnTitleClick) return;
       if ($clickedEl.closest('a').length > 0) {
