@@ -1,5 +1,9 @@
 # Change Log
 
+## Framework7 v1.6.3 - Updated on May 30, 2017
+  * Dom7
+    * Added missing shortcut methods `click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll`
+
 ## Framework7 v1.6.2 - Updated on May 29, 2017
   * Virtual List
     * New `renderExternal` callback parameter that allows to render DOM items using some custom method. Useful in case it is used with Vue plugin to pass DOM rendering and manipulation to Vue

@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
   "repository": {
@@ -35,7 +35,7 @@
   },
   "homepage": "http://framework7.io/",
   "devDependencies": {
-    "dom7": "^1.6.2",
+    "dom7": "^1.6.3",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.2.2",
     "gulp-concat": "^2.6.1",

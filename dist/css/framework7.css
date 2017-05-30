@@ -3259,6 +3259,188 @@ html.md .dialog-preloader .dialog-inner {
   text-align: center;
 }
 /* === Popup === */
+.popup-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 13000;
+  visibility: hidden;
+  opacity: 0;
+  transition-duration: 400ms;
+  will-change: opacity;
+  contain: strict;
+  z-index: 10500;
+}
+.popup-overlay.not-animated {
+  transition-duration: 0ms;
+}
+.popup-overlay.overlay-in {
+  visibility: visible;
+  opacity: 1;
+}
+.popup {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  contain: strict;
+  will-change: transform;
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  transform: translate3d(0, 100%, 0);
+  background: #fff;
+  z-index: 11000;
+}
+.popup.modal-in,
+.popup.modal-out {
+  transition-duration: 400ms;
+}
+.popup.not-animated {
+  transition-duration: 0ms;
+}
+.popup.modal-in {
+  display: block;
+  transform: translate3d(0, 0, 0);
+}
+.popup.modal-out {
+  transform: translate3d(0, 100%, 0);
+}
+@media (min-width: 630px) and (min-height: 630px) {
+  .popup:not(.popup-tablet-fullscreen) {
+    width: 630px;
+    height: 630px;
+    left: 50%;
+    top: 50%;
+    margin-left: -315px;
+    margin-top: -315px;
+    transform: translate3d(0, 100vh, 0);
+  }
+  .popup:not(.popup-tablet-fullscreen).modal-in {
+    transform: translate3d(0, 0, 0);
+  }
+  .popup:not(.popup-tablet-fullscreen).modal-out {
+    transform: translate3d(0, 100vh, 0);
+  }
+}
+@media all and (max-width: 629px), (max-height: 629px) {
+  html.with-statusbar .popup-overlay {
+    z-index: 9500;
+  }
+  html.with-statusbar.device-ios .popup {
+    height: -webkit-calc(100% - 20px);
+    height: calc(100% - 20px);
+    top: 20px;
+  }
+  html.with-statusbar.device-android .popup {
+    height: -webkit-calc(100% - 24px);
+    height: calc(100% - 24px);
+    top: 24px;
+  }
+}
+@media all and (min-width: 630px), (min-height: 630px) {
+  html.with-statusbar.device-ios .popup-tablet-fullscreen {
+    height: -webkit-calc(100% - 20px);
+    height: calc(100% - 20px);
+    top: 20px;
+  }
+  html.with-statusbar.device-android .popup-tablet-fullscreen {
+    height: -webkit-calc(100% - 24px);
+    height: calc(100% - 24px);
+    top: 24px;
+  }
+}
+@media (min-width: 630px) and (min-height: 630px) {
+  html.md .popup:not(.popup-tablet-fullscreen) {
+    box-shadow: 0px 20px 44px rgba(0, 0, 0, 0.5);
+  }
+}
+/* === Login Screen === */
+.login-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  contain: strict;
+  will-change: transform;
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  transform: translate3d(0, 100%, 0);
+  background: #fff;
+  z-index: 11000;
+}
+.login-screen.modal-in,
+.login-screen.modal-out {
+  transition-duration: 400ms;
+}
+.login-screen.not-animated {
+  transition-duration: 0ms;
+}
+.login-screen.modal-in {
+  display: block;
+  transform: translate3d(0, 0, 0);
+}
+.login-screen.modal-out {
+  transform: translate3d(0, 100%, 0);
+}
+html.with-statusbar.device-ios .login-screen {
+  height: -webkit-calc(100% - 20px);
+  height: calc(100% - 20px);
+  top: 20px;
+}
+html.with-statusbar.device-android .login-screen {
+  height: -webkit-calc(100% - 24px);
+  height: calc(100% - 24px);
+  top: 24px;
+}
+.login-screen-content {
+  background: #fff;
+}
+.login-screen-content .login-screen-title,
+.login-screen-content .list-block,
+.login-screen-content .content-block,
+.login-screen-content .list-block-label {
+  max-width: 480px;
+}
+.login-screen-content .list-block ul {
+  background: none;
+}
+.login-screen-content .list-block ul:before {
+  display: none !important;
+}
+.login-screen-content .list-block ul:after {
+  display: none !important;
+}
+.login-screen-content .list-block-label {
+  text-align: center;
+}
+.login-screen-title {
+  text-align: center;
+}
+html.ios .login-screen-content .login-screen-title,
+html.ios .login-screen-content .list-block,
+html.ios .login-screen-content .content-block,
+html.ios .login-screen-content .list-block-label {
+  margin: 25px auto;
+}
+html.ios .login-screen-title {
+  font-size: 30px;
+}
+html.md .login-screen-content .login-screen-title,
+html.md .login-screen-content .list-block,
+html.md .login-screen-content .content-block,
+html.md .login-screen-content .list-block-label {
+  margin: 24px auto;
+}
+html.md .login-screen-title {
+  font-size: 34px;
+}
 /* === Popover === */
 /* === Actions === */
 /* === Touch Ripple === */

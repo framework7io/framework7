@@ -1,5 +1,5 @@
 /**
- * Framework7 1.6.2
+ * Framework7 1.6.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * http://framework7.io/
@@ -10,10 +10,10 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 29, 2017
+ * Released on: May 30, 2017
  */
 /**
- * Dom7 1.6.2
+ * Dom7 1.6.3
  * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
  * http://framework7.io/docs/dom.html
  * 
@@ -23,7 +23,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 11, 2017
+ * Released on: May 30, 2017
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -408,7 +408,7 @@ $.ajaxSetup = function ajaxSetup(options) {
 var jsonpRequests = 0;
 
 // Ajax
-function Ajax(options) {
+function ajax(options) {
   var defaults = {
     method: 'GET',
     data: false,
@@ -652,6 +652,62 @@ function Ajax(options) {
 
   // Return XHR object
   return xhr;
+}
+
+function ajaxShortcut(method) {
+  var args = [], len = arguments.length - 1;
+  while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+  var url;
+  var data;
+  var success;
+  var error;
+  var dataType;
+  if (typeof args[1] === 'function') {
+    var assign;
+    (assign = args, url = assign[0], success = assign[1], error = assign[2], dataType = assign[3]);
+  } else {
+    var assign$1;
+    (assign$1 = args, url = assign$1[0], data = assign$1[1], success = assign$1[2], error = assign$1[3], dataType = assign$1[4]);
+  }
+  [success, error].forEach(function (callback) {
+    if (typeof callback === 'string') {
+      dataType = callback;
+      if (callback === success) { success = undefined; }
+      else { error = undefined; }
+    }
+  });
+  dataType = dataType || (method === 'getJSON' ? 'json' : undefined);
+  return $.ajax({
+    url: url,
+    method: method === 'post' ? 'POST' : 'GET',
+    data: data,
+    success: success,
+    error: error,
+    dataType: dataType,
+  });
+}
+
+function get() {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  args.unshift('get');
+  return ajaxShortcut.apply(this, args);
+}
+function post() {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  args.unshift('post');
+  return ajaxShortcut.apply(this, args);
+}
+function getJSON() {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  args.unshift('getJSON');
+  return ajaxShortcut.apply(this, args);
 }
 
 var Scroll = {
@@ -1131,7 +1187,7 @@ var Methods = {
     var dom = this;
     var i;
     function fireCallBack(e) {
-          /* jshint validthis:true */
+      /* jshint validthis:true */
       if (e.target !== this) { return; }
       callback.call(this, e);
       for (i = 0; i < events.length; i += 1) {
@@ -1632,7 +1688,32 @@ var Methods = {
   },
 };
 
-function Animate(initialProps, initialParams) {
+// Shortcuts
+var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
+var notTrigger = ('resize scroll').split(' ');
+function createMethod(name) {
+  Methods[name] = function eventShortcut(targetSelector, listener, capture) {
+    var this$1 = this;
+
+    if (typeof targetSelector === 'undefined') {
+      for (var i = 0; i < this.length; i += 1) {
+        if (notTrigger.indexOf(name) < 0) {
+          if (name in this$1[i]) { this$1[i][name](); }
+          else {
+            $(this$1[i]).trigger(name);
+          }
+        }
+      }
+      return this;
+    }
+    return this.on(name, targetSelector, listener, capture);
+  };
+}
+for (var i$1 = 0; i$1 < shortcuts.length; i$1 += 1) {
+  createMethod(shortcuts[i$1]);
+}
+
+function animate(initialProps, initialParams) {
   var els = this;
   var a = {
     props: $.extend({}, initialProps),
@@ -1810,7 +1891,7 @@ function Animate(initialProps, initialParams) {
   return els;
 }
 
-function Stop() {
+function stop() {
   var els = this;
   for (var i = 0; i < els.length; i += 1) {
     if (els[i].dom7AnimateInstance) {
@@ -1836,48 +1917,14 @@ function dom7() {
   });
 
   // Animate
-  Dom7.prototype.animate = Animate;
-  Dom7.prototype.stop = Stop;
+  Dom7.prototype.animate = animate;
+  Dom7.prototype.stop = stop;
 
   // Ajax
-  $.ajax = Ajax;
-
-  // Ajax Shrotcuts
-  ('get post getJSON').split(' ').forEach(function (method) {
-    $[method] = function ajax() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      var url;
-      var data;
-      var success;
-      var error;
-      var dataType;
-      if (typeof args[1] === 'function') {
-        var assign;
-        (assign = args, url = assign[0], success = assign[1], error = assign[2], dataType = assign[3]);
-      } else {
-        var assign$1;
-        (assign$1 = args, url = assign$1[0], data = assign$1[1], success = assign$1[2], error = assign$1[3], dataType = assign$1[4]);
-      }
-      [success, error].forEach(function (callback) {
-        if (typeof callback === 'string') {
-          dataType = callback;
-          if (callback === success) { success = undefined; }
-          else { error = undefined; }
-        }
-      });
-      dataType = dataType || (method === 'getJSON' ? 'json' : undefined);
-      return $.ajax({
-        url: url,
-        method: method === 'post' ? 'POST' : 'GET',
-        data: data,
-        success: success,
-        error: error,
-        dataType: dataType,
-      });
-    };
-  });
+  $.ajax = ajax;
+  $.get = get;
+  $.post = post;
+  $.getJSON = getJSON;
 
   // Link to prototype
   $.fn = Dom7.prototype;
