@@ -255,10 +255,10 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   }
 
   // Component Callbacks
-  function proceed(pageEl, newOptions) {
+  function resolve(pageEl, newOptions) {
     return router.backward(pageEl, Utils.extend(options, newOptions));
   }
-  function release() {
+  function reject() {
     router.allowPageChange = true;
     return router;
   }
@@ -269,7 +269,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (template || templateUrl) {
     // Parse template and send page element
     try {
-      router.templateLoader(template, templateUrl, options, proceed, release);
+      router.templateLoader(template, templateUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -283,7 +283,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.componentLoader(component, componentUrl, options, proceed, release);
+      router.componentLoader(component, componentUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -381,17 +381,17 @@ function back(...args) {
     }
   });
   // Async
-  function asyncProceed(proceedParams, proceedOptions) {
+  function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
-    router.loadBack(proceedParams, Utils.extend(options, proceedOptions), true);
+    router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
   }
-  function asyncRelease() {
+  function asyncReject() {
     router.allowPageChange = true;
   }
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncProceed, asyncRelease);
+    route.route.async(asyncResolve, asyncReject);
   }
   // Return Router
   return router;
