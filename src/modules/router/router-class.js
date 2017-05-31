@@ -1,12 +1,10 @@
 import $ from 'dom7';
 import t7 from 'template7';
-import Use from '../../utils/use';
+import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import Component from '../../utils/component';
-import Events from '../../modules/events/events';
 import SwipeBack from './swipe-back';
 
-// import RouterNavigate from './navigate';
 import { forward as RouterForward, load as RouterLoad, navigate as RouterNavigate } from './load';
 import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterBack } from './back';
 
@@ -116,8 +114,9 @@ import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterB
   ]
 */
 
-class Router {
+class Router extends Framework7Class {
   constructor(app, view) {
+    super();
     const router = this;
 
     // Is App Router
@@ -148,11 +147,11 @@ class Router {
         initialNavbars: [],
       });
     }
-    router.useInstanceModules({
-      events: {
-        parents: [router.isAppRouter ? app : view],
-      },
-    });
+
+    router.eventsParents = [router.isAppRouter ? app : view];
+
+    // Install Modules
+    router.useInstanceModules();
 
     // Temporary Dom
     router.tempDom = document.createElement('div');
@@ -828,10 +827,5 @@ class Router {
     router = null;
   }
 }
-
-// Use Events
-Use(Router)
-  .use(Events)
-  .use(SwipeBack);
 
 export default Router;

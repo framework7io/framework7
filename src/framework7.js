@@ -8,7 +8,6 @@ import Framework7 from './components/app/framework7-class';
 import Resize from './modules/resize/resize';
 import Device from './modules/device/device';
 import Support from './modules/support/support';
-import Events from './modules/events/events';
 import Touch from './modules/touch/touch';
 import Router from './modules/router/router';
 import History from './modules/history/history';
@@ -47,7 +46,6 @@ if (!window.Dom7) window.Dom7 = $;
 // Install Modules
 Framework7
   // Core Modules
-  .use(Events)
   .use(Support)
   .use(Device)
   .use(Resize)

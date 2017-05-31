@@ -1,9 +1,9 @@
 import Utils from '../../utils/utils';
-import Use from '../../utils/use';
-import Events from '../../modules/events/events';
+import Framework7Class from '../../utils/class';
 
-class Calendar {
+class Calendar extends Framework7Class {
   constructor(app, params = {}) {
+    super(params);
     const calendar = this;
     calendar.params = Utils.extend({
 
@@ -11,7 +11,5 @@ class Calendar {
     return calendar;
   }
 }
-
-Use(Calendar).use(Events);
 
 export default Calendar;

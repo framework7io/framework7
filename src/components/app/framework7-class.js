@@ -1,10 +1,12 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
-import Use from '../../utils/use';
+import Framework7Class from '../../utils/class';
 
-class Framework7 {
+class Framework7 extends Framework7Class {
   constructor(params) {
+    super(params);
+
     // App Instance
     const app = this;
 
@@ -81,9 +83,9 @@ class Framework7 {
     app.initialized = true;
     app.emit('init');
   }
+  static Class(...args) {
+    return new Framework7Class(...args);
+  }
 }
-
-// Modularity
-Use(Framework7);
 
 export default Framework7;

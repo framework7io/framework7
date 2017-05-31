@@ -1,7 +1,6 @@
 import $ from 'dom7';
-import Use from '../../utils/use';
 import Utils from '../../utils/utils';
-import Events from '../../modules/events/events';
+import Framework7Class from '../../utils/class';
 
 const dialogsQueue = [];
 function clearDialogsQueue() {
@@ -9,38 +8,51 @@ function clearDialogsQueue() {
   const dialog = dialogsQueue.shift();
   dialog.open();
 }
-class Modal {
+class Modal extends Framework7Class {
   constructor(app, params) {
+    super(params);
+
     const modal = this;
-    modal.params = params;
-    modal.useInstanceModules({
-      events: {
-        parents: [app],
-      },
-    });
+
+    const defaults = {};
+
+    // Extend defaults with modules params
+    modal.useInstanceModulesParams(defaults);
+
+    modal.params = Utils.extend(defaults, params);
+
+    modal.eventsParents = [app];
+
+    // Install Modules
+    modal.useInstanceModules();
+
     return this;
   }
   onOpen() {
     const modal = this;
-    modal.$el.trigger(`open ${modal.type}:open`);
-    modal.emit(`${modal.type}Open ${modal.type}:open`);
+    modal.$el.trigger(`open ${modal.type}:open`, modal);
+    modal.emit('modalOpen modal:open', modal);
+    modal.emit(`${modal.type}Open ${modal.type}:open`, modal);
   }
   onOpened() {
     const modal = this;
-    modal.$el.trigger(`opened ${modal.type}:opened`);
-    modal.emit(`${modal.type}Opened ${modal.type}:opened`);
+    modal.$el.trigger(`opened ${modal.type}:opened`, modal);
+    modal.emit('modalOpened modal:opened', modal);
+    modal.emit(`${modal.type}Opened ${modal.type}:opened`, modal);
   }
   onClose() {
     const modal = this;
-    modal.$el.trigger(`close ${modal.type}:close`);
-    modal.emit(`${modal.type}Close ${modal.type}:close`);
+    modal.$el.trigger(`close ${modal.type}:close`, modal);
+    modal.emit('modalClose modal:close', modal);
+    modal.emit(`${modal.type}Close ${modal.type}:close`, modal);
   }
   onClosed() {
     const modal = this;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
-    modal.$el.trigger(`closed ${modal.type}:closed`);
-    modal.emit(`${modal.type}Closed ${modal.type}:closed`);
+    modal.$el.trigger(`closed ${modal.type}:closed`, modal);
+    modal.emit('modalClosed modal:closed', modal);
+    modal.emit(`${modal.type}Closed ${modal.type}:closed`, modal);
   }
   open(animate = true) {
     const modal = this;
@@ -164,7 +176,5 @@ class Modal {
     modal = null;
   }
 }
-
-Use(Modal).use(Events);
 
 export default Modal;

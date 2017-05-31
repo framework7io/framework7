@@ -1,12 +1,12 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
-import Use from '../../utils/use';
-import Events from '../../modules/events/events';
 import Router from '../../modules/router/router';
+import Framework7Class from '../../utils/class';
 
-
-class View {
+class View extends Framework7Class {
   constructor(appInstance, el, viewParams = {}) {
+    super(viewParams);
+
     const app = appInstance;
     const $el = $(el);
     const view = this;
@@ -65,11 +65,10 @@ class View {
 
     $el[0].f7View = view;
 
+    view.eventsParents = [app];
+
     // Install Modules
     view.useInstanceModules({
-      events: {
-        parents: [app],
-      },
       router: {
         app,
         view,
@@ -136,8 +135,8 @@ class View {
   }
 }
 
-// Use Events and Router
-Use(View).use(Events).use(Router);
+// Use Router
+View.use(Router);
 
 
 export default View;

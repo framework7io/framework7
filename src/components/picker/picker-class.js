@@ -1,9 +1,9 @@
 import Utils from '../../utils/utils';
-import Use from '../../utils/use';
-import Events from '../../modules/events/events';
+import Framework7Class from '../../utils/class';
 
-class Picker {
+class Picker extends Framework7Class {
   constructor(app, params = {}) {
+    super(params);
     const picker = this;
     picker.params = Utils.extend({
 
@@ -11,7 +11,5 @@ class Picker {
     return picker;
   }
 }
-
-Use(Picker).use(Events);
 
 export default Picker;
