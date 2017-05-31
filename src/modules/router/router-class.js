@@ -518,14 +518,14 @@ class Router {
       });
     });
   }
-  templateLoader(template, templateUrl, options, proceed, release) {
+  templateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     function compile(t) {
       let compiledHtml;
       let context;
       try {
         context = options.context || {};
-        if (typeof context === 'function') context = context();
+        if (typeof context === 'function') context = context.call(router.app);
         else if (typeof context === 'string') {
           try {
             context = JSON.parse(context);
@@ -545,10 +545,10 @@ class Router {
           }));
         }
       } catch (err) {
-        release();
+        resolve();
         throw (err);
       }
-      proceed(router.getPageEl(compiledHtml), { context });
+      reject(router.getPageEl(compiledHtml), { context });
     }
     if (templateUrl) {
       // Load via XHR
@@ -562,13 +562,13 @@ class Router {
           compile(templateContent);
         })
         .catch(() => {
-          release();
+          reject();
         });
     } else {
       compile(template);
     }
   }
-  componentLoader(component, componentUrl, options, proceed, release) {
+  componentLoader(component, componentUrl, options, resolve, reject) {
     const router = this;
     function compile(c) {
       const compiled = Component.compile(c, {
@@ -578,7 +578,18 @@ class Router {
         $router: router,
         $theme: router.app.theme,
       });
-      proceed(router.getPageEl(compiled.html), { pageEvents: compiled.component.on });
+      const $pageEl = $(compiled.dom).eq(0);
+      if (compiled.events && compiled.events.length) {
+        compiled.events.forEach((event) => {
+          $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
+        });
+        $pageEl.once('pageBeforeRemove', () => {
+          compiled.events.forEach((event) => {
+            $(event.el).off(event.name, event.handler);
+          });
+        });
+      }
+      resolve($pageEl, { pageEvents: c.on });
     }
     if (componentUrl) {
       // Load via XHR
@@ -592,7 +603,7 @@ class Router {
           compile(Component.parse(loadedComponent));
         })
         .catch(() => {
-          release();
+          reject();
         });
     } else {
       compile(component);
@@ -640,6 +651,8 @@ class Router {
     }
 
     function attachEvents() {
+      if ($pageEl[0].f7PageEventsAttached) return;
+      $pageEl[0].f7PageEventsAttached = true;
       if (options.pageEvents) {
         Object.keys(options.pageEvents).forEach((eventName) => {
           $pageEl.on(eventName, () => {
@@ -648,15 +661,17 @@ class Router {
         });
       }
     }
-
+    if (callback === 'attached') {
+      attachEvents();
+    }
     if (callback === 'init') {
+      attachEvents();
       if ($pageEl[0].f7PageInitialized) {
         if (on.pageReinit) on.pageReinit(page);
         router.emit('pageReinit page:reinit', page);
         $pageEl.trigger('pageReinit page:reinit', page);
         return;
       }
-      attachEvents();
       $pageEl[0].f7PageInitialized = true;
     }
     if (on[camelName]) on[camelName](page);
