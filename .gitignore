@@ -6,4 +6,4 @@ npm-debug.log
 .idea
 .vscode
 nbproject
-dist/framework7.css
+dist/css/framework7.css

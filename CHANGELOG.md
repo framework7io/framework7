@@ -1,5 +1,8 @@
 # Change Log
 
+## Framework7 v1.6.4 - Updated on May 31, 2017
+  * Fixed issue with Dom7 and Template7 being missing when using bundler
+
 ## Framework7 v1.6.3 - Updated on May 30, 2017
   * Dom7
     * Added missing shortcut methods `click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll`

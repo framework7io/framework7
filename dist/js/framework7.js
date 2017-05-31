@@ -1,5 +1,5 @@
 /**
- * Framework7 1.6.3
+ * Framework7 1.6.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * http://framework7.io/
@@ -10,26 +10,10 @@
  * 
  * Licensed under MIT
  * 
- * Released on: May 30, 2017
+ * Released on: May 31, 2017
  */
-/**
- * Dom7 1.6.3
- * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
- * http://framework7.io/docs/dom.html
- * 
- * Copyright 2017, Vladimir Kharlampidi
- * The iDangero.us
- * http://www.idangero.us/
- * 
- * Licensed under MIT
- * 
- * Released on: May 30, 2017
- */
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Dom7 = factory());
-}(this, (function () { 'use strict';
+window.Dom7 = (function () {
+'use strict';
 
 var Dom7 = function Dom7(arr) {
   var self = this;
@@ -1935,29 +1919,10 @@ var dom7$1 = dom7();
 
 return dom7$1;
 
-})));
+}());
 
-//# sourceMappingURL=dom7.js.map
-
-/**
- * template7 1.2.3
- * Mobile-first HTML template engine
- * 
- * http://www.idangero.us/template7/
- * 
- * Copyright 2017, Vladimir Kharlampidi
- * The iDangero.us
- * http://www.idangero.us/
- * 
- * Licensed under MIT
- * 
- * Released on: May 12, 2017
- */
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Template7 = factory());
-}(this, (function () { 'use strict';
+window.Template7 = (function () {
+'use strict';
 
 var template7Context;
 if (typeof window !== 'undefined') {
@@ -2416,9 +2381,7 @@ t7.partials = Template7.prototype.partials;
 
 return t7;
 
-})));
-
-//# sourceMappingURL=template7.js.map
+}());
 
 (function () {
 
