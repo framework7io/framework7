@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="page-content">
-      <h2>{{title}}</h2>
+      <h2 @click="alert('Hello World!')">{{title}}</h2>
       <h3>User is: {{$root.user.firstName}} {{$root.user.lastName}}</h3>
       <ul>
         {{#each items}}
@@ -27,7 +27,9 @@
       }
     },
     methods: {
-
+      alert(text) {
+        this.$app.dialog.alert(text);
+      },
     },
     on: {
       pageAttached: function(page) {
@@ -53,14 +55,6 @@
       pageAfterOut: function(page) {
         var self = this;
         console.log('pageAfterOut', self, page);
-      },
-      pageBeforeStack: function(page) {
-        var self = this;
-        console.log('pageBeforeStack', self, page);
-      },
-      pageAfterStack: function(page) {
-        var self = this;
-        console.log('pageAfterStack', self, page);
       },
       pageBeforeRemove: function(page) {
         var self = this;
