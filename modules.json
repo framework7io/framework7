@@ -1,8 +1,8 @@
 {
     "core_intro" : {
         "js" : [
-            "./node_modules/dom7/dist/dom7.js",
-            "./node_modules/template7/dist/template7.js",
+            "src/js/dom7/dom7.js",
+            "src/js/template7/template7.js",
             "src/js/wrap-start.js",
             "src/js/framework7/f7-intro.js",
             "src/js/framework7/views.js",

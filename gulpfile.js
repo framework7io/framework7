@@ -15,6 +15,10 @@
         concat = require('gulp-concat'),
         jshint = require('gulp-jshint'),
         stylish = require('jshint-stylish'),
+        rollup = require('rollup-stream'),
+        buble = require('rollup-plugin-buble'),
+        source = require('vinyl-source-stream'),
+        buffer = require('vinyl-buffer'),
         fs = require('fs'),
         paths = {
             root: './',
@@ -63,8 +67,8 @@
         f7 = {
             filename: 'framework7',
             jsFiles: [
-                './node_modules/dom7/dist/dom7.js',
-                './node_modules/template7/dist/template7.js',
+                'src/js/dom7/dom7.js',
+                'src/js/template7/template7.js',
                 'src/js/wrap-start.js',
                 'src/js/framework7/f7-intro.js',
                 'src/js/framework7/views.js',
@@ -164,17 +168,17 @@
     function addJSIndent (file, t) {
         var addIndent = '        ';
         var filename = file.path.split('src/js/')[1];
-        if (filename === 'wrap-start.js' || filename === 'wrap-end.js' || !filename) {
+        if (filename === 'wrap-start.js' || filename === 'wrap-end.js' || filename === 'dom7/dom7.js' || filename === 'template7/template7.js') {
             addIndent = '';
         }
-        var add4spaces = ('framework7/f7-intro.js framework7/f7-outro.js framework7/proto-device.js framework7/proto-plugins.js framework7/proto-support.js dom7/dom7-intro.js dom7/dom7-outro.js animate7/animate7.js template7/template7.js swiper/swiper.js').split(' ');
+        var add4spaces = ('framework7/f7-intro.js framework7/f7-outro.js framework7/proto-device.js framework7/proto-plugins.js framework7/proto-support.js swiper/swiper.js').split(' ');
         if (add4spaces.indexOf(filename) >= 0) {
             addIndent = '    ';
         }
-        var add8spaces = ('dom7/dom7-methods.js dom7/dom7-ajax.js dom7/dom7-utils.js').split(' ');
-        if (add8spaces.indexOf(filename) >= 0) {
-            addIndent = '        ';
-        }
+        // var add8spaces = ('dom7/dom7-methods.js dom7/dom7-ajax.js dom7/dom7-utils.js').split(' ');
+        // if (add8spaces.indexOf(filename) >= 0) {
+        //     addIndent = '        ';
+        // }
         if (addIndent !== '') {
             var fileLines = fs.readFileSync(file.path).toString().split('\n');
             var newFileContents = '';
@@ -187,6 +191,40 @@
     /* ==================================================================
     Build Framework7
     ================================================================== */
+    gulp.task('dom7', function (cb) {
+        rollup({
+            entry: './node_modules/dom7/src/dom7.js',
+            plugins: [buble()],
+            format: 'iife',
+            moduleName: 'Dom7',
+            useStrict: true,
+        })
+        .pipe(source('dom7.js', './node_modules/dom7/src'))
+        .pipe(buffer())
+        .pipe(gulp.dest('./src/js/dom7/'))
+        .on('end', function () {
+            var fileContent = fs.readFileSync('./src/js/dom7/dom7.js', 'utf-8');
+            fs.writeFileSync('./src/js/dom7/dom7.js', fileContent.replace('var Dom7 = (function () {', 'window.Dom7 = (function () {'))
+            cb();
+        });
+    });
+    gulp.task('template7', function (cb) {
+        rollup({
+            entry: './node_modules/template7/src/template7.js',
+            plugins: [buble()],
+            format: 'iife',
+            moduleName: 'Template7',
+            useStrict: true,
+        })
+        .pipe(source('template7.js', './node_modules/template7/src'))
+        .pipe(buffer())
+        .pipe(gulp.dest('./src/js/template7/'))
+        .on('end', function () {
+            var fileContent = fs.readFileSync('./src/js/template7/template7.js', 'utf-8');
+            fs.writeFileSync('./src/js/template7/template7.js', fileContent.replace('var Template7 = (function () {', 'window.Template7 = (function () {'))
+            cb();
+        });
+    });
     // Build Styles and Scripts
     gulp.task('scripts', function (cb) {
         gulp.src(f7.jsFiles)
