@@ -17,6 +17,9 @@ export default {
       closeByOutsideClick: true,
     },
   },
+  static: {
+    Panel,
+  },
   instance: {
     panel: {
       allowOpen: true,
