@@ -5,7 +5,7 @@ import Framework7Class from '../../utils/class';
 
 class View extends Framework7Class {
   constructor(appInstance, el, viewParams = {}) {
-    super(viewParams);
+    super(viewParams, [appInstance]);
 
     const app = appInstance;
     const $el = $(el);
@@ -64,8 +64,6 @@ class View extends Framework7Class {
     });
 
     $el[0].f7View = view;
-
-    view.eventsParents = [app];
 
     // Install Modules
     view.useInstanceModules({
