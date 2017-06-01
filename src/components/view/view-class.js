@@ -110,7 +110,6 @@ class View extends Framework7Class {
       app.views[view.name] = null;
       delete app.views[view.name];
     }
-    view.$el.removeAttr('data-page');
     view.$el[0].f7View = null;
     delete view.$el[0].f7View;
 
