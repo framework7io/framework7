@@ -8,9 +8,6 @@ function initTouch() {
   const params = app.params.touch;
   const useRipple = app.theme === 'md' && params.materialRipple;
 
-  if (params.activeState) {
-    $('html').addClass('watch-active-state');
-  }
   if (Device.ios && Device.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
     window.addEventListener('touchstart', () => {});
