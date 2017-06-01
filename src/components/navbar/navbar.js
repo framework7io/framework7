@@ -4,6 +4,7 @@ import Utils from '../../utils/utils';
 const Navbar = {
   size(el) {
     const app = this;
+    if (app.theme !== 'ios') return;
     const $el = $(el);
     if ($el.hasClass('stacked') || $el.parents('.stacked').length > 0 || $el.parents('.tab:not(.active)').length > 0) {
       return;
@@ -152,7 +153,7 @@ export default {
   on: {
     pageBeforeRemove(page) {
       const app = this;
-      if (app.theme === 'md') return;
+      if (app.theme !== 'ios') return;
       const $navbarEl = Navbar.getEl(page);
       if (!$navbarEl || $navbarEl.length === 0) return;
 
@@ -160,7 +161,7 @@ export default {
     },
     pageReinit(page) {
       const app = this;
-      if (app.theme === 'md') return;
+      if (app.theme !== 'ios') return;
       const $navbarEl = Navbar.getEl(page);
       if (!$navbarEl || $navbarEl.length === 0) return;
 
@@ -168,7 +169,7 @@ export default {
     },
     pageInit(page) {
       const app = this;
-      if (app.theme === 'md') return;
+      if (app.theme !== 'ios') return;
       const $navbarEl = Navbar.getEl(page);
       if (!$navbarEl || $navbarEl.length === 0) return;
       $navbarEl[0].f7ResizeHandler = function resizeHandler() {
@@ -176,6 +177,14 @@ export default {
       };
       app.navbar.size($navbarEl);
       app.on('resize', $navbarEl[0].f7ResizeHandler);
+    },
+    panelOpen(panelEl) {
+      const app = this;
+      if (app.theme !== 'ios') return;
+      const $panelEl = $(panelEl);
+      $panelEl.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+        app.navbar.size(navbarEl);
+      });
     },
   },
   clicks: {
