@@ -9,12 +9,14 @@
 <body>
   <div id="app">
     <div class="statusbar"></div>
+    <div class="panel panel-left panel-reveal"></div>
+    <div class="panel panel-right panel-cover"></div>
     <div class="view view-main">
       <div class="page" data-page="home">
         <div class="navbar">
           <div class="navbar-inner">
             <div class="left sliding">Left</div>
-            <div class="title sliding">Hello!</div>
+            <div class="title sliding">Framework7</div>
             <div class="right sliding">
               <a href="#" class="link">Link</a>
             </div>
@@ -55,6 +57,9 @@
             </li>
           </ul>
           <ul>
+            <li>
+              <a href="/cards/">Cards</a>
+            </li>
             <li>
               <a href="/progressbar/">Progressbar</a>
             </li>
@@ -179,6 +184,11 @@
         {
           path: '/progressbar/',
           componentUrl: '/pages/progressbar.html',
+        },
+        // Cards
+        {
+          path: '/cards/',
+          url: '/pages/cards.html',
         },
 
         // Dynamic + Content
