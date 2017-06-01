@@ -279,7 +279,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     router.backward(router.getPageEl(el), options);
   } else if (name) {
     // Load page by page name in pages container
-    router.backward(router.$el.children(`.page[data-page="${name}"]`).eq(0), options);
+    router.backward(router.$el.children(`.page[data-name="${name}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {

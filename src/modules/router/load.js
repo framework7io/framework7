@@ -239,7 +239,7 @@ function forward(el, forwardOptions = {}) {
         if (dynamicNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
-      } else if (!($newPage.attr('data-page') && $newPage.attr('data-page').indexOf('smart-select-') === 0)) {
+      } else if (!($newPage.attr('data-name') && $newPage.attr('data-name').indexOf('smart-select-') === 0)) {
         // Remove event
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
         router.remove($oldPage);
@@ -322,7 +322,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     router.forward(router.getPageEl(el), options);
   } else if (name) {
     // Load page by page name in pages container
-    router.forward(router.$el.children(`.page[data-page="${name}"]`).eq(0), options);
+    router.forward(router.$el.children(`.page[data-name="${name}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {

@@ -622,7 +622,7 @@ class Router extends Framework7Class {
       pageEl: $pageEl[0],
       $navbarEl,
       navbarEl: $navbarEl[0],
-      name: $pageEl.attr('data-page'),
+      name: $pageEl.attr('data-name'),
       position: from,
       from,
       to,
