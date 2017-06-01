@@ -10,7 +10,7 @@ function clearDialogsQueue() {
 }
 class Modal extends Framework7Class {
   constructor(app, params) {
-    super(params);
+    super(params, [app]);
 
     const modal = this;
 
@@ -20,8 +20,6 @@ class Modal extends Framework7Class {
     modal.useInstanceModulesParams(defaults);
 
     modal.params = Utils.extend(defaults, params);
-
-    modal.eventsParents = [app];
 
     // Install Modules
     modal.useInstanceModules();
