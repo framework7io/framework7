@@ -647,6 +647,17 @@ app.router._load = function (view, options) {
 
 app.router.load = function (view, options) {
     options = options || {};
+    if (app.routerPreOptions) {
+        options = app.routerPreOptions(view, options) || {};
+    }
+    if (options.component && app.componentLoader) {
+        try {
+            app.componentLoader(view, options, function (newOptions) {
+                app.router.load(view, newOptions);
+            });
+        } catch (e) {}
+        return;
+    }
     if (app.router.preroute(view, options)) {
         return false;
     }
@@ -1072,6 +1083,17 @@ app.router._back = function (view, options) {
 };
 app.router.back = function (view, options) {
     options = options || {};
+    if (app.routerPreOptions) {
+        options = app.routerPreOptions(view, options) || {};
+    }
+    if (options.component && app.componentLoader) {
+        try {
+            app.componentLoader(view, options, function (newOptions) {
+                app.router.load(view, newOptions);
+            });
+        } catch (e) {}
+        return;
+    }
     if (app.router.preroute(view, options, true)) {
         return false;
     }

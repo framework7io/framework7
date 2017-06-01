@@ -123,7 +123,7 @@ var View = function (selector, params) {
 
     // View startup URL
     if (view.params.domCache && currentPage) {
-        view.url = container.attr('data-url') || view.params.url || '#' + currentPage.attr('data-page');   
+        view.url = container.attr('data-url') || view.params.url || '#' + currentPage.attr('data-page');
         view.pagesCache[view.url] = currentPage.attr('data-page');
     }
     else view.url = container.attr('data-url') || view.params.url || viewURL;
@@ -163,6 +163,7 @@ var View = function (selector, params) {
         previousNavBackIcon,
         dynamicNavbar,
         pageShadow,
+        pageOpacity,
         el;
 
     view.handleTouchStart = function (e) {
@@ -221,6 +222,13 @@ var View = function (selector, params) {
                     activePage.append(pageShadow);
                 }
             }
+            if (view.params.swipeBackPageAnimateOpacity) {
+                pageOpacity = previousPage.find('.swipeback-page-opacity');
+                if (pageOpacity.length === 0) {
+                    pageOpacity = $('<div class="swipeback-page-opacity"></div>');
+                    previousPage.append(pageOpacity);
+                }
+            }
 
             if (dynamicNavbar) {
                 activeNavbar = container.find('.navbar-on-center:not(.cached)');
@@ -275,7 +283,7 @@ var View = function (selector, params) {
         if (view.params.swipeBackPageAnimateShadow && !app.device.android) pageShadow[0].style.opacity = 1 - 1 * percentage;
 
         previousPage.transform('translate3d(' + previousPageTranslate + 'px,0,0)');
-        if (view.params.swipeBackPageAnimateOpacity) previousPage[0].style.opacity = 0.9 + 0.1 * percentage;
+        if (view.params.swipeBackPageAnimateOpacity) pageOpacity[0].style.opacity = 1 - 1 * percentage;
 
         // Dynamic Navbars Animation
         if (dynamicNavbar) {
@@ -320,7 +328,7 @@ var View = function (selector, params) {
         isTouched = false;
         isMoved = false;
         if (touchesDiff === 0) {
-            $([activePage[0], previousPage[0]]).transform('').css({opacity: '', boxShadow: ''});
+            $([activePage[0], previousPage[0]]).transform('');
             if (dynamicNavbar) {
                 activeNavElements.transform('').css({opacity: ''});
                 previousNavElements.transform('').css({opacity: ''});
@@ -346,7 +354,7 @@ var View = function (selector, params) {
         }
         // Reset custom styles
         // Add transitioning class for transition-duration
-        $([activePage[0], previousPage[0]]).transform('').css({opacity: '', boxShadow: ''}).addClass('page-transitioning');
+        $([activePage[0], previousPage[0]]).transform('').addClass('page-transitioning');
         if (dynamicNavbar) {
             activeNavElements.css({opacity: ''})
             .each(function () {
@@ -431,6 +439,7 @@ var View = function (selector, params) {
                 container.trigger('swipeBackAfterReset swipeback:afterreset', callbackData);
             }
             if (pageShadow && pageShadow.length > 0) pageShadow.remove();
+            if (pageOpacity && pageOpacity.length > 0) pageOpacity.remove();
         });
     };
     view.attachEvents = function (detach) {
@@ -452,7 +461,7 @@ var View = function (selector, params) {
 
     // Check view name to delete unwanted characters
     if (view.params.name) view.params.name = view.params.name.replace(/[^a-zA-Z]/g, '');
-  
+
     // Add view to app
     app.views.push(view);
     if (view.main) {
@@ -612,7 +621,7 @@ var View = function (selector, params) {
         container.removeAttr('data-page');
         container[0].f7View = null;
         delete container[0].f7View;
-        
+
         app.views.splice(app.views.indexOf(view), 1);
 
         // Delete props & methods

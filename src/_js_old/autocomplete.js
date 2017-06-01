@@ -321,7 +321,7 @@ var Autocomplete = function (params) {
             }
         }
         if (a.params.updateInputValueOnSelect) {
-            a.input.val(typeof clickedItem === 'object' ? clickedItem[a.params.textProperty] : clickedItem);
+            a.input.val(typeof clickedItem === 'object' ? clickedItem[a.params.valueProperty] : clickedItem);
             a.input.trigger('input change');
         }
 

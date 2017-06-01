@@ -24,18 +24,26 @@
     }
 }
 .page-on-left {
-    opacity: 0.9;
     .translate3d(-20%);
+    .swipeback-page-opacity {
+        opacity: 1;
+    }
+    &:after {
+        opacity: 1;
+    }
 }
 .page-on-center {
     .swipeback-page-shadow {
         opacity: 1;
     }
+    .swipeback-page-opacity {
+        opacity: 0 !important;
+    }
 }
 .page-on-right {
     .translate3d(100%);
     .swipeback-page-shadow {
-        opacity: 0;
+        opacity: 0 !important;
     }
 }
 .page-content {
@@ -47,6 +55,19 @@
 }
 
 // Page Shadow
+.page-fake-opacity() {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.1);
+    width: 100%;
+    height: 100%;
+    content: '';
+    opacity: 0;
+    z-index: 10000;
+    will-change: opacity;
+    contain: strict;
+}
 .page-fake-shadow() {
     position: absolute;
     right: 100%;
@@ -57,6 +78,8 @@
     background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
     z-index: -1;
     content: '';
+    will-change: opacity;
+    contain: strict;
     html.android & {
         display: none;
         .animation(none);
@@ -65,11 +88,14 @@
 .swipeback-page-shadow {
     .page-fake-shadow();
 }
+.swipeback-page-opacity {
+    .page-fake-opacity();
+}
 
 
 //Class that will trigger transition during page custom transitions (like swipe-back)
 .page-transitioning {
-    &, .swipeback-page-shadow {
+    &, .swipeback-page-shadow, .swipeback-page-opacity {
         .transition(@pageDuration);
     }
 }
@@ -160,18 +186,24 @@
 // From/to Center To/from Left animations
 .page-from-center-to-left {
     .animation(pageFromCenterToLeft @pageDuration forwards);
+    &:after {
+        .page-fake-opacity();
+        .animation(pageFromCenterToLeftOpacity @pageDuration forwards);
+    }
 }
 .page-from-left-to-center {
     .animation(pageFromLeftToCenter @pageDuration forwards);
+    &:after {
+        .page-fake-opacity();
+        .animation(pageFromLeftToCenterOpacity @pageDuration forwards);
+    }
 }
 
 @-webkit-keyframes pageFromCenterToLeft {
     from {
-        opacity: 1;
         -webkit-transform: translate3d(0,0,0);
     }
     to {
-        opacity: 0.9;
         -webkit-transform: translate3d(-20%,0,0);
     }
 }
@@ -180,17 +212,14 @@
         transform: translate3d(0,0,0);
     }
     to {
-        opacity: 0.9;
         transform: translate3d(-20%,0,0);
     }
 }
 @-webkit-keyframes pageFromLeftToCenter {
     from {
-        opacity: 0.9;
         -webkit-transform: translate3d(-20%,0,0);
     }
     to {
-        opacity: 1;
         -webkit-transform: translate3d(0,0,0);
     }
 }
@@ -199,7 +228,39 @@
         transform: translate3d(-20%,0,0);
     }
     to {
-        opacity: 1;
         transform: translate3d(0,0,0);
+    }
+}
+
+@-webkit-keyframes pageFromCenterToLeftOpacity {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes pageFromCenterToLeftOpacity {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes pageFromLeftToCenterOpacity {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes pageFromLeftToCenterOpacity {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
     }
 }

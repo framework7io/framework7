@@ -5,4 +5,8 @@ custom
 npm-debug.log
 .idea
 .vscode
+<<<<<<< HEAD
+=======
+nbproject
+>>>>>>> nolimits4web/master
 dist/css/framework7.css

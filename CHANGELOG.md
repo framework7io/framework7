@@ -1,5 +1,26 @@
 # Change Log
 
+## Framework7 v1.6.4 - Updated on May 31, 2017
+  * Fixed issue with Dom7 and Template7 being missing when using bundler
+
+## Framework7 v1.6.3 - Updated on May 30, 2017
+  * Dom7
+    * Added missing shortcut methods `click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll`
+
+## Framework7 v1.6.2 - Updated on May 29, 2017
+  * Virtual List
+    * New `renderExternal` callback parameter that allows to render DOM items using some custom method. Useful in case it is used with Vue plugin to pass DOM rendering and manipulation to Vue
+  * Pull To Refresh
+    * Fixed issue with its destory method when used in multiple tabs on single page to destroy it only in specified tab
+  * Autocomplete
+    * Fixed issues with not being used `valueProperty` on input
+  * iOS
+    * A bit improved page transitions performance using fake opacity layer instead of changing opacity of whole page
+  * Dom7
+    * Now it is used as a standalone library from https://github.com/nolimits4web/Dom7
+    * New `Dom7.extend(obj1, obj2, ...)` method to clone/extend objects
+    * Proxified events. Now all events are being added/removed using proxy functions. This allows to pass additional arguments to events handlers and detach all assigned event listeners by calling e.g. `$$(document).off('someEvent');`
+
 ## Framework7 v1.6.0 - Updated on April 10, 2017
   * New Data Table component
   * Lazy Loading
