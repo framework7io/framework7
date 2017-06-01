@@ -116,7 +116,7 @@ import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterB
 
 class Router extends Framework7Class {
   constructor(app, view) {
-    super();
+    super({}, [typeof view === 'undefined' ? app : view]);
     const router = this;
 
     // Is App Router
@@ -147,8 +147,6 @@ class Router extends Framework7Class {
         initialNavbars: [],
       });
     }
-
-    router.eventsParents = [router.isAppRouter ? app : view];
 
     // Install Modules
     router.useInstanceModules();
