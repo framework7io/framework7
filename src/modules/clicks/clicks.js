@@ -196,7 +196,6 @@ function initClicks(app) {
       $('.speed-dial-opened').removeClass('speed-dial-opened');
     }
     */
-
     // Load Page
     let clickedLinkData = {};
     if (isLink) {
@@ -206,7 +205,7 @@ function initClicks(app) {
 
     const validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
     const template = clickedLinkData.template;
-    if (validUrl || clicked.hasClass('back') || template) {
+    if (validUrl || clickedLink.hasClass('back') || template) {
       let view;
       if (clickedLinkData.view) {
         view = $(clickedLinkData.view)[0].f7View;
@@ -221,7 +220,7 @@ function initClicks(app) {
         if (app.mainView) view = app.mainView;
       }
       if (!view) return;
-      if (clicked.hasClass('back')) view.router.back(url, clickedLinkData);
+      if (clickedLink.hasClass('back')) view.router.back(url, clickedLinkData);
       else view.router.navigate(url, clickedLinkData);
     }
   }
