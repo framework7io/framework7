@@ -28,12 +28,13 @@ import Popover from './components/popover/popover';
 import Actions from './components/actions/actions';
 
 // Additional Components
+import Panel from './components/panel/panel';
+import Card from './components/card/card';
 import Sortable from './components/sortable/sortable';
 import Swipeout from './components/swipeout/swipeout';
 import SmartSelect from './components/smartselect/smartselect';
 import Calendar from './components/calendar/calendar';
 import Picker from './components/picker/picker';
-import Panels from './components/panels/panels';
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -72,6 +73,7 @@ Framework7
   .use(SmartSelect)
   .use(Calendar)
   .use(Picker)
-  .use(Panels);
+  .use(Panel)
+  .use(Card);
 
 export default Framework7;
