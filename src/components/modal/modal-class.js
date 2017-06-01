@@ -30,6 +30,7 @@ class Modal extends Framework7Class {
   }
   onOpen() {
     const modal = this;
+    $('html').addClass(`with-modal-${modal.type}`);
     modal.$el.trigger(`open ${modal.type}:open`, modal);
     modal.emit('modalOpen modal:open', modal);
     modal.emit(`${modal.type}Open ${modal.type}:open`, modal);
@@ -42,6 +43,7 @@ class Modal extends Framework7Class {
   }
   onClose() {
     const modal = this;
+    $('html').removeClass(`with-modal-${modal.type}`);
     modal.$el.trigger(`close ${modal.type}:close`, modal);
     modal.emit('modalClose modal:close', modal);
     modal.emit(`${modal.type}Close ${modal.type}:close`, modal);
