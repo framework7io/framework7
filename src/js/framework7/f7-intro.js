@@ -72,6 +72,8 @@ window.Framework7 = function (params) {
         // Smart Select Back link template
         smartSelectOpenIn: 'page', // or 'popup' or 'picker'
         smartSelectBackText: 'Back',
+        smartSelectClearSelectText: 'clear {{numSelected}} items',
+        smartSelectSelectAllText: 'select all',
         smartSelectPopupCloseText: 'Close',
         smartSelectPickerCloseText: 'Done',
         smartSelectSearchbar: false,
