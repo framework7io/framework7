@@ -1,11 +1,12 @@
 import Utils from './utils';
 
 class Framework7Class {
-  constructor(params = {}) {
+  constructor(params = {}, parents = []) {
     const self = this;
     self.params = params;
 
     // Events
+    self.eventsParents = parents;
     self.eventsListeners = {};
     self.on = function on(events, handler) {
       // const self = this;
