@@ -1,6 +1,6 @@
 /* === Content Block === */
 html.ios {
-  .content-block {
+  .block {
     margin: 35px 0;
     padding: 0 15px;
     color: #6d6d72;
@@ -9,32 +9,31 @@ html.ios {
     text-transform: uppercase;
     color: #6d6d72;
     margin: 35px 15px 10px;
-    + .list-block, + .content-block, + .card, + .timeline {
+    + .list, + .block, + .card, + .timeline {
       margin-top: 10px;
     }
   }
-  .content-block-inner {
+  .block-strong {
     color: #000;
     background: #fff;
-    padding: 10px 15px;
-    margin-left: -15px;
+    padding: 15px 15px;
   }
-  .hairline-root('.content-block-inner', top, #c8c7cc);
-  .hairline-root('.content-block-inner', bottom, #c8c7cc);
-  .content-block.inset {
+  .hairline-root('.block-strong', top, #c8c7cc);
+  .hairline-root('.block-strong', bottom, #c8c7cc);
+  .block.inset {
     margin-left: 15px;
     margin-right: 15px;
-    .content-block-inner {
-      border-radius: 7px;
-    }
+  }
+  .block-strong-inset {
+    border-radius: 7px;
   }
   @media all and (min-width:768px) {
-    .content-block.tablet-inset {
+    .block.tablet-inset {
       margin-left: 15px;
       margin-right: 15px;
       border-radius: 7px
     }
-    .content-block.tablet-inset .content-block-inner {
+    .block-strong.tablet-inset {
       border-radius: 7px;
     }
   }
