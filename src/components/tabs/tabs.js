@@ -11,13 +11,13 @@ const Tabs = {
     if (typeof animate === 'undefined') animate = true;
 
     const $newTabEl = $(tab);
-    if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) return;
+    if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) return undefined;
 
     let $tabLinkEl;
     if (tabLink) $tabLinkEl = $(tabLink);
 
     const $tabsEl = $newTabEl.parent('.tabs');
-    if ($tabsEl.length === 0) return;
+    if ($tabsEl.length === 0) return undefined;
 
     // Release swipeouts in hidden tabs
     if (app.swipeout) app.swipeout.allowOpen = true;
@@ -65,37 +65,39 @@ const Tabs = {
         });
       }
     }
-    if ($tabLinkEl.length === 0) return;
-
-    // Find related link for old tab
-    let $oldTabLinkEl;
-    if ($oldTabEl && $oldTabEl.length > 0) {
-        // Search by id
-      const oldTabId = $oldTabEl.attr('id');
-      if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
-        // Search by data-tab
-      if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
-        $('[data-tab]').each((index, tabLinkEl) => {
-          if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);
-        });
-      }
-    }
-
-    // Update links' classes
-    if ($tabLinkEl && $tabLinkEl.length > 0) {
-      $tabLinkEl.addClass('tab-link-active');
-      // Material Highlight
-      if (app.theme === 'md' && app.toolbar) {
-        const $tabbarEl = $tabLinkEl.parents('.tabbar');
-        if ($tabbarEl.length > 0) {
-          if ($tabbarEl.find('.tab-link-highlight').length === 0) {
-            $tabbarEl.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
-          }
-          app.toolbar.setHighlight($tabbarEl);
+    if ($tabLinkEl.length > 0) {
+      // Find related link for old tab
+      let $oldTabLinkEl;
+      if ($oldTabEl && $oldTabEl.length > 0) {
+          // Search by id
+        const oldTabId = $oldTabEl.attr('id');
+        if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
+          // Search by data-tab
+        if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
+          $('[data-tab]').each((index, tabLinkEl) => {
+            if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);
+          });
         }
       }
+
+      // Update links' classes
+      if ($tabLinkEl && $tabLinkEl.length > 0) {
+        $tabLinkEl.addClass('tab-link-active');
+        // Material Highlight
+        if (app.theme === 'md' && app.toolbar) {
+          const $tabbarEl = $tabLinkEl.parents('.tabbar');
+          if ($tabbarEl.length > 0) {
+            if ($tabbarEl.find('.tab-link-highlight').length === 0) {
+              $tabbarEl.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+            }
+            app.toolbar.setHighlight($tabbarEl);
+          }
+        }
+      }
+      if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass('tab-link-active');
     }
-    if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass('tab-link-active');
+
+    return $newTabEl[0];
   },
 };
 export default {
@@ -111,7 +113,9 @@ export default {
   clicks: {
     '.tab-link': function tabLinkClick($clickedEl, data = {}) {
       const app = this;
-      app.tabs.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
+      if ($clickedEl.attr('href').indexOf('#') === 0 || $clickedEl.attr('data-tab')) {
+        app.tabs.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
+      }
     },
   },
 };

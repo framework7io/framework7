@@ -4,13 +4,12 @@ import Support from '../../utils/support';
 import ViewClass from '../../components/view/view-class';
 
 function initClicks(app) {
-
   function handleClicks(e) {
     const clicked = $(e.target);
     const clickedLink = clicked.closest('a');
     const isLink = clickedLink.length > 0;
     const url = isLink && clickedLink.attr('href');
-    const isTabLink = clicked.closest('.tab-link').length > 0;
+    const isTabLink = isLink && clickedLink.hasClass('tab-link') && (clickedLink.attr('data-tab') || url.indexOf('#') === 0);
 
     // Check if link is external
     if (isLink) {
@@ -42,26 +41,6 @@ function initClicks(app) {
       if (app.smartSelectOpen) app.smartSelectOpen(clicked);
     }
 
-    // Open Panel
-    if (clicked.hasClass('open-panel')) {
-      if ($('.panel').length === 1) {
-        if ($('.panel').hasClass('panel-left')) app.openPanel('left');
-        else app.openPanel('right');
-      } else if (clickedData.panel === 'right') app.openPanel('right');
-      else app.openPanel('left');
-    }
-
-    // Close Panel
-    if (clicked.hasClass('close-panel')) {
-      app.closePanel();
-    }
-
-    // Panel Overlay
-    if (clicked.hasClass('panel-overlay')) {
-      $('.panel.active').trigger('panel:overlay-click');
-      if (app.params.panelsCloseByOutside) app.closePanel();
-    }
-
     // Popover
     if (clicked.hasClass('open-popover')) {
       let popover;
@@ -74,32 +53,6 @@ function initClicks(app) {
       app.closeModal('.popover.modal-in');
     }
 
-    // Popup
-    let popup;
-    if (clicked.hasClass('open-popup')) {
-      if (clickedData.popup) {
-        popup = clickedData.popup;
-      } else popup = '.popup';
-      app.popup(popup);
-    }
-    if (clicked.hasClass('close-popup')) {
-      if (clickedData.popup) {
-        popup = clickedData.popup;
-      } else popup = '.popup.modal-in';
-      app.closeModal(popup);
-    }
-
-    // Login Screen
-    let loginScreen;
-    if (clicked.hasClass('open-login-screen')) {
-      if (clickedData.loginScreen) {
-        loginScreen = clickedData.loginScreen;
-      } else loginScreen = '.login-screen';
-      app.loginScreen(loginScreen);
-    }
-    if (clicked.hasClass('close-login-screen')) {
-      app.closeModal('.login-screen.modal-in');
-    }
 
     // Close Modal
     if (clicked.hasClass('dialog-overlay')) {
@@ -107,9 +60,6 @@ function initClicks(app) {
       if ($('.actions-modal.modal-in').length > 0 && app.params.actionsCloseByOutside) { app.closeModal('.actions-modal.modal-in'); }
 
       if ($('.popover.modal-in').length > 0 && app.params.popoverCloseByOutside) { app.closeModal('.popover.modal-in'); }
-    }
-    if (clicked.hasClass('popup-overlay')) {
-      if ($('.popup.modal-in').length > 0 && app.params.popupCloseByOutside) { app.closeModal('.popup.modal-in'); }
     }
     if (clicked.hasClass('picker-overlay')) {
       if ($('.picker.modal-in').length > 0) { app.closeModal('.picker.modal-in'); }
@@ -133,12 +83,6 @@ function initClicks(app) {
         pickerToOpen = clickedData.picker;
       } else pickerToOpen = '.picker';
       app.pickerModal(pickerToOpen, clicked);
-    }
-
-    // Tabs
-    if (clicked.hasClass('tab-link')) {
-      isTabLink = true;
-      app.showTab(clickedData.tab || clicked.attr('href'), clicked);
     }
 
     // Swipeout Close
@@ -202,7 +146,6 @@ function initClicks(app) {
       e.preventDefault();
       clickedLinkData = clickedLink.dataset();
     }
-
     const validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
     const template = clickedLinkData.template;
     if (validUrl || clickedLink.hasClass('back') || template) {
