@@ -552,7 +552,10 @@ class Router extends Framework7Class {
             $root: router.app.data,
             $route: options.route,
             $router: router,
-            $theme: router.app.theme,
+            $theme: {
+              ios: router.app.theme === 'ios',
+              md: router.app.theme === 'md',
+            },
           }));
         }
       } catch (err) {
@@ -600,7 +603,10 @@ class Router extends Framework7Class {
         $root: router.app.data,
         $route: options.route,
         $router: router,
-        $theme: router.app.theme,
+        $theme: {
+          ios: router.app.theme === 'ios',
+          md: router.app.theme === 'md',
+        },
       });
       const $el = $(compiled.dom);
 

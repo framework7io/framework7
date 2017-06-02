@@ -135,6 +135,16 @@ const Component = {
                   if (!isNaN(arg)) arg = parseFloat(arg);
                   else if (arg[0] === '"') arg = arg.replace(/"/g, '');
                   else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
+                  else if (arg.indexOf('.') > 0) {
+                    let deepArg;
+                    arg.split('.').forEach((path) => {
+                      if (!deepArg) deepArg = context;
+                      deepArg = deepArg[path];
+                    });
+                    arg = deepArg;
+                  } else {
+                    arg = context[arg];
+                  }
                   args.push(arg);
                 });
               }
