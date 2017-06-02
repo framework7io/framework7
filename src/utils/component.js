@@ -7,9 +7,28 @@ const Component = {
   parse(componentString) {
     const callbackName = `f7_component_callback_${new Date().getTime()}`;
 
+    // Template
     let template;
     if (componentString.indexOf('<template>') >= 0) {
       template = componentString.split('<template>')[1].split('</template>')[0].trim();
+    }
+
+    // Styles
+    let style;
+    const styleScope = Utils.now();
+    if (componentString.indexOf('<style>') >= 0) {
+      style = componentString.split('<style>')[1].split('</style>')[0];
+    } else if (componentString.indexOf('<style scoped>') >= 0) {
+      style = componentString.split('<style scoped>')[1].split('</style>')[0];
+      style = style.split('\n').map((line) => {
+        if (line.indexOf('{') >= 0) {
+          if (line.indexOf('{{this}}') >= 0) {
+            return line.replace('{{this}}', `[data-scope="${styleScope}"]`);
+          }
+          return `[data-scope="${styleScope}"] ${line.trim()}`;
+        }
+        return line;
+      }).join('\n');
     }
 
     let scriptContent = componentString.split('<script>')[1].split('</script>')[0].trim();
@@ -27,6 +46,10 @@ const Component = {
 
     if (!component.template && !component.render) {
       component.template = template;
+    }
+    if (style) {
+      component.style = style;
+      component.styleScope = styleScope;
     }
     return component;
   },

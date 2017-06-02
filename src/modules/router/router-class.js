@@ -567,6 +567,7 @@ class Router extends Framework7Class {
   }
   componentLoader(component, componentUrl, options, resolve, reject) {
     const router = this;
+    const url = typeof component === 'string' ? component : componentUrl;
     function compile(c) {
       const compiled = Component.compile(c, {
         $app: router.app,
@@ -576,11 +577,22 @@ class Router extends Framework7Class {
         $theme: router.app.theme,
       });
       const $pageEl = $(compiled.dom).eq(0);
+
+      let styleEl;
+      if (c.style) {
+        styleEl = document.createElement('style');
+        styleEl.innerHTML = c.style;
+        $('head').append(styleEl);
+        if (c.styleScope) $pageEl.attr('data-scope', c.styleScope);
+      }
       if (compiled.events && compiled.events.length) {
         compiled.events.forEach((event) => {
           $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
         });
         $pageEl.once('pageBeforeRemove', () => {
+          if (c.style && styleEl) {
+            $(styleEl).remove();
+          }
           compiled.events.forEach((event) => {
             $(event.el).off(event.name, event.handler);
           });
@@ -588,14 +600,14 @@ class Router extends Framework7Class {
       }
       resolve($pageEl, { pageEvents: c.on });
     }
-    if (componentUrl) {
+    if (url) {
       // Load via XHR
       if (router.xhr) {
         router.xhr.abort();
         router.xhr = false;
       }
       router
-        .xhrRequest(componentUrl)
+        .xhrRequest(url)
         .then((loadedComponent) => {
           compile(Component.parse(loadedComponent));
         })
