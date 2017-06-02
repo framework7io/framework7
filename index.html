@@ -70,6 +70,9 @@
               <a href="/tabs/">Tabs</a>
             </li>
             <li>
+              <a href="/tabs-router/">Routable Tabs</a>
+            </li>
+            <li>
               <a href="/progressbar/">Progressbar</a>
             </li>
           </ul>
@@ -103,6 +106,12 @@
         };
       },
       on: {
+        // routerAjaxStart() {
+        //   this.progressbar.show();
+        // },
+        // routerAjaxComplete() {
+        //   this.progressbar.hide();
+        // },
         routeChanged(to, from) {
           // console.log(to, from)
         },
@@ -199,6 +208,24 @@
           url: '/pages/tabs.html',
         },
         {
+          path: '/tabs-router/',
+          url: '/pages/tabs-router.html',
+          tabs: [
+            {
+              path: '/',
+              id: 'tab1',
+            },
+            {
+              path: '/tab2/',
+              id: 'tab2',
+            },
+            {
+              path: '/tab3/',
+              id: 'tab3',
+            },
+          ],
+        },
+        {
           path: '/content-block/',
           url: '/pages/content-block.html',
         },
@@ -210,6 +237,7 @@
           path: '/chips/',
           url: '/pages/chips.html',
         },
+
 
         // Dynamic + Content
         {

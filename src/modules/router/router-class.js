@@ -5,7 +5,7 @@ import Utils from '../../utils/utils';
 import Component from '../../utils/component';
 import SwipeBack from './swipe-back';
 
-import { forward as RouterForward, load as RouterLoad, navigate as RouterNavigate } from './load';
+import { loadTab, forward, load, navigate } from './navigate';
 import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterBack } from './back';
 
 /*
@@ -182,9 +182,10 @@ class Router extends Framework7Class {
     });
 
     // Load
-    router.forward = RouterForward;
-    router.load = RouterLoad;
-    router.navigate = RouterNavigate;
+    router.forward = forward;
+    router.load = load;
+    router.navigate = navigate;
+    router.loadTab = loadTab;
 
     // Back
     router.backward = RouterBackward;
@@ -380,15 +381,26 @@ class Router extends Framework7Class {
   flattenRoutes(routes = this.routes) {
     let flattenedRoutes = [];
     routes.forEach((route) => {
-      if (!('routes' in route)) {
-        flattenedRoutes.push(route);
-      } else {
-        const metgedPathsRoutes = route.routes.map((childRoute) => {
-          const cRoute = childRoute;
+      if ('routes' in route) {
+        const mergedPathsRoutes = route.routes.map((childRoute) => {
+          const cRoute = Utils.extend({}, childRoute);
           cRoute.path = (`${route.path}/${cRoute.path}`).replace('///', '/').replace('//', '/');
           return cRoute;
         });
-        flattenedRoutes = flattenedRoutes.concat(route, this.flattenRoutes(metgedPathsRoutes));
+        flattenedRoutes = flattenedRoutes.concat(route, this.flattenRoutes(mergedPathsRoutes));
+      } else if ('tabs' in route && route.tabs) {
+        const mergedPathsRoutes = route.tabs.map((tabRoute) => {
+          const tRoute = Utils.extend({}, route, {
+            path: (`${route.path}/${tabRoute.path}`).replace('///', '/').replace('//', '/'),
+            parentPath: route.path,
+            tab: tabRoute,
+          });
+          delete tRoute.tabs;
+          return tRoute;
+        });
+        flattenedRoutes = flattenedRoutes.concat(this.flattenRoutes(mergedPathsRoutes));
+      } else {
+        flattenedRoutes.push(route);
       }
     });
     return flattenedRoutes;
@@ -527,6 +539,7 @@ class Router extends Framework7Class {
           try {
             context = JSON.parse(context);
           } catch (err) {
+            reject();
             throw (err);
           }
         }
@@ -542,10 +555,10 @@ class Router extends Framework7Class {
           }));
         }
       } catch (err) {
-        resolve();
+        reject();
         throw (err);
       }
-      reject(router.getPageEl(compiledHtml), { context });
+      resolve(compiledHtml, { context });
     }
     if (templateUrl) {
       // Load via XHR
@@ -565,6 +578,18 @@ class Router extends Framework7Class {
       compile(template);
     }
   }
+  tabTemplateLoader(tabEl, template, templateUrl, options, resolve, reject) {
+    const router = this;
+    return router.templateLoader(template, templateUrl, options, (html) => {
+      resolve($(html));
+    }, reject);
+  }
+  pageTemplateLoader(template, templateUrl, options, resolve, reject) {
+    const router = this;
+    return router.templateLoader(template, templateUrl, options, (html, newOptions = {}) => {
+      resolve(router.getPageEl(html), newOptions);
+    }, reject);
+  }
   componentLoader(component, componentUrl, options, resolve, reject) {
     const router = this;
     const url = typeof component === 'string' ? component : componentUrl;
@@ -576,20 +601,20 @@ class Router extends Framework7Class {
         $router: router,
         $theme: router.app.theme,
       });
-      const $pageEl = $(compiled.dom).eq(0);
+      const $el = $(compiled.dom);
 
       let styleEl;
       if (c.style) {
         styleEl = document.createElement('style');
         styleEl.innerHTML = c.style;
         $('head').append(styleEl);
-        if (c.styleScope) $pageEl.attr('data-scope', c.styleScope);
+        if (c.styleScope) $el.attr('data-scope', c.styleScope);
       }
       if (compiled.events && compiled.events.length) {
         compiled.events.forEach((event) => {
           $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
         });
-        $pageEl.once('pageBeforeRemove', () => {
+        $el.once('pageBeforeRemove', () => {
           if (c.style && styleEl) {
             $(styleEl).remove();
           }
@@ -598,7 +623,7 @@ class Router extends Framework7Class {
           });
         });
       }
-      resolve($pageEl, { pageEvents: c.on });
+      resolve($el, { pageEvents: c.on });
     }
     if (url) {
       // Load via XHR
@@ -617,6 +642,18 @@ class Router extends Framework7Class {
     } else {
       compile(component);
     }
+  }
+  tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
+    const router = this;
+    router.componentLoader(component, componentUrl, options, (el) => {
+      resolve(el);
+    }, reject);
+  }
+  pageComponentLoader(component, componentUrl, options, resolve, reject) {
+    const router = this;
+    router.componentLoader(component, componentUrl, options, (el, newOptions = {}) => {
+      resolve(el, newOptions);
+    }, reject);
   }
   getPageData(pageEl, navbarEl, from, to, route = {}) {
     const router = this;

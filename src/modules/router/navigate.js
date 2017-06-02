@@ -275,6 +275,88 @@ function forward(el, forwardOptions = {}) {
 
   return router;
 }
+function loadTab(tab, loadOptions = {}) {
+  const router = this;
+  const options = Utils.extend({
+    animate: router.params.animatePages,
+    pushState: true,
+    history: true,
+    reloadCurrent: router.params.reloadPages,
+    on: {},
+  }, loadOptions);
+
+  const { ignoreCache } = options;
+
+  // Set Route
+  router.currentRoute = options.route;
+
+  // Update Browser History
+  if (router.params.pushState && options.pushState && !options.reloadPrevious) {
+    History.replace(
+      {
+        url: options.route.url,
+        tabId: tab.id,
+      },
+      (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
+  }
+
+  // Update Router History
+  if (options.history) {
+    router.history[router.history.length - 1] = options.route.url;
+    router.saveHistory();
+  }
+
+  // Show Tab
+  const $tabEl = $(router.app.tabs.show(`#${tab.id}`, options.animate));
+
+  // Load Tab Content
+  const { url, content, el, template, templateUrl, component, componentUrl } = tab;
+
+  // Component/Template Callbacks
+  function resolve(contentEl) {
+    $tabEl.html('');
+    $tabEl.append(contentEl);
+  }
+  function reject() {
+    router.allowPageChange = true;
+    return router;
+  }
+
+  if (content) {
+    $tabEl.html(content);
+  } else if (template || templateUrl) {
+    try {
+      router.tabTemplateLoader(template, templateUrl, options, resolve, reject);
+    } catch (err) {
+      router.allowPageChange = true;
+      throw err;
+    }
+  } else if (el) {
+    $tabEl.html('');
+    $tabEl.append(el);
+  } else if (component || componentUrl) {
+    // Load from component (F7/Vue/React/...)
+    try {
+      router.tabComponentLoader($tabEl, component, componentUrl, options, resolve, reject);
+    } catch (err) {
+      router.allowPageChange = true;
+      throw err;
+    }
+  } else if (url) {
+    // Load using XHR
+    if (router.xhr) {
+      router.xhr.abort();
+      router.xhr = false;
+    }
+    router.xhrRequest(url, ignoreCache)
+      .then((pageContent) => {
+        $tabEl.html(pageContent);
+      })
+      .catch(() => {
+        router.allowPageChange = true;
+      });
+  }
+}
 function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const router = this;
 
@@ -284,6 +366,17 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const { url, content, el, name, template, templateUrl, component, componentUrl } = params;
   const { ignoreCache } = options;
 
+  if (options.route.route.parentPath &&
+    router.currentRoute.route.parentPath &&
+    options.route.route.parentPath === router.currentRoute.route.parentPath) {
+    // Do something nested
+    if (options.route.url === router.url) return false;
+    if (options.route.route.tab) {
+      return router.loadTab(options.route.route.tab, options);
+    }
+    return false;
+  }
+
   if (
     options.route.url &&
     router.url === options.route.url &&
@@ -292,6 +385,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     ) {
     return false;
   }
+
 
   if (!options.route && url) {
     options.route = router.findMatchingRoute(url, true);
@@ -312,7 +406,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   } else if (template || templateUrl) {
     // Parse template and send page element
     try {
-      router.templateLoader(template, templateUrl, options, resolve, reject);
+      router.pageTemplateLoader(template, templateUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -326,7 +420,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.componentLoader(component, componentUrl, options, resolve, reject);
+      router.pageComponentLoader(component, componentUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -357,9 +451,10 @@ function navigate(url, navigateOptions = {}) {
   if (url === '#' || url === '') {
     return router;
   }
-  let navigateUrl = url;
+  let navigateUrl = url.replace('./', '');
   if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
-    navigateUrl = ((router.path || '/') + navigateUrl).replace('//', '/');
+    const currentPath = router.currentRoute.route.parentPath || router.currentRoute.path;
+    navigateUrl = ((currentPath || '/') + navigateUrl).replace('//', '/');
   }
   const route = router.findMatchingRoute(navigateUrl);
 
@@ -372,7 +467,6 @@ function navigate(url, navigateOptions = {}) {
   } else {
     Utils.extend(options, navigateOptions, { route });
   }
-
   ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
@@ -394,4 +488,4 @@ function navigate(url, navigateOptions = {}) {
   // Retur Router
   return router;
 }
-export { forward, load, navigate };
+export { loadTab, forward, load, navigate };
