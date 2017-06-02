@@ -1,0 +1,44 @@
+html.ios {
+  @import (multiple) '../../less/colors-ios.less';
+
+  .chip {
+    font-size: 14px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.37);
+    height: 23px;
+    line-height: 23px;
+    border-radius: 5px;
+    padding: 0 6px;
+  }
+  .chip-media {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    color: #fff;
+    font-size: 12px;
+    box-sizing: border-box;
+
+    + .chip-label {
+      margin-left: 4px;
+    }
+
+    i.icon {
+      font-size: 16px;
+      height: 16px;
+    }
+  }
+  .chip-delete {
+    margin-right: -6px;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2028%2028'%3E%3Ccircle%20cx%3D'14'%20cy%3D'14'%20r%3D'14'%20fill%3D'%23fff'%2F%3E%3Cline%20stroke%3D'%23000'%20stroke-width%3D'2'%20stroke-miterlimit%3D'10'%20x1%3D'8'%20y1%3D'8'%20x2%3D'20'%20y2%3D'20'%2F%3E%3Cline%20fill%3D'none'%20stroke%3D'%23000'%20stroke-width%3D'2'%20stroke-miterlimit%3D'10'%20x1%3D'20'%20y1%3D'8'%20x2%3D'8'%20y2%3D'20'%2F%3E%3C%2Fsvg%3E");
+    background-position: center;
+    -webkit-background-size: 13px 13px;
+    background-size: 13px 13px;
+    opacity: 0.7;
+  }
+}

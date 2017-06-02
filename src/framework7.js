@@ -30,6 +30,7 @@ import Actions from './components/actions/actions';
 // Additional Components
 import Panel from './components/panel/panel';
 import Card from './components/card/card';
+import Chip from './components/chip/chip';
 import Sortable from './components/sortable/sortable';
 import Swipeout from './components/swipeout/swipeout';
 import SmartSelect from './components/smartselect/smartselect';
@@ -74,6 +75,7 @@ Framework7
   .use(Calendar)
   .use(Picker)
   .use(Panel)
-  .use(Card);
+  .use(Card)
+  .use(Chip);
 
 export default Framework7;
