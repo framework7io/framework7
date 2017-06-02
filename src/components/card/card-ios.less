@@ -1,46 +1,34 @@
 html.ios {
   @import (multiple) '../../less/colors-ios.less';
-
-}
-
-.card {
+  .card {
     box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
     margin: 10px;
-}
+  }
 
-.card-content-inner {
+  .card-content-inner {
     padding: 15px;
-}
+  }
 
-.card-header, .card-footer {
+  .card-header, .card-footer {
     min-height: 44px;
     padding: 10px 15px;
-}
-
-a.link {
+  }
+  a.link {
     line-height: 44px;
     height: 44px;
-    text-decoration: none;
     margin-top: -10px;
     margin-bottom: -10px;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    transition-duration: 300ms;
-    html:not(.watch-active-state) &:active, &.active-state {
-        opacity: 0.3;
-        transition-duration: 0ms;
-    }
-}
-
-a.icon-only {
+  }
+  a.icon-only {
     min-width: 44px;
-}
-
-.card-header {
+  }
+  .card-header {
     font-size: 17px;
-}
+  }
 
-.card-footer {
+  .card-footer {
     color:#6d6d72;
+  }
 }

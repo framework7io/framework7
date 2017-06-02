@@ -1,42 +1,38 @@
 html.md {
   @import (multiple) '../../less/colors-md.less';
-
-}
-
-.card {
+  .card {
     margin: 8px;
     .md-depth(1);
-}
+  }
 
-.page-content > .card:last-child {
+  .page-content > .card:last-child {
     margin-bottom: 32px;
-}
+  }
 
-.card-content-inner {
+  .card-content-inner {
     padding: 16px;
-}
+  }
 
-.card-header, .card-footer {
+  .card-header, .card-footer {
     min-height: 48px;
     padding: 4px 16px;
-}
+  }
 
-a.link {
-    // .button;
-    text-transform: uppercase;
-    padding-left: 8px;
-    padding-right: 8px;
-}
+  a.link {
+    .md-button();
+  }
 
-a.icon-only {
+  a.icon-only {
     min-width: 48px;
-}
+  }
 
-.card-header {
+  .card-header {
     font-size: 16px;
+  }
+
+  .card-footer {
+    color: #757575;
+  }
 }
 
-.card-footer {
-    // color:#6d6d72;
-    color: #757575;
-}
+
