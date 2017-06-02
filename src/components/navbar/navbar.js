@@ -192,6 +192,12 @@ export default {
         app.navbar.size(navbarEl);
       });
     },
+    tabShow(tabEl) {
+      const app = this;
+      $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+        app.navbar.size(navbarEl);
+      });
+    },
   },
   clicks: {
     '.navbar .title': function onTitleClick($clickedEl) {

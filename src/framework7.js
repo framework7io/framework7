@@ -28,6 +28,7 @@ import Popover from './components/popover/popover';
 import Actions from './components/actions/actions';
 
 // Additional Components
+import Tabs from './components/tabs/tabs';
 import Panel from './components/panel/panel';
 import Card from './components/card/card';
 import Chip from './components/chip/chip';
@@ -69,6 +70,7 @@ Framework7
   .use(Popover)
   .use(Actions)
   // Additional Components
+  .use(Tabs)
   .use(Sortable)
   .use(Swipeout)
   .use(SmartSelect)
