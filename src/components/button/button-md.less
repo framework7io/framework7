@@ -10,9 +10,7 @@ html.md {
         min-width: 64px;
         padding: 0 8px;
         border: none;
-        -webkit-transition-duration: 300ms;
         transition-duration: 300ms;
-        -webkit-transform: translate3d(0,0,0);
         transform: translate3d(0,0,0);
         html:not(.watch-active-state) &:active, &.active-state {
             background: rgba(0,0,0,0.1);
@@ -60,8 +58,7 @@ html.md {
         .button {
             margin-left: 16px;
             width: 100%;
-            -webkit-box-flex:1;
-            -ms-flex:1;
+            flex:1;
         }
         .button:first-child {
             margin-left: 0;
