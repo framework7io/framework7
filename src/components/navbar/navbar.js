@@ -178,11 +178,17 @@ export default {
       app.navbar.size($navbarEl);
       app.on('resize', $navbarEl[0].f7ResizeHandler);
     },
-    panelOpen(panelEl) {
+    panelOpen(panel) {
       const app = this;
       if (app.theme !== 'ios') return;
-      const $panelEl = $(panelEl);
-      $panelEl.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+      panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+        app.navbar.size(navbarEl);
+      });
+    },
+    panelSwipeOpen(panel) {
+      const app = this;
+      if (app.theme !== 'ios') return;
+      panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },

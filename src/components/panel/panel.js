@@ -8,7 +8,7 @@ export default {
     panel: {
       leftBreakpoint: 0,
       rightBreakpoint: 0,
-      swipe: undefined, // or 'left' or 'right'
+      swipe: undefined, // or 'left' or 'right' or 'both'
       swipeActiveArea: 0,
       swipeCloseOpposite: true,
       swipeOnlyClose: false,
@@ -40,19 +40,33 @@ export default {
           panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) return false;
-        return app.panel[panelSide].open(animate);
+        if (app.panel[panelSide]) {
+          return app.panel[panelSide].open(animate);
+        }
+        const $panelEl = $(`.panel-${panelSide}`);
+        if ($panelEl.length > 0) {
+          return new Panel(app, { el: $panelEl }).open(animate);
+        }
+        return false;
       },
       close(side, animate) {
         let $panelEl;
         let panelSide;
         if (panelSide) {
           panelSide = side;
+          $panelEl = $(`.panel-${panelSide}`);
         } else {
           $panelEl = $('.panel.panel-active');
           panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) return false;
-        return app.panel[panelSide].close(animate);
+        if (app.panel[panelSide]) {
+          return app.panel[panelSide].close(animate);
+        }
+        if ($panelEl.length > 0) {
+          return new Panel(app, { el: $panelEl }).close(animate);
+        }
+        return false;
       },
     });
   },

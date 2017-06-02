@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
+import SwipePanel from './swipe-panel';
 
 class Panel extends Framework7Class {
   constructor(app, params = {}) {
@@ -18,6 +19,12 @@ class Panel extends Framework7Class {
     if (typeof opened === 'undefined') opened = $el.hasClass('panel-active');
     if (typeof side === 'undefined') side = $el.hasClass('panel-left') ? 'left' : 'right';
     if (typeof effect === 'undefined') effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal';
+
+    if (!app.panel[side]) {
+      Utils.extend(app.panel, {
+        [side]: panel,
+      });
+    }
 
     let $overlayEl = $('.panel-overlay');
     if ($overlayEl.length === 0) {
@@ -59,7 +66,13 @@ class Panel extends Framework7Class {
     if (app.params.panel[`${panel.side}Breakpoint`]) {
       panel.initBreakpoints();
     }
-    if (app.params.panel.swipe) {
+    if (
+      (app.params.panel.swipe === panel.side)
+      ||
+      (app.params.panel.swipe === 'both')
+      ||
+      (app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
+      ) {
       panel.initSwipePanel();
     }
   }
@@ -103,7 +116,7 @@ class Panel extends Framework7Class {
     return panel;
   }
   initSwipePanel() {
-
+    SwipePanel(this);
   }
   destroy() {
     let panel = this;
@@ -111,6 +124,8 @@ class Panel extends Framework7Class {
     if (panel.resizeHandler) {
       app.off('resize', panel.resizeHandler);
     }
+    panel.$el.trigger('panelDestroy panel:destroy', panel);
+    panel.emit('panelDestroy panel:destroy');
     delete app.panel[panel.side];
     delete panel.el.f7Panel;
     Object.keys(panel).forEach((key) => {
@@ -206,30 +221,31 @@ class Panel extends Framework7Class {
   }
   onOpen() {
     const panel = this;
-    panel.$el.trigger('open panel:open');
-    panel.emit('panelOpen panel:open', panel.el, panel.side);
+    panel.opened = true;
+    panel.$el.trigger('open panelOpen panel:open', panel);
+    panel.emit('panelOpen panel:open', panel);
   }
   onOpened() {
     const panel = this;
     const app = panel.app;
     app.panel.allowOpen = true;
 
-    panel.$el.trigger('opened panel:opened');
-    panel.emit('panelOpened panel:opened', panel.el, panel.side);
+    panel.$el.trigger('opened panelOpened panel:opened', panel);
+    panel.emit('panelOpened panel:opened', panel);
   }
   onClose() {
     const panel = this;
-
-    panel.$el.trigger('close panel:close');
-    panel.emit('panelClose panel:close', panel.el, panel.side);
+    panel.opened = false;
+    panel.$el.trigger('close panelClose panel:close', panel);
+    panel.emit('panelClose panel:close', panel);
   }
   onClosed() {
     const panel = this;
     const app = panel.app;
     app.panel.allowOpen = true;
 
-    panel.$el.trigger('closed panel:closed');
-    panel.emit('panelClosed panel:closed', panel.el, panel.side);
+    panel.$el.trigger('closed panelClosed panel:closed', panel);
+    panel.emit('panelClosed panel:closed', panel);
   }
 }
 

@@ -1,19 +1,12 @@
 import $ from 'dom7';
+import Utils from '../../utils/utils';
 
-function swipePanels() {
-  const app = this;
+function swipePanel(panel) {
+  const app = panel.app;
   const params = app.params.panel;
-  let $panelEl;
-  let side;
-  if (params.swipePanel) {
-    $panelEl = $(`.panel.panel-${params.swipePanel}`);
-    side = params.swipePanel;
-    if ($panelEl.length === 0 && side !== 'both') return;
-  } else if (params.swipePanelOnlyClose) {
-    if ($('.panel').length === 0) return;
-  } else return;
+  const { $el, $overlayEl, side, effect, $viewEl } = panel;
+  let otherPanel;
 
-  const $overlayEl = $('.panel-overlay');
   let isTouched;
   let isMoved;
   let isScrolling;
@@ -22,51 +15,40 @@ function swipePanels() {
   let touchesDiff;
   let translate;
   let overlayOpacity;
-  let opened;
   let panelWidth;
-  let effect;
   let direction;
-  let $viewEl;
-  if (app.root.children('.views').length > 0) {
-    $viewEl = app.root.children('.views');
-  } else {
-    $viewEl = app.root.children('.view').eq(0);
-  }
 
   function handleTouchStart(e) {
-    if (!app.panel.allowOpen || (!params.swipePanel && !params.swipePanelOnlyClose) || isTouched) return;
+    if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
     if ($('.modal-in, .photo-browser-in').length > 0) return;
-    if (!(params.swipePanelCloseOpposite || params.swipePanelOnlyClose)) {
-      if ($('.panel.active').length > 0 && !$panelEl.hasClass('active')) return;
+    otherPanel = app.panel[side === 'left' ? 'right' : 'left'] || {};
+    if (!panel.opened && otherPanel.opened) return;
+    if (!(params.swipeCloseOpposite || params.swipeOnlyClose)) {
+      if (otherPanel.opened) return;
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
     if ($(e.target).closest('.tabs-swipeable-wrap').length > 0) return;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-    if (params.swipePanelCloseOpposite || params.swipePanelOnlyClose) {
-      if ($('.panel.active').length > 0) {
-        side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
-      } else {
-        if (params.swipePanelOnlyClose) return;
-        side = params.swipePanel;
-      }
-      if (!side) return;
+    if (params.swipeOnlyClose && !panel.opened) {
+      return;
     }
-    $panelEl = $(`.panel.panel-${side}`);
-    opened = $panelEl.hasClass('active');
-    if (params.swipePanelActiveArea && !opened) {
+    if (params.swipe !== 'both' && params.swipeCloseOpposite && params.swipe !== side && !panel.opened) {
+      return;
+    }
+    if (params.swipeActiveArea && !panel.opened) {
       if (side === 'left') {
-        if (touchesStart.x > params.swipePanelActiveArea) return;
+        if (touchesStart.x > params.swipeActiveArea) return;
       }
       if (side === 'right') {
-        if (touchesStart.x < app.width - params.swipePanelActiveArea) return;
+        if (touchesStart.x < app.width - params.swipeActiveArea) return;
       }
     }
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
 
-    touchStartTime = (new Date()).getTime();
+    touchStartTime = Utils.now();
     direction = undefined;
   }
   function handleTouchMove(e) {
@@ -88,25 +70,19 @@ function swipePanels() {
         direction = 'to-left';
       }
 
-      if (side === 'both') {
-        if ($('.panel.active').length > 0) {
-          side = $('.panel.active').hasClass('panel-left') ? 'left' : 'right';
-        } else {
-          side = direction === 'to-right' ? 'left' : 'right';
-        }
-        if (params.swipePanelActiveArea > 0) {
-          if (side === 'left' && touchesStart.x > params.swipePanelActiveArea) {
+      if (params.swipe === 'both') {
+        if (params.swipeActiveArea > 0) {
+          if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
             isTouched = false;
             return;
           }
-          if (side === 'right' && touchesStart.x < app.width - params.swipePanelActiveArea) {
+          if (side === 'right' && touchesStart.x < app.width - params.swipeActiveArea) {
             isTouched = false;
             return;
           }
         }
-        $panelEl = $(`.panel.panel-${side}`);
       }
-      if ($panelEl.hasClass('panel-visible-by-breakpoint')) {
+      if ($el.hasClass('panel-visible-by-breakpoint')) {
         isTouched = false;
         return;
       }
@@ -114,13 +90,13 @@ function swipePanels() {
       if (
         (side === 'left' &&
           (
-            direction === 'to-left' && !$panelEl.hasClass('active')
+            direction === 'to-left' && !$el.hasClass('panel-active')
           )
         )
         ||
         (side === 'right' &&
           (
-            direction === 'to-right' && !$panelEl.hasClass('active')
+            direction === 'to-right' && !$el.hasClass('panel-active')
           )
         )
       ) {
@@ -129,16 +105,16 @@ function swipePanels() {
       }
     }
 
-    if (params.swipePanelNoFollow) {
+    if (params.swipeNoFollow) {
       const timeDiff = (new Date()).getTime() - touchStartTime;
       if (timeDiff < 300) {
         if (direction === 'to-left') {
           if (side === 'right') app.openPanel(side);
-          if (side === 'left' && $panelEl.hasClass('active')) app.closePanel();
+          if (side === 'left' && $el.hasClass('panel-active')) app.closePanel();
         }
         if (direction === 'to-right') {
           if (side === 'left') app.openPanel(side);
-          if (side === 'right' && $panelEl.hasClass('active')) app.closePanel();
+          if (side === 'right' && $el.hasClass('panel-active')) app.closePanel();
         }
       }
       isTouched = false;
@@ -147,39 +123,40 @@ function swipePanels() {
     }
 
     if (!isMoved) {
-      effect = $panelEl.hasClass('panel-cover') ? 'cover' : 'reveal';
-      if (!opened) {
-        $panelEl.show();
+      if (!panel.opened) {
+        $el.show();
         $overlayEl.show();
+        $el.trigger('panelSwipeOpen panel:swipeopen', panel);
+        panel.emit('panelSwipeOpen panel:swipeopen', panel);
       }
-      panelWidth = $panelEl[0].offsetWidth;
-      $panelEl.transition(0);
+      panelWidth = $el[0].offsetWidth;
+      $el.transition(0);
     }
 
     isMoved = true;
 
     e.preventDefault();
-    let threshold = opened ? 0 : -params.swipePanelThreshold;
+    let threshold = panel.opened ? 0 : -params.swipeThreshold;
     if (side === 'right') threshold = -threshold;
 
     touchesDiff = (pageX - touchesStart.x) + threshold;
 
     if (side === 'right') {
       if (effect === 'cover') {
-        translate = touchesDiff + (opened ? 0 : panelWidth);
+        translate = touchesDiff + (panel.opened ? 0 : panelWidth);
         if (translate < 0) translate = 0;
         if (translate > panelWidth) {
           translate = panelWidth;
         }
       } else {
-        translate = touchesDiff - (opened ? panelWidth : 0);
+        translate = touchesDiff - (panel.opened ? panelWidth : 0);
         if (translate > 0) translate = 0;
         if (translate < -panelWidth) {
           translate = -panelWidth;
         }
       }
     } else {
-      translate = touchesDiff + (opened ? panelWidth : 0);
+      translate = touchesDiff + (panel.opened ? panelWidth : 0);
       if (translate < 0) translate = 0;
       if (translate > panelWidth) {
         translate = panelWidth;
@@ -189,18 +166,18 @@ function swipePanels() {
       $viewEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
       $overlayEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
-      $panelEl.trigger('panel:swipe', { progress: Math.abs(translate / panelWidth) });
-      app.pluginHook('swipePanelSetTransform', $viewEl[0], $panelEl[0], Math.abs(translate / panelWidth));
+      $el.trigger('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
     } else {
       if (side === 'left') translate -= panelWidth;
-      $panelEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
+      $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
       $overlayEl.transition(0);
       overlayOpacity = 1 - Math.abs(translate / panelWidth);
       $overlayEl.css({ opacity: overlayOpacity });
 
-      $panelEl.trigger('panel:swipe', { progress: Math.abs(translate / panelWidth) });
-      app.pluginHook('swipePanelSetTransform', $viewEl[0], $panelEl[0], Math.abs(translate / panelWidth));
+      $el.trigger('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
     }
   }
   function handleTouchEnd() {
@@ -215,7 +192,7 @@ function swipePanels() {
     let action;
     const edge = (translate === 0 || Math.abs(translate) === panelWidth);
 
-    if (!opened) {
+    if (!panel.opened) {
       if (effect === 'cover') {
         if (translate === 0) {
           action = 'swap'; // open
@@ -260,53 +237,48 @@ function swipePanels() {
       action = 'reset';
     }
     if (action === 'swap') {
-      app.panel.allowOpen = true;
-      if (opened) {
-        app.closePanel();
-        if (edge) {
-          $panelEl.css({ display: '' });
-          $('body').removeClass('panel-closing');
-        }
+      if (panel.opened) {
+        panel.close(!edge);
       } else {
-        app.openPanel(side);
+        panel.open(!edge);
       }
-      if (edge) app.panel.allowOpen = true;
     }
     if (action === 'reset') {
-      if (opened) {
-        app.panel.allowOpen = true;
-        app.openPanel(side);
-      } else {
-        app.closePanel();
+      if (!panel.opened) {
         if (edge) {
-          app.panel.allowOpen = true;
-          $panelEl.css({ display: '' });
+          $el.css({ display: '' });
         } else {
-          const target = effect === 'reveal' ? $viewEl : $panelEl;
-          $panelEl.trigger('close panel:close');
-          $('body').addClass('panel-closing');
+          const target = effect === 'reveal' ? $viewEl : $el;
+          $('html').addClass('with-panel-transitioning');
           target.transitionEnd(() => {
-            if ($panelEl.hasClass('active')) return;
-            $panelEl.trigger('close panel:closed');
-            $panelEl.css({ display: '' });
-            $('body').removeClass('panel-closing');
-            app.panel.allowOpen = true;
+            if ($el.hasClass('panel-active')) return;
+            $el.css({ display: '' });
+            $('html').removeClass('with-panel-transitioning');
           });
         }
       }
     }
     if (effect === 'reveal') {
-      $viewEl.transition('');
-      $viewEl.transform('');
+      Utils.nextFrame(() => {
+        $viewEl.transition('');
+        $viewEl.transform('');
+      });
     }
-    $panelEl.transition('').transform('');
+    $el.transition('').transform('');
     $overlayEl.css({ display: '' }).transform('').transition('').css('opacity', '');
   }
+
+  // Add Events
   const passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
   const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
   $(document).on(app.touchEvents.start, handleTouchStart, passiveListener);
   $(document).on(app.touchEvents.move, handleTouchMove, activeListener);
   $(document).on(app.touchEvents.end, handleTouchEnd, passiveListener);
+  panel.on('panelDestroy', () => {
+    $(document).off(app.touchEvents.start, handleTouchStart, passiveListener);
+    $(document).off(app.touchEvents.move, handleTouchMove, activeListener);
+    $(document).off(app.touchEvents.end, handleTouchEnd, passiveListener);
+  });
 }
 
-export default swipePanels;
+export default swipePanel;
