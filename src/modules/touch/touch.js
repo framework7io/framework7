@@ -1,7 +1,7 @@
 import $ from 'dom7';
 import Support from '../../utils/support';
 import Device from '../../utils/device';
-import TouchRipple from './touch-ripple-class';
+import TouchRipple from '../../components/touch-ripple/touch-ripple-class';
 
 function initTouch() {
   const app = this;
