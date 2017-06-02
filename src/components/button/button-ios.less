@@ -7,12 +7,6 @@ html.ios {
         line-height: 27px;
         box-sizing: border-box;
         height: 29px;
-        font-family: inherit;
-        cursor: pointer;
-        outline: 0;
-        input[type="submit"]&, input[type="button"]&{
-            width: 100%;
-        }
 
         html:not(.watch-active-state) &:active, &.active-state {
             background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), .15);
@@ -53,19 +47,6 @@ html.ios {
 
     // Row of connected buttons
     .buttons-row {
-        -ms-flex-item-align: center;
-        -webkit-align-self: center;
-        align-self: center;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-lines: single;
-        -moz-box-lines: single;
-        -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: none;
-        -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
         .button {
             border-radius: 0 0 0 0;
             border-left-width: 0;
