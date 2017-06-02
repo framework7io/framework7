@@ -30,6 +30,20 @@
   }
 
 }
+// No Hairlines
+.no-hairlines() {
+  &.no-hairlines, &.no-hairlines ul {
+    .hairline-remove(top);
+    .hairline-remove(bottom);
+  }
+}
+.no-hairlines-between() {
+  &.no-hairlines-between {
+    .item-inner, .list-button, .item-divider, .list-group-title, .list-group-title {
+      .hairline-remove(bottom);
+    }
+  }
+}
 // Hairlines
 .hairline-pseudo(@color, @top, @right, @bottom, @left) {
   content: '';
@@ -189,32 +203,32 @@
 }
 // MD Active Active Links Highlights
 .md-link-highlight(@color:rgba(255,255,255,0.15)) {
-    &:before {
-        content: '';
-        width: 152%;
-        height: 152%;
-        position: absolute;
-        left: -26%;
-        top: -26%;
-        background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
-        background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 100% 100%;
-        opacity: 0;
-        pointer-events: none;
-        transition-duration: 600ms;
-    }
-    &.active-state:before {
-        opacity: 1;
-        transition-duration: 150ms;
-    }
+  &:before {
+    content: '';
+    width: 152%;
+    height: 152%;
+    position: absolute;
+    left: -26%;
+    top: -26%;
+    background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+    background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 600ms;
+  }
+  &.active-state:before {
+    opacity: 1;
+    transition-duration: 150ms;
+  }
 }
 .md-link-highlight-color(@color) {
-    &:before {
-        background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
-        background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
-    }
+  &:before {
+    background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+    background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+  }
 }
 
 // MD Button

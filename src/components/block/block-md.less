@@ -1,0 +1,40 @@
+html.md {
+  .block {
+    margin: 32px 0;
+    padding: 0 16px;
+  }
+  .block-title {
+    color: rgba(0,0,0,0.54);
+    margin: 16px 16px 16px;
+    padding-top: 16px;
+    line-height: 16px;
+    font-weight: 500;
+    + .list, + .block, + .card, + .timeline {
+      margin-top: 0px;
+    }
+  }
+  .block-strong {
+    padding: 16px;
+  }
+  .hairline-root('.block-strong', top, rgba(0,0,0,0.12));
+  .hairline-root('.block-strong', bottom, rgba(0,0,0,0.12));
+
+  .block.inset {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .block-strong.inset {
+    border-radius: 4px;
+  }
+  @media all and (min-width:768px) {
+    .block.tablet-inset {
+      margin-left: 16px;
+      margin-right: 16px;
+      border-radius: 4px;
+    }
+
+    .block-strong.tablet-inset {
+      border-radius: 4px;
+    }
+  }
+}
