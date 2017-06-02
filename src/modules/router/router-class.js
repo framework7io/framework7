@@ -5,7 +5,8 @@ import Utils from '../../utils/utils';
 import Component from '../../utils/component';
 import SwipeBack from './swipe-back';
 
-import { loadTab, forward, load, navigate } from './navigate';
+import { forward, load, navigate } from './navigate';
+import loadTab from './load-tab';
 import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterBack } from './back';
 
 /*

@@ -166,6 +166,14 @@ function backward(el, backwardOptions) {
   router.currentRoute = options.route;
   router.currentPage = $newPage[0];
 
+  // Load Tab
+  if (options.route.route.tab) {
+    router.loadTab(options.route.route.tab, Utils.extend({}, options, {
+      history: false,
+      pushState: false,
+    }));
+  }
+
   // Page init and before init events
   router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current');
 

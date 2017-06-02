@@ -204,6 +204,14 @@ function forward(el, forwardOptions = {}) {
   router.currentRoute = options.route;
   router.currentPage = $newPage[0];
 
+  // Load Tab
+  if (options.route.route.tab) {
+    router.loadTab(options.route.route.tab, Utils.extend({}, options, {
+      history: false,
+      pushState: false,
+    }));
+  }
+
   // Page init and before init events
   router.pageCallback('init', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
 
@@ -274,88 +282,6 @@ function forward(el, forwardOptions = {}) {
   }
 
   return router;
-}
-function loadTab(tab, loadOptions = {}) {
-  const router = this;
-  const options = Utils.extend({
-    animate: router.params.animatePages,
-    pushState: true,
-    history: true,
-    reloadCurrent: router.params.reloadPages,
-    on: {},
-  }, loadOptions);
-
-  const { ignoreCache } = options;
-
-  // Set Route
-  router.currentRoute = options.route;
-
-  // Update Browser History
-  if (router.params.pushState && options.pushState && !options.reloadPrevious) {
-    History.replace(
-      {
-        url: options.route.url,
-        tabId: tab.id,
-      },
-      (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
-  }
-
-  // Update Router History
-  if (options.history) {
-    router.history[router.history.length - 1] = options.route.url;
-    router.saveHistory();
-  }
-
-  // Show Tab
-  const $tabEl = $(router.app.tabs.show(`#${tab.id}`, options.animate));
-
-  // Load Tab Content
-  const { url, content, el, template, templateUrl, component, componentUrl } = tab;
-
-  // Component/Template Callbacks
-  function resolve(contentEl) {
-    $tabEl.html('');
-    $tabEl.append(contentEl);
-  }
-  function reject() {
-    router.allowPageChange = true;
-    return router;
-  }
-
-  if (content) {
-    $tabEl.html(content);
-  } else if (template || templateUrl) {
-    try {
-      router.tabTemplateLoader(template, templateUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
-    }
-  } else if (el) {
-    $tabEl.html('');
-    $tabEl.append(el);
-  } else if (component || componentUrl) {
-    // Load from component (F7/Vue/React/...)
-    try {
-      router.tabComponentLoader($tabEl, component, componentUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
-    }
-  } else if (url) {
-    // Load using XHR
-    if (router.xhr) {
-      router.xhr.abort();
-      router.xhr = false;
-    }
-    router.xhrRequest(url, ignoreCache)
-      .then((pageContent) => {
-        $tabEl.html(pageContent);
-      })
-      .catch(() => {
-        router.allowPageChange = true;
-      });
-  }
 }
 function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const router = this;
@@ -488,4 +414,4 @@ function navigate(url, navigateOptions = {}) {
   // Retur Router
   return router;
 }
-export { loadTab, forward, load, navigate };
+export { forward, load, navigate };
