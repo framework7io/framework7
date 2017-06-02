@@ -1,44 +1,43 @@
-/* === Chips === */
-.md .chip {
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.87);
-  background: rgba(0, 0, 0, 0.12);
-  height: 32px;
-  line-height: 32px;
-  border-radius: 16px;
-  padding: 0 12px;
-}
-.md .chip-media {
-  width: 32px;
-  height: 32px;
-  margin-left: -12px;
-  vertical-align: top;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 32px;
-  color: #fff;
-  -webkit-box-flex: 0;
-  -webkit-flex-shrink: 0;
-  -ms-flex: 0 0 auto;
-  flex-shrink: 0;
-  font-size: 16px;
-}
-.md .chip-label {
-  -webkit-box-flex: 1;
-}
-.md .chip-label + .chip-delete {
-  margin-left: 4px;
-}
-.md .chip-delete {
-  margin-right: -8px;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23000'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M12%202C6.47%202%202%206.47%202%2012s4.47%2010%2010%2010%2010-4.47%2010-10S17.53%202%2012%202zm5%2013.59L15.59%2017%2012%2013.41%208.41%2017%207%2015.59%2010.59%2012%207%208.41%208.41%207%2012%2010.59%2015.59%207%2017%208.41%2013.41%2012%2017%2015.59z'%2F%3E%3Cpath%20d%3D'M0%200h24v24H0z'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
-  background-position: center;
-  background-size: 20px 20px;
-  opacity: 0.54;
-}
-.md .chip-label + .chip-delete {
-  margin-left: 4px;
+html.md {
+  @import (multiple) '../../less/colors-md.less';
+
+  .chip {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.87);
+    background: rgba(0, 0, 0, 0.12);
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    padding: 0 12px;
+  }
+  .chip-media {
+    width: 32px;
+    height: 32px;
+    margin-left: -12px;
+    vertical-align: top;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    color: #fff;
+    font-size: 16px;
+
+    + .chip-label {
+      margin-left: 8px;
+    }
+  }
+  .chip-label {
+    + .chip-delete {
+      margin-left: 4px;
+    }
+  }
+  .chip-delete {
+    margin-right: -8px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23000'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M12%202C6.47%202%202%206.47%202%2012s4.47%2010%2010%2010%2010-4.47%2010-10S17.53%202%2012%202zm5%2013.59L15.59%2017%2012%2013.41%208.41%2017%207%2015.59%2010.59%2012%207%208.41%208.41%207%2012%2010.59%2015.59%207%2017%208.41%2013.41%2012%2017%2015.59z'%2F%3E%3Cpath%20d%3D'M0%200h24v24H0z'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
+    background-position: center;
+    background-size: 20px 20px;
+    opacity: 0.54;
+  }
 }
