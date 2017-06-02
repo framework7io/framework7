@@ -12,7 +12,7 @@ export default {
   },
   instance: {
     swipeout: {
-      allow: true,
+      allowOpen: true,
       el: undefined,
       open() {},
       close() {},
