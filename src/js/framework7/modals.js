@@ -379,7 +379,7 @@ app.popover = function (modal, target, removeOnClose, animated, closeByOutside) 
                         if (!target.hasClass('floating-button-to-popover-in')) return;
                         target
                             .addClass('floating-button-to-popover-scale')
-                            .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0) scale(' + (modalWidth/targetWidth) + ', ' + (modalHeight/targetHeight) + ')');
+                            .transform('translate3d(' + diffX + 'px, ' + diffY + 'px,0)');
                     });
 
                 modal.once('popover:close', function () {
