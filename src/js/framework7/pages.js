@@ -52,6 +52,15 @@ function createPageCallback(callbackName) {
     };
 }
 
+function renderPage(data) {
+    var tpl = Template7.cache[this.url];
+    var newData = data || this.data || {};
+    var content = tpl(newData);
+
+    this.data = newData;
+    this.container.innerHTML = content;
+}
+
 var pageCallbacksNames = ('beforeInit init reinit beforeAnimation afterAnimation back afterBack beforeRemove').split(' ');
 for (var i = 0; i < pageCallbacksNames.length; i++) {
     app.pageCallbacks[pageCallbacksNames[i]] = {};
@@ -103,6 +112,9 @@ app.pageInitCallback = function (view, params) {
         navbarInnerContainer: params.navbarInnerContainer,
         fromPage: params.fromPage
     };
+
+    pageData.render = renderPage.bind(pageData);
+
     if (params.fromPage && !params.fromPage.navbarInnerContainer && params.oldNavbarInnerContainer) {
         params.fromPage.navbarInnerContainer = params.oldNavbarInnerContainer;
     }
@@ -161,6 +173,9 @@ app.pageRemoveCallback = function (view, pageContainer, position) {
         from: position,
         context: pageContext
     };
+
+    pageData.render = renderPage.bind(pageData);
+
     // Before Init Callback
     app.pluginHook('pageBeforeRemove', pageData);
     if (app.params.onPageBeforeRemove) app.params.onPageBeforeRemove(app, pageData);
@@ -186,6 +201,8 @@ app.pageBackCallback = function (callback, view, params) {
         navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
         swipeBack: params.swipeBack
     };
+
+    pageData.render = renderPage.bind(pageData);
 
     if (callback === 'after') {
         app.pluginHook('pageAfterBack', pageData);
@@ -232,6 +249,9 @@ app.pageAnimCallback = function (callback, view, params) {
         navbarInnerContainer: pageContainer.f7PageData && pageContainer.f7PageData.navbarInnerContainer,
         fromPage: params.fromPage
     };
+
+    pageData.render = renderPage.bind(pageData);
+
     var oldPage = params.oldPage,
         newPage = params.newPage;
 

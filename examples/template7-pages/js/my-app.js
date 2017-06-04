@@ -10,6 +10,31 @@ var myApp = new Framework7({
     precompileTemplates: true,
     // Enabled pages rendering using Template7
     template7Pages: true,
+    // Render page with custom data
+    onPageInit: function (app, page) {
+        if (page.name === 'contacts-rerendered') {
+            page.render({
+                tel: '+1 (222) 333-44-55',
+                email: 'john@doe.com',
+                country: 'USA',
+                city: 'San Francisco',
+                zip: '12345',
+                street: 'Awesome st'
+            });
+
+            // Now fake a data update
+            setTimeout(function () {
+                page.render({
+                    tel: '+1 (222) 333-44-55 (changed)',
+                    email: 'john@doe.com (changed)',
+                    country: 'USA (changed)',
+                    city: 'San Francisco (changed)',
+                    zip: '12345 (changed)',
+                    street: 'Awesome st (changed)'
+                });
+            }, 3000);
+        }
+    },
     // Specify Template7 data for pages
     template7Data: {
         // Will be applied for page with "projects.html" url
