@@ -454,7 +454,6 @@ app.initSwipePanels = function () {
                     target.transitionEnd(function () {
                         if (panel.hasClass('active')) return;
                         panel.trigger('close panel:closed');
-                        panel.css({display: ''});
                         $('body').removeClass('panel-closing');
                         app.allowPanelOpen = true;
                     });
