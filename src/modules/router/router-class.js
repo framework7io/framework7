@@ -410,10 +410,10 @@ class Router extends Framework7Class {
         url,
         method: 'GET',
         beforeSend() {
-          router.emit('ajaxStart ajax:start');
+          router.emit('routerAjaxStart router:ajaxstart');
         },
         complete(xhr, status) {
-          router.emit('ajaxComplete ajax:complete');
+          router.emit('routerAjaxComplete router:ajaxcomplete');
           if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
