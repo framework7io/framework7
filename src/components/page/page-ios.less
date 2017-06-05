@@ -10,6 +10,7 @@ html.ios {
     background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
     z-index: -1;
     content: '';
+    will-change: opacity;
   }
   .fake-opacity() {
     position: absolute;
@@ -21,15 +22,13 @@ html.ios {
     content: '';
     opacity: 0;
     z-index: 10000;
+    will-change: opacity;
   }
   .swipeback-page-shadow {
     .fake-shadow();
   }
   .swipeback-page-opacity {
     .fake-opacity();
-  }
-  .pages {
-    // background: #000;
   }
   .page {
     background: #efeff4;
@@ -56,6 +55,9 @@ html.ios {
     .swipeback-page-shadow {
       opacity: 0 !important;
     }
+  }
+  .page-next-to-current, .page-current-to-next, .page-current-to-previous, .page-previous-to-current {
+    will-change: transform;
   }
   .page-next-to-current {
     // From next to current
