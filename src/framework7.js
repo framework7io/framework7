@@ -2,7 +2,7 @@ import t7 from 'template7';
 import $ from 'dom7';
 
 // F7 Class
-import Framework7 from './components/app/framework7-class';
+import Framework7 from './components/app/app-class';
 
 // Import Core Modules
 import Resize from './modules/resize/resize';
