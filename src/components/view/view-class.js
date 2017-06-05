@@ -42,7 +42,7 @@ class View extends Framework7Class {
 
     // DynamicNavbar
     let $navbarEl;
-    if (app.theme === 'ios' && view.params.router.iosDynamicNavbar) {
+    if (app.theme === 'ios' && view.params.router.iosDynamicNavbar && view.params.router.iosSeparateDynamicNavbar) {
       $navbarEl = $el.children('.navbar').eq(0);
       if ($navbarEl.length === 0) {
         $navbarEl = $('<div class="navbar"></div>');

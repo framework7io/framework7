@@ -9,112 +9,6 @@ import { forward, load, navigate } from './navigate';
 import loadTab from './load-tab';
 import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterBack } from './back';
 
-/*
-  parameters: {
-    url: String, // load page by XHR request
-    content: String, // load page from string content
-    name: String, // load page by name (inline pages)
-    el: Object (HTMLElement), // load page by passed DOM element
-    component: Object, // f7 component
-    componentUrl: String, // component to load
-    template: String or Function, // t7 template
-    templateUrl: String, // template to load
-  }
-
-  options: {
-    reloadAll: Boolean,
-    reloadCurrent: Boolean
-    reloadPrevious: Boolean,
-
-    effect: String, // TODO
-    animate: Boolean,
-
-    context: Object,
-
-    pushState: Boolean,
-    ignoreCache: Boolean,
-    force: Boolean,
-
-    route: {}
-  }
-
-  Routes example:
-  [
-    // Load page by URL
-    {
-      path: '/some-page/',
-      url: 'about.html',
-    },
-    // Dynamic + Content
-    {
-      path: '/some-page/:user/:id/',
-      content: '<div class="page">...</div>',
-    },
-    // Inline Page
-    {
-      path: '/another-page/',
-      name: 'another-page',
-    },
-    // Page Element
-    {
-      path: '/another-page/',
-      el: document.querySelector('.page'),
-    },
-    // Template
-    {
-      path: '/page/',
-      template: '<div class="page">{{hello}}</div>',
-      context: { hello: 'Hello World!' },
-    },
-    // Component (For Vue/React)
-    {
-      path: '/page/',
-      component: require('some-page.vue'),
-    },
-    // Nested Tabs
-    {
-      path: '/page-with-tabs/',
-      url: 'page-tabs.html',
-      routes: [
-        {
-          path: 'tab1/',
-          tab: 'tab1',
-        },
-        {
-          path: 'tab1/',
-          tab: 'tab1',
-        },
-
-      ],
-      tabs: [
-        {
-          path: '/',
-          id: 'tab1',
-          // available options: url, component, content, template, async
-        }
-      ]
-    },
-    // Async
-    {
-      path: '/async-page/',
-      async(load) {
-        setTimeout(() => {
-          load({
-            content: '<div class="page">...</div>',
-          })
-        });
-      },
-    },
-    // Popup
-    {
-      path: '/popup/',
-      popup: {
-
-      }
-    },
-  ]
-*/
-
 class Router extends Framework7Class {
   constructor(app, view) {
     super({}, [typeof view === 'undefined' ? app : view]);
@@ -144,6 +38,7 @@ class Router extends Framework7Class {
         history: view.history,
         cache: app.cache,
         dynamicNavbar: app.theme === 'ios' && view.params.router.iosDynamicNavbar,
+        separateNavbar: app.theme === 'ios' && view.params.router.iosDynamicNavbar && view.params.router.iosSeparateDynamicNavbar,
         initialPages: [],
         initialNavbars: [],
       });
@@ -209,7 +104,15 @@ class Router extends Framework7Class {
       const slidingOffset = from === 'next' ? slidingEl.f7NavbarRightOffset : slidingEl.f7NavbarLeftOffset;
       if (router.params.iosAnimateNavbarBackIcon) {
         if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-          $slidingEl.find('.back .icon').transform(`translate3d(${-slidingOffset}px,0,0)`);
+          let iconSlidingOffset = -slidingOffset;
+          if (!router.separateNavbar) {
+            if (from === 'next') {
+              iconSlidingOffset -= newNavbarInner[0].offsetWidth;
+            } else {
+              iconSlidingOffset += newNavbarInner[0].offsetWidth / 5;
+            }
+          }
+          $slidingEl.find('.back .icon').transform(`translate3d(${iconSlidingOffset}px,0,0)`);
         }
       }
       $slidingEl.transform(`translate3d(${slidingOffset}px,0,0)`);
@@ -218,9 +121,15 @@ class Router extends Framework7Class {
   animateNavbars(oldNavbarInner, newNavbarInner, from, to) {
     const router = this;
     const removeClasses = 'navbar-current navbar-next navbar-previous';
-    router.prepareNavbar(newNavbarInner, from);
 
-
+    let moveNavbarIconOffset = 0;
+    if (!router.separateNavbar) {
+      if (from === 'next') {
+        moveNavbarIconOffset = oldNavbarInner[0].offsetWidth / 5;
+      } else {
+        moveNavbarIconOffset = oldNavbarInner[0].offsetWidth;
+      }
+    }
 
     // New Navbar Sliding
     let newNavbarSlidingEls;
@@ -238,77 +147,75 @@ class Router extends Framework7Class {
       oldNavbarSlidingEls = oldNavbarInner.find('.sliding');
     }
 
-    Utils.nextFrame(() => {
-      if (from === 'next' && to === 'current') {
-        oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-previous');
-        newNavbarInner.removeClass(removeClasses).addClass('navbar-next-to-current');
+    if (from === 'next' && to === 'current') {
+      oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-previous');
+      newNavbarInner.removeClass(removeClasses).addClass('navbar-next-to-current');
 
-        if (newNavbarSlidingEls) {
-          newNavbarSlidingEls.each((index, slidingEl) => {
-            const $slidingEl = $(slidingEl);
-            $slidingEl.transform('translate3d(0px,0,0)');
-            if (router.params.iosAnimateNavbarBackIcon) {
-              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-                $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
-              }
+      if (newNavbarSlidingEls) {
+        newNavbarSlidingEls.each((index, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          $slidingEl.transform('translate3d(0px,0,0)');
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
             }
-          });
-        }
-        if (oldNavbarSlidingEls) {
-          oldNavbarSlidingEls.each((oldElIndex, slidingEl) => {
-            const $slidingEl = $(slidingEl);
-            if (router.params.iosAnimateNavbarBackIcon) {
-              if ($slidingEl.hasClass('title')) {
-                let iconEl;
-                let iconTextEl;
-                newNavbarSlidingEls.each((newElIndex, el) => {
-                  const $el = $(el);
-                  if ($el.hasClass('left')) {
-                    iconEl = $el.find('.back .icon').eq(0);
-                    iconTextEl = $el.find('.back span').eq(0);
-                  }
-                });
-                if (iconEl && iconEl.length && iconTextEl && iconTextEl.length) {
-                  slidingEl.f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
+          }
+        });
+      }
+      if (oldNavbarSlidingEls) {
+        oldNavbarSlidingEls.each((oldElIndex, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('title')) {
+              let iconEl;
+              let iconTextEl;
+              newNavbarSlidingEls.each((newElIndex, el) => {
+                const $el = $(el);
+                if ($el.hasClass('left')) {
+                  iconEl = $el.find('.back .icon').eq(0);
+                  iconTextEl = $el.find('.back span').eq(0);
                 }
-              }
-              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-                $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarLeftOffset}px,0,0)`);
+              });
+              if (iconEl && iconEl.length && iconTextEl && iconTextEl.length) {
+                $slidingEl[0].f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
               }
             }
-            $slidingEl.transform(`translate3d(${slidingEl.f7NavbarLeftOffset}px,0,0)`);
-          });
-        }
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarLeftOffset + moveNavbarIconOffset}px,0,0)`);
+            }
+          }
+          $slidingEl.transform(`translate3d(${slidingEl.f7NavbarLeftOffset}px,0,0)`);
+        });
       }
-      if (from === 'previous' && to === 'current') {
-        oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-next');
-        newNavbarInner.removeClass(removeClasses).addClass('navbar-previous-to-current');
+    }
+    if (from === 'previous' && to === 'current') {
+      oldNavbarInner.removeClass(removeClasses).addClass('navbar-current-to-next');
+      newNavbarInner.removeClass(removeClasses).addClass('navbar-previous-to-current');
 
-        if (newNavbarSlidingEls) {
-          newNavbarSlidingEls.each((index, slidingEl) => {
-            const $slidingEl = $(slidingEl);
-            $slidingEl.transform('translate3d(0px,0,0)');
-            if (router.params.iosAnimateNavbarBackIcon) {
-              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-                $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
-              }
+      if (newNavbarSlidingEls) {
+        newNavbarSlidingEls.each((index, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          $slidingEl.transform('translate3d(0px,0,0)');
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform('translate3d(0px,0,0)');
             }
-          });
-        }
-
-        if (oldNavbarSlidingEls) {
-          oldNavbarSlidingEls.each((index, slidingEl) => {
-            const $slidingEl = $(slidingEl);
-            if (router.params.iosAnimateNavbarBackIcon) {
-              if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-                $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarRightOffset}px,0,0)`);
-              }
-            }
-            $slidingEl.transform(`translate3d(${slidingEl.f7NavbarRightOffset}px,0,0)`);
-          });
-        }
+          }
+        });
       }
-    });
+
+      if (oldNavbarSlidingEls) {
+        oldNavbarSlidingEls.each((index, slidingEl) => {
+          const $slidingEl = $(slidingEl);
+          if (router.params.iosAnimateNavbarBackIcon) {
+            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+              $slidingEl.find('.back .icon').transform(`translate3d(${-slidingEl.f7NavbarRightOffset - moveNavbarIconOffset}px,0,0)`);
+            }
+          }
+          $slidingEl.transform(`translate3d(${slidingEl.f7NavbarRightOffset}px,0,0)`);
+        });
+      }
+    }
   }
   animatePages(oldPage, newPage, from, to) {
     const removeClasses = 'page-current page-next page-previous';
@@ -819,7 +726,7 @@ class Router extends Framework7Class {
       router.$el.children('.page').each((index, pageEl) => {
         const $pageEl = $(pageEl);
         router.initialPages.push($pageEl[0]);
-        if (router.dynamicNavbar && $pageEl.children('.navbar').length > 0) {
+        if (router.separateNavbar && $pageEl.children('.navbar').length > 0) {
           router.initialNavbars.push($pageEl.children('.navbar').find('.navbar-inner')[0]);
         }
       });
@@ -838,7 +745,7 @@ class Router extends Framework7Class {
         const $pageEl = $(pageEl);
         let $navbarInnerEl;
         $pageEl.addClass('page-current');
-        if (router.dynamicNavbar) {
+        if (router.separateNavbar) {
           $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
           if ($navbarInnerEl.length > 0) {
             router.$navbarEl.append($navbarInnerEl);

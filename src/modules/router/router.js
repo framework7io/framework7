@@ -32,6 +32,7 @@ export default {
       animatePages: true,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
+      iosSeparateDynamicNavbar: true,
       // Animate iOS Navbar Back Icon
       iosAnimateNavbarBackIcon: true,
       // MD Theme delay
