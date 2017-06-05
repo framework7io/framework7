@@ -1,0 +1,99 @@
+html.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .list {
+    margin: 35px 0;
+    font-size: 17px;
+    ul {
+      background: #fff;
+    }
+    .item-media {
+      padding-top: 7px;
+      i + i, i + img {
+        margin-left: 5px;
+      }
+    }
+    .item-media + .item-inner {
+      margin-left: 15px;
+    }
+    .item-inner {
+      padding-right: 15px;
+      padding-bottom: 7px;
+      min-height: 44px;
+    }
+    .item-after {
+      color: #8e8e93;
+      padding-left: 5px;
+    }
+    .item-link, .list-button {
+      .item-inner {
+        padding-right: 35px;
+        background-position: calc(~"100% - 15px") center;
+      }
+      &.active-state {
+        transition-duration: 0ms;
+        background-color: #d9d9d9;
+        .item-inner {
+          .hairline-color(bottom, transparent);
+        }
+      }
+    }
+    .list-button {
+      padding: 0 15px;
+      text-align: center;
+      color: @themeColor;
+      line-height: 44px;
+    }
+    .item-content {
+      padding-left: 15px;
+      min-height: 44px;
+    }
+    .list-footer {
+      padding: 0 15px;
+      color: #8f8f94;
+    }
+  }
+  .hairline-root('.list .list-button', bottom, @blockBorderColor);
+  .hairline-root('.list .item-inner', bottom, @blockBorderColor);
+  .hairline-root('.list ul', top, @blockBorderColor);
+  .hairline-root('.list ul', bottom, @blockBorderColor);
+  .list.inset {
+    margin-left: 15px;
+    margin-right: 15px;
+    border-radius: 7px;
+    li:first-child > a {
+      border-radius: 7px 7px 0 0;
+    }
+    li:last-child > a {
+      border-radius: 0 0 7px 7px;
+    }
+    li:first-child:last-child > a {
+      border-radius: 7px;
+    }
+  }
+  .list.tablet-inset {
+    @media (min-width: 768px) {
+      margin-left: 15px;
+      margin-right: 15px;
+      border-radius: 7px;
+      li:first-child > a {
+        border-radius: 7px 7px 0 0;
+      }
+      li:last-child > a {
+        border-radius: 0 0 7px 7px;
+      }
+      li:first-child:last-child > a {
+        border-radius: 7px;
+      }
+    }
+  }
+
+  // Last-childs
+  li {
+    li:last-child, &:last-child li {
+      .item-inner {
+        .hairline(bottom, @blockBorderColor);
+      }
+    }
+  }
+
+}

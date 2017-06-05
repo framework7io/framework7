@@ -1,0 +1,95 @@
+html.md {
+  @import (multiple) '../../less/colors-md.less';
+  .list {
+    margin: 32px 0;
+    font-size: 16px;
+    ul {
+
+    }
+    .item-media {
+      padding-top: 8px;
+      min-width: 40px;
+      i + i, i + img {
+        margin-left: 8px;
+      }
+    }
+    .item-media + .item-inner {
+      margin-left: 16px;
+    }
+    .item-inner {
+      padding-right: 16px;
+      padding-bottom: 8px;
+      min-height: 48px;
+    }
+    .item-after {
+      color: #757575;
+      padding-left: 8px;
+      font-size: 14px;
+    }
+    .item-link, .list-button {
+      .item-inner {
+        padding-right: 42px;
+        background-position: calc(~"100% - 16px") center;
+      }
+      &.active-state {
+        background-color: rgba(0,0,0,0.1);;
+      }
+    }
+    .list-button {
+      padding: 0 16px;
+      font-size: 16px;
+      line-height: 48px;
+    }
+    .item-content {
+      padding-left: 16px;
+      min-height: 48px;
+    }
+    .list-footer {
+      padding: 0 16px;
+      color: rgba(0,0,0,0.54);
+    }
+  }
+  .hairline-root('.list .item-inner', bottom, @blockBorderColor);
+  .hairline-root('.list ul', top, @blockBorderColor);
+  .hairline-root('.list ul', bottom, @blockBorderColor);
+  .list.inset {
+    margin-left: 16px;
+    margin-right: 16px;
+    border-radius: 4px;
+    li:first-child > a {
+      border-radius: 4px 4px 0 0;
+    }
+    li:last-child > a {
+      border-radius: 0 0 4px 4px;
+    }
+    li:first-child:last-child > a {
+      border-radius: 4px;
+    }
+  }
+  .list.tablet-inset {
+    @media (min-width: 768px) {
+      margin-left: 16px;
+      margin-right: 16px;
+      border-radius: 4px;
+      li:first-child > a {
+        border-radius: 4px 4px 0 0;
+      }
+      li:last-child > a {
+        border-radius: 0 0 4px 4px;
+      }
+      li:first-child:last-child > a {
+        border-radius: 4px;
+      }
+    }
+  }
+
+  // Last-childs
+  li {
+    li:last-child, &:last-child li {
+      .item-inner {
+        .hairline(bottom, @blockBorderColor);
+      }
+    }
+  }
+
+}

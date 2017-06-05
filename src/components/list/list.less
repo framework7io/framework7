@@ -1,0 +1,114 @@
+/* === List View === */
+.list {
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  li {
+    position: relative;
+    box-sizing: border-box;
+  }
+  .item-media {
+    display: flex;
+    flex-shtink: 0;
+    flex-wrap: nowrap;
+    align-items: center;
+    box-sizing: border-box;
+    padding-bottom: 8px;
+  }
+  .item-inner {
+    position: relative;
+    width: 100%;
+    padding-top: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    min-width: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+  }
+  .item-title {
+    min-width: 0;
+    flex-shrink: 1;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  .item-after {
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: auto;
+    display: flex;
+    max-height: 28px;
+  }
+  .item-link, .list-button {
+    transition-duration: 300ms;
+    transition-property: background-color;
+    display: block;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    .item-inner {
+      .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
+      background-size: 10px 20px;
+      background-repeat: no-repeat;
+      background-position: 95% center;
+    }
+  }
+  .item-content {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .list-footer {
+    margin: 10px 35px;
+    font-size: 14px;
+  }
+  // Last-childs
+  li {
+    &:last-child {
+      .list-button {
+        .hairline-remove(bottom);
+      }
+    }
+    &:last-child, &:last-child li:last-child {
+      .item-inner {
+        .hairline-remove(bottom);
+      }
+    }
+  }
+  .no-hairlines();
+  .no-hairlines-between();
+}
+.list.inset {
+  .block-title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  ul {
+    .hairline-remove(top);
+    .hairline-remove(bottom);
+  }
+}
+.list.tablet-inset {
+  @media (min-width: 768px) {
+    .block-title {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    ul {
+      .hairline-remove(top);
+      .hairline-remove(bottom);
+    }
+  }
+}
+@import url('./list-ios.less');
+@import url('./list-md.less');
