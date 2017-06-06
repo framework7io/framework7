@@ -13,12 +13,12 @@ html.md {
   .page-transitioning {
     transition-duration: @duration;
   }
-  .router-animate-forward, .router-animate-backward {
+  .router-animate-css-forward, .router-animate-css-backward {
     .page {
       pointer-events: none;
     }
   }
-  .router-animate-forward {
+  .router-animate-css-forward {
     .page-next {
       will-change: transform, opacity;
       animation: md-page-next-to-current @duration forwards;
@@ -27,7 +27,7 @@ html.md {
       animation: none;
     }
   }
-  .router-animate-backward {
+  .router-animate-css-backward {
     .page-current {
       will-change: transform, opacity;
       animation: md-page-current-to-next @duration forwards;

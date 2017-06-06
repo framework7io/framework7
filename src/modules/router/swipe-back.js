@@ -80,16 +80,16 @@ function SwipeBack(r) {
       }
 
       if (router.params.swipeBackPageAnimateShadow) {
-        pageShadow = currentPage.find('.swipeback-page-shadow');
+        pageShadow = currentPage.find('.page-shadow-effect');
         if (pageShadow.length === 0) {
-          pageShadow = $('<div class="swipeback-page-shadow"></div>');
+          pageShadow = $('<div class="page-shadow-effect"></div>');
           currentPage.append(pageShadow);
         }
       }
       if (router.params.swipeBackPageAnimateOpacity) {
-        pageOpacity = previousPage.find('.swipeback-page-opacity');
+        pageOpacity = previousPage.find('.page-opacity-effect');
         if (pageOpacity.length === 0) {
-          pageOpacity = $('<div class="swipeback-page-opacity"></div>');
+          pageOpacity = $('<div class="page-opacity-effect"></div>');
           previousPage.append(pageOpacity);
         }
       }

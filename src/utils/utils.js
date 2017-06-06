@@ -1,4 +1,12 @@
+import bezier from './bezier';
+
 const Utils = {
+  bezier(...args) {
+    return bezier(...args);
+  },
+  nextTick(callback) {
+    setTimeout(() => callback, 0);
+  },
   nextFrame(callback) {
     if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
     else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);

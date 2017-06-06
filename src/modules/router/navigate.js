@@ -239,16 +239,6 @@ function forward(el, forwardOptions = {}) {
     if (dynamicNavbar) {
       $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
-      if ($newNavbarInner.hasClass('sliding')) {
-        $newNavbarInner.find('.title, .left, .right, .left .icon').transform('');
-      } else {
-        $newNavbarInner.find('.sliding').transform('');
-      }
-      if ($oldNavbarInner.hasClass('sliding')) {
-        $oldNavbarInner.find('.title, .left, .right, .left .icon').transform('');
-      } else {
-        $oldNavbarInner.find('.sliding').transform('');
-      }
     }
     // After animation event
     router.allowPageChange = true;

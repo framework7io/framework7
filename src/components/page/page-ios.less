@@ -23,14 +23,14 @@ html.ios {
     z-index: 10000;
     will-change: opacity;
   }
-  .swipeback-page-shadow {
+  .page-shadow-effect {
     .fake-shadow();
   }
-  .swipeback-page-opacity {
+  .page-opacity-effect {
     .fake-opacity();
   }
   .router-dynamic-navbar-inside {
-    .swipeback-page-shadow, .swipeback-page-opacity {
+    .page-shadow-effect, .page-opacity-effect {
       top: 44px;
     }
   }
@@ -39,7 +39,7 @@ html.ios {
   }
   .page-previous {
     transform: translate3d(-20%, 0, 0);
-    .swipeback-page-opacity {
+    .page-opacity-effect {
       opacity: 1;
     }
     &:after {
@@ -47,26 +47,26 @@ html.ios {
     }
   }
   .page-current {
-    .swipeback-page-shadow {
+    .page-shadow-effect {
       opacity: 1;
     }
-    .swipeback-page-opacity {
-      opacity: 0 !important;
+    .page-opacity-effect {
+      // opacity: 0 !important;
     }
   }
   .page-next {
     transform: translate3d(100%, 0, 0);
-    .swipeback-page-shadow {
-      opacity: 0 !important;
+    page-shadow-effect {
+      // opacity: 0 !important;
     }
   }
 
   .page-transitioning {
-    &, .swipeback-page-shadow, .swipeback-page-opacity {
+    &, page-shadow-effect, .page-opacity-effect {
       transition-duration: @duration;
     }
   }
-  .router-animate-forward {
+  .router-animate-css-forward {
     .page-next, .page-current {
       will-change: transform;
       pointer-events: none;
@@ -94,7 +94,7 @@ html.ios {
       }
     }
   }
-  .router-animate-backward {
+  .router-animate-css-backward {
     .page-previous, .page-current {
       will-change: transform;
       pointer-events: none;
