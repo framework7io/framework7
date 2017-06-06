@@ -7,7 +7,7 @@ function forward(el, forwardOptions = {}) {
   const view = router.view;
 
   const options = Utils.extend({
-    animate: router.params.animatePages,
+    animate: router.params.animate,
     pushState: true,
     history: true,
     reloadCurrent: router.params.reloadPages,
@@ -232,8 +232,8 @@ function forward(el, forwardOptions = {}) {
 
   // Animation
   function afterAnimation() {
-    const pageClasses = 'page-previous page-current page-next page-next-to-current page-current-to-next page-previous-to-current page-current-to-previous';
-    const navbarClasses = 'navbar-previous navbar-current navbar-next navbar-next-to-current navbar-current-to-next navbar-previous-to-current navbar-current-to-previous';
+    const pageClasses = 'page-previous page-current page-next';
+    const navbarClasses = 'navbar-previous navbar-current navbar-next';
     $newPage.removeClass(pageClasses).addClass('page-current');
     $oldPage.removeClass(pageClasses).addClass('page-previous');
     if (dynamicNavbar) {
@@ -255,7 +255,7 @@ function forward(el, forwardOptions = {}) {
     router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-    if (!(router.params.swipeBackPage || router.params.preloadPreviousPage) || router.app.theme === 'md') {
+    if (!router.params.preloadPreviousPage || router.app.theme === 'md') {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
         if (separateNavbar) {
@@ -279,26 +279,18 @@ function forward(el, forwardOptions = {}) {
   if (options.animate) {
     if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
       setTimeout(() => {
-        router.animatePages($oldPage, $newPage, 'next', 'current');
+        router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
+          afterAnimation();
+        });
       }, router.params.materialPageLoadDelay);
     } else {
-      if (dynamicNavbar) {
-        router.prepareNavbar($newNavbarInner, 'next');
-        Utils.nextFrame(() => {
-          router.animatePages($oldPage, $newPage, 'next', 'current');
-          router.animateNavbars($oldNavbarInner, $newNavbarInner, 'next', 'current');
-        });
-      } else {
-        router.animatePages($oldPage, $newPage, 'next', 'current');
-      }
+      router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
+        afterAnimation();
+      });
     }
-    $newPage.animationEnd(() => {
-      afterAnimation();
-    });
   } else {
     afterAnimation();
   }
-
   return router;
 }
 function load(loadParams = {}, loadOptions = {}, ignorePageChange) {

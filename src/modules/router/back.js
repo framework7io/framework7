@@ -7,7 +7,7 @@ function backward(el, backwardOptions) {
   const view = router.view;
 
   const options = Utils.extend({
-    animate: router.params.animatePages,
+    animate: router.params.animate,
     pushState: true,
   }, backwardOptions);
 
@@ -189,8 +189,8 @@ function backward(el, backwardOptions) {
   // Animation
   function afterAnimation() {
     // Set classes
-    const pageClasses = 'page-previous page-current page-next page-next-to-current page-current-to-next page-previous-to-current page-current-to-previous';
-    const navbarClasses = 'navbar-previous navbar-current navbar-next navbar-next-to-current navbar-current-to-next navbar-previous-to-current navbar-current-to-previous';
+    const pageClasses = 'page-previous page-current page-next';
+    const navbarClasses = 'navbar-previous navbar-current navbar-next';
     $newPage.removeClass(pageClasses).addClass('page-current');
     $oldPage.removeClass(pageClasses).addClass('page-next');
     if (dynamicNavbar) {
@@ -239,26 +239,13 @@ function backward(el, backwardOptions) {
   }
 
   if (options.animate) {
-    if (router.app.theme !== 'ios' || !dynamicNavbar) {
-      router.animatePages($oldPage, $newPage, 'previous', 'current');
-    } else {
-      if (dynamicNavbar) {
-        router.prepareNavbar($newNavbarInner, 'previous');
-        Utils.nextFrame(() => {
-          router.animatePages($oldPage, $newPage, 'previous', 'current');
-          router.animateNavbars($oldNavbarInner, $newNavbarInner, 'previous', 'current');
-        });
-      } else {
-        router.animatePages($oldPage, $newPage, 'previous', 'current');
-      }
-    }
-
-    $newPage.animationEnd(() => {
+    router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'backward', () => {
       afterAnimation();
     });
   } else {
     afterAnimation();
   }
+
   return router;
 }
 function loadBack(backParams, backOptions, ignorePageChange) {

@@ -9,30 +9,32 @@ html.md {
     pointer-events: none;
   }
 
-  .page-next-to-current, .page-current-to-next {
-    will-change: transform, opacity;
-  }
-
   // Animations
-  .page-next-to-current {
-    pointer-events: none;
-    animation: md-page-next-to-current @duration forwards;
-  }
-  .page-previous-to-current {
-    pointer-events: none;
-    animation: md-page-previous-to-current @duration forwards;
-  }
-  .page-current-to-next {
-    pointer-events: none;
-    animation: md-page-current-to-next @duration forwards;
-  }
-  .page-current-to-previous {
-    pointer-events: none;
-    animation: md-page-current-to-previous @duration forwards;
-  }
-
   .page-transitioning {
     transition-duration: @duration;
+  }
+  .router-animate-forward, .router-animate-backward {
+    .page {
+      pointer-events: none;
+    }
+  }
+  .router-animate-forward {
+    .page-next {
+      will-change: transform, opacity;
+      animation: md-page-next-to-current @duration forwards;
+    }
+    .page-current {
+      animation: none;
+    }
+  }
+  .router-animate-backward {
+    .page-current {
+      will-change: transform, opacity;
+      animation: md-page-current-to-next @duration forwards;
+    }
+    .page-previous {
+      animation: none;
+    }
   }
 }
 @keyframes md-page-next-to-current {
@@ -43,22 +45,6 @@ html.md {
   to {
     transform: translate3d(0, 0px, 0);
     opacity: 1;
-  }
-}
-@keyframes md-page-previous-to-current {
-  from {
-    transform: translate3d(0,0,0);
-  }
-  to {
-    transform: translate3d(0,0,0);
-  }
-}
-@keyframes md-page-current-to-previous {
-  from {
-    transform: translate3d(0,0,0);
-  }
-  to {
-    transform: translate3d(0,0,0);
   }
 }
 @keyframes md-page-current-to-next {

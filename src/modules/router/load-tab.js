@@ -5,7 +5,7 @@ import History from '../../utils/history';
 function loadTab(tab, loadOptions = {}) {
   const router = this;
   const options = Utils.extend({
-    animate: router.params.animatePages,
+    animate: router.params.animate,
     pushState: true,
     history: true,
     on: {},

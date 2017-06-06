@@ -29,7 +29,7 @@ export default {
       pushStateSeparator: '#!',
       pushStateOnLoad: true,
       // Animate Pages
-      animatePages: true,
+      animate: true,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
       iosSeparateDynamicNavbar: true,
