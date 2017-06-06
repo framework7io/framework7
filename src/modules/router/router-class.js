@@ -90,33 +90,43 @@ class Router extends Framework7Class {
 
     return router;
   }
-  prepareNavbar(navbarInner, direction) {
+  prepareNavbars(oldNavbarInner, newNavbarInner, direction) {
     const router = this;
     let slidingEls;
-    if (navbarInner.hasClass('sliding')) {
-      slidingEls = navbarInner.children('.left, .right, .title, .subnavbar');
+    if (newNavbarInner.hasClass('sliding')) {
+      slidingEls = newNavbarInner.children('.left, .right, .title, .subnavbar');
     } else {
-      slidingEls = navbarInner.find('.sliding');
+      slidingEls = newNavbarInner.find('.sliding');
     }
     if (!slidingEls) return;
     let navbarWidth;
     if (!router.separateNavbar) {
-      navbarWidth = navbarInner[0].offsetWidth;
+      navbarWidth = newNavbarInner[0].offsetWidth;
     }
+
+    let oldNavbarTitleEl;
+    if (oldNavbarInner.find('.title.sliding').length > 0) {
+      oldNavbarTitleEl = oldNavbarInner.find('.title.sliding');
+    } else {
+      oldNavbarTitleEl = oldNavbarInner.hasClass('sliding') && oldNavbarInner.find('.title');
+    }
+
     slidingEls.each((index, slidingEl) => {
       const $slidingEl = $(slidingEl);
       const slidingOffset = direction === 'forward' ? slidingEl.f7NavbarRightOffset : slidingEl.f7NavbarLeftOffset;
-      if (router.params.iosAnimateNavbarBackIcon) {
-        if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-          let iconSlidingOffset = -slidingOffset;
-          if (!router.separateNavbar) {
-            if (direction === 'forward') {
-              iconSlidingOffset -= navbarWidth;
-            } else {
-              iconSlidingOffset += navbarWidth / 5;
-            }
+      if (router.params.iosAnimateNavbarBackIcon && $slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
+        let iconSlidingOffset = -slidingOffset;
+        const iconTextEl = $slidingEl.find('.back span').eq(0);
+        if (!router.separateNavbar) {
+          if (direction === 'forward') {
+            iconSlidingOffset -= navbarWidth;
+          } else {
+            iconSlidingOffset += navbarWidth / 5;
           }
-          $slidingEl.find('.back .icon').transform(`translate3d(${iconSlidingOffset}px,0,0)`);
+        }
+        $slidingEl.find('.back .icon').transform(`translate3d(${iconSlidingOffset}px,0,0)`);
+        if (oldNavbarTitleEl && iconTextEl.length > 0) {
+          oldNavbarTitleEl[0].f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
         }
       }
       $slidingEl.transform(`translate3d(${slidingOffset}px,0,0)`);
@@ -137,16 +147,6 @@ class Router extends Framework7Class {
       }
     }
 
-    // New Navbar Sliding
-    let newNavbarSlidingEls;
-    if (direction === 'forward') {
-      if (newNavbarInner.hasClass('sliding')) {
-        newNavbarSlidingEls = newNavbarInner.children('.left, .right, .title, .subnavbar');
-      } else {
-        newNavbarSlidingEls = newNavbarInner.find('.sliding');
-      }
-    }
-
     // Old Navbar Sliding
     let oldNavbarSlidingEls;
     if (oldNavbarInner.hasClass('sliding')) {
@@ -158,27 +158,13 @@ class Router extends Framework7Class {
     if (oldNavbarSlidingEls) {
       oldNavbarSlidingEls.each((index, slidingEl) => {
         const $slidingEl = $(slidingEl);
-        if (animateIcon && direction === 'forward' && $slidingEl.hasClass('title')) {
-          let iconEl;
-          let iconTextEl;
-          newNavbarSlidingEls.each((newElIndex, el) => {
-            const $el = $(el);
-            if ($el.hasClass('left')) {
-              iconEl = $el.find('.back .icon').eq(0);
-              iconTextEl = $el.find('.back span').eq(0);
-            }
-          });
-          if (iconEl && iconEl.length && iconTextEl && iconTextEl.length) {
-            $slidingEl[0].f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
-          }
-        }
         const offset = direction === 'forward' ? slidingEl.f7NavbarLeftOffset : slidingEl.f7NavbarRightOffset;
+        $slidingEl.transform(`translate3d(${offset}px,0,0)`);
         if (animateIcon) {
           if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
             $slidingEl.find('.back .icon').transform(`translate3d(${-offset + navbarIconOffset}px,0,0)`);
           }
         }
-        $slidingEl.transform(`translate3d(${offset}px,0,0)`);
       });
     }
   }
@@ -218,7 +204,7 @@ class Router extends Framework7Class {
 
     if (router.dynamicNavbar) {
       // Prepare Navbars
-      router.prepareNavbar(newNavbarInner, direction);
+      router.prepareNavbars(oldNavbarInner, newNavbarInner, direction);
       Utils.nextFrame(() => {
         // Add class, start animation
         router.$el.addClass(routerClass);
