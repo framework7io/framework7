@@ -169,6 +169,88 @@ class Router extends Framework7Class {
     }
   }
 
+  animateJs(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+    const router = this;
+    const dynamicNavbar = router.dynamicNavbar;
+    const separateNavbar = router.separateNavbar;
+    const animateIcon = router.params.iosAnimateNavbarBackIcon;
+
+    let startTime = null;
+    let done = false;
+
+    let newNavEls;
+    let oldNavEls;
+    let navbarWidth = 0;
+    if (dynamicNavbar) {
+      newNavEls = newNavbarInner.hasClass('sliding') ? newNavbarInner.find('.left, .right, .title, .subnavbar') : newNavbarInner.find('.sliding');
+      oldNavEls = oldNavbarInner.hasClass('sliding') ? oldNavbarInner.find('.left, .right, .title, .subnavbar') : oldNavbarInner.find('.sliding');
+      if (!separateNavbar) {
+        navbarWidth = newNavbarInner[0].offsetWidth;
+      }
+    }
+
+    function render() {
+      const duration = 400;
+      const time = Utils.now();
+      if (!startTime) startTime = time;
+      const progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
+      const easeProgress = (0.5 - (Math.cos(progress * Math.PI) / 2));
+
+      if (progress >= 1) {
+        done = true;
+      }
+      if (direction === 'forward') {
+        newPage.transform(`translate3d(${(1 - easeProgress) * 100}%,0,0)`);
+        oldPage.transform(`translate3d(${-easeProgress * 20}%,0,0)`);
+      } else {
+        newPage.transform(`translate3d(${-(1 - easeProgress) * 20}%,0,0)`);
+        oldPage.transform(`translate3d(${easeProgress * 100}%,0,0)`);
+      }
+
+      if (dynamicNavbar) {
+        newNavEls.each((index, navEl) => {
+          const el = navEl;
+          const from = direction === 'forward' ? navEl.f7NavbarRightOffset : navEl.f7NavbarLeftOffset;
+          const to = 0;
+          el.style.opacity = easeProgress;
+          if (direction === 'forward') {
+            el.style.transform = `translate3d(${(from - to) * (1 - easeProgress)}px,0,0)`;
+            if (animateIcon && $(el).hasClass('left') && $(el).find('.back .icon').length > 0) {
+              $(el).find('.back .icon')[0].style.transform = `translate3d(${(to - from - navbarWidth) * (1 - easeProgress)}px,0,0)`;
+            }
+          } else {
+            el.style.transform = `translate3d(${(from - to) * (1 - easeProgress)}px,0,0)`;
+            if (animateIcon && $(el).hasClass('left') && $(el).find('.back .icon').length > 0) {
+              $(el).find('.back .icon')[0].style.transform = `translate3d(${((to - from) + (navbarWidth / 5)) * (1 - easeProgress)}px,0,0)`;
+            }
+          }
+        });
+        oldNavEls.each((index, navEl) => {
+          const el = navEl;
+          const from = 0;
+          const to = direction === 'forward' ? navEl.f7NavbarLeftOffset : navEl.f7NavbarRightOffset;
+          el.style.opacity = (1 - easeProgress);
+          if (direction === 'forward') {
+            el.style.transform = `translate3d(${(to - from) * (easeProgress)}px,0,0)`;
+            if (animateIcon && $(el).hasClass('left') && $(el).find('.back .icon').length > 0) {
+              $(el).find('.back .icon')[0].style.transform = `translate3d(${((from - to) + (navbarWidth / 5)) * (easeProgress)}px,0,0)`;
+            }
+          } else {
+            el.style.transform = `translate3d(${(to - from) * (easeProgress)}px,0,0)`;
+            if (animateIcon && $(el).hasClass('left') && $(el).find('.back .icon').length > 0) {
+              $(el).find('.back .icon')[0].style.transform = `translate3d(${(from - to - navbarWidth) * (easeProgress)}px,0,0)`;
+            }
+          }
+        });
+      }
+      if (done) {
+        if (callback) callback();
+        return;
+      }
+      Utils.nextFrame(render);
+    }
+    render();
+  }
   animate(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
     const router = this;
     const pageClasses = 'page-current page-next page-previous';
