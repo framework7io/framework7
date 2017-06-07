@@ -25,11 +25,14 @@
 </style>
 <script>
   return {
-    attached() {
-      console.log('attached');
+    mounted() {
+      console.log('mounted');
     },
-    beforeRemove() {
-      console.log('beforeRemove');
+    beforeDestroy() {
+      console.log('beforeDestroy');
+    },
+    destroyed() {
+      console.log('destroyed');
     },
     data: function () {
       return {
