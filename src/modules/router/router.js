@@ -4,7 +4,7 @@ export default {
   name: 'router',
   params: {
     router: {
-      stackPages: false,
+      stackPages: true,
       xhrCache: true,
       xhrCacheIgnore: [],
       xhrCacheIgnoreGetParameters: false,
@@ -14,7 +14,9 @@ export default {
       uniqueHistoryIgnoreGetParameters: false,
       allowDuplicateUrls: false,
       reloadPages: false,
-      removeWithTimeout: false,
+      removeElements: true,
+      removeElementsWithTimeout: false,
+      removeElementsTimeout: 0,
       // Swipe Back
       swipeBackPage: true,
       swipeBackPageAnimateShadow: true,

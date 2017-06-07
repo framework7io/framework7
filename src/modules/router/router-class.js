@@ -392,12 +392,19 @@ class Router extends Framework7Class {
   }
   remove(el) {
     const router = this;
-    if (router.params.removeWithTimeout) {
+    const $el = $(el);
+    if ($el[0].f7Component && $el[0].f7Component.beforeRemove) {
+      $el[0].f7Component.beforeRemove();
+    }
+    if (!router.params.removeElements) {
+      return;
+    }
+    if (router.params.removeElementsWithTimeout) {
       setTimeout(() => {
-        $(el).remove();
-      }, 0);
+        $el.remove();
+      }, router.params.removeElementsTimeout);
     } else {
-      $(el).remove();
+      $el.remove();
     }
   }
   getPageEl(content) {
