@@ -3,8 +3,24 @@ html.ios {
   .list {
     margin: 35px 0;
     font-size: 17px;
+    .item-cell {
+      padding-left: 15px;
+      padding-right: 15px;
+      flex-shrink: 1;
+      width: 100%;
+      min-width: 0;
+      &:first-child {
+        padding-left: 0;
+      }
+      &:last-child {
+        padding-right: 0;
+      }
+    }
     ul {
       background: #fff;
+      ul {
+        padding-left: 45px;
+      }
     }
     .item-media {
       padding-top: 7px;
@@ -17,7 +33,6 @@ html.ios {
     }
     .item-inner {
       padding-right: 15px;
-      padding-bottom: 7px;
       min-height: 44px;
     }
     .item-after {
@@ -51,7 +66,48 @@ html.ios {
       padding: 0 15px;
       color: #8f8f94;
     }
+    .item-subtitle {
+      font-size: 15px;
+    }
+    .item-text {
+      font-size: 15px;
+      color: #8e8e93;
+      line-height: 21px;
+      max-height: 42px;
+    }
   }
+  .media-list, li.media-item {
+    .item-title {
+      font-weight: 600;
+    }
+    .item-inner {
+      padding-top: 10px;
+      padding-bottom: 9px;
+    }
+    .item-link .item-inner {
+      padding-right: 15px;
+    }
+    .item-link .item-title-row {
+      padding-right: 20px;
+    }
+    .item-media {
+      padding-top: 9px;
+      padding-bottom: 10px;
+    }
+  }
+
+  li.item-divider, .item-divider, li.list-group-title {
+    margin-top: -1px; //?
+    padding: 4px 15px;
+    background: #f7f7f7;
+    color: #8e8e93;
+  }
+  li.list-group-title {
+    margin-top: 0;
+  }
+  .hairline-root('.item-divider', top, @blockBorderColor);
+  .hairline-root('.list-group-title', top, @blockBorderColor);
+
   .hairline-root('.list .list-button', bottom, @blockBorderColor);
   .hairline-root('.list .item-inner', bottom, @blockBorderColor);
   .hairline-root('.list ul', top, @blockBorderColor);
@@ -60,6 +116,9 @@ html.ios {
     margin-left: 15px;
     margin-right: 15px;
     border-radius: 7px;
+    ul {
+      border-radius: 7px;
+    }
     li:first-child > a {
       border-radius: 7px 7px 0 0;
     }

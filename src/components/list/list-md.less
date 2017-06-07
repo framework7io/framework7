@@ -3,8 +3,23 @@ html.md {
   .list {
     margin: 32px 0;
     font-size: 16px;
+    .item-cell {
+      padding-left: 16px;
+      padding-right: 16px;
+      flex-shrink: 1;
+      width: 100%;
+      min-width: 0;
+      &:first-child {
+        padding-left: 0;
+      }
+      &:last-child {
+        padding-right: 0;
+      }
+    }
     ul {
-
+      ul {
+        padding-left: 56px;
+      }
     }
     .item-media {
       padding-top: 8px;
@@ -18,7 +33,6 @@ html.md {
     }
     .item-inner {
       padding-right: 16px;
-      padding-bottom: 8px;
       min-height: 48px;
     }
     .item-after {
@@ -48,6 +62,44 @@ html.md {
       padding: 0 16px;
       color: rgba(0,0,0,0.54);
     }
+    .item-subtitle {
+      font-size: 14px;
+    }
+    .item-text {
+      font-size: 14px;
+      color: #757575;
+      line-height: 20px;
+      max-height: 40px;
+    }
+  }
+  .media-list, li.media-item {
+    .item-inner {
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+    .item-link .item-inner {
+      padding-right: 16px;
+    }
+    .item-link .item-title-row {
+      padding-right: 26px;
+    }
+    .item-media {
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+  }
+  .item-divider, .list-group-title {
+    .hairline-remove(top);
+    padding: 0 16px;
+    background: #f4f4f4;
+    color: rgba(0,0,0,0.54);
+    height: 48px;
+    line-height: 48px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  .list-group-title {
+    margin-top: 0;
   }
   .hairline-root('.list .item-inner', bottom, @blockBorderColor);
   .hairline-root('.list ul', top, @blockBorderColor);
@@ -56,6 +108,9 @@ html.md {
     margin-left: 16px;
     margin-right: 16px;
     border-radius: 4px;
+    ul {
+      border-radius: 4px;
+    }
     li:first-child > a {
       border-radius: 4px 4px 0 0;
     }
