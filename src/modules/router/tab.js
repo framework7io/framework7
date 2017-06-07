@@ -41,11 +41,14 @@ function loadTab(tabRoute, loadOptions = {}) {
   const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
 
   function onTabLoaded() {
+    $newTabEl.children().each((index, tabChild) => {
+      if (tabChild.f7Component && tabChild.f7Component.attached) {
+        tabChild.f7Component.attached();
+      }
+    });
     $newTabEl.trigger('tabInit tab:init tabAttached tab:attached', tabRoute);
     router.emit('tabInit tab:init tabAttached tab:attached', $newTabEl, tabRoute);
     if ($oldTabEl) {
-      $oldTabEl.trigger('tabBeforeRemove tab:beforeremove', tabRoute);
-      router.emit('tabBeforeRemove tab:beforeremove', $oldTabEl, $newTabEl, tabRoute);
       router.removeTab($oldTabEl, $newTabEl, tabRoute);
     }
   }
@@ -107,6 +110,13 @@ function loadTab(tabRoute, loadOptions = {}) {
 }
 function removeTab($oldTabEl, $newTabEl, tabRoute) {
   const router = this;
+  $oldTabEl.trigger('tabBeforeRemove tab:beforeremove', tabRoute);
+  router.emit('tabBeforeRemove tab:beforeremove', $oldTabEl, $newTabEl, tabRoute);
+  $oldTabEl.children().each((index, tabChild) => {
+    if (tabChild.f7Component && tabChild.f7Component.beforeRemove) {
+      tabChild.f7Component.beforeRemove();
+    }
+  });
   $oldTabEl.html('');
 }
 
