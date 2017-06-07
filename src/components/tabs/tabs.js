@@ -1,7 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 
-const Tabs = {
+const Tab = {
   show(...args) {
     const app = this;
     let [tab, tabLink, animate] = args;
@@ -11,13 +11,25 @@ const Tabs = {
     if (typeof animate === 'undefined') animate = true;
 
     const $newTabEl = $(tab);
-    if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) return undefined;
+
+    if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
+      return {
+        $newTabEl,
+        newTabEl: $newTabEl[0],
+      };
+    }
+
 
     let $tabLinkEl;
     if (tabLink) $tabLinkEl = $(tabLink);
 
     const $tabsEl = $newTabEl.parent('.tabs');
-    if ($tabsEl.length === 0) return undefined;
+    if ($tabsEl.length === 0) {
+      return {
+        $newTabEl,
+        newTabEl: $newTabEl[0],
+      };
+    }
 
     // Release swipeouts in hidden tabs
     if (app.swipeout) app.swipeout.allowOpen = true;
@@ -94,7 +106,12 @@ const Tabs = {
         }
       }
     }
-    return $newTabEl[0];
+    return {
+      $newTabEl,
+      newTabEl: $newTabEl[0],
+      $oldTabEl,
+      oldTabEl: $oldTabEl[0],
+    };
   },
 };
 export default {
@@ -102,8 +119,8 @@ export default {
   create() {
     const app = this;
     Utils.extend(app, {
-      tabs: {
-        show: Tabs.show.bind(app),
+      tab: {
+        show: Tab.show.bind(app),
       },
     });
   },
@@ -111,7 +128,7 @@ export default {
     '.tab-link': function tabLinkClick($clickedEl, data = {}) {
       const app = this;
       if ($clickedEl.attr('href').indexOf('#') === 0 || $clickedEl.attr('data-tab')) {
-        app.tabs.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
+        app.tab.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
       }
     },
   },

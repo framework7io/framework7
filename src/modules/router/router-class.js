@@ -6,7 +6,7 @@ import Component from '../../utils/component';
 import SwipeBack from './swipe-back';
 
 import { forward, load, navigate } from './navigate';
-import loadTab from './load-tab';
+import { loadTab, removeTab } from './tab';
 import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterBack } from './back';
 
 class Router extends Framework7Class {
@@ -81,7 +81,10 @@ class Router extends Framework7Class {
     router.forward = forward;
     router.load = load;
     router.navigate = navigate;
+
+    // Tab
     router.loadTab = loadTab;
+    router.removeTab = removeTab;
 
     // Back
     router.backward = RouterBackward;
@@ -651,7 +654,7 @@ class Router extends Framework7Class {
   tabTemplateLoader(tabEl, template, templateUrl, options, resolve, reject) {
     const router = this;
     return router.templateLoader(template, templateUrl, options, (html) => {
-      resolve($(html));
+      resolve(html);
     }, reject);
   }
   pageTemplateLoader(template, templateUrl, options, resolve, reject) {

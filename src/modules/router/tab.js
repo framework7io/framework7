@@ -1,8 +1,7 @@
-import $ from 'dom7';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 
-function loadTab(tab, loadOptions = {}) {
+function loadTab(tabRoute, loadOptions = {}) {
   const router = this;
   const options = Utils.extend({
     animate: router.params.animate,
@@ -38,16 +37,31 @@ function loadTab(tab, loadOptions = {}) {
 
 
   // Show Tab
-  const $tabEl = $(router.app.tabs.show(`#${tab.id}`, options.animate));
+  const { $newTabEl, $oldTabEl } = router.app.tab.show(`#${tabRoute.id}`, options.animate);
 
   // Load Tab Content
-  const { url, content, el, template, templateUrl, component, componentUrl } = tab;
+  const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
+
+  function onTabLoaded() {
+    $newTabEl.trigger('tabInit tab:init tabAttached tab:attached', tabRoute);
+    router.emit('tabInit tab:init tabAttached tab:attached', $newTabEl, tabRoute);
+    if ($oldTabEl) {
+      $oldTabEl.trigger('tabBeforeRemove tab:beforeremove', tabRoute);
+      router.emit('tabBeforeRemove tab:beforeremove', $oldTabEl, $newTabEl, tabRoute);
+      router.removeTab($oldTabEl, $newTabEl, tabRoute);
+    }
+  }
 
   // Component/Template Callbacks
   function resolve(contentEl) {
     if (contentEl) {
-      $tabEl.html('');
-      $tabEl.append(contentEl);
+      if (typeof contentEl === 'string') {
+        $newTabEl.html(contentEl);
+      } else {
+        $newTabEl.html('');
+        $newTabEl.append(contentEl);
+      }
+      onTabLoaded();
     }
   }
   function reject() {
@@ -56,7 +70,8 @@ function loadTab(tab, loadOptions = {}) {
   }
 
   if (content) {
-    $tabEl.html(content);
+    $newTabEl.html(content);
+    onTabLoaded();
   } else if (template || templateUrl) {
     try {
       router.tabTemplateLoader(template, templateUrl, options, resolve, reject);
@@ -65,12 +80,13 @@ function loadTab(tab, loadOptions = {}) {
       throw err;
     }
   } else if (el) {
-    $tabEl.html('');
-    $tabEl.append(el);
+    $newTabEl.html('');
+    $newTabEl.append(el);
+    onTabLoaded();
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.tabComponentLoader($tabEl, component, componentUrl, options, resolve, reject);
+      router.tabComponentLoader($newTabEl, component, componentUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -82,14 +98,19 @@ function loadTab(tab, loadOptions = {}) {
       router.xhr = false;
     }
     router.xhrRequest(url, ignoreCache)
-      .then((pageContent) => {
-        $tabEl.html(pageContent);
+      .then((tabContent) => {
+        $newTabEl.html(tabContent);
+        onTabLoaded();
       })
       .catch(() => {
         router.allowPageChange = true;
       });
   }
 }
+function removeTab($oldTabEl, $newTabEl, tabRoute) {
+  const router = this;
+  $oldTabEl.html('');
+}
 
-export default loadTab;
+export { loadTab, removeTab };
 
