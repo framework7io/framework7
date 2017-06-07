@@ -393,8 +393,8 @@ class Router extends Framework7Class {
   remove(el) {
     const router = this;
     const $el = $(el);
-    if ($el[0].f7Component && $el[0].f7Component.beforeRemove) {
-      $el[0].f7Component.beforeRemove();
+    if ($el[0].f7Component && $el[0].f7Component.destroy) {
+      $el[0].f7Component.destroy();
     }
     if (!router.params.removeElements) {
       return;
@@ -684,27 +684,10 @@ class Router extends Framework7Class {
           md: router.app.theme === 'md',
         },
       });
-      const $el = $(compiled.dom);
+      const $el = $(compiled.el);
 
-      let styleEl;
-      if (c.style) {
-        styleEl = document.createElement('style');
-        styleEl.innerHTML = c.style;
-        $('head').append(styleEl);
-        if (c.styleScope) $el.attr('data-scope', c.styleScope);
-      }
-      if (compiled.events && compiled.events.length) {
-        compiled.events.forEach((event) => {
-          $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
-        });
-        $el.once('pageBeforeRemove', () => {
-          if (c.style && styleEl) {
-            $(styleEl).remove();
-          }
-          compiled.events.forEach((event) => {
-            $(event.el).off(event.name, event.handler);
-          });
-        });
+      if (c.styles && compiled.styleEl) {
+        $('head').append(compiled.styleEl);
       }
       resolve($el, { pageEvents: c.on });
     }

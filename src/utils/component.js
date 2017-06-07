@@ -14,18 +14,18 @@ const Component = {
     }
 
     // Styles
-    let style;
-    const styleScope = Utils.now();
+    let styles;
+    const stylesScopeId = Utils.now();
     if (componentString.indexOf('<style>') >= 0) {
-      style = componentString.split('<style>')[1].split('</style>')[0];
+      styles = componentString.split('<style>')[1].split('</style>')[0];
     } else if (componentString.indexOf('<style scoped>') >= 0) {
-      style = componentString.split('<style scoped>')[1].split('</style>')[0];
-      style = style.split('\n').map((line) => {
+      styles = componentString.split('<style scoped>')[1].split('</style>')[0];
+      styles = styles.split('\n').map((line) => {
         if (line.indexOf('{') >= 0) {
           if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', `[data-scope="${styleScope}"]`);
+            return line.replace('{{this}}', `[data-scope="${stylesScopeId}"]`);
           }
-          return `[data-scope="${styleScope}"] ${line.trim()}`;
+          return `[data-scope="${stylesScopeId}"] ${line.trim()}`;
         }
         return line;
       }).join('\n');
@@ -47,9 +47,9 @@ const Component = {
     if (!component.template && !component.render) {
       component.template = template;
     }
-    if (style) {
-      component.style = style;
-      component.styleScope = styleScope;
+    if (styles) {
+      component.styles = styles;
+      component.stylesScopeId = stylesScopeId;
     }
     return component;
   },
@@ -58,11 +58,14 @@ const Component = {
     const context = Utils.extend({}, extend);
 
     // Apply context
-    if (component.attached) {
-      component.attached = component.attached.bind(context);
+    if (component.mounted) {
+      component.mounted = component.mounted.bind(context);
     }
-    if (component.beforeRemove) {
-      component.attached = component.attached.bind(context);
+    if (component.beforeDestroy) {
+      component.beforeDestroy = component.beforeDestroy.bind(context);
+    }
+    if (component.destroyed) {
+      component.destroyed = component.destroyed.bind(context);
     }
 
     if (component.data) {
@@ -97,6 +100,10 @@ const Component = {
 
     // Make Dom
     tempDom.innerHTML = html;
+
+    // Extend context with $el
+    const $el = tempDom.children[0];
+    context.$el = $el;
 
     // Find Events
     const events = [];
@@ -175,14 +182,40 @@ const Component = {
         }
       }
     });
+
+    // Set styles scrope ID
+    let styleEl;
+    if (component.styles) {
+      styleEl = document.createElement('style');
+      styleEl.innerHTML = component.styles;
+    }
+    if (component.stylesScopeId) {
+      $el.setAttribute('data-scope', component.stylesScopeId);
+    }
+
+    // Attach events
+    events.forEach((event) => {
+      $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
+    });
+
+    component.destroy = function destroy() {
+      if (component.beforeDestroy) component.beforeDestroy();
+      if (styleEl) $(styleEl).remove();
+      events.forEach((event) => {
+        $(event.el).off(event.name, event.handler);
+      });
+      if (component.destroyed) component.destroyed();
+    };
+
+    // Store component instance
     for (let i = 0; i < tempDom.children.length; i += 1) {
       tempDom.children[i].f7Component = component;
     }
+
     return {
-      dom: tempDom.children,
-      events,
-      html,
+      el: $el,
       context,
+      styleEl,
     };
   },
 };
