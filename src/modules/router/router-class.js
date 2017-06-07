@@ -362,7 +362,7 @@ class Router extends Framework7Class {
       Utils.nextFrame(render);
     }
     router.$el.addClass(routerTransitionClass);
-    render();
+    Utils.nextFrame(render);
   }
   animate(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
     const router = this;
