@@ -25,6 +25,12 @@
 </style>
 <script>
   return {
+    attached() {
+      console.log('attached');
+    },
+    beforeRemove() {
+      console.log('beforeRemove');
+    },
     data: function () {
       return {
         title: 'Component Test',
