@@ -975,7 +975,7 @@ app.router._back = function (view, options) {
         oldPage = $(pagesInView[pagesInView.length - 1]);
         
         if (view.params.domCache){
-        	var pageNameFromUrl = (url.split("#")[1]).split("?")[0];
+        	var pageNameFromUrl = (url.split('#')[1]).split('?')[0];
             if (newPage[0].f7PageData.name != pageNameFromUrl){
                 var previousPages = newPage.prevAll('.page.page-on-left');
                 for (var k = 0; k < previousPages.length; k++){
