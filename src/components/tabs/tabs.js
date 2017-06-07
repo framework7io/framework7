@@ -80,23 +80,20 @@ const Tabs = {
         }
       }
 
+      if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass('tab-link-active');
+
       // Update links' classes
       if ($tabLinkEl && $tabLinkEl.length > 0) {
         $tabLinkEl.addClass('tab-link-active');
         // Material Highlight
         if (app.theme === 'md' && app.toolbar) {
-          const $tabbarEl = $tabLinkEl.parents('.tabbar');
+          const $tabbarEl = $tabLinkEl.parents('.tabbar, .tabbar-labels');
           if ($tabbarEl.length > 0) {
-            if ($tabbarEl.find('.tab-link-highlight').length === 0) {
-              $tabbarEl.find('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
-            }
             app.toolbar.setHighlight($tabbarEl);
           }
         }
       }
-      if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass('tab-link-active');
     }
-
     return $newTabEl[0];
   },
 };
