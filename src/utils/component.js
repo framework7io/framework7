@@ -58,6 +58,13 @@ const Component = {
     const context = Utils.extend({}, extend);
 
     // Apply context
+    if (component.attached) {
+      component.attached = component.attached.bind(context);
+    }
+    if (component.beforeRemove) {
+      component.attached = component.attached.bind(context);
+    }
+
     if (component.data) {
       component.data = component.data.bind(context);
       // Data
@@ -168,7 +175,9 @@ const Component = {
         }
       }
     });
-
+    for (let i = 0; i < tempDom.children.length; i += 1) {
+      tempDom.children[i].f7Component = component;
+    }
     return {
       dom: tempDom.children,
       events,
