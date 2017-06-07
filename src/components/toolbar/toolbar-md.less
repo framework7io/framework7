@@ -15,11 +15,10 @@ html.md {
     height: @toolbarSize;
     color: @toolbarColor;
     font-size: 14px;
-    overflow: hidden;
     top: 0;
     .md-bar-shadow-to-bottom();
     &.no-shadow {
-      box-shadow: none !important;
+      .md-bar-no-shadow();
     }
     a {
       color: @toolbarLinkColor;
@@ -41,7 +40,7 @@ html.md {
     }
   }
   .toolbar-inner {
-
+    overflow: hidden;
   }
 
   .tabbar, .tabbar-labels {
