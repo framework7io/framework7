@@ -138,6 +138,41 @@
   .no-hairlines();
   .no-hairlines-between();
 }
+.list.simple-list {
+  li {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-oveflow: ellipsis;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  li:last-child {
+    .hairline-remove(bottom);
+  }
+}
+.list.links-list {
+  a {
+    transition-duration: 300ms;
+    transition-property: background-color;
+    display: block;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    display: block;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-oveflow: ellipsis;
+    max-width: 100%;
+    .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
+    background-size: 10px 20px;
+    background-repeat: no-repeat;
+    background-position: 95% center;
+  }
+  li:last-child a {
+    .hairline-remove(bottom);
+  }
+}
 .media-list, li.media-item {
   .item-inner {
     display: block;

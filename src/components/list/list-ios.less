@@ -76,6 +76,30 @@ html.ios {
       max-height: 42px;
     }
   }
+  .simple-list {
+    li {
+      padding-left: 15px;
+      line-height: 44px;
+    }
+    li:after {
+      margin-left: 15px;
+    }
+  }
+  .links-list {
+    a {
+      line-height: 44px;
+      padding-left: 15px;
+      padding-right: 35px;
+      background-position: calc(~"100% - 15px") center;
+      &.active-state {
+        transition-duration: 0ms;
+        background-color: #d9d9d9;
+      }
+    }
+    a:after {
+      margin-left: 15px;
+    }
+  }
   .media-list, li.media-item {
     .item-title {
       font-weight: 600;
@@ -105,6 +129,8 @@ html.ios {
   li.list-group-title {
     margin-top: 0;
   }
+  .hairline-root('.simple-list li', bottom, @blockBorderColor);
+  .hairline-root('.links-list a', bottom, @blockBorderColor);
   .hairline-root('.item-divider', top, @blockBorderColor);
   .hairline-root('.list-group-title', top, @blockBorderColor);
 

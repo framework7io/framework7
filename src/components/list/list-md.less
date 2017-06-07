@@ -46,7 +46,7 @@ html.md {
         background-position: calc(~"100% - 16px") center;
       }
       &.active-state {
-        background-color: rgba(0,0,0,0.1);;
+        background-color: rgba(0,0,0,0.1);
       }
     }
     .list-button {
@@ -70,6 +70,29 @@ html.md {
       color: #757575;
       line-height: 20px;
       max-height: 40px;
+    }
+  }
+  .simple-list {
+    li {
+      padding-left: 16px;
+      line-height: 48px;
+    }
+    li:after {
+      margin-left: 16px;
+    }
+  }
+  .links-list {
+    a {
+      line-height: 48px;
+      padding-left: 16px;
+      padding-right: 42px;
+      background-position: calc(~"100% - 16px") center;
+      &.active-state {
+        background-color: rgba(0,0,0,0.1);
+      }
+    }
+    a:after {
+      margin-left: 16px;
     }
   }
   .media-list, li.media-item {
@@ -101,6 +124,8 @@ html.md {
   .list-group-title {
     margin-top: 0;
   }
+  .hairline-root('.simple-list li', bottom, @blockBorderColor);
+  .hairline-root('.links-list a', bottom, @blockBorderColor);
   .hairline-root('.list .item-inner', bottom, @blockBorderColor);
   .hairline-root('.list ul', top, @blockBorderColor);
   .hairline-root('.list ul', bottom, @blockBorderColor);
