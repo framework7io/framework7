@@ -42,8 +42,8 @@ function loadTab(tabRoute, loadOptions = {}) {
 
   function onTabLoaded() {
     $newTabEl.children().each((index, tabChild) => {
-      if (tabChild.f7Component && tabChild.f7Component.attached) {
-        tabChild.f7Component.attached();
+      if (tabChild.f7Component && tabChild.f7Component.mounted) {
+        tabChild.f7Component.mounted();
       }
     });
     $newTabEl.trigger('tabInit tab:init tabAttached tab:attached', tabRoute);
@@ -113,8 +113,8 @@ function removeTab($oldTabEl, $newTabEl, tabRoute) {
   $oldTabEl.trigger('tabBeforeRemove tab:beforeremove', tabRoute);
   router.emit('tabBeforeRemove tab:beforeremove', $oldTabEl, $newTabEl, tabRoute);
   $oldTabEl.children().each((index, tabChild) => {
-    if (tabChild.f7Component && tabChild.f7Component.beforeRemove) {
-      tabChild.f7Component.beforeRemove();
+    if (tabChild.f7Component && tabChild.f7Component.destroy) {
+      tabChild.f7Component.destroy();
     }
   });
   $oldTabEl.html('');
