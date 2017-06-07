@@ -123,8 +123,8 @@ function backward(el, backwardOptions) {
     $newNavbarInner.insertBefore($oldNavbarInner);
   }
   if (needsAttachedCallback) {
-    if ($newPage[0].f7Component && $newPage[0].f7Component.attached) {
-      $newPage[0].f7Component.attached();
+    if ($newPage[0].f7Component && $newPage[0].f7Component.mounted) {
+      $newPage[0].f7Component.mounted();
     }
     router.pageCallback('attached', $newPage, $newNavbarInner, 'previous', 'current', options);
   }

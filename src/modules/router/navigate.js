@@ -169,8 +169,8 @@ function forward(el, forwardOptions = {}) {
     }
   }
   if (needsAttachedCallback) {
-    if ($newPage[0].f7Component && $newPage[0].f7Component.attached) {
-      $newPage[0].f7Component.attached();
+    if ($newPage[0].f7Component && $newPage[0].f7Component.mounted) {
+      $newPage[0].f7Component.mounted();
     }
     router.pageCallback('attached', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
   }
