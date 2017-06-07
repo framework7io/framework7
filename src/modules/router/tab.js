@@ -17,7 +17,6 @@ function loadTab(tabRoute, loadOptions = {}) {
       router.currentRoute = options.route;
     }
 
-
     // Update Browser History
     if (router.params.pushState && options.pushState && !options.reloadPrevious) {
       History.replace(
@@ -34,7 +33,6 @@ function loadTab(tabRoute, loadOptions = {}) {
       router.saveHistory();
     }
   }
-
 
   // Show Tab
   const { $newTabEl, $oldTabEl } = router.app.tab.show(`#${tabRoute.id}`, options.animate);
