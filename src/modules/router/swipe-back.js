@@ -297,8 +297,8 @@ function SwipeBack(r) {
     currentPage.transitionEnd(() => {
       $([currentPage[0], previousPage[0]]).removeClass('page-transitioning');
       if (dynamicNavbar) {
-        currentNavElements.removeClass('navbar-transitioning').css({ opacity: '' });
-        previousNavElements.removeClass('navbar-transitioning').css({ opacity: '' });
+        currentNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
+        previousNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
         if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('navbar-transitioning');
         if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('navbar-transitioning');
       }

@@ -13,23 +13,25 @@ html.md {
   .page-transitioning {
     transition-duration: @duration;
   }
-  .router-animate-css-forward, .router-animate-css-backward {
+  .router-transition-forward, .router-transition-backward {
     .page {
       pointer-events: none;
     }
-  }
-  .router-animate-css-forward {
-    .page-next {
+    .page-next, .page-current {
       will-change: transform, opacity;
+    }
+  }
+
+  .router-transition-css-forward {
+    .page-next {
       animation: md-page-next-to-current @duration forwards;
     }
     .page-current {
       animation: none;
     }
   }
-  .router-animate-css-backward {
+  .router-transition-css-backward {
     .page-current {
-      will-change: transform, opacity;
       animation: md-page-current-to-next @duration forwards;
     }
     .page-previous {

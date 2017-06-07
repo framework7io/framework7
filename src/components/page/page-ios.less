@@ -66,11 +66,13 @@ html.ios {
       transition-duration: @duration;
     }
   }
-  .router-animate-css-forward {
-    .page-next, .page-current {
+  .router-transition-forward, .router-transition-backward {
+    .page-next, .page-current, .page-previous:not(.stacked) {
       will-change: transform;
       pointer-events: none;
     }
+  }
+  .router-transition-css-forward {
     .page-next {
       animation: ios-page-next-to-current @duration forwards;
       &:before {
@@ -94,7 +96,7 @@ html.ios {
       }
     }
   }
-  .router-animate-css-backward {
+  .router-transition-css-backward {
     .page-previous, .page-current {
       will-change: transform;
       pointer-events: none;

@@ -93,7 +93,7 @@ class Router extends Framework7Class {
   animateWithCSS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
     const router = this;
     // Router Animation class
-    const routerClass = `router-animate-${direction} router-animate-css-${direction}`;
+    const routerTransitionClass = `router-transition-${direction} router-transition-css-${direction}`;
 
     // AnimationEnd Callback
     (direction === 'forward' ? newPage : oldPage).animationEnd(() => {
@@ -109,7 +109,7 @@ class Router extends Framework7Class {
           oldNavbarInner.find('.sliding').transform('');
         }
       }
-      router.$el.removeClass(routerClass);
+      router.$el.removeClass(routerTransitionClass);
       if (callback) callback();
     });
 
@@ -195,12 +195,12 @@ class Router extends Framework7Class {
       prepareNavbars();
       Utils.nextFrame(() => {
         // Add class, start animation
-        router.$el.addClass(routerClass);
+        router.$el.addClass(routerTransitionClass);
         animateNavbars();
       });
     } else {
       // Add class, start animation
-      router.$el.addClass(routerClass);
+      router.$el.addClass(routerTransitionClass);
     }
   }
   animateWithJS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
@@ -209,8 +209,8 @@ class Router extends Framework7Class {
     const separateNavbar = router.separateNavbar;
     const animateIcon = router.params.iosAnimateNavbarBackIcon;
     const ios = router.app.theme === 'ios';
-    const duration = 400;
-    const routerAnimationClass = `router-animate-${direction} router-animate-js-${direction}`;
+    const duration = ios ? 400 : 300;
+    const routerTransitionClass = `router-transition-${direction} router-transition-js-${direction}`;
 
     let startTime = null;
     let done = false;
@@ -221,10 +221,11 @@ class Router extends Framework7Class {
 
     function animatableNavEl(el, navbarInner) {
       const $el = $(el);
-      const hasIcon = animateIcon && $el.hasClass('left') && $el.find('.back .icon').length > 0;
+      const sliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
+      const hasIcon = sliding && animateIcon && $el.hasClass('left') && $el.find('.back .icon').length > 0;
       let $iconEl;
       if (hasIcon) $iconEl = $el.find('.back .icon');
-      if (navbarInner === oldNavbarInner && $el.hasClass('title') && newNavEls) {
+      if (sliding && navbarInner === oldNavbarInner && $el.hasClass('title') && newNavEls) {
         newNavEls.forEach((newNavEl) => {
           if (newNavEl.$el.hasClass('left') && newNavEl.hasIcon) {
             const iconTextEl = newNavEl.$el.find('.back span')[0];
@@ -238,19 +239,18 @@ class Router extends Framework7Class {
         hasIcon,
         leftOffset: $el[0].f7NavbarLeftOffset,
         rightOffset: $el[0].f7NavbarRightOffset,
+        sliding,
       };
     }
     if (dynamicNavbar) {
       newNavEls = [];
       oldNavEls = [];
-      (newNavbarInner.hasClass('sliding') ? newNavbarInner.find('.left, .right, .title, .subnavbar') : newNavbarInner.find('.sliding'))
-        .each((index, navEl) => {
-          newNavEls.push(animatableNavEl(navEl, newNavbarInner));
-        });
-      (oldNavbarInner.hasClass('sliding') ? oldNavbarInner.find('.left, .right, .title, .subnavbar') : oldNavbarInner.find('.sliding'))
-        .each((index, navEl) => {
-          oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
-        });
+      newNavbarInner.find('.left, .right, .title, .subnavbar').each((index, navEl) => {
+        newNavEls.push(animatableNavEl(navEl, newNavbarInner));
+      });
+      oldNavbarInner.find('.left, .right, .title, .subnavbar').each((index, navEl) => {
+        oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
+      });
       if (!separateNavbar) {
         navbarWidth = newNavbarInner[0].offsetWidth;
       }
@@ -271,7 +271,6 @@ class Router extends Framework7Class {
         oldPage.append($shadowEl);
       }
     }
-
     const easing = Utils.bezier(0.25, 0.1, 0.25, 1);
 
     function render() {
@@ -300,7 +299,9 @@ class Router extends Framework7Class {
             const $el = navEl.$el;
             const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
             $el[0].style.opacity = easeProgress;
-            $el.transform(`translate3d(${offset * (1 - easeProgress)}px,0,0)`);
+            if (navEl.sliding) {
+              $el.transform(`translate3d(${offset * (1 - easeProgress)}px,0,0)`);
+            }
             if (navEl.hasIcon) {
               if (direction === 'forward') {
                 navEl.$iconEl.transform(`translate3d(${(-offset - navbarWidth) * (1 - easeProgress)}px,0,0)`);
@@ -313,7 +314,9 @@ class Router extends Framework7Class {
             const $el = navEl.$el;
             const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
             $el[0].style.opacity = (1 - easeProgress);
-            $el.transform(`translate3d(${offset * (easeProgress)}px,0,0)`);
+            if (navEl.sliding) {
+              $el.transform(`translate3d(${offset * (easeProgress)}px,0,0)`);
+            }
             if (navEl.hasIcon) {
               if (direction === 'forward') {
                 navEl.$iconEl.transform(`translate3d(${(-offset + (navbarWidth / 5)) * (easeProgress)}px,0,0)`);
@@ -326,10 +329,10 @@ class Router extends Framework7Class {
       } else {
         if (direction === 'forward') {
           newPage.transform(`translate3d(0, ${(1 - easeProgress) * 56}px,0)`);
-          newPage[0].style.opacity = easeProgress;
+          newPage.css('opacity', easeProgress);
         } else {
           oldPage.transform(`translate3d(0, ${easeProgress * 56}px,0)`);
-          oldPage[0].style.opacity = 1 - easeProgress;
+          oldPage.css('opacity', 1 - easeProgress);
         }
       }
 
@@ -339,26 +342,26 @@ class Router extends Framework7Class {
         if (ios) {
           $shadowEl.remove();
           $opacityEl.remove();
-          newNavEls.forEach((el) => {
-            el.$el.transform('');
-            el.$el[0].style.opacity = '';
+          newNavEls.forEach((navEl) => {
+            navEl.$el.transform('');
+            navEl.$el.css('opacity', '');
           });
-          oldNavEls.forEach((el) => {
-            el.$el.transform('');
-            el.$el[0].style.opacity = '';
+          oldNavEls.forEach((navEl) => {
+            navEl.$el.transform('');
+            navEl.$el.css('opacity', '');
           });
           newNavEls = [];
           oldNavEls = [];
         }
 
-        router.$el.removeClass(routerAnimationClass);
+        router.$el.removeClass(routerTransitionClass);
 
         if (callback) callback();
         return;
       }
       Utils.nextFrame(render);
     }
-    router.$el.addClass(routerAnimationClass);
+    router.$el.addClass(routerTransitionClass);
     render();
   }
   animate(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
@@ -730,6 +733,9 @@ class Router extends Framework7Class {
     const $pageEl = $(pageEl);
     const $navbarEl = $(navbarEl);
     const currentPage = $pageEl[0].f7Page || {};
+    let direction;
+    if ((from === 'next' && to === 'current') || (from === 'current' && to === 'previous')) direction = 'forward';
+    if ((from === 'current' && to === 'next') || (from === 'previous' && to === 'current')) direction = 'backward';
     const page = {
       app: router.app,
       view: router.view,
@@ -743,6 +749,7 @@ class Router extends Framework7Class {
       position: from,
       from,
       to,
+      direction,
       route: currentPage.route ? currentPage.route : route,
     };
     $pageEl[0].f7Page = page;
