@@ -86,15 +86,20 @@ html.md {
       background: @themeColor;
       padding: 0px 12px;
       color: @white;
+      .md-bar-shadow-to-bottom();
     }
     .timeline-item-content {
       padding: 12px;
       height: ~"calc(100% - 12px)";
     }
+    &.no-shadow {
+      .timeline-item-date {
+        .md-bar-no-shadow();
+      }
+    }
   }
   .hairline-root('.timeline-horizontal .timeline-item', right, rgba(0,0,0,.12));
   .hairline-root('.timeline-horizontal .timeline-item', top, rgba(0,0,0,.12));
-  .hairline-root('.timeline-horizontal .timeline-item-date', bottom, rgba(0,0,0,.12));
   .timeline-year-title, .timeline-month-title {
     padding: 0 12px;
     color: @white;
