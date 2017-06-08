@@ -1,0 +1,36 @@
+/* === Range Slider === */
+.range-slider {
+  display: block;
+  width: 100%;
+  position: relative;
+  align-self: center;
+  cursor: pointer;
+
+  input[type="range"] {
+    display: none;
+  }
+}
+.range-bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  overflow: hidden;
+}
+.range-bar-active {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+.range-knob {
+  z-index: 10;
+  box-sizing: border-box;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateX(-50%);
+}
+@import url('range-ios.less');
+@import url('range-md.less');

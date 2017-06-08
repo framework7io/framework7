@@ -27,6 +27,7 @@ function swipePanel(panel) {
       if (otherPanel.opened) return;
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
+    if ($(e.target).closest('.range-slider').length > 0) return;
     if ($(e.target).closest('.tabs-swipeable-wrap').length > 0) return;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;

@@ -37,6 +37,8 @@ import Swipeout from './components/swipeout/swipeout';
 import SmartSelect from './components/smartselect/smartselect';
 import Calendar from './components/calendar/calendar';
 import Picker from './components/picker/picker';
+import Toggle from './components/toggle/toggle';
+import Range from './components/range/range';
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -78,6 +80,8 @@ Framework7
   .use(Picker)
   .use(Panel)
   .use(Card)
-  .use(Chip);
+  .use(Chip)
+  .use(Toggle)
+  .use(Range);
 
 export default Framework7;
