@@ -4,7 +4,7 @@ export default {
   name: 'router',
   params: {
     router: {
-      stackPages: true,
+      stackPages: false,
       xhrCache: true,
       xhrCacheIgnore: [],
       xhrCacheIgnoreGetParameters: false,
