@@ -1,0 +1,36 @@
+@import (multiple) '../../less/colors-ios.less';
+
+.button {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    appearance: none;
+    background: none;
+    padding: 0 10px;
+    margin: 0;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+    cursor: pointer;
+    outline: 0;
+
+    input[type="submit"]&, input[type="button"]&{
+        width: 100%;
+    }
+
+    .buttons-row {
+        align-self: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        box-lines: single;
+        flex-wrap: nowrap;
+    }
+}
+
+@import './button-ios.less';
+@import './button-md.less';

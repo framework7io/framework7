@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const connect = require('gulp-connect');
-const open = require('gulp-open');
+const gopen = require('gulp-open');
 const header = require('gulp-header');
 const uglify = require('gulp-uglify');
 const path = require('path');
@@ -35,6 +35,7 @@ const banner = [
 
 // Build JS Files
 function buildJs(cb) {
+  'use strict';
   rollup({
     entry: './src/framework7.js',
     plugins: [
@@ -64,6 +65,7 @@ function buildJs(cb) {
 
 // Build Less Files
 function buildLess(cb) {
+  'use strict';
   gulp.src('./src/framework7.less')
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')],
@@ -79,6 +81,7 @@ function buildLess(cb) {
 }
 
 gulp.task('diff', () => {
+  'use strict';
   var file = process.argv.slice(3).toString().replace('-', '');
   const ios = fs.readFileSync('./src/_less-old/ios/' + file + '.less', 'utf8');
   const md = fs.readFileSync('./src/_less-old/material/' + file + '.less', 'utf8');
@@ -99,27 +102,36 @@ gulp.task('diff', () => {
 
 // Tasks
 gulp.task('js', (cb) => {
+  'use strict';
   buildJs(cb);
 });
 
 gulp.task('less', (cb) => {
+  'use strict';
   buildLess(cb);
 });
 
 gulp.task('build', ['js', 'less']);
 
 gulp.task('watch', () => {
+  'use strict';
   gulp.watch('./src/**/**/*.js', ['js']);
   gulp.watch('./src/**/**/*.less', ['less']);
 });
 
-gulp.task('connect', () => connect.server({
-  root: ['./'],
-  livereload: true,
-  port: '3000',
-}));
+gulp.task('connect', () => {
+  'use strict';
+  connect.server({
+    root: ['./'],
+    livereload: true,
+    port: '3000',
+  });
+});
 
-gulp.task('open', () => gulp.src('./index.html').pipe(open({ uri: 'http://localhost:3000/' })));
+gulp.task('open', () => {
+  'use strict';
+  gulp.src('./index.html').pipe(gopen({ uri: 'http://localhost:3000/' }));
+});
 
 gulp.task('server', ['watch', 'connect', 'open']);
 
