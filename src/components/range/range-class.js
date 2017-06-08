@@ -9,7 +9,7 @@ class Range extends Framework7Class {
     const defaults = {
       dual: false,
       step: 1,
-      label: true,
+      label: false,
     };
     range.params = Utils.extend(defaults, params);
 
@@ -19,17 +19,38 @@ class Range extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return range;
 
+    const dataset = $el.dataset();
+
+    ('step min max value').split(' ').forEach((paramName) => {
+      if (typeof params[paramName] === 'undefined' && typeof dataset[paramName] !== 'undefined') {
+        range.params[paramName] = parseFloat(dataset[paramName]);
+      }
+    });
+    ('dual label').split(' ').forEach((paramName) => {
+      if (typeof params[paramName] === 'undefined' && typeof dataset[paramName] !== 'undefined') {
+        range.params[paramName] = dataset[paramName];
+      }
+    });
+
+
+    if (!range.params.value) {
+      if (typeof dataset.value !== 'undefined') range.params.value = dataset.value;
+      if (typeof dataset.valueLeft !== 'undefined' && typeof dataset.valueRight !== 'undefined') {
+        range.params.value = [parseFloat(dataset.valueLeft), parseFloat(dataset.valueRight)];
+      }
+    }
+
+    console.log(range.params);
+
     let $inputEl;
-    if (typeof params.dual === 'undefined') {
+    if (!range.params.dual) {
       if (range.params.inputEl) {
         $inputEl = $(range.params.inputEl);
       } else if ($el.find('input[type="range"]').length) {
         $inputEl = $el.find('input[type="range"]').eq(0);
       }
     }
-    if (typeof params.label === 'undefined' && $el.attr('data-label') === 'true') {
-      range.params.label = true;
-    }
+
 
     Utils.extend(range, range.params, {
       $el,
@@ -41,6 +62,7 @@ class Range extends Framework7Class {
     if ($inputEl) {
       ('step min max value').split(' ').forEach((paramName) => {
         if (!params[paramName] && $inputEl.attr(paramName)) {
+          range.params[paramName] = parseFloat($inputEl.attr(paramName));
           range[paramName] = parseFloat($inputEl.attr(paramName));
         }
       });
