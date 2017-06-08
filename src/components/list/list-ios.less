@@ -4,16 +4,11 @@ html.ios {
     margin: 35px 0;
     font-size: 17px;
     .item-cell {
-      padding-left: 15px;
-      padding-right: 15px;
-      flex-shrink: 1;
+      margin-left: 15px;
       width: 100%;
       min-width: 0;
       &:first-child {
-        padding-left: 0;
-      }
-      &:last-child {
-        padding-right: 0;
+        margin-left: 0;
       }
     }
     ul {
@@ -76,15 +71,21 @@ html.ios {
       max-height: 42px;
     }
   }
+  .hairline-root('.simple-list li', bottom, @blockBorderColor);
   .simple-list {
     li {
       padding-left: 15px;
+      padding-right: 15px;
       line-height: 44px;
+      height: 44px;
     }
     li:after {
-      margin-left: 15px;
+      left: 15px;
+      right: 0;
+      width: auto;
     }
   }
+  .hairline-root('.links-list a', bottom, @blockBorderColor);
   .links-list {
     a {
       line-height: 44px;
@@ -97,7 +98,9 @@ html.ios {
       }
     }
     a:after {
-      margin-left: 15px;
+      left: 15px;
+      width: auto;
+      right: 0;
     }
   }
   .media-list, li.media-item {
@@ -129,8 +132,7 @@ html.ios {
   li.list-group-title {
     margin-top: 0;
   }
-  .hairline-root('.simple-list li', bottom, @blockBorderColor);
-  .hairline-root('.links-list a', bottom, @blockBorderColor);
+
   .hairline-root('.item-divider', top, @blockBorderColor);
   .hairline-root('.list-group-title', top, @blockBorderColor);
 

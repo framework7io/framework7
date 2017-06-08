@@ -4,16 +4,11 @@ html.md {
     margin: 32px 0;
     font-size: 16px;
     .item-cell {
-      padding-left: 16px;
-      padding-right: 16px;
-      flex-shrink: 1;
+      margin-left: 16px;
       width: 100%;
       min-width: 0;
       &:first-child {
-        padding-left: 0;
-      }
-      &:last-child {
-        padding-right: 0;
+        margin-left: 0;
       }
     }
     ul {
@@ -72,15 +67,21 @@ html.md {
       max-height: 40px;
     }
   }
+  .hairline-root('.simple-list li', bottom, @blockBorderColor);
   .simple-list {
     li {
       padding-left: 16px;
+      padding-right: 16px;
       line-height: 48px;
+      height: 48px;
     }
     li:after {
-      margin-left: 16px;
+      left: 16px;
+      width: auto;
+      right: 0;
     }
   }
+  .hairline-root('.links-list a', bottom, @blockBorderColor);
   .links-list {
     a {
       line-height: 48px;
@@ -92,7 +93,9 @@ html.md {
       }
     }
     a:after {
-      margin-left: 16px;
+      left: 16px;
+      width: auto;
+      right: 0;
     }
   }
   .media-list, li.media-item {
@@ -124,8 +127,6 @@ html.md {
   .list-group-title {
     margin-top: 0;
   }
-  .hairline-root('.simple-list li', bottom, @blockBorderColor);
-  .hairline-root('.links-list a', bottom, @blockBorderColor);
   .hairline-root('.list .item-inner', bottom, @blockBorderColor);
   .hairline-root('.list ul', top, @blockBorderColor);
   .hairline-root('.list ul', bottom, @blockBorderColor);
