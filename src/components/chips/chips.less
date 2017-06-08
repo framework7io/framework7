@@ -1,0 +1,48 @@
+//* === Chips === */
+.chip {
+  font-weight: normal;
+  display: inline-block;
+  box-sizing: border-box;
+  vertical-align: middle;
+  .flexbox-inline();
+  .align-items(center);
+  margin: 2px 0;
+}
+.chip-media {
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+  .flex-shrink(0);
+  .flexbox();
+  .align-items(center);
+  .justify-content(center);
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    display: block;
+  }
+}
+.chip-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  .flex-shrink(1);
+  min-width: 0;
+}
+.chip-delete {
+  text-align: center;
+  cursor: pointer;
+  .flex-shrink(0);
+  background-repeat: no-repeat;
+  html:not(.watch-active-state) &:active, &.active-state {
+    opacity: 1;
+  }
+}
+
+@import url('./chips.ios.less');
+@import url('./chips.md.less');

@@ -100,8 +100,29 @@
         }
     }
     .focus-state {
+        &.item-inner {
+            .label {
+                color: @themeColor;
+            }
+        }
+        &.input-field:after,
+        .item-input-field:after {
+            background: @themeColor;
+        }
         .label, .floating-label {
             color: @themeColor;
+        }
+    }
+    .not-empty-state {
+        &.item-inner {
+            .label {
+                color: rgba(0, 0, 0, 0.65);
+            }
+        }
+        &.input-field:after,
+        .item-input-field:after {
+            background: rgba(0, 0, 0, 0.12);
+            transform: none !important;
         }
     }
 }

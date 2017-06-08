@@ -670,8 +670,8 @@ app.closeModal = function (modal, animated) {
     var removeOnClose = modal.hasClass('remove-on-close');
     
     // ignore close popover
-    if (isPopover && modal.hasClass('ignore-close-by-outside')) {
-        return;
+    if (isPopover && !removeOnClose && modal.hasClass('ignore-close-by-outside')) {
+	return;
     }
 
     // For Actions
