@@ -1,5 +1,6 @@
 /* === Content Block === */
 html.ios {
+  @import (multiple) '../../less/colors-ios.less';
   .block {
     margin: 35px 0;
     padding: 0 15px;
@@ -18,8 +19,8 @@ html.ios {
     background: #fff;
     padding: 15px 15px;
   }
-  .hairline-root('.block-strong', top, #c8c7cc);
-  .hairline-root('.block-strong', bottom, #c8c7cc);
+  .hairline-root('.block-strong', top, @blockBorderColor);
+  .hairline-root('.block-strong', bottom, @blockBorderColor);
   .block.inset {
     margin-left: 15px;
     margin-right: 15px;

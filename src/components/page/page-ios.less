@@ -5,11 +5,11 @@ html.ios {
     right: 100%;
     top: 0;
     width: 16px;
-    height: 100%;
-    background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    bottom: 0;
     background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
     z-index: -1;
     content: '';
+    will-change: opacity;
   }
   .fake-opacity() {
     position: absolute;
@@ -17,26 +17,29 @@ html.ios {
     top: 0;
     background: rgba(0,0,0,0.1);
     width: 100%;
-    height: 100%;
+    bottom: 0;
     content: '';
     opacity: 0;
     z-index: 10000;
+    will-change: opacity;
   }
-  .swipeback-page-shadow {
+  .page-shadow-effect {
     .fake-shadow();
   }
-  .swipeback-page-opacity {
+  .page-opacity-effect {
     .fake-opacity();
   }
-  .pages {
-    // background: #000;
+  .router-dynamic-navbar-inside {
+    .page-shadow-effect, .page-opacity-effect {
+      top: 44px;
+    }
   }
   .page {
     background: #efeff4;
   }
   .page-previous {
     transform: translate3d(-20%, 0, 0);
-    .swipeback-page-opacity {
+    .page-opacity-effect {
       opacity: 1;
     }
     &:after {
@@ -44,57 +47,81 @@ html.ios {
     }
   }
   .page-current {
-    .swipeback-page-shadow {
+    .page-shadow-effect {
       opacity: 1;
     }
-    .swipeback-page-opacity {
-      opacity: 0 !important;
+    .page-opacity-effect {
+      // opacity: 0 !important;
     }
   }
   .page-next {
     transform: translate3d(100%, 0, 0);
-    .swipeback-page-shadow {
-      opacity: 0 !important;
+    page-shadow-effect {
+      // opacity: 0 !important;
     }
   }
-  .page-next-to-current {
-    // From next to current
-    animation: ios-page-next-to-current @duration forwards;
-    &:before {
-      // Fake opacity
-      .fake-shadow();
-      animation: ios-page-next-to-current-shadow @duration forwards;
-    }
-  }
-  .page-previous-to-current {
-    // From previous to current
-    animation: ios-page-previous-to-current @duration forwards;
-    &:after {
-      // Fake opacity
-      .fake-opacity();
-      animation: ios-page-previous-to-current-opacity @duration forwards;
-    }
-  }
-  .page-current-to-next {
-    // From current to next
-    animation: ios-page-current-to-next @duration forwards;
-    &:before {
-      .fake-shadow();
-      animation: ios-page-current-to-next-shadow @duration forwards;
-    }
-  }
-  .page-current-to-previous {
-    // From current to previous
-    animation: ios-page-current-to-previous @duration forwards;
-    &:after {
-      // Fake opacity
-      .fake-opacity();
-      animation: ios-page-current-to-previous-opacity @duration forwards;
-    }
-  }
+
   .page-transitioning {
-    &, .swipeback-page-shadow, .swipeback-page-opacity {
+    &, page-shadow-effect, .page-opacity-effect {
       transition-duration: @duration;
+    }
+  }
+  .router-transition-forward, .router-transition-backward {
+    .page-next, .page-current, .page-previous:not(.stacked) {
+      will-change: transform;
+      pointer-events: none;
+    }
+  }
+  .router-transition-css-forward {
+    .page-next {
+      animation: ios-page-next-to-current @duration forwards;
+      &:before {
+        // Fake opacity
+        .fake-shadow();
+        animation: ios-page-next-to-current-shadow @duration forwards;
+      }
+    }
+    .page-current {
+      // From current to previous
+      animation: ios-page-current-to-previous @duration forwards;
+      &:after {
+        // Fake opacity
+        .fake-opacity();
+        animation: ios-page-current-to-previous-opacity @duration forwards;
+      }
+    }
+    &.router-dynamic-navbar-inside {
+      .page-next:before, .page-current:after {
+        top: 44px;
+      }
+    }
+  }
+  .router-transition-css-backward {
+    .page-previous, .page-current {
+      will-change: transform;
+      pointer-events: none;
+    }
+    .page-previous {
+      // From previous to current
+      animation: ios-page-previous-to-current @duration forwards;
+      &:after {
+        // Fake opacity
+        .fake-opacity();
+        animation: ios-page-previous-to-current-opacity @duration forwards;
+      }
+    }
+    .page-current {
+      // From current to next
+      animation: ios-page-current-to-next @duration forwards;
+      &:before {
+        .fake-shadow();
+        animation: ios-page-current-to-next-shadow @duration forwards;
+      }
+    }
+    &.router-dynamic-navbar-inside {
+      .page-current:before, .page-previous:after {
+        top: 44px;
+      }
     }
   }
 }

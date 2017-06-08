@@ -1,0 +1,248 @@
+/* === List View === */
+.list {
+  .item-row() {
+    display: flex;
+    justify-content: space-between;
+  }
+  .item-cell() {
+    display: block;
+    align-self: stretch;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    ul {
+      .hairline-remove(top);
+      .hairline-remove(bottom);
+    }
+  }
+  li {
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .item-media {
+    display: flex;
+    flex-shtink: 0;
+    flex-wrap: nowrap;
+    align-items: center;
+    box-sizing: border-box;
+    padding-bottom: 8px;
+  }
+  .item-inner {
+    position: relative;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    min-width: 0;
+    .item-row();
+    align-items: center;
+    align-self: stretch;
+  }
+  .item-title {
+    min-width: 0;
+    flex-shrink: 1;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  .item-after {
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: auto;
+    display: flex;
+    max-height: 28px;
+  }
+  .item-link, .list-button {
+    transition-duration: 300ms;
+    transition-property: background-color;
+    display: block;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    .item-inner {
+      .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
+      background-size: 10px 20px;
+      background-repeat: no-repeat;
+      background-position: 95% center;
+    }
+  }
+  .item-content {
+    .item-row();
+    box-sizing: border-box;
+    align-items: center;
+  }
+
+  .list-footer {
+    margin: 10px 0 35px;
+    font-size: 14px;
+    ul, p, h1, h2, h3, h4 {
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:first-child:last-child {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+  .item-subtitle {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+    text-overflow: ellipsis;
+  }
+  .item-text {
+    position: relative;
+    overflow: hidden;
+    text-overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+  }
+  .item-title-row {
+    .item-row();
+  }
+
+  .item-row {
+    .item-row();
+  }
+  .item-cell {
+    .item-cell();
+  }
+
+  // Last-childs
+  li {
+    &:last-child {
+      .list-button {
+        .hairline-remove(bottom);
+      }
+    }
+    &:last-child, &:last-child li:last-child {
+      .item-inner {
+        .hairline-remove(bottom);
+      }
+    }
+  }
+  .no-hairlines();
+  .no-hairlines-between();
+}
+.list.simple-list {
+  li {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-oveflow: ellipsis;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  li:last-child {
+    .hairline-remove(bottom);
+  }
+}
+.list.links-list {
+  a {
+    transition-duration: 300ms;
+    transition-property: background-color;
+    display: block;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    display: block;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-oveflow: ellipsis;
+    max-width: 100%;
+    .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
+    background-size: 10px 20px;
+    background-repeat: no-repeat;
+    background-position: 95% center;
+  }
+  li:last-child a {
+    .hairline-remove(bottom);
+  }
+}
+.media-list, li.media-item {
+  .item-inner {
+    display: block;
+    align-self: stretch;
+  }
+  .item-link .item-inner {
+    background: none;
+  }
+  .item-link .item-title-row {
+    .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
+    background-size: 10px 20px;
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+  .item-media {
+    align-selft: flex-start;
+    img {
+      display: block;
+    }
+  }
+}
+.list-group {
+  ul {
+    &:after, &:before {
+      z-index: 25 !important;
+    }
+  }
+  + .list-group ul {
+    .hairline-remove(top);
+  }
+}
+li.item-divider, .item-divider, li.list-group-title {
+  white-space: nowrap;
+  position: relative;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  z-index: 15;
+}
+li.list-group-title {
+  position: relative;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: sticky;
+  top: 0;
+  margin-top: 0;
+  z-index: 20;
+  .hairline-remove(top);
+}
+.list.inset {
+  .block-title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  ul {
+    .hairline-remove(top);
+    .hairline-remove(bottom);
+  }
+}
+.list.tablet-inset {
+  @media (min-width: 768px) {
+    .block-title {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    ul {
+      .hairline-remove(top);
+      .hairline-remove(bottom);
+    }
+  }
+}
+@import url('./list-ios.less');
+@import url('./list-md.less');

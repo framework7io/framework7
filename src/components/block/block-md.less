@@ -1,4 +1,5 @@
 html.md {
+  @import (multiple) '../../less/colors-md.less';
   .block {
     margin: 32px 0;
     padding: 0 16px;
@@ -16,8 +17,8 @@ html.md {
   .block-strong {
     padding: 16px;
   }
-  .hairline-root('.block-strong', top, rgba(0,0,0,0.12));
-  .hairline-root('.block-strong', bottom, rgba(0,0,0,0.12));
+  .hairline-root('.block-strong', top, @blockBorderColor);
+  .hairline-root('.block-strong', bottom, @blockBorderColor);
 
   .block.inset {
     margin-left: 16px;

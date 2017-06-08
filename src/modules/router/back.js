@@ -7,11 +7,12 @@ function backward(el, backwardOptions) {
   const view = router.view;
 
   const options = Utils.extend({
-    animate: router.params.animatePages,
+    animate: router.params.animate,
     pushState: true,
   }, backwardOptions);
 
-  const dynamicNavbar = router.app.theme === 'ios' && router.params.iosDynamicNavbar;
+  const dynamicNavbar = router.dynamicNavbar;
+  const separateNavbar = router.separateNavbar;
 
   const $newPage = $(el);
   const $oldPage = router.$el.children('.page-current');
@@ -21,16 +22,20 @@ function backward(el, backwardOptions) {
   let $oldNavbarInner;
 
   if (dynamicNavbar) {
-    $navbarEl = router.$navbarEl;
     $newNavbarInner = $newPage.children('.navbar').children('.navbar-inner');
-    if ($newNavbarInner.length > 0) {
-      $newPage.children('.navbar').remove();
+    if (separateNavbar) {
+      $navbarEl = router.$navbarEl;
+      if ($newNavbarInner.length > 0) {
+        $newPage.children('.navbar').remove();
+      }
+      if ($newNavbarInner.length === 0 && $newPage[0].f7Page) {
+        // Try from pageData
+        $newNavbarInner = $newPage[0].f7Page.$navbarEl;
+      }
+      $oldNavbarInner = $navbarEl.find('.navbar-current');
+    } else {
+      $oldNavbarInner = $oldPage.children('.navbar').children('.navbar-inner');
     }
-    if ($newNavbarInner.length === 0 && $newPage[0].f7Page) {
-      // Try from pageData
-      $newNavbarInner = $newPage[0].f7Page.$navbarEl;
-    }
-    $oldNavbarInner = $navbarEl.find('.navbar-current');
   }
 
   router.allowPageChange = false;
@@ -71,19 +76,19 @@ function backward(el, backwardOptions) {
         $oldPage.prevAll('.page-previous').each((index, pageToRemove) => {
           const $pageToRemove = $(pageToRemove);
           let $navbarToRemove;
-          if (dynamicNavbar) {
+          if (separateNavbar) {
             $navbarToRemove = $oldNavbarInner.prevAll('.navbar-previous').eq(index);
           }
           if ($pageToRemove[0] !== $newPage[0] && $pageToRemove.index() > $newPage.index()) {
             if (router.initialPages.indexOf($pageToRemove[0]) >= 0) {
               $pageToRemove.addClass('stacked');
-              if (dynamicNavbar) {
+              if (separateNavbar) {
                 $navbarToRemove.addClass('stacked');
               }
             } else {
               router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
               router.remove($pageToRemove);
-              if (dynamicNavbar) {
+              if (separateNavbar) {
                 router.remove($navbarToRemove);
               }
             }
@@ -92,7 +97,7 @@ function backward(el, backwardOptions) {
       } else {
         const $pageToRemove = $oldPage.prev('.page-previous:not(.stacked)');
         let $navbarToRemove;
-        if (dynamicNavbar) {
+        if (separateNavbar) {
           $navbarToRemove = $oldNavbarInner.prev('.navbar-inner:not(.stacked)');
         }
         if (router.params.stackPages && router.initialPages.indexOf($pageToRemove[0]) >= 0) {
@@ -101,7 +106,7 @@ function backward(el, backwardOptions) {
         } else {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
           router.remove($pageToRemove);
-          if (dynamicNavbar) {
+          if (separateNavbar) {
             router.remove($navbarToRemove);
           }
         }
@@ -114,10 +119,13 @@ function backward(el, backwardOptions) {
   if ($newPage.next($oldPage).length === 0) {
     $newPage.insertBefore($oldPage);
   }
-  if (dynamicNavbar) {
+  if (separateNavbar) {
     $newNavbarInner.insertBefore($oldNavbarInner);
   }
   if (needsAttachedCallback) {
+    if ($newPage[0].f7Component && $newPage[0].f7Component.mounted) {
+      $newPage[0].f7Component.mounted();
+    }
     router.pageCallback('attached', $newPage, $newNavbarInner, 'previous', 'current', options);
   }
 
@@ -128,18 +136,18 @@ function backward(el, backwardOptions) {
       $newPage.prevAll('.page-previous:not(.stacked)').each((index, pageToRemove) => {
         const $pageToRemove = $(pageToRemove);
         let $navbarToRemove;
-        if (dynamicNavbar) {
+        if (separateNavbar) {
           $navbarToRemove = $newNavbarInner.prevAll('.navbar-previous:not(.stacked)').eq(index);
         }
         if (router.params.stackPages && router.initialPages.indexOf(pageToRemove) >= 0) {
           $pageToRemove.addClass('stacked');
-          if (dynamicNavbar) {
+          if (separateNavbar) {
             $navbarToRemove.addClass('stacked');
           }
         } else {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined);
           router.remove($pageToRemove);
-          if (dynamicNavbar) {
+          if (separateNavbar) {
             router.remove($navbarToRemove);
           }
         }
@@ -166,6 +174,14 @@ function backward(el, backwardOptions) {
   router.currentRoute = options.route;
   router.currentPage = $newPage[0];
 
+  // Load Tab
+  if (options.route.route.tab) {
+    router.loadTab(options.route.route.tab, Utils.extend({}, options, {
+      history: false,
+      pushState: false,
+    }));
+  }
+
   // Page init and before init events
   router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current');
 
@@ -176,15 +192,13 @@ function backward(el, backwardOptions) {
   // Animation
   function afterAnimation() {
     // Set classes
-    const pageClasses = 'page-previous page-current page-next page-next-to-current page-current-to-next page-previous-to-current page-current-to-previous';
-    const navbarClasses = 'navbar-previous navbar-current navbar-next navbar-next-to-current navbar-current-to-next navbar-previous-to-current navbar-current-to-previous';
+    const pageClasses = 'page-previous page-current page-next';
+    const navbarClasses = 'navbar-previous navbar-current navbar-next';
     $newPage.removeClass(pageClasses).addClass('page-current');
     $oldPage.removeClass(pageClasses).addClass('page-next');
     if (dynamicNavbar) {
       $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
-      $newNavbarInner.find('.sliding').transform('');
-      $oldNavbarInner.find('.sliding').transform('');
     }
 
     // After animation event
@@ -194,13 +208,13 @@ function backward(el, backwardOptions) {
     // Remove Old Page
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
       $oldPage.addClass('stacked');
-      if (dynamicNavbar) {
+      if (separateNavbar) {
         $oldNavbarInner.addClass('stacked');
       }
     } else {
       router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined);
       router.remove($oldPage);
-      if (dynamicNavbar) {
+      if (separateNavbar) {
         router.remove($oldNavbarInner);
       }
     }
@@ -218,18 +232,13 @@ function backward(el, backwardOptions) {
   }
 
   if (options.animate) {
-    // Set pages before animation
-    router.animatePages($oldPage, $newPage, 'previous', 'current');
-    if (dynamicNavbar) {
-      router.animateNavbars($oldNavbarInner, $newNavbarInner, 'previous', 'current');
-    }
-
-    $newPage.animationEnd(() => {
+    router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'backward', () => {
       afterAnimation();
     });
   } else {
     afterAnimation();
   }
+
   return router;
 }
 function loadBack(backParams, backOptions, ignorePageChange) {
@@ -269,7 +278,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (template || templateUrl) {
     // Parse template and send page element
     try {
-      router.templateLoader(template, templateUrl, options, resolve, reject);
+      router.pageTemplateLoader(template, templateUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -283,7 +292,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.componentLoader(component, componentUrl, options, resolve, reject);
+      router.pageComponentLoader(component, componentUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;

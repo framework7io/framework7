@@ -2,7 +2,7 @@ import t7 from 'template7';
 import $ from 'dom7';
 
 // F7 Class
-import Framework7 from './components/app/framework7-class';
+import Framework7 from './components/app/app-class';
 
 // Import Core Modules
 import Resize from './modules/resize/resize';
@@ -28,6 +28,7 @@ import Popover from './components/popover/popover';
 import Actions from './components/actions/actions';
 
 // Additional Components
+import Tabs from './components/tabs/tabs';
 import Panel from './components/panel/panel';
 import Card from './components/card/card';
 import Chip from './components/chip/chip';
@@ -69,6 +70,7 @@ Framework7
   .use(Popover)
   .use(Actions)
   // Additional Components
+  .use(Tabs)
   .use(Sortable)
   .use(Swipeout)
   .use(SmartSelect)
