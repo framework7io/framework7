@@ -5,7 +5,10 @@
   position: relative;
   align-self: center;
   cursor: pointer;
-
+  &.disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
   input[type="range"] {
     display: none;
   }
