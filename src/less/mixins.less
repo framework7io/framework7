@@ -233,7 +233,48 @@
 
 // MD Button
 .md-button() {
+  color:@themeColor;
+  border-radius: 2px;
+  line-height: 36px;
+  height: 36px;
+  text-transform: uppercase;
+  min-width: 64px;
+  padding: 0 8px;
+  border: none;
+  transition-duration: 300ms;
+  transform: translate3d(0,0,0);
+  &.active-state {
+    background: rgba(0,0,0,0.1);
+  }
+  &.button-fill, &.button-active, &.tab-link-active {
+    background-color: @themeColor;
+    color: #fff;
+    &.active-state {
+      background: darken(@themeColor, 8%);
+    }
+  }
+  &.button-big {
+    height: 48px;
+    line-height: 48px;
+    border-radius: 3px;
+  }
+  &.button-round {
+    border-radius: 36px;
+  }
+  i.icon + span,
+  span:not(.ripple-wave) + span,
+  span:not(.ripple-wave) + i.icon,
+  i.icon + i.icon {
+    margin-left: 8px;
+  }
 
+  // Raised (with shadow) buttons
+  &.button-raised {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    &.active-state {
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+  }
 }
 
 // MD Shadows

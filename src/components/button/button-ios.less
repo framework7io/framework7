@@ -1,74 +1,72 @@
 html.ios {
-    //Buttons
-    .button {
-        border: 1px solid @themeColor;
-        color: @themeColor;
+  @import (multiple) '../../less/colors-ios.less';
+  //Buttons
+  .button, button {
+    border: 1px solid @themeColor;
+    color: @themeColor;
+    border-radius: 5px;
+    line-height: 27px;
+    height: 29px;
+
+    &.active-state {
+      background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), .15);
+    }
+    &.button-round {
+      border-radius: 27px;
+    }
+    &.button-active, &.tab-link-active {
+      background: @themeColor;
+      color: #fff;
+    }
+    &.button-big {
+      font-size: 17px;
+      height: 44px;
+      line-height: 42px;
+    }
+    &.button-fill {
+      color: #fff;
+      background: @themeColor;
+      border-color: transparent;
+      &.active-state {
+        opacity: 0.8;
+      }
+    }
+    i.icon {
+      &:first-child {
+        margin-right: 10px;
+      }
+      &:last-child {
+        margin-left: 10px;
+      }
+      &:first-child:last-child {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+  // Segmented Control
+  .segmented {
+    .button, button {
+      border-radius: 0;
+      border-left-width: 0;
+      &:first-child {
+        border-radius: 5px 0 0 5px;
+        border-left-width: 1px;
+        border-left-style: solid;
+      }
+      &:last-child {
+        border-radius: 0 5px 5px 0;
+      }
+      &:first-child:last-child {
         border-radius: 5px;
-        line-height: 27px;
-        box-sizing: border-box;
-        height: 29px;
-
-        html:not(.watch-active-state) &:active, &.active-state {
-            background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), .15);
-        }
-        &.button-round {
-            border-radius: 27px;
-        }
-        &.active {
-            background: @themeColor;
-            color: #fff;
-        }
-        &.button-big {
-            font-size: 17px;
-            height: 44px;
-            line-height: 42px;
-        }
-        &.button-fill {
-            color:#fff;
-            background: @themeColor;
-            border-color: transparent;
-            html:not(.watch-active-state) &:active, &.active-state {
-                opacity: 0.8;
-            }
-        }
-        i.icon {
-            &:first-child {
-                margin-right: 10px;
-            }
-            &:last-child {
-                margin-left: 10px;
-            }
-            &:first-child:last-child {
-                margin-left: 0;
-                margin-right: 0;
-            }
-        }
+      }
+      &.button-round:first-child {
+        border-radius: 29px 0 0 29px;
+      }
+      &.button-round:last-child {
+        border-radius: 0 29px 29px 0;
+      }
     }
-
-    // Row of connected buttons
-    .buttons-row {
-        .button {
-            border-radius: 0 0 0 0;
-            border-left-width: 0;
-            width: 100%;
-            flex:1;
-        }
-        .button:first-child {
-            border-radius: 5px 0 0 5px;
-            border-left-width: 1px;
-            border-left-style: solid;
-        }
-        .button:last-child {
-            border-radius: 0 5px 5px 0;
-        }
-        .button:first-child:last-child {
-            border-radius: 5px;
-        }
-        .button.button-round:first-child {
-            border-radius: 27px 0 0 27px;
-        }
-        .button.button-round:last-child {
-            border-radius: 0 27px 27px 0;
-        }
-    }
+  }
 }

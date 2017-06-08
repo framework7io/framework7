@@ -22,14 +22,14 @@ html.md {
       .--(@j: 1) when (@j < length(@cols)) {
           @divider: e(extract(@cols, @j));
           @className: `Math.floor(@{divider})`;
-          .col-auto:nth-last-child(@{j}), .col-auto:nth-last-child(@{j}) ~ .col-auto {
+          .col:nth-last-child(@{j}), .col:nth-last-child(@{j}) ~ .col {
               @j-1: @j - 1;
               width: 100% / @j;
               width: ~"-webkit-calc((100% - 16px*@{j-1}) / @{j})";
               width: ~"calc((100% - 16px*@{j-1}) / @{j})";
           }
           &.no-gutter {
-              .col-auto:nth-last-child(@{j}), .col-auto:nth-last-child(@{j}) ~ .col-auto {
+              .col:nth-last-child(@{j}), .col:nth-last-child(@{j}) ~ .col {
                   width: 100% / @j;
               }
           }
@@ -57,7 +57,7 @@ html.md {
               .-((@i - 1));
           } .-;
           .--(@j: 1) when (@j < length(@cols)) {
-              .tablet-auto:nth-last-child(@{j}), .tablet-auto:nth-last-child(@{j}) ~ .col-auto {
+              .tablet-auto:nth-last-child(@{j}), .tablet-auto:nth-last-child(@{j}) ~ .col {
                   @j-1: @j - 1;
                   width: 100% / @j;
                   width: ~"-webkit-calc((100% - 16px*@{j-1}) / @{j})";
