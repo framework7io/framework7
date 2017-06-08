@@ -3,7 +3,7 @@ html.md {
   .toggle {
     width: 36px;
     height: 14px;
-    .checkbox {
+    .toggle-icon {
       width: 36px;
       height: 14px;
       border-radius: 14px;
@@ -15,7 +15,7 @@ html.md {
         left: 0;
       }
     }
-    input[type="checkbox"]:checked + .checkbox {
+    input[type="checkbox"]:checked + .toggle-icon {
       background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), 0.5);
       &:after {
         transform: translateX(16px);
