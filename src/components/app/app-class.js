@@ -61,6 +61,7 @@ class Framework7 extends Framework7Class {
   }
   init() {
     const app = this;
+    if (app.initialized) return;
 
     // RTL attr
     if (app.rtl) {
@@ -71,7 +72,7 @@ class Framework7 extends Framework7Class {
     app.root.addClass('framework7-root');
 
     // Theme class
-    $('html').addClass(app.theme);
+    $('html').removeClass('ios md').addClass(app.theme);
 
     // Data
     app.data = {};
