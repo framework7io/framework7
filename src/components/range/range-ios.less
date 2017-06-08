@@ -11,11 +11,27 @@ html.ios {
   .range-bar-active {
     background: @themeColor;
   }
-  .range-knob {
+  .range-knob-wrap {
     height: 28px;
     width: 28px;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
     margin-top: -14px;
+    margin-left: -14px;
+  }
+  .range-knob {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .range-knob-label {
+    min-width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 5px;
+    color: #000;
+    font-size: 12px;
+    margin-bottom: 6px;
+    transform: translateX(-50%) translateY(100%) scale(0);
+  }
+  .range-knob-active .range-knob-label {
+    transform: translateX(-50%) translateY(0%) scale(1);
   }
 }

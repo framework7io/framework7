@@ -23,14 +23,33 @@
   top: 0;
   height: 100%;
 }
-.range-knob {
-  z-index: 10;
-  box-sizing: border-box;
-  border-radius: 50%;
+.range-knob-wrap {
+  z-index: 20;
   position: absolute;
   top: 50%;
   left: 0;
-  transform: translateX(-50%);
+}
+.range-knob {
+  box-sizing: border-box;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.range-knob-label {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  text-align: center;
+  transition-duration: 120ms;
+  transition-property: transform;
+  transform: translateY(100%) scale(0);
+}
+.range-knob-active .range-knob-label {
+  transform: translateY(0%) scale(1);
 }
 @import url('range-ios.less');
 @import url('range-md.less');
