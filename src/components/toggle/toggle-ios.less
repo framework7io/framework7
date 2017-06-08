@@ -1,0 +1,42 @@
+html.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .toggle {
+    width: 52px;
+    border-radius: 16px;
+    height: 32px;
+    .checkbox {
+      width: 52px;
+      border-radius: 16px;
+      height: 32px;
+      background: #e5e5e5;
+      &:before {
+        position: absolute;
+        left: 2px;
+        top: 2px;
+        width: 48px;
+        height: 28px;
+        border-radius: 16px;
+        box-sizing: border-box;
+        background: #fff;
+        z-index: 1;
+        transition-duration: 300ms;
+        transform: scale(1);
+      }
+      &:after {
+        height: 28px;
+        width: 28px;
+        top: 2px;
+        left: 2px;
+      }
+    }
+    input[type="checkbox"]:checked + .checkbox{
+      background: #4cd964;
+      &:before {
+        transform: scale(0);
+      }
+      &:after {
+        transform: translateX(20px);
+      }
+    }
+  }
+}
