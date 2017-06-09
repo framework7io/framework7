@@ -1,11 +1,17 @@
 import bezier from './bezier';
 
 const Utils = {
+  deleteProps(obj) {
+    const object = obj;
+    Object.keys(object).forEach((key) => {
+      delete object[key];
+    });
+  },
   bezier(...args) {
     return bezier(...args);
   },
-  nextTick(callback) {
-    setTimeout(() => callback, 0);
+  nextTick(callback, delay = 0) {
+    setTimeout(() => callback(), delay);
   },
   nextFrame(callback) {
     if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
