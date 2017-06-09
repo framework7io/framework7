@@ -198,6 +198,7 @@ class Range extends Framework7Class {
     }
     function handleTouchEnd() {
       if (!isTouched) {
+        if (isScrolling) $touchedKnobEl.removeClass('range-knob-active-state');
         isTouched = false;
         return;
       }

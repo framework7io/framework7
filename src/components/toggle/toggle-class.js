@@ -104,8 +104,9 @@ class Toggle extends Framework7Class {
         touchStartChecked = !touchStartChecked;
       }
     }
-    function handleTouchEnd(e) {
+    function handleTouchEnd() {
       if (!isTouched || toggle.disabled) {
+        if (isScrolling) $el.removeClass('toggle-active-state');
         isTouched = false;
         return;
       }
