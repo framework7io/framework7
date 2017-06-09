@@ -5,6 +5,7 @@
   position: relative;
   align-self: center;
   cursor: pointer;
+  user-select: none;
   &.disabled {
     opacity: 0.55;
     pointer-events: none;
@@ -51,7 +52,7 @@
   transition-property: transform;
   transform: translateY(100%) scale(0);
 }
-.range-knob-active .range-knob-label {
+.range-knob-active-state .range-knob-label {
   transform: translateY(0%) scale(1);
 }
 @import url('range-ios.less');

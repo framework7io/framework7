@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
+import Support from '../../utils/support';
 
 class Range extends Framework7Class {
   constructor(app, params) {
@@ -11,6 +12,10 @@ class Range extends Framework7Class {
       step: 1,
       label: false,
     };
+
+    // Extend defaults with modules params
+    range.useInstanceModulesParams(defaults);
+
     range.params = Utils.extend(defaults, params);
 
     const el = range.params.el;
@@ -39,8 +44,6 @@ class Range extends Framework7Class {
         range.params.value = [parseFloat(dataset.valueLeft), parseFloat(dataset.valueRight)];
       }
     }
-
-    console.log(range.params);
 
     let $inputEl;
     if (!range.params.dual) {
@@ -115,14 +118,14 @@ class Range extends Framework7Class {
       $barActiveEl,
     });
 
-    range.$el[0].f7Range = range;
+    $el[0].f7Range = range;
 
     // Touch Events
     let isTouched;
     const touchesStart = {};
     let isScrolling;
     let rangeOffsetLeft;
-    let $dualKnobEl;
+    let $touchedKnobEl;
     let dualValueIndex;
     function handleTouchStart(e) {
       if (isTouched) return;
@@ -131,7 +134,7 @@ class Range extends Framework7Class {
 
       isTouched = true;
       isScrolling = undefined;
-      rangeOffsetLeft = range.$el.offset().left;
+      rangeOffsetLeft = $el.offset().left;
 
       const progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
 
@@ -139,18 +142,20 @@ class Range extends Framework7Class {
       if (range.dual) {
         if (Math.abs(range.value[0] - newValue) < Math.abs(range.value[1] - newValue)) {
           dualValueIndex = 0;
-          $dualKnobEl = range.knobs[0];
+          $touchedKnobEl = range.knobs[0];
           newValue = [newValue, range.value[1]];
         } else {
           dualValueIndex = 1;
-          $dualKnobEl = range.knobs[1];
+          $touchedKnobEl = range.knobs[1];
           newValue = [range.value[0], newValue];
         }
-        $dualKnobEl.addClass('range-knob-active');
       } else {
+        $touchedKnobEl = range.knobs[0];
         newValue = (progress * (range.max - range.min)) + range.min;
-        range.knobs[0].addClass('range-knob-active');
       }
+      Utils.nextTick(() => {
+        if (isTouched) $touchedKnobEl.addClass('range-knob-active-state');
+      }, 70);
       range.setValue(newValue);
     }
     function handleTouchMove(e) {
@@ -197,29 +202,32 @@ class Range extends Framework7Class {
         return;
       }
       isTouched = false;
-      if (!range.dual) {
-        range.knobs[0].removeClass('range-knob-active');
-      } else if ($dualKnobEl) {
-        $dualKnobEl.removeClass('range-knob-active');
-      }
+      $touchedKnobEl.removeClass('range-knob-active-state');
     }
 
-    range.handleResize = function handleResize() {
+    function handleResize() {
       range.calcSize();
       range.layout();
-    };
+    }
     range.attachEvents = function attachEvents() {
-      range.$el.on(app.touchEvents.start, handleTouchStart, { passive: false });
-      $(document).on(app.touchEvents.move, handleTouchMove, { passive: false });
-      $(document).on(app.touchEvents.end, handleTouchEnd, { passive: false });
-      app.on('resize', range.handleResize);
+      const passive = Support.passiveListener ? { passive: true } : false;
+      const active = Support.passiveListener ? { passive: false } : false;
+      range.$el.on(app.touchEvents.start, handleTouchStart, passive);
+      $(document).on(app.touchEvents.move, handleTouchMove, active);
+      $(document).on(app.touchEvents.end, handleTouchEnd, passive);
+      app.on('resize', handleResize);
     };
     range.detachEvents = function detachEvents() {
-      range.$el.off(app.touchEvents.start, handleTouchStart, { passive: false });
-      $(document).off(app.touchEvents.move, handleTouchMove, { passive: false });
-      $(document).off(app.touchEvents.end, handleTouchEnd, { passive: false });
-      app.off('resize', range.handleResize);
+      const passive = Support.passiveListener ? { passive: true } : false;
+      const active = Support.passiveListener ? { passive: false } : false;
+      range.$el.off(app.touchEvents.start, handleTouchStart, passive);
+      $(document).off(app.touchEvents.move, handleTouchMove, active);
+      $(document).off(app.touchEvents.end, handleTouchEnd, passive);
+      app.off('resize', handleResize);
     };
+
+    // Install Modules
+    range.useInstanceModules();
 
     // Init
     range.init();
@@ -312,8 +320,10 @@ class Range extends Framework7Class {
     return range;
   }
   destroy() {
-    const range = this;
+    let range = this;
     range.detachEvents();
+    Utils.deleteProps(range);
+    range = null;
   }
 }
 

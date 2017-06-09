@@ -7,23 +7,31 @@ export default {
   create() {
     const app = this;
     Utils.extend(app, {
-      create(params) {
-        return new Range(app, params);
-      },
-      destroy(el) {
-        const $el = $(el);
-        if ($el.length) return $el[0].f7Range.destroy();
-        return undefined;
-      },
-      getValue(el) {
-        const $el = $(el);
-        if ($el.length) return $el[0].f7Range.get();
-        return undefined;
-      },
-      setValue(el, value) {
-        const $el = $(el);
-        if ($el.length) return $el[0].f7Range.set(value);
-        return undefined;
+      range: {
+        create(params) {
+          return new Range(app, params);
+        },
+        destroy(el) {
+          if (el && (el instanceof Range) && el.destroy) return el.destroy();
+          const $el = $(el);
+          if ($el.length) return $el[0].f7Range.destroy();
+          return undefined;
+        },
+        get(el) {
+          const $el = $(el);
+          if ($el.length) return $el[0].f7Range;
+          return undefined;
+        },
+        getValue(el) {
+          const $el = $(el);
+          if ($el.length) return $el[0].f7Range.get();
+          return undefined;
+        },
+        setValue(el, value) {
+          const $el = $(el);
+          if ($el.length) return $el[0].f7Range.set(value);
+          return undefined;
+        },
       },
     });
   },
