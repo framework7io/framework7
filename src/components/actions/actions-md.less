@@ -1,4 +1,40 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
-
+  .actions-modal {
+    background: #fff;
+  }
+  .actions-group {
+    &:last-child {
+      .hairline-remove(bottom);
+    }
+  }
+  .hairline-root('.actions-group', bottom, #d2d2d6);
+  .actions-button, .actions-label {
+    padding: 0 16px;
+    &.disabled {
+      color: @gray;
+    }
+  }
+  .actions-button {
+    line-height: 48px;
+    font-size: 16px;
+    color: rgba(0,0,0,0.87);
+    transition-duration: 300ms;
+    a, & {
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      &.active-state {
+        background: rgba(0,0,0,0.1);
+      }
+    }
+  }
+  .actions-label {
+    font-size: 16px;
+    color: rgba(0,0,0,0.54);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    justify-content: flex-start;
+  }
 }

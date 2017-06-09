@@ -109,7 +109,7 @@ class Actions extends Modal {
     }
     actions.open = function open(animate) {
       let convertToPopover = false;
-      if (actions.params.toPopover) {
+      if (actions.params.toPopover && actions.params.targetEl) {
         // Popover
         if (app.device.ios && app.device.ipad) {
           convertToPopover = true;
