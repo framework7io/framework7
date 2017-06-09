@@ -2,6 +2,7 @@ import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
+const openedModals = [];
 const dialogsQueue = [];
 function clearDialogsQueue() {
   if (dialogsQueue.length === 0) return;
@@ -28,6 +29,7 @@ class Modal extends Framework7Class {
   }
   onOpen() {
     const modal = this;
+    openedModals.push(modal);
     $('html').addClass(`with-modal-${modal.type}`);
     modal.$el.trigger(`open ${modal.type}:open`, modal);
     modal.emit('modalOpen modal:open', modal);
@@ -41,6 +43,7 @@ class Modal extends Framework7Class {
   }
   onClose() {
     const modal = this;
+    openedModals.splice(openedModals.indexOf(modal), 1);
     $('html').removeClass(`with-modal-${modal.type}`);
     modal.$el.trigger(`close ${modal.type}:close`, modal);
     modal.emit('modalClose modal:close', modal);
@@ -65,9 +68,19 @@ class Modal extends Framework7Class {
       return modal;
     }
 
-    if (type === 'dialog' && $('.dialog.modal-in').length > 0 && app.params.modals.queueDialogs) {
-      dialogsQueue.push(modal);
-      return modal;
+    if (type === 'dialog' && app.params.modals.queueDialogs) {
+      let pushToQueue;
+      if ($('.dialog.modal-in').length > 0) {
+        pushToQueue = true;
+      } else if (openedModals.length > 0) {
+        openedModals.forEach((openedModal) => {
+          if (openedModal.type === 'dialog') pushToQueue = true;
+        });
+      }
+      if (pushToQueue) {
+        dialogsQueue.push(modal);
+        return modal;
+      }
     }
 
     const $modalParentEl = $el.parent();
@@ -94,14 +107,12 @@ class Modal extends Framework7Class {
 
     // Emit open
     modal.onOpen();
-
-    Utils.nextFrame(() => {
+    Utils.nextTick(() => {
       // Overlay
       if ($overlayEl) {
         $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
         $overlayEl.addClass('overlay-in');
       }
-
       // Modal
       if (animate) {
         $el
