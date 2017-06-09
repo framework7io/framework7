@@ -8045,6 +8045,15 @@ return t7;
         app.smartSelectAddOption = function (select, option, index) {
             select = $(select);
             var smartSelect = select.parents('.smart-select');
+
+            var id = (new Date()).getTime();
+            var inputType = select.multiple ? 'checkbox' : 'radio';
+            var inputName = inputType + '-' + id;
+            var pageName = 'smart-select-' + inputName;
+            smartSelect.attr('data-select-id', id);
+            smartSelect.attr('data-select-inputType', inputType);
+            smartSelect.attr('data-select-pageName', pageName);
+            
             if (typeof index === 'undefined') {
                 select.append(option);
             }
@@ -8053,7 +8062,7 @@ return t7;
             }
             app.initSmartSelects(smartSelect);
             var selectName = smartSelect.find('select').attr('name');
-            var opened = $('.page.smart-select-page[data-select-name="' + selectName + '"]').length > 0;
+            var opened = $('.page.smart-select-page[data-page="' + pageName + '"]').length > 0;
             if (opened) {
                 app.smartSelectOpen(smartSelect, true);
             }
@@ -8109,8 +8118,8 @@ return t7;
                 return;
             }
             var values = [];
-            var id = (new Date()).getTime();
-            var inputType = select.multiple ? 'checkbox' : 'radio';
+            var id = smartSelect.attr('data-select-id') || (new Date()).getTime();
+            var inputType = smartSelect.attr('data-select-inputType') || (select.multiple ? 'checkbox' : 'radio');
             var inputName = inputType + '-' + id;
             var maxLength = $select.attr('maxlength');
             var selectName = select.name;
@@ -8278,7 +8287,7 @@ return t7;
         
         
             // Page Layout
-            var pageName = 'smart-select-' + inputName;
+            var pageName = smartSelect.attr('data-select-name') || 'smart-select-' + inputName;
         
             var useSearchbar = typeof smartSelect.data('searchbar') === 'undefined' ? app.params.smartSelectSearchbar : (smartSelect.data('searchbar') === 'true' ? true : false);
             var searchbarPlaceholder, searchbarCancel;
