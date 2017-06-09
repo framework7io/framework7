@@ -180,10 +180,7 @@ class Modal extends Framework7Class {
   }
   destroy() {
     let modal = this;
-    Object.keys(modal).forEach((key) => {
-      modal[key] = null;
-      delete modal[key];
-    });
+    Utils.deleteProps(modal);
     modal = null;
   }
 }

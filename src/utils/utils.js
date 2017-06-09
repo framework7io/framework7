@@ -4,6 +4,7 @@ const Utils = {
   deleteProps(obj) {
     const object = obj;
     Object.keys(object).forEach((key) => {
+      object[key] = null;
       delete object[key];
     });
   },
