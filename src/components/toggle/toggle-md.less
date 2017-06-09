@@ -3,24 +3,26 @@ html.md {
   .toggle {
     width: 36px;
     height: 14px;
-    .toggle-icon {
-      width: 36px;
-      height: 14px;
-      border-radius: 14px;
-      background: #b0afaf;
-      &:after {
-        height: 20px;
-        width: 20px;
-        top: -3px;
-        left: 0;
-      }
-    }
     input[type="checkbox"]:checked + .toggle-icon {
       background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), 0.5);
       &:after {
         transform: translateX(16px);
         background: @themeColor;
       }
+    }
+  }
+  .toggle-icon {
+    width: 36px;
+    height: 14px;
+    border-radius: 14px;
+    background: #b0afaf;
+    &:after {
+      height: 20px;
+      width: 20px;
+      top: -3px;
+      left: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+      border-radius: 10px;
     }
   }
 }

@@ -338,7 +338,7 @@ function initTouch() {
 
     if (!trackClick) {
       if (!activeSelection && needsFastClick) {
-        if (!(Device.android && !e.cancelable)) {
+        if (!(Device.android && !e.cancelable) && e.cancelable) {
           e.preventDefault();
         }
       }
