@@ -5,16 +5,20 @@ html.ios {
     margin: 35px 0;
     padding: 0 15px;
   }
+  .block-strong .timeline {
+    padding: 0;
+    margin: 0;
+  }
   .timeline-item {
     padding: 2px 0px 15px;
   }
   .timeline-item-content {
-    .card, .list-block, .block {
-      + .card, + .list-block, + .block {
+    .card, .list, .block {
+      + .card, + .list, + .block {
         margin: 15px 0 0;
       }
     }
-    .card, &.card, .list-block, &.list-block, .block, &.block {
+    .card, &.card, .list, &.list, .block, &.block {
       margin: 0;
       width: 100%;
     }
@@ -22,13 +26,13 @@ html.ios {
   .timeline-item-inner {
     border-radius: 7px;
     padding: 8px 15px;
-    .block-strong & {
-      border-radius: 3px;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
     + .timeline-item-inner {
       margin-top: 15px;
     }
+  }
+  .block-strong .timeline-item-inner {
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.1);
   }
   .timeline-item-divider {
     margin: 0 15px;

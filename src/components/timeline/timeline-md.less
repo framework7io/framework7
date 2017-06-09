@@ -5,16 +5,20 @@ html.md {
     margin: 32px 0;
     padding: 0 16px;
   }
+  .block-strong .timeline {
+    padding: 0;
+    margin: 0;
+  }
   .timeline-item {
     padding: 2px 0px 16px;
   }
   .timeline-item-content {
-    .card, .list-block, .block {
-      + .card, + .list-block, + .block {
+    .card, .list, .block {
+      + .card, + .list, + .block {
         margin: 16px 0 0;
       }
     }
-    .card, &.card, .list-block, &.list-block, .block, &.block {
+    .card, &.card, .list, &.list, .block, &.block {
       margin: 0;
       width: 100%;
     }
