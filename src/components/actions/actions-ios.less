@@ -1,4 +1,69 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
-
+  @actionsModalBg: rgba(255,255,255,0.95);
+  @actionsModalButtonActiveBg: rgba(230,230,230,0.9);
+  @actionsModalHairlineColor: rgba(0,0,0,0.2);
+  .actions-modal {
+    @media (min-width: 496px) {
+      width: 480px;
+      left: 50%;
+      margin-left: -240px;
+    }
+  }
+  .actions-group {
+    margin: 8px;
+    border-radius: 13px;
+    overflow: hidden;
+    transform: translate3d(0,0,0);
+  }
+  .actions-button, .actions-label {
+    text-align: center;
+    overflow: hidden;
+    background: rgba(255,255,255,0.95);
+    b, &.actions-button-bold {
+      font-weight: 600;
+    }
+    &:first-child {
+      border-radius: 13px 13px 0 0;
+    }
+    &:last-child {
+      .hairline-remove(bottom);
+      border-radius: 0 0 13px 13px;
+    }
+    &:first-child:last-child {
+      border-radius: 13px;
+    }
+    &.disabled {
+      color: @gray;
+    }
+  }
+  .actions-button {
+    height: 57px;
+    line-height: 57px;
+    font-size: 20px;
+    color: @themeColor;
+    white-space: normal;
+    text-overflow: ellipsis;
+    &.active-state {
+      background: rgba(230,230,230,0.9);
+    }
+  }
+  .actions-label {
+    font-size: 13px;
+    min-height: 57px;
+    padding: 8px 10px;
+    color: #8a8a8a;
+    justify-content: center;
+  }
+  @media (orientation:lanscape) {
+    .actions-label {
+      min-height: 44px;
+    }
+    .actions-button {
+      height: 44px;
+      line-height: 44px;
+    }
+  }
+  .hairline-root('.actions-button', bottom, rgba(0,0,0,0.2));
+  .hairline-root('.actions-label', bottom, rgba(0,0,0,0.2));
 }

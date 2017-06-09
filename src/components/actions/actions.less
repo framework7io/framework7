@@ -1,4 +1,61 @@
 /* === Actions === */
-
+.actions-overlay {
+  .modal-overlay();
+}
+.actions-modal {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 13500;
+  width: 100%;
+  transform: translate3d(0, 100%, 0);
+  display: none;
+  max-height: 100%;
+  .scrollable();
+  transition-property: transform;
+  &.modal-in, &.modal-out {
+    transition-duration: 300ms;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+  &.modal-in {
+    transform: translate3d(0, 0, 0);
+  }
+  &.modal-out {
+    z-index: 13500 - 1;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+.actions-group {
+  position: relative;
+}
+.actions-button, .actions-label {
+  width: 100%;
+  font-weight: normal;
+  margin: 0;
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  b, &.actions-button-bold {
+    font-weight: 500;
+  }
+  &.disabled {
+    opacity: 0.9;
+  }
+}
+.actions-button {
+  cursor: pointer;
+}
+.actions-label {
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+}
 @import url('./actions-ios.less');
 @import url('./actions-md.less');

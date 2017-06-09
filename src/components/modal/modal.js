@@ -18,8 +18,9 @@ export default {
       dialogProgressTitle: 'Loading... ',
       dialogCloseByOutsideClick: false,
       popupCloseByOutsideClick: true,
-      actionsCloseByOutsideClick: true,
       popoverCloseByOutsideClick: true,
+      actionsToPopover: true,
+      actionsCloseByOutsideClick: true,
     },
   },
 };
