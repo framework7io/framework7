@@ -38,10 +38,10 @@ class Toggle extends Framework7Class {
       enumerable: true,
       configurable: true,
       set(checked) {
+        if (!toggle || typeof toggle.$inputEl === 'undefined') return;
         if (toggle.checked === checked) return;
         $inputEl[0].checked = checked;
         toggle.$inputEl.trigger('change');
-        toggle.emit('change toggleChange toggle:change');
       },
       get() {
         return $inputEl[0].checked;
@@ -127,6 +127,9 @@ class Toggle extends Framework7Class {
         }
       }
     }
+    function handleInputChange() {
+      toggle.emit('change toggleChange toggle:change');
+    }
     toggle.attachEvents = function attachEvents() {
       if (!Support.touch) return;
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -134,6 +137,7 @@ class Toggle extends Framework7Class {
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       $(document).on(app.touchEvents.move, handleTouchMove, active);
       $(document).on(app.touchEvents.end, handleTouchEnd, passive);
+      toggle.$inputEl.on('change', handleInputChange);
     };
     toggle.detachEvents = function detachEvents() {
       if (!Support.touch) return;
@@ -142,6 +146,7 @@ class Toggle extends Framework7Class {
       $el.off(app.touchEvents.start, handleTouchStart, passive);
       $(document).off(app.touchEvents.move, handleTouchMove, active);
       $(document).off(app.touchEvents.end, handleTouchEnd, passive);
+      toggle.$inputEl.off('change', handleInputChange);
     };
 
 
