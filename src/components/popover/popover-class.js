@@ -142,7 +142,7 @@ class Popover extends Modal {
         $el.addClass('popover-on-bottom');
       }
       if ($targetEl.hasClass('floating-button-to-popover') && !$el.hasClass('modal-in')) {
-        $el.addClass('popover-floating-button');
+        $el.addClass('popover-from-fab');
         const diffX = ((left + width) / 2) - ((targetOffsetLeft + targetWidth) / 2);
         const diffY = ((top + height) / 2) - ((targetOffsetTop + targetHeight) / 2);
         $targetEl
@@ -165,7 +165,7 @@ class Popover extends Modal {
             });
         });
         $el.once('popover:closed', () => {
-          $el.removeClass('popover-floating-button');
+          $el.removeClass('popover-from-fab');
         });
       } else if ($targetEl.hasClass('floating-button-to-popover') && $el.hasClass('modal-in')) {
         left = targetOffsetLeft;
