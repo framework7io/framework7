@@ -1,4 +1,48 @@
 /* === Popover === */
+.popover-overlay {
+  .modal-overlay();
+}
+.popover {
+  width: 300px;
+  z-index: 13500;
+  margin: 0;
+  top: 0;
+  opacity: 0;
+  left: 0;
+  position: absolute;
+  display: none;
+  transition-duration: 300ms;
+  .list {
+    margin: 0;
+    ul {
+      background: none;
+    }
+    &:first-child ul {
+      .hairline-remove(top);
+    }
+    &:last-child ul {
+      .hairline-remove(bottom);
+    }
+  }
+  &.modal-in {
+    opacity: 1;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+}
+.popover-inner {
+  .scrollable();
+}
+.popover-from-actions {
 
+}
+.popover-from-actions-label {
+  line-height: 1.3;
+  position: relative;
+  &:last-child {
+    .hairline-remove(bottom);
+  }
+}
 @import url('./popover-ios.less');
 @import url('./popover-md.less');
