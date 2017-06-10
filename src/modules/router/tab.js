@@ -42,8 +42,8 @@ function loadTab(tabRoute, loadOptions = {}) {
 
   function onTabLoaded() {
     $newTabEl.children().each((index, tabChild) => {
-      if (tabChild.f7Component && tabChild.f7Component.mounted) {
-        tabChild.f7Component.mounted();
+      if (tabChild.f7Component && tabChild.f7Component.mount) {
+        tabChild.f7Component.mount();
       }
     });
     $newTabEl.trigger('tabInit tab:init tabAttached tab:attached', tabRoute);
@@ -60,7 +60,13 @@ function loadTab(tabRoute, loadOptions = {}) {
         $newTabEl.html(contentEl);
       } else {
         $newTabEl.html('');
-        $newTabEl.append(contentEl);
+        if (contentEl.f7Component) {
+          contentEl.f7Component.mounted((componentEl) => {
+            $newTabEl.append(componentEl);
+          });
+        } else {
+          $newTabEl.append(contentEl);
+        }
       }
       onTabLoaded();
     }
@@ -113,7 +119,7 @@ function removeTab($oldTabEl, $newTabEl, tabRoute) {
   $oldTabEl.trigger('tabBeforeRemove tab:beforeremove', tabRoute);
   router.emit('tabBeforeRemove tab:beforeremove', $oldTabEl[0], $newTabEl[0], tabRoute);
   $oldTabEl.children().each((index, tabChild) => {
-    if (tabChild.f7Component && tabChild.f7Component.destroy) {
+    if (tabChild.f7Component) {
       tabChild.f7Component.destroy();
     }
   });

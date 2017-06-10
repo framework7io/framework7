@@ -3,70 +3,16 @@ import t7 from 'template7';
 import Utils from '../utils/utils';
 
 const tempDom = document.createElement('div');
-const Component = {
-  parse(componentString) {
-    const callbackName = `f7_component_callback_${new Date().getTime()}`;
 
-    // Template
-    let template;
-    if (componentString.indexOf('<template>') >= 0) {
-      template = componentString.split('<template>')[1].split('</template>')[0].trim();
-    }
-
-    // Styles
-    let styles;
-    const stylesScopeId = Utils.now();
-    if (componentString.indexOf('<style>') >= 0) {
-      styles = componentString.split('<style>')[1].split('</style>')[0];
-    } else if (componentString.indexOf('<style scoped>') >= 0) {
-      styles = componentString.split('<style scoped>')[1].split('</style>')[0];
-      styles = styles.split('\n').map((line) => {
-        if (line.indexOf('{') >= 0) {
-          if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', `[data-scope="${stylesScopeId}"]`);
-          }
-          return `[data-scope="${stylesScopeId}"] ${line.trim()}`;
-        }
-        return line;
-      }).join('\n');
-    }
-
-    let scriptContent = componentString.split('<script>')[1].split('</script>')[0].trim();
-    scriptContent = `window.${callbackName} = function () {${scriptContent}}`;
-
-    // Insert Script El
-    const scriptEl = document.createElement('script');
-    scriptEl.innerHTML = scriptContent;
-    $('head').append(scriptEl);
-
-    const component = window[callbackName]();
-
-    // Remove Script El
-    $(scriptEl).remove();
-
-    if (!component.template && !component.render) {
-      component.template = template;
-    }
-    if (styles) {
-      component.styles = styles;
-      component.stylesScopeId = stylesScopeId;
-    }
-    return component;
-  },
-  compile(c, extend = {}) {
-    const component = c;
+class Framework7Component {
+  constructor(c, extend = {}) {
     const context = Utils.extend({}, extend);
+    const component = Utils.extend(this, c, { context });
 
     // Apply context
-    if (component.mounted) {
-      component.mounted = component.mounted.bind(context);
-    }
-    if (component.beforeDestroy) {
-      component.beforeDestroy = component.beforeDestroy.bind(context);
-    }
-    if (component.destroyed) {
-      component.destroyed = component.destroyed.bind(context);
-    }
+    ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
+      if (component[cycleKey]) component[cycleKey] = component[cycleKey].bind(context);
+    });
 
     if (component.data) {
       component.data = component.data.bind(context);
@@ -85,6 +31,8 @@ const Component = {
       });
     }
 
+    if (component.beforeCreate) component.beforeCreate();
+
     // Render template
     let html = '';
     if (component.render) {
@@ -102,14 +50,15 @@ const Component = {
     tempDom.innerHTML = html;
 
     // Extend context with $el
-    const $el = tempDom.children[0];
-    context.$el = $el;
+    const el = tempDom.children[0];
+    context.$el = el;
+    component.el = el;
 
     // Find Events
     const events = [];
-    $(tempDom).find('*').each((index, el) => {
-      for (let i = 0; i < el.attributes.length; i += 1) {
-        const attr = el.attributes[i];
+    $(tempDom).find('*').each((index, element) => {
+      for (let i = 0; i < element.attributes.length; i += 1) {
+        const attr = element.attributes[i];
         if (attr.name.indexOf('@') === 0) {
           const event = attr.name.replace('@', '');
           let name = event;
@@ -128,9 +77,9 @@ const Component = {
           }
 
           const value = attr.value;
-          el.removeAttribute(attr.name);
+          element.removeAttribute(attr.name);
           events.push({
-            el,
+            el: element,
             name,
             once,
             handler: (e) => {
@@ -190,20 +139,37 @@ const Component = {
       styleEl.innerHTML = component.styles;
     }
     if (component.stylesScopeId) {
-      $el.setAttribute('data-scope', component.stylesScopeId);
+      el.setAttribute('data-scope', component.stylesScopeId);
     }
 
     // Attach events
-    events.forEach((event) => {
-      $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
-    });
+    component.attachEvents = function attachEvents() {
+      events.forEach((event) => {
+        $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
+      });
+    };
+
+    component.detachEvents = function detachEvents() {
+      events.forEach((event) => {
+        $(event.el).off(event.name, event.handler);
+      });
+    };
+
+    component.attachEvents();
+
+    if (component.created) component.created();
+
+    component.mount = function mount(mountMethod) {
+      if (component.beforeMount) component.beforeMount();
+      if (styleEl) $('head').append(styleEl);
+      if (mountMethod) mountMethod(el);
+      if (component.mounted) component.mounted();
+    };
 
     component.destroy = function destroy() {
       if (component.beforeDestroy) component.beforeDestroy();
       if (styleEl) $(styleEl).remove();
-      events.forEach((event) => {
-        $(event.el).off(event.name, event.handler);
-      });
+      component.detachEvents();
       if (component.destroyed) component.destroyed();
     };
 
@@ -212,11 +178,63 @@ const Component = {
       tempDom.children[i].f7Component = component;
     }
 
-    return {
-      el: $el,
-      context,
-      styleEl,
-    };
+    return component;
+  }
+}
+
+
+const Component = {
+  parse(componentString) {
+    const callbackName = `f7_component_callback_${new Date().getTime()}`;
+
+    // Template
+    let template;
+    if (componentString.indexOf('<template>') >= 0) {
+      template = componentString.split('<template>')[1].split('</template>')[0].trim();
+    }
+
+    // Styles
+    let styles;
+    const stylesScopeId = Utils.now();
+    if (componentString.indexOf('<style>') >= 0) {
+      styles = componentString.split('<style>')[1].split('</style>')[0];
+    } else if (componentString.indexOf('<style scoped>') >= 0) {
+      styles = componentString.split('<style scoped>')[1].split('</style>')[0];
+      styles = styles.split('\n').map((line) => {
+        if (line.indexOf('{') >= 0) {
+          if (line.indexOf('{{this}}') >= 0) {
+            return line.replace('{{this}}', `[data-scope="${stylesScopeId}"]`);
+          }
+          return `[data-scope="${stylesScopeId}"] ${line.trim()}`;
+        }
+        return line;
+      }).join('\n');
+    }
+
+    let scriptContent = componentString.split('<script>')[1].split('</script>')[0].trim();
+    scriptContent = `window.${callbackName} = function () {${scriptContent}}`;
+
+    // Insert Script El
+    const scriptEl = document.createElement('script');
+    scriptEl.innerHTML = scriptContent;
+    $('head').append(scriptEl);
+
+    const component = window[callbackName]();
+
+    // Remove Script El
+    $(scriptEl).remove();
+
+    if (!component.template && !component.render) {
+      component.template = template;
+    }
+    if (styles) {
+      component.styles = styles;
+      component.stylesScopeId = stylesScopeId;
+    }
+    return component;
+  },
+  create(c, extendContext = {}) {
+    return new Framework7Component(c, extendContext);
   },
 };
 export default Component;

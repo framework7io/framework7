@@ -674,7 +674,7 @@ class Router extends Framework7Class {
     const router = this;
     const url = typeof component === 'string' ? component : componentUrl;
     function compile(c) {
-      const compiled = Component.compile(c, {
+      const createdComponent = Component.create(c, {
         $app: router.app,
         $root: router.app.data,
         $route: options.route,
@@ -684,12 +684,7 @@ class Router extends Framework7Class {
           md: router.app.theme === 'md',
         },
       });
-      const $el = $(compiled.el);
-
-      if (c.styles && compiled.styleEl) {
-        $('head').append(compiled.styleEl);
-      }
-      resolve($el, { pageEvents: c.on });
+      resolve(createdComponent.el, { pageEvents: c.on });
     }
     if (url) {
       // Load via XHR

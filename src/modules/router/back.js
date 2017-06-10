@@ -115,17 +115,22 @@ function backward(el, backwardOptions) {
   }
 
   // Insert new page
-  const needsAttachedCallback = $newPage.parents(document).length === 0;
+  const newPageInDom = $newPage.parents(document).length > 0;
+  const f7Component = $newPage[0].f7Component;
+
   if ($newPage.next($oldPage).length === 0) {
-    $newPage.insertBefore($oldPage);
+    if (!newPageInDom && f7Component) {
+      f7Component.mount((componentEl) => {
+        $(componentEl).insertBefore($oldPage);
+      });
+    } else {
+      $newPage.insertBefore($oldPage);
+    }
   }
   if (separateNavbar) {
     $newNavbarInner.insertBefore($oldNavbarInner);
   }
-  if (needsAttachedCallback) {
-    if ($newPage[0].f7Component && $newPage[0].f7Component.mounted) {
-      $newPage[0].f7Component.mounted();
-    }
+  if (!newPageInDom) {
     router.pageCallback('attached', $newPage, $newNavbarInner, 'previous', 'current', options);
   }
 

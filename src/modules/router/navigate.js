@@ -156,22 +156,32 @@ function forward(el, forwardOptions = {}) {
   router.saveHistory();
 
   // Insert new page and navbar
-  const needsAttachedCallback = $newPage.parents(document).length === 0;
+  const newPageInDom = $newPage.parents(document).length > 0;
+  const f7Component = $newPage[0].f7Component;
   if (options.reloadPrevious) {
-    $newPage.insertBefore($oldPage);
+    if (f7Component && !newPageInDom) {
+      f7Component.mount((componentEl) => {
+        $(componentEl).insertBefore($oldPage);
+      });
+    } else {
+      $newPage.insertBefore($oldPage);
+    }
     if (separateNavbar) {
       $newNavbarInner.insertBefore($oldNavbarInner);
     }
   } else if ($oldPage.next('.page')[0] !== $newPage[0]) {
-    $viewEl.append($newPage[0]);
+    if (f7Component && !newPageInDom) {
+      f7Component.mount((componentEl) => {
+        $viewEl.append(componentEl);
+      });
+    } else {
+      $viewEl.append($newPage[0]);
+    }
     if (separateNavbar) {
       $navbarEl.append($newNavbarInner[0]);
     }
   }
-  if (needsAttachedCallback) {
-    if ($newPage[0].f7Component && $newPage[0].f7Component.mounted) {
-      $newPage[0].f7Component.mounted();
-    }
+  if (!newPageInDom) {
     router.pageCallback('attached', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
   }
 
