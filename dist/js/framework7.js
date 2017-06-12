@@ -8047,7 +8047,7 @@ return t7;
             var smartSelect = select.parents('.smart-select');
 
             var id = (new Date()).getTime();
-            var inputType = select.multiple ? 'checkbox' : 'radio';
+            var inputType = select[0].multiple ? 'checkbox' : 'radio';
             var inputName = inputType + '-' + id;
             var pageName = 'smart-select-' + inputName;
             smartSelect.attr('data-select-id', id);
