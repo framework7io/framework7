@@ -12,14 +12,17 @@ export default {
           return new Popover(app, params);
         },
         open(popoverEl, animate) {
-          return new Popover(app, {
-            el: $(popoverEl),
-          }).open(animate);
+          const $popoverEl = $(popoverEl);
+          let popover = $popoverEl[0].f7Modal;
+          if (!popover) popover = new Popover(app, { el: $popoverEl });
+          return popover.open(animate);
         },
         close(popoverEl = '.popover.modal-in', animate) {
-          return new Popover(app, {
-            el: $(popoverEl),
-          }).close(animate);
+          const $popoverEl = $(popoverEl);
+          if ($popoverEl.length === 0) return undefined;
+          let popover = $popoverEl[0].f7Modal;
+          if (!popover) popover = new Popover(app, { el: $popoverEl });
+          return popover.close(animate);
         },
       },
     });

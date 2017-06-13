@@ -15,14 +15,17 @@ export default {
           return new Dialog(app, params);
         },
         open(dialogEl, animate) {
-          return new Dialog(app, {
-            el: $(dialogEl),
-          }).open(animate);
+          const $dialogEl = $(dialogEl);
+          let dialog = $dialogEl[0].f7Modal;
+          if (!dialog) dialog = new Dialog(app, { el: $dialogEl });
+          return dialog.open(animate);
         },
         close(dialogEl = '.dialog.modal-in', animate) {
-          return new Dialog(app, {
-            el: $(dialogEl),
-          }).close(animate);
+          const $dialogEl = $(dialogEl);
+          if ($dialogEl.length === 0) return undefined;
+          let dialog = $dialogEl[0].f7Modal;
+          if (!dialog) dialog = new Dialog(app, { el: $dialogEl });
+          return dialog.close(animate);
         },
 
         // Shortcuts

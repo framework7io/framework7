@@ -3,7 +3,7 @@ import Utils from '../../utils/utils';
 import LoginScreen from './login-screen-class';
 
 export default {
-  name: 'loginscreen',
+  name: 'loginScreen',
   static: {
     LoginScreen,
   },
@@ -15,14 +15,17 @@ export default {
           return new LoginScreen(app, params);
         },
         open(loginScreenEl, animate) {
-          return new LoginScreen(app, {
-            el: $(loginScreenEl),
-          }).open(animate);
+          const $loginScreenEl = $(loginScreenEl);
+          let loginScreen = $loginScreenEl[0].f7Modal;
+          if (!loginScreen) loginScreen = new LoginScreen(app, { el: $loginScreenEl });
+          return loginScreen.open(animate);
         },
         close(loginScreenEl = '.login-screen.modal-in', animate) {
-          return new LoginScreen(app, {
-            el: $(loginScreenEl),
-          }).close(animate);
+          const $loginScreenEl = $(loginScreenEl);
+          if ($loginScreenEl.length === 0) return undefined;
+          let loginScreen = $loginScreenEl[0].f7Modal;
+          if (!loginScreen) loginScreen = new LoginScreen(app, { el: $loginScreenEl });
+          return loginScreen.close(animate);
         },
       },
     });

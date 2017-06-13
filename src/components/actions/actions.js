@@ -12,16 +12,17 @@ export default {
           return new Actions(app, params);
         },
         open(actionsEl, animate) {
-          return new Actions(app, {
-            el: $(actionsEl),
-          }).open(animate);
+          const $actionsEl = $(actionsEl);
+          let actions = $actionsEl[0].f7Modal;
+          if (!actions) actions = new Actions(app, { el: $actionsEl });
+          return actions.open(animate);
         },
         close(actionsEl = '.actions-modal.modal-in', animate) {
           const $actionsEl = $(actionsEl);
-          if ($actionsEl.length && $actionsEl[0].f7Modal) {
-            return $actionsEl[0].f7Modal.close(animate);
-          }
-          return undefined;
+          if ($actionsEl.length === 0) return undefined;
+          let actions = $actionsEl[0].f7Modal;
+          if (!actions) actions = new Actions(app, { el: $actionsEl });
+          return actions.close(animate);
         },
       },
     });

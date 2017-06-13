@@ -15,14 +15,17 @@ export default {
           return new Popup(app, params);
         },
         open(popupEl, animate) {
-          return new Popup(app, {
-            el: $(popupEl),
-          }).open(animate);
+          const $popupEl = $(popupEl);
+          let popup = $popupEl[0].f7Modal;
+          if (!popup) popup = new Popup(app, { el: $popupEl });
+          return popup.open(animate);
         },
         close(popupEl = '.popup.modal-in', animate) {
-          return new Popup(app, {
-            el: $(popupEl),
-          }).close(animate);
+          const $popupEl = $(popupEl);
+          if ($popupEl.length === 0) return undefined;
+          let popup = $popupEl[0].f7Modal;
+          if (!popup) popup = new Popup(app, { el: $popupEl });
+          return popup.close(animate);
         },
       },
     });
