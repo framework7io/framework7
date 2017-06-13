@@ -107,11 +107,11 @@ class Actions extends Modal {
       return actions.destroy();
     }
 
-    // Overlay
-    let $overlayEl = app.root.children('.actions-overlay');
-    if ($overlayEl.length === 0) {
-      $overlayEl = $('<div class="actions-overlay"></div>');
-      app.root.append($overlayEl);
+    // Backdrop
+    let $backdropEl = app.root.children('.actions-backdrop');
+    if ($backdropEl.length === 0) {
+      $backdropEl = $('<div class="actions-backdrop"></div>');
+      app.root.append($backdropEl);
     }
 
     const originalOpen = actions.open;
@@ -190,8 +190,8 @@ class Actions extends Modal {
       app,
       $el,
       el: $el ? $el[0] : undefined,
-      $overlayEl,
-      overlayEl: $overlayEl[0],
+      $backdropEl,
+      backdropEl: $backdropEl[0],
       type: 'actions',
     });
 

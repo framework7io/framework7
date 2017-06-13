@@ -1,5 +1,5 @@
 /* === Panels === */
-.panel-overlay {
+.panel-backdrop {
   position: absolute;
   left: 0;
   top: 0;
@@ -63,25 +63,25 @@ html.with-panel {
   }
 }
 html.with-panel-left-cover, html.with-panel-right-cover {
-  .panel-overlay {
+  .panel-backdrop {
     display: block;
     opacity: 1;
   }
 }
 html.with-panel-left-reveal, html.with-panel-right-reveal, html.with-panel-transitioning {
-  .panel-overlay {
+  .panel-backdrop {
     background: rgba(0,0,0,0);
     display: block;
     opacity: 0;
   }
 }
 html.with-panel-left-reveal {
-  .views, .framework7-root > .view, .panel-overlay {
+  .views, .framework7-root > .view, .panel-backdrop {
     transform: translate3d(260px,0,0);
   }
 }
 html.with-panel-right-reveal {
-  .views, .framework7-root > .view, .panel-overlay {
+  .views, .framework7-root > .view, .panel-backdrop {
     transform: translate3d(-260px,0,0);
   }
 }

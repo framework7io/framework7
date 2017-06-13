@@ -1,6 +1,6 @@
 /* === Popup === */
-.popup-overlay {
-  .modal-overlay();
+.popup-backdrop {
+  .modal-backdrop();
   z-index: 10500;
 }
 .popup {
@@ -50,7 +50,7 @@
 }
 html.with-statusbar {
   @media all and (max-width:629px), (max-height:629px) {
-    .popup-overlay {
+    .popup-backdrop {
       z-index: 9500;
     }
     &.device-ios .popup {

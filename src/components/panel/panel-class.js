@@ -26,10 +26,10 @@ class Panel extends Framework7Class {
       });
     }
 
-    let $overlayEl = $('.panel-overlay');
-    if ($overlayEl.length === 0) {
-      $overlayEl = $('<div class="panel-overlay"></div>');
-      $overlayEl.insertBefore($el);
+    let $backdropEl = $('.panel-backdrop');
+    if ($backdropEl.length === 0) {
+      $backdropEl = $('<div class="panel-backdrop"></div>');
+      $backdropEl.insertBefore($el);
     }
 
     let $viewEl;
@@ -46,8 +46,8 @@ class Panel extends Framework7Class {
       $el,
       el: $el[0],
       opened,
-      $overlayEl,
-      overlayEl: $overlayEl[0],
+      $backdropEl,
+      backdropEl: $backdropEl[0],
       $viewEl,
       viewEl: $viewEl[0],
     });
@@ -138,7 +138,7 @@ class Panel extends Framework7Class {
     const app = panel.app;
     if (!app.panel.allowOpen) return false;
 
-    const { side, effect, $el, $overlayEl } = panel;
+    const { side, effect, $el, $backdropEl } = panel;
 
     // Close if some panel is opened
     app.panel.close(side === 'left' ? 'right' : 'left', animate);
@@ -150,8 +150,8 @@ class Panel extends Framework7Class {
       .css({ display: 'block' })
       .addClass('panel-active');
 
-    $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
-    $overlayEl.show();
+    $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+    $backdropEl.show();
 
     Utils.nextFrame(() => {
       $('html').addClass(`with-panel with-panel-${side}-${effect}`);
@@ -165,10 +165,10 @@ class Panel extends Framework7Class {
           if ($(e.target).is(transitionEndTarget)) {
             if ($el.hasClass('panel-active')) {
               panel.onOpened();
-              $overlayEl.css({ display: '' });
+              $backdropEl.css({ display: '' });
             } else {
               panel.onClosed();
-              $overlayEl.css({ display: '' });
+              $backdropEl.css({ display: '' });
             }
           } else panelTransitionEnd();
         });
@@ -177,7 +177,7 @@ class Panel extends Framework7Class {
         panelTransitionEnd();
       } else {
         panel.onOpened();
-        $overlayEl.css({ display: '' });
+        $backdropEl.css({ display: '' });
       }
     });
 
@@ -187,14 +187,14 @@ class Panel extends Framework7Class {
     const panel = this;
     const app = panel.app;
 
-    const { side, effect, $el, $overlayEl } = panel;
+    const { side, effect, $el, $backdropEl } = panel;
 
     if ($el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) return false;
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
     $el.removeClass('panel-active');
 
-    $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
+    $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
 
     const transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
 

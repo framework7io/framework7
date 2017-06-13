@@ -194,7 +194,7 @@ export default {
     });
   },
   clicks: {
-    '.dialog-overlay': function closeDialog() {
+    '.dialog-backdrop': function closeDialog() {
       const app = this;
       if (!app.params.modals.dialogCloseByOutsideClick) return;
       app.dialog.close();

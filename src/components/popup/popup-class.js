@@ -31,18 +31,18 @@ class Popup extends Modal {
       return popup.destroy();
     }
 
-    let $overlayEl = app.root.children('.popup-overlay');
-    if ($overlayEl.length === 0) {
-      $overlayEl = $('<div class="popup-overlay"></div>');
-      app.root.append($overlayEl);
+    let $backdropEl = app.root.children('.popup-backdrop');
+    if ($backdropEl.length === 0) {
+      $backdropEl = $('<div class="popup-backdrop"></div>');
+      app.root.append($backdropEl);
     }
 
     Utils.extend(popup, {
       app,
       $el,
       el: $el[0],
-      $overlayEl,
-      overlayEl: $overlayEl[0],
+      $backdropEl,
+      backdropEl: $backdropEl[0],
       type: 'popup',
     });
 

@@ -36,7 +36,7 @@ export default {
       const app = this;
       app.popup.close(data.popup, data.animate);
     },
-    '.popup-overlay': function closePopup() {
+    '.popup-backdrop': function closePopup() {
       const app = this;
       if (!app.params.modals.popupCloseByOutsideClick) return;
       app.popup.close();

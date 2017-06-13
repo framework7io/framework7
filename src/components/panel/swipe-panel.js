@@ -4,7 +4,7 @@ import Utils from '../../utils/utils';
 function swipePanel(panel) {
   const app = panel.app;
   const params = app.params.panel;
-  const { $el, $overlayEl, side, effect, $viewEl } = panel;
+  const { $el, $backdropEl, side, effect, $viewEl } = panel;
   let otherPanel;
 
   let isTouched;
@@ -14,7 +14,7 @@ function swipePanel(panel) {
   let touchStartTime;
   let touchesDiff;
   let translate;
-  let overlayOpacity;
+  let backdropOpacity;
   let panelWidth;
   let direction;
 
@@ -126,7 +126,7 @@ function swipePanel(panel) {
     if (!isMoved) {
       if (!panel.opened) {
         $el.show();
-        $overlayEl.show();
+        $backdropEl.show();
         $el.trigger('panelSwipeOpen panel:swipeopen', panel);
         panel.emit('panelSwipeOpen panel:swipeopen', panel);
       }
@@ -165,7 +165,7 @@ function swipePanel(panel) {
     }
     if (effect === 'reveal') {
       $viewEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
-      $overlayEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
+      $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
       $el.trigger('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
       panel.emit('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
@@ -173,9 +173,9 @@ function swipePanel(panel) {
       if (side === 'left') translate -= panelWidth;
       $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
-      $overlayEl.transition(0);
-      overlayOpacity = 1 - Math.abs(translate / panelWidth);
-      $overlayEl.css({ opacity: overlayOpacity });
+      $backdropEl.transition(0);
+      backdropOpacity = 1 - Math.abs(translate / panelWidth);
+      $backdropEl.css({ opacity: backdropOpacity });
 
       $el.trigger('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
       panel.emit('panelSwipe panel:swipe', panel, Math.abs(translate / panelWidth));
@@ -266,7 +266,7 @@ function swipePanel(panel) {
       });
     }
     $el.transition('').transform('');
-    $overlayEl.css({ display: '' }).transform('').transition('').css('opacity', '');
+    $backdropEl.css({ display: '' }).transform('').transition('').css('opacity', '');
   }
 
   // Add Events

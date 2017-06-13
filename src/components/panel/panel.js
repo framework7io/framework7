@@ -95,9 +95,9 @@ export default {
       const side = data.panel;
       app.panel.close(side, data.animate);
     },
-    '.panel-overlay': function close() {
+    '.panel-backdrop': function close() {
       const app = this;
-      $('.panel-active').trigger('panelOverlayClick panel:overlay-click');
+      $('.panel-active').trigger('panelBackdropClick panel:backdrop-click');
       if (app.params.panel.closeByOutsideClick) app.panel.close();
     },
   },

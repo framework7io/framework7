@@ -35,7 +35,7 @@ export default {
       const app = this;
       app.actions.close(data.actions, data.animate);
     },
-    '.actions-overlay': function closeActions() {
+    '.actions-backdrop': function closeActions() {
       const app = this;
       if (!app.params.modals.actionsCloseByOutsideClick) return;
       app.actions.close();

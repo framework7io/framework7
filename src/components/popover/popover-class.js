@@ -34,11 +34,11 @@ class Popover extends Modal {
       return popover.destroy();
     }
 
-    // Overlay
-    let $overlayEl = app.root.children('.popover-overlay');
-    if ($overlayEl.length === 0) {
-      $overlayEl = $('<div class="popover-overlay"></div>');
-      app.root.append($overlayEl);
+    // backdrop
+    let $backdropEl = app.root.children('.popover-backdrop');
+    if ($backdropEl.length === 0) {
+      $backdropEl = $('<div class="popover-backdrop"></div>');
+      app.root.append($backdropEl);
     }
 
     // Find Angle
@@ -58,8 +58,8 @@ class Popover extends Modal {
       targetEl: $targetEl[0],
       $angleEl,
       angleEl: $angleEl[0],
-      $overlayEl,
-      overlayEl: $overlayEl[0],
+      $backdropEl,
+      backdropEl: $backdropEl[0],
       type: 'popover',
     });
 

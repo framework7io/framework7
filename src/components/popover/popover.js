@@ -33,7 +33,7 @@ export default {
       const app = this;
       app.popover.close(data.popover, data.animate);
     },
-    '.popover-overlay': function closePopover() {
+    '.popover-backdrop': function closePopover() {
       const app = this;
       if (!app.params.modals.popoverCloseByOutsideClick) return;
       app.popover.close();

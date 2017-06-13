@@ -64,10 +64,10 @@ class Dialog extends Modal {
       return dialog.destroy();
     }
 
-    let $overlayEl = app.root.children('.dialog-overlay');
-    if ($overlayEl.length === 0) {
-      $overlayEl = $('<div class="dialog-overlay"></div>');
-      app.root.append($overlayEl);
+    let $backdropEl = app.root.children('.dialog-backdrop');
+    if ($backdropEl.length === 0) {
+      $backdropEl = $('<div class="dialog-backdrop"></div>');
+      app.root.append($backdropEl);
     }
 
     // Assign events
@@ -93,8 +93,8 @@ class Dialog extends Modal {
       app,
       $el,
       el: $el[0],
-      $overlayEl,
-      overlayEl: $overlayEl[0],
+      $backdropEl,
+      backdropEl: $backdropEl[0],
       type: 'dialog',
       setProgress(progress, duration) {
         app.progressbar.set($el.find('.progressbar'), progress, duration);

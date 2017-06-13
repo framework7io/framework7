@@ -61,7 +61,7 @@ class Modal extends Framework7Class {
     const modal = this;
     const app = modal.app;
     const $el = modal.$el;
-    const $overlayEl = modal.$overlayEl;
+    const $backdropEl = modal.$backdropEl;
     const type = modal.type;
 
     if (!$el || $el.hasClass('modal-in')) {
@@ -108,10 +108,10 @@ class Modal extends Framework7Class {
     // Emit open
     modal.onOpen();
     Utils.nextTick(() => {
-      // Overlay
-      if ($overlayEl) {
-        $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
-        $overlayEl.addClass('overlay-in');
+      // Backdrop
+      if ($backdropEl) {
+        $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+        $backdropEl.addClass('backdrop-in');
       }
       // Modal
       if (animate) {
@@ -136,7 +136,7 @@ class Modal extends Framework7Class {
   close(animate = true) {
     const modal = this;
     const $el = modal.$el;
-    const $overlayEl = modal.$overlayEl;
+    const $backdropEl = modal.$backdropEl;
 
     if (!$el || !$el.hasClass('modal-in')) {
       return modal;
@@ -145,10 +145,10 @@ class Modal extends Framework7Class {
     // Emit close
     modal.onClose();
 
-    // Overlay
-    if ($overlayEl) {
-      $overlayEl[animate ? 'removeClass' : 'addClass']('not-animated');
-      $overlayEl.removeClass('overlay-in');
+    // backdrop
+    if ($backdropEl) {
+      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      $backdropEl.removeClass('backdrop-in');
     }
 
     // Modal
