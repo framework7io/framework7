@@ -28,9 +28,59 @@ export default {
   create() {
     const app = this;
     Utils.extend(app.panel, {
+      disableSwipe(panel = 'both') {
+        let side;
+        let panels = [];
+        if (typeof panel === 'string') {
+          if (panel === 'both') {
+            side = 'both';
+            panels = [app.panel.left, app.panel.right];
+          } else {
+            side = panel;
+            panels = app.panel[side];
+          }
+        } else {
+          panels = [panel];
+        }
+        panels.forEach((panelInstance) => {
+          if (panelInstance) Utils.extend(panelInstance, { swipeable: false });
+        });
+      },
+      enableSwipe(panel = 'both') {
+        let panels = [];
+        let side;
+        if (typeof panel === 'string') {
+          side = panel;
+          if (
+            (app.params.panel.swipe === 'left' && side === 'right') ||
+            (app.params.panel.swipe === 'right' && side === 'left') ||
+            side === 'both'
+          ) {
+            side = 'both';
+            app.params.panel.swipe = side;
+            panels = [app.panel.left, app.panel.right];
+          } else {
+            app.params.panel.swipe = side;
+            panels.push(app.panel[side]);
+          }
+        } else if (panel) {
+          panels.push(panel);
+        }
+        if (panels.length) {
+          panels.forEach((panelInstance) => {
+            if (!panelInstance) return;
+            if (!panelInstance.swipeInitialized) {
+              panelInstance.initSwipePanel();
+            } else {
+              Utils.extend(panelInstance, { swipeable: true });
+            }
+          });
+        }
+      },
       create(el) {
         return new Panel(app, { el });
       },
+
       open(side, animate) {
         let panelSide = side;
         if (!panelSide) {

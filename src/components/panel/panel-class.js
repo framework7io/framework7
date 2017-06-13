@@ -71,7 +71,7 @@ class Panel extends Framework7Class {
       ||
       (app.params.panel.swipe === 'both')
       ||
-      (app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
+      (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
       ) {
       panel.initSwipePanel();
     }

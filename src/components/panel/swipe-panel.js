@@ -3,6 +3,10 @@ import Utils from '../../utils/utils';
 
 function swipePanel(panel) {
   const app = panel.app;
+  Utils.extend(panel, {
+    swipeable: true,
+    swipeInitialized: true,
+  });
   const params = app.params.panel;
   const { $el, $backdropEl, side, effect, $viewEl } = panel;
   let otherPanel;
@@ -19,6 +23,7 @@ function swipePanel(panel) {
   let direction;
 
   function handleTouchStart(e) {
+    if (!panel.swipeable) return;
     if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
     if ($('.modal-in, .photo-browser-in').length > 0) return;
     otherPanel = app.panel[side === 'left' ? 'right' : 'left'] || {};
