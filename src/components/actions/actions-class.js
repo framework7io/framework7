@@ -48,6 +48,23 @@ class Actions extends Modal {
                         return `<li class="${itemClasses.join(' ')}">${button.text}</li>`;
                       }
                       itemClasses.push('item-link');
+                      if (button.icon) {
+                        itemClasses.push('item-content');
+                        return `
+                          <li>
+                            <a class="${itemClasses.join(' ')}">
+                              <div class="item-media">
+                                ${button.icon}
+                              </div>
+                              <div class="item-inner">
+                                <div class="item-title">
+                                  ${button.text}
+                                </div>
+                              </div>
+                            </a>
+                          </li>
+                        `;
+                      }
                       itemClasses.push('list-button');
                       return `
                         <li>
@@ -63,7 +80,7 @@ class Actions extends Modal {
         `;
       }
       actions.actionsHtml = `
-        <div class="actions-modal">
+        <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''}">
           ${groups.map(group =>
             `<div class="actions-group">
               ${group.map((button) => {
@@ -72,7 +89,10 @@ class Actions extends Modal {
                 if (button.bg) buttonClasses.push(`bg-${button.color}`);
                 if (button.bold) buttonClasses.push('actions-button-bold');
                 if (button.disabled) buttonClasses.push('disabled');
-                return `<div class="${buttonClasses.join(' ')}">${button.text}</div>`;
+                if (button.label) {
+                  return `<div class="${buttonClasses.join(' ')}">${button.text}</div>`;
+                }
+                return `<div class="${buttonClasses.join(' ')}">${button.icon ? `<div class="actions-button-media">${button.icon}</div>` : ''}<div class="actions-button-text">${button.text}</div></div>`;
               }).join('')}
             </div>`).join('')}
         </div>
@@ -100,8 +120,15 @@ class Actions extends Modal {
     let popover;
     function buttonOnClick(e) {
       const buttonEl = this;
-      const buttonIndex = $(buttonEl).index();
-      const groupIndex = $(buttonEl).parents('.actions-group').index();
+      let buttonIndex;
+      let groupIndex;
+      if ($(buttonEl).hasClass('item-link')) {
+        buttonIndex = $(buttonEl).parents('li').index();
+        groupIndex = $(buttonEl).parents('.list').index();
+      } else {
+        buttonIndex = $(buttonEl).index();
+        groupIndex = $(buttonEl).parents('.actions-group').index();
+      }
       const button = groups[groupIndex][buttonIndex];
       if (button.onClick) button.onClick(actions, e);
       if (actions.params.onClick) actions.params.onClick(actions, e);
@@ -123,14 +150,24 @@ class Actions extends Modal {
           targetEl: actions.params.targetEl,
         });
         popover.open(animate);
+        popover.once('popoverOpened', () => {
+          popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
+            $(buttonEl).on('click', buttonOnClick);
+          });
+        });
+        popover.once('popoverClosed', () => {
+          popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
+            $(buttonEl).on('click', buttonOnClick);
+          });
+        });
       } else {
         actions.$el = $(actions.actionsHtml);
         actions.$el[0].f7Modal = actions;
         actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
           $(buttonEl).on('click', buttonOnClick);
         });
-        actions.once('closed', () => {
-          actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
+        actions.once('actionsClosed', () => {
+          actions.$el.find('.list-button').each((groupIndex, buttonEl) => {
             $(buttonEl).off('click', buttonOnClick);
           });
         });

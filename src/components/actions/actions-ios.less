@@ -20,6 +20,10 @@
     text-align: center;
     overflow: hidden;
     background: rgba(255,255,255,0.95);
+    &.disabled {
+      pointer-events: none;
+      color: @gray;
+    }
     b, &.actions-button-bold {
       font-weight: 600;
     }
@@ -33,9 +37,6 @@
     &:first-child:last-child {
       border-radius: 13px;
     }
-    &.disabled {
-      color: @gray;
-    }
   }
   .actions-button {
     height: 57px;
@@ -44,8 +45,21 @@
     color: @themeColor;
     white-space: normal;
     text-overflow: ellipsis;
+    justify-content: center;
     &.active-state {
       background: rgba(230,230,230,0.9);
+    }
+  }
+  .actions-button-media {
+    margin-left: 15px;
+    i.icon {
+      width: 29px;
+      height: 29px;
+      font-size: 29px;
+    }
+    + .actions-button-text {
+      text-align: left;
+      margin-left: 15px;
     }
   }
   .actions-label {
@@ -62,6 +76,56 @@
     .actions-button {
       height: 44px;
       line-height: 44px;
+    }
+  }
+  .actions-grid {
+    .actions-group {
+      margin-top: 0;
+      border-radius: 0;
+      background: rgba(255,255,255,0.95);
+      &:first-child {
+        border-radius: 13px 13px 0 0;
+      }
+      &:last-child {
+        border-radius: 0 0 13px 13px;
+      }
+    }
+    .actions-group:not(:last-child) {
+      margin-bottom: 0;
+    }
+    .actions-button, .actions-label {
+      border-radius: 0 !important;
+      background: none;
+    }
+    .actions-button-media {
+      width: 48px;
+      height: 48px;
+      margin-left: auto;
+      margin-right: auto;
+      i.icon {
+        width: 48px;
+        height: 48px;
+        font-size: 48px;
+      }
+      + .actions-button-text {
+        text-align: center;
+      }
+    }
+    .actions-button {
+      padding: 16px;
+      line-height: 1;
+      height: auto;
+      .hairline-remove(bottom);
+      &.active-state {
+        background: rgba(230,230,230,0.9);
+      }
+    }
+    .actions-button-text {
+      margin-top: 8px;
+      line-height: 16px;
+      height: 16px;
+      font-size: 12px;
+      color: #757575;
     }
   }
   .hairline-root('.actions-button', bottom, rgba(0,0,0,0.2));

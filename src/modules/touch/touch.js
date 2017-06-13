@@ -515,7 +515,7 @@ export default {
       tapHoldPreventClicks: true,
       // Active State
       activeState: true,
-      activeStateElements: 'a, button, label, span',
+      activeStateElements: 'a, button, label, span, .actions-button',
       materialRipple: true,
       materialRippleElements: '.ripple, a.link, a.item-link, .links-list a, .button, button, .dialog-button, .tab-link, .label-radio, .label-checkbox, .actions-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a, .form-checkbox, .form-radio, .data-table .sortable-cell',
     },
