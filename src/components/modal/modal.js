@@ -21,6 +21,7 @@ export default {
       popoverCloseByOutsideClick: true,
       actionsToPopover: true,
       actionsCloseByOutsideClick: true,
+      sheetCloseByOutsideClick: true,
     },
   },
 };

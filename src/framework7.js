@@ -26,6 +26,7 @@ import Popup from './components/popup/popup';
 import LoginScreen from './components/login-screen/login-screen';
 import Popover from './components/popover/popover';
 import Actions from './components/actions/actions';
+import Sheet from './components/sheet/sheet';
 
 // Additional Components
 import Tabs from './components/tabs/tabs';
@@ -65,12 +66,14 @@ Framework7
   .use(Toolbar)
   .use(Preloader)
   .use(Progressbar)
+  // Modals
   .use(Modal)
   .use(Dialog)
   .use(Popup)
   .use(LoginScreen)
   .use(Popover)
   .use(Actions)
+  .use(Sheet)
   // Additional Components
   .use(Tabs)
   .use(Sortable)
