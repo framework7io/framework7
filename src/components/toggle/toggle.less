@@ -7,15 +7,13 @@
   align-self: center;
   user-select: none;
   &.disabled, .disabled & {
-    opacity: 0.55;
-    pointer-events: none;
+    .disabled();
   }
 
   input[type="checkbox"] {
     display: none;
     &[disabled] + .toggle-icon {
-      opacity: 0.5;
-      pointer-events: none;
+      .disabled();
     }
   }
 }
