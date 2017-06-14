@@ -38,7 +38,6 @@
     .item-link, .list-button {
       .item-inner {
         padding-right: 42px;
-        background-position: calc(~"100% - 16px") center;
       }
       &.active-state {
         background-color: rgba(0,0,0,0.1);
@@ -87,7 +86,6 @@
       line-height: 48px;
       padding-left: 16px;
       padding-right: 42px;
-      background-position: calc(~"100% - 16px") center;
       &.active-state {
         background-color: rgba(0,0,0,0.1);
       }
@@ -113,6 +111,10 @@
       padding-top: 14px;
       padding-bottom: 14px;
     }
+  }
+  .list .item-link .item-inner,
+  .links-list a {
+    background-position: calc(~"100% - 16px") center;
   }
   .item-divider, .list-group-title {
     .hairline-remove(top);

@@ -29,7 +29,7 @@
 
   .item-media {
     display: flex;
-    flex-shtink: 0;
+    flex-shrink: 0;
     flex-wrap: nowrap;
     align-items: center;
     box-sizing: border-box;
@@ -70,12 +70,6 @@
     position: relative;
     overflow: hidden;
     z-index: 0;
-    .item-inner {
-      .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
-      background-size: 10px 20px;
-      background-repeat: no-repeat;
-      background-position: 95% center;
-    }
     &.disabled {
       .disabled();
     }
@@ -119,6 +113,9 @@
   }
   .item-title-row {
     .item-row();
+    .item-after {
+      align-self: center;
+    }
   }
 
   .item-row {
@@ -207,10 +204,6 @@
     white-space: nowrap;
     text-oveflow: ellipsis;
     max-width: 100%;
-    .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
-    background-size: 10px 20px;
-    background-repeat: no-repeat;
-    background-position: 95% center;
   }
   li:last-child a {
     .hairline-remove(bottom);
@@ -224,18 +217,31 @@
   .item-link .item-inner {
     background: none;
   }
-  .item-link .item-title-row {
-    .svg-background("<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='#c7c7cc'/></svg>");
-    background-size: 10px 20px;
-    background-repeat: no-repeat;
-    background-position: right center;
-  }
   .item-media {
-    align-selft: flex-start;
+    align-self: flex-start;
     img {
       display: block;
     }
   }
+}
+.list .item-link .item-inner,
+.links-list a,
+.media-list .item-link .item-title-row,
+li.media-item .item-link .item-title-row
+{
+  .svg-background("<svg width='8px' height='13px' viewBox='0 0 8 13' xmlns='http://www.w3.org/2000/svg'><polygon fill='#c7c7cc' transform='translate(1.500000, 6.500000) rotate(-45.000000) translate(-1.500000, -6.500000) ' points='6 11 6 2 4 2 4 9 -3 9 -3 11 5 11'></polygon></svg>");
+  background-size: 8px 13px;
+  background-repeat: no-repeat;
+  background-position: 95% center;
+}
+.media-list .item-link .item-inner,
+li.media-item .item-link .item-inner {
+  background: none;
+}
+.media-list .item-link .item-title-row,
+li.media-item .item-link .item-title-row
+{
+  background-position: right center !important;
 }
 .list-group {
   ul {
