@@ -196,7 +196,7 @@ class Router extends Framework7Class {
     if (router.dynamicNavbar) {
       // Prepare Navbars
       prepareNavbars();
-      Utils.nextFrame(() => {
+      Utils.nextTick(() => {
         // Add class, start animation
         router.$el.addClass(routerTransitionClass);
         animateNavbars();
