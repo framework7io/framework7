@@ -55,13 +55,13 @@ function SwipeBack(r) {
       let cancel = false;
       const target = $(e.target);
 
-      const swipeout = target.hasClass('swipeout') ? target : target.parents('.swipeout');
+      const swipeout = target.closest('.swipeout');
       if (swipeout.length > 0) {
         if (!app.rtl && swipeout.find('.swipeout-actions-left').length > 0) cancel = true;
         if (app.rtl && swipeout.find('.swipeout-actions-right').length > 0) cancel = true;
       }
 
-      currentPage = target.is('.page') ? target : target.parents('.page');
+      currentPage = target.closest('.page');
       if (currentPage.hasClass('no-swipeback')) cancel = true;
       previousPage = $el.find('.page-previous:not(.stacked)');
 
