@@ -1,4 +1,11 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
-
+  .swipeout-actions-left, .swipeout-actions-right {
+    > a, > button, > span, > div {
+      padding: 0 24px;
+    }
+    .swipeout-delete {
+      background: @red;
+    }
+  }
 }

@@ -29,7 +29,7 @@ function SwipeBack(r) {
   let navbarWidth;
 
   function handleTouchStart(e) {
-    if (!allowViewTouchMove || !router.params.swipeBackPage || isTouched || app.swipeoutOpenedEl || !router.allowPageChange) return;
+    if (!allowViewTouchMove || !router.params.swipeBackPage || isTouched || app.swipeout.el || !router.allowPageChange) return;
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
