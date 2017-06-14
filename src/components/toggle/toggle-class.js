@@ -133,19 +133,17 @@ class Toggle extends Framework7Class {
     toggle.attachEvents = function attachEvents() {
       if (!Support.touch) return;
       const passive = Support.passiveListener ? { passive: true } : false;
-      const active = Support.passiveListener ? { passive: false } : false;
       $el.on(app.touchEvents.start, handleTouchStart, passive);
-      $(document).on(app.touchEvents.move, handleTouchMove, active);
-      $(document).on(app.touchEvents.end, handleTouchEnd, passive);
+      app.on('touchmove', handleTouchMove);
+      app.on('touchend:passive', handleTouchEnd);
       toggle.$inputEl.on('change', handleInputChange);
     };
     toggle.detachEvents = function detachEvents() {
       if (!Support.touch) return;
       const passive = Support.passiveListener ? { passive: true } : false;
-      const active = Support.passiveListener ? { passive: false } : false;
       $el.off(app.touchEvents.start, handleTouchStart, passive);
-      $(document).off(app.touchEvents.move, handleTouchMove, active);
-      $(document).off(app.touchEvents.end, handleTouchEnd, passive);
+      app.off('touchmove', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
       toggle.$inputEl.off('change', handleInputChange);
     };
 

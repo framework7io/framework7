@@ -33,7 +33,6 @@ function initTouch() {
 
   let rippleWave;
   let rippleTarget;
-  let rippleTransform;
   let rippleTimeout;
 
   function findActivableElement(el) {
@@ -92,6 +91,19 @@ function initTouch() {
     return false;
   }
   function targetNeedsFastClick(el) {
+    /*
+    if (
+      Device.ios
+      &&
+      (
+        Device.osVersion.split('.')[0] > 9
+        ||
+        (Device.osVersion.split('.')[0] * 1 === 9 && Device.osVersion.split('.')[1] >= 1)
+      )
+    ) {
+      return false;
+    }
+    */
     const $el = $(el);
     if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) return false;
     if (el.nodeName.toLowerCase() === 'select' && Device.android) return false;
@@ -255,7 +267,11 @@ function initTouch() {
     }
     if (Device.ios || (Device.android && 'getSelection' in window)) {
       const selection = window.getSelection();
-      if (selection.rangeCount && selection.focusNode !== document.body && (!selection.isCollapsed || document.activeElement === selection.focusNode)) {
+      if (
+        selection.rangeCount &&
+        selection.focusNode !== document.body &&
+        (!selection.isCollapsed || document.activeElement === selection.focusNode)
+      ) {
         activeSelection = true;
         return true;
       }
@@ -291,9 +307,9 @@ function initTouch() {
 
     if (params.activeState) {
       activableElement = findActivableElement(targetElement);
-          // If it's inside a scrollable view, we don't trigger active-state yet,
-          // because it can be a scroll instead. Based on the link:
-          // http://labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
+      // If it's inside a scrollable view, we don't trigger active-state yet,
+      // because it can be a scroll instead. Based on the link:
+      // http://labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
       if (!isInsideScrollableView(activableElement)) {
         addActive();
       } else {
@@ -303,6 +319,7 @@ function initTouch() {
     if (useRipple) {
       rippleTouchStart(targetElement, touchStartX, touchStartY);
     }
+    return true;
   }
   function handleTouchMove(e) {
     if (!trackClick) return;
@@ -480,18 +497,76 @@ function initTouch() {
 
     return allowClick;
   }
-  if (Support.touch) {
-    document.addEventListener('click', handleClick, true);
 
-    document.addEventListener('touchstart', handleTouchStart, { passive: false });
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+  function emitAppTouchEvent(name, context, e) {
+    app.emit({
+      events: name,
+      data: [e],
+      context,
+    });
+  }
+  function appClick(e) {
+    emitAppTouchEvent('click', this, e);
+  }
+  function appTouchStartActive(e) {
+    emitAppTouchEvent('touchstart', this, e);
+  }
+  function appTouchMoveActive(e) {
+    emitAppTouchEvent('touchmove', this, e);
+  }
+  function appTouchEndActive(e) {
+    emitAppTouchEvent('touchend', this, e);
+  }
+  function appTouchStartPassive(e) {
+    emitAppTouchEvent('touchstart:passive', this, e);
+  }
+  function appTouchMovePassive(e) {
+    emitAppTouchEvent('touchmove:passive', this, e);
+  }
+  function appTouchEndPassive(e) {
+    emitAppTouchEvent('touchend:passive', this, e);
+  }
+
+  const passiveListener = Support.passiveListener ? { passive: true } : false;
+  const activeListener = Support.passiveListener ? { passive: false } : false;
+
+  document.addEventListener('click', appClick, true);
+
+  if (Support.passiveListener) {
+    document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
+    document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
+    document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
+
+    document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListener);
+    document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
+    document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
+  } else {
+    document.addEventListener(app.touchEvents.start, function handler(e) {
+      appTouchStartActive.call(this, e);
+      appTouchStartPassive.call(this, e);
+    }, false);
+    document.addEventListener(app.touchEvents.move, function handler(e) {
+      appTouchMoveActive.call(this, e);
+      appTouchMovePassive.call(this, e);
+    }, false);
+    document.addEventListener(app.touchEvents.end, function handler(e) {
+      appTouchEndActive.call(this, e);
+      appTouchEndPassive.call(this, e);
+    }, false);
+  }
+
+  if (Support.touch) {
+    app.on('click', handleClick);
+    app.on('touchstart', handleTouchStart);
+    app.on('touchmove', handleTouchMove);
+    app.on('touchend', handleTouchEnd);
     document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
   } else if (params.activeState) {
-    document.addEventListener('mousedown', handleMouseDown, { passive: false });
-    document.addEventListener('mousemove', handleMouseMove, { passive: false });
-    document.addEventListener('mouseup', handleMouseUp, { passive: false });
+    app.on('touchstart', handleMouseDown);
+    app.on('touchmove', handleMouseMove);
+    app.on('touchend', handleMouseUp);
   }
+
   if (useRipple) {
     document.addEventListener('contextmenu', () => {
       if (activableElement) removeActive();

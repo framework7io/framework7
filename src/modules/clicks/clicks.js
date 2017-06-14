@@ -41,49 +41,6 @@ function initClicks(app) {
       if (app.smartSelectOpen) app.smartSelectOpen(clicked);
     }
 
-    // Popover
-    if (clicked.hasClass('open-popover')) {
-      let popover;
-      if (clickedData.popover) {
-        popover = clickedData.popover;
-      } else popover = '.popover';
-      app.popover(popover, clicked);
-    }
-    if (clicked.hasClass('close-popover')) {
-      app.closeModal('.popover.modal-in');
-    }
-
-
-    // Close Modal
-    if (clicked.hasClass('dialog-overlay')) {
-      if ($('.dialog.modal-in').length > 0 && app.params.modalCloseByOutside) { app.closeModal('.dialog.modal-in'); }
-      if ($('.actions-modal.modal-in').length > 0 && app.params.actionsCloseByOutside) { app.closeModal('.actions-modal.modal-in'); }
-
-      if ($('.popover.modal-in').length > 0 && app.params.popoverCloseByOutside) { app.closeModal('.popover.modal-in'); }
-    }
-    if (clicked.hasClass('picker-overlay')) {
-      if ($('.picker.modal-in').length > 0) { app.closeModal('.picker.modal-in'); }
-    }
-
-    // Picker
-    if (clicked.hasClass('close-picker')) {
-      let pickerToClose = $('.picker.modal-in');
-      if (pickerToClose.length > 0) {
-        app.closeModal(pickerToClose);
-      } else {
-        pickerToClose = $('.popover.modal-in .picker');
-        if (pickerToClose.length > 0) {
-          app.closeModal(pickerToClose.parents('.popover'));
-        }
-      }
-    }
-    if (clicked.hasClass('open-picker')) {
-      let pickerToOpen;
-      if (clickedData.picker) {
-        pickerToOpen = clickedData.picker;
-      } else pickerToOpen = '.picker';
-      app.pickerModal(pickerToOpen, clicked);
-    }
 
     // Swipeout Close
     if (clicked.hasClass('swipeout-close')) {
@@ -153,7 +110,7 @@ function initClicks(app) {
       if (clickedLinkData.view) {
         view = $(clickedLinkData.view)[0].f7View;
       } else {
-        view = clicked.parents(`.${app.params.view.viewClass}`)[0] && clicked.parents(`.${app.params.view.viewClass}`)[0].f7View;
+        view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
         if (view && view.params.linksView) {
           if (typeof view.params.linksView === 'string') view = $(view.params.linksView)[0].f7View;
           else if (view.params.linksView instanceof ViewClass) view = view.params.linksView;
@@ -168,9 +125,7 @@ function initClicks(app) {
     }
   }
 
-  $(document).on('click', handleClicks);
-  // $(document).on('click', 'a, .open-panel, .close-panel, .panel-overlay, .dialog-overlay, .popup-overlay, .swipeout-delete, .swipeout-close, .close-popup, .open-popup, .open-popover, .open-login-screen, .close-login-screen .smart-select, .toggle-sortable, .open-sortable, .close-sortable, .accordion-item-toggle, .close-picker, .picker-overlay', handleClicks);
-
+  app.on('click', handleClicks);
 
   // Prevent scrolling on overlays
   function preventScrolling(e) {
@@ -178,7 +133,7 @@ function initClicks(app) {
   }
   if (Support.touch && !Device.android) {
     const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
-    $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-overlay, .dialog-overlay, .preloader-indicator-overlay, .popup-overlay, .searchbar-overlay', preventScrolling, activeListener);
+    $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-indicator-overlay, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
 export default {
@@ -187,8 +142,6 @@ export default {
     clicks: {
       // External Links
       externalLinks: '.external',
-      // Tap Navbar or Statusbar to scroll to top
-      scrollTopOnStatusbarClick: false,
     },
   },
   on: {

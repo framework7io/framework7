@@ -275,15 +275,13 @@ function swipePanel(panel) {
   }
 
   // Add Events
-  const passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
-  const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
-  $(document).on(app.touchEvents.start, handleTouchStart, passiveListener);
-  $(document).on(app.touchEvents.move, handleTouchMove, activeListener);
-  $(document).on(app.touchEvents.end, handleTouchEnd, passiveListener);
+  app.on('touchstart:passive', handleTouchStart);
+  app.on('touchmove', handleTouchMove);
+  app.on('touchend:passive', handleTouchEnd);
   panel.on('panelDestroy', () => {
-    $(document).off(app.touchEvents.start, handleTouchStart, passiveListener);
-    $(document).off(app.touchEvents.move, handleTouchMove, activeListener);
-    $(document).off(app.touchEvents.end, handleTouchEnd, passiveListener);
+    app.off('touchstart:passive', handleTouchStart);
+    app.off('touchmove', handleTouchMove);
+    app.off('touchend:passive', handleTouchEnd);
   });
 }
 

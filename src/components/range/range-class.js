@@ -212,18 +212,16 @@ class Range extends Framework7Class {
     }
     range.attachEvents = function attachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
-      const active = Support.passiveListener ? { passive: false } : false;
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
-      $(document).on(app.touchEvents.move, handleTouchMove, active);
-      $(document).on(app.touchEvents.end, handleTouchEnd, passive);
+      app.on('touchmove', handleTouchMove);
+      app.on('touchend:passive', handleTouchEnd);
       app.on('resize', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
-      const active = Support.passiveListener ? { passive: false } : false;
       range.$el.off(app.touchEvents.start, handleTouchStart, passive);
-      $(document).off(app.touchEvents.move, handleTouchMove, active);
-      $(document).off(app.touchEvents.end, handleTouchEnd, passive);
+      app.off('touchmove', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
       app.off('resize', handleResize);
     };
 
