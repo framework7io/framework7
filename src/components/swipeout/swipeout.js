@@ -205,6 +205,8 @@ const Swipeout = {
           $buttonEl.transform(`translate3d(${buttonTranslate + (buttonOffset * (1 - Math.min(progress, 1)))}px,0,0)`);
         });
       }
+      $swipeoutEl.trigger('swipeout', progress);
+      app.emit('swipeout', $swipeoutEl[0], progress);
       $swipeoutContent.transform(`translate3d(${translate}px,0,0)`);
     }
     function handleTouchEnd() {
@@ -252,6 +254,7 @@ const Swipeout = {
       if (action === 'open') {
         Swipeout.el = $swipeoutEl;
         $swipeoutEl.trigger('open swipeout:open');
+        app.emit('swipeoutOpen swipeout:open', $swipeoutEl[0]);
         $swipeoutEl.addClass('swipeout-opened swipeout-transitioning');
         const newTranslate = direction === 'to-left' ? -actionsWidth : actionsWidth;
         $swipeoutContent.transform(`translate3d(${newTranslate}px,0,0)`);
@@ -270,6 +273,7 @@ const Swipeout = {
         }
       } else {
         $swipeoutEl.trigger('close swipeout:close');
+        app.emit('swipeoutClose swipeout:close', $swipeoutEl[0]);
         Swipeout.el = undefined;
         $swipeoutEl.addClass('swipeout-transitioning').removeClass('swipeout-opened');
         $swipeoutContent.transform('');
@@ -300,6 +304,7 @@ const Swipeout = {
       $swipeoutContent.transitionEnd(() => {
         if ((opened && action === 'open') || (!opened && action === 'close')) return;
         $swipeoutEl.trigger(action === 'open' ? 'opened swipeout:opened' : 'closed swipeout:closed');
+        app.emit(action === 'open' ? 'swipeoutOpened swipeout:opened' : 'swipeoutClosed swipeout:closed', $swipeoutEl[0]);
         $swipeoutEl.removeClass('swipeout-transitioning');
         if (opened && action === 'close') {
           if ($actionsRight.length > 0) {
@@ -337,6 +342,7 @@ const Swipeout = {
   allow: true,
   el: undefined,
   open(...args) {
+    const app = this;
     let [el, side, callback] = args;
     if (typeof args[1] === 'function') {
       [el, callback, side] = args;
@@ -353,6 +359,7 @@ const Swipeout = {
     const $swipeoutContent = $el.find('.swipeout-content');
     if ($swipeoutActions.length === 0) return;
     $el.trigger('open swipeout:open').addClass('swipeout-opened').removeClass('swipeout-transitioning');
+    app.emit('swipeoutOpen swipeout:open', $el[0]);
     $swipeoutActions.addClass('swipeout-actions-opened');
     const $buttons = $swipeoutActions.children('a');
     const swipeoutActionsWidth = $swipeoutActions.outerWidth();
@@ -369,6 +376,7 @@ const Swipeout = {
     }
     $el.addClass('swipeout-transitioning');
     $swipeoutContent.transitionEnd(() => {
+      app.emit('swipeoutOpened swipeout:opened', $el[0]);
       $el.trigger('opened swipeout:opened');
       if (callback) callback.call($el[0]);
     });
@@ -379,6 +387,7 @@ const Swipeout = {
     Swipeout.el = $el[0];
   },
   close(el, callback) {
+    const app = this;
     const $el = $(el).eq(0);
     if ($el.length === 0) return;
     if (!$el.hasClass('swipeout-opened')) return;
@@ -388,6 +397,7 @@ const Swipeout = {
     const swipeoutActionsWidth = $swipeoutActions.outerWidth();
     Swipeout.allow = false;
     el.trigger('close swipeout:close');
+    app.emit('swipeoutClose swipeout:close', $el[0]);
     $el.removeClass('swipeout-opened').addClass('swipeout-transitioning');
 
     let closeTimeout;
@@ -397,6 +407,7 @@ const Swipeout = {
       el.removeClass('swipeout-transitioning');
       $buttons.transform('');
       el.trigger('closed swipeout:closed');
+      app.emit('swipeoutClosed swipeout:closed', $el[0]);
       if (callback) callback.call(el[0]);
       if (closeTimeout) clearTimeout(closeTimeout);
     }
@@ -420,9 +431,11 @@ const Swipeout = {
     if ($el.length === 0) return;
     Swipeout.el = undefined;
     $el.trigger('delete swipeout:delete');
+    app.emit('swipeoutDelete swipeout:delete', $el[0]);
     $el.css({ height: `${$el.outerHeight()}px` });
     $el.transitionEnd(() => {
       $el.trigger('deleted swipeout:deleted');
+      app.emit('swipeoutDeleted swipeout:deleted', $el[0]);
       if (callback) callback.call($el[0]);
       if ($el.parents('.virtual-list').length > 0) {
         const virtualList = $el.parents('.virtual-list')[0].f7VirtualList;
