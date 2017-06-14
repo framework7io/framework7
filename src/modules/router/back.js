@@ -118,23 +118,27 @@ function backward(el, backwardOptions) {
   const newPageInDom = $newPage.parents(document).length > 0;
   const f7Component = $newPage[0].f7Component;
 
-  if ($newPage.next($oldPage).length === 0) {
-    if (!newPageInDom && f7Component) {
-      f7Component.mount((componentEl) => {
-        $(componentEl).insertBefore($oldPage);
-      });
-    } else {
-      $newPage.insertBefore($oldPage);
+  function insertPage() {
+    if ($newPage.next($oldPage).length === 0) {
+      if (!newPageInDom && f7Component) {
+        f7Component.mount((componentEl) => {
+          $(componentEl).insertBefore($oldPage);
+        });
+      } else {
+        $newPage.insertBefore($oldPage);
+      }
     }
-  }
-  if (separateNavbar) {
-    $newNavbarInner.insertBefore($oldNavbarInner);
-  }
-  if (!newPageInDom) {
-    router.pageCallback('attached', $newPage, $newNavbarInner, 'previous', 'current', options);
+    if (separateNavbar) {
+      $newNavbarInner.insertBefore($oldNavbarInner);
+    }
+    if (!newPageInDom) {
+      router.pageCallback('attached', $newPage, $newNavbarInner, 'previous', 'current', options);
+    }
   }
 
   if (options.preload) {
+    // Insert Page
+    insertPage();
     // Page init and before init events
     router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options);
     if ($newPage.prevAll('.page-previous:not(.stacked)').length > 0) {
@@ -178,6 +182,9 @@ function backward(el, backwardOptions) {
   // Current Route
   router.currentRoute = options.route;
   router.currentPage = $newPage[0];
+
+  // Insert Page
+  insertPage();
 
   // Load Tab
   if (options.route.route.tab) {

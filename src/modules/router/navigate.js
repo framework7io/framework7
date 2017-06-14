@@ -155,6 +155,10 @@ function forward(el, forwardOptions = {}) {
   }
   router.saveHistory();
 
+  // Current Route
+  router.currentRoute = options.route;
+  router.currentPage = $newPage[0];
+
   // Insert new page and navbar
   const newPageInDom = $newPage.parents(document).length > 0;
   const f7Component = $newPage[0].f7Component;
@@ -218,10 +222,6 @@ function forward(el, forwardOptions = {}) {
       }
     });
   }
-
-  // Current Route
-  router.currentRoute = options.route;
-  router.currentPage = $newPage[0];
 
   // Load Tab
   if (options.route.route.tab) {
