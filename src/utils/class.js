@@ -38,17 +38,32 @@ class Framework7Class {
       });
       return self;
     };
-    self.emit = function emit(events, ...args) {
+    self.emit = function emit(...args) {
+      let events;
+      let data;
+      let context;
+      let eventsParents;
+      if (typeof args[0] === 'string') {
+        events = args[0];
+        data = args.slice(1, args.length);
+        context = self;
+        eventsParents = self.eventsParents;
+      } else {
+        events = args[0].events;
+        data = args[0].data;
+        context = args[0].context;
+        eventsParents = args[0].parents;
+      }
       events.split(' ').forEach((event) => {
         if (self.eventsListeners[event]) {
           self.eventsListeners[event].forEach((eventHandler) => {
-            eventHandler.apply(self, args);
+            eventHandler.apply(context, data);
           });
         }
       });
-      if (self.eventsParents && self.eventsParents.length > 0) {
-        self.eventsParents.forEach((eventsParent) => {
-          eventsParent.emit(events, ...args);
+      if (eventsParents && eventsParents.length > 0) {
+        eventsParents.forEach((eventsParent) => {
+          eventsParent.emit(events, ...data);
         });
       }
       return self;
