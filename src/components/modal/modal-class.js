@@ -32,30 +32,26 @@ class Modal extends Framework7Class {
     openedModals.push(modal);
     $('html').addClass(`with-modal-${modal.type}`);
     modal.$el.trigger(`open ${modal.type}:open`, modal);
-    modal.emit('modalOpen modal:open', modal);
-    modal.emit(`${modal.type}Open ${modal.type}:open`, modal);
+    modal.emit(`modalOpen modal:open ${modal.type}Open ${modal.type}:open`, modal);
   }
   onOpened() {
     const modal = this;
     modal.$el.trigger(`opened ${modal.type}:opened`, modal);
-    modal.emit('modalOpened modal:opened', modal);
-    modal.emit(`${modal.type}Opened ${modal.type}:opened`, modal);
+    modal.emit(`modalOpened modal:opened ${modal.type}Opened ${modal.type}:opened`, modal);
   }
   onClose() {
     const modal = this;
     openedModals.splice(openedModals.indexOf(modal), 1);
     $('html').removeClass(`with-modal-${modal.type}`);
     modal.$el.trigger(`close ${modal.type}:close`, modal);
-    modal.emit('modalClose modal:close', modal);
-    modal.emit(`${modal.type}Close ${modal.type}:close`, modal);
+    modal.emit(`modalClose modal:close ${modal.type}Close ${modal.type}:close`, modal);
   }
   onClosed() {
     const modal = this;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
     modal.$el.trigger(`closed ${modal.type}:closed`, modal);
-    modal.emit('modalClosed modal:closed', modal);
-    modal.emit(`${modal.type}Closed ${modal.type}:closed`, modal);
+    modal.emit(`modalClosed modal:closed ${modal.type}Closed ${modal.type}:closed`, modal);
   }
   open(animate = true) {
     const modal = this;
