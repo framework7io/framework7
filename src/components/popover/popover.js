@@ -11,11 +11,11 @@ export default {
         create(params) {
           return new Popover(app, params);
         },
-        open(popoverEl, animate) {
+        open(popoverEl, targetEl, animate) {
           const $popoverEl = $(popoverEl);
           let popover = $popoverEl[0].f7Modal;
-          if (!popover) popover = new Popover(app, { el: $popoverEl });
-          return popover.open(animate);
+          if (!popover) popover = new Popover(app, { el: $popoverEl, targetEl });
+          return popover.open(targetEl, animate);
         },
         close(popoverEl = '.popover.modal-in', animate) {
           const $popoverEl = $(popoverEl);
@@ -30,7 +30,7 @@ export default {
   clicks: {
     '.popover-open': function openPopover($clickedEl, data = {}) {
       const app = this;
-      app.popover.open(data.popover, data.animate);
+      app.popover.open(data.popover, $clickedEl, data.animate);
     },
     '.popover-close': function closePopover($clickedEl, data = {}) {
       const app = this;

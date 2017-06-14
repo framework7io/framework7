@@ -30,7 +30,7 @@ class Popover extends Modal {
     // Find Target
     const $targetEl = $(popover.params.targetEl).eq(0);
 
-    if ($el.length === 0 || $targetEl.length === 0) {
+    if ($el.length === 0) {
       return popover.destroy();
     }
 
@@ -50,6 +50,9 @@ class Popover extends Modal {
       $angleEl = $el.find('.popover-angle');
     }
 
+    // Open
+    const originalOpen = popover.open;
+
     Utils.extend(popover, {
       app,
       $el,
@@ -61,6 +64,15 @@ class Popover extends Modal {
       $backdropEl,
       backdropEl: $backdropEl[0],
       type: 'popover',
+      open(...args) {
+        let [targetEl, animate] = args;
+        if (typeof args[0] === 'boolean') [animate, targetEl] = args;
+        if (targetEl) {
+          popover.$targetEl = $(targetEl);
+          popover.targetEl = popover.$targetEl[0];
+        }
+        originalOpen.call(popover, animate);
+      },
     });
 
     function handleResize() {
