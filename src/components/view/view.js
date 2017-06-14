@@ -3,11 +3,7 @@ import View from './view-class';
 export default {
   name: 'view',
   params: {
-    view: {
-      viewClass: 'view',
-      viewMainClass: 'view-main',
-      viewsClass: 'views',
-    },
+    view: {},
   },
   static: {
     View,
