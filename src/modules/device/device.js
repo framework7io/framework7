@@ -5,6 +5,9 @@ export default {
   proto: {
     device: Device,
   },
+  static: {
+    Device,
+  },
   on: {
     init() {
       const classNames = [];

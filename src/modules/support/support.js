@@ -5,4 +5,7 @@ export default {
   proto: {
     support: Support,
   },
+  static: {
+    Support,
+  },
 };
