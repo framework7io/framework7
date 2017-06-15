@@ -147,6 +147,7 @@ const Swipeout = {
         progress = buttonTranslate / actionsRightWidth;
         if (buttonTranslate < -actionsRightWidth) {
           buttonTranslate = -actionsRightWidth - ((-buttonTranslate - actionsRightWidth) ** 0.8);
+          translate = buttonTranslate;
           if ($overswipeRightButton.length > 0) {
             overswipeRight = true;
           }
@@ -178,6 +179,7 @@ const Swipeout = {
         progress = buttonTranslate / actionsLeftWidth;
         if (buttonTranslate > actionsLeftWidth) {
           buttonTranslate = actionsLeftWidth + ((buttonTranslate - actionsLeftWidth) ** 0.8);
+          translate = buttonTranslate;
           if ($overswipeLeftButton.length > 0) {
             overswipeLeft = true;
           }
