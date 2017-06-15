@@ -1,0 +1,101 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .list {
+    input[type="text"],
+    input[type="password"],
+    input[type="search"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="time"],
+    input[type="number"],
+    select {
+      height: 36px;
+      color: #212121;
+      font-size: 16px;
+      &::-webkit-input-placeholder {
+        color: rgba(0,0,0,0.35);
+      }
+    }
+    textarea {
+      color: #212121;
+      font-size: 16px;
+      padding-top: 7px;
+      padding-bottom: 7px;
+      &.resizable {
+        height: 36px;
+      }
+      &::-webkit-input-placeholder {
+        color: rgba(0,0,0,0.35);
+      }
+    }
+  }
+  .item-input-wrap {
+    min-height: 36px;
+    &:after {
+      transition-duration: 200ms;
+    }
+    input + ::after {
+      background: red;
+    }
+  }
+  .hairline-root('.item-input-wrap', bottom, rgba(0, 0, 0, 0.12));
+  .item-label {
+    font-size: 12px;
+    width: 100%;
+    color: rgba(0,0,0,.65);
+    transition-duration: 200ms;
+  }
+  .item-input {
+    .item-media {
+      align-self: flex-end;
+    }
+    .item-inner {
+      display: block;
+      .hairline-remove(bottom);
+    }
+  }
+  .item-input-with-error-message {
+    margin-bottom: 12px;
+  }
+  .item-input-error-message {
+    color: @red;
+    display: none;
+    font-size: 12px;
+    line-height: 1.4;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 16px;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-input-focused-state {
+    .item-label {
+      color: @themeColor;
+    }
+    .item-input-wrap:after {
+      background: @themeColor;
+    }
+  }
+  .item-input-invalid-state {
+    .item-label {
+      color: @red;
+    }
+    .item-input-wrap:after {
+      background: @red;
+    }
+    .item-input-error-message {
+      display: block;
+    }
+  }
+  .item-input-invalid-state, .item-input-focused-state {
+    .item-input-wrap:after {
+      transform: scaleY(2);
+    }
+  }
+}

@@ -38,6 +38,7 @@ import Swipeout from './components/swipeout/swipeout';
 import SmartSelect from './components/smartselect/smartselect';
 import Calendar from './components/calendar/calendar';
 import Picker from './components/picker/picker';
+import Input from './components/input/input';
 import Toggle from './components/toggle/toggle';
 import Range from './components/range/range';
 
@@ -84,6 +85,7 @@ Framework7
   .use(Panel)
   .use(Card)
   .use(Chip)
+  .use(Input)
   .use(Toggle)
   .use(Range);
 

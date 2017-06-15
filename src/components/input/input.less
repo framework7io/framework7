@@ -1,0 +1,52 @@
+/* === Input === */
+.list {
+  input[type="text"],
+  input[type="password"],
+  input[type="search"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  input[type="number"],
+  select,
+  textarea {
+    appearance: none;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    outline: 0;
+    display: block;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    background: none;
+  }
+  input[type="datetime-local"] {
+    max-width: 50vw;
+  }
+  input[type="date"], input[type="datetime-local"] {
+    line-height: 44px;
+  }
+  textarea {
+    resize: none;
+    line-height: 1.4;
+    height: 100px;
+  }
+  .item-label {
+    vertical-align: top;
+    flex-shrink: 0;
+  }
+  .item-input-wrap {
+    width: 100%;
+    flex-shrink: 1;
+    position: relative;
+  }
+}
+
+
+@import url('./input-ios.less');
+@import url('./input-md.less');

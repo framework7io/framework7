@@ -1,0 +1,67 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .list {
+    input[type="text"],
+    input[type="password"],
+    input[type="search"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="time"],
+    input[type="number"],
+    select {
+      height: 44px;
+      color: #000;
+      font-size: 17px;
+    }
+  }
+  textarea {
+    color: #000;
+    font-size: 17px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    &.resizable {
+      height: 44px;
+    }
+  }
+  .item-input {
+    .item-label, .item-media {
+      align-self: flex-start;
+    }
+    .item-label {
+      padding-top: 3px;
+    }
+  }
+  .item-label {
+    width: 35%;
+    + .item-input-wrap {
+      margin-left: 5px;
+    }
+  }
+  .item-input-wrap {
+    margin-top: -8px;
+    margin-bottom: -8px;
+  }
+  .item-input-with-error-message {
+    .item-input-wrap {
+      input, select, textarea {
+        color: @red;
+      }
+    }
+  }
+  .item-input-error-message {
+    color: @red;
+    display: none;
+    font-size: 12px;
+    line-height: 1.4;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .item-input-invalid-state {
+    .item-input-error-message {
+      display: block;
+    }
+  }
+}
