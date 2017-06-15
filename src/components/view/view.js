@@ -1,3 +1,4 @@
+import Utils from '../../utils/utils';
 import View from './view-class';
 
 export default {
@@ -8,12 +9,17 @@ export default {
   static: {
     View,
   },
-  instance: {
-    views: [],
-    addView(el, params) {
-      const app = this;
-      return new View(app, el, params);
-    },
+  create() {
+    const app = this;
+    const views = Utils.extend([], {
+      add(el, params) {
+        return new View(app, el, params);
+      },
+      current() {
+
+      },
+    });
+    Utils.extend(app, { views });
   },
 };
 

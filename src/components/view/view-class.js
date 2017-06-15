@@ -76,10 +76,8 @@ class View extends Framework7Class {
     // Add to app
     app.views.push(view);
     if (view.main) {
-      app.mainView = view;
       app.views.main = view;
     } else if (view.name) {
-      app[`${view.name}View`] = view;
       app.views[view.name] = view;
     }
 
@@ -98,13 +96,9 @@ class View extends Framework7Class {
     let view = this;
     const app = view.app;
     if (view.main) {
-      app.mainView = null;
-      delete app.mainView;
       app.views.main = null;
       delete app.views.main;
     } else if (view.name) {
-      app[`${view.name}View`] = null;
-      delete app[`${view.name}View`];
       app.views[view.name] = null;
       delete app.views[view.name];
     }

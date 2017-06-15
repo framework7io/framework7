@@ -359,7 +359,8 @@
         },
       ],
     });
-    const view = app2.addView('.view-main', {
+    const view = app2.views.add('.view-main', {
+      main: true,
       router: {
         // animateNavBackIcon: 'yes',
         // pushState: true,

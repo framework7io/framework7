@@ -117,7 +117,7 @@ function initClicks(app) {
         }
       }
       if (!view) {
-        if (app.mainView) view = app.mainView;
+        if (app.views.main) view = app.views.main;
       }
       if (!view) return;
       if (clickedLink.hasClass('back')) view.router.back(url, clickedLinkData);
