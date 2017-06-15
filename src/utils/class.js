@@ -8,72 +8,75 @@ class Framework7Class {
     // Events
     self.eventsParents = parents;
     self.eventsListeners = {};
-    self.on = function on(events, handler) {
-      // const self = this;
-      events.split(' ').forEach((event) => {
-        if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
-        self.eventsListeners[event].push(handler);
-      });
-      return self;
-    };
-    self.once = function once(events, handler) {
-      // const self = this;
-      function onceHandler(...args) {
-        handler.apply(self, args);
-        self.off(events, onceHandler);
-      }
-      return self.on(events, onceHandler);
-    };
-    self.off = function off(events, handler) {
-      events.split(' ').forEach((event) => {
-        if (typeof handler === 'undefined') {
-          self.eventsListeners[event] = [];
-        } else {
-          self.eventsListeners[event].forEach((eventHandler, index) => {
-            if (eventHandler === handler) {
-              self.eventsListeners[event].splice(index, 1);
-            }
-          });
-        }
-      });
-      return self;
-    };
-    self.emit = function emit(...args) {
-      let events;
-      let data;
-      let context;
-      let eventsParents;
-      if (typeof args[0] === 'string') {
-        events = args[0];
-        data = args.slice(1, args.length);
-        context = self;
-        eventsParents = self.eventsParents;
-      } else {
-        events = args[0].events;
-        data = args[0].data;
-        context = args[0].context;
-        eventsParents = args[0].parents;
-      }
-      events.split(' ').forEach((event) => {
-        if (self.eventsListeners[event]) {
-          self.eventsListeners[event].forEach((eventHandler) => {
-            eventHandler.apply(context, data);
-          });
-        }
-      });
-      if (eventsParents && eventsParents.length > 0) {
-        eventsParents.forEach((eventsParent) => {
-          eventsParent.emit(events, ...data);
-        });
-      }
-      return self;
-    };
 
     if (self.params && self.params.on) {
       Object.keys(self.params.on).forEach((eventName) => {
         self.on(eventName, self.params.on[eventName]);
       });
     }
+  }
+  on(events, handler) {
+    const self = this;
+    events.split(' ').forEach((event) => {
+      if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
+      self.eventsListeners[event].push(handler);
+    });
+    return self;
+  }
+  once(events, handler) {
+    const self = this;
+    function onceHandler(...args) {
+      handler.apply(self, args);
+      self.off(events, onceHandler);
+    }
+    return self.on(events, onceHandler);
+  }
+  off(events, handler) {
+    const self = this;
+    events.split(' ').forEach((event) => {
+      if (typeof handler === 'undefined') {
+        self.eventsListeners[event] = [];
+      } else {
+        self.eventsListeners[event].forEach((eventHandler, index) => {
+          if (eventHandler === handler) {
+            self.eventsListeners[event].splice(index, 1);
+          }
+        });
+      }
+    });
+    return self;
+  }
+  emit(...args) {
+    const self = this;
+    let events;
+    let data;
+    let context;
+    let eventsParents;
+    if (typeof args[0] === 'string' || Array.isArray(args[0])) {
+      events = args[0];
+      data = args.slice(1, args.length);
+      context = self;
+      eventsParents = self.eventsParents;
+    } else {
+      events = args[0].events;
+      data = args[0].data;
+      context = args[0].context;
+      eventsParents = args[0].parents;
+    }
+    const eventsArray = Array.isArray(events) ? events : events.split(' ');
+    eventsArray.forEach((event) => {
+      if (self.eventsListeners[event]) {
+        self.eventsListeners[event].forEach((eventHandler) => {
+          eventHandler.apply(context, data);
+        });
+      }
+    });
+    if (eventsParents && eventsParents.length > 0) {
+      eventsParents.forEach((eventsParent) => {
+        eventsParent.emit(events, ...data);
+      });
+    }
+    return self;
   }
   useInstanceModulesParams(instanceParams) {
     const instance = this;
