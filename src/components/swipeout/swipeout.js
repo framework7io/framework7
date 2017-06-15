@@ -2,7 +2,8 @@ import $ from 'dom7';
 import Utils from '../../utils/utils';
 
 const Swipeout = {
-  init(app) {
+  init() {
+    const app = this;
     const touchesStart = {};
     let isTouched;
     let isMoved;
@@ -477,6 +478,7 @@ export default {
     const app = this;
     Utils.extend(app, {
       swipeout: {
+        init: Swipeout.init.bind(app),
         open: Swipeout.open.bind(app),
         close: Swipeout.close.bind(app),
         delete: Swipeout.delete.bind(app),
@@ -527,7 +529,7 @@ export default {
   on: {
     init() {
       const app = this;
-      Swipeout.init(app);
+      app.swipeout.init();
     },
   },
 };
