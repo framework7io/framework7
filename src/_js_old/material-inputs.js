@@ -31,7 +31,7 @@ app.initMaterialWatchInputs = function () {
         var type = i.attr('type');
         if (notInputs.indexOf(type) >= 0) return;
         var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
-        els.addClass('focus-state');
+        els.removeClass('not-empty-state').addClass('focus-state');
     }
     function removeFocusState(e) {
         /*jshint validthis:true*/
@@ -41,7 +41,7 @@ app.initMaterialWatchInputs = function () {
         var els = i.add(i.parents('.item-input, .input-field')).add(i.parents('.item-inner').eq(0));
         els.removeClass('focus-state');
         if (value && value.trim() !== '') {
-            els.addClass('not-empty-state');
+            els.removeClass('focus-state').addClass('not-empty-state');
         }
         else {
             els.removeClass('not-empty-state');
