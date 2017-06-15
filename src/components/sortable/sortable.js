@@ -66,11 +66,12 @@ const Sortable = {
       const translate = Math.min(Math.max(touchesDiff + translateScrollOffset, -minTop), maxTop);
       $sortingEl.transform(`translate3d(0,${translate}px,0)`);
 
+      const scrollAddition = 44;
       let allowScroll = true;
-      if ((touchesDiff + translateScrollOffset) + (sortingElHeight * 1) < -minTop) {
+      if ((touchesDiff + translateScrollOffset) + scrollAddition < -minTop) {
         allowScroll = false;
       }
-      if ((touchesDiff + translateScrollOffset) - (sortingElHeight * 1) > maxTop) {
+      if ((touchesDiff + translateScrollOffset) - scrollAddition > maxTop) {
         allowScroll = false;
       }
 
@@ -79,11 +80,13 @@ const Sortable = {
 
       let scrollDiff;
       if (allowScroll) {
-        if (sortingElOffsetTop + touchesDiff + sortingElHeight > pageOffset + pageHeight) {
-          scrollDiff = (sortingElOffsetTop + touchesDiff + sortingElHeight) - (pageOffset + pageHeight);
+        if (sortingElOffsetTop + touchesDiff + sortingElHeight + scrollAddition > pageOffset + pageHeight) {
+          // To Bottom
+          scrollDiff = (sortingElOffsetTop + touchesDiff + sortingElHeight + scrollAddition) - (pageOffset + pageHeight);
         }
-        if (sortingElOffsetTop + touchesDiff < pageOffset) {
-          scrollDiff = (sortingElOffsetTop + touchesDiff) - pageOffset;
+        if (sortingElOffsetTop + touchesDiff < pageOffset + scrollAddition) {
+          // To Top
+          scrollDiff = (sortingElOffsetTop + touchesDiff) - pageOffset - scrollAddition;
         }
         if (scrollDiff) {
           $pageContentEl[0].scrollTop += scrollDiff;
