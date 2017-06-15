@@ -1,52 +1,53 @@
 html, body, .framework7-root {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 body {
-    margin: 0;
-    padding: 0;
-    font-size: 14px;
-    width: 100%;
-    -webkit-text-size-adjust:100%;
-    background: #fff;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  width: 100%;
+  -webkit-text-size-adjust:100%;
+  background: #fff;
+  overflow: hidden;
 }
 .framework7-root {
-    overflow: hidden;
-    box-sizing: border-box;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 // Touch Actions
 /*
-a, button, input, textarea, .link, .button, label {
+a, button, input, textarea, .link, .button, label, .sortable-handler {
   touch-action: manipulation;
   -ms-touch-action: manipulation;
 }
 */
 // Fix for iPad in Safari in Lanscape mode
 @media all and (width:1024px) and (height:691px) and (orientation:landscape) {
-    html, body, .framework7-root {
-        height: 671px;
-    }
+  html, body, .framework7-root {
+    height: 671px;
+  }
 }
 @media all and (width:1024px) and (height:692px) and (orientation:landscape) {
-    html, body, .framework7-root  {
-        height: 672px;
-    }
+  html, body, .framework7-root  {
+    height: 672px;
+  }
 }
 * {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-touch-callout:none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-touch-callout:none;
 }
 a, input, textarea, select {
-    outline: 0;
+  outline: 0;
 }
 a {
-    text-decoration: none;
+  cursor: pointer;
+  text-decoration: none;
 }
 p {
-    margin: 1em 0;
+  margin: 1em 0;
 }
 
 @import url('app-ios.less');

@@ -1,4 +1,16 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
-
+  .sortable-handler {
+    width: 35px;
+  }
+  .sortable {
+    li.sorting {
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.6);
+    }
+  }
+  .sortable-enabled {
+    .item-inner, .item-link .item-inner {
+      padding-right: 35px;
+    }
+  }
 }
