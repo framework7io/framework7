@@ -130,7 +130,7 @@ gulp.task('connect', () => {
 
 gulp.task('open', () => {
   'use strict';
-  gulp.src('./index.html').pipe(gopen({ uri: 'http://localhost:3000/' }));
+  gulp.src('./kitchen-sink/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/' }));
 });
 
 gulp.task('server', ['watch', 'connect', 'open']);
