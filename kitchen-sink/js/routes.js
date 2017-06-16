@@ -50,10 +50,7 @@ var routes = [
   },
 
   // Components
-  {
-    path: '/progressbar/',
-    componentUrl: './progressbar.html',
-  },
+
   {
     path: '/tabs/',
     url: './tabs.html',
@@ -80,8 +77,28 @@ var routes = [
     ],
   },
   {
+    path: '/buttons/',
+    url: './buttons.html',
+  },
+  {
+    path: '/cards/',
+    url: './cards.html',
+  },
+  {
+    path: '/checkbox/',
+    url: './checkbox.html',
+  },
+  {
+    path: '/chips/',
+    url: './chips.html',
+  },
+  {
     path: '/content-block/',
     url: './content-block.html',
+  },
+  {
+    path: '/dialog/',
+    componentUrl: './dialog.html',
   },
   {
     path: '/inputs/',
@@ -92,16 +109,12 @@ var routes = [
     url: './list.html',
   },
   {
-    path: '/cards/',
-    url: './cards.html',
+    path: '/progressbar/',
+    componentUrl: './progressbar.html',
   },
   {
-    path: '/dialog/',
-    componentUrl: './dialog.html',
-  },
-  {
-    path: '/buttons/',
-    url: './buttons.html',
+    path: '/radio/',
+    url: './radio.html',
   },
   {
     path: '/range/',
@@ -135,10 +148,6 @@ var routes = [
     path: '/timeline-horizontal-calendar/',
     url: './timeline-horizontal-calendar.html',
 
-  },
-  {
-    path: '/chips/',
-    url: './chips.html',
   },
 
 

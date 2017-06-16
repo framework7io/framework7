@@ -1,0 +1,46 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .icon-radio {
+    width: 22px;
+    height: 22px;
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+  }
+  .radio .icon-radio {
+    border-radius: 50%;
+    border: 1px solid #c7c7cc;
+  }
+  label.item-radio input[type="radio"] ~ .icon-radio {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -11px;
+  }
+  label.item-radio {
+    .item-inner {
+      padding-right: 35px;
+    }
+  }
+  label.item-radio input[type="radio"]:checked ~ .icon-radio,
+  label.item-radio input[type="radio"]:checked ~ * .icon-radio,
+  .radio input[type="radio"]:checked ~ .icon-radio {
+    background: no-repeat center;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='@{themeColor}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+    background-size: 13px 10px;
+  }
+  .radio input[type="radio"]:checked ~ .icon-radio {
+    border-color: @themeColor;
+  }
+  label.item-radio {
+    .item-content, &.item-content {
+      .item-media {
+        align-self: center;
+      }
+    }
+    &.active-state {
+      transition-duration: 0ms;
+      background-color: #d9d9d9;
+    }
+  }
+}

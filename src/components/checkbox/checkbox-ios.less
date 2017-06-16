@@ -1,0 +1,44 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .icon-checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid #c7c7cc;
+    &:after {
+      left: 50%;
+      top: 50%;
+      margin-left: -6px;
+      margin-top: -4px;
+      width: 12px;
+      height: 9px;
+    }
+  }
+  label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,
+  .checkbox input[type="checkbox"]:checked ~ .icon-checkbox {
+    border: none;
+    background: @themeColor;
+    &:after {
+      background: no-repeat center;
+      .svg-background("<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 12 9' xml:space='preserve'><polygon fill='#ffffff' points='12,0.7 11.3,0 3.9,7.4 0.7,4.2 0,4.9 3.9,8.8 3.9,8.8 3.9,8.8 '/></svg>");
+      background-size: 12px 9px;
+    }
+  }
+  label.item-checkbox {
+    > .icon-checkbox {
+      margin-right: 15px;
+      + .item-media {
+        margin-left: -10px;
+      }
+    }
+    .item-content, &.item-content {
+      .item-media {
+        align-self: center;
+      }
+    }
+    &.active-state {
+      transition-duration: 0ms;
+      background-color: #d9d9d9;
+    }
+  }
+}
