@@ -27,14 +27,14 @@
     }
   }
   .item-input {
-    .item-label, .item-media {
+    .item-title, .item-media {
       align-self: flex-start;
     }
-    .item-label {
+    .item-title {
       padding-top: 3px;
     }
   }
-  .item-label {
+  .item-label, .item-floating-label {
     width: 35%;
     + .item-input-wrap {
       margin-left: 5px;
@@ -51,17 +51,26 @@
       }
     }
   }
-  .item-input-error-message {
-    color: @red;
-    display: none;
+  .item-input-error-message, .item-input-info {
     font-size: 12px;
     line-height: 1.4;
     position: relative;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    margin-top: -8px;
   }
-  .item-input-invalid-state {
+  .item-input-info {
+    color: rgba(0,0,0,0.5);
+  }
+  .item-input-error-message {
+    color: @red;
+    display: none;
+  }
+  .item-input-invalid {
     .item-input-error-message {
       display: block;
+    }
+    .item-input-info {
+      display: none;
     }
   }
 }

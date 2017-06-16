@@ -1,4 +1,13 @@
 /* === Input === */
+.textarea-resizable-shadow {
+  opacity: 0;
+  position: absolute;
+  z-index: -1000;
+  pointer-events: none;
+  left: -1000px;
+  top: -1000px;
+  visibility: hidden;
+}
 .list {
   input[type="text"],
   input[type="password"],
@@ -36,7 +45,7 @@
     line-height: 1.4;
     height: 100px;
   }
-  .item-label {
+  .item-label, .item-floating-label {
     vertical-align: top;
     flex-shrink: 0;
   }

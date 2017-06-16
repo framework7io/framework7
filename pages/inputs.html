@@ -18,7 +18,7 @@
           <div class="item-inner">
             <div class="item-title item-label">Name</div>
             <div class="item-input-wrap">
-              <input type="text" placeholder="Your name" value="Vladimir">
+              <input type="text" placeholder="Your name">
             </div>
           </div>
         </li>
@@ -40,7 +40,7 @@
           <div class="item-inner">
             <div class="item-title item-label">E-mail</div>
             <div class="item-input-wrap">
-              <input type="email" placeholder="Your e-mail" validate>
+              <input type="email" placeholder="Your e-mail">
             </div>
           </div>
         </li>
@@ -122,7 +122,7 @@
           <div class="item-inner">
             <div class="item-title item-label">Textarea</div>
             <div class="item-input-wrap">
-              <textarea placeholder="Bio..."></textarea>
+              <textarea placeholder="Bio"></textarea>
             </div>
           </div>
         </li>
@@ -133,7 +133,335 @@
           <div class="item-inner">
             <div class="item-title item-label">Resizable</div>
             <div class="item-input-wrap">
-              <textarea class="resizable" placeholder="Bio..."></textarea>
+              <textarea class="resizable" placeholder="Bio"></textarea>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block-title">Floating Labels (MD-theme only)</div>
+    <div class="list">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-floating-label">Name</div>
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Your name">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-floating-label">Password</div>
+            <div class="item-input-wrap">
+              <input type="password" placeholder="Your password">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-floating-label">E-mail</div>
+            <div class="item-input-wrap">
+              <input type="email" placeholder="Your e-mail">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-floating-label">URL</div>
+            <div class="item-input-wrap">
+              <input type="url" placeholder="URL">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-floating-label">Phone</div>
+            <div class="item-input-wrap">
+              <input type="tel" placeholder="Your phone number">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Resizable</div>
+            <div class="item-input-wrap">
+              <textarea class="resizable" placeholder="Bio"></textarea>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block-title">Validation + Additional Info</div>
+    <div class="list">
+      <ul>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Name</div>
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Your name" required validate>
+              <div class="item-input-info">Default "required" validation</div>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Fruit</div>
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Type 'apple' or 'banana'" required validate pattern="apple|banana">
+              <div class="item-input-info">Pattern validation (<b>apple|banana</b>)</div>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">E-mail</div>
+            <div class="item-input-wrap">
+              <input type="email" placeholder="Your e-mail" required validate>
+              <div class="item-input-info">Default e-mail validation</div>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">URL</div>
+            <div class="item-input-wrap">
+              <input type="url" placeholder="Your URL" required validate>
+              <div class="item-input-info">Default URL validation</div>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-title item-label">Number</div>
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Enter number" required validate pattern="[0-9]*" data-error-message="Only numbers please!">
+              <div class="item-input-info">With custom error message</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block-title">Icon + Input</div>
+    <div class="list">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Your name">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="password" placeholder="Your password">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="email" placeholder="Your e-mail">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-media">
+            <i class="icon" style="width: 29px; height: 29px; background: red; display: block;"></i>
+          </div>
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="url" placeholder="URL">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block-title">Label + Input</div>
+    <div class="list">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label">Name</div>
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Your name">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label">Password</div>
+            <div class="item-input-wrap">
+              <input type="password" placeholder="Your password">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label">E-mail</div>
+            <div class="item-input-wrap">
+              <input type="email" placeholder="Your e-mail">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label">URL</div>
+            <div class="item-input-wrap">
+              <input type="url" placeholder="URL">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block-title">Only Inputs</div>
+    <div class="list">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Your name">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="password" placeholder="Your password">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="email" placeholder="Your e-mail">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="url" placeholder="URL">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block-title">Inputs + Additional Info</div>
+    <div class="list">
+      <ul>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Your name">
+              <div class="item-input-info">Full name please</div>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="password" placeholder="Your password">
+              <div class="item-input-info">8 characters minimum</div>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="email" placeholder="Your e-mail">
+              <div class="item-input-info">Your work e-mail address</div>
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input item-input-with-info">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="url" placeholder="URL">
+              <div class="item-input-info">Your website URL</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="block-title">Only Inputs Inset</div>
+    <div class="list inset">
+      <ul>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="text" placeholder="Your name">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="password" placeholder="Your password">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="email" placeholder="Your e-mail">
+            </div>
+          </div>
+        </li>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-input-wrap">
+              <input type="url" placeholder="URL">
             </div>
           </div>
         </li>

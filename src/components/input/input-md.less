@@ -42,11 +42,27 @@
     }
   }
   .hairline-root('.item-input-wrap', bottom, rgba(0, 0, 0, 0.12));
-  .item-label {
+  .item-label, .item-floating-label {
     font-size: 12px;
     width: 100%;
     color: rgba(0,0,0,.65);
     transition-duration: 200ms;
+    line-height: 1;
+    transition-property: transform, color;
+  }
+  .item-floating-label {
+    transform-origin: left;
+    transform: scale(16/12) translateY(21px);
+    color: rgba(0,0,0,0.35);
+    width: auto;
+    max-width: 75%;
+    pointer-events: none;
+    ~ .item-input-wrap input::-webkit-input-placeholder {
+      color: transparent;
+    }
+  }
+  .item-input-with-value .item-floating-label, .item-input-focused .item-floating-label {
+    transform: scale(1) translateY(0);
   }
   .item-input {
     .item-media {
@@ -57,12 +73,10 @@
       .hairline-remove(bottom);
     }
   }
-  .item-input-with-error-message {
-    margin-bottom: 12px;
+  .item-input-with-error-message, .item-input-with-info {
+    padding-bottom: 20px;
   }
-  .item-input-error-message {
-    color: @red;
-    display: none;
+  .item-input-error-message, .item-input-info {
     font-size: 12px;
     line-height: 1.4;
     position: absolute;
@@ -73,17 +87,25 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
   }
-  .item-input-focused-state {
-    .item-label {
+  .item-input-info {
+    color: rgba(0,0,0,.45);
+  }
+  .item-input-error-message {
+    color: @red;
+    display: none;
+  }
+  .item-input-focused {
+    .item-title {
       color: @themeColor;
     }
     .item-input-wrap:after {
       background: @themeColor;
     }
   }
-  .item-input-invalid-state {
-    .item-label {
+  .item-input-invalid {
+    .item-title {
       color: @red;
     }
     .item-input-wrap:after {
@@ -92,8 +114,11 @@
     .item-input-error-message {
       display: block;
     }
+    .item-input-info {
+      display: none;
+    }
   }
-  .item-input-invalid-state, .item-input-focused-state {
+  .item-input-invalid, .item-input-focused {
     .item-input-wrap:after {
       transform: scaleY(2);
     }
