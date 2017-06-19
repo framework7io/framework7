@@ -170,6 +170,21 @@ export default {
       const app = this;
       app.input.init();
     },
+    tabAttached(tabEl) {
+      const app = this;
+      const $tabEl = $(tabEl);
+      $tabEl.find('.item-input').each((itemInputIndex, itemInputEl) => {
+        const $itemInputEl = $(itemInputEl);
+        $itemInputEl.find('input, select, textarea').each((inputIndex, inputEl) => {
+          const $inputEl = $(inputEl);
+          if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) return;
+          app.input.checkEmptyState($inputEl);
+        });
+      });
+      $tabEl.find('textarea.resizable').each((textareaIndex, textareaEl) => {
+        app.input.resizeTextarea(textareaEl);
+      });
+    },
     pageInit(page) {
       const app = this;
       const $pageEl = page.$el;

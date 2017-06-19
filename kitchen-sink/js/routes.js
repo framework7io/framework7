@@ -105,6 +105,10 @@ var routes = [
     componentUrl: './dialog.html',
   },
   {
+    path: '/infinite/',
+    componentUrl: './infinite.html',
+  },
+  {
     path: '/inputs/',
     url: './inputs.html',
   },

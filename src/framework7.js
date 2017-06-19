@@ -43,6 +43,7 @@ import Picker from './components/picker/picker';
 import Input from './components/input/input';
 import Toggle from './components/toggle/toggle';
 import Range from './components/range/range';
+import Infinite from './components/infinite/infinite';
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -91,6 +92,7 @@ Framework7
   .use(Chip)
   .use(Input)
   .use(Toggle)
-  .use(Range);
+  .use(Range)
+  .use(Infinite);
 
 export default Framework7;
