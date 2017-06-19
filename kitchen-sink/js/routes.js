@@ -77,6 +77,10 @@ var routes = [
     ],
   },
   {
+    path: '/accordion/',
+    url: './accordion.html',
+  },
+  {
     path: '/buttons/',
     url: './buttons.html',
   },

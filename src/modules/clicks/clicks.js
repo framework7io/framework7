@@ -81,14 +81,6 @@ function initClicks(app) {
       app.sortableClose(clickedData.sortable);
     }
 
-    // Accordion
-    if (clicked.hasClass('accordion-item-toggle') || (clicked.hasClass('item-link') && clicked.parent().hasClass('accordion-item'))) {
-      let accordionItem = clicked.parent('.accordion-item');
-      if (accordionItem.length === 0) accordionItem = clicked.parents('.accordion-item');
-      if (accordionItem.length === 0) accordionItem = clicked.parents('li');
-      app.accordionToggle(accordionItem);
-    }
-
     // Speed Dial
     if (clicked.hasClass('floating-button') && clicked.parent().hasClass('speed-dial')) {
       clicked.parent().toggleClass('speed-dial-opened');

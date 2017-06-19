@@ -36,6 +36,7 @@ import Card from './components/card/card';
 import Chip from './components/chip/chip';
 import Sortable from './components/sortable/sortable';
 import Swipeout from './components/swipeout/swipeout';
+import Accordion from './components/accordion/accordion';
 import SmartSelect from './components/smartselect/smartselect';
 import Calendar from './components/calendar/calendar';
 import Picker from './components/picker/picker';
@@ -81,6 +82,7 @@ Framework7
   .use(Tabs)
   .use(Sortable)
   .use(Swipeout)
+  .use(Accordion)
   .use(SmartSelect)
   .use(Calendar)
   .use(Picker)
