@@ -102,12 +102,12 @@ class Router extends Framework7Class {
     (direction === 'forward' ? newPage : oldPage).animationEnd(() => {
       if (router.dynamicNavbar) {
         if (newNavbarInner.hasClass('sliding')) {
-          newNavbarInner.find('.title, .left, .right, .left .icon').transform('');
+          newNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
         } else {
           newNavbarInner.find('.sliding').transform('');
         }
         if (oldNavbarInner.hasClass('sliding')) {
-          oldNavbarInner.find('.title, .left, .right, .left .icon').transform('');
+          oldNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
         } else {
           oldNavbarInner.find('.sliding').transform('');
         }
@@ -224,11 +224,12 @@ class Router extends Framework7Class {
 
     function animatableNavEl(el, navbarInner) {
       const $el = $(el);
-      const sliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
-      const hasIcon = sliding && animateIcon && $el.hasClass('left') && $el.find('.back .icon').length > 0;
+      const isSliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
+      const needsOpacityTransition = isSliding ? !$el.hasClass('subnavbar') : true;
+      const hasIcon = isSliding && animateIcon && $el.hasClass('left') && $el.find('.back .icon').length > 0;
       let $iconEl;
       if (hasIcon) $iconEl = $el.find('.back .icon');
-      if (sliding && navbarInner === oldNavbarInner && $el.hasClass('title') && newNavEls) {
+      if (isSliding && navbarInner === oldNavbarInner && $el.hasClass('title') && newNavEls) {
         newNavEls.forEach((newNavEl) => {
           if (newNavEl.$el.hasClass('left') && newNavEl.hasIcon) {
             const iconTextEl = newNavEl.$el.find('.back span')[0];
@@ -242,7 +243,8 @@ class Router extends Framework7Class {
         hasIcon,
         leftOffset: $el[0].f7NavbarLeftOffset,
         rightOffset: $el[0].f7NavbarRightOffset,
-        sliding,
+        isSliding,
+        needsOpacityTransition,
       };
     }
     if (dynamicNavbar) {
@@ -301,8 +303,10 @@ class Router extends Framework7Class {
           newNavEls.forEach((navEl) => {
             const $el = navEl.$el;
             const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
-            $el[0].style.opacity = easeProgress;
-            if (navEl.sliding) {
+            if (navEl.needsOpacityTransition) {
+              $el[0].style.opacity = easeProgress;
+            }
+            if (navEl.isSliding) {
               $el.transform(`translate3d(${offset * (1 - easeProgress)}px,0,0)`);
             }
             if (navEl.hasIcon) {
@@ -316,8 +320,10 @@ class Router extends Framework7Class {
           oldNavEls.forEach((navEl) => {
             const $el = navEl.$el;
             const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
-            $el[0].style.opacity = (1 - easeProgress);
-            if (navEl.sliding) {
+            if (navEl.needsOpacityTransition) {
+              $el[0].style.opacity = (1 - easeProgress);
+            }
+            if (navEl.isSliding) {
               $el.transform(`translate3d(${offset * (easeProgress)}px,0,0)`);
             }
             if (navEl.hasIcon) {

@@ -1,0 +1,79 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @navbarSize: 44px;
+  @navbarBg: @barsBg;
+  @navbarBgBlured: rgba(248,248,249, 0.85);
+  @navbarBorderColor: @barsBorderColor;
+  @navbarLinksColor: @themeColor;
+  @duration: 400ms;
+  .subnavbar {
+    height: 45px;
+    margin-top: -1px;
+    padding-top: 1px;
+    background: @barsBg;
+    &.no-hairline {
+      .hairline-remove(bottom);
+    }
+    .title {
+      font-weight: 600;
+      line-height: 44px;
+      font-size: 17px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      flex-shrink: 10;
+    }
+    .left, .right {
+      a + a {
+        margin-left: 15px;
+      }
+    }
+    .left {
+      margin-right: 10px;
+    }
+    .right {
+      margin-left: 10px;
+    }
+    .right:first-child {
+      right: 8px;
+    }
+
+    a.link {
+      line-height: 44px;
+      height: 44px;
+      justify-content: flex-start;
+    }
+    a.icon-only {
+      min-width: 44px;
+      justify-content: center;
+      margin: 0;
+    }
+  }
+  .hairline-root('.subnavbar', bottom, @barsBorderColor);
+
+  .subnavbar-inner {
+    padding: 0 8px;
+  }
+
+  // Relation with page
+  .navbar ~ .page-with-subnavbar .subnavbar,
+  .navbar ~ .subnavbar
+  {
+    top: 44px;
+  }
+
+  .page-with-subnavbar .page-content,
+  .subnavbar ~ .page-content,
+  .subnavbar ~ * .page-content
+  {
+    padding-top: 44px;
+  }
+
+  .navbar ~ .page-with-subnavbar .page-content,
+  .page-with-subnavbar .navbar ~ .page-content,
+  .navbar ~ * .subnavbar ~ .page-content,
+  .navbar ~ * .subnavbar ~ * .page-content
+  {
+    padding-top: 88px;
+  }
+}

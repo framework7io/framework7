@@ -18,6 +18,7 @@ import Statusbar from './components/statusbar/statusbar';
 import View from './components/view/view';
 import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
+import Subnavbar from './components/subnavbar/subnavbar';
 import Preloader from './components/preloader/preloader';
 import Progressbar from './components/progressbar/progressbar';
 import Modal from './components/modal/modal';
@@ -65,6 +66,7 @@ Framework7
   .use(View)
   .use(Navbar)
   .use(Toolbar)
+  .use(Subnavbar)
   .use(Preloader)
   .use(Progressbar)
   // Modals
