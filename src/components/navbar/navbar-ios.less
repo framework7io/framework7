@@ -10,7 +10,7 @@
     height: @navbarSize;
     font-size: 17px;
     background: @navbarBg;
-    &.no-border {
+    &.no-hairline {
       .hairline-remove(bottom);
     }
     &:after {
@@ -70,9 +70,9 @@
     .sliding {
       opacity: 0;
     }
-    .subnavbar.sliding {
+    .subnavbar.sliding, &.sliding .subnavbar {
       opacity: 1;
-      trasnform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
     }
   }
   .navbar-next {
@@ -88,7 +88,8 @@
       }
     }
     .subnavbar.sliding, &.sliding .subnavbar {
-      trasnform: translate3d(100%, 0, 0);
+      opacity: 1;
+      transform: translate3d(100%, 0, 0);
     }
   }
 
@@ -113,11 +114,15 @@
       &.sliding .left,
       &.sliding .left .icon,
       &.sliding .title,
-      &.sliding .right,
-      &.sliding .subnavbar {
+      &.sliding .right {
         transition-duration: @duration;
         opacity: 0 !important;
         animation: none;
+      }
+      &.sliding .subnavbar, .sliding.subnavbar {
+        transition-duration: @duration;
+        animation: none;
+        opacity: 1;
       }
     }
   }
