@@ -42,45 +42,6 @@ function initClicks(app) {
     }
 
 
-    // Swipeout Close
-    if (clicked.hasClass('swipeout-close')) {
-      app.swipeoutClose(clicked.parents('.swipeout-opened'));
-    }
-
-    // Swipeout Delete
-    if (clicked.hasClass('swipeout-delete')) {
-      if (clickedData.confirm) {
-        const text = clickedData.confirm;
-        const title = clickedData.confirmTitle;
-        if (title) {
-          app.confirm(text, title, () => {
-            app.swipeoutDelete(clicked.parents('.swipeout'));
-          }, () => {
-            if (clickedData.closeOnCancel) app.swipeoutClose(clicked.parents('.swipeout'));
-          });
-        } else {
-          app.confirm(text, () => {
-            app.swipeoutDelete(clicked.parents('.swipeout'));
-          }, () => {
-            if (clickedData.closeOnCancel) app.swipeoutClose(clicked.parents('.swipeout'));
-          });
-        }
-      } else {
-        app.swipeoutDelete(clicked.parents('.swipeout'));
-      }
-    }
-
-    // Sortable
-    if (clicked.hasClass('toggle-sortable')) {
-      app.sortableToggle(clickedData.sortable);
-    }
-    if (clicked.hasClass('open-sortable')) {
-      app.sortableOpen(clickedData.sortable);
-    }
-    if (clicked.hasClass('close-sortable')) {
-      app.sortableClose(clickedData.sortable);
-    }
-
     // Speed Dial
     if (clicked.hasClass('floating-button') && clicked.parent().hasClass('speed-dial')) {
       clicked.parent().toggleClass('speed-dial-opened');
