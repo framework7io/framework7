@@ -3,20 +3,34 @@ import Utils from '../../utils/utils';
 
 const Input = {
   ignoreTypes: ['checkbox', 'button', 'submit', 'range', 'radio', 'image'],
+  createTextareaResizableShadow() {
+    const $shadowEl = $(document.createElement('textarea'));
+    $shadowEl.addClass('textarea-resizable-shadow');
+    $shadowEl.prop({
+      disabled: true,
+      readonly: true,
+    });
+    Input.textareaResizableShadow = $shadowEl;
+  },
   textareaResizableShadow: undefined,
   resizeTextarea(textareaEl) {
     const app = this;
     const $textareaEl = $(textareaEl);
+    if (!Input.textareaResizableShadow) {
+      Input.createTextareaResizableShadow();
+    }
     const $shadowEl = Input.textareaResizableShadow;
     if (!$textareaEl.length) return;
     if (!$textareaEl.hasClass('resizable')) return;
-
-    app.root.append($shadowEl);
+    if (Input.textareaResizableShadow.parents().length === 0) {
+      app.root.append($shadowEl);
+    }
 
     const styles = window.getComputedStyle($textareaEl[0]);
     ('padding margin width font border box-sizing display').split(' ').forEach((style) => {
       $shadowEl.css(style, styles[style]);
     });
+    const currentHeight = $textareaEl[0].offsetHeight;
 
     $shadowEl.val('');
     const initialHeight = $shadowEl[0].scrollHeight;
@@ -24,13 +38,13 @@ const Input = {
     $shadowEl.val($textareaEl.val());
     $shadowEl.css('height', 0);
     const scrollHeight = $shadowEl[0].scrollHeight;
-
-    if (scrollHeight > initialHeight) {
-      $textareaEl.css('height', `${scrollHeight}px`);
-    } else {
-      $textareaEl.css('height', '');
+    if (currentHeight !== scrollHeight) {
+      if (scrollHeight > initialHeight) {
+        $textareaEl.css('height', `${scrollHeight}px`);
+      } else {
+        $textareaEl.css('height', '');
+      }
     }
-    $shadowEl.remove();
   },
   validate(inputEl) {
     const $inputEl = $(inputEl);
@@ -86,15 +100,20 @@ const Input = {
   },
   init() {
     const app = this;
-    Input.textareaResizableShadow = $(document.createElement('textarea')).addClass('textarea-resizable-shadow');
+    Input.createTextareaResizableShadow();
     function onFocus() {
       app.input.focus(this);
     }
     function onBlur() {
       const $inputEl = $(this);
+      const tag = $inputEl[0].nodeName.toLowerCase();
       app.input.blur($inputEl);
       if ($inputEl.dataset().validate || $inputEl.attr('validate') !== null) {
         app.input.validate($inputEl);
+      }
+      // Resize textarea
+      if (tag === 'textarea' && $inputEl.hasClass('resizable')) {
+        if (Input.textareaResizableShadow) Input.textareaResizableShadow.remove();
       }
     }
     function onChange() {
