@@ -43,7 +43,8 @@ import Picker from './components/picker/picker';
 import Input from './components/input/input';
 import Toggle from './components/toggle/toggle';
 import Range from './components/range/range';
-import Infinite from './components/infinite/infinite';
+import InfiniteScroll from './components/infinite-scroll/infinite-scroll';
+import PullToRefresh from './components/pull-to-refresh/pull-to-refresh';
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -93,6 +94,7 @@ Framework7
   .use(Input)
   .use(Toggle)
   .use(Range)
-  .use(Infinite);
+  .use(InfiniteScroll)
+  .use(PullToRefresh);
 
 export default Framework7;
