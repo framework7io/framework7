@@ -29,7 +29,7 @@ export default {
     Toggle,
   },
   on: {
-    tabAttached(tabEl) {
+    tabMounted(tabEl) {
       $(tabEl).find('label.toggle').each((index, toggleEl) => {
         if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
       });

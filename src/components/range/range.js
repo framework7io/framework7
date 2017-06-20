@@ -39,7 +39,7 @@ export default {
     Range,
   },
   on: {
-    tabAttached(tabEl) {
+    tabMounted(tabEl) {
       $(tabEl).find('.range-slider-init').each((index, rangeEl) => {
         if (rangeEl.f7Range) rangeEl.f7Range.destroy();
       });

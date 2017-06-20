@@ -132,7 +132,7 @@ function backward(el, backwardOptions) {
       $newNavbarInner.insertBefore($oldNavbarInner);
     }
     if (!newPageInDom) {
-      router.pageCallback('attached', $newPage, $newNavbarInner, 'previous', 'current', options);
+      router.pageCallback('mounted', $newPage, $newNavbarInner, 'previous', 'current', options);
     }
   }
 

@@ -780,7 +780,7 @@ class Router extends Framework7Class {
         });
       }
     }
-    if (callback === 'attached') {
+    if (callback === 'mounted') {
       attachEvents();
     }
     if (callback === 'init') {

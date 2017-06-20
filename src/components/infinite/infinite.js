@@ -60,7 +60,7 @@ export default {
     });
   },
   on: {
-    tabAttached(tabEl) {
+    tabMounted(tabEl) {
       const app = this;
       const $tabEl = $(tabEl);
       $tabEl.find('.infinite-content').each((index, el) => {

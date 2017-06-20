@@ -46,8 +46,8 @@ function loadTab(tabRoute, loadOptions = {}) {
         tabChild.f7Component.mount();
       }
     });
-    $newTabEl.trigger('tabInit tab:init tabAttached tab:attached', tabRoute);
-    router.emit('tabInit tab:init tabAttached tab:attached', $newTabEl[0], tabRoute);
+    $newTabEl.trigger('tabInit tab:init tabMounted tab:mounted', tabRoute);
+    router.emit('tabInit tab:init tabMounted tab:mounted', $newTabEl[0], tabRoute);
     if ($oldTabEl) {
       router.removeTab($oldTabEl, $newTabEl, tabRoute);
     }

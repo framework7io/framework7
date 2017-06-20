@@ -170,7 +170,7 @@ export default {
       const app = this;
       app.input.init();
     },
-    tabAttached(tabEl) {
+    tabMounted(tabEl) {
       const app = this;
       const $tabEl = $(tabEl);
       $tabEl.find('.item-input').each((itemInputIndex, itemInputEl) => {

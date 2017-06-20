@@ -186,7 +186,7 @@ function forward(el, forwardOptions = {}) {
     }
   }
   if (!newPageInDom) {
-    router.pageCallback('attached', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
+    router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
   }
 
   // Remove old page
