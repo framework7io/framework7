@@ -5,7 +5,7 @@ import Support from '../../utils/support';
 
 class Toggle extends Framework7Class {
   constructor(app, params = {}) {
-    super();
+    super(params, [app]);
     const toggle = this;
 
     const defaults = {};
