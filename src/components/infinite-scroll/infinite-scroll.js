@@ -13,7 +13,7 @@ const InfiniteScroll = {
     const virtualListContainer = $el.find('.virtual-list');
     let virtualList;
 
-    const onTop = $el.hasClass('infinite-top');
+    const onTop = $el.hasClass('infinite-scroll-top');
     if (!distance) distance = 50;
     if (typeof distance === 'string' && distance.indexOf('%') >= 0) {
       distance = (parseInt(distance, 10) / 100) * height;
@@ -22,7 +22,7 @@ const InfiniteScroll = {
     if (onTop) {
       if (scrollTop < distance) {
         $el.trigger('infinite', e);
-        app.emit('infintie', $el[0], e);
+        app.emit('infinite', $el[0], e);
       }
     } else if (scrollTop + height >= scrollHeight - distance) {
       if (virtualListContainer.length > 0) {
@@ -32,17 +32,17 @@ const InfiniteScroll = {
         }
       }
       $el.trigger('infinite', e);
-      app.emit('infintie', $el[0], e);
+      app.emit('infinite', $el[0], e);
     }
   },
-  attach(el) {
+  create(el) {
     const $el = $(el);
     const app = this;
     $el.on('scroll', function handle(e) {
       app.infiniteScroll.handle(this, e);
     });
   },
-  detach(el) {
+  destroy(el) {
     const $el = $(el);
     $el.off('scroll');
   },
@@ -54,8 +54,8 @@ export default {
     Utils.extend(app, {
       infiniteScroll: {
         handle: InfiniteScroll.handleScroll.bind(app),
-        attach: InfiniteScroll.attach.bind(app),
-        detach: InfiniteScroll.detach.bind(app),
+        create: InfiniteScroll.create.bind(app),
+        destroy: InfiniteScroll.destroy.bind(app),
       },
     });
   },
@@ -64,26 +64,26 @@ export default {
       const app = this;
       const $tabEl = $(tabEl);
       $tabEl.find('.infinite-scroll-content').each((index, el) => {
-        app.infiniteScroll.attach(el);
+        app.infiniteScroll.create(el);
       });
     },
     tabBeforeRemove(tabEl) {
       const $tabEl = $(tabEl);
       const app = this;
       $tabEl.find('.infinite-scroll-content').each((index, el) => {
-        app.infiniteScroll.detach(el);
+        app.infiniteScroll.destroy(el);
       });
     },
     pageInit(page) {
       const app = this;
       page.$el.find('.infinite-scroll-content').each((index, el) => {
-        app.infiniteScroll.attach(el);
+        app.infiniteScroll.create(el);
       });
     },
     pageBeforeRemove(page) {
       const app = this;
       page.$el.find('.infinite-scroll-content').each((index, el) => {
-        app.infiniteScroll.detach(el);
+        app.infiniteScroll.destroy(el);
       });
     },
   },
