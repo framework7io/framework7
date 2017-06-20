@@ -121,6 +121,10 @@ var routes = [
     componentUrl: './progressbar.html',
   },
   {
+    path: '/pull-to-refresh/',
+    componentUrl: './ptr.html',
+  },
+  {
     path: '/radio/',
     url: './radio.html',
   },
