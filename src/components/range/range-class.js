@@ -5,7 +5,7 @@ import Support from '../../utils/support';
 
 class Range extends Framework7Class {
   constructor(app, params) {
-    super(params);
+    super(params, [app]);
     const range = this;
     const defaults = {
       dual: false,
