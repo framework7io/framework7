@@ -34,6 +34,7 @@
           <li>Item 20</li>
         </ul>
       </div>
+      <div class="preloader infinite-preloader"></div>
     </div>
   </div>
 </template>
@@ -49,9 +50,14 @@
       loadMore: function () {
         var self = this;
         var $ = self.$$;
-        if (!self.allowInfinite || self.lastItem >= 200) return;
+        if (!self.allowInfinite) return;
         self.allowInfinite = false;
+
         setTimeout(function () {
+          if (self.lastItem >= 200) {
+            $(self.$el).find('.preloader').remove();
+            return;
+          }
           var html = '';
 
           for (var i = 1; i <= 20; i++) {
