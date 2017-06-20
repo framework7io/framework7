@@ -82,14 +82,15 @@ class Framework7Component {
             el: element,
             name,
             once,
-            handler: (e) => {
+            handler: (...args) => {
+              const e = args[0];
               if (stop) e.stopPropagation();
               if (prevent) e.preventDefault();
               let methodName;
               let method;
-              const args = [];
+              let customArgs = [];
               if (value.indexOf('(') < 0) {
-                args.push(e);
+                customArgs = args;
                 methodName = value;
               } else {
                 methodName = value.split('(')[0];
@@ -108,7 +109,7 @@ class Framework7Component {
                   } else {
                     arg = context[arg];
                   }
-                  args.push(arg);
+                  customArgs.push(arg);
                 });
               }
               if (methodName.indexOf('.') >= 0) {
@@ -125,7 +126,7 @@ class Framework7Component {
                 }
                 method = context[methodName];
               }
-              method(...args);
+              method(...customArgs);
             },
           });
         }
