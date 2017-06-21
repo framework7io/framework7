@@ -278,6 +278,31 @@ class Router extends Framework7Class {
     }
     const easing = Utils.bezier(0.25, 0.1, 0.25, 1);
 
+    function onDone() {
+      newPage.transform('').css('opacity', '');
+      oldPage.transform('').css('opacity', '');
+      if (ios) {
+        $shadowEl.remove();
+        $opacityEl.remove();
+        if (dynamicNavbar) {
+          newNavEls.forEach((navEl) => {
+            navEl.$el.transform('');
+            navEl.$el.css('opacity', '');
+          });
+          oldNavEls.forEach((navEl) => {
+            navEl.$el.transform('');
+            navEl.$el.css('opacity', '');
+          });
+          newNavEls = [];
+          oldNavEls = [];
+        }
+      }
+
+      router.$el.removeClass(routerTransitionClass);
+
+      if (callback) callback();
+    }
+
     function render() {
       const time = Utils.now();
       if (!startTime) startTime = time;
@@ -346,31 +371,14 @@ class Router extends Framework7Class {
       }
 
       if (done) {
-        newPage.transform('').css('opacity', '');
-        oldPage.transform('').css('opacity', '');
-        if (ios) {
-          $shadowEl.remove();
-          $opacityEl.remove();
-          newNavEls.forEach((navEl) => {
-            navEl.$el.transform('');
-            navEl.$el.css('opacity', '');
-          });
-          oldNavEls.forEach((navEl) => {
-            navEl.$el.transform('');
-            navEl.$el.css('opacity', '');
-          });
-          newNavEls = [];
-          oldNavEls = [];
-        }
-
-        router.$el.removeClass(routerTransitionClass);
-
-        if (callback) callback();
+        onDone();
         return;
       }
       Utils.nextFrame(render);
     }
+
     router.$el.addClass(routerTransitionClass);
+
     Utils.nextFrame(render);
   }
   animate(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
