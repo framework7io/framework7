@@ -42,7 +42,7 @@ html.with-statusbar {
 
 .login-screen-content {
   background: #fff;
-  .login-screen-title, .list, .block, .list-footer {
+  .login-screen-title, .list, .block, .block-footer, .block-header {
     max-width: 480px;
   }
   .list ul {
@@ -50,8 +50,10 @@ html.with-statusbar {
     .hairline-remove(bottom);
     background: none;
   }
-  .list-footer {
+  .block-footer, .block-header {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 .login-screen-title {

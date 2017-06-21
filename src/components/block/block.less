@@ -28,6 +28,28 @@
   .hairline-remove(top);
   .hairline-remove(bottom);
 }
+.block-footer, .block-header {
+  font-size: 14px;
+  ul, p, h1, h2, h3, h4 {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:first-child:last-child {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+.block-header {
+  margin-bottom: 10px;
+}
+.block-footer {
+  margin-top: 10px;
+}
+
 @media all and (min-width:768px) {
   .block-strong.tablet-inset {
     .hairline-remove(top);

@@ -10,7 +10,7 @@
     padding-top: 16px;
     line-height: 16px;
     font-weight: 500;
-    + .list, + .block, + .card, + .timeline {
+    + .list, + .block, + .card, + .timeline, + .block-header {
       margin-top: 0px;
     }
   }
@@ -26,6 +26,40 @@
   }
   .block-strong.inset {
     border-radius: 4px;
+  }
+  // Header/Footer
+  .block-header, .block-footer {
+    padding: 0 16px;
+    color: rgba(0,0,0,0.54);
+  }
+  .block {
+    .block-header, .block-footer {
+      padding: 0;
+    }
+  }
+  .block-header {
+    margin-top: 32px;
+    + .list, + .block, + .card, + .timeline {
+      margin-top: 10px;
+    }
+  }
+  .block-footer {
+    margin-bottom: 32px;
+  }
+  .list, .block, .card, .timeline {
+    .block-header {
+      margin-top: 0;
+    }
+    .block-footer {
+      margin-bottom: 0;
+    }
+    + .block-footer {
+      margin-top: -22px;
+    }
+  }
+  .block + .block-footer {
+    margin-top: -22px;
+    margin-bottom: 32px;
   }
   @media all and (min-width:768px) {
     .block.tablet-inset {

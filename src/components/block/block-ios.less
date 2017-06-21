@@ -10,7 +10,7 @@
     text-transform: uppercase;
     color: #6d6d72;
     margin: 35px 15px 10px;
-    + .list, + .block, + .card, + .timeline {
+    + .list, + .block, + .card, + .timeline, + .block-header {
       margin-top: 10px;
     }
   }
@@ -27,6 +27,41 @@
   }
   .block-strong-inset {
     border-radius: 7px;
+  }
+
+  // Header/Footer
+  .block-header, .block-footer {
+    padding: 0 15px;
+    color: #8f8f94;
+  }
+  .block {
+    .block-header, .block-footer {
+      padding: 0;
+    }
+  }
+  .block-header {
+    margin-top: 35px;
+    + .list, + .block, + .card, + .timeline {
+      margin-top: 10px;
+    }
+  }
+  .block-footer {
+    margin-bottom: 35px;
+  }
+  .list, .block, .card, .timeline {
+    .block-header {
+      margin-top: 0;
+    }
+    .block-footer {
+      margin-bottom: 0;
+    }
+    + .block-footer {
+      margin-top: -25px;
+    }
+  }
+  .block + .block-footer {
+    margin-top: -25px;
+    margin-bottom: 35px;
   }
   @media all and (min-width:768px) {
     .block.tablet-inset {
