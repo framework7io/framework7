@@ -95,6 +95,7 @@ class VirtualList extends Framework7Class {
     const handleResizeBound = vl.handleResize.bind(vl);
     vl.attachEvents = function attachEvents() {
       vl.$pageContentEl.on('scroll', handleScrollBound);
+      vl.$el.parents('.page').eq(0).on('page:reinit', handleResizeBound);
       vl.$el.parents('.tab').eq(0).on('tab:show', handleResizeBound);
       vl.$el.parents('.panel').eq(0).on('panel:open', handleResizeBound);
       vl.$el.parents('.popup').eq(0).on('popup:open', handleResizeBound);
@@ -102,6 +103,7 @@ class VirtualList extends Framework7Class {
     };
     vl.detachEvents = function attachEvents() {
       vl.$pageContentEl.off('scroll', handleScrollBound);
+      vl.$el.parents('.page').eq(0).off('page:reinit', handleResizeBound);
       vl.$el.parents('.tab').eq(0).off('tab:show', handleResizeBound);
       vl.$el.parents('.panel').eq(0).off('panel:open', handleResizeBound);
       vl.$el.parents('.popup').eq(0).off('popup:open', handleResizeBound);
