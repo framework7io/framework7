@@ -44,21 +44,10 @@ var app = new Framework7({
     //   console.log('app init');
     // },
   },
-
-  router: {
-    // allowDuplicateUrls: true,
-    // pushState: true,
-    // stackPages: true,
-
-  },
   routes: routes,
 });
 
 var view = app.views.add('.view-main', {
   main: true,
-  router: {
-    url: '/',
-    // animateNavBackIcon: 'yes',
-    // pushState: true,
-  },
+  url: '/',
 });

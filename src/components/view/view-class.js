@@ -22,9 +22,6 @@ class View extends Framework7Class {
     // Default View params
     view.params = Utils.extend(defaults, app.params.view, viewParams);
 
-    // Router Params
-    view.params.router = Utils.extend({}, app.params.router, view.params.router);
-
     // Routes
     if (view.params.routes.length > 0) {
       view.routes = view.params.routes;
@@ -42,7 +39,7 @@ class View extends Framework7Class {
 
     // DynamicNavbar
     let $navbarEl;
-    if (app.theme === 'ios' && view.params.router.iosDynamicNavbar && view.params.router.iosSeparateDynamicNavbar) {
+    if (app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar) {
       $navbarEl = $el.children('.navbar').eq(0);
       if ($navbarEl.length === 0) {
         $navbarEl = $('<div class="navbar"></div>');

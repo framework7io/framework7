@@ -21,7 +21,7 @@ class Router extends Framework7Class {
       // App Router
       Utils.extend(router, {
         app,
-        params: app.params.router,
+        params: app.params.view,
         routes: app.routes || [],
         cache: app.cache,
       });
@@ -30,15 +30,15 @@ class Router extends Framework7Class {
       Utils.extend(router, {
         app,
         view,
-        params: view.params.router,
+        params: view.params,
         routes: view.routes || [],
         $el: view.$el,
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
         history: view.history,
         cache: app.cache,
-        dynamicNavbar: app.theme === 'ios' && view.params.router.iosDynamicNavbar,
-        separateNavbar: app.theme === 'ios' && view.params.router.iosDynamicNavbar && view.params.router.iosSeparateDynamicNavbar,
+        dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
+        separateNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar,
         initialPages: [],
         initialNavbars: [],
       });
