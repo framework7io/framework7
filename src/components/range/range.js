@@ -40,15 +40,15 @@ export default {
   },
   on: {
     tabMounted(tabEl) {
-      $(tabEl).find('.range-slider-init').each((index, rangeEl) => {
-        if (rangeEl.f7Range) rangeEl.f7Range.destroy();
-      });
-    },
-    tabBeforeRemove(tabEl) {
       const app = this;
       $(tabEl).find('.range-slider-init').each((index, rangeEl) => new Range(app, {
         el: rangeEl,
       }));
+    },
+    tabBeforeRemove(tabEl) {
+      $(tabEl).find('.range-slider-init').each((index, rangeEl) => {
+        if (rangeEl.f7Range) rangeEl.f7Range.destroy();
+      });
     },
     pageInit(page) {
       const app = this;

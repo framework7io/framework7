@@ -30,13 +30,13 @@ export default {
   },
   on: {
     tabMounted(tabEl) {
+      const app = this;
+      $(tabEl).find('label.toggle').each((index, toggleEl) => new Toggle(app, { el: toggleEl }));
+    },
+    tabBeforeRemove(tabEl) {
       $(tabEl).find('label.toggle').each((index, toggleEl) => {
         if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
       });
-    },
-    tabBeforeRemove(tabEl) {
-      const app = this;
-      $(tabEl).find('label.toggle').each((index, toggleEl) => new Toggle(app, { el: toggleEl }));
     },
     pageInit(page) {
       const app = this;
