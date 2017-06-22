@@ -126,7 +126,7 @@ var routes = [
   },
   {
     path: '/pull-to-refresh/',
-    componentUrl: './ptr.html',
+    componentUrl: './pull-to-refresh.html',
   },
   {
     path: '/radio/',
@@ -163,7 +163,10 @@ var routes = [
   {
     path: '/timeline-horizontal-calendar/',
     url: './timeline-horizontal-calendar.html',
-
+  },
+  {
+    path: '/virtual-list/',
+    componentUrl: './virtual-list.html',
   },
 
 
