@@ -60,8 +60,8 @@ class Framework7Class {
     } else {
       events = args[0].events;
       data = args[0].data;
-      context = args[0].context;
-      eventsParents = args[0].parents;
+      context = args[0].context || self;
+      eventsParents = args[0].parents || self.eventsParents;
     }
     const eventsArray = Array.isArray(events) ? events : events.split(' ');
     eventsArray.forEach((event) => {
