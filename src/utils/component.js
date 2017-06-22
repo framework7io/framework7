@@ -212,7 +212,12 @@ const Component = {
       }).join('\n');
     }
 
-    let scriptContent = componentString.split('<script>')[1].split('</script>')[0].trim();
+    let scriptContent;
+    if (componentString.indexOf('<script>') >= 0) {
+      scriptContent = componentString.split('<script>')[1].split('</script>')[0].trim();
+    } else {
+      scriptContent = 'return {}';
+    }
     scriptContent = `window.${callbackName} = function () {${scriptContent}}`;
 
     // Insert Script El
