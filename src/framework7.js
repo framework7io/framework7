@@ -19,8 +19,12 @@ import View from './components/view/view';
 import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
+
+// Loaders
 import Preloader from './components/preloader/preloader';
 import Progressbar from './components/progressbar/progressbar';
+
+// Modals
 import Modal from './components/modal/modal';
 import Dialog from './components/dialog/dialog';
 import Popup from './components/popup/popup';
@@ -29,22 +33,33 @@ import Popover from './components/popover/popover';
 import Actions from './components/actions/actions';
 import Sheet from './components/sheet/sheet';
 
+// Lists
+import Sortable from './components/sortable/sortable';
+import Swipeout from './components/swipeout/swipeout';
+import Accordion from './components/accordion/accordion';
+import SmartSelect from './components/smartselect/smartselect';
+
 // Additional Components
 import Tabs from './components/tabs/tabs';
 import Panel from './components/panel/panel';
 import Card from './components/card/card';
 import Chip from './components/chip/chip';
-import Sortable from './components/sortable/sortable';
-import Swipeout from './components/swipeout/swipeout';
-import Accordion from './components/accordion/accordion';
-import SmartSelect from './components/smartselect/smartselect';
-import Calendar from './components/calendar/calendar';
-import Picker from './components/picker/picker';
+
+// Forms
 import Input from './components/input/input';
 import Toggle from './components/toggle/toggle';
 import Range from './components/range/range';
+
+// Pickers
+import Calendar from './components/calendar/calendar';
+import Picker from './components/picker/picker';
+
+// Page
 import InfiniteScroll from './components/infinite-scroll/infinite-scroll';
 import PullToRefresh from './components/pull-to-refresh/pull-to-refresh';
+
+// Table
+import DataTable from './components/data-table/data-table';
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -70,6 +85,7 @@ Framework7
   .use(Navbar)
   .use(Toolbar)
   .use(Subnavbar)
+  // Loaders
   .use(Preloader)
   .use(Progressbar)
   // Modals
@@ -80,21 +96,27 @@ Framework7
   .use(Popover)
   .use(Actions)
   .use(Sheet)
-  // Additional Components
-  .use(Tabs)
+  // Lists
   .use(Sortable)
   .use(Swipeout)
   .use(Accordion)
   .use(SmartSelect)
-  .use(Calendar)
-  .use(Picker)
+  // Additional Components
+  .use(Tabs)
   .use(Panel)
   .use(Card)
   .use(Chip)
+  // Forms
   .use(Input)
   .use(Toggle)
   .use(Range)
+  // Pickers
+  .use(Calendar)
+  .use(Picker)
+  // Page
   .use(InfiniteScroll)
-  .use(PullToRefresh);
+  .use(PullToRefresh)
+  // Table
+  .use(DataTable);
 
 export default Framework7;

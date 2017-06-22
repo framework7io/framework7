@@ -101,6 +101,10 @@ var routes = [
     url: './content-block.html',
   },
   {
+    path: '/data-table/',
+    componentUrl: './data-table.html',
+  },
+  {
     path: '/dialog/',
     componentUrl: './dialog.html',
   },

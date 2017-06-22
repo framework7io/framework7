@@ -1,0 +1,141 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .data-table {
+    thead {
+      th, td {
+        font-weight: 500;
+        height: 56px;
+        &:not(.sortable-cell-active) {
+          color: rgba(0,0,0,0.54);
+        }
+        i.icon, i.material-icons {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+    tbody {
+      font-size: 13px;
+      tr.data-table-row-selected {
+        background: #f5f5f5;
+      }
+      td {
+        height: 48px;
+      }
+    }
+    th, td {
+      padding-left: 28px;
+      padding-right: 28px;
+      &.label-cell {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      &:first-child {
+        padding-left: 24px;
+      }
+      &:last-child {
+        padding-right: 24px;
+      }
+      &.checkbox-cell {
+        padding-left: 24px;
+        padding-right: 12px;
+        width: 18px;
+        + td, + th {
+          padding-left: 12px;
+        }
+      }
+      &.actions-cell {
+        a.link {
+          color: rgba(0,0,0,0.54);
+          + a.link {
+            margin-left: 24px;
+          }
+        }
+        a.icon-only {
+          width: 24px;
+          height: 24px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+  .sortable-cell:not(.numeric-cell):after {
+    margin-left: 8px;
+  }
+  .sortable-cell.numeric-cell:before {
+    margin-right: 8px;
+  }
+  .data-table.card, .card .data-table {
+    .card-header, .card-footer {
+      padding-left: 24px;
+      padding-right: 14px;
+    }
+    .card-footer {
+      height: 56px;
+    }
+  }
+  .data-table-title {
+    font-size: 20px;
+  }
+  .data-table-links, .data-table-actions {
+    a.link + a.link {
+      margin-left: 24px;
+    }
+  }
+  .data-table-actions {
+    a.link {
+      color: rgba(0,0,0,0.54);
+    }
+    a.link.icon-only {
+      width: 24px;
+      height: 24px;
+      overflow: visible;
+      &.active-state {
+        background: none;
+      }
+    }
+  }
+  .data-table .card-header {
+    > .data-table-header, > .data-table-header-selected {
+      padding-left: 24px;
+      padding-right: 14px;
+      margin-left: -24px;
+      margin-right: -14px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      height: 100%;
+    }
+  }
+  .data-table-header-selected {
+    background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), 0.1);
+  }
+  .data-table-title-selected {
+    color: @themeColor;
+  }
+  .hairline-root('.data-table tbody td', top, rgba(0,0,0,0.12));
+  &.device-desktop .data-table {
+    tbody tr:hover {
+      background: #f5f5f5;
+    }
+  }
+
+  // Collapsible
+  @media (max-width:480px) and (orientation:portrait) {
+    .data-table-collapsible {
+      td {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      td:not(.checkbox-cell) {
+        font-size: 16px;
+        &:before {
+          color: rgba(0,0,0,0.54);
+          font-weight: 500;
+          line-height: 16px;
+        }
+      }
+    }
+    .hairline-root('.data-table-collapsible tr', top, rgba(0,0,0,0.12));
+  }
+}
