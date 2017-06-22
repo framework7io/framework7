@@ -58,9 +58,11 @@ import Picker from './components/picker/picker';
 // Page
 import InfiniteScroll from './components/infinite-scroll/infinite-scroll';
 import PullToRefresh from './components/pull-to-refresh/pull-to-refresh';
+import Lazy from './components/lazy/lazy';
 
 // Table
 import DataTable from './components/data-table/data-table';
+
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -118,6 +120,7 @@ Framework7
   // Page
   .use(InfiniteScroll)
   .use(PullToRefresh)
+  .use(Lazy)
   // Table
   .use(DataTable);
 

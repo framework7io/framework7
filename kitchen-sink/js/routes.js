@@ -117,6 +117,10 @@ var routes = [
     url: './inputs.html',
   },
   {
+    path: '/lazy-load/',
+    url: './lazy-load.html',
+  },
+  {
     path: '/list/',
     url: './list.html',
   },
