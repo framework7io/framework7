@@ -15,7 +15,7 @@
       height: 36px;
       color: #212121;
       font-size: 16px;
-      &::-webkit-input-placeholder {
+      &::placeholder {
         color: rgba(0,0,0,0.35);
       }
     }
@@ -27,7 +27,7 @@
       &.resizable {
         height: 36px;
       }
-      &::-webkit-input-placeholder {
+      &::placeholder {
         color: rgba(0,0,0,0.35);
       }
     }
@@ -57,7 +57,7 @@
     width: auto;
     max-width: 75%;
     pointer-events: none;
-    ~ .item-input-wrap input::-webkit-input-placeholder {
+    ~ .item-input-wrap input::placeholder {
       color: transparent;
     }
   }
