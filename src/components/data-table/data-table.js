@@ -4,6 +4,9 @@ import DataTable from './data-table-class';
 
 export default {
   name: 'dataTable',
+  static: {
+    DataTable,
+  },
   create() {
     const app = this;
     Utils.extend(app, {
