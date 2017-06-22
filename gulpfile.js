@@ -15,6 +15,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const pkg = require('./package.json');
 const fs = require('fs');
 const diff = require('diff');
+const autoprefixer = require('gulp-autoprefixer');
 
 const banner = [
   '/**',
@@ -69,6 +70,9 @@ function buildLess(cb) {
   gulp.src('./src/framework7.less')
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')],
+    }))
+    .pipe(autoprefixer({
+      cascade: false,
     }))
     .on('error', (err) => {
       console.log(err.toString());
