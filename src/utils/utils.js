@@ -12,7 +12,7 @@ const Utils = {
     return bezier(...args);
   },
   nextTick(callback, delay = 0) {
-    setTimeout(() => callback(), delay);
+    return setTimeout(callback, delay);
   },
   nextFrame(callback) {
     if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
