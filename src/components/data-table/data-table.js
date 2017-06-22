@@ -21,6 +21,32 @@ export default {
       },
     });
   },
+  on: {
+    tabBeforeRemove(tabEl) {
+      const app = this;
+      $(tabEl).$el.find('.data-table-init').each((index, tableEl) => {
+        app.dataTable.destroy(tableEl);
+      });
+    },
+    tabMounted(tabEl) {
+      const app = this;
+      $(tabEl).find('.data-table-init').each((index, tableEl) => {
+        app.dataTable.create({ el: tableEl });
+      });
+    },
+    pageBeforeRemove(page) {
+      const app = this;
+      page.$el.find('.data-table-init').each((index, tableEl) => {
+        app.dataTable.destroy(tableEl);
+      });
+    },
+    pageInit(page) {
+      const app = this;
+      page.$el.find('.data-table-init').each((index, tableEl) => {
+        app.dataTable.create({ el: tableEl });
+      });
+    },
+  },
   clicks: {
 
   },
