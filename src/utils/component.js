@@ -51,7 +51,7 @@ class Framework7Component {
 
     // Extend context with $el
     const el = tempDom.children[0];
-    context.$el = el;
+    context.$el = $(el);
     component.el = el;
 
     // Find Events
