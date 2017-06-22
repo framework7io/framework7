@@ -89,4 +89,6 @@ class Framework7 extends Framework7Class {
   }
 }
 
+Framework7.Class = Framework7Class;
+
 export default Framework7;
