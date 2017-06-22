@@ -37,7 +37,7 @@ import Sheet from './components/sheet/sheet';
 import Sortable from './components/sortable/sortable';
 import Swipeout from './components/swipeout/swipeout';
 import Accordion from './components/accordion/accordion';
-import SmartSelect from './components/smartselect/smartselect';
+import VirtualList from './components/virtual-list/virtual-list';
 
 // Additional Components
 import Tabs from './components/tabs/tabs';
@@ -49,6 +49,7 @@ import Chip from './components/chip/chip';
 import Input from './components/input/input';
 import Toggle from './components/toggle/toggle';
 import Range from './components/range/range';
+import SmartSelect from './components/smartselect/smartselect';
 
 // Pickers
 import Calendar from './components/calendar/calendar';
@@ -100,7 +101,7 @@ Framework7
   .use(Sortable)
   .use(Swipeout)
   .use(Accordion)
-  .use(SmartSelect)
+  .use(VirtualList)
   // Additional Components
   .use(Tabs)
   .use(Panel)
@@ -110,6 +111,7 @@ Framework7
   .use(Input)
   .use(Toggle)
   .use(Range)
+  .use(SmartSelect)
   // Pickers
   .use(Calendar)
   .use(Picker)
