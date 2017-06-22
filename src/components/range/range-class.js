@@ -305,7 +305,12 @@ class Range extends Framework7Class {
     if (range.$inputEl && !range.dual) {
       range.$inputEl.val(range.value).trigger('input change');
     }
-    range.emit('change rangeChange range:change', range.value);
+    range.emit({
+      events: 'change',
+      parents: [],
+      data: range.value,
+    });
+    range.emit('rangeChange range:change', range, range.value);
     return range;
   }
   getValue() {

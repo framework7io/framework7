@@ -128,7 +128,11 @@ class Toggle extends Framework7Class {
       }
     }
     function handleInputChange() {
-      toggle.emit('change toggleChange toggle:change');
+      toggle.emit({
+        events: 'change',
+        parents: [],
+      });
+      toggle.emit('toggleChange toggle:change', toggle);
     }
     toggle.attachEvents = function attachEvents() {
       if (!Support.touch) return;
