@@ -113,6 +113,10 @@ var routes = [
     url: './fab.html',
   },
   {
+    path: '/fab-morph/',
+    url: './fab-morph.html',
+  },
+  {
     path: '/infinite/',
     componentUrl: './infinite.html',
   },
