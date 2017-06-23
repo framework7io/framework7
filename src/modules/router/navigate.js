@@ -45,6 +45,8 @@ function forward(el, forwardOptions = {}) {
     router.allowPageChange = true;
     return router;
   }
+  // Remove theme elements
+  router.removeThemeElements($newPage);
 
   // Pages In View
   const $pagesInView = $viewEl

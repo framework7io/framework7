@@ -46,6 +46,7 @@ function loadTab(tabRoute, loadOptions = {}) {
         tabChild.f7Component.mount();
       }
     });
+    router.removeThemeElements($newTabEl);
     $newTabEl.trigger('tabInit tab:init tabMounted tab:mounted', tabRoute);
     router.emit('tabInit tab:init tabMounted tab:mounted', $newTabEl[0], tabRoute);
     if ($oldTabEl) {

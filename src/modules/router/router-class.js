@@ -618,6 +618,12 @@ class Router extends Framework7Class {
       });
     });
   }
+  // Remove theme elements
+  removeThemeElements(el) {
+    const router = this;
+    const theme = router.app.theme;
+    $(el).find(`.${theme === 'md' ? 'ios' : 'md'}-only`).remove();
+  }
   templateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     function compile(t) {

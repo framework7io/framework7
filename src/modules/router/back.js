@@ -44,6 +44,9 @@ function backward(el, backwardOptions) {
     return router;
   }
 
+  // Remove theme elements
+  router.removeThemeElements($newPage);
+
   // New Page
   $newPage
     .addClass('page-previous')
