@@ -153,36 +153,6 @@ class Popover extends Modal {
       if (position === 'bottom') {
         $el.addClass('popover-on-bottom');
       }
-      if ($targetEl.hasClass('floating-button-to-popover') && !$el.hasClass('modal-in')) {
-        $el.addClass('popover-from-fab');
-        const diffX = ((left + width) / 2) - ((targetOffsetLeft + targetWidth) / 2);
-        const diffY = ((top + height) / 2) - ((targetOffsetTop + targetHeight) / 2);
-        $targetEl
-          .addClass('floating-button-to-popover-in')
-          .transform(`translate3d(${diffX}px, ${diffY}px,0)`)
-          .transitionEnd(() => {
-            if (!$targetEl.hasClass('floating-button-to-popover-in')) return;
-            $targetEl
-              .addClass('floating-button-to-popover-scale')
-              .transform(`translate3d(${diffX}px, ${diffY}px,0) scale(${width / targetWidth}, ${height / targetHeight})`);
-          });
-
-        $el.once('popover:close', () => {
-          $targetEl
-            .removeClass('floating-button-to-popover-in floating-button-to-popover-scale')
-            .addClass('floating-button-to-popover-out')
-            .transform('')
-            .transitionEnd(() => {
-              $targetEl.removeClass('floating-button-to-popover-out');
-            });
-        });
-        $el.once('popover:closed', () => {
-          $el.removeClass('popover-from-fab');
-        });
-      } else if ($targetEl.hasClass('floating-button-to-popover') && $el.hasClass('modal-in')) {
-        left = targetOffsetLeft;
-        top = targetOffsetTop;
-      }
     } else {
       if ((height + angleSize) < targetOffsetTop) {
         // On top
