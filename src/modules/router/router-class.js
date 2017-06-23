@@ -441,7 +441,7 @@ class Router extends Framework7Class {
     const app = router.app;
 
     // Modals Selector
-    const modalsSelector = '.popup, .modal, .popover, .actions-modal, .picker-modal, .login-screen';
+    const modalsSelector = '.popup, .dialog, .popover, .actions-modal, .sheet-modal, .login-screen, .page';
 
     const $container = $(container);
     let selector = stringSelector;
