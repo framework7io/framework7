@@ -43,12 +43,6 @@ function initClicks(app) {
 
 
     // Speed Dial
-    if (clicked.hasClass('floating-button') && clicked.parent().hasClass('speed-dial')) {
-      clicked.parent().toggleClass('speed-dial-opened');
-    }
-    if (clicked.hasClass('close-speed-dial')) {
-      $('.speed-dial-opened').removeClass('speed-dial-opened');
-    }
     */
     // Load Page
     let clickedLinkData = {};
