@@ -127,7 +127,7 @@ export default {
   clicks: {
     '.tab-link': function tabLinkClick($clickedEl, data = {}) {
       const app = this;
-      if ($clickedEl.attr('href').indexOf('#') === 0 || $clickedEl.attr('data-tab')) {
+      if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
         app.tab.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
       }
     },
