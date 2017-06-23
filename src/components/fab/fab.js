@@ -44,6 +44,7 @@ const Fab = {
 
     $fabEl[0].f7FabMorphResizeHandler = function resizeHandler() {
       $fabEl.transition(0).transform('');
+      $targetEl.transition(0);
       target.width = $targetEl[0].offsetWidth;
       target.height = $targetEl[0].offsetHeight;
       target.offset = $targetEl.offset();
