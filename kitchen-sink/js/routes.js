@@ -109,6 +109,10 @@ var routes = [
     componentUrl: './dialog.html',
   },
   {
+    path: '/fab/',
+    url: './fab.html',
+  },
+  {
     path: '/infinite/',
     componentUrl: './infinite.html',
   },

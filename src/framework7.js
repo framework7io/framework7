@@ -63,6 +63,9 @@ import Lazy from './components/lazy/lazy';
 // Table
 import DataTable from './components/data-table/data-table';
 
+// FAB
+import FAB from './components/fab/fab';
+
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -122,6 +125,8 @@ Framework7
   .use(PullToRefresh)
   .use(Lazy)
   // Table
-  .use(DataTable);
+  .use(DataTable)
+  // FAB
+  .use(FAB);
 
 export default Framework7;
