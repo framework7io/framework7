@@ -114,11 +114,11 @@ const Fab = {
       .transform(`translate3d(${-diffX}px, ${-diffY}px, 0)`);
     $fabEl.transitionEnd(() => {
       $fabEl
+        .css('z-index', '')
         .removeClass('fab-opened')
         .transform('');
       Utils.nextTick(() => {
         $fabEl.transitionEnd(() => {
-          $fabEl.css('z-index', '');
           $targetEl
             .removeClass('fab-morph-target-visible')
             .css('opacity', '')
