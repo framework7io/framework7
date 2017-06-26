@@ -55,7 +55,7 @@
       },
     },
     on: {
-      pageMounted: function(page) {
+      pageMounted: function(e, page) {
         var self = this;
         console.log('pageMounted', self, page);
       },
@@ -63,23 +63,23 @@
         var self = this;
         console.log('pageInit', self, page);
       },
-      pageBeforeIn: function(page) {
+      pageBeforeIn: function(e, page) {
         var self = this;
         console.log('pageBeforeIn', self, page);
       },
-      pageAfterIn: function(page) {
+      pageAfterIn: function(e, page) {
         var self = this;
         console.log('pageAfterIn', self, page);
       },
-      pageBeforeOut: function(page) {
+      pageBeforeOut: function(e, page) {
         var self = this;
         console.log('pageBeforeOut', self, page);
       },
-      pageAfterOut: function(page) {
+      pageAfterOut: function(e, page) {
         var self = this;
         console.log('pageAfterOut', self, page);
       },
-      pageBeforeRemove: function(page) {
+      pageBeforeRemove: function(e, page) {
         var self = this;
         console.log('pageBeforeRemove', self, page);
       },
