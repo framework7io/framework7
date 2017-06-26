@@ -56,6 +56,45 @@
   }
 }
 
+.input-clear-button {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition-duration: 100ms;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  z-index: 1;
+  cursor: pointer;
+  background: none;
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  &:before {
+    position: absolute;
+    content: '';
+    left: 50%;
+    top: 50%;
+  }
+}
+.input-with-value ~ .input-clear-button,
+.item-input-with-value .input-clear-button {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
 
 @import url('./input-ios.less');
 @import url('./input-md.less');

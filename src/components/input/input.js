@@ -84,9 +84,11 @@ const Input = {
     if (Input.ignoreTypes.indexOf(type) >= 0) return;
     const $itemInputEl = $inputEl.parents('.item-input');
     $itemInputEl.addClass('item-input-focused');
+    $inputEl.addClass('input-focused');
   },
   blur(inputEl) {
     $(inputEl).parents('.item-input').removeClass('item-input-focused');
+    $(inputEl).removeClass('input-focused');
   },
   checkEmptyState(inputEl) {
     const $inputEl = $(inputEl);
@@ -94,8 +96,10 @@ const Input = {
     const $itemInputEl = $inputEl.parents('.item-input');
     if ((value && (typeof value === 'string' && value.trim() !== '')) || (Array.isArray(value) && value.length > 0)) {
       $itemInputEl.addClass('item-input-with-value');
+      $inputEl.addClass('input-with-value');
     } else {
       $itemInputEl.removeClass('item-input-with-value');
+      $inputEl.removeClass('input-with-value');
     }
   },
   init() {
@@ -142,6 +146,14 @@ const Input = {
         app.input.validate($inputEl);
       }
     }
+    function clearInput() {
+      const $clicked = $(this);
+      $clicked.siblings('input, textarea').eq(0)
+        .val('')
+        .trigger('change')
+        .focus();
+    }
+    $(document).on('click', '.input-clear-button', clearInput);
     $(document).on('change input', 'input, textarea, select', onChange, true);
     $(document).on('focus', 'input, textarea, select', onFocus, true);
     $(document).on('blur', 'input, textarea, select', onBlur, true);
