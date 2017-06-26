@@ -49,7 +49,7 @@ import Chip from './components/chip/chip';
 import Input from './components/input/input';
 import Toggle from './components/toggle/toggle';
 import Range from './components/range/range';
-import SmartSelect from './components/smartselect/smartselect';
+import SmartSelect from './components/smart-select/smart-select';
 
 // Pickers
 import Calendar from './components/calendar/calendar';

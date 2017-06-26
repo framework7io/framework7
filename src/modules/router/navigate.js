@@ -266,7 +266,7 @@ function forward(el, forwardOptions = {}) {
         if (separateNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
-      } else if (!($newPage.attr('data-name') && $newPage.attr('data-name').indexOf('smart-select-') === 0)) {
+      } else if (!($newPage.attr('data-name') && $newPage.attr('data-name') === 'smart-select-page')) {
         // Remove event
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
         router.remove($oldPage);
@@ -339,7 +339,6 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     return false;
   }
 
-
   if (!options.route && url) {
     options.route = router.findMatchingRoute(url, true);
   }
@@ -409,7 +408,13 @@ function navigate(url, navigateOptions = {}) {
     const currentPath = router.currentRoute.route.parentPath || router.currentRoute.path;
     navigateUrl = ((currentPath || '/') + navigateUrl).replace('//', '/');
   }
-  const route = router.findMatchingRoute(navigateUrl);
+  let route = router.findMatchingRoute(navigateUrl);
+
+  if (!route && navigateOptions.create) {
+    route = Utils.extend(router.findMatchingRoute(navigateUrl, true), {
+      route: Utils.extend({}, navigateOptions),
+    });
+  }
 
   if (!route) {
     return router;
