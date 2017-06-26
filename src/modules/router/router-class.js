@@ -782,10 +782,9 @@ class Router extends Framework7Class {
       if ($pageEl[0].f7PageEventsAttached) return;
       $pageEl[0].f7PageEventsAttached = true;
       if (options.pageEvents) {
+        $pageEl[0].f7PageEvents = options.pageEvents;
         Object.keys(options.pageEvents).forEach((eventName) => {
-          $pageEl.on(eventName, () => {
-            options.pageEvents[eventName](page);
-          });
+          $pageEl.on(eventName, options.pageEvents[eventName]);
         });
       }
     }
@@ -801,6 +800,13 @@ class Router extends Framework7Class {
         return;
       }
       $pageEl[0].f7PageInitialized = true;
+    }
+    if (callback === 'beforeRemove') {
+      if ($pageEl[0].f7PageEventsAttached && $pageEl[0].f7PageEvents) {
+        Object.keys($pageEl[0].f7PageEvents).forEach((eventName) => {
+          $pageEl.off(eventName, $pageEl[0].f7PageEvents[eventName]);
+        });
+      }
     }
     if (on[camelName]) on[camelName](page);
     router.emit(callbackName, page);
