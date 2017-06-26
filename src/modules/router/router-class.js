@@ -192,14 +192,13 @@ class Router extends Framework7Class {
         });
       }
     }
-
     if (router.dynamicNavbar) {
       // Prepare Navbars
       prepareNavbars();
       Utils.nextTick(() => {
         // Add class, start animation
-        router.$el.addClass(routerTransitionClass);
         animateNavbars();
+        router.$el.addClass(routerTransitionClass);
       });
     } else {
       // Add class, start animation
@@ -225,7 +224,8 @@ class Router extends Framework7Class {
     function animatableNavEl(el, navbarInner) {
       const $el = $(el);
       const isSliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
-      const needsOpacityTransition = isSliding ? !$el.hasClass('subnavbar') : true;
+      const isSubnavbar = $el.hasClass('subnavbar');
+      const needsOpacityTransition = isSliding ? !isSubnavbar : true;
       const hasIcon = isSliding && animateIcon && $el.hasClass('left') && $el.find('.back .icon').length > 0;
       let $iconEl;
       if (hasIcon) $iconEl = $el.find('.back .icon');
@@ -236,6 +236,7 @@ class Router extends Framework7Class {
         leftOffset: $el[0].f7NavbarLeftOffset,
         rightOffset: $el[0].f7NavbarRightOffset,
         isSliding,
+        isSubnavbar,
         needsOpacityTransition,
       };
     }

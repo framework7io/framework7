@@ -294,14 +294,14 @@ function forward(el, forwardOptions = {}) {
   if (options.animate) {
     if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
       setTimeout(() => {
+        setPositionClasses();
         router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
-          setPositionClasses();
           afterAnimation();
         });
       }, router.params.materialPageLoadDelay);
     } else {
+      setPositionClasses();
       router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
-        setPositionClasses();
         afterAnimation();
       });
     }

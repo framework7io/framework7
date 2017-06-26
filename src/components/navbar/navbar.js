@@ -103,7 +103,7 @@ const Navbar = {
       }
       if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
         subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : (-subnavbar[0].offsetWidth + separateNavbarLeftOffset);
-        subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset - separateNavbarRightOffset;
+        subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset - separateNavbarRightOffset + separateNavbarLeftOffset;
       }
     }
 
