@@ -47,7 +47,7 @@ var app = new Framework7({
   routes: routes,
 });
 
-var view = app.view.create('.view-main', {
+var view = app.views.create('.view-main', {
   main: true,
   url: '/',
 });
