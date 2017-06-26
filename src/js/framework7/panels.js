@@ -245,11 +245,11 @@ app.initSwipePanels = function () {
                     side = direction === 'to-right' ? 'left' : 'right';
                 }
                 if (app.params.swipePanelActiveArea > 0) {
-                    if (side === 'left' && touchesStart.x > app.params.swipePanelActiveArea) {
+                    if (side === 'left' && touchesStart.x > app.params.swipePanelActiveAreaOpen) {
                         isTouched = false;
                         return;
                     }
-                    if (side === 'right' && touchesStart.x < app.width - app.params.swipePanelActiveArea) {
+                    if (side === 'right' && touchesStart.x < app.width - app.params.swipePanelActiveAreaOpen) {
                         isTouched = false;
                         return;
                     }
