@@ -194,14 +194,22 @@ app.initSwipePanels = function () {
         }
         panel = $('.panel.panel-' + side);
         opened = panel.hasClass('active');
-        if (app.params.swipePanelActiveArea && !opened) {
+        if (app.params.swipePanelActiveAreaOpen && !opened) {
             if (side === 'left') {
-                if (touchesStart.x > app.params.swipePanelActiveArea) return;
+                if (touchesStart.x > app.params.swipePanelActiveAreaOpen) return;
             }
             if (side === 'right') {
-                if (touchesStart.x < app.width - app.params.swipePanelActiveArea) return;
+                if (touchesStart.x < app.width - app.params.swipePanelActiveAreaOpen) return;
             }
         }
+        if (app.params.swipePanelActiveAreaClose && opened) {
+            if (side === 'left') {
+                if (touchesStart.x > app.params.swipePanelActiveAreaClose) return;
+            }                    
+            if (side === 'right') {
+               if (touchesStart.x > (app.width - panel.outerWidth() + app.params.swipePanelActiveAreaClose)) return;
+            }
+        }         
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
