@@ -325,6 +325,7 @@ class Range extends Framework7Class {
   }
   destroy() {
     let range = this;
+    delete range.$el[0].f7Range;
     range.detachEvents();
     Utils.deleteProps(range);
     range = null;

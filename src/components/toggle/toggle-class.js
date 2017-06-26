@@ -168,6 +168,7 @@ class Toggle extends Framework7Class {
   }
   destroy() {
     let toggle = this;
+    delete toggle.$el[0].f7Toggle;
     toggle.detachEvents();
     Utils.deleteProps(toggle);
     toggle = null;
