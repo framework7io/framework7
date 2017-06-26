@@ -28,6 +28,9 @@ label.item-checkbox {
   &.active-state {
     .hairline-color(bottom, transparent);
   }
+  &.disabled, .disabled & {
+    .disabled();
+  }
 }
 @import url('./checkbox-ios.less');
 @import url('./checkbox-md.less');
