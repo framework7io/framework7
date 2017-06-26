@@ -19,7 +19,7 @@ class Sheet extends Modal {
     // Find Element
     let $el;
     if (!sheet.params.el) {
-      $el = $(sheet.params.html);
+      $el = $(sheet.params.content);
     } else {
       $el = $(sheet.params.el);
     }

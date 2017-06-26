@@ -18,7 +18,7 @@ class Popover extends Modal {
     // Find Element
     let $el;
     if (!popover.params.el) {
-      $el = $(popover.params.html);
+      $el = $(popover.params.content);
     } else {
       $el = $(popover.params.el);
     }

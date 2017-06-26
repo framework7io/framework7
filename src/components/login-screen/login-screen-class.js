@@ -18,7 +18,7 @@ class LoginScreen extends Modal {
     // Find Element
     let $el;
     if (!loginScreen.params.el) {
-      $el = $(loginScreen.params.html);
+      $el = $(loginScreen.params.content);
     } else {
       $el = $(loginScreen.params.el);
     }

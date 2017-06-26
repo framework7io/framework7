@@ -27,8 +27,8 @@ class Actions extends Modal {
     let $el;
     if (actions.params.el) {
       $el = $(actions.params.el);
-    } else if (actions.params.html) {
-      $el = $(actions.params.html);
+    } else if (actions.params.content) {
+      $el = $(actions.params.content);
     } else if (actions.params.buttons) {
       if (actions.params.toPopover) {
         actions.popoverHtml = `
@@ -146,7 +146,7 @@ class Actions extends Modal {
       }
       if (convertToPopover) {
         popover = app.popover.create({
-          html: actions.popoverHtml,
+          content: actions.popoverHtml,
           targetEl: actions.params.targetEl,
         });
         popover.open(animate);

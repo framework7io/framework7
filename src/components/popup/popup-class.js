@@ -18,7 +18,7 @@ class Popup extends Modal {
     // Find Element
     let $el;
     if (!popup.params.el) {
-      $el = $(popup.params.html);
+      $el = $(popup.params.content);
     } else {
       $el = $(popup.params.el);
     }
