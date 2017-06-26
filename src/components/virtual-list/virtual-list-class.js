@@ -32,6 +32,9 @@ class VirtualList extends Framework7Class {
     vl.useInstanceModulesParams(defaults);
 
     vl.params = Utils.extend(defaults, params);
+    if (vl.params.height === undefined || !vl.params.height) {
+      vl.params.height = app.theme === 'md' ? 48 : 44;
+    }
 
     vl.$el = $(params.el);
     vl.el = vl.$el[0];
@@ -146,7 +149,6 @@ class VirtualList extends Framework7Class {
     let scrollTop = -(vl.$el[0].getBoundingClientRect().top - vl.$pageContentEl[0].getBoundingClientRect().top);
 
     if (typeof forceScrollTop !== 'undefined') scrollTop = forceScrollTop;
-
     if (vl.lastRepaintY === null || Math.abs(scrollTop - vl.lastRepaintY) > vl.maxBufferHeight || (!vl.updatableScroll && (vl.$pageContentEl[0].scrollTop + vl.pageHeight >= vl.$pageContentEl[0].scrollHeight))) {
       vl.lastRepaintY = scrollTop;
     } else {
