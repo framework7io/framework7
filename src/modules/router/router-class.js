@@ -229,14 +229,6 @@ class Router extends Framework7Class {
       const hasIcon = isSliding && animateIcon && $el.hasClass('left') && $el.find('.back .icon').length > 0;
       let $iconEl;
       if (hasIcon) $iconEl = $el.find('.back .icon');
-      if (isSliding && navbarInner === oldNavbarInner && $el.hasClass('title') && newNavEls) {
-        newNavEls.forEach((newNavEl) => {
-          if (newNavEl.$el.hasClass('left') && newNavEl.hasIcon) {
-            const iconTextEl = newNavEl.$el.find('.back span')[0];
-            $el[0].f7NavbarLeftOffset += iconTextEl ? iconTextEl.offsetLeft : 0;
-          }
-        });
-      }
       return {
         $el,
         $iconEl,
@@ -259,6 +251,20 @@ class Router extends Framework7Class {
       if (!separateNavbar) {
         navbarWidth = newNavbarInner[0].offsetWidth;
       }
+      [oldNavEls, newNavEls].forEach((navEls) => {
+        navEls.forEach((navEl) => {
+          const n = navEl;
+          const { isSliding, $el } = navEl;
+          const otherEls = navEls === oldNavEls ? newNavEls : oldNavEls;
+          if (!(isSliding && $el.hasClass('title') && otherEls)) return;
+          otherEls.forEach((otherNavEl) => {
+            if (otherNavEl.$el.hasClass('left') && otherNavEl.hasIcon) {
+              const iconTextEl = otherNavEl.$el.find('.back span')[0];
+              n.leftOffset += iconTextEl ? iconTextEl.offsetLeft : 0;
+            }
+          });
+        });
+      });
     }
 
     let $shadowEl;
@@ -381,28 +387,16 @@ class Router extends Framework7Class {
 
     Utils.nextFrame(render);
   }
-  animate(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+  animate(...args) {
+    // Args: oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback
     const router = this;
-    const pageClasses = 'page-current page-next page-previous';
-    const navbarClasses = 'navbar-current navbar-next navbar-previous';
-    const dynamicNavbar = router.dynamicNavbar;
-    if (direction === 'forward') {
-      oldPage.removeClass(pageClasses).addClass('page-current');
-      newPage.removeClass(pageClasses).addClass('page-next');
-      if (dynamicNavbar) {
-        oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-        newNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
-      }
+    if (router.params.animateCustom) {
+      router.params.animateCustom.apply(router, args);
+    } else if (router.params.animateWithJS) {
+      router.animateWithJS(...args);
     } else {
-      oldPage.removeClass(pageClasses).addClass('page-current');
-      newPage.removeClass(pageClasses).addClass('page-previous');
-      if (dynamicNavbar) {
-        oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-        newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
-      }
+      router.animateWithCSS(...args);
     }
-
-    router.animateWithJS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback);
   }
   remove(el) {
     const router = this;
