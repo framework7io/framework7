@@ -281,15 +281,27 @@ function forward(el, forwardOptions = {}) {
       History.clearQueue();
     }
   }
+  function setPositionClasses() {
+    const pageClasses = 'page-previous page-current page-next';
+    const navbarClasses = 'navbar-previous navbar-current navbar-next';
+    $oldPage.removeClass(pageClasses).addClass('page-current');
+    $newPage.removeClass(pageClasses).addClass('page-next');
+    if (dynamicNavbar) {
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
+    }
+  }
   if (options.animate) {
     if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
       setTimeout(() => {
         router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
+          setPositionClasses();
           afterAnimation();
         });
       }, router.params.materialPageLoadDelay);
     } else {
       router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
+        setPositionClasses();
         afterAnimation();
       });
     }

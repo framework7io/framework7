@@ -246,7 +246,19 @@ function backward(el, backwardOptions) {
     }
   }
 
+  function setPositionClasses() {
+    const pageClasses = 'page-previous page-current page-next';
+    const navbarClasses = 'navbar-previous navbar-current navbar-next';
+    $oldPage.removeClass(pageClasses).addClass('page-current');
+    $newPage.removeClass(pageClasses).addClass('page-previous');
+    if (dynamicNavbar) {
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
+    }
+  }
+
   if (options.animate) {
+    setPositionClasses();
     router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'backward', () => {
       afterAnimation();
     });
