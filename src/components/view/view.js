@@ -33,6 +33,7 @@ export default {
       pushStateOnLoad: true,
       // Animate Pages
       animate: true,
+      animateWithJS: true,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
       iosSeparateDynamicNavbar: true,
@@ -47,15 +48,17 @@ export default {
   },
   create() {
     const app = this;
-    const views = Utils.extend([], {
-      add(el, params) {
-        return new View(app, el, params);
-      },
-      current() {
+    Utils.extend(app, {
+      views: [],
+      view: {
+        create(el, params) {
+          return new View(app, el, params);
+        },
+        current() {
 
+        },
       },
     });
-    Utils.extend(app, { views });
   },
 };
 
