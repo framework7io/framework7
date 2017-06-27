@@ -1,7 +1,7 @@
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 
-function loadTab(tabRoute, loadOptions = {}) {
+function tabLoad(tabRoute, loadOptions = {}) {
   const router = this;
   const options = Utils.extend({
     animate: router.params.animate,
@@ -41,16 +41,11 @@ function loadTab(tabRoute, loadOptions = {}) {
   const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
 
   function onTabLoaded() {
-    $newTabEl.children().each((index, tabChild) => {
-      if (tabChild.f7Component && tabChild.f7Component.mount) {
-        tabChild.f7Component.mount();
-      }
-    });
     router.removeThemeElements($newTabEl);
     $newTabEl.trigger('tabInit tab:init tabMounted tab:mounted', tabRoute);
     router.emit('tabInit tab:init tabMounted tab:mounted', $newTabEl[0], tabRoute);
     if ($oldTabEl) {
-      router.removeTab($oldTabEl, $newTabEl, tabRoute);
+      router.tabRemove($oldTabEl, $newTabEl, tabRoute);
     }
   }
 
@@ -62,7 +57,7 @@ function loadTab(tabRoute, loadOptions = {}) {
       } else {
         $newTabEl.html('');
         if (contentEl.f7Component) {
-          contentEl.f7Component.mounted((componentEl) => {
+          contentEl.f7Component.mount((componentEl) => {
             $newTabEl.append(componentEl);
           });
         } else {
@@ -94,7 +89,7 @@ function loadTab(tabRoute, loadOptions = {}) {
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.tabComponentLoader($newTabEl, component, componentUrl, options, resolve, reject);
+      router.tabComponentLoader($newTabEl[0], component, componentUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -115,7 +110,7 @@ function loadTab(tabRoute, loadOptions = {}) {
       });
   }
 }
-function removeTab($oldTabEl, $newTabEl, tabRoute) {
+function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   const router = this;
   $oldTabEl.trigger('tabBeforeRemove tab:beforeremove', tabRoute);
   router.emit('tabBeforeRemove tab:beforeremove', $oldTabEl[0], $newTabEl[0], tabRoute);
@@ -127,5 +122,5 @@ function removeTab($oldTabEl, $newTabEl, tabRoute) {
   $oldTabEl.html('');
 }
 
-export { loadTab, removeTab };
+export { tabLoad, tabRemove };
 
