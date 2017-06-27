@@ -35,7 +35,7 @@ class LoginScreen extends Modal {
       app,
       $el,
       el: $el[0],
-      type: 'loginscreen',
+      type: 'loginScreen',
     });
 
     $el[0].f7Modal = loginScreen;
