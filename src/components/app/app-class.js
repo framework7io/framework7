@@ -63,6 +63,8 @@ class Framework7 extends Framework7Class {
     const app = this;
     if (app.initialized) return;
 
+    app.root.addClass('framework7-initializing');
+
     // RTL attr
     if (app.rtl) {
       $('html').attr('dir', 'rtl');
@@ -79,7 +81,9 @@ class Framework7 extends Framework7Class {
     if (app.params.data && typeof app.params.data === 'function') {
       Utils.extend(app.data, app.params.data.bind(app)());
     }
-
+    Utils.nextFrame(() => {
+      app.root.removeClass('framework7-initializing');
+    });
     // Emit, init other modules
     app.initialized = true;
     app.emit('init');
