@@ -30,28 +30,28 @@ class Modal extends Framework7Class {
   onOpen() {
     const modal = this;
     openedModals.push(modal);
-    $('html').addClass(`with-modal-${modal.type}`);
-    modal.$el.trigger(`open ${modal.type}:open`, modal);
-    modal.emit(`modalOpen modal:open ${modal.type}Open ${modal.type}:open`, modal);
+    $('html').addClass(`with-modal-${modal.type.toLowerCase()}`);
+    modal.$el.trigger(`open ${modal.type.toLowerCase()}:open`, modal);
+    modal.emit(`modalOpen modal:open ${modal.type}Open ${modal.type.toLowerCase()}:open`, modal);
   }
   onOpened() {
     const modal = this;
-    modal.$el.trigger(`opened ${modal.type}:opened`, modal);
-    modal.emit(`modalOpened modal:opened ${modal.type}Opened ${modal.type}:opened`, modal);
+    modal.$el.trigger(`opened ${modal.type.toLowerCase()}:opened`, modal);
+    modal.emit(`modalOpened modal:opened ${modal.type}Opened ${modal.type.toLowerCase()}:opened`, modal);
   }
   onClose() {
     const modal = this;
     openedModals.splice(openedModals.indexOf(modal), 1);
-    $('html').removeClass(`with-modal-${modal.type}`);
-    modal.$el.trigger(`close ${modal.type}:close`, modal);
-    modal.emit(`modalClose modal:close ${modal.type}Close ${modal.type}:close`, modal);
+    $('html').removeClass(`with-modal-${modal.type.toLowerCase()}`);
+    modal.$el.trigger(`close ${modal.type.toLowerCase()}:close`, modal);
+    modal.emit(`modalClose modal:close ${modal.type}Close ${modal.type.toLowerCase()}:close`, modal);
   }
   onClosed() {
     const modal = this;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
-    modal.$el.trigger(`closed ${modal.type}:closed`, modal);
-    modal.emit(`modalClosed modal:closed ${modal.type}Closed ${modal.type}:closed`, modal);
+    modal.$el.trigger(`closed ${modal.type.toLowerCase()}:closed`, modal);
+    modal.emit(`modalClosed modal:closed ${modal.type}Closed ${modal.type.toLowerCase()}:closed`, modal);
   }
   open(animate = true) {
     const modal = this;
@@ -83,7 +83,7 @@ class Modal extends Framework7Class {
     const wasInDom = $el.parents(document).length > 0;
     if (app.params.modals.moveToRoot && !$modalParentEl.is(app.root)) {
       app.root.append($el);
-      modal.once(`${type}:closed`, () => {
+      modal.once(`${type}Closed`, () => {
         if (wasInDom) {
           $modalParentEl.append(modal);
         } else {
@@ -102,30 +102,32 @@ class Modal extends Framework7Class {
     }
 
     // Emit open
-    modal.onOpen();
-    Utils.nextTick(() => {
-      // Backdrop
-      if ($backdropEl) {
-        $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-        $backdropEl.addClass('backdrop-in');
-      }
-      // Modal
-      if (animate) {
-        $el
-          .transitionEnd(() => {
-            if ($el.hasClass('modal-out')) {
-              modal.onClosed();
-            } else {
-              modal.onOpened();
-            }
-          })
-          .removeClass('modal-out not-animated')
-          .addClass('modal-in');
-      } else {
-        $el.removeClass('modal-out').addClass('modal-in not-animated');
-        modal.onOpened();
-      }
-    });
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
+    modal._clientLeft = $el[0].clientLeft;
+
+    // Backdrop
+    if ($backdropEl) {
+      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+      $backdropEl.addClass('backdrop-in');
+    }
+    // Modal
+    if (animate) {
+      $el
+        .transitionEnd(() => {
+          if ($el.hasClass('modal-out')) {
+            modal.onClosed();
+          } else {
+            modal.onOpened();
+          }
+        })
+        .removeClass('modal-out not-animated')
+        .addClass('modal-in');
+      modal.onOpen();
+    } else {
+      $el.removeClass('modal-out').addClass('modal-in not-animated');
+      modal.onOpen();
+      modal.onOpened();
+    }
 
     return modal;
   }
@@ -137,9 +139,6 @@ class Modal extends Framework7Class {
     if (!$el || !$el.hasClass('modal-in')) {
       return modal;
     }
-
-    // Emit close
-    modal.onClose();
 
     // backdrop
     if ($backdropEl) {
@@ -160,11 +159,15 @@ class Modal extends Framework7Class {
         })
         .removeClass('modal-in')
         .addClass('modal-out');
+      // Emit close
+      modal.onClose();
     } else {
       $el
         .addClass('not-animated')
         .removeClass('modal-in')
         .addClass('modal-out');
+      // Emit close
+      modal.onClose();
       modal.onClosed();
     }
 
