@@ -144,8 +144,8 @@ function SwipeBack(r) {
       currentNavbarEl: currentNavbar[0],
       previousNavbarEl: previousNavbar[0],
     };
-    router.emit('swipeBackMove swipeback:move', callbackData);
-    $el.trigger('swipeBackMove swipeback:move', callbackData);
+    $el.trigger('swipeback:move', callbackData);
+    router.emit('swipeBackMove', callbackData);
 
     // Transform pages
     let currentPageTranslate = touchesDiff * inverter;
@@ -287,11 +287,11 @@ function SwipeBack(r) {
       router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route });
       router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
 
-      router.emit('swipeBackBeforeChange swipeback:beforechange', callbackData);
-      $el.trigger('swipeBackBeforeChange swipeback:beforechange', callbackData);
+      $el.trigger('swipeback:beforechange', callbackData);
+      router.emit('swipeBackBeforeChange', callbackData);
     } else {
-      router.emit('swipeBackBeforeReset swipeback:beforereset', callbackData);
-      $el.trigger('swipeBackBeforeReset swipeback:beforereset', callbackData);
+      $el.trigger('swipeback:beforereset', callbackData);
+      router.emit('swipeBackBeforeReset', callbackData);
     }
 
     currentPage.transitionEnd(() => {
@@ -335,17 +335,17 @@ function SwipeBack(r) {
           }
         }
 
-        router.emit('swipeBackAfterChange swipeback:afterchange', callbackData);
-        $el.trigger('swipeBackAfterChange swipeback:afterchange', callbackData);
+        $el.trigger('swipeback:afterchange', callbackData);
+        router.emit('swipeBackAfterChange', callbackData);
 
-        router.emit('routeChanged route:changed', router.currentRoute, router.previousRoute, router);
+        router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
         if (router.params.preloadPreviousPage) {
           router.back(router.history[router.history.length - 2], { preload: true });
         }
       } else {
-        router.emit('swipeBackAfterReset swipeback:afterreset', callbackData);
-        $el.trigger('swipeBackAfterReset swipeback:afterreset', callbackData);
+        $el.trigger('swipeback:afterreset', callbackData);
+        router.emit('swipeBackAfterReset', callbackData);
       }
       if (pageShadow && pageShadow.length > 0) pageShadow.remove();
       if (pageOpacity && pageOpacity.length > 0) pageOpacity.remove();

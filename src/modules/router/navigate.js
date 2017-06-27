@@ -275,7 +275,7 @@ function forward(el, forwardOptions = {}) {
         }
       }
     }
-    router.emit('routeChanged route:changed', router.currentRoute, router.previousRoute, router);
+    router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     if (router.params.pushState) {
       History.clearQueue();

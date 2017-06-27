@@ -42,8 +42,8 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
   function onTabLoaded() {
     router.removeThemeElements($newTabEl);
-    $newTabEl.trigger('tabInit tab:init tabMounted tab:mounted', tabRoute);
-    router.emit('tabInit tab:init tabMounted tab:mounted', $newTabEl[0], tabRoute);
+    $newTabEl.trigger('tab:init tab:mounted', tabRoute);
+    router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
     if ($oldTabEl) {
       router.tabRemove($oldTabEl, $newTabEl, tabRoute);
     }
@@ -112,8 +112,8 @@ function tabLoad(tabRoute, loadOptions = {}) {
 }
 function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   const router = this;
-  $oldTabEl.trigger('tabBeforeRemove tab:beforeremove', tabRoute);
-  router.emit('tabBeforeRemove tab:beforeremove', $oldTabEl[0], $newTabEl[0], tabRoute);
+  $oldTabEl.trigger('tab:beforeremove', tabRoute);
+  router.emit('tabBeforeRemove', $oldTabEl[0], $newTabEl[0], tabRoute);
   $oldTabEl.children().each((index, tabChild) => {
     if (tabChild.f7Component) {
       tabChild.f7Component.destroy();

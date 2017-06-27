@@ -43,8 +43,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
     });
 
     modal.on('modalClosed', () => {
-      modal.$el.trigger(`${modalType}BeforeRemove ${modalType.toLowerCase()}:beforeremove`, route, modal);
-      modal.emit(`${modalType}BeforeRemove ${modalType.toLowerCase()}:beforeremove`, modal.el, route, modal);
+      modal.$el.trigger(`${modalType.toLowerCase()}:beforeremove`, route, modal);
+      modal.emit(`${modalType}BeforeRemove`, modal.el, route, modal);
       if (modal.el.f7Component) {
         modal.el.f7Component.destroy();
       }
@@ -80,8 +80,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
     // Remove theme elements
     router.removeThemeElements(modal.el);
     // Emit events
-    modal.$el.trigger(`${modalType}Init ${modalType.toLowerCase()}:init ${modalType}Mounted ${modalType.toLowerCase()}:mounted`, route, modal);
-    router.emit(`${modalType}Init ${modalType.toLowerCase()}:init ${modalType}Mounted ${modalType.toLowerCase()}:mounted`, modal.el, route, modal);
+    modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
+    router.emit(`${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
     // Open
     modal.open();
   }

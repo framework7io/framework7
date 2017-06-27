@@ -56,14 +56,14 @@ const Tab = {
     const $oldTabEl = $tabsEl.children('.tab-active');
     $oldTabEl
       .removeClass('tab-active')
-      .trigger('hide tab:hide tabHide');
-    app.emit('tabHide tab:hide', $oldTabEl[0]);
+      .trigger('tab:hide');
+    app.emit('tabHide', $oldTabEl[0]);
 
     // Trigger 'show' event on new tab
     $newTabEl
       .addClass('tab-active')
-      .trigger('show tab:show tabShow');
-    app.emit('tabShow tab:show', $newTabEl[0]);
+      .trigger('tab:show');
+    app.emit('tabShow', $newTabEl[0]);
 
     // Find related link for new tab
     if (!$tabLinkEl) {

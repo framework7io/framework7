@@ -238,7 +238,7 @@ class VirtualList extends Framework7Class {
           data: [itemEl, items[i]],
           parents: [],
         });
-        vl.emit('vlItemBeforeInsert vl:itemBeforeInsert', vl, itemEl, items[i]);
+        vl.emit('vlItemBeforeInsert', vl, itemEl, items[i]);
 
         // Append item to fragment
         vl.fragment.appendChild(itemEl);
@@ -265,7 +265,7 @@ class VirtualList extends Framework7Class {
         data: [vl.fragment],
         parents: [],
       });
-      vl.emit('vlBeforeClear vl:beforeClear', vl, vl.fragment);
+      vl.emit('vlBeforeClear', vl, vl.fragment);
       vl.ul[0].innerHTML = '';
 
       vl.emit({
@@ -273,7 +273,7 @@ class VirtualList extends Framework7Class {
         data: [vl.fragment],
         parents: [],
       });
-      vl.emit('vlItemsBeforeInsert vl:itemsBeforeInsert', vl, vl.fragment);
+      vl.emit('vlItemsBeforeInsert', vl, vl.fragment);
 
       if (items && items.length === 0) {
         vl.reachEnd = true;
@@ -287,7 +287,7 @@ class VirtualList extends Framework7Class {
         data: [vl.fragment],
         parents: [],
       });
-      vl.emit('vlItemsAfterInsert vl:itemsAfterInsert', vl, vl.fragment);
+      vl.emit('vlItemsAfterInsert', vl, vl.fragment);
     }
 
     if (typeof forceScrollTop !== 'undefined' && force) {

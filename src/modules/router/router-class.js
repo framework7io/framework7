@@ -64,7 +64,7 @@ class Router extends Framework7Class {
         previousRoute = Utils.extend({}, currentRoute);
         currentRoute = newRoute;
         router.url = currentRoute.url;
-        router.emit('routeChange route:change', newRoute, previousRoute, router);
+        router.emit('routeChange', newRoute, previousRoute, router);
       },
       get() {
         return currentRoute;
@@ -591,10 +591,10 @@ class Router extends Framework7Class {
         url,
         method: 'GET',
         beforeSend() {
-          router.emit('routerAjaxStart router:ajaxstart');
+          router.emit('routerAjaxStart');
         },
         complete(xhr, status) {
-          router.emit('routerAjaxComplete router:ajaxcomplete');
+          router.emit('routerAjaxComplete');
           if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
@@ -610,7 +610,7 @@ class Router extends Framework7Class {
           }
         },
         error(xhr) {
-          router.emit('ajaxError ajax:error');
+          router.emit('ajaxError');
           reject(xhr);
         },
       });
@@ -784,7 +784,6 @@ class Router extends Framework7Class {
 
     const camelName = `page${callback[0].toUpperCase() + callback.slice(1, callback.length)}`;
     const colonName = `page:${callback.toLowerCase()}`;
-    const callbackName = `${camelName} ${colonName}`;
 
     let page = {};
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
@@ -810,8 +809,8 @@ class Router extends Framework7Class {
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
         if (on.pageReinit) on.pageReinit(page);
-        router.emit('pageReinit page:reinit', page);
-        $pageEl.trigger('pageReinit page:reinit', page);
+        $pageEl.trigger('page:reinit', page);
+        router.emit('pageReinit', page);
         return;
       }
       $pageEl[0].f7PageInitialized = true;
@@ -824,8 +823,8 @@ class Router extends Framework7Class {
       }
     }
     if (on[camelName]) on[camelName](page);
-    router.emit(callbackName, page);
-    $pageEl.trigger(callbackName, page);
+    $pageEl.trigger(colonName, page);
+    router.emit(camelName, page);
 
     if (callback === 'beforeRemove') {
       $pageEl[0].f7Page = null;
@@ -966,12 +965,12 @@ class Router extends Framework7Class {
         router.saveHistory();
       }
     }
-    router.emit('routerInit router:init', router);
+    router.emit('routerInit', router);
   }
   destroy() {
     let router = this;
 
-    router.emit('routerDestroy router:destroy', router);
+    router.emit('routerDestroy', router);
 
     // Delete props & methods
     Object.keys(router).forEach((routerProp) => {

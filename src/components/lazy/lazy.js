@@ -97,8 +97,8 @@ const Lazy = {
         $imageEl.attr('src', src);
       }
       if (callback) callback();
-      $imageEl.trigger('lazyLoaded lazy:loaded');
-      app.emit('lazyLoaded lazy:loaded', $imageEl[0]);
+      $imageEl.trigger('lazy:loaded');
+      app.emit('lazyLoaded', $imageEl[0]);
     }
 
     function onError() {
@@ -109,8 +109,8 @@ const Lazy = {
         $imageEl.attr('src', app.params.lazy.placeholder || '');
       }
       if (callback) callback();
-      $imageEl.trigger('lazyError lazy:error');
-      app.emit('lazyError lazy:error', $imageEl[0]);
+      $imageEl.trigger('lazy:error');
+      app.emit('lazyError', $imageEl[0]);
     }
     const image = new window.Image();
     image.onload = onLoad;
@@ -120,8 +120,8 @@ const Lazy = {
     $imageEl.removeAttr('data-src').removeAttr('data-background');
 
     // Add loaded callback and events
-    $imageEl.trigger('lazyLoad lazy:load');
-    app.emit('lazyLoad lazy:load', $imageEl[0]);
+    $imageEl.trigger('lazy:load');
+    app.emit('lazyLoad', $imageEl[0]);
   },
   load(pageEl, callback) {
     const app = this;

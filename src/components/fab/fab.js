@@ -147,7 +147,7 @@ const Fab = {
     } else {
       $fabEl.addClass('fab-opened');
     }
-    $fabEl.trigger('fabOpen fab:open');
+    $fabEl.trigger('fab:open');
   },
   close(fabEl = '.fab-opened') {
     const app = this;
@@ -162,7 +162,7 @@ const Fab = {
     } else {
       $fabEl.removeClass('fab-opened');
     }
-    $fabEl.trigger('fabClose fab:close');
+    $fabEl.trigger('fab:close');
   },
   toggle(fabEl) {
     const app = this;

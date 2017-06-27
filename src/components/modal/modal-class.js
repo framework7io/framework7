@@ -31,27 +31,27 @@ class Modal extends Framework7Class {
     const modal = this;
     openedModals.push(modal);
     $('html').addClass(`with-modal-${modal.type.toLowerCase()}`);
-    modal.$el.trigger(`open ${modal.type.toLowerCase()}:open`, modal);
-    modal.emit(`modalOpen modal:open ${modal.type}Open ${modal.type.toLowerCase()}:open`, modal);
+    modal.$el.trigger(`modal:open ${modal.type.toLowerCase()}:open`, modal);
+    modal.emit(`modalOpen ${modal.type}Open`, modal);
   }
   onOpened() {
     const modal = this;
-    modal.$el.trigger(`opened ${modal.type.toLowerCase()}:opened`, modal);
-    modal.emit(`modalOpened modal:opened ${modal.type}Opened ${modal.type.toLowerCase()}:opened`, modal);
+    modal.$el.trigger(`modal:opened ${modal.type.toLowerCase()}:opened`, modal);
+    modal.emit(`modalOpened ${modal.type}Opened`, modal);
   }
   onClose() {
     const modal = this;
     openedModals.splice(openedModals.indexOf(modal), 1);
     $('html').removeClass(`with-modal-${modal.type.toLowerCase()}`);
-    modal.$el.trigger(`close ${modal.type.toLowerCase()}:close`, modal);
-    modal.emit(`modalClose modal:close ${modal.type}Close ${modal.type.toLowerCase()}:close`, modal);
+    modal.$el.trigger(`modal:close ${modal.type.toLowerCase()}:close`, modal);
+    modal.emit(`modalClose ${modal.type}Close`, modal);
   }
   onClosed() {
     const modal = this;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
-    modal.$el.trigger(`closed ${modal.type.toLowerCase()}:closed`, modal);
-    modal.emit(`modalClosed modal:closed ${modal.type}Closed ${modal.type.toLowerCase()}:closed`, modal);
+    modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`, modal);
+    modal.emit(`modalClosed ${modal.type}Closed`, modal);
   }
   open(animate = true) {
     const modal = this;

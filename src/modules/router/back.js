@@ -235,7 +235,7 @@ function backward(el, backwardOptions) {
     }
 
     router.allowPageChange = true;
-    router.emit('routeChanged route:changed', router.currentRoute, router.previousRoute, router);
+    router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     // Preload previous page
     if (router.params.preloadPreviousPage) {

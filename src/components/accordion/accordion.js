@@ -23,18 +23,18 @@ const Accordion = {
       if ($el.hasClass('accordion-item-opened')) {
         $contentEl.css('height', '');
         $contentEl.transition('');
-        $el.trigger('opened accordion:opened');
-        app.emit('accordionOpened accordion:open', $el[0]);
+        $el.trigger('accordion:opened');
+        app.emit('accordionOpened', $el[0]);
       } else {
         $contentEl.css('height', '');
-        $el.trigger('closed accordion:closed');
-        app.emit('accordionClosed accordion:closed', $el[0]);
+        $el.trigger('accordion:closed');
+        app.emit('accordionClosed', $el[0]);
       }
     });
     $contentEl.css('height', `${$contentEl[0].scrollHeight}px`);
-    $el.trigger('open accordion:open');
+    $el.trigger('accordion:open');
     $el.addClass('accordion-item-opened');
-    app.emit('accordionOpen accordion:open', $el[0]);
+    app.emit('accordionOpen', $el[0]);
   },
   close(el) {
     const app = this;
@@ -49,19 +49,19 @@ const Accordion = {
       if ($el.hasClass('accordion-item-opened')) {
         $contentEl.css('height', '');
         $contentEl.transition('');
-        $el.trigger('opened accordion:opened');
-        app.emit('accordionOpened accordion:open', $el[0]);
+        $el.trigger('accordion:opened');
+        app.emit('accordionOpened', $el[0]);
       } else {
         $contentEl.css('height', '');
-        $el.trigger('closed accordion:closed');
-        app.emit('accordionClosed accordion:closed', $el[0]);
+        $el.trigger('accordion:closed');
+        app.emit('accordionClosed', $el[0]);
       }
     });
     Utils.nextFrame(() => {
       $contentEl.transition('');
       $contentEl.css('height', '');
-      $el.trigger('close accordion:close');
-      app.emit('accordionClose accordion:close');
+      $el.trigger('accordion:close');
+      app.emit('accordionClose');
     });
   },
   toggle(el) {

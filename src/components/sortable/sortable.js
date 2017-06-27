@@ -140,8 +140,8 @@ const Sortable = {
         $sortingEl.insertBefore($insertBeforeEl);
       }
 
-      $sortingEl.trigger('sort sortable:sort', { from: indexFrom, to: $sortingEl.index() });
-      app.emit('sortableSort sortable:sort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
+      $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
+      app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
 
       if (($insertAfterEl || $insertBeforeEl) && $sortableContainer.hasClass('virtual-list')) {
         virtualList = $sortableContainer[0].f7VirtualList;
@@ -166,16 +166,16 @@ const Sortable = {
     const $el = $(el);
     if ($el.length === 0) return;
     $el.addClass('sortable-enabled');
-    $el.trigger('open sortable:open');
-    app.emit('sortableOpen sortable:open', $el[0]);
+    $el.trigger('sortable:open');
+    app.emit('sortableOpen', $el[0]);
   },
   disable(el = '.list.sortable') {
     const app = this;
     const $el = $(el);
     if ($el.length === 0) return;
     $el.removeClass('sortable-enabled');
-    $el.trigger('close sortable:close');
-    app.emit('sortableClose sortable:close', $el[0]);
+    $el.trigger('sortable:close');
+    app.emit('sortableClose', $el[0]);
   },
   toggle(el = '.list.sortable') {
     const app = this;

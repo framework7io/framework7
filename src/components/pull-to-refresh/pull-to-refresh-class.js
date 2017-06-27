@@ -23,8 +23,8 @@ class PullToRefresh extends Framework7Class {
       const $transitionTarget = isMaterial ? $preloaderEl : $el;
       $transitionTarget.transitionEnd(() => {
         $el.removeClass('ptr-transitioning ptr-pull-up ptr-pull-down');
-        $el.trigger('ptrDone ptr:done');
-        ptr.emit('ptrDone ptr:done', $el[0]);
+        $el.trigger('ptr:done');
+        ptr.emit('ptrDone', $el[0]);
       });
       $el.removeClass('ptr-refreshing').addClass('ptr-transitioning');
       return ptr;
@@ -33,8 +33,8 @@ class PullToRefresh extends Framework7Class {
     ptr.refresh = function refresh() {
       if ($el.hasClass('ptr-refreshing')) return ptr;
       $el.addClass('ptr-transitioning ptr-refreshing');
-      $el.trigger('ptrRefresh ptr:refresh', ptr.done);
-      ptr.emit('ptrRefresh ptr:refresh', $el[0], ptr.done);
+      $el.trigger('ptr:refresh', ptr.done);
+      ptr.emit('ptrRefresh', $el[0], ptr.done);
       return ptr;
     };
 
@@ -165,17 +165,17 @@ class PullToRefresh extends Framework7Class {
           $el.removeClass('ptr-pull-up').addClass('ptr-pull-down');
         }
         if (!pullStarted) {
-          $el.trigger('ptrPullstart ptr:pullstart');
-          ptr.emit('ptrPullstart ptr:pullstart', $el[0]);
+          $el.trigger('ptr:pullstart');
+          ptr.emit('ptrPullstart', $el[0]);
           pullStarted = true;
         }
-        $el.trigger('ptrPullmove ptr:pullmove', {
+        $el.trigger('ptr:pullmove', {
           event: e,
           scrollTop,
           translate,
           touchesDiff,
         });
-        ptr.emit('ptrPullmove ptr:pullmove', $el[0], {
+        ptr.emit('ptrPullmove', $el[0], {
           event: e,
           scrollTop,
           translate,
@@ -209,16 +209,16 @@ class PullToRefresh extends Framework7Class {
 
       if (refresh) {
         $el.addClass('ptr-refreshing');
-        $el.trigger('ptrRefresh ptr:refresh', ptr.done);
-        ptr.emit('ptrRefresh ptr:refresh', $el[0], ptr.done);
+        $el.trigger('ptr:refresh', ptr.done);
+        ptr.emit('ptrRefresh', $el[0], ptr.done);
       } else {
         $el.removeClass('ptr-pull-down');
       }
       isTouched = false;
       isMoved = false;
       if (pullStarted) {
-        $el.trigger('ptrPullend ptr:pullend');
-        ptr.emit('ptrPullend ptr:pullend', $el[0]);
+        $el.trigger('ptr:pullend');
+        ptr.emit('ptrPullend', $el[0]);
       }
     }
 

@@ -147,7 +147,8 @@ export default {
     },
     '.panel-backdrop': function close() {
       const app = this;
-      $('.panel-active').trigger('panelBackdropClick panel:backdrop-click');
+      $('.panel-active').trigger('panel:backdrop-click');
+      app.emit('panelBackdropClick', $('.panel-active')[0]);
       if (app.params.panel.closeByOutsideClick) app.panel.close();
     },
   },
