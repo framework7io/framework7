@@ -6,7 +6,12 @@ const Navbar = {
     const app = this;
     if (app.theme !== 'ios') return;
     const $el = $(el);
-    if ($el.hasClass('stacked') || $el.parents('.stacked').length > 0 || $el.parents('.tab:not(.active)').length > 0) {
+    if (
+      $el.hasClass('stacked') ||
+      $el.parents('.stacked').length > 0 ||
+      $el.parents('.tab:not(.tab-active)').length > 0 ||
+      $el.parents('.popup:not(.modal-in)').length > 0
+    ) {
       return;
     }
     const $viewEl = $el.parents('.view').eq(0);
@@ -160,6 +165,13 @@ export default {
     },
   },
   on: {
+    resize() {
+      const app = this;
+      if (app.theme !== 'ios') return;
+      $('.navbar').each((index, navbarEl) => {
+        app.navbar.size(navbarEl);
+      });
+    },
     pageBeforeRemove(page) {
       const app = this;
       if (app.theme !== 'ios') return;
@@ -173,7 +185,6 @@ export default {
       if (app.theme !== 'ios') return;
       const $navbarEl = Navbar.getEl(page);
       if (!$navbarEl || $navbarEl.length === 0) return;
-
       app.navbar.size($navbarEl);
     },
     pageInit(page) {
@@ -181,11 +192,21 @@ export default {
       if (app.theme !== 'ios') return;
       const $navbarEl = Navbar.getEl(page);
       if (!$navbarEl || $navbarEl.length === 0) return;
-      $navbarEl[0].f7ResizeHandler = function resizeHandler() {
-        app.navbar.size($navbarEl);
-      };
       app.navbar.size($navbarEl);
-      app.on('resize', $navbarEl[0].f7ResizeHandler);
+    },
+    popoverOpen(popover) {
+      const app = this;
+      if (app.theme !== 'ios') return;
+      popover.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+        app.navbar.size(navbarEl);
+      });
+    },
+    popupOpen(popup) {
+      const app = this;
+      if (app.theme !== 'ios') return;
+      popup.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+        app.navbar.size(navbarEl);
+      });
     },
     panelOpen(panel) {
       const app = this;
