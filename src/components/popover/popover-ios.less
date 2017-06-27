@@ -10,7 +10,7 @@
         ul {
           border-radius: 13px 13px 0 0;
         }
-        li:first-child a {
+        li:first-child, li:first-child a, li:first-child > label {
           border-radius: 13px 13px 0 0;
         }
       }
@@ -18,12 +18,12 @@
         ul {
           border-radius: 0 0 13px 13px;
         }
-        li:last-child a {
+        li:last-child, li:last-child a, li:last-child > label {
           border-radius: 0 0 13px 13px;
         }
       }
       &:first-child:last-child {
-        li:first-child:last-child a, ul {
+        li:first-child:last-child, li:first-child:last-child a, li:first-child:last-child > label, ul {
           border-radius: 13px;
         }
       }
