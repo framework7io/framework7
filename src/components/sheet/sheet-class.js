@@ -6,6 +6,7 @@ class Sheet extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: app.theme === 'md',
+      closeByOutsideClick: false,
       on: {},
     }, params);
 
@@ -78,11 +79,31 @@ class Sheet extends Modal {
         });
       }
     }
-
-    if (sheet.params.scrollToEl) {
-      sheet.on('sheetOpen', scrollToOpen);
-      sheet.on('sheetClose', scrollToClose);
+    function handleClick(e) {
+      const target = e.target;
+      if ($(target).closest(sheet.el).length === 0) {
+        sheet.close();
+      }
     }
+
+    sheet.on('sheetOpen', () => {
+      if (sheet.params.scrollToEl) {
+        scrollToOpen();
+      }
+    });
+    sheet.on('sheetOpened', () => {
+      if (sheet.params.closeByOutsideClick) {
+        $(document).on('click', handleClick);
+      }
+    });
+    sheet.on('sheetClose', () => {
+      if (sheet.params.scrollToEl) {
+        scrollToClose();
+      }
+      if (sheet.params.closeByOutsideClick) {
+        $(document).off('click', handleClick);
+      }
+    });
 
     Utils.extend(sheet, {
       app,
