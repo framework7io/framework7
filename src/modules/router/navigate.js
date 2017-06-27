@@ -227,7 +227,7 @@ function forward(el, forwardOptions = {}) {
 
   // Load Tab
   if (options.route.route.tab) {
-    router.loadTab(options.route.route.tab, Utils.extend({}, options, {
+    router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
       history: false,
       pushState: false,
     }));
@@ -325,7 +325,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     // Do something nested
     if (options.route.url === router.url) return false;
     if (options.route.route.tab) {
-      return router.loadTab(options.route.route.tab, options);
+      return router.tabLoad(options.route.route.tab, options);
     }
     return false;
   }
@@ -372,7 +372,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.pageComponentLoader(component, componentUrl, options, resolve, reject);
+      router.pageComponentLoader(router.el, component, componentUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -403,17 +403,19 @@ function navigate(url, navigateOptions = {}) {
   if (url === '#' || url === '') {
     return router;
   }
+
   let navigateUrl = url.replace('./', '');
   if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
     const currentPath = router.currentRoute.route.parentPath || router.currentRoute.path;
     navigateUrl = ((currentPath || '/') + navigateUrl).replace('//', '/');
   }
-  let route = router.findMatchingRoute(navigateUrl);
-
-  if (!route && navigateOptions.create) {
+  let route;
+  if (navigateOptions.createRoute) {
     route = Utils.extend(router.findMatchingRoute(navigateUrl, true), {
-      route: Utils.extend({}, navigateOptions),
+      route: Utils.extend({}, navigateOptions.createRoute),
     });
+  } else {
+    route = router.findMatchingRoute(navigateUrl);
   }
 
   if (!route) {
@@ -425,6 +427,11 @@ function navigate(url, navigateOptions = {}) {
   } else {
     Utils.extend(options, navigateOptions, { route });
   }
+  ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+    if (route.route[modalLoadProp]) {
+      router.modalLoad(modalLoadProp, route, options);
+    }
+  });
   ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);

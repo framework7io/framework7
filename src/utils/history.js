@@ -2,12 +2,26 @@ import $ from 'dom7';
 
 const History = {
   queue: [],
+  closeModal(modalType) {
+    let modalClassName = modalType;
+    if (modalType === 'sheet' || modalType === 'actions') {
+      modalClassName = `${modalType}-modal`;
+    }
+    if (modalType === 'loginScreen') {
+      modalClassName = 'login-screen';
+    }
+    const modalEl = $(`.${modalClassName}.modal-in`)[0];
+    if (modalEl && modalEl.f7Modal) {
+      modalEl.f7Modal.closeByHistory = true;
+      modalEl.f7Modal.close();
+    }
+  },
   clearQueue() {
     if (History.queue.length === 0) return;
     const currentQueue = History.queue.pop();
     const router = currentQueue.router;
 
-    let animate = router.params.animatePages;
+    let animate = router.params.animate;
     if (router.params.pushStateAnimate === false) animate = false;
 
     if (currentQueue.action === 'back') {
@@ -22,6 +36,12 @@ const History = {
     const app = this;
     const mainView = app.views.main;
     let state = e.state;
+    History.previousState = History.state;
+    History.state = state;
+    if (History.previousState && History.previousState.modal) {
+      History.closeModal(History.previousState.modal);
+      return;
+    }
     if (!state && mainView) {
       state = {
         viewIndex: mainView.index,
@@ -33,8 +53,7 @@ const History = {
     const router = view.router;
     const stateUrl = (state && state.url) || undefined;
 
-
-    let animate = router.params.animatePages;
+    let animate = router.params.animate;
     if (router.params.pushStateAnimate === false) animate = false;
 
     if (stateUrl !== router.url) {
@@ -61,9 +80,13 @@ const History = {
     }
   },
   push(state, url) {
+    History.previousState = History.state;
+    History.state = state;
     window.history.pushState(state, '', url);
   },
   replace(state, url) {
+    History.previousState = History.state;
+    History.state = state;
     window.history.replaceState(state, '', url);
   },
   go(index) {
@@ -72,6 +95,7 @@ const History = {
   back() {
     window.history.back();
   },
+  previousState: {},
   state: window.history.state,
   blockPopstate: true,
   init(app) {

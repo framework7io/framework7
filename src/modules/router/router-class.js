@@ -6,8 +6,9 @@ import Component from '../../utils/component';
 import SwipeBack from './swipe-back';
 
 import { forward, load, navigate } from './navigate';
-import { loadTab, removeTab } from './tab';
-import { backward as RouterBackward, loadBack as RouterLoadBack, back as RouterBack } from './back';
+import { tabLoad, tabRemove } from './tab';
+import { modalLoad, modalRemove } from './modal';
+import { backward, loadBack, back } from './back';
 
 class Router extends Framework7Class {
   constructor(app, view) {
@@ -76,20 +77,22 @@ class Router extends Framework7Class {
         return previousRoute;
       },
     });
-
-    // Load
-    router.forward = forward;
-    router.load = load;
-    router.navigate = navigate;
-
-    // Tab
-    router.loadTab = loadTab;
-    router.removeTab = removeTab;
-
-    // Back
-    router.backward = RouterBackward;
-    router.loadBack = RouterLoadBack;
-    router.back = RouterBack;
+    Utils.extend(router, {
+      // Load
+      forward,
+      load,
+      navigate,
+      // Tab
+      tabLoad,
+      tabRemove,
+      // Modal
+      modalLoad,
+      modalRemove,
+      // Back
+      backward,
+      loadBack,
+      back,
+    });
 
     return router;
   }
@@ -673,7 +676,13 @@ class Router extends Framework7Class {
       compile(template);
     }
   }
-  tabTemplateLoader(tabEl, template, templateUrl, options, resolve, reject) {
+  popupTemplateLoader(template, templateUrl, options, resolve, reject) {
+    const router = this;
+    return router.templateLoader(template, templateUrl, options, (html) => {
+      resolve(html);
+    }, reject);
+  }
+  tabTemplateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     return router.templateLoader(template, templateUrl, options, (html) => {
       resolve(html);
@@ -721,13 +730,19 @@ class Router extends Framework7Class {
       compile(component);
     }
   }
+  popupComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
+    const router = this;
+    router.componentLoader(component, componentUrl, options, (el) => {
+      resolve(el);
+    }, reject);
+  }
   tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
     const router = this;
     router.componentLoader(component, componentUrl, options, (el) => {
       resolve(el);
     }, reject);
   }
-  pageComponentLoader(component, componentUrl, options, resolve, reject) {
+  pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
     const router = this;
     router.componentLoader(component, componentUrl, options, (el, newOptions = {}) => {
       resolve(el, newOptions);

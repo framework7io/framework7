@@ -191,7 +191,7 @@ function backward(el, backwardOptions) {
 
   // Load Tab
   if (options.route.route.tab) {
-    router.loadTab(options.route.route.tab, Utils.extend({}, options, {
+    router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
       history: false,
       pushState: false,
     }));
@@ -319,7 +319,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
-      router.pageComponentLoader(component, componentUrl, options, resolve, reject);
+      router.pageComponentLoader(router.el, component, componentUrl, options, resolve, reject);
     } catch (err) {
       router.allowPageChange = true;
       throw err;
@@ -354,6 +354,11 @@ function back(...args) {
   const app = router.app;
   if (!router.view) {
     app.views.main.router.back(navigateUrl, navigateOptions);
+    return router;
+  }
+
+  if (router.currentRoute.modal) {
+    router.modalRemove();
     return router;
   }
 
