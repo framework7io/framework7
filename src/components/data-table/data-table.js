@@ -27,7 +27,7 @@ export default {
   on: {
     tabBeforeRemove(tabEl) {
       const app = this;
-      $(tabEl).$el.find('.data-table-init').each((index, tableEl) => {
+      $(tabEl).find('.data-table-init').each((index, tableEl) => {
         app.dataTable.destroy(tableEl);
       });
     },
