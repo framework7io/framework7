@@ -341,7 +341,7 @@ class SmartSelect extends Framework7Class {
       pageTitle = ss.$el.find('.item-title').text().trim();
     }
     const pageHtml = `
-      <div class="page smart-select-page" data-name="smart-select-page" data-select-name="${ss.name}}">
+      <div class="page smart-select-page" data-name="smart-select-page" data-select-name="${ss.name}">
         <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
           <div class="navbar-inner sliding">
             <div class="left">
@@ -368,61 +368,186 @@ class SmartSelect extends Framework7Class {
     const pageHtml = ss.renderPage(ss.items);
 
     ss.view.router.navigate(ss.url, {
-      create: true,
-      content: pageHtml,
-      path: ss.url,
-      options: {
-        pageEvents: {
-          pageBeforeIn(e, page) {
-            ss.onOpen('page', page.el);
-          },
-          pageAfterIn(e, page) {
-            ss.onOpened('page', page.el);
-          },
-          pageBeforeOut(e, page) {
-            ss.onClose('page', page.el);
-          },
-          pageAfterOut(e, page) {
-            ss.onClosed('page', page.el);
+      createRoute: {
+        content: pageHtml,
+        path: ss.url,
+        options: {
+          pageEvents: {
+            pageBeforeIn(e, page) {
+              ss.onOpen('page', page.el);
+            },
+            pageAfterIn(e, page) {
+              ss.onOpened('page', page.el);
+            },
+            pageBeforeOut(e, page) {
+              ss.onClose('page', page.el);
+            },
+            pageAfterOut(e, page) {
+              ss.onClosed('page', page.el);
+            },
           },
         },
       },
     });
     return ss;
+  }
+  renderPopup() {
+    const ss = this;
+    if (ss.params.renderPopup) return ss.params.renderPopup(ss, ss.items);
+    let pageTitle = ss.params.pageTitle;
+    if (typeof pageTitle === 'undefined') {
+      pageTitle = ss.$el.find('.item-title').text().trim();
+    }
+    const popupHtml = `
+      <div class="popup smart-select-popup" data-select-name="${ss.name}">
+        <div class="view">
+          <div class="page smart-select-page" data-name="smart-select-page">
+            <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
+              <div class="navbar-inner sliding">
+                <div class="left">
+                  <a href="#" class="link popup-close">
+                    <i class="icon icon-back"></i>
+                    <span class="ios-only">${ss.params.popupCloseLinkText}</span>
+                  </a>
+                </div>
+                ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
+              </div>
+            </div>
+            <div class="page-content">
+              <div class="list${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+                <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    return popupHtml;
   }
   openPopup() {
     const ss = this;
     ss.getItemsData();
     const popupHtml = ss.renderPopup(ss.items);
     ss.view.router.navigate(ss.url, {
-      create: true,
-      path: ss.url,
-      popup: {
-        content: popupHtml,
-        on: {
-          popupOpen(e, popup) {
-            ss.onOpen('popup', popup.el);
-          },
-          popupOpened(e, popup) {
-            ss.onOpened('popup', popup.el);
-          },
-          popupClose(e, popup) {
-            ss.onClose('popup', popup.el);
-          },
-          popupClosed(e, popup) {
-            ss.onClosed('popup', popup.el);
+      createRoute: {
+        path: ss.url,
+        popup: {
+          content: popupHtml,
+          on: {
+            popupOpen(popup) {
+              ss.onOpen('popup', popup.el);
+            },
+            popupOpened(popup) {
+              ss.onOpened('popup', popup.el);
+            },
+            popupClose(popup) {
+              ss.onClose('popup', popup.el);
+            },
+            popupClosed(popup) {
+              ss.onClosed('popup', popup.el);
+            },
           },
         },
       },
     });
     return ss;
   }
+  renderSheet() {
+    const ss = this;
+    if (ss.params.renderSheet) return ss.params.renderSheet(ss, ss.items);
+    const sheetHtml = `
+      <div class="sheet-modal smart-select-sheet" data-select-name="${ss.name}">
+        <div class="toolbar ${ss.params.toolbarColorTheme ? `theme-${ss.params.toolbarColorTheme}` : ''}">
+          <div class="toolbar-inner">
+            <div class="left"></div>
+            <div class="right">
+              <a class="link sheet-close">${ss.params.sheetCloseLinkText}</a>
+            </div>
+          </div>
+        </div>
+        <div class="sheet-modal-inner">
+          <div class="page-content">
+            <div class="list${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+              <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    return sheetHtml;
+  }
   openSheet() {
     const ss = this;
+    ss.getItemsData();
+    const sheetHtml = ss.renderSheet(ss.items);
+    ss.view.router.navigate(ss.url, {
+      createRoute: {
+        path: ss.url,
+        sheet: {
+          content: sheetHtml,
+          backdrop: false,
+          scrollToEl: ss.$el,
+          closeByOutsideClick: true,
+          on: {
+            sheetOpen(sheet) {
+              ss.onOpen('sheet', sheet.el);
+            },
+            sheetOpened(sheet) {
+              ss.onOpened('sheet', sheet.el);
+            },
+            sheetClose(sheet) {
+              ss.onClose('sheet', sheet.el);
+            },
+            sheetClosed(sheet) {
+              ss.onClosed('sheet', sheet.el);
+            },
+          },
+        },
+      },
+    });
     return ss;
+  }
+  renderPopover() {
+    const ss = this;
+    if (ss.params.renderPopover) return ss.params.renderPopover(ss, ss.items);
+    const popoverHtml = `
+      <div class="popover smart-select-popover" data-select-name="${ss.name}">
+        <div class="popover-inner">
+          <div class="list${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+          </div>
+        </div>
+      </div>
+    `;
+    return popoverHtml;
   }
   openPopover() {
     const ss = this;
+    ss.getItemsData();
+    const popoverHtml = ss.renderPopover(ss.items);
+    ss.view.router.navigate(ss.url, {
+      createRoute: {
+        path: ss.url,
+        popover: {
+          content: popoverHtml,
+          targetEl: ss.$el,
+          on: {
+            popoverOpen(popover) {
+              ss.onOpen('popover', popover.el);
+            },
+            popoverOpened(popover) {
+              ss.onOpened('popover', popover.el);
+            },
+            popoverClose(popover) {
+              ss.onClose('popover', popover.el);
+            },
+            popoverClosed(popover) {
+              ss.onClosed('popover', popover.el);
+            },
+          },
+        },
+      },
+    });
     return ss;
   }
   open(type) {
