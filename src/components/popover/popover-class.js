@@ -5,6 +5,8 @@ import Modal from '../modal/modal-class';
 class Popover extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
+      backdrop: true,
+      closeByOutsideClick: app.params.modals.popoverCloseByOutsideClick,
       on: {},
     }, params);
 
@@ -34,11 +36,14 @@ class Popover extends Modal {
       return popover.destroy();
     }
 
-    // backdrop
-    let $backdropEl = app.root.children('.popover-backdrop');
-    if ($backdropEl.length === 0) {
-      $backdropEl = $('<div class="popover-backdrop"></div>');
-      app.root.append($backdropEl);
+    // Backdrop
+    let $backdropEl;
+    if (popover.params.backdrop) {
+      $backdropEl = app.root.children('.popover-backdrop');
+      if ($backdropEl.length === 0) {
+        $backdropEl = $('<div class="popover-backdrop"></div>');
+        app.root.append($backdropEl);
+      }
     }
 
     // Find Angle
@@ -62,7 +67,7 @@ class Popover extends Modal {
       $angleEl,
       angleEl: $angleEl[0],
       $backdropEl,
-      backdropEl: $backdropEl[0],
+      backdropEl: $backdropEl && $backdropEl[0],
       type: 'popover',
       open(...args) {
         let [targetEl, animate] = args;
@@ -84,6 +89,24 @@ class Popover extends Modal {
       popover.once('popoverClose', () => {
         app.off('resize', handleResize);
       });
+    });
+
+    function handleClick(e) {
+      const target = e.target;
+      if ($(target).closest(popover.el).length === 0) {
+        popover.close();
+      }
+    }
+
+    popover.on('popoverOpened', () => {
+      if (popover.params.closeByOutsideClick && !popover.params.backdrop) {
+        app.on('click', handleClick);
+      }
+    });
+    popover.on('popoverClose', () => {
+      if (popover.params.closeByOutsideClick && !popover.params.backdrop) {
+        app.off('click', handleClick);
+      }
     });
 
     $el[0].f7Modal = popover;
