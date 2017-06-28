@@ -27,6 +27,11 @@ export default {
           if (!popup) popup = new Popup(app, { el: $popupEl });
           return popup.close(animate);
         },
+        get(popupEl = '.popup.modal-in') {
+          const $popupEl = $(popupEl);
+          if ($popupEl.length === 0) return undefined;
+          return $popupEl[0].f7Modal;
+        },
       },
     });
   },
@@ -41,7 +46,7 @@ export default {
     },
     '.popup-backdrop': function closePopup() {
       const app = this;
-      if (!app.params.modals.popupCloseByOutsideClick) return;
+      if (!app.params.modals.popupCloseByBackdropClick) return;
       app.popup.close();
     },
   },

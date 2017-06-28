@@ -24,6 +24,11 @@ export default {
           if (!actions) actions = new Actions(app, { el: $actionsEl });
           return actions.close(animate);
         },
+        get(actionsEl = '.actions-modal.modal-in') {
+          const $actionsEl = $(actionsEl);
+          if ($actionsEl.length === 0) return undefined;
+          return $actionsEl[0].f7Modal;
+        },
       },
     });
   },
@@ -38,7 +43,7 @@ export default {
     },
     '.actions-backdrop': function closeActions() {
       const app = this;
-      if (!app.params.modals.actionsCloseByOutsideClick) return;
+      if (!app.params.modals.actionsCloseByBackdropClick) return;
       app.actions.close();
     },
   },

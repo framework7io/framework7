@@ -27,6 +27,11 @@ export default {
           if (!loginScreen) loginScreen = new LoginScreen(app, { el: $loginScreenEl });
           return loginScreen.close(animate);
         },
+        get(loginScreenEl = '.login-screen.modal-in') {
+          const $loginScreenEl = $(loginScreenEl);
+          if ($loginScreenEl.length === 0) return undefined;
+          return $loginScreenEl[0].f7Modal;
+        },
       },
     });
   },

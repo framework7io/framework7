@@ -27,6 +27,11 @@ export default {
           if (!dialog) dialog = new Dialog(app, { el: $dialogEl });
           return dialog.close(animate);
         },
+        get(dialogEl = '.dialog.modal-in') {
+          const $dialogEl = $(dialogEl);
+          if ($dialogEl.length === 0) return undefined;
+          return $dialogEl[0].f7Modal;
+        },
 
         // Shortcuts
         alert(...args) {
@@ -205,7 +210,7 @@ export default {
   clicks: {
     '.dialog-backdrop': function closeDialog() {
       const app = this;
-      if (!app.params.modals.dialogCloseByOutsideClick) return;
+      if (!app.params.modals.dialogCloseByBackdropClick) return;
       app.dialog.close();
     },
   },

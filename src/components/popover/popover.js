@@ -24,6 +24,11 @@ export default {
           if (!popover) popover = new Popover(app, { el: $popoverEl });
           return popover.close(animate);
         },
+        get(popoverEl = '.popover.modal-in') {
+          const $popoverEl = $(popoverEl);
+          if ($popoverEl.length === 0) return undefined;
+          return $popoverEl[0].f7Modal;
+        },
       },
     });
   },
@@ -38,7 +43,7 @@ export default {
     },
     '.popover-backdrop': function closePopover() {
       const app = this;
-      if (!app.params.modals.popoverCloseByOutsideClick) return;
+      if (!app.params.modals.popoverCloseByBackdropClick) return;
       app.popover.close();
     },
   },

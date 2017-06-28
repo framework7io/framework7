@@ -27,6 +27,11 @@ export default {
           if (!sheet) sheet = new Sheet(app, { el: $sheetEl });
           return sheet.close(animate);
         },
+        get(sheetEl = '.sheet-modal.modal-in') {
+          const $sheetEl = $(sheetEl);
+          if ($sheetEl.length === 0) return undefined;
+          return $sheetEl[0].f7Modal;
+        },
       },
     });
   },
@@ -41,7 +46,7 @@ export default {
     },
     '.sheet-backdrop': function closePopup() {
       const app = this;
-      if (!app.params.modals.sheetCloseByOutsideClick) return;
+      if (!app.params.modals.sheetCloseByBackdropClick) return;
       app.sheet.close();
     },
   },
