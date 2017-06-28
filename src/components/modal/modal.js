@@ -8,6 +8,7 @@ export default {
   params: {
     modals: {
       moveToRoot: true,
+
       queueDialogs: true,
       dialogTitle: 'Framework7',
       dialogButtonOk: 'OK',
@@ -16,12 +17,18 @@ export default {
       dialogPasswordPlaceholder: 'Password',
       dialogPreloaderTitle: 'Loading... ',
       dialogProgressTitle: 'Loading... ',
-      dialogCloseByOutsideClick: false,
-      popupCloseByOutsideClick: true,
-      popoverCloseByOutsideClick: true,
+      dialogCloseByBackdropClick: false,
+
+      popupCloseByBackdropClick: true,
+
+      popoverCloseByBackdropClick: true,
+      popoverCloseByOutsideClick: false,
+
       actionsToPopover: true,
-      actionsCloseByOutsideClick: true,
-      sheetCloseByOutsideClick: true,
+      actionsCloseByBackdropClick: true,
+
+      sheetCloseByBackdropClick: true,
+      sheetCloseByOutsideClick: false,
     },
   },
 };
