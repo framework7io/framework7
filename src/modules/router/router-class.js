@@ -676,7 +676,7 @@ class Router extends Framework7Class {
       compile(template);
     }
   }
-  popupTemplateLoader(template, templateUrl, options, resolve, reject) {
+  modalTemplateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     return router.templateLoader(template, templateUrl, options, (html) => {
       resolve(html);
@@ -730,7 +730,7 @@ class Router extends Framework7Class {
       compile(component);
     }
   }
-  popupComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
+  modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
     const router = this;
     router.componentLoader(component, componentUrl, options, (el) => {
       resolve(el);
@@ -865,13 +865,17 @@ class Router extends Framework7Class {
     }
 
     let initUrl = router.params.url;
-    const documentUrl = document.location.href.split(document.location.origin)[1];
+    let documentUrl = document.location.href.split(document.location.origin)[1];
     let historyRestored;
     if (!router.params.pushState) {
       if (!initUrl) {
         initUrl = documentUrl;
       }
     } else {
+      if (router.params.pushStateRoot && documentUrl.indexOf(router.params.pushStateRoot) >= 0) {
+        documentUrl = documentUrl.split(router.params.pushStateRoot)[1];
+        if (documentUrl === '') documentUrl = '/';
+      }
       if (documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
         initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
       } else {
@@ -880,8 +884,10 @@ class Router extends Framework7Class {
       router.restoreHistory();
       if (router.history.indexOf(initUrl) >= 0) {
         router.history = router.history.slice(0, router.history.indexOf(initUrl) + 1);
+      } else if (router.params.url === initUrl) {
+        router.history = [initUrl];
       } else {
-        router.history = [documentUrl.split(router.params.pushStateSeparator)[0], initUrl];
+        router.history = [documentUrl.split(router.params.pushStateSeparator)[0] || '/', initUrl];
       }
       if (router.history.length > 1) {
         historyRestored = true;
