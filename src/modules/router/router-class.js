@@ -798,7 +798,7 @@ class Router extends Framework7Class {
       if (options.pageEvents) {
         $pageEl[0].f7PageEvents = options.pageEvents;
         Object.keys(options.pageEvents).forEach((eventName) => {
-          $pageEl.on(eventName, options.pageEvents[eventName]);
+          $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, options.pageEvents[eventName]);
         });
       }
     }
@@ -818,7 +818,7 @@ class Router extends Framework7Class {
     if (callback === 'beforeRemove') {
       if ($pageEl[0].f7PageEventsAttached && $pageEl[0].f7PageEvents) {
         Object.keys($pageEl[0].f7PageEvents).forEach((eventName) => {
-          $pageEl.off(eventName, $pageEl[0].f7PageEvents[eventName]);
+          $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEvents[eventName]);
         });
       }
     }
