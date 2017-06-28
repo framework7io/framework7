@@ -21,7 +21,7 @@ export default {
       virtualListHeight: undefined,
       formColorTheme: undefined,
       navbarColorTheme: undefined,
-      on: {},
+      routableModals: true,
       /*
         Custom render functions:
         function (smartSelect, items)
@@ -55,11 +55,20 @@ export default {
         create(params) {
           return new SmartSelect(app, params);
         },
-        open(el) {
-
+        open(smartSelectEl) {
+          const ss = app.smartSelect.get(smartSelectEl);
+          if (ss && ss.open) return ss.open();
+          return undefined;
         },
-        close(el) {
-
+        close(smartSelectEl) {
+          const ss = app.smartSelect.get(smartSelectEl);
+          if (ss && ss.close) return ss.close();
+          return undefined;
+        },
+        get(smartSelectEl) {
+          const $smartSelectEl = $(smartSelectEl);
+          if (!$smartSelectEl.length) return undefined;
+          return $smartSelectEl[0].f7SmartSelect;
         },
       },
     });

@@ -7,7 +7,9 @@ class SmartSelect extends Framework7Class {
     super(params, [app]);
     const ss = this;
     ss.app = app;
-    const defaults = Utils.extend({}, app.modules.smartSelect.params.smartSelect);
+    const defaults = Utils.extend({
+      on: {},
+    }, app.modules.smartSelect.params.smartSelect);
 
     const $el = $(params.el).eq(0);
     if ($el.length === 0) return ss;
@@ -41,7 +43,7 @@ class SmartSelect extends Framework7Class {
       selectEl: $selectEl[0],
       $valueEl,
       valueEl: $valueEl[0],
-      url: params.url || $el.attr('href') || 'select/',
+      url: params.url || $el.attr('href') || `${$selectEl.attr('name').toLowerCase()}-select/`,
       multiple,
       inputType,
       id,
@@ -266,6 +268,7 @@ class SmartSelect extends Framework7Class {
   }
   onClose() {
     const ss = this;
+    if (ss.destroyed) return;
 
     // Destroy VL
     if (ss.vl && ss.vl.destroy) {
@@ -286,6 +289,7 @@ class SmartSelect extends Framework7Class {
   }
   onClosed() {
     const ss = this;
+    if (ss.destroyed) return;
     ss.opened = false;
     ss.$containerEl = null;
     delete ss.$containerEl;
@@ -364,6 +368,7 @@ class SmartSelect extends Framework7Class {
   }
   openPage() {
     const ss = this;
+    if (ss.opened) return ss;
     ss.getItemsData();
     const pageHtml = ss.renderPage(ss.items);
 
@@ -426,30 +431,38 @@ class SmartSelect extends Framework7Class {
   }
   openPopup() {
     const ss = this;
+    if (ss.opened) return ss;
     ss.getItemsData();
     const popupHtml = ss.renderPopup(ss.items);
-    ss.view.router.navigate(ss.url, {
-      createRoute: {
-        path: ss.url,
-        popup: {
-          content: popupHtml,
-          on: {
-            popupOpen(popup) {
-              ss.onOpen('popup', popup.el);
-            },
-            popupOpened(popup) {
-              ss.onOpened('popup', popup.el);
-            },
-            popupClose(popup) {
-              ss.onClose('popup', popup.el);
-            },
-            popupClosed(popup) {
-              ss.onClosed('popup', popup.el);
-            },
-          },
+
+    const popupParams = {
+      content: popupHtml,
+      on: {
+        popupOpen(popup) {
+          ss.onOpen('popup', popup.el);
+        },
+        popupOpened(popup) {
+          ss.onOpened('popup', popup.el);
+        },
+        popupClose(popup) {
+          ss.onClose('popup', popup.el);
+        },
+        popupClosed(popup) {
+          ss.onClosed('popup', popup.el);
         },
       },
-    });
+    };
+
+    if (ss.params.routableModals) {
+      ss.view.router.navigate(ss.url, {
+        createRoute: {
+          path: ss.url,
+          popup: popupParams,
+        },
+      });
+    } else {
+      ss.modal = ss.app.popup.create(popupParams).open();
+    }
     return ss;
   }
   renderSheet() {
@@ -478,33 +491,41 @@ class SmartSelect extends Framework7Class {
   }
   openSheet() {
     const ss = this;
+    if (ss.opened) return ss;
     ss.getItemsData();
     const sheetHtml = ss.renderSheet(ss.items);
-    ss.view.router.navigate(ss.url, {
-      createRoute: {
-        path: ss.url,
-        sheet: {
-          content: sheetHtml,
-          backdrop: false,
-          scrollToEl: ss.$el,
-          closeByOutsideClick: true,
-          on: {
-            sheetOpen(sheet) {
-              ss.onOpen('sheet', sheet.el);
-            },
-            sheetOpened(sheet) {
-              ss.onOpened('sheet', sheet.el);
-            },
-            sheetClose(sheet) {
-              ss.onClose('sheet', sheet.el);
-            },
-            sheetClosed(sheet) {
-              ss.onClosed('sheet', sheet.el);
-            },
-          },
+
+    const sheetParams = {
+      content: sheetHtml,
+      backdrop: false,
+      scrollToEl: ss.$el,
+      closeByOutsideClick: true,
+      on: {
+        sheetOpen(sheet) {
+          ss.onOpen('sheet', sheet.el);
+        },
+        sheetOpened(sheet) {
+          ss.onOpened('sheet', sheet.el);
+        },
+        sheetClose(sheet) {
+          ss.onClose('sheet', sheet.el);
+        },
+        sheetClosed(sheet) {
+          ss.onClosed('sheet', sheet.el);
         },
       },
-    });
+    };
+
+    if (ss.params.routableModals) {
+      ss.view.router.navigate(ss.url, {
+        createRoute: {
+          path: ss.url,
+          sheet: sheetParams,
+        },
+      });
+    } else {
+      ss.modal = ss.app.sheet.create(sheetParams).open();
+    }
     return ss;
   }
   renderPopover() {
@@ -523,35 +544,42 @@ class SmartSelect extends Framework7Class {
   }
   openPopover() {
     const ss = this;
+    if (ss.opened) return ss;
     ss.getItemsData();
     const popoverHtml = ss.renderPopover(ss.items);
-    ss.view.router.navigate(ss.url, {
-      createRoute: {
-        path: ss.url,
-        popover: {
-          content: popoverHtml,
-          targetEl: ss.$el,
-          on: {
-            popoverOpen(popover) {
-              ss.onOpen('popover', popover.el);
-            },
-            popoverOpened(popover) {
-              ss.onOpened('popover', popover.el);
-            },
-            popoverClose(popover) {
-              ss.onClose('popover', popover.el);
-            },
-            popoverClosed(popover) {
-              ss.onClosed('popover', popover.el);
-            },
-          },
+    const popoverParams = {
+      content: popoverHtml,
+      targetEl: ss.$el,
+      on: {
+        popoverOpen(popover) {
+          ss.onOpen('popover', popover.el);
+        },
+        popoverOpened(popover) {
+          ss.onOpened('popover', popover.el);
+        },
+        popoverClose(popover) {
+          ss.onClose('popover', popover.el);
+        },
+        popoverClosed(popover) {
+          ss.onClosed('popover', popover.el);
         },
       },
-    });
+    };
+    if (ss.params.routableModals) {
+      ss.view.router.navigate(ss.url, {
+        createRoute: {
+          path: ss.url,
+          popover: popoverParams,
+        },
+      });
+    } else {
+      ss.modal = ss.app.popover.create(popoverParams).open();
+    }
     return ss;
   }
   open(type) {
     const ss = this;
+    if (ss.opened) return ss;
     const openIn = type || ss.params.openIn;
     ss[`open${openIn.split('').map((el, index) => {
       if (index === 0) return el.toUpperCase();
@@ -561,7 +589,18 @@ class SmartSelect extends Framework7Class {
   }
   close() {
     const ss = this;
-    ss.view.router.back();
+    if (!ss.opened) return ss;
+    if (ss.params.routableModals || ss.openedIn === 'page') {
+      ss.view.router.back();
+    } else {
+      ss.modal.once('modalClosed', () => {
+        Utils.nextTick(() => {
+          ss.modal.destroy();
+          delete ss.modal;
+        });
+      });
+      ss.modal.close();
+    }
     return ss;
   }
   init() {
@@ -570,11 +609,11 @@ class SmartSelect extends Framework7Class {
     ss.setValue();
   }
   destroy() {
-    let ss = this;
+    const ss = this;
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
     Utils.deleteProps(ss);
-    ss = null;
+    ss.destroyed = true;
   }
 }
 
