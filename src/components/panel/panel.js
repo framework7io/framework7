@@ -14,7 +14,7 @@ export default {
       swipeOnlyClose: false,
       swipeNoFollow: false,
       swipeThreshold: 0,
-      closeByOutsideClick: true,
+      closeByBackdropClick: true,
     },
   },
   static: {
@@ -149,7 +149,7 @@ export default {
       const app = this;
       $('.panel-active').trigger('panel:backdrop-click');
       app.emit('panelBackdropClick', $('.panel-active')[0]);
-      if (app.params.panel.closeByOutsideClick) app.panel.close();
+      if (app.params.panel.closeByBackdropClick) app.panel.close();
     },
   },
 };
