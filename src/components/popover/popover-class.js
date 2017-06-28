@@ -163,7 +163,7 @@ class Popover extends Modal {
       }
 
       // Horizontal Position
-      left = targetOffsetLeft;
+      left = (targetOffsetLeft + targetWidth) - width - 8;
       if (left + width >= app.width - 8) {
         left = (targetOffsetLeft + targetWidth) - width - 8;
       }
