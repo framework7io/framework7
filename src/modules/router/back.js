@@ -62,7 +62,7 @@ function backward(el, backwardOptions) {
   // Remove previous page in case of "forced"
   let backIndex;
   if (options.force) {
-    if ($oldPage.prev('.page-previous:not(.stacked)').length > 0) {
+    if ($oldPage.prev('.page-previous:not(.stacked)').length > 0 || $oldPage.prev('.page-previous').length === 0) {
       if (router.history.indexOf(options.route.url) >= 0) {
         backIndex = router.history.length - router.history.indexOf(options.route.url) - 1;
         router.history = router.history.slice(0, router.history.indexOf(options.route.url) + 2);
@@ -106,7 +106,7 @@ function backward(el, backwardOptions) {
         if (router.params.stackPages && router.initialPages.indexOf($pageToRemove[0]) >= 0) {
           $pageToRemove.addClass('stacked');
           $navbarToRemove.addClass('stacked');
-        } else {
+        } else if ($pageToRemove.length > 0) {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
           router.remove($pageToRemove);
           if (separateNavbar) {
@@ -184,7 +184,6 @@ function backward(el, backwardOptions) {
 
   // Current Route
   router.currentRoute = options.route;
-  router.currentPage = $newPage[0];
 
   // Insert Page
   insertPage();
@@ -242,7 +241,7 @@ function backward(el, backwardOptions) {
       router.back(router.history[router.history.length - 2], { preload: true });
     }
     if (router.params.pushState) {
-      History.clearQueue();
+      History.clearRouterQueue();
     }
   }
 
@@ -357,11 +356,34 @@ function back(...args) {
     return router;
   }
 
-  if (router.currentRoute.modal) {
-    router.modalRemove();
+  let currentRouteIsModal = router.currentRoute.modal;
+  let modalType;
+  if (!currentRouteIsModal) {
+    ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+      if (router.currentRoute.route[modalLoadProp]) {
+        currentRouteIsModal = true;
+        modalType = modalLoadProp;
+      }
+    });
+  }
+  if (currentRouteIsModal) {
+    const modalToClose = router.currentRoute.modal ||
+                         router.currentRoute.route.modalInstance ||
+                         app[modalType].get();
+    const previousUrl = router.history[router.history.length - 2];
+    const previousRoute = router.findMatchingRoute(previousUrl);
+    if (!previousRoute || !modalToClose) {
+      return router;
+    }
+    if (router.params.pushState && navigateOptions.pushState !== false) {
+      History.back();
+    }
+    router.currentRoute = previousRoute;
+    router.history.pop();
+    router.saveHistory();
+    router.modalRemove(modalToClose);
     return router;
   }
-
   const $previousPage = router.$el.children('.page-current').prevAll('.page-previous').eq(0);
   if (!navigateOptions.force && $previousPage.length > 0) {
     if (router.params.pushState && $previousPage[0].f7Page && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url) {
@@ -373,7 +395,8 @@ function back(...args) {
     }));
     return router;
   }
-  // Find page to load
+
+  // Navigate URL
   if (navigateUrl === '#') {
     navigateUrl = undefined;
   }
@@ -383,6 +406,8 @@ function back(...args) {
   if (!navigateUrl && router.history.length > 1) {
     navigateUrl = router.history[router.history.length - 2];
   }
+
+  // Find route to load
   let route = router.findMatchingRoute(navigateUrl);
 
   if (!route) {

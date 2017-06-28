@@ -2,23 +2,15 @@ import $ from 'dom7';
 
 const History = {
   queue: [],
-  closeModal(modalType) {
-    let modalClassName = modalType;
-    if (modalType === 'sheet' || modalType === 'actions') {
-      modalClassName = `${modalType}-modal`;
-    }
-    if (modalType === 'loginScreen') {
-      modalClassName = 'login-screen';
-    }
-    const modalEl = $(`.${modalClassName}.modal-in`)[0];
-    if (modalEl && modalEl.f7Modal) {
-      modalEl.f7Modal.closeByHistory = true;
-      modalEl.f7Modal.close();
-    }
-  },
   clearQueue() {
     if (History.queue.length === 0) return;
-    const currentQueue = History.queue.pop();
+    const currentQueue = History.queue.shift();
+    currentQueue();
+  },
+  routerQueue: [],
+  clearRouterQueue() {
+    if (History.routerQueue.length === 0) return;
+    const currentQueue = History.routerQueue.pop();
     const router = currentQueue.router;
 
     let animate = router.params.animate;
@@ -38,10 +30,12 @@ const History = {
     let state = e.state;
     History.previousState = History.state;
     History.state = state;
-    if (History.previousState && History.previousState.modal) {
-      History.closeModal(History.previousState.modal);
-      return;
-    }
+
+    History.allowChange = true;
+    History.clearQueue();
+
+    state = History.state;
+
     if (!state && mainView) {
       state = {
         viewIndex: mainView.index,
@@ -62,7 +56,7 @@ const History = {
         if (router.allowPageChange) {
           router.back({ animate, pushState: false });
         } else {
-          History.queue.push({
+          History.routerQueue.push({
             action: 'back',
             router,
           });
@@ -71,7 +65,7 @@ const History = {
         // Load page
         router.navigate(stateUrl, { animate, pushState: false });
       } else {
-        History.queue.unshift({
+        History.routerQueue.unshift({
           action: 'load',
           stateUrl,
           router,
@@ -80,21 +74,36 @@ const History = {
     }
   },
   push(state, url) {
+    if (!History.allowChange) {
+      History.queue.push(() => {
+        History.push(state, url);
+      });
+      return;
+    }
     History.previousState = History.state;
     History.state = state;
     window.history.pushState(state, '', url);
   },
   replace(state, url) {
+    if (!History.allowChange) {
+      History.queue.push(() => {
+        History.replace(state, url);
+      });
+      return;
+    }
     History.previousState = History.state;
     History.state = state;
     window.history.replaceState(state, '', url);
   },
   go(index) {
+    History.allowChange = false;
     window.history.go(index);
   },
   back() {
+    History.allowChange = false;
     window.history.back();
   },
+  allowChange: true,
   previousState: {},
   state: window.history.state,
   blockPopstate: true,

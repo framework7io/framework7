@@ -143,9 +143,11 @@ function forward(el, forwardOptions = {}) {
       pushStateRoot + router.params.pushStateSeparator + options.route.url);
   }
 
+  // Current Route
+  router.currentRoute = options.route;
+
   // Update router history
   const url = options.route.url;
-  router.url = options.route.url;
   if (options.history) {
     if (options.reloadCurrent && router.history.length > 0) {
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
@@ -156,10 +158,6 @@ function forward(el, forwardOptions = {}) {
     }
   }
   router.saveHistory();
-
-  // Current Route
-  router.currentRoute = options.route;
-  router.currentPage = $newPage[0];
 
   // Insert new page and navbar
   const newPageInDom = $newPage.parents(document).length > 0;
@@ -260,7 +258,8 @@ function forward(el, forwardOptions = {}) {
     router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-    if (!router.params.preloadPreviousPage || router.app.theme === 'md') {
+    const removeOldPage = !(router.params.preloadPreviousPage || (router.app.them === 'ios' && router.params.swipeBackPage));
+    if (removeOldPage) {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
         if (separateNavbar) {
@@ -278,7 +277,7 @@ function forward(el, forwardOptions = {}) {
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     if (router.params.pushState) {
-      History.clearQueue();
+      History.clearRouterQueue();
     }
   }
   function setPositionClasses() {

@@ -12,6 +12,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
   }, loadOptions);
 
   const modalParams = route.route[modalType];
+  const modalRoute = route.route;
 
   const { ignoreCache } = options;
 
@@ -21,6 +22,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
   function onModalLoaded() {
     // Create Modal
     const modal = app[modalType].create(modalParams);
+    modalRoute.modalInstance = modal;
 
     function closeOnSwipeBack() {
       modal.close();
@@ -30,15 +32,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
     });
     modal.on('modalClose', () => {
       router.off('swipeBackMove', closeOnSwipeBack);
-      router.currentRoute = router.previousRoute;
-      const inState = (History.state && History.state.modal) ||
-                      (History.previousState && History.previousState.modal);
-      if (router.params.pushState && (options.pushState || inState) && !modal.closeByHistory) {
-        History.back();
-      }
-      if (options.history) {
-        router.history.pop();
-        router.saveHistory();
+      if (!modal.closeByRouter) {
+        router.back();
       }
     });
 
@@ -50,15 +45,11 @@ function modalLoad(modalType, route, loadOptions = {}) {
       }
       Utils.nextTick(() => {
         modal.destroy();
+        delete modalRoute.modalInstance;
       });
     });
 
     if (options.route) {
-      // Set Route
-      if (options.route !== router.currentRoute) {
-        router.currentRoute = Utils.extend(options.route, { modal });
-      }
-
       // Update Browser History
       if (router.params.pushState && options.pushState) {
         History.push(
@@ -68,6 +59,11 @@ function modalLoad(modalType, route, loadOptions = {}) {
             modal: modalType,
           },
           (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
+      }
+
+      // Set Route
+      if (options.route !== router.currentRoute) {
+        router.currentRoute = Utils.extend(options.route, { modal });
       }
 
       // Update Router History
@@ -140,11 +136,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
     onModalLoaded();
   }
 }
-function modalRemove() {
-  const router = this;
-  const route = router.currentRoute;
-  const modal = route.modal;
-  modal.closeByRouter = true;
+function modalRemove(modal) {
+  Utils.extend(modal, { closeByRouter: true });
   modal.close();
 }
 
