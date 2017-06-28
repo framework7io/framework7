@@ -5,7 +5,10 @@ const Navbar = {
   size(el) {
     const app = this;
     if (app.theme !== 'ios') return;
-    const $el = $(el);
+    let $el = $(el);
+    if ($el.hasClass('navbar')) {
+      $el = $el.children('.navbar-inner');
+    }
     if (
       $el.hasClass('stacked') ||
       $el.parents('.stacked').length > 0 ||
