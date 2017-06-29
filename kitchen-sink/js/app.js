@@ -1,6 +1,7 @@
 var $ = Dom7;
 var app = new Framework7({
   root: '#app',
+  theme: 'auto',
   data: function data() {
     return {
       user: {
