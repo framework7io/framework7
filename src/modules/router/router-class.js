@@ -772,6 +772,9 @@ class Router extends Framework7Class {
       direction,
       route: currentPage.route ? currentPage.route : route,
     };
+    if ($navbarEl && $navbarEl[0]) {
+      $navbarEl[0].f7Page = page;
+    }
     $pageEl[0].f7Page = page;
     return page;
   }
