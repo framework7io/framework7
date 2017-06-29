@@ -83,7 +83,7 @@ export default {
     },
     tabBeforeRemove(tabEl) {
       $(tabEl).find('.smart-select-init').each((index, smartSelectEl) => {
-        if (smartSelectEl.f7SmartSelect && smartSelectEl[0].f7SmartSelect.destroy) {
+        if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
           smartSelectEl.f7SmartSelect.destroy();
         }
       });
