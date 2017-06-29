@@ -7,7 +7,10 @@ const Navbar = {
     if (app.theme !== 'ios') return;
     let $el = $(el);
     if ($el.hasClass('navbar')) {
-      $el = $el.children('.navbar-inner');
+      $el = $el.children('.navbar-inner').each((index, navbarEl) => {
+        app.navbar.size(navbarEl);
+      });
+      return;
     }
     if (
       $el.hasClass('stacked') ||
@@ -76,7 +79,7 @@ const Navbar = {
     const inverter = app.rtl ? -1 : 1;
 
     if (dynamicNavbar) {
-      if (title.hasClass('sliding') || sliding) {
+      if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
         title[0].f7NavbarLeftOffset = -(currLeft + diff) * inverter + separateNavbarLeftOffset;
         title[0].f7NavbarRightOffset = (navbarInnerWidth - currLeft - diff - titleWidth) * inverter - separateNavbarRightOffset;
         if (isPrevious) {
@@ -174,14 +177,6 @@ export default {
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
-    },
-    pageBeforeRemove(page) {
-      const app = this;
-      if (app.theme !== 'ios') return;
-      const $navbarEl = Navbar.getEl(page);
-      if (!$navbarEl || $navbarEl.length === 0) return;
-
-      app.off('resize', $navbarEl[0].f7ResizeHandler);
     },
     pageReinit(page) {
       const app = this;
