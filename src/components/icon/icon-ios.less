@@ -1,0 +1,39 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .icon-back {
+    width: 12px;
+    height: 20px;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,0l2,2l-8,8l8,8l-2,2L0,10L10,0z' fill='@{themeColor}'/></svg>");
+  }
+  .icon-forward {
+    width: 12px;
+    height: 20px;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='@{themeColor}'/></svg>");
+  }
+  .icon-next, .icon-prev {
+    width: 15px;
+    height: 15px;
+  }
+  .icon-next {
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='@{themeColor}' d='M1,1.6l11.8,5.8L1,13.4V1.6 M0,0v15l15-7.6L0,0L0,0z'/></g></svg>");
+  }
+  .icon-prev {
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='@{themeColor}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
+  }
+  .navbar, .toolbar {
+    .f7-icons {
+      font-size: 22px;
+    }
+  }
+  .tabbar, .tabbar-labels {
+    .f7-icons {
+      font-size: 25px;
+    }
+  }
+  .item-media .f7-icons {
+    font-size: 29px;
+  }
+  .button .f7-icons {
+    font-size: 22px;
+  }
+}

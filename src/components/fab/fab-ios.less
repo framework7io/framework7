@@ -1,0 +1,55 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .fab > a, .fab-buttons a {
+    background: @themeColor;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    border-radius: 25px;
+    &.active-state {
+      transition-duration: 0ms;
+      background: darken(@themeColor, 8%);
+    }
+    i.icon {
+      font-size: 21px;
+    }
+  }
+
+  .fab[class*="fab-left"] {
+    left: 15px;
+  }
+  .fab[class*="fab-right"] {
+    right: 15px;
+  }
+  .fab[class*="-top"] {
+    top: 15px;
+  }
+  .fab[class*="-bottom"] {
+    bottom: 15px;
+  }
+
+  // Relation with navbar
+  .navbar ~ * .fab[class*="-top"], .navbar ~ .fab[class*="-top"] {
+    margin-top: @navbarSize;
+  }
+  // Relation with toolbar
+  .toolbar ~ * .fab[class*="-bottom"], .toolbar ~ .fab[class*="-bottom"] {
+    margin-bottom: @toolbarSize;
+  }
+  .tabbar-labels ~ * .fab[class*="-bottom"], .tabbar-labels ~ .fab[class*="-bottom"] {
+    margin-bottom: @tabbarLabelsSize;
+    @media (min-width: 768px) {
+      margin-bottom: @tabbarLabelsSizeTablet;
+    }
+  }
+  .fab-morph {
+    border-radius: 25px;
+    background: @themeColor;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    > a {
+      box-shadow: none;
+      background: none !important;
+    }
+  }
+}

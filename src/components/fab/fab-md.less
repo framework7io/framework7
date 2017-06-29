@@ -1,0 +1,77 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  .fab > a, .fab-buttons a {
+    background: @themeColor;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    .md-depth(3);
+    &.active-state {
+      background: darken(@themeColor, 8%);
+    }
+  }
+  .fab[class*="fab-left"] {
+    left: 15px;
+  }
+  .fab[class*="fab-right"] {
+    right: 15px;
+  }
+  .fab[class*="-top"] {
+    top: 15px;
+  }
+  .fab[class*="-bottom"] {
+    bottom: 15px;
+  }
+
+  // Relation with navbar
+  .navbar ~ * .fab[class*="-top"], .navbar ~ .fab[class*="-top"] {
+    margin-top: @navbarSize;
+  }
+
+  @media (min-width: 768px) {
+    .navbar ~ * .fab[class*="-top"], .navbar ~ .fab[class*="-top"] {
+      margin-top: @navbarSizeTablet;
+    }
+  }
+  // Relation with toolbar
+  .toolbar:not(.toolbar-bottom) ~ * .fab[class*="-top"], .toolbar:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+    margin-top: @toolbarSize;
+  }
+  .tabbar-labels:not(.toolbar-bottom) ~ * .fab[class*="-top"], .tabbar-labels:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+    margin-top: @tabbarLabelsSize;
+  }
+  .navbar {
+    + .toolbar:not(.toolbar-bottom) ~ * .fab[class*="-top"], + .toolbar:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+      margin-top: @toolbarSize + @navbarSize;
+    }
+    + .tabbar-labels:not(.toolbar-bottom) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+      margin-top: @tabbarLabelsSize + @navbarSize;
+    }
+    @media (min-width: 768px) {
+      + .toolbar:not(.toolbar-bottom) ~ * .fab[class*="-top"], + .toolbar:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+        margin-top: @toolbarSize + @navbarSizeTablet;
+      }
+      + .tabbar-labels:not(.toolbar-bottom) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+        margin-top: @tabbarLabelsSize + @navbarSizeTablet;
+      }
+    }
+  }
+  // Bottom
+  .toolbar-bottom ~ * .fab[class*="-bottom"], .toolbar-bottom ~ .fab[class*="-bottom"] {
+    margin-bottom: @toolbarSize;
+  }
+  .toolbar-bottom.tabbar-labels ~ * .fab[class*="-bottom"], .toolbar-bottom.tabbar-labels ~ .fab[class*="-bottom"] {
+    margin-bottom: @tabbarLabelsSize;
+  }
+
+  .fab-morph {
+    border-radius: 28px;
+    background: @themeColor;
+    .md-depth(3);
+    > a {
+      box-shadow: none;
+      background: none !important;
+    }
+  }
+}

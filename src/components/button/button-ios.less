@@ -1,0 +1,72 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  //Buttons
+  .button {
+    border: 1px solid @themeColor;
+    color: @themeColor;
+    border-radius: 5px;
+    line-height: 27px;
+    height: 29px;
+
+    &.active-state {
+      background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), .15);
+    }
+    &.button-round, &.button-round-ios {
+      border-radius: 27px;
+    }
+    &.button-active, &.tab-link-active {
+      background: @themeColor;
+      color: #fff;
+    }
+    &.button-big, &.button-big-ios {
+      font-size: 17px;
+      height: 44px;
+      line-height: 42px;
+    }
+    &.button-fill, &.button-fill-ios {
+      color: #fff;
+      background: @themeColor;
+      border-color: transparent;
+      &.active-state {
+        opacity: 0.8;
+      }
+    }
+    i.icon {
+      &:first-child {
+        margin-right: 10px;
+      }
+      &:last-child {
+        margin-left: 10px;
+      }
+      &:first-child:last-child {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+  // Segmented Control
+  .segmented {
+    .button {
+      border-radius: 0;
+      border-left-width: 0;
+      &:first-child {
+        border-radius: 5px 0 0 5px;
+        border-left-width: 1px;
+        border-left-style: solid;
+      }
+      &:last-child {
+        border-radius: 0 5px 5px 0;
+      }
+      &:first-child:last-child {
+        border-radius: 5px;
+      }
+      &.button-round:first-child, &.button-round-ios:first-child {
+        border-radius: 29px 0 0 29px;
+      }
+      &.button-round:last-child, &.button-round-ios:last-child {
+        border-radius: 0 29px 29px 0;
+      }
+    }
+  }
+}

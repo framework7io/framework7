@@ -1,0 +1,58 @@
+/* === Range Slider === */
+.range-slider {
+  display: block;
+  width: 100%;
+  position: relative;
+  align-self: center;
+  cursor: pointer;
+  user-select: none;
+  &.disabled {
+    .disabled();
+  }
+  input[type="range"] {
+    display: none;
+  }
+}
+.range-bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  overflow: hidden;
+}
+.range-bar-active {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+.range-knob-wrap {
+  z-index: 20;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}
+.range-knob {
+  box-sizing: border-box;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.range-knob-label {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  text-align: center;
+  transition-duration: 120ms;
+  transition-property: transform;
+  transform: translateY(100%) scale(0);
+}
+.range-knob-active-state .range-knob-label {
+  transform: translateY(0%) scale(1);
+}
+@import url('range-ios.less');
+@import url('range-md.less');

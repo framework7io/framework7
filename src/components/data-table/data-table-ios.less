@@ -1,0 +1,119 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .data-table {
+    thead {
+      th, td {
+        font-weight: 600;
+        &:not(.sortable-cell-active) {
+          color: #8e8e93;
+        }
+      }
+      i.icon, i.f7-icons {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+    tbody {
+      tr.data-table-row-selected {
+          background: #f7f7f8;
+      }
+      td {
+
+      }
+    }
+    th, td {
+      padding-left: 15px;
+      padding-right: 15px;
+      height: 44px;
+      &.checkbox-cell {
+        padding-right: 7px;
+        width: 22px;
+        + td, + th {
+          padding-left: 8px;
+        }
+      }
+      &.actions-cell {
+        a.link + a.link {
+          margin-left: 15px;
+        }
+        a.icon-only {
+          width: 18px;
+          height: 18px;
+          line-height: 18px;
+        }
+      }
+    }
+
+  }
+  .sortable-cell:not(.numeric-cell):after {
+    margin-left: 5px;
+  }
+  .sortable-cell.numeric-cell:before {
+    margin-right: 5px;
+  }
+  .data-table.card, .card .data-table {
+    .card-header, .card-footer {
+      padding-left: 15px;
+      padding-right: 8px;
+    }
+  }
+
+  .data-table-title {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .data-table-links, .data-table-actions {
+    a.link + a.link {
+      margin-left: 15px;
+    }
+  }
+  .data-table-actions {
+    a.link.icon-only {
+      width: 44px;
+      height: 44px;
+    }
+    i.icon, i.f7-icons {
+      font-size: 22px;
+    }
+  }
+  .data-table .card-header {
+    > .data-table-header, > .data-table-header-selected {
+      padding-left: 15px;
+      padding-right: 8px;
+      margin-left: -15px;
+      margin-right: -8px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      height: 100%;
+    }
+  }
+  .data-table-header-selected {
+    background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), 0.1);
+  }
+  .data-table-title-selected {
+    color: @themeColor;
+  }
+
+  .hairline-root('.data-table tbody td', top, #c8c7cc);
+  &.device-desktop .data-table {
+    tbody tr:hover {
+      background: #f7f7f8;
+    }
+  }
+
+  // Collapsible
+  @media (max-width:480px) and (orientation:portrait) {
+    .data-table.data-table-collapsible {
+      td:not(.checkbox-cell) {
+        font-size: 17px;
+        line-height: 17px;
+        &:before {
+          color: #8e8e93;
+          font-weight: 600;
+        }
+      }
+    }
+    .hairline-root('.data-table-collapsible tr', top, #c8c7cc);
+  }
+}

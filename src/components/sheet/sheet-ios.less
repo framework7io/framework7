@@ -1,0 +1,16 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .sheet-modal {
+    background: #cfd5da;
+    .toolbar {
+      background: @barsBg;
+      + .sheet-modal-inner {
+        height: ~"calc(100% - 44px)";
+      }
+      ~ .sheet-modal-inner .page-content {
+        padding-bottom: 0;
+      }
+    }
+  }
+  .hairline-root('.sheet-modal .toolbar', top, #929499);
+}

@@ -1,0 +1,180 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  @duration: 400ms;
+  .toolbar {
+    background: @toolbarBg;
+    height: @toolbarSize;
+    color: @toolbarColor;
+    font-size: 14px;
+    top: 0;
+    .md-bar-shadow-to-bottom();
+    &.no-shadow {
+      .md-bar-no-shadow();
+    }
+    a {
+      color: @toolbarLinkColor;
+    }
+    a.link {
+      justify-content: center;
+      padding: 0 16px;
+      min-width: 48px;
+      line-height: @toolbarSize;
+      height: @toolbarSize;
+      .md-link-highlight();
+      i + span, i + i, span + i, span + span {
+        margin-left: 8px;
+      }
+    }
+    a.icon-only {
+      min-width: 0;
+      flex-shrink: 0;
+    }
+  }
+  .toolbar-inner {
+    overflow: hidden;
+  }
+
+  .tabbar, .tabbar-labels {
+    a.link, a.tab-link {
+      padding-left: 0;
+      padding-right: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+    i.icon {
+      height: 24px;
+    }
+    a.tab-link {
+      transition-duration: 300ms;
+      overflow: hidden;
+      color: @tabbarLinkColor;
+      position: relative;
+      &.tab-link-active, &.active-state {
+        color: @tabbarActiveLinkColor;
+      }
+    }
+    .tab-link-highlight {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.5);
+      transition-duration: 300ms;
+    }
+  }
+  .toolbar-bottom {
+    top: auto !important;
+    bottom: 0 !important;
+    .md-bar-shadow-to-top();
+    .tab-link-highlight {
+      bottom: auto;
+      top: 0;
+    }
+  }
+  .tabbar-labels {
+    height: @tabbarLabelsSize;
+    a.tab-link, a.link {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+    .tabbar-label {
+      margin-top: 10px;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    &.toolbar-bottom {
+      .tabbar-label {
+        text-transform: none;
+      }
+    }
+  }
+
+
+  // Scrollable
+  .tabbar-scrollable {
+    a.tab-link, a.link {
+      padding: 0 16px;
+    }
+  }
+
+  // Relation with page and navbar
+  .toolbar:not(.toolbar-bottom) ~ * .page-content, .toolbar:not(.toolbar-bottom) ~ .page-content {
+    padding-top: @toolbarSize;
+  }
+  .tabbar-labels:not(.toolbar-bottom) ~ * .page-content, .tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+    padding-top: @tabbarLabelsSize;
+  }
+
+  // Hidden
+  .toolbar-hidden {
+    transform: translate3d(0, -100%, 0);
+    box-shadow: none;
+    &.toolbar-bottom {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+
+  // With Navbar
+  .navbar {
+    + .toolbar:not(.toolbar-bottom) {
+      top: @navbarSize;
+    }
+    + .toolbar:not(.toolbar-bottom) ~ * .page-content, + .toolbar:not(.toolbar-bottom) ~ .page-content {
+      padding-top: @toolbarSize + @navbarSize;
+    }
+    + .tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+      padding-top: @tabbarLabelsSize + @navbarSize;
+    }
+    + .toolbar-hidden:not(.toolbar-bottom) {
+      @translate: @navbarSize + @toolbarSize;
+      transform: translate3d(0, -@translate, 0);
+    }
+    + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom) {
+      @translate: @navbarSize + @tabbarLabelsSize;
+      transform: translate3d(0, -@translate, 0);
+    }
+    &.navbar-hidden {
+      + .toolbar:not(.toolbar-bottom) {
+        transform: translate3d(0, -@navbarSize, 0);
+      }
+    }
+    @media (min-width: 768px) {
+      + .toolbar:not(.toolbar-bottom) {
+        top: @navbarSizeTablet;
+      }
+      + .toolbar:not(.toolbar-bottom) ~ * .page-content, + .toolbar:not(.toolbar-bottom) ~ .page-content {
+        padding-top: @toolbarSize + @navbarSizeTablet;
+      }
+      + .tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+        padding-top: @tabbarLabelsSize + @navbarSizeTablet;
+      }
+      &.navbar-hidden {
+        + .toolbar:not(.toolbar-bottom) {
+          transform: translate3d(0, -@navbarSizeTablet, 0);
+        }
+      }
+      + .toolbar-hidden:not(.toolbar-bottom) {
+        @translate: @navbarSizeTablet + @toolbarSize;
+        transform: translate3d(0, -@translate, 0);
+      }
+      + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom) {
+        @translate: @navbarSizeTablet + @tabbarLabelsSize;
+        transform: translate3d(0, -@translate, 0);
+      }
+    }
+  }
+
+  // Bottom
+  .toolbar-bottom ~ * .page-content, .toolbar-bottom ~ .page-content {
+    padding-bottom: @toolbarSize;
+  }
+  .toolbar-bottom.tabbar-labels ~ * .page-content, .toolbar-bottom.tabbar-labels ~ .page-content {
+    padding-bottom: @tabbarLabelsSize;
+  }
+
+  // Transitions
+  .toolbar-transitioning, .navbar-transitioning + .toolbar {
+    transition-duration: @duration;
+  }
+}
