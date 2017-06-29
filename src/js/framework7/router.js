@@ -973,6 +973,20 @@ app.router._back = function (view, options) {
         // Define old and new pages
         newPage = $(pagesInView[pagesInView.length - 2]);
         oldPage = $(pagesInView[pagesInView.length - 1]);
+        
+        if (view.params.domCache){
+        	var pageNameFromUrl = (url.split('#')[1]).split('?')[0];
+            if (newPage[0].f7PageData.name != pageNameFromUrl){
+                var previousPages = newPage.prevAll('.page.page-on-left');
+                for (var k = 0; k < previousPages.length; k++){
+                	if (previousPages[k].f7PageData.name == pageNameFromUrl){
+                		$(newPage).removeClass('page-on-left').addClass('cached');
+                		newPage = $(previousPages[k]);
+                		break;
+                	}
+                }
+			}	
+       }
 
         // Dynamic navbar
         if (view.params.dynamicNavbar) {
@@ -1283,8 +1297,8 @@ app.router.afterBack = function (view, oldPage, newPage) {
             }
             else {
                 // Just load previous page
-                previousPage = newPage.prev('.page.cached');
-                if (newNavbar) previousNavbar = newNavbar.prev('.navbar-inner.cached');
+                previousPage = newPage.prevAll('.page.page-on-left');
+                if (newNavbar) previousNavbar = newNavbar.prevAll('.navbar-inner.navbar-on-left');
             }
             if (previousPage && previousPage.length > 0) previousPage.removeClass('cached page-on-right page-on-center').addClass('page-on-left');
             if (previousNavbar && previousNavbar.length > 0) previousNavbar.removeClass('cached navbar-on-right navbar-on-center').addClass('navbar-on-left');
