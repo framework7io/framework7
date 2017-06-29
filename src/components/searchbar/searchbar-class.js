@@ -207,7 +207,7 @@ class Searchbar extends FrameworkClass {
     if (sb.enabled) return sb;
     const app = sb.app;
     function enable() {
-      if (sb.$backdropEl && (sb.$searchContainer.length || sb.params.customSearch) && !sb.$el.hasClass('searchbar-enabled') && !sb.query) {
+      if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch) && !sb.$el.hasClass('searchbar-enabled') && !sb.query) {
         sb.$backdropEl.addClass('searchbar-backdrop-in');
       }
       sb.$el.addClass('searchbar-enabled');
@@ -240,7 +240,7 @@ class Searchbar extends FrameworkClass {
       sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
     }
 
-    if (sb.$backdropEl && (sb.$searchContainer.length || sb.params.customSearch)) {
+    if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch)) {
       sb.$backdropEl.removeClass('searchbar-backdrop-in');
     }
 
@@ -284,8 +284,8 @@ class Searchbar extends FrameworkClass {
 
     // Add active/inactive classes on overlay
     if (query.length === 0) {
-      if ($searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) $backdropEl.addClass('searchbar-backdrop-in');
-    } else if ($searchContainer.length && $el.hasClass('searchbar-enabled')) {
+      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) $backdropEl.addClass('searchbar-backdrop-in');
+    } else if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) {
       $backdropEl.removeClass('searchbar-backdrop-in');
     }
 
