@@ -38,7 +38,8 @@ Bart DJ
 ---
 
 ### $10+
-
+Ferry van de Graaf<br>
+Denis Bousselier<br>
 Firestream<br>
 Matthew Becker<br>
 Greg Hatt<br>
@@ -56,7 +57,7 @@ Dave Billington
 ---
 
 ### $5+
-
+VOUSYS<br>
 Mnill<br>
 Daniel Wüst<br>
 Tirso Martínez Reyes<br>
