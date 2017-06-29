@@ -23,6 +23,9 @@
       }
     }
   }
+  .searchbar-expandable {
+    height: 100%;
+  }
   .searchbar-backdrop {
     background: rgba(0,0,0,0.25);
   }
@@ -31,7 +34,8 @@
     width: 48px;
     height: 48px;
     left: -4px;
-    top: 0;
+    top: 50%;
+    margin-top: -24px;
     background-size: 24px 24px;
     background-repeat: no-repeat;
     background-position: center;
@@ -92,19 +96,66 @@
   .page > .searchbar {
     z-index: 510;
     .md-bar-shadow-to-bottom();
+    &.no-shadow {
+      .md-bar-no-shadow();
+    }
+  }
+  .page > .searchbar, .searchbar-expandable {
     input[type="search"] {
       padding-left: 65px + 8px;
     }
     .searchbar-icon, .searchbar-disable-button {
       left: -4px + 8px;
     }
-    &.no-shadow {
-      .md-bar-no-shadow();
+  }
+  .searchbar-expandable {
+    width: 56px;
+    height: 100%;
+    opacity: 0;
+    left: 100%;
+    top: 50%;
+    margin-left: -56px;
+    margin-top: -56px / 2;
+    transform: translate3d(0px, 0px, 0px);
+  }
+  .navbar .searchbar-expandable {
+    border-radius: @navbarSize / 2;
+    width: @navbarSize;
+    margin-left: -@navbarSize;
+    margin-top: -@navbarSize / 2;
+    @media (min-width: 768px) {
+      border-radius: @navbarSizeTablet / 2;
+      width: @navbarSizeTablet;
+      margin-left: -@navbarSizeTablet;
+      margin-top: -@navbarSizeTablet / 2;
     }
   }
+  .toolbar .searchbar-expandable, .subnavbar .searchbar-expandable {
+    border-radius: @toolbarSize / 2;
+    width: @toolbarSize;
+    margin-left: -@toolbarSize;
+    margin-top: -@toolbarSize / 2;
+  }
+  .tabbar-labels .searchbar-expandable {
+    border-radius: @tabbarLabelsSize / 2;
+    width: @tabbarLabelsSize;
+    margin-left: -@tabbarLabelsSize;
+    margin-top: -@tabbarLabelsSize / 2;
+  }
 
-  // Relation with navbar/toolbar
+  .searchbar-expandable.searchbar-enabled {
+    width: 100%;
+    border-radius: 0;
+    opacity: 1;
+    pointer-events: auto;
+    left: 0;
+    top: 0;
+    margin-left: 0;
+    margin-top: 0;
+  }
 
+
+  // Relation with page/navbar/toolbar
   .page > .searchbar ~ * .page-content,
   .page > .searchbar ~ .page-content {
     padding-top: @searchbarSize;

@@ -26,6 +26,7 @@ class Searchbar extends FrameworkClass {
       hideDividers: true,
       hideGroups: true,
       disableOnBackdropClick: true,
+      expandable: false,
     };
 
     // Extend defaults with modules params
@@ -44,9 +45,13 @@ class Searchbar extends FrameworkClass {
     } else {
       const $navbarEl = $el.parents('.navbar-inner');
       if ($navbarEl.length > 0) {
-        const $currentPageEl = $el.parents('.view').find('.page-current');
-        if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
-          $pageEl = $currentPageEl;
+        if ($navbarEl[0].f7Page) {
+          $pageEl = $navbarEl[0].f7Page.$el;
+        } else {
+          const $currentPageEl = $el.parents('.view').find('.page-current');
+          if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
+            $pageEl = $currentPageEl;
+          }
         }
       }
     }
@@ -69,6 +74,8 @@ class Searchbar extends FrameworkClass {
     if (sb.params.backdrop) {
       if (sb.params.backdropEl) {
         $backdropEl = $(sb.params.backdropEl);
+      } else if ($pageEl && $pageEl.length > 0) {
+        $backdropEl = $pageEl.find('.searchbar-backdrop');
       } else {
         $backdropEl = $el.siblings('.searchbar-backdrop');
       }
@@ -123,6 +130,7 @@ class Searchbar extends FrameworkClass {
       isVirtualList: $searchContainer && $searchContainer.hasClass('virtual-list'),
       virtualList: undefined,
       enabled: false,
+      expandable: sb.params.expandable || $el.hasClass('searchbar-expandable'),
     });
 
     // Events
@@ -195,6 +203,7 @@ class Searchbar extends FrameworkClass {
   }
   setDisableButtonMargin() {
     const sb = this;
+    if (sb.expandable) return;
     const app = sb.app;
     sb.$disableButtonEl.transition(0).show();
     sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
@@ -202,16 +211,17 @@ class Searchbar extends FrameworkClass {
     sb.$disableButtonEl.transition('');
     sb.disableButtonHasMargin = true;
   }
-  enable(e) {
+  enable(setFocus) {
     const sb = this;
     if (sb.enabled) return sb;
     const app = sb.app;
+    sb.enabled = true;
     function enable() {
       if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch) && !sb.$el.hasClass('searchbar-enabled') && !sb.query) {
         sb.$backdropEl.addClass('searchbar-backdrop-in');
       }
       sb.$el.addClass('searchbar-enabled');
-      if (sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
+      if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
         if (!sb.disableButtonHasMargin) {
           sb.setDisableButtonMargin();
         }
@@ -219,13 +229,30 @@ class Searchbar extends FrameworkClass {
       }
       sb.$el.trigger('searchbar:enable');
       sb.emit('searchbarEnable');
-      sb.enabled = true;
     }
-    if (app.device.ios && app.theme === 'ios' && e && e.type === 'focus') {
-      Utils.nextTick(() => {
+    let needsFocus = false;
+    if (setFocus === true) {
+      if (document.activeElement !== sb.inputEl) {
+        needsFocus = true;
+      }
+    }
+    const isIos = app.device.ios && app.theme === 'ios';
+    if (isIos) {
+      if (sb.expandable) {
+        if (needsFocus) sb.$inputEl.focus();
         enable();
-      }, 400);
+      } else {
+        if (needsFocus) sb.$inputEl.focus();
+        if (setFocus && (setFocus.type === 'focus' || setFocus === true)) {
+          Utils.nextTick(() => {
+            enable();
+          }, 400);
+        } else {
+          enable();
+        }
+      }
     } else {
+      if (needsFocus) sb.$inputEl.focus();
       enable();
     }
     return sb;
@@ -236,7 +263,7 @@ class Searchbar extends FrameworkClass {
     const app = sb.app;
     sb.$inputEl.val('').trigger('change');
     sb.$el.removeClass('searchbar-enabled');
-    if (sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
+    if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
       sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
     }
 
@@ -245,16 +272,9 @@ class Searchbar extends FrameworkClass {
     }
 
     sb.enabled = false;
-    function disable() {
-      sb.$inputEl.blur();
-    }
-    if (app.device.ios) {
-      Utils.nextTick(() => {
-        disable();
-      }, 400);
-    } else {
-      disable();
-    }
+
+    sb.$inputEl.blur();
+
     sb.$el.trigger('searchbar:disable');
     sb.emit('searchbarDisable');
     return sb;
@@ -262,7 +282,7 @@ class Searchbar extends FrameworkClass {
   toggle() {
     const sb = this;
     if (sb.enabled) sb.disable();
-    else sb.enable();
+    else sb.enable(true);
     return sb;
   }
   search(query, internal) {

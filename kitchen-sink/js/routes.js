@@ -153,6 +153,10 @@ var routes = [
     url: './searchbar.html',
   },
   {
+    path: '/searchbar-expandable/',
+    url: './searchbar-expandable.html',
+  },
+  {
     path: '/smart-select/',
     url: './smart-select.html',
   },
