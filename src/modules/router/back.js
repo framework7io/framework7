@@ -17,6 +17,11 @@ function backward(el, backwardOptions) {
   const $newPage = $(el);
   const $oldPage = router.$el.children('.page-current');
 
+  if ($newPage.length) {
+    // Remove theme elements
+    router.removeThemeElements($newPage);
+  }
+
   let $navbarEl;
   let $newNavbarInner;
   let $oldNavbarInner;

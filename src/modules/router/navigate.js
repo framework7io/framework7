@@ -26,6 +26,11 @@ function forward(el, forwardOptions = {}) {
   let $newNavbarInner;
   let $oldNavbarInner;
 
+  if ($newPage.length) {
+    // Remove theme elements
+    router.removeThemeElements($newPage);
+  }
+
   if (dynamicNavbar) {
     $newNavbarInner = $newPage.children('.navbar').children('.navbar-inner');
     if (separateNavbar) {
@@ -45,8 +50,6 @@ function forward(el, forwardOptions = {}) {
     router.allowPageChange = true;
     return router;
   }
-  // Remove theme elements
-  router.removeThemeElements($newPage);
 
   // Pages In View
   const $pagesInView = $viewEl

@@ -41,7 +41,9 @@ function tabLoad(tabRoute, loadOptions = {}) {
   const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
 
   function onTabLoaded() {
+    // Remove theme elements
     router.removeThemeElements($newTabEl);
+
     $newTabEl.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
     if ($oldTabEl) {

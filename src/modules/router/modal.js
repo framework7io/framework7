@@ -75,6 +75,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
     // Remove theme elements
     router.removeThemeElements(modal.el);
+
     // Emit events
     modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
     router.emit(`${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
