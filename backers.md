@@ -48,7 +48,6 @@ Dmitry Akinin<br>
 Adrian Maleska<br>
 Michael Kreinbihl<br>
 Todd Crowe<br>
-Thanakrit Tangtermsak<br>
 Rick Chang<br>
 Dave Billington
 
