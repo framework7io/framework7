@@ -148,10 +148,13 @@ const Input = {
     }
     function clearInput() {
       const $clicked = $(this);
-      $clicked.siblings('input, textarea').eq(0)
+      const $inputEl = $clicked.siblings('input, textarea').eq(0);
+      const previousValue = $inputEl.val();
+      $inputEl
         .val('')
         .trigger('change')
-        .focus();
+        .focus()
+        .trigger('input:clear', previousValue);
     }
     $(document).on('click', '.input-clear-button', clearInput);
     $(document).on('change input', 'input, textarea, select', onChange, true);
