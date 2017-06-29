@@ -65,7 +65,7 @@ class PullToRefresh extends Framework7Class {
     if ($el.attr('data-ptr-distance')) {
       dynamicTriggerDistance = true;
     } else {
-      triggerDistance = isMaterial ? 56 : 44;
+      triggerDistance = isMaterial ? 66 : 44;
     }
 
     function handleTouchStart(e) {
@@ -152,7 +152,7 @@ class PullToRefresh extends Framework7Class {
           translate = (touchesDiff ** 0.85) + startTranslate;
           if (isMaterial) {
             $preloaderEl.transform(`translate3d(0,${translate}px,0)`)
-              .find('.ptr-arrow').transform(`rotate(${(180 * (touchesDiff / 56)) + 150}deg)`);
+              .find('.ptr-arrow').transform(`rotate(${(180 * (touchesDiff / 66)) + 100}deg)`);
           } else {
             $el.transform(`translate3d(0,${translate}px,0)`);
           }

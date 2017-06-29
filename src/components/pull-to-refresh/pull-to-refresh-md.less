@@ -3,7 +3,7 @@
   .ptr-preloader {
     position: absolute;
     left: 50%;
-    top: 56px - 40px;
+    top: 66px - 50px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -11,15 +11,15 @@
     margin-left: -20px;
     margin-top: -7px;
     z-index: 100;
-    .md-depth(2);
+    .md-depth(1);
     @media (min-width:768px) {
       top: 64px - 40px;
     }
     .preloader {
-      width: 26px;
-      height: 26px;
-      margin-left: -13px;
-      margin-top: -13px;
+      width: 22px;
+      height: 22px;
+      margin-left: -11px;
+      margin-top: -11px;
       top: 50%;
       visibility: hidden;
       .preloader-inner-gap, .preloader-inner-half-circle {
@@ -28,15 +28,15 @@
     }
   }
   .ptr-arrow {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     box-sizing: border-box;
     border: 3px solid #757575;
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -13px;
-    margin-top: -13px;
+    margin-left: -11px;
+    margin-top: -11px;
     border-left-color: transparent;
     border-radius: 50%;
     opacity: 1;
@@ -46,8 +46,8 @@
       width: 0px;
       height: 0px;
       position: absolute;
-      left: -4px;
-      bottom: 1px;
+      left: -5px;
+      bottom: 0px;
       border-bottom-width: 6px;
       border-bottom-style: solid;
       border-bottom-color: inherit;
@@ -73,7 +73,7 @@
   }
   .ptr-refreshing {
     .ptr-preloader {
-      transform: translate3d(0, 56px, 0);
+      transform: translate3d(0, 66px, 0);
     }
   }
   .ptr-transitioning {
