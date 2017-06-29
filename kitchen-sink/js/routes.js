@@ -149,6 +149,10 @@ var routes = [
     url: './range.html',
   },
   {
+    path: '/searchbar/',
+    url: './searchbar.html',
+  },
+  {
     path: '/smart-select/',
     url: './smart-select.html',
   },

@@ -1,0 +1,88 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .searchbar {
+    height: @searchbarSize;
+    background: @searchbarBg;
+    input[type="search"] {
+      padding: 0 28px;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: none;
+      appearance: none;
+      border-radius: 5px;
+      font-family: inherit;
+      color: #000;
+      font-size: 14px;
+      font-weight: normal;
+      background-color: #fff;
+      &::placeholder {
+        color: #939398;
+        opacity: 1;
+      }
+    }
+  }
+  .searchbar-inner {
+    padding: 0 8px;
+  }
+  .searchbar-icon {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    margin-top: -6px;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13' enable-background='new 0 0 13 13'><g><path fill='#939398' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/></g><line stroke='#939398' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>");
+    background-size: 13px 13px;
+  }
+  .searchbar-backdrop {
+    background: rgba(0,0,0,0.4);
+  }
+  .searchbar-input-wrap {
+    height: 28px;
+  }
+  .hairline-root('.searchbar', bottom, @searchbarBorderColor);
+
+  .searchbar-disable-button {
+    font-size: 17px;
+    flex-shrink: 0;
+    transform: translate3d(0,0,0);
+    transition-duration: 300ms;
+    color: @themeColor;
+    display: none;
+    &.active-state {
+      transition-duration: 0ms;
+      opacity: 0.3;
+    }
+  }
+  .searchbar-enabled {
+    .searchbar-disable-button  {
+      margin-left: 8px;
+      pointer-events: auto;
+      opacity: 1;
+    }
+  }
+  .searchbar:not(.searchbar-enabled) {
+    .searchbar-disable-button {
+      transition-duration: 300ms !important;
+    }
+  }
+
+  .page > .searchbar {
+    z-index: 200;
+  }
+  // Relation with page
+  .navbar ~ .page > .searchbar, .page > .navbar ~ .searchbar {
+    top: @searchbarSize;
+  }
+  // Relation with page
+  .navbar ~ .page > .searchbar ~ .page-content,
+  .navbar ~ .page > .searchbar ~ * .page-content,
+  .page > .navbar ~ .searchbar ~ .page-content,
+  .page > .navbar ~ .searchbar ~ * .page-content
+  {
+    padding-top: @navbarSize + @searchbarSize;
+  }
+}

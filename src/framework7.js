@@ -66,6 +66,9 @@ import DataTable from './components/data-table/data-table';
 // FAB
 import FAB from './components/fab/fab';
 
+// Searchbar
+import Searchbar from './components/searchbar/searchbar';
+
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -127,6 +130,8 @@ Framework7
   // Table
   .use(DataTable)
   // FAB
-  .use(FAB);
+  .use(FAB)
+  // Searchbar
+  .use(Searchbar);
 
 export default Framework7;
