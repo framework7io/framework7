@@ -38,7 +38,9 @@
   align-content: center;
 }
 .tabbar, .tabbar-labels {
-  z-index: 5001;
+  .views > & {
+    z-index: 5001;
+  }
   a.link {
     line-height: 1.4;
   }
