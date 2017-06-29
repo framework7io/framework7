@@ -63,11 +63,11 @@ class SmartSelect extends Framework7Class {
     }
     ss.attachEvents = function attachEvents() {
       $el.on('click', onClick);
-      $el.on('change', onChange);
+      $el.on('change', 'input[type="checkbox"], input[type="radio"]', onChange);
     };
     ss.detachEvents = function detachEvents() {
       $el.off('click', onClick);
-      $el.off('change', onChange);
+      $el.off('change', 'input[type="checkbox"], input[type="radio"]', onChange);
     };
 
     function handleInputChange() {
@@ -108,10 +108,10 @@ class SmartSelect extends Framework7Class {
     }
 
     ss.attachInputsEvents = function attachInputsEvents() {
-      ss.$containerEl.on('change', 'input', handleInputChange);
+      ss.$containerEl.on('change', 'input[type="checkbox"], input[type="radio"]', handleInputChange);
     };
     ss.detachInputsEvents = function detachInputsEvents() {
-      ss.$containerEl.off('change', 'input', handleInputChange);
+      ss.$containerEl.off('change', 'input[type="checkbox"], input[type="radio"]', handleInputChange);
     };
 
     // Install Modules
@@ -302,6 +302,24 @@ class SmartSelect extends Framework7Class {
     });
     ss.emit('smartSelectClosed', ss);
   }
+  renderSearchbar() {
+    const ss = this;
+    if (ss.params.renderSearchbar) return ss.params.renderSearchbar();
+    const searchbarHTML = `
+      <div class="searchbar-backdrop"></div>
+      <form class="searchbar searchbar-init" data-search-container=".smart-select-list-${ss.id}" data-search-in=".item-title">
+        <div class="searchbar-inner">
+          <div class="searchbar-input-wrap">
+            <input type="search" placeholder="${ss.params.searchbarPlaceholder}"/>
+            <i class="searchbar-icon"></i>
+            <span class="input-clear-button"></span>
+          </div>
+          <span class="searchbar-disable-button">${ss.params.searchbarDisableText}</span>
+        </div>
+      </form>
+    `;
+    return searchbarHTML;
+  }
   renderItem(index, item) {
     const ss = this;
     if (ss.params.renderItem) return ss.params.renderItem(index, item);
@@ -357,8 +375,9 @@ class SmartSelect extends Framework7Class {
             ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
           </div>
         </div>
+        ${ss.params.searchbar ? ss.renderSearchbar() : ''}
         <div class="page-content">
-          <div class="list${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
             <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>
@@ -418,8 +437,9 @@ class SmartSelect extends Framework7Class {
                 ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
               </div>
             </div>
+            ${ss.params.searchbar ? ss.renderSearchbar() : ''}
             <div class="page-content">
-              <div class="list${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
                 <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
               </div>
             </div>
@@ -480,7 +500,7 @@ class SmartSelect extends Framework7Class {
         </div>
         <div class="sheet-modal-inner">
           <div class="page-content">
-            <div class="list${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
               <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
             </div>
           </div>
@@ -534,7 +554,7 @@ class SmartSelect extends Framework7Class {
     const popoverHtml = `
       <div class="popover smart-select-popover" data-select-name="${ss.name}">
         <div class="popover-inner">
-          <div class="list${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
             <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>

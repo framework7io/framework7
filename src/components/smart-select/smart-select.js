@@ -14,8 +14,8 @@ export default {
       popupCloseLinkText: 'Close',
       sheetCloseLinkText: 'Done',
       searchbar: false,
-      searchbarPlaceholder: 'Search...',
-      searchbarCancelText: 'Search...',
+      searchbarPlaceholder: 'Search',
+      searchbarDisableText: 'Cancel',
       closeOnSelect: false,
       virtualList: false,
       virtualListHeight: undefined,
@@ -23,9 +23,7 @@ export default {
       navbarColorTheme: undefined,
       routableModals: true,
       /*
-        Custom render functions:
-        function (smartSelect, items)
-        must return HTML string
+        Custom render functions
       */
       renderPage: undefined,
       renderPopup: undefined,
@@ -33,16 +31,17 @@ export default {
       renderPopover: undefined,
       /*
         Custom render functions:
-        function (smartSelect, items)
+        function (items)
         must return HTML string
       */
       renderItems: undefined,
       /*
         Custom render functions:
-        function (smartSelect, item)
+        function (index, item)
         must return HTML string
       */
       renderItem: undefined,
+      renderSearchbar: undefined,
     },
   },
   static: {
