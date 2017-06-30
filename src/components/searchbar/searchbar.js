@@ -29,6 +29,9 @@ export default {
       searchbar,
     });
   },
+  static: {
+    Searchbar,
+  },
   on: {
     tabMounted(tabEl) {
       const app = this;
