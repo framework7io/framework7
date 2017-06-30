@@ -69,6 +69,9 @@ import FAB from './components/fab/fab';
 // Searchbar
 import Searchbar from './components/searchbar/searchbar';
 
+// Form
+import Form from './components/form/form';
+
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -132,6 +135,8 @@ Framework7
   // FAB
   .use(FAB)
   // Searchbar
-  .use(Searchbar);
+  .use(Searchbar)
+  // Form
+  .use(Form);
 
 export default Framework7;
