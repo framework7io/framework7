@@ -97,6 +97,10 @@ var routes = [
     url: './chips.html',
   },
   {
+    path: '/contacts-list/',
+    url: './contacts-list.html',
+  },
+  {
     path: '/content-block/',
     url: './content-block.html',
   },
