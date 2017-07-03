@@ -7,7 +7,7 @@ app.accordionToggle = function (item) {
     var itemsForClose = item.filter(function(item) {
         return !item.dataset.closeManual;
     });
-    if (itemsForClose.hasClass('accordion-item-expanded') ) app.accordionClose(itemsForClose);
+    if (itemsForClose.hasClass('accordion-item-expanded')) app.accordionClose(itemsForClose);
     else app.accordionOpen(item);
 };
 app.accordionOpen = function (item) {
