@@ -126,7 +126,9 @@ const Navbar = {
     }
   },
   hide(el, animate = true) {
-    const $el = $(el);
+    let $el = $(el);
+    if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
+    if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
     const className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
     $el.transitionEnd(() => {
@@ -134,8 +136,10 @@ const Navbar = {
     });
     $el.addClass(className);
   },
-  show(el, animate = true) {
-    const $el = $(el);
+  show(el = '.navbar-hidden', animate = true) {
+    let $el = $(el);
+    if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
+    if (!$el.length) return;
     if (!$el.hasClass('navbar-hidden')) return;
     if (animate) {
       $el.addClass('navbar-transitioning');
@@ -145,11 +149,24 @@ const Navbar = {
     }
     $el.removeClass('navbar-hidden');
   },
-  getEl(page) {
+  getElByPage(page) {
+    let $pageEl;
     let $navbarEl;
-    if (page.$navbarEl && page.$navbarEl.length > 0) $navbarEl = page.$navbarEl;
-    else $navbarEl = page.$el.children('.navbar').children('.navbar-inner');
-    return $navbarEl;
+    let pageData;
+    if (page.$navbarEl || page.$el) {
+      pageData = page;
+      $pageEl = page.$el;
+    } else {
+      $pageEl = $(page);
+      if ($pageEl.length > 0) pageData = $pageEl[0].f7Page;
+    }
+    if (pageData && pageData.$navbarEl && pageData.$navbarEl.length > 0) {
+      $navbarEl = pageData.$navbarEl;
+    } else if ($pageEl) {
+      $navbarEl = $pageEl.children('.navbar').children('.navbar-inner');
+    }
+    if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) return undefined;
+    return $navbarEl[0];
   },
 };
 export default {
@@ -161,6 +178,7 @@ export default {
         size: Navbar.size.bind(app),
         hide: Navbar.hide.bind(app),
         show: Navbar.show.bind(app),
+        getElByPage: Navbar.getElByPage.bind(app),
       },
     });
   },
@@ -178,17 +196,33 @@ export default {
         app.navbar.size(navbarEl);
       });
     },
+    pageBeforeIn(page) {
+      const app = this;
+      if (app.theme !== 'ios') return;
+      let $navbarEl;
+      const navbarInnerEl = app.navbar.getElByPage(page);
+      if (!navbarInnerEl) {
+        $navbarEl = page.$el.parents('.view').children('.navbar');
+      } else {
+        $navbarEl = $(navbarInnerEl).parents('.navbar');
+      }
+      if (page.$el.hasClass('no-navbar')) {
+        app.navbar.hide($navbarEl);
+      } else {
+        app.navbar.show($navbarEl);
+      }
+    },
     pageReinit(page) {
       const app = this;
       if (app.theme !== 'ios') return;
-      const $navbarEl = Navbar.getEl(page);
+      const $navbarEl = $(app.navbar.getElByPage(page));
       if (!$navbarEl || $navbarEl.length === 0) return;
       app.navbar.size($navbarEl);
     },
     pageInit(page) {
       const app = this;
       if (app.theme !== 'ios') return;
-      const $navbarEl = Navbar.getEl(page);
+      const $navbarEl = $(app.navbar.getElByPage(page));
       if (!$navbarEl || $navbarEl.length === 0) return;
       app.navbar.size($navbarEl);
     },
