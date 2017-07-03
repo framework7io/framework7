@@ -4,6 +4,7 @@ import History from '../../utils/history';
 
 function forward(el, forwardOptions = {}) {
   const router = this;
+  const app = router.app;
   const view = router.view;
 
   const options = Utils.extend({
@@ -81,7 +82,7 @@ function forward(el, forwardOptions = {}) {
     .addClass(`page-${newPagePosition}`)
     .removeClass('stacked');
 
-  if (dynamicNavbar) {
+  if (dynamicNavbar && $newNavbarInner.length) {
     $newNavbarInner
       .addClass(`navbar-${newPagePosition}`)
       .removeClass('stacked');
@@ -91,12 +92,14 @@ function forward(el, forwardOptions = {}) {
   if (options.reloadCurrent) {
     $oldPage = $pagesInView.eq($pagesInView.length - 1);
     if (separateNavbar) {
-      $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 1);
+      // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 1);
+      $oldNavbarInner = app.navbar.getElByPage($oldPage);
     }
   } else if (options.reloadPrevious) {
     $oldPage = $pagesInView.eq($pagesInView.length - 2);
     if (separateNavbar) {
-      $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 2);
+      // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 2);
+      $oldNavbarInner = app.navbar.getElByPage($oldPage);
     }
   } else if (options.reloadAll) {
     $oldPage = $pagesInView.filter((index, pageEl) => pageEl !== $newPage[0]);
@@ -107,17 +110,20 @@ function forward(el, forwardOptions = {}) {
     if ($pagesInView.length > 1) {
       let i = 0;
       for (i = 0; i < $pagesInView.length - 1; i += 1) {
+        const oldNavbarInnerEl = app.navbar.getElByPage($pagesInView.eq(i));
         if (router.params.stackPages) {
           $pagesInView.eq(i).addClass('stacked');
           if (separateNavbar) {
-            $navbarsInView.eq(i).addClass('stacked');
+            // $navbarsInView.eq(i).addClass('stacked');
+            $(oldNavbarInnerEl).addClass('stacked');
           }
         } else {
           // Page remove event
           router.pageCallback('beforeRemove', $pagesInView[i], $navbarsInView && $navbarsInView[i], 'previous', undefined, options);
-          router.remove($pagesInView[i]);
-          if (separateNavbar) {
-            router.remove($navbarsInView[i]);
+          router.removeEl($pagesInView[i]);
+          if (separateNavbar && oldNavbarInnerEl) {
+            // router.removeEl($navbarsInView[i]);
+            router.removeEl(oldNavbarInnerEl);
           }
         }
       }
@@ -173,8 +179,12 @@ function forward(el, forwardOptions = {}) {
     } else {
       $newPage.insertBefore($oldPage);
     }
-    if (separateNavbar) {
-      $newNavbarInner.insertBefore($oldNavbarInner);
+    if (separateNavbar && $newNavbarInner.length) {
+      if ($oldNavbarInner.length) {
+        $newNavbarInner.insertBefore($oldNavbarInner);
+      } else {
+        $navbarEl.append($newNavbarInner);
+      }
     }
   } else if ($oldPage.next('.page')[0] !== $newPage[0]) {
     if (f7Component && !newPageInDom) {
@@ -184,12 +194,12 @@ function forward(el, forwardOptions = {}) {
     } else {
       $viewEl.append($newPage[0]);
     }
-    if (separateNavbar) {
+    if (separateNavbar && $newNavbarInner.length) {
       $navbarEl.append($newNavbarInner[0]);
     }
   }
   if (!newPageInDom) {
-    router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
+    router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options, $oldPage);
   }
 
   // Remove old page
@@ -197,30 +207,33 @@ function forward(el, forwardOptions = {}) {
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
       $oldPage.addClass('stacked');
       if (separateNavbar) {
-        $newNavbarInner.addClass('stacked');
+        $oldNavbarInner.addClass('stacked');
       }
     } else {
       // Page remove event
       router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', undefined, options);
-      router.remove($oldPage);
-      if (separateNavbar) {
-        router.remove($oldNavbarInner);
+      router.removeEl($oldPage);
+      if (separateNavbar && $oldNavbarInner.length) {
+        router.removeEl($oldNavbarInner);
       }
     }
   } else if (options.reloadAll) {
     $oldPage.each((index, pageEl) => {
       const $oldPageEl = $(pageEl);
+      const $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
       if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
         $oldPageEl.addClass('stacked');
         if (separateNavbar) {
-          $oldNavbarInner.eq(index).addClass('stacked');
+          // $oldNavbarInner.eq(index).addClass('stacked');
+          $oldNavbarInnerEl.addClass('stacked');
         }
       } else {
         // Page remove event
         router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner && $oldNavbarInner.eq(index), 'previous', undefined, options);
-        router.remove($oldPageEl);
-        if (separateNavbar) {
-          router.remove($oldNavbarInner.eq(index));
+        router.removeEl($oldPageEl);
+        if (separateNavbar && $oldNavbarInnerEl.length) {
+          // router.removeEl($oldNavbarInner.eq(index));
+          router.removeEl($oldNavbarInnerEl);
         }
       }
     });
@@ -235,7 +248,7 @@ function forward(el, forwardOptions = {}) {
   }
 
   // Page init and before init events
-  router.pageCallback('init', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options);
+  router.pageCallback('init', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options, $oldPage);
 
   if (options.reloadCurrent || options.reloadAll) {
     router.allowPageChange = true;
@@ -271,9 +284,9 @@ function forward(el, forwardOptions = {}) {
       } else if (!($newPage.attr('data-name') && $newPage.attr('data-name') === 'smart-select-page')) {
         // Remove event
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
-        router.remove($oldPage);
-        if (separateNavbar) {
-          router.remove($oldNavbarInner);
+        router.removeEl($oldPage);
+        if (separateNavbar && $oldNavbarInner.length) {
+          router.removeEl($oldNavbarInner);
         }
       }
     }
@@ -321,7 +334,8 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const { url, content, el, name, template, templateUrl, component, componentUrl } = params;
   const { ignoreCache } = options;
 
-  if (options.route.route.parentPath &&
+  if (options.route.route &&
+    options.route.route.parentPath &&
     router.currentRoute.route.parentPath &&
     options.route.route.parentPath === router.currentRoute.route.parentPath) {
     // Do something nested

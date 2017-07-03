@@ -402,9 +402,17 @@ class Router extends Framework7Class {
       router.animateWithCSS(...args);
     }
   }
-  remove(el) {
+  removePage(el) {
+
+  }
+  removeNavbar(el) {
+
+  }
+  removeEl(el) {
+    if (!el) return;
     const router = this;
     const $el = $(el);
+    if ($el.length === 0) return;
     if ($el[0].f7Component && $el[0].f7Component.destroy) {
       $el[0].f7Component.destroy();
     }
@@ -748,14 +756,21 @@ class Router extends Framework7Class {
       resolve(el, newOptions);
     }, reject);
   }
-  getPageData(pageEl, navbarEl, from, to, route = {}) {
+  getPageData(pageEl, navbarEl, from, to, route = {}, pageFromEl) {
     const router = this;
     const $pageEl = $(pageEl);
     const $navbarEl = $(navbarEl);
     const currentPage = $pageEl[0].f7Page || {};
     let direction;
+    let pageFrom;
     if ((from === 'next' && to === 'current') || (from === 'current' && to === 'previous')) direction = 'forward';
     if ((from === 'current' && to === 'next') || (from === 'previous' && to === 'current')) direction = 'backward';
+    if (currentPage && !currentPage.fromPage) {
+      const $pageFromEl = $(pageFromEl);
+      if ($pageFromEl.length) {
+        pageFrom = $pageFromEl[0].f7Page;
+      }
+    }
     const page = {
       app: router.app,
       view: router.view,
@@ -771,7 +786,9 @@ class Router extends Framework7Class {
       to,
       direction,
       route: currentPage.route ? currentPage.route : route,
+      pageFrom: currentPage.pageFrom || pageFrom,
     };
+
     if ($navbarEl && $navbarEl[0]) {
       $navbarEl[0].f7Page = page;
     }
@@ -779,7 +796,7 @@ class Router extends Framework7Class {
     return page;
   }
   // Callbacks
-  pageCallback(callback, pageEl, navbarEl, from, to, options = {}) {
+  pageCallback(callback, pageEl, navbarEl, from, to, options = {}, pageFromEl) {
     if (!pageEl) return;
     const router = this;
     const $pageEl = $(pageEl);
@@ -792,7 +809,7 @@ class Router extends Framework7Class {
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
       page = Utils.extend($pageEl[0].f7Page, { from, to, position: from });
     } else {
-      page = router.getPageData(pageEl, navbarEl, from, to, route);
+      page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
 
     function attachEvents() {

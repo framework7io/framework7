@@ -329,9 +329,9 @@ function SwipeBack(r) {
           }
         } else {
           router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next');
-          router.remove(currentPage);
+          router.removeEl(currentPage);
           if (separateNavbar) {
-            router.remove(currentNavbar);
+            router.removeEl(currentNavbar);
           }
         }
 

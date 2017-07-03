@@ -52,7 +52,7 @@
   }
 
   // Relation with page
-  .navbar ~ .page-with-subnavbar .subnavbar,
+  .navbar ~ .page-with-subnavbar:not(.no-navbar) .subnavbar,
   .navbar ~ .subnavbar
   {
     top: 44px;
@@ -65,10 +65,10 @@
     padding-top: 44px;
   }
 
-  .navbar ~ .page-with-subnavbar .page-content,
+  .navbar ~ .page-with-subnavbar:not(.no-navbar) .page-content,
   .page-with-subnavbar .navbar ~ .page-content,
-  .navbar ~ * .subnavbar ~ .page-content,
-  .navbar ~ * .subnavbar ~ * .page-content
+  .navbar ~ *:not(.no-navbar) .subnavbar ~ .page-content,
+  .navbar ~ *:not(.no-navbar) .subnavbar ~ * .page-content
   {
     padding-top: 88px;
   }
