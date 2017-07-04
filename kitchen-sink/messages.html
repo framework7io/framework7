@@ -1,0 +1,126 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Messsages</div>
+      </div>
+    </div>
+    <div class="toolbar messagebar" @messagebar:attachmentdelete="deleteAttachment">
+      <div class="toolbar-inner">
+        <a class="link icon-only" @click="sheetToggle">
+          <i class="icon f7-icons ios-only">camera_fill</i>
+          <i class="icon material-icons md-only">camera_alt</i>
+        </a>
+        <div class="messagebar-area">
+          <textarea class="resizable" placeholder="Message"></textarea>
+        </div>
+        <a class="link icon-only demo-send-message-link">
+          <i class="icon f7-icons ios-only">arrow_up_fill</i>
+          <i class="icon material-icons md-only">send</i>
+        </a>
+      </div>
+      <div class="messagebar-sheet">
+        {{#each images}}
+        <label class="checkbox messagebar-sheet-image" style="background-image:url({{this}})" @change="handleAttachment">
+          <input type="checkbox">
+          <i class="icon icon-checkbox"></i>
+        </label>
+        {{/each}}
+      </div>
+    </div>
+    <div class="page-content messages-content">
+      <div class="messages">
+
+      </div>
+    </div>
+  </div>
+</template>
+<style scoped>
+  .ios {{this}} .messagebar:not(.messagebar-with-value):not(.messagebar-attachments-visible) a.demo-send-message-link {
+    pointer-events: none;
+    color: #8e8e8e;
+  }
+  .ios {{this}} a.demo-send-message-link i {
+    font-size: 26px;
+  }
+</style>
+<script>
+  return {
+    data: function () {
+      return {
+        attachments: [],
+        images: [
+          'http://lorempixel.com/300/300/cats/1/',
+          'http://lorempixel.com/200/300/cats/2/',
+          'http://lorempixel.com/400/300/cats/3/',
+          'http://lorempixel.com/300/150/cats/4/',
+          'http://lorempixel.com/150/300/cats/5/',
+          'http://lorempixel.com/300/300/cats/6/',
+          'http://lorempixel.com/300/300/cats/7/',
+          'http://lorempixel.com/200/300/cats/8/',
+          'http://lorempixel.com/400/300/cats/9/',
+          'http://lorempixel.com/300/150/cats/10/'
+        ]
+      }
+    },
+    methods: {
+      sheetToggle: function () {
+        var self = this;
+        self.messagebar.sheetToggle();
+      },
+      deleteAttachment: function (e, index) {
+        var self = this;
+        var image = self.attachments.splice(index, 1)[0];
+        self.messagebar.renderAttachments();
+        self.checkAttachments();
+        // Uncheck in sheet
+        var imageIndex = self.images.indexOf(image);
+        self.$el.find('.messagebar-sheet .checkbox').eq(imageIndex).find('input').prop('checked', false);
+      },
+      handleAttachment: function (e) {
+        var self = this;
+        var $$ = self.$$;
+        var index = $(e.target).parents('label.checkbox').index();
+        var image = self.images[index];
+        if (e.target.checked) {
+          // Add to attachments
+          self.attachments.unshift(image)
+        } else {
+          // Remove from attachments
+          self.attachments.splice(self.attachments.indexOf(image), 1);
+        }
+        self.messagebar.renderAttachments();
+        self.checkAttachments();
+      },
+      checkAttachments: function () {
+        var self = this;
+        if (self.attachments.length > 0) {
+          self.messagebar.attachmentsShow();
+        } else {
+          self.messagebar.attachmentsHide();
+        }
+      },
+    },
+    on: {
+      pageBeforeRemove: function (e, page) {
+        var self = this;
+        if (self.messagebar) self.messagebar.destroy();
+      },
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+        var messagebarEl = page.$el.find('.messagebar');
+        self.messagebar = app.messagebar.create({
+          el: messagebarEl,
+        })
+        self.messagebar.attachments = self.attachments;
+      }
+    }
+  }
+</script>

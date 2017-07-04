@@ -137,6 +137,10 @@ var routes = [
     url: './list.html',
   },
   {
+    path: '/messages/',
+    componentUrl: './messages.html',
+  },
+  {
     path: '/progressbar/',
     componentUrl: './progressbar.html',
   },
