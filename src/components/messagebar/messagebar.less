@@ -1,0 +1,48 @@
+/* === Messagebar === */
+.toolbar.messagebar {
+  transform: translate3d(0,0,0);
+  background: #fff;
+  height: auto;
+  .toolbar-inner {
+    position: relative;
+  }
+  .messagebar-area {
+    width: 100%;
+    flex-shrink: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  textarea {
+    width: 100%;
+    flex-shrink: 1;
+  }
+  a.link {
+    align-self: flex-end;
+    flex-shrink: 0;
+  }
+}
+.messagebar-attachments {
+  width: 100%;
+  .scrollable();
+  font-size: 0;
+  white-space: nowrap;
+  box-sizing: border-box;
+  position: relative;
+}
+.messagebar:not(.messagebar-attachments-visible) .messagebar-attachments {
+  display: none;
+}
+.messagebar-attachment {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+.messagebar:not(.messagebar-sheet-visible) .messagebar-sheet {
+  display: none;
+}
+@import url('./messagebar-ios.less');
+@import url('./messagebar-md.less');
