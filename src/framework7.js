@@ -72,6 +72,10 @@ import Searchbar from './components/searchbar/searchbar';
 // Form
 import Form from './components/form/form';
 
+// Messages
+import Messages from './components/messages/messages';
+import Messagebar from './components/messagebar/messagebar';
+
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -137,6 +141,9 @@ Framework7
   // Searchbar
   .use(Searchbar)
   // Form
-  .use(Form);
+  .use(Form)
+  // Messages
+  .use(Messages)
+  .use(Messagebar);
 
 export default Framework7;
