@@ -1,4 +1,29 @@
 /* === Input === */
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+input[type="number"],
+select,
+textarea {
+  box-sizing: border-box;
+  appearance: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  outline: 0;
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  background: none;
+  resize: none;
+}
 .textarea-resizable-shadow {
   opacity: 0;
   position: absolute;
@@ -21,18 +46,7 @@
   input[type="number"],
   select,
   textarea {
-    appearance: none;
-    box-sizing: border-box;
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
-    outline: 0;
-    display: block;
-    padding: 0;
-    margin: 0;
     width: 100%;
-    font-family: inherit;
-    background: none;
   }
   input[type="datetime-local"] {
     max-width: 50vw;
