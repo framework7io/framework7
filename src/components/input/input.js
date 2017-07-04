@@ -30,7 +30,7 @@ const Input = {
     ('padding margin width font border box-sizing display').split(' ').forEach((style) => {
       $shadowEl.css(style, styles[style]);
     });
-    const currentHeight = $textareaEl[0].offsetHeight;
+    const currentHeight = $textareaEl[0].clientHeight;
 
     $shadowEl.val('');
     const initialHeight = $shadowEl[0].scrollHeight;
@@ -41,8 +41,10 @@ const Input = {
     if (currentHeight !== scrollHeight) {
       if (scrollHeight > initialHeight) {
         $textareaEl.css('height', `${scrollHeight}px`);
-      } else {
+        $textareaEl.trigger('textarea:resize', initialHeight, currentHeight, scrollHeight);
+      } else if (scrollHeight < currentHeight) {
         $textareaEl.css('height', '');
+        $textareaEl.trigger('textarea:resize', initialHeight, currentHeight, initialHeight);
       }
     }
   },
@@ -97,9 +99,11 @@ const Input = {
     if ((value && (typeof value === 'string' && value.trim() !== '')) || (Array.isArray(value) && value.length > 0)) {
       $itemInputEl.addClass('item-input-with-value');
       $inputEl.addClass('input-with-value');
+      $inputEl.trigger('input:notempty');
     } else {
       $itemInputEl.removeClass('item-input-with-value');
       $inputEl.removeClass('input-with-value');
+      $inputEl.trigger('input:empty');
     }
   },
   init() {
