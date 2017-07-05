@@ -183,8 +183,8 @@
         }
       }
     }
-    .toolbar:not(.toolbar-bottom) ~ * .page-content,
-    .toolbar:not(.toolbar-bottom) ~ .page-content,
+    .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .page-content,
+    .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content,
     .searchbar ~ * .page-content,
     .searchbar ~ .page-content {
       li.list-group-title {
@@ -198,8 +198,8 @@
       }
     }
 
-    .navbar:not(.navbar-hidden) + .toolbar:not(.toolbar-bottom) ~ * .page-content,
-    .navbar:not(.navbar-hidden) + .toolbar:not(.toolbar-bottom) ~ .page-content,
+    .navbar:not(.navbar-hidden) + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .page-content,
+    .navbar:not(.navbar-hidden) + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content,
     .navbar:not(.navbar-hidden) ~ .subnavbar ~ .page-content,
     .navbar:not(.navbar-hidden) ~ .subnavbar ~ * .page-content,
     .page-with-subnavbar .navbar:not(.navbar-hidden) ~ * .page-content,
