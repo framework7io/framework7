@@ -41,15 +41,6 @@
     </div>
   </div>
 </template>
-<style scoped>
-  .ios {{this}} .messagebar:not(.messagebar-with-value):not(.messagebar-attachments-visible) a.demo-send-message-link {
-    pointer-events: none;
-    color: #8e8e8e;
-  }
-  .ios {{this}} a.demo-send-message-link i {
-    font-size: 26px;
-  }
-</style>
 <script>
   return {
     data: function () {
@@ -102,8 +93,10 @@
         var self = this;
         if (self.attachments.length > 0) {
           self.messagebar.attachmentsShow();
+          self.messagebar.setPlaceholder('Add comment or Send');
         } else {
           self.messagebar.attachmentsHide();
+          self.messagebar.setPlaceholder('Message');
         }
       },
     },
