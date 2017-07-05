@@ -74,15 +74,25 @@ class Messagebar extends Framework7Class {
     function onSubmit(e) {
       e.preventDefault();
     }
-    function onDeleteAttachment() {
-      const index = $(this).parents('.messagebar-attachment').index();
-      $(this).trigger('messagebar:attachmentdelete', index);
-      messagebar.emit('messagebarAttachmentDelete', this, index);
-      messagebar.emit({
-        events: 'attachmentDelete',
-        data: [this, index],
-        local: true,
-      });
+    function onAttachmentClick(e) {
+      const index = $(this).index();
+      if ($(e.target).closest('.messagebar-attachment-delete').length) {
+        $(this).trigger('messagebar:attachmentdelete', index);
+        messagebar.emit('messagebarAttachmentDelete', this, index);
+        messagebar.emit({
+          events: 'attachmentDelete',
+          data: [this, index],
+          local: true,
+        });
+      } else {
+        $(this).trigger('messagebar:attachmentclick', index);
+        messagebar.emit('messagebarAttachmentClick', this, index);
+        messagebar.emit({
+          events: 'attachmentClick',
+          data: [this, index],
+          local: true,
+        });
+      }
     }
     function onTextareaChange() {
       messagebar.checkEmptyState();
@@ -94,7 +104,7 @@ class Messagebar extends Framework7Class {
     messagebar.attachEvents = function attachEvents() {
       $el.on('textarea:resize', onAppResize);
       $el.on('submit', onSubmit);
-      $el.on('click', '.messagebar-attachment-delete', onDeleteAttachment);
+      $el.on('click', '.messagebar-attachment', onAttachmentClick);
       $textareaEl.on('change input', onTextareaChange);
       $textareaEl.on('focus', onTextareaFocus);
       app.on('resize', onAppResize);
@@ -102,7 +112,7 @@ class Messagebar extends Framework7Class {
     messagebar.detachEvents = function detachEvents() {
       $el.off('textarea:resize', onAppResize);
       $el.off('submit', onSubmit);
-      $el.off('click', '.messagebar-attachment-delete', onDeleteAttachment);
+      $el.off('click', '.messagebar-attachment', onAttachmentClick);
       $textareaEl.off('change input', onTextareaChange);
       $textareaEl.on('focus', onTextareaFocus);
       app.off('resize', onAppResize);
