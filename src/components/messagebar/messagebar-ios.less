@@ -2,15 +2,9 @@
   @import (multiple) '../../less/colors-ios.less';
   @import (multiple) '../../less/vars-ios.less';
   .messagebar {
-    transition-duration: 0ms;
     background: #fff;
     .hairline-remove(top);
     min-height: 44px;
-
-    .messagebar-area {
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
     textarea {
       background: #fff;
       border-radius: 17px;
@@ -20,18 +14,22 @@
       font-size: 17px;
       border: 1px solid #c8c8cd;
     }
-    .link.icon-only:first-child {
+    a.link.icon-only:first-child {
       margin-left: -8px;
     }
-    .link.icon-only:last-child {
+    a.link.icon-only:last-child {
       margin-right: -8px;
     }
-    .link:not(.icon-only) + .messagebar-area {
+    a.link:not(.icon-only) + .messagebar-area {
       margin-left: 8px;
     }
     .messagebar-area + a.link:not(.icon-only) {
       margin-left: 8px;
     }
+  }
+  .messagebar-area {
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   .messagebar-attachments {
     padding: 5px;
@@ -45,86 +43,29 @@
     }
   }
   .messagebar-attachment {
-    height: 155px;
     border-radius: 12px;
     font-size: 14px;
-    position: relative;
-    @media (orientation: landscape) {
-      height: 120px;
-    }
     img {
       border-radius: 12px;
-      display: block;
-      width: auto;
-      height: 100%;
-    }
-    + .messagebar-attachment {
-      margin-left: 8px;
     }
   }
   .messagebar-sheet {
-    height: 252px;
     background: #d1d5da;
-    .scrollable();
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: flex-start;
-    @media (orientation: landscape) {
-      height: 192px;
-    }
-  }
-  .messagebar-sheet-image, .messagebar-sheet-item {
-    box-sizing: border-box;
-    flex-shrink: 0;
-    height: 125px;
-    width: 125px;
-    margin-left: 1px;
-    margin-top: 1px;
-    @media (orientation: landscape) {
-      width: 190px / 2;
-      height: 190px / 2;
-    }
-    .icon-checkbox, .icon-radio {
-      position: absolute;
-      right: 8px;
-      bottom: 8px;
-    }
-  }
-  .messagebar-sheet-image {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
   }
   .messagebar-attachment-delete {
-    display: block;
-    position: absolute;
     right: 5px;
     top: 5px;
     width: 20px;
     height: 20px;
-    border-radius: 50%;
     background: #7d7e80;
-    box-sizing: border-box;
     border: 2px solid #fff;
     cursor: pointer;
-    box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
     &:after, &:before {
-      position: absolute;
-      content: '';
-      left: 50%;
-      top: 50%;
       width: 10px;
       height: 2px;
       background: #fff;
       margin-left: -5px;
       margin-top: -1px;
-    }
-    &:after {
-      transform: rotate(45deg);
-    }
-    &:before {
-      transform: rotate(-45deg);
     }
   }
 }

@@ -124,12 +124,16 @@ class Messagebar extends Framework7Class {
   }
   getValue() {
     const messagebar = this;
-    messagebar.$textareaEl.val('').trigger('change');
-    return messagebar.$textareaEl.val();
+    return messagebar.$textareaEl.val().trim();
   }
   setValue(value) {
     const messagebar = this;
     messagebar.$textareaEl.val(value).trigger('change');
+    return messagebar;
+  }
+  setPlaceholder(placeholder) {
+    const messagebar = this;
+    messagebar.$textareaEl.attr('placeholder', placeholder);
     return messagebar;
   }
   resize() {

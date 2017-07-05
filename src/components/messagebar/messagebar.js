@@ -21,6 +21,13 @@ export default {
         return undefined;
       },
     };
+    ('clear getValue setValue setPlaceholder resize attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle destroy').split(' ').forEach((messagebarMethod) => {
+      messagebar[messagebarMethod] = (messagebarEl = '.messagebar', ...args) => {
+        const mb = app.messagebar.get(messagebarEl);
+        if (mb) return mb[messagebarMethod](...args);
+        return undefined;
+      };
+    });
     Utils.extend(app, {
       messagebar,
     });
