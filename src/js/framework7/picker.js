@@ -84,9 +84,12 @@ var Picker = function (params) {
         var newValue = forceValues || [];
         var newDisplayValue = [], i, column;
         if (p.cols.length === 0) {
-            for (i = 0; i < p.params.cols.length; i++) {
-                column = p.params.cols[i];
-                if (column.displayValues !== undefined && column.values !== undefined && column.values.indexOf(newValue[i]) !== undefined) {
+            var noDividerColumns = p.params.cols.filter(function (column) {
+                return !column.divider;
+            });
+            for (i = 0; i < noDividerColumns.length; i++) {
+                column = noDividerColumns[i];
+                if (column.displayValues !== undefined && column.values !== undefined && column.values.indexOf(newValue[i]) !== -1) {
                     newDisplayValue.push(column.displayValues[column.values.indexOf(newValue[i])]);
                 }
                 else {
