@@ -36,7 +36,139 @@
     </div>
     <div class="page-content messages-content">
       <div class="messages">
-
+        <div class="messages-title"><b>Sunday, Feb 9,</b> 12:58</div>
+        <div class="message message-sent">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Vladimir</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, Kate</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Kate Johnsin</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, I am good!</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Vladimir</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, Kate</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Vladimir</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, Kate</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Vladimir</div>
+            <div class="message-bubble">
+              <div class="message-image">
+                <img src="http://lorempixel.com/300/400/cats/4/" width="300" height="400">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Kate Johnsin</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, I am good!</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Kate Johnsin</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, I am good!</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Kate Johnsin</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, I am good!</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Vladimir</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, Kate</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Kate Johnsin</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, I am good!</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-sent">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Vladimir</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, Kate</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
+        <div class="message message-received">
+          <div class="message-avatar"></div>
+          <div class="message-content">
+            <div class="message-name">Kate Johnsin</div>
+            <div class="message-bubble">
+              <div class="message-text-header">Nice</div>
+              <div class="message-text">Hi, I am good!</div>
+              <div class="message-text-footer">Feb 9, 12:58</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -108,11 +240,29 @@
       pageInit: function (e, page) {
         var self = this;
         var app = self.$app;
-        var messagebarEl = page.$el.find('.messagebar');
         self.messagebar = app.messagebar.create({
-          el: messagebarEl,
+          el: page.$el.find('.messagebar')
         })
         self.messagebar.attachments = self.attachments;
+
+        self.messages = app.messages.create({
+          el: page.$el.find('.messages'),
+          firstMessageRule: function (message, previousMessage, nextMessage) {
+            if (message.isTitle) return false;
+            if (!previousMessage || previousMessage.type !== message.type || previousMessage.name !== message.name) return true;
+            return false;
+          },
+          lastMessageRule: function (message, previousMessage, nextMessage) {
+            if (message.isTitle) return false;
+            if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
+            return false;
+          },
+          tailMessageRule: function (message, previousMessage, nextMessage) {
+            if (message.isTitle) return false;
+            if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
+            return false;
+          }
+        })
       }
     }
   }
