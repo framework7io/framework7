@@ -122,7 +122,7 @@ var View = function (selector, params) {
     }
 
     // View startup URL
-    if (view.params.domCache && currentPage) {
+    if (view.params.domCache && currentPageData) {
         view.url = container.attr('data-url') || view.params.url || '#' + currentPage.attr('data-page');
         view.pagesCache[view.url] = currentPage.attr('data-page');
     }
