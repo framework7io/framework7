@@ -2,45 +2,18 @@ import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
-/*
-message-first firstMessageRule
-- Visible Header
-- Hidden avatar
-
-message-last lastMessageRule
-- Visible Avatar
-- Hidden Header
-
-message-with-tail tailMessageRule
-- Visible tail
-
-message-same-name sameNameMessageRule
-- Hidden name
-
-message-same-header sameHeaderMessageRule
-- Hidden header
-
-message-same-footer sameFooterMessageRule
-- Hidden footer
-
-message-same-avatar sameAvatarMessageRule
-- Hidden avatar
-
-message-custom-rule customClassMessageRule(message, previous, next)
-*/
-
 class Messages extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
-    const messages = this;
+    const m = this;
 
     const defaults = {
       autoLayout: true,
       messages: [],
       newMessagesFirst: false,
-      scrollMessage: true,
-      scrollMessageOnEdge: false,
+      scrollMessages: true,
+      scrollMessagesOnEdge: true,
       firstMessageRule: undefined,
       lastMessageRule: undefined,
       tailMessageRule: undefined,
@@ -53,30 +26,35 @@ class Messages extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    messages.useInstanceModulesParams(defaults);
+    m.useInstanceModulesParams(defaults);
 
-    messages.params = Utils.extend(defaults, params);
+    m.params = Utils.extend(defaults, params);
 
     const $el = $(params.el).eq(0);
-    if ($el.length === 0) return;
+    if ($el.length === 0) return m;
 
-    $el[0].f7Messages = messages;
+    $el[0].f7Messages = m;
 
-    Utils.extend(messages, {
-      messages: messages.params.messages,
+    const $pageContentEl = $el.closest('.page-content').eq(0);
+
+    Utils.extend(m, {
+      messages: m.params.messages,
       $el,
       el: $el[0],
+      $pageContentEl,
+      pageContentEl: $pageContentEl[0],
+
     });
     // Install Modules
-    messages.useInstanceModules();
+    m.useInstanceModules();
 
     // Init
-    messages.init();
+    m.init();
 
-    return messages;
+    return m;
   }
   getMessageData(messageEl) {
-    const messages = this;
+    const m = this;
     const $messageEl = $(messageEl);
     const data = {
       avatar: $messageEl.css('background-image'),
@@ -88,8 +66,12 @@ class Messages extends Framework7Class {
       isTitle: $messageEl.hasClass('messages-title'),
       type: $messageEl.hasClass('message-sent') ? 'sent' : 'received',
       text: $messageEl.find('.message-text').html(),
-      image: $messageEl.find('.message-text img').attr('src'),
+      image: $messageEl.find('.message-image').html(),
+      imageSrc: $messageEl.find('.message-image img').attr('src'),
     };
+    if (data.isTitle) {
+      data.text = $messageEl.html();
+    }
     if (data.text && data.textHeader) {
       data.text = data.text.replace(`<div class="message-text-header">${data.textHeader}</div>`, '');
     }
@@ -103,32 +85,36 @@ class Messages extends Framework7Class {
     return data;
   }
   getMessagesData() {
-    const messages = this;
+    const m = this;
     const data = [];
-    messages.$el.find('.message, .messages-title').each((index, messageEl) => {
-      data.push(messages.getMessageData(messageEl));
+    m.$el.find('.message, .messages-title').each((index, messageEl) => {
+      data.push(m.getMessageData(messageEl));
     });
     return data;
   }
-  renderMessage(message) {
-    const messages = this;
-    if (messages.params.renderMessage) {
-      return messages.params.renderMessage(message);
+  renderMessage(messageToRender) {
+    const m = this;
+    const message = Utils.extend({
+      type: 'sent',
+    }, messageToRender);
+    if (m.params.renderMessage) {
+      return m.params.renderMessage(message);
     }
     if (message.isTitle) {
       return `<div class="messages-title">${message.text}</div>`;
     }
     return `
-      <div class="messages ${message.type}">
+      <div class="message message-${message.type}">
         ${message.avatar ? `
         <div class="message-avatar" style="background-image:url(${message.avatar})"></div>
         ` : ''}
         <div class="message-content">
-          ${message.name ? `<div class="message-header">${message.name}</div>` : ''}
+          ${message.name ? `<div class="message-name">${message.name}</div>` : ''}
           ${message.header ? `<div class="message-header">${message.header}</div>` : ''}
           <div class="message-bubble">
             ${message.textHeader ? `<div class="message-text-header">${message.textHeader}</div>` : ''}
-            ${message.image ? `<div class="message-image"><img src="${message.image}"></div>` : ''}
+            ${message.image ? `<div class="message-image">${message.image}</div>` : ''}
+            ${message.imageSrc && !message.image ? `<div class="message-image"><img src="${message.imageSrc}"></div>` : ''}
             ${message.text ? `<div class="message-text">${message.text}</div>` : ''}
             ${message.textFooter ? `<div class="message-text-footer">${message.textFooter}</div>` : ''}
           </div>
@@ -137,87 +123,84 @@ class Messages extends Framework7Class {
       </div>
     `;
   }
-  renderMessages() {
-    const messages = this;
-    const html = messages.messages.map(message => messages.renderMessage(message)).join('');
-    messages.$el.append(html);
-  }
-  scroll() {
-
+  renderMessages(messagesToRender = this.messages, method = this.params.newMessagesFirst ? 'prepend' : 'append') {
+    const m = this;
+    const html = messagesToRender.map(message => m.renderMessage(message)).join('');
+    m.$el[method](html);
   }
   isFirstMessage(...args) {
-    const messages = this;
-    if (messages.params.firstMessageRule) return messages.params.firstMessageRule(...args);
+    const m = this;
+    if (m.params.firstMessageRule) return m.params.firstMessageRule(...args);
     return false;
   }
   isLastMessage(...args) {
-    const messages = this;
-    if (messages.params.lastMessageRule) return messages.params.lastMessageRule(...args);
+    const m = this;
+    if (m.params.lastMessageRule) return m.params.lastMessageRule(...args);
     return false;
   }
   isTailMessage(...args) {
-    const messages = this;
-    if (messages.params.tailMessageRule) return messages.params.tailMessageRule(...args);
+    const m = this;
+    if (m.params.tailMessageRule) return m.params.tailMessageRule(...args);
     return false;
   }
   isSameNameMessage(...args) {
-    const messages = this;
-    if (messages.params.sameNameMessageRule) return messages.params.sameNameMessageRule(...args);
+    const m = this;
+    if (m.params.sameNameMessageRule) return m.params.sameNameMessageRule(...args);
     return false;
   }
   isSameHeaderMessage(...args) {
-    const messages = this;
-    if (messages.params.sameHeaderMessageRule) return messages.params.sameHeaderMessageRule(...args);
+    const m = this;
+    if (m.params.sameHeaderMessageRule) return m.params.sameHeaderMessageRule(...args);
     return false;
   }
   isSameFooterMessage(...args) {
-    const messages = this;
-    if (messages.params.sameFooterMessageRule) return messages.params.sameFooterMessageRule(...args);
+    const m = this;
+    if (m.params.sameFooterMessageRule) return m.params.sameFooterMessageRule(...args);
     return false;
   }
   isSameAvatarMessage(...args) {
-    const messages = this;
-    if (messages.params.sameAvatarMessageRule) return messages.params.sameAvatarMessageRule(...args);
+    const m = this;
+    if (m.params.sameAvatarMessageRule) return m.params.sameAvatarMessageRule(...args);
     return false;
   }
   isCustomClassMessage(...args) {
-    const messages = this;
-    if (messages.params.customClassMessageRule) return messages.params.customClassMessageRule(...args);
+    const m = this;
+    if (m.params.customClassMessageRule) return m.params.customClassMessageRule(...args);
     return undefined;
   }
   layout() {
-    const messages = this;
-    messages.$el.find('.message, .messages-title').each((index, messageEl) => {
+    const m = this;
+    m.$el.find('.message, .messages-title').each((index, messageEl) => {
       const $messageEl = $(messageEl);
-      if (!messages.messages) {
-        messages.messages = messages.getMessagesData();
+      if (!m.messages) {
+        m.messages = m.getMessagesData();
       }
       const classes = [];
-      const message = messages.messages[index];
-      const previousMessage = messages.messages[index - 1];
-      const nextMessage = messages.messages[index + 1];
-      if (messages.isFirstMessage(message, previousMessage, nextMessage)) {
+      const message = m.messages[index];
+      const previousMessage = m.messages[index - 1];
+      const nextMessage = m.messages[index + 1];
+      if (m.isFirstMessage(message, previousMessage, nextMessage)) {
         classes.push('message-first');
       }
-      if (messages.isLastMessage(message, previousMessage, nextMessage)) {
+      if (m.isLastMessage(message, previousMessage, nextMessage)) {
         classes.push('message-last');
       }
-      if (messages.isTailMessage(message, previousMessage, nextMessage)) {
+      if (m.isTailMessage(message, previousMessage, nextMessage)) {
         classes.push('message-tail');
       }
-      if (messages.isSameNameMessage(message, previousMessage, nextMessage)) {
+      if (m.isSameNameMessage(message, previousMessage, nextMessage)) {
         classes.push('message-same-name');
       }
-      if (messages.isSameHeaderMessage(message, previousMessage, nextMessage)) {
+      if (m.isSameHeaderMessage(message, previousMessage, nextMessage)) {
         classes.push('message-same-header');
       }
-      if (messages.isSameFooterMessage(message, previousMessage, nextMessage)) {
+      if (m.isSameFooterMessage(message, previousMessage, nextMessage)) {
         classes.push('message-same-footer');
       }
-      if (messages.isSameAvatarMessage(message, previousMessage, nextMessage)) {
+      if (m.isSameAvatarMessage(message, previousMessage, nextMessage)) {
         classes.push('message-same-avatar');
       }
-      let customMessageClasses = messages.isCustomClassMessage(message, previousMessage, nextMessage);
+      let customMessageClasses = m.isCustomClassMessage(message, previousMessage, nextMessage);
       if (customMessageClasses && customMessageClasses.length) {
         if (typeof customMessageClasses === 'string') {
           customMessageClasses = customMessageClasses.split(' ');
@@ -226,26 +209,166 @@ class Messages extends Framework7Class {
           classes.push(customClass);
         });
       }
+      $messageEl.removeClass('message-first message-last message-tail message-same-name message-same-header message-same-footer message-same-avatar');
       classes.forEach((className) => {
         $messageEl.addClass(className);
       });
     });
   }
+  clean() {
+    const m = this;
+    m.messages = [];
+    m.$el.html('');
+  }
+  removeMessage(messageToRemove, layout = true) {
+    const m = this;
+    // Index or El
+    let index;
+    let $el;
+    if (typeof messageToRemove === 'number') {
+      index = messageToRemove;
+      $el = m.$el.find('.message, .messages-title').eq(index);
+    } else {
+      $el = $(messageToRemove);
+      index = $el.index();
+    }
+    if ($el.length === 0) {
+      return m;
+    }
+    $el.remove();
+    m.messages.splice(index, 1);
+    if (m.params.autoLayout && layout) m.layout();
+    return m;
+  }
+  removeMessages(messagesToRemove, layout = true) {
+    const m = this;
+    if (Array.isArray(messagesToRemove)) {
+      const messagesToRemoveEls = [];
+      messagesToRemove.forEach((messageToRemoveIndex) => {
+        messagesToRemoveEls.push(m.$el.find('.message, .messages-title').eq(messageToRemoveIndex));
+      });
+      messagesToRemoveEls.forEach((messageToRemove) => {
+        m.removeMessage(messageToRemove, false);
+      });
+    } else {
+      $(messagesToRemove).each((index, messageToRemove) => {
+        m.removeMessage(messageToRemove, false);
+      });
+    }
+    if (m.params.autoLayout && layout) m.layout();
+    return m;
+  }
+
+  addMessage(...args) {
+    const m = this;
+    let messageToAdd;
+    let animate;
+    let method;
+    if (typeof args[1] === 'boolean') {
+      [messageToAdd, animate, method] = args;
+    } else {
+      [messageToAdd, method, animate] = args;
+    }
+    if (typeof animate === 'undefined') {
+      animate = true;
+    }
+    if (typeof method === 'undefined') {
+      method = m.params.newMessagesFirst ? 'prepend' : 'append';
+    }
+
+    return m.addMessages([messageToAdd], animate, method);
+  }
+  addMessages(...args) {
+    const m = this;
+    let messagesToAdd;
+    let animate;
+    let method;
+    if (typeof args[1] === 'boolean') {
+      [messagesToAdd, animate, method] = args;
+    } else {
+      [messagesToAdd, method, animate] = args;
+    }
+    if (typeof animate === 'undefined') {
+      animate = true;
+    }
+    if (typeof method === 'undefined') {
+      method = m.params.newMessagesFirst ? 'prepend' : 'append';
+    }
+
+    // Define scroll positions before new messages added
+    const scrollHeightBefore = m.pageContentEl.scrollHeight;
+    const heightBefore = m.pageContentEl.offsetHeight;
+    const scrollBefore = m.pageContentEl.scrollTop;
+
+    // Add message to DOM and data
+    let messagesHTML = '';
+    messagesToAdd.forEach((messageToAdd) => {
+      m.messages[method === 'append' ? 'push' : 'unshift'](messageToAdd);
+      messagesHTML += m.renderMessage(messageToAdd);
+    });
+    const $messagesEls = $(messagesHTML);
+    if (animate) {
+      if (method === 'append' && !m.params.newMessagesFirst) {
+        $messagesEls.addClass('message-appear-from-bottom');
+      }
+      if (method === 'prepend' && m.params.newMessagesFirst) {
+        $messagesEls.addClass('message-appear-from-top');
+      }
+    }
+    m.$el[method]($messagesEls);
+
+    // Layout
+    if (m.params.autoLayout) m.layout();
+
+    if (method === 'prepend') {
+      m.pageContentEl.scrollTop = scrollBefore + (m.pageContentEl.scrollHeight - scrollHeightBefore);
+    }
+
+    if (m.params.scrollMessages && ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst))) {
+      if (m.params.scrollMessagesOnEdge) {
+        let onEdge = false;
+        if (m.params.newMessagesFirst && scrollBefore === 0) {
+          onEdge = true;
+        }
+        if (!m.params.newMessagesFirst && (scrollBefore - (scrollHeightBefore - heightBefore) >= -10)) {
+          onEdge = true;
+        }
+        if (onEdge) m.scroll(animate ? undefined : 0);
+      } else {
+        m.scroll(animate ? undefined : 0);
+      }
+    }
+
+    return m;
+  }
+  scroll(duration = 300, scrollTop) {
+    const m = this;
+    const currentScroll = m.pageContentEl.scrollTop;
+    let newScrollTop;
+    if (typeof scrollTop !== 'undefined') newScrollTop = scrollTop;
+    else {
+      newScrollTop = m.params.newMessagesFirst ? 0 : m.pageContentEl.scrollHeight - m.pageContentEl.offsetHeight;
+      if (newScrollTop === currentScroll) return m;
+    }
+    m.$pageContentEl.scrollTop(newScrollTop, duration);
+    return m;
+  }
   init() {
-    const messages = this;
-    if (!messages.messages || messages.messages.length === 0) {
-      messages.messages = messages.getMessagesData();
+    const m = this;
+    if (!m.messages || m.messages.length === 0) {
+      m.messages = m.getMessagesData();
     }
-    if (messages.params.messages && messages.params.messages.length) {
-      messages.renderMessages();
+    if (m.params.messages && m.params.messages.length) {
+      m.renderMessages();
     }
-    if (messages.params.autoLayout) messages.layout();
+    if (m.params.autoLayout) m.layout();
+    if (m.params.scrollMessages) m.scroll(0);
   }
   destroy() {
-    const messages = this;
-    messages.$el[0].f7Messages = null;
-    delete messages.$el[0].f7Messages;
-    Utils.deleteProps(messages);
+    const m = this;
+    m.$el[0].f7Messages = null;
+    delete m.$el[0].f7Messages;
+    Utils.deleteProps(m);
   }
 }
 

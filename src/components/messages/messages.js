@@ -9,19 +9,27 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      messages: {
-        create(params) {
-          return new Messages(app, params);
-        },
-        destroy(messagesEl) {
-          const $messagesEl = $(messagesEl);
-          if (!$messagesEl.length) return undefined;
-          const messages = $messagesEl[0].f7Messages;
-          if (!messages) return undefined;
-          return messages.destroy();
-        },
+    const messages = {
+      create(params) {
+        return new Messages(app, params);
       },
+      get(messagesEl) {
+        const $messagesEl = $(messagesEl);
+        if ($messagesEl.length && $messagesEl[0].f7Messages) {
+          return $messagesEl[0].f7Messages;
+        }
+        return undefined;
+      },
+    };
+    ('renderMessages layout scroll clean removeMessage removeMessages addMessage addMessages destroy').split(' ').forEach((messagesMethod) => {
+      messages[messagesMethod] = (messagesEl = '.messages', ...args) => {
+        const m = app.messages.get(messagesEl);
+        if (m) return m[messagesMethod](...args);
+        return undefined;
+      };
+    });
+    Utils.extend(app, {
+      messages,
     });
   },
   on: {
