@@ -33,6 +33,24 @@ class Framework7Component {
 
     if (component.beforeCreate) component.beforeCreate();
 
+    // Watchers
+    if (component.watch) {
+      Object.keys(component.watch).forEach((watchKey) => {
+        let dataKeyValue = component.context[watchKey];
+        Object.defineProperty(component.context, watchKey, {
+          enumerable: true,
+          configurable: true,
+          set(newValue) {
+            dataKeyValue = newValue;
+            component.watch[watchKey].call(context, dataKeyValue);
+          },
+          get() {
+            return dataKeyValue;
+          },
+        });
+      });
+    }
+
     // Render template
     let html = '';
     if (component.render) {
@@ -158,8 +176,10 @@ class Framework7Component {
 
     component.attachEvents();
 
+    // Created callback
     if (component.created) component.created();
 
+    // Mount
     component.mount = function mount(mountMethod) {
       if (component.beforeMount) component.beforeMount();
       if (styleEl) $('head').append(styleEl);
@@ -167,6 +187,7 @@ class Framework7Component {
       if (component.mounted) component.mounted();
     };
 
+    // Destroy
     component.destroy = function destroy() {
       if (component.beforeDestroy) component.beforeDestroy();
       if (styleEl) $(styleEl).remove();
