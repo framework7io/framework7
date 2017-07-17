@@ -3,6 +3,11 @@
   "version": "2.0.0",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
+  "scripts": {
+    "dev": "NODE_ENV=development gulp build && gulp server",
+    "build": "NODE_ENV=development gulp build",
+    "dev": "NODE_ENV=production gulp build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/nolimits4web/Framework7.git"
