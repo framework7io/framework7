@@ -2,6 +2,9 @@
 .messages {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  position: relative;
+  z-index: 1;
 }
 .messages-title {
   text-align: center;
@@ -12,6 +15,9 @@
   max-width: 70%;
   box-sizing: border-box;
   display: flex;
+  position: relative;
+  z-index: 1;
+  transform: translate3d(0,0,0);
 }
 .message-avatar {
   border-radius: 50%;
@@ -34,7 +40,7 @@
 .message-bubble {
   box-sizing: border-box;
   word-break: break-word;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   position: relative;
   line-height: 1.2;
@@ -44,6 +50,7 @@
     display: block;
     max-width: 100%;
     height: auto;
+    width: auto;
   }
 }
 .message-text-header, .message-text-footer {
@@ -87,6 +94,28 @@
 .message.message-same-footer {
   .message-footer {
     display: none;
+  }
+}
+.message-appear-from-bottom {
+  animation: message-appear-from-bottom 300ms;
+}
+.message-appear-from-top {
+  animation: message-appear-from-top 300ms;
+}
+@keyframes message-appear-from-bottom {
+  from {
+    transform: translate3d(0,100%,0);
+  }
+  to {
+    transform: translate3d(0,0,0);
+  }
+}
+@keyframes message-appear-from-top {
+  from {
+    transform: translate3d(0,-100%,0);
+  }
+  to {
+    transform: translate3d(0,0,0);
   }
 }
 @import url('./messages-ios.less');
