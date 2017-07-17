@@ -4,4 +4,108 @@
   .messages {
     background: #eee;
   }
+  .message {
+    margin-top: 16px;
+    &:last-child {
+      margin-bottom: 16px;
+    }
+  }
+  .messages-title {
+    font-size: 12px;
+    color: rgba(0,0,0,.51);;
+    margin-top: 16px;
+    &:last-child {
+      margin-bottom: 16px;
+    }
+    b {
+      font-weight: 500;
+    }
+  }
+  .message-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .message-header, .message-footer, .message-name {
+    color: rgba(0,0,0,.51);
+    b {
+      font-weight: 500;
+    }
+  }
+  .message-header, .message-name {
+    margin-bottom: 2px;
+  }
+  .message-footer {
+    margin-top: 2px;
+  }
+  .message-bubble {
+    font-size: 16px;
+    color: #333;
+    border-radius: 2px;
+    padding: 6px 8px;
+    min-width: 48px;
+    min-height: 32px;
+  }
+  .message-image {
+
+  }
+  .message-text-header, .message-text-footer {
+    color: rgba(0,0,0,.51);
+  }
+  .message-text-header {
+    margin-bottom: 4px;
+  }
+  .message-text-footer {
+    margin-top: 4px;
+  }
+  .message-received {
+    margin-left: 8px;
+    .message-bubble {
+      background: #fff;
+    }
+    .message-avatar + .message-content {
+      margin-left: 8px;
+    }
+    &.message-tail .message-bubble {
+      border-radius: 2px 2px 2px 0;
+      &:before {
+        position: absolute;
+        content: '';
+        border-left: 8px solid transparent;
+        border-right: 0 solid transparent;
+        border-bottom: 8px solid #fff;
+        right: 100%;
+        bottom: 0;
+        width: 0;
+        height: 0;
+      }
+    }
+  }
+  .message-sent {
+    margin-right: 8px;
+    .message-bubble {
+      background: #c8e6c9;
+    }
+    .message-avatar + .message-content {
+      margin-right: 8px;
+    }
+    &.message-tail .message-bubble {
+      border-radius: 2px 2px 0 2px;
+      &:before {
+        position: absolute;
+        content: '';
+        border-right: 8px solid transparent;
+        border-left: 0 solid transparent;
+        border-bottom: 8px solid #c8e6c9;
+        left: 100%;
+        bottom: 0;
+        width: 0;
+        height: 0;
+      }
+    }
+  }
+
+  // Rules
+  .message + .message:not(.message-first) {
+    margin-top: 8px;
+  }
 }

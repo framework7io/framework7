@@ -1,7 +1,93 @@
 /* === Messages === */
+.messages {
+  display: flex;
+  flex-direction: column;
+}
+.messages-title {
+  text-align: center;
+  width: 100%;
+  line-height: 1;
+}
 .message {
+  max-width: 70%;
   box-sizing: border-box;
   display: flex;
+}
+.message-avatar {
+  border-radius: 50%;
+  position: relative;
+  background-size: cover;
+  align-self: flex-end;
+  flex-shrink: 0;
+}
+.message-content {
+  position: relative;
+}
+.message-header, .message-footer, .message-name {
+  line-height: 1;
+  font-size: 12px;
+}
+.message-footer {
+  font-size: 11px;
+  margin-bottom: -1em;
+}
+.message-bubble {
+  box-sizing: border-box;
+  word-break: break-word;
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  line-height: 1.2;
+}
+.message-image {
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+.message-text-header, .message-text-footer {
+  font-size: 12px;
+  line-height: 1;
+}
+.message-text {
+  text-align: left;
+}
+.message-sent {
+  flex-direction: row-reverse;
+  text-align: right;
+  align-self: flex-end;
+}
+// Rules
+.message-sent {
+  .message-avatar {
+    display: none;
+  }
+}
+.message:not(.message-last) {
+  .message-avatar {
+    opacity: 0;
+  }
+}
+.message:not(.message-first) {
+  .message-name {
+    display: none;
+  }
+}
+.message.message-same-name {
+  .message-name {
+    display: none;
+  }
+}
+.message.message-same-header {
+  .message-header {
+    display: none;
+  }
+}
+.message.message-same-footer {
+  .message-footer {
+    display: none;
+  }
 }
 @import url('./messages-ios.less');
 @import url('./messages-md.less');
