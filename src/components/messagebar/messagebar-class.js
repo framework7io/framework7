@@ -127,6 +127,16 @@ class Messagebar extends Framework7Class {
 
     return messagebar;
   }
+  focus() {
+    const messagebar = this;
+    messagebar.$textareaEl.focus();
+    return messagebar;
+  }
+  blur() {
+    const messagebar = this;
+    messagebar.$textareaEl.blur();
+    return messagebar;
+  }
   clear() {
     const messagebar = this;
     messagebar.$textareaEl.val('').trigger('change');

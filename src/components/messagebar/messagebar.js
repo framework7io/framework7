@@ -15,13 +15,13 @@ export default {
       },
       get(messagebarEl) {
         const $messagebarEl = $(messagebarEl);
-        if ($messagebarEl.length && $messagebarEl[0].f7Searchbar) {
-          return $messagebarEl[0].f7Searchbar;
+        if ($messagebarEl.length && $messagebarEl[0].f7Messagebar) {
+          return $messagebarEl[0].f7Messagebar;
         }
         return undefined;
       },
     };
-    ('clear getValue setValue setPlaceholder resize attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle destroy').split(' ').forEach((messagebarMethod) => {
+    ('clear getValue setValue setPlaceholder resize focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle destroy').split(' ').forEach((messagebarMethod) => {
       messagebar[messagebarMethod] = (messagebarEl = '.messagebar', ...args) => {
         const mb = app.messagebar.get(messagebarEl);
         if (mb) return mb[messagebarMethod](...args);
