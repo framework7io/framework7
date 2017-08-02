@@ -168,6 +168,56 @@ const Navbar = {
     if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) return undefined;
     return $navbarEl[0];
   },
+  initHideNavbarOnScroll(pageEl, navbarEl) {
+    const app = this;
+    const $pageEl = $(pageEl);
+    const $navbarEl = $(navbarEl).closest('.navbar');
+
+    let previousScrollTop;
+    let currentScrollTop;
+
+    let scrollHeight;
+    let offsetHeight;
+    let reachEnd;
+    let action;
+    let navbarHidden;
+    function handleScroll() {
+      const scrollContent = this;
+      if ($pageEl.hasClass('page-previous')) return;
+      currentScrollTop = scrollContent.scrollTop;
+      scrollHeight = scrollContent.scrollHeight;
+      offsetHeight = scrollContent.offsetHeight;
+      reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
+      navbarHidden = $navbarEl.hasClass('navbar-hidden');
+      if (reachEnd) {
+        if (app.params.navbar.showOnPageScrollEnd) {
+          action = 'show';
+        }
+      } else if (previousScrollTop > currentScrollTop) {
+        if (app.params.navbar.showOnPageScrollTop || currentScrollTop <= 44) {
+          action = 'show';
+        } else {
+          action = 'hide';
+        }
+      } else if (currentScrollTop > 44) {
+        action = 'hide';
+      } else {
+        action = 'show';
+      }
+
+      if (action === 'show' && navbarHidden) {
+        app.navbar.show($navbarEl);
+        navbarHidden = false;
+      } else if (action === 'hide' && !navbarHidden) {
+        app.navbar.hide($navbarEl);
+        navbarHidden = true;
+      }
+
+      previousScrollTop = currentScrollTop;
+    }
+    $pageEl.on('scroll', '.page-content', handleScroll, true);
+    $pageEl[0].f7ScrollNavbarHandler = handleScroll;
+  },
 };
 export default {
   name: 'navbar',
@@ -179,6 +229,7 @@ export default {
         hide: Navbar.hide.bind(app),
         show: Navbar.show.bind(app),
         getElByPage: Navbar.getElByPage.bind(app),
+        initHideNavbarOnScroll: Navbar.initHideNavbarOnScroll.bind(app),
       },
     });
   },
@@ -186,6 +237,9 @@ export default {
     navbar: {
       scrollTopOnTitleClick: true,
       iosCenterTitle: true,
+      hideOnPageScroll: false,
+      showOnPageScrollEnd: true,
+      showOnPageScrollTop: true,
     },
   },
   on: {
@@ -195,6 +249,11 @@ export default {
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
+    },
+    pageBeforeRemove(page) {
+      if (page.$el[0].f7ScrollNavbarHandler) {
+        page.$el.off('scroll', '.page-content', page.$el[0].f7ScrollNavbarHandler, true);
+      }
     },
     pageBeforeIn(page) {
       const app = this;
@@ -221,10 +280,14 @@ export default {
     },
     pageInit(page) {
       const app = this;
-      if (app.theme !== 'ios') return;
       const $navbarEl = $(app.navbar.getElByPage(page));
       if (!$navbarEl || $navbarEl.length === 0) return;
-      app.navbar.size($navbarEl);
+      if (app.theme === 'ios') {
+        app.navbar.size($navbarEl);
+      }
+      if (app.params.navbar.hideOnPageScroll || page.$el.find('.hide-navbar-on-scroll').length || page.$el.hasClass('hide-navbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
+        app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
+      }
     },
     popoverOpen(popover) {
       const app = this;
