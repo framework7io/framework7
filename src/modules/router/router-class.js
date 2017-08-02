@@ -402,12 +402,6 @@ class Router extends Framework7Class {
       router.animateWithCSS(...args);
     }
   }
-  removePage(el) {
-
-  }
-  removeNavbar(el) {
-
-  }
   removeEl(el) {
     if (!el) return;
     const router = this;
@@ -969,6 +963,8 @@ class Router extends Framework7Class {
           if ($navbarInnerEl.length > 0) {
             router.$navbarEl.append($navbarInnerEl);
             $pageEl.children('.navbar').remove();
+          } else {
+            router.$navbarEl.addClass('navbar-hidden');
           }
         }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, { route: router.currentRoute });
