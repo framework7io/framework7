@@ -57,6 +57,63 @@ const Toolbar = {
     }
     $el.removeClass('toolbar-hidden');
   },
+  initHideToolbarOnScroll(pageEl) {
+    const app = this;
+    const $pageEl = $(pageEl);
+    let $toolbarEl = $pageEl.parents('.view').children('.toolbar');
+    if ($toolbarEl.length === 0) {
+      $toolbarEl = $pageEl.find('.toolbar');
+    }
+    if ($toolbarEl.length === 0) {
+      return;
+    }
+
+    let previousScrollTop;
+    let currentScrollTop;
+
+    let scrollHeight;
+    let offsetHeight;
+    let reachEnd;
+    let action;
+    let toolbarHidden;
+    function handleScroll() {
+      const scrollContent = this;
+      if ($pageEl.hasClass('page-previous')) return;
+      currentScrollTop = scrollContent.scrollTop;
+      scrollHeight = scrollContent.scrollHeight;
+      offsetHeight = scrollContent.offsetHeight;
+      reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
+      toolbarHidden = $toolbarEl.hasClass('toolbar-hidden');
+
+      if (reachEnd) {
+        if (app.params.toolbar.showOnPageScrollEnd) {
+          action = 'show';
+        }
+      } else if (previousScrollTop > currentScrollTop) {
+        if (app.params.toolbar.showOnPageScrollTop || currentScrollTop <= 44) {
+          action = 'show';
+        } else {
+          action = 'hide';
+        }
+      } else if (currentScrollTop > 44) {
+        action = 'hide';
+      } else {
+        action = 'show';
+      }
+
+      if (action === 'show' && toolbarHidden) {
+        app.toolbar.show($toolbarEl);
+        toolbarHidden = false;
+      } else if (action === 'hide' && !toolbarHidden) {
+        app.toolbar.hide($toolbarEl);
+        toolbarHidden = true;
+      }
+
+      previousScrollTop = currentScrollTop;
+    }
+    $pageEl.on('scroll', '.page-content', handleScroll, true);
+    $pageEl[0].f7ScrollToolbarHandler = handleScroll;
+  },
 };
 export default {
   name: 'toolbar',
@@ -67,16 +124,49 @@ export default {
         hide: Toolbar.hide.bind(app),
         show: Toolbar.show.bind(app),
         setHighlight: Toolbar.setHighlight.bind(app),
+        initHideToolbarOnScroll: Toolbar.initHideToolbarOnScroll.bind(app),
         init: Toolbar.init.bind(app),
       },
     });
   },
+  params: {
+    toolbar: {
+      hideOnPageScroll: false,
+      showOnPageScrollEnd: true,
+      showOnPageScrollTop: true,
+    },
+  },
   on: {
+    pageBeforeRemove(page) {
+      if (page.$el[0].f7ScrollToolbarHandler) {
+        page.$el.off('scroll', '.page-content', page.$el[0].f7ScrollToolbarHandler, true);
+      }
+    },
+    pageBeforeIn(page) {
+      const app = this;
+      if (app.theme !== 'ios') return;
+      let $toolbarEl = page.$el.parents('.view').children('.toolbar');
+      if ($toolbarEl.length === 0) {
+        $toolbarEl = page.$el.find('.toolbar');
+      }
+      if ($toolbarEl.length === 0) {
+        return;
+      }
+      if (page.$el.hasClass('no-toolbar')) {
+        app.toolbar.hide($toolbarEl);
+      } else {
+        app.toolbar.show($toolbarEl);
+      }
+    },
     pageInit(page) {
       const app = this;
       page.$el.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
+      if (app.params.toolbar.hideOnPageScroll || page.$el.find('.hide-toolbar-on-scroll').length || page.$el.hasClass('hide-toolbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
+        if (page.$el.find('.keep-toolbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) return;
+        app.toolbar.initHideToolbarOnScroll(page.el);
+      }
     },
   },
 };
