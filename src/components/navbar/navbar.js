@@ -168,10 +168,10 @@ const Navbar = {
     if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) return undefined;
     return $navbarEl[0];
   },
-  initHideNavbarOnScroll(pageEl, navbarEl) {
+  initHideNavbarOnScroll(pageEl, navbarInnerEl) {
     const app = this;
     const $pageEl = $(pageEl);
-    const $navbarEl = $(navbarEl).closest('.navbar');
+    const $navbarEl = $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
 
     let previousScrollTop;
     let currentScrollTop;
@@ -189,6 +189,7 @@ const Navbar = {
       offsetHeight = scrollContent.offsetHeight;
       reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
       navbarHidden = $navbarEl.hasClass('navbar-hidden');
+
       if (reachEnd) {
         if (app.params.navbar.showOnPageScrollEnd) {
           action = 'show';
@@ -287,6 +288,7 @@ export default {
         app.navbar.size($navbarEl);
       }
       if (app.params.navbar.hideOnPageScroll || page.$el.find('.hide-navbar-on-scroll').length || page.$el.hasClass('hide-navbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
+        if (page.$el.find('.keep-navbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) return;
         app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
       }
     },
