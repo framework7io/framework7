@@ -22,9 +22,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $100
 
-Juergen Schimmoeller
-
-[Join here](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
+[Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
 
 ---
 
@@ -46,7 +44,6 @@ Greg Hatt<br>
 Timo Ernst<br>
 Dmitry Akinin<br>
 Adrian Maleska<br>
-Michael Kreinbihl<br>
 Todd Crowe<br>
 Rick Chang<br>
 Dave Billington
@@ -56,9 +53,10 @@ Dave Billington
 ---
 
 ### $5+
+Garry Lowther<br>
+Uri Bram<br>
 VOUSYS<br>
 Mnill<br>
-Daniel Wüst<br>
 Tirso Martínez Reyes<br>
 Zafer Ayan<br>
 Amir br<br>
