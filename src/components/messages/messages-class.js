@@ -215,7 +215,7 @@ class Messages extends Framework7Class {
       });
     });
   }
-  clean() {
+  clear() {
     const m = this;
     m.messages = [];
     m.$el.html('');

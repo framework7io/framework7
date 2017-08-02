@@ -21,7 +21,7 @@ export default {
         return undefined;
       },
     };
-    ('renderMessages layout scroll clean removeMessage removeMessages addMessage addMessages destroy').split(' ').forEach((messagesMethod) => {
+    ('renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages destroy').split(' ').forEach((messagesMethod) => {
       messages[messagesMethod] = (messagesEl = '.messages', ...args) => {
         const m = app.messages.get(messagesEl);
         if (m) return m[messagesMethod](...args);
