@@ -259,13 +259,14 @@ export default {
       const app = this;
       if (app.theme !== 'ios') return;
       let $navbarEl;
+      const view = page.$el.parents('.view')[0].f7View;
       const navbarInnerEl = app.navbar.getElByPage(page);
       if (!navbarInnerEl) {
         $navbarEl = page.$el.parents('.view').children('.navbar');
       } else {
         $navbarEl = $(navbarInnerEl).parents('.navbar');
       }
-      if (page.$el.hasClass('no-navbar')) {
+      if (page.$el.hasClass('no-navbar') || (view.router.dynamicNavbar && !navbarInnerEl)) {
         app.navbar.hide($navbarEl);
       } else {
         app.navbar.show($navbarEl);
