@@ -102,7 +102,7 @@ function SwipeBack(r) {
           currentNavbar = currentPage.children('.navbar').children('.navbar-inner');
           previousNavbar = previousPage.children('.navbar').children('.navbar-inner');
         }
-        navbarWidth = currentNavbar[0].offsetWidth;
+        navbarWidth = $navbarEl[0].offsetWidth;
         currentNavElements = currentNavbar.find('.left, .title, .right, .subnavbar, .fading');
         previousNavElements = previousNavbar.find('.left, .title, .right, .subnavbar, .fading');
         if (router.params.iosAnimateNavbarBackIcon) {
