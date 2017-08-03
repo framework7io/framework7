@@ -4,9 +4,8 @@
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
   "scripts": {
-    "dev": "NODE_ENV=development gulp build && gulp server",
-    "build": "NODE_ENV=development gulp build",
-    "dev": "NODE_ENV=production gulp build"
+    "dev": "NODE_ENV=production gulp build",
+    "build": "NODE_ENV=development gulp build"
   },
   "repository": {
     "type": "git",
@@ -39,9 +38,14 @@
     "url": "https://github.com/nolimits4web/Framework7/issues"
   },
   "homepage": "http://framework7.io/",
-  "browserslist": ["Android > 4", "IOS >= 7", "last 2 versions", "ie >= 10"],
+  "browserslist": [
+    "Android > 4",
+    "IOS >= 7",
+    "last 2 versions",
+    "ie >= 10"
+  ],
   "dependencies": {
-    "dom7": "^1.6.3",
+    "dom7": "^1.6.4",
     "template7": "^1.2.3"
   },
   "devDependencies": {
