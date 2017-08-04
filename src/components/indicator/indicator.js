@@ -3,7 +3,7 @@ import Utils from '../../utils/utils';
 
 const Indicator = {
   visible: false,
-  show() {
+  show(color = 'white') {
     const app = this;
     if (Indicator.visible) return;
     const preloaderInner = app.theme !== 'md' ? '' :
@@ -20,7 +20,7 @@ const Indicator = {
     app.root.append(`
       <div class="indicator-backdrop"></div>
       <div class="indicator-modal">
-        <div class="preloader preloader-white">${preloaderInner}</div>
+        <div class="preloader preloader-${color}">${preloaderInner}</div>
       </div>
     `);
     Indicator.visible = true;
