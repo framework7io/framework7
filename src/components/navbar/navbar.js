@@ -292,17 +292,10 @@ export default {
         app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
       }
     },
-    popoverOpen(popover) {
+    modalOpen(modal) {
       const app = this;
       if (app.theme !== 'ios') return;
-      popover.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
-        app.navbar.size(navbarEl);
-      });
-    },
-    popupOpen(popup) {
-      const app = this;
-      if (app.theme !== 'ios') return;
-      popup.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+      modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
