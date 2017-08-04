@@ -63,6 +63,7 @@ class Router extends Framework7Class {
       set(newRoute = {}) {
         previousRoute = Utils.extend({}, currentRoute);
         currentRoute = newRoute;
+        if (!currentRoute) return;
         router.url = currentRoute.url;
         router.emit('routeChange', newRoute, previousRoute, router);
       },
@@ -75,6 +76,9 @@ class Router extends Framework7Class {
       configurable: true,
       get() {
         return previousRoute;
+      },
+      set(newRoute) {
+        previousRoute = newRoute;
       },
     });
     Utils.extend(router, {
