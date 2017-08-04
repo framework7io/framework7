@@ -49,17 +49,20 @@
   }
   .item-floating-label {
     transform-origin: left;
-    transform: scale(16/12) translateY(21px);
+    transform: scale(16/12) translateY(18px);
     color: rgba(0,0,0,0.35);
     width: auto;
     max-width: 75%;
     pointer-events: none;
-    ~ .item-input-wrap input::placeholder {
+    ~ .item-input-wrap input::placeholder, ~ .item-input-wrap textarea::placeholder, {
       color: transparent;
     }
   }
   .item-input-with-value .item-floating-label, .item-input-focused .item-floating-label {
     transform: scale(1) translateY(0);
+  }
+  .item-input-with-value .item-floating-label {
+    color: rgba(0,0,0,.65);
   }
   .item-input {
     .item-media {
@@ -68,6 +71,25 @@
     .item-inner {
       display: block;
       .hairline-remove(bottom);
+    }
+  }
+  .inline-labels, .inline-label {
+    .item-media {
+      align-self: flex-start;
+      padding-top: 14px;
+    }
+    .item-inner {
+      display: flex;
+    }
+    .item-label, .item-floating-label {
+      font-size: 16px;
+      width: 30%;
+      line-height: 1.5;
+      align-self: flex-start;
+      padding-top: 7px;
+      + .item-input-wrap {
+        margin-left: 8px;
+      }
     }
   }
   .item-input-with-error-message, .item-input-with-info {
@@ -94,7 +116,7 @@
     display: none;
   }
   .item-input-focused {
-    .item-title {
+    .item-label, .item-floating-label {
       color: @themeColor;
     }
     .item-input-wrap:after {
@@ -102,7 +124,7 @@
     }
   }
   .item-input-invalid {
-    .item-title {
+    .item-label, .item-floating-label {
       color: @red;
     }
     .item-input-wrap:after {

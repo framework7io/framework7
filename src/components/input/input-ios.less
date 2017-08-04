@@ -26,23 +26,45 @@
       }
     }
   }
-  .item-input {
-    .item-title, .item-media {
-      align-self: flex-start;
-    }
-    .item-title {
-      padding-top: 3px;
+  .item-label, .item-floating-label {
+    font-size: 12px;
+    width: 100%;
+    line-height: 1;
+    overflow: visible;
+    + .item-input-wrap {
+      margin-top: 0;
     }
   }
-  .item-label, .item-floating-label {
-    width: 35%;
-    + .item-input-wrap {
-      margin-left: 5px;
+  .item-input {
+    .item-inner {
+      display: block;
+    }
+    .item-media {
+      align-self: flex-start;
     }
   }
   .item-input-wrap {
     margin-top: -8px;
     margin-bottom: -8px;
+  }
+  .inline-labels, .inline-label {
+    .item-inner {
+      display: flex;
+    }
+    .item-label, .item-floating-label {
+      font-size: 17px;
+      width: 35%;
+      line-height: 1.4;
+      align-self: flex-start;
+      padding-top: 3px;
+      + .item-input-wrap {
+        margin-left: 5px;
+        margin-top: -8px;
+      }
+    }
+    .item-input-wrap {
+      margin-top: -8px;
+    }
   }
   .item-input-with-error-message {
     .item-input-wrap {
