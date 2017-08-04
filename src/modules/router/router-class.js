@@ -705,6 +705,7 @@ class Router extends Framework7Class {
         $root: router.app.data,
         $route: options.route,
         $router: router,
+        $: $,
         $$: $,
         $dom7: $,
         $theme: {
