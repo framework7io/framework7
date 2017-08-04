@@ -14,6 +14,13 @@ app.initDataTable = function (table) {
             tableHeaderSelected.find('.data-table-selected-count').text(checkedItems);
         }
     }
+    function toggleRowSelected (index, el, checked) {
+        // Select the row if the checkbox is the first column
+        if (index === 0) {
+            el[checked ? 'addClass': 'removeClass']('data-table-row-selected');
+        }
+    }
+
     table.on('change', '.checkbox-cell input[type="checkbox"]', function (e) {
         if (e.detail && e.detail._sentByF7DataTable) {
             // Scripted event, don't do anything
@@ -21,20 +28,24 @@ app.initDataTable = function (table) {
         }
         var input = $(this);
         var checked = input[0].checked;
-        if (input.parents('thead').length > 0) {
-            table
-                .find('tbody tr')[checked ? 'addClass': 'removeClass']('data-table-row-selected')
-                .find('input').prop('checked', checked).trigger('change', {_sentByF7DataTable: true});
+        var headerCell = input.parents('th');
+        var columnIndex = input.parents('td,th').index();
+
+        // If header checkbox exists
+        if (headerCell.length > 0) {
+            toggleRowSelected(columnIndex, table.find('tbody tr'), checked);            
+            table.find('tbody tr td:nth-child(' + (columnIndex +1) + ') input').prop('checked', checked).trigger('change', {_sentByF7DataTable: true});
         }
         else {
-            input.parents('tr')[checked ? 'addClass': 'removeClass']('data-table-row-selected');
+            toggleRowSelected(columnIndex, input.parents('tr'), checked);
+
             if (!checked) {
-                table.find('thead .checkbox-cell input[type="checkbox"]').prop('checked', false);
+                table.find('thead .checkbox-cell:nth-child(' + (columnIndex +1) + ') input[type="checkbox"]').prop('checked', false);
             }
             else {
                 // Check for all checked
-                if (table.find('tbody .checkbox-cell input[type="checkbox"]:checked').length === table.find('tbody tr').length) {
-                    table.find('thead .checkbox-cell input[type="checkbox"]').prop('checked', true).trigger('change', {_sentByF7DataTable: true});
+                if (table.find('tbody .checkbox-cell:nth-child(' + (columnIndex +1) + ') input[type="checkbox"]:checked').length === table.find('tbody tr').length) {
+                    table.find('thead .checkbox-cell:nth-child(' + (columnIndex +1) + ') input[type="checkbox"]').prop('checked', true).trigger('change', {_sentByF7DataTable: true});
                 }
             }
         }
