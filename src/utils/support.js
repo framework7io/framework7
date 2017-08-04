@@ -40,6 +40,7 @@ function positionStickyFalsy() {
   if (document.getElementById('position-sticky-test-element').offsetTop === 50) {
     falsy = true;
   }
+  div.parentNode.removeChild(div);
   return falsy;
 }
 const Support = {
