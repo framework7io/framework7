@@ -11,6 +11,7 @@ class PullToRefresh extends Framework7Class {
     const $el = $(el);
     const $preloaderEl = $el.find('.ptr-preloader');
 
+    ptr.$el = $el;
     ptr.el = $el[0];
 
     // Extend defaults with modules params
