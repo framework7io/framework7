@@ -9,7 +9,8 @@
     "build": "NODE_ENV=development gulp build",
     "dist": "NODE_ENV=production gulp build",
     "dev": "NODE_ENV=development gulp build && NODE_ENV=development gulp ks && gulp server",
-    "prod": "NODE_ENV=production gulp ks && gulp server"
+    "prod": "NODE_ENV=production gulp ks && gulp server",
+    "test": "npm run build"
   },
   "repository": {
     "type": "git",
