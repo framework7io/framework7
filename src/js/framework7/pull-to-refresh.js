@@ -30,7 +30,11 @@ app.initPullToRefresh = function (pageContainer) {
             if (app.device.os === 'android') {
                 if ('targetTouches' in e && e.targetTouches.length > 1) return;
             }
-            else return;
+            else {
+                if(isMoved && isTouched && isScrolling){
+                    return;
+                }
+            }
         }
 
         /*jshint validthis:true */
@@ -143,7 +147,13 @@ app.initPullToRefresh = function (pageContainer) {
     }
     function handleTouchEnd(e) {
         if (e.type === 'touchend' && e.changedTouches && e.changedTouches.length > 0 && touchId) {
-            if (e.changedTouches[0].identifier !== touchId) return;
+            if (e.changedTouches[0].identifier !== touchId) {
+                isTouched = false;
+                isScrolling = false;
+                isMoved = false;
+                touchId = null;
+                return;
+            };
         }
         if (!isTouched || !isMoved) {
             isTouched = false;
