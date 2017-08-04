@@ -925,7 +925,7 @@ class Router extends Framework7Class {
     } else {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
-      if (!router.currentRoute) {
+      if (!currentRoute) {
         currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
           route: {
             url: initUrl,
