@@ -1,3 +1,5 @@
+/* eslint no-console: ["error", { allow: ["log"] }] */
+
 const gulp = require('gulp');
 const connect = require('gulp-connect');
 const gopen = require('gulp-open');
@@ -16,6 +18,9 @@ const pkg = require('./package.json');
 const fs = require('fs');
 const diff = require('diff');
 const autoprefixer = require('gulp-autoprefixer');
+const replace = require('rollup-plugin-replace');
+const cleanCSS = require('gulp-clean-css');
+const modifyFile = require('gulp-modify-file');
 
 const banner = [
   '/**',
@@ -23,50 +28,100 @@ const banner = [
   ' * <%= pkg.description %>',
   ' * <%= pkg.homepage %>',
   ' * ',
-  ' * Copyright <%= date.year %>, <%= pkg.author %>',
-  ' * The iDangero.us',
-  ' * http://www.idangero.us/',
+  ' * Copyright 2014-<%= date.year %> <%= pkg.author %>',
   ' * ',
-  ' * Licensed under <%= pkg.license %>',
+  ' * Released under the <%= pkg.license %> License',
   ' * ',
   ' * Released on: <%= date.month %> <%= date.day %>, <%= date.year %>',
   ' */',
   ''].join('\n');
 
+const date = {
+  year: new Date().getFullYear(),
+  month: ('January February March April May June July August September October November December').split(' ')[new Date().getMonth()],
+  day: new Date().getDate(),
+};
+
 
 // Build JS Files
-function buildJs(cb) {
-  'use strict';
+function buildJsEsModule(cb) {
+  const env = process.env.NODE_ENV || 'development';
   rollup({
     entry: './src/framework7.js',
     plugins: [
-      resolve({
-        jsnext: true,
-      }),
       buble(),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+      }),
+    ],
+    format: 'es',
+    moduleName: 'Framework7',
+    useStrict: true,
+    sourceMap: false,
+  })
+    .on('error', (err) => {
+      if (cb) cb();
+      console.log(err.toString());
+    })
+    .pipe(source('framework7.js', './src'))
+    .pipe(buffer())
+    .pipe(header(banner, { pkg, date }))
+    .pipe(rename('framework7.module.js'))
+    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .on('end', () => {
+      if (cb) cb();
+    });
+}
+function buildJs(cb) {
+  const env = process.env.NODE_ENV || 'development';
+  rollup({
+    entry: './src/framework7.js',
+    plugins: [
+      resolve({ jsnext: true }),
+      buble(),
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+      }),
     ],
     format: 'umd',
     moduleName: 'Framework7',
     useStrict: true,
     sourceMap: true,
   })
-  .on('error', (err) => {
-    console.log(err.toString());
-    if (cb) cb();
-  })
-  .pipe(source('framework7.js', './src'))
-  .pipe(buffer())
-  .pipe(sourcemaps.init({ loadMaps: true }))
-  .pipe(sourcemaps.write('./'))
-  .pipe(gulp.dest('./build/js/'))
-  .on('end', () => {
-    if (cb) cb();
-  });
+    .on('error', (err) => {
+      if (cb) cb();
+      console.log(err.toString());
+    })
+    .pipe(source('framework7.js', './src'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(header(banner, { pkg, date }))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .on('end', () => {
+      if (env === 'development') {
+        if (cb) cb();
+        return;
+      }
+      gulp.src('./dist/js/framework7.js')
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(uglify())
+        .pipe(header(banner, { pkg, date }))
+        .pipe(rename((filePath) => {
+          /* eslint no-param-reassign: ["error", { "props": false }] */
+          filePath.basename += '.min';
+        }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./dist/js/'))
+        .on('end', () => {
+          buildJsEsModule(cb);
+        });
+    });
 }
 
 // Build Less Files
 function buildLess(cb) {
-  'use strict';
+  const env = process.env.NODE_ENV || 'development';
   gulp.src('./src/framework7.less')
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')],
@@ -75,17 +130,34 @@ function buildLess(cb) {
       cascade: false,
     }))
     .on('error', (err) => {
+      if (cb) cb();
       console.log(err.toString());
-      if (cb) cb();
     })
-    .pipe(gulp.dest('./build/css/'))
+    .pipe(header(banner, { pkg, date }))
+    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/css/`))
     .on('end', () => {
-      if (cb) cb();
+      if (env === 'development') {
+        if (cb) cb();
+        return;
+      }
+      gulp.src('./dist/css/framework7.css')
+        .pipe(cleanCSS({
+          advanced: false,
+          aggressiveMerging: false,
+        }))
+        .pipe(header(banner, { pkg, date }))
+        .pipe(rename((filePath) => {
+          /* eslint no-param-reassign: ["error", { "props": false }] */
+          filePath.basename += '.min';
+        }))
+        .pipe(gulp.dest('./dist/css/'))
+        .on('end', () => {
+          if (cb) cb();
+        });
     });
 }
 
 gulp.task('diff', () => {
-  'use strict';
   var file = process.argv.slice(3).toString().replace('-', '');
   const ios = fs.readFileSync('./src/_less-old/ios/' + file + '.less', 'utf8');
   const md = fs.readFileSync('./src/_less-old/material/' + file + '.less', 'utf8');
@@ -105,26 +177,41 @@ gulp.task('diff', () => {
 });
 
 // Tasks
+gulp.task('ks', (cb) => {
+  const env = process.env.NODE_ENV || 'development';
+  gulp.src('./kitchen-sink/index.html')
+    .pipe(modifyFile((content) => {
+      if (env === 'development') {
+        return content
+          .replace('../dist/css/framework7.min.css', '../build/css/framework7.css')
+          .replace('../dist/js/framework7.min.js', '../build/js/framework7.js');
+      }
+      console.log('here', content);
+      return content
+        .replace('../build/css/framework7.css', '../dist/css/framework7.min.css')
+        .replace('../build/js/framework7.js', '../dist/js/framework7.min.js');
+    }))
+    .pipe(gulp.dest('./kitchen-sink/'))
+    .on('end', () => {
+      if (cb) cb();
+    });
+});
 gulp.task('js', (cb) => {
-  'use strict';
   buildJs(cb);
 });
 
 gulp.task('less', (cb) => {
-  'use strict';
   buildLess(cb);
 });
 
 gulp.task('build', ['js', 'less']);
 
 gulp.task('watch', () => {
-  'use strict';
   gulp.watch('./src/**/**/*.js', ['js']);
   gulp.watch('./src/**/**/*.less', ['less']);
 });
 
 gulp.task('connect', () => {
-  'use strict';
   connect.server({
     root: ['./'],
     livereload: true,
@@ -133,7 +220,6 @@ gulp.task('connect', () => {
 });
 
 gulp.task('open', () => {
-  'use strict';
   gulp.src('./kitchen-sink/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/' }));
 });
 
