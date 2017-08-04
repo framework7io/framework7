@@ -93,5 +93,30 @@ export default {
       },
     });
   },
+  on: {
+    init() {
+      const app = this;
+      $('.view-init').each((index, viewEl) => {
+        if (viewEl.f7View) return;
+        const viewParams = $(viewEl).dataset();
+        app.views.create(viewEl, viewParams);
+      });
+    },
+    modalOpen(modal) {
+      const app = this;
+      modal.$el.find('.view-init').each((index, viewEl) => {
+        if (viewEl.f7View) return;
+        const viewParams = $(viewEl).dataset();
+        app.views.create(viewEl, viewParams);
+      });
+    },
+    modalBeforeDestroy(modal) {
+      modal.$el.find('.view-init').each((index, viewEl) => {
+        const view = viewEl.f7View;
+        if (!view) return;
+        view.destroy();
+      });
+    },
+  },
 };
 
