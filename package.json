@@ -1,11 +1,15 @@
 {
   "name": "framework7",
-  "version": "2.0.0",
+  "version": "2.0.0-beta.1",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
+  "jsnext:main": "dist/js/framework7.module.js",
+  "module": "dist/js/framework7.module.js",
   "scripts": {
-    "dev": "NODE_ENV=production gulp build",
-    "build": "NODE_ENV=development gulp build"
+    "build": "NODE_ENV=development gulp build",
+    "dist": "NODE_ENV=production gulp build",
+    "dev": "NODE_ENV=development gulp build && NODE_ENV=development gulp ks && gulp server",
+    "prod": "NODE_ENV=production gulp ks && gulp server"
   },
   "repository": {
     "type": "git",
@@ -46,7 +50,7 @@
   ],
   "dependencies": {
     "dom7": "^1.6.4",
-    "template7": "^1.2.3"
+    "template7": "^1.2.5"
   },
   "devDependencies": {
     "diff": "^3.2.0",
@@ -55,15 +59,18 @@
     "eslint-plugin-import": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.7.0",
     "gulp-connect": "^5.0.0",
     "gulp-header": "^1.8.8",
     "gulp-less": "^3.3.0",
+    "gulp-modify-file": "^0.1.0",
     "gulp-open": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^2.1.2",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^1.1.1",
     "rollup-stream": "^1.19.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
