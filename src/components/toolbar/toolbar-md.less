@@ -103,7 +103,7 @@
   .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content {
     padding-top: @toolbarSize;
   }
-  .tabbar-labels:not(.toolbar-bottom) ~ * .page-content, .tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+  .toolbar.tabbar-labels:not(.toolbar-bottom) ~ * .page-content, .toolbar.tabbar-labels:not(.toolbar-bottom) ~ .page-content {
     padding-top: @tabbarLabelsSize;
   }
 
@@ -125,7 +125,7 @@
     + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content {
       padding-top: @toolbarSize + @navbarSize;
     }
-    + .tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+    + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ .page-content {
       padding-top: @tabbarLabelsSize + @navbarSize;
     }
     + .toolbar-hidden:not(.toolbar-bottom):not(.messagebar) {
@@ -149,7 +149,7 @@
       + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content {
         padding-top: @toolbarSize + @navbarSizeTablet;
       }
-      + .tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+      + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ .page-content {
         padding-top: @tabbarLabelsSize + @navbarSizeTablet;
       }
       &.navbar-hidden {
