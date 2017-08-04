@@ -179,6 +179,8 @@ class Modal extends Framework7Class {
   }
   destroy() {
     let modal = this;
+    modal.emit('modalBeforeDestroy', modal);
+    modal.$el.trigger(`modal:beforedestroy ${modal.type.toLowerCase()}:beforedestroy`, modal);
     Utils.deleteProps(modal);
     modal = null;
   }
