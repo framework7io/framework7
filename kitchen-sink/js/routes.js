@@ -94,7 +94,7 @@ var routes = [
   },
   {
     path: '/chips/',
-    url: './chips.html',
+    componentUrl: './chips.html',
   },
   {
     path: '/contacts-list/',
@@ -121,8 +121,8 @@ var routes = [
     url: './fab-morph.html',
   },
   {
-    path: '/infinite/',
-    componentUrl: './infinite.html',
+    path: '/infinite-scroll/',
+    componentUrl: './infinite-scroll.html',
   },
   {
     path: '/inputs/',
@@ -249,13 +249,6 @@ var routes = [
           url: 'about.html',
         });
       }, 3000);
-    },
-  },
-  // Popup
-  {
-    path: '/popup/',
-    popup: {
-
     },
   },
 ];
