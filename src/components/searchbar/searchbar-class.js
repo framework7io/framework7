@@ -411,6 +411,8 @@ class Searchbar extends FrameworkClass {
   }
   destroy() {
     const sb = this;
+    sb.emit('searchbarBeforeDestroy', sb);
+    sb.$el.trigger('searchbar:beforedestroy', sb);
     sb.detachEvents();
     delete sb.$el.f7Searchbar;
     Utils.deleteProps(sb);

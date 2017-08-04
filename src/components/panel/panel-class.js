@@ -121,6 +121,10 @@ class Panel extends Framework7Class {
   destroy() {
     let panel = this;
     const app = panel.app;
+
+    panel.emit('panelBeforeDestroy', panel);
+    panel.$el.trigger('panel:beforedestroy', panel);
+
     if (panel.resizeHandler) {
       app.off('resize', panel.resizeHandler);
     }

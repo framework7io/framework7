@@ -247,7 +247,7 @@ class SmartSelect extends Framework7Class {
     // Attach input events
     ss.attachInputsEvents();
 
-    ss.$el.trigger('smartselect:open');
+    ss.$el.trigger('smartselect:open', ss);
     ss.emit({
       events: 'open',
       data: [ss],
@@ -258,7 +258,7 @@ class SmartSelect extends Framework7Class {
   onOpened() {
     const ss = this;
 
-    ss.$el.trigger('smartselect:opened');
+    ss.$el.trigger('smartselect:opened', ss);
     ss.emit({
       events: 'opened',
       data: [ss],
@@ -279,7 +279,7 @@ class SmartSelect extends Framework7Class {
     // Detach events
     ss.detachInputsEvents();
 
-    ss.$el.trigger('smartselect:close');
+    ss.$el.trigger('smartselect:close', ss);
     ss.emit({
       events: 'close',
       data: [ss],
@@ -294,7 +294,7 @@ class SmartSelect extends Framework7Class {
     ss.$containerEl = null;
     delete ss.$containerEl;
 
-    ss.$el.trigger('smartselect:closed');
+    ss.$el.trigger('smartselect:closed', ss);
     ss.emit({
       events: 'closed',
       data: [ss],
@@ -630,6 +630,8 @@ class SmartSelect extends Framework7Class {
   }
   destroy() {
     const ss = this;
+    ss.emit('smartSelectBeforeDestroy', ss);
+    ss.$el.trigger('smartselect:beforedestroy', ss);
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
     Utils.deleteProps(ss);
