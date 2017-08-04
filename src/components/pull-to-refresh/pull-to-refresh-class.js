@@ -189,7 +189,13 @@ class PullToRefresh extends Framework7Class {
     }
     function handleTouchEnd(e) {
       if (e.type === 'touchend' && e.changedTouches && e.changedTouches.length > 0 && touchId) {
-        if (e.changedTouches[0].identifier !== touchId) return;
+        if (e.changedTouches[0].identifier !== touchId) {
+          isTouched = false;
+          isScrolling = false;
+          isMoved = false;
+          touchId = null;
+          return;
+        }
       }
       if (!isTouched || !isMoved) {
         isTouched = false;
