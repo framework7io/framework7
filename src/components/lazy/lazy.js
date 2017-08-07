@@ -30,11 +30,14 @@ const Lazy = {
     const imagesSequence = [];
     let imageIsLoading = false;
 
-    function onImageComplete() {
+    function onImageComplete(lazyEl) {
+      if (imagesSequence.indexOf(lazyEl) >= 0) {
+        imagesSequence.splice(imagesSequence.indexOf(lazyEl), 1);
+      }
       imageIsLoading = false;
       if (app.params.lazy.sequential && imagesSequence.length > 0) {
         imageIsLoading = true;
-        app.lazy.loadImage(imagesSequence.shift(), onImageComplete);
+        app.lazy.loadImage(imagesSequence[0], onImageComplete);
       }
     }
 
@@ -75,6 +78,7 @@ const Lazy = {
     const app = this;
     const rect = lazyEl.getBoundingClientRect();
     const threshold = app.params.lazy.threshold || 0;
+
     return (
       rect.top >= (0 - threshold) &&
       rect.left >= (0 - threshold) &&
@@ -96,7 +100,7 @@ const Lazy = {
       } else {
         $imageEl.attr('src', src);
       }
-      if (callback) callback();
+      if (callback) callback(imageEl);
       $imageEl.trigger('lazy:loaded');
       app.emit('lazyLoaded', $imageEl[0]);
     }
@@ -108,7 +112,7 @@ const Lazy = {
       } else {
         $imageEl.attr('src', app.params.lazy.placeholder || '');
       }
-      if (callback) callback();
+      if (callback) callback(imageEl);
       $imageEl.trigger('lazy:error');
       app.emit('lazyError', $imageEl[0]);
     }
@@ -166,6 +170,12 @@ export default {
   },
   on: {
     pageInit(page) {
+      const app = this;
+      if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
+        app.lazy.init(page.$el);
+      }
+    },
+    pageAfterIn(page) {
       const app = this;
       if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
         app.lazy.init(page.$el);
