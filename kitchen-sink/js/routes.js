@@ -48,6 +48,14 @@ var routes = [
     path: '/tabbar-scrollable/',
     url: './tabbar-scrollable.html',
   },
+  {
+    path: '/login-screen/',
+    url: './login-screen.html',
+  },
+  {
+    path: '/login-screen-embedded/',
+    url: './login-screen-embedded.html',
+  },
 
   // Components
 
