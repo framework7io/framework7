@@ -226,9 +226,19 @@ class SmartSelect extends Framework7Class {
         renderItem: ss.renderItem.bind(ss),
         height: ss.params.virtualListHeight,
         searchByItem(query, index, item) {
-          if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >=0 ) return true;
+          if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >= 0) return true;
           return false;
         },
+      });
+    }
+
+    // Init SB
+    if (ss.params.searchbar) {
+      ss.searchbar = app.searchbar.create({
+        el: $containerEl.find('.searchbar'),
+        backdropEl: $containerEl.find('.searchbar-backdrop'),
+        searchContainer: `.smart-select-list-${ss.id}`,
+        searchIn: '.item-title',
       });
     }
 
@@ -276,6 +286,13 @@ class SmartSelect extends Framework7Class {
       ss.vl = null;
       delete ss.vl;
     }
+
+    // Destroy SB
+    if (ss.searchbar && ss.searchbar.destroy) {
+      ss.searchbar.destroy();
+      ss.searchbar = null;
+      delete ss.searchbar;
+    }
     // Detach events
     ss.detachInputsEvents();
 
@@ -306,8 +323,7 @@ class SmartSelect extends Framework7Class {
     const ss = this;
     if (ss.params.renderSearchbar) return ss.params.renderSearchbar();
     const searchbarHTML = `
-      <div class="searchbar-backdrop"></div>
-      <form class="searchbar searchbar-init" data-search-container=".smart-select-list-${ss.id}" data-search-in=".item-title">
+      <form class="searchbar">
         <div class="searchbar-inner">
           <div class="searchbar-input-wrap">
             <input type="search" placeholder="${ss.params.searchbarPlaceholder}"/>
@@ -373,9 +389,10 @@ class SmartSelect extends Framework7Class {
               </a>
             </div>
             ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
+            ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
           </div>
         </div>
-        ${ss.params.searchbar ? ss.renderSearchbar() : ''}
+        ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
         <div class="page-content">
           <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
             <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
@@ -425,7 +442,7 @@ class SmartSelect extends Framework7Class {
     const popupHtml = `
       <div class="popup smart-select-popup" data-select-name="${ss.name}">
         <div class="view">
-          <div class="page smart-select-page" data-name="smart-select-page">
+          <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
             <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
               <div class="navbar-inner sliding">
                 <div class="left">
@@ -435,9 +452,10 @@ class SmartSelect extends Framework7Class {
                   </a>
                 </div>
                 ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
+                ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
               </div>
             </div>
-            ${ss.params.searchbar ? ss.renderSearchbar() : ''}
+            ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
             <div class="page-content">
               <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
                 <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
