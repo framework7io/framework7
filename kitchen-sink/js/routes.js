@@ -50,11 +50,11 @@ var routes = [
   },
   {
     path: '/login-screen/',
-    url: './login-screen.html',
+    componentUrl: './login-screen.html',
   },
   {
-    path: '/login-screen-embedded/',
-    url: './login-screen-embedded.html',
+    path: '/login-screen-page/',
+    componentUrl: './login-screen-page.html',
   },
 
   // Components
