@@ -68,6 +68,7 @@ class Messages extends Framework7Class {
       text: $messageEl.find('.message-text').html(),
       image: $messageEl.find('.message-image').html(),
       imageSrc: $messageEl.find('.message-image img').attr('src'),
+      typing: $messageEl.hasClass('message-typing'),
     };
     if (data.isTitle) {
       data.text = $messageEl.html();
@@ -104,7 +105,7 @@ class Messages extends Framework7Class {
       return `<div class="messages-title">${message.text}</div>`;
     }
     return `
-      <div class="message message-${message.type}">
+      <div class="message message-${message.type} ${message.isTyping ? 'message-typing' : ''}">
         ${message.avatar ? `
         <div class="message-avatar" style="background-image:url(${message.avatar})"></div>
         ` : ''}
@@ -115,7 +116,7 @@ class Messages extends Framework7Class {
             ${message.textHeader ? `<div class="message-text-header">${message.textHeader}</div>` : ''}
             ${message.image ? `<div class="message-image">${message.image}</div>` : ''}
             ${message.imageSrc && !message.image ? `<div class="message-image"><img src="${message.imageSrc}"></div>` : ''}
-            ${message.text ? `<div class="message-text">${message.text}</div>` : ''}
+            ${message.text || message.isTyping ? `<div class="message-text">${message.text || ''}${message.isTyping ? '<div class="message-typing-indicator"><div></div><div></div><div></div></div>' : ''}</div>` : ''}
             ${message.textFooter ? `<div class="message-text-footer">${message.textFooter}</div>` : ''}
           </div>
           ${message.footer ? `<div class="message-footer">${message.footer}</div>` : ''}
@@ -302,8 +303,17 @@ class Messages extends Framework7Class {
 
     // Add message to DOM and data
     let messagesHTML = '';
+    const typingMessage = m.messages.filter(el => el.isTyping)[0];
     messagesToAdd.forEach((messageToAdd) => {
-      m.messages[method === 'append' ? 'push' : 'unshift'](messageToAdd);
+      if (typingMessage) {
+        if (method === 'append') {
+          m.messages.splice(m.messages.indexOf(typingMessage), 0, messageToAdd);
+        } else {
+          m.messages.splice(m.messages.indexOf(typingMessage) + 1, 0, messageToAdd);
+        }
+      } else {
+        m.messages[method === 'append' ? 'push' : 'unshift'](messageToAdd);
+      }
       messagesHTML += m.renderMessage(messageToAdd);
     });
     const $messagesEls = $(messagesHTML);
@@ -315,16 +325,24 @@ class Messages extends Framework7Class {
         $messagesEls.addClass('message-appear-from-top');
       }
     }
-    m.$el[method]($messagesEls);
+    if (typingMessage) {
+      if (method === 'append') {
+        $messagesEls.insertBefore(m.$el.find('.message-typing'));
+      } else {
+        $messagesEls.insertAfter(m.$el.find('.message-typing'));
+      }
+    } else {
+      m.$el[method]($messagesEls);
+    }
 
     // Layout
     if (m.params.autoLayout) m.layout();
 
-    if (method === 'prepend') {
+    if (method === 'prepend' && !typingMessage) {
       m.pageContentEl.scrollTop = scrollBefore + (m.pageContentEl.scrollHeight - scrollHeightBefore);
     }
 
-    if (m.params.scrollMessages && ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst))) {
+    if (m.params.scrollMessages && ((method === 'append' && !m.params.newMessagesFirst) || (method === 'prepend' && m.params.newMessagesFirst && !typingMessage))) {
       if (m.params.scrollMessagesOnEdge) {
         let onEdge = false;
         if (m.params.newMessagesFirst && scrollBefore === 0) {
@@ -339,6 +357,29 @@ class Messages extends Framework7Class {
       }
     }
 
+    return m;
+  }
+  showTyping(message = {}) {
+    const m = this;
+    const typingMessage = m.messages.filter(el => el.isTyping)[0];
+    if (typingMessage) {
+      m.removeMessage(m.messages.indexOf(typingMessage));
+    }
+    m.addMessage(Utils.extend({
+      type: 'received',
+      isTyping: true,
+    }, message));
+    return m;
+  }
+  hideTyping() {
+    const m = this;
+    let typingMessageIndex;
+    m.messages.forEach((message, index) => {
+      if (message.isTyping) typingMessageIndex = index;
+    });
+    if (typeof typingMessageIndex !== 'undefined') {
+      m.removeMessage(typingMessageIndex);
+    }
     return m;
   }
   scroll(duration = 300, scrollTop) {

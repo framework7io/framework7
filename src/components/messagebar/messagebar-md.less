@@ -3,6 +3,7 @@
   @import (multiple) '../../less/vars-md.less';
   .messagebar {
     font-size: 16px;
+    .md-bar-no-shadow();
     textarea {
       padding: 5px 8px;
       height: 32px;
@@ -15,6 +16,7 @@
       .md-link-highlight(rgba(0,0,0,0.1));
     }
   }
+  .hairline-root('.messagebar', top, #d1d1d1);
   .messagebar-attachments {
     padding: 8px;
     border-bottom: 1px solid #ddd;

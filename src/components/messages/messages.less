@@ -15,6 +15,7 @@
   max-width: 70%;
   box-sizing: border-box;
   display: flex;
+  align-items: flex-end;
   position: relative;
   z-index: 1;
   transform: translate3d(0,0,0);
@@ -28,6 +29,8 @@
 }
 .message-content {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .message-header, .message-footer, .message-name {
   line-height: 1;
@@ -66,9 +69,14 @@
   align-self: flex-end;
 }
 // Rules
+.message-received {
+  .message-content {
+    align-items: flex-start;
+  }
+}
 .message-sent {
-  .message-avatar {
-    display: none;
+  .message-content {
+    align-items: flex-end;
   }
 }
 .message:not(.message-last) {
@@ -101,6 +109,18 @@
 }
 .message-appear-from-top {
   animation: message-appear-from-top 300ms;
+}
+.message-typing-indicator {
+  display: inline-block;
+  font-size: 0;
+  vertical-align: middle;
+  > div {
+    display: inline-block;
+    position: relative;
+    background: #000;
+    vertical-align: middle;
+    border-radius: 50%;
+  }
 }
 @keyframes message-appear-from-bottom {
   from {
