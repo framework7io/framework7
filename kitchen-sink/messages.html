@@ -138,7 +138,32 @@
           'http://lorempixel.com/200/300/cats/8/',
           'http://lorempixel.com/400/300/cats/9/',
           'http://lorempixel.com/300/150/cats/10/'
-        ]
+        ],
+        people: [
+          {
+            name: 'Kate Johnson',
+            avatar: 'http://lorempixel.com/100/100/people/9'
+          },
+          {
+            name: 'Blue Ninja',
+            avatar: 'http://lorempixel.com/100/100/people/7'
+          },
+        ],
+        answers: [
+          'Yes!',
+          'No',
+          'Hm...',
+          'I am not sure',
+          'And what about you?',
+          'May be ;)',
+          'Lorem ipsum dolor sit amet, consectetur',
+          'What?',
+          'Are you sure?',
+          'Of course',
+          'Need to think about it',
+          'Amazing!!!',
+        ],
+        responseInProgress: false,
       }
     },
     methods: {
@@ -208,6 +233,28 @@
         if (text.length) self.messagebar.focus();
         // Send message
         self.messages.addMessages(messagesToSend);
+
+        // Mock response
+        if (self.responseInProgress) return;
+        self.responseInProgress = true;
+        setTimeout(function () {
+          var answer = self.answers[Math.floor(Math.random() * self.answers.length)];
+          var person = self.people[Math.floor(Math.random() * self.people.length)];
+          self.messages.showTyping({
+            header: person.name + ' is typing',
+            avatar: person.avatar
+          });
+          setTimeout(function () {
+            self.messages.addMessage({
+              text: answer,
+              type: 'received',
+              name: person.name,
+              avatar: person.avatar
+            });
+            self.messages.hideTyping();
+            self.responseInProgress = false;
+          }, 4000);
+        }, 1000);
       },
     },
     on: {
