@@ -21,7 +21,9 @@ function SwipeBack(r) {
   let currentNavElements;
   let previousNavElements;
   let activeNavBackIcon;
+  let activeNavBackIconText;
   let previousNavBackIcon;
+  let previousNavBackIconText;
   let dynamicNavbar;
   let separateNavbar;
   let pageShadow;
@@ -108,13 +110,17 @@ function SwipeBack(r) {
         if (router.params.iosAnimateNavbarBackIcon) {
           if (currentNavbar.hasClass('sliding')) {
             activeNavBackIcon = currentNavbar.find('.left .back .icon');
+            activeNavBackIconText = currentNavbar.find('.left .back span').eq(0);
           } else {
             activeNavBackIcon = currentNavbar.find('.left.sliding .back .icon');
+            activeNavBackIconText = currentNavbar.find('.left.sliding .back span').eq(0);
           }
           if (previousNavbar.hasClass('sliding')) {
             previousNavBackIcon = previousNavbar.find('.left .back .icon');
+            previousNavBackIconText = previousNavbar.find('.left .back span').eq(0);
           } else {
             previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
+            previousNavBackIconText = previousNavbar.find('.left.sliding .back span').eq(0);
           }
         }
       }
@@ -186,6 +192,11 @@ function SwipeBack(r) {
         if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (percentage * 1.3) - 0.3;
         if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           let previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
+          if ($navEl[0].className.indexOf('title') >= 0 && activeNavBackIcon && activeNavBackIcon.length && activeNavBackIconText.length) {
+            previousNavTranslate = ($navEl[0].f7NavbarLeftOffset + activeNavBackIconText[0].offsetLeft) * (1 - percentage);
+          } else {
+            previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
+          }
           if (Device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
           $navEl.transform(`translate3d(${previousNavTranslate}px,0,0)`);
           if (router.params.iosAnimateNavbarBackIcon) {
