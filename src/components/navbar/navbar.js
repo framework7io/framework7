@@ -61,7 +61,7 @@ const Navbar = {
       currLeft = 0;
     }
     if (!noLeft && !noRight) {
-      currLeft = (navbarInnerWidth - rightWidth - titleWidth + leftWidth) / 2;
+      currLeft = ((navbarInnerWidth - rightWidth - titleWidth) + leftWidth) / 2;
     }
     let requiredLeft = (navbarInnerWidth - titleWidth) / 2;
     if (navbarInnerWidth - leftWidth - rightWidth > titleWidth) {
@@ -75,29 +75,33 @@ const Navbar = {
     } else {
       diff = 0;
     }
+
     // RTL inverter
     const inverter = app.rtl ? -1 : 1;
 
     if (dynamicNavbar) {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
-        title[0].f7NavbarLeftOffset = -(currLeft + diff) * inverter + separateNavbarLeftOffset;
-        title[0].f7NavbarRightOffset = (navbarInnerWidth - currLeft - diff - titleWidth) * inverter - separateNavbarRightOffset;
+        let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
+        let titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
+
         if (isPrevious) {
           if (router && router.params.iosAnimateNavbarBackIcon) {
             const activeNavbarBackLink = $el.parent().find('.navbar-current').find('.left.sliding .back .icon ~ span');
             if (activeNavbarBackLink.length > 0) {
-              title[0].f7NavbarLeftOffset += activeNavbarBackLink[0].offsetLeft;
+              titleLeftOffset += activeNavbarBackLink[0].offsetLeft;
             }
           }
         }
+        title[0].f7NavbarLeftOffset = titleLeftOffset;
+        title[0].f7NavbarRightOffset = titleRightOffset;
       }
       if (!noLeft && (left.hasClass('sliding') || sliding)) {
         if (app.rtl) {
-          left[0].f7NavbarLeftOffset = -(navbarInnerWidth - left[0].offsetWidth) / 2 * inverter;
+          left[0].f7NavbarLeftOffset = (-(navbarInnerWidth - left[0].offsetWidth) / 2) * inverter;
           left[0].f7NavbarRightOffset = leftWidth * inverter;
         } else {
           left[0].f7NavbarLeftOffset = -leftWidth + separateNavbarLeftOffset;
-          left[0].f7NavbarRightOffset = (navbarInnerWidth - left[0].offsetWidth) / 2 - separateNavbarRightOffset;
+          left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2) - separateNavbarRightOffset;
           if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
             left[0].f7NavbarRightOffset -= left.find('.back .icon')[0].offsetWidth;
           }
@@ -106,15 +110,15 @@ const Navbar = {
       if (!noRight && (right.hasClass('sliding') || sliding)) {
         if (app.rtl) {
           right[0].f7NavbarLeftOffset = -rightWidth * inverter;
-          right[0].f7NavbarRightOffset = (navbarInnerWidth - right[0].offsetWidth) / 2 * inverter;
+          right[0].f7NavbarRightOffset = ((navbarInnerWidth - right[0].offsetWidth) / 2) * inverter;
         } else {
-          right[0].f7NavbarLeftOffset = -(navbarInnerWidth - right[0].offsetWidth) / 2 + separateNavbarLeftOffset;
+          right[0].f7NavbarLeftOffset = (-(navbarInnerWidth - right[0].offsetWidth) / 2) + separateNavbarLeftOffset;
           right[0].f7NavbarRightOffset = rightWidth - separateNavbarRightOffset;
         }
       }
       if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
         subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : (-subnavbar[0].offsetWidth + separateNavbarLeftOffset);
-        subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset - separateNavbarRightOffset + separateNavbarLeftOffset;
+        subnavbar[0].f7NavbarRightOffset = (-subnavbar[0].f7NavbarLeftOffset - separateNavbarRightOffset) + separateNavbarLeftOffset;
       }
     }
 
