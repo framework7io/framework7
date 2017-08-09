@@ -255,7 +255,7 @@ const Swipeout = {
       }
 
       if (action === 'open') {
-        Swipeout.el = $swipeoutEl;
+        Swipeout.el = $swipeoutEl[0];
         $swipeoutEl.trigger('swipeout:open');
         app.emit('swipeoutOpen', $swipeoutEl[0]);
         $swipeoutEl.addClass('swipeout-opened swipeout-transitioning');
@@ -395,26 +395,26 @@ const Swipeout = {
     if ($el.length === 0) return;
     if (!$el.hasClass('swipeout-opened')) return;
     const side = $el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
-    const $swipeoutActions = el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
+    const $swipeoutActions = $el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
     const $buttons = $swipeoutActions.children('a');
     const swipeoutActionsWidth = $swipeoutActions.outerWidth();
     Swipeout.allow = false;
-    el.trigger('swipeout:close');
+    $el.trigger('swipeout:close');
     app.emit('swipeoutClose', $el[0]);
     $el.removeClass('swipeout-opened').addClass('swipeout-transitioning');
 
     let closeTimeout;
     function onSwipeoutClose() {
       Swipeout.allow = true;
-      if (el.hasClass('swipeout-opened')) return;
-      el.removeClass('swipeout-transitioning');
+      if ($el.hasClass('swipeout-opened')) return;
+      $el.removeClass('swipeout-transitioning');
       $buttons.transform('');
-      el.trigger('swipeout:closed');
+      $el.trigger('swipeout:closed');
       app.emit('swipeoutClosed', $el[0]);
-      if (callback) callback.call(el[0]);
+      if (callback) callback.call($el[0]);
       if (closeTimeout) clearTimeout(closeTimeout);
     }
-    el.find('.swipeout-content').transform('').transitionEnd(onSwipeoutClose);
+    $el.find('.swipeout-content').transform('').transitionEnd(onSwipeoutClose);
     closeTimeout = setTimeout(onSwipeoutClose, 500);
 
     $buttons.each((index, buttonEl) => {
