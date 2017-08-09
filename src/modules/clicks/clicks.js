@@ -34,16 +34,6 @@ function initClicks(app) {
       });
     });
 
-    /*
-
-    // Smart Select
-    if (clicked.hasClass('smart-select')) {
-      if (app.smartSelectOpen) app.smartSelectOpen(clicked);
-    }
-
-
-    // Speed Dial
-    */
     // Load Page
     let clickedLinkData = {};
     if (isLink) {
