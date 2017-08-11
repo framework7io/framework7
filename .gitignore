@@ -6,3 +6,4 @@ npm-debug.log
 .idea
 .vscode
 dist/css/framework7.css
+package-lock.json
