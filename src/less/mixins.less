@@ -1,3 +1,15 @@
+// Colors Loop
+.colors-loop( @ruleset ) {
+  @length: length( @colors ) ;
+  .looper( 1 ) ;
+  .looper( @index ) when ( @index <= @length ) {
+    @pair: extract( @colors, @index );
+    @name: extract( @pair, 1 ) ;
+    @value: extract( @pair, 2 ) ;
+    @ruleset();
+    .looper( @index + 1 ) ;
+  }
+}
 // Scrollable
 .scrollable() {
   overflow: auto;
