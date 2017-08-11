@@ -1,5 +1,4 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
-
 const gulp = require('gulp');
 const connect = require('gulp-connect');
 const gopen = require('gulp-open');
@@ -22,6 +21,8 @@ const replace = require('rollup-plugin-replace');
 const cleanCSS = require('gulp-clean-css');
 const modifyFile = require('gulp-modify-file');
 
+const config = require('./config.js');
+
 const banner = [
   '/**',
   ' * Framework7 <%= pkg.version %>',
@@ -41,7 +42,6 @@ const date = {
   month: ('January February March April May June July August September October November December').split(' ')[new Date().getMonth()],
   day: new Date().getDate(),
 };
-
 
 // Build JS Files
 function buildJsEsModule(cb) {
@@ -74,6 +74,36 @@ function buildJsEsModule(cb) {
 }
 function buildJs(cb) {
   const env = process.env.NODE_ENV || 'development';
+
+  /*
+  let jsFileContent = fs.readFileSync('./src/framework7.js', 'utf8');
+  const jsComponents = [];
+  config.components.forEach((name) => {
+    const capitalized = name.split('-').map((word) => {
+      return word.split('').map((char, index) => {
+        if (index === 0) return char.toUpperCase();
+        return char;
+      }).join('');
+    }).join('');
+    const jsFilePath = `./src/components/${name}/${name}.js`;
+    if (fs.existsSync(jsFilePath)) {
+      jsComponents.push({ name, capitalized });
+    }
+  });
+
+  jsFileContent = jsFileContent
+    .replace('/* IMPORTS *\/', jsComponents.map((component) => {
+      return `import ${component.capitalized} from './components/${component.name}/${component.name}';`;
+    }).join('\n'))
+    .replace('/* INSTALLS *\/', jsComponents.map((component) => {
+      return `.use(${component.capitalized})`;
+    }).join('\n  '));
+
+  fs.writeFileSync('./src/framework7.temp.js', jsFileContent);
+
+  return;
+  */
+
   rollup({
     entry: './src/framework7.js',
     plugins: [
@@ -122,6 +152,28 @@ function buildJs(cb) {
 // Build Less Files
 function buildLess(cb) {
   const env = process.env.NODE_ENV || 'development';
+
+  /*
+  let lessFileContent = fs.readFileSync('./src/framework7.less', 'utf8');
+
+  const lessComponents = [];
+  config.components.forEach((name) => {
+    const lessFilePath = `./src/components/${name}/${name}.less`;
+    if (fs.existsSync(lessFilePath)) {
+      lessComponents.push(name);
+    }
+  });
+
+  lessFileContent = lessFileContent
+    .replace('// IMPORTS', lessComponents.map((component) => {
+      return `@import url('./components/${component}/${component}.less');`;
+    }).join('\n'));
+
+  fs.writeFileSync('./src/framework7.temp.less', lessFileContent);
+
+  return;
+  */
+
   gulp.src('./src/framework7.less')
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')],

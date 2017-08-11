@@ -20,10 +20,7 @@ import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 
-// Loaders
-import Preloader from './components/preloader/preloader';
-import Progressbar from './components/progressbar/progressbar';
-
+/* IMPORTS */
 // Modals
 import Modal from './components/modal/modal';
 import Dialog from './components/dialog/dialog';
@@ -32,6 +29,10 @@ import LoginScreen from './components/login-screen/login-screen';
 import Popover from './components/popover/popover';
 import Actions from './components/actions/actions';
 import Sheet from './components/sheet/sheet';
+
+// Loaders
+import Preloader from './components/preloader/preloader';
+import Progressbar from './components/progressbar/progressbar';
 
 // Lists
 import Sortable from './components/sortable/sortable';
@@ -76,7 +77,6 @@ import Form from './components/form/form';
 import Messages from './components/messages/messages';
 import Messagebar from './components/messagebar/messagebar';
 
-
 // Template7
 Framework7.prototype.t7 = t7;
 if (!window.Template7) window.Template7 = t7;
@@ -101,6 +101,7 @@ Framework7
   .use(Navbar)
   .use(Toolbar)
   .use(Subnavbar)
+  /* INSTALLS */
   // Loaders
   .use(Preloader)
   .use(Progressbar)
