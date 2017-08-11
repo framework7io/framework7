@@ -2,5 +2,29 @@
 .preloader {
   display: inline-block;
 }
+
+/* === Preloader Modal === */
+.preloader-backdrop {
+    visibility: visible;
+    opacity: 0;
+    background: none;
+}
+.preloader-modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 8px;
+  background: rgba(0,0,0,0.8);
+  z-index: 13500;
+  transform: translateX(-50%) translateY(-50%);
+  .preloader {
+    display: block !important;
+  }
+}
+html.with-modal-preloader {
+  .page-content {
+    .not-scrollable();
+  }
+}
 @import url('./preloader-ios.less');
 @import url('./preloader-md.less');

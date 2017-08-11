@@ -23,7 +23,6 @@ import Subnavbar from './components/subnavbar/subnavbar';
 // Loaders
 import Preloader from './components/preloader/preloader';
 import Progressbar from './components/progressbar/progressbar';
-import Indicator from './components/indicator/indicator';
 
 // Modals
 import Modal from './components/modal/modal';
@@ -105,7 +104,6 @@ Framework7
   // Loaders
   .use(Preloader)
   .use(Progressbar)
-  .use(Indicator)
   // Modals
   .use(Modal)
   .use(Dialog)

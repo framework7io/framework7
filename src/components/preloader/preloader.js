@@ -18,6 +18,37 @@ const Preloader = {
           '</span>' +
       '</span>');
   },
+  // Modal
+  visible: false,
+  show(color = 'white') {
+    const app = this;
+    if (Preloader.visible) return;
+    const preloaderInner = app.theme !== 'md' ? '' :
+      '<span class="preloader-inner">' +
+          '<span class="preloader-inner-gap"></span>' +
+          '<span class="preloader-inner-left">' +
+              '<span class="preloader-inner-half-circle"></span>' +
+          '</span>' +
+          '<span class="preloader-inner-right">' +
+              '<span class="preloader-inner-half-circle"></span>' +
+          '</span>' +
+      '</span>';
+    $('html').addClass('with-modal-preloader');
+    app.root.append(`
+      <div class="preloader-backdrop"></div>
+      <div class="preloader-modal">
+        <div class="preloader preloader-${color}">${preloaderInner}</div>
+      </div>
+    `);
+    Preloader.visible = true;
+  },
+  hide() {
+    const app = this;
+    if (!Preloader.visible) return;
+    $('html').removeClass('with-modal-preloader');
+    app.root.find('.preloader-backdrop, .preloader-modal').remove();
+    Preloader.visible = false;
+  },
 };
 export default {
   name: 'preloader',
@@ -26,6 +57,8 @@ export default {
     Utils.extend(app, {
       preloader: {
         init: Preloader.init.bind(app),
+        show: Preloader.show.bind(app),
+        hide: Preloader.hide.bind(app),
       },
     });
   },
