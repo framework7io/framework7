@@ -89,6 +89,10 @@ var routes = [
     url: './accordion.html',
   },
   {
+    path: '/action-sheet/',
+    componentUrl: './action-sheet.html',
+  },
+  {
     path: '/buttons/',
     url: './buttons.html',
   },
