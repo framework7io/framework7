@@ -13,13 +13,20 @@
     </div>
     <div class="page-content">
       <div class="block">
-        <a href="#" class="button button-raised button-big button-fill actions-open">Action Sheet</a>
+        <a href="#" class="button button-raised button-big button-fill" @click="openActionSheet">Action Sheet</a>
       </div>
     </div>
   </div>
 </template>
 <script>
 return {
+  methods: {
+    openActionSheet: function () {
+      var self = this;
+      console.log(self.actions);
+      self.actions.open();
+    }
+  },
   on: {
     pageInit: function(page) {
       var self = this;
@@ -40,7 +47,7 @@ return {
             color: 'red'
         },
     ];
-    this.$app.actions.create(buttons);
+    self.actions = self.$app.actions.create(buttons);
     }
   }
 }
