@@ -93,6 +93,10 @@ var routes = [
     componentUrl: './action-sheet.html',
   },
   {
+    path: '/badge/',
+    componentUrl: './badge.html',
+  },
+  {
     path: '/buttons/',
     url: './buttons.html',
   },
