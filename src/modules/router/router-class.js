@@ -626,7 +626,7 @@ class Router extends Framework7Class {
   removeThemeElements(el) {
     const router = this;
     const theme = router.app.theme;
-    $(el).find(`.${theme === 'md' ? 'ios' : 'md'}-only`).remove();
+    $(el).find(`.${theme === 'md' ? 'ios' : 'md'}-only, .if-${theme === 'md' ? 'ios' : 'md'}`).remove();
   }
   templateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
