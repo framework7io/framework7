@@ -64,11 +64,6 @@
       animation-duration: (@preloader-inner-duration * 0.25);
       animation-timing-function: @preloader-inner-ease;
     }
-    .preloader-white & {
-      .preloader-inner-gap, .preloader-inner-half-circle {
-        border-color: #fff;
-      }
-    }
     .preloader-inner-left {
       left: 0;
       .preloader-inner-half-circle {
@@ -85,22 +80,31 @@
         animation-name: md-preloader-right-rotate;
       }
     }
-    .color-multi & {
-      .preloader-inner-left {
-        .preloader-inner-half-circle {
-          animation-name: md-preloader-left-rotate-multicolor;
-        }
-      }
-      .preloader-inner-right {
-        .preloader-inner-half-circle {
-          animation-name: md-preloader-right-rotate-multicolor;
-        }
-      }
-    }
+
   }
 
   .preloader-modal {
     border-radius: 4px;
+  }
+
+  .color-loop({
+    .preloader.color-@{colorName}, .preloader.preloader-@{colorName} {
+      .preloader-inner-gap, .preloader-inner-half-circle {
+        border-color: #fff;
+      }
+    }
+  });
+  .preloader.color-multi {
+    .preloader-inner-left {
+      .preloader-inner-half-circle {
+        animation-name: md-preloader-left-rotate-multicolor;
+      }
+    }
+    .preloader-inner-right {
+      .preloader-inner-half-circle {
+        animation-name: md-preloader-right-rotate-multicolor;
+      }
+    }
   }
 
   @keyframes md-preloader-left-rotate {
