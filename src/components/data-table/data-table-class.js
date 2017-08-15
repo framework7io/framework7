@@ -47,18 +47,26 @@ class DataTable extends Framework7Class {
       }
       const $inputEl = $(this);
       const checked = $inputEl[0].checked;
+      const columnIndex = $inputEl.parents('td,th').index();
+
       if ($inputEl.parents('thead').length > 0) {
+        if (columnIndex === 0) {
+          $el
+            .find('tbody tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected');
+        }
         $el
-          .find('tbody tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected')
-          .find('input')
+          .find(`tbody tr td:nth-child(${columnIndex + 1}) input`)
             .prop('checked', checked)
             .trigger('change', { sentByF7DataTable: true });
       } else {
-        $inputEl.parents('tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected');
+        if (columnIndex === 0) {
+          $inputEl.parents('tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected');
+        }
+
         if (!checked) {
-          $el.find('thead .checkbox-cell input[type="checkbox"]').prop('checked', false);
-        } else if ($el.find('tbody .checkbox-cell input[type="checkbox"]:checked').length === $el.find('tbody tr').length) {
-          $el.find('thead .checkbox-cell input[type="checkbox"]').prop('checked', true).trigger('change', { sentByF7DataTable: true });
+          $el.find(`thead .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]`).prop('checked', false);
+        } else if ($el.find(`tbody .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]:checked`).length === $el.find('tbody tr').length) {
+          $el.find(`thead .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]`).prop('checked', true).trigger('change', { sentByF7DataTable: true });
         }
       }
       table.checkSelectedHeader();
