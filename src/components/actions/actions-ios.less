@@ -133,4 +133,10 @@
   }
   .hairline-root('.actions-button', bottom, rgba(0,0,0,0.2));
   .hairline-root('.actions-label', bottom, rgba(0,0,0,0.2));
+
+  .colors-loop({
+    .actions-button.color-@{colorName}, .actions-label.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }
