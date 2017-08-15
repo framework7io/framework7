@@ -1,5 +1,16 @@
 // Colors Loop
-.colors-loop( @ruleset ) {
+.color-theme-loop(@ruleset) {
+  @length: length( @colors ) ;
+  .looper( 1 ) ;
+  .looper( @index ) when ( @index <= @length ) {
+    @pairTheme: extract( @colors, @index );
+    @colorThemeName: extract( @pairTheme, 1 ) ;
+    @colorThemeValue: extract( @pairTheme, 2 ) ;
+    @ruleset();
+    .looper( @index + 1 ) ;
+  }
+}
+.color-loop(@ruleset) {
   @length: length( @colors ) ;
   .looper( 1 ) ;
   .looper( @index ) when ( @index <= @length ) {
@@ -10,6 +21,7 @@
     .looper( @index + 1 ) ;
   }
 }
+
 // Scrollable
 .scrollable() {
   overflow: auto;
