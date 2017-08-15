@@ -1,0 +1,124 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Action Sheet</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <a href="#" class="button button-raised button-big button-fill" @click="openDemo1">One group, title, three buttons</a>
+      </div>
+      <div class="block">
+        <a href="#" class="button button-raised button-big button-fill" @click="openDemo2">Two groups</a>
+      </div>
+      <div class="block">
+        <a href="#" class="button button-raised button-big button-fill" @click="openDemo3">New grid action sheet</a>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+return {
+  methods: {
+    openDemo1: function () {
+      var self = this;
+      self.actions.open();
+    },
+    openDemo2: function () {
+      var self = this;
+      self.actions2.open();
+    },
+    openDemo3: function () {
+      var self = this;
+      self.actions3.open();
+    },
+  },
+  on: {
+    pageBeforeRemove() {
+      var self = this;
+      self.actions.destroy();
+      self.actions2.destroy();
+      self.actions3.destroy();
+    },
+    pageInit: function(page) {
+      var self = this;
+      var demo1 = [
+        {
+          text: 'Do something',
+          label: true
+        },
+        {
+          text: 'Button1',
+          bold: true
+        },
+        {
+          text: 'Button2',
+        },
+        {
+          text: 'Cancel',
+          color: 'red'
+        },
+      ];
+      var buttons1 = [
+        {
+          text: 'Do something',
+          label: true
+        },
+        {
+          text: 'Button1',
+          bold: true
+        },
+        {
+          text: 'Button2',
+        }
+      ];
+      var buttons2 = [
+        {
+          text: 'Cancel',
+          color: 'red'
+        }
+      ];
+      var demo2 = [buttons1, buttons2];
+      var gridButtons1 = [
+        {
+          text: 'Button1',
+          icon: '<img src="http://lorempixel.com/160/160/people/1" width="48"/>'
+        },
+        {
+          text: 'Button2',
+          icon: '<img src="http://lorempixel.com/160/160/people/2" width="48">'
+        },
+        {
+          text: 'Cancel',
+          icon: '<img src="http://lorempixel.com/160/160/peopl/3" width="48">'
+        },
+      ];
+      var gridButtons2 = [
+        {
+          text: 'Button1',
+          icon: '<img src="http://lorempixel.com/88/88/fashion/1" width="48"/>'
+        },
+        {
+          text: 'Button2',
+          icon: '<img src="http://lorempixel.com/88/88/fashion/2" width="48">'
+        },
+        {
+          text: 'Cancel',
+          icon: '<img src="http://lorempixel.com/88/88/fashion/3" width="48">'
+        },
+      ];
+      var demo3 = [ gridButtons1, gridButtons2];
+      self.actions = self.$app.actions.create({buttons: demo1});
+      self.actions2 = self.$app.actions.create({buttons: demo2});
+      self.actions3 = self.$app.actions.create({buttons: demo3, grid: true});
+    }
+  }
+}
+</script>
