@@ -40,5 +40,9 @@
     transition-duration: 300ms;
   }
 }
-@import url('toggle-ios.less');
-@import url('toggle-md.less');
+& when (@include-ios-theme) {
+  @import url('./toggle-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./toggle-md.less');
+}
