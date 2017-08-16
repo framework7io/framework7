@@ -80,4 +80,17 @@
     .md-bar-no-shadow();
     transform: translate3d(0, -100%, 0);
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .navbar, &.navbar {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .navbar.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
 }

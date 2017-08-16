@@ -6,6 +6,7 @@
     width: 56px;
     height: 56px;
     border-radius: 28px;
+    color: #fff;
     .md-depth(3);
     &.active-state {
       background: darken(@themeColor, 8%);
@@ -80,4 +81,32 @@
       background: none !important;
     }
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .fab > a, .fab-buttons a, &.fab > a, &.fab-buttons a {
+        background: @colorThemeValue;
+        &.active-state {
+          background: darken(@colorThemeValue, 8%);
+        }
+      }
+      .fab-morph, &.fab-morph {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .fab.color-@{colorName} > a,
+    .fab.color-@{colorName} .fab-buttons > a,
+    .fab-buttons.color-@{colorName} a,
+    .fab > a.color-@{colorName},
+    .fab .fab-buttons > a.color-@{colorName} {
+      background: @colorValue;
+      &.active-state {
+        background: darken(@colorValue, 8%);
+      }
+    }
+    .fab-morph.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
 }

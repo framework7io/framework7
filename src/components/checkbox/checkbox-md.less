@@ -47,6 +47,31 @@
       background-color: rgba(0,0,0,0.1);
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,
+      label.item-checkbox input[type="checkbox"]:checked ~ * .icon-checkbox,
+      .checkbox input[type="checkbox"]:checked ~ i {
+        background-color: @colorThemeValue;
+        border-color: @colorThemeValue;
+      }
+      .checkbox .ripple-wave {
+        background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), 0.5);
+      }
+    }
+  });
+  .color-loop({
+    label.item-checkbox.color-@{colorName} input[type="checkbox"]:checked ~ .icon-checkbox,
+    label.item-checkbox.color-@{colorName} input[type="checkbox"]:checked ~ * .icon-checkbox,
+    .checkbox.color-@{colorName} input[type="checkbox"]:checked ~ i {
+      background-color: @colorValue;
+      border-color: @colorValue;
+    }
+    .checkbox.color-@{colorName} .ripple-wave {
+      background: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), 0.5);
+    }
+  });
 }
 
 

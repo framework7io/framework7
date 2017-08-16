@@ -183,4 +183,17 @@
   .toolbar-transitioning, .navbar-transitioning + .toolbar {
     transition-duration: @duration;
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .toolbar:not(.messagebar), &.toolbar:not(.messagebar) {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .toolbar:not(.messagebar).color-@{colorName} {
+      background: @colorValue;
+    }
+  });
 }

@@ -1,8 +1,8 @@
 // Colors Loop
-.color-theme-loop(@ruleset) {
+.color-theme-loop(@ruleset) when (length( @colors ) >= 1) {
   @length: length( @colors ) ;
   .looper( 1 ) ;
-  .looper( @index ) when ( @index <= @length ) {
+  .looper( @index ) when ( @index <= @length ) and (length(extract( @colors, @index )) = 2) {
     @pairTheme: extract( @colors, @index );
     @colorThemeName: extract( @pairTheme, 1 ) ;
     @colorThemeValue: extract( @pairTheme, 2 ) ;
@@ -10,10 +10,10 @@
     .looper( @index + 1 ) ;
   }
 }
-.color-loop(@ruleset) {
+.color-loop(@ruleset) when (length( @colors ) >= 1) {
   @length: length( @colors ) ;
   .looper( 1 ) ;
-  .looper( @index ) when ( @index <= @length ) {
+  .looper( @index ) when ( @index <= @length ) and (length(extract( @colors, @index )) = 2) {
     @pair: extract( @colors, @index );
     @colorName: extract( @pair, 1 ) ;
     @colorValue: extract( @pair, 2 ) ;
