@@ -22,4 +22,17 @@
       height: 672px;
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      a {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    a.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }
