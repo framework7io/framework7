@@ -167,12 +167,13 @@ function buildLess(cb) {
   lessFileContent = lessFileContent
     .replace('// IMPORTS', lessComponents.map((component) => {
       return `@import url('./components/${component}/${component}.less');`;
-    }).join('\n'));
+    }).join('\n'))
+    .replace(/@include-ios-theme: (true|false);/, `@include-ios-theme: ${config.themes.indexOf('ios') >= 0 ? 'true' : 'false'};`)
+    .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${config.themes.indexOf('md') >= 0 ? 'true' : 'false'};`);
 
   fs.writeFileSync('./src/framework7.temp.less', lessFileContent);
-
-  return;
   */
+
 
   gulp.src('./src/framework7.less')
     .pipe(less({
@@ -190,6 +191,10 @@ function buildLess(cb) {
       console.log(err.toString());
     })
     .pipe(header(banner, { pkg, date }))
+    .pipe(rename((filePath) => {
+      /* eslint no-param-reassign: ["error", { "props": false }] */
+      filePath.basename = 'framework7';
+    }))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/css/`))
     .on('end', () => {
       if (env === 'development') {
