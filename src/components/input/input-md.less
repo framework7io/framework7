@@ -166,4 +166,26 @@
       top: auto;
     }
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .item-input-focused {
+        .item-label, .item-floating-label {
+          color: @colorThemeValue;
+        }
+        .item-input-wrap:after {
+          background: @colorThemeValue;
+        }
+      }
+    }
+  });
+  .color-loop({
+    .item-input-focused.color-@{colorName} {
+      .item-label, .item-floating-label {
+        color: @colorValue;
+      }
+      .item-input-wrap:after {
+        background: @colorValue;
+      }
+    }
+  });
 }
