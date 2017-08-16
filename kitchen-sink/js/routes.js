@@ -138,7 +138,7 @@ var routes = [
   },
   {
     path: '/grid/',
-    componentUrl: './grid.html',
+    url: './grid.html',
   },
   {
     path: '/infinite-scroll/',
@@ -162,7 +162,7 @@ var routes = [
   },
   {
     path: '/popup/',
-    componentUrl: './popup.html',
+    url: './popup.html',
   },
   {
     path: '/progressbar/',
