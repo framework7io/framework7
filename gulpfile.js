@@ -4,7 +4,6 @@ const connect = require('gulp-connect');
 const gopen = require('gulp-open');
 const header = require('gulp-header');
 const uglify = require('gulp-uglify');
-const path = require('path');
 const sourcemaps = require('gulp-sourcemaps');
 const rollup = require('rollup-stream');
 const buble = require('rollup-plugin-buble');
