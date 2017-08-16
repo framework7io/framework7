@@ -69,4 +69,45 @@
       }
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .button {
+        border-color: @colorThemeValue;
+        color: @colorThemeValue;
+        &.active-state {
+          background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), .15);
+        }
+        &.button-active, &.tab-link-active, &.button-fill, &.button-fill-ios {
+          color: #fff;
+        }
+        &.button-active, &.tab-link-active {
+          background: @colorThemeValue;
+        }
+        &.button-fill, &.button-fill-ios {
+          background: @colorThemeValue;
+          border-color: transparent;
+        }
+      }
+    }
+  });
+  .color-loop({
+    .button.color-@{colorName} {
+      border-color: @colorValue;
+      color: @colorValue;
+      &.active-state {
+        background: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), .15);
+      }
+      &.button-active, &.tab-link-active, &.button-fill, &.button-fill-ios {
+        color: #fff;
+      }
+      &.button-active, &.tab-link-active {
+        background: @colorValue;
+      }
+      &.button-fill, &.button-fill-ios {
+        background: @colorValue;
+        border-color: transparent;
+      }
+    }
+  });
 }
