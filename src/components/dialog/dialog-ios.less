@@ -24,9 +24,7 @@
   .dialog-title {
     font-size: 18px;
     text-align: center;
-    html.device-ios-gt-8 & {
-      font-weight: 600;
-    }
+    font-weight: 600;
     + .dialog-text {
       margin-top: 5px;
     }
@@ -80,11 +78,6 @@
         border-radius: 0 0 13px 13px;
         .hairline-remove(bottom);
       }
-    }
-  }
-  &.device-ios-gt-8 {
-    .dialog-button.dialog-button-bold {
-      font-weight: 600;
     }
   }
   .hairline-root('.dialog-button', right, @dialogHairlineColor);
