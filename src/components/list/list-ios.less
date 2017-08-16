@@ -219,4 +219,23 @@
       }
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .list-button {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .list .list-button.color-@{colorName},
+    .list li.color-@{colorName} .list-button,
+    .links-list li.color-@{colorName} a,
+    .simple-list li.color-@{colorName},
+    .links-list a.color-@{colorName},
+    .list .item-link.color-@{colorName},
+    .list li.color-@{colorName} .item-link {
+      color: @colorValue;
+    }
+  });
 }
