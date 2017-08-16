@@ -161,6 +161,10 @@ var routes = [
     componentUrl: './messages.html',
   },
   {
+    path: '/popup/',
+    componentUrl: './popup.html',
+  },
+  {
     path: '/progressbar/',
     componentUrl: './progressbar.html',
   },
