@@ -60,5 +60,9 @@ html.with-statusbar {
   text-align: center;
 }
 
-@import url('./login-screen-ios.less');
-@import url('./login-screen-md.less');
+& when (@include-ios-theme) {
+  @import url('./login-screen-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./login-screen-md.less');
+}

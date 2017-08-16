@@ -42,5 +42,9 @@
   }
 }
 
-@import url('./sheet-ios.less');
-@import url('./sheet-md.less');
+& when (@include-ios-theme) {
+  @import url('./sheet-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./sheet-md.less');
+}

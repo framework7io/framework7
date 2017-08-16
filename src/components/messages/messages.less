@@ -138,5 +138,9 @@
     transform: translate3d(0,0,0);
   }
 }
-@import url('./messages-ios.less');
-@import url('./messages-md.less');
+& when (@include-ios-theme) {
+  @import url('./messages-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./messages-md.less');
+}

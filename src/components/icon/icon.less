@@ -9,5 +9,9 @@ i.icon {
   position: relative;
 }
 
-@import url('./icon-ios.less');
-@import url('./icon-md.less');
+& when (@include-ios-theme) {
+  @import url('./icon-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./icon-md.less');
+}

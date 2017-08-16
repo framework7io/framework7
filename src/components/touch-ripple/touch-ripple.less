@@ -1,3 +1,7 @@
 /* === Touch Ripple === */
-@import url('./touch-ripple-ios.less');
-@import url('./touch-ripple-md.less');
+& when (@include-ios-theme) {
+  @import url('./touch-ripple-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./touch-ripple-md.less');
+}

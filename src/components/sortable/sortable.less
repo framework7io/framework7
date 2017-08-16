@@ -40,5 +40,9 @@
     background-image: none;
   }
 }
-@import url('./sortable-ios.less');
-@import url('./sortable-md.less');
+& when (@include-ios-theme) {
+  @import url('./sortable-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./sortable-md.less');
+}

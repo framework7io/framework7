@@ -91,5 +91,9 @@
     position: absolute;
   }
 }
-@import url('./toolbar-ios.less');
-@import url('./toolbar-md.less');
+& when (@include-ios-theme) {
+  @import url('./toolbar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./toolbar-md.less');
+}

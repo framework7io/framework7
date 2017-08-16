@@ -61,5 +61,9 @@
   }
 }
 
-@import url('./accordion-ios.less');
-@import url('./accordion-md.less');
+& when (@include-ios-theme) {
+  @import url('./accordion-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./accordion-md.less');
+}

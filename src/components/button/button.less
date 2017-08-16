@@ -41,5 +41,9 @@ button {
 .subnavbar .segmented {
   width: 100%;
 }
-@import './button-ios.less';
-@import './button-md.less';
+& when (@include-ios-theme) {
+  @import url('./button-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./button-md.less');
+}

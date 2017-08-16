@@ -26,5 +26,9 @@ html.with-modal-preloader {
     .not-scrollable();
   }
 }
-@import url('./preloader-ios.less');
-@import url('./preloader-md.less');
+& when (@include-ios-theme) {
+  @import url('./preloader-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./preloader-md.less');
+}

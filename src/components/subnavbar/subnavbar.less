@@ -47,5 +47,9 @@
     position: absolute;
   }
 }
-@import url('./subnavbar-ios.less');
-@import url('./subnavbar-md.less');
+& when (@include-ios-theme) {
+  @import url('./subnavbar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./subnavbar-md.less');
+}

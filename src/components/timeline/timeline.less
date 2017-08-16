@@ -185,5 +185,9 @@
   }
 }
 
-@import url('./timeline-ios.less');
-@import url('./timeline-md.less');
+& when (@include-ios-theme) {
+  @import url('./timeline-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./timeline-md.less');
+}

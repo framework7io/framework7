@@ -7,5 +7,9 @@
     display: block;
   }
 }
-@import url('./infinite-scroll-ios.less');
-@import url('./infinite-scroll-md.less');
+& when (@include-ios-theme) {
+  @import url('./infinite-scroll-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./infinite-scroll-md.less');
+}

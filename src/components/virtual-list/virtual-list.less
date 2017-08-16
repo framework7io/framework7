@@ -1,4 +1,8 @@
 /* === Virtual List === */
 
-@import url('./virtual-list-ios.less');
-@import url('./virtual-list-md.less');
+& when (@include-ios-theme) {
+  @import url('./virtual-list-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./virtual-list-md.less');
+}

@@ -198,5 +198,9 @@
     }
   }
 }
-@import url('./data-table-ios.less');
-@import url('./data-table-md.less');
+& when (@include-ios-theme) {
+  @import url('./data-table-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./data-table-md.less');
+}

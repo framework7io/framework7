@@ -15,5 +15,9 @@
   }
 }
 
-@import url('./grid-ios.less');
-@import url('./grid-md.less');
+& when (@include-ios-theme) {
+  @import url('./grid-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./grid-md.less');
+}

@@ -31,5 +31,9 @@ html.with-statusbar {
   }
 }
 
-@import url('./statusbar-ios.less');
-@import url('./statusbar-md.less');
+& when (@include-ios-theme) {
+  @import url('./statusbar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./statusbar-md.less');
+}

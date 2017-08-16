@@ -66,5 +66,9 @@
     }
   }
 }
-@import url('./swipeout-ios.less');
-@import url('./swipeout-md.less');
+& when (@include-ios-theme) {
+  @import url('./swipeout-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./swipeout-md.less');
+}

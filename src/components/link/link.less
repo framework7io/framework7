@@ -9,5 +9,9 @@
   z-index: 1;
 }
 
-@import url('./link-ios.less');
-@import url('./link-md.less');
+& when (@include-ios-theme) {
+  @import url('./link-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./link-md.less');
+}

@@ -12,5 +12,9 @@
   }
 }
 
-@import url('./lazy-ios.less');
-@import url('./lazy-md.less');
+& when (@include-ios-theme) {
+  @import url('./lazy-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./lazy-md.less');
+}

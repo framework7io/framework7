@@ -78,5 +78,9 @@
   }
 
 }
-@import url('./card-ios.less');
-@import url('./card-md.less');
+& when (@include-ios-theme) {
+  @import url('./card-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./card-md.less');
+}
