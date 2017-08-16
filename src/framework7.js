@@ -19,6 +19,7 @@ import View from './components/view/view';
 import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
+import TouchRipple from './components/touch-ripple/touch-ripple';
 
 /* IMPORTS */
 // Modals
@@ -101,6 +102,7 @@ Framework7
   .use(Navbar)
   .use(Toolbar)
   .use(Subnavbar)
+  .use(TouchRipple)
   /* INSTALLS */
   // Loaders
   .use(Preloader)
