@@ -7,12 +7,12 @@
     background: rgba(0, 0, 0, 0.37);
     height: 23px;
     line-height: 23px;
-    border-radius: 5px;
+    border-radius: 12px;
     padding: 0 6px;
   }
   .chip-media {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
     vertical-align: middle;
     border-radius: 50%;
     text-align: center;
@@ -20,6 +20,7 @@
     color: #fff;
     font-size: 12px;
     box-sizing: border-box;
+    margin-left: -6px;
 
     + .chip-label {
       margin-left: 4px;
@@ -40,4 +41,9 @@
     background-size: 13px 13px;
     opacity: 0.7;
   }
+  .color-loop({
+    .chip.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
 }
