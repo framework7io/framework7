@@ -89,6 +89,9 @@
       &:last-child {
         border-radius: 0 0 13px 13px;
       }
+      &:first-child:last-child {
+        border-radius: 13px;
+      }
     }
     .actions-group:not(:last-child) {
       margin-bottom: 0;
@@ -130,4 +133,10 @@
   }
   .hairline-root('.actions-button', bottom, rgba(0,0,0,0.2));
   .hairline-root('.actions-label', bottom, rgba(0,0,0,0.2));
+
+  .color-loop({
+    .actions-button.color-@{colorName}, .actions-label.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }

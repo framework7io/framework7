@@ -25,4 +25,21 @@
       border-radius: 10px;
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} .toggle input[type="checkbox"]:checked + .toggle-icon {
+      background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), 0.5);
+      &:after {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .toggle.color-@{colorName} input[type="checkbox"]:checked + .toggle-icon {
+      background: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), 0.5);
+      &:after {
+        background: @colorValue;
+      }
+    }
+  });
 }

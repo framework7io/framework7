@@ -9,13 +9,21 @@
     .item-after & {
       min-width: 20px;
     }
-    .icon &, .f7-icons &, .framework7-icons &, .material-icons & {
+  }
+  .icon, .f7-icons, .framework7-icons, .material-icons {
+    .badge {
       line-height: 16px;
       height: 16px;
       border-radius: 16px;
       padding: 0 4px;
       min-width: 16px;
       font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 10px;
     }
   }
+  .color-loop({
+    .badge.color-@{colorName} {
+      background-color: @colorValue;
+    }
+  });
 }

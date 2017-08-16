@@ -63,4 +63,18 @@
       transform: scale(0);
     }
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} .range-slider {
+      .range-bar-active, .range-knob, .range-knob-label, .range-knob-label:before {
+        background-color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .range-slider.color-@{colorName} {
+      .range-bar-active, .range-knob, .range-knob-label, .range-knob-label:before {
+        background-color: @colorValue;
+      }
+    }
+  });
 }

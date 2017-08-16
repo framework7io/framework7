@@ -37,7 +37,7 @@ const Preloader = {
     app.root.append(`
       <div class="preloader-backdrop"></div>
       <div class="preloader-modal">
-        <div class="preloader preloader-${color}">${preloaderInner}</div>
+        <div class="preloader color-${color}">${preloaderInner}</div>
       </div>
     `);
     Preloader.visible = true;

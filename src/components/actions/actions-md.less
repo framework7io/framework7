@@ -50,7 +50,7 @@
     justify-content: flex-start;
   }
   .actions-grid {
-    padding: 8px 0;
+    padding: 0;
     @media (min-width: 496px) {
       width: 480px;
       left: 50%;
@@ -77,4 +77,9 @@
       color: #757575;
     }
   }
+  .color-loop({
+    .actions-button.color-@{colorName}, .actions-label.color-@{colorName}, .actions-button.color-@{colorName} .actions-button-text {
+      color: @colorValue;
+    }
+  });
 }

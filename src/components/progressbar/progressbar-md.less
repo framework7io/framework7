@@ -34,6 +34,38 @@
       }
     }
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .progressbar, .progressbar-infinite {
+        background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), 0.5);
+      }
+      .progressbar {
+        span {
+          background: @colorThemeValue;
+        }
+      }
+      .progressbar-infinite {
+        &:before, &:after {
+          background: @colorThemeValue;
+        }
+      }
+    }
+  });
+  .color-loop({
+    .progressbar.color-@{colorName}, .progressbar-infinite.color-@{colorName} {
+      background: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), 0.5);
+    }
+    .progressbar.color-@{colorName} {
+      span {
+        background: @colorValue;
+      }
+    }
+    .progressbar-infinite.color-@{colorName} {
+      &:before, &:after {
+        background: @colorValue;
+      }
+    }
+  });
   @keyframes md-progressbar-infinite-1 {
     0% {
       transform: translateX(-10%) scaleX(0.1);

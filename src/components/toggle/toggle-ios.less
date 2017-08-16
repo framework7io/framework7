@@ -60,4 +60,9 @@
       }
     }
   }
+  .color-loop({
+    .toggle.color-@{colorName} input[type="checkbox"]:checked + .toggle-icon {
+      background-color: @colorValue;
+    }
+  });
 }
