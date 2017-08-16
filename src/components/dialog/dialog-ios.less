@@ -1,7 +1,7 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
   @dialogBg: rgba(255,255,255,0.95);
-  @dialogButonColor: @themeColor;
+  @dialogButtonColor: @themeColor;
   @dialogButonActiveBg: rgba(230,230,230,0.95);
   @dialogHairlineColor: rgba(0,0,0,0.2);
   .dialog {
@@ -40,7 +40,7 @@
     font-size: 17px;
     line-height: 44px;
     text-align: center;
-    color: @dialogButonColor;
+    color: @dialogButtonColor;
     display: block;
     position: relative;
     white-space: nowrap;
@@ -133,4 +133,10 @@
       margin-top: 15px;
     }
   }
+
+  .color-loop({
+    .dialog-button.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }

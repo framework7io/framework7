@@ -54,7 +54,7 @@
       padding-right: 16px;
     }
   }
-  .dialog-button, .dialog-buttons .button {
+  .dialog-button {
     .button;
     color:@themeColor;
     border-radius: 2px;
@@ -109,4 +109,10 @@
       margin-top: 16px;
     }
   }
+
+  .color-loop({
+    .dialog-button.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }
