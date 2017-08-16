@@ -21,62 +21,7 @@ import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
 
-/* IMPORTS */
-// Modals
-import Modal from './components/modal/modal';
-import Dialog from './components/dialog/dialog';
-import Popup from './components/popup/popup';
-import LoginScreen from './components/login-screen/login-screen';
-import Popover from './components/popover/popover';
-import Actions from './components/actions/actions';
-import Sheet from './components/sheet/sheet';
-
-// Loaders
-import Preloader from './components/preloader/preloader';
-import Progressbar from './components/progressbar/progressbar';
-
-// Lists
-import Sortable from './components/sortable/sortable';
-import Swipeout from './components/swipeout/swipeout';
-import Accordion from './components/accordion/accordion';
-import VirtualList from './components/virtual-list/virtual-list';
-
-// Additional Components
-import Tabs from './components/tabs/tabs';
-import Panel from './components/panel/panel';
-import Card from './components/card/card';
-import Chip from './components/chip/chip';
-
-// Forms
-import Input from './components/input/input';
-import Toggle from './components/toggle/toggle';
-import Range from './components/range/range';
-import SmartSelect from './components/smart-select/smart-select';
-
-// Pickers
-import Calendar from './components/calendar/calendar';
-import Picker from './components/picker/picker';
-
-// Page
-import InfiniteScroll from './components/infinite-scroll/infinite-scroll';
-import PullToRefresh from './components/pull-to-refresh/pull-to-refresh';
-import Lazy from './components/lazy/lazy';
-
-// Table
-import DataTable from './components/data-table/data-table';
-
-// FAB
-import FAB from './components/fab/fab';
-
-// Searchbar
-import Searchbar from './components/searchbar/searchbar';
-
-// Form
-import Form from './components/form/form';
-
-// Messages
-import Messages from './components/messages/messages';
-import Messagebar from './components/messagebar/messagebar';
+//IMPORT_COMPONENTS
 
 // Template7
 Framework7.prototype.t7 = t7;
@@ -103,50 +48,6 @@ Framework7
   .use(Toolbar)
   .use(Subnavbar)
   .use(TouchRipple)
-  /* INSTALLS */
-  // Loaders
-  .use(Preloader)
-  .use(Progressbar)
-  // Modals
-  .use(Modal)
-  .use(Dialog)
-  .use(Popup)
-  .use(LoginScreen)
-  .use(Popover)
-  .use(Actions)
-  .use(Sheet)
-  // Lists
-  .use(Sortable)
-  .use(Swipeout)
-  .use(Accordion)
-  .use(VirtualList)
-  // Additional Components
-  .use(Tabs)
-  .use(Panel)
-  .use(Card)
-  .use(Chip)
-  // Forms
-  .use(Input)
-  .use(Toggle)
-  .use(Range)
-  .use(SmartSelect)
-  // Pickers
-  .use(Calendar)
-  .use(Picker)
-  // Page
-  .use(InfiniteScroll)
-  .use(PullToRefresh)
-  .use(Lazy)
-  // Table
-  .use(DataTable)
-  // FAB
-  .use(FAB)
-  // Searchbar
-  .use(Searchbar)
-  // Form
-  .use(Form)
-  // Messages
-  .use(Messages)
-  .use(Messagebar);
+  //INSTALL_COMPONENTS
 
 export default Framework7;
