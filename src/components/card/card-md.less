@@ -46,6 +46,24 @@
   .card-footer {
     color: #757575;
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} .card-header,
+    .color-theme-@{colorThemeName} .card-footer,
+    .card-header.color-theme-@{colorThemeName},
+    .card-footer.color-theme-@{colorThemeName} {
+      a.link {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .card-header, .card-footer {
+      a.link.color-@{colorThemeName} {
+        color: @colorThemeValue;
+      }
+    }
+  });
 }
 
 
