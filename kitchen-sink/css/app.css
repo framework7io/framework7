@@ -202,7 +202,7 @@ div.demo-lazy {
   opacity: 0.5;
 }
 /* Grid demo */
-div[class*="col"] {
+.ks-grid-demo div[class*="col"] {
   background: #fff;
   text-align: center;
   color: #000;
