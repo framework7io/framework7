@@ -201,3 +201,12 @@ div.demo-lazy {
   pointer-events: none;
   opacity: 0.5;
 }
+/* Grid demo */
+div[class*="col"] {
+  background: #fff;
+  text-align: center;
+  color: #000;
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-bottom: 15px;
+}

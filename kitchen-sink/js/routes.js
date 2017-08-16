@@ -137,6 +137,10 @@ var routes = [
     url: './fab-morph.html',
   },
   {
+    path: '/grid/',
+    componentUrl: './grid.html',
+  },
+  {
     path: '/infinite-scroll/',
     componentUrl: './infinite-scroll.html',
   },
