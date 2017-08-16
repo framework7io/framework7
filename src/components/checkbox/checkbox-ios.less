@@ -41,4 +41,18 @@
       background-color: #d9d9d9;
     }
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,
+      .checkbox input[type="checkbox"]:checked ~ i {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    label.item-checkbox.color-@{colorName} input[type="checkbox"]:checked ~ .icon-checkbox,
+    .checkbox.color-@{colorName} input[type="checkbox"]:checked ~ i {
+      background: @colorValue;
+    }
+  });
 }
