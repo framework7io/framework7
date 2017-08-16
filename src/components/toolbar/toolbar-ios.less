@@ -111,4 +111,21 @@
   .toolbar-hidden {
     transform: translate3d(0, 100%, 0);
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .tabbar, .tabbar-labels, &.tabbar-labels, &.tabbar {
+        a.tab-link-active {
+          color: @colorThemeValue;
+        }
+      }
+    }
+  });
+  .color-loop({
+    .tabbar-labels.color-@{colorName}, .tabbar.color-@{colorName} {
+      a.tab-link-active {
+        color: @colorValue;
+      }
+    }
+  });
 }
