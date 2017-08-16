@@ -138,4 +138,15 @@
     }
     .hairline-root('.data-table-collapsible tr', top, rgba(0,0,0,0.12));
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} .data-table-header-selected,
+    .data-table-header-selected.color-@{colorThemeName} {
+      background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), 0.1);
+    }
+    .color-theme-@{colorThemeName} .data-table-title-selected,
+    .color-@{colorThemeName} .data-table-title-selected {
+      color: @colorThemeValue;
+    }
+  });
 }
