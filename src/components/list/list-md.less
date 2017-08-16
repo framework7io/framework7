@@ -37,6 +37,7 @@
       font-size: 14px;
     }
     .item-link, .list-button {
+      color: inherit;
       .item-inner {
         padding-right: 42px;
       }
@@ -92,6 +93,7 @@
       height: 48px;
       padding-left: 16px;
       padding-right: 42px;
+      color: inherit;
       &.active-state {
         background-color: rgba(0,0,0,0.1);
       }
@@ -232,4 +234,23 @@
       }
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .list-button {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .list .list-button.color-@{colorName},
+    .list li.color-@{colorName} .list-button,
+    .links-list li.color-@{colorName} a,
+    .simple-list li.color-@{colorName},
+    .links-list a.color-@{colorName},
+    .list .item-link.color-@{colorName},
+    .list li.color-@{colorName} .item-link {
+      color: @colorValue;
+    }
+  });
 }

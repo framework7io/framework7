@@ -52,6 +52,44 @@
       background-color: rgba(0,0,0,0.1);
     }
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .icon-radio {
+        &:after {
+          background-color: @colorThemeValue;
+        }
+      }
+      label.item-radio input[type="radio"]:checked ~ .icon-radio,
+      label.item-radio input[type="radio"]:checked ~ * .icon-radio,
+      .radio input[type="radio"]:checked ~ .icon-radio {
+        border-color: @colorThemeValue;
+        &:after {
+          background-color: @colorThemeValue;
+        }
+      }
+      .radio .ripple-wave {
+        background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), 0.5);
+      }
+    }
+  });
+  .color-loop({
+    .radio.color-@{colorName} .icon-radio {
+      &:after {
+        background-color: @colorValue;
+      }
+    }
+    label.item-radio.color-@{colorName} input[type="radio"]:checked ~ .icon-radio,
+    label.item-radio.color-@{colorName} input[type="radio"]:checked ~ * .icon-radio,
+    .radio.color-@{colorName} input[type="radio"]:checked ~ .icon-radio {
+      border-color: @colorValue;
+      &:after {
+        background-color: @colorValue;
+      }
+    }
+    .radio.color-@{colorName} .ripple-wave {
+      background: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), 0.5);
+    }
+  });
 }
 
 

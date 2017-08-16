@@ -80,4 +80,17 @@
       top: @navbarSizeTablet;
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .subnavbar, &.subnavbar {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .subnavbar.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
 }

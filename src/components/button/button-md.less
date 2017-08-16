@@ -78,8 +78,11 @@
       &:first-child {
         border-radius: 3px 0 0 3px;
         border-left: none;
-        &.button-outline {
-          border: 1px solid @themeColor;
+      }
+      &.button-outline {
+        border: 1px solid @themeColor;
+        &:nth-child(n + 2) {
+          border-left: none;
         }
       }
       &:last-child {
@@ -96,4 +99,63 @@
       }
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .button {
+        color:@colorThemeValue;
+        &.button-fill, &.button-fill-md, &.button-active, &.tab-link-active {
+          background-color: @colorThemeValue;
+          color: #fff;
+          &.active-state {
+            background: darken(@colorThemeValue, 8%);
+          }
+        }
+        &.button-outline {
+          border-color: @colorThemeValue;
+        }
+      }
+
+      // Segmented Control
+      .segmented .button {
+        border-left: 1px solid rgba(0,0,0,0.1);
+        &:first-child {
+          border-left: none;
+        }
+        &.button-outline {
+          border: 1px solid @colorThemeValue;
+          &:nth-child(n + 2) {
+            border-left: none;
+          }
+        }
+      }
+    }
+  });
+  .color-loop({
+    .button.color-@{colorName} {
+      color:@colorValue;
+      &.button-fill, &.button-fill-md, &.button-active, &.tab-link-active {
+        background-color: @colorValue;
+        color: #fff;
+        &.active-state {
+          background: darken(@colorValue, 8%);
+        }
+      }
+      &.button-outline {
+        border-color: @colorValue;
+      }
+    }
+    .segmented.color-@{colorName} .button {
+      border-left: 1px solid rgba(0,0,0,0.1);
+      &:first-child {
+        border-left: none;
+      }
+      &.button-outline {
+        border: 1px solid @colorValue;
+        &:nth-child(n + 2) {
+          border-left: none;
+        }
+      }
+    }
+  });
 }

@@ -11,4 +11,16 @@
   a {
     color: @themeColor;
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      a {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    a.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }

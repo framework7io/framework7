@@ -117,4 +117,19 @@
       margin-top: 2px;
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .timeline-item-date, .timeline-year-title, .timeline-month-title {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .timeline.color-theme-@{colorName} {
+      .timeline-item-date, .timeline-year-title, .timeline-month-title {
+        background: @colorValue;
+      }
+    }
+  });
 }
