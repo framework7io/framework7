@@ -24,6 +24,12 @@
           <button class="col button button-raised" @click="openPassword">Password</button>
         </p>
       </div>
+      <div class="block-title">Vertical Buttons</div>
+      <div class="block block-strong">
+        <p>
+          <button class="button button-raised" @click="openVerticalButtons">Vertical Buttons</button>
+        </p>
+      </div>
       <div class="block-title">Preloader Dialog</div>
       <div class="block block-strong">
         <p class="row">
@@ -88,6 +94,24 @@
         app.dialog.alert('Alert 3');
         app.dialog.alert('Alert 4');
         app.dialog.alert('Alert 5');
+      },
+      openVerticalButtons: function () {
+        var app = this.$app;
+        app.dialog.create({
+          title: 'Vertical Buttons',
+          buttons: [
+            {
+              text: 'Button 1',
+            },
+            {
+              text: 'Button 2',
+            },
+            {
+              text: 'Button 3',
+            },
+          ],
+          verticalButtons: true,
+        }).open();
       },
       openPreloader: function () {
         var app = this.$app;
