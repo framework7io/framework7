@@ -178,6 +178,10 @@ function buildLess(cb) {
     .pipe(less({
       paths: [path.join(__dirname, 'less', 'includes')],
     }))
+    .on('error', (err) => {
+      if (cb) cb();
+      console.log(err.toString());
+    })
     .pipe(autoprefixer({
       cascade: false,
     }))
