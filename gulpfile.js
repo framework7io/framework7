@@ -160,9 +160,7 @@ function buildLess(cb) {
         .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${config.themes.indexOf('md') >= 0 ? 'true' : 'false'};`);
       return newContent;
     }))
-    .pipe(less({
-      paths: [path.join(__dirname, 'less', 'includes')],
-    }))
+    .pipe(less())
     .on('error', (err) => {
       if (cb) cb();
       console.log(err.toString());
