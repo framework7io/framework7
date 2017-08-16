@@ -197,6 +197,10 @@ var routes = [
     url: './sortable.html',
   },
   {
+    path: '/subnavbar/',
+    url: './subnavbar.html',
+  },
+  {
     path: '/swipeout/',
     url: './swipeout.html',
   },
