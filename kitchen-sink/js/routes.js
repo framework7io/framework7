@@ -152,7 +152,7 @@ var routes = [
   },
   {
     path: '/range/',
-    url: './range.html',
+    componentUrl: './range.html',
   },
   {
     path: '/searchbar/',
