@@ -241,6 +241,7 @@ class Panel extends Framework7Class {
   onClose() {
     const panel = this;
     panel.opened = false;
+    panel.$el.addClass('panel-closing');
     panel.$el.trigger('panel:close', panel);
     panel.emit('panelClose', panel);
   }
@@ -248,7 +249,7 @@ class Panel extends Framework7Class {
     const panel = this;
     const app = panel.app;
     app.panel.allowOpen = true;
-
+    panel.$el.removeClass('panel-closing');
     panel.$el.trigger('panel:closed', panel);
     panel.emit('panelClosed', panel);
   }
