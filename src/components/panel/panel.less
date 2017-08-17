@@ -95,5 +95,9 @@ html.with-panel-right-cover {
     transform: translate3d(0px,0,0);
   }
 }
-@import url('./panel-ios.less');
-@import url('./panel-md.less');
+& when (@include-ios-theme) {
+  @import url('./panel-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./panel-md.less');
+}

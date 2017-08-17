@@ -43,5 +43,9 @@
   opacity: 1;
 }
 
-@import url('./chip-ios.less');
-@import url('./chip-md.less');
+& when (@include-ios-theme) {
+  @import url('./chip-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./chip-md.less');
+}

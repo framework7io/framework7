@@ -202,11 +202,12 @@ div.demo-lazy {
   opacity: 0.5;
 }
 /* Grid demo */
-.ks-grid-demo div[class*="col"] {
+.grid-demo div[class*="col"] {
   background: #fff;
   text-align: center;
   color: #000;
   border: 1px solid #ddd;
   padding: 5px;
   margin-bottom: 15px;
+  font-size: 12px;
 }

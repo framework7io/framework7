@@ -83,5 +83,9 @@ body, .view, .views, .page, .panel, .popup, .framework7-root {
   }
 }
 
-@import url('./progressbar-ios.less');
-@import url('./progressbar-md.less');
+& when (@include-ios-theme) {
+  @import url('./progressbar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./progressbar-md.less');
+}

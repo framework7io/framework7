@@ -62,5 +62,9 @@
     position: absolute;
   }
 }
-@import url('./navbar-ios.less');
-@import url('./navbar-md.less');
+& when (@include-ios-theme) {
+  @import url('./navbar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./navbar-md.less');
+}

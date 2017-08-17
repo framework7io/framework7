@@ -55,5 +55,9 @@ p {
   margin: 1em 0;
 }
 
-@import url('app-ios.less');
-@import url('app-md.less');
+& when (@include-ios-theme) {
+  @import url('./app-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./app-md.less');
+}

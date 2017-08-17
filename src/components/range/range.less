@@ -54,5 +54,9 @@
 .range-knob-active-state .range-knob-label {
   transform: translateY(0%) scale(1);
 }
-@import url('range-ios.less');
-@import url('range-md.less');
+& when (@include-ios-theme) {
+  @import url('./range-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./range-md.less');
+}

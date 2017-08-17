@@ -196,5 +196,9 @@
   display: none;
 }
 
-@import url('./fab-ios.less');
-@import url('./fab-md.less');
+& when (@include-ios-theme) {
+  @import url('./fab-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./fab-md.less');
+}

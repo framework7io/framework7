@@ -32,5 +32,9 @@ label.item-radio {
     .disabled();
   }
 }
-@import url('./radio-ios.less');
-@import url('./radio-md.less');
+& when (@include-ios-theme) {
+  @import url('./radio-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./radio-md.less');
+}

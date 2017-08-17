@@ -41,20 +41,20 @@
     overflow: hidden;
     box-sizing:border-box;
     justify-content: flex-end;
-    &.dialog-buttons-vertical {
-      padding: 0 0 8px 0;
-      .dialog-button {
-        margin-left: 0;
-        text-align: right;
-        height: 48px;
-        line-height: 48px;
-        border-radius: 0;
-        padding-left: 16px;
-        padding-right: 16px;
-      }
+  }
+  .dialog-buttons-vertical .dialog-buttons{
+    padding: 0 0 8px 0;
+    .dialog-button {
+      margin-left: 0;
+      text-align: right;
+      height: 48px;
+      line-height: 48px;
+      border-radius: 0;
+      padding-left: 16px;
+      padding-right: 16px;
     }
   }
-  .dialog-button, .dialog-buttons .button {
+  .dialog-button {
     .button;
     color:@themeColor;
     border-radius: 2px;
@@ -109,4 +109,10 @@
       margin-top: 16px;
     }
   }
+
+  .color-loop({
+    .dialog-button.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }

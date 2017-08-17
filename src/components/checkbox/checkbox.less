@@ -32,5 +32,9 @@ label.item-checkbox {
     .disabled();
   }
 }
-@import url('./checkbox-ios.less');
-@import url('./checkbox-md.less');
+& when (@include-ios-theme) {
+  @import url('./checkbox-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./checkbox-md.less');
+}

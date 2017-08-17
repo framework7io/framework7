@@ -39,7 +39,7 @@
   display: flex;
   .dialog-buttons-vertical & {
     display: block;
-    height: auto;
+    height: auto !important;
   }
 }
 .dialog-no-buttons {
@@ -70,5 +70,9 @@ html.with-modal-dialog {
     .not-scrollable();
   }
 }
-@import url('./dialog-ios.less');
-@import url('./dialog-md.less');
+& when (@include-ios-theme) {
+  @import url('./dialog-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./dialog-md.less');
+}

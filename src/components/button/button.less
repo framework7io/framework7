@@ -38,5 +38,12 @@ button {
     min-width: 0;
   }
 }
-@import './button-ios.less';
-@import './button-md.less';
+.subnavbar .segmented {
+  width: 100%;
+}
+& when (@include-ios-theme) {
+  @import url('./button-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./button-md.less');
+}

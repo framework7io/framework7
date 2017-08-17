@@ -5,5 +5,9 @@
     left: 50%;
   }
 }
-@import url('./pull-to-refresh-ios.less');
-@import url('./pull-to-refresh-md.less');
+& when (@include-ios-theme) {
+  @import url('./pull-to-refresh-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./pull-to-refresh-md.less');
+}

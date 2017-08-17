@@ -23,6 +23,21 @@
       height: 44px;
       line-height: 42px;
     }
+    &.button-small, &.button-small-ios {
+      height: 26px;
+      line-height: 22px;
+      border-radius: 26px;
+      border-width: 2px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      &.button-fill.active-state, &.button-fill-ios.active-state {
+        color: @themeColor;
+        border: 2px solid @themeColor;
+        background-color: transparent;
+        opacity: 1;
+      }
+    }
     &.button-fill, &.button-fill-ios {
       color: #fff;
       background: @themeColor;
@@ -88,6 +103,13 @@
           background: @colorThemeValue;
           border-color: transparent;
         }
+        &.button-small, &.button-small-ios {
+          &.button-fill.active-state, &.button-fill-ios.active-state {
+            color: @colorThemeValue;
+            border: 2px solid @colorThemeValue;
+            background-color: transparent;
+          }
+        }
       }
     }
   });
@@ -107,6 +129,13 @@
       &.button-fill, &.button-fill-ios {
         background: @colorValue;
         border-color: transparent;
+      }
+      &.button-small, &.button-small-ios {
+        &.button-fill.active-state, &.button-fill-ios.active-state {
+          color: @colorValue;
+          border: 2px solid @colorValue;
+          background-color: transparent;
+        }
       }
     }
   });

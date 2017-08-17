@@ -33,6 +33,13 @@
     display: block;
   }
 }
+.page > .tabs {
+  height: 100%;
+}
 
-@import url('./tabs-ios.less');
-@import url('./tabs-md.less');
+& when (@include-ios-theme) {
+  @import url('./tabs-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./tabs-md.less');
+}

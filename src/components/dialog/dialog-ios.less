@@ -1,7 +1,7 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
   @dialogBg: rgba(255,255,255,0.95);
-  @dialogButonColor: @themeColor;
+  @dialogButtonColor: @themeColor;
   @dialogButonActiveBg: rgba(230,230,230,0.95);
   @dialogHairlineColor: rgba(0,0,0,0.2);
   .dialog {
@@ -24,9 +24,7 @@
   .dialog-title {
     font-size: 18px;
     text-align: center;
-    html.device-ios-gt-8 & {
-      font-weight: 600;
-    }
+    font-weight: 600;
     + .dialog-text {
       margin-top: 5px;
     }
@@ -42,7 +40,7 @@
     font-size: 17px;
     line-height: 44px;
     text-align: center;
-    color: @dialogButonColor;
+    color: @dialogButtonColor;
     display: block;
     position: relative;
     white-space: nowrap;
@@ -82,11 +80,6 @@
       }
     }
   }
-  &.device-ios-gt-8 {
-    .dialog-button.dialog-button-bold {
-      font-weight: 600;
-    }
-  }
   .hairline-root('.dialog-button', right, @dialogHairlineColor);
   .hairline-root('.dialog-buttons-vertical .dialog-button', bottom, @dialogHairlineColor);
 
@@ -97,7 +90,13 @@
     }
   }
 
-  // Prompt
+  .dialog-input-field {
+    margin-top: 15px;
+    .item-input-wrap {
+      margin: 0;
+    }
+  }
+
   .dialog-input {
     height: 26px;
     background: #fff;
@@ -111,6 +110,7 @@
   }
   .dialog-input-double {
     + .dialog-input-double {
+      margin-top: 0;
       .dialog-input {
         border-top: 0;
         margin-top: 0;
@@ -133,4 +133,10 @@
       margin-top: 15px;
     }
   }
+
+  .color-loop({
+    .dialog-button.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
 }

@@ -110,5 +110,9 @@ textarea {
   visibility: visible;
 }
 
-@import url('./input-ios.less');
-@import url('./input-md.less');
+& when (@include-ios-theme) {
+  @import url('./input-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./input-md.less');
+}

@@ -45,5 +45,9 @@
     .hairline-remove(bottom);
   }
 }
-@import url('./popover-ios.less');
-@import url('./popover-md.less');
+& when (@include-ios-theme) {
+  @import url('./popover-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./popover-md.less');
+}

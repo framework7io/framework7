@@ -111,5 +111,9 @@
 .messagebar:not(.messagebar-sheet-visible) .messagebar-sheet {
   display: none;
 }
-@import url('./messagebar-ios.less');
-@import url('./messagebar-md.less');
+& when (@include-ios-theme) {
+  @import url('./messagebar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./messagebar-md.less');
+}

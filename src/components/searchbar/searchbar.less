@@ -82,5 +82,9 @@
     display: none;
   }
 }
-@import url('./searchbar-ios.less');
-@import url('./searchbar-md.less');
+& when (@include-ios-theme) {
+  @import url('./searchbar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./searchbar-md.less');
+}

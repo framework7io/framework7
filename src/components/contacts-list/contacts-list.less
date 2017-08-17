@@ -7,5 +7,9 @@
     .hairline-remove(bottom);
   }
 }
-@import url('./contacts-list-ios.less');
-@import url('./contacts-list-md.less');
+& when (@include-ios-theme) {
+  @import url('./contacts-list-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./contacts-list-md.less');
+}

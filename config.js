@@ -13,7 +13,7 @@ module.exports = {
     'preloader',
     'progressbar',
 
-    // Lists
+    // List Components
     'list',
     'sortable',
     'swipeout',
@@ -21,14 +21,18 @@ module.exports = {
     'contacts-list',
     'virtual-list',
 
-    //
+    // Timeline
     'timeline',
+    // Tabs
     'tabs',
+    // Panel
     'panel',
+    // Card
     'card',
+    // Chip
     'chip',
 
-    // Forms
+    // Form Components
     'form',
     'input',
     'checkbox',

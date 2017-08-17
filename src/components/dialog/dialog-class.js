@@ -36,7 +36,9 @@ class Dialog extends Modal {
       if (buttons.length > 0) {
         buttonsHTML = `
           <div class="dialog-buttons">
-            ${buttons.map(button => `<span class="dialog-button${button.bold ? ' dialog-button-bold' : ''}">${button.text}</span>`).join('')}
+            ${buttons.map(button => `
+              <span class="dialog-button${button.bold ? ' dialog-button-bold' : ''}${button.color ? ` color-${button.color}` : ''}">${button.text}</span>
+            `).join('')}
           </div>
         `;
       }

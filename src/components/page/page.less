@@ -28,5 +28,9 @@
   will-change: scroll-position;
 }
 
-@import url('./page-ios.less');
-@import url('./page-md.less');
+& when (@include-ios-theme) {
+  @import url('./page-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./page-md.less');
+}

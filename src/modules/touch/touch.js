@@ -1,7 +1,6 @@
 import $ from 'dom7';
 import Support from '../../utils/support';
 import Device from '../../utils/device';
-import TouchRipple from '../../components/touch-ripple/touch-ripple-class';
 
 function initTouch() {
   const app = this;
@@ -159,7 +158,7 @@ function initTouch() {
   }
   function createRipple($el, x, y) {
     if (!$el) return;
-    rippleWave = new TouchRipple($el, x, y);
+    rippleWave = app.touchRipple.create($el, x, y);
   }
 
   function removeRipple() {
@@ -594,9 +593,6 @@ export default {
       materialRipple: true,
       materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell',
     },
-  },
-  static: {
-    TouchRipple,
   },
   instance: {
     touchEvents: {

@@ -4,7 +4,6 @@ const connect = require('gulp-connect');
 const gopen = require('gulp-open');
 const header = require('gulp-header');
 const uglify = require('gulp-uglify');
-const path = require('path');
 const sourcemaps = require('gulp-sourcemaps');
 const rollup = require('rollup-stream');
 const buble = require('rollup-plugin-buble');
@@ -44,15 +43,17 @@ const date = {
 };
 
 // Build JS Files
-function buildJsEsModule(cb) {
+function buildJsEsModule(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   rollup({
     entry: './src/framework7.js',
     plugins: [
-      buble(),
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
+        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
       }),
+      buble(),
     ],
     format: 'es',
     moduleName: 'Framework7',
@@ -75,9 +76,8 @@ function buildJsEsModule(cb) {
 function buildJs(cb) {
   const env = process.env.NODE_ENV || 'development';
 
-  /*
-  let jsFileContent = fs.readFileSync('./src/framework7.js', 'utf8');
-  const jsComponents = [];
+  // let jsFileContent = fs.readFileSync('./src/framework7.js', 'utf8');
+  const components = [];
   config.components.forEach((name) => {
     const capitalized = name.split('-').map((word) => {
       return word.split('').map((char, index) => {
@@ -87,31 +87,21 @@ function buildJs(cb) {
     }).join('');
     const jsFilePath = `./src/components/${name}/${name}.js`;
     if (fs.existsSync(jsFilePath)) {
-      jsComponents.push({ name, capitalized });
+      components.push({ name, capitalized });
     }
   });
-
-  jsFileContent = jsFileContent
-    .replace('/* IMPORTS *\/', jsComponents.map((component) => {
-      return `import ${component.capitalized} from './components/${component.name}/${component.name}';`;
-    }).join('\n'))
-    .replace('/* INSTALLS *\/', jsComponents.map((component) => {
-      return `.use(${component.capitalized})`;
-    }).join('\n  '));
-
-  fs.writeFileSync('./src/framework7.temp.js', jsFileContent);
-
-  return;
-  */
 
   rollup({
     entry: './src/framework7.js',
     plugins: [
-      resolve({ jsnext: true }),
-      buble(),
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
+        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
       }),
+      resolve({ jsnext: true }),
+      buble(),
+
     ],
     format: 'umd',
     moduleName: 'Framework7',
@@ -144,7 +134,7 @@ function buildJs(cb) {
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./dist/js/'))
         .on('end', () => {
-          buildJsEsModule(cb);
+          buildJsEsModule(components, cb);
         });
     });
 }
@@ -153,31 +143,23 @@ function buildJs(cb) {
 function buildLess(cb) {
   const env = process.env.NODE_ENV || 'development';
 
-  /*
-  let lessFileContent = fs.readFileSync('./src/framework7.less', 'utf8');
-
-  const lessComponents = [];
+  const components = [];
   config.components.forEach((name) => {
     const lessFilePath = `./src/components/${name}/${name}.less`;
     if (fs.existsSync(lessFilePath)) {
-      lessComponents.push(name);
+      components.push(name);
     }
   });
 
-  lessFileContent = lessFileContent
-    .replace('// IMPORTS', lessComponents.map((component) => {
-      return `@import url('./components/${component}/${component}.less');`;
-    }).join('\n'));
-
-  fs.writeFileSync('./src/framework7.temp.less', lessFileContent);
-
-  return;
-  */
-
   gulp.src('./src/framework7.less')
-    .pipe(less({
-      paths: [path.join(__dirname, 'less', 'includes')],
+    .pipe(modifyFile((content) => {
+      const newContent = content
+        .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
+        .replace(/@include-ios-theme: (true|false);/, `@include-ios-theme: ${config.themes.indexOf('ios') >= 0 ? 'true' : 'false'};`)
+        .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${config.themes.indexOf('md') >= 0 ? 'true' : 'false'};`);
+      return newContent;
     }))
+    .pipe(less())
     .on('error', (err) => {
       if (cb) cb();
       console.log(err.toString());
@@ -190,6 +172,10 @@ function buildLess(cb) {
       console.log(err.toString());
     })
     .pipe(header(banner, { pkg, date }))
+    .pipe(rename((filePath) => {
+      /* eslint no-param-reassign: ["error", { "props": false }] */
+      filePath.basename = 'framework7';
+    }))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/css/`))
     .on('end', () => {
       if (env === 'development') {
@@ -242,7 +228,6 @@ gulp.task('ks', (cb) => {
           .replace('../dist/css/framework7.min.css', '../build/css/framework7.css')
           .replace('../dist/js/framework7.min.js', '../build/js/framework7.js');
       }
-      console.log('here', content);
       return content
         .replace('../build/css/framework7.css', '../dist/css/framework7.min.css')
         .replace('../build/js/framework7.js', '../dist/js/framework7.min.js');

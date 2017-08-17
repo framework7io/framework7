@@ -276,5 +276,9 @@ li.list-group-title {
     }
   }
 }
-@import url('./list-ios.less');
-@import url('./list-md.less');
+& when (@include-ios-theme) {
+  @import url('./list-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./list-md.less');
+}
