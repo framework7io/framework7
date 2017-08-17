@@ -64,6 +64,14 @@ var routes = [
     url: './tabs.html',
   },
   {
+    path: '/tabs-animated/',
+    url: './tabs-animated.html',
+  },
+  {
+    path: '/tabs-swipeable/',
+    url: './tabs-swipeable.html',
+  },
+  {
     path: '/tabs-routable/',
     url: './tabs-routable.html',
     tabs: [
