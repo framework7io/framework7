@@ -3,9 +3,19 @@
   .swipeout-actions-left, .swipeout-actions-right {
     > a, > button, > span, > div {
       padding: 0 30px;
+      color: #fff;
     }
     .swipeout-delete {
       background: @red;
     }
   }
+  .color-loop({
+    .swipeout-actions-left, .swipeout-actions-right {
+      > a, > button, > span, > div {
+        &.color-@{colorName} {
+          background-color: @colorValue;
+        }
+      }
+    }
+  });
 }
