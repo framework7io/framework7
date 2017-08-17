@@ -274,7 +274,7 @@ function forward(el, forwardOptions = {}) {
     router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-    const removeOldPage = !(router.params.preloadPreviousPage || (router.app.them === 'ios' && router.params.swipeBackPage));
+    const removeOldPage = !(router.params.preloadPreviousPage || (router.app.theme === 'ios' && router.params.swipeBackPage));
     if (removeOldPage) {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
