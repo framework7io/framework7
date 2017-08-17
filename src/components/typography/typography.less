@@ -46,6 +46,13 @@
 @verticalAlign: bottom, middle, top;
 .rules-loop(@verticalAlign, vertical-align);
 
+// Width
+.width-auto {
+  width: auto !important;
+}
+.width-100 {
+  width: 100% !important;
+}
 
 & when (@include-ios-theme) {
   @import url('./typography-ios.less');
