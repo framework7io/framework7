@@ -212,10 +212,24 @@ div.demo-lazy {
   font-size: 12px;
 }
 /* Panels Demo */
-.ios .panel-left.panel-active ~ .view-main,
-.ios .panel-left.panel-closing ~ .view-main {
-  border-left: 1px solid #c4c4c4;
+.ios .panel-right.panel-active ~ .view-main:after,
+.ios .panel-right.panel-closing ~ .view-main:after {
+  content: '';
+  height: 100%;
+  width: 1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: #ddd;
+  z-index: 1000;
 }
-.ios .panel-right {
-  border-left: 1px solid #c4c4c4;
+.ios .panel-left:after {
+  content: '';
+  height: 100%;
+  width: 1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: #ddd;
+  z-index: 1000;
 }
