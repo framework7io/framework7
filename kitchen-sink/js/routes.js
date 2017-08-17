@@ -176,7 +176,7 @@ var routes = [
   },
   {
     path: '/swipeout/',
-    url: './swipeout.html',
+    componentUrl: './swipeout.html',
   },
   {
     path: '/tabs/',
