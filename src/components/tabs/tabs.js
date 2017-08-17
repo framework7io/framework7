@@ -4,9 +4,12 @@ import Utils from '../../utils/utils';
 const Tab = {
   show(...args) {
     const app = this;
-    let [tab, tabLink, animate] = args;
+    let [tab, tabLink, animate, tabRoute] = args;
     if (typeof args[1] === 'boolean') {
-      [tab, animate, tabLink] = args;
+      [tab, animate, tabLink, tabRoute] = args;
+      if (args.length > 2 && tabLink.constructor === Object) {
+        [tab, animate, tabRoute, tabLink] = args;
+      }
     }
     if (typeof animate === 'undefined') animate = true;
 
@@ -76,12 +79,18 @@ const Tab = {
           if ($newTabEl.is($(el).attr('data-tab'))) $tabLinkEl = $(el);
         });
       }
+      if (tabRoute && (!$tabLinkEl || ($tabLinkEl && $tabLinkEl.length === 0))) {
+        $tabLinkEl = $(`[data-route-tab-id="${tabRoute.route.tab.id}"]`);
+        if ($tabLinkEl.length === 0) {
+          $tabLinkEl = $(`.tab-link[href="${tabRoute.url}"]`);
+        }
+      }
     }
     if ($tabLinkEl.length > 0) {
       // Find related link for old tab
       let $oldTabLinkEl;
       if ($oldTabEl && $oldTabEl.length > 0) {
-          // Search by id
+        // Search by id
         const oldTabId = $oldTabEl.attr('id');
         if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
           // Search by data-tab
@@ -89,6 +98,9 @@ const Tab = {
           $('[data-tab]').each((index, tabLinkEl) => {
             if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);
           });
+        }
+        if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
+          $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
         }
       }
 
