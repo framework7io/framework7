@@ -143,6 +143,10 @@ var routes = [
     url: './popup.html',
   },
   {
+    path: '/popover/',
+    url: './popover.html',
+  },
+  {
     path: '/progressbar/',
     componentUrl: './progressbar.html',
   },
