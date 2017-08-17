@@ -101,7 +101,6 @@ function buildJs(cb) {
       }),
       resolve({ jsnext: true }),
       buble(),
-
     ],
     format: 'umd',
     moduleName: 'Framework7',
