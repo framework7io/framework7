@@ -211,10 +211,11 @@ div.demo-lazy {
   margin-bottom: 15px;
   font-size: 12px;
 }
-/* border for panels with page in iOS theme - NOT WORKING WELL NEED TO BE FIX*/
-.ios .panel-left .page {
-  border-right: 1px solid #b2b2b2;
+/* Panels Demo */
+.ios .panel-left.panel-active ~ .view-main,
+.ios .panel-left.panel-closing ~ .view-main {
+  border-left: 1px solid #c4c4c4;
 }
-.ios .panel-right .page {
-  border-left: 1px solid #b2b2b2
+.ios .panel-right {
+  border-left: 1px solid #c4c4c4;
 }
