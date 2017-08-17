@@ -83,10 +83,10 @@ class Popover extends Modal {
     function handleResize() {
       popover.resize();
     }
-    popover.once('popoverOpen', () => {
+    popover.on('popoverOpen', () => {
       popover.resize();
       app.on('resize', handleResize);
-      popover.once('popoverClose', () => {
+      popover.on('popoverClose', () => {
         app.off('resize', handleResize);
       });
     });
