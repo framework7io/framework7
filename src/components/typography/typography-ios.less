@@ -1,0 +1,15 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  // Colors
+  .color-loop({
+    .text-color-@{colorName} {
+      color: @colorValue !important;
+    }
+    .bg-color-@{colorName} {
+      background-color: @colorValue !important;
+    }
+    .border-color-@{colorName} {
+      border-color: @colorValue !important;
+    }
+  });
+}
