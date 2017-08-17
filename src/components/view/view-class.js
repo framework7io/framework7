@@ -53,7 +53,7 @@ class View extends Framework7Class {
       $el,
       el: $el[0],
       name: view.params.name,
-      main: view.params.main || $el.hasClass(app.params.view.viewMainClass),
+      main: view.params.main || $el.hasClass('view-main'),
       $navbarEl,
       navbarEl: $navbarEl ? $navbarEl[0] : undefined,
       selector,
