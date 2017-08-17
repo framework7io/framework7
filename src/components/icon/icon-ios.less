@@ -30,11 +30,16 @@
       font-size: 25px;
     }
   }
-  .item-media .f7-icons {
-    font-size: 29px;
+  .list .f7-icons {
+    font-size: 25px;
+    width: 29px;
+    height: 29px;
   }
   .button .f7-icons {
     font-size: 22px;
+  }
+  .list .icon {
+    color: #808080;
   }
   .color-theme-loop({
     .color-theme-@{colorThemeName} .icon-back, .icon-back.color-@{colorThemeName}, a.link.color-@{colorThemeName} .icon-back {
@@ -48,6 +53,11 @@
     }
     .color-theme-@{colorThemeName} .icon-prev, .icon-prev.color-@{colorThemeName}, a.link.color-@{colorThemeName} .icon-prev {
       .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15 15'><g><path fill='@{colorThemeValue}' d='M14,1.6v11.8L2.2,7.6L14,1.6 M15,0L0,7.6L15,15V0L15,0z'/></g></svg>");
+    }
+  });
+  .color-loop({
+    .icon.color-@{colorName} {
+      color: @colorValue;
     }
   });
 }
