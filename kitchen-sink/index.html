@@ -84,6 +84,22 @@
         <div class="navbar">
           <div class="navbar-inner sliding">
             <div class="title">Framework7</div>
+            <div class="right">
+              <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-components">
+                <i class="icon f7-icons ios-only">search_strong</i>
+                <i class="icon material-icons md-only">search</i>
+              </a>
+            </div>
+            <form data-search-container=".components-list" data-search-in="a" class="searchbar searchbar-expandable searchbar-components searchbar-init">
+              <div class="searchbar-inner">
+                <div class="searchbar-input-wrap">
+                  <input type="search" placeholder="Search components"/>
+                  <i class="searchbar-icon"></i>
+                  <span class="input-clear-button"></span>
+                </div>
+                <span class="searchbar-disable-button">Cancel</span>
+              </div>
+            </form>
           </div>
         </div>
         <div class="page-content">
@@ -94,8 +110,8 @@
               </li>
             </ul>
           </div>
-          <div class="block-title">Components</div>
-          <div class="list links-list">
+          <div class="block-title searchbar-found">Components</div>
+          <div class="list links-list components-list searchbar-found">
             <ul>
               <li>
                 <a href="/accordion/">Accordion</a>
@@ -185,10 +201,10 @@
                 <a href="/popover/">Popover</a>
               </li>
               <li>
-                <a href="/preloader/">Preloader <span class="badge">TODO</span></a>
+                <a href="/preloader/">Preloader</a>
               </li>
               <li>
-                <a href="/progressbar/">Progressbar  <span class="badge">TODO</span></a>
+                <a href="/progressbar/">Progress Bar</a>
               </li>
               <li>
                 <a href="/pull-to-refresh/">Pull To Refresh</a>
