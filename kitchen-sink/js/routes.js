@@ -176,6 +176,10 @@ var routes = [
     url: './popover.html',
   },
   {
+    path: '/preloader/',
+    componentUrl: './preloader.html',
+  },
+  {
     path: '/progressbar/',
     componentUrl: './progressbar.html',
   },
