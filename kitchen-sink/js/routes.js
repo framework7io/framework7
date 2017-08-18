@@ -132,6 +132,10 @@ var routes = [
     url: './fab-morph.html',
   },
   {
+    path: '/form-storage/',
+    url: './form-storage.html',
+  },
+  {
     path: '/grid/',
     url: './grid.html',
   },
