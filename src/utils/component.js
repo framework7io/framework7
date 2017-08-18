@@ -114,7 +114,12 @@ class Framework7Component {
                 methodName = value.split('(')[0];
                 value.split('(')[1].split(')')[0].split(',').forEach((argument) => {
                   let arg = argument.trim();
+
                   if (!isNaN(arg)) arg = parseFloat(arg);
+                  else if (arg === 'true') arg = true;
+                  else if (arg === 'false') arg = false;
+                  else if (arg === 'null') arg = null;
+                  else if (arg === 'undefined') arg = undefined;
                   else if (arg[0] === '"') arg = arg.replace(/"/g, '');
                   else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
                   else if (arg.indexOf('.') > 0) {
