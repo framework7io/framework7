@@ -137,10 +137,10 @@ class Router extends Framework7Class {
       }
 
       let oldNavbarTitleEl;
-      if (oldNavbarInner.find('.title.sliding').length > 0) {
-        oldNavbarTitleEl = oldNavbarInner.find('.title.sliding');
+      if (oldNavbarInner.children('.title.sliding').length > 0) {
+        oldNavbarTitleEl = oldNavbarInner.children('.title.sliding');
       } else {
-        oldNavbarTitleEl = oldNavbarInner.hasClass('sliding') && oldNavbarInner.find('.title');
+        oldNavbarTitleEl = oldNavbarInner.hasClass('sliding') && oldNavbarInner.children('.title');
       }
 
       slidingEls.each((index, slidingEl) => {
@@ -250,10 +250,10 @@ class Router extends Framework7Class {
     if (dynamicNavbar) {
       newNavEls = [];
       oldNavEls = [];
-      newNavbarInner.find('.left, .right, .title, .subnavbar').each((index, navEl) => {
+      newNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         newNavEls.push(animatableNavEl(navEl, newNavbarInner));
       });
-      oldNavbarInner.find('.left, .right, .title, .subnavbar').each((index, navEl) => {
+      oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
       });
       if (!separateNavbar) {

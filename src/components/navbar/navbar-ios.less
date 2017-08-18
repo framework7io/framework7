@@ -66,7 +66,7 @@
   // Positions
   .navbar-previous {
     pointer-events: none;
-    .left, .right, .title, .subnavbar, .fading {
+    .left, .right, > .title, .subnavbar, .fading {
       opacity: 0;
     }
     .sliding {
@@ -79,14 +79,14 @@
   }
   .navbar-next {
     pointer-events: none;
-    .left, .right, .title, .subnavbar, .fading {
+    .left, .right, > .title, .subnavbar, .fading {
       opacity: 0;
     }
     .sliding {
       opacity: 0;
     }
     &.sliding {
-      .left, .right, .title, .subnavbar {
+      .left, .right, > .title, .subnavbar {
         opacity: 0;
       }
     }
@@ -109,14 +109,14 @@
   // Animations
   .router-transition-css-forward, .router-transition-css-backward {
     .navbar-current {
-      .left, .title, .right, .subnavbar {
+      .left, > .title, .right, .subnavbar {
         animation: ios-navbar-element-fade-out @duration forwards;
       }
       .sliding,
       .left.sliding .icon,
       &.sliding .left,
       &.sliding .left .icon,
-      &.sliding .title,
+      &.sliding > .title,
       &.sliding .right {
         transition-duration: @duration;
         opacity: 0 !important;
@@ -130,14 +130,14 @@
     }
   }
   .router-transition-css-forward .navbar-next, .router-transition-css-backward .navbar-previous {
-    .left, .title, .right, .subnavbar {
+    .left, > .title, .right, .subnavbar {
       animation: ios-navbar-element-fade-in @duration forwards;
     }
     & .sliding,
     & .left.sliding .icon,
     &.sliding .left,
     &.sliding .left .icon,
-    &.sliding .title,
+    &.sliding > .title,
     &.sliding .right,
     &.sliding .subnavbar {
       transition-duration: @duration;

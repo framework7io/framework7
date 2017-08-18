@@ -105,22 +105,22 @@ function SwipeBack(r) {
           previousNavbar = previousPage.children('.navbar').children('.navbar-inner');
         }
         navbarWidth = $navbarEl[0].offsetWidth;
-        currentNavElements = currentNavbar.find('.left, .title, .right, .subnavbar, .fading');
-        previousNavElements = previousNavbar.find('.left, .title, .right, .subnavbar, .fading');
+        currentNavElements = currentNavbar.children('.left, .title, .right, .subnavbar, .fading');
+        previousNavElements = previousNavbar.children('.left, .title, .right, .subnavbar, .fading');
         if (router.params.iosAnimateNavbarBackIcon) {
           if (currentNavbar.hasClass('sliding')) {
-            activeNavBackIcon = currentNavbar.find('.left .back .icon');
-            activeNavBackIconText = currentNavbar.find('.left .back span').eq(0);
+            activeNavBackIcon = currentNavbar.children('.left').find('.back .icon');
+            activeNavBackIconText = currentNavbar.children('.left').find('.back span').eq(0);
           } else {
-            activeNavBackIcon = currentNavbar.find('.left.sliding .back .icon');
-            activeNavBackIconText = currentNavbar.find('.left.sliding .back span').eq(0);
+            activeNavBackIcon = currentNavbar.children('.left.sliding').find('.back .icon');
+            activeNavBackIconText = currentNavbar.children('.left.sliding').find('.back span').eq(0);
           }
           if (previousNavbar.hasClass('sliding')) {
-            previousNavBackIcon = previousNavbar.find('.left .back .icon');
-            previousNavBackIconText = previousNavbar.find('.left .back span').eq(0);
+            previousNavBackIcon = previousNavbar.children('.left').find('.back .icon');
+            previousNavBackIconText = previousNavbar.children('left').find('.back span').eq(0);
           } else {
-            previousNavBackIcon = previousNavbar.find('.left.sliding .back .icon');
-            previousNavBackIconText = previousNavbar.find('.left.sliding .back span').eq(0);
+            previousNavBackIcon = previousNavbar.children('.left.sliding').find('.back .icon');
+            previousNavBackIconText = previousNavbar.children('.left.sliding').find('.back span').eq(0);
           }
         }
       }

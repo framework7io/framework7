@@ -21,10 +21,10 @@ const Navbar = {
       return;
     }
     const $viewEl = $el.parents('.view').eq(0);
-    const left = app.rtl ? $el.find('.right') : $el.find('.left');
-    const right = app.rtl ? $el.find('.left') : $el.find('.right');
-    const title = $el.find('.title');
-    const subnavbar = $el.find('.subnavbar');
+    const left = app.rtl ? $el.children('.right') : $el.children('.left');
+    const right = app.rtl ? $el.children('.left') : $el.children('.right');
+    const title = $el.children('.title');
+    const subnavbar = $el.children('.subnavbar');
     const noLeft = left.length === 0;
     const noRight = right.length === 0;
     const leftWidth = noLeft ? 0 : left.outerWidth(true);
@@ -86,7 +86,7 @@ const Navbar = {
 
         if (isPrevious) {
           if (router && router.params.iosAnimateNavbarBackIcon) {
-            const activeNavbarBackLink = $el.parent().find('.navbar-current').find('.left.sliding .back .icon ~ span');
+            const activeNavbarBackLink = $el.parent().find('.navbar-current').children('.left.sliding').find('.back .icon ~ span');
             if (activeNavbarBackLink.length > 0) {
               titleLeftOffset += activeNavbarBackLink[0].offsetLeft;
             }
