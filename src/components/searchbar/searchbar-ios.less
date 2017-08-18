@@ -108,4 +108,12 @@
   {
     padding-top: @navbarSize + @searchbarSize;
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .searchbar-disable-button {
+        color: @colorThemeValue;
+      }
+    }
+  });
 }
