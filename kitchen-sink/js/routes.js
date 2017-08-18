@@ -208,6 +208,10 @@ var routes = [
     url: './searchbar-expandable.html',
   },
   {
+    path: '/sheet-modal/',
+    componentUrl: './sheet-modal.html',
+  },
+  {
     path: '/smart-select/',
     url: './smart-select.html',
   },
