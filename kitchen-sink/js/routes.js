@@ -59,25 +59,6 @@ var routes = [
     ',
   },
 
-  // Toolbars
-  {
-    path: '/toolbar/',
-    url: './toolbar.html',
-  },
-  {
-    path: '/tabbar/',
-    url: './tabbar.html',
-  },
-  {
-    path: '/tabbar-labels/',
-    url: './tabbar-labels.html',
-  },
-  {
-    path: '/tabbar-scrollable/',
-    url: './tabbar-scrollable.html',
-  },
-
-
   // Components
   {
     path: '/accordion/',
@@ -300,6 +281,24 @@ var routes = [
   {
     path: '/toggle/',
     url: './toggle.html',
+  },
+  {
+    path: '/toolbar-tabbar/',
+    componentUrl: './toolbar-tabbar.html',
+    routes: [
+      {
+        path: 'tabbar/',
+        componentUrl: './tabbar.html',
+      },
+      {
+        path: 'tabbar-labels/',
+        componentUrl: './tabbar-labels.html',
+      },
+      {
+        path: 'tabbar-scrollable/',
+        componentUrl: './tabbar-scrollable.html',
+      },
+    ],
   },
   {
     path: '/timeline/',
