@@ -1,0 +1,74 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Color Themes</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Choose Color Theme</div>
+      <div class="block">
+        <p>Framework7 comes with {{colorsAmount}} color themes set.</p>
+        <div class="row">
+        {{#each colors}}
+          <div class="col-33">
+            <button class="button button-fill button-round button-raised color-{{this}}" @click="setColorTheme('{{this}}')">{{this}}</button>
+          </div>
+        {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<style scoped>
+  .button {
+    margin-bottom: 1em;
+    text-transform: capitalize;
+  }
+</style>
+<script>
+  return {
+    data: function () {
+      var colors = [
+        'red',
+        'pink',
+        'purple',
+        'deeppurple',
+        'indigo',
+        'blue',
+        'lightblue',
+        'cyan',
+        'teal',
+        'green',
+        'lightgreen',
+        'lime',
+        'yellow',
+        'amber',
+        'orange',
+        'deeporange',
+        'brown',
+        'gray',
+        'bluegray',
+      ];
+      return {
+        colors: colors,
+        colorsAmount: colors.length,
+      };
+    },
+    methods: {
+      setColorTheme: function (color) {
+        var self = this;
+        var app = self.$app;
+        var currentColorClass = app.root[0].className.match(/color-theme-([a-z]*)/);
+        if (currentColorClass) app.root.removeClass(currentColorClass[0])
+          app.root.addClass('color-theme-' + color);
+      },
+    }
+  }
+</script>
