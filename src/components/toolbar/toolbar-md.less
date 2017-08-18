@@ -84,8 +84,14 @@
       overflow: hidden;
     }
     &.toolbar-bottom {
+      height: @tabbarLabelsBottomSize;
+      a.tab-link, a.link {
+        padding-top: 7px;
+        padding-bottom: 7px;
+      }
       .tabbar-label {
         text-transform: none;
+        line-height: 1.2;
       }
     }
   }
@@ -179,7 +185,7 @@
     padding-bottom: @toolbarSize;
   }
   .toolbar-bottom.tabbar-labels ~ * .page-content, .toolbar-bottom.tabbar-labels ~ .page-content {
-    padding-bottom: @tabbarLabelsSize;
+    padding-bottom: @tabbarLabelsBottomSize;
   }
 
   // Transitions
