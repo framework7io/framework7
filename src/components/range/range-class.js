@@ -63,10 +63,14 @@ class Range extends Framework7Class {
     });
 
     if ($inputEl) {
-      ('step min max value').split(' ').forEach((paramName) => {
+      ('step min max').split(' ').forEach((paramName) => {
         if (!params[paramName] && $inputEl.attr(paramName)) {
           range.params[paramName] = parseFloat($inputEl.attr(paramName));
           range[paramName] = parseFloat($inputEl.attr(paramName));
+        }
+        if (typeof $inputEl.val() !== 'undefined') {
+          range.params.value = parseFloat($inputEl.val());
+          range.value = parseFloat($inputEl.val());
         }
       });
     }
