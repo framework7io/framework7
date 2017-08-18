@@ -15,12 +15,12 @@ body, .view, .views, .page, .panel, .popup, .framework7-root {
     border-radius: 0;
     transform-origin: center top;
   }
-  html.with-statusbar.device-ios &, html.ios:not(.device-ios):not(.device-android) & {
+  html.with-statusbar.device-ios &, html.with-statusbar.ios:not(.device-ios):not(.device-android) & {
     > .progressbar, > .progressbar-infinite {
       top: 20px;
     }
   }
-  html.with-statusbar.device-android &, html.md:not(.device-ios):not(.device-android) & {
+  html.with-statusbar.device-android &, html.with-statusbar.md:not(.device-ios):not(.device-android) & {
     > .progressbar, > .progressbar-infinite {
       top: 24px;
     }
