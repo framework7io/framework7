@@ -40,10 +40,11 @@ class Searchbar extends FrameworkClass {
     $el[0].f7Searchbar = sb;
 
     let $pageEl;
+    let $navbarEl;
     if ($el.parents('.page').length > 0) {
       $pageEl = $el.parents('.page');
     } else {
-      const $navbarEl = $el.parents('.navbar-inner');
+      $navbarEl = $el.parents('.navbar-inner');
       if ($navbarEl.length > 0) {
         if ($navbarEl[0].f7Page) {
           $pageEl = $navbarEl[0].f7Page.$el;
@@ -81,7 +82,15 @@ class Searchbar extends FrameworkClass {
       }
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="searchbar-backdrop"></div>');
-        $backdropEl.insertBefore($el);
+        if ($pageEl && $pageEl.length) {
+          if ($el.parents($pageEl).length > 0 && $navbarEl && $el.parents($navbarEl).length === 0) {
+            $backdropEl.insertBefore($el);
+          } else {
+            $backdropEl.insertBefore($pageEl.find('.page-content').eq(0));
+          }
+        } else {
+          $backdropEl.insertBefore($el);
+        }
       }
     }
 
