@@ -53,25 +53,21 @@ html.with-statusbar {
     .popup-backdrop {
       z-index: 9500;
     }
-    &.device-ios .popup {
-      height: ~"-webkit-calc(100% - 20px)";
+    &.device-ios .popup, &.ios:not(.device-ios):not(.device-android) .popup {
       height: ~"calc(100% - 20px)";
       top: 20px;
     }
-    &.device-android .popup {
-      height: ~"-webkit-calc(100% - 24px)";
+    &.device-android .popup, &.md:not(.device-ios):not(.device-android) .popup {
       height: ~"calc(100% - 24px)";
       top: 24px;
     }
   }
   @media all and (min-width:630px), (min-height:630px) {
-    &.device-ios .popup-tablet-fullscreen {
-      height: ~"-webkit-calc(100% - 20px)";
+    &.device-ios .popup-tablet-fullscreen, &.ios:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
       height: ~"calc(100% - 20px)";
       top: 20px;
     }
-    &.device-android .popup-tablet-fullscreen {
-      height: ~"-webkit-calc(100% - 24px)";
+    &.device-android .popup-tablet-fullscreen, &.md:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
       height: ~"calc(100% - 24px)";
       top: 24px;
     }

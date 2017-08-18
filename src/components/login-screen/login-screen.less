@@ -28,13 +28,11 @@
   }
 }
 html.with-statusbar {
-  &.device-ios .login-screen {
-    height: ~"-webkit-calc(100% - 20px)";
+  &.device-ios .login-screen, &.ios:not(.device-ios):not(.device-android) .login-screen {
     height: ~"calc(100% - 20px)";
     top: 20px;
   }
-  &.device-android .login-screen {
-    height: ~"-webkit-calc(100% - 24px)";
+  &.device-android .login-screen, &.md:not(.device-ios):not(.device-android) .login-screen {
     height: ~"calc(100% - 24px)";
     top: 24px;
   }
