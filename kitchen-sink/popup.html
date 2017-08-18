@@ -13,7 +13,7 @@
     </div>
     <div class="page-content">
       <div class="block">
-        <p>Popup is a popup window with any HTML content that pops up over App's main content. Popup as all other overlays is part of so called "Temporary Views".</p>
+        <p>Popup is a modal window with any HTML content that pops up over App's main content. Popup as all other overlays is part of so called "Temporary Views".</p>
         <p>
           <a href="#" class="button button-raised popup-open" data-popup=".demo-popup">Open Popup</a>
         </p>
@@ -76,6 +76,7 @@
     on: {
       pageBeforeRemove: function () {
         var self = this;
+        // Destroy popup when page removed
         if (self.popup) self.popup.destroy();
       },
     }
