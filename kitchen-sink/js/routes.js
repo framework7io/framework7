@@ -164,12 +164,16 @@ var routes = [
     componentUrl: './messages.html',
   },
   {
+    path: '/navbar/',
+    url: './navbar.html',
+  },
+  {
     path: '/panel/',
     url: './panel.html',
   },
   {
     path: '/popup/',
-    url: './popup.html',
+    componentUrl: './popup.html',
   },
   {
     path: '/popover/',
@@ -212,8 +216,16 @@ var routes = [
     url: './sortable.html',
   },
   {
+    path: '/statusbar/',
+    componentUrl: './statusbar.html',
+  },
+  {
     path: '/subnavbar/',
     url: './subnavbar.html',
+  },
+  {
+    path: '/subnavbar-title/',
+    url: './subnavbar-title.html',
   },
   {
     path: '/swipeout/',
@@ -300,6 +312,12 @@ var routes = [
   {
     path: '/virtual-list/',
     componentUrl: './virtual-list.html',
+  },
+
+  // Color Themes
+  {
+    path: '/color-themes/',
+    componentUrl: './color-themes.html',
   },
 
 
