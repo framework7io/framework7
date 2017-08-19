@@ -834,6 +834,11 @@ class Router extends Framework7Class {
       }
       $pageEl[0].f7PageInitialized = true;
     }
+
+    if (on[camelName]) on[camelName](page);
+    $pageEl.trigger(colonName, page);
+    router.emit(camelName, page);
+
     if (callback === 'beforeRemove') {
       if ($pageEl[0].f7PageEventsAttached && $pageEl[0].f7PageEvents) {
         Object.keys($pageEl[0].f7PageEvents).forEach((eventName) => {
@@ -841,9 +846,6 @@ class Router extends Framework7Class {
         });
       }
     }
-    if (on[camelName]) on[camelName](page);
-    $pageEl.trigger(colonName, page);
-    router.emit(camelName, page);
 
     if (callback === 'beforeRemove') {
       $pageEl[0].f7Page = null;
