@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // Dom7
 var $ = Dom7;
 
@@ -13,16 +11,13 @@ if (document.location.search.indexOf('theme=') >= 0) {
 var app = new Framework7({
   root: '#app',
   theme: theme,
-  data: function data() {
+  data: function () {
     return {
       user: {
-        firstName: 'Vladimir',
-        lastName: 'Kharlampidi',
+        firstName: 'John',
+        lastName: 'Doe',
       },
     };
   },
   routes: routes,
 });
-
-// Add View
-var view = app.views.create('.view-main');

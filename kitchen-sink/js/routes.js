@@ -153,6 +153,10 @@ var routes = [
     url: './navbar.html',
   },
   {
+    path: '/navbar-hide-scroll/',
+    url: './navbar-hide-scroll.html',
+  },
+  {
     path: '/panel/',
     url: './panel.html',
   },
@@ -298,6 +302,10 @@ var routes = [
         path: 'tabbar-scrollable/',
         componentUrl: './tabbar-scrollable.html',
       },
+      {
+        path: 'toolbar-hide-scroll/',
+        url: './toolbar-hide-scroll.html',
+      },
     ],
   },
   {
@@ -327,54 +335,13 @@ var routes = [
     componentUrl: './color-themes.html',
   },
 
-
-  // Dynamic + Content
+  // Page Loaders
   {
-    path: '/blog/:user/:id/',
-    url: 'blog.html',
+    path: '/page-loader-template7/:user/:userId/:posts/:postId/',
+    templateUrl: './page-loader-template7.html',
   },
-  // Inline Page
   {
-    path: '/another-page/',
-    name: 'another-page',
-  },
-  // Page Element
-  {
-    path: '/another-page/',
-    el: document.querySelector('.page'),
-  },
-  // Template
-  {
-    path: '/page/',
-    template: '<div class="page">{{hello}}</div>',
-    context: { hello: 'Hello World!' },
-  },
-  // Component (For Vue/React)
-  {
-    path: '/page/',
-    component: 'testComponent',
-    // component: require('some-page.vue'),
-  },
-  // Nested Tabs
-  {
-    path: '/page-with-tabs/',
-    tabs: [
-      {
-        path: '/',
-        id: 'tab1',
-        // available options: url, component, content, template, async
-      },
-    ],
-  },
-  // Async
-  {
-    path: '/async-page/',
-    async(proceed, release) {
-      setTimeout(() => {
-        proceed({
-          url: 'about.html',
-        });
-      }, 3000);
-    },
+    path: '/page-loader-component/:user/:userId/:posts/:postId/',
+    componentUrl: './page-loader-component.html',
   },
 ];
