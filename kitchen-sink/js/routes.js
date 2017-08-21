@@ -2,12 +2,12 @@ var routes = [
   // Index page
   {
     path: '/',
-    url: 'index.html',
+    url: './index.html',
   },
   // About page
   {
     path: '/about/',
-    url: './about.html',
+    url: './pages/about.html',
   },
   // Right Panel pages
   {
@@ -62,187 +62,187 @@ var routes = [
   // Components
   {
     path: '/accordion/',
-    url: './accordion.html',
+    url: './pages/accordion.html',
   },
   {
     path: '/action-sheet/',
-    componentUrl: './action-sheet.html',
+    componentUrl: './pages/action-sheet.html',
   },
   {
     path: '/badge/',
-    componentUrl: './badge.html',
+    componentUrl: './pages/badge.html',
   },
   {
     path: '/buttons/',
-    url: './buttons.html',
+    url: './pages/buttons.html',
   },
   {
     path: '/cards/',
-    url: './cards.html',
+    url: './pages/cards.html',
   },
   {
     path: '/checkbox/',
-    url: './checkbox.html',
+    url: './pages/checkbox.html',
   },
   {
     path: '/chips/',
-    componentUrl: './chips.html',
+    componentUrl: './pages/chips.html',
   },
   {
     path: '/contacts-list/',
-    url: './contacts-list.html',
+    url: './pages/contacts-list.html',
   },
   {
     path: '/content-block/',
-    url: './content-block.html',
+    url: './pages/content-block.html',
   },
   {
     path: '/data-table/',
-    componentUrl: './data-table.html',
+    componentUrl: './pages/data-table.html',
   },
   {
     path: '/dialog/',
-    componentUrl: './dialog.html',
+    componentUrl: './pages/dialog.html',
   },
   {
     path: '/fab/',
-    url: './fab.html',
+    url: './pages/fab.html',
   },
   {
     path: '/fab-morph/',
-    url: './fab-morph.html',
+    url: './pages/fab-morph.html',
   },
   {
     path: '/form-storage/',
-    url: './form-storage.html',
+    url: './pages/form-storage.html',
   },
   {
     path: '/grid/',
-    url: './grid.html',
+    url: './pages/grid.html',
   },
   {
     path: '/infinite-scroll/',
-    componentUrl: './infinite-scroll.html',
+    componentUrl: './pages/infinite-scroll.html',
   },
   {
     path: '/inputs/',
-    url: './inputs.html',
+    url: './pages/inputs.html',
   },
   {
     path: '/lazy-load/',
-    url: './lazy-load.html',
+    url: './pages/lazy-load.html',
   },
   {
     path: '/list/',
-    url: './list.html',
+    url: './pages/list.html',
   },
   {
     path: '/login-screen/',
-    componentUrl: './login-screen.html',
+    componentUrl: './pages/login-screen.html',
   },
   {
     path: '/login-screen-page/',
-    componentUrl: './login-screen-page.html',
+    componentUrl: './pages/login-screen-page.html',
   },
   {
     path: '/messages/',
-    componentUrl: './messages.html',
+    componentUrl: './pages/messages.html',
   },
   {
     path: '/navbar/',
-    url: './navbar.html',
+    url: './pages/navbar.html',
   },
   {
     path: '/navbar-hide-scroll/',
-    url: './navbar-hide-scroll.html',
+    url: './pages/navbar-hide-scroll.html',
   },
   {
     path: '/panel/',
-    url: './panel.html',
+    url: './pages/panel.html',
   },
   {
     path: '/popup/',
-    componentUrl: './popup.html',
+    componentUrl: './pages/popup.html',
   },
   {
     path: '/popover/',
-    url: './popover.html',
+    url: './pages/popover.html',
   },
   {
     path: '/preloader/',
-    componentUrl: './preloader.html',
+    componentUrl: './pages/preloader.html',
   },
   {
     path: '/progressbar/',
-    componentUrl: './progressbar.html',
+    componentUrl: './pages/progressbar.html',
   },
   {
     path: '/pull-to-refresh/',
-    componentUrl: './pull-to-refresh.html',
+    componentUrl: './pages/pull-to-refresh.html',
   },
   {
     path: '/radio/',
-    url: './radio.html',
+    url: './pages/radio.html',
   },
   {
     path: '/range/',
-    componentUrl: './range.html',
+    componentUrl: './pages/range.html',
   },
   {
     path: '/searchbar/',
-    url: './searchbar.html',
+    url: './pages/searchbar.html',
   },
   {
     path: '/searchbar-expandable/',
-    url: './searchbar-expandable.html',
+    url: './pages/searchbar-expandable.html',
   },
   {
     path: '/sheet-modal/',
-    componentUrl: './sheet-modal.html',
+    componentUrl: './pages/sheet-modal.html',
   },
   {
     path: '/smart-select/',
-    url: './smart-select.html',
+    url: './pages/smart-select.html',
   },
   {
     path: '/sortable/',
-    url: './sortable.html',
+    url: './pages/sortable.html',
   },
   {
     path: '/statusbar/',
-    componentUrl: './statusbar.html',
+    componentUrl: './pages/statusbar.html',
   },
   {
     path: '/subnavbar/',
-    url: './subnavbar.html',
+    url: './pages/subnavbar.html',
   },
   {
     path: '/subnavbar-title/',
-    url: './subnavbar-title.html',
+    url: './pages/subnavbar-title.html',
   },
   {
     path: '/swipeout/',
-    componentUrl: './swipeout.html',
+    componentUrl: './pages/swipeout.html',
   },
   {
     path: '/tabs/',
-    url: './tabs.html',
+    url: './pages/tabs.html',
   },
   {
     path: '/tabs-static/',
-    url: './tabs-static.html',
+    url: './pages/tabs-static.html',
   },
   {
     path: '/tabs-animated/',
-    url: './tabs-animated.html',
+    url: './pages/tabs-animated.html',
   },
   {
     path: '/tabs-swipeable/',
-    url: './tabs-swipeable.html',
+    url: './pages/tabs-swipeable.html',
   },
   {
     path: '/tabs-routable/',
-    url: './tabs-routable.html',
+    url: './pages/tabs-routable.html',
     tabs: [
       {
         path: '/',
@@ -284,64 +284,64 @@ var routes = [
   },
   {
     path: '/toggle/',
-    url: './toggle.html',
+    url: './pages/toggle.html',
   },
   {
     path: '/toolbar-tabbar/',
-    componentUrl: './toolbar-tabbar.html',
+    componentUrl: './pages/toolbar-tabbar.html',
     routes: [
       {
         path: 'tabbar/',
-        componentUrl: './tabbar.html',
+        componentUrl: './pages/tabbar.html',
       },
       {
         path: 'tabbar-labels/',
-        componentUrl: './tabbar-labels.html',
+        componentUrl: './pages/tabbar-labels.html',
       },
       {
         path: 'tabbar-scrollable/',
-        componentUrl: './tabbar-scrollable.html',
+        componentUrl: './pages/tabbar-scrollable.html',
       },
       {
         path: 'toolbar-hide-scroll/',
-        url: './toolbar-hide-scroll.html',
+        url: './pages/toolbar-hide-scroll.html',
       },
     ],
   },
   {
     path: '/timeline/',
-    url: './timeline.html',
+    url: './pages/timeline.html',
   },
   {
     path: '/timeline-vertical/',
-    url: './timeline-vertical.html',
+    url: './pages/timeline-vertical.html',
   },
   {
     path: '/timeline-horizontal/',
-    url: './timeline-horizontal.html',
+    url: './pages/timeline-horizontal.html',
   },
   {
     path: '/timeline-horizontal-calendar/',
-    url: './timeline-horizontal-calendar.html',
+    url: './pages/timeline-horizontal-calendar.html',
   },
   {
     path: '/virtual-list/',
-    componentUrl: './virtual-list.html',
+    componentUrl: './pages/virtual-list.html',
   },
 
   // Color Themes
   {
     path: '/color-themes/',
-    componentUrl: './color-themes.html',
+    componentUrl: './pages/color-themes.html',
   },
 
   // Page Loaders
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',
-    templateUrl: './page-loader-template7.html',
+    templateUrl: './pages/page-loader-template7.html',
   },
   {
     path: '/page-loader-component/:user/:userId/:posts/:postId/',
-    componentUrl: './page-loader-component.html',
+    componentUrl: './pages/page-loader-component.html',
   },
 ];

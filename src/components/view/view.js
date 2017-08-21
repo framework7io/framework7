@@ -111,6 +111,7 @@ export default {
       });
     },
     modalBeforeDestroy(modal) {
+      if (!modal || !modal.$el) return;
       modal.$el.find('.view-init').each((index, viewEl) => {
         const view = viewEl.f7View;
         if (!view) return;
