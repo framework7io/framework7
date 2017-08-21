@@ -140,6 +140,17 @@ app.pageInitCallback = function (view, params) {
     // Init page
     app.initPage(pageContainer);
 
+    // Run scripts
+    $(pageContainer).find('script').each(function() {
+        if ($(this).attr('src')) {
+            var s = document.createElement('script');
+            s.src = $(this).attr('src');
+            $('head').append(s);
+        } else {
+            eval($(this).text());
+        }
+    });
+
     // Init Callback
     app.pluginHook('pageInit', pageData);
     if (app.params.onPageInit) app.params.onPageInit(app, pageData);
