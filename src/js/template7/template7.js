@@ -190,17 +190,50 @@ function stringToBlocks(string) {
   }
   return blocks;
 }
+function parseJsVariable(expression, replace, object) {
+  return expression.split(/([+ -*/^])/g).map(function (part) {
+    if (part.indexOf(replace) < 0) { return part; }
+    if (!object) { return JSON.stringify(''); }
+    var variable = object;
+    if (part.indexOf((replace + ".")) >= 0) {
+      part.split((replace + "."))[1].split('.').forEach(function (partName) {
+        if (variable[partName]) { variable = variable[partName]; }
+        else { variable = 'undefined'; }
+      });
+    }
+    return JSON.stringify(variable);
+  }).join('');
+}
+function parseJsParents(expression, parents) {
+  return expression.split(/([+ -*^])/g).map(function (part) {
+    if (part.indexOf('../') < 0) { return part; }
+    if (!parents || parents.length === 0) { return JSON.stringify(''); }
+    var levelsUp = part.split('../').length - 1;
+    var parentData = levelsUp > parents.length ? parents[parents.length - 1] : parents[levelsUp - 1];
+
+    var variable = parentData;
+    var parentPart = part.replace(/..\//g, '');
+    parentPart.split('.').forEach(function (partName) {
+      if (variable[partName]) { variable = variable[partName]; }
+      else { variable = 'undefined'; }
+    });
+    return JSON.stringify(variable);
+  }).join('');
+}
 var Template7 = function Template7(template) {
   var t = this;
   t.template = template;
 
-  function getCompileVar(name, ctx) {
+  function getCompileVar(name, ctx, data) {
+    if ( data === void 0 ) data = 'data_1';
+
     var variable = ctx;
     var parts;
     var levelsUp = 0;
+    var newDepth;
     if (name.indexOf('../') === 0) {
-      var newDepth = variable.split('_')[1] - levelsUp;
       levelsUp = name.split('../').length - 1;
+      newDepth = variable.split('_')[1] - levelsUp;
       variable = "ctx_" + (newDepth >= 1 ? newDepth : 1);
       parts = name.split('../')[levelsUp].split('.');
     } else if (name.indexOf('@global') === 0) {
@@ -215,10 +248,14 @@ var Template7 = function Template7(template) {
     for (var i = 0; i < parts.length; i += 1) {
       var part = parts[i];
       if (part.indexOf('@') === 0) {
+        var dataLevel = data.split('_')[1];
+        if (levelsUp > 0) {
+          dataLevel = newDepth;
+        }
         if (i > 0) {
-          variable += "[(data && data." + (part.replace('@', '')) + ")]";
+          variable += "[(data_" + dataLevel + " && data_" + dataLevel + "." + (part.replace('@', '')) + ")]";
         } else {
-          variable = "(data && data." + (name.replace('@', '')) + ")";
+          variable = "(data_" + dataLevel + " && data_" + dataLevel + "." + (part.replace('@', '')) + ")";
         }
       } else if (isFinite(part)) {
         variable += "[" + part + "]";
@@ -228,16 +265,15 @@ var Template7 = function Template7(template) {
         variable += "." + part;
       }
     }
-
     return variable;
   }
-  function getCompiledArguments(contextArray, ctx) {
+  function getCompiledArguments(contextArray, ctx, data) {
     var arr = [];
     for (var i = 0; i < contextArray.length; i += 1) {
       if (/^['"]/.test(contextArray[i])) { arr.push(contextArray[i]); }
       else if (/^(true|false|\d+)$/.test(contextArray[i])) { arr.push(contextArray[i]); }
       else {
-        arr.push(getCompileVar(contextArray[i], ctx));
+        arr.push(getCompileVar(contextArray[i], ctx, data));
       }
     }
 
@@ -252,6 +288,7 @@ var Template7 = function Template7(template) {
     }
     var blocks = stringToBlocks(template);
     var ctx = "ctx_" + depth;
+    var data = "data_" + depth;
     if (blocks.length === 0) {
       return function empty() { return ''; };
     }
@@ -267,9 +304,9 @@ var Template7 = function Template7(template) {
 
     var resultString = '';
     if (depth === 1) {
-      resultString += "(function (" + ctx + ", data, root) {\n";
+      resultString += "(function (" + ctx + ", " + data + ", root) {\n";
     } else {
-      resultString += "(function (" + ctx + ", data) {\n";
+      resultString += "(function (" + ctx + ", " + data + ") {\n";
     }
     if (depth === 1) {
       resultString += 'function isArray(arr){return Object.prototype.toString.apply(arr) === \'[object Array]\';}\n';
@@ -290,24 +327,34 @@ var Template7 = function Template7(template) {
       var compiledArguments = (void 0);
       // Variable block
       if (block.type === 'variable') {
-        variable = getCompileVar(block.contextName, ctx);
+        variable = getCompileVar(block.contextName, ctx, data);
         resultString += "r += c(" + variable + ", " + ctx + ");";
       }
       // Helpers block
       if (block.type === 'helper') {
+        var parents = (void 0);
+        if (ctx !== 'ctx_1') {
+          var level = ctx.split('_')[1];
+          var parentsString = "ctx_" + (level - 1);
+          for (var j = level - 2; j >= 1; j -= 1) {
+            parentsString += ", ctx_" + j;
+          }
+          parents = "[" + parentsString + "]";
+        } else {
+          parents = "[" + ctx + "]";
+        }
         if (block.helperName in t.helpers) {
-          compiledArguments = getCompiledArguments(block.contextName, ctx);
-
-          resultString += "r += (Template7.helpers." + (block.helperName) + ").call(" + ctx + ", " + (compiledArguments && ((compiledArguments + ", "))) + "{hash:" + (JSON.stringify(block.hash)) + ", data: data || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root});";
+          compiledArguments = getCompiledArguments(block.contextName, ctx, data);
+          resultString += "r += (Template7.helpers." + (block.helperName) + ").call(" + ctx + ", " + (compiledArguments && ((compiledArguments + ", "))) + "{hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
         } else if (block.contextName.length > 0) {
           throw new Error(("Template7: Missing helper: \"" + (block.helperName) + "\""));
         } else {
-          variable = getCompileVar(block.helperName, ctx);
+          variable = getCompileVar(block.helperName, ctx, data);
           resultString += "if (" + variable + ") {";
           resultString += "if (isArray(" + variable + ")) {";
-          resultString += "r += (Template7.helpers.each).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: data || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root});";
+          resultString += "r += (Template7.helpers.each).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
           resultString += '}else {';
-          resultString += "r += (Template7.helpers.with).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: data || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root});";
+          resultString += "r += (Template7.helpers.with).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
           resultString += '}}';
         }
       }
@@ -398,20 +445,60 @@ Template7.prototype = {
       return ctx.join(options.hash.delimiter || options.hash.delimeter);
     },
     js: function js(expression, options) {
+      var data = options.data;
       var func;
-      if (expression.indexOf('return') >= 0) {
-        func = "(function(){" + expression + "})";
+      var execute = expression;
+      ('index first last key').split(' ').forEach(function (prop) {
+        if (typeof data[prop] !== 'undefined') {
+          var re1 = new RegExp(("this.@" + prop), 'g');
+          var re2 = new RegExp(("@" + prop), 'g');
+          execute = execute
+            .replace(re1, JSON.stringify(data[prop]))
+            .replace(re2, JSON.stringify(data[prop]));
+        }
+      });
+      if (options.root && execute.indexOf('@root') >= 0) {
+        execute = parseJsVariable(execute, '@root', options.root);
+      }
+      if (execute.indexOf('@global') >= 0) {
+        execute = parseJsVariable(execute, '@global', template7Context.Template7.global);
+      }
+      if (execute.indexOf('../') >= 0) {
+        execute = parseJsParents(execute, options.parents);
+      }
+      if (execute.indexOf('return') >= 0) {
+        func = "(function(){" + execute + "})";
       } else {
-        func = "(function(){return (" + expression + ")})";
+        func = "(function(){return (" + execute + ")})";
       }
       return eval.call(this, func).call(this);
     },
-    js_compare: function js_compare(expression, options) {
+    js_if: function js_if(expression, options) {
+      var data = options.data;
       var func;
-      if (expression.indexOf('return') >= 0) {
-        func = "(function(){" + expression + "})";
+      var execute = expression;
+      ('index first last key').split(' ').forEach(function (prop) {
+        if (typeof data[prop] !== 'undefined') {
+          var re1 = new RegExp(("this.@" + prop), 'g');
+          var re2 = new RegExp(("@" + prop), 'g');
+          execute = execute
+            .replace(re1, JSON.stringify(data[prop]))
+            .replace(re2, JSON.stringify(data[prop]));
+        }
+      });
+      if (options.root && execute.indexOf('@root') >= 0) {
+        execute = parseJsVariable(execute, '@root', options.root);
+      }
+      if (execute.indexOf('@global') >= 0) {
+        execute = parseJsVariable(execute, '@global', Template7.global);
+      }
+      if (execute.indexOf('../') >= 0) {
+        execute = parseJsParents(execute, options.parents);
+      }
+      if (execute.indexOf('return') >= 0) {
+        func = "(function(){" + execute + "})";
       } else {
-        func = "(function(){return (" + expression + ")})";
+        func = "(function(){return (" + execute + ")})";
       }
       var condition = eval.call(this, func).call(this);
       if (condition) {
@@ -422,6 +509,7 @@ Template7.prototype = {
     },
   },
 };
+Template7.prototype.helpers.js_compare = Template7.prototype.helpers.js_if;
 function t7(template, data) {
   if (arguments.length === 2) {
     var instance = new Template7(template);
