@@ -65,6 +65,9 @@ class Framework7Component {
     }
 
     // Make Dom
+    if (html && typeof html === 'string') {
+      html = html.trim();
+    }
     tempDom.innerHTML = html;
 
     // Extend context with $el
@@ -156,7 +159,7 @@ class Framework7Component {
       }
     });
 
-    // Set styles scrope ID
+    // Set styles scope ID
     let styleEl;
     if (component.styles) {
       styleEl = document.createElement('style');
@@ -167,19 +170,19 @@ class Framework7Component {
     }
 
     // Attach events
-    component.attachEvents = function attachEvents() {
+    function attachEvents() {
       events.forEach((event) => {
         $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
       });
-    };
+    }
 
-    component.detachEvents = function detachEvents() {
+    function detachEvents() {
       events.forEach((event) => {
         $(event.el).off(event.name, event.handler);
       });
-    };
+    }
 
-    component.attachEvents();
+    attachEvents();
 
     // Created callback
     if (component.created) component.created();
@@ -196,7 +199,7 @@ class Framework7Component {
     component.destroy = function destroy() {
       if (component.beforeDestroy) component.beforeDestroy();
       if (styleEl) $(styleEl).remove();
-      component.detachEvents();
+      detachEvents();
       if (component.destroyed) component.destroyed();
     };
 
