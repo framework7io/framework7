@@ -9,2483 +9,8 @@
  *
  * Released on: August 21, 2017
  */
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Framework7 = factory());
-}(this, (function () { 'use strict';
-
-/**
- * Template7 1.2.5
- * Mobile-first HTML template engine
- * 
- * http://www.idangero.us/template7/
- * 
- * Copyright 2017, Vladimir Kharlampidi
- * The iDangero.us
- * http://www.idangero.us/
- * 
- * Licensed under MIT
- * 
- * Released on: August 2, 2017
- */
-var template7Context;
-if (typeof window !== 'undefined') {
-  template7Context = window;
-} else if (typeof global !== 'undefined') {
-  template7Context = global;
-} else {
-  template7Context = undefined;
-}
-function isArray(arr) {
-  return Array.isArray ? Array.isArray(arr) : Object.prototype.toString.apply(arr) === '[object Array]';
-}
-function isFunction(func) {
-  return typeof func === 'function';
-}
-function escape(string) {
-  return (typeof template7Context !== 'undefined' && template7Context.escape ? template7Context.escape(string) : string)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-}
-var quoteSingleRexExp = new RegExp('\'', 'g');
-var quoteDoubleRexExp = new RegExp('"', 'g');
-function helperToSlices(string) {
-  var helperParts = string.replace(/[{}#}]/g, '').split(' ');
-  var slices = [];
-  var shiftIndex;
-  var i;
-  var j;
-  for (i = 0; i < helperParts.length; i += 1) {
-    var part = helperParts[i];
-    var blockQuoteRegExp = (void 0);
-    var openingQuote = (void 0);
-    if (i === 0) { slices.push(part); }
-    else if (part.indexOf('"') === 0 || part.indexOf('\'') === 0) {
-      blockQuoteRegExp = part.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
-      openingQuote = part.indexOf('"') === 0 ? '"' : '\'';
-      // Plain String
-      if (part.match(blockQuoteRegExp).length === 2) {
-        // One word string
-        slices.push(part);
-      } else {
-        // Find closed Index
-        shiftIndex = 0;
-        for (j = i + 1; j < helperParts.length; j += 1) {
-          part += " " + (helperParts[j]);
-          if (helperParts[j].indexOf(openingQuote) >= 0) {
-            shiftIndex = j;
-            slices.push(part);
-            break;
-          }
-        }
-        if (shiftIndex) { i = shiftIndex; }
-      }
-    } else if (part.indexOf('=') > 0) {
-      // Hash
-      var hashParts = part.split('=');
-      var hashName = hashParts[0];
-      var hashContent = hashParts[1];
-      if (!blockQuoteRegExp) {
-        blockQuoteRegExp = hashContent.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
-        openingQuote = hashContent.indexOf('"') === 0 ? '"' : '\'';
-      }
-      if (hashContent.match(blockQuoteRegExp).length !== 2) {
-        shiftIndex = 0;
-        for (j = i + 1; j < helperParts.length; j += 1) {
-          hashContent += " " + (helperParts[j]);
-          if (helperParts[j].indexOf(openingQuote) >= 0) {
-            shiftIndex = j;
-            break;
-          }
-        }
-        if (shiftIndex) { i = shiftIndex; }
-      }
-      var hash = [hashName, hashContent.replace(blockQuoteRegExp, '')];
-      slices.push(hash);
-    } else {
-      // Plain variable
-      slices.push(part);
-    }
-  }
-  return slices;
-}
-function stringToBlocks(string) {
-  var blocks = [];
-  var i;
-  var j;
-  if (!string) { return []; }
-  var stringBlocks = string.split(/({{[^{^}]*}})/);
-  for (i = 0; i < stringBlocks.length; i += 1) {
-    var block = stringBlocks[i];
-    if (block === '') { continue; }
-    if (block.indexOf('{{') < 0) {
-      blocks.push({
-        type: 'plain',
-        content: block,
-      });
-    } else {
-      if (block.indexOf('{/') >= 0) {
-        continue;
-      }
-      if (block.indexOf('{#') < 0 && block.indexOf(' ') < 0 && block.indexOf('else') < 0) {
-        // Simple variable
-        blocks.push({
-          type: 'variable',
-          contextName: block.replace(/[{}]/g, ''),
-        });
-        continue;
-      }
-      // Helpers
-      var helperSlices = helperToSlices(block);
-      var helperName = helperSlices[0];
-      var isPartial = helperName === '>';
-      var helperContext = [];
-      var helperHash = {};
-      for (j = 1; j < helperSlices.length; j += 1) {
-        var slice = helperSlices[j];
-        if (isArray(slice)) {
-          // Hash
-          helperHash[slice[0]] = slice[1] === 'false' ? false : slice[1];
-        } else {
-          helperContext.push(slice);
-        }
-      }
-
-      if (block.indexOf('{#') >= 0) {
-        // Condition/Helper
-        var helperContent = '';
-        var elseContent = '';
-        var toSkip = 0;
-        var shiftIndex = (void 0);
-        var foundClosed = false;
-        var foundElse = false;
-        var depth = 0;
-        for (j = i + 1; j < stringBlocks.length; j += 1) {
-          if (stringBlocks[j].indexOf('{{#') >= 0) {
-            depth += 1;
-          }
-          if (stringBlocks[j].indexOf('{{/') >= 0) {
-            depth -= 1;
-          }
-          if (stringBlocks[j].indexOf(("{{#" + helperName)) >= 0) {
-            helperContent += stringBlocks[j];
-            if (foundElse) { elseContent += stringBlocks[j]; }
-            toSkip += 1;
-          } else if (stringBlocks[j].indexOf(("{{/" + helperName)) >= 0) {
-            if (toSkip > 0) {
-              toSkip -= 1;
-              helperContent += stringBlocks[j];
-              if (foundElse) { elseContent += stringBlocks[j]; }
-            } else {
-              shiftIndex = j;
-              foundClosed = true;
-              break;
-            }
-          } else if (stringBlocks[j].indexOf('else') >= 0 && depth === 0) {
-            foundElse = true;
-          } else {
-            if (!foundElse) { helperContent += stringBlocks[j]; }
-            if (foundElse) { elseContent += stringBlocks[j]; }
-          }
-        }
-        if (foundClosed) {
-          if (shiftIndex) { i = shiftIndex; }
-          blocks.push({
-            type: 'helper',
-            helperName: helperName,
-            contextName: helperContext,
-            content: helperContent,
-            inverseContent: elseContent,
-            hash: helperHash,
-          });
-        }
-      } else if (block.indexOf(' ') > 0) {
-        if (isPartial) {
-          helperName = '_partial';
-          if (helperContext[0]) { helperContext[0] = "\"" + (helperContext[0].replace(/"|'/g, '')) + "\""; }
-        }
-        blocks.push({
-          type: 'helper',
-          helperName: helperName,
-          contextName: helperContext,
-          hash: helperHash,
-        });
-      }
-    }
-  }
-  return blocks;
-}
-function parseJsVariable(expression, replace, object) {
-  return expression.split(/([+ -*/^])/g).map(function (part) {
-    if (part.indexOf(replace) < 0) { return part; }
-    if (!object) { return JSON.stringify(''); }
-    var variable = object;
-    if (part.indexOf((replace + ".")) >= 0) {
-      part.split((replace + "."))[1].split('.').forEach(function (partName) {
-        if (variable[partName]) { variable = variable[partName]; }
-        else { variable = 'undefined'; }
-      });
-    }
-    return JSON.stringify(variable);
-  }).join('');
-}
-function parseJsParents(expression, parents) {
-  return expression.split(/([+ -*^])/g).map(function (part) {
-    if (part.indexOf('../') < 0) { return part; }
-    if (!parents || parents.length === 0) { return JSON.stringify(''); }
-    var levelsUp = part.split('../').length - 1;
-    var parentData = levelsUp > parents.length ? parents[parents.length - 1] : parents[levelsUp - 1];
-
-    var variable = parentData;
-    var parentPart = part.replace(/..\//g, '');
-    parentPart.split('.').forEach(function (partName) {
-      if (variable[partName]) { variable = variable[partName]; }
-      else { variable = 'undefined'; }
-    });
-    return JSON.stringify(variable);
-  }).join('');
-}
-var Template7 = function Template7(template) {
-  var t = this;
-  t.template = template;
-
-  function getCompileVar(name, ctx, data) {
-    if ( data === void 0 ) data = 'data_1';
-
-    var variable = ctx;
-    var parts;
-    var levelsUp = 0;
-    var newDepth;
-    if (name.indexOf('../') === 0) {
-      levelsUp = name.split('../').length - 1;
-      newDepth = variable.split('_')[1] - levelsUp;
-      variable = "ctx_" + (newDepth >= 1 ? newDepth : 1);
-      parts = name.split('../')[levelsUp].split('.');
-    } else if (name.indexOf('@global') === 0) {
-      variable = 'Template7.global';
-      parts = name.split('@global.')[1].split('.');
-    } else if (name.indexOf('@root') === 0) {
-      variable = 'root';
-      parts = name.split('@root.')[1].split('.');
-    } else {
-      parts = name.split('.');
-    }
-    for (var i = 0; i < parts.length; i += 1) {
-      var part = parts[i];
-      if (part.indexOf('@') === 0) {
-        var dataLevel = data.split('_')[1];
-        if (levelsUp > 0) {
-          dataLevel = newDepth;
-        }
-        if (i > 0) {
-          variable += "[(data_" + dataLevel + " && data_" + dataLevel + "." + (part.replace('@', '')) + ")]";
-        } else {
-          variable = "(data_" + dataLevel + " && data_" + dataLevel + "." + (part.replace('@', '')) + ")";
-        }
-      } else if (isFinite(part)) {
-        variable += "[" + part + "]";
-      } else if (part === 'this' || part.indexOf('this.') >= 0 || part.indexOf('this[') >= 0 || part.indexOf('this(') >= 0) {
-        variable = part.replace('this', ctx);
-      } else {
-        variable += "." + part;
-      }
-    }
-    return variable;
-  }
-  function getCompiledArguments(contextArray, ctx, data) {
-    var arr = [];
-    for (var i = 0; i < contextArray.length; i += 1) {
-      if (/^['"]/.test(contextArray[i])) { arr.push(contextArray[i]); }
-      else if (/^(true|false|\d+)$/.test(contextArray[i])) { arr.push(contextArray[i]); }
-      else {
-        arr.push(getCompileVar(contextArray[i], ctx, data));
-      }
-    }
-
-    return arr.join(', ');
-  }
-  function compile(template, depth) {
-    if ( template === void 0 ) template = t.template;
-    if ( depth === void 0 ) depth = 1;
-
-    if (typeof template !== 'string') {
-      throw new Error('Template7: Template must be a string');
-    }
-    var blocks = stringToBlocks(template);
-    var ctx = "ctx_" + depth;
-    var data = "data_" + depth;
-    if (blocks.length === 0) {
-      return function empty() { return ''; };
-    }
-
-    function getCompileFn(block, newDepth) {
-      if (block.content) { return compile(block.content, newDepth); }
-      return function empty() { return ''; };
-    }
-    function getCompileInverse(block, newDepth) {
-      if (block.inverseContent) { return compile(block.inverseContent, newDepth); }
-      return function empty() { return ''; };
-    }
-
-    var resultString = '';
-    if (depth === 1) {
-      resultString += "(function (" + ctx + ", " + data + ", root) {\n";
-    } else {
-      resultString += "(function (" + ctx + ", " + data + ") {\n";
-    }
-    if (depth === 1) {
-      resultString += 'function isArray(arr){return Object.prototype.toString.apply(arr) === \'[object Array]\';}\n';
-      resultString += 'function isFunction(func){return (typeof func === \'function\');}\n';
-      resultString += 'function c(val, ctx) {if (typeof val !== "undefined" && val !== null) {if (isFunction(val)) {return val.call(ctx);} else return val;} else return "";}\n';
-      resultString += 'root = root || ctx_1 || {};\n';
-    }
-    resultString += 'var r = \'\';\n';
-    var i;
-    for (i = 0; i < blocks.length; i += 1) {
-      var block = blocks[i];
-      // Plain block
-      if (block.type === 'plain') {
-        resultString += "r +='" + ((block.content).replace(/\r/g, '\\r').replace(/\n/g, '\\n').replace(/'/g, '\\' + '\'')) + "';";
-        continue;
-      }
-      var variable = (void 0);
-      var compiledArguments = (void 0);
-      // Variable block
-      if (block.type === 'variable') {
-        variable = getCompileVar(block.contextName, ctx, data);
-        resultString += "r += c(" + variable + ", " + ctx + ");";
-      }
-      // Helpers block
-      if (block.type === 'helper') {
-        var parents = (void 0);
-        if (ctx !== 'ctx_1') {
-          var level = ctx.split('_')[1];
-          var parentsString = "ctx_" + (level - 1);
-          for (var j = level - 2; j >= 1; j -= 1) {
-            parentsString += ", ctx_" + j;
-          }
-          parents = "[" + parentsString + "]";
-        } else {
-          parents = "[" + ctx + "]";
-        }
-        if (block.helperName in t.helpers) {
-          compiledArguments = getCompiledArguments(block.contextName, ctx, data);
-          resultString += "r += (Template7.helpers." + (block.helperName) + ").call(" + ctx + ", " + (compiledArguments && ((compiledArguments + ", "))) + "{hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
-        } else if (block.contextName.length > 0) {
-          throw new Error(("Template7: Missing helper: \"" + (block.helperName) + "\""));
-        } else {
-          variable = getCompileVar(block.helperName, ctx, data);
-          resultString += "if (" + variable + ") {";
-          resultString += "if (isArray(" + variable + ")) {";
-          resultString += "r += (Template7.helpers.each).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
-          resultString += '}else {';
-          resultString += "r += (Template7.helpers.with).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
-          resultString += '}}';
-        }
-      }
-    }
-    resultString += '\nreturn r;})';
-    return eval.call(template7Context, resultString);
-  }
-  t.compile = function _compile(template) {
-    if (!t.compiled) {
-      t.compiled = compile(template);
-    }
-    return t.compiled;
-  };
-};
-
-Template7.prototype = {
-  options: {},
-  partials: {},
-  helpers: {
-    _partial: function _partial(partialName, options) {
-      var p = Template7.prototype.partials[partialName];
-      if (!p || (p && !p.template)) { return ''; }
-      if (!p.compiled) {
-        p.compiled = new Template7(p.template).compile();
-      }
-      var ctx = this;
-      for (var hashName in options.hash) {
-        ctx[hashName] = options.hash[hashName];
-      }
-      return p.compiled(ctx, options.data, options.root);
-    },
-    escape: function escape$1(context, options) {
-      if (typeof context !== 'string') {
-        throw new Error('Template7: Passed context to "escape" helper should be a string');
-      }
-      return escape(context);
-    },
-    if: function if$1(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      if (ctx) {
-        return options.fn(this, options.data);
-      }
-
-      return options.inverse(this, options.data);
-    },
-    unless: function unless(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      if (!ctx) {
-        return options.fn(this, options.data);
-      }
-
-      return options.inverse(this, options.data);
-    },
-    each: function each(context, options) {
-      var ctx = context;
-      var ret = '';
-      var i = 0;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      if (isArray(ctx)) {
-        if (options.hash.reverse) {
-          ctx = ctx.reverse();
-        }
-        for (i = 0; i < ctx.length; i += 1) {
-          ret += options.fn(ctx[i], { first: i === 0, last: i === ctx.length - 1, index: i });
-        }
-        if (options.hash.reverse) {
-          ctx = ctx.reverse();
-        }
-      } else {
-        for (var key in ctx) {
-          i += 1;
-          ret += options.fn(ctx[key], { key: key });
-        }
-      }
-      if (i > 0) { return ret; }
-      return options.inverse(this);
-    },
-    with: function with$1(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = context.call(this); }
-      return options.fn(ctx);
-    },
-    join: function join(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      return ctx.join(options.hash.delimiter || options.hash.delimeter);
-    },
-    js: function js(expression, options) {
-      var data = options.data;
-      var func;
-      var execute = expression;
-      ('index first last key').split(' ').forEach(function (prop) {
-        if (typeof data[prop] !== 'undefined') {
-          var re1 = new RegExp(("this.@" + prop), 'g');
-          var re2 = new RegExp(("@" + prop), 'g');
-          execute = execute
-            .replace(re1, JSON.stringify(data[prop]))
-            .replace(re2, JSON.stringify(data[prop]));
-        }
-      });
-      if (options.root && execute.indexOf('@root') >= 0) {
-        execute = parseJsVariable(execute, '@root', options.root);
-      }
-      if (execute.indexOf('@global') >= 0) {
-        execute = parseJsVariable(execute, '@global', template7Context.Template7.global);
-      }
-      if (execute.indexOf('../') >= 0) {
-        execute = parseJsParents(execute, options.parents);
-      }
-      if (execute.indexOf('return') >= 0) {
-        func = "(function(){" + execute + "})";
-      } else {
-        func = "(function(){return (" + execute + ")})";
-      }
-      return eval.call(this, func).call(this);
-    },
-    js_if: function js_if(expression, options) {
-      var data = options.data;
-      var func;
-      var execute = expression;
-      ('index first last key').split(' ').forEach(function (prop) {
-        if (typeof data[prop] !== 'undefined') {
-          var re1 = new RegExp(("this.@" + prop), 'g');
-          var re2 = new RegExp(("@" + prop), 'g');
-          execute = execute
-            .replace(re1, JSON.stringify(data[prop]))
-            .replace(re2, JSON.stringify(data[prop]));
-        }
-      });
-      if (options.root && execute.indexOf('@root') >= 0) {
-        execute = parseJsVariable(execute, '@root', options.root);
-      }
-      if (execute.indexOf('@global') >= 0) {
-        execute = parseJsVariable(execute, '@global', Template7.global);
-      }
-      if (execute.indexOf('../') >= 0) {
-        execute = parseJsParents(execute, options.parents);
-      }
-      if (execute.indexOf('return') >= 0) {
-        func = "(function(){" + execute + "})";
-      } else {
-        func = "(function(){return (" + execute + ")})";
-      }
-      var condition = eval.call(this, func).call(this);
-      if (condition) {
-        return options.fn(this, options.data);
-      }
-
-      return options.inverse(this, options.data);
-    },
-  },
-};
-Template7.prototype.helpers.js_compare = Template7.prototype.helpers.js_if;
-function t7(template, data) {
-  if (arguments.length === 2) {
-    var instance = new Template7(template);
-    var rendered = instance.compile()(data);
-    instance = null;
-    return (rendered);
-  }
-  return new Template7(template);
-}
-t7.registerHelper = function registerHelper(name, fn) {
-  Template7.prototype.helpers[name] = fn;
-};
-t7.unregisterHelper = function unregisterHelper(name) {
-  Template7.prototype.helpers[name] = undefined;
-  delete Template7.prototype.helpers[name];
-};
-t7.registerPartial = function registerPartial(name, template) {
-  Template7.prototype.partials[name] = { template: template };
-};
-t7.unregisterPartial = function unregisterPartial(name) {
-  if (Template7.prototype.partials[name]) {
-    Template7.prototype.partials[name] = undefined;
-    delete Template7.prototype.partials[name];
-  }
-};
-t7.compile = function compile(template, options) {
-  var instance = new Template7(template, options);
-  return instance.compile();
-};
-
-t7.options = Template7.prototype.options;
-t7.helpers = Template7.prototype.helpers;
-t7.partials = Template7.prototype.partials;
-
-/**
- * Dom7 1.6.4
- * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
- * http://framework7.io/docs/dom.html
- * 
- * Copyright 2017, Vladimir Kharlampidi
- * The iDangero.us
- * http://www.idangero.us/
- * 
- * Licensed under MIT
- * 
- * Released on: August 2, 2017
- */
-var Dom7 = function Dom7(arr) {
-  var self = this;
-  // Create array-like object
-  for (var i = 0; i < arr.length; i += 1) {
-    self[i] = arr[i];
-  }
-  self.length = arr.length;
-  // Return collection with methods
-  return this;
-};
-
-function $(selector, context) {
-  var arr = [];
-  var i = 0;
-  if (selector && !context) {
-    if (selector instanceof Dom7) {
-      return selector;
-    }
-  }
-  if (selector) {
-      // String
-    if (typeof selector === 'string') {
-      var els;
-      var tempParent;
-      var html = selector.trim();
-      if (html.indexOf('<') >= 0 && html.indexOf('>') >= 0) {
-        var toCreate = 'div';
-        if (html.indexOf('<li') === 0) { toCreate = 'ul'; }
-        if (html.indexOf('<tr') === 0) { toCreate = 'tbody'; }
-        if (html.indexOf('<td') === 0 || html.indexOf('<th') === 0) { toCreate = 'tr'; }
-        if (html.indexOf('<tbody') === 0) { toCreate = 'table'; }
-        if (html.indexOf('<option') === 0) { toCreate = 'select'; }
-        tempParent = document.createElement(toCreate);
-        tempParent.innerHTML = html;
-        for (i = 0; i < tempParent.childNodes.length; i += 1) {
-          arr.push(tempParent.childNodes[i]);
-        }
-      } else {
-        if (!context && selector[0] === '#' && !selector.match(/[ .<>:~]/)) {
-          // Pure ID selector
-          els = [document.getElementById(selector.trim().split('#')[1])];
-        } else {
-          // Other selectors
-          els = (context || document).querySelectorAll(selector.trim());
-        }
-        for (i = 0; i < els.length; i += 1) {
-          if (els[i]) { arr.push(els[i]); }
-        }
-      }
-    } else if (selector.nodeType || selector === window || selector === document) {
-      // Node/element
-      arr.push(selector);
-    } else if (selector.length > 0 && selector[0].nodeType) {
-      // Array of elements or instance of Dom
-      for (i = 0; i < selector.length; i += 1) {
-        arr.push(selector[i]);
-      }
-    }
-  }
-  return new Dom7(arr);
-}
-
-// Remove Diacritics
-var defaultDiacriticsRemovalap = [
-  { base: 'A', letters: '\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F' },
-  { base: 'AA', letters: '\uA732' },
-  { base: 'AE', letters: '\u00C6\u01FC\u01E2' },
-  { base: 'AO', letters: '\uA734' },
-  { base: 'AU', letters: '\uA736' },
-  { base: 'AV', letters: '\uA738\uA73A' },
-  { base: 'AY', letters: '\uA73C' },
-  { base: 'B', letters: '\u0042\u24B7\uFF22\u1E02\u1E04\u1E06\u0243\u0182\u0181' },
-  { base: 'C', letters: '\u0043\u24B8\uFF23\u0106\u0108\u010A\u010C\u00C7\u1E08\u0187\u023B\uA73E' },
-  { base: 'D', letters: '\u0044\u24B9\uFF24\u1E0A\u010E\u1E0C\u1E10\u1E12\u1E0E\u0110\u018B\u018A\u0189\uA779' },
-  { base: 'DZ', letters: '\u01F1\u01C4' },
-  { base: 'Dz', letters: '\u01F2\u01C5' },
-  { base: 'E', letters: '\u0045\u24BA\uFF25\u00C8\u00C9\u00CA\u1EC0\u1EBE\u1EC4\u1EC2\u1EBC\u0112\u1E14\u1E16\u0114\u0116\u00CB\u1EBA\u011A\u0204\u0206\u1EB8\u1EC6\u0228\u1E1C\u0118\u1E18\u1E1A\u0190\u018E' },
-  { base: 'F', letters: '\u0046\u24BB\uFF26\u1E1E\u0191\uA77B' },
-  { base: 'G', letters: '\u0047\u24BC\uFF27\u01F4\u011C\u1E20\u011E\u0120\u01E6\u0122\u01E4\u0193\uA7A0\uA77D\uA77E' },
-  { base: 'H', letters: '\u0048\u24BD\uFF28\u0124\u1E22\u1E26\u021E\u1E24\u1E28\u1E2A\u0126\u2C67\u2C75\uA78D' },
-  { base: 'I', letters: '\u0049\u24BE\uFF29\u00CC\u00CD\u00CE\u0128\u012A\u012C\u0130\u00CF\u1E2E\u1EC8\u01CF\u0208\u020A\u1ECA\u012E\u1E2C\u0197' },
-  { base: 'J', letters: '\u004A\u24BF\uFF2A\u0134\u0248' },
-  { base: 'K', letters: '\u004B\u24C0\uFF2B\u1E30\u01E8\u1E32\u0136\u1E34\u0198\u2C69\uA740\uA742\uA744\uA7A2' },
-  { base: 'L', letters: '\u004C\u24C1\uFF2C\u013F\u0139\u013D\u1E36\u1E38\u013B\u1E3C\u1E3A\u0141\u023D\u2C62\u2C60\uA748\uA746\uA780' },
-  { base: 'LJ', letters: '\u01C7' },
-  { base: 'Lj', letters: '\u01C8' },
-  { base: 'M', letters: '\u004D\u24C2\uFF2D\u1E3E\u1E40\u1E42\u2C6E\u019C' },
-  { base: 'N', letters: '\u004E\u24C3\uFF2E\u01F8\u0143\u00D1\u1E44\u0147\u1E46\u0145\u1E4A\u1E48\u0220\u019D\uA790\uA7A4' },
-  { base: 'NJ', letters: '\u01CA' },
-  { base: 'Nj', letters: '\u01CB' },
-  { base: 'O', letters: '\u004F\u24C4\uFF2F\u00D2\u00D3\u00D4\u1ED2\u1ED0\u1ED6\u1ED4\u00D5\u1E4C\u022C\u1E4E\u014C\u1E50\u1E52\u014E\u022E\u0230\u00D6\u022A\u1ECE\u0150\u01D1\u020C\u020E\u01A0\u1EDC\u1EDA\u1EE0\u1EDE\u1EE2\u1ECC\u1ED8\u01EA\u01EC\u00D8\u01FE\u0186\u019F\uA74A\uA74C' },
-  { base: 'OI', letters: '\u01A2' },
-  { base: 'OO', letters: '\uA74E' },
-  { base: 'OU', letters: '\u0222' },
-  { base: 'OE', letters: '\u008C\u0152' },
-  { base: 'oe', letters: '\u009C\u0153' },
-  { base: 'P', letters: '\u0050\u24C5\uFF30\u1E54\u1E56\u01A4\u2C63\uA750\uA752\uA754' },
-  { base: 'Q', letters: '\u0051\u24C6\uFF31\uA756\uA758\u024A' },
-  { base: 'R', letters: '\u0052\u24C7\uFF32\u0154\u1E58\u0158\u0210\u0212\u1E5A\u1E5C\u0156\u1E5E\u024C\u2C64\uA75A\uA7A6\uA782' },
-  { base: 'S', letters: '\u0053\u24C8\uFF33\u1E9E\u015A\u1E64\u015C\u1E60\u0160\u1E66\u1E62\u1E68\u0218\u015E\u2C7E\uA7A8\uA784' },
-  { base: 'T', letters: '\u0054\u24C9\uFF34\u1E6A\u0164\u1E6C\u021A\u0162\u1E70\u1E6E\u0166\u01AC\u01AE\u023E\uA786' },
-  { base: 'TZ', letters: '\uA728' },
-  { base: 'U', letters: '\u0055\u24CA\uFF35\u00D9\u00DA\u00DB\u0168\u1E78\u016A\u1E7A\u016C\u00DC\u01DB\u01D7\u01D5\u01D9\u1EE6\u016E\u0170\u01D3\u0214\u0216\u01AF\u1EEA\u1EE8\u1EEE\u1EEC\u1EF0\u1EE4\u1E72\u0172\u1E76\u1E74\u0244' },
-  { base: 'V', letters: '\u0056\u24CB\uFF36\u1E7C\u1E7E\u01B2\uA75E\u0245' },
-  { base: 'VY', letters: '\uA760' },
-  { base: 'W', letters: '\u0057\u24CC\uFF37\u1E80\u1E82\u0174\u1E86\u1E84\u1E88\u2C72' },
-  { base: 'X', letters: '\u0058\u24CD\uFF38\u1E8A\u1E8C' },
-  { base: 'Y', letters: '\u0059\u24CE\uFF39\u1EF2\u00DD\u0176\u1EF8\u0232\u1E8E\u0178\u1EF6\u1EF4\u01B3\u024E\u1EFE' },
-  { base: 'Z', letters: '\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762' },
-  { base: 'a', letters: '\u0061\u24D0\uFF41\u1E9A\u00E0\u00E1\u00E2\u1EA7\u1EA5\u1EAB\u1EA9\u00E3\u0101\u0103\u1EB1\u1EAF\u1EB5\u1EB3\u0227\u01E1\u00E4\u01DF\u1EA3\u00E5\u01FB\u01CE\u0201\u0203\u1EA1\u1EAD\u1EB7\u1E01\u0105\u2C65\u0250' },
-  { base: 'aa', letters: '\uA733' },
-  { base: 'ae', letters: '\u00E6\u01FD\u01E3' },
-  { base: 'ao', letters: '\uA735' },
-  { base: 'au', letters: '\uA737' },
-  { base: 'av', letters: '\uA739\uA73B' },
-  { base: 'ay', letters: '\uA73D' },
-  { base: 'b', letters: '\u0062\u24D1\uFF42\u1E03\u1E05\u1E07\u0180\u0183\u0253' },
-  { base: 'c', letters: '\u0063\u24D2\uFF43\u0107\u0109\u010B\u010D\u00E7\u1E09\u0188\u023C\uA73F\u2184' },
-  { base: 'd', letters: '\u0064\u24D3\uFF44\u1E0B\u010F\u1E0D\u1E11\u1E13\u1E0F\u0111\u018C\u0256\u0257\uA77A' },
-  { base: 'dz', letters: '\u01F3\u01C6' },
-  { base: 'e', letters: '\u0065\u24D4\uFF45\u00E8\u00E9\u00EA\u1EC1\u1EBF\u1EC5\u1EC3\u1EBD\u0113\u1E15\u1E17\u0115\u0117\u00EB\u1EBB\u011B\u0205\u0207\u1EB9\u1EC7\u0229\u1E1D\u0119\u1E19\u1E1B\u0247\u025B\u01DD' },
-  { base: 'f', letters: '\u0066\u24D5\uFF46\u1E1F\u0192\uA77C' },
-  { base: 'g', letters: '\u0067\u24D6\uFF47\u01F5\u011D\u1E21\u011F\u0121\u01E7\u0123\u01E5\u0260\uA7A1\u1D79\uA77F' },
-  { base: 'h', letters: '\u0068\u24D7\uFF48\u0125\u1E23\u1E27\u021F\u1E25\u1E29\u1E2B\u1E96\u0127\u2C68\u2C76\u0265' },
-  { base: 'hv', letters: '\u0195' },
-  { base: 'i', letters: '\u0069\u24D8\uFF49\u00EC\u00ED\u00EE\u0129\u012B\u012D\u00EF\u1E2F\u1EC9\u01D0\u0209\u020B\u1ECB\u012F\u1E2D\u0268\u0131' },
-  { base: 'j', letters: '\u006A\u24D9\uFF4A\u0135\u01F0\u0249' },
-  { base: 'k', letters: '\u006B\u24DA\uFF4B\u1E31\u01E9\u1E33\u0137\u1E35\u0199\u2C6A\uA741\uA743\uA745\uA7A3' },
-  { base: 'l', letters: '\u006C\u24DB\uFF4C\u0140\u013A\u013E\u1E37\u1E39\u013C\u1E3D\u1E3B\u017F\u0142\u019A\u026B\u2C61\uA749\uA781\uA747' },
-  { base: 'lj', letters: '\u01C9' },
-  { base: 'm', letters: '\u006D\u24DC\uFF4D\u1E3F\u1E41\u1E43\u0271\u026F' },
-  { base: 'n', letters: '\u006E\u24DD\uFF4E\u01F9\u0144\u00F1\u1E45\u0148\u1E47\u0146\u1E4B\u1E49\u019E\u0272\u0149\uA791\uA7A5' },
-  { base: 'nj', letters: '\u01CC' },
-  { base: 'o', letters: '\u006F\u24DE\uFF4F\u00F2\u00F3\u00F4\u1ED3\u1ED1\u1ED7\u1ED5\u00F5\u1E4D\u022D\u1E4F\u014D\u1E51\u1E53\u014F\u022F\u0231\u00F6\u022B\u1ECF\u0151\u01D2\u020D\u020F\u01A1\u1EDD\u1EDB\u1EE1\u1EDF\u1EE3\u1ECD\u1ED9\u01EB\u01ED\u00F8\u01FF\u0254\uA74B\uA74D\u0275' },
-  { base: 'oi', letters: '\u01A3' },
-  { base: 'ou', letters: '\u0223' },
-  { base: 'oo', letters: '\uA74F' },
-  { base: 'p', letters: '\u0070\u24DF\uFF50\u1E55\u1E57\u01A5\u1D7D\uA751\uA753\uA755' },
-  { base: 'q', letters: '\u0071\u24E0\uFF51\u024B\uA757\uA759' },
-  { base: 'r', letters: '\u0072\u24E1\uFF52\u0155\u1E59\u0159\u0211\u0213\u1E5B\u1E5D\u0157\u1E5F\u024D\u027D\uA75B\uA7A7\uA783' },
-  { base: 's', letters: '\u0073\u24E2\uFF53\u00DF\u015B\u1E65\u015D\u1E61\u0161\u1E67\u1E63\u1E69\u0219\u015F\u023F\uA7A9\uA785\u1E9B' },
-  { base: 't', letters: '\u0074\u24E3\uFF54\u1E6B\u1E97\u0165\u1E6D\u021B\u0163\u1E71\u1E6F\u0167\u01AD\u0288\u2C66\uA787' },
-  { base: 'tz', letters: '\uA729' },
-  { base: 'u', letters: '\u0075\u24E4\uFF55\u00F9\u00FA\u00FB\u0169\u1E79\u016B\u1E7B\u016D\u00FC\u01DC\u01D8\u01D6\u01DA\u1EE7\u016F\u0171\u01D4\u0215\u0217\u01B0\u1EEB\u1EE9\u1EEF\u1EED\u1EF1\u1EE5\u1E73\u0173\u1E77\u1E75\u0289' },
-  { base: 'v', letters: '\u0076\u24E5\uFF56\u1E7D\u1E7F\u028B\uA75F\u028C' },
-  { base: 'vy', letters: '\uA761' },
-  { base: 'w', letters: '\u0077\u24E6\uFF57\u1E81\u1E83\u0175\u1E87\u1E85\u1E98\u1E89\u2C73' },
-  { base: 'x', letters: '\u0078\u24E7\uFF58\u1E8B\u1E8D' },
-  { base: 'y', letters: '\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4\u024F\u1EFF' },
-  { base: 'z', letters: '\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763' } ];
-
-var diacriticsMap = {};
-for (var i = 0; i < defaultDiacriticsRemovalap.length; i += 1) {
-  var letters = defaultDiacriticsRemovalap[i].letters;
-  for (var j = 0; j < letters.length; j += 1) {
-    diacriticsMap[letters[j]] = defaultDiacriticsRemovalap[i].base;
-  }
-}
-
-var Utils = {
-  parseUrlQuery: function parseUrlQuery(url) {
-    var query = {};
-    var urlToParse = url || window.location.href;
-    var i;
-    var params;
-    var param;
-    var length;
-    if (typeof urlToParse === 'string' && urlToParse.length) {
-      urlToParse = urlToParse.indexOf('?') > -1 ? urlToParse.replace(/\S*\?/, '') : '';
-      params = urlToParse.split('&').filter(function (paramsPart) { return paramsPart !== ''; });
-      length = params.length;
-
-      for (i = 0; i < length; i += 1) {
-        param = params[i].replace(/#\S+/g, '').split('=');
-        query[decodeURIComponent(param[0])] = typeof param[1] === 'undefined' ? undefined : decodeURIComponent(param[1]) || '';
-      }
-    }
-    return query;
-  },
-  isArray: function isArray(arr) {
-    return Array.isArray(arr);
-  },
-  each: function each(obj, callback) {
-      // Check it's iterable
-      // TODO: Should probably raise a value error here
-    if (typeof obj !== 'object') { return; }
-    // Don't bother continuing without a callback
-    if (!callback) { return; }
-    if (Array.isArray(obj) || obj instanceof Dom7) {
-      // Array
-      for (var i = 0; i < obj.length; i++) {
-        // If callback returns false
-        if (callback(i, obj[i]) === false) {
-          // Break out of the loop
-          return;
-        }
-      }
-    } else {
-      // Object
-      for (var prop in obj) {
-        // Check the propertie belongs to the object
-        // not it's prototype
-        if (obj.hasOwnProperty(prop)) {
-          // If the callback returns false
-          if (callback(prop, obj[prop]) === false) {
-            // Break out of the loop;
-            return;
-          }
-        }
-      }
-    }
-  },
-  unique: function unique(arr) {
-    var uniqueArray = [];
-    for (var i = 0; i < arr.length; i += 1) {
-      if (uniqueArray.indexOf(arr[i]) === -1) { uniqueArray.push(arr[i]); }
-    }
-    return uniqueArray;
-  },
-  serializeObject: function serializeObject(obj, parents) {
-    if ( parents === void 0 ) parents = [];
-
-    if (typeof obj === 'string') { return obj; }
-    var resultArray = [];
-    var separator = '&';
-    var newParents;
-    function varName(name) {
-      if (parents.length > 0) {
-        var parentParts = '';
-        for (var j = 0; j < parents.length; j += 1) {
-          if (j === 0) { parentParts += parents[j]; }
-          else { parentParts += "[" + (encodeURIComponent(parents[j])) + "]"; }
-        }
-        return (parentParts + "[" + (encodeURIComponent(name)) + "]");
-      }
-      return encodeURIComponent(name);
-    }
-    function varValue(value) {
-      return encodeURIComponent(value);
-    }
-    for (var prop in obj) {
-      if (obj.hasOwnProperty(prop)) {
-        var toPush = (void 0);
-        if (Array.isArray(obj[prop])) {
-          toPush = [];
-          for (var i = 0; i < obj[prop].length; i += 1) {
-            if (!Array.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
-              newParents = parents.slice();
-              newParents.push(prop);
-              newParents.push(String(i));
-              toPush.push(Utils.serializeObject(obj[prop][i], newParents));
-            } else {
-              toPush.push(((varName(prop)) + "[]=" + (varValue(obj[prop][i]))));
-            }
-          }
-          if (toPush.length > 0) { resultArray.push(toPush.join(separator)); }
-        } else if (obj[prop] === null || obj[prop] === '') {
-          resultArray.push(((varName(prop)) + "="));
-        } else if (typeof obj[prop] === 'object') {
-          // Object, convert to named array
-          newParents = parents.slice();
-          newParents.push(prop);
-          toPush = Utils.serializeObject(obj[prop], newParents);
-          if (toPush !== '') { resultArray.push(toPush); }
-        } else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
-          // Should be string or plain value
-          resultArray.push(((varName(prop)) + "=" + (varValue(obj[prop]))));
-        } else if (obj[prop] === '') { resultArray.push(varName(prop)); }
-      }
-    }
-    return resultArray.join(separator);
-  },
-  toCamelCase: function toCamelCase(string) {
-    return string.toLowerCase().replace(/-(.)/g, function (match, group1) { return group1.toUpperCase(); });
-  },
-  dataset: function dataset(el) {
-    return $(el).dataset();
-  },
-  getTranslate: function getTranslate(el, axis) {
-    if ( axis === void 0 ) axis = 'x';
-
-    var curStyle = window.getComputedStyle(el, null);
-    var matrix;
-    var curTransform;
-    var transformMatrix;
-
-    if (window.WebKitCSSMatrix) {
-      curTransform = curStyle.transform || curStyle.webkitTransform;
-      if (curTransform.split(',').length > 6) {
-        curTransform = curTransform.split(', ').map(function map(a) {
-          return a.replace(',', '.');
-        }).join(', ');
-      }
-      // Some old versions of Webkit choke when 'none' is passed; pass
-      // empty string instead in this case
-      transformMatrix = new window.WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
-    } else {
-      transformMatrix = curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
-      matrix = transformMatrix.toString().split(',');
-    }
-
-    if (axis === 'x') {
-      // Latest Chrome and webkits Fix
-      if (window.WebKitCSSMatrix) { curTransform = transformMatrix.m41; }
-      // Crazy IE10 Matrix
-      else if (matrix.length === 16) { curTransform = parseFloat(matrix[12]); }
-      // Normal Browsers
-      else { curTransform = parseFloat(matrix[4]); }
-    }
-    if (axis === 'y') {
-      // Latest Chrome and webkits Fix
-      if (window.WebKitCSSMatrix) { curTransform = transformMatrix.m42; }
-      // Crazy IE10 Matrix
-      else if (matrix.length === 16) { curTransform = parseFloat(matrix[13]); }
-      // Normal Browsers
-      else { curTransform = parseFloat(matrix[5]); }
-    }
-
-    return curTransform || 0;
-  },
-  requestAnimationFrame: function requestAnimationFrame(callback) {
-    if (window.requestAnimationFrame) { return window.requestAnimationFrame(callback); }
-    else if (window.webkitRequestAnimationFrame) { return window.webkitRequestAnimationFrame(callback); }
-    return window.setTimeout(callback, 1000 / 60);
-  },
-  cancelAnimationFrame: function cancelAnimationFrame(id) {
-    if (window.cancelAnimationFrame) { return window.cancelAnimationFrame(id); }
-    else if (window.webkitCancelAnimationFrame) { return window.webkitCancelAnimationFrame(id); }
-    return window.clearTimeout(id);
-  },
-  supportTouch: !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch)),
-  removeDiacritics: function removeDiacritics(str) {
-    return str.replace(/[^\u0000-\u007E]/g, function (a) { return diacriticsMap[a] || a; });
-  },
-  extend: function extend() {
-    var args = [], len$1 = arguments.length;
-    while ( len$1-- ) args[ len$1 ] = arguments[ len$1 ];
-
-    var to = Object(args[0]);
-    for (var i = 1; i < args.length; i += 1) {
-      var nextSource = args[i];
-      if (nextSource !== undefined && nextSource !== null) {
-        var keysArray = Object.keys(Object(nextSource));
-        for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
-          var nextKey = keysArray[nextIndex];
-          var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
-          if (desc !== undefined && desc.enumerable) {
-            if (typeof to[nextKey] === 'object' && typeof nextSource[nextKey] === 'object') {
-              Utils.extend(to[nextKey], nextSource[nextKey]);
-            } else {
-              to[nextKey] = nextSource[nextKey];
-            }
-          }
-        }
-      }
-    }
-    return to;
-  },
-};
-
-// Aliases
-Utils.parseQuery = Utils.parseUrlQuery;
-Utils.param = Utils.serializeObject;
-
-// Global Ajax Setup
-var globalAjaxOptions = {};
-$.ajaxSetup = function ajaxSetup(options) {
-  if (options.type && !options.method) { options.method = options.type; }
-  Utils.each(options, function (optionName, optionValue) {
-    globalAjaxOptions[optionName] = optionValue;
-  });
-};
-
-// JSONP Requests
-var jsonpRequests = 0;
-
-// Ajax
-function ajax(options) {
-  var defaults = {
-    method: 'GET',
-    data: false,
-    async: true,
-    cache: true,
-    user: '',
-    password: '',
-    headers: {},
-    xhrFields: {},
-    statusCode: {},
-    processData: true,
-    dataType: 'text',
-    contentType: 'application/x-www-form-urlencoded',
-    timeout: 0,
-  };
-  var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
-
-  // For jQuery guys
-  if (options.type) { options.method = options.type; }
-
-  // Global options
-  var globals = globalAjaxOptions;
-
-  // Merge global and defaults
-  Utils.each(globals, function (globalOptionName, globalOptionValue) {
-    if (callbacks.indexOf(globalOptionName) < 0) { defaults[globalOptionName] = globalOptionValue; }
-  });
-
-  // Function to run XHR callbacks and events
-  function fireAjaxCallback(eventName, eventData, callbackName) {
-    var a = arguments;
-    if (eventName) { $(document).trigger(eventName, eventData); }
-    if (callbackName) {
-      // Global callback
-      if (callbackName in globals) { globals[callbackName](a[3], a[4], a[5], a[6]); }
-      // Options callback
-      if (options[callbackName]) { options[callbackName](a[3], a[4], a[5], a[6]); }
-    }
-  }
-
-  // Merge options and defaults
-  Utils.each(defaults, function (prop, defaultValue) {
-    if (!(prop in options)) { options[prop] = defaultValue; }
-  });
-
-  // Default URL
-  if (!options.url) {
-    options.url = window.location.toString();
-  }
-  // Parameters Prefix
-  var paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
-
-  // UC method
-  var method = options.method.toUpperCase();
-
-  // Data to modify GET URL
-  if ((method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') && options.data) {
-    var stringData;
-    if (typeof options.data === 'string') {
-      // Should be key=value string
-      if (options.data.indexOf('?') >= 0) { stringData = options.data.split('?')[1]; }
-      else { stringData = options.data; }
-    } else {
-      // Should be key=value object
-      stringData = Utils.serializeObject(options.data);
-    }
-    if (stringData.length) {
-      options.url += paramsPrefix + stringData;
-      if (paramsPrefix === '?') { paramsPrefix = '&'; }
-    }
-  }
-  // JSONP
-  if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-    var callbackName = "f7jsonp_" + (Date.now() + ((jsonpRequests += 1)));
-    var abortTimeout;
-    var callbackSplit = options.url.split('callback=');
-    var requestUrl = (callbackSplit[0]) + "callback=" + callbackName;
-    if (callbackSplit[1].indexOf('&') >= 0) {
-      var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
-      if (addVars.length > 0) { requestUrl += "&" + addVars; }
-    }
-
-    // Create script
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.onerror = function onerror() {
-      clearTimeout(abortTimeout);
-      fireAjaxCallback(undefined, undefined, 'error', null, 'scripterror');
-      fireAjaxCallback('ajaxComplete ajax:complete', { scripterror: true }, 'complete', null, 'scripterror');
-    };
-    script.src = requestUrl;
-
-    // Handler
-    window[callbackName] = function jsonpCallback(data) {
-      clearTimeout(abortTimeout);
-      fireAjaxCallback(undefined, undefined, 'success', data);
-      script.parentNode.removeChild(script);
-      script = null;
-      delete window[callbackName];
-    };
-    document.querySelector('head').appendChild(script);
-
-    if (options.timeout > 0) {
-      abortTimeout = setTimeout(function () {
-        script.parentNode.removeChild(script);
-        script = null;
-        fireAjaxCallback(undefined, undefined, 'error', null, 'timeout');
-      }, options.timeout);
-    }
-
-    return;
-  }
-
-  // Cache for GET/HEAD requests
-  if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') {
-    if (options.cache === false) {
-      options.url += paramsPrefix + "_nocache" + (Date.now());
-    }
-  }
-
-  // Create XHR
-  var xhr = new XMLHttpRequest();
-
-  // Save Request URL
-  xhr.requestUrl = options.url;
-  xhr.requestParameters = options;
-
-  // Open XHR
-  xhr.open(method, options.url, options.async, options.user, options.password);
-
-  // Create POST Data
-  var postData = null;
-
-  if ((method === 'POST' || method === 'PUT' || method === 'PATCH') && options.data) {
-    if (options.processData) {
-      var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
-      // Post Data
-      if (postDataInstances.indexOf(options.data.constructor) >= 0) {
-        postData = options.data;
-      } else {
-        // POST Headers
-        var boundary = "---------------------------" + (Date.now().toString(16));
-
-        if (options.contentType === 'multipart/form-data') {
-          xhr.setRequestHeader('Content-Type', ("multipart/form-data; boundary=" + boundary));
-        } else {
-          xhr.setRequestHeader('Content-Type', options.contentType);
-        }
-        postData = '';
-        var data = Utils.serializeObject(options.data);
-        if (options.contentType === 'multipart/form-data') {
-          data = data.split('&');
-          var newData = [];
-          for (var i = 0; i < data.length; i += 1) {
-            newData.push(("Content-Disposition: form-data; name=\"" + (data[i].split('=')[0]) + "\"\r\n\r\n" + (data[i].split('=')[1]) + "\r\n"));
-          }
-          postData = "--" + boundary + "\r\n" + (newData.join(("--" + boundary + "\r\n"))) + "--" + boundary + "--\r\n";
-        } else {
-          postData = data;
-        }
-      }
-    } else {
-      postData = options.data;
-    }
-  }
-
-  // Additional headers
-  if (options.headers) {
-    Utils.each(options.headers, function (headerName, headerCallback) {
-      xhr.setRequestHeader(headerName, headerCallback);
-    });
-  }
-
-  // Check for crossDomain
-  if (typeof options.crossDomain === 'undefined') {
-    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
-  }
-
-  if (!options.crossDomain) {
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  }
-
-  if (options.xhrFields) {
-    Utils.each(options.xhrFields, function (fieldName, fieldValue) {
-      xhr[fieldName] = fieldValue;
-    });
-  }
-
-  var xhrTimeout;
-  // Handle XHR
-  xhr.onload = function onload(e) {
-    if (xhrTimeout) { clearTimeout(xhrTimeout); }
-    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
-      var responseData;
-      if (options.dataType === 'json') {
-        try {
-          responseData = JSON.parse(xhr.responseText);
-          fireAjaxCallback('ajaxSuccess ajax:success', { xhr: xhr }, 'success', responseData, xhr.status, xhr);
-        } catch (err) {
-          fireAjaxCallback('ajaxError ajax:error', { xhr: xhr, parseerror: true }, 'error', xhr, 'parseerror');
-        }
-      } else {
-        responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
-        fireAjaxCallback('ajaxSuccess ajax:success', { xhr: xhr }, 'success', responseData, xhr.status, xhr);
-      }
-    } else {
-      fireAjaxCallback('ajaxError ajax:error', { xhr: xhr }, 'error', xhr, xhr.status);
-    }
-    if (options.statusCode) {
-      if (globals.statusCode && globals.statusCode[xhr.status]) { globals.statusCode[xhr.status](xhr); }
-      if (options.statusCode[xhr.status]) { options.statusCode[xhr.status](xhr); }
-    }
-    fireAjaxCallback('ajaxComplete ajax:complete', { xhr: xhr }, 'complete', xhr, xhr.status);
-  };
-
-  xhr.onerror = function onerror(e) {
-    if (xhrTimeout) { clearTimeout(xhrTimeout); }
-    fireAjaxCallback('ajaxError ajax:error', { xhr: xhr }, 'error', xhr, xhr.status);
-    fireAjaxCallback('ajaxComplete ajax:complete', { xhr: xhr, error: true }, 'complete', xhr, 'error');
-  };
-
-  // Ajax start callback
-  fireAjaxCallback('ajaxStart ajax:start', { xhr: xhr }, 'start', xhr);
-  fireAjaxCallback(undefined, undefined, 'beforeSend', xhr);
-
-  // Timeout
-  if (options.timeout > 0) {
-    xhr.onabort = function onabort() {
-      if (xhrTimeout) { clearTimeout(xhrTimeout); }
-    };
-    xhrTimeout = setTimeout(function () {
-      xhr.abort();
-      fireAjaxCallback('ajaxError ajax:error', { xhr: xhr, timeout: true }, 'error', xhr, 'timeout');
-      fireAjaxCallback('ajaxComplete ajax:complete', { xhr: xhr, timeout: true }, 'complete', xhr, 'timeout');
-    }, options.timeout);
-  }
-
-  // Send XHR
-  xhr.send(postData);
-
-  // Return XHR object
-  return xhr;
-}
-
-function ajaxShortcut(method) {
-  var args = [], len = arguments.length - 1;
-  while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-  var url;
-  var data;
-  var success;
-  var error;
-  var dataType;
-  if (typeof args[1] === 'function') {
-    var assign;
-    (assign = args, url = assign[0], success = assign[1], error = assign[2], dataType = assign[3]);
-  } else {
-    var assign$1;
-    (assign$1 = args, url = assign$1[0], data = assign$1[1], success = assign$1[2], error = assign$1[3], dataType = assign$1[4]);
-  }
-  [success, error].forEach(function (callback) {
-    if (typeof callback === 'string') {
-      dataType = callback;
-      if (callback === success) { success = undefined; }
-      else { error = undefined; }
-    }
-  });
-  dataType = dataType || (method === 'getJSON' ? 'json' : undefined);
-  return $.ajax({
-    url: url,
-    method: method === 'post' ? 'POST' : 'GET',
-    data: data,
-    success: success,
-    error: error,
-    dataType: dataType,
-  });
-}
-
-function get() {
-  var args = [], len = arguments.length;
-  while ( len-- ) args[ len ] = arguments[ len ];
-
-  args.unshift('get');
-  return ajaxShortcut.apply(this, args);
-}
-function post() {
-  var args = [], len = arguments.length;
-  while ( len-- ) args[ len ] = arguments[ len ];
-
-  args.unshift('post');
-  return ajaxShortcut.apply(this, args);
-}
-function getJSON() {
-  var args = [], len = arguments.length;
-  while ( len-- ) args[ len ] = arguments[ len ];
-
-  args.unshift('getJSON');
-  return ajaxShortcut.apply(this, args);
-}
-
-var Scroll = {
-  scrollTo: function scrollTo(left, top, duration, easing, callback) {
-    if ( easing === void 0 ) easing = 'swing';
-
-    if (arguments.length === 4 && typeof easing === 'function') {
-      callback = easing;
-      easing = undefined;
-    }
-    return this.each(function animate() {
-      var el = this;
-      var currentTop;
-      var currentLeft;
-      var maxTop;
-      var maxLeft;
-      var newTop;
-      var newLeft;
-      var scrollTop;
-      var scrollLeft;
-      var animateTop = top > 0 || top === 0;
-      var animateLeft = left > 0 || left === 0;
-      if (typeof easing === 'undefined') {
-        easing = 'swing';
-      }
-      if (animateTop) {
-        currentTop = el.scrollTop;
-        if (!duration) {
-          el.scrollTop = top;
-        }
-      }
-      if (animateLeft) {
-        currentLeft = el.scrollLeft;
-        if (!duration) {
-          el.scrollLeft = left;
-        }
-      }
-      if (!duration) { return; }
-      if (animateTop) {
-        maxTop = el.scrollHeight - el.offsetHeight;
-        newTop = Math.max(Math.min(top, maxTop), 0);
-      }
-      if (animateLeft) {
-        maxLeft = el.scrollWidth - el.offsetWidth;
-        newLeft = Math.max(Math.min(left, maxLeft), 0);
-      }
-      var startTime = null;
-      if (animateTop && newTop === currentTop) { animateTop = false; }
-      if (animateLeft && newLeft === currentLeft) { animateLeft = false; }
-      function render(time) {
-        if ( time === void 0 ) time = new Date().getTime();
-
-        if (startTime === null) {
-          startTime = time;
-        }
-        var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
-        var easeProgress = easing === 'linear' ? progress : (0.5 - (Math.cos(progress * Math.PI) / 2));
-        var done;
-        if (animateTop) { scrollTop = currentTop + (easeProgress * (newTop - currentTop)); }
-        if (animateLeft) { scrollLeft = currentLeft + (easeProgress * (newLeft - currentLeft)); }
-        if (animateTop && newTop > currentTop && scrollTop >= newTop) {
-          el.scrollTop = newTop;
-          done = true;
-        }
-        if (animateTop && newTop < currentTop && scrollTop <= newTop) {
-          el.scrollTop = newTop;
-          done = true;
-        }
-        if (animateLeft && newLeft > currentLeft && scrollLeft >= newLeft) {
-          el.scrollLeft = newLeft;
-          done = true;
-        }
-        if (animateLeft && newLeft < currentLeft && scrollLeft <= newLeft) {
-          el.scrollLeft = newLeft;
-          done = true;
-        }
-
-        if (done) {
-          if (callback) { callback(); }
-          return;
-        }
-        if (animateTop) { el.scrollTop = scrollTop; }
-        if (animateLeft) { el.scrollLeft = scrollLeft; }
-        Utils.requestAnimationFrame(render);
-      }
-      Utils.requestAnimationFrame(render);
-    });
-  },
-  scrollTop: function scrollTop(top, duration, easing, callback) {
-    if (arguments.length === 3 && typeof easing === 'function') {
-      callback = easing;
-      easing = undefined;
-    }
-    var dom = this;
-    if (typeof top === 'undefined') {
-      if (dom.length > 0) { return dom[0].scrollTop; }
-      return null;
-    }
-    return dom.scrollTo(undefined, top, duration, easing, callback);
-  },
-  scrollLeft: function scrollLeft(left, duration, easing, callback) {
-    if (arguments.length === 3 && typeof easing === 'function') {
-      callback = easing;
-      easing = undefined;
-    }
-    var dom = this;
-    if (typeof left === 'undefined') {
-      if (dom.length > 0) { return dom[0].scrollLeft; }
-      return null;
-    }
-    return dom.scrollTo(left, undefined, duration, easing, callback);
-  },
-};
-
-var Methods = {
-  // Classes and attributes
-  addClass: function addClass(className) {
-    var this$1 = this;
-
-    if (typeof className === 'undefined') {
-      return this;
-    }
-    var classes = className.split(' ');
-    for (var i = 0; i < classes.length; i += 1) {
-      for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j].classList !== 'undefined') { this$1[j].classList.add(classes[i]); }
-      }
-    }
-    return this;
-  },
-  removeClass: function removeClass(className) {
-    var this$1 = this;
-
-    var classes = className.split(' ');
-    for (var i = 0; i < classes.length; i += 1) {
-      for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j].classList !== 'undefined') { this$1[j].classList.remove(classes[i]); }
-      }
-    }
-    return this;
-  },
-  hasClass: function hasClass(className) {
-    if (!this[0]) { return false; }
-    return this[0].classList.contains(className);
-  },
-  toggleClass: function toggleClass(className) {
-    var this$1 = this;
-
-    var classes = className.split(' ');
-    for (var i = 0; i < classes.length; i += 1) {
-      for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j].classList !== 'undefined') { this$1[j].classList.toggle(classes[i]); }
-      }
-    }
-    return this;
-  },
-  attr: function attr(attrs, value) {
-    var arguments$1 = arguments;
-    var this$1 = this;
-
-    if (arguments.length === 1 && typeof attrs === 'string') {
-      // Get attr
-      if (this[0]) { return this[0].getAttribute(attrs); }
-      return undefined;
-    }
-
-    // Set attrs
-    for (var i = 0; i < this.length; i += 1) {
-      if (arguments$1.length === 2) {
-        // String
-        this$1[i].setAttribute(attrs, value);
-      } else {
-        // Object
-        for (var attrName in attrs) {
-          this$1[i][attrName] = attrs[attrName];
-          this$1[i].setAttribute(attrName, attrs[attrName]);
-        }
-      }
-    }
-    return this;
-  },
-  removeAttr: function removeAttr(attr) {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      this$1[i].removeAttribute(attr);
-    }
-    return this;
-  },
-  prop: function prop(props, value) {
-    var arguments$1 = arguments;
-    var this$1 = this;
-
-    if (arguments.length === 1 && typeof props === 'string') {
-      // Get prop
-      if (this[0]) { return this[0][props]; }
-    } else {
-      // Set props
-      for (var i = 0; i < this.length; i += 1) {
-        if (arguments$1.length === 2) {
-          // String
-          this$1[i][props] = value;
-        } else {
-          // Object
-          for (var propName in props) {
-            this$1[i][propName] = props[propName];
-          }
-        }
-      }
-      return this;
-    }
-  },
-  data: function data(key, value) {
-    var this$1 = this;
-
-    var el;
-    if (typeof value === 'undefined') {
-      el = this[0];
-      // Get value
-      if (el) {
-        if (el.dom7ElementDataStorage && (key in el.dom7ElementDataStorage)) {
-          return el.dom7ElementDataStorage[key];
-        }
-
-        var dataKey = el.getAttribute(("data-" + key));
-        if (dataKey) {
-          return dataKey;
-        }
-        return undefined;
-      }
-      return undefined;
-    }
-
-    // Set value
-    for (var i = 0; i < this.length; i += 1) {
-      el = this$1[i];
-      if (!el.dom7ElementDataStorage) { el.dom7ElementDataStorage = {}; }
-      el.dom7ElementDataStorage[key] = value;
-    }
-    return this;
-  },
-  removeData: function removeData(key) {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      var el = this$1[i];
-      if (el.dom7ElementDataStorage && el.dom7ElementDataStorage[key]) {
-        el.dom7ElementDataStorage[key] = null;
-        delete el.dom7ElementDataStorage[key];
-      }
-    }
-  },
-  dataset: function dataset() {
-    var el = this[0];
-    if (!el) { return undefined; }
-    var dataset = {};
-    if (el.dataset) {
-      for (var dataKey in el.dataset) {
-        dataset[dataKey] = el.dataset[dataKey];
-      }
-    } else {
-      for (var i = 0; i < el.attributes.length; i += 1) {
-        var attr = el.attributes[i];
-        if (attr.name.indexOf('data-') >= 0) {
-          dataset[Utils.toCamelCase(attr.name.split('data-')[1])] = attr.value;
-        }
-      }
-    }
-    for (var key in dataset) {
-      if (dataset[key] === 'false') { dataset[key] = false; }
-      else if (dataset[key] === 'true') { dataset[key] = true; }
-      else if (parseFloat(dataset[key]) === dataset[key] * 1) { dataset[key] *= 1; }
-    }
-    return dataset;
-  },
-  val: function val(value) {
-    var this$1 = this;
-
-    if (typeof value === 'undefined') {
-      if (this[0]) {
-        if (this[0].multiple && this[0].nodeName.toLowerCase() === 'select') {
-          var values = [];
-          for (var i = 0; i < this[0].selectedOptions.length; i += 1) {
-            values.push(this$1[0].selectedOptions[i].value);
-          }
-          return values;
-        }
-        return this[0].value;
-      }
-      return undefined;
-    }
-
-    for (var i$1 = 0; i$1 < this.length; i$1 += 1) {
-      this$1[i$1].value = value;
-    }
-    return this;
-  },
-  // Transforms
-  transform: function transform(transform$1) {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      var elStyle = this$1[i].style;
-      elStyle.webkitTransform = transform$1;
-      elStyle.transform = transform$1;
-    }
-    return this;
-  },
-  transition: function transition(duration) {
-    var this$1 = this;
-
-    if (typeof duration !== 'string') {
-      duration = duration + "ms";
-    }
-    for (var i = 0; i < this.length; i += 1) {
-      var elStyle = this$1[i].style;
-      elStyle.webkitTransitionDuration = duration;
-      elStyle.transitionDuration = duration;
-    }
-    return this;
-  },
-  // Events
-  on: function on() {
-    var this$1 = this;
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var eventType = args[0];
-    var targetSelector;
-    var listener;
-    var capture = false;
-    if (typeof args[1] === 'function') {
-      targetSelector = false;
-      listener = args[1];
-      capture = args[2];
-    } else {
-      targetSelector = args[1];
-      listener = args[2];
-      capture = args[3];
-    }
-    function handleLiveEvent(e) {
-      var target = e.target;
-      if (!target) { return; }
-      var eventData = e.target.dom7EventData || [];
-      eventData.unshift(e);
-      if ($(target).is(targetSelector)) { listener.apply(target, eventData); }
-      else {
-        var parents = $(target).parents();
-        for (var k = 0; k < parents.length; k += 1) {
-          if ($(parents[k]).is(targetSelector)) { listener.apply(parents[k], eventData); }
-        }
-      }
-    }
-    function handleEvent(e) {
-      var eventData = e && e.target ? e.target.dom7EventData || [] : [];
-      eventData.unshift(e);
-      listener.apply(this, eventData);
-    }
-    var events = eventType.split(' ');
-    var j;
-    for (var i = 0; i < this.length; i += 1) {
-      var el = this$1[i];
-      if (!targetSelector) {
-        for (j = 0; j < events.length; j += 1) {
-          if (!el.dom7Listeners) { el.dom7Listeners = []; }
-          el.dom7Listeners.push({
-            type: eventType,
-            listener: listener,
-            proxyListener: handleEvent,
-          });
-          el.addEventListener(events[j], handleEvent, capture);
-        }
-      } else {
-        // Live events
-        for (j = 0; j < events.length; j += 1) {
-          if (!el.dom7LiveListeners) { el.dom7LiveListeners = []; }
-          el.dom7LiveListeners.push({
-            type: eventType,
-            listener: listener,
-            proxyListener: handleLiveEvent,
-          });
-          el.addEventListener(events[j], handleLiveEvent, capture);
-        }
-      }
-    }
-    return this;
-  },
-  off: function off() {
-    var this$1 = this;
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var eventType = args[0];
-    var targetSelector;
-    var listener;
-    var capture = false;
-    if (typeof args[1] === 'function') {
-      targetSelector = false;
-      listener = args[1];
-      capture = args[2];
-    } else {
-      targetSelector = args[1];
-      listener = args[2];
-      capture = args[3];
-    }
-    var events = eventType.split(' ');
-    for (var i = 0; i < events.length; i += 1) {
-      for (var j = 0; j < this.length; j += 1) {
-        var el = this$1[j];
-        if (!targetSelector) {
-          if (el.dom7Listeners) {
-            for (var k = 0; k < el.dom7Listeners.length; k += 1) {
-              if (listener) {
-                if (el.dom7Listeners[k].listener === listener) {
-                  el.removeEventListener(events[i], el.dom7Listeners[k].proxyListener, capture);
-                }
-              } else if (el.dom7Listeners[k].type === events[i]) {
-                el.removeEventListener(events[i], el.dom7Listeners[k].proxyListener, capture);
-              }
-            }
-          }
-        } else if (el.dom7LiveListeners) {
-          for (var k$1 = 0; k$1 < el.dom7LiveListeners.length; k$1 += 1) {
-            if (listener) {
-              if (el.dom7LiveListeners[k$1].listener === listener) {
-                el.removeEventListener(events[i], el.dom7LiveListeners[k$1].proxyListener, capture);
-              }
-            } else if (el.dom7Listeners[k$1].type === events[i]) {
-              el.removeEventListener(events[i], el.dom7LiveListeners[k$1].proxyListener, capture);
-            }
-          }
-        }
-      }
-    }
-    return this;
-  },
-  once: function once(eventName, targetSelector, listener, capture) {
-    var dom = this;
-    if (typeof targetSelector === 'function') {
-      listener = arguments[1];
-      capture = arguments[2];
-      targetSelector = false;
-    }
-    function proxy(e) {
-      var eventData = e.target.dom7EventData || [];
-      listener.apply(this, eventData);
-      dom.off(eventName, targetSelector, proxy, capture);
-    }
-    return dom.on(eventName, targetSelector, proxy, capture);
-  },
-  trigger: function trigger() {
-    var this$1 = this;
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var events = args[0].split(' ');
-    var eventData = args[1];
-    for (var i = 0; i < events.length; i += 1) {
-      for (var j = 0; j < this.length; j += 1) {
-        var evt = (void 0);
-        try {
-          evt = new CustomEvent(events[i], { detail: eventData, bubbles: true, cancelable: true });
-        } catch (e) {
-          evt = document.createEvent('Event');
-          evt.initEvent(events[i], true, true);
-          evt.detail = eventData;
-        }
-        this$1[j].dom7EventData = args.filter(function (data, dataIndex) { return dataIndex > 0; });
-        this$1[j].dispatchEvent(evt);
-        this$1[j].dom7EventData = [];
-        delete this$1[j].dom7EventData;
-      }
-    }
-    return this;
-  },
-  transitionEnd: function transitionEnd(callback) {
-    var events = ['webkitTransitionEnd', 'transitionend'];
-    var dom = this;
-    var i;
-    function fireCallBack(e) {
-      /* jshint validthis:true */
-      if (e.target !== this) { return; }
-      callback.call(this, e);
-      for (i = 0; i < events.length; i += 1) {
-        dom.off(events[i], fireCallBack);
-      }
-    }
-    if (callback) {
-      for (i = 0; i < events.length; i += 1) {
-        dom.on(events[i], fireCallBack);
-      }
-    }
-    return this;
-  },
-  animationEnd: function animationEnd(callback) {
-    var events = ['webkitAnimationEnd', 'animationend'];
-    var dom = this;
-    var i;
-    function fireCallBack(e) {
-      callback(e);
-      for (i = 0; i < events.length; i += 1) {
-        dom.off(events[i], fireCallBack);
-      }
-    }
-    if (callback) {
-      for (i = 0; i < events.length; i += 1) {
-        dom.on(events[i], fireCallBack);
-      }
-    }
-    return this;
-  },
-  // Sizing/Styles
-  width: function width() {
-    if (this[0] === window) {
-      return window.innerWidth;
-    }
-
-    if (this.length > 0) {
-      return parseFloat(this.css('width'));
-    }
-
-    return null;
-  },
-  outerWidth: function outerWidth(includeMargins) {
-    if (this.length > 0) {
-      if (includeMargins) {
-        var styles = this.styles();
-        return this[0].offsetWidth + parseFloat(styles.getPropertyValue('margin-right')) + parseFloat(styles.getPropertyValue('margin-left'));
-      }
-      return this[0].offsetWidth;
-    }
-    return null;
-  },
-  height: function height() {
-    if (this[0] === window) {
-      return window.innerHeight;
-    }
-
-    if (this.length > 0) {
-      return parseFloat(this.css('height'));
-    }
-
-    return null;
-  },
-  outerHeight: function outerHeight(includeMargins) {
-    if (this.length > 0) {
-      if (includeMargins) {
-        var styles = this.styles();
-        return this[0].offsetHeight + parseFloat(styles.getPropertyValue('margin-top')) + parseFloat(styles.getPropertyValue('margin-bottom'));
-      }
-      return this[0].offsetHeight;
-    }
-    return null;
-  },
-  offset: function offset() {
-    if (this.length > 0) {
-      var el = this[0];
-      var box = el.getBoundingClientRect();
-      var body = document.body;
-      var clientTop = el.clientTop || body.clientTop || 0;
-      var clientLeft = el.clientLeft || body.clientLeft || 0;
-      var scrollTop = el === window ? window.scrollY : el.scrollTop;
-      var scrollLeft = el === window ? window.scrollX : el.scrollLeft;
-      return {
-        top: (box.top + scrollTop) - clientTop,
-        left: (box.left + scrollLeft) - clientLeft,
-      };
-    }
-
-    return null;
-  },
-  hide: function hide() {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      this$1[i].style.display = 'none';
-    }
-    return this;
-  },
-  show: function show() {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      this$1[i].style.display = 'block';
-    }
-    return this;
-  },
-  styles: function styles() {
-    if (this[0]) { return window.getComputedStyle(this[0], null); }
-  },
-  css: function css(props, value) {
-    var this$1 = this;
-
-    var i;
-    if (arguments.length === 1) {
-      if (typeof props === 'string') {
-        if (this[0]) { return window.getComputedStyle(this[0], null).getPropertyValue(props); }
-      } else {
-        for (i = 0; i < this.length; i += 1) {
-          for (var prop in props) {
-            this$1[i].style[prop] = props[prop];
-          }
-        }
-        return this;
-      }
-    }
-    if (arguments.length === 2 && typeof props === 'string') {
-      for (i = 0; i < this.length; i += 1) {
-        this$1[i].style[props] = value;
-      }
-      return this;
-    }
-    return this;
-  },
-
-  // Dom manipulation
-  // Iterate over the collection passing elements to `callback`
-  each: function each(callback) {
-    var this$1 = this;
-
-    // Don't bother continuing without a callback
-    if (!callback) { return this; }
-    // Iterate over the current collection
-    for (var i = 0; i < this.length; i += 1) {
-      // If the callback returns false
-      if (callback.call(this$1[i], i, this$1[i]) === false) {
-        // End the loop early
-        return this$1;
-      }
-    }
-    // Return `this` to allow chained DOM operations
-    return this;
-  },
-  filter: function filter(callback) {
-    var matchedItems = [];
-    var dom = this;
-    for (var i = 0; i < dom.length; i += 1) {
-      if (callback.call(dom[i], i, dom[i])) { matchedItems.push(dom[i]); }
-    }
-    return new Dom7(matchedItems);
-  },
-  html: function html(html$1) {
-    var this$1 = this;
-
-    if (typeof html$1 === 'undefined') {
-      return this[0] ? this[0].innerHTML : undefined;
-    }
-
-    for (var i = 0; i < this.length; i += 1) {
-      this$1[i].innerHTML = html$1;
-    }
-    return this;
-  },
-  text: function text(text$1) {
-    var this$1 = this;
-
-    if (typeof text$1 === 'undefined') {
-      if (this[0]) {
-        return this[0].textContent.trim();
-      }
-      return null;
-    }
-
-    for (var i = 0; i < this.length; i += 1) {
-      this$1[i].textContent = text$1;
-    }
-    return this;
-  },
-  is: function is(selector) {
-    var el = this[0];
-    var compareWith;
-    var i;
-    if (!el || typeof selector === 'undefined') { return false; }
-    if (typeof selector === 'string') {
-      if (el.matches) { return el.matches(selector); }
-      else if (el.webkitMatchesSelector) { return el.webkitMatchesSelector(selector); }
-      else if (el.msMatchesSelector) { return el.msMatchesSelector(selector); }
-
-      compareWith = $(selector);
-      for (i = 0; i < compareWith.length; i += 1) {
-        if (compareWith[i] === el) { return true; }
-      }
-      return false;
-    } else if (selector === document) { return el === document; }
-    else if (selector === window) { return el === window; }
-
-    if (selector.nodeType || selector instanceof Dom7) {
-      compareWith = selector.nodeType ? [selector] : selector;
-      for (i = 0; i < compareWith.length; i += 1) {
-        if (compareWith[i] === el) { return true; }
-      }
-      return false;
-    }
-    return false;
-  },
-  indexOf: function indexOf(el) {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      if (this$1[i] === el) { return i; }
-    }
-  },
-  index: function index() {
-    var child = this[0];
-    var i;
-    if (child) {
-      i = 0;
-      while ((child = child.previousSibling) !== null) {
-        if (child.nodeType === 1) { i += 1; }
-      }
-      return i;
-    }
-  },
-  eq: function eq(index) {
-    if (typeof index === 'undefined') { return this; }
-    var length = this.length;
-    var returnIndex;
-    if (index > length - 1) {
-      return new Dom7([]);
-    }
-    if (index < 0) {
-      returnIndex = length + index;
-      if (returnIndex < 0) { return new Dom7([]); }
-      return new Dom7([this[returnIndex]]);
-    }
-    return new Dom7([this[index]]);
-  },
-  append: function append() {
-    var this$1 = this;
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var newChild;
-
-    for (var k = 0; k < args.length; k += 1) {
-      newChild = args[k];
-      for (var i = 0; i < this.length; i += 1) {
-        if (typeof newChild === 'string') {
-          var tempDiv = document.createElement('div');
-          tempDiv.innerHTML = newChild;
-          while (tempDiv.firstChild) {
-            this$1[i].appendChild(tempDiv.firstChild);
-          }
-        } else if (newChild instanceof Dom7) {
-          for (var j = 0; j < newChild.length; j += 1) {
-            this$1[i].appendChild(newChild[j]);
-          }
-        } else {
-          this$1[i].appendChild(newChild);
-        }
-      }
-    }
-
-    return this;
-  },
-  appendTo: function appendTo(parent) {
-    $(parent).append(this);
-    return this;
-  },
-  prepend: function prepend(newChild) {
-    var this$1 = this;
-
-    var i;
-    var j;
-    for (i = 0; i < this.length; i += 1) {
-      if (typeof newChild === 'string') {
-        var tempDiv = document.createElement('div');
-        tempDiv.innerHTML = newChild;
-        for (j = tempDiv.childNodes.length - 1; j >= 0; j -= 1) {
-          this$1[i].insertBefore(tempDiv.childNodes[j], this$1[i].childNodes[0]);
-        }
-      } else if (newChild instanceof Dom7) {
-        for (j = 0; j < newChild.length; j += 1) {
-          this$1[i].insertBefore(newChild[j], this$1[i].childNodes[0]);
-        }
-      } else {
-        this$1[i].insertBefore(newChild, this$1[i].childNodes[0]);
-      }
-    }
-    return this;
-  },
-  prependTo: function prependTo(parent) {
-    $(parent).prepend(this);
-    return this;
-  },
-  insertBefore: function insertBefore(selector) {
-    var this$1 = this;
-
-    var before = $(selector);
-    for (var i = 0; i < this.length; i += 1) {
-      if (before.length === 1) {
-        before[0].parentNode.insertBefore(this$1[i], before[0]);
-      } else if (before.length > 1) {
-        for (var j = 0; j < before.length; j += 1) {
-          before[j].parentNode.insertBefore(this$1[i].cloneNode(true), before[j]);
-        }
-      }
-    }
-  },
-  insertAfter: function insertAfter(selector) {
-    var this$1 = this;
-
-    var after = $(selector);
-    for (var i = 0; i < this.length; i += 1) {
-      if (after.length === 1) {
-        after[0].parentNode.insertBefore(this$1[i], after[0].nextSibling);
-      } else if (after.length > 1) {
-        for (var j = 0; j < after.length; j += 1) {
-          after[j].parentNode.insertBefore(this$1[i].cloneNode(true), after[j].nextSibling);
-        }
-      }
-    }
-  },
-  next: function next(selector) {
-    if (this.length > 0) {
-      if (selector) {
-        if (this[0].nextElementSibling && $(this[0].nextElementSibling).is(selector)) { return new Dom7([this[0].nextElementSibling]); }
-        return new Dom7([]);
-      }
-
-      if (this[0].nextElementSibling) { return new Dom7([this[0].nextElementSibling]); }
-      return new Dom7([]);
-    }
-    return new Dom7([]);
-  },
-  nextAll: function nextAll(selector) {
-    var nextEls = [];
-    var el = this[0];
-    if (!el) { return new Dom7([]); }
-    while (el.nextElementSibling) {
-      var next = el.nextElementSibling;
-      if (selector) {
-        if ($(next).is(selector)) { nextEls.push(next); }
-      } else { nextEls.push(next); }
-      el = next;
-    }
-    return new Dom7(nextEls);
-  },
-  prev: function prev(selector) {
-    if (this.length > 0) {
-      var el = this[0];
-      if (selector) {
-        if (el.previousElementSibling && $(el.previousElementSibling).is(selector)) { return new Dom7([el.previousElementSibling]); }
-        return new Dom7([]);
-      }
-
-      if (el.previousElementSibling) { return new Dom7([el.previousElementSibling]); }
-      return new Dom7([]);
-    }
-    return new Dom7([]);
-  },
-  prevAll: function prevAll(selector) {
-    var prevEls = [];
-    var el = this[0];
-    if (!el) { return new Dom7([]); }
-    while (el.previousElementSibling) {
-      var prev = el.previousElementSibling;
-      if (selector) {
-        if ($(prev).is(selector)) { prevEls.push(prev); }
-      } else { prevEls.push(prev); }
-      el = prev;
-    }
-    return new Dom7(prevEls);
-  },
-  siblings: function siblings(selector) {
-    return this.nextAll(selector).add(this.prevAll(selector));
-  },
-  parent: function parent(selector) {
-    var this$1 = this;
-
-    var parents = [];
-    for (var i = 0; i < this.length; i += 1) {
-      if (this$1[i].parentNode !== null) {
-        if (selector) {
-          if ($(this$1[i].parentNode).is(selector)) { parents.push(this$1[i].parentNode); }
-        } else {
-          parents.push(this$1[i].parentNode);
-        }
-      }
-    }
-    return $(Utils.unique(parents));
-  },
-  parents: function parents(selector) {
-    var this$1 = this;
-
-    var parents = [];
-    for (var i = 0; i < this.length; i += 1) {
-      var parent = this$1[i].parentNode;
-      while (parent) {
-        if (selector) {
-          if ($(parent).is(selector)) { parents.push(parent); }
-        } else {
-          parents.push(parent);
-        }
-        parent = parent.parentNode;
-      }
-    }
-    return $(Utils.unique(parents));
-  },
-  closest: function closest(selector) {
-    var closest = this;
-    if (typeof selector === 'undefined') {
-      return new Dom7([]);
-    }
-    if (!closest.is(selector)) {
-      closest = closest.parents(selector).eq(0);
-    }
-    return closest;
-  },
-  find: function find(selector) {
-    var this$1 = this;
-
-    var foundElements = [];
-    for (var i = 0; i < this.length; i += 1) {
-      var found = this$1[i].querySelectorAll(selector);
-      for (var j = 0; j < found.length; j += 1) {
-        foundElements.push(found[j]);
-      }
-    }
-    return new Dom7(foundElements);
-  },
-  children: function children(selector) {
-    var this$1 = this;
-
-    var children = [];
-    for (var i = 0; i < this.length; i += 1) {
-      var childNodes = this$1[i].childNodes;
-
-      for (var j = 0; j < childNodes.length; j += 1) {
-        if (!selector) {
-          if (childNodes[j].nodeType === 1) { children.push(childNodes[j]); }
-        } else if (childNodes[j].nodeType === 1 && $(childNodes[j]).is(selector)) { children.push(childNodes[j]); }
-      }
-    }
-    return new Dom7(Utils.unique(children));
-  },
-  remove: function remove() {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      if (this$1[i].parentNode) { this$1[i].parentNode.removeChild(this$1[i]); }
-    }
-    return this;
-  },
-  detach: function detach() {
-    return this.remove();
-  },
-  add: function add() {
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var dom = this;
-    var i;
-    var j;
-    for (i = 0; i < args.length; i += 1) {
-      var toAdd = $(args[i]);
-      for (j = 0; j < toAdd.length; j += 1) {
-        dom[dom.length] = toAdd[j];
-        dom.length += 1;
-      }
-    }
-    return dom;
-  },
-  empty: function empty() {
-    var this$1 = this;
-
-    for (var i = 0; i < this.length; i += 1) {
-      var el = this$1[i];
-      if (el.nodeType === 1) {
-        for (var j = 0; j < el.childNodes.length; j += 1) {
-          if (el.childNodes[j].parentNode) {
-            el.childNodes[j].parentNode.removeChild(el.childNodes[j]);
-          }
-        }
-        el.textContent = '';
-      }
-    }
-    return this;
-  },
-};
-
-// Shortcuts
-var shortcuts = ('click blur focus focusin focusout keyup keydown keypress submit change mousedown mousemove mouseup mouseenter mouseleave mouseout mouseover touchstart touchend touchmove resize scroll').split(' ');
-var notTrigger = ('resize scroll').split(' ');
-function createMethod(name) {
-  Methods[name] = function eventShortcut(targetSelector, listener, capture) {
-    var this$1 = this;
-
-    if (typeof targetSelector === 'undefined') {
-      for (var i = 0; i < this.length; i += 1) {
-        if (notTrigger.indexOf(name) < 0) {
-          if (name in this$1[i]) { this$1[i][name](); }
-          else {
-            $(this$1[i]).trigger(name);
-          }
-        }
-      }
-      return this;
-    }
-    return this.on(name, targetSelector, listener, capture);
-  };
-}
-for (var i$1 = 0; i$1 < shortcuts.length; i$1 += 1) {
-  createMethod(shortcuts[i$1]);
-}
-
-function animate(initialProps, initialParams) {
-  var els = this;
-  var a = {
-    props: $.extend({}, initialProps),
-    params: $.extend({
-      duration: 300,
-      easing: 'swing', // or 'linear'
-      /* Callbacks
-      begin(elements)
-      complete(elements)
-      progress(elements, complete, remaining, start, tweenValue)
-      */
-    }, initialParams),
-
-    elements: els,
-    animating: false,
-    que: [],
-
-    easingProgress: function easingProgress(easing, progress) {
-      if (easing === 'swing') {
-        return 0.5 - (Math.cos(progress * Math.PI) / 2);
-      }
-      if (typeof easing === 'function') {
-        return easing(progress);
-      }
-      return progress;
-    },
-    stop: function stop() {
-      if (a.frameId) {
-        Utils.cancelAnimationFrame(a.frameId);
-      }
-      a.animating = false;
-      a.elements.each(function (index, el) {
-        var element = el;
-        delete element.dom7AnimateInstance;
-      });
-      a.que = [];
-    },
-    done: function done(complete) {
-      a.animating = false;
-      a.elements.each(function (index, el) {
-        var element = el;
-        delete element.dom7AnimateInstance;
-      });
-      if (complete) { complete(els); }
-      if (a.que.length > 0) {
-        var que = a.que.shift();
-        a.animate(que[0], que[1]);
-      }
-    },
-    animate: function animate(props, params) {
-      if (a.animating) {
-        a.que.push([props, params]);
-        return a;
-      }
-      var elements = [];
-
-      // Define & Cache Initials & Units
-      a.elements.each(function (index, el) {
-        var initialFullValue;
-        var initialValue;
-        var unit;
-        var finalValue;
-        var finalFullValue;
-
-        if (!el.dom7AnimateInstance) { a.elements[index].dom7AnimateInstance = a; }
-
-        elements[index] = {
-          container: el,
-        };
-        Object.keys(props).forEach(function (prop) {
-          initialFullValue = window.getComputedStyle(el, null).getPropertyValue(prop).replace(',', '.');
-          initialValue = parseFloat(initialFullValue);
-          unit = initialFullValue.replace(initialValue, '');
-          finalValue = parseFloat(props[prop]);
-          finalFullValue = props[prop] + unit;
-          elements[index][prop] = {
-            initialFullValue: initialFullValue,
-            initialValue: initialValue,
-            unit: unit,
-            finalValue: finalValue,
-            finalFullValue: finalFullValue,
-            currentValue: initialValue,
-          };
-        });
-      });
-
-      var startTime = null;
-      var time;
-      var elementsDone = 0;
-      var propsDone = 0;
-      var done;
-      var began = false;
-
-      a.animating = true;
-
-      function render() {
-        time = new Date().getTime();
-        var progress;
-        var easeProgress;
-        // let el;
-        if (!began) {
-          began = true;
-          if (params.begin) { params.begin(els); }
-        }
-        if (startTime === null) {
-          startTime = time;
-        }
-        if (params.progress) {
-          params.progress(els, Math.max(Math.min((time - startTime) / params.duration, 1), 0), ((startTime + params.duration) - time < 0 ? 0 : (startTime + params.duration) - time), startTime);
-        }
-
-        elements.forEach(function (element) {
-          var el = element;
-          if (done || el.done) { return; }
-          Object.keys(props).forEach(function (prop) {
-            if (done || el.done) { return; }
-            progress = Math.max(Math.min((time - startTime) / params.duration, 1), 0);
-            easeProgress = a.easingProgress(params.easing, progress);
-            var ref = el[prop];
-            var initialValue = ref.initialValue;
-            var finalValue = ref.finalValue;
-            var unit = ref.unit;
-            el[prop].currentValue = initialValue + (easeProgress * (finalValue - initialValue));
-            var currentValue = el[prop].currentValue;
-
-            if (
-              (finalValue > initialValue && currentValue >= finalValue) ||
-              (finalValue < initialValue && currentValue <= finalValue)) {
-              el.container.style[prop] = finalValue + unit;
-              propsDone += 1;
-              if (propsDone === Object.keys(props).length) {
-                el.done = true;
-                elementsDone += 1;
-              }
-              if (elementsDone === elements.length) {
-                done = true;
-              }
-            }
-            if (done) {
-              a.done(params.complete);
-              return;
-            }
-            el.container.style[prop] = currentValue + unit;
-          });
-        });
-        if (done) { return; }
-        // Then call
-        a.frameId = Utils.requestAnimationFrame(render);
-      }
-      a.frameId = Utils.requestAnimationFrame(render);
-      return a;
-    },
-  };
-
-  if (a.elements.length === 0) {
-    return els;
-  }
-
-  var animateInstance;
-  for (var i = 0; i < a.elements.length; i += 1) {
-    if (a.elements[i].dom7AnimateInstance) {
-      animateInstance = a.elements[i].dom7AnimateInstance;
-    } else { a.elements[i].dom7AnimateInstance = a; }
-  }
-  if (!animateInstance) {
-    animateInstance = a;
-  }
-
-  if (initialProps === 'stop') {
-    animateInstance.stop();
-  } else {
-    animateInstance.animate(a.props, a.params);
-  }
-
-  return els;
-}
-
-function stop() {
-  var els = this;
-  for (var i = 0; i < els.length; i += 1) {
-    if (els[i].dom7AnimateInstance) {
-      els[i].dom7AnimateInstance.stop();
-    }
-  }
-}
-
-function dom7() {
-  // Utils & Helpers
-  Object.keys(Utils).forEach(function (key) {
-    $[key] = Utils[key];
-  });
-
-  // Methods
-  Object.keys(Methods).forEach(function (key) {
-    Dom7.prototype[key] = Methods[key];
-  });
-
-  // Scroll
-  Object.keys(Scroll).forEach(function (key) {
-    Dom7.prototype[key] = Scroll[key];
-  });
-
-  // Animate
-  Dom7.prototype.animate = animate;
-  Dom7.prototype.stop = stop;
-
-  // Ajax
-  $.ajax = ajax;
-  $.get = get;
-  $.post = post;
-  $.getJSON = getJSON;
-
-  // Link to prototype
-  $.fn = Dom7.prototype;
-
-  return $;
-}
-var dom7$1 = dom7();
+import t7 from 'template7';
+import $ from 'dom7';
 
 /**
  * https://github.com/gre/bezier-easing
@@ -2592,7 +117,7 @@ function bezier (mX1, mY1, mX2, mY2) {
   };
 }
 
-var Utils$1 = {
+var Utils = {
   deleteProps: function deleteProps(obj) {
     var object = obj;
     Object.keys(object).forEach(function (key) {
@@ -2710,7 +235,7 @@ var Utils$1 = {
           var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
           if (desc !== undefined && desc.enumerable) {
             if (typeof to[nextKey] === 'object' && typeof nextSource[nextKey] === 'object') {
-              Utils$1.extend(to[nextKey], nextSource[nextKey]);
+              Utils.extend(to[nextKey], nextSource[nextKey]);
             } else {
               to[nextKey] = nextSource[nextKey];
             }
@@ -2910,7 +435,7 @@ Framework7Class.prototype.useInstanceModulesParams = function useInstanceModules
     var module = instance.modules[moduleName];
     // Extend params
     if (module.params) {
-      Utils$1.extend(instanceParams, module.params);
+      Utils.extend(instanceParams, module.params);
     }
   });
 };
@@ -2952,7 +477,7 @@ Framework7Class.installModule = function installModule (module) {
 
   var Class = this;
   if (!Class.prototype.modules) { Class.prototype.modules = {}; }
-  var name = module.name || (((Object.keys(Class.prototype.modules).length) + "_" + (Utils$1.now())));
+  var name = module.name || (((Object.keys(Class.prototype.modules).length) + "_" + (Utils.now())));
   Class.prototype.modules[name] = module;
   // Prototype
   if (module.proto) {
@@ -3002,13 +527,13 @@ var Framework7$1 = (function (Framework7Class$$1) {
     app.useInstanceModulesParams(defaults);
 
     // Extend defaults with passed params
-    app.params = Utils$1.extend(defaults, params);
+    app.params = Utils.extend(defaults, params);
 
     // Routes
     app.routes = app.params.routes;
 
     // Root
-    app.root = dom7$1(app.params.root);
+    app.root = $(app.params.root);
     app.root[0].f7 = app;
 
     // Link to local storage
@@ -3051,21 +576,21 @@ var Framework7$1 = (function (Framework7Class$$1) {
 
     // RTL attr
     if (app.rtl) {
-      dom7$1('html').attr('dir', 'rtl');
+      $('html').attr('dir', 'rtl');
     }
 
     // Root class
     app.root.addClass('framework7-root');
 
     // Theme class
-    dom7$1('html').removeClass('ios md').addClass(app.theme);
+    $('html').removeClass('ios md').addClass(app.theme);
 
     // Data
     app.data = {};
     if (app.params.data && typeof app.params.data === 'function') {
-      Utils$1.extend(app.data, app.params.data.bind(app)());
+      Utils.extend(app.data, app.params.data.bind(app)());
     }
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       app.root.removeClass('framework7-initializing');
     });
     // Emit, init other modules
@@ -3293,7 +818,7 @@ function initTouch() {
   var rippleTimeout;
 
   function findActivableElement(el) {
-    var target = dom7$1(el);
+    var target = $(el);
     var parents = target.parents(params.activeStateElements);
     var activable;
     if (target.is(params.activeStateElements)) {
@@ -3361,7 +886,7 @@ function initTouch() {
       return false;
     }
     */
-    var $el = dom7$1(el);
+    var $el = $(el);
     if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) { return false; }
     if (el.nodeName.toLowerCase() === 'select' && Device$1.android) { return false; }
     if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) { return false; }
@@ -3384,7 +909,7 @@ function initTouch() {
     return false;
   }
   function targetNeedsPrevent(el) {
-    var $el = dom7$1(el);
+    var $el = $(el);
     var prevent = true;
     if ($el.is('label') || $el.parents('label').length > 0) {
       if (Device$1.android) {
@@ -3399,7 +924,7 @@ function initTouch() {
   // Ripple handlers
   function findRippleElement(el) {
     var rippleElements = params.materialRippleElements;
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.is(rippleElements)) {
       if ($el.hasClass('no-ripple')) {
         return false;
@@ -3460,7 +985,7 @@ function initTouch() {
     findActivableElement(e.target).addClass('active-state');
     if ('which' in e && e.which === 3) {
       setTimeout(function () {
-        dom7$1('.active-state').removeClass('active-state');
+        $('.active-state').removeClass('active-state');
       }, 0);
     }
     if (useRipple) {
@@ -3470,13 +995,13 @@ function initTouch() {
     }
   }
   function handleMouseMove() {
-    dom7$1('.active-state').removeClass('active-state');
+    $('.active-state').removeClass('active-state');
     if (useRipple) {
       rippleTouchMove();
     }
   }
   function handleMouseUp() {
-    dom7$1('.active-state').removeClass('active-state');
+    $('.active-state').removeClass('active-state');
     if (useRipple) {
       rippleTouchEnd();
     }
@@ -3514,7 +1039,7 @@ function initTouch() {
         if (e && e.touches && e.touches.length > 1) { return; }
         tapHoldFired = true;
         e.preventDefault();
-        dom7$1(e.target).trigger('taphold');
+        $(e.target).trigger('taphold');
       }, params.tapHoldDelay);
     }
     if (needsFastClickTimeOut) { clearTimeout(needsFastClickTimeOut); }
@@ -3552,7 +1077,7 @@ function initTouch() {
       // Detect scroll parent
     if (Device$1.ios) {
       scrollParent = undefined;
-      dom7$1(targetElement).parents().each(function () {
+      $(targetElement).parents().each(function () {
         var parent = this$1;
         if (parent.scrollHeight > parent.offsetHeight && !scrollParent) {
           scrollParent = parent;
@@ -3871,8 +1396,8 @@ var tempDom = document.createElement('div');
 var Framework7Component = function Framework7Component(c, extend) {
   if ( extend === void 0 ) extend = {};
 
-  var context = Utils$1.extend({}, extend);
-  var component = Utils$1.extend(this, c, { context: context });
+  var context = Utils.extend({}, extend);
+  var component = Utils.extend(this, c, { context: context });
 
   // Apply context
   ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach(function (cycleKey) {
@@ -3882,7 +1407,7 @@ var Framework7Component = function Framework7Component(c, extend) {
   if (component.data) {
     component.data = component.data.bind(context);
     // Data
-    Utils$1.extend(context, component.data());
+    Utils.extend(context, component.data());
   }
   if (component.render) { component.render = component.render.bind(context); }
   if (component.methods) {
@@ -3937,12 +1462,12 @@ var Framework7Component = function Framework7Component(c, extend) {
 
   // Extend context with $el
   var el = tempDom.children[0];
-  context.$el = dom7$1(el);
+  context.$el = $(el);
   component.el = el;
 
   // Find Events
   var events = [];
-  dom7$1(tempDom).find('*').each(function (index, element) {
+  $(tempDom).find('*').each(function (index, element) {
     for (var i = 0; i < element.attributes.length; i += 1) {
       var attr = element.attributes[i];
       if (attr.name.indexOf('@') === 0) {
@@ -4040,13 +1565,13 @@ var Framework7Component = function Framework7Component(c, extend) {
   // Attach events
   function attachEvents() {
     events.forEach(function (event) {
-      dom7$1(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
+      $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
     });
   }
 
   function detachEvents() {
     events.forEach(function (event) {
-      dom7$1(event.el).off(event.name, event.handler);
+      $(event.el).off(event.name, event.handler);
     });
   }
 
@@ -4058,7 +1583,7 @@ var Framework7Component = function Framework7Component(c, extend) {
   // Mount
   component.mount = function mount(mountMethod) {
     if (component.beforeMount) { component.beforeMount(); }
-    if (styleEl) { dom7$1('head').append(styleEl); }
+    if (styleEl) { $('head').append(styleEl); }
     if (mountMethod) { mountMethod(el); }
     if (component.mounted) { component.mounted(); }
   };
@@ -4066,7 +1591,7 @@ var Framework7Component = function Framework7Component(c, extend) {
   // Destroy
   component.destroy = function destroy() {
     if (component.beforeDestroy) { component.beforeDestroy(); }
-    if (styleEl) { dom7$1(styleEl).remove(); }
+    if (styleEl) { $(styleEl).remove(); }
     detachEvents();
     if (component.destroyed) { component.destroyed(); }
   };
@@ -4092,7 +1617,7 @@ var Component = {
 
     // Styles
     var styles;
-    var stylesScopeId = Utils$1.now();
+    var stylesScopeId = Utils.now();
     if (componentString.indexOf('<style>') >= 0) {
       styles = componentString.split('<style>')[1].split('</style>')[0];
     } else if (componentString.indexOf('<style scoped>') >= 0) {
@@ -4119,12 +1644,12 @@ var Component = {
     // Insert Script El
     var scriptEl = document.createElement('script');
     scriptEl.innerHTML = scriptContent;
-    dom7$1('head').append(scriptEl);
+    $('head').append(scriptEl);
 
     var component = window[callbackName]();
 
     // Remove Script El
-    dom7$1(scriptEl).remove();
+    $(scriptEl).remove();
 
     if (!component.template && !component.render) {
       component.template = template;
@@ -4250,7 +1775,7 @@ var History = {
   state: window.history.state,
   blockPopstate: true,
   init: function init(app) {
-    dom7$1(window).on('load', function () {
+    $(window).on('load', function () {
       setTimeout(function () {
         History.blockPopstate = false;
       }, 0);
@@ -4260,7 +1785,7 @@ var History = {
       History.blockPopstate = false;
     }
 
-    dom7$1(window).on('popstate', History.handle.bind(app));
+    $(window).on('popstate', History.handle.bind(app));
   },
 };
 
@@ -4318,7 +1843,7 @@ function SwipeBack(r) {
     if (!isMoved) {
       // Calc values during first move fired
       var cancel = false;
-      var target = dom7$1(e.target);
+      var target = $(e.target);
 
       var swipeout = target.closest('.swipeout');
       if (swipeout.length > 0) {
@@ -4347,14 +1872,14 @@ function SwipeBack(r) {
       if (router.params.swipeBackPageAnimateShadow) {
         pageShadow = currentPage.find('.page-shadow-effect');
         if (pageShadow.length === 0) {
-          pageShadow = dom7$1('<div class="page-shadow-effect"></div>');
+          pageShadow = $('<div class="page-shadow-effect"></div>');
           currentPage.append(pageShadow);
         }
       }
       if (router.params.swipeBackPageAnimateOpacity) {
         pageOpacity = previousPage.find('.page-opacity-effect');
         if (pageOpacity.length === 0) {
-          pageOpacity = dom7$1('<div class="page-opacity-effect"></div>');
+          pageOpacity = $('<div class="page-opacity-effect"></div>');
           previousPage.append(pageOpacity);
         }
       }
@@ -4389,8 +1914,8 @@ function SwipeBack(r) {
       }
 
       // Close/Hide Any Picker
-      if (dom7$1('.picker.modal-in').length > 0) {
-        app.closeModal(dom7$1('.picker.modal-in'));
+      if ($('.picker.modal-in').length > 0) {
+        app.closeModal($('.picker.modal-in'));
       }
     }
     e.f7PreventPanelSwipe = true;
@@ -4433,7 +1958,7 @@ function SwipeBack(r) {
     // Dynamic Navbars Animation
     if (dynamicNavbar) {
       currentNavElements.each(function (index, navEl) {
-        var $navEl = dom7$1(navEl);
+        var $navEl = $(navEl);
         if (!$navEl.is('.subnavbar')) { $navEl[0].style.opacity = (1 - (percentage * 1.3)); }
         if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           var activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
@@ -4451,7 +1976,7 @@ function SwipeBack(r) {
         }
       });
       previousNavElements.each(function (index, navEl) {
-        var $navEl = dom7$1(navEl);
+        var $navEl = $(navEl);
         if (!$navEl.is('.subnavbar')) { $navEl[0].style.opacity = (percentage * 1.3) - 0.3; }
         if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           var previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
@@ -4484,7 +2009,7 @@ function SwipeBack(r) {
     isTouched = false;
     isMoved = false;
     if (touchesDiff === 0) {
-      dom7$1([currentPage[0], previousPage[0]]).transform('');
+      $([currentPage[0], previousPage[0]]).transform('');
       if (dynamicNavbar) {
         currentNavElements.transform('').css({ opacity: '' });
         previousNavElements.transform('').css({ opacity: '' });
@@ -4512,12 +2037,12 @@ function SwipeBack(r) {
     }
     // Reset custom styles
     // Add transitioning class for transition-duration
-    dom7$1([currentPage[0], previousPage[0]]).addClass('page-transitioning').transform('');
+    $([currentPage[0], previousPage[0]]).addClass('page-transitioning').transform('');
     if (dynamicNavbar) {
       currentNavElements.css({ opacity: '' })
         .each(function (navElIndex, navEl) {
           var translate = pageChanged ? navEl.f7NavbarRightOffset : 0;
-          var sliding = dom7$1(navEl);
+          var sliding = $(navEl);
           var iconTranslate = pageChanged ? -translate : 0;
           if (!separateNavbar && pageChanged) { iconTranslate -= navbarWidth; }
           sliding.transform(("translate3d(" + translate + "px,0,0)"));
@@ -4530,7 +2055,7 @@ function SwipeBack(r) {
 
       previousNavElements.transform('').css({ opacity: '' }).each(function (navElIndex, navEl) {
         var translate = pageChanged ? 0 : navEl.f7NavbarLeftOffset;
-        var sliding = dom7$1(navEl);
+        var sliding = $(navEl);
         var iconTranslate = pageChanged ? 0 : -translate;
         if (!separateNavbar && !pageChanged) { iconTranslate += navbarWidth / 5; }
         sliding.transform(("translate3d(" + translate + "px,0,0)"));
@@ -4569,7 +2094,7 @@ function SwipeBack(r) {
     }
 
     currentPage.transitionEnd(function () {
-      dom7$1([currentPage[0], previousPage[0]]).removeClass('page-transitioning');
+      $([currentPage[0], previousPage[0]]).removeClass('page-transitioning');
       if (dynamicNavbar) {
         currentNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
         previousNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
@@ -4653,7 +2178,7 @@ function forward(el, forwardOptions) {
   var app = router.app;
   var view = router.view;
 
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
@@ -4665,7 +2190,7 @@ function forward(el, forwardOptions) {
   var separateNavbar = router.separateNavbar;
 
   var $viewEl = router.$el;
-  var $newPage = dom7$1(el);
+  var $newPage = $(el);
   var reload = options.reloadPrevious || options.reloadCurrent || options.reloadAll;
   var $oldPage;
 
@@ -4761,7 +2286,7 @@ function forward(el, forwardOptions) {
           $pagesInView.eq(i).addClass('stacked');
           if (separateNavbar) {
             // $navbarsInView.eq(i).addClass('stacked');
-            dom7$1(oldNavbarInnerEl).addClass('stacked');
+            $(oldNavbarInnerEl).addClass('stacked');
           }
         } else {
           // Page remove event
@@ -4820,7 +2345,7 @@ function forward(el, forwardOptions) {
   if (options.reloadPrevious) {
     if (f7Component && !newPageInDom) {
       f7Component.mount(function (componentEl) {
-        dom7$1(componentEl).insertBefore($oldPage);
+        $(componentEl).insertBefore($oldPage);
       });
     } else {
       $newPage.insertBefore($oldPage);
@@ -4865,8 +2390,8 @@ function forward(el, forwardOptions) {
     }
   } else if (options.reloadAll) {
     $oldPage.each(function (index, pageEl) {
-      var $oldPageEl = dom7$1(pageEl);
-      var $oldNavbarInnerEl = dom7$1(app.navbar.getElByPage($oldPageEl));
+      var $oldPageEl = $(pageEl);
+      var $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
       if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
         $oldPageEl.addClass('stacked');
         if (separateNavbar) {
@@ -4887,7 +2412,7 @@ function forward(el, forwardOptions) {
 
   // Load Tab
   if (options.route.route.tab) {
-    router.tabLoad(options.route.route.tab, Utils$1.extend({}, options, {
+    router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
       history: false,
       pushState: false,
     }));
@@ -5017,7 +2542,7 @@ function load(loadParams, loadOptions, ignorePageChange) {
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.forward(pageEl, Utils$1.extend(options, newOptions));
+    return router.forward(pageEl, Utils.extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -5085,8 +2610,8 @@ function navigate(url, navigateOptions) {
   }
   var route;
   if (navigateOptions.createRoute) {
-    route = Utils$1.extend(router.findMatchingRoute(navigateUrl, true), {
-      route: Utils$1.extend({}, navigateOptions.createRoute),
+    route = Utils.extend(router.findMatchingRoute(navigateUrl, true), {
+      route: Utils.extend({}, navigateOptions.createRoute),
     });
   } else {
     route = router.findMatchingRoute(navigateUrl);
@@ -5097,9 +2622,9 @@ function navigate(url, navigateOptions) {
   }
   var options = {};
   if (route.route.options) {
-    Utils$1.extend(options, route.route.options, navigateOptions, { route: route });
+    Utils.extend(options, route.route.options, navigateOptions, { route: route });
   } else {
-    Utils$1.extend(options, navigateOptions, { route: route });
+    Utils.extend(options, navigateOptions, { route: route });
   }
   ('popup popover sheet loginScreen actions').split(' ').forEach(function (modalLoadProp) {
     if (route.route[modalLoadProp]) {
@@ -5115,7 +2640,7 @@ function navigate(url, navigateOptions) {
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
-    router.load(resolveParams, Utils$1.extend(options, resolveOptions), true);
+    router.load(resolveParams, Utils.extend(options, resolveOptions), true);
   }
   function asyncReject() {
     router.allowPageChange = true;
@@ -5133,7 +2658,7 @@ function tabLoad(tabRoute, loadOptions) {
   if ( loadOptions === void 0 ) loadOptions = {};
 
   var router = this;
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
@@ -5267,7 +2792,7 @@ function modalLoad(modalType, route, loadOptions) {
 
   var router = this;
   var app = router.app;
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
@@ -5310,7 +2835,7 @@ function modalLoad(modalType, route, loadOptions) {
       if (modal.el.f7Component) {
         modal.el.f7Component.destroy();
       }
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         modal.destroy();
         delete modalRoute.modalInstance;
       });
@@ -5330,7 +2855,7 @@ function modalLoad(modalType, route, loadOptions) {
 
       // Set Route
       if (options.route !== router.currentRoute) {
-        router.currentRoute = Utils$1.extend(options.route, { modal: modal });
+        router.currentRoute = Utils.extend(options.route, { modal: modal });
       }
 
       // Update Router History
@@ -5405,7 +2930,7 @@ function modalLoad(modalType, route, loadOptions) {
   }
 }
 function modalRemove(modal) {
-  Utils$1.extend(modal, { closeByRouter: true });
+  Utils.extend(modal, { closeByRouter: true });
   modal.close();
 }
 
@@ -5414,7 +2939,7 @@ function backward(el, backwardOptions) {
   var app = router.app;
   var view = router.view;
 
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
   }, backwardOptions);
@@ -5422,7 +2947,7 @@ function backward(el, backwardOptions) {
   var dynamicNavbar = router.dynamicNavbar;
   var separateNavbar = router.separateNavbar;
 
-  var $newPage = dom7$1(el);
+  var $newPage = $(el);
   var $oldPage = router.$el.children('.page-current');
 
   if ($newPage.length) {
@@ -5490,11 +3015,11 @@ function backward(el, backwardOptions) {
 
       if (backIndex && router.params.stackPages) {
         $oldPage.prevAll('.page-previous').each(function (index, pageToRemove) {
-          var $pageToRemove = dom7$1(pageToRemove);
+          var $pageToRemove = $(pageToRemove);
           var $navbarToRemove;
           if (separateNavbar) {
             // $navbarToRemove = $oldNavbarInner.prevAll('.navbar-previous').eq(index);
-            $navbarToRemove = dom7$1(app.navbar.getElByPage($pageToRemove));
+            $navbarToRemove = $(app.navbar.getElByPage($pageToRemove));
           }
           if ($pageToRemove[0] !== $newPage[0] && $pageToRemove.index() > $newPage.index()) {
             if (router.initialPages.indexOf($pageToRemove[0]) >= 0) {
@@ -5516,7 +3041,7 @@ function backward(el, backwardOptions) {
         var $navbarToRemove;
         if (separateNavbar) {
           // $navbarToRemove = $oldNavbarInner.prev('.navbar-inner:not(.stacked)');
-          $navbarToRemove = dom7$1(app.navbar.getElByPage($pageToRemove));
+          $navbarToRemove = $(app.navbar.getElByPage($pageToRemove));
         }
         if (router.params.stackPages && router.initialPages.indexOf($pageToRemove[0]) >= 0) {
           $pageToRemove.addClass('stacked');
@@ -5540,7 +3065,7 @@ function backward(el, backwardOptions) {
     if ($newPage.next($oldPage).length === 0) {
       if (!newPageInDom && f7Component) {
         f7Component.mount(function (componentEl) {
-          dom7$1(componentEl).insertBefore($oldPage);
+          $(componentEl).insertBefore($oldPage);
         });
       } else {
         $newPage.insertBefore($oldPage);
@@ -5566,11 +3091,11 @@ function backward(el, backwardOptions) {
     router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
     if ($newPage.prevAll('.page-previous:not(.stacked)').length > 0) {
       $newPage.prevAll('.page-previous:not(.stacked)').each(function (index, pageToRemove) {
-        var $pageToRemove = dom7$1(pageToRemove);
+        var $pageToRemove = $(pageToRemove);
         var $navbarToRemove;
         if (separateNavbar) {
           // $navbarToRemove = $newNavbarInner.prevAll('.navbar-previous:not(.stacked)').eq(index);
-          $navbarToRemove = dom7$1(app.navbar.getElByPage($pageToRemove));
+          $navbarToRemove = $(app.navbar.getElByPage($pageToRemove));
         }
         if (router.params.stackPages && router.initialPages.indexOf(pageToRemove) >= 0) {
           $pageToRemove.addClass('stacked');
@@ -5611,7 +3136,7 @@ function backward(el, backwardOptions) {
 
   // Load Tab
   if (options.route.route.tab) {
-    router.tabLoad(options.route.route.tab, Utils$1.extend({}, options, {
+    router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
       history: false,
       pushState: false,
     }));
@@ -5719,7 +3244,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.backward(pageEl, Utils$1.extend(options, newOptions));
+    return router.backward(pageEl, Utils.extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -5818,10 +3343,10 @@ function back() {
   var $previousPage = router.$el.children('.page-current').prevAll('.page-previous').eq(0);
   if (!navigateOptions.force && $previousPage.length > 0) {
     if (router.params.pushState && $previousPage[0].f7Page && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url) {
-      router.back(router.history[router.history.length - 2], Utils$1.extend(navigateOptions, { force: true }));
+      router.back(router.history[router.history.length - 2], Utils.extend(navigateOptions, { force: true }));
       return router;
     }
-    router.loadBack({ el: $previousPage }, Utils$1.extend(navigateOptions, {
+    router.loadBack({ el: $previousPage }, Utils.extend(navigateOptions, {
       route: $previousPage[0].f7Page.route,
     }));
     return router;
@@ -5846,7 +3371,7 @@ function back() {
       route = {
         url: navigateUrl,
         path: navigateUrl.split('?')[0],
-        query: Utils$1.parseUrlQuery(navigateUrl),
+        query: Utils.parseUrlQuery(navigateUrl),
         route: {
           path: navigateUrl.split('?')[0],
           url: navigateUrl,
@@ -5859,9 +3384,9 @@ function back() {
   }
   var options = {};
   if (route.route.options) {
-    Utils$1.extend(options, route.route.options, navigateOptions, { route: route });
+    Utils.extend(options, route.route.options, navigateOptions, { route: route });
   } else {
-    Utils$1.extend(options, navigateOptions, { route: route });
+    Utils.extend(options, navigateOptions, { route: route });
   }
 
   if (options.force && router.params.stackPages) {
@@ -5881,7 +3406,7 @@ function back() {
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
-    router.loadBack(resolveParams, Utils$1.extend(options, resolveOptions), true);
+    router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
   }
   function asyncReject() {
     router.allowPageChange = true;
@@ -5905,7 +3430,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     if (router.isAppRouter) {
       // App Router
-      Utils$1.extend(router, {
+      Utils.extend(router, {
         app: app,
         params: app.params.view,
         routes: app.routes || [],
@@ -5913,7 +3438,7 @@ var Router$1 = (function (Framework7Class$$1) {
       });
     } else {
       // View Router
-      Utils$1.extend(router, {
+      Utils.extend(router, {
         app: app,
         view: view,
         params: view.params,
@@ -5948,7 +3473,7 @@ var Router$1 = (function (Framework7Class$$1) {
       set: function set(newRoute) {
         if ( newRoute === void 0 ) newRoute = {};
 
-        previousRoute = Utils$1.extend({}, currentRoute);
+        previousRoute = Utils.extend({}, currentRoute);
         currentRoute = newRoute;
         if (!currentRoute) { return; }
         router.url = currentRoute.url;
@@ -5968,7 +3493,7 @@ var Router$1 = (function (Framework7Class$$1) {
         previousRoute = newRoute;
       },
     });
-    Utils$1.extend(router, {
+    Utils.extend(router, {
       // Load
       forward: forward,
       load: load,
@@ -6035,7 +3560,7 @@ var Router$1 = (function (Framework7Class$$1) {
       }
 
       slidingEls.each(function (index, slidingEl) {
-        var $slidingEl = dom7$1(slidingEl);
+        var $slidingEl = $(slidingEl);
         var slidingOffset = direction === 'forward' ? slidingEl.f7NavbarRightOffset : slidingEl.f7NavbarLeftOffset;
         if (router.params.iosAnimateNavbarBackIcon && $slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
           var iconSlidingOffset = -slidingOffset;
@@ -6079,7 +3604,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
       if (oldNavbarSlidingEls) {
         oldNavbarSlidingEls.each(function (index, slidingEl) {
-          var $slidingEl = dom7$1(slidingEl);
+          var $slidingEl = $(slidingEl);
           var offset = direction === 'forward' ? slidingEl.f7NavbarLeftOffset : slidingEl.f7NavbarRightOffset;
           $slidingEl.transform(("translate3d(" + offset + "px,0,0)"));
           if (animateIcon) {
@@ -6093,7 +3618,7 @@ var Router$1 = (function (Framework7Class$$1) {
     if (router.dynamicNavbar) {
       // Prepare Navbars
       prepareNavbars();
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         // Add class, start animation
         animateNavbars();
         router.$el.addClass(routerTransitionClass);
@@ -6120,7 +3645,7 @@ var Router$1 = (function (Framework7Class$$1) {
     var navbarWidth = 0;
 
     function animatableNavEl(el, navbarInner) {
-      var $el = dom7$1(el);
+      var $el = $(el);
       var isSliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
       var isSubnavbar = $el.hasClass('subnavbar');
       var needsOpacityTransition = isSliding ? !isSubnavbar : true;
@@ -6171,8 +3696,8 @@ var Router$1 = (function (Framework7Class$$1) {
     var $opacityEl;
 
     if (ios) {
-      $shadowEl = dom7$1('<div class="page-shadow-effect"></div>');
-      $opacityEl = dom7$1('<div class="page-opacity-effect"></div>');
+      $shadowEl = $('<div class="page-shadow-effect"></div>');
+      $opacityEl = $('<div class="page-opacity-effect"></div>');
 
       if (direction === 'forward') {
         newPage.append($shadowEl);
@@ -6182,7 +3707,7 @@ var Router$1 = (function (Framework7Class$$1) {
         oldPage.append($shadowEl);
       }
     }
-    var easing = Utils$1.bezier(0.25, 0.1, 0.25, 1);
+    var easing = Utils.bezier(0.25, 0.1, 0.25, 1);
 
     function onDone() {
       newPage.transform('').css('opacity', '');
@@ -6210,7 +3735,7 @@ var Router$1 = (function (Framework7Class$$1) {
     }
 
     function render() {
-      var time = Utils$1.now();
+      var time = Utils.now();
       if (!startTime) { startTime = time; }
       var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
       var easeProgress = easing(progress);
@@ -6280,12 +3805,12 @@ var Router$1 = (function (Framework7Class$$1) {
         onDone();
         return;
       }
-      Utils$1.nextFrame(render);
+      Utils.nextFrame(render);
     }
 
     router.$el.addClass(routerTransitionClass);
 
-    Utils$1.nextFrame(render);
+    Utils.nextFrame(render);
   };
   Router.prototype.animate = function animate () {
     var args = [], len = arguments.length;
@@ -6304,7 +3829,7 @@ var Router$1 = (function (Framework7Class$$1) {
   Router.prototype.removeEl = function removeEl (el) {
     if (!el) { return; }
     var router = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return; }
     if ($el[0].f7Component && $el[0].f7Component.destroy) {
       $el[0].f7Component.destroy();
@@ -6325,11 +3850,11 @@ var Router$1 = (function (Framework7Class$$1) {
     if (typeof content === 'string') {
       router.tempDom.innerHTML = content;
     } else {
-      if (dom7$1(content).hasClass('page')) {
+      if ($(content).hasClass('page')) {
         return content;
       }
       router.tempDom.innerHTML = '';
-      dom7$1(router.tempDom).append(content);
+      $(router.tempDom).append(content);
     }
 
     return router.findElement('.page', router.tempDom);
@@ -6342,13 +3867,13 @@ var Router$1 = (function (Framework7Class$$1) {
     // Modals Selector
     var modalsSelector = '.popup, .dialog, .popover, .actions-modal, .sheet-modal, .login-screen, .page';
 
-    var $container = dom7$1(container);
+    var $container = $(container);
     var selector = stringSelector;
     if (notStacked) { selector += ':not(.stacked)'; }
 
     var found = $container
       .find(selector)
-      .filter(function (index, el) { return dom7$1(el).parents(modalsSelector).length === 0; });
+      .filter(function (index, el) { return $(el).parents(modalsSelector).length === 0; });
 
     if (found.length > 1) {
       if (typeof view.selector === 'string') {
@@ -6365,7 +3890,7 @@ var Router$1 = (function (Framework7Class$$1) {
     // Try to find not stacked
     if (!notStacked) { found = router.findElement(selector, $container, true); }
     if (found && found.length === 1) { return found; }
-    if (found && found.length > 1) { return dom7$1(found[0]); }
+    if (found && found.length > 1) { return $(found[0]); }
     return undefined;
   };
   Router.prototype.flattenRoutes = function flattenRoutes (routes) {
@@ -6376,14 +3901,14 @@ var Router$1 = (function (Framework7Class$$1) {
     routes.forEach(function (route) {
       if ('routes' in route) {
         var mergedPathsRoutes = route.routes.map(function (childRoute) {
-          var cRoute = Utils$1.extend({}, childRoute);
+          var cRoute = Utils.extend({}, childRoute);
           cRoute.path = (((route.path) + "/" + (cRoute.path))).replace('///', '/').replace('//', '/');
           return cRoute;
         });
         flattenedRoutes = flattenedRoutes.concat(route, this$1.flattenRoutes(mergedPathsRoutes));
       } else if ('tabs' in route && route.tabs) {
         var mergedPathsRoutes$1 = route.tabs.map(function (tabRoute) {
-          var tRoute = Utils$1.extend({}, route, {
+          var tRoute = Utils.extend({}, route, {
             path: (((route.path) + "/" + (tabRoute.path))).replace('///', '/').replace('//', '/'),
             parentPath: route.path,
             tab: tabRoute,
@@ -6403,7 +3928,7 @@ var Router$1 = (function (Framework7Class$$1) {
     var router = this;
     var routes = router.routes;
     var flattenedRoutes = router.flattenRoutes(routes);
-    var query = Utils$1.parseUrlQuery(url);
+    var query = Utils.parseUrlQuery(url);
     var hash = url.split('#')[1];
     var params = {};
     var path = url.split('#')[0].split('?')[0];
@@ -6479,13 +4004,13 @@ var Router$1 = (function (Framework7Class$$1) {
       url = url.split('?')[0];
     }
 
-    return Utils$1.promise(function (resolve, reject) {
+    return Utils.promise(function (resolve, reject) {
       if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
         for (var i = 0; i < router.cache.xhr.length; i += 1) {
           var cachedUrl = router.cache.xhr[i];
           if (cachedUrl.url === url) {
             // Check expiration
-            if (Utils$1.now() - cachedUrl.time < params.xhrCacheDuration) {
+            if (Utils.now() - cachedUrl.time < params.xhrCacheDuration) {
               // Load from cache
               resolve(cachedUrl.content);
               return;
@@ -6493,7 +4018,7 @@ var Router$1 = (function (Framework7Class$$1) {
           }
         }
       }
-      router.xhr = dom7$1.ajax({
+      router.xhr = $.ajax({
         url: url,
         method: 'GET',
         beforeSend: function beforeSend() {
@@ -6506,7 +4031,7 @@ var Router$1 = (function (Framework7Class$$1) {
               router.removeFromXhrCache(url);
               router.cache.xhr.push({
                 url: url,
-                time: Utils$1.now(),
+                time: Utils.now(),
                 content: xhr.responseText,
               });
             }
@@ -6526,7 +4051,7 @@ var Router$1 = (function (Framework7Class$$1) {
   Router.prototype.removeThemeElements = function removeThemeElements (el) {
     var router = this;
     var theme = router.app.theme;
-    dom7$1(el).find(("." + (theme === 'md' ? 'ios' : 'md') + "-only, .if-" + (theme === 'md' ? 'ios' : 'md'))).remove();
+    $(el).find(("." + (theme === 'md' ? 'ios' : 'md') + "-only, .if-" + (theme === 'md' ? 'ios' : 'md'))).remove();
   };
   Router.prototype.templateLoader = function templateLoader (template, templateUrl, options, resolve, reject) {
     var router = this;
@@ -6547,7 +4072,7 @@ var Router$1 = (function (Framework7Class$$1) {
         if (typeof t === 'function') {
           compiledHtml = t(context);
         } else {
-          compiledHtml = t7.compile(t)(Utils$1.extend({}, context || {}, {
+          compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
             $app: router.app,
             $root: router.app.data,
             $route: options.route,
@@ -6611,9 +4136,9 @@ var Router$1 = (function (Framework7Class$$1) {
         $root: router.app.data,
         $route: options.route,
         $router: router,
-        $: dom7$1,
-        $$: dom7$1,
-        $dom7: dom7$1,
+        $: $,
+        $$: $,
+        $dom7: $,
         $theme: {
           ios: router.app.theme === 'ios',
           md: router.app.theme === 'md',
@@ -6663,15 +4188,15 @@ var Router$1 = (function (Framework7Class$$1) {
     if ( route === void 0 ) route = {};
 
     var router = this;
-    var $pageEl = dom7$1(pageEl);
-    var $navbarEl = dom7$1(navbarEl);
+    var $pageEl = $(pageEl);
+    var $navbarEl = $(navbarEl);
     var currentPage = $pageEl[0].f7Page || {};
     var direction;
     var pageFrom;
     if ((from === 'next' && to === 'current') || (from === 'current' && to === 'previous')) { direction = 'forward'; }
     if ((from === 'current' && to === 'next') || (from === 'previous' && to === 'current')) { direction = 'backward'; }
     if (currentPage && !currentPage.fromPage) {
-      var $pageFromEl = dom7$1(pageFromEl);
+      var $pageFromEl = $(pageFromEl);
       if ($pageFromEl.length) {
         pageFrom = $pageFromEl[0].f7Page;
       }
@@ -6706,7 +4231,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     if (!pageEl) { return; }
     var router = this;
-    var $pageEl = dom7$1(pageEl);
+    var $pageEl = $(pageEl);
     var route = options.route;
     var on = options.on; if ( on === void 0 ) on = {};
 
@@ -6715,7 +4240,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     var page = {};
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
-      page = Utils$1.extend($pageEl[0].f7Page, { from: from, to: to, position: from });
+      page = Utils.extend($pageEl[0].f7Page, { from: from, to: to, position: from });
     } else {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
@@ -6831,7 +4356,7 @@ var Router$1 = (function (Framework7Class$$1) {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
-        currentRoute = Utils$1.extend(router.findMatchingRoute(router.history[0], true), {
+        currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -6842,7 +4367,7 @@ var Router$1 = (function (Framework7Class$$1) {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
-        currentRoute = Utils$1.extend(router.findMatchingRoute(initUrl, true), {
+        currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
@@ -6853,7 +4378,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     if (router.params.stackPages) {
       router.$el.children('.page').each(function (index, pageEl) {
-        var $pageEl = dom7$1(pageEl);
+        var $pageEl = $(pageEl);
         router.initialPages.push($pageEl[0]);
         if (router.separateNavbar && $pageEl.children('.navbar').length > 0) {
           router.initialNavbars.push($pageEl.children('.navbar').find('.navbar-inner')[0]);
@@ -6871,7 +4396,7 @@ var Router$1 = (function (Framework7Class$$1) {
       // Init current DOM page
       router.currentRoute = currentRoute;
       router.$el.children('.page:not(.stacked)').each(function (index, pageEl) {
-        var $pageEl = dom7$1(pageEl);
+        var $pageEl = $(pageEl);
         var $navbarInnerEl;
         $pageEl.addClass('page-current');
         if (router.separateNavbar) {
@@ -6964,7 +4489,7 @@ var View = (function (Framework7Class$$1) {
     Framework7Class$$1.call(this, viewParams, [appInstance]);
 
     var app = appInstance;
-    var $el = dom7$1(el);
+    var $el = $(el);
     var view = this;
 
     var defaults = {
@@ -6976,7 +4501,7 @@ var View = (function (Framework7Class$$1) {
     };
 
     // Default View params
-    view.params = Utils$1.extend(defaults, app.params.view, viewParams);
+    view.params = Utils.extend(defaults, app.params.view, viewParams);
 
     // Routes
     if (view.params.routes.length > 0) {
@@ -6998,13 +4523,13 @@ var View = (function (Framework7Class$$1) {
     if (app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar) {
       $navbarEl = $el.children('.navbar').eq(0);
       if ($navbarEl.length === 0) {
-        $navbarEl = dom7$1('<div class="navbar"></div>');
+        $navbarEl = $('<div class="navbar"></div>');
         $el.prepend($navbarEl);
       }
     }
 
     // View Props
-    Utils$1.extend(view, {
+    Utils.extend(view, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -7094,7 +4619,7 @@ View.use(Router);
 
 function initClicks(app) {
   function handleClicks(e) {
-    var clicked = dom7$1(e.target);
+    var clicked = $(e.target);
     var clickedLink = clicked.closest('a');
     var isLink = clickedLink.length > 0;
     var url = isLink && clickedLink.attr('href');
@@ -7134,11 +4659,11 @@ function initClicks(app) {
     if (validUrl || clickedLink.hasClass('back') || template) {
       var view;
       if (clickedLinkData.view) {
-        view = dom7$1(clickedLinkData.view)[0].f7View;
+        view = $(clickedLinkData.view)[0].f7View;
       } else {
         view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
         if (view && view.params.linksView) {
-          if (typeof view.params.linksView === 'string') { view = dom7$1(view.params.linksView)[0].f7View; }
+          if (typeof view.params.linksView === 'string') { view = $(view.params.linksView)[0].f7View; }
           else if (view.params.linksView instanceof View) { view = view.params.linksView; }
         }
       }
@@ -7159,7 +4684,7 @@ function initClicks(app) {
   }
   if (Support$1.touch && !Device$1.android) {
     var activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
-    dom7$1(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-indicator-overlay, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
+    $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-indicator-overlay, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
 var Clicks = {
@@ -7180,13 +4705,13 @@ var Clicks = {
 
 var Statusbar = {
   hide: function hide() {
-    dom7$1('html').removeClass('with-statusbar');
+    $('html').removeClass('with-statusbar');
     if (Device$1.cordova && window.StatusBar) {
       window.StatusBar.hide();
     }
   },
   show: function show() {
-    dom7$1('html').addClass('with-statusbar');
+    $('html').addClass('with-statusbar');
     if (Device$1.cordova && window.StatusBar) {
       window.StatusBar.show();
     }
@@ -7194,17 +4719,17 @@ var Statusbar = {
   onClick: function onClick() {
     var app = this;
     var pageContent;
-    if (dom7$1('.popup.modal-in').length > 0) {
+    if ($('.popup.modal-in').length > 0) {
       // Check for opened popup
-      pageContent = dom7$1('.popup.modal-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-    } else if (dom7$1('.panel.panel-active').length > 0) {
+      pageContent = $('.popup.modal-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+    } else if ($('.panel.panel-active').length > 0) {
       // Check for opened panel
-      pageContent = dom7$1('.panel.panel-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-    } else if (dom7$1('.views > .view.tab-active').length > 0) {
+      pageContent = $('.panel.panel-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+    } else if ($('.views > .view.tab-active').length > 0) {
       // View in tab bar app layout
-      pageContent = dom7$1('.views > .view.tab-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-    } else if (dom7$1('.views').length > 0) {
-      pageContent = dom7$1('.views').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+      pageContent = $('.views > .view.tab-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+    } else if ($('.views').length > 0) {
+      pageContent = $('.views').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
     } else {
       pageContent = app.root.children('.view').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
     }
@@ -7230,13 +4755,13 @@ var Statusbar = {
     if (Device$1.cordova && window.StatusBar) {
       if (Device$1.needsStatusbar()) {
         // Change Overlay Color;
-        dom7$1('.statusbar').css('background-color', color);
+        $('.statusbar').css('background-color', color);
       } else {
         // Change Real Status bar color
         window.StatusBar.backgroundColorByHexString(color);
       }
     } else {
-      dom7$1('.statusbar').css('background-color', color);
+      $('.statusbar').css('background-color', color);
     }
   },
   isVisible: function isVisible() {
@@ -7251,26 +4776,26 @@ var Statusbar = {
 
     if (params.overlay === 'auto') {
       if (Device$1.needsStatusbar()) {
-        dom7$1('html').addClass('with-statusbar');
+        $('html').addClass('with-statusbar');
       }
       if (Device$1.cordova) {
-        dom7$1(document).on('resume', function () {
+        $(document).on('resume', function () {
           if (Device$1.needsStatusbar()) {
-            dom7$1('html').addClass('with-statusbar');
+            $('html').addClass('with-statusbar');
           } else {
-            dom7$1('html').removeClass('with-statusbar');
+            $('html').removeClass('with-statusbar');
           }
         }, false);
       }
     } else if (params.overlay === true) {
-      dom7$1('html').addClass('with-statusbar');
+      $('html').addClass('with-statusbar');
     } else if (params.overlay === false) {
-      dom7$1('html').removeClass('with-statusbar');
+      $('html').removeClass('with-statusbar');
     }
 
     if (Device$1.cordova && window.StatusBar) {
       if (params.scrollTopOnClick) {
-        dom7$1(window).on('statusTap', Statusbar.onClick.bind(app));
+        $(window).on('statusTap', Statusbar.onClick.bind(app));
       }
       if (params.iosOverlaysWebView) {
         window.StatusBar.overlaysWebView(true);
@@ -7306,7 +4831,7 @@ var Statusbar$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       statusbar: {
         hide: Statusbar.hide,
         show: Statusbar.show,
@@ -7333,10 +4858,10 @@ var Statusbar$1 = {
 };
 
 function getCurrentView(app) {
-  var popoverView = dom7$1('.popover.modal-in .view');
-  var popupView = dom7$1('.popup.modal-in .view');
-  var panelView = dom7$1('.panel.panel-active .view');
-  var appViews = dom7$1('.views');
+  var popoverView = $('.popover.modal-in .view');
+  var popupView = $('.popup.modal-in .view');
+  var panelView = $('.panel.panel-active .view');
+  var appViews = $('.views');
   if (appViews.length === 0) { appViews = app.root; }
   // Find active view as tab
   var appView = appViews.children('.view');
@@ -7408,8 +4933,8 @@ var View$2 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      views: Utils$1.extend([], {
+    Utils.extend(app, {
+      views: Utils.extend([], {
         create: function create(el, params) {
           return new View(app, el, params);
         },
@@ -7426,9 +4951,9 @@ var View$2 = {
   on: {
     init: function init() {
       var app = this;
-      dom7$1('.view-init').each(function (index, viewEl) {
+      $('.view-init').each(function (index, viewEl) {
         if (viewEl.f7View) { return; }
-        var viewParams = dom7$1(viewEl).dataset();
+        var viewParams = $(viewEl).dataset();
         app.views.create(viewEl, viewParams);
       });
     },
@@ -7436,7 +4961,7 @@ var View$2 = {
       var app = this;
       modal.$el.find('.view-init').each(function (index, viewEl) {
         if (viewEl.f7View) { return; }
-        var viewParams = dom7$1(viewEl).dataset();
+        var viewParams = $(viewEl).dataset();
         app.views.create(viewEl, viewParams);
       });
     },
@@ -7455,7 +4980,7 @@ var Navbar = {
   size: function size(el) {
     var app = this;
     if (app.theme !== 'ios') { return; }
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.hasClass('navbar')) {
       $el = $el.children('.navbar-inner').each(function (index, navbarEl) {
         app.navbar.size(navbarEl);
@@ -7582,7 +5107,7 @@ var Navbar = {
   hide: function hide(el, animate) {
     if ( animate === void 0 ) animate = true;
 
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.hasClass('navbar-inner')) { $el = $el.parents('.navbar'); }
     if (!$el.length) { return; }
     if ($el.hasClass('navbar-hidden')) { return; }
@@ -7596,7 +5121,7 @@ var Navbar = {
     if ( el === void 0 ) el = '.navbar-hidden';
     if ( animate === void 0 ) animate = true;
 
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.hasClass('navbar-inner')) { $el = $el.parents('.navbar'); }
     if (!$el.length) { return; }
     if (!$el.hasClass('navbar-hidden')) { return; }
@@ -7616,7 +5141,7 @@ var Navbar = {
       pageData = page;
       $pageEl = page.$el;
     } else {
-      $pageEl = dom7$1(page);
+      $pageEl = $(page);
       if ($pageEl.length > 0) { pageData = $pageEl[0].f7Page; }
     }
     if (pageData && pageData.$navbarEl && pageData.$navbarEl.length > 0) {
@@ -7629,8 +5154,8 @@ var Navbar = {
   },
   initHideNavbarOnScroll: function initHideNavbarOnScroll(pageEl, navbarInnerEl) {
     var app = this;
-    var $pageEl = dom7$1(pageEl);
-    var $navbarEl = dom7$1(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
+    var $pageEl = $(pageEl);
+    var $navbarEl = $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
 
     var previousScrollTop;
     var currentScrollTop;
@@ -7683,7 +5208,7 @@ var Navbar$1 = {
   name: 'navbar',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       navbar: {
         size: Navbar.size.bind(app),
         hide: Navbar.hide.bind(app),
@@ -7706,7 +5231,7 @@ var Navbar$1 = {
     resize: function resize() {
       var app = this;
       if (app.theme !== 'ios') { return; }
-      dom7$1('.navbar').each(function (index, navbarEl) {
+      $('.navbar').each(function (index, navbarEl) {
         app.navbar.size(navbarEl);
       });
     },
@@ -7724,7 +5249,7 @@ var Navbar$1 = {
       if (!navbarInnerEl) {
         $navbarEl = page.$el.parents('.view').children('.navbar');
       } else {
-        $navbarEl = dom7$1(navbarInnerEl).parents('.navbar');
+        $navbarEl = $(navbarInnerEl).parents('.navbar');
       }
       if (page.$el.hasClass('no-navbar') || (view.router.dynamicNavbar && !navbarInnerEl)) {
         app.navbar.hide($navbarEl);
@@ -7735,13 +5260,13 @@ var Navbar$1 = {
     pageReinit: function pageReinit(page) {
       var app = this;
       if (app.theme !== 'ios') { return; }
-      var $navbarEl = dom7$1(app.navbar.getElByPage(page));
+      var $navbarEl = $(app.navbar.getElByPage(page));
       if (!$navbarEl || $navbarEl.length === 0) { return; }
       app.navbar.size($navbarEl);
     },
     pageInit: function pageInit(page) {
       var app = this;
-      var $navbarEl = dom7$1(app.navbar.getElByPage(page));
+      var $navbarEl = $(app.navbar.getElByPage(page));
       if (!$navbarEl || $navbarEl.length === 0) { return; }
       if (app.theme === 'ios') {
         app.navbar.size($navbarEl);
@@ -7774,7 +5299,7 @@ var Navbar$1 = {
     },
     tabShow: function tabShow(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
+      $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
         app.navbar.size(navbarEl);
       });
     },
@@ -7821,7 +5346,7 @@ var Toolbar = {
     var app = this;
     if (app.theme !== 'md') { return; }
 
-    var $tabbarEl = dom7$1(tabbarEl);
+    var $tabbarEl = $(tabbarEl);
 
     if ($tabbarEl.length === 0 || !($tabbarEl.hasClass('tabbar') || $tabbarEl.hasClass('tabbar-labels'))) { return; }
 
@@ -7855,7 +5380,7 @@ var Toolbar = {
   hide: function hide(el, animate) {
     if ( animate === void 0 ) animate = true;
 
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.hasClass('toolbar-hidden')) { return; }
     var className = "toolbar-hidden" + (animate ? ' toolbar-transitioning' : '');
     $el.transitionEnd(function () {
@@ -7866,7 +5391,7 @@ var Toolbar = {
   show: function show(el, animate) {
     if ( animate === void 0 ) animate = true;
 
-    var $el = dom7$1(el);
+    var $el = $(el);
     if (!$el.hasClass('toolbar-hidden')) { return; }
     if (animate) {
       $el.addClass('toolbar-transitioning');
@@ -7878,7 +5403,7 @@ var Toolbar = {
   },
   initHideToolbarOnScroll: function initHideToolbarOnScroll(pageEl) {
     var app = this;
-    var $pageEl = dom7$1(pageEl);
+    var $pageEl = $(pageEl);
     var $toolbarEl = $pageEl.parents('.view').children('.toolbar');
     if ($toolbarEl.length === 0) {
       $toolbarEl = $pageEl.find('.toolbar');
@@ -7938,7 +5463,7 @@ var Toolbar$1 = {
   name: 'toolbar',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       toolbar: {
         hide: Toolbar.hide.bind(app),
         show: Toolbar.show.bind(app),
@@ -8016,7 +5541,7 @@ var TouchRipple$1 = function TouchRipple($el, x, y) {
   var height = box.height;
   var diameter = Math.max((Math.pow( ((Math.pow( height, 2 )) + (Math.pow( width, 2 ))), 0.5 )), 48);
 
-  ripple.$rippleWaveEl = dom7$1(("<div class=\"ripple-wave\" style=\"width: " + diameter + "px; height: " + diameter + "px; margin-top:-" + (diameter / 2) + "px; margin-left:-" + (diameter / 2) + "px; left:" + (center.x) + "px; top:" + (center.y) + "px;\"></div>"));
+  ripple.$rippleWaveEl = $(("<div class=\"ripple-wave\" style=\"width: " + diameter + "px; height: " + diameter + "px; margin-top:-" + (diameter / 2) + "px; margin-left:-" + (diameter / 2) + "px; left:" + (center.x) + "px; top:" + (center.y) + "px;\"></div>"));
 
   $el.prepend(ripple.$rippleWaveEl);
 
@@ -8042,7 +5567,7 @@ TouchRipple$1.prototype.remove = function remove () {
   if (ripple.removing) { return; }
   var $rippleWaveEl = this.$rippleWaveEl;
   var rippleTransform = this.rippleTransform;
-  var removeTimeout = Utils$1.nextTick(function () {
+  var removeTimeout = Utils.nextTick(function () {
     ripple.onRemove();
   }, 400);
   ripple.removing = true;
@@ -8051,12 +5576,12 @@ TouchRipple$1.prototype.remove = function remove () {
     .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
     .transitionEnd(function () {
       clearTimeout(removeTimeout);
-      Utils$1.nextFrame(function () {
+      Utils.nextFrame(function () {
         $rippleWaveEl
           .addClass('ripple-wave-out')
           .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
-        removeTimeout = Utils$1.nextTick(function () {
+        removeTimeout = Utils.nextTick(function () {
           ripple.onRemove();
         }, 700);
 
@@ -8104,7 +5629,7 @@ var Modal$1 = (function (Framework7Class$$1) {
     // Extend defaults with modules params
     modal.useInstanceModulesParams(defaults);
 
-    modal.params = Utils$1.extend(defaults, params);
+    modal.params = Utils.extend(defaults, params);
 
     // Install Modules
     modal.useInstanceModules();
@@ -8118,7 +5643,7 @@ var Modal$1 = (function (Framework7Class$$1) {
   Modal.prototype.onOpen = function onOpen () {
     var modal = this;
     openedModals.push(modal);
-    dom7$1('html').addClass(("with-modal-" + (modal.type.toLowerCase())));
+    $('html').addClass(("with-modal-" + (modal.type.toLowerCase())));
     modal.$el.trigger(("modal:open " + (modal.type.toLowerCase()) + ":open"), modal);
     modal.emit(("modalOpen " + (modal.type) + "Open"), modal);
   };
@@ -8130,7 +5655,7 @@ var Modal$1 = (function (Framework7Class$$1) {
   Modal.prototype.onClose = function onClose () {
     var modal = this;
     openedModals.splice(openedModals.indexOf(modal), 1);
-    dom7$1('html').removeClass(("with-modal-" + (modal.type.toLowerCase())));
+    $('html').removeClass(("with-modal-" + (modal.type.toLowerCase())));
     modal.$el.trigger(("modal:close " + (modal.type.toLowerCase()) + ":close"), modal);
     modal.emit(("modalClose " + (modal.type) + "Close"), modal);
   };
@@ -8156,7 +5681,7 @@ var Modal$1 = (function (Framework7Class$$1) {
 
     if (type === 'dialog' && app.params.modals.queueDialogs) {
       var pushToQueue;
-      if (dom7$1('.dialog.modal-in').length > 0) {
+      if ($('.dialog.modal-in').length > 0) {
         pushToQueue = true;
       } else if (openedModals.length > 0) {
         openedModals.forEach(function (openedModal) {
@@ -8275,7 +5800,7 @@ var Modal$1 = (function (Framework7Class$$1) {
     if (modal.$el) {
       modal.$el.trigger(("modal:beforedestroy " + (modal.type.toLowerCase()) + ":beforedestroy"), modal);
     }
-    Utils$1.deleteProps(modal);
+    Utils.deleteProps(modal);
     modal = null;
   };
 
@@ -8317,7 +5842,7 @@ var Modal = {
 
 var Dialog$1 = (function (Modal) {
   function Dialog(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       title: app.params.modals.dialogTitle,
       text: undefined,
       content: '',
@@ -8356,9 +5881,9 @@ var Dialog$1 = (function (Modal) {
       }
 
       var dialogHtml = "\n        <div class=\"" + (dialogClasses.join(' ')) + "\">\n          <div class=\"dialog-inner\">\n            " + (title ? ("<div class=\"dialog-title\">" + title + "</div>") : '') + "\n            " + (text ? ("<div class=\"dialog-text\">" + text + "</div>") : '') + "\n            " + content + "\n          </div>\n          " + buttonsHTML + "\n        </div>\n      ";
-      $el = dom7$1(dialogHtml);
+      $el = $(dialogHtml);
     } else {
-      $el = dom7$1(dialog.params.el);
+      $el = $(dialog.params.el);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -8371,14 +5896,14 @@ var Dialog$1 = (function (Modal) {
 
     var $backdropEl = app.root.children('.dialog-backdrop');
     if ($backdropEl.length === 0) {
-      $backdropEl = dom7$1('<div class="dialog-backdrop"></div>');
+      $backdropEl = $('<div class="dialog-backdrop"></div>');
       app.root.append($backdropEl);
     }
 
     // Assign events
     function buttonOnClick(e) {
       var buttonEl = this;
-      var index = dom7$1(buttonEl).index();
+      var index = $(buttonEl).index();
       var button = buttons[index];
       if (button.onClick) { button.onClick(dialog, e); }
       if (dialog.params.onClick) { dialog.params.onClick(dialog, index); }
@@ -8386,15 +5911,15 @@ var Dialog$1 = (function (Modal) {
     }
     if (buttons && buttons.length > 0) {
       $el.find('.dialog-button').each(function (index, buttonEl) {
-        dom7$1(buttonEl).on('click', buttonOnClick);
+        $(buttonEl).on('click', buttonOnClick);
       });
       dialog.on('close', function () {
         $el.find('.dialog-button').each(function (index, buttonEl) {
-          dom7$1(buttonEl).off('click', buttonOnClick);
+          $(buttonEl).off('click', buttonOnClick);
         });
       });
     }
-    Utils$1.extend(dialog, {
+    Utils.extend(dialog, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -8408,7 +5933,7 @@ var Dialog$1 = (function (Modal) {
       setText: function setText(newText) {
         var $textEl = $el.find('.dialog-text');
         if ($textEl.length === 0) {
-          $textEl = dom7$1('<div class="dialog-text"></div>');
+          $textEl = $('<div class="dialog-text"></div>');
           if (typeof title !== 'undefined') {
             $textEl.insertAfter($el.find('.dialog-title'));
           } else {
@@ -8422,7 +5947,7 @@ var Dialog$1 = (function (Modal) {
       setTitle: function setTitle(newTitle) {
         var $titleEl = $el.find('.dialog-title');
         if ($titleEl.length === 0) {
-          $titleEl = dom7$1('<div class="dialog-title"></div>');
+          $titleEl = $('<div class="dialog-title"></div>');
           $el.find('.dialog-inner').prepend($titleEl);
         }
         $titleEl.html(newTitle);
@@ -8450,13 +5975,13 @@ var Dialog = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       dialog: {
         create: function create(params) {
           return new Dialog$1(app, params);
         },
         open: function open(dialogEl, animate) {
-          var $dialogEl = dom7$1(dialogEl);
+          var $dialogEl = $(dialogEl);
           var dialog = $dialogEl[0].f7Modal;
           if (!dialog) { dialog = new Dialog$1(app, { el: $dialogEl }); }
           return dialog.open(animate);
@@ -8464,7 +5989,7 @@ var Dialog = {
         close: function close(dialogEl, animate) {
           if ( dialogEl === void 0 ) dialogEl = '.dialog.modal-in';
 
-          var $dialogEl = dom7$1(dialogEl);
+          var $dialogEl = $(dialogEl);
           if ($dialogEl.length === 0) { return undefined; }
           var dialog = $dialogEl[0].f7Modal;
           if (!dialog) { dialog = new Dialog$1(app, { el: $dialogEl }); }
@@ -8473,7 +5998,7 @@ var Dialog = {
         get: function get(dialogEl) {
           if ( dialogEl === void 0 ) dialogEl = '.dialog.modal-in';
 
-          var $dialogEl = dom7$1(dialogEl);
+          var $dialogEl = $(dialogEl);
           if ($dialogEl.length === 0) { return undefined; }
           return $dialogEl[0].f7Modal;
         },
@@ -8682,7 +6207,7 @@ var Dialog = {
 
 var Popup$1 = (function (Modal) {
   function Popup(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       on: {},
     }, params);
 
@@ -8696,9 +6221,9 @@ var Popup$1 = (function (Modal) {
     // Find Element
     var $el;
     if (!popup.params.el) {
-      $el = dom7$1(popup.params.content);
+      $el = $(popup.params.content);
     } else {
-      $el = dom7$1(popup.params.el);
+      $el = $(popup.params.el);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -8711,11 +6236,11 @@ var Popup$1 = (function (Modal) {
 
     var $backdropEl = app.root.children('.popup-backdrop');
     if ($backdropEl.length === 0) {
-      $backdropEl = dom7$1('<div class="popup-backdrop"></div>');
+      $backdropEl = $('<div class="popup-backdrop"></div>');
       app.root.append($backdropEl);
     }
 
-    Utils$1.extend(popup, {
+    Utils.extend(popup, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -8743,13 +6268,13 @@ var Popup = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       popup: {
         create: function create(params) {
           return new Popup$1(app, params);
         },
         open: function open(popupEl, animate) {
-          var $popupEl = dom7$1(popupEl);
+          var $popupEl = $(popupEl);
           var popup = $popupEl[0].f7Modal;
           if (!popup) { popup = new Popup$1(app, { el: $popupEl }); }
           return popup.open(animate);
@@ -8757,7 +6282,7 @@ var Popup = {
         close: function close(popupEl, animate) {
           if ( popupEl === void 0 ) popupEl = '.popup.modal-in';
 
-          var $popupEl = dom7$1(popupEl);
+          var $popupEl = $(popupEl);
           if ($popupEl.length === 0) { return undefined; }
           var popup = $popupEl[0].f7Modal;
           if (!popup) { popup = new Popup$1(app, { el: $popupEl }); }
@@ -8766,7 +6291,7 @@ var Popup = {
         get: function get(popupEl) {
           if ( popupEl === void 0 ) popupEl = '.popup.modal-in';
 
-          var $popupEl = dom7$1(popupEl);
+          var $popupEl = $(popupEl);
           if ($popupEl.length === 0) { return undefined; }
           return $popupEl[0].f7Modal;
         },
@@ -8796,7 +6321,7 @@ var Popup = {
 
 var LoginScreen$1 = (function (Modal) {
   function LoginScreen(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       on: {},
     }, params);
 
@@ -8810,9 +6335,9 @@ var LoginScreen$1 = (function (Modal) {
     // Find Element
     var $el;
     if (!loginScreen.params.el) {
-      $el = dom7$1(loginScreen.params.content);
+      $el = $(loginScreen.params.content);
     } else {
-      $el = dom7$1(loginScreen.params.el);
+      $el = $(loginScreen.params.el);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -8823,7 +6348,7 @@ var LoginScreen$1 = (function (Modal) {
       return loginScreen.destroy();
     }
 
-    Utils$1.extend(loginScreen, {
+    Utils.extend(loginScreen, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -8849,13 +6374,13 @@ var LoginScreen = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       loginScreen: {
         create: function create(params) {
           return new LoginScreen$1(app, params);
         },
         open: function open(loginScreenEl, animate) {
-          var $loginScreenEl = dom7$1(loginScreenEl);
+          var $loginScreenEl = $(loginScreenEl);
           var loginScreen = $loginScreenEl[0].f7Modal;
           if (!loginScreen) { loginScreen = new LoginScreen$1(app, { el: $loginScreenEl }); }
           return loginScreen.open(animate);
@@ -8863,7 +6388,7 @@ var LoginScreen = {
         close: function close(loginScreenEl, animate) {
           if ( loginScreenEl === void 0 ) loginScreenEl = '.login-screen.modal-in';
 
-          var $loginScreenEl = dom7$1(loginScreenEl);
+          var $loginScreenEl = $(loginScreenEl);
           if ($loginScreenEl.length === 0) { return undefined; }
           var loginScreen = $loginScreenEl[0].f7Modal;
           if (!loginScreen) { loginScreen = new LoginScreen$1(app, { el: $loginScreenEl }); }
@@ -8872,7 +6397,7 @@ var LoginScreen = {
         get: function get(loginScreenEl) {
           if ( loginScreenEl === void 0 ) loginScreenEl = '.login-screen.modal-in';
 
-          var $loginScreenEl = dom7$1(loginScreenEl);
+          var $loginScreenEl = $(loginScreenEl);
           if ($loginScreenEl.length === 0) { return undefined; }
           return $loginScreenEl[0].f7Modal;
         },
@@ -8897,7 +6422,7 @@ var LoginScreen = {
 
 var Popover$1 = (function (Modal) {
   function Popover(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       backdrop: true,
       closeByOutsideClick: app.params.modals.popoverCloseByOutsideClick,
       on: {},
@@ -8913,9 +6438,9 @@ var Popover$1 = (function (Modal) {
     // Find Element
     var $el;
     if (!popover.params.el) {
-      $el = dom7$1(popover.params.content);
+      $el = $(popover.params.content);
     } else {
-      $el = dom7$1(popover.params.el);
+      $el = $(popover.params.el);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -8923,7 +6448,7 @@ var Popover$1 = (function (Modal) {
     }
 
     // Find Target
-    var $targetEl = dom7$1(popover.params.targetEl).eq(0);
+    var $targetEl = $(popover.params.targetEl).eq(0);
 
     if ($el.length === 0) {
       return popover.destroy();
@@ -8934,7 +6459,7 @@ var Popover$1 = (function (Modal) {
     if (popover.params.backdrop) {
       $backdropEl = app.root.children('.popover-backdrop');
       if ($backdropEl.length === 0) {
-        $backdropEl = dom7$1('<div class="popover-backdrop"></div>');
+        $backdropEl = $('<div class="popover-backdrop"></div>');
         app.root.append($backdropEl);
       }
     }
@@ -8942,7 +6467,7 @@ var Popover$1 = (function (Modal) {
     // Find Angle
     var $angleEl;
     if ($el.find('.popover-angle').length === 0) {
-      $angleEl = dom7$1('<div class="popover-angle"></div>');
+      $angleEl = $('<div class="popover-angle"></div>');
       $el.prepend($angleEl);
     } else {
       $angleEl = $el.find('.popover-angle');
@@ -8951,7 +6476,7 @@ var Popover$1 = (function (Modal) {
     // Open
     var originalOpen = popover.open;
 
-    Utils$1.extend(popover, {
+    Utils.extend(popover, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -8971,7 +6496,7 @@ var Popover$1 = (function (Modal) {
         if (typeof args[0] === 'boolean') { var assign;
           (assign = args, animate = assign[0], targetEl = assign[1]); }
         if (targetEl) {
-          popover.$targetEl = dom7$1(targetEl);
+          popover.$targetEl = $(targetEl);
           popover.targetEl = popover.$targetEl[0];
         }
         originalOpen.call(popover, animate);
@@ -8991,7 +6516,7 @@ var Popover$1 = (function (Modal) {
 
     function handleClick(e) {
       var target = e.target;
-      if (dom7$1(target).closest(popover.el).length === 0) {
+      if ($(target).closest(popover.el).length === 0) {
         popover.close();
       }
     }
@@ -9149,13 +6674,13 @@ var Popover = {
   name: 'popover',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       popover: {
         create: function create(params) {
           return new Popover$1(app, params);
         },
         open: function open(popoverEl, targetEl, animate) {
-          var $popoverEl = dom7$1(popoverEl);
+          var $popoverEl = $(popoverEl);
           var popover = $popoverEl[0].f7Modal;
           if (!popover) { popover = new Popover$1(app, { el: $popoverEl, targetEl: targetEl }); }
           return popover.open(targetEl, animate);
@@ -9163,7 +6688,7 @@ var Popover = {
         close: function close(popoverEl, animate) {
           if ( popoverEl === void 0 ) popoverEl = '.popover.modal-in';
 
-          var $popoverEl = dom7$1(popoverEl);
+          var $popoverEl = $(popoverEl);
           if ($popoverEl.length === 0) { return undefined; }
           var popover = $popoverEl[0].f7Modal;
           if (!popover) { popover = new Popover$1(app, { el: $popoverEl }); }
@@ -9172,7 +6697,7 @@ var Popover = {
         get: function get(popoverEl) {
           if ( popoverEl === void 0 ) popoverEl = '.popover.modal-in';
 
-          var $popoverEl = dom7$1(popoverEl);
+          var $popoverEl = $(popoverEl);
           if ($popoverEl.length === 0) { return undefined; }
           return $popoverEl[0].f7Modal;
         },
@@ -9202,7 +6727,7 @@ var Popover = {
 
 var Actions$1 = (function (Modal) {
   function Actions(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       toPopover: app.params.modals.actionsToPopover,
       on: {},
     }, params);
@@ -9224,9 +6749,9 @@ var Actions$1 = (function (Modal) {
     // Find Element
     var $el;
     if (actions.params.el) {
-      $el = dom7$1(actions.params.el);
+      $el = $(actions.params.el);
     } else if (actions.params.content) {
-      $el = dom7$1(actions.params.content);
+      $el = $(actions.params.content);
     } else if (actions.params.buttons) {
       if (actions.params.toPopover) {
         actions.popoverHtml = "\n          <div class=\"popover popover-from-actions\">\n            <div class=\"popover-inner\">\n              " + (groups.map(function (group) { return ("\n                <div class=\"list\">\n                  <ul>\n                    " + (group.map(function (button) {
@@ -9272,7 +6797,7 @@ var Actions$1 = (function (Modal) {
     // Backdrop
     var $backdropEl = app.root.children('.actions-backdrop');
     if ($backdropEl.length === 0) {
-      $backdropEl = dom7$1('<div class="actions-backdrop"></div>');
+      $backdropEl = $('<div class="actions-backdrop"></div>');
       app.root.append($backdropEl);
     }
 
@@ -9284,12 +6809,12 @@ var Actions$1 = (function (Modal) {
       var buttonEl = this;
       var buttonIndex;
       var groupIndex;
-      if (dom7$1(buttonEl).hasClass('item-link')) {
-        buttonIndex = dom7$1(buttonEl).parents('li').index();
-        groupIndex = dom7$1(buttonEl).parents('.list').index();
+      if ($(buttonEl).hasClass('item-link')) {
+        buttonIndex = $(buttonEl).parents('li').index();
+        groupIndex = $(buttonEl).parents('.list').index();
       } else {
-        buttonIndex = dom7$1(buttonEl).index();
-        groupIndex = dom7$1(buttonEl).parents('.actions-group').index();
+        buttonIndex = $(buttonEl).index();
+        groupIndex = $(buttonEl).parents('.actions-group').index();
       }
       var button = groups[groupIndex][buttonIndex];
       if (button.onClick) { button.onClick(actions, e); }
@@ -9314,23 +6839,23 @@ var Actions$1 = (function (Modal) {
         popover.open(animate);
         popover.once('popoverOpened', function () {
           popover.$el.find('.item-link').each(function (groupIndex, buttonEl) {
-            dom7$1(buttonEl).on('click', buttonOnClick);
+            $(buttonEl).on('click', buttonOnClick);
           });
         });
         popover.once('popoverClosed', function () {
           popover.$el.find('.item-link').each(function (groupIndex, buttonEl) {
-            dom7$1(buttonEl).on('click', buttonOnClick);
+            $(buttonEl).on('click', buttonOnClick);
           });
         });
       } else {
-        actions.$el = dom7$1(actions.actionsHtml);
+        actions.$el = $(actions.actionsHtml);
         actions.$el[0].f7Modal = actions;
         actions.$el.find('.actions-button').each(function (groupIndex, buttonEl) {
-          dom7$1(buttonEl).on('click', buttonOnClick);
+          $(buttonEl).on('click', buttonOnClick);
         });
         actions.once('actionsClosed', function () {
           actions.$el.find('.list-button').each(function (groupIndex, buttonEl) {
-            dom7$1(buttonEl).off('click', buttonOnClick);
+            $(buttonEl).off('click', buttonOnClick);
           });
         });
         originalOpen.call(actions, animate);
@@ -9348,7 +6873,7 @@ var Actions$1 = (function (Modal) {
       }
     };
 
-    Utils$1.extend(actions, {
+    Utils.extend(actions, {
       app: app,
       $el: $el,
       el: $el ? $el[0] : undefined,
@@ -9375,13 +6900,13 @@ var Actions = {
   name: 'actions',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       actions: {
         create: function create(params) {
           return new Actions$1(app, params);
         },
         open: function open(actionsEl, animate) {
-          var $actionsEl = dom7$1(actionsEl);
+          var $actionsEl = $(actionsEl);
           var actions = $actionsEl[0].f7Modal;
           if (!actions) { actions = new Actions$1(app, { el: $actionsEl }); }
           return actions.open(animate);
@@ -9389,7 +6914,7 @@ var Actions = {
         close: function close(actionsEl, animate) {
           if ( actionsEl === void 0 ) actionsEl = '.actions-modal.modal-in';
 
-          var $actionsEl = dom7$1(actionsEl);
+          var $actionsEl = $(actionsEl);
           if ($actionsEl.length === 0) { return undefined; }
           var actions = $actionsEl[0].f7Modal;
           if (!actions) { actions = new Actions$1(app, { el: $actionsEl }); }
@@ -9398,7 +6923,7 @@ var Actions = {
         get: function get(actionsEl) {
           if ( actionsEl === void 0 ) actionsEl = '.actions-modal.modal-in';
 
-          var $actionsEl = dom7$1(actionsEl);
+          var $actionsEl = $(actionsEl);
           if ($actionsEl.length === 0) { return undefined; }
           return $actionsEl[0].f7Modal;
         },
@@ -9428,7 +6953,7 @@ var Actions = {
 
 var Sheet$1 = (function (Modal) {
   function Sheet(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       backdrop: app.theme === 'md',
       closeByOutsideClick: app.params.modals.sheetCloseByOutsideClick,
       on: {},
@@ -9444,9 +6969,9 @@ var Sheet$1 = (function (Modal) {
     // Find Element
     var $el;
     if (!sheet.params.el) {
-      $el = dom7$1(sheet.params.content);
+      $el = $(sheet.params.content);
     } else {
-      $el = dom7$1(sheet.params.el);
+      $el = $(sheet.params.el);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -9460,14 +6985,14 @@ var Sheet$1 = (function (Modal) {
     if (sheet.params.backdrop) {
       $backdropEl = app.root.children('.sheet-backdrop');
       if ($backdropEl.length === 0) {
-        $backdropEl = dom7$1('<div class="sheet-backdrop"></div>');
+        $backdropEl = $('<div class="sheet-backdrop"></div>');
         app.root.append($backdropEl);
       }
     }
 
     var $pageContentEl;
     function scrollToOpen() {
-      var $scrollEl = dom7$1(sheet.params.scrollToEl).eq(0);
+      var $scrollEl = $(sheet.params.scrollToEl).eq(0);
       if ($scrollEl.length === 0) { return; }
       $pageContentEl = $scrollEl.parents('.page-content');
       if ($pageContentEl.length === 0) { return; }
@@ -9505,7 +7030,7 @@ var Sheet$1 = (function (Modal) {
     }
     function handleClick(e) {
       var target = e.target;
-      if (dom7$1(target).closest(sheet.el).length === 0) {
+      if ($(target).closest(sheet.el).length === 0) {
         sheet.close();
       }
     }
@@ -9529,7 +7054,7 @@ var Sheet$1 = (function (Modal) {
       }
     });
 
-    Utils$1.extend(sheet, {
+    Utils.extend(sheet, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -9557,13 +7082,13 @@ var Sheet = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       sheet: {
         create: function create(params) {
           return new Sheet$1(app, params);
         },
         open: function open(sheetEl, animate) {
-          var $sheetEl = dom7$1(sheetEl);
+          var $sheetEl = $(sheetEl);
           var sheet = $sheetEl[0].f7Modal;
           if (!sheet) { sheet = new Sheet$1(app, { el: $sheetEl }); }
           return sheet.open(animate);
@@ -9571,7 +7096,7 @@ var Sheet = {
         close: function close(sheetEl, animate) {
           if ( sheetEl === void 0 ) sheetEl = '.sheet-modal.modal-in';
 
-          var $sheetEl = dom7$1(sheetEl);
+          var $sheetEl = $(sheetEl);
           if ($sheetEl.length === 0) { return undefined; }
           var sheet = $sheetEl[0].f7Modal;
           if (!sheet) { sheet = new Sheet$1(app, { el: $sheetEl }); }
@@ -9580,7 +7105,7 @@ var Sheet = {
         get: function get(sheetEl) {
           if ( sheetEl === void 0 ) sheetEl = '.sheet-modal.modal-in';
 
-          var $sheetEl = dom7$1(sheetEl);
+          var $sheetEl = $(sheetEl);
           if ($sheetEl.length === 0) { return undefined; }
           return $sheetEl[0].f7Modal;
         },
@@ -9612,7 +7137,7 @@ var Preloader = {
   init: function init(el) {
     var app = this;
     if (app.theme !== 'md') { return; }
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0 || $el.children('.preloader-inner').length > 0) { return; }
     $el.append(
       '<span class="preloader-inner">' +
@@ -9642,14 +7167,14 @@ var Preloader = {
               '<span class="preloader-inner-half-circle"></span>' +
           '</span>' +
       '</span>';
-    dom7$1('html').addClass('with-modal-preloader');
+    $('html').addClass('with-modal-preloader');
     app.root.append(("\n      <div class=\"preloader-backdrop\"></div>\n      <div class=\"preloader-modal\">\n        <div class=\"preloader color-" + color + "\">" + preloaderInner + "</div>\n      </div>\n    "));
     Preloader.visible = true;
   },
   hide: function hide() {
     var app = this;
     if (!Preloader.visible) { return; }
-    dom7$1('html').removeClass('with-modal-preloader');
+    $('html').removeClass('with-modal-preloader');
     app.root.find('.preloader-backdrop, .preloader-modal').remove();
     Preloader.visible = false;
   },
@@ -9658,7 +7183,7 @@ var Preloader$1 = {
   name: 'preloader',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       preloader: {
         init: Preloader.init.bind(app),
         show: Preloader.show.bind(app),
@@ -9693,7 +7218,7 @@ var Progressbar = {
     }
     if (!progress) { progress = 0; }
 
-    var $el = dom7$1(el || app.root);
+    var $el = $(el || app.root);
     if ($el.length === 0) {
       return el;
     }
@@ -9708,7 +7233,7 @@ var Progressbar = {
     }
     var $progressbarLine = $progressbarEl.children('span');
     if ($progressbarLine.length === 0) {
-      $progressbarLine = dom7$1('<span></span>');
+      $progressbarLine = $('<span></span>');
       $progressbarEl.append($progressbarLine);
     }
     $progressbarLine
@@ -9755,7 +7280,7 @@ var Progressbar = {
       el = app.root;
     }
 
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return undefined; }
 
     var $progressbarEl;
@@ -9764,7 +7289,7 @@ var Progressbar = {
     } else {
       $progressbarEl = $el.children('.progressbar:not(.progressbar-out), .progressbar-infinite:not(.progressbar-out)');
       if ($progressbarEl.length === 0) {
-        $progressbarEl = dom7$1(("\n          <span class=\"progressbar" + (type === 'infinite' ? '-infinite' : '') + (color ? (" color-" + color) : '') + " progressbar-in\">\n            " + (type === 'infinite' ? '' : '<span></span>') + "\n          </span>"));
+        $progressbarEl = $(("\n          <span class=\"progressbar" + (type === 'infinite' ? '-infinite' : '') + (color ? (" color-" + color) : '') + " progressbar-in\">\n            " + (type === 'infinite' ? '' : '<span></span>') + "\n          </span>"));
         $el.append($progressbarEl);
       }
     }
@@ -9779,7 +7304,7 @@ var Progressbar = {
     if ( removeAfterHide === void 0 ) removeAfterHide = true;
 
     var app = this;
-    var $el = dom7$1(el || app.root);
+    var $el = $(el || app.root);
     if ($el.length === 0) { return undefined; }
     var $progressbarEl;
     if ($el.hasClass('progressbar') || $el.hasClass('progressbar-infinite')) {
@@ -9806,7 +7331,7 @@ var Progressbar$1 = {
   name: 'progressbar',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       progressbar: {
         set: Progressbar.set.bind(app),
         show: Progressbar.show.bind(app),
@@ -9818,7 +7343,7 @@ var Progressbar$1 = {
     pageInit: function pageInit(page) {
       var app = this;
       page.$el.find('.progressbar').each(function (index, progressbarEl) {
-        var $progressbarEl = dom7$1(progressbarEl);
+        var $progressbarEl = $(progressbarEl);
         app.progressbar.set($progressbarEl, $progressbarEl.attr('data-progress'));
       });
     },
@@ -9853,7 +7378,7 @@ var Sortable = {
       isMoved = false;
       isTouched = true;
       touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-      $sortingEl = dom7$1(this).parent('li');
+      $sortingEl = $(this).parent('li');
       indexFrom = $sortingEl.index();
       $sortableContainer = $sortingEl.parents('.sortable');
       $sortingItems = $sortableContainer.children('ul').children('li');
@@ -9918,7 +7443,7 @@ var Sortable = {
       }
 
       $sortingItems.each(function (index, el) {
-        var $currentEl = dom7$1(el);
+        var $currentEl = $(el);
         if ($currentEl[0] === $sortingEl[0]) { return; }
         var currentElOffset = $currentEl[0].offsetTop;
         var currentElHeight = $currentEl.height();
@@ -9981,7 +7506,7 @@ var Sortable = {
 
     var activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
 
-    dom7$1(document).on(app.touchEvents.start, '.list.sortable .sortable-handler', handleTouchStart, activeListener);
+    $(document).on(app.touchEvents.start, '.list.sortable .sortable-handler', handleTouchStart, activeListener);
     app.on('touchmove', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
   },
@@ -9989,7 +7514,7 @@ var Sortable = {
     if ( el === void 0 ) el = '.list.sortable';
 
     var app = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return; }
     $el.addClass('sortable-enabled');
     $el.trigger('sortable:open');
@@ -9999,7 +7524,7 @@ var Sortable = {
     if ( el === void 0 ) el = '.list.sortable';
 
     var app = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return; }
     $el.removeClass('sortable-enabled');
     $el.trigger('sortable:close');
@@ -10009,7 +7534,7 @@ var Sortable = {
     if ( el === void 0 ) el = '.list.sortable';
 
     var app = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return; }
     if ($el.hasClass('sortable-enabled')) {
       app.sortable.disable($el);
@@ -10025,7 +7550,7 @@ var Sortable$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       sortable: {
         init: Sortable.init.bind(app),
         enable: Sortable.enable.bind(app),
@@ -10110,8 +7635,8 @@ var Swipeout = {
       }
 
       if (!isMoved) {
-        if (dom7$1('.list.sortable-opened').length > 0) { return; }
-        $swipeoutEl = dom7$1(this);
+        if ($('.list.sortable-opened').length > 0) { return; }
+        $swipeoutEl = $(this);
         $swipeoutContent = $swipeoutEl.find('.swipeout-content');
         $actionsRight = $swipeoutEl.find('.swipeout-actions-right');
         $actionsLeft = $swipeoutEl.find('.swipeout-actions-left');
@@ -10218,7 +7743,7 @@ var Swipeout = {
           buttonTranslate = 0;
         }
         $rightButtons.each(function (index, buttonEl) {
-          var $buttonEl = dom7$1(buttonEl);
+          var $buttonEl = $(buttonEl);
           if (typeof buttonEl.f7SwipeoutButtonOffset === 'undefined') {
             $buttonEl[0].f7SwipeoutButtonOffset = buttonEl.offsetLeft;
           }
@@ -10250,7 +7775,7 @@ var Swipeout = {
           progress = 0;
         }
         $leftButtons.each(function (index, buttonEl) {
-          var $buttonEl = dom7$1(buttonEl);
+          var $buttonEl = $(buttonEl);
           if (typeof buttonEl.f7SwipeoutButtonOffset === 'undefined') {
             $buttonEl[0].f7SwipeoutButtonOffset = actionsLeftWidth - buttonEl.offsetLeft - buttonEl.offsetWidth;
           }
@@ -10326,7 +7851,7 @@ var Swipeout = {
         $buttons = direction === 'to-left' ? $rightButtons : $leftButtons;
         if ($buttons) {
           for (i = 0; i < $buttons.length; i += 1) {
-            dom7$1($buttons[i]).transform(("translate3d(" + newTranslate + "px,0,0)"));
+            $($buttons[i]).transform(("translate3d(" + newTranslate + "px,0,0)"));
           }
         }
         if (overswipeRight) {
@@ -10347,7 +7872,7 @@ var Swipeout = {
       var buttonOffset;
       if ($leftButtons && $leftButtons.length > 0 && $leftButtons !== $buttons) {
         $leftButtons.each(function (index, buttonEl) {
-          var $buttonEl = dom7$1(buttonEl);
+          var $buttonEl = $(buttonEl);
           buttonOffset = buttonEl.f7SwipeoutButtonOffset;
           if (typeof buttonOffset === 'undefined') {
             $buttonEl[0].f7SwipeoutButtonOffset = actionsLeftWidth - buttonEl.offsetLeft - buttonEl.offsetWidth;
@@ -10357,7 +7882,7 @@ var Swipeout = {
       }
       if ($rightButtons && $rightButtons.length > 0 && $rightButtons !== $buttons) {
         $rightButtons.each(function (index, buttonEl) {
-          var $buttonEl = dom7$1(buttonEl);
+          var $buttonEl = $(buttonEl);
           buttonOffset = buttonEl.f7SwipeoutButtonOffset;
           if (typeof buttonOffset === 'undefined') {
             $buttonEl[0].f7SwipeoutButtonOffset = buttonEl.offsetLeft;
@@ -10386,9 +7911,9 @@ var Swipeout = {
 
     app.on('touchstart', function (e) {
       if (Swipeout.el) {
-        var $targetEl = dom7$1(e.target);
+        var $targetEl = $(e.target);
         if (!(
-          dom7$1(Swipeout.el).is($targetEl[0]) ||
+          $(Swipeout.el).is($targetEl[0]) ||
           $targetEl.parents('.swipeout').is(Swipeout.el) ||
           $targetEl.hasClass('modal-in') ||
           $targetEl[0].className.indexOf('-backdrop') > 0 ||
@@ -10399,9 +7924,9 @@ var Swipeout = {
         }
       }
     });
-    dom7$1(document).on(app.touchEvents.start, 'li.swipeout', handleTouchStart, passiveListener);
-    dom7$1(document).on(app.touchEvents.move, 'li.swipeout', handleTouchMove, activeListener);
-    dom7$1(document).on(app.touchEvents.end, 'li.swipeout', handleTouchEnd, passiveListener);
+    $(document).on(app.touchEvents.start, 'li.swipeout', handleTouchStart, passiveListener);
+    $(document).on(app.touchEvents.move, 'li.swipeout', handleTouchMove, activeListener);
+    $(document).on(app.touchEvents.end, 'li.swipeout', handleTouchEnd, passiveListener);
   },
   allow: true,
   el: undefined,
@@ -10417,7 +7942,7 @@ var Swipeout = {
       var assign;
       (assign = args, el = assign[0], callback = assign[1], side = assign[2]);
     }
-    var $el = dom7$1(el).eq(0);
+    var $el = $(el).eq(0);
 
     if ($el.length === 0) { return; }
     if (!$el.hasClass('swipeout') || $el.hasClass('swipeout-opened')) { return; }
@@ -10436,7 +7961,7 @@ var Swipeout = {
     var translate = side === 'right' ? -swipeoutActionsWidth : swipeoutActionsWidth;
     if ($buttons.length > 1) {
       $buttons.each(function (buttonIndex, buttonEl) {
-        var $buttonEl = dom7$1(buttonEl);
+        var $buttonEl = $(buttonEl);
         if (side === 'right') {
           $buttonEl.transform(("translate3d(" + (-buttonEl.offsetLeft) + "px,0,0)"));
         } else {
@@ -10450,7 +7975,7 @@ var Swipeout = {
       app.emit('swipeoutOpened', $el[0]);
       if (callback) { callback.call($el[0]); }
     });
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       $buttons.transform(("translate3d(" + translate + "px,0,0)"));
       $swipeoutContent.transform(("translate3d(" + translate + "px,0,0)"));
     });
@@ -10458,7 +7983,7 @@ var Swipeout = {
   },
   close: function close(el, callback) {
     var app = this;
-    var $el = dom7$1(el).eq(0);
+    var $el = $(el).eq(0);
     if ($el.length === 0) { return; }
     if (!$el.hasClass('swipeout-opened')) { return; }
     var side = $el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
@@ -10485,7 +8010,7 @@ var Swipeout = {
     closeTimeout = setTimeout(onSwipeoutClose, 500);
 
     $buttons.each(function (index, buttonEl) {
-      var $buttonEl = dom7$1(buttonEl);
+      var $buttonEl = $(buttonEl);
       if (side === 'right') {
         $buttonEl.transform(("translate3d(" + (-buttonEl.offsetLeft) + "px,0,0)"));
       } else {
@@ -10497,7 +8022,7 @@ var Swipeout = {
   },
   delete: function delete$1(el, callback) {
     var app = this;
-    var $el = dom7$1(el).eq(0);
+    var $el = $(el).eq(0);
     if ($el.length === 0) { return; }
     Swipeout.el = undefined;
     $el.trigger('swipeout:delete');
@@ -10523,7 +8048,7 @@ var Swipeout = {
         $el.removeClass('swipeout-deleting swipeout-transitioning');
       }
     });
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       $el
         .addClass('swipeout-deleting swipeout-transitioning')
         .css({ height: '0px' })
@@ -10545,7 +8070,7 @@ var Swipeout$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       swipeout: {
         init: Swipeout.init.bind(app),
         open: Swipeout.open.bind(app),
@@ -10617,7 +8142,7 @@ var Accordion = {
   },
   open: function open(el) {
     var app = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     var $list = $el.parents('.accordion-list').eq(0);
     var $contentEl = $el.children('.accordion-item-content');
     if ($contentEl.length === 0) { $contentEl = $el.find('.accordion-item-content'); }
@@ -10645,7 +8170,7 @@ var Accordion = {
   },
   close: function close(el) {
     var app = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     var $contentEl = $el.children('.accordion-item-content');
     if ($contentEl.length === 0) { $contentEl = $el.find('.accordion-item-content'); }
     $el.removeClass('accordion-item-opened');
@@ -10664,7 +8189,7 @@ var Accordion = {
         app.emit('accordionClosed', $el[0]);
       }
     });
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       $contentEl.transition('');
       $contentEl.css('height', '');
       $el.trigger('accordion:close');
@@ -10673,7 +8198,7 @@ var Accordion = {
   },
   toggle: function toggle(el) {
     var app = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return; }
     if ($el.hasClass('accordion-item-opened')) { app.accordion.close(el); }
     else { app.accordion.open(el); }
@@ -10684,7 +8209,7 @@ var Accordion$1 = {
   name: 'accordion',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       accordion: {
         open: Accordion.open.bind(app),
         close: Accordion.close.bind(app),
@@ -10729,12 +8254,12 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     // Extend defaults with modules params
     vl.useInstanceModulesParams(defaults);
 
-    vl.params = Utils$1.extend(defaults, params);
+    vl.params = Utils.extend(defaults, params);
     if (vl.params.height === undefined || !vl.params.height) {
       vl.params.height = app.theme === 'md' ? 48 : 44;
     }
 
-    vl.$el = dom7$1(params.el);
+    vl.$el = $(params.el);
     vl.el = vl.$el[0];
 
     if (vl.$el.length === 0) { return undefined; }
@@ -10761,13 +8286,13 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     }
 
     // Append <ul>
-    vl.ul = vl.params.ul ? dom7$1(vl.params.ul) : vl.$el.children('ul');
+    vl.ul = vl.params.ul ? $(vl.params.ul) : vl.$el.children('ul');
     if (vl.ul.length === 0) {
       vl.$el.append('<ul></ul>');
       vl.ul = vl.$el.children('ul');
     }
 
-    Utils$1.extend(vl, {
+    Utils.extend(vl, {
       // DOM cached items
       domCache: {},
       displayDomCache: {},
@@ -11237,7 +8762,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     vl.detachEvents();
     vl.$el[0].f7VirtualList = null;
     delete vl.$el[0].f7VirtualList;
-    Utils$1.deleteProps(vl);
+    Utils.deleteProps(vl);
     vl = null;
   };
 
@@ -11248,13 +8773,13 @@ var VirtualList = {
   name: 'virtualList',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       virtualList: {
         create: function create(params) {
           return new VirtualList$1(app, params);
         },
         destroy: function destroy(listEl) {
-          var $listEl = dom7$1(listEl);
+          var $listEl = $(listEl);
           if (!$listEl.length) { return undefined; }
           var virtualList = $listEl[0].f7VirtualList;
           if (!virtualList) { return undefined; }
@@ -11289,7 +8814,7 @@ var Tab = {
     }
     if (typeof animate === 'undefined') { animate = true; }
 
-    var $newTabEl = dom7$1(tab);
+    var $newTabEl = $(tab);
 
     if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
       return {
@@ -11300,7 +8825,7 @@ var Tab = {
 
 
     var $tabLinkEl;
-    if (tabLink) { $tabLinkEl = dom7$1(tabLink); }
+    if (tabLink) { $tabLinkEl = $(tabLink); }
 
     var $tabsEl = $newTabEl.parent('.tabs');
     if ($tabsEl.length === 0) {
@@ -11347,18 +8872,18 @@ var Tab = {
     // Find related link for new tab
     if (!$tabLinkEl) {
       // Search by id
-      if (typeof tab === 'string') { $tabLinkEl = dom7$1((".tab-link[href=\"" + tab + "\"]")); }
-      else { $tabLinkEl = dom7$1((".tab-link[href=\"#" + ($newTabEl.attr('id')) + "\"]")); }
+      if (typeof tab === 'string') { $tabLinkEl = $((".tab-link[href=\"" + tab + "\"]")); }
+      else { $tabLinkEl = $((".tab-link[href=\"#" + ($newTabEl.attr('id')) + "\"]")); }
       // Search by data-tab
       if (!$tabLinkEl || ($tabLinkEl && $tabLinkEl.length === 0)) {
-        dom7$1('[data-tab]').each(function (index, el) {
-          if ($newTabEl.is(dom7$1(el).attr('data-tab'))) { $tabLinkEl = dom7$1(el); }
+        $('[data-tab]').each(function (index, el) {
+          if ($newTabEl.is($(el).attr('data-tab'))) { $tabLinkEl = $(el); }
         });
       }
       if (tabRoute && (!$tabLinkEl || ($tabLinkEl && $tabLinkEl.length === 0))) {
-        $tabLinkEl = dom7$1(("[data-route-tab-id=\"" + (tabRoute.route.tab.id) + "\"]"));
+        $tabLinkEl = $(("[data-route-tab-id=\"" + (tabRoute.route.tab.id) + "\"]"));
         if ($tabLinkEl.length === 0) {
-          $tabLinkEl = dom7$1((".tab-link[href=\"" + (tabRoute.url) + "\"]"));
+          $tabLinkEl = $((".tab-link[href=\"" + (tabRoute.url) + "\"]"));
         }
       }
     }
@@ -11368,11 +8893,11 @@ var Tab = {
       if ($oldTabEl && $oldTabEl.length > 0) {
         // Search by id
         var oldTabId = $oldTabEl.attr('id');
-        if (oldTabId) { $oldTabLinkEl = dom7$1((".tab-link[href=\"#" + oldTabId + "\"]")); }
+        if (oldTabId) { $oldTabLinkEl = $((".tab-link[href=\"#" + oldTabId + "\"]")); }
           // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
-          dom7$1('[data-tab]').each(function (index, tabLinkEl) {
-            if ($oldTabEl.is(dom7$1(tabLinkEl).attr('data-tab'))) { $oldTabLinkEl = dom7$1(tabLinkEl); }
+          $('[data-tab]').each(function (index, tabLinkEl) {
+            if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) { $oldTabLinkEl = $(tabLinkEl); }
           });
         }
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
@@ -11406,7 +8931,7 @@ var Tabs = {
   name: 'tabs',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       tab: {
         show: Tab.show.bind(app),
       },
@@ -11426,7 +8951,7 @@ var Tabs = {
 
 function swipePanel(panel) {
   var app = panel.app;
-  Utils$1.extend(panel, {
+  Utils.extend(panel, {
     swipeable: true,
     swipeInitialized: true,
   });
@@ -11452,15 +8977,15 @@ function swipePanel(panel) {
   function handleTouchStart(e) {
     if (!panel.swipeable) { return; }
     if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) { return; }
-    if (dom7$1('.modal-in, .photo-browser-in').length > 0) { return; }
+    if ($('.modal-in, .photo-browser-in').length > 0) { return; }
     otherPanel = app.panel[side === 'left' ? 'right' : 'left'] || {};
     if (!panel.opened && otherPanel.opened) { return; }
     if (!(params.swipeCloseOpposite || params.swipeOnlyClose)) {
       if (otherPanel.opened) { return; }
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') { return; }
-    if (dom7$1(e.target).closest('.range-slider').length > 0) { return; }
-    if (dom7$1(e.target).closest('.tabs-swipeable-wrap').length > 0) { return; }
+    if ($(e.target).closest('.range-slider').length > 0) { return; }
+    if ($(e.target).closest('.tabs-swipeable-wrap').length > 0) { return; }
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     if (params.swipeOnlyClose && !panel.opened) {
@@ -11481,7 +9006,7 @@ function swipePanel(panel) {
     isTouched = true;
     isScrolling = undefined;
 
-    touchStartTime = Utils$1.now();
+    touchStartTime = Utils.now();
     direction = undefined;
   }
   function handleTouchMove(e) {
@@ -11682,17 +9207,17 @@ function swipePanel(panel) {
           $el.css({ display: '' });
         } else {
           var target = effect === 'reveal' ? $viewEl : $el;
-          dom7$1('html').addClass('with-panel-transitioning');
+          $('html').addClass('with-panel-transitioning');
           target.transitionEnd(function () {
             if ($el.hasClass('panel-active')) { return; }
             $el.css({ display: '' });
-            dom7$1('html').removeClass('with-panel-transitioning');
+            $('html').removeClass('with-panel-transitioning');
           });
         }
       }
     }
     if (effect === 'reveal') {
-      Utils$1.nextFrame(function () {
+      Utils.nextFrame(function () {
         $viewEl.transition('');
         $viewEl.transform('');
       });
@@ -11720,7 +9245,7 @@ var Panel$1 = (function (Framework7Class$$1) {
     var panel = this;
 
     var el = params.el;
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return panel; }
     if ($el[0].f7Panel) { return $el[0].f7Panel; }
 
@@ -11734,13 +9259,13 @@ var Panel$1 = (function (Framework7Class$$1) {
     if (typeof effect === 'undefined') { effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal'; }
 
     if (!app.panel[side]) {
-      Utils$1.extend(app.panel, ( obj = {}, obj[side] = panel, obj ));
+      Utils.extend(app.panel, ( obj = {}, obj[side] = panel, obj ));
       var obj;
     }
 
-    var $backdropEl = dom7$1('.panel-backdrop');
+    var $backdropEl = $('.panel-backdrop');
     if ($backdropEl.length === 0) {
-      $backdropEl = dom7$1('<div class="panel-backdrop"></div>');
+      $backdropEl = $('<div class="panel-backdrop"></div>');
       $backdropEl.insertBefore($el);
     }
 
@@ -11751,7 +9276,7 @@ var Panel$1 = (function (Framework7Class$$1) {
       $viewEl = app.root.children('.view').eq(0);
     }
 
-    Utils$1.extend(panel, {
+    Utils.extend(panel, {
       app: app,
       side: side,
       effect: effect,
@@ -11803,7 +9328,7 @@ var Panel$1 = (function (Framework7Class$$1) {
 
     if (app.width >= breakpoint) {
       if (!wasVisible) {
-        dom7$1('html').removeClass(("with-panel-" + side + "-reveal with-panel-" + side + "-cover with-panel"));
+        $('html').removeClass(("with-panel-" + side + "-reveal with-panel-" + side + "-cover with-panel"));
         $el.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('active');
         panel.onOpen();
         panel.onOpened();
@@ -11881,7 +9406,7 @@ var Panel$1 = (function (Framework7Class$$1) {
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
     panel._clientLeft = $el[0].clientLeft;
 
-    dom7$1('html').addClass(("with-panel with-panel-" + side + "-" + effect));
+    $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
     panel.onOpen();
 
     // Transition End;
@@ -11889,7 +9414,7 @@ var Panel$1 = (function (Framework7Class$$1) {
 
     function panelTransitionEnd() {
       transitionEndTarget.transitionEnd(function (e) {
-        if (dom7$1(e.target).is(transitionEndTarget)) {
+        if ($(e.target).is(transitionEndTarget)) {
           if ($el.hasClass('panel-active')) {
             panel.onOpened();
             $backdropEl.css({ display: '' });
@@ -11936,16 +9461,16 @@ var Panel$1 = (function (Framework7Class$$1) {
       transitionEndTarget.transitionEnd(function () {
         if ($el.hasClass('panel-active')) { return; }
         $el.css({ display: '' });
-        dom7$1('html').removeClass('with-panel-transitioning');
+        $('html').removeClass('with-panel-transitioning');
         panel.onClosed();
       });
-      dom7$1('html')
+      $('html')
         .removeClass(("with-panel with-panel-" + side + "-" + effect))
         .addClass('with-panel-transitioning');
     } else {
       $el.css({ display: '' });
       $el.removeClass('not-animated');
-      dom7$1('html').removeClass(("with-panel with-panel-transitioning with-panel-" + side + "-" + effect));
+      $('html').removeClass(("with-panel with-panel-transitioning with-panel-" + side + "-" + effect));
       panel.onClosed();
     }
     return true;
@@ -12008,7 +9533,7 @@ var Panel = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app.panel, {
+    Utils.extend(app.panel, {
       disableSwipe: function disableSwipe(panel) {
         if ( panel === void 0 ) panel = 'both';
 
@@ -12026,7 +9551,7 @@ var Panel = {
           panels = [panel];
         }
         panels.forEach(function (panelInstance) {
-          if (panelInstance) { Utils$1.extend(panelInstance, { swipeable: false }); }
+          if (panelInstance) { Utils.extend(panelInstance, { swipeable: false }); }
         });
       },
       enableSwipe: function enableSwipe(panel) {
@@ -12057,7 +9582,7 @@ var Panel = {
             if (!panelInstance.swipeInitialized) {
               panelInstance.initSwipePanel();
             } else {
-              Utils$1.extend(panelInstance, { swipeable: true });
+              Utils.extend(panelInstance, { swipeable: true });
             }
           });
         }
@@ -12069,16 +9594,16 @@ var Panel = {
       open: function open(side, animate) {
         var panelSide = side;
         if (!panelSide) {
-          if (dom7$1('.panel').length > 1) {
+          if ($('.panel').length > 1) {
             return false;
           }
-          panelSide = dom7$1('.panel').hasClass('panel-left') ? 'left' : 'right';
+          panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) { return false; }
         if (app.panel[panelSide]) {
           return app.panel[panelSide].open(animate);
         }
-        var $panelEl = dom7$1((".panel-" + panelSide));
+        var $panelEl = $((".panel-" + panelSide));
         if ($panelEl.length > 0) {
           return new Panel$1(app, { el: $panelEl }).open(animate);
         }
@@ -12089,9 +9614,9 @@ var Panel = {
         var panelSide;
         if (panelSide) {
           panelSide = side;
-          $panelEl = dom7$1((".panel-" + panelSide));
+          $panelEl = $((".panel-" + panelSide));
         } else {
-          $panelEl = dom7$1('.panel.panel-active');
+          $panelEl = $('.panel.panel-active');
           panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) { return false; }
@@ -12110,8 +9635,8 @@ var Panel = {
       var app = this;
 
       // Create Panels
-      dom7$1('.panel').each(function (index, panelEl) {
-        var side = dom7$1(panelEl).hasClass('panel-left') ? 'left' : 'right';
+      $('.panel').each(function (index, panelEl) {
+        var side = $(panelEl).hasClass('panel-left') ? 'left' : 'right';
         app.panel[side] = new Panel$1(app, { el: panelEl, side: side });
       });
     },
@@ -12122,7 +9647,7 @@ var Panel = {
 
       var app = this;
       var side = 'left';
-      if (data.panel === 'right' || (dom7$1('.panel').length === 1 && dom7$1('.panel').hasClass('panel-right'))) {
+      if (data.panel === 'right' || ($('.panel').length === 1 && $('.panel').hasClass('panel-right'))) {
         side = 'right';
       }
       app.panel.open(side, data.animate);
@@ -12136,8 +9661,8 @@ var Panel = {
     },
     '.panel-backdrop': function close() {
       var app = this;
-      dom7$1('.panel-active').trigger('panel:backdrop-click');
-      app.emit('panelBackdropClick', dom7$1('.panel-active')[0]);
+      $('.panel-active').trigger('panel:backdrop-click');
+      app.emit('panelBackdropClick', $('.panel-active')[0]);
       if (app.params.panel.closeByBackdropClick) { app.panel.close(); }
     },
   },
@@ -12152,12 +9677,12 @@ var Chip = {
 };
 
 // Form Data
-var FormData$1 = {
+var FormData = {
   store: function store(form, data) {
     var app = this;
     var formId = form;
 
-    var $formEl = dom7$1(form);
+    var $formEl = $(form);
     if ($formEl.length && $formEl.is('form') && $formEl.attr('id')) {
       formId = $formEl.attr('id');
     }
@@ -12175,7 +9700,7 @@ var FormData$1 = {
     var app = this;
     var formId = form;
 
-    var $formEl = dom7$1(form);
+    var $formEl = $(form);
     if ($formEl.length && $formEl.is('form') && $formEl.attr('id')) {
       formId = $formEl.attr('id');
     }
@@ -12196,7 +9721,7 @@ var FormData$1 = {
     var app = this;
     var formId = form;
 
-    var $formEl = dom7$1(form);
+    var $formEl = $(form);
     if ($formEl.length && $formEl.is('form') && $formEl.attr('id')) {
       formId = $formEl.attr('id');
     }
@@ -12223,7 +9748,7 @@ var FormData$1 = {
 var FormStorage = {
   init: function init(formEl) {
     var app = this;
-    var $formEl = dom7$1(formEl);
+    var $formEl = $(formEl);
     var formId = $formEl.attr('id');
     if (!formId) { return; }
     var initialData = app.form.data.get(formId);
@@ -12240,7 +9765,7 @@ var FormStorage = {
     $formEl.on('change submit', store);
   },
   destroy: function destroy(formEl) {
-    var $formEl = dom7$1(formEl);
+    var $formEl = $(formEl);
     $formEl.off('change submit');
   },
 };
@@ -12248,7 +9773,7 @@ var FormStorage = {
 // Form To/From Data
 function formToData(formEl) {
   var app = this;
-  var $formEl = dom7$1(formEl).eq(0);
+  var $formEl = $(formEl).eq(0);
   if ($formEl.length === 0) { return undefined; }
 
   // Form data
@@ -12258,7 +9783,7 @@ function formToData(formEl) {
   var skipTypes = ['submit', 'image', 'button', 'file'];
   var skipNames = [];
   $formEl.find('input, select, textarea').each(function (inputIndex, inputEl) {
-    var $inputEl = dom7$1(inputEl);
+    var $inputEl = $(inputEl);
     var name = $inputEl.attr('name');
     var type = $inputEl.attr('type');
     var tag = inputEl.nodeName.toLowerCase();
@@ -12298,7 +9823,7 @@ function formToData(formEl) {
 }
 function formFromData(formEl, formData) {
   var app = this;
-  var $formEl = dom7$1(formEl).eq(0);
+  var $formEl = $(formEl).eq(0);
   if (!$formEl.length) { return; }
 
   var data = formData;
@@ -12315,7 +9840,7 @@ function formFromData(formEl, formData) {
   var skipNames = [];
 
   $formEl.find('input, select, textarea').each(function (inputIndex, inputEl) {
-    var $inputEl = dom7$1(inputEl);
+    var $inputEl = $(inputEl);
     var name = $inputEl.attr('name');
     var type = $inputEl.attr('type');
     var tag = inputEl.nodeName.toLowerCase();
@@ -12364,7 +9889,7 @@ function initAjaxForm() {
   var app = this;
 
   function onSubmitChange(e, fromData) {
-    var $formEl = dom7$1(this);
+    var $formEl = $(this);
     if (e.type === 'change' && !$formEl.hasClass('form-ajax-submit-onchange')) { return; }
     if (e.type === 'submit') { e.preventDefault(); }
 
@@ -12377,10 +9902,10 @@ function initAjaxForm() {
     if (!url) { return; }
 
     var data;
-    if (method === 'POST') { data = new FormData$1($formEl[0]); }
-    else { data = dom7$1.serializeObject(app.form.toData($formEl[0])); }
+    if (method === 'POST') { data = new FormData($formEl[0]); }
+    else { data = $.serializeObject(app.form.toData($formEl[0])); }
 
-    var xhr = dom7$1.ajax({
+    var xhr = $.ajax({
       method: method,
       url: url,
       contentType: contentType,
@@ -12403,19 +9928,19 @@ function initAjaxForm() {
       },
     });
   }
-  dom7$1(document).on('submit change', 'form.form-ajax-submit, form.form-ajax-submit-onchange', onSubmitChange);
+  $(document).on('submit change', 'form.form-ajax-submit, form.form-ajax-submit-onchange', onSubmitChange);
 }
 
 var Form = {
   name: 'form',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       form: {
         data: {
-          store: FormData$1.store.bind(app),
-          get: FormData$1.get.bind(app),
-          delete: FormData$1.delete.bind(app),
+          store: FormData.store.bind(app),
+          get: FormData.get.bind(app),
+          delete: FormData.delete.bind(app),
         },
         toData: formToData.bind(app),
         fromData: formFromData.bind(app),
@@ -12433,13 +9958,13 @@ var Form = {
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.form-store-data').each(function (index, formEl) {
+      $(tabEl).find('.form-store-data').each(function (index, formEl) {
         app.form.storage.destroy(formEl);
       });
     },
     tabInit: function tabInit(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.form-store-data').each(function (index, formEl) {
+      $(tabEl).find('.form-store-data').each(function (index, formEl) {
         app.form.storage.init(formEl);
       });
     },
@@ -12461,7 +9986,7 @@ var Form = {
 var Input = {
   ignoreTypes: ['checkbox', 'button', 'submit', 'range', 'radio', 'image'],
   createTextareaResizableShadow: function createTextareaResizableShadow() {
-    var $shadowEl = dom7$1(document.createElement('textarea'));
+    var $shadowEl = $(document.createElement('textarea'));
     $shadowEl.addClass('textarea-resizable-shadow');
     $shadowEl.prop({
       disabled: true,
@@ -12472,7 +9997,7 @@ var Input = {
   textareaResizableShadow: undefined,
   resizeTextarea: function resizeTextarea(textareaEl) {
     var app = this;
-    var $textareaEl = dom7$1(textareaEl);
+    var $textareaEl = $(textareaEl);
     if (!Input.textareaResizableShadow) {
       Input.createTextareaResizableShadow();
     }
@@ -12506,7 +10031,7 @@ var Input = {
     }
   },
   validate: function validate(inputEl) {
-    var $inputEl = dom7$1(inputEl);
+    var $inputEl = $(inputEl);
     if (!$inputEl.length) { return; }
     var $itemInputEl = $inputEl.parents('.item-input');
     var validity = $inputEl[0].validity;
@@ -12516,7 +10041,7 @@ var Input = {
       var $errorEl = $inputEl.nextAll('.item-input-error-message');
       if (validationMessage) {
         if ($errorEl.length === 0) {
-          $errorEl = dom7$1('<div class="item-input-error-message"></div>');
+          $errorEl = $('<div class="item-input-error-message"></div>');
           $errorEl.insertAfter($inputEl);
         }
         $errorEl.text(validationMessage);
@@ -12533,12 +10058,12 @@ var Input = {
   },
   validateInputs: function validateInputs(el) {
     var app = this;
-    dom7$1(el).find('input, textarea, select').each(function (index, inputEl) {
+    $(el).find('input, textarea, select').each(function (index, inputEl) {
       app.input.validate(inputEl);
     });
   },
   focus: function focus(inputEl) {
-    var $inputEl = dom7$1(inputEl);
+    var $inputEl = $(inputEl);
     var type = $inputEl.attr('type');
     if (Input.ignoreTypes.indexOf(type) >= 0) { return; }
     var $itemInputEl = $inputEl.parents('.item-input');
@@ -12546,11 +10071,11 @@ var Input = {
     $inputEl.addClass('input-focused');
   },
   blur: function blur(inputEl) {
-    dom7$1(inputEl).parents('.item-input').removeClass('item-input-focused');
-    dom7$1(inputEl).removeClass('input-focused');
+    $(inputEl).parents('.item-input').removeClass('item-input-focused');
+    $(inputEl).removeClass('input-focused');
   },
   checkEmptyState: function checkEmptyState(inputEl) {
-    var $inputEl = dom7$1(inputEl);
+    var $inputEl = $(inputEl);
     var value = $inputEl.val();
     var $itemInputEl = $inputEl.parents('.item-input');
     if ((value && (typeof value === 'string' && value.trim() !== '')) || (Array.isArray(value) && value.length > 0)) {
@@ -12570,7 +10095,7 @@ var Input = {
       app.input.focus(this);
     }
     function onBlur() {
-      var $inputEl = dom7$1(this);
+      var $inputEl = $(this);
       var tag = $inputEl[0].nodeName.toLowerCase();
       app.input.blur($inputEl);
       if ($inputEl.dataset().validate || $inputEl.attr('validate') !== null) {
@@ -12582,7 +10107,7 @@ var Input = {
       }
     }
     function onChange() {
-      var $inputEl = dom7$1(this);
+      var $inputEl = $(this);
       var type = $inputEl.attr('type');
       var tag = $inputEl[0].nodeName.toLowerCase();
       if (Input.ignoreTypes.indexOf(type) >= 0) { return; }
@@ -12601,14 +10126,14 @@ var Input = {
       }
     }
     function onInvalid(e) {
-      var $inputEl = dom7$1(this);
+      var $inputEl = $(this);
       if ($inputEl.dataset().validate || $inputEl.attr('validate') !== null) {
         e.preventDefault();
         app.input.validate($inputEl);
       }
     }
     function clearInput() {
-      var $clicked = dom7$1(this);
+      var $clicked = $(this);
       var $inputEl = $clicked.siblings('input, textarea').eq(0);
       var previousValue = $inputEl.val();
       $inputEl
@@ -12617,11 +10142,11 @@ var Input = {
         .focus()
         .trigger('input:clear', previousValue);
     }
-    dom7$1(document).on('click', '.input-clear-button', clearInput);
-    dom7$1(document).on('change input', 'input, textarea, select', onChange, true);
-    dom7$1(document).on('focus', 'input, textarea, select', onFocus, true);
-    dom7$1(document).on('blur', 'input, textarea, select', onBlur, true);
-    dom7$1(document).on('invalid', 'input, textarea, select', onInvalid, true);
+    $(document).on('click', '.input-clear-button', clearInput);
+    $(document).on('change input', 'input, textarea, select', onChange, true);
+    $(document).on('focus', 'input, textarea, select', onFocus, true);
+    $(document).on('blur', 'input, textarea, select', onBlur, true);
+    $(document).on('invalid', 'input, textarea, select', onInvalid, true);
   },
 };
 
@@ -12629,7 +10154,7 @@ var Input$1 = {
   name: 'input',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       input: {
         focus: Input.focus.bind(app),
         blur: Input.blur.bind(app),
@@ -12648,11 +10173,11 @@ var Input$1 = {
     },
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      var $tabEl = dom7$1(tabEl);
+      var $tabEl = $(tabEl);
       $tabEl.find('.item-input').each(function (itemInputIndex, itemInputEl) {
-        var $itemInputEl = dom7$1(itemInputEl);
+        var $itemInputEl = $(itemInputEl);
         $itemInputEl.find('input, select, textarea').each(function (inputIndex, inputEl) {
-          var $inputEl = dom7$1(inputEl);
+          var $inputEl = $(inputEl);
           if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) { return; }
           app.input.checkEmptyState($inputEl);
         });
@@ -12665,9 +10190,9 @@ var Input$1 = {
       var app = this;
       var $pageEl = page.$el;
       $pageEl.find('.item-input').each(function (itemInputIndex, itemInputEl) {
-        var $itemInputEl = dom7$1(itemInputEl);
+        var $itemInputEl = $(itemInputEl);
         $itemInputEl.find('input, select, textarea').each(function (inputIndex, inputEl) {
-          var $inputEl = dom7$1(inputEl);
+          var $inputEl = $(inputEl);
           if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) { return; }
           app.input.checkEmptyState($inputEl);
         });
@@ -12699,19 +10224,19 @@ var Toggle$1 = (function (Framework7Class$$1) {
     // Extend defaults with modules params
     toggle.useInstanceModulesParams(defaults);
 
-    toggle.params = Utils$1.extend(defaults, params);
+    toggle.params = Utils.extend(defaults, params);
 
     var el = toggle.params.el;
     if (!el) { return toggle; }
 
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return toggle; }
 
     var dataset = $el.dataset();
 
     var $inputEl = $el.children('input[type="checkbox"]');
 
-    Utils$1.extend(toggle, {
+    Utils.extend(toggle, {
       $el: $el,
       el: $el[0],
       dataset: dataset,
@@ -12751,11 +10276,11 @@ var Toggle$1 = (function (Framework7Class$$1) {
 
       isTouched = true;
       isScrolling = undefined;
-      touchStartTime = Utils$1.now();
+      touchStartTime = Utils.now();
       touchStartChecked = toggle.checked;
 
       toggleWidth = $el[0].offsetWidth;
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         if (isTouched) {
           $el.addClass('toggle-active-state');
         }
@@ -12801,7 +10326,7 @@ var Toggle$1 = (function (Framework7Class$$1) {
       $el.removeClass('toggle-active-state');
 
       var changed;
-      if ((Utils$1.now() - touchStartTime) < 300) {
+      if ((Utils.now() - touchStartTime) < 300) {
         if (touchesDiff < 0 && touchStartChecked) {
           changed = true;
         }
@@ -12862,7 +10387,7 @@ var Toggle$1 = (function (Framework7Class$$1) {
     toggle.$el.trigger('toggle:beforedestroy', toggle);
     delete toggle.$el[0].f7Toggle;
     toggle.detachEvents();
-    Utils$1.deleteProps(toggle);
+    Utils.deleteProps(toggle);
     toggle = null;
   };
 
@@ -12873,19 +10398,19 @@ var Toggle = {
   name: 'toggle',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       toggle: {
         create: function create(params) {
           return new Toggle$1(app, params);
         },
         get: function get(el) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if ($el.length) { return $el[0].f7Toggle; }
           return undefined;
         },
         destroy: function destroy(el) {
           if (el && (el instanceof Toggle$1) && el.destroy) { return el.destroy(); }
-          var $el = dom7$1(el);
+          var $el = $(el);
           if ($el.length) { return $el[0].f7Toggle.destroy(); }
           return undefined;
         },
@@ -12898,10 +10423,10 @@ var Toggle = {
   on: {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('label.toggle').each(function (index, toggleEl) { return new Toggle$1(app, { el: toggleEl }); });
+      $(tabEl).find('label.toggle').each(function (index, toggleEl) { return new Toggle$1(app, { el: toggleEl }); });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
-      dom7$1(tabEl).find('label.toggle').each(function (index, toggleEl) {
+      $(tabEl).find('label.toggle').each(function (index, toggleEl) {
         if (toggleEl.f7Toggle) { toggleEl.f7Toggle.destroy(); }
       });
     },
@@ -12930,12 +10455,12 @@ var Range$1 = (function (Framework7Class$$1) {
     // Extend defaults with modules params
     range.useInstanceModulesParams(defaults);
 
-    range.params = Utils$1.extend(defaults, params);
+    range.params = Utils.extend(defaults, params);
 
     var el = range.params.el;
     if (!el) { return range; }
 
-    var $el = dom7$1(el);
+    var $el = $(el);
     if ($el.length === 0) { return range; }
 
     var dataset = $el.dataset();
@@ -12962,14 +10487,14 @@ var Range$1 = (function (Framework7Class$$1) {
     var $inputEl;
     if (!range.params.dual) {
       if (range.params.inputEl) {
-        $inputEl = dom7$1(range.params.inputEl);
+        $inputEl = $(range.params.inputEl);
       } else if ($el.find('input[type="range"]').length) {
         $inputEl = $el.find('input[type="range"]').eq(0);
       }
     }
 
 
-    Utils$1.extend(range, range.params, {
+    Utils.extend(range, range.params, {
       $el: $el,
       el: $el[0],
       $inputEl: $inputEl,
@@ -12998,17 +10523,17 @@ var Range$1 = (function (Framework7Class$$1) {
     }
 
     // Check for layout
-    var $barEl = dom7$1('<div class="range-bar"></div>');
-    var $barActiveEl = dom7$1('<div class="range-bar-active"></div>');
+    var $barEl = $('<div class="range-bar"></div>');
+    var $barActiveEl = $('<div class="range-bar-active"></div>');
     $barEl.append($barActiveEl);
 
     // Create Knobs
     var knobHTML = "\n      <div class=\"range-knob-wrap\">\n        <div class=\"range-knob\"></div>\n        " + (range.label ? '<div class="range-knob-label"></div>' : '') + "\n      </div>\n    ";
-    var knobs = [dom7$1(knobHTML)];
+    var knobs = [$(knobHTML)];
     var labels = [];
 
     if (range.dual) {
-      knobs.push(dom7$1(knobHTML));
+      knobs.push($(knobHTML));
     }
 
     $el.append($barEl);
@@ -13024,7 +10549,7 @@ var Range$1 = (function (Framework7Class$$1) {
       }
     }
 
-    Utils$1.extend(range, {
+    Utils.extend(range, {
       knobs: knobs,
       labels: labels,
       $barEl: $barEl,
@@ -13066,7 +10591,7 @@ var Range$1 = (function (Framework7Class$$1) {
         $touchedKnobEl = range.knobs[0];
         newValue = (progress * (range.max - range.min)) + range.min;
       }
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         if (isTouched) { $touchedKnobEl.addClass('range-knob-active-state'); }
       }, 70);
       range.setValue(newValue);
@@ -13256,7 +10781,7 @@ var Range$1 = (function (Framework7Class$$1) {
     range.$el.trigger('range:beforedestroy', range);
     delete range.$el[0].f7Range;
     range.detachEvents();
-    Utils$1.deleteProps(range);
+    Utils.deleteProps(range);
     range = null;
   };
 
@@ -13267,29 +10792,29 @@ var Range = {
   name: 'range',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       range: {
         create: function create(params) {
           return new Range$1(app, params);
         },
         destroy: function destroy(el) {
           if (el && (el instanceof Range$1) && el.destroy) { return el.destroy(); }
-          var $el = dom7$1(el);
+          var $el = $(el);
           if ($el.length) { return $el[0].f7Range.destroy(); }
           return undefined;
         },
         get: function get(el) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if ($el.length) { return $el[0].f7Range; }
           return undefined;
         },
         getValue: function getValue(el) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if ($el.length) { return $el[0].f7Range.get(); }
           return undefined;
         },
         setValue: function setValue(el, value) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if ($el.length) { return $el[0].f7Range.set(value); }
           return undefined;
         },
@@ -13302,12 +10827,12 @@ var Range = {
   on: {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.range-slider-init').each(function (index, rangeEl) { return new Range$1(app, {
+      $(tabEl).find('.range-slider-init').each(function (index, rangeEl) { return new Range$1(app, {
         el: rangeEl,
       }); });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
-      dom7$1(tabEl).find('.range-slider-init').each(function (index, rangeEl) {
+      $(tabEl).find('.range-slider-init').each(function (index, rangeEl) {
         if (rangeEl.f7Range) { rangeEl.f7Range.destroy(); }
       });
     },
@@ -13332,19 +10857,19 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     Framework7Class$$1.call(this, params, [app]);
     var ss = this;
     ss.app = app;
-    var defaults = Utils$1.extend({
+    var defaults = Utils.extend({
       on: {},
     }, app.modules.smartSelect.params.smartSelect);
 
-    var $el = dom7$1(params.el).eq(0);
+    var $el = $(params.el).eq(0);
     if ($el.length === 0) { return ss; }
 
     var $selectEl = $el.find('select').eq(0);
     if ($selectEl.length === 0) { return ss; }
 
-    var $valueEl = dom7$1(params.valueEl);
+    var $valueEl = $(params.valueEl);
     if ($valueEl.length === 0) {
-      $valueEl = dom7$1('<div class="item-after"></div>');
+      $valueEl = $('<div class="item-after"></div>');
       $valueEl.insertAfter($el.find('.item-title'));
     }
 
@@ -13359,9 +10884,9 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
 
     var multiple = $selectEl[0].multiple;
     var inputType = multiple ? 'checkbox' : 'radio';
-    var id = Utils$1.now();
-    Utils$1.extend(ss, {
-      params: Utils$1.extend(defaults, params),
+    var id = Utils.now();
+    Utils.extend(ss, {
+      params: Utils.extend(defaults, params),
       $el: $el,
       el: $el[0],
       $selectEl: $selectEl,
@@ -13409,7 +10934,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
             optionEl.selected = inputEl.checked;
           }
           if (optionEl.selected) {
-            displayAs = optionEl.dataset ? optionEl.dataset.displayAs : dom7$1(optionEl).data('display-value-as');
+            displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-value-as');
             text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
             optionText.push(text.trim());
           }
@@ -13419,7 +10944,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
         }
       } else {
         optionEl = ss.$selectEl.find(("option[value=\"" + value + "\"]"))[0];
-        displayAs = optionEl.dataset ? optionEl.dataset.displayAs : dom7$1(optionEl).data('display-as');
+        displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
         text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
         optionText = [text];
         ss.selectEl.value = value;
@@ -13457,9 +10982,9 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     if (ss.selectEl.selectedOptions.length >= ss.maxLength) {
       $containerEl.find('input[type="checkbox"]').each(function (index, inputEl) {
         if (!inputEl.checked) {
-          dom7$1(inputEl).parents('li').addClass('disabled');
+          $(inputEl).parents('li').addClass('disabled');
         } else {
-          dom7$1(inputEl).parents('li').removeClass('disabled');
+          $(inputEl).parents('li').removeClass('disabled');
         }
       });
     } else {
@@ -13477,7 +11002,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       }
     } else {
       ss.$selectEl.find('option').each(function (optionIndex, optionEl) {
-        var $optionEl = dom7$1(optionEl);
+        var $optionEl = $(optionEl);
         if (optionEl.selected) {
           var displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $optionEl.data('display-value-as');
           if (displayAs && typeof displayAs !== 'undefined') {
@@ -13495,7 +11020,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     var items = [];
     var previousGroupEl;
     ss.$selectEl.find('option').each(function (index, optionEl) {
-      var $optionEl = dom7$1(optionEl);
+      var $optionEl = $(optionEl);
       var optionData = $optionEl.dataset();
       var optionImage = optionData.optionImage || ss.params.optionImage;
       var optionIcon = optionData.optionIcon || ss.params.optionIcon;
@@ -13542,7 +11067,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
   SmartSelect.prototype.onOpen = function onOpen (type, container) {
     var ss = this;
     var app = ss.app;
-    var $containerEl = dom7$1(container);
+    var $containerEl = $(container);
     ss.$containerEl = $containerEl;
     ss.openedIn = type;
     ss.opened = true;
@@ -13860,7 +11385,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       ss.view.router.back();
     } else {
       ss.modal.once('modalClosed', function () {
-        Utils$1.nextTick(function () {
+        Utils.nextTick(function () {
           ss.modal.destroy();
           delete ss.modal;
         });
@@ -13880,7 +11405,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     ss.$el.trigger('smartselect:beforedestroy', ss);
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
-    Utils$1.deleteProps(ss);
+    Utils.deleteProps(ss);
     ss.destroyed = true;
   };
 
@@ -13934,7 +11459,7 @@ var SmartSelect = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       smartSelect: {
         create: function create(params) {
           return new SmartSelect$1(app, params);
@@ -13950,7 +11475,7 @@ var SmartSelect = {
           return undefined;
         },
         get: function get(smartSelectEl) {
-          var $smartSelectEl = dom7$1(smartSelectEl);
+          var $smartSelectEl = $(smartSelectEl);
           if (!$smartSelectEl.length) { return undefined; }
           return $smartSelectEl[0].f7SmartSelect;
         },
@@ -13961,12 +11486,12 @@ var SmartSelect = {
   on: {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.smart-select-init').each(function (index, smartSelectEl) {
-        app.smartSelect.create(Utils$1.extend({ el: smartSelectEl }, dom7$1(smartSelectEl).dataset()));
+      $(tabEl).find('.smart-select-init').each(function (index, smartSelectEl) {
+        app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
       });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
-      dom7$1(tabEl).find('.smart-select-init').each(function (index, smartSelectEl) {
+      $(tabEl).find('.smart-select-init').each(function (index, smartSelectEl) {
         if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
           smartSelectEl.f7SmartSelect.destroy();
         }
@@ -13975,7 +11500,7 @@ var SmartSelect = {
     pageInit: function pageInit(page) {
       var app = this;
       page.$el.find('.smart-select-init').each(function (index, smartSelectEl) {
-        app.smartSelect.create(Utils$1.extend({ el: smartSelectEl }, dom7$1(smartSelectEl).dataset()));
+        app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
       });
     },
     pageBeforeRemove: function pageBeforeRemove(page) {
@@ -13990,7 +11515,7 @@ var SmartSelect = {
     '.smart-select': function open($clickedEl, data) {
       var app = this;
       if (!$clickedEl[0].f7SmartSelect) {
-        var ss = app.smartSelect.create(Utils$1.extend({ el: $clickedEl }, data));
+        var ss = app.smartSelect.create(Utils.extend({ el: $clickedEl }, data));
         ss.open();
       }
     },
@@ -14003,7 +11528,7 @@ var Calendar$1 = (function (Framework7Class$$1) {
 
     Framework7Class$$1.call(this, params, [app]);
     var calendar = this;
-    calendar.params = Utils$1.extend({
+    calendar.params = Utils.extend({
 
     }, params);
     return calendar;
@@ -14034,7 +11559,7 @@ var Picker$1 = (function (Framework7Class$$1) {
 
     Framework7Class$$1.call(this, params);
     var picker = this;
-    picker.params = Utils$1.extend({
+    picker.params = Utils.extend({
 
     }, params);
     return picker;
@@ -14062,7 +11587,7 @@ var Picker = {
 var InfiniteScroll = {
   handleScroll: function handleScroll(el, e) {
     var app = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     var scrollTop = $el[0].scrollTop;
     var scrollHeight = $el[0].scrollHeight;
     var height = $el[0].offsetHeight;
@@ -14094,14 +11619,14 @@ var InfiniteScroll = {
     }
   },
   create: function create(el) {
-    var $el = dom7$1(el);
+    var $el = $(el);
     var app = this;
     $el.on('scroll', function handle(e) {
       app.infiniteScroll.handle(this, e);
     });
   },
   destroy: function destroy(el) {
-    var $el = dom7$1(el);
+    var $el = $(el);
     $el.off('scroll');
   },
 };
@@ -14109,7 +11634,7 @@ var InfiniteScroll$1 = {
   name: 'infiniteScroll',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       infiniteScroll: {
         handle: InfiniteScroll.handleScroll.bind(app),
         create: InfiniteScroll.create.bind(app),
@@ -14120,13 +11645,13 @@ var InfiniteScroll$1 = {
   on: {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      var $tabEl = dom7$1(tabEl);
+      var $tabEl = $(tabEl);
       $tabEl.find('.infinite-scroll-content').each(function (index, el) {
         app.infiniteScroll.create(el);
       });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
-      var $tabEl = dom7$1(tabEl);
+      var $tabEl = $(tabEl);
       var app = this;
       $tabEl.find('.infinite-scroll-content').each(function (index, el) {
         app.infiniteScroll.destroy(el);
@@ -14151,7 +11676,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
   function PullToRefresh(app, el) {
     Framework7Class$$1.call(this, {}, [app]);
     var ptr = this;
-    var $el = dom7$1(el);
+    var $el = $(el);
     var $preloaderEl = $el.find('.ptr-preloader');
 
     ptr.$el = $el;
@@ -14412,7 +11937,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
     ptr.$el.trigger('ptr:beforedestroy', ptr);
     delete ptr.el.f7PullToRefresh;
     ptr.detachEvents();
-    Utils$1.deleteProps(ptr);
+    Utils.deleteProps(ptr);
     ptr = null;
   };
 
@@ -14423,10 +11948,10 @@ var PullToRefresh = {
   name: 'pullToRefresh',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       ptr: {
         create: function create(el) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if (!$el.length) { return undefined; }
           if ($el[0].f7PullToRefresh) {
             return $el[0].f7PullToRefresh;
@@ -14434,7 +11959,7 @@ var PullToRefresh = {
           return new PullToRefresh$1(app, el);
         },
         destroy: function destroy(el) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if (!$el.length) { return undefined; }
           if ($el[0].f7PullToRefresh) {
             $el[0].f7PullToRefresh.destroy();
@@ -14442,7 +11967,7 @@ var PullToRefresh = {
           return undefined;
         },
         done: function done(el) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if (!$el.length) { return undefined; }
           if ($el[0].f7PullToRefresh) {
             return $el[0].f7PullToRefresh.done();
@@ -14450,7 +11975,7 @@ var PullToRefresh = {
           return undefined;
         },
         refresh: function refresh(el) {
-          var $el = dom7$1(el);
+          var $el = $(el);
           if (!$el.length) { return undefined; }
           if ($el[0].f7PullToRefresh) {
             return $el[0].f7PullToRefresh.refresh();
@@ -14466,13 +11991,13 @@ var PullToRefresh = {
   on: {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      var $tabEl = dom7$1(tabEl);
+      var $tabEl = $(tabEl);
       $tabEl.find('.ptr-content').each(function (index, el) {
         app.ptr.create(el);
       });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
-      var $tabEl = dom7$1(tabEl);
+      var $tabEl = $(tabEl);
       var app = this;
       $tabEl.find('.ptr-content').each(function (index, el) {
         app.ptr.destroy(el);
@@ -14495,7 +12020,7 @@ var PullToRefresh = {
 
 var Lazy = {
   destroy: function destroy(pageEl) {
-    var $pageEl = dom7$1(pageEl).closest('.page');
+    var $pageEl = $(pageEl).closest('.page');
     if (!$pageEl.length) { return; }
     if ($pageEl[0].f7DestroyLazy) {
       $pageEl[0].f7DestroyLazy();
@@ -14503,7 +12028,7 @@ var Lazy = {
   },
   init: function init(pageEl) {
     var app = this;
-    var $pageEl = dom7$1(pageEl).closest('.page').eq(0);
+    var $pageEl = $(pageEl).closest('.page').eq(0);
 
     // Lazy images
     var lazyLoadImages = $pageEl.find('.lazy');
@@ -14514,7 +12039,7 @@ var Lazy = {
 
     if (placeholderSrc !== false) {
       lazyLoadImages.each(function (index, lazyEl) {
-        if (dom7$1(lazyEl).attr('data-src') && !dom7$1(lazyEl).attr('src')) { dom7$1(lazyEl).attr('src', placeholderSrc); }
+        if ($(lazyEl).attr('data-src') && !$(lazyEl).attr('src')) { $(lazyEl).attr('src', placeholderSrc); }
       });
     }
 
@@ -14580,7 +12105,7 @@ var Lazy = {
   },
   loadImage: function loadImage(imageEl, callback) {
     var app = this;
-    var $imageEl = dom7$1(imageEl);
+    var $imageEl = $(imageEl);
 
     var bg = $imageEl.attr('data-background');
     var src = bg || $imageEl.attr('data-src');
@@ -14621,13 +12146,13 @@ var Lazy = {
   },
   load: function load(pageEl, callback) {
     var app = this;
-    var $pageEl = dom7$1(pageEl);
+    var $pageEl = $(pageEl);
     if (!$pageEl.hasClass('page')) { $pageEl = $pageEl.parents('.page').eq(0); }
     if ($pageEl.length === 0) {
       return;
     }
     $pageEl.find('.lazy').each(function (index, lazyEl) {
-      var $lazyEl = dom7$1(lazyEl);
+      var $lazyEl = $(lazyEl);
       if ($lazyEl.parents('.tab:not(.tab-active)').length > 0) {
         return;
       }
@@ -14650,7 +12175,7 @@ var Lazy$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       lazy: {
         init: Lazy.init.bind(app),
         destroy: Lazy.destroy.bind(app),
@@ -14681,14 +12206,14 @@ var Lazy$1 = {
     },
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      var $tabEl = dom7$1(tabEl);
+      var $tabEl = $(tabEl);
       if ($tabEl.find('.lazy').length > 0 || $tabEl.hasClass('lazy')) {
         app.lazy.init($tabEl);
       }
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
       var app = this;
-      var $tabEl = dom7$1(tabEl);
+      var $tabEl = $(tabEl);
       if ($tabEl.find('.lazy').length > 0 || $tabEl.hasClass('lazy')) {
         app.lazy.destroy($tabEl);
       }
@@ -14711,10 +12236,10 @@ var DataTable$1 = (function (Framework7Class$$1) {
     // Extend defaults with modules params
     table.useInstanceModulesParams(defaults);
 
-    table.params = Utils$1.extend(defaults, params);
+    table.params = Utils.extend(defaults, params);
 
     // El
-    var $el = dom7$1(table.params.el);
+    var $el = $(table.params.el);
     if ($el.length === 0) { return undefined; }
 
     table.$el = $el;
@@ -14728,7 +12253,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
 
     table.$el[0].f7DataTable = table;
 
-    Utils$1.extend(table, {
+    Utils.extend(table, {
       collapsible: $el.hasClass('data-table-collapsible'),
       // Headers
       $headerEl: $el.find('.data-table-header'),
@@ -14741,7 +12266,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
         // Scripted event, don't do anything
         return;
       }
-      var $inputEl = dom7$1(this);
+      var $inputEl = $(this);
       var checked = $inputEl[0].checked;
       var columnIndex = $inputEl.parents('td,th').index();
 
@@ -14768,7 +12293,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
       table.checkSelectedHeader();
     }
     function handleSortableClick() {
-      var $cellEl = dom7$1(this);
+      var $cellEl = $(this);
       var isActive = $cellEl.hasClass('sortable-cell-active');
       var currentSort;
       if (isActive) {
@@ -14804,7 +12329,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
     var table = this;
     if (!table.collapsible) { return; }
     table.$el.find('tbody td:not(.checkbox-cell)').each(function (index, el) {
-      var $el = dom7$1(el);
+      var $el = $(el);
       var elIndex = $el.index();
       var collpsibleTitle = $el.attr('data-collapsible-title');
       if (!collpsibleTitle && collpsibleTitle !== '') {
@@ -14835,7 +12360,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
     table.attachEvents();
     table.$el[0].f7DataTable = null;
     delete table.$el[0].f7DataTable;
-    Utils$1.deleteProps(table);
+    Utils.deleteProps(table);
     table = null;
   };
 
@@ -14849,13 +12374,13 @@ var DataTable = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       dataTable: {
         create: function create(params) {
           return new DataTable$1(app, params);
         },
         destroy: function destroy(tableEl) {
-          var $tableEl = dom7$1(tableEl);
+          var $tableEl = $(tableEl);
           if (!$tableEl.length) { return undefined; }
           var dataTable = $tableEl[0].f7DataTable;
           if (!dataTable) { return undefined; }
@@ -14867,13 +12392,13 @@ var DataTable = {
   on: {
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.data-table-init').each(function (index, tableEl) {
+      $(tabEl).find('.data-table-init').each(function (index, tableEl) {
         app.dataTable.destroy(tableEl);
       });
     },
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.data-table-init').each(function (index, tableEl) {
+      $(tabEl).find('.data-table-init').each(function (index, tableEl) {
         app.dataTable.create({ el: tableEl });
       });
     },
@@ -14898,8 +12423,8 @@ var DataTable = {
 var Fab = {
   morphOpen: function morphOpen(fabEl, targetEl) {
     var app = this;
-    var $fabEl = dom7$1(fabEl);
-    var $targetEl = dom7$1(targetEl);
+    var $fabEl = $(fabEl);
+    var $targetEl = $(targetEl);
     if ($targetEl.length === 0) { return; }
 
     $targetEl.transition(0).addClass('fab-morph-target-visible');
@@ -14914,8 +12439,8 @@ var Fab = {
       width: $fabEl[0].offsetWidth,
       height: $fabEl[0].offsetHeight,
       offset: $fabEl.offset(),
-      translateX: dom7$1.getTranslate($fabEl[0], 'x'),
-      translateY: dom7$1.getTranslate($fabEl[0], 'y'),
+      translateX: $.getTranslate($fabEl[0], 'x'),
+      translateY: $.getTranslate($fabEl[0], 'y'),
     };
 
     $fabEl[0].f7FabMorphData = {
@@ -14965,7 +12490,7 @@ var Fab = {
       .transform(("translate3d(" + (-diffX) + "px, " + (-diffY) + "px, 0)"));
     $fabEl.transitionEnd(function () {
       $targetEl.transition('');
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         $targetEl.css('opacity', 1).transform('scale(1,1)');
       });
       $fabEl.transform(("translate3d(" + (-diffX) + "px, " + (-diffY) + "px, 0) scale(" + scaleX + ", " + scaleY + ")"))
@@ -14979,7 +12504,7 @@ var Fab = {
   },
   morphClose: function morphClose(fabEl) {
     var app = this;
-    var $fabEl = dom7$1(fabEl);
+    var $fabEl = $(fabEl);
     var morphData = $fabEl[0].f7FabMorphData;
     if (!morphData) { return; }
     var $targetEl = morphData.$targetEl;
@@ -15014,7 +12539,7 @@ var Fab = {
         .css('z-index', '')
         .removeClass('fab-opened')
         .transform('');
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         $fabEl.transitionEnd(function () {
           $targetEl
             .removeClass('fab-morph-target-visible')
@@ -15027,7 +12552,7 @@ var Fab = {
   },
   open: function open(fabEl, targetEl) {
     var app = this;
-    var $fabEl = dom7$1(fabEl).eq(0);
+    var $fabEl = $(fabEl).eq(0);
     var $buttonsEl = $fabEl.find('.fab-buttons');
     if (!$fabEl.length) { return; }
     if ($fabEl.hasClass('fab-opened')) { return; }
@@ -15049,7 +12574,7 @@ var Fab = {
     if ( fabEl === void 0 ) fabEl = '.fab-opened';
 
     var app = this;
-    var $fabEl = dom7$1(fabEl).eq(0);
+    var $fabEl = $(fabEl).eq(0);
     var $buttonsEl = $fabEl.find('.fab-buttons');
     if (!$fabEl.length) { return; }
     if (!$fabEl.hasClass('fab-opened')) { return; }
@@ -15064,7 +12589,7 @@ var Fab = {
   },
   toggle: function toggle(fabEl) {
     var app = this;
-    var $fabEl = dom7$1(fabEl);
+    var $fabEl = $(fabEl);
     if (!$fabEl.hasClass('fab-opened')) { app.fab.open(fabEl); }
     else { app.fab.close(fabEl); }
   },
@@ -15074,7 +12599,7 @@ var Fab$1 = {
   name: 'fab',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       fab: {
         openedEl: null,
         morphOpen: Fab.morphOpen.bind(app),
@@ -15137,9 +12662,9 @@ var Searchbar$1 = (function (FrameworkClass) {
     // Extend defaults with modules params
     sb.useInstanceModulesParams(defaults);
 
-    sb.params = Utils$1.extend(defaults, params);
+    sb.params = Utils.extend(defaults, params);
 
-    var $el = dom7$1(sb.params.el);
+    var $el = $(sb.params.el);
     if ($el.length === 0) { return sb; }
 
     $el[0].f7Searchbar = sb;
@@ -15164,14 +12689,14 @@ var Searchbar$1 = (function (FrameworkClass) {
 
     var $foundEl;
     if (params.foundEl) {
-      $foundEl = dom7$1(params.foundEl);
+      $foundEl = $(params.foundEl);
     } else if ($pageEl) {
       $foundEl = $pageEl.find(sb.params.foundEl);
     }
 
     var $notFoundEl;
     if (params.notFoundEl) {
-      $notFoundEl = dom7$1(params.notFoundEl);
+      $notFoundEl = $(params.notFoundEl);
     } else if ($pageEl) {
       $notFoundEl = $pageEl.find(sb.params.notFoundEl);
     }
@@ -15179,14 +12704,14 @@ var Searchbar$1 = (function (FrameworkClass) {
     var $backdropEl;
     if (sb.params.backdrop) {
       if (sb.params.backdropEl) {
-        $backdropEl = dom7$1(sb.params.backdropEl);
+        $backdropEl = $(sb.params.backdropEl);
       } else if ($pageEl && $pageEl.length > 0) {
         $backdropEl = $pageEl.find('.searchbar-backdrop');
       } else {
         $backdropEl = $el.siblings('.searchbar-backdrop');
       }
       if ($backdropEl.length === 0) {
-        $backdropEl = dom7$1('<div class="searchbar-backdrop"></div>');
+        $backdropEl = $('<div class="searchbar-backdrop"></div>');
         if ($pageEl && $pageEl.length) {
           if ($el.parents($pageEl).length > 0 && $navbarEl && $el.parents($navbarEl).length === 0) {
             $backdropEl.insertBefore($el);
@@ -15201,12 +12726,12 @@ var Searchbar$1 = (function (FrameworkClass) {
 
     var $searchContainer;
     if (sb.params.searchContainer) {
-      $searchContainer = dom7$1(sb.params.searchContainer);
+      $searchContainer = $(sb.params.searchContainer);
     }
 
     var $inputEl;
     if (sb.params.inputEl) {
-      $inputEl = dom7$1(sb.params.inputEl);
+      $inputEl = $(sb.params.inputEl);
     } else {
       $inputEl = $el.find('input[type="search"]').eq(0);
     }
@@ -15214,13 +12739,13 @@ var Searchbar$1 = (function (FrameworkClass) {
     var $disableButtonEl;
     if (sb.params.disableButton) {
       if (sb.params.disableButtonEl) {
-        $disableButtonEl = dom7$1(sb.params.disableButtonEl);
+        $disableButtonEl = $(sb.params.disableButtonEl);
       } else {
         $disableButtonEl = $el.find('.searchbar-disable-button');
       }
     }
 
-    Utils$1.extend(sb, {
+    Utils.extend(sb, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -15309,7 +12834,7 @@ var Searchbar$1 = (function (FrameworkClass) {
   Searchbar.prototype.constructor = Searchbar;
   Searchbar.prototype.clear = function clear (e) {
     var sb = this;
-    if (!sb.query && e && dom7$1(e.target).hasClass('searchbar-clear')) {
+    if (!sb.query && e && $(e.target).hasClass('searchbar-clear')) {
       sb.disable();
       return sb;
     }
@@ -15362,7 +12887,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       } else {
         if (needsFocus) { sb.$inputEl.focus(); }
         if (setFocus && (setFocus.type === 'focus' || setFocus === true)) {
-          Utils$1.nextTick(function () {
+          Utils.nextTick(function () {
             enable();
           }, 400);
         } else {
@@ -15448,7 +12973,7 @@ var Searchbar$1 = (function (FrameworkClass) {
         if ($foundEl) { $foundEl.show(); }
         return sb;
       }
-      vlQuery = sb.params.removeDiacritics ? dom7$1.removeDiacritics(query) : query;
+      vlQuery = sb.params.removeDiacritics ? $.removeDiacritics(query) : query;
       if (sb.virtualList.params.searchAll) {
         foundItems = sb.virtualList.params.searchAll(vlQuery, sb.virtualList.items) || [];
       } else if (sb.virtualList.params.searchByItem) {
@@ -15460,16 +12985,16 @@ var Searchbar$1 = (function (FrameworkClass) {
       }
     } else {
       var values;
-      if (sb.params.removeDiacritics) { values = dom7$1.removeDiacritics(query.trim().toLowerCase()).split(' '); }
+      if (sb.params.removeDiacritics) { values = $.removeDiacritics(query.trim().toLowerCase()).split(' '); }
       else {
         values = query.trim().toLowerCase().split(' ');
       }
       $searchContainer.find(sb.params.searchItem).removeClass('hidden-by-searchbar').each(function (itemIndex, itemEl) {
-        var $itemEl = dom7$1(itemEl);
+        var $itemEl = $(itemEl);
         var compareWithText = [];
         $itemEl.find(sb.params.searchIn).each(function (searchInIndex, searchInEl) {
-          var itemText = dom7$1(searchInEl).text().trim().toLowerCase();
-          if (sb.params.removeDiacritics) { itemText = dom7$1.removeDiacritics(itemText); }
+          var itemText = $(searchInEl).text().trim().toLowerCase();
+          if (sb.params.removeDiacritics) { itemText = $.removeDiacritics(itemText); }
           compareWithText.push(itemText);
         });
         compareWithText = compareWithText.join(' ');
@@ -15486,7 +13011,7 @@ var Searchbar$1 = (function (FrameworkClass) {
 
       if (sb.params.hideDividers) {
         $searchContainer.find('.item-divider, .list-group-title').each(function (titleIndex, titleEl) {
-          var $titleEl = dom7$1(titleEl);
+          var $titleEl = $(titleEl);
           var $nextElements = $titleEl.nextAll('li');
           var hide = true;
           for (var i = 0; i < $nextElements.length; i += 1) {
@@ -15503,7 +13028,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       }
       if (sb.params.hideGroups) {
         $searchContainer.find('.list-group').each(function (groupIndex, groupEl) {
-          var $groupEl = dom7$1(groupEl);
+          var $groupEl = $(groupEl);
           var ignore = sb.params.ignore && $groupEl.is(sb.params.ignore);
           var notHidden = $groupEl.find('li:not(.hidden-by-searchbar)');
           if (notHidden.length === 0 && !ignore) {
@@ -15538,7 +13063,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     sb.$el.trigger('searchbar:beforedestroy', sb);
     sb.detachEvents();
     delete sb.$el.f7Searchbar;
-    Utils$1.deleteProps(sb);
+    Utils.deleteProps(sb);
   };
 
   return Searchbar;
@@ -15553,7 +13078,7 @@ var Searchbar = {
         return new Searchbar$1(app, params);
       },
       get: function get(searchbarEl) {
-        var $searchbarEl = dom7$1(searchbarEl);
+        var $searchbarEl = $(searchbarEl);
         if ($searchbarEl.length && $searchbarEl[0].f7Searchbar) {
           return $searchbarEl[0].f7Searchbar;
         }
@@ -15571,7 +13096,7 @@ var Searchbar = {
         return undefined;
       };
     });
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       searchbar: searchbar,
     });
   },
@@ -15581,13 +13106,13 @@ var Searchbar = {
   on: {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.searchbar-init').each(function (index, searchbarEl) {
-        var $searchbarEl = dom7$1(searchbarEl);
-        app.searchbar.create(Utils$1.extend($searchbarEl.dataset(), { el: searchbarEl }));
+      $(tabEl).find('.searchbar-init').each(function (index, searchbarEl) {
+        var $searchbarEl = $(searchbarEl);
+        app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
       });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
-      dom7$1(tabEl).find('.searchbar-init').each(function (index, searchbarEl) {
+      $(tabEl).find('.searchbar-init').each(function (index, searchbarEl) {
         if (searchbarEl.f7Searchbar && searchbarEl.f7Searchbar.destroy) {
           searchbarEl.f7Searchbar.destroy();
         }
@@ -15596,13 +13121,13 @@ var Searchbar = {
     pageInit: function pageInit(page) {
       var app = this;
       page.$el.find('.searchbar-init').each(function (index, searchbarEl) {
-        var $searchbarEl = dom7$1(searchbarEl);
-        app.searchbar.create(Utils$1.extend($searchbarEl.dataset(), { el: searchbarEl }));
+        var $searchbarEl = $(searchbarEl);
+        app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
       });
       if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
         page.$navbarEl.find('.searchbar-init').each(function (index, searchbarEl) {
-          var $searchbarEl = dom7$1(searchbarEl);
-          app.searchbar.create(Utils$1.extend($searchbarEl.dataset(), { el: searchbarEl }));
+          var $searchbarEl = $(searchbarEl);
+          app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
         });
       }
     },
@@ -15682,16 +13207,16 @@ var Messages$1 = (function (Framework7Class$$1) {
     // Extend defaults with modules params
     m.useInstanceModulesParams(defaults);
 
-    m.params = Utils$1.extend(defaults, params);
+    m.params = Utils.extend(defaults, params);
 
-    var $el = dom7$1(params.el).eq(0);
+    var $el = $(params.el).eq(0);
     if ($el.length === 0) { return m; }
 
     $el[0].f7Messages = m;
 
     var $pageContentEl = $el.closest('.page-content').eq(0);
 
-    Utils$1.extend(m, {
+    Utils.extend(m, {
       messages: m.params.messages,
       $el: $el,
       el: $el[0],
@@ -15713,7 +13238,7 @@ var Messages$1 = (function (Framework7Class$$1) {
   Messages.prototype.constructor = Messages;
   Messages.prototype.getMessageData = function getMessageData (messageEl) {
     var m = this;
-    var $messageEl = dom7$1(messageEl);
+    var $messageEl = $(messageEl);
     var data = {
       avatar: $messageEl.css('background-image'),
       name: $messageEl.find('.message-name').html(),
@@ -15753,7 +13278,7 @@ var Messages$1 = (function (Framework7Class$$1) {
   };
   Messages.prototype.renderMessage = function renderMessage (messageToRender) {
     var m = this;
-    var message = Utils$1.extend({
+    var message = Utils.extend({
       type: 'sent',
     }, messageToRender);
     if (m.params.renderMessage) {
@@ -15847,7 +13372,7 @@ var Messages$1 = (function (Framework7Class$$1) {
   Messages.prototype.layout = function layout () {
     var m = this;
     m.$el.find('.message, .messages-title').each(function (index, messageEl) {
-      var $messageEl = dom7$1(messageEl);
+      var $messageEl = $(messageEl);
       if (!m.messages) {
         m.messages = m.getMessagesData();
       }
@@ -15907,7 +13432,7 @@ var Messages$1 = (function (Framework7Class$$1) {
       index = messageToRemove;
       $el = m.$el.find('.message, .messages-title').eq(index);
     } else {
-      $el = dom7$1(messageToRemove);
+      $el = $(messageToRemove);
       index = $el.index();
     }
     if ($el.length === 0) {
@@ -15931,7 +13456,7 @@ var Messages$1 = (function (Framework7Class$$1) {
         m.removeMessage(messageToRemove, false);
       });
     } else {
-      dom7$1(messagesToRemove).each(function (index, messageToRemove) {
+      $(messagesToRemove).each(function (index, messageToRemove) {
         m.removeMessage(messageToRemove, false);
       });
     }
@@ -16005,7 +13530,7 @@ var Messages$1 = (function (Framework7Class$$1) {
       }
       messagesHTML += m.renderMessage(messageToAdd);
     });
-    var $messagesEls = dom7$1(messagesHTML);
+    var $messagesEls = $(messagesHTML);
     if (animate) {
       if (method === 'append' && !m.params.newMessagesFirst) {
         $messagesEls.addClass('message-appear-from-bottom');
@@ -16056,7 +13581,7 @@ var Messages$1 = (function (Framework7Class$$1) {
     if (typingMessage) {
       m.removeMessage(m.messages.indexOf(typingMessage));
     }
-    m.addMessage(Utils$1.extend({
+    m.addMessage(Utils.extend({
       type: 'received',
       isTyping: true,
     }, message));
@@ -16104,7 +13629,7 @@ var Messages$1 = (function (Framework7Class$$1) {
     m.$el.trigger('messages:beforedestroy', m);
     m.$el[0].f7Messages = null;
     delete m.$el[0].f7Messages;
-    Utils$1.deleteProps(m);
+    Utils.deleteProps(m);
   };
 
   return Messages;
@@ -16122,7 +13647,7 @@ var Messages = {
         return new Messages$1(app, params);
       },
       get: function get(messagesEl) {
-        var $messagesEl = dom7$1(messagesEl);
+        var $messagesEl = $(messagesEl);
         if ($messagesEl.length && $messagesEl[0].f7Messages) {
           return $messagesEl[0].f7Messages;
         }
@@ -16140,20 +13665,20 @@ var Messages = {
         return undefined;
       };
     });
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       messages: messages,
     });
   },
   on: {
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.messages-init').each(function (index, messagesEl) {
+      $(tabEl).find('.messages-init').each(function (index, messagesEl) {
         app.messages.destroy(messagesEl);
       });
     },
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.messages-init').each(function (index, messagesEl) {
+      $(tabEl).find('.messages-init').each(function (index, messagesEl) {
         app.messages.create({ el: messagesEl });
       });
     },
@@ -16194,10 +13719,10 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     // Extend defaults with modules params
     messagebar.useInstanceModulesParams(defaults);
 
-    messagebar.params = Utils$1.extend(defaults, params);
+    messagebar.params = Utils.extend(defaults, params);
 
     // El
-    var $el = dom7$1(messagebar.params.el);
+    var $el = $(messagebar.params.el);
     if ($el.length === 0) { return messagebar; }
 
     $el[0].f7Messagebar = messagebar;
@@ -16212,7 +13737,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     // Textarea
     var $textareaEl;
     if (messagebar.params.textareaEl) {
-      $textareaEl = dom7$1(messagebar.params.textareaEl);
+      $textareaEl = $(messagebar.params.textareaEl);
     } else {
       $textareaEl = $el.find('textarea');
     }
@@ -16221,7 +13746,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var $attachmentsEl = $el.find('.messagebar-attachments');
     var $sheetEl = $el.find('.messagebar-sheet');
 
-    Utils$1.extend(messagebar, {
+    Utils.extend(messagebar, {
       $el: $el,
       el: $el[0],
       $areaEl: $areaEl,
@@ -16250,9 +13775,9 @@ var Messagebar$1 = (function (Framework7Class$$1) {
       e.preventDefault();
     }
     function onAttachmentClick(e) {
-      var index = dom7$1(this).index();
-      if (dom7$1(e.target).closest('.messagebar-attachment-delete').length) {
-        dom7$1(this).trigger('messagebar:attachmentdelete', index);
+      var index = $(this).index();
+      if ($(e.target).closest('.messagebar-attachment-delete').length) {
+        $(this).trigger('messagebar:attachmentdelete', index);
         messagebar.emit('messagebarAttachmentDelete', this, index);
         messagebar.emit({
           events: 'attachmentDelete',
@@ -16260,7 +13785,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
           local: true,
         });
       } else {
-        dom7$1(this).trigger('messagebar:attachmentclick', index);
+        $(this).trigger('messagebar:attachmentclick', index);
         messagebar.emit('messagebarAttachmentClick', this, index);
         messagebar.emit({
           events: 'attachmentClick',
@@ -16392,9 +13917,9 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     if ( innerHTML === void 0 ) innerHTML = '';
 
     var messagebar = this;
-    var $attachmentsEl = dom7$1(("<div class=\"messagebar-attachments\">" + innerHTML + "</div>"));
+    var $attachmentsEl = $(("<div class=\"messagebar-attachments\">" + innerHTML + "</div>"));
     $attachmentsEl.insertBefore(messagebar.$textareaEl);
-    Utils$1.extend(messagebar, {
+    Utils.extend(messagebar, {
       $attachmentsEl: $attachmentsEl,
       attachmentsEl: $attachmentsEl[0],
     });
@@ -16453,9 +13978,9 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     if ( innerHTML === void 0 ) innerHTML = '';
 
     var messagebar = this;
-    var $sheetEl = dom7$1(("<div class=\"messagebar-sheet\">" + innerHTML + "</div>"));
+    var $sheetEl = $(("<div class=\"messagebar-sheet\">" + innerHTML + "</div>"));
     messagebar.append($sheetEl);
-    Utils$1.extend(messagebar, {
+    Utils.extend(messagebar, {
       $sheetEl: $sheetEl,
       sheetEl: $sheetEl[0],
     });
@@ -16502,7 +14027,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     messagebar.detachEvents();
     messagebar.$el[0].f7Messagebar = null;
     delete messagebar.$el[0].f7Messagebar;
-    Utils$1.deleteProps(messagebar);
+    Utils.deleteProps(messagebar);
   };
 
   return Messagebar;
@@ -16520,7 +14045,7 @@ var Messagebar = {
         return new Messagebar$1(app, params);
       },
       get: function get(messagebarEl) {
-        var $messagebarEl = dom7$1(messagebarEl);
+        var $messagebarEl = $(messagebarEl);
         if ($messagebarEl.length && $messagebarEl[0].f7Messagebar) {
           return $messagebarEl[0].f7Messagebar;
         }
@@ -16538,21 +14063,21 @@ var Messagebar = {
         return undefined;
       };
     });
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       messagebar: messagebar,
     });
   },
   on: {
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.messagebar-init').each(function (index, messagebarEl) {
+      $(tabEl).find('.messagebar-init').each(function (index, messagebarEl) {
         app.messagebar.destroy(messagebarEl);
       });
     },
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      dom7$1(tabEl).find('.messagebar-init').each(function (index, messagebarEl) {
-        app.messagebar.create(Utils$1.extend({ el: messagebarEl }, dom7$1(messagebarEl).dataset()));
+      $(tabEl).find('.messagebar-init').each(function (index, messagebarEl) {
+        app.messagebar.create(Utils.extend({ el: messagebarEl }, $(messagebarEl).dataset()));
       });
     },
     pageBeforeRemove: function pageBeforeRemove(page) {
@@ -16564,7 +14089,7 @@ var Messagebar = {
     pageInit: function pageInit(page) {
       var app = this;
       page.$el.find('.messagebar-init').each(function (index, messagebarEl) {
-        app.messagebar.create(Utils$1.extend({ el: messagebarEl }, dom7$1(messagebarEl).dataset()));
+        app.messagebar.create(Utils.extend({ el: messagebarEl }, $(messagebarEl).dataset()));
       });
     },
   },
@@ -16583,9 +14108,9 @@ if (typeof t7 !== 'undefined') {
 }
 
 // Dom7
-if (typeof dom7$1 !== 'undefined') {
-  Framework7$1.prototype.$ = dom7$1;
-  if (!window.Dom7) { window.Dom7 = dom7$1; }
+if (typeof $ !== 'undefined') {
+  Framework7$1.prototype.$ = $;
+  if (!window.Dom7) { window.Dom7 = $; }
 }
 
 // Install Modules & Components
@@ -16641,6 +14166,4 @@ Framework7$1
   .use(Messages)
   .use(Messagebar);
 
-return Framework7$1;
-
-})));
+export default Framework7$1;
