@@ -44,7 +44,7 @@ To build production version of Framework7:
 $ npm run dist
 ```
 
-Production version will available in `dist/` folder.
+Production version will be available in `dist/` folder.
 
 ## Kitchen Sink
 
