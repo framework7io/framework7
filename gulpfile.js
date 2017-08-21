@@ -5,6 +5,7 @@ const gopen = require('gulp-open');
 const header = require('gulp-header');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
+const gulpif = require('gulp-if');
 const rollup = require('rollup-stream');
 const buble = require('rollup-plugin-buble');
 const source = require('vinyl-source-stream');
@@ -22,25 +23,24 @@ const modifyFile = require('gulp-modify-file');
 
 const config = require('./config.js');
 
-const banner = [
-  '/**',
-  ' * Framework7 <%= pkg.version %>',
-  ' * <%= pkg.description %>',
-  ' * <%= pkg.homepage %>',
-  ' * ',
-  ' * Copyright 2014-<%= date.year %> <%= pkg.author %>',
-  ' * ',
-  ' * Released under the <%= pkg.license %> License',
-  ' * ',
-  ' * Released on: <%= date.month %> <%= date.day %>, <%= date.year %>',
-  ' */',
-  ''].join('\n');
-
-const date = {
-  year: new Date().getFullYear(),
-  month: ('January February March April May June July August September October November December').split(' ')[new Date().getMonth()],
+const releaseDate = {
   day: new Date().getDate(),
+  month: ('January February March April May June July August September October November December').split(' ')[new Date().getMonth()],
+  year: new Date().getFullYear(),
 };
+const banner = `${`
+/**
+ * Framework7 ${pkg.version}
+ * ${pkg.description}
+ * ${pkg.homepage}
+ *
+ * Copyright 2014-${releaseDate.year} ${pkg.author}
+ *
+ * Released under the ${pkg.license} License
+ *
+ * Released on: ${releaseDate.month} ${releaseDate.day}, ${releaseDate.year}
+ */
+`.trim()}\n`;
 
 // Build JS Files
 function buildJsEsModule(components, cb) {
@@ -66,11 +66,60 @@ function buildJsEsModule(components, cb) {
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
-    .pipe(header(banner, { pkg, date }))
+    .pipe(header(banner))
     .pipe(rename('framework7.module.js'))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       if (cb) cb();
+    });
+}
+function buildJSUmdModule(components, cb) {
+  const env = process.env.NODE_ENV || 'development';
+  rollup({
+    entry: './src/framework7.js',
+    plugins: [
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
+        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
+      }),
+      resolve({ jsnext: true }),
+      buble(),
+    ],
+    format: 'umd',
+    moduleName: 'Framework7',
+    useStrict: true,
+    sourceMap: env === 'development',
+  })
+    .on('error', (err) => {
+      if (cb) cb();
+      console.log(err.toString());
+    })
+    .pipe(source('framework7.js', './src'))
+    .pipe(buffer())
+    .pipe(gulpif(env === 'development', sourcemaps.init()))
+    .pipe(header(banner))
+    .pipe(gulpif(env === 'development', sourcemaps.write('./')))
+    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .on('end', () => {
+      if (env === 'development') {
+        if (cb) cb();
+        return;
+      }
+      // Minified version
+      gulp.src('./dist/js/framework7.js')
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(header(banner))
+        .pipe(rename((filePath) => {
+          /* eslint no-param-reassign: ["error", { "props": false }] */
+          filePath.basename += '.min';
+        }))
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./dist/js/'))
+        .on('end', () => {
+          cb();
+        });
     });
 }
 function buildJs(cb) {
@@ -91,55 +140,24 @@ function buildJs(cb) {
     }
   });
 
-  rollup({
-    entry: './src/framework7.js',
-    plugins: [
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-        '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
-      }),
-      resolve({ jsnext: true }),
-      buble(),
-    ],
-    format: 'umd',
-    moduleName: 'Framework7',
-    useStrict: true,
-    sourceMap: true,
-  })
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(source('framework7.js', './src'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(header(banner, { pkg, date }))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
-    .on('end', () => {
-      if (env === 'development') {
-        if (cb) cb();
-        return;
-      }
-      gulp.src('./dist/js/framework7.js')
-        .pipe(sourcemaps.init({ loadMaps: true }))
-        .pipe(uglify())
-        .pipe(header(banner, { pkg, date }))
-        .pipe(rename((filePath) => {
-          /* eslint no-param-reassign: ["error", { "props": false }] */
-          filePath.basename += '.min';
-        }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./dist/js/'))
-        .on('end', () => {
-          buildJsEsModule(components, cb);
-        });
+  const expectCbs = env === 'development' ? 1 : 2;
+  let cbs = 0;
+
+  buildJSUmdModule(components, () => {
+    cbs += 1;
+    if (cbs === expectCbs) cb();
+  });
+
+  if (env === 'production') {
+    buildJsEsModule(components, () => {
+      cbs += 1;
+      if (cbs === expectCbs) cb();
     });
+  }
 }
 
 // Build Less Files
-function buildLess(cb) {
+function buildLess(cb, buildTheme) {
   const env = process.env.NODE_ENV || 'development';
 
   const components = [];
@@ -150,12 +168,14 @@ function buildLess(cb) {
     }
   });
 
+  const themes = buildTheme ? [buildTheme] : config.themes;
+
   gulp.src('./src/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
-        .replace(/@include-ios-theme: (true|false);/, `@include-ios-theme: ${config.themes.indexOf('ios') >= 0 ? 'true' : 'false'};`)
-        .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${config.themes.indexOf('md') >= 0 ? 'true' : 'false'};`);
+        .replace(/@include-ios-theme: (true|false);/, `@include-ios-theme: ${themes.indexOf('ios') >= 0 ? 'true' : 'false'};`)
+        .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${themes.indexOf('md') >= 0 ? 'true' : 'false'};`);
       return newContent;
     }))
     .pipe(less())
@@ -170,10 +190,10 @@ function buildLess(cb) {
       if (cb) cb();
       console.log(err.toString());
     })
-    .pipe(header(banner, { pkg, date }))
+    .pipe(header(banner))
     .pipe(rename((filePath) => {
       /* eslint no-param-reassign: ["error", { "props": false }] */
-      filePath.basename = 'framework7';
+      filePath.basename = buildTheme ? `framework7.${buildTheme}` : 'framework7';
     }))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/css/`))
     .on('end', () => {
@@ -181,19 +201,34 @@ function buildLess(cb) {
         if (cb) cb();
         return;
       }
-      gulp.src('./dist/css/framework7.css')
+      gulp.src(`./dist/css/${buildTheme ? `framework7.${buildTheme}` : 'framework7'}.css`)
         .pipe(cleanCSS({
           advanced: false,
           aggressiveMerging: false,
         }))
-        .pipe(header(banner, { pkg, date }))
+        .pipe(header(banner))
         .pipe(rename((filePath) => {
           /* eslint no-param-reassign: ["error", { "props": false }] */
           filePath.basename += '.min';
         }))
         .pipe(gulp.dest('./dist/css/'))
         .on('end', () => {
-          if (cb) cb();
+          if (buildTheme && cb) {
+            cb();
+            return;
+          }
+          let cbs = 0;
+          const expectCbs = themes.length;
+          themes.forEach((theme) => {
+            buildLess(() => {
+              cbs += 1;
+              if (cbs === expectCbs && cb) cb();
+            }, theme);
+            buildLess(() => {
+              cbs += 1;
+              if (cbs === expectCbs && cb) cb();
+            }, theme);
+          });
         });
     });
 }
