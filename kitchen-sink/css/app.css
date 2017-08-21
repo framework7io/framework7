@@ -211,6 +211,49 @@ div.demo-lazy {
   margin-bottom: 15px;
   font-size: 12px;
 }
+/* Cards Demo */
+.demo-card-header-pic .card-header {
+  height: 40vw;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+.demo-card-header-pic .card-content-inner .date{
+  color: #8e8e93;
+}
+.demo-facebook-card .card-header {
+  display: block;
+  padding: 10px;
+}
+.demo-facebook-card .demo-facebook-avatar {
+  float: left;
+}
+.demo-facebook-card .demo-facebook-name {
+  margin-left: 44px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.demo-facebook-card .demo-facebook-date {
+  margin-left: 44px;
+  font-size: 13px;
+  color: #8e8e93;
+}
+.demo-facebook-card .card-footer {
+  background: #fafafa;
+}
+.demo-facebook-card .card-footer a {
+  color: #81848b;
+  font-weight: 500;
+}
+.demo-facebook-card .card-content img {
+  display: block;
+}
+.demo-facebook-card .card-content-inner {
+  padding: 15px 10px;
+}
+.demo-facebook-card .card-content-inner .likes {
+  color: #8e8e93;
+}
 /* Panels Demo */
 .ios .panel-right.panel-active ~ .view-main:after,
 .ios .panel-right.panel-closing ~ .view-main:after {
