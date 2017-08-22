@@ -334,7 +334,7 @@ class Searchbar extends FrameworkClass {
         if ($foundEl) $foundEl.show();
         return sb;
       }
-      vlQuery = sb.params.removeDiacritics ? $.removeDiacritics(query) : query;
+      vlQuery = sb.params.removeDiacritics ? Utils.removeDiacritics(query) : query;
       if (sb.virtualList.params.searchAll) {
         foundItems = sb.virtualList.params.searchAll(vlQuery, sb.virtualList.items) || [];
       } else if (sb.virtualList.params.searchByItem) {
@@ -346,7 +346,7 @@ class Searchbar extends FrameworkClass {
       }
     } else {
       let values;
-      if (sb.params.removeDiacritics) values = $.removeDiacritics(query.trim().toLowerCase()).split(' ');
+      if (sb.params.removeDiacritics) values = Utils.removeDiacritics(query.trim().toLowerCase()).split(' ');
       else {
         values = query.trim().toLowerCase().split(' ');
       }
@@ -355,7 +355,7 @@ class Searchbar extends FrameworkClass {
         let compareWithText = [];
         $itemEl.find(sb.params.searchIn).each((searchInIndex, searchInEl) => {
           let itemText = $(searchInEl).text().trim().toLowerCase();
-          if (sb.params.removeDiacritics) itemText = $.removeDiacritics(itemText);
+          if (sb.params.removeDiacritics) itemText = Utils.removeDiacritics(itemText);
           compareWithText.push(itemText);
         });
         compareWithText = compareWithText.join(' ');
