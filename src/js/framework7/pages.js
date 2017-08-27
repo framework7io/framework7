@@ -65,6 +65,25 @@ app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
             allPagesCallbacks[j](pageData);
         }
     }
+
+    // Run scripts
+    $(pageContainer).find('script').each(function() {
+        // Check for data-run
+        var wantedCb = $(this).data('run').toLowerCase() || 'init';
+        if (callbackName.toLowerCase() !== wantedCb) {
+            return;
+        }
+        if ($(this).attr('src')) {
+            // Add the script tag to the HEAD
+            var s = document.createElement('script');
+            s.src = $(this).attr('src');
+            $('head').append(s);
+        } else {
+            // Eval inline scripts
+            eval($(this).text());
+        }
+    });
+
     var callbacks = app.pageCallbacks[callbackName][pageName];
     if (!callbacks || callbacks.length === 0) return;
     for (var i = 0; i < callbacks.length; i++) {
@@ -139,17 +158,6 @@ app.pageInitCallback = function (view, params) {
 
     // Init page
     app.initPage(pageContainer);
-
-    // Run scripts
-    $(pageContainer).find('script').each(function() {
-        if ($(this).attr('src')) {
-            var s = document.createElement('script');
-            s.src = $(this).attr('src');
-            $('head').append(s);
-        } else {
-            eval($(this).text());
-        }
-    });
 
     // Init Callback
     app.pluginHook('pageInit', pageData);
