@@ -68,8 +68,8 @@ app.triggerPageCallbacks = function (callbackName, pageName, pageData) {
 
     // Run scripts
     $(pageData.container).find('script').each(function() {
-        // Check for data-run
-        var wantedCb = $(this).data('run').toLowerCase() || 'init';
+        // Check for data-run (default to 'init')
+        var wantedCb = ($(this).data('run') || 'init').toLowerCase();
         if (callbackName.toLowerCase() !== wantedCb) {
             return;
         }
