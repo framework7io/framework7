@@ -251,7 +251,17 @@ app.initFastClicks = function () {
         }
         evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
         evt.forwardedTouchEvent = true;
-        targetElement.dispatchEvent(evt);
+
+        if (app.device.ios && navigator.standalone) {
+            //Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
+            //Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
+            setTimeout(function () {
+                targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+                targetElement.dispatchEvent(evt);
+            }, 10);
+        } else {
+            targetElement.dispatchEvent(evt);
+        }
     }
 
     // Touch Handlers
