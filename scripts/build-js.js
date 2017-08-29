@@ -97,7 +97,6 @@ function umd(components, cb) {
 function build(cb) {
   const env = process.env.NODE_ENV || 'development';
 
-  // let jsFileContent = fs.readFileSync('./src/framework7.js', 'utf8');
   const components = [];
   config.components.forEach((name) => {
     const capitalized = name.split('-').map((word) => {

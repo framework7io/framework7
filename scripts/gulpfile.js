@@ -52,7 +52,7 @@ gulp.task('js', (cb) => {
 });
 
 gulp.task('less', (cb) => {
-  buildLess(cb);
+  buildLess(undefined, cb);
 });
 
 gulp.task('build', ['js', 'less']);

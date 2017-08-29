@@ -13,7 +13,7 @@ const cleanCSS = require('gulp-clean-css');
 const config = require('./config.js');
 const banner = require('./banner.js');
 
-function build(cb, buildTheme) {
+function build(buildTheme, cb) {
   const env = process.env.NODE_ENV || 'development';
 
   const components = [];
@@ -76,14 +76,10 @@ function build(cb, buildTheme) {
           let cbs = 0;
           const expectCbs = themes.length;
           themes.forEach((theme) => {
-            build(() => {
+            build(theme, () => {
               cbs += 1;
               if (cbs === expectCbs && cb) cb();
-            }, theme);
-            build(() => {
-              cbs += 1;
-              if (cbs === expectCbs && cb) cb();
-            }, theme);
+            });
           });
         });
     });
