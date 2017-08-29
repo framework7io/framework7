@@ -102,8 +102,16 @@ const Utils = {
   deleteProps(obj) {
     const object = obj;
     Object.keys(object).forEach((key) => {
-      object[key] = null;
-      delete object[key];
+      try {
+        object[key] = null;
+      } catch (e) {
+        // no getter for object
+      }
+      try {
+        delete object[key];
+      } catch (e) {
+        // something got wrong
+      }
     });
   },
   bezier(...args) {
@@ -113,9 +121,7 @@ const Utils = {
     return setTimeout(callback, delay);
   },
   nextFrame(callback) {
-    if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
-    else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
-    return window.setTimeout(callback, 1000 / 60);
+    return Utils.requestAnimationFrame(callback);
   },
   now() {
     return Date.now();
