@@ -33,6 +33,7 @@ function es(components, cb) {
     moduleName: 'Framework7',
     useStrict: true,
     sourceMap: false,
+    banner,
   })
     .on('error', (err) => {
       if (cb) cb();
@@ -40,7 +41,6 @@ function es(components, cb) {
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
-    .pipe(header(banner))
     .pipe(rename('framework7.module.js'))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
@@ -64,6 +64,7 @@ function umd(components, cb) {
     moduleName: 'Framework7',
     useStrict: true,
     sourceMap: env === 'development',
+    banner,
   })
     .on('error', (err) => {
       if (cb) cb();
@@ -71,7 +72,6 @@ function umd(components, cb) {
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
-    .pipe(header(banner))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       if (env === 'development') {
