@@ -65,6 +65,9 @@ module.exports = {
     // Messages
     'messages',
     'messagebar',
+
+    // Swiper
+    'swiper',
   ],
   themes: [
     'ios',
