@@ -6,8 +6,8 @@
   "jsnext:main": "dist/js/framework7.module.js",
   "module": "dist/js/framework7.module.js",
   "scripts": {
-    "build": "NODE_ENV=development gulp build",
-    "dist": "NODE_ENV=production gulp build",
+    "build-dev": "NODE_ENV=development gulp build",
+    "build-prod": "NODE_ENV=production gulp build",
     "dev": "NODE_ENV=development gulp build && NODE_ENV=development gulp ks && gulp server",
     "prod": "NODE_ENV=production gulp ks && gulp server",
     "test": "npm run build"
@@ -50,7 +50,8 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "dom7": "^1.6.4",
+    "dom7": "^1.7.0",
+    "swiper": "^4.0.0-beta.1",
     "template7": "^1.2.5"
   },
   "devDependencies": {
