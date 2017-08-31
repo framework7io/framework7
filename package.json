@@ -6,11 +6,11 @@
   "jsnext:main": "dist/js/framework7.module.js",
   "module": "dist/js/framework7.module.js",
   "scripts": {
-    "build-dev": "NODE_ENV=development gulp build",
-    "build-prod": "NODE_ENV=production gulp build",
-    "dev": "NODE_ENV=development gulp build && NODE_ENV=development gulp ks && gulp server",
-    "prod": "NODE_ENV=production gulp ks && gulp server",
-    "test": "npm run build"
+    "build-dev": "cross-env NODE_ENV=development gulp build",
+    "build-prod": "cross-env NODE_ENV=production gulp build",
+    "dev": "cross-env NODE_ENV=development gulp build && cross-env NODE_ENV=development gulp ks && cross-env NODE_ENV=development gulp server",
+    "prod": "cross-env NODE_ENV=production gulp ks && cross-env NODE_ENV=production gulp server",
+    "test": "npm run build-dev"
   },
   "repository": {
     "type": "git",
@@ -54,6 +54,7 @@
     "template7": "^1.2.5"
   },
   "devDependencies": {
+    "cross-env": "^5.0.5",
     "diff": "^3.2.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.1.3",
