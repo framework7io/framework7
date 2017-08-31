@@ -446,3 +446,21 @@ div.demo-lazy {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* Icons Demo */
+code {
+  background: #f3f3f3;
+  padding: 5px;
+  font-size: 12px;
+}
+.demo-icon {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: #333;
+}
+.demo-icon .demo-icon-name {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #666;
+}

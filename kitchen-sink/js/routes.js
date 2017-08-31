@@ -121,6 +121,10 @@ var routes = [
     url: './pages/grid.html',
   },
   {
+    path: '/icons/',
+    componentUrl: './pages/icons.html',
+  },
+  {
     path: '/infinite-scroll/',
     componentUrl: './pages/infinite-scroll.html',
   },
