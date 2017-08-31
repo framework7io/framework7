@@ -5,6 +5,7 @@ import Swiper from './swiper-class/swiper';
 if (!window.Swiper) {
   window.Swiper = Swiper;
 }
+
 export default {
   name: 'swiper',
   static: {
@@ -59,6 +60,16 @@ export default {
           params = JSON.parse($swiperEl.attr('data-swiper'));
         } else {
           params = $swiperEl.dataset();
+          Object.keys(params).forEach((key) => {
+            const value = params[key];
+            if (typeof value === 'string' && value.indexOf('{') === 0 && value.indexOf('}') > 0) {
+              try {
+                params[key] = JSON.parse(value);
+              } catch (e) {
+                // not JSON
+              }
+            }
+          });
         }
         if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
           params.initialSlide = initialSlide;
