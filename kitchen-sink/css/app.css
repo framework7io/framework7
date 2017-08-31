@@ -276,3 +276,173 @@ div.demo-lazy {
   background: #ddd;
   z-index: 1000;
 }
+
+/* Swipers Demo */
+.demo-swiper {
+  width: 100%;
+  height: 100%;
+}
+.demo-swiper .swiper-slide,
+.demo-swiper-multiple .swiper-slide {
+  font-size: 25px;
+  font-weight: 300;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  background: #fff;
+}
+.demo-swiper-multiple .swiper-slide {
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+.demo-swiper-multiple {
+  margin: 0px 0 35px;
+  font-size: 18px;
+  height: 120px;
+}
+.demo-swiper-multiple.demo-swiper-multiple-auto .swiper-slide {
+  width: 85%;
+}
+.demo-swiper-multiple.demo-swiper-multiple-auto .swiper-slide:nth-child(2n) {
+  width: 70%;
+}
+.demo-swiper-multiple.demo-swiper-multiple-auto .swiper-slide:nth-child(3n) {
+  width: 30%;
+}
+.demo-swiper-custom {
+  height: 100%;
+}
+.demo-swiper-custom .swiper-container {
+  background: #000;
+  height: 100%;
+}
+.demo-swiper-custom .swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+.demo-swiper-custom .swiper-pagination .swiper-pagination-bullet {
+  cursor: pointer;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0);
+  opacity: 1;
+  border-radius: 0;
+  transition: 200ms;
+  position: relative;
+  transform: scale(0.9);
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+.demo-swiper-custom .swiper-pagination .swiper-pagination-bullet-active {
+  z-index: 1;
+  border: 1px solid #007aff;
+  transform: scale(1.4);
+}
+.demo-swiper-cube {
+  width: 80%;
+  height: 70%;
+  top: 15%;
+}
+.demo-swiper-coverflow {
+  height: 60%;
+  top: 20%;
+}
+.demo-swiper-coverflow .swiper-slide {
+  width: 65%;
+}
+.demo-swiper-cube .swiper-slide,
+.demo-swiper-coverflow .swiper-slide {
+  background-size: cover;
+  color: #fff;
+  -webkit-backface-visibility: hidden;
+}
+.demo-swiper-fade .swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+.demo-swiper-gallery-top {
+  height: 70%;
+}
+.demo-swiper-gallery-thumbs {
+  margin-top: 10px;
+  height: 20%;
+  height: -webkit-calc(30% - 20px);
+  height: -moz-calc(30% - 20px);
+  height: -ms-calc(30% - 20px);
+  height: calc(30% - 20px);
+}
+.demo-swiper-gallery-thumbs .swiper-slide {
+  width: 25%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.35;
+  transition: 300ms;
+}
+.demo-swiper-gallery-thumbs .swiper-slide-active  {
+  opacity: 1;
+}
+.demo-swiper-gallery-top .swiper-slide,
+.demo-swiper-gallery-thumbs .swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+.demo-swiper-parallax {
+  height: 100%;
+}
+.demo-swiper-parallax .swiper-parallax-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 130%;
+  height: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+.demo-swiper-parallax .swiper-slide {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 40px 60px;
+  color: #fff;
+}
+.demo-swiper-parallax .swiper-slide-title {
+  font-size: 41px;
+  font-weight: 300;
+}
+.demo-swiper-parallax .swiper-slide-subtitle {
+  font-size: 21px;
+}
+.demo-swiper-parallax .swiper-slide-text {
+  font-size: 14px;
+  max-width: 400px;
+  line-height: 1.3;
+}
+.demo-swiper-lazy {
+  height: 100%;
+}
+.demo-swiper-lazy .swiper-slide {
+  position: relative;
+}
+.demo-swiper-lazy .swiper-slide img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
