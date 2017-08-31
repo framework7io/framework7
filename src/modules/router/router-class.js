@@ -709,7 +709,7 @@ class Router extends Framework7Class {
         $root: router.app.data,
         $route: options.route,
         $router: router,
-        $: $,
+        $,
         $$: $,
         $dom7: $,
         $theme: {
@@ -717,7 +717,7 @@ class Router extends Framework7Class {
           md: router.app.theme === 'md',
         },
       });
-      resolve(createdComponent.el, { pageEvents: c.on });
+      resolve(createdComponent.el, { pageEvents: createdComponent.on });
     }
     if (url) {
       // Load via XHR
