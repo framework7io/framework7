@@ -1,5 +1,12 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
+  .swiper-lazy-preloader {
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    margin-top: -16px;
+  }
+
   .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
     .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='@{themeColor}'/></svg>");
   }
@@ -35,7 +42,7 @@
       .swiper-pagination-bullet-active {
         background: @colorValue;
       }
-      .swiper-pagination-progressbar {
+      .swiper-pagination-progressbar, &.swiper-pagination-progressbar {
         background: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), 0.25);
         .swiper-pagination-progressbar-fill {
           background: @colorValue;
