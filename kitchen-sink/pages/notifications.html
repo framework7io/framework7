@@ -1,0 +1,97 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Notifications</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions. Such notification are also called Snackbars & Toasts in Android </p>
+        {{#if $theme.md}}
+          <p><a href="#" class="button button-raised" @click="showMDSingleLineMessage">Single-line message</a></p>
+          <p><a href="#" class="button button-raised" @click="showMDMultiLineMessage">Multi-line message</a></p>
+          <p><a href="#" class="button button-raised" @click="showMDCustomButtonMessage">With custom button</a></p>
+          <p><a href="#" class="button button-raised" @click="showMDCallbackOnCloseMessage">With callback on close</a></p>
+        {{else}}
+          <p><a href="#" class="button button-raised" @click="showIOSDefaultNotification">Default notification</a></p>
+          <p><a href="#" class="button button-raised" @click="showIOSFullLayoutNotification">Full layout notification</a></p>
+          <p><a href="#" class="button button-raised" @click="showIOSViewCustomImageNotification">View custom image</a></p>
+          <p><a href="#" class="button button-raised" @click="showIOSCallbackOnCloseMessage">With callback on close</a></p>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      showMDSingleLineMessage: function () {
+          app.notification.add({message: 'Simple message'});
+      },
+      showMDMultiLineMessage: function () {
+          app.notification.add({message: 'Multi-line message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in magna nisi.'});
+      },
+      showMDCustomButtonMessage: function () {
+          app.notification.add({message: 'Nice yellow button',
+            button: {
+                text: 'Click me',
+                color: 'yellow'
+            }
+          });
+      },
+      showMDCallbackOnCloseMessage: function () {
+          app.notification.add({
+            message: 'Close me to see Alert',
+            button: {
+                text: 'Close',
+                color: 'lightgreen'
+            },
+            onClose: function () {
+                app.dialog.alert('Notification closed.');
+            }
+          });
+      },
+      showIOSDefaultNotification: function () {
+          app.notification.add({
+            title: 'Framework7',
+            message: 'This is a simple notification message with title and message'
+          });
+      },
+      showIOSFullLayoutNotification: function () {
+          app.notification.add({
+            title: 'Framework7',
+            subtitle: 'Notification subtitle',
+            message: 'This is a simple notification message with custom icon and subtitle',
+            media: '<i class="icon icon-f7"></i>'
+          });
+      },
+      showIOSViewCustomImageNotification: function () {
+          app.notification.add({
+            title: 'My Awesome App',
+            subtitle: 'New message from John Doe',
+            message: 'Hello, how are you? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut posuere erat. Pellentesque id elementum urna, a aliquam ante. Donec vitae volutpat orci. Aliquam sed molestie risus, quis tincidunt dui.',
+            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/100/100/people/9/">'
+          });
+      },
+      showIOSCallbackOnCloseMessage: function () {
+          app.notification.add({
+            title: 'My Awesome App',
+            subtitle: 'New message from John Doe',
+            message: 'Hello, how are you? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut posuere erat. Pellentesque id elementum urna, a aliquam ante. Donec vitae volutpat orci. Aliquam sed molestie risus, quis tincidunt dui.',
+            media: '<img width="44" height="44" style="border-radius:100%" src="http://lorempixel.com/100/100/people/9/">',
+            onClose: function () {
+                app.dialog.alert('Notification closed');
+            }
+          });
+      },
+
+    }
+  }
+</script>

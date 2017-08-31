@@ -157,6 +157,10 @@ var routes = [
     url: './pages/navbar-hide-scroll.html',
   },
   {
+    path: '/notifications/',
+    componentUrl: './pages/notifications.html',
+  },
+  {
     path: '/panel/',
     url: './pages/panel.html',
   },

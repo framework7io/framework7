@@ -65,6 +65,9 @@ module.exports = {
     // Messages
     'messages',
     'messagebar',
+
+    // Notifications
+    'notification',
   ],
   themes: [
     'ios',
