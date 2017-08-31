@@ -287,7 +287,7 @@ export default {
         app.form.storage.destroy(formEl);
       });
     },
-    tabInit(tabEl) {
+    tabMounted(tabEl) {
       const app = this;
       $(tabEl).find('.form-store-data').each((index, formEl) => {
         app.form.storage.init(formEl);
