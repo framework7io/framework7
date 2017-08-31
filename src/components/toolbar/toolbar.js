@@ -168,5 +168,11 @@ export default {
         app.toolbar.initHideToolbarOnScroll(page.el);
       }
     },
+    init() {
+      const app = this;
+      app.root.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
+        app.toolbar.init(tabbarEl);
+      });
+    },
   },
 };
