@@ -19,5 +19,10 @@ var app = new Framework7({
       },
     };
   },
+  methods: {
+    helloWorld: function () {
+      app.dialog.alert('Hello World!');
+    },
+  },
   routes: routes,
 });

@@ -44,10 +44,11 @@
         </ul>
 
         <h4>$root</h4>
-        <p>Root app data:</p>
+        <p>Root data & methods:</p>
         <ul style="padding-left:25px">
           <li><b>$root.user.firstName</b>: {{$root.user.firstName}}</li>
           <li><b>$root.user.lastName</b>: {{$root.user.lastName}}</li>
+          <li><a @click="$root.helloWorld()">$root.helloWorld()</a></li>
         </ul>
 
         <h4>$theme</h4>
