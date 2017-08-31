@@ -26,12 +26,26 @@ function build(buildTheme, cb) {
 
   const themes = buildTheme ? [buildTheme] : config.themes;
 
+  const colorsIos = [];
+  Object.keys(config.ios.colors).forEach((colorName) => {
+    colorsIos.push(`${colorName} ${config.ios.colors[colorName]}`);
+  });
+
+  const colorsMd = [];
+  Object.keys(config.md.colors).forEach((colorName) => {
+    colorsIos.push(`${colorName} ${config.md.colors[colorName]}`);
+  });
+
   gulp.src('./src/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
         .replace(/@include-ios-theme: (true|false);/, `@include-ios-theme: ${themes.indexOf('ios') >= 0 ? 'true' : 'false'};`)
-        .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${themes.indexOf('md') >= 0 ? 'true' : 'false'};`);
+        .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${themes.indexOf('md') >= 0 ? 'true' : 'false'};`)
+        .replace('$themeColorIos', config.ios.themeColor)
+        .replace('$colorsIos', colorsIos.join(', '))
+        .replace('$themeColorMd', config.md.themeColor)
+        .replace('$colorsMd', colorsMd.join(', '));
       return newContent;
     }))
     .pipe(less())
