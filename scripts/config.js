@@ -68,6 +68,9 @@ module.exports = {
 
     // Swiper
     'swiper',
+
+    // Notifications
+    'notification',
   ],
   themes: [
     'ios',

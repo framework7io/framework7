@@ -1,0 +1,34 @@
+/* === Notifications === */
+.notifications {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 20000;
+    font-size: 14px;
+    margin: 0;
+    border: none;
+    display: none;
+    box-sizing: border-box;
+    max-height: 100%;
+    -webkit-perspective:1200px;
+    perspective:1200px;
+
+    &.list-block > ul {
+        .hairline-remove(top);
+        .hairline-remove(bottom);
+        list-style-type: none;
+        padding-left: 0px;
+    }
+    .item-content {
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+    }
+}
+& when (@include-ios-theme) {
+  @import url('./notification-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./notification-md.less');
+}

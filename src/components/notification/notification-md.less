@@ -1,0 +1,80 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+
+  @notificationsDuration: 450ms;
+  .notifications {
+    bottom: 0;
+    color: #fff;
+    overflow: hidden;
+    -webkit-transition-duration: @notificationsDuration;
+    transition-duration: @notificationsDuration;
+    -webkit-overflow-scrolling: touch;
+
+    &.list-block > ul {
+        max-width: 568px;
+        background: #323232;
+        margin: 0 auto;
+    }
+    .item-content {
+        padding-left: 24px;
+    }
+    .item-title {
+        font-size: 14px;
+        font-weight: normal;
+        white-space: normal;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+    .item-inner {
+        padding-right: 24px;
+        padding-top: 0;
+        padding-bottom: 0;
+        .hairline-remove(bottom);
+        display: flex;
+        position: relative;
+        min-height: 48px;
+        box-sizing: border-box;
+        -webkit-box-flex: 1;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        align-items: center;
+        align-self: stretch;
+    }
+    .item-after {
+        max-height: none;
+        margin-left: 16px;
+    }
+    .button .close-notification {
+        color: lighten(saturate(@themeColor, 10%), 10%);
+    }
+    .notification-item {
+        margin: 0 auto;
+        -webkit-transition-duration: @notificationsDuration;
+        transition-duration: @notificationsDuration;
+        -webkit-transition-delay: 100ms;
+        transition-delay: 100ms;
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+    }
+    .notification-hidden {
+        opacity: 0;
+        -webkit-transition-delay: 0ms;
+        transition-delay: 0ms;
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+    }
+    .notification-item-removing {
+        -webkit-transition-delay: 0ms;
+        transition-delay: 0ms;
+    }
+    @media (min-width: 569px) {
+        &.list-block > ul {
+            border-radius: 2px;
+            width: auto;
+            min-width: 288px;
+        }
+    }
+  }
+}
