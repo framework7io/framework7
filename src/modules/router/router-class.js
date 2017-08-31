@@ -649,7 +649,7 @@ class Router extends Framework7Class {
         } else {
           compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
             $app: router.app,
-            $root: router.app.data,
+            $root: Utils.extend({}, router.app.data, router.app.methods),
             $route: options.route,
             $router: router,
             $theme: {
@@ -706,7 +706,7 @@ class Router extends Framework7Class {
     function compile(c) {
       const createdComponent = Component.create(c, {
         $app: router.app,
-        $root: router.app.data,
+        $root: Utils.extend({}, router.app.data, router.app.methods),
         $route: options.route,
         $router: router,
         $,

@@ -80,7 +80,15 @@ class Framework7 extends Framework7Class {
     app.data = {};
     if (app.params.data && typeof app.params.data === 'function') {
       Utils.extend(app.data, app.params.data.bind(app)());
+    } else if (app.params.data) {
+      Utils.extend(app.data, app.params.data);
     }
+    // Methods
+    app.methods = {};
+    if (app.params.methods) {
+      Utils.extend(app.methods, app.params.methods);
+    }
+    // Init class
     Utils.nextFrame(() => {
       app.root.removeClass('framework7-initializing');
     });
