@@ -73,7 +73,6 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-stream": "^1.19.0",
-    "swiper": "^4.0.0-beta.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }
