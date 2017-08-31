@@ -20,8 +20,8 @@ const Fab = {
       width: $fabEl[0].offsetWidth,
       height: $fabEl[0].offsetHeight,
       offset: $fabEl.offset(),
-      translateX: $.getTranslate($fabEl[0], 'x'),
-      translateY: $.getTranslate($fabEl[0], 'y'),
+      translateX: Utils.getTranslate($fabEl[0], 'x'),
+      translateY: Utils.getTranslate($fabEl[0], 'y'),
     };
 
     $fabEl[0].f7FabMorphData = {
