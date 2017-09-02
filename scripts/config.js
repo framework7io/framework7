@@ -14,7 +14,6 @@ module.exports = {
     'progressbar',
 
     // List Components
-    'list',
     'sortable',
     'swipeout',
     'accordion',
@@ -68,6 +67,9 @@ module.exports = {
 
     // Swiper
     'swiper',
+
+    // Photo Browser
+    'photo-browser',
 
     // Notifications
     'notification',
