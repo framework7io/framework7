@@ -21,9 +21,17 @@ export default {
       view: undefined,
       url: 'photos/',
       routableModals: true,
+
+      renderNavbar: undefined,
+      renderToolbar: undefined,
+      renderCaption: undefined,
+      renderObject: undefined,
+      renderLazyPhoto: undefined,
+      renderPhoto: undefined,
       renderPage: undefined,
       renderPopup: undefined,
       renderStandalone: undefined,
+
       swiper: {
         initialSlide: 0,
         spaceBetween: 20,
