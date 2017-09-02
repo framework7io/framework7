@@ -33,7 +33,7 @@ function build(buildTheme, cb) {
 
   const colorsMd = [];
   Object.keys(config.md.colors).forEach((colorName) => {
-    colorsIos.push(`${colorName} ${config.md.colors[colorName]}`);
+    colorsMd.push(`${colorName} ${config.md.colors[colorName]}`);
   });
 
   gulp.src('./src/framework7.less')
