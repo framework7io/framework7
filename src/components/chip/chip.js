@@ -1,3 +1,3 @@
 export default {
-  name: 'chips',
+  name: 'chip',
 };
