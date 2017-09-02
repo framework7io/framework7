@@ -18,16 +18,20 @@ export default {
         create(...args) {
           return new Swiper(...args);
         },
-        get(swiperEl) {
+        get(swiperEl = '.swiper-container') {
           const $swiperEl = $(swiperEl);
           if ($swiperEl.length && $swiperEl[0].swiper) return $swiperEl[0].swiper;
           return undefined;
         },
         destroy(swiperEl) {
+          if (swiperEl && (swiperEl instanceof Swiper) && swiperEl.destroy) {
+            return swiperEl.destroy();
+          }
           const $swiperEl = $(swiperEl);
-          if (!$swiperEl.length) return;
+          if (!$swiperEl.length) return undefined;
           const swiper = $swiperEl[0].swiper;
-          if (swiper && swiper.destroy) swiper.destroy(true);
+          if (swiper && swiper.destroy) return swiper.destroy();
+          return undefined;
         },
       },
     });
