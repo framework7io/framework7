@@ -210,10 +210,10 @@ class SmartSelect extends Framework7Class {
     ss.items = items;
     return items;
   }
-  onOpen(type, container) {
+  onOpen(type, containerEl) {
     const ss = this;
     const app = ss.app;
-    const $containerEl = $(container);
+    const $containerEl = $(containerEl);
     ss.$containerEl = $containerEl;
     ss.openedIn = type;
     ss.opened = true;
@@ -321,7 +321,7 @@ class SmartSelect extends Framework7Class {
   }
   renderSearchbar() {
     const ss = this;
-    if (ss.params.renderSearchbar) return ss.params.renderSearchbar();
+    if (ss.params.renderSearchbar) return ss.params.renderSearchbar.call(ss);
     const searchbarHTML = `
       <form class="searchbar">
         <div class="searchbar-inner">
@@ -338,7 +338,7 @@ class SmartSelect extends Framework7Class {
   }
   renderItem(index, item) {
     const ss = this;
-    if (ss.params.renderItem) return ss.params.renderItem(index, item);
+    if (ss.params.renderItem) return ss.params.renderItem.call(ss, index, item);
     let itemHtml;
     if (item.isLabel) {
       itemHtml = `<li class="item-divider">${item.groupLabel}</li>`;
@@ -365,7 +365,7 @@ class SmartSelect extends Framework7Class {
   }
   renderItems() {
     const ss = this;
-    if (ss.params.renderItems) return ss.params.renderItems(ss.items);
+    if (ss.params.renderItems) return ss.params.renderItems.call(ss, ss.items);
     const itemsHtml = `
       ${ss.items.map((item, index) => `${ss.renderItem(index, item)}`).join('')}
     `;
@@ -373,7 +373,7 @@ class SmartSelect extends Framework7Class {
   }
   renderPage() {
     const ss = this;
-    if (ss.params.renderPage) return ss.params.renderPage(ss, ss.items);
+    if (ss.params.renderPage) return ss.params.renderPage.call(ss, ss.items);
     let pageTitle = ss.params.pageTitle;
     if (typeof pageTitle === 'undefined') {
       pageTitle = ss.$el.find('.item-title').text().trim();
