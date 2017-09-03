@@ -211,11 +211,11 @@ function backward(el, backwardOptions) {
   }
 
   // Page init and before init events
-  router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', $oldPage);
+  router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
 
   // Before animation callback
-  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current');
-  router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next');
+  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current', options);
+  router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
 
   // Animation
   function afterAnimation() {
@@ -230,8 +230,8 @@ function backward(el, backwardOptions) {
     }
 
     // After animation event
-    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current');
-    router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next');
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current', options);
+    router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
 
     // Remove Old Page
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
@@ -240,7 +240,7 @@ function backward(el, backwardOptions) {
         $oldNavbarInner.addClass('stacked');
       }
     } else {
-      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined);
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined, options);
       router.removeEl($oldPage);
       if (separateNavbar && $oldNavbarInner.length) {
         router.removeEl($oldNavbarInner);
@@ -481,7 +481,7 @@ function back(...args) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncResolve, asyncReject);
+    route.route.async.call(router, asyncResolve, asyncReject);
   }
   // Return Router
   return router;
