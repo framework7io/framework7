@@ -635,7 +635,7 @@ class Router extends Framework7Class {
       let context;
       try {
         context = options.context || {};
-        if (typeof context === 'function') context = context.call(router.app);
+        if (typeof context === 'function') context = context.call(router);
         else if (typeof context === 'string') {
           try {
             context = JSON.parse(context);
@@ -814,7 +814,7 @@ class Router extends Framework7Class {
     function attachEvents() {
       if ($pageEl[0].f7PageEventsAttached) return;
       $pageEl[0].f7PageEventsAttached = true;
-      if (options.pageEvents) {
+      if (options.pageEvents && Object.keys(options.pageEvents).length > 0) {
         $pageEl[0].f7PageEvents = options.pageEvents;
         Object.keys(options.pageEvents).forEach((eventName) => {
           $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, options.pageEvents[eventName]);
