@@ -12,6 +12,9 @@ function forward(el, forwardOptions = {}) {
     pushState: true,
     history: true,
     reloadCurrent: router.params.reloadPages,
+    reloadPrevious: false,
+    reloadAll: false,
+    pageEvents: {},
     on: {},
   }, forwardOptions);
 
@@ -464,7 +467,7 @@ function navigate(url, navigateOptions = {}) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncResolve, asyncReject);
+    route.route.async.call(router, asyncResolve, asyncReject);
   }
   // Retur Router
   return router;
