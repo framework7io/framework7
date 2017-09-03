@@ -17,6 +17,7 @@ class Framework7Class {
   }
   on(events, handler) {
     const self = this;
+    if (typeof handler !== 'function') return self;
     events.split(' ').forEach((event) => {
       if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
       self.eventsListeners[event].push(handler);
@@ -25,6 +26,7 @@ class Framework7Class {
   }
   once(events, handler) {
     const self = this;
+    if (typeof handler !== 'function') return self;
     function onceHandler(...args) {
       handler.apply(self, args);
       self.off(events, onceHandler);

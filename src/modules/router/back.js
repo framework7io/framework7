@@ -385,7 +385,18 @@ function back(...args) {
                          router.currentRoute.route.modalInstance ||
                          app[modalType].get();
     const previousUrl = router.history[router.history.length - 2];
-    const previousRoute = router.findMatchingRoute(previousUrl);
+    let previousRoute = router.findMatchingRoute(previousUrl);
+    if (!previousRoute && previousUrl) {
+      previousRoute = {
+        url: previousUrl,
+        path: previousUrl.split('?')[0],
+        query: Utils.parseUrlQuery(previousUrl),
+        route: {
+          path: previousUrl.split('?')[0],
+          url: previousUrl,
+        },
+      };
+    }
     if (!previousRoute || !modalToClose) {
       return router;
     }
@@ -423,7 +434,6 @@ function back(...args) {
 
   // Find route to load
   let route = router.findMatchingRoute(navigateUrl);
-
   if (!route) {
     if (navigateUrl) {
       route = {

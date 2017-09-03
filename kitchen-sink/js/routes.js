@@ -169,6 +169,10 @@ var routes = [
     url: './pages/panel.html',
   },
   {
+    path: '/photo-browser/',
+    componentUrl: './pages/photo-browser.html',
+  },
+  {
     path: '/popup/',
     componentUrl: './pages/popup.html',
   },

@@ -10,7 +10,7 @@ const header = require('gulp-header');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
 
-const config = require('./config.js');
+const config = require('./build-config.js');
 const banner = require('./banner.js');
 
 function build(buildTheme, cb) {
@@ -26,15 +26,8 @@ function build(buildTheme, cb) {
 
   const themes = buildTheme ? [buildTheme] : config.themes;
 
-  const colorsIos = [];
-  Object.keys(config.ios.colors).forEach((colorName) => {
-    colorsIos.push(`${colorName} ${config.ios.colors[colorName]}`);
-  });
-
-  const colorsMd = [];
-  Object.keys(config.md.colors).forEach((colorName) => {
-    colorsMd.push(`${colorName} ${config.md.colors[colorName]}`);
-  });
+  const colorsIos = config.ios.colors.map(color => `${color[0]} ${color[1]}`);
+  const colorsMd = config.md.colors.map(color => `${color[0]} ${color[1]}`);
 
   gulp.src('./src/framework7.less')
     .pipe(modifyFile((content) => {

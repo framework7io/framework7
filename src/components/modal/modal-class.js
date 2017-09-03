@@ -111,15 +111,23 @@ class Modal extends Framework7Class {
       $backdropEl.addClass('backdrop-in');
     }
     // Modal
+    function transitionEnd() {
+      if ($el.hasClass('modal-out')) {
+        modal.onClosed();
+      } else {
+        modal.onOpened();
+      }
+    }
     if (animate) {
       $el
+        .animationEnd(() => {
+          transitionEnd();
+        });
+      $el
         .transitionEnd(() => {
-          if ($el.hasClass('modal-out')) {
-            modal.onClosed();
-          } else {
-            modal.onOpened();
-          }
-        })
+          transitionEnd();
+        });
+      $el
         .removeClass('modal-out not-animated')
         .addClass('modal-in');
       modal.onOpen();
@@ -148,15 +156,23 @@ class Modal extends Framework7Class {
 
     // Modal
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
+    function transitionEnd() {
+      if ($el.hasClass('modal-out')) {
+        modal.onClosed();
+      } else {
+        modal.onOpened();
+      }
+    }
     if (animate) {
       $el
+        .animationEnd(() => {
+          transitionEnd();
+        });
+      $el
         .transitionEnd(() => {
-          if ($el.hasClass('modal-out')) {
-            modal.onClosed();
-          } else {
-            modal.onOpened();
-          }
-        })
+          transitionEnd();
+        });
+      $el
         .removeClass('modal-in')
         .addClass('modal-out');
       // Emit close

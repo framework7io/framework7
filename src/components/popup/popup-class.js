@@ -31,10 +31,13 @@ class Popup extends Modal {
       return popup.destroy();
     }
 
-    let $backdropEl = app.root.children('.popup-backdrop');
-    if ($backdropEl.length === 0) {
-      $backdropEl = $('<div class="popup-backdrop"></div>');
-      app.root.append($backdropEl);
+    let $backdropEl;
+    if (popup.params.backdrop !== false) {
+      $backdropEl = app.root.children('.popup-backdrop');
+      if ($backdropEl.length === 0) {
+        $backdropEl = $('<div class="popup-backdrop"></div>');
+        app.root.append($backdropEl);
+      }
     }
 
     Utils.extend(popup, {
@@ -42,7 +45,7 @@ class Popup extends Modal {
       $el,
       el: $el[0],
       $backdropEl,
-      backdropEl: $backdropEl[0],
+      backdropEl: $backdropEl && $backdropEl[0],
       type: 'popup',
     });
 

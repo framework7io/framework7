@@ -63,6 +63,13 @@ export default {
     });
   },
   on: {
+    photoBrowserOpen(pb) {
+      const app = this;
+      if (app.theme !== 'md') return;
+      pb.$containerEl.find('.preloader').each((index, preloaderEl) => {
+        app.preloader.init(preloaderEl);
+      });
+    },
     pageInit(page) {
       const app = this;
       if (app.theme !== 'md') return;

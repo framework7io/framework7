@@ -6,5 +6,4 @@ npm-debug.log
 .idea
 .vscode
 package-lock.json
-src/_js
-src/_less
+scripts/build-config-local.js

@@ -13,7 +13,6 @@
     a.link {
       line-height: @toolbarSize;
       height: @toolbarSize;
-      justify-content: flex-start;
       i + span, i + i, span + i, span + span {
         margin-left: 7px;
       }
@@ -32,6 +31,9 @@
     &.no-hairline {
       .hairline-remove(top);
     }
+  }
+  .toolbar:not(.tabbar) a.link {
+    justify-content: flex-start;
   }
   .hairline-root('.toolbar', top, @toolbarBorderColor);
   .toolbar-inner {
