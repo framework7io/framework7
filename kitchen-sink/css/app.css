@@ -72,6 +72,10 @@
   display: block;
   position: relative;
 }
+.icon-f7 {
+  background: url(../img/f7-icon.png) no-repeat center;
+  background-size: cover;
+}
 
 .ios .demo-list-icon, .ios .icon-f7 {
   width: 29px !important;
@@ -79,51 +83,12 @@
   border-radius: 6px;
   box-sizing: border-box;
 }
-.ios .icon-f7 {
-  background: #e02b2b;
-  position: relative;
-  font-size: 0;
-  border: 0.5px solid rgba(0,0,0,0.2);
-}
-.ios .icon-f7:after {
-  content: 'F7';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-style: normal;
-  font-size: 12px;
-  color: #fff;
-  line-height: 29px;
-  font-weight: 500;
-}
 .md .demo-list-icon, .md .icon-f7 {
   width: 24px !important;
   height: 24px !important;
   border-radius: 4px;
 }
-.md .icon-f7 {
-  background: #e02b2b;
-  position: relative;
-  font-size: 0;
-  border-radius: 50%;
-}
-.md .icon-f7:after {
-  content: 'F7';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-style: normal;
-  font-size: 10px;
-  color: #fff;
-  line-height: 24px;
-  font-weight: 400;
-}
+
 /* Lazy Demo */
 img.demo-lazy {
   display: block;
@@ -464,3 +429,4 @@ code {
   font-size: 11px;
   color: #666;
 }
+
