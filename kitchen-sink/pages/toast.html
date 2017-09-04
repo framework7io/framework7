@@ -32,6 +32,9 @@
         <p>
           <a href="#" class="button button-raised" @click="showToastWithCustomButton">Toast with custom button</a>
         </p>
+        <p>
+          <a href="#" class="button button-raised" @click="showToastWithCallback">Toast with callback on close</a>
+        </p>
       </div>
     </div>
   </div>
@@ -115,12 +118,35 @@
         // Open it
         self.toastWithCustomButton.open();
       },
+      showToastWithCallback: function () {
+        var self = this;
+        // Create toast
+        if (!self.toastWithCallback) {
+          self.toastWithCallback = self.$app.toast.create({
+            message: 'Custom close button',
+            closeButton: true,
+            on: {
+              close: function () {
+                self.$app.dialog.alert('Toast closed');
+              },
+            }
+          });
+        }
+        // Open it
+        self.toastWithCallback.open();
+      },
     },
     on: {
       pageBeforeRemove: function () {
         var self = this;
-        // Destroy popup when page removed
-        if (self.popup) self.popup.destroy();
+        // Destroy toasts when page removed
+        if (self.toastBottom) self.toastBottom.destroy();
+        if (self.toastTop) self.toastTop.destroy();
+        if (self.toastCenter) self.toastCenter.destroy();
+        if (self.toastLargeMessage) self.toastLargeMessage.destroy();
+        if (self.toastWithButton) self.toastWithButton.destroy();
+        if (self.toastWithCustomButton) self.toastWithCustomButton.destroy();
+        if (self.toastWithCallback) self.toastWithCallback.destroy();
       },
     }
   }
