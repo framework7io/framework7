@@ -11,6 +11,7 @@ class Dialog extends Modal {
       buttons: [],
       verticalButtons: false,
       onClick: undefined,
+      cssClass: undefined,
       on: {},
     }, params);
 
