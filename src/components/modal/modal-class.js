@@ -32,11 +32,13 @@ class Modal extends Framework7Class {
     openedModals.push(modal);
     $('html').addClass(`with-modal-${modal.type.toLowerCase()}`);
     modal.$el.trigger(`modal:open ${modal.type.toLowerCase()}:open`, modal);
+    modal.emit({ events: 'open', data: [modal], parents: [] });
     modal.emit(`modalOpen ${modal.type}Open`, modal);
   }
   onOpened() {
     const modal = this;
     modal.$el.trigger(`modal:opened ${modal.type.toLowerCase()}:opened`, modal);
+    modal.emit({ events: 'opened', data: [modal], parents: [] });
     modal.emit(`modalOpened ${modal.type}Opened`, modal);
   }
   onClose() {
@@ -44,6 +46,7 @@ class Modal extends Framework7Class {
     openedModals.splice(openedModals.indexOf(modal), 1);
     $('html').removeClass(`with-modal-${modal.type.toLowerCase()}`);
     modal.$el.trigger(`modal:close ${modal.type.toLowerCase()}:close`, modal);
+    modal.emit({ events: 'close', data: [modal], parents: [] });
     modal.emit(`modalClose ${modal.type}Close`, modal);
   }
   onClosed() {
@@ -51,6 +54,7 @@ class Modal extends Framework7Class {
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`, modal);
+    modal.emit({ events: 'closed', data: [modal], parents: [] });
     modal.emit(`modalClosed ${modal.type}Closed`, modal);
   }
   open(animate = true) {
@@ -195,6 +199,7 @@ class Modal extends Framework7Class {
   }
   destroy() {
     let modal = this;
+    modal.emit({ events: 'beforeDestroy', data: [modal], parents: [] });
     modal.emit('modalBeforeDestroy', modal);
     if (modal.$el) {
       modal.$el.trigger(`modal:beforedestroy ${modal.type.toLowerCase()}:beforedestroy`, modal);
