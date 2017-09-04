@@ -29,6 +29,12 @@ export default {
 
       sheetCloseByBackdropClick: true,
       sheetCloseByOutsideClick: false,
+
+      toastPosition: 'bottom', // or 'top' or 'center'
+      toastCloseButton: false,
+      toastCloseButtonColor: undefined,
+      toastCloseButtonText: 'Ok',
+      toastCloseTimeout: undefined,
     },
   },
 };
