@@ -14,6 +14,7 @@ let config = {
     'popover',
     'actions',
     'sheet',
+    'toast',
 
     // Loaders
     'preloader',
