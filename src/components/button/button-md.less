@@ -65,18 +65,20 @@
       }
     }
 
-    .navbar &, .toolbar &, .subnavbar &, .notifications & {
-      &:not(.button-fill, .button-fill-md) {
-        color:#fff;
-        &.active-state {
-          background: rgba(255,255,255,0.15);
-        }
+  }
+  .navbar, .subnavbar, .toolbar {
+    .button:not(.button-fill):not(.button-fill-md) {
+      color: #fff;
+      &.active-state {
+        background: rgba(255,255,255,0.15);
       }
     }
   }
-  .navbar, .subnavbar, .toolbar {
-    .button:not(.button-fill) {
-      color: #fff;
+  .toast {
+    .button:not(.button-fill):not(.button-fill-md) {
+      &.active-state {
+        background: rgba(255,255,255,0.15);
+      }
     }
   }
 
