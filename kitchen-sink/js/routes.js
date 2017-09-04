@@ -373,6 +373,10 @@ var routes = [
     ],
   },
   {
+    path: '/toast/',
+    componentUrl: './pages/toast.html',
+  },
+  {
     path: '/toggle/',
     url: './pages/toggle.html',
   },
