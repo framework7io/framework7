@@ -117,6 +117,7 @@ class Searchbar extends FrameworkClass {
 
     Utils.extend(sb, {
       app,
+      view: app.views.get($el.parents('.view')),
       $el,
       el: $el[0],
       $backdropEl,
@@ -130,6 +131,8 @@ class Searchbar extends FrameworkClass {
       disableButtonHasMargin: false,
       $pageEl,
       pageEl: $pageEl && $pageEl[0],
+      $navbarEl,
+      navbarEl: $navbarEl && $navbarEl[0],
       $foundEl,
       foundEl: $foundEl && $foundEl[0],
       $notFoundEl,
@@ -165,6 +168,18 @@ class Searchbar extends FrameworkClass {
     function disableOnClick(e) {
       sb.disable(e);
     }
+    function onPageBeforeOut() {
+      if (!sb || (sb && !sb.$el)) return;
+      if (sb.enabled) {
+        sb.$el.removeClass('searchbar-enabled');
+      }
+    }
+    function onPageBeforeIn() {
+      if (!sb || (sb && !sb.$el)) return;
+      if (sb.enabled) {
+        sb.$el.addClass('searchbar-enabled');
+      }
+    }
     sb.attachEvents = function attachEvents() {
       $el.on('submit', preventSubmit);
       if (sb.params.disableButton) {
@@ -172,6 +187,10 @@ class Searchbar extends FrameworkClass {
       }
       if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
         sb.$backdropEl.on('click', disableOnClick);
+      }
+      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+        sb.$pageEl.on('page:beforeout', onPageBeforeOut);
+        sb.$pageEl.on('page:beforein', onPageBeforeIn);
       }
       sb.$inputEl.on('focus', onInputFocus);
       sb.$inputEl.on('change input compositionend', onInputChange);
@@ -184,6 +203,10 @@ class Searchbar extends FrameworkClass {
       }
       if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
         sb.$backdropEl.off('click', disableOnClick);
+      }
+      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+        sb.$pageEl.on('page:beforeout', onPageBeforeOut);
+        sb.$pageEl.on('page:beforein', onPageBeforeIn);
       }
       sb.$inputEl.off('focus', onInputFocus);
       sb.$inputEl.off('change input compositionend', onInputChange);
