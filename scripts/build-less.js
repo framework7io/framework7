@@ -26,8 +26,8 @@ function build(buildTheme, cb) {
 
   const themes = buildTheme ? [buildTheme] : config.themes;
 
-  const colorsIos = config.ios.colors.map(color => `${color[0]} ${color[1]}`);
-  const colorsMd = config.md.colors.map(color => `${color[0]} ${color[1]}`);
+  const colorsIos = Object.entries(config.ios.colors).map(color => color.join(' '));
+  const colorsMd = Object.entries(config.md.colors).map(color => color.join(' '));
 
   gulp.src('./src/framework7.less')
     .pipe(modifyFile((content) => {
