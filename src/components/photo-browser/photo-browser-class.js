@@ -242,7 +242,7 @@ class PhotoBrowser extends Framework7Class {
     const html = `
       <div class="photo-browser photo-browser-${pb.params.theme}">
         <div class="view">
-          <div class="page photo-browser-page photo-browser-page-${pb.params.theme} no-toolbar ${!pb.params.navbar ? 'no-navbar' : ''}" data-page="photo-browser-slides">
+          <div class="page photo-browser-page photo-browser-page-${pb.params.theme} no-toolbar ${!pb.params.navbar ? 'no-navbar' : ''}" data-name="photo-browser-page">
             ${pb.params.navbar ? pb.renderNavbar() : ''}
             ${pb.params.toolbar ? pb.renderToolbar() : ''}
             <div class="photo-browser-captions photo-browser-captions-${pb.params.captionsTheme || pb.params.theme}">
