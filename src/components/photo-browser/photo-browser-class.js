@@ -183,10 +183,10 @@ class PhotoBrowser extends Framework7Class {
       <div class="toolbar tabbar toolbar-bottom">
         <div class="toolbar-inner">
           <a href="#" class="link photo-browser-prev">
-            <i class="icon icon-prev ${iconsColor ? `color-${iconsColor}` : ''}"></i>
+            <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
           </a>
           <a href="#" class="link photo-browser-next">
-            <i class="icon icon-next ${iconsColor ? `color-${iconsColor}` : ''}"></i>
+            <i class="icon icon-forward ${iconsColor ? `color-${iconsColor}` : ''}"></i>
           </a>
         </div>
       </div>
