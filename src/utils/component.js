@@ -67,8 +67,11 @@ class Framework7Component {
     // Make Dom
     if (html && typeof html === 'string') {
       html = html.trim();
+      tempDom.innerHTML = html;
+    } else if (html) {
+      tempDom.innerHTML = '';
+      tempDom.appendChild(html);
     }
-    tempDom.innerHTML = html;
 
     // Extend context with $el
     const el = tempDom.children[0];
@@ -161,12 +164,12 @@ class Framework7Component {
 
     // Set styles scope ID
     let styleEl;
-    if (component.styles) {
+    if (component.style) {
       styleEl = document.createElement('style');
-      styleEl.innerHTML = component.styles;
+      styleEl.innerHTML = component.style;
     }
-    if (component.stylesScopeId) {
-      el.setAttribute('data-scope', component.stylesScopeId);
+    if (component.styleScopeId) {
+      el.setAttribute('data-scope', component.styleScopeId);
     }
 
     // Attach events
@@ -224,18 +227,18 @@ const Component = {
     }
 
     // Styles
-    let styles;
-    const stylesScopeId = Utils.now();
+    let style;
+    const styleScopeId = Utils.now();
     if (componentString.indexOf('<style>') >= 0) {
-      styles = componentString.split('<style>')[1].split('</style>')[0];
+      style = componentString.split('<style>')[1].split('</style>')[0];
     } else if (componentString.indexOf('<style scoped>') >= 0) {
-      styles = componentString.split('<style scoped>')[1].split('</style>')[0];
-      styles = styles.split('\n').map((line) => {
+      style = componentString.split('<style scoped>')[1].split('</style>')[0];
+      style = style.split('\n').map((line) => {
         if (line.indexOf('{') >= 0) {
           if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', `[data-scope="${stylesScopeId}"]`);
+            return line.replace('{{this}}', `[data-scope="${styleScopeId}"]`);
           }
-          return `[data-scope="${stylesScopeId}"] ${line.trim()}`;
+          return `[data-scope="${styleScopeId}"] ${line.trim()}`;
         }
         return line;
       }).join('\n');
@@ -262,9 +265,9 @@ const Component = {
     if (!component.template && !component.render) {
       component.template = template;
     }
-    if (styles) {
-      component.styles = styles;
-      component.stylesScopeId = stylesScopeId;
+    if (style) {
+      component.style = style;
+      component.styleScopeId = styleScopeId;
     }
     return component;
   },
