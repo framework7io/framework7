@@ -277,8 +277,13 @@ function forward(el, forwardOptions = {}) {
     router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-    const removeOldPage = !(router.params.preloadPreviousPage || (router.app.theme === 'ios' && router.params.swipeBackPage));
-    if (removeOldPage) {
+    let keepOldPage = app.theme === 'ios' ? (router.params.preloadPreviousPage || router.params.iosSwipeBackPage) : router.params.preloadPreviousPage;
+    if (!keepOldPage) {
+      if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page')) {
+        keepOldPage = true;
+      }
+    }
+    if (!keepOldPage) {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
         if (separateNavbar) {

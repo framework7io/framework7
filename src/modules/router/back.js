@@ -251,7 +251,8 @@ function backward(el, backwardOptions) {
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     // Preload previous page
-    if (router.params.preloadPreviousPage) {
+    const preloadPreviousPage = app.theme === 'ios' ? (router.params.preloadPreviousPage || router.params.iosSwipeBackPage) : router.params.preloadPreviousPage;
+    if (preloadPreviousPage) {
       router.back(router.history[router.history.length - 2], { preload: true });
     }
     if (router.params.pushState) {
