@@ -348,6 +348,9 @@ div.demo-lazy {
 }
 .demo-swiper-gallery-thumbs .swiper-slide {
   width: 25%;
+}
+.demo-swiper-gallery-thumbs .swiper-slide-pic {
+  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
@@ -356,11 +359,11 @@ div.demo-lazy {
   opacity: 0.35;
   transition: 300ms;
 }
-.demo-swiper-gallery-thumbs .swiper-slide-active  {
+.demo-swiper-gallery-thumbs .swiper-slide-active .swiper-slide-pic  {
   opacity: 1;
 }
 .demo-swiper-gallery-top .swiper-slide,
-.demo-swiper-gallery-thumbs .swiper-slide {
+.demo-swiper-gallery-thumbs .swiper-slide-pic {
   background-size: cover;
   background-position: center;
 }
