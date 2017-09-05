@@ -22,6 +22,7 @@ export default {
       formColorTheme: undefined,
       navbarColorTheme: undefined,
       routableModals: true,
+      url: 'select',
       /*
         Custom render functions
       */
@@ -37,7 +38,7 @@ export default {
       renderItems: undefined,
       /*
         Custom render functions:
-        function (index, item)
+        function (item, index)
         must return HTML string
       */
       renderItem: undefined,
