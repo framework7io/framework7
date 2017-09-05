@@ -26,15 +26,15 @@ function build(buildTheme, cb) {
 
   const themes = buildTheme ? [buildTheme] : config.themes;
 
-  const colorsIos = Object.entries(config.ios.colors).map(color => color.join(' '));
-  const colorsMd = Object.entries(config.md.colors).map(color => color.join(' '));
+  const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`);
+  const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`);
 
   gulp.src('./src/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
-        .replace(/@include-ios-theme: (true|false);/, `@include-ios-theme: ${themes.indexOf('ios') >= 0 ? 'true' : 'false'};`)
-        .replace(/@include-md-theme: (true|false);/, `@include-md-theme: ${themes.indexOf('md') >= 0 ? 'true' : 'false'};`)
+        .replace('$includeIosTheme', themes.indexOf('ios') >= 0)
+        .replace('$includeMdTheme', themes.indexOf('md') >= 0)
         .replace('$themeColorIos', config.ios.themeColor)
         .replace('$colorsIos', colorsIos.join(', '))
         .replace('$themeColorMd', config.md.themeColor)
