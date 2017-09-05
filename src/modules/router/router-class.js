@@ -597,10 +597,10 @@ class Router extends Framework7Class {
         url,
         method: 'GET',
         beforeSend() {
-          router.emit('routerAjaxStart');
+          router.emit('routerAjaxStart', router.xhr);
         },
         complete(xhr, status) {
-          router.emit('routerAjaxComplete');
+          router.emit('routerAjaxComplete', xhr);
           if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
@@ -610,13 +610,15 @@ class Router extends Framework7Class {
                 content: xhr.responseText,
               });
             }
+            router.emit('routerAjaxSuccess', xhr);
             resolve(xhr.responseText);
           } else {
+            router.emit('routerAjaxError', xhr);
             reject(xhr);
           }
         },
         error(xhr) {
-          router.emit('ajaxError');
+          router.emit('routerAjaxError', xhr);
           reject(xhr);
         },
       });
@@ -705,12 +707,12 @@ class Router extends Framework7Class {
     const url = typeof component === 'string' ? component : componentUrl;
     function compile(c) {
       const createdComponent = Component.create(c, {
+        $,
+        $$: $,
         $app: router.app,
         $root: Utils.extend({}, router.app.data, router.app.methods),
         $route: options.route,
         $router: router,
-        $,
-        $$: $,
         $dom7: $,
         $theme: {
           ios: router.app.theme === 'ios',
@@ -876,7 +878,7 @@ class Router extends Framework7Class {
     const app = router.app;
 
     // Init Swipeback
-    if (router.view && router.params.swipeBackPage && app.theme === 'ios') {
+    if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
       SwipeBack(router);
     }
 

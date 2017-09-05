@@ -49,11 +49,11 @@ export default {
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
       // Swipe Back
-      swipeBackPage: true,
-      swipeBackPageAnimateShadow: true,
-      swipeBackPageAnimateOpacity: true,
-      swipeBackPageActiveArea: 30,
-      swipeBackPageThreshold: 0,
+      iosSwipeBack: true,
+      iosSwipeBackAnimateShadow: true,
+      iosSwipeBackAnimateOpacity: true,
+      iosSwipeBackActiveArea: 30,
+      iosSwipeBackThreshold: 0,
       // Push State
       pushState: false,
       pushStateRoot: undefined,
@@ -82,6 +82,11 @@ export default {
       views: Utils.extend([], {
         create(el, params) {
           return new View(app, el, params);
+        },
+        get(viewEl) {
+          const $viewEl = $(viewEl);
+          if ($viewEl.length && $viewEl[0].f7View) return $viewEl[0].f7View;
+          return undefined;
         },
       }),
     });

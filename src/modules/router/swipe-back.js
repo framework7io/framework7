@@ -31,7 +31,7 @@ function SwipeBack(r) {
   let navbarWidth;
 
   function handleTouchStart(e) {
-    if (!allowViewTouchMove || !router.params.swipeBackPage || isTouched || app.swipeout.el || !router.allowPageChange) return;
+    if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || app.swipeout.el || !router.allowPageChange) return;
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
@@ -67,12 +67,12 @@ function SwipeBack(r) {
       if (currentPage.hasClass('no-swipeback')) cancel = true;
       previousPage = $el.find('.page-previous:not(.stacked)');
 
-      let notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
+      let notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
       viewContainerWidth = $el.width();
       if (app.rtl) {
-        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.swipeBackPageActiveArea);
+        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.iosSwipeBackActiveArea);
       } else {
-        notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
+        notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
       }
       if (notFromBorder) cancel = true;
       if (previousPage.length === 0 || currentPage.length === 0) cancel = true;
@@ -81,14 +81,14 @@ function SwipeBack(r) {
         return;
       }
 
-      if (router.params.swipeBackPageAnimateShadow) {
+      if (router.params.iosSwipeBackAnimateShadow) {
         pageShadow = currentPage.find('.page-shadow-effect');
         if (pageShadow.length === 0) {
           pageShadow = $('<div class="page-shadow-effect"></div>');
           currentPage.append(pageShadow);
         }
       }
-      if (router.params.swipeBackPageAnimateOpacity) {
+      if (router.params.iosSwipeBackAnimateOpacity) {
         pageOpacity = previousPage.find('.page-opacity-effect');
         if (pageOpacity.length === 0) {
           pageOpacity = $('<div class="page-opacity-effect"></div>');
@@ -138,7 +138,7 @@ function SwipeBack(r) {
     const inverter = app.rtl ? -1 : 1;
 
     // Touches diff
-    touchesDiff = (pageX - touchesStart.x - router.params.swipeBackPageThreshold) * inverter;
+    touchesDiff = (pageX - touchesStart.x - router.params.iosSwipeBackThreshold) * inverter;
     if (touchesDiff < 0) touchesDiff = 0;
     const percentage = touchesDiff / viewContainerWidth;
 
@@ -162,10 +162,10 @@ function SwipeBack(r) {
     }
 
     currentPage.transform(`translate3d(${currentPageTranslate}px,0,0)`);
-    if (router.params.swipeBackPageAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
+    if (router.params.iosSwipeBackAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
 
     previousPage.transform(`translate3d(${previousPageTranslate}px,0,0)`);
-    if (router.params.swipeBackPageAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
+    if (router.params.iosSwipeBackAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
 
     // Dynamic Navbars Animation
     if (dynamicNavbar) {
