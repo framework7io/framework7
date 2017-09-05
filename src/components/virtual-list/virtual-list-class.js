@@ -17,8 +17,10 @@ class VirtualList extends Framework7Class {
       showFilteredItemsOnly: false,
       renderExternal: undefined,
       setListHeight: true,
+      searchByItem: undefined,
+      searchAll: undefined,
       on: {},
-      template:
+      itemTemplate:
         '<li>' +
           '<div class="item-content">' +
             '<div class="item-inner">' +
@@ -46,9 +48,9 @@ class VirtualList extends Framework7Class {
     if (vl.params.showFilteredItemsOnly) {
       vl.filteredItems = [];
     }
-    if (vl.params.template && !vl.params.renderItem) {
-      if (typeof vl.params.template === 'string') vl.template = t7.compile(vl.params.template);
-      else if (typeof vl.params.template === 'function') vl.template = vl.params.template;
+    if (vl.params.itemTemplate && !vl.params.renderItem) {
+      if (typeof vl.params.itemTemplate === 'string') vl.itemTemplate = t7.compile(vl.params.template);
+      else if (typeof vl.params.itemTemplate === 'function') vl.itemTemplate = vl.params.itemTemplate;
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');
 
@@ -209,10 +211,10 @@ class VirtualList extends Framework7Class {
         itemEl = vl.domCache[index];
         itemEl.f7VirtualListIndex = index;
       } else {
-        if (vl.template && !vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.template(items[i], { index }).trim();
+        if (vl.itemTemplate && !vl.params.renderItem) {
+          vl.tempDomElement.innerHTML = vl.itemTemplate(items[i], { index }).trim();
         } else if (vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]).trim();
+          vl.tempDomElement.innerHTML = vl.params.renderItem(items[i], index).trim();
         } else {
           vl.tempDomElement.innerHTML = items[i].toString().trim();
         }
