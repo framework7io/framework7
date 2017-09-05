@@ -19,7 +19,7 @@ class VirtualList extends Framework7Class {
       setListHeight: true,
       searchByItem: undefined,
       searchAll: undefined,
-      on: {},
+      renderItem: undefined,
       itemTemplate:
         '<li>' +
           '<div class="item-content">' +
@@ -28,6 +28,7 @@ class VirtualList extends Framework7Class {
             '</div>' +
           '</div>' +
         '</li>',
+      on: {},
     };
 
     // Extend defaults with modules params
@@ -214,7 +215,7 @@ class VirtualList extends Framework7Class {
         if (vl.itemTemplate && !vl.params.renderItem) {
           vl.tempDomElement.innerHTML = vl.itemTemplate(items[i], { index }).trim();
         } else if (vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.params.renderItem(items[i], index).trim();
+          vl.tempDomElement.innerHTML = vl.params.renderItem.call(vl, items[i], index).trim();
         } else {
           vl.tempDomElement.innerHTML = items[i].toString().trim();
         }
