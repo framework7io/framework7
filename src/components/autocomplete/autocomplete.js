@@ -96,42 +96,4 @@ export default {
       },
     });
   },
-
-  on: {
-    // tabMounted(tabEl) {
-    //   const app = this;
-    //   $(tabEl).find('.smart-select-init').each((index, smartSelectEl) => {
-    //     app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
-    //   });
-    // },
-    // tabBeforeRemove(tabEl) {
-    //   $(tabEl).find('.smart-select-init').each((index, smartSelectEl) => {
-    //     if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
-    //       smartSelectEl.f7SmartSelect.destroy();
-    //     }
-    //   });
-    // },
-    // pageInit(page) {
-    //   const app = this;
-    //   page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
-    //     app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
-    //   });
-    // },
-    // pageBeforeRemove(page) {
-    //   page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
-    //     if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
-    //       smartSelectEl.f7SmartSelect.destroy();
-    //     }
-    //   });
-    // },
-  },
-  clicks: {
-    // '.smart-select': function open($clickedEl, data) {
-    //   const app = this;
-    //   if (!$clickedEl[0].f7SmartSelect) {
-    //     const ss = app.smartSelect.create(Utils.extend({ el: $clickedEl }, data));
-    //     ss.open();
-    //   }
-    // },
-  },
 };
