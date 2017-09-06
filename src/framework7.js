@@ -5,6 +5,8 @@ import $ from 'dom7';
 import Framework7 from './components/app/app-class';
 
 // Import Core Modules
+import Utils from './modules/utils/utils';
+import Storage from './modules/storage/storage';
 import Resize from './modules/resize/resize';
 import Device from './modules/device/device';
 import Support from './modules/support/support';
@@ -38,6 +40,8 @@ if (typeof $ !== 'undefined') {
 // Install Modules & Components
 Framework7
   // Core Modules
+  .use(Utils)
+  .use(Storage)
   .use(Support)
   .use(Device)
   .use(Resize)
