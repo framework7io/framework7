@@ -21,7 +21,7 @@ class Searchbar extends FrameworkClass {
       foundEl: '.searchbar-found',
       notFoundEl: '.searchbar-not-found',
       backdrop: true,
-      removeDiacritics: false,
+      removeDiacritics: true,
       customSearch: false,
       hideDividers: true,
       hideGroups: true,
