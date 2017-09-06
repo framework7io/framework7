@@ -155,15 +155,18 @@ class Searchbar extends FrameworkClass {
     function onInputChange() {
       const value = sb.$inputEl.val().trim();
       if (
-          ((sb.$searchContainer && sb.$searchContainer.length > 0) || sb.params.customSearch) &&
-          (sb.params.searchIn || sb.isVirtualList)
+          (
+            (sb.$searchContainer && sb.$searchContainer.length > 0) &&
+            (sb.params.searchIn || sb.isVirtualList)
+          ) ||
+          sb.params.customSearch
         ) {
         sb.search(value, true);
       }
     }
     function onInputClear(e, previousValue) {
       sb.$el.trigger('searchbar:clear', previousValue);
-      sb.emit('searchbarClear', previousValue);
+      sb.emit('local::clear searchbarClear', previousValue);
     }
     function disableOnClick(e) {
       sb.disable(e);
@@ -230,7 +233,7 @@ class Searchbar extends FrameworkClass {
     const previousQuery = sb.value;
     sb.$inputEl.val('').trigger('change').focus();
     sb.$el.trigger('searchbar:clear', previousQuery);
-    sb.emit('searchbarClear', previousQuery);
+    sb.emit('local::clear searchbarClear', previousQuery);
     return sb;
   }
   setDisableButtonMargin() {
@@ -250,7 +253,7 @@ class Searchbar extends FrameworkClass {
     sb.enabled = true;
     function enable() {
       if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch) && !sb.$el.hasClass('searchbar-enabled') && !sb.query) {
-        sb.$backdropEl.addClass('searchbar-backdrop-in');
+        sb.backdropShow();
       }
       sb.$el.addClass('searchbar-enabled');
       if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
@@ -260,7 +263,7 @@ class Searchbar extends FrameworkClass {
         sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, '0px');
       }
       sb.$el.trigger('searchbar:enable');
-      sb.emit('searchbarEnable');
+      sb.emit('local::enable searchbarEnable');
     }
     let needsFocus = false;
     if (setFocus === true) {
@@ -300,7 +303,7 @@ class Searchbar extends FrameworkClass {
     }
 
     if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch)) {
-      sb.$backdropEl.removeClass('searchbar-backdrop-in');
+      sb.backdropHide();
     }
 
     sb.enabled = false;
@@ -308,13 +311,27 @@ class Searchbar extends FrameworkClass {
     sb.$inputEl.blur();
 
     sb.$el.trigger('searchbar:disable');
-    sb.emit('searchbarDisable');
+    sb.emit('local::disable searchbarDisable');
     return sb;
   }
   toggle() {
     const sb = this;
     if (sb.enabled) sb.disable();
     else sb.enable(true);
+    return sb;
+  }
+  backdropShow() {
+    const sb = this;
+    if (sb.$backdropEl) {
+      sb.$backdropEl.addClass('searchbar-backdrop-in');
+    }
+    return sb;
+  }
+  backdropHide() {
+    const sb = this;
+    if (sb.$backdropEl) {
+      sb.$backdropEl.removeClass('searchbar-backdrop-in');
+    }
     return sb;
   }
   search(query, internal) {
@@ -336,14 +353,14 @@ class Searchbar extends FrameworkClass {
 
     // Add active/inactive classes on overlay
     if (query.length === 0) {
-      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) $backdropEl.addClass('searchbar-backdrop-in');
+      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) sb.backdropShow();
     } else if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) {
-      $backdropEl.removeClass('searchbar-backdrop-in');
+      sb.backdropHide();
     }
 
     if (sb.params.customSearch) {
-      $el.trigger('searhbar:search', query);
-      sb.emit('searhbarSearch', query);
+      $el.trigger('searchbar:search', query, sb.previousQuery);
+      sb.emit('local::search searchbarSearch', query, sb.previousQuery);
       return sb;
     }
 
@@ -423,8 +440,8 @@ class Searchbar extends FrameworkClass {
         });
       }
     }
-    $el.trigger('searchbar:search', query, foundItems);
-    sb.emit('searchbarSearch', query, foundItems);
+    $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
+    sb.emit('local::search searchbarSearch', query, sb.previousQuery, foundItems);
     if (foundItems.length === 0) {
       if ($notFoundEl) $notFoundEl.show();
       if ($foundEl) $foundEl.hide();
@@ -443,7 +460,7 @@ class Searchbar extends FrameworkClass {
   }
   destroy() {
     const sb = this;
-    sb.emit('searchbarBeforeDestroy', sb);
+    sb.emit('local::beforeDestroy searchbarBeforeDestroy', sb);
     sb.$el.trigger('searchbar:beforedestroy', sb);
     sb.detachEvents();
     delete sb.$el.f7Searchbar;
