@@ -13,7 +13,7 @@ export default {
       ModalMethods({
         app,
         constructor: Sheet,
-        defaultSelector: '.sheet.modal-in',
+        defaultSelector: '.sheet-modal.modal-in',
       })
     );
   },

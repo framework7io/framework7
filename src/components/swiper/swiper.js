@@ -14,12 +14,19 @@ export default {
   },
   create() {
     const app = this;
-    app.swiper = ConstructorMethods({
-      defaultSelector: '.swiper-container',
-      constructor: Swiper,
-      app,
-      domProp: 'swiper',
-    });
+    app.swiper = Utils.extend(
+      ConstructorMethods({
+        defaultSelector: '.swiper-container',
+        constructor: Swiper,
+        app,
+        domProp: 'swiper',
+      }),
+      {
+        create(...args) {
+          return new Swiper(...args);
+        },
+      }
+    );
   },
   on: {
     pageBeforeRemove(page) {
