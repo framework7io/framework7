@@ -122,14 +122,14 @@ class Panel extends Framework7Class {
     let panel = this;
     const app = panel.app;
 
-    panel.emit('panelBeforeDestroy', panel);
+    panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
     panel.$el.trigger('panel:beforedestroy', panel);
 
     if (panel.resizeHandler) {
       app.off('resize', panel.resizeHandler);
     }
     panel.$el.trigger('panel:destroy', panel);
-    panel.emit('panelDestroy');
+    panel.emit('local::destroy panelDestroy');
     delete app.panel[panel.side];
     delete panel.el.f7Panel;
     Object.keys(panel).forEach((key) => {
@@ -228,7 +228,7 @@ class Panel extends Framework7Class {
     const panel = this;
     panel.opened = true;
     panel.$el.trigger('panel:open', panel);
-    panel.emit('panelOpen', panel);
+    panel.emit('local::open panelOpen', panel);
   }
   onOpened() {
     const panel = this;
@@ -236,14 +236,14 @@ class Panel extends Framework7Class {
     app.panel.allowOpen = true;
 
     panel.$el.trigger('panel:opened', panel);
-    panel.emit('panelOpened', panel);
+    panel.emit('local::opened panelOpened', panel);
   }
   onClose() {
     const panel = this;
     panel.opened = false;
     panel.$el.addClass('panel-closing');
     panel.$el.trigger('panel:close', panel);
-    panel.emit('panelClose', panel);
+    panel.emit('local::close panelClose', panel);
   }
   onClosed() {
     const panel = this;
@@ -251,7 +251,7 @@ class Panel extends Framework7Class {
     app.panel.allowOpen = true;
     panel.$el.removeClass('panel-closing');
     panel.$el.trigger('panel:closed', panel);
-    panel.emit('panelClosed', panel);
+    panel.emit('local::closed panelClosed', panel);
   }
 }
 

@@ -133,7 +133,7 @@ function swipePanel(panel) {
         $el.show();
         $backdropEl.show();
         $el.trigger('panel:swipeopen', panel);
-        panel.emit('panelSwipeOpen', panel);
+        panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
       panelWidth = $el[0].offsetWidth;
       $el.transition(0);
@@ -173,7 +173,7 @@ function swipePanel(panel) {
       $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
       $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
-      panel.emit('panelSwipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     } else {
       if (side === 'left') translate -= panelWidth;
       $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
@@ -183,7 +183,7 @@ function swipePanel(panel) {
       $backdropEl.css({ opacity: backdropOpacity });
 
       $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
-      panel.emit('panelSwipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     }
   }
   function handleTouchEnd() {

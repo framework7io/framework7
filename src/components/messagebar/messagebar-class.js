@@ -78,20 +78,10 @@ class Messagebar extends Framework7Class {
       const index = $(this).index();
       if ($(e.target).closest('.messagebar-attachment-delete').length) {
         $(this).trigger('messagebar:attachmentdelete', index);
-        messagebar.emit('messagebarAttachmentDelete', this, index);
-        messagebar.emit({
-          events: 'attachmentDelete',
-          data: [this, index],
-          local: true,
-        });
+        messagebar.emit('local::attachmentDelete messagebarAttachmentDelete', this, index);
       } else {
         $(this).trigger('messagebar:attachmentclick', index);
-        messagebar.emit('messagebarAttachmentClick', this, index);
-        messagebar.emit({
-          events: 'attachmentClick',
-          data: [this, index],
-          local: true,
-        });
+        messagebar.emit('local::attachmentClick messagebarAttachmentClick', this, index);
       }
     }
     function onTextareaChange() {
@@ -168,7 +158,7 @@ class Messagebar extends Framework7Class {
         $textareaEl.css('max-height', `${maxHeight}px`);
         $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
         $el.trigger('messagebar:resize');
-        messagebar.emit('messagebarResize');
+        messagebar.emit('local::resize messagebarResize');
       }
     } else {
       const currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
@@ -186,7 +176,7 @@ class Messagebar extends Framework7Class {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
         $el.trigger('messagebar:resize');
-        messagebar.emit('messagebarResize');
+        messagebar.emit('local::resize messagebarResize');
       }
     }
   }
@@ -306,7 +296,7 @@ class Messagebar extends Framework7Class {
   }
   destroy() {
     const messagebar = this;
-    messagebar.emit('messagebarBeforeDestroy', messagebar);
+    messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
     messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
     messagebar.detachEvents();
     messagebar.$el[0].f7Messagebar = null;

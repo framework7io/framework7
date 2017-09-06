@@ -93,8 +93,8 @@ class View extends Framework7Class {
     let view = this;
     const app = view.app;
 
-    view.emit('viewBeforeDestroy', view);
     view.$el.trigger('view:beforedestroy', view);
+    view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
     if (view.main) {
       app.views.main = null;
@@ -111,7 +111,7 @@ class View extends Framework7Class {
     // Destroy Router
     view.router.destroy();
 
-    view.emit('viewDestroy', view);
+    view.emit('local::destroy viewDestroy', view);
 
     // Delete props & methods
     Object.keys(view).forEach((viewProp) => {

@@ -128,11 +128,8 @@ class Toggle extends Framework7Class {
       }
     }
     function handleInputChange() {
-      toggle.emit({
-        events: 'change',
-        parents: [],
-      });
-      toggle.emit('toggleChange toggle:change', toggle);
+      toggle.$el.trigger('toggle:change', toggle);
+      toggle.emit('local::change toggleChange', toggle);
     }
     toggle.attachEvents = function attachEvents() {
       if (!Support.touch) return;
@@ -168,8 +165,8 @@ class Toggle extends Framework7Class {
   }
   destroy() {
     let toggle = this;
-    toggle.emit('toggleBeforeDestroy', toggle);
     toggle.$el.trigger('toggle:beforedestroy', toggle);
+    toggle.emit('local::beforeDestroy toggleBeforeDestroy', toggle);
     delete toggle.$el[0].f7Toggle;
     toggle.detachEvents();
     Utils.deleteProps(toggle);

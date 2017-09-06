@@ -25,7 +25,7 @@ class PullToRefresh extends Framework7Class {
       $transitionTarget.transitionEnd(() => {
         $el.removeClass('ptr-transitioning ptr-pull-up ptr-pull-down');
         $el.trigger('ptr:done');
-        ptr.emit('ptrDone', $el[0]);
+        ptr.emit('local::done ptrDone', $el[0]);
       });
       $el.removeClass('ptr-refreshing').addClass('ptr-transitioning');
       return ptr;
@@ -35,7 +35,7 @@ class PullToRefresh extends Framework7Class {
       if ($el.hasClass('ptr-refreshing')) return ptr;
       $el.addClass('ptr-transitioning ptr-refreshing');
       $el.trigger('ptr:refresh', ptr.done);
-      ptr.emit('ptrRefresh', $el[0], ptr.done);
+      ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
       return ptr;
     };
 
@@ -167,7 +167,7 @@ class PullToRefresh extends Framework7Class {
         }
         if (!pullStarted) {
           $el.trigger('ptr:pullstart');
-          ptr.emit('ptrPullstart', $el[0]);
+          ptr.emit('local::pullStart ptrPullStart', $el[0]);
           pullStarted = true;
         }
         $el.trigger('ptr:pullmove', {
@@ -176,7 +176,7 @@ class PullToRefresh extends Framework7Class {
           translate,
           touchesDiff,
         });
-        ptr.emit('ptrPullmove', $el[0], {
+        ptr.emit('local::pullMove ptrPullMove', $el[0], {
           event: e,
           scrollTop,
           translate,
@@ -217,7 +217,7 @@ class PullToRefresh extends Framework7Class {
       if (refresh) {
         $el.addClass('ptr-refreshing');
         $el.trigger('ptr:refresh', ptr.done);
-        ptr.emit('ptrRefresh', $el[0], ptr.done);
+        ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
       } else {
         $el.removeClass('ptr-pull-down');
       }
@@ -225,7 +225,7 @@ class PullToRefresh extends Framework7Class {
       isMoved = false;
       if (pullStarted) {
         $el.trigger('ptr:pullend');
-        ptr.emit('ptrPullend', $el[0]);
+        ptr.emit('local::pullEnd ptrPullEnd', $el[0]);
       }
     }
 
@@ -261,7 +261,7 @@ class PullToRefresh extends Framework7Class {
   }
   destroy() {
     let ptr = this;
-    ptr.emit('ptrBeforeDestroy', ptr);
+    ptr.emit('local::beforeDestroy ptrBeforeDestroy', ptr);
     ptr.$el.trigger('ptr:beforedestroy', ptr);
     delete ptr.el.f7PullToRefresh;
     ptr.detachEvents();

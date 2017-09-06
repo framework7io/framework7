@@ -123,7 +123,7 @@ class PhotoBrowser extends Framework7Class {
           if (swipeToClose.diff < 0) pb.$containerEl.addClass('swiper-close-to-bottom');
           else pb.$containerEl.addClass('swiper-close-to-top');
         }
-        pb.emit({ events: 'swipeToClose', data: [pb], parents: [] });
+        pb.emit('local::swipeToClose', pb);
         pb.close();
         swipeToClose.allow = true;
       });
@@ -310,40 +310,40 @@ class PhotoBrowser extends Framework7Class {
       initialSlide: pb.activeIndex,
       on: {
         tap(e) {
-          pb.emit({ events: 'tap', data: [e], parents: [] });
+          pb.emit('local::tap', e);
         },
         click(e) {
           if (pb.params.exposition) {
             pb.expositionToggle();
           }
-          pb.emit({ events: 'click', data: [e], parents: [] });
+          pb.emit('local::click', e);
         },
         doubleTap(e) {
-          pb.emit({ events: 'doubleTap', data: [e], parents: [] });
+          pb.emit('local::doubleTap', e);
         },
         transitionStart() {
           const swiper = this;
           pb.onTransitionStart(swiper);
-          pb.emit({ events: 'transitionStart', data: [swiper], parents: [] });
+          pb.emit('local::transitionStart', swiper);
         },
         transitionEnd() {
           const swiper = this;
-          pb.emit({ events: 'transitionStart', data: [swiper], parents: [] });
+          pb.emit('local::transitionEnd', swiper);
         },
         slideChangeStart() {
           const swiper = this;
-          pb.emit({ events: 'slideChangeStart', data: [swiper], parents: [] });
+          pb.emit('local::slideChangeStart', swiper);
         },
         slideChangeEnd() {
           const swiper = this;
-          pb.emit({ events: 'slideChangeEnd', data: [swiper], parents: [] });
+          pb.emit('local::slideChangeEnd', swiper);
         },
         lazyImageLoad(slideEl, imgEl) {
-          pb.emit({ events: 'lazyImageLoad', data: [slideEl, imgEl], parents: [] });
+          pb.emit('local::lazyImageLoad', slideEl, imgEl);
         },
         lazyImageReady(slideEl, imgEl) {
           $(slideEl).removeClass('photo-browser-slide-lazy');
-          pb.emit({ events: 'lazyImageReady', data: [slideEl, imgEl], parents: [] });
+          pb.emit('local::lazyImageReady', slideEl, imgEl);
         },
       },
     });
@@ -367,22 +367,12 @@ class PhotoBrowser extends Framework7Class {
       pb.onTransitionStart(pb.swiper);
     }
 
-    pb.emit({
-      events: 'open',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserOpen', pb);
+    pb.emit('local::open photoBrowserOpen', pb);
   }
   onOpened() {
     const pb = this;
 
-    pb.emit({
-      events: 'opened',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserOpened', pb);
+    pb.emit('local::opened photoBrowserOpened', pb);
   }
   onClose() {
     const pb = this;
@@ -395,12 +385,7 @@ class PhotoBrowser extends Framework7Class {
       delete pb.swiper;
     }
 
-    pb.emit({
-      events: 'close',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserClose', pb);
+    pb.emit('local::close photoBrowserClose', pb);
   }
   onClosed() {
     const pb = this;
@@ -409,12 +394,7 @@ class PhotoBrowser extends Framework7Class {
     pb.$containerEl = null;
     delete pb.$containerEl;
 
-    pb.emit({
-      events: 'closed',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserClosed', pb);
+    pb.emit('local::closed photoBrowserClosed', pb);
   }
 
   // Open
@@ -600,8 +580,7 @@ class PhotoBrowser extends Framework7Class {
   }
   destroy() {
     let pb = this;
-    pb.emit('photoBrowserBeforeDestroy', pb);
-    pb.emit({ events: 'beforeDestroy', parents: [], data: [pb] });
+    pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
     if (pb.$containerEl) {
       pb.$containerEl.trigger('photobrowser:beforedestroy');
       delete pb.$containerEl[0].f7PhotoBrowser;

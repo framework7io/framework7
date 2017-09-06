@@ -62,8 +62,7 @@ class Toast extends Modal {
 
     if (closeButton) {
       $el.find('.toast-button').on('click', () => {
-        toast.emit({ events: 'closeButtonClick', data: [toast], parents: [] });
-        toast.emit('toastCloseButtonClick', toast);
+        toast.emit('local::closeButtonClick toastCloseButtonClick', toast);
         toast.close();
       });
 

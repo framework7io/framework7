@@ -305,16 +305,11 @@ class Range extends Framework7Class {
       range.layout();
     }
     // Events
-    range.$el.trigger('change range:change', range, range.value);
+    range.$el.trigger('range:change', range, range.value);
     if (range.$inputEl && !range.dual) {
       range.$inputEl.val(range.value).trigger('input change');
     }
-    range.emit({
-      events: 'change',
-      parents: [],
-      data: range.value,
-    });
-    range.emit('rangeChange', range, range.value);
+    range.emit('local::change rangeChange', range, range.value);
     return range;
   }
   getValue() {
@@ -329,8 +324,8 @@ class Range extends Framework7Class {
   }
   destroy() {
     let range = this;
-    range.emit('rangeBeforeDestroy', range);
     range.$el.trigger('range:beforedestroy', range);
+    range.emit('local::beforeDestroy rangeBeforeDestroy', range);
     delete range.$el[0].f7Range;
     range.detachEvents();
     Utils.deleteProps(range);
