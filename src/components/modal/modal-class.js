@@ -53,12 +53,17 @@ class Modal extends Framework7Class {
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`, modal);
     modal.emit(`local::closed modalClosed ${modal.type}Closed`, modal);
   }
-  open(animate = true) {
+  open(animateModal) {
     const modal = this;
     const app = modal.app;
     const $el = modal.$el;
     const $backdropEl = modal.$backdropEl;
     const type = modal.type;
+    let animate = true;
+    if (typeof animateModal !== 'undefined') animate = animateModal;
+    else if (typeof modal.params.animate !== 'undefined') {
+      animate = modal.params.animate;
+    }
 
     if (!$el || $el.hasClass('modal-in')) {
       return modal;
@@ -139,10 +144,16 @@ class Modal extends Framework7Class {
 
     return modal;
   }
-  close(animate = true) {
+  close(animateModal) {
     const modal = this;
     const $el = modal.$el;
     const $backdropEl = modal.$backdropEl;
+
+    let animate = true;
+    if (typeof animateModal !== 'undefined') animate = animateModal;
+    else if (typeof modal.params.animate !== 'undefined') {
+      animate = modal.params.animate;
+    }
 
     if (!$el || !$el.hasClass('modal-in')) {
       return modal;

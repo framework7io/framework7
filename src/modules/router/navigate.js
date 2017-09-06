@@ -464,6 +464,16 @@ function navigate(url, navigateOptions = {}) {
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
+    let resolvedAsModal = false;
+    ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+      if (resolveParams[modalLoadProp]) {
+        resolvedAsModal = true;
+        const modalRoute = Utils.extend({}, route, { route: resolveParams });
+        router.allowPageChange = true;
+        router.modalLoad(modalLoadProp, modalRoute, Utils.extend(options, resolveOptions));
+      }
+    });
+    if (resolvedAsModal) return;
     router.load(resolveParams, Utils.extend(options, resolveOptions), true);
   }
   function asyncReject() {
