@@ -1,41 +1,14 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
 import Actions from './actions-class';
+import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'actions',
   create() {
     const app = this;
-    Utils.extend(app, {
-      actions: {
-        create(params) {
-          return new Actions(app, params);
-        },
-        open(actionsEl, animate) {
-          const $actionsEl = $(actionsEl);
-          let actions = $actionsEl[0].f7Modal;
-          if (!actions) actions = new Actions(app, { el: $actionsEl });
-          return actions.open(animate);
-        },
-        close(actionsEl = '.actions-modal.modal-in', animate) {
-          const $actionsEl = $(actionsEl);
-          if ($actionsEl.length === 0) return undefined;
-          let actions = $actionsEl[0].f7Modal;
-          if (!actions) actions = new Actions(app, { el: $actionsEl });
-          return actions.close(animate);
-        },
-        get(actionsEl = '.actions-modal.modal-in') {
-          if ((actionsEl instanceof Actions)) return actionsEl;
-          const $actionsEl = $(actionsEl);
-          if ($actionsEl.length === 0) return undefined;
-          return $actionsEl[0].f7Modal;
-        },
-        destroy(actionsEl) {
-          const actions = app.actions.get(actionsEl);
-          if (actions && actions.destroy) return actions.destroy();
-          return undefined;
-        },
-      },
+    app.actions = ModalMethods({
+      app,
+      constructor: Actions,
+      defaultSelector: '.actions-modal.modal-in',
     });
   },
   clicks: {

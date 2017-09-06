@@ -1,6 +1,6 @@
-import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Autocomplete from './autocomplete-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'autocomplete',
@@ -67,11 +67,14 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      autocomplete: {
-        create(params) {
-          return new Autocomplete(app, params);
-        },
+    app.autocomplete = Utils.extend(
+      ConstructorMethods({
+        defaultSelector: undefined,
+        constructor: Autocomplete,
+        app,
+        domProp: 'f7Autocomplete',
+      }),
+      {
         open(autocompleteEl) {
           const ac = app.autocomplete.get(autocompleteEl);
           if (ac && ac.open) return ac.open();
@@ -82,18 +85,7 @@ export default {
           if (ac && ac.close) return ac.close();
           return undefined;
         },
-        get(autocompleteEl) {
-          if ((autocompleteEl instanceof Autocomplete)) return autocompleteEl;
-          const $autocompleteEl = $(autocompleteEl);
-          if (!$autocompleteEl.length) return undefined;
-          return $autocompleteEl[0].f7Autocomplete;
-        },
-        destroy(autocompleteEl) {
-          const ac = app.autocomplete.get(autocompleteEl);
-          if (ac && ac.destroy) return ac.destroy();
-          return undefined;
-        },
-      },
-    });
+      }
+    );
   },
 };

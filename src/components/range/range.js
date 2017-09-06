@@ -1,39 +1,32 @@
 import $ from 'dom7';
-import Range from './range-class';
 import Utils from '../../utils/utils';
+import Range from './range-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'range',
   create() {
     const app = this;
-    Utils.extend(app, {
-      range: {
-        create(params) {
-          return new Range(app, params);
-        },
-        destroy(el) {
-          if (el && (el instanceof Range) && el.destroy) return el.destroy();
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Range.destroy();
+    app.range = Utils.extend(
+      ConstructorMethods({
+        defaultSelector: '.range-slider',
+        constructor: Range,
+        app,
+        domProp: 'f7Range',
+      }),
+      {
+        getValue(el = '.range-slider') {
+          const range = app.range.get(el);
+          if (range) return range.getValue();
           return undefined;
         },
-        get(el) {
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Range;
+        setValue(el = '.range-slider', value) {
+          const range = app.range.get(el);
+          if (range) return range.setValue(value);
           return undefined;
         },
-        getValue(el) {
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Range.get();
-          return undefined;
-        },
-        setValue(el, value) {
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Range.set(value);
-          return undefined;
-        },
-      },
-    });
+      }
+    );
   },
   static: {
     Range,

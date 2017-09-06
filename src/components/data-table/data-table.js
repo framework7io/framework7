@@ -1,6 +1,6 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
 import DataTable from './data-table-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'dataTable',
@@ -9,23 +9,11 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      dataTable: {
-        create(params) {
-          return new DataTable(app, params);
-        },
-        get(tableEl) {
-          if ((tableEl instanceof DataTable)) return tableEl;
-          const $tableEl = $(tableEl);
-          if (!$tableEl.length) return undefined;
-          return $tableEl[0].f7DataTable;
-        },
-        destroy(tableEl) {
-          const dt = app.autocomplete.get(tableEl);
-          if (dt && dt.destroy) return dt.destroy();
-          return undefined;
-        },
-      },
+    app.dataTable = ConstructorMethods({
+      defaultSelector: '.data-table',
+      constructor: DataTable,
+      app,
+      domProp: 'f7DataTable',
     });
   },
   on: {

@@ -1,6 +1,6 @@
-import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Dialog from './dialog-class';
+import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'dialog',
@@ -9,31 +9,13 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      dialog: {
-        create(params) {
-          return new Dialog(app, params);
-        },
-        open(dialogEl, animate) {
-          const $dialogEl = $(dialogEl);
-          let dialog = $dialogEl[0].f7Modal;
-          if (!dialog) dialog = new Dialog(app, { el: $dialogEl });
-          return dialog.open(animate);
-        },
-        close(dialogEl = '.dialog.modal-in', animate) {
-          const $dialogEl = $(dialogEl);
-          if ($dialogEl.length === 0) return undefined;
-          let dialog = $dialogEl[0].f7Modal;
-          if (!dialog) dialog = new Dialog(app, { el: $dialogEl });
-          return dialog.close(animate);
-        },
-        get(dialogEl = '.dialog.modal-in') {
-          if ((dialogEl instanceof Dialog)) return dialogEl;
-          const $dialogEl = $(dialogEl);
-          if ($dialogEl.length === 0) return undefined;
-          return $dialogEl[0].f7Modal;
-        },
-
+    app.dialog = Utils.extend(
+      ModalMethods({
+        app,
+        constructor: Dialog,
+        defaultSelector: '.dialog.modal-in',
+      }),
+      {
         // Shortcuts
         alert(...args) {
           let [text, title, callbackOk] = args;
@@ -205,8 +187,8 @@ export default {
           if (!infinite) dialog.setProgress(progress);
           return dialog.open();
         },
-      },
-    });
+      }
+    );
   },
   clicks: {
     '.dialog-backdrop': function closeDialog() {

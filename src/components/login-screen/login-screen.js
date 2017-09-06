@@ -1,6 +1,5 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
 import LoginScreen from './login-screen-class';
+import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'loginScreen',
@@ -9,36 +8,10 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      loginScreen: {
-        create(params) {
-          return new LoginScreen(app, params);
-        },
-        open(loginScreenEl, animate) {
-          const $loginScreenEl = $(loginScreenEl);
-          let loginScreen = $loginScreenEl[0].f7Modal;
-          if (!loginScreen) loginScreen = new LoginScreen(app, { el: $loginScreenEl });
-          return loginScreen.open(animate);
-        },
-        close(loginScreenEl = '.login-screen.modal-in', animate) {
-          const $loginScreenEl = $(loginScreenEl);
-          if ($loginScreenEl.length === 0) return undefined;
-          let loginScreen = $loginScreenEl[0].f7Modal;
-          if (!loginScreen) loginScreen = new LoginScreen(app, { el: $loginScreenEl });
-          return loginScreen.close(animate);
-        },
-        get(loginScreenEl = '.login-screen.modal-in') {
-          if ((loginScreenEl instanceof LoginScreen)) return loginScreenEl;
-          const $loginScreenEl = $(loginScreenEl);
-          if ($loginScreenEl.length === 0) return undefined;
-          return $loginScreenEl[0].f7Modal;
-        },
-        destroy(loginScreenEl) {
-          const loginScreen = app.loginScreen.get(loginScreenEl);
-          if (loginScreen && loginScreen.destroy) return loginScreen.destroy();
-          return undefined;
-        },
-      },
+    app.loginScreen = ModalMethods({
+      app,
+      constructor: LoginScreen,
+      defaultSelector: '.login-screen.modal-in',
     });
   },
   clicks: {

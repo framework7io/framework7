@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Swiper from './swiper-class/swiper';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 if (!window.Swiper) {
   window.Swiper = Swiper;
@@ -13,23 +14,11 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      swiper: {
-        create(...args) {
-          return new Swiper(...args);
-        },
-        get(swiperEl = '.swiper-container') {
-          if ((swiperEl instanceof Swiper)) return swiperEl;
-          const $swiperEl = $(swiperEl);
-          if ($swiperEl.length && $swiperEl[0].swiper) return $swiperEl[0].swiper;
-          return undefined;
-        },
-        destroy(swiperEl) {
-          const swiper = app.swiper.get(swiperEl);
-          if (swiper && swiper.destroy) return swiper.destroy();
-          return undefined;
-        },
-      },
+    app.swiper = ConstructorMethods({
+      defaultSelector: '.swiper-container',
+      constructor: Swiper,
+      app,
+      domProp: 'swiper',
     });
   },
   on: {
@@ -96,5 +85,4 @@ export default {
       });
     },
   },
-
 };

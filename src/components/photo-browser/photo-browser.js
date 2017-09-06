@@ -1,6 +1,5 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
 import PhotoBrowser from './photo-browser-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'photoBrowser',
@@ -55,24 +54,11 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      photoBrowser: {
-        create(params) {
-          return new PhotoBrowser(app, params);
-        },
-        get(el = '.photo-browser') {
-          if ((el instanceof PhotoBrowser)) return el;
-          const $el = $(el);
-          if ($el.length) return $el[0].f7PhotoBrowser;
-          return undefined;
-        },
-        destroy(el) {
-          if (el && (el instanceof PhotoBrowser) && el.destroy) return el.destroy();
-          const $el = $(el);
-          if ($el.length) return $el[0].f7PhotoBrowser.destroy();
-          return undefined;
-        },
-      },
+    app.photoBrowser = ConstructorMethods({
+      defaultSelector: '.photo-browser',
+      constructor: PhotoBrowser,
+      app,
+      domProp: 'f7PhotoBrowser',
     });
   },
   static: {

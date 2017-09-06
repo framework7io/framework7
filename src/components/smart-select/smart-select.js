@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import SmartSelect from './smart-select-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'smartSelect',
@@ -30,17 +31,7 @@ export default {
       renderPopup: undefined,
       renderSheet: undefined,
       renderPopover: undefined,
-      /*
-        Custom render functions:
-        function (items)
-        must return HTML string
-      */
       renderItems: undefined,
-      /*
-        Custom render functions:
-        function (item, index)
-        must return HTML string
-      */
       renderItem: undefined,
       renderSearchbar: undefined,
     },
@@ -50,11 +41,14 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      smartSelect: {
-        create(params) {
-          return new SmartSelect(app, params);
-        },
+    app.smartSelect = Utils.extend(
+      ConstructorMethods({
+        defaultSelector: '.smart-select',
+        constructor: SmartSelect,
+        app,
+        domProp: 'f7SmartSelect',
+      }),
+      {
         open(smartSelectEl) {
           const ss = app.smartSelect.get(smartSelectEl);
           if (ss && ss.open) return ss.open();
@@ -65,19 +59,8 @@ export default {
           if (ss && ss.close) return ss.close();
           return undefined;
         },
-        get(smartSelectEl) {
-          if ((smartSelectEl instanceof SmartSelect)) return smartSelectEl;
-          const $smartSelectEl = $(smartSelectEl);
-          if (!$smartSelectEl.length) return undefined;
-          return $smartSelectEl[0].f7SmartSelect;
-        },
-        destroy(smartSelectEl) {
-          const smartSelect = app.smartSelect.get(smartSelectEl);
-          if (smartSelect && smartSelect.destroy) return smartSelect.destroy();
-          return undefined;
-        },
-      },
-    });
+      }
+    );
   },
 
   on: {

@@ -1,6 +1,6 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
 import Messages from './messages-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'messages',
@@ -9,28 +9,12 @@ export default {
   },
   create() {
     const app = this;
-    const messages = {
-      create(params) {
-        return new Messages(app, params);
-      },
-      get(messagesEl) {
-        if ((messagesEl instanceof Messages)) return messagesEl;
-        const $messagesEl = $(messagesEl);
-        if ($messagesEl.length && $messagesEl[0].f7Messages) {
-          return $messagesEl[0].f7Messages;
-        }
-        return undefined;
-      },
-    };
-    ('renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages destroy').split(' ').forEach((messagesMethod) => {
-      messages[messagesMethod] = (messagesEl = '.messages', ...args) => {
-        const m = app.messages.get(messagesEl);
-        if (m) return m[messagesMethod](...args);
-        return undefined;
-      };
-    });
-    Utils.extend(app, {
-      messages,
+    app.messages = ConstructorMethods({
+      defaultSelector: '.messages',
+      constructor: Messages,
+      app,
+      domProp: 'f7Messages',
+      addMethods: 'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(' '),
     });
   },
   on: {

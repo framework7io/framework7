@@ -1,42 +1,27 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Popover from './popover-class';
+import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'popover',
   create() {
     const app = this;
-    Utils.extend(app, {
-      popover: {
-        create(params) {
-          return new Popover(app, params);
-        },
+    app.popover = Utils.extend(
+      ModalMethods({
+        app,
+        constructor: Popover,
+        defaultSelector: '.popover.modal-in',
+      }),
+      {
         open(popoverEl, targetEl, animate) {
           const $popoverEl = $(popoverEl);
           let popover = $popoverEl[0].f7Modal;
           if (!popover) popover = new Popover(app, { el: $popoverEl, targetEl });
           return popover.open(targetEl, animate);
         },
-        close(popoverEl = '.popover.modal-in', animate) {
-          const $popoverEl = $(popoverEl);
-          if ($popoverEl.length === 0) return undefined;
-          let popover = $popoverEl[0].f7Modal;
-          if (!popover) popover = new Popover(app, { el: $popoverEl });
-          return popover.close(animate);
-        },
-        get(popoverEl = '.popover.modal-in') {
-          if ((popoverEl instanceof Popover)) return popoverEl;
-          const $popoverEl = $(popoverEl);
-          if ($popoverEl.length === 0) return undefined;
-          return $popoverEl[0].f7Modal;
-        },
-        destroy(popoverEl) {
-          const popover = app.popover.get(popoverEl);
-          if (popover && popover.destroy) return popover.destroy();
-          return undefined;
-        },
-      },
-    });
+      }
+    );
   },
   clicks: {
     '.popover-open': function openPopover($clickedEl, data = {}) {

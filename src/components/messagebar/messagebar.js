@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Messagebar from './messagebar-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'messagebar',
@@ -9,28 +10,12 @@ export default {
   },
   create() {
     const app = this;
-    const messagebar = {
-      create(params) {
-        return new Messagebar(app, params);
-      },
-      get(messagebarEl) {
-        if ((messagebarEl instanceof Messagebar)) return messagebarEl;
-        const $messagebarEl = $(messagebarEl);
-        if ($messagebarEl.length && $messagebarEl[0].f7Messagebar) {
-          return $messagebarEl[0].f7Messagebar;
-        }
-        return undefined;
-      },
-    };
-    ('clear getValue setValue setPlaceholder resize focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle destroy').split(' ').forEach((messagebarMethod) => {
-      messagebar[messagebarMethod] = (messagebarEl = '.messagebar', ...args) => {
-        const mb = app.messagebar.get(messagebarEl);
-        if (mb) return mb[messagebarMethod](...args);
-        return undefined;
-      };
-    });
-    Utils.extend(app, {
-      messagebar,
+    app.messagebar = ConstructorMethods({
+      defaultSelector: '.messagebar',
+      constructor: Messagebar,
+      app,
+      domProp: 'f7Messagebar',
+      addMethods: 'clear getValue setValue setPlaceholder resize focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(' '),
     });
   },
   on: {
