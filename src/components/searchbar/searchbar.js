@@ -11,6 +11,7 @@ export default {
         return new Searchbar(app, params);
       },
       get(searchbarEl) {
+        if ((searchbarEl instanceof Searchbar)) return searchbarEl;
         const $searchbarEl = $(searchbarEl);
         if ($searchbarEl.length && $searchbarEl[0].f7Searchbar) {
           return $searchbarEl[0].f7Searchbar;

@@ -4,6 +4,9 @@ import VirtualList from './virtual-list-class';
 
 export default {
   name: 'virtualList',
+  static: {
+    VirtualList,
+  },
   create() {
     const app = this;
     Utils.extend(app, {
@@ -11,12 +14,16 @@ export default {
         create(params) {
           return new VirtualList(app, params);
         },
-        destroy(listEl) {
+        get(listEl) {
+          if ((listEl instanceof VirtualList)) return listEl;
           const $listEl = $(listEl);
-          if (!$listEl.length) return undefined;
-          const virtualList = $listEl[0].f7VirtualList;
-          if (!virtualList) return undefined;
-          return virtualList.destroy();
+          if ($listEl.length === 0) return undefined;
+          return $listEl[0].f7VirtualList;
+        },
+        destroy(listEl) {
+          const virtualList = app.virtualList.get(listEl);
+          if (virtualList && virtualList.destroy) return virtualList.destroy();
+          return undefined;
         },
       },
     });

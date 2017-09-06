@@ -25,9 +25,15 @@ export default {
           return actions.close(animate);
         },
         get(actionsEl = '.actions-modal.modal-in') {
+          if ((actionsEl instanceof Actions)) return actionsEl;
           const $actionsEl = $(actionsEl);
           if ($actionsEl.length === 0) return undefined;
           return $actionsEl[0].f7Modal;
+        },
+        destroy(actionsEl) {
+          const actions = app.actions.get(actionsEl);
+          if (actions && actions.destroy) return actions.destroy();
+          return undefined;
         },
       },
     });

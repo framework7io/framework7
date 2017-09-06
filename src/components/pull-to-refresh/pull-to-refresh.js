@@ -17,6 +17,7 @@ export default {
           return new PullToRefresh(app, el);
         },
         destroy(el) {
+          if (el && (el instanceof PullToRefresh) && el.destroy) return el.destroy();
           const $el = $(el);
           if (!$el.length) return undefined;
           if ($el[0].f7PullToRefresh) {

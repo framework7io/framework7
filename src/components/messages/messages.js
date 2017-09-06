@@ -14,6 +14,7 @@ export default {
         return new Messages(app, params);
       },
       get(messagesEl) {
+        if ((messagesEl instanceof Messages)) return messagesEl;
         const $messagesEl = $(messagesEl);
         if ($messagesEl.length && $messagesEl[0].f7Messages) {
           return $messagesEl[0].f7Messages;

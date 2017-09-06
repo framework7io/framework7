@@ -14,6 +14,7 @@ export default {
         return new Messagebar(app, params);
       },
       get(messagebarEl) {
+        if ((messagebarEl instanceof Messagebar)) return messagebarEl;
         const $messagebarEl = $(messagebarEl);
         if ($messagebarEl.length && $messagebarEl[0].f7Messagebar) {
           return $messagebarEl[0].f7Messagebar;

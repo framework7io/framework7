@@ -66,9 +66,15 @@ export default {
           return undefined;
         },
         get(smartSelectEl) {
+          if ((smartSelectEl instanceof SmartSelect)) return smartSelectEl;
           const $smartSelectEl = $(smartSelectEl);
           if (!$smartSelectEl.length) return undefined;
           return $smartSelectEl[0].f7SmartSelect;
+        },
+        destroy(smartSelectEl) {
+          const smartSelect = app.smartSelect.get(smartSelectEl);
+          if (smartSelect && smartSelect.destroy) return smartSelect.destroy();
+          return undefined;
         },
       },
     });

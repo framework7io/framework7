@@ -4,6 +4,9 @@ import Toast from './toast-class';
 
 export default {
   name: 'toast',
+  static: {
+    Toast,
+  },
   create() {
     const app = this;
     Utils.extend(app, {
@@ -25,9 +28,15 @@ export default {
           return toast.close(animate);
         },
         get(toastEl = '.toast.modal-in') {
+          if ((toastEl instanceof Toast)) return toastEl;
           const $toastEl = $(toastEl);
           if ($toastEl.length === 0) return undefined;
           return $toastEl[0].f7Modal;
+        },
+        destroy(toastEl) {
+          const toast = app.toast.get(toastEl);
+          if (toast && toast.destroy) return toast.destroy();
+          return undefined;
         },
       },
     });

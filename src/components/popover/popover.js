@@ -25,9 +25,15 @@ export default {
           return popover.close(animate);
         },
         get(popoverEl = '.popover.modal-in') {
+          if ((popoverEl instanceof Popover)) return popoverEl;
           const $popoverEl = $(popoverEl);
           if ($popoverEl.length === 0) return undefined;
           return $popoverEl[0].f7Modal;
+        },
+        destroy(popoverEl) {
+          const popover = app.popover.get(popoverEl);
+          if (popover && popover.destroy) return popover.destroy();
+          return undefined;
         },
       },
     });

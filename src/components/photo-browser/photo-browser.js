@@ -61,6 +61,7 @@ export default {
           return new PhotoBrowser(app, params);
         },
         get(el = '.photo-browser') {
+          if ((el instanceof PhotoBrowser)) return el;
           const $el = $(el);
           if ($el.length) return $el[0].f7PhotoBrowser;
           return undefined;

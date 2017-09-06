@@ -28,6 +28,7 @@ export default {
           return dialog.close(animate);
         },
         get(dialogEl = '.dialog.modal-in') {
+          if ((dialogEl instanceof Dialog)) return dialogEl;
           const $dialogEl = $(dialogEl);
           if ($dialogEl.length === 0) return undefined;
           return $dialogEl[0].f7Modal;

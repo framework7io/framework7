@@ -28,9 +28,15 @@ export default {
           return popup.close(animate);
         },
         get(popupEl = '.popup.modal-in') {
+          if ((popupEl instanceof Popup)) return popupEl;
           const $popupEl = $(popupEl);
           if ($popupEl.length === 0) return undefined;
           return $popupEl[0].f7Modal;
+        },
+        destroy(popupEl) {
+          const popup = app.popup.get(popupEl);
+          if (popup && popup.destroy) return popup.destroy();
+          return undefined;
         },
       },
     });

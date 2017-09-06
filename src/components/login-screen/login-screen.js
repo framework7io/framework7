@@ -28,9 +28,15 @@ export default {
           return loginScreen.close(animate);
         },
         get(loginScreenEl = '.login-screen.modal-in') {
+          if ((loginScreenEl instanceof LoginScreen)) return loginScreenEl;
           const $loginScreenEl = $(loginScreenEl);
           if ($loginScreenEl.length === 0) return undefined;
           return $loginScreenEl[0].f7Modal;
+        },
+        destroy(loginScreenEl) {
+          const loginScreen = app.loginScreen.get(loginScreenEl);
+          if (loginScreen && loginScreen.destroy) return loginScreen.destroy();
+          return undefined;
         },
       },
     });

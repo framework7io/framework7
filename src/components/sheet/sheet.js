@@ -28,9 +28,15 @@ export default {
           return sheet.close(animate);
         },
         get(sheetEl = '.sheet-modal.modal-in') {
+          if ((sheetEl instanceof Sheet)) return sheetEl;
           const $sheetEl = $(sheetEl);
           if ($sheetEl.length === 0) return undefined;
           return $sheetEl[0].f7Modal;
+        },
+        destroy(sheetEl) {
+          const sheet = app.sheet.get(sheetEl);
+          if (sheet && sheet.destroy) return sheet.destroy();
+          return undefined;
         },
       },
     });

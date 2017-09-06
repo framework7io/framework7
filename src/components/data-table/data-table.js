@@ -14,12 +14,16 @@ export default {
         create(params) {
           return new DataTable(app, params);
         },
-        destroy(tableEl) {
+        get(tableEl) {
+          if ((tableEl instanceof DataTable)) return tableEl;
           const $tableEl = $(tableEl);
           if (!$tableEl.length) return undefined;
-          const dataTable = $tableEl[0].f7DataTable;
-          if (!dataTable) return undefined;
-          return dataTable.destroy();
+          return $tableEl[0].f7DataTable;
+        },
+        destroy(tableEl) {
+          const dt = app.autocomplete.get(tableEl);
+          if (dt && dt.destroy) return dt.destroy();
+          return undefined;
         },
       },
     });
