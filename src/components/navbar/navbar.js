@@ -172,6 +172,14 @@ const Navbar = {
     if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) return undefined;
     return $navbarEl[0];
   },
+  getPageByEl(navbarInnerEl) {
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner');
+      if ($navbarInnerEl.length > 1) return undefined;
+    }
+    return $navbarInnerEl[0].f7Page;
+  },
   initHideNavbarOnScroll(pageEl, navbarInnerEl) {
     const app = this;
     const $pageEl = $(pageEl);
