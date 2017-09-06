@@ -69,6 +69,10 @@ var routes = [
     componentUrl: './pages/action-sheet.html',
   },
   {
+    path: '/autocomplete/',
+    componentUrl: './pages/autocomplete.html',
+  },
+  {
     path: '/badge/',
     componentUrl: './pages/badge.html',
   },
