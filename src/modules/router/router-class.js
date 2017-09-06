@@ -871,13 +871,13 @@ class Router extends Framework7Class {
     const router = this;
     router.view.history = router.history;
     if (router.params.pushState) {
-      window.localStorage[`f7-router-view${router.view.index}-history`] = JSON.stringify(router.history);
+      window.localStorage[`f7router-view${router.view.index}-history`] = JSON.stringify(router.history);
     }
   }
   restoreHistory() {
     const router = this;
-    if (router.params.pushState && window.localStorage[`f7-router-view${router.view.index}-history`]) {
-      router.history = JSON.parse(window.localStorage[`f7-router-view${router.view.index}-history`]);
+    if (router.params.pushState && window.localStorage[`f7router-view${router.view.index}-history`]) {
+      router.history = JSON.parse(window.localStorage[`f7router-view${router.view.index}-history`]);
       router.view.history = router.history;
     }
   }
