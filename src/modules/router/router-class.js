@@ -37,6 +37,7 @@ class Router extends Framework7Class {
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
         history: view.history,
+        scrollHistory: view.scrollHistory,
         cache: app.cache,
         dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
         separateNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar,
@@ -802,6 +803,7 @@ class Router extends Framework7Class {
     const router = this;
     const $pageEl = $(pageEl);
     const { route, on = {} } = options;
+    const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack;
 
     const camelName = `page${callback[0].toUpperCase() + callback.slice(1, callback.length)}`;
     const colonName = `page:${callback.toLowerCase()}`;
@@ -827,6 +829,9 @@ class Router extends Framework7Class {
       attachEvents();
     }
     if (callback === 'init') {
+      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url]) {
+        $pageEl.find('.page-content').scrollTop(router.scrollHistory[page.route.url]);
+      }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
         if (on.pageReinit) on.pageReinit(page);
@@ -835,6 +840,14 @@ class Router extends Framework7Class {
         return;
       }
       $pageEl[0].f7PageInitialized = true;
+    }
+    if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'previous') {
+      // Save scroll position
+      router.scrollHistory[page.route.url] = $pageEl.find('.page-content').scrollTop();
+    }
+    if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'next') {
+      // Delete scroll position
+      delete router.scrollHistory[page.route.url];
     }
 
     if (on[camelName]) on[camelName](page);
@@ -858,13 +871,13 @@ class Router extends Framework7Class {
     const router = this;
     router.view.history = router.history;
     if (router.params.pushState) {
-      window.localStorage[`f7_router_${router.view.index}_history`] = JSON.stringify(router.history);
+      window.localStorage[`f7-router-view${router.view.index}-history`] = JSON.stringify(router.history);
     }
   }
   restoreHistory() {
     const router = this;
-    if (router.params.pushState && window.localStorage[`f7_router_${router.view.index}_history`]) {
-      router.history = JSON.parse(window.localStorage[`f7_router_${router.view.index}_history`]);
+    if (router.params.pushState && window.localStorage[`f7-router-view${router.view.index}-history`]) {
+      router.history = JSON.parse(window.localStorage[`f7-router-view${router.view.index}-history`]);
       router.view.history = router.history;
     }
   }

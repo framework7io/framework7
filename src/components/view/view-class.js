@@ -58,6 +58,7 @@ class View extends Framework7Class {
       navbarEl: $navbarEl ? $navbarEl[0] : undefined,
       selector,
       history: [],
+      scrollHistory: {},
     });
 
     $el[0].f7View = view;

@@ -48,6 +48,7 @@ export default {
       removeElements: true,
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
+      restoreScrollTopOnBack: true,
       // Swipe Back
       iosSwipeBack: true,
       iosSwipeBackAnimateShadow: true,
