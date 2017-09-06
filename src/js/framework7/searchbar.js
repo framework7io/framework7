@@ -14,7 +14,7 @@ var Searchbar = function (container, params) {
         overlay: null,
         ignore: '.searchbar-ignore',
         customSearch: false,
-        removeDiacritics: false,
+        removeDiacritics: true,
         hideDividers: true,
         hideGroups: true,
         /* Callbacks
