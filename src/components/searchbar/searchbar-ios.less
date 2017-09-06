@@ -4,7 +4,7 @@
   .searchbar {
     height: @searchbarSize;
     background: @searchbarBg;
-    input[type="search"] {
+    input[type="search"], input[type="text"] {
       padding: 0 28px;
       box-sizing: border-box;
       width: 100%;
@@ -18,11 +18,16 @@
       color: #000;
       font-size: 17px;
       font-weight: normal;
+      z-index: 30;
       background-color: #e8e8ea;
+      position: relative;
       &::placeholder {
         color: #939398;
         opacity: 1;
       }
+    }
+    .input-clear-button {
+      z-index: 40;
     }
   }
   .searchbar-expandable {
@@ -40,6 +45,7 @@
     margin-top: -6px;
     .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13' enable-background='new 0 0 13 13'><g><path fill='#939398' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/></g><line stroke='#939398' stroke-miterlimit='10' stroke-width='1.5' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>");
     background-size: 13px 13px;
+    z-index: 40;
   }
   .searchbar-backdrop {
     background: rgba(0,0,0,0.4);
