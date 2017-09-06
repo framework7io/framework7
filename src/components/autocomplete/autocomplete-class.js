@@ -1,3 +1,4 @@
+/* eslint "no-useless-escape": "off" */
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
@@ -5,655 +6,766 @@ import Framework7Class from '../../utils/class';
 class Autocomplete extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
-    const ss = this;
-    ss.app = app;
+
+    const ac = this;
+    ac.app = app;
+
     const defaults = Utils.extend({
       on: {},
-    }, app.modules.smartSelect.params.smartSelect);
+    }, app.modules.autocomplete.params.autocomplete);
 
-    const $el = $(params.el).eq(0);
-    if ($el.length === 0) return ss;
-
-    const $selectEl = $el.find('select').eq(0);
-    if ($selectEl.length === 0) return ss;
-
-    let $valueEl = $(params.valueEl);
-    if ($valueEl.length === 0) {
-      $valueEl = $('<div class="item-after"></div>');
-      $valueEl.insertAfter($el.find('.item-title'));
-    }
 
     // Extend defaults with modules params
-    ss.useInstanceModulesParams(defaults);
+    ac.useInstanceModulesParams(defaults);
 
-    // View
-    const view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
-    if (!view) {
-      throw Error('Smart Select requires initialized View');
+    ac.params = Utils.extend(defaults, params);
+
+    let $openerEl;
+    if (ac.params.openerEl) {
+      $openerEl = $(ac.params.openerEl);
+      if ($openerEl.length) $openerEl[0].f7Autocomplete = ac;
     }
 
-    const multiple = $selectEl[0].multiple;
-    const inputType = multiple ? 'checkbox' : 'radio';
+    let $inputEl;
+    if (ac.params.inputEl) {
+      $inputEl = $(ac.params.inputEl);
+      if ($inputEl.length) $inputEl[0].f7Autocomplete = ac;
+    }
+
+    let view;
+    if (ac.params.view) {
+      view = ac.params.view;
+    } else if ($openerEl || $inputEl) {
+      view = app.views.get($openerEl || $inputEl);
+    }
+    if (!view) view = app.views.main;
+
     const id = Utils.now();
-    Utils.extend(ss, {
-      params: Utils.extend(defaults, params),
-      $el,
-      el: $el[0],
-      $selectEl,
-      selectEl: $selectEl[0],
-      $valueEl,
-      valueEl: $valueEl[0],
-      url: params.url || $el.attr('href') || `${$selectEl.attr('name').toLowerCase()}-select/`,
-      multiple,
-      inputType,
+
+    let url = params.url;
+    if (!url && $openerEl && $openerEl.length) {
+      if ($openerEl.attr('href')) url = $openerEl.attr('href');
+      else if ($openerEl.find('a').length > 0) {
+        url = $openerEl.find('a').attr('href');
+      }
+    }
+    if (!url || url === '#' || url === '') url = ac.params.url;
+
+    const inputType = ac.params.multiple ? 'checkbox' : 'radio';
+
+    Utils.extend(ac, {
+      $openerEl,
+      openerEl: $openerEl && $openerEl[0],
+      $inputEl,
+      inputEl: $inputEl && $inputEl[0],
       id,
       view,
+      url,
+      value: ac.params.value || [],
+      inputType,
       inputName: `${inputType}-${id}`,
-      name: $selectEl.attr('name'),
-      maxLength: $selectEl.attr('maxlength') || params.maxLength,
+      $modalEl: undefined,
+      $dropdownEl: undefined,
     });
-    $el[0].f7SmartSelect = ss;
 
-    // Events
-    function onClick() {
-      ss.open();
-    }
-    function onChange() {
-      ss.setValue();
-    }
-    ss.attachEvents = function attachEvents() {
-      $el.on('click', onClick);
-      $el.on('change', 'input[type="checkbox"], input[type="radio"]', onChange);
-    };
-    ss.detachEvents = function detachEvents() {
-      $el.off('click', onClick);
-      $el.off('change', 'input[type="checkbox"], input[type="radio"]', onChange);
-    };
+    let previousQuery = '';
+    function onInputChange() {
+      let query = ac.$inputEl.val().trim();
 
-    function handleInputChange() {
-      let optionEl;
-      let text;
-      const inputEl = this;
-      const value = inputEl.value;
-      let optionText = [];
-      let displayAs;
-      if (inputEl.type === 'checkbox') {
-        for (let i = 0; i < ss.selectEl.options.length; i += 1) {
-          optionEl = ss.selectEl.options[i];
-          if (optionEl.value === value) {
-            optionEl.selected = inputEl.checked;
+      if (!ac.params.source) return;
+      ac.params.source.call(ac, query, (items) => {
+        let itemsHTML = '';
+        const limit = ac.params.limit ? Math.min(ac.params.limit, items.length) : items.length;
+        ac.items = items;
+        let regExp;
+        if (ac.params.highlightMatches) {
+          query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+          regExp = new RegExp(`(${query})`, 'i');
+        }
+
+        let firstValue;
+        let firstItem;
+        for (let i = 0; i < limit; i += 1) {
+          const itemValue = typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
+          const itemText = typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i];
+          if (i === 0) {
+            firstValue = itemValue;
+            firstItem = ac.items[i];
           }
-          if (optionEl.selected) {
-            displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-value-as');
-            text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
-            optionText.push(text.trim());
+          itemsHTML += ac.renderItem({
+            value: itemValue,
+            text: ac.params.highlightMatches ? itemText.replace(regExp, '<b>$1</b>') : itemText,
+          }, i);
+        }
+        if (itemsHTML === '' && query === '' && ac.params.dropdownPlaceholderText) {
+          itemsHTML += ac.renderItem({
+            placeholder: true,
+            text: ac.params.dropdownPlaceholderText,
+          });
+        }
+        ac.$dropdownEl.find('ul').html(itemsHTML);
+        if (ac.params.typeahead) {
+          if (!firstValue || !firstItem) {
+            return;
+          }
+          if (firstValue.toLowerCase().indexOf(query.toLowerCase()) !== 0) {
+            return;
+          }
+          if (previousQuery.toLowerCase() === query.toLowerCase()) {
+            ac.value = [];
+            return;
+          }
+
+          if (previousQuery.toLowerCase().indexOf(query.toLowerCase()) === 0) {
+            previousQuery = query;
+            ac.value = [];
+            return;
+          }
+          $inputEl.val(firstValue);
+          $inputEl[0].setSelectionRange(query.length, firstValue.length);
+
+          const previousValue = typeof ac.value[0] === 'object' ? ac.value[0][ac.params.valueProperty] : ac.value[0];
+          if (!previousValue || firstValue.toLowerCase() !== previousValue.toLowerCase()) {
+            ac.value = [firstItem];
+            ac.emit('local::change autocompleteChange', [firstItem]);
           }
         }
-        if (ss.maxLength) {
-          ss.checkMaxLength();
+
+        previousQuery = query;
+      });
+    }
+    function onPageInputChange() {
+      const input = this;
+      const value = input.value;
+      const isValues = $(input).parents('.autocomplete-values').length > 0;
+      let item;
+      let itemValue;
+      let aValue;
+      if (isValues) {
+        if (ac.inputType === 'checkbox' && !input.checked) {
+          for (let i = 0; i < ac.value.length; i += 1) {
+            aValue = typeof ac.value[i] === 'string' ? ac.value[i] : ac.value[i][ac.params.valueProperty];
+            if (aValue === value || aValue * 1 === value * 1) {
+              ac.value.splice(i, 1);
+            }
+          }
+          ac.updateValues();
+          ac.emit('local::change autocompleteChange', ac.value);
         }
+        return;
+      }
+
+      // Find Related Item
+      for (let i = 0; i < ac.items.length; i += 1) {
+        itemValue = typeof ac.items[i] === 'object' ? ac.items[i][ac.params.valueProperty] : ac.items[i];
+        if (itemValue === value || itemValue * 1 === value * 1) item = ac.items[i];
+      }
+      if (ac.inputType === 'radio') {
+        ac.value = [item];
+      } else if (input.checked) {
+        ac.value.push(item);
       } else {
-        optionEl = ss.$selectEl.find(`option[value="${value}"]`)[0];
-        displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
-        text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
-        optionText = [text];
-        ss.selectEl.value = value;
+        for (let i = 0; i < ac.value.length; i += 1) {
+          aValue = typeof ac.value[i] === 'object' ? ac.value[i][ac.params.valueProperty] : ac.value[i];
+          if (aValue === value || aValue * 1 === value * 1) {
+            ac.value.splice(i, 1);
+          }
+        }
       }
 
-      ss.$selectEl.trigger('change');
-      ss.$valueEl.text(optionText.join(', '));
-      if (ss.params.closeOnSelect && ss.inputType === 'radio') {
-        ss.close();
+      // Update Values Block
+      ac.updateValues();
+
+      // On Select Callback
+      if (((ac.inputType === 'radio' && input.checked) || ac.inputType === 'checkbox')) {
+        ac.emit('local::change autocompleteChange', ac.value);
       }
     }
+    function onHtmlClick(e) {
+      const $targetEl = $(e.target);
+      if ($targetEl.is(ac.$inputEl[0]) || ($targetEl.closest(ac.$dropdownEl[0]).length)) return;
+      ac.close();
+    }
+    function onOpenerClick() {
+      ac.open();
+    }
+    function onInputFocus() {
+      ac.open();
+    }
+    function onInputBlur() {
+      if (ac.$dropdownEl.find('label.active-state').length > 0) return;
+      ac.close();
+    }
+    function onResize() {
+      ac.positionDropDown();
+    }
 
-    ss.attachInputsEvents = function attachInputsEvents() {
-      ss.$containerEl.on('change', 'input[type="checkbox"], input[type="radio"]', handleInputChange);
+    function onKeyDown(e) {
+      if (ac.opened && e.keyCode === 13) {
+        e.preventDefault();
+        ac.$inputEl.blur();
+      }
+    }
+    function onDropdownclick() {
+      const $clickedEl = $(this);
+      let clickedItem;
+      for (let i = 0; i < ac.items.length; i += 1) {
+        const itemValue = typeof ac.items[i] === 'object' ? ac.items[i][ac.params.valueProperty] : ac.items[i];
+        const value = $clickedEl.attr('data-value');
+        if (itemValue === value || itemValue * 1 === value * 1) {
+          clickedItem = ac.items[i];
+        }
+      }
+      if (ac.params.updateInputValueOnSelect) {
+        ac.$inputEl.val(typeof clickedItem === 'object' ? clickedItem[ac.params.valueProperty] : clickedItem);
+        ac.$inputEl.trigger('input change');
+      }
+      ac.value = [clickedItem];
+      ac.emit('local::change autocompleteChange', [clickedItem]);
+
+      ac.close();
+    }
+
+    ac.attachEvents = function attachEvents() {
+      if (ac.params.openIn !== 'dropdown' && ac.$openerEl) {
+        ac.$openerEl.on('click', onOpenerClick);
+      }
+      if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
+        ac.$inputEl.on('focus', onInputFocus);
+        ac.$inputEl.on('input', onInputChange);
+        if (app.device.android) {
+          $('html').on('click', onHtmlClick);
+        } else {
+          ac.$inputEl.on('blur', onInputBlur);
+        }
+        if (ac.params.typeahead) {
+          ac.$inputEl.on('keydown', onKeyDown);
+        }
+      }
     };
-    ss.detachInputsEvents = function detachInputsEvents() {
-      ss.$containerEl.off('change', 'input[type="checkbox"], input[type="radio"]', handleInputChange);
+    ac.detachEvents = function attachEvents() {
+      if (ac.params.openIn !== 'dropdown' && ac.$openerEl) {
+        ac.$openerEl.off('click', onOpenerClick);
+      }
+      if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
+        ac.$inputEl.off('focus', onInputFocus);
+        ac.$inputEl.off('input', onInputChange);
+        if (app.device.android) {
+          $('html').off('click', onHtmlClick);
+        } else {
+          ac.$inputEl.off('blur', onInputBlur);
+        }
+        if (ac.params.typeahead) {
+          ac.$inputEl.off('keydown', onKeyDown);
+        }
+      }
+    };
+    ac.attachDropdownEvents = function attachDropdownEvents() {
+      ac.$dropdownEl.on('click', 'label', onDropdownclick);
+      app.on('resize', onResize);
+    };
+    ac.detachDropdownEvents = function detachDropdownEvents() {
+      ac.$dropdownEl.off('click', 'label', onDropdownclick);
+      app.off('resize', onResize);
+    };
+
+    ac.attachPageEvents = function attachPageEvents() {
+      ac.$containerEl.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
+      if (ac.params.closeOnSelect && !ac.params.multiple) {
+        ac.$containerEl.once('click', '.list label', () => {
+          Utils.nextTick(() => {
+            ac.close();
+          });
+        });
+      }
+    };
+    ac.detachPageEvents = function detachPageEvents() {
+      ac.$containerEl.off('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
     };
 
     // Install Modules
-    ss.useInstanceModules();
+    ac.useInstanceModules();
 
     // Init
-    ss.init();
+    ac.init();
 
-    return ss;
+    return ac;
   }
-  checkMaxLength() {
-    const ss = this;
-    const $containerEl = ss.$containerEl;
-    if (ss.selectEl.selectedOptions.length >= ss.maxLength) {
-      $containerEl.find('input[type="checkbox"]').each((index, inputEl) => {
-        if (!inputEl.checked) {
-          $(inputEl).parents('li').addClass('disabled');
+  positionDropDown() {
+    const ac = this;
+    const { $inputEl, app, $dropdownEl } = ac;
+
+    const $pageContentEl = $inputEl.parents('.page-content');
+    if ($pageContentEl.length === 0) return;
+
+    const inputOffset = $inputEl.offset();
+    const inputOffsetWidth = $inputEl[0].offsetWidth;
+    const inputOffsetHeight = $inputEl[0].offsetHeight;
+    const $listEl = $inputEl.parents('.list');
+    const listOffset = $listEl.offset();
+    const paddingBottom = parseInt($pageContentEl.css('padding-top'), 10);
+    const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
+    const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0);
+    const inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
+    const maxHeight = $pageContentEl[0].scrollHeight - paddingBottom - (inputOffsetTop + $pageContentEl[0].scrollTop) - $inputEl[0].offsetHeight;
+
+    $dropdownEl.css({
+      left: `${$listEl.length > 0 ? listOffsetLeft : inputOffsetLeft}px`,
+      top: `${inputOffsetTop + $pageContentEl[0].scrollTop + inputOffsetHeight}px`,
+      width: `${$listEl.length > 0 ? $listEl[0].offsetWidth : inputOffsetWidth}px`,
+    });
+    $dropdownEl.children('.autocomplete-dropdown-inner').css({
+      maxHeight: `${maxHeight}px`,
+      paddingLeft: $listEl.length > 0 && !ac.params.expandInput ? `${inputOffsetLeft - (app.theme === 'md' ? 16 : 15)}px` : '',
+    });
+  }
+  focus() {
+    const ac = this;
+    ac.$containerEl.find('input[type=search]').focus();
+  }
+  source(query) {
+    const ac = this;
+    if (!ac.params.source) return;
+
+    const { $containerEl } = ac;
+
+    ac.params.source.call(ac, query, (items) => {
+      let itemsHTML = '';
+      const limit = ac.params.limit ? Math.min(ac.params.limit, items.length) : items.length;
+      ac.items = items;
+      for (let i = 0; i < limit; i += 1) {
+        let selected = false;
+        const itemValue = typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
+        for (let j = 0; j < ac.value.length; j += 1) {
+          const aValue = typeof ac.value[j] === 'object' ? ac.value[j][ac.params.valueProperty] : ac.value[j];
+          if (aValue === itemValue || aValue * 1 === itemValue * 1) selected = true;
+        }
+        itemsHTML += ac.renderItem({
+          value: itemValue,
+          text: typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i],
+          inputType: ac.inputType,
+          id: ac.id,
+          inputName: ac.inputName,
+          selected,
+        }, i);
+      }
+      $containerEl.find('.autocomplete-found ul').html(itemsHTML);
+      if (items.length === 0) {
+        if (query.length !== 0) {
+          $containerEl.find('.autocomplete-not-found').show();
+          $containerEl.find('.autocomplete-found, .autocomplete-values').hide();
         } else {
-          $(inputEl).parents('li').removeClass('disabled');
+          $containerEl.find('.autocomplete-values').show();
+          $containerEl.find('.autocomplete-found, .autocomplete-not-found').hide();
         }
-      });
-    } else {
-      $containerEl.find('.disabled').removeClass('disabled');
-    }
-  }
-  setValue(value) {
-    const ss = this;
-    let valueArray = [];
-    if (typeof value !== 'undefined') {
-      if (Array.isArray(value)) {
-        valueArray = value;
       } else {
-        valueArray = [value];
+        $containerEl.find('.autocomplete-found').show();
+        $containerEl.find('.autocomplete-not-found, .autocomplete-values').hide();
       }
+    });
+  }
+  updateValues() {
+    const ac = this;
+    let valuesHTML = '';
+    for (let i = 0; i < ac.value.length; i += 1) {
+      valuesHTML += ac.renderItem({
+        value: typeof ac.value[i] === 'object' ? ac.value[i][ac.params.valueProperty] : ac.value[i],
+        text: typeof ac.value[i] === 'object' ? ac.value[i][ac.params.textProperty] : ac.value[i],
+        inputType: ac.inputType,
+        id: ac.id,
+        inputName: `${ac.inputName}-checked}`,
+        selected: true,
+      }, i);
+    }
+    ac.$containerEl.find('.autocomplete-values ul').html(valuesHTML);
+  }
+  preloaderHide() {
+    const ac = this;
+    if (ac.params.openIn === 'dropdown' && ac.$dropdownEl) {
+      ac.$dropdownEl.find('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
     } else {
-      ss.$selectEl.find('option').each((optionIndex, optionEl) => {
-        const $optionEl = $(optionEl);
-        if (optionEl.selected) {
-          const displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $optionEl.data('display-value-as');
-          if (displayAs && typeof displayAs !== 'undefined') {
-            valueArray.push(displayAs);
-          } else {
-            valueArray.push(optionEl.textContent.trim());
-          }
-        }
-      });
+      $('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
     }
-    ss.$valueEl.text(valueArray.join(', '));
   }
-  getItemsData() {
-    const ss = this;
-    const items = [];
-    let previousGroupEl;
-    ss.$selectEl.find('option').each((index, optionEl) => {
-      const $optionEl = $(optionEl);
-      const optionData = $optionEl.dataset();
-      const optionImage = optionData.optionImage || ss.params.optionImage;
-      const optionIcon = optionData.optionIcon || ss.params.optionIcon;
-      const optionHasMedia = optionImage || optionIcon;
-      // if (material) optionHasMedia = optionImage || optionIcon;
-      const optionColor = optionData.optionColor;
-
-      let optionClassName = optionData.optionClass || '';
-      if ($optionEl[0].disabled) optionClassName += ' disabled';
-
-      const optionGroupEl = $optionEl.parent('optgroup')[0];
-      const optionGroupLabel = optionGroupEl && optionGroupEl.label;
-      let optionIsLabel = false;
-      if (optionGroupEl && optionGroupEl !== previousGroupEl) {
-        optionIsLabel = true;
-        previousGroupEl = optionGroupEl;
-        items.push({
-          groupLabel: optionGroupLabel,
-          isLabel: optionIsLabel,
-        });
-      }
-      items.push({
-        value: $optionEl[0].value,
-        text: $optionEl[0].textContent.trim(),
-        selected: $optionEl[0].selected,
-        groupEl: optionGroupEl,
-        groupLabel: optionGroupLabel,
-        image: optionImage,
-        icon: optionIcon,
-        color: optionColor,
-        className: optionClassName,
-        disabled: $optionEl[0].disabled,
-        id: ss.id,
-        hasMedia: optionHasMedia,
-        checkbox: ss.inputType === 'checkbox',
-        radio: ss.inputType === 'radio',
-        inputName: ss.inputName,
-        inputType: ss.inputType,
-      });
-    });
-    ss.items = items;
-    return items;
+  preloaderShow() {
+    const ac = this;
+    if (ac.params.openIn === 'dropdown' && ac.$dropdownEl) {
+      ac.$dropdownEl.find('.autocomplete-preloader').addClass('autocomplete-preloader-visible');
+    } else {
+      $('.autocomplete-preloader').addClass('autocomplete-preloader-visible');
+    }
   }
-  onOpen(type, containerEl) {
-    const ss = this;
-    const app = ss.app;
-    const $containerEl = $(containerEl);
-    ss.$containerEl = $containerEl;
-    ss.openedIn = type;
-    ss.opened = true;
-
-    // Init VL
-    if (ss.params.virtualList) {
-      ss.vl = app.virtualList.create({
-        el: $containerEl.find('.virtual-list'),
-        items: ss.items,
-        renderItem: ss.renderItem.bind(ss),
-        height: ss.params.virtualListHeight,
-        searchByItem(query, index, item) {
-          if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >= 0) return true;
-          return false;
-        },
-      });
-    }
-
-    // Init SB
-    if (ss.params.searchbar) {
-      ss.searchbar = app.searchbar.create({
-        el: $containerEl.find('.searchbar'),
-        backdropEl: $containerEl.find('.searchbar-backdrop'),
-        searchContainer: `.smart-select-list-${ss.id}`,
-        searchIn: '.item-title',
-      });
-    }
-
-    // Check for max length
-    if (ss.maxLength) {
-      ss.checkMaxLength();
-    }
-
-    // Close on select
-    if (ss.params.closeOnSelect) {
-      ss.$containerEl.find(`input[type="radio"][name="${ss.inputName}"]:checked`).parents('label').once('click', () => {
-        ss.close();
-      });
-    }
-
-    // Attach input events
-    ss.attachInputsEvents();
-
-    ss.$el.trigger('smartselect:open', ss);
-    ss.emit({
-      events: 'open',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpen', ss);
-  }
-  onOpened() {
-    const ss = this;
-
-    ss.$el.trigger('smartselect:opened', ss);
-    ss.emit({
-      events: 'opened',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpened', ss);
-  }
-  onClose() {
-    const ss = this;
-    if (ss.destroyed) return;
-
-    // Destroy VL
-    if (ss.vl && ss.vl.destroy) {
-      ss.vl.destroy();
-      ss.vl = null;
-      delete ss.vl;
-    }
-
-    // Destroy SB
-    if (ss.searchbar && ss.searchbar.destroy) {
-      ss.searchbar.destroy();
-      ss.searchbar = null;
-      delete ss.searchbar;
-    }
-    // Detach events
-    ss.detachInputsEvents();
-
-    ss.$el.trigger('smartselect:close', ss);
-    ss.emit({
-      events: 'close',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClose', ss);
-  }
-  onClosed() {
-    const ss = this;
-    if (ss.destroyed) return;
-    ss.opened = false;
-    ss.$containerEl = null;
-    delete ss.$containerEl;
-
-    ss.$el.trigger('smartselect:closed', ss);
-    ss.emit({
-      events: 'closed',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClosed', ss);
+  renderPreloader() {
+    const ac = this;
+    return `
+      <div class="autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}">${ac.app.theme === 'md' ? `
+        <span class="preloader-inner">
+          <span class="preloader-inner-gap"></span>
+          <span class="preloader-inner-left">
+            <span class="preloader-inner-half-circle"></span>
+          </span>
+          <span class="preloader-inner-right">
+            <span class="preloader-inner-half-circle"></span>
+          </span>
+        </span>
+      `.trim() : ''}</div>
+    `.trim();
   }
   renderSearchbar() {
-    const ss = this;
-    if (ss.params.renderSearchbar) return ss.params.renderSearchbar.call(ss);
+    const ac = this;
+    if (ac.params.renderSearchbar) return ac.params.renderSearchbar.call(ac);
     const searchbarHTML = `
       <form class="searchbar">
         <div class="searchbar-inner">
           <div class="searchbar-input-wrap">
-            <input type="search" placeholder="${ss.params.searchbarPlaceholder}"/>
+            <input type="search" placeholder="${ac.params.searchbarPlaceholder}"/>
             <i class="searchbar-icon"></i>
             <span class="input-clear-button"></span>
           </div>
-          <span class="searchbar-disable-button">${ss.params.searchbarDisableText}</span>
+          <span class="searchbar-disable-button">${ac.params.searchbarDisableText}</span>
         </div>
       </form>
-    `;
+    `.trim();
     return searchbarHTML;
   }
-  renderItem(index, item) {
-    const ss = this;
-    if (ss.params.renderItem) return ss.params.renderItem.call(ss, index, item);
+  renderItem(item, index) {
+    const ac = this;
+    if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
     let itemHtml;
-    if (item.isLabel) {
-      itemHtml = `<li class="item-divider">${item.groupLabel}</li>`;
-    } else {
+    if (ac.params.openIn !== 'dropdown') {
       itemHtml = `
-        <li class="${item.className || ''}">
+        <li>
           <label class="item-${item.inputType} item-content">
-            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${item.selected ? 'checked' : ''}/>
+            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${item.selected ? 'checked' : ''}>
             <i class="icon icon-${item.inputType}"></i>
-            ${item.hasMedia ? `
-              <div class="item-media">
-                ${item.icon ? `<i class="icon ${item.icon}"></i>` : ''}
-                ${item.image ? `<img src="${item.image}">` : ''}
-              </div>
-            ` : ''}
             <div class="item-inner">
-              <div class="item-title${item.color ? ` color-${item.color}` : ''}">${item.text}</div>
+              <div class="item-title">${item.text}</div>
+            </div>
+          </label>
+        </li>
+      `;
+    } else if (!item.placeholder) {
+      // Dropdown
+      itemHtml = `
+        <li>
+          <label class="item-radio item-content" data-value="${item.value}">
+            <div class="item-inner">
+              <div class="item-title">${item.text}</div>
+            </div>
+          </label>
+        </li>
+      `;
+    } else {
+      // Dropwdown placeholder
+      itemHtml = `
+        <li class="autocomplete-dropdown-placeholder">
+          <div class="item-content">
+            <div class="item-inner">
+              <div class="item-title">${item.text}</div>
             </div>
           </label>
         </li>
       `;
     }
-    return itemHtml;
+    return itemHtml.trim();
   }
-  renderItems() {
-    const ss = this;
-    if (ss.params.renderItems) return ss.params.renderItems.call(ss, ss.items);
-    const itemsHtml = `
-      ${ss.items.map((item, index) => `${ss.renderItem(index, item)}`).join('')}
-    `;
-    return itemsHtml;
-  }
-  renderPage() {
-    const ss = this;
-    if (ss.params.renderPage) return ss.params.renderPage.call(ss, ss.items);
-    let pageTitle = ss.params.pageTitle;
-    if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
+
+  renderNavbar() {
+    const ac = this;
+    if (ac.params.renderNavbar) return ac.params.renderNavbar.call(ac);
+    let pageTitle = ac.params.pageTitle;
+    if (typeof pageTitle === 'undefined' && ac.$openerEl && ac.$openerEl.length) {
+      pageTitle = ac.$openerEl.find('.item-title').text().trim();
     }
-    const pageHtml = `
-      <div class="page smart-select-page" data-name="smart-select-page" data-select-name="${ss.name}">
-        <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
-          <div class="navbar-inner sliding">
-            <div class="left">
-              <a href="#" class="link back">
-                <i class="icon icon-back"></i>
-                <span class="ios-only">${ss.params.pageBackLinkText}</span>
-              </a>
-            </div>
-            ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
-            ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
+    const navbarHtml = `
+      <div class="navbar ${ac.params.navbarColorTheme ? `color-theme-${ac.params.navbarColorTheme}` : ''}">
+        <div class="navbar-inner ${ac.params.navbarColorTheme ? `color-theme-${ac.params.navbarColorTheme}` : ''}">
+          <div class="left sliding">
+            <a href="#" class="link ${ac.params.openIn === 'page' ? 'back' : 'popup-close'}">
+              <i class="icon icon-back"></i>
+              <span class="ios-only">${ac.params.openIn === 'page' ? ac.params.pageBackLinkText : ac.params.popupCloseLinkText}</span>
+            </a>
+          </div>
+          ${pageTitle ? `<div class="title sliding">${pageTitle}</div>` : ''}
+          ${ac.params.preloader ? `
+          <div class="right">
+            ${ac.renderPreloader()}
+          </div>
+          ` : ''}
+          <div class="subnavbar sliding">${ac.renderSearchbar()}</div>
+        </div>
+      </div>
+    `.trim();
+    return navbarHtml;
+  }
+  renderDropdown() {
+    const ac = this;
+    if (ac.params.renderDropdown) return ac.params.renderDropdown.call(ac, ac.items);
+    const dropdownHtml = `
+      <div class="autocomplete-dropdown">
+        <div class="autocomplete-dropdown-inner">
+          <div class="list">
+            <ul></ul>
           </div>
         </div>
-        ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
+        ${ac.params.preloader ? ac.renderPreloader() : ''}
+      </div>
+    `.trim();
+    return dropdownHtml;
+  }
+  renderPage() {
+    const ac = this;
+    if (ac.params.renderPage) return ac.params.renderPage.call(ac, ac.items);
+
+    const pageHtml = `
+      <div class="page page-with-subnavbar autocomplete-page" data-name="autocomplete-page">
+        ${ac.renderNavbar()}
+        <div class="searchbar-backdrop"></div>
         <div class="page-content">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+          <div class="list autocomplete-list autocomplete-found autocomplete-list-${ac.id} ${ac.params.formColorTheme ? `color-theme-${ac.params.formColorTheme}` : ''}">
+            <ul></ul>
+          </div>
+          <div class="list autocomplete-not-found">
+            <ul>
+              <li class="item-content"><div class="item-inner"><div class="item-title">${ac.params.notFoundText}</div></div></li>
+            </ul>
+          </div>
+          <div class="list autocomplete-values">
+            <ul></ul>
           </div>
         </div>
       </div>
-    `;
+    `.trim();
     return pageHtml;
   }
-  openPage() {
-    const ss = this;
-    if (ss.opened) return ss;
-    ss.getItemsData();
-    const pageHtml = ss.renderPage(ss.items);
+  renderPopup() {
+    const ac = this;
+    if (ac.params.renderPopup) return ac.params.renderPopup.call(ac, ac.items);
+    const popupHtml = `
+      <div class="popup autocomplete-popup">
+        <div class="view">
+          ${ac.renderPage()};
+        </div>
+      </div>
+    `.trim();
+    return popupHtml;
+  }
+  onOpen(type, containerEl) {
+    const ac = this;
+    const app = ac.app;
+    const $containerEl = $(containerEl);
+    ac.$containerEl = $containerEl;
+    ac.openedIn = type;
+    ac.opened = true;
 
-    ss.view.router.navigate(ss.url, {
+    if (ac.params.openIn === 'dropdown') {
+      ac.attachDropdownEvents();
+
+      ac.$dropdownEl.addClass('autocomplete-dropdown-in');
+      ac.$inputEl.trigger('input');
+    } else {
+      // Init SB
+      let $searchbarEl = $containerEl.find('.searchbar');
+      if (ac.params.openIn === 'page' && app.theme === 'ios' && $searchbarEl.length === 0) {
+        $searchbarEl = $(app.navbar.getElByPage($containerEl)).find('.searchbar');
+      }
+      ac.searchbar = app.searchbar.create({
+        el: $searchbarEl,
+        backdropEl: $containerEl.find('.searchbar-backdrop'),
+        customSearch: true,
+        on: {
+          searchbarSearch(query) {
+            if (query.length === 0 && ac.searchbar.enabled) {
+              ac.searchbar.backdropShow();
+            } else {
+              ac.searchbar.backdropHide();
+            }
+            ac.source(query);
+          },
+        },
+      });
+
+      // Attach page events
+      ac.attachPageEvents();
+
+      // Update Values On Page Init
+      ac.updateValues();
+
+      // Source on load
+      if (ac.params.requestSourceOnOpen) ac.source('');
+    }
+
+    ac.emit('local::open autocompleteOpen', ac);
+  }
+  onOpened() {
+    const ac = this;
+    if (ac.params.openIn !== 'dropdown' && ac.params.autoFocus) {
+      ac.autoFocus();
+    }
+    ac.emit('local::opened autocompleteOpened', ac);
+  }
+  onClose() {
+    const ac = this;
+    if (ac.destroyed) return;
+
+    // Destroy SB
+    if (ac.searchbar && ac.searchbar.destroy) {
+      ac.searchbar.destroy();
+      ac.searchbar = null;
+      delete ac.searchbar;
+    }
+
+    if (ac.params.openIn === 'dropdown') {
+      ac.detachDropdownEvents();
+      ac.$dropdownEl.removeClass('autocomplete-dropdown-in').remove();
+      ac.$inputEl.parents('.item-content-dropdown-expanded').removeClass('item-content-dropdown-expanded');
+    } else {
+      ac.detachPageEvents();
+    }
+
+    ac.emit('local::close autocompleteClose', ac);
+  }
+  onClosed() {
+    const ac = this;
+    if (ac.destroyed) return;
+    ac.opened = false;
+    ac.$containerEl = null;
+    delete ac.$containerEl;
+
+    ac.emit('local::closed autocompleteClosed', ac);
+  }
+  openPage() {
+    const ac = this;
+    if (ac.opened) return ac;
+    const pageHtml = ac.renderPage();
+    ac.view.router.navigate(ac.url, {
       createRoute: {
         content: pageHtml,
-        path: ss.url,
+        path: ac.url,
         options: {
+          animate: ac.params.animate,
           pageEvents: {
             pageBeforeIn(e, page) {
-              ss.onOpen('page', page.el);
+              ac.onOpen('page', page.el);
             },
             pageAfterIn(e, page) {
-              ss.onOpened('page', page.el);
+              ac.onOpened('page', page.el);
             },
             pageBeforeOut(e, page) {
-              ss.onClose('page', page.el);
+              ac.onClose('page', page.el);
             },
             pageAfterOut(e, page) {
-              ss.onClosed('page', page.el);
+              ac.onClosed('page', page.el);
             },
           },
         },
       },
     });
-    return ss;
-  }
-  renderPopup() {
-    const ss = this;
-    if (ss.params.renderPopup) return ss.params.renderPopup(ss, ss.items);
-    let pageTitle = ss.params.pageTitle;
-    if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
-    }
-    const popupHtml = `
-      <div class="popup smart-select-popup" data-select-name="${ss.name}">
-        <div class="view">
-          <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
-            <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
-              <div class="navbar-inner sliding">
-                <div class="left">
-                  <a href="#" class="link popup-close">
-                    <i class="icon icon-back"></i>
-                    <span class="ios-only">${ss.params.popupCloseLinkText}</span>
-                  </a>
-                </div>
-                ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
-                ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
-              </div>
-            </div>
-            ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
-            <div class="page-content">
-              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-                <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    return popupHtml;
+    return ac;
   }
   openPopup() {
-    const ss = this;
-    if (ss.opened) return ss;
-    ss.getItemsData();
-    const popupHtml = ss.renderPopup(ss.items);
+    const ac = this;
+    if (ac.opened) return ac;
+    const popupHtml = ac.renderPopup();
 
     const popupParams = {
       content: popupHtml,
+      animate: ac.params.animate,
       on: {
         popupOpen(popup) {
-          ss.onOpen('popup', popup.el);
+          ac.onOpen('popup', popup.el);
         },
         popupOpened(popup) {
-          ss.onOpened('popup', popup.el);
+          ac.onOpened('popup', popup.el);
         },
         popupClose(popup) {
-          ss.onClose('popup', popup.el);
+          ac.onClose('popup', popup.el);
         },
         popupClosed(popup) {
-          ss.onClosed('popup', popup.el);
+          ac.onClosed('popup', popup.el);
         },
       },
     };
 
-    if (ss.params.routableModals) {
-      ss.view.router.navigate(ss.url, {
+    if (ac.params.routableModals) {
+      ac.view.router.navigate(ac.url, {
         createRoute: {
-          path: ss.url,
+          path: ac.url,
           popup: popupParams,
         },
       });
     } else {
-      ss.modal = ss.app.popup.create(popupParams).open();
+      ac.modal = ac.app.popup.create(popupParams).open(ac.params.animate);
     }
-    return ss;
+    return ac;
   }
-  renderSheet() {
-    const ss = this;
-    if (ss.params.renderSheet) return ss.params.renderSheet(ss, ss.items);
-    const sheetHtml = `
-      <div class="sheet-modal smart-select-sheet" data-select-name="${ss.name}">
-        <div class="toolbar ${ss.params.toolbarColorTheme ? `theme-${ss.params.toolbarColorTheme}` : ''}">
-          <div class="toolbar-inner">
-            <div class="left"></div>
-            <div class="right">
-              <a class="link sheet-close">${ss.params.sheetCloseLinkText}</a>
-            </div>
-          </div>
-        </div>
-        <div class="sheet-modal-inner">
-          <div class="page-content">
-            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-              <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    return sheetHtml;
-  }
-  openSheet() {
-    const ss = this;
-    if (ss.opened) return ss;
-    ss.getItemsData();
-    const sheetHtml = ss.renderSheet(ss.items);
+  openDropdown() {
+    const ac = this;
 
-    const sheetParams = {
-      content: sheetHtml,
-      backdrop: false,
-      scrollToEl: ss.$el,
-      closeByOutsideClick: true,
-      on: {
-        sheetOpen(sheet) {
-          ss.onOpen('sheet', sheet.el);
-        },
-        sheetOpened(sheet) {
-          ss.onOpened('sheet', sheet.el);
-        },
-        sheetClose(sheet) {
-          ss.onClose('sheet', sheet.el);
-        },
-        sheetClosed(sheet) {
-          ss.onClosed('sheet', sheet.el);
-        },
-      },
-    };
-
-    if (ss.params.routableModals) {
-      ss.view.router.navigate(ss.url, {
-        createRoute: {
-          path: ss.url,
-          sheet: sheetParams,
-        },
-      });
-    } else {
-      ss.modal = ss.app.sheet.create(sheetParams).open();
+    if (!ac.$dropdownEl) {
+      ac.$dropdownEl = $(ac.renderDropdown());
     }
-    return ss;
-  }
-  renderPopover() {
-    const ss = this;
-    if (ss.params.renderPopover) return ss.params.renderPopover(ss, ss.items);
-    const popoverHtml = `
-      <div class="popover smart-select-popover" data-select-name="${ss.name}">
-        <div class="popover-inner">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
-          </div>
-        </div>
-      </div>
-    `;
-    return popoverHtml;
-  }
-  openPopover() {
-    const ss = this;
-    if (ss.opened) return ss;
-    ss.getItemsData();
-    const popoverHtml = ss.renderPopover(ss.items);
-    const popoverParams = {
-      content: popoverHtml,
-      targetEl: ss.$el,
-      on: {
-        popoverOpen(popover) {
-          ss.onOpen('popover', popover.el);
-        },
-        popoverOpened(popover) {
-          ss.onOpened('popover', popover.el);
-        },
-        popoverClose(popover) {
-          ss.onClose('popover', popover.el);
-        },
-        popoverClosed(popover) {
-          ss.onClosed('popover', popover.el);
-        },
-      },
-    };
-    if (ss.params.routableModals) {
-      ss.view.router.navigate(ss.url, {
-        createRoute: {
-          path: ss.url,
-          popover: popoverParams,
-        },
-      });
-    } else {
-      ss.modal = ss.app.popover.create(popoverParams).open();
+    const $listEl = ac.$inputEl.parents('.list');
+    if ($listEl.length && ac.$inputEl.parents('.item-content').length > 0 && ac.params.expandInput) {
+      ac.$inputEl.parents('.item-content').addClass('item-content-dropdown-expanded');
     }
-    return ss;
+    ac.positionDropDown();
+    const $pageContentEl = ac.$inputEl.parents('.page-content');
+    if (ac.params.dropdownContainerEl) {
+      $(ac.params.dropdownContainerEl).append(ac.$dropdownEl);
+    } else if ($pageContentEl.length === 0) {
+      ac.$dropdownEl.insertAfter(ac.$inputEl);
+    } else {
+      $pageContentEl.append(ac.$dropdownEl);
+    }
+    ac.onOpen('dropdown', ac.$dropdownEl);
+    ac.onOpened('dropdown', ac.$dropdownEl);
   }
-  open(type) {
-    const ss = this;
-    if (ss.opened) return ss;
-    const openIn = type || ss.params.openIn;
-    ss[`open${openIn.split('').map((el, index) => {
+  open() {
+    const ac = this;
+    if (ac.opened) return ac;
+    const openIn = ac.params.openIn;
+    ac[`open${openIn.split('').map((el, index) => {
       if (index === 0) return el.toUpperCase();
       return el;
     }).join('')}`]();
-    return ss;
+    return ac;
   }
   close() {
-    const ss = this;
-    if (!ss.opened) return ss;
-    if (ss.params.routableModals || ss.openedIn === 'page') {
-      ss.view.router.back();
+    const ac = this;
+    if (!ac.opened) return ac;
+    if (ac.params.openIn === 'dropdown') {
+      ac.onClose();
+      ac.onClosed();
+    } else if (ac.params.routableModals || ac.openedIn === 'page') {
+      ac.view.router.back({ animate: ac.params.animate });
     } else {
-      ss.modal.once('modalClosed', () => {
+      ac.modal.once('modalClosed', () => {
         Utils.nextTick(() => {
-          ss.modal.destroy();
-          delete ss.modal;
+          ac.modal.destroy();
+          delete ac.modal;
         });
       });
-      ss.modal.close();
+      ac.modal.close();
     }
-    return ss;
+    return ac;
   }
   init() {
-    const ss = this;
-    ss.attachEvents();
-    ss.setValue();
+    const ac = this;
+    ac.attachEvents();
   }
   destroy() {
-    const ss = this;
-    ss.emit('smartSelectBeforeDestroy', ss);
-    ss.$el.trigger('smartselect:beforedestroy', ss);
-    ss.detachEvents();
-    delete ss.$el[0].f7SmartSelect;
-    Utils.deleteProps(ss);
-    ss.destroyed = true;
+    const ac = this;
+    ac.emit('local::beforeDestroy autocompleteBeforeDestroy', ac);
+    ac.detachEvents();
+    if (ac.$inputEl && ac.$inputEl[0]) {
+      delete ac.$inputEl[0].f7Autocomplete;
+    }
+    if (ac.$openerEl && ac.$openerEl[0]) {
+      delete ac.$openerEl[0].f7Autocomplete;
+    }
+    Utils.deleteProps(ac);
+    ac.destroyed = true;
   }
 }
 

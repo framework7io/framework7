@@ -5,109 +5,133 @@ import Autocomplete from './autocomplete-class';
 export default {
   name: 'autocomplete',
   params: {
-    smartSelect: {
-      el: undefined,
-      valueEl: undefined,
-      openIn: 'page', // or 'popup' or 'sheet' or 'popover'
-      pageTitle: undefined,
+    autocomplete: {
+      openerEl: undefined,
+      inputEl: undefined,
+      view: undefined,
+
+      // DropDown
+      dropdownContainerEl: undefined,
+      dropdownPlaceholderText: undefined,
+      typeahead: false,
+      highlightMatches: true,
+      expandInput: false,
+      updateInputValueOnSelect: true,
+
+      value: undefined,
+      multiple: false,
+
+      source: undefined,
+      limit: undefined,
+      valueProperty: 'id',
+      textProperty: 'text',
+
+      openIn: 'page', // or 'popup' or 'dropdown'
       pageBackLinkText: 'Back',
       popupCloseLinkText: 'Close',
-      sheetCloseLinkText: 'Done',
-      searchbar: false,
-      searchbarPlaceholder: 'Search',
+      searchbarPlaceholder: 'Search...',
       searchbarDisableText: 'Cancel',
+
+      animate: true,
+
+      autoFocus: false,
       closeOnSelect: false,
-      virtualList: false,
-      virtualListHeight: undefined,
+      notFoundText: 'Nothing found',
+      requestSourceOnOpen: false,
+
+      // Preloader
+      preloaderColor: undefined,
+      preloader: false,
+
+      // Colors
       formColorTheme: undefined,
       navbarColorTheme: undefined,
+
+      // Routing
       routableModals: true,
-      /*
-        Custom render functions
-      */
+      url: 'select',
+
+      // Custom render functions
+      renderDropdown: undefined,
       renderPage: undefined,
       renderPopup: undefined,
-      renderSheet: undefined,
-      renderPopover: undefined,
-      /*
-        Custom render functions:
-        function (items)
-        must return HTML string
-      */
       renderItems: undefined,
-      /*
-        Custom render functions:
-        function (index, item)
-        must return HTML string
-      */
       renderItem: undefined,
       renderSearchbar: undefined,
+      renderNavbar: undefined,
+
     },
   },
   static: {
-    SmartSelect,
+    Autocomplete,
   },
   create() {
     const app = this;
     Utils.extend(app, {
-      smartSelect: {
+      autocomplete: {
         create(params) {
-          return new SmartSelect(app, params);
+          return new Autocomplete(app, params);
         },
-        open(smartSelectEl) {
-          const ss = app.smartSelect.get(smartSelectEl);
-          if (ss && ss.open) return ss.open();
+        open(autocompleteEl) {
+          const ac = app.autocomplete.get(autocompleteEl);
+          if (ac && ac.open) return ac.open();
           return undefined;
         },
-        close(smartSelectEl) {
-          const ss = app.smartSelect.get(smartSelectEl);
-          if (ss && ss.close) return ss.close();
+        close(autocompleteEl) {
+          const ac = app.autocomplete.get(autocompleteEl);
+          if (ac && ac.close) return ac.close();
           return undefined;
         },
-        get(smartSelectEl) {
-          const $smartSelectEl = $(smartSelectEl);
-          if (!$smartSelectEl.length) return undefined;
-          return $smartSelectEl[0].f7SmartSelect;
+        get(autocompleteEl) {
+          if ((autocompleteEl instanceof Autocomplete)) return autocompleteEl;
+          const $autocompleteEl = $(autocompleteEl);
+          if (!$autocompleteEl.length) return undefined;
+          return $autocompleteEl[0].f7Autocomplete;
+        },
+        destroy(autocompleteEl) {
+          const ac = app.autocomplete.get(autocompleteEl);
+          if (ac && ac.destroy) return ac.destroy();
+          return undefined;
         },
       },
     });
   },
 
   on: {
-    tabMounted(tabEl) {
-      const app = this;
-      $(tabEl).find('.smart-select-init').each((index, smartSelectEl) => {
-        app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
-      });
-    },
-    tabBeforeRemove(tabEl) {
-      $(tabEl).find('.smart-select-init').each((index, smartSelectEl) => {
-        if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
-          smartSelectEl.f7SmartSelect.destroy();
-        }
-      });
-    },
-    pageInit(page) {
-      const app = this;
-      page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
-        app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
-      });
-    },
-    pageBeforeRemove(page) {
-      page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
-        if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
-          smartSelectEl.f7SmartSelect.destroy();
-        }
-      });
-    },
+    // tabMounted(tabEl) {
+    //   const app = this;
+    //   $(tabEl).find('.smart-select-init').each((index, smartSelectEl) => {
+    //     app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
+    //   });
+    // },
+    // tabBeforeRemove(tabEl) {
+    //   $(tabEl).find('.smart-select-init').each((index, smartSelectEl) => {
+    //     if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
+    //       smartSelectEl.f7SmartSelect.destroy();
+    //     }
+    //   });
+    // },
+    // pageInit(page) {
+    //   const app = this;
+    //   page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
+    //     app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
+    //   });
+    // },
+    // pageBeforeRemove(page) {
+    //   page.$el.find('.smart-select-init').each((index, smartSelectEl) => {
+    //     if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
+    //       smartSelectEl.f7SmartSelect.destroy();
+    //     }
+    //   });
+    // },
   },
   clicks: {
-    '.smart-select': function open($clickedEl, data) {
-      const app = this;
-      if (!$clickedEl[0].f7SmartSelect) {
-        const ss = app.smartSelect.create(Utils.extend({ el: $clickedEl }, data));
-        ss.open();
-      }
-    },
+    // '.smart-select': function open($clickedEl, data) {
+    //   const app = this;
+    //   if (!$clickedEl[0].f7SmartSelect) {
+    //     const ss = app.smartSelect.create(Utils.extend({ el: $clickedEl }, data));
+    //     ss.open();
+    //   }
+    // },
   },
 };

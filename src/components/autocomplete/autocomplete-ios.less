@@ -1,10 +1,37 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
   @import (multiple) '../../less/vars-ios.less';
-  .smart-select-sheet {
-    .page {
-      background: #fff;
+  .autocomplete-dropdown {
+    box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
+    .autocomplete-preloader {
+      right: 15px;
+      margin-bottom: 12px;
+    }
+    .list {
+      b {
+        font-weight: 600;
+      }
     }
   }
-  .hairline-root('.smart-select-sheet .toolbar', bottom, @barsBorderColor);
+  .searchbar-input-wrap .autocomplete-dropdown {
+    margin-top: -32px;
+    top: 100%;
+    background: #e8e8ea;
+    z-index: 20;
+    border-radius: 8px;
+    .item-content {
+      padding-left: 28px;
+    }
+    li:last-child {
+      border-radius: 0 0 8px 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .autocomplete-dropdown-inner {
+      padding-top: 32px;
+    }
+    .autocomplete-dropdown-placeholder {
+      color: #939398;
+    }
+  }
 }
