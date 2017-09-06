@@ -422,23 +422,13 @@ class SmartSelect extends Framework7Class {
     ss.attachInputsEvents();
 
     ss.$el.trigger('smartselect:open', ss);
-    ss.emit({
-      events: 'open',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpen', ss);
+    ss.emit('local::open smartSelectOpen', ss);
   }
   onOpened() {
     const ss = this;
 
     ss.$el.trigger('smartselect:opened', ss);
-    ss.emit({
-      events: 'opened',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpened', ss);
+    ss.emit('local::opened smartSelectOpened', ss);
   }
   onClose() {
     const ss = this;
@@ -461,12 +451,7 @@ class SmartSelect extends Framework7Class {
     ss.detachInputsEvents();
 
     ss.$el.trigger('smartselect:close', ss);
-    ss.emit({
-      events: 'close',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClose', ss);
+    ss.emit('local::close smartSelectClose', ss);
   }
   onClosed() {
     const ss = this;
@@ -476,12 +461,7 @@ class SmartSelect extends Framework7Class {
     delete ss.$containerEl;
 
     ss.$el.trigger('smartselect:closed', ss);
-    ss.emit({
-      events: 'closed',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClosed', ss);
+    ss.emit('local::closed smartSelectClosed', ss);
   }
   openPage() {
     const ss = this;
@@ -656,7 +636,7 @@ class SmartSelect extends Framework7Class {
   }
   destroy() {
     const ss = this;
-    ss.emit('smartSelectBeforeDestroy', ss);
+    ss.emit('local::beforeDestroy smartSelectBeforeDestroy', ss);
     ss.$el.trigger('smartselect:beforedestroy', ss);
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
