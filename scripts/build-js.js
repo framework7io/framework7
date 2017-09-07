@@ -28,6 +28,9 @@ try {
 function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || 'universal';
+  let cbs = 0;
+
+  // Bundle
   rollup({
     entry: './src/framework7.js',
     plugins: [
@@ -36,6 +39,7 @@ function es(components, cb) {
         'process.env.TARGET': JSON.stringify(target),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
+        '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
     ],
     format: 'es',
@@ -53,7 +57,38 @@ function es(components, cb) {
     .pipe(rename('framework7.module.js'))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
+      cbs += 1;
+      if (cbs === 2 && cb) cb();
+    });
+
+  // Modules
+  rollup({
+    entry: './src/framework7.js',
+    plugins: [
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        'process.env.TARGET': JSON.stringify(target),
+        '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
+        '//EXPORT_COMPONENTS': `export { Framework7, ${components.map(component => component.capitalized).join(', ')} };`,
+      }),
+    ],
+    format: 'es',
+    moduleName: 'Framework7',
+    useStrict: true,
+    sourceMap: false,
+    banner,
+  })
+    .on('error', (err) => {
       if (cb) cb();
+      console.log(err.toString());
+    })
+    .pipe(source('framework7.js', './src'))
+    .pipe(buffer())
+    .pipe(rename('framework7.modular.js'))
+    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .on('end', () => {
+      cbs += 1;
+      if (cbs === 2 && cb) cb();
     });
 }
 function umd(components, cb) {
@@ -67,6 +102,7 @@ function umd(components, cb) {
         'process.env.TARGET': JSON.stringify(target),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
+        '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
       resolve({ jsnext: true }),
       buble(),

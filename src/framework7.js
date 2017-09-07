@@ -56,6 +56,7 @@ Framework7
   .use(Toolbar)
   .use(Subnavbar)
   .use(TouchRipple)
+  // Additional Components
   //INSTALL_COMPONENTS
 
-export default Framework7;
+//EXPORT_COMPONENTS
