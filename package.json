@@ -35,7 +35,7 @@
   },
   "homepage": "http://framework7.io/",
   "devDependencies": {
-    "dom7": "^1.6.4",
+    "dom7": "^1.7.2",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.2.2",
     "gulp-concat": "^2.6.1",
