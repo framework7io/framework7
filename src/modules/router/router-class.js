@@ -802,6 +802,7 @@ class Router extends Framework7Class {
     if (!pageEl) return;
     const router = this;
     const $pageEl = $(pageEl);
+    if (!$pageEl.length) return;
     const { route, on = {} } = options;
     const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack;
 
