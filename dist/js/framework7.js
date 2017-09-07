@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.2
+ * Framework7 2.0.0-beta.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 2, 2017
+ * Released on: September 7, 2017
  */
 
 (function (global, factory) {
@@ -1545,16 +1545,21 @@ var Methods = {
       listener = args[2];
       capture = args[3];
     }
+
     function handleLiveEvent(e) {
       var target = e.target;
+      // console.log('target', eventType, target);
       if (!target) { return; }
+      // console.log('here');
       var eventData = e.target.dom7EventData || [];
       eventData.unshift(e);
       if ($$1(target).is(targetSelector)) { listener.apply(target, eventData); }
       else {
         var parents = $$1(target).parents();
         for (var k = 0; k < parents.length; k += 1) {
-          if ($$1(parents[k]).is(targetSelector)) { listener.apply(parents[k], eventData); }
+          if ($$1(parents[k]).is(targetSelector)) {
+            listener.apply(parents[k], eventData);
+          }
         }
       }
     }
@@ -2826,8 +2831,20 @@ var Utils$1 = {
     var args = [], len$1 = arguments.length;
     while ( len$1-- ) args[ len$1 ] = arguments[ len$1 ];
 
-    var to = Object(args[0]);
-    for (var i = 1; i < args.length; i += 1) {
+    var deep = true;
+    var to;
+    var from;
+    if (typeof args[0] === 'boolean') {
+      deep = args[0];
+      to = args[1];
+      args.splice(0, 2);
+      from = args;
+    } else {
+      to = args[0];
+      args.splice(0, 1);
+      from = args;
+    }
+    for (var i = 0; i < from.length; i += 1) {
       var nextSource = args[i];
       if (nextSource !== undefined && nextSource !== null) {
         var keysArray = Object.keys(Object(nextSource));
@@ -2835,7 +2852,9 @@ var Utils$1 = {
           var nextKey = keysArray[nextIndex];
           var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
           if (desc !== undefined && desc.enumerable) {
-            if (Utils$1.isObject(to[nextKey]) && Utils$1.isObject(nextSource[nextKey])) {
+            if (!deep) {
+              to[nextKey] = nextSource[nextKey];
+            } else if (Utils$1.isObject(to[nextKey]) && Utils$1.isObject(nextSource[nextKey])) {
               Utils$1.extend(to[nextKey], nextSource[nextKey]);
             } else if (!Utils$1.isObject(to[nextKey]) && Utils$1.isObject(nextSource[nextKey])) {
               to[nextKey] = {};
@@ -3020,7 +3039,9 @@ Framework7Class.prototype.emit = function emit () {
     eventsParents = args[0].local ? [] : args[0].parents || self.eventsParents;
   }
   var eventsArray = Array.isArray(events) ? events : events.split(' ');
-  eventsArray.forEach(function (event) {
+  var localEvents = eventsArray.map(function (eventName) { return eventName.replace('local::', ''); });
+  var parentEvents = eventsArray.filter(function (eventName) { return eventName.indexOf('local::') < 0; });
+  localEvents.forEach(function (event) {
     if (self.eventsListeners[event]) {
       self.eventsListeners[event].forEach(function (eventHandler) {
         eventHandler.apply(context, data);
@@ -3029,7 +3050,7 @@ Framework7Class.prototype.emit = function emit () {
   });
   if (eventsParents && eventsParents.length > 0) {
     eventsParents.forEach(function (eventsParent) {
-      eventsParent.emit.apply(eventsParent, [ events ].concat( data ));
+      eventsParent.emit.apply(eventsParent, [ parentEvents ].concat( data ));
     });
   }
   return self;
@@ -3156,11 +3177,7 @@ var Framework7$1 = (function (Framework7Class$$1) {
     }
 
     // Install Modules
-    app.useInstanceModules({
-      router: {
-        app: app,
-      },
-    });
+    app.useInstanceModules();
 
     // Init
     if (app.params.init) {
@@ -3222,6 +3239,92 @@ var Framework7$1 = (function (Framework7Class$$1) {
 }(Framework7Class));
 
 Framework7$1.Class = Framework7Class;
+
+var Utils$3 = {
+  name: 'utils',
+  proto: {
+    utils: Utils$1,
+  },
+  static: {
+    Utils: Utils$1,
+  },
+};
+
+var keyPrefix = 'f7storage-';
+var Storage = {
+  get: function get(key) {
+    return Utils$1.promise(function (resolve, reject) {
+      try {
+        var value = JSON.parse(window.localStorage.getItem(("" + keyPrefix + key)));
+        resolve(value);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  set: function set(key, value) {
+    return Utils$1.promise(function (resolve, reject) {
+      try {
+        window.localStorage.setItem(("" + keyPrefix + key), JSON.stringify(value));
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  remove: function remove(key) {
+    return Utils$1.promise(function (resolve, reject) {
+      try {
+        window.localStorage.removeItem(("" + keyPrefix + key));
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  clear: function clear() {
+
+  },
+  length: function length() {
+
+  },
+  keys: function keys() {
+    return Utils$1.promise(function (resolve, reject) {
+      try {
+        var keys = Object.keys(window.localStorage)
+          .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
+          .map(function (keyName) { return keyName.replace(keyPrefix, ''); });
+        resolve(keys);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  forEach: function forEach(callback) {
+    return Utils$1.promise(function (resolve, reject) {
+      try {
+        Object.keys(window.localStorage)
+          .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
+          .forEach(function (keyName, index) {
+            var key = keyName.replace(keyPrefix, '');
+            Storage.get(key).then(function (value) {
+              callback(key, value, index);
+            });
+          });
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+};
+
+var Storage$1 = {
+  name: 'storage',
+  static: {
+    Storage: Storage,
+  },
+};
 
 var Resize = {
   name: 'resize',
@@ -4081,8 +4184,11 @@ var Framework7Component = function Framework7Component(c, extend) {
   // Make Dom
   if (html && typeof html === 'string') {
     html = html.trim();
+    tempDom.innerHTML = html;
+  } else if (html) {
+    tempDom.innerHTML = '';
+    tempDom.appendChild(html);
   }
-  tempDom.innerHTML = html;
 
   // Extend context with $el
   var el = tempDom.children[0];
@@ -4178,12 +4284,12 @@ var Framework7Component = function Framework7Component(c, extend) {
 
   // Set styles scope ID
   var styleEl;
-  if (component.styles) {
+  if (component.style) {
     styleEl = document.createElement('style');
-    styleEl.innerHTML = component.styles;
+    styleEl.innerHTML = component.style;
   }
-  if (component.stylesScopeId) {
-    el.setAttribute('data-scope', component.stylesScopeId);
+  if (component.styleScopeId) {
+    el.setAttribute('data-scope', component.styleScopeId);
   }
 
   // Attach events
@@ -4240,18 +4346,18 @@ var Component = {
     }
 
     // Styles
-    var styles;
-    var stylesScopeId = Utils$1.now();
+    var style;
+    var styleScopeId = Utils$1.now();
     if (componentString.indexOf('<style>') >= 0) {
-      styles = componentString.split('<style>')[1].split('</style>')[0];
+      style = componentString.split('<style>')[1].split('</style>')[0];
     } else if (componentString.indexOf('<style scoped>') >= 0) {
-      styles = componentString.split('<style scoped>')[1].split('</style>')[0];
-      styles = styles.split('\n').map(function (line) {
+      style = componentString.split('<style scoped>')[1].split('</style>')[0];
+      style = style.split('\n').map(function (line) {
         if (line.indexOf('{') >= 0) {
           if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', ("[data-scope=\"" + stylesScopeId + "\"]"));
+            return line.replace('{{this}}', ("[data-scope=\"" + styleScopeId + "\"]"));
           }
-          return ("[data-scope=\"" + stylesScopeId + "\"] " + (line.trim()));
+          return ("[data-scope=\"" + styleScopeId + "\"] " + (line.trim()));
         }
         return line;
       }).join('\n');
@@ -4278,9 +4384,9 @@ var Component = {
     if (!component.template && !component.render) {
       component.template = template;
     }
-    if (styles) {
-      component.styles = styles;
-      component.stylesScopeId = stylesScopeId;
+    if (style) {
+      component.style = style;
+      component.styleScopeId = styleScopeId;
     }
     return component;
   },
@@ -4443,7 +4549,7 @@ function SwipeBack(r) {
   var navbarWidth;
 
   function handleTouchStart(e) {
-    if (!allowViewTouchMove || !router.params.swipeBackPage || isTouched || app.swipeout.el || !router.allowPageChange) { return; }
+    if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || app.swipeout.el || !router.allowPageChange) { return; }
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
@@ -4479,12 +4585,12 @@ function SwipeBack(r) {
       if (currentPage.hasClass('no-swipeback')) { cancel = true; }
       previousPage = $el.find('.page-previous:not(.stacked)');
 
-      var notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
+      var notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
       viewContainerWidth = $el.width();
       if (app.rtl) {
-        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.swipeBackPageActiveArea);
+        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.iosSwipeBackActiveArea);
       } else {
-        notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
+        notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
       }
       if (notFromBorder) { cancel = true; }
       if (previousPage.length === 0 || currentPage.length === 0) { cancel = true; }
@@ -4493,14 +4599,14 @@ function SwipeBack(r) {
         return;
       }
 
-      if (router.params.swipeBackPageAnimateShadow) {
+      if (router.params.iosSwipeBackAnimateShadow) {
         pageShadow = currentPage.find('.page-shadow-effect');
         if (pageShadow.length === 0) {
           pageShadow = $$1('<div class="page-shadow-effect"></div>');
           currentPage.append(pageShadow);
         }
       }
-      if (router.params.swipeBackPageAnimateOpacity) {
+      if (router.params.iosSwipeBackAnimateOpacity) {
         pageOpacity = previousPage.find('.page-opacity-effect');
         if (pageOpacity.length === 0) {
           pageOpacity = $$1('<div class="page-opacity-effect"></div>');
@@ -4550,7 +4656,7 @@ function SwipeBack(r) {
     var inverter = app.rtl ? -1 : 1;
 
     // Touches diff
-    touchesDiff = (pageX - touchesStart.x - router.params.swipeBackPageThreshold) * inverter;
+    touchesDiff = (pageX - touchesStart.x - router.params.iosSwipeBackThreshold) * inverter;
     if (touchesDiff < 0) { touchesDiff = 0; }
     var percentage = touchesDiff / viewContainerWidth;
 
@@ -4574,10 +4680,10 @@ function SwipeBack(r) {
     }
 
     currentPage.transform(("translate3d(" + currentPageTranslate + "px,0,0)"));
-    if (router.params.swipeBackPageAnimateShadow) { pageShadow[0].style.opacity = 1 - (1 * percentage); }
+    if (router.params.iosSwipeBackAnimateShadow) { pageShadow[0].style.opacity = 1 - (1 * percentage); }
 
     previousPage.transform(("translate3d(" + previousPageTranslate + "px,0,0)"));
-    if (router.params.swipeBackPageAnimateOpacity) { pageOpacity[0].style.opacity = 1 - (1 * percentage); }
+    if (router.params.iosSwipeBackAnimateOpacity) { pageOpacity[0].style.opacity = 1 - (1 * percentage); }
 
     // Dynamic Navbars Animation
     if (dynamicNavbar) {
@@ -4807,6 +4913,9 @@ function forward(el, forwardOptions) {
     pushState: true,
     history: true,
     reloadCurrent: router.params.reloadPages,
+    reloadPrevious: false,
+    reloadAll: false,
+    pageEvents: {},
     on: {},
   }, forwardOptions);
 
@@ -5069,8 +5178,13 @@ function forward(el, forwardOptions) {
     router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-    var removeOldPage = !(router.params.preloadPreviousPage || (router.app.theme === 'ios' && router.params.swipeBackPage));
-    if (removeOldPage) {
+    var keepOldPage = app.theme === 'ios' ? (router.params.preloadPreviousPage || router.params.iosSwipeBack) : router.params.preloadPreviousPage;
+    if (!keepOldPage) {
+      if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page')) {
+        keepOldPage = true;
+      }
+    }
+    if (!keepOldPage) {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
         if (separateNavbar) {
@@ -5139,7 +5253,8 @@ function load(loadParams, loadOptions, ignorePageChange) {
   var componentUrl = params.componentUrl;
   var ignoreCache = options.ignoreCache;
 
-  if (options.route.route &&
+  if (options.route &&
+    options.route.route &&
     options.route.route.parentPath &&
     router.currentRoute.route.parentPath &&
     options.route.route.parentPath === router.currentRoute.route.parentPath) {
@@ -5152,6 +5267,7 @@ function load(loadParams, loadOptions, ignorePageChange) {
   }
 
   if (
+    options.route &&
     options.route.url &&
     router.url === options.route.url &&
     !(options.reloadCurrent || options.reloadPrevious) &&
@@ -5162,6 +5278,7 @@ function load(loadParams, loadOptions, ignorePageChange) {
 
   if (!options.route && url) {
     options.route = router.findMatchingRoute(url, true);
+    Utils$1.extend(options.route, { route: { url: url, path: url } });
   }
 
   // Component Callbacks
@@ -5264,6 +5381,16 @@ function navigate(url, navigateOptions) {
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
+    var resolvedAsModal = false;
+    ('popup popover sheet loginScreen actions').split(' ').forEach(function (modalLoadProp) {
+      if (resolveParams[modalLoadProp]) {
+        resolvedAsModal = true;
+        var modalRoute = Utils$1.extend({}, route, { route: resolveParams });
+        router.allowPageChange = true;
+        router.modalLoad(modalLoadProp, modalRoute, Utils$1.extend(options, resolveOptions));
+      }
+    });
+    if (resolvedAsModal) { return; }
     router.load(resolveParams, Utils$1.extend(options, resolveOptions), true);
   }
   function asyncReject() {
@@ -5272,7 +5399,7 @@ function navigate(url, navigateOptions) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncResolve, asyncReject);
+    route.route.async.call(router, asyncResolve, asyncReject);
   }
   // Retur Router
   return router;
@@ -5767,11 +5894,11 @@ function backward(el, backwardOptions) {
   }
 
   // Page init and before init events
-  router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', $oldPage);
+  router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
 
   // Before animation callback
-  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current');
-  router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next');
+  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current', options);
+  router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
 
   // Animation
   function afterAnimation() {
@@ -5786,8 +5913,8 @@ function backward(el, backwardOptions) {
     }
 
     // After animation event
-    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current');
-    router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next');
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current', options);
+    router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
 
     // Remove Old Page
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
@@ -5796,7 +5923,7 @@ function backward(el, backwardOptions) {
         $oldNavbarInner.addClass('stacked');
       }
     } else {
-      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined);
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined, options);
       router.removeEl($oldPage);
       if (separateNavbar && $oldNavbarInner.length) {
         router.removeEl($oldNavbarInner);
@@ -5807,7 +5934,8 @@ function backward(el, backwardOptions) {
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     // Preload previous page
-    if (router.params.preloadPreviousPage) {
+    var preloadPreviousPage = app.theme === 'ios' ? (router.params.preloadPreviousPage || router.params.iosSwipeBack) : router.params.preloadPreviousPage;
+    if (preloadPreviousPage) {
       router.back(router.history[router.history.length - 2], { preload: true });
     }
     if (router.params.pushState) {
@@ -6048,7 +6176,7 @@ function back() {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncResolve, asyncReject);
+    route.route.async.call(router, asyncResolve, asyncReject);
   }
   // Return Router
   return router;
@@ -6064,7 +6192,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     if (router.isAppRouter) {
       // App Router
-      Utils$1.extend(router, {
+      Utils$1.extend(false, router, {
         app: app,
         params: app.params.view,
         routes: app.routes || [],
@@ -6072,15 +6200,16 @@ var Router$1 = (function (Framework7Class$$1) {
       });
     } else {
       // View Router
-      Utils$1.extend(router, {
+      Utils$1.extend(false, router, {
         app: app,
         view: view,
         params: view.params,
-        routes: view.routes || [],
+        routes: view.routes,
         $el: view.$el,
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
         history: view.history,
+        scrollHistory: view.scrollHistory,
         cache: app.cache,
         dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
         separateNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar,
@@ -6656,10 +6785,10 @@ var Router$1 = (function (Framework7Class$$1) {
         url: url,
         method: 'GET',
         beforeSend: function beforeSend() {
-          router.emit('routerAjaxStart');
+          router.emit('routerAjaxStart', router.xhr);
         },
         complete: function complete(xhr, status) {
-          router.emit('routerAjaxComplete');
+          router.emit('routerAjaxComplete', xhr);
           if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
@@ -6669,13 +6798,15 @@ var Router$1 = (function (Framework7Class$$1) {
                 content: xhr.responseText,
               });
             }
+            router.emit('routerAjaxSuccess', xhr);
             resolve(xhr.responseText);
           } else {
+            router.emit('routerAjaxError', xhr);
             reject(xhr);
           }
         },
         error: function error(xhr) {
-          router.emit('ajaxError');
+          router.emit('routerAjaxError', xhr);
           reject(xhr);
         },
       });
@@ -6694,7 +6825,7 @@ var Router$1 = (function (Framework7Class$$1) {
       var context;
       try {
         context = options.context || {};
-        if (typeof context === 'function') { context = context.call(router.app); }
+        if (typeof context === 'function') { context = context.call(router); }
         else if (typeof context === 'string') {
           try {
             context = JSON.parse(context);
@@ -6766,12 +6897,12 @@ var Router$1 = (function (Framework7Class$$1) {
     var url = typeof component === 'string' ? component : componentUrl;
     function compile(c) {
       var createdComponent = Component.create(c, {
+        $: $$1,
+        $$: $$1,
         $app: router.app,
         $root: Utils$1.extend({}, router.app.data, router.app.methods),
         $route: options.route,
         $router: router,
-        $: $$1,
-        $$: $$1,
         $dom7: $$1,
         $theme: {
           ios: router.app.theme === 'ios',
@@ -6866,8 +6997,10 @@ var Router$1 = (function (Framework7Class$$1) {
     if (!pageEl) { return; }
     var router = this;
     var $pageEl = $$1(pageEl);
+    if (!$pageEl.length) { return; }
     var route = options.route;
     var on = options.on; if ( on === void 0 ) on = {};
+    var restoreScrollTopOnBack = router.params.restoreScrollTopOnBack;
 
     var camelName = "page" + (callback[0].toUpperCase() + callback.slice(1, callback.length));
     var colonName = "page:" + (callback.toLowerCase());
@@ -6882,7 +7015,7 @@ var Router$1 = (function (Framework7Class$$1) {
     function attachEvents() {
       if ($pageEl[0].f7PageEventsAttached) { return; }
       $pageEl[0].f7PageEventsAttached = true;
-      if (options.pageEvents) {
+      if (options.pageEvents && Object.keys(options.pageEvents).length > 0) {
         $pageEl[0].f7PageEvents = options.pageEvents;
         Object.keys(options.pageEvents).forEach(function (eventName) {
           $pageEl.on(("page:" + (eventName.split('page')[1].toLowerCase())), options.pageEvents[eventName]);
@@ -6893,6 +7026,9 @@ var Router$1 = (function (Framework7Class$$1) {
       attachEvents();
     }
     if (callback === 'init') {
+      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url]) {
+        $pageEl.find('.page-content').scrollTop(router.scrollHistory[page.route.url]);
+      }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
         if (on.pageReinit) { on.pageReinit(page); }
@@ -6901,6 +7037,14 @@ var Router$1 = (function (Framework7Class$$1) {
         return;
       }
       $pageEl[0].f7PageInitialized = true;
+    }
+    if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'previous') {
+      // Save scroll position
+      router.scrollHistory[page.route.url] = $pageEl.find('.page-content').scrollTop();
+    }
+    if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'next') {
+      // Delete scroll position
+      delete router.scrollHistory[page.route.url];
     }
 
     if (on[camelName]) { on[camelName](page); }
@@ -6924,13 +7068,13 @@ var Router$1 = (function (Framework7Class$$1) {
     var router = this;
     router.view.history = router.history;
     if (router.params.pushState) {
-      window.localStorage[("f7_router_" + (router.view.index) + "_history")] = JSON.stringify(router.history);
+      window.localStorage[("f7router-view" + (router.view.index) + "-history")] = JSON.stringify(router.history);
     }
   };
   Router.prototype.restoreHistory = function restoreHistory () {
     var router = this;
-    if (router.params.pushState && window.localStorage[("f7_router_" + (router.view.index) + "_history")]) {
-      router.history = JSON.parse(window.localStorage[("f7_router_" + (router.view.index) + "_history")]);
+    if (router.params.pushState && window.localStorage[("f7router-view" + (router.view.index) + "-history")]) {
+      router.history = JSON.parse(window.localStorage[("f7router-view" + (router.view.index) + "-history")]);
       router.view.history = router.history;
     }
   };
@@ -6944,7 +7088,7 @@ var Router$1 = (function (Framework7Class$$1) {
     var app = router.app;
 
     // Init Swipeback
-    if (router.view && router.params.swipeBackPage && app.theme === 'ios') {
+    if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
       SwipeBack(router);
     }
 
@@ -7093,16 +7237,14 @@ var Router = {
       components: [],
     },
   },
-  create: function create(params) {
+  create: function create() {
     var instance = this;
-    var app = params.app;
-    var view = params.view;
-    if (view) {
+    if (instance.app) {
       // View Router
-      instance.router = new Router$1(app, view);
+      instance.router = new Router$1(instance.app, instance);
     } else {
       // App Router
-      instance.router = new Router$1(app);
+      instance.router = new Router$1(instance);
     }
   },
 };
@@ -7163,7 +7305,7 @@ var View = (function (Framework7Class$$1) {
     }
 
     // View Props
-    Utils$1.extend(view, {
+    Utils$1.extend(false, view, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -7173,17 +7315,13 @@ var View = (function (Framework7Class$$1) {
       navbarEl: $navbarEl ? $navbarEl[0] : undefined,
       selector: selector,
       history: [],
+      scrollHistory: {},
     });
 
     $el[0].f7View = view;
 
     // Install Modules
-    view.useInstanceModules({
-      router: {
-        app: app,
-        view: view,
-      },
-    });
+    view.useInstanceModules();
 
     // Add to app
     app.views.push(view);
@@ -7212,8 +7350,8 @@ var View = (function (Framework7Class$$1) {
     var view = this;
     var app = view.app;
 
-    view.emit('viewBeforeDestroy', view);
     view.$el.trigger('view:beforedestroy', view);
+    view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
     if (view.main) {
       app.views.main = null;
@@ -7230,7 +7368,7 @@ var View = (function (Framework7Class$$1) {
     // Destroy Router
     view.router.destroy();
 
-    view.emit('viewDestroy', view);
+    view.emit('local::destroy viewDestroy', view);
 
     // Delete props & methods
     Object.keys(view).forEach(function (viewProp) {
@@ -7537,12 +7675,13 @@ var View$2 = {
       removeElements: true,
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
+      restoreScrollTopOnBack: true,
       // Swipe Back
-      swipeBackPage: true,
-      swipeBackPageAnimateShadow: true,
-      swipeBackPageAnimateOpacity: true,
-      swipeBackPageActiveArea: 30,
-      swipeBackPageThreshold: 0,
+      iosSwipeBack: true,
+      iosSwipeBackAnimateShadow: true,
+      iosSwipeBackAnimateOpacity: true,
+      iosSwipeBackActiveArea: 30,
+      iosSwipeBackThreshold: 0,
       // Push State
       pushState: false,
       pushStateRoot: undefined,
@@ -7571,6 +7710,11 @@ var View$2 = {
       views: Utils$1.extend([], {
         create: function create(el, params) {
           return new View(app, el, params);
+        },
+        get: function get(viewEl) {
+          var $viewEl = $$1(viewEl);
+          if ($viewEl.length && $viewEl[0].f7View) { return $viewEl[0].f7View; }
+          return undefined;
         },
       }),
     });
@@ -7785,6 +7929,14 @@ var Navbar = {
     }
     if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) { return undefined; }
     return $navbarEl[0];
+  },
+  getPageByEl: function getPageByEl(navbarInnerEl) {
+    var $navbarInnerEl = $$1(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner');
+      if ($navbarInnerEl.length > 1) { return undefined; }
+    }
+    return $navbarInnerEl[0].f7Page;
   },
   initHideNavbarOnScroll: function initHideNavbarOnScroll(pageEl, navbarInnerEl) {
     var app = this;
@@ -8285,35 +8437,38 @@ var Modal$1 = (function (Framework7Class$$1) {
     openedModals.push(modal);
     $$1('html').addClass(("with-modal-" + (modal.type.toLowerCase())));
     modal.$el.trigger(("modal:open " + (modal.type.toLowerCase()) + ":open"), modal);
-    modal.emit(("modalOpen " + (modal.type) + "Open"), modal);
+    modal.emit(("local::open modalOpen " + (modal.type) + "Open"), modal);
   };
   Modal.prototype.onOpened = function onOpened () {
     var modal = this;
     modal.$el.trigger(("modal:opened " + (modal.type.toLowerCase()) + ":opened"), modal);
-    modal.emit(("modalOpened " + (modal.type) + "Opened"), modal);
+    modal.emit(("local::opened modalOpened " + (modal.type) + "Opened"), modal);
   };
   Modal.prototype.onClose = function onClose () {
     var modal = this;
     openedModals.splice(openedModals.indexOf(modal), 1);
     $$1('html').removeClass(("with-modal-" + (modal.type.toLowerCase())));
     modal.$el.trigger(("modal:close " + (modal.type.toLowerCase()) + ":close"), modal);
-    modal.emit(("modalClose " + (modal.type) + "Close"), modal);
+    modal.emit(("local::close modalClose " + (modal.type) + "Close"), modal);
   };
   Modal.prototype.onClosed = function onClosed () {
     var modal = this;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
     modal.$el.trigger(("modal:closed " + (modal.type.toLowerCase()) + ":closed"), modal);
-    modal.emit(("modalClosed " + (modal.type) + "Closed"), modal);
+    modal.emit(("local::closed modalClosed " + (modal.type) + "Closed"), modal);
   };
-  Modal.prototype.open = function open (animate) {
-    if ( animate === void 0 ) animate = true;
-
+  Modal.prototype.open = function open (animateModal) {
     var modal = this;
     var app = modal.app;
     var $el = modal.$el;
     var $backdropEl = modal.$backdropEl;
     var type = modal.type;
+    var animate = true;
+    if (typeof animateModal !== 'undefined') { animate = animateModal; }
+    else if (typeof modal.params.animate !== 'undefined') {
+      animate = modal.params.animate;
+    }
 
     if (!$el || $el.hasClass('modal-in')) {
       return modal;
@@ -8394,12 +8549,16 @@ var Modal$1 = (function (Framework7Class$$1) {
 
     return modal;
   };
-  Modal.prototype.close = function close (animate) {
-    if ( animate === void 0 ) animate = true;
-
+  Modal.prototype.close = function close (animateModal) {
     var modal = this;
     var $el = modal.$el;
     var $backdropEl = modal.$backdropEl;
+
+    var animate = true;
+    if (typeof animateModal !== 'undefined') { animate = animateModal; }
+    else if (typeof modal.params.animate !== 'undefined') {
+      animate = modal.params.animate;
+    }
 
     if (!$el || !$el.hasClass('modal-in')) {
       return modal;
@@ -8452,9 +8611,12 @@ var Modal$1 = (function (Framework7Class$$1) {
   };
   Modal.prototype.destroy = function destroy () {
     var modal = this;
-    modal.emit('modalBeforeDestroy', modal);
+    modal.emit(("local::beforeDestroy modalBeforeDestroy " + (modal.type) + "BeforeDestroy"), modal);
     if (modal.$el) {
       modal.$el.trigger(("modal:beforedestroy " + (modal.type.toLowerCase()) + ":beforedestroy"), modal);
+      if (modal.$el.length && modal.$el[0].f7Modal) {
+        delete modal.$el[0].f7Modal;
+      }
     }
     Utils$1.deleteProps(modal);
     modal = null;
@@ -8492,6 +8654,12 @@ var Modal = {
 
       sheetCloseByBackdropClick: true,
       sheetCloseByOutsideClick: false,
+
+      toastPosition: 'bottom', // or 'top' or 'center'
+      toastCloseButton: false,
+      toastCloseButtonColor: undefined,
+      toastCloseButtonText: 'Ok',
+      toastCloseTimeout: undefined,
     },
   },
 };
@@ -8505,6 +8673,7 @@ var Dialog$1 = (function (Modal) {
       buttons: [],
       verticalButtons: false,
       onClick: undefined,
+      cssClass: undefined,
       on: {},
     }, params);
 
@@ -8624,6 +8793,82 @@ var Dialog$1 = (function (Modal) {
   return Dialog;
 }(Modal$1));
 
+var ConstructorMethods = function (parameters) {
+  if ( parameters === void 0 ) parameters = {};
+
+  var defaultSelector = parameters.defaultSelector;
+  var constructor = parameters.constructor;
+  var domProp = parameters.domProp;
+  var app = parameters.app;
+  var addMethods = parameters.addMethods;
+  var methods = {
+    create: function create(params) {
+      return new constructor(app, params);
+    },
+    get: function get(el) {
+      if ( el === void 0 ) el = defaultSelector;
+
+      if (el instanceof constructor) { return el; }
+      var $el = $$1(el);
+      if ($el.length === 0) { return undefined; }
+      return $el[0][domProp];
+    },
+    destroy: function destroy(el) {
+      var instance = methods.get(el);
+      if (instance && instance.destroy) { return instance.destroy(); }
+      return undefined;
+    },
+  };
+  if (addMethods && Array.isArray(addMethods)) {
+    addMethods.forEach(function (methodName) {
+      methods[methodName] = function (el) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        if ( el === void 0 ) el = defaultSelector;
+        var instance = methods.get(el);
+        if (instance && instance[methodName]) { return instance[methodName].apply(instance, args); }
+        return undefined;
+      };
+    });
+  }
+  return methods;
+};
+
+var ModalMethods = function (parameters) {
+  if ( parameters === void 0 ) parameters = {};
+
+  var defaultSelector = parameters.defaultSelector;
+  var constructor = parameters.constructor;
+  var app = parameters.app;
+  var methods = Utils$1.extend(
+    ConstructorMethods({
+      defaultSelector: defaultSelector,
+      constructor: constructor,
+      app: app,
+      domProp: 'f7Modal',
+    }),
+    {
+      open: function open(el, animate) {
+        var $el = $$1(el);
+        var instance = $el[0].f7Modal;
+        if (!instance) { instance = new constructor(app, { el: $el }); }
+        return instance.open(animate);
+      },
+      close: function close(el, animate) {
+        if ( el === void 0 ) el = defaultSelector;
+
+        var $el = $$1(el);
+        if ($el.length === 0) { return undefined; }
+        var instance = $el[0].f7Modal;
+        if (!instance) { instance = new constructor(app, { el: $el }); }
+        return instance.close(animate);
+      },
+    }
+  );
+  return methods;
+};
+
 var Dialog = {
   name: 'dialog',
   static: {
@@ -8631,34 +8876,13 @@ var Dialog = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      dialog: {
-        create: function create(params) {
-          return new Dialog$1(app, params);
-        },
-        open: function open(dialogEl, animate) {
-          var $dialogEl = $$1(dialogEl);
-          var dialog = $dialogEl[0].f7Modal;
-          if (!dialog) { dialog = new Dialog$1(app, { el: $dialogEl }); }
-          return dialog.open(animate);
-        },
-        close: function close(dialogEl, animate) {
-          if ( dialogEl === void 0 ) dialogEl = '.dialog.modal-in';
-
-          var $dialogEl = $$1(dialogEl);
-          if ($dialogEl.length === 0) { return undefined; }
-          var dialog = $dialogEl[0].f7Modal;
-          if (!dialog) { dialog = new Dialog$1(app, { el: $dialogEl }); }
-          return dialog.close(animate);
-        },
-        get: function get(dialogEl) {
-          if ( dialogEl === void 0 ) dialogEl = '.dialog.modal-in';
-
-          var $dialogEl = $$1(dialogEl);
-          if ($dialogEl.length === 0) { return undefined; }
-          return $dialogEl[0].f7Modal;
-        },
-
+    app.dialog = Utils$1.extend(
+      ModalMethods({
+        app: app,
+        constructor: Dialog$1,
+        defaultSelector: '.dialog.modal-in',
+      }),
+      {
         // Shortcuts
         alert: function alert() {
           var args = [], len = arguments.length;
@@ -8849,8 +9073,8 @@ var Dialog = {
           if (!infinite) { dialog.setProgress(progress); }
           return dialog.open();
         },
-      },
-    });
+      }
+    );
   },
   clicks: {
     '.dialog-backdrop': function closeDialog() {
@@ -8927,34 +9151,10 @@ var Popup = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      popup: {
-        create: function create(params) {
-          return new Popup$1(app, params);
-        },
-        open: function open(popupEl, animate) {
-          var $popupEl = $$1(popupEl);
-          var popup = $popupEl[0].f7Modal;
-          if (!popup) { popup = new Popup$1(app, { el: $popupEl }); }
-          return popup.open(animate);
-        },
-        close: function close(popupEl, animate) {
-          if ( popupEl === void 0 ) popupEl = '.popup.modal-in';
-
-          var $popupEl = $$1(popupEl);
-          if ($popupEl.length === 0) { return undefined; }
-          var popup = $popupEl[0].f7Modal;
-          if (!popup) { popup = new Popup$1(app, { el: $popupEl }); }
-          return popup.close(animate);
-        },
-        get: function get(popupEl) {
-          if ( popupEl === void 0 ) popupEl = '.popup.modal-in';
-
-          var $popupEl = $$1(popupEl);
-          if ($popupEl.length === 0) { return undefined; }
-          return $popupEl[0].f7Modal;
-        },
-      },
+    app.popup = ModalMethods({
+      app: app,
+      constructor: Popup$1,
+      defaultSelector: '.popup.modal-in',
     });
   },
   clicks: {
@@ -9033,34 +9233,10 @@ var LoginScreen = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      loginScreen: {
-        create: function create(params) {
-          return new LoginScreen$1(app, params);
-        },
-        open: function open(loginScreenEl, animate) {
-          var $loginScreenEl = $$1(loginScreenEl);
-          var loginScreen = $loginScreenEl[0].f7Modal;
-          if (!loginScreen) { loginScreen = new LoginScreen$1(app, { el: $loginScreenEl }); }
-          return loginScreen.open(animate);
-        },
-        close: function close(loginScreenEl, animate) {
-          if ( loginScreenEl === void 0 ) loginScreenEl = '.login-screen.modal-in';
-
-          var $loginScreenEl = $$1(loginScreenEl);
-          if ($loginScreenEl.length === 0) { return undefined; }
-          var loginScreen = $loginScreenEl[0].f7Modal;
-          if (!loginScreen) { loginScreen = new LoginScreen$1(app, { el: $loginScreenEl }); }
-          return loginScreen.close(animate);
-        },
-        get: function get(loginScreenEl) {
-          if ( loginScreenEl === void 0 ) loginScreenEl = '.login-screen.modal-in';
-
-          var $loginScreenEl = $$1(loginScreenEl);
-          if ($loginScreenEl.length === 0) { return undefined; }
-          return $loginScreenEl[0].f7Modal;
-        },
-      },
+    app.loginScreen = ModalMethods({
+      app: app,
+      constructor: LoginScreen$1,
+      defaultSelector: '.login-screen.modal-in',
     });
   },
   clicks: {
@@ -9333,35 +9509,21 @@ var Popover = {
   name: 'popover',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      popover: {
-        create: function create(params) {
-          return new Popover$1(app, params);
-        },
+    app.popover = Utils$1.extend(
+      ModalMethods({
+        app: app,
+        constructor: Popover$1,
+        defaultSelector: '.popover.modal-in',
+      }),
+      {
         open: function open(popoverEl, targetEl, animate) {
           var $popoverEl = $$1(popoverEl);
           var popover = $popoverEl[0].f7Modal;
           if (!popover) { popover = new Popover$1(app, { el: $popoverEl, targetEl: targetEl }); }
           return popover.open(targetEl, animate);
         },
-        close: function close(popoverEl, animate) {
-          if ( popoverEl === void 0 ) popoverEl = '.popover.modal-in';
-
-          var $popoverEl = $$1(popoverEl);
-          if ($popoverEl.length === 0) { return undefined; }
-          var popover = $popoverEl[0].f7Modal;
-          if (!popover) { popover = new Popover$1(app, { el: $popoverEl }); }
-          return popover.close(animate);
-        },
-        get: function get(popoverEl) {
-          if ( popoverEl === void 0 ) popoverEl = '.popover.modal-in';
-
-          var $popoverEl = $$1(popoverEl);
-          if ($popoverEl.length === 0) { return undefined; }
-          return $popoverEl[0].f7Modal;
-        },
-      },
-    });
+      }
+    );
   },
   clicks: {
     '.popover-open': function openPopover($clickedEl, data) {
@@ -9559,34 +9721,10 @@ var Actions = {
   name: 'actions',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      actions: {
-        create: function create(params) {
-          return new Actions$1(app, params);
-        },
-        open: function open(actionsEl, animate) {
-          var $actionsEl = $$1(actionsEl);
-          var actions = $actionsEl[0].f7Modal;
-          if (!actions) { actions = new Actions$1(app, { el: $actionsEl }); }
-          return actions.open(animate);
-        },
-        close: function close(actionsEl, animate) {
-          if ( actionsEl === void 0 ) actionsEl = '.actions-modal.modal-in';
-
-          var $actionsEl = $$1(actionsEl);
-          if ($actionsEl.length === 0) { return undefined; }
-          var actions = $actionsEl[0].f7Modal;
-          if (!actions) { actions = new Actions$1(app, { el: $actionsEl }); }
-          return actions.close(animate);
-        },
-        get: function get(actionsEl) {
-          if ( actionsEl === void 0 ) actionsEl = '.actions-modal.modal-in';
-
-          var $actionsEl = $$1(actionsEl);
-          if ($actionsEl.length === 0) { return undefined; }
-          return $actionsEl[0].f7Modal;
-        },
-      },
+    app.actions = ModalMethods({
+      app: app,
+      constructor: Actions$1,
+      defaultSelector: '.actions-modal.modal-in',
     });
   },
   clicks: {
@@ -9741,54 +9879,142 @@ var Sheet = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      sheet: {
-        create: function create(params) {
-          return new Sheet$1(app, params);
-        },
-        open: function open(sheetEl, animate) {
-          var $sheetEl = $$1(sheetEl);
-          var sheet = $sheetEl[0].f7Modal;
-          if (!sheet) { sheet = new Sheet$1(app, { el: $sheetEl }); }
-          return sheet.open(animate);
-        },
-        close: function close(sheetEl, animate) {
-          if ( sheetEl === void 0 ) sheetEl = '.sheet-modal.modal-in';
-
-          var $sheetEl = $$1(sheetEl);
-          if ($sheetEl.length === 0) { return undefined; }
-          var sheet = $sheetEl[0].f7Modal;
-          if (!sheet) { sheet = new Sheet$1(app, { el: $sheetEl }); }
-          return sheet.close(animate);
-        },
-        get: function get(sheetEl) {
-          if ( sheetEl === void 0 ) sheetEl = '.sheet-modal.modal-in';
-
-          var $sheetEl = $$1(sheetEl);
-          if ($sheetEl.length === 0) { return undefined; }
-          return $sheetEl[0].f7Modal;
-        },
-      },
-    });
+    app.sheet = Utils$1.extend({},
+      ModalMethods({
+        app: app,
+        constructor: Sheet$1,
+        defaultSelector: '.sheet-modal.modal-in',
+      })
+    );
   },
   clicks: {
-    '.sheet-open': function openPopup($clickedEl, data) {
+    '.sheet-open': function openSheet($clickedEl, data) {
       if ( data === void 0 ) data = {};
 
       var app = this;
       app.sheet.open(data.sheet, data.animate);
     },
-    '.sheet-close': function closePopup($clickedEl, data) {
+    '.sheet-close': function closeSheet($clickedEl, data) {
       if ( data === void 0 ) data = {};
 
       var app = this;
       app.sheet.close(data.sheet, data.animate);
     },
-    '.sheet-backdrop': function closePopup() {
+    '.sheet-backdrop': function closeSheet() {
       var app = this;
       if (!app.params.modals.sheetCloseByBackdropClick) { return; }
       app.sheet.close();
     },
+  },
+};
+
+var Toast$1 = (function (Modal) {
+  function Toast(app, params) {
+    var extendedParams = Utils$1.extend({
+      message: undefined,
+      position: app.params.modals.toastPosition,
+      closeButton: app.params.modals.toastCloseButton,
+      closeButtonColor: app.params.modals.toastCloseButtonColor,
+      closeButtonText: app.params.modals.toastCloseButtonText,
+      closeTimeout: app.params.modals.toastCloseTimeout,
+      cssClass: undefined,
+      on: {},
+    }, params);
+
+    // Extends with open/close Modal methods;
+    Modal.call(this, app, extendedParams);
+
+    var toast = this;
+
+    toast.params = extendedParams;
+
+    var ref = toast.params;
+    var message = ref.message;
+    var position = ref.position;
+    var closeButton = ref.closeButton;
+    var closeButtonColor = ref.closeButtonColor;
+    var closeButtonText = ref.closeButtonText;
+    var closeTimeout = ref.closeTimeout;
+    var cssClass = ref.cssClass;
+
+    var $el;
+    if (!toast.params.el) {
+      // Find Element
+      var toastHtml = ("\n        <div class=\"toast toast-" + position + " " + (cssClass || '') + "\">\n          <div class=\"toast-content\">\n            <div class=\"toast-message\">" + message + "</div>\n            " + (closeButton ? ("\n            <a class=\"toast-button " + (app.theme === 'md' ? 'button' : 'link') + " " + (closeButtonColor ? ("color-" + closeButtonColor) : '') + "\">" + closeButtonText + "</a>\n            ").trim() : '') + "\n          </div>\n        </div>\n      ").trim();
+
+      $el = $$1(toastHtml);
+    } else {
+      $el = $$1(toast.params.el);
+    }
+
+    if ($el && $el.length > 0 && $el[0].f7Modal) {
+      return $el[0].f7Modal;
+    }
+
+    if ($el.length === 0) {
+      return toast.destroy();
+    }
+
+    Utils$1.extend(toast, {
+      app: app,
+      $el: $el,
+      el: $el[0],
+      type: 'toast',
+    });
+
+    $el[0].f7Modal = toast;
+
+    if (closeButton) {
+      $el.find('.toast-button').on('click', function () {
+        toast.emit('local::closeButtonClick toastCloseButtonClick', toast);
+        toast.close();
+      });
+
+      toast.on('beforeDestroy', function () {
+        $el.find('.toast-button').off('click');
+      });
+    }
+
+    var timeoutId;
+    toast.on('open', function () {
+      var openedToast = app.toast.get('.toast.modal-in');
+      if (openedToast && openedToast.el && openedToast.el !== toast.el) {
+        openedToast.close();
+      }
+      if (closeTimeout) {
+        timeoutId = Utils$1.nextTick(function () {
+          toast.close();
+        }, closeTimeout);
+      }
+    });
+    toast.on('close', function () {
+      window.clearTimeout(timeoutId);
+    });
+
+    return toast;
+  }
+
+  if ( Modal ) Toast.__proto__ = Modal;
+  Toast.prototype = Object.create( Modal && Modal.prototype );
+  Toast.prototype.constructor = Toast;
+
+  return Toast;
+}(Modal$1));
+
+var Toast = {
+  name: 'toast',
+  static: {
+    Toast: Toast$1,
+  },
+  create: function create() {
+    var app = this;
+    app.toast = Utils$1.extend({},
+      ModalMethods({
+        app: app,
+        constructor: Toast$1,
+        defaultSelector: '.toast.modal-in',
+      })
+    );
   },
 };
 
@@ -10906,8 +11132,10 @@ var VirtualList$1 = (function (Framework7Class$$1) {
       showFilteredItemsOnly: false,
       renderExternal: undefined,
       setListHeight: true,
-      on: {},
-      template:
+      searchByItem: undefined,
+      searchAll: undefined,
+      renderItem: undefined,
+      itemTemplate:
         '<li>' +
           '<div class="item-content">' +
             '<div class="item-inner">' +
@@ -10915,6 +11143,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
             '</div>' +
           '</div>' +
         '</li>',
+      on: {},
     };
 
     // Extend defaults with modules params
@@ -10935,9 +11164,9 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     if (vl.params.showFilteredItemsOnly) {
       vl.filteredItems = [];
     }
-    if (vl.params.template && !vl.params.renderItem) {
-      if (typeof vl.params.template === 'string') { vl.template = t7.compile(vl.params.template); }
-      else if (typeof vl.params.template === 'function') { vl.template = vl.params.template; }
+    if (vl.params.itemTemplate && !vl.params.renderItem) {
+      if (typeof vl.params.itemTemplate === 'string') { vl.itemTemplate = t7.compile(vl.params.template); }
+      else if (typeof vl.params.itemTemplate === 'function') { vl.itemTemplate = vl.params.itemTemplate; }
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');
 
@@ -11102,10 +11331,10 @@ var VirtualList$1 = (function (Framework7Class$$1) {
         itemEl = vl.domCache[index];
         itemEl.f7VirtualListIndex = index;
       } else {
-        if (vl.template && !vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.template(items[i], { index: index }).trim();
+        if (vl.itemTemplate && !vl.params.renderItem) {
+          vl.tempDomElement.innerHTML = vl.itemTemplate(items[i], { index: index }).trim();
         } else if (vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.params.renderItem(index, items[i]).trim();
+          vl.tempDomElement.innerHTML = vl.params.renderItem.call(vl, items[i], index).trim();
         } else {
           vl.tempDomElement.innerHTML = items[i].toString().trim();
         }
@@ -11437,21 +11666,16 @@ var VirtualList$1 = (function (Framework7Class$$1) {
 
 var VirtualList = {
   name: 'virtualList',
+  static: {
+    VirtualList: VirtualList$1,
+  },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      virtualList: {
-        create: function create(params) {
-          return new VirtualList$1(app, params);
-        },
-        destroy: function destroy(listEl) {
-          var $listEl = $$1(listEl);
-          if (!$listEl.length) { return undefined; }
-          var virtualList = $listEl[0].f7VirtualList;
-          if (!virtualList) { return undefined; }
-          return virtualList.destroy();
-        },
-      },
+    app.virtualList = ConstructorMethods({
+      defaultSelector: '.virtual-list',
+      constructor: VirtualList$1,
+      app: app,
+      domProp: 'f7VirtualList',
     });
   },
 };
@@ -11569,6 +11793,8 @@ var Tab = {
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
           $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
         }
+      } else if (tabRoute) {
+        $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
       }
 
       if ($oldTabLinkEl && $oldTabLinkEl.length > 0) { $oldTabLinkEl.removeClass('tab-link-active'); }
@@ -11751,7 +11977,7 @@ function swipePanel(panel) {
         $el.show();
         $backdropEl.show();
         $el.trigger('panel:swipeopen', panel);
-        panel.emit('panelSwipeOpen', panel);
+        panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
       panelWidth = $el[0].offsetWidth;
       $el.transition(0);
@@ -11791,7 +12017,7 @@ function swipePanel(panel) {
       $backdropEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
 
       $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
-      panel.emit('panelSwipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     } else {
       if (side === 'left') { translate -= panelWidth; }
       $el.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
@@ -11801,7 +12027,7 @@ function swipePanel(panel) {
       $backdropEl.css({ opacity: backdropOpacity });
 
       $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
-      panel.emit('panelSwipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     }
   }
   function handleTouchEnd() {
@@ -12029,14 +12255,14 @@ var Panel$1 = (function (Framework7Class$$1) {
     var panel = this;
     var app = panel.app;
 
-    panel.emit('panelBeforeDestroy', panel);
+    panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
     panel.$el.trigger('panel:beforedestroy', panel);
 
     if (panel.resizeHandler) {
       app.off('resize', panel.resizeHandler);
     }
     panel.$el.trigger('panel:destroy', panel);
-    panel.emit('panelDestroy');
+    panel.emit('local::destroy panelDestroy');
     delete app.panel[panel.side];
     delete panel.el.f7Panel;
     Object.keys(panel).forEach(function (key) {
@@ -12145,7 +12371,7 @@ var Panel$1 = (function (Framework7Class$$1) {
     var panel = this;
     panel.opened = true;
     panel.$el.trigger('panel:open', panel);
-    panel.emit('panelOpen', panel);
+    panel.emit('local::open panelOpen', panel);
   };
   Panel.prototype.onOpened = function onOpened () {
     var panel = this;
@@ -12153,14 +12379,14 @@ var Panel$1 = (function (Framework7Class$$1) {
     app.panel.allowOpen = true;
 
     panel.$el.trigger('panel:opened', panel);
-    panel.emit('panelOpened', panel);
+    panel.emit('local::opened panelOpened', panel);
   };
   Panel.prototype.onClose = function onClose () {
     var panel = this;
     panel.opened = false;
     panel.$el.addClass('panel-closing');
     panel.$el.trigger('panel:close', panel);
-    panel.emit('panelClose', panel);
+    panel.emit('local::close panelClose', panel);
   };
   Panel.prototype.onClosed = function onClosed () {
     var panel = this;
@@ -12168,7 +12394,7 @@ var Panel$1 = (function (Framework7Class$$1) {
     app.panel.allowOpen = true;
     panel.$el.removeClass('panel-closing');
     panel.$el.trigger('panel:closed', panel);
-    panel.emit('panelClosed', panel);
+    panel.emit('local::closed panelClosed', panel);
   };
 
   return Panel;
@@ -12293,6 +12519,24 @@ var Panel = {
           return new Panel$1(app, { el: $panelEl }).close(animate);
         }
         return false;
+      },
+      get: function get(side) {
+        var panelSide = side;
+        if (!panelSide) {
+          if ($$1('.panel').length > 1) {
+            return undefined;
+          }
+          panelSide = $$1('.panel').hasClass('panel-left') ? 'left' : 'right';
+        }
+        if (!panelSide) { return undefined; }
+        if (app.panel[panelSide]) {
+          return app.panel[panelSide];
+        }
+        var $panelEl = $$1((".panel-" + panelSide));
+        if ($panelEl.length > 0) {
+          return new Panel$1(app, { el: $panelEl });
+        }
+        return undefined;
       },
     });
   },
@@ -13005,11 +13249,8 @@ var Toggle$1 = (function (Framework7Class$$1) {
       }
     }
     function handleInputChange() {
-      toggle.emit({
-        events: 'change',
-        parents: [],
-      });
-      toggle.emit('toggleChange toggle:change', toggle);
+      toggle.$el.trigger('toggle:change', toggle);
+      toggle.emit('local::change toggleChange', toggle);
     }
     toggle.attachEvents = function attachEvents() {
       if (!Support$1.touch) { return; }
@@ -13049,8 +13290,8 @@ var Toggle$1 = (function (Framework7Class$$1) {
   };
   Toggle.prototype.destroy = function destroy () {
     var toggle = this;
-    toggle.emit('toggleBeforeDestroy', toggle);
     toggle.$el.trigger('toggle:beforedestroy', toggle);
+    toggle.emit('local::beforeDestroy toggleBeforeDestroy', toggle);
     delete toggle.$el[0].f7Toggle;
     toggle.detachEvents();
     Utils$1.deleteProps(toggle);
@@ -13419,16 +13660,11 @@ var Range$1 = (function (Framework7Class$$1) {
       range.layout();
     }
     // Events
-    range.$el.trigger('change range:change', range, range.value);
+    range.$el.trigger('range:change', range, range.value);
     if (range.$inputEl && !range.dual) {
       range.$inputEl.val(range.value).trigger('input change');
     }
-    range.emit({
-      events: 'change',
-      parents: [],
-      data: range.value,
-    });
-    range.emit('rangeChange', range, range.value);
+    range.emit('local::change rangeChange', range, range.value);
     return range;
   };
   Range.prototype.getValue = function getValue () {
@@ -13443,8 +13679,8 @@ var Range$1 = (function (Framework7Class$$1) {
   };
   Range.prototype.destroy = function destroy () {
     var range = this;
-    range.emit('rangeBeforeDestroy', range);
     range.$el.trigger('range:beforedestroy', range);
+    range.emit('local::beforeDestroy rangeBeforeDestroy', range);
     delete range.$el[0].f7Range;
     range.detachEvents();
     Utils$1.deleteProps(range);
@@ -13458,34 +13694,30 @@ var Range = {
   name: 'range',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      range: {
-        create: function create(params) {
-          return new Range$1(app, params);
-        },
-        destroy: function destroy(el) {
-          if (el && (el instanceof Range$1) && el.destroy) { return el.destroy(); }
-          var $el = $$1(el);
-          if ($el.length) { return $el[0].f7Range.destroy(); }
-          return undefined;
-        },
-        get: function get(el) {
-          var $el = $$1(el);
-          if ($el.length) { return $el[0].f7Range; }
-          return undefined;
-        },
+    app.range = Utils$1.extend(
+      ConstructorMethods({
+        defaultSelector: '.range-slider',
+        constructor: Range$1,
+        app: app,
+        domProp: 'f7Range',
+      }),
+      {
         getValue: function getValue(el) {
-          var $el = $$1(el);
-          if ($el.length) { return $el[0].f7Range.get(); }
+          if ( el === void 0 ) el = '.range-slider';
+
+          var range = app.range.get(el);
+          if (range) { return range.getValue(); }
           return undefined;
         },
         setValue: function setValue(el, value) {
-          var $el = $$1(el);
-          if ($el.length) { return $el[0].f7Range.set(value); }
+          if ( el === void 0 ) el = '.range-slider';
+
+          var range = app.range.get(el);
+          if (range) { return range.setValue(value); }
           return undefined;
         },
-      },
-    });
+      }
+    );
   },
   static: {
     Range: Range$1,
@@ -13548,6 +13780,14 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       throw Error('Smart Select requires initialized View');
     }
 
+    // Url
+    var url = params.url;
+    if (!url) {
+      if ($el.attr('href')) { url = $el.attr('href'); }
+      else { url = ($selectEl.attr('name').toLowerCase()) + "-select/"; }
+    }
+    if (!url) { url = ss.params.url; }
+
     var multiple = $selectEl[0].multiple;
     var inputType = multiple ? 'checkbox' : 'radio';
     var id = Utils$1.now();
@@ -13559,13 +13799,13 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       selectEl: $selectEl[0],
       $valueEl: $valueEl,
       valueEl: $valueEl[0],
-      url: params.url || $el.attr('href') || (($selectEl.attr('name').toLowerCase()) + "-select/"),
+      url: url,
       multiple: multiple,
       inputType: inputType,
       id: id,
       view: view,
       inputName: (inputType + "-" + id),
-      name: $selectEl.attr('name'),
+      selectName: $selectEl.attr('name'),
       maxLength: $selectEl.attr('maxlength') || params.maxLength,
     });
     $el[0].f7SmartSelect = ss;
@@ -13730,6 +13970,61 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     ss.items = items;
     return items;
   };
+  SmartSelect.prototype.renderSearchbar = function renderSearchbar () {
+    var ss = this;
+    if (ss.params.renderSearchbar) { return ss.params.renderSearchbar.call(ss); }
+    var searchbarHTML = "\n      <form class=\"searchbar\">\n        <div class=\"searchbar-inner\">\n          <div class=\"searchbar-input-wrap\">\n            <input type=\"search\" placeholder=\"" + (ss.params.searchbarPlaceholder) + "\"/>\n            <i class=\"searchbar-icon\"></i>\n            <span class=\"input-clear-button\"></span>\n          </div>\n          <span class=\"searchbar-disable-button\">" + (ss.params.searchbarDisableText) + "</span>\n        </div>\n      </form>\n    ";
+    return searchbarHTML;
+  };
+  SmartSelect.prototype.renderItem = function renderItem (item, index) {
+    var ss = this;
+    if (ss.params.renderItem) { return ss.params.renderItem.call(ss, item, index); }
+    var itemHtml;
+    if (item.isLabel) {
+      itemHtml = "<li class=\"item-divider\">" + (item.groupLabel) + "</li>";
+    } else {
+      itemHtml = "\n        <li class=\"" + (item.className || '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (item.selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+    }
+    return itemHtml;
+  };
+  SmartSelect.prototype.renderItems = function renderItems () {
+    var ss = this;
+    if (ss.params.renderItems) { return ss.params.renderItems.call(ss, ss.items); }
+    var itemsHtml = "\n      " + (ss.items.map(function (item, index) { return ("" + (ss.renderItem(item, index))); }).join('')) + "\n    ";
+    return itemsHtml;
+  };
+  SmartSelect.prototype.renderPage = function renderPage () {
+    var ss = this;
+    if (ss.params.renderPage) { return ss.params.renderPage.call(ss, ss.items); }
+    var pageTitle = ss.params.pageTitle;
+    if (typeof pageTitle === 'undefined') {
+      pageTitle = ss.$el.find('.item-title').text().trim();
+    }
+    var pageHtml = "\n      <div class=\"page smart-select-page\" data-name=\"smart-select-page\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n          <div class=\"navbar-inner sliding " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n            <div class=\"left\">\n              <a href=\"#\" class=\"link back\">\n                <i class=\"icon icon-back\"></i>\n                <span class=\"ios-only\">" + (ss.params.pageBackLinkText) + "</span>\n              </a>\n            </div>\n            " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n            " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n          </div>\n        </div>\n        " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n        <div class=\"page-content\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
+    return pageHtml;
+  };
+  SmartSelect.prototype.renderPopup = function renderPopup () {
+    var ss = this;
+    if (ss.params.renderPopup) { return ss.params.renderPopup.call(ss, ss.items); }
+    var pageTitle = ss.params.pageTitle;
+    if (typeof pageTitle === 'undefined') {
+      pageTitle = ss.$el.find('.item-title').text().trim();
+    }
+    var popupHtml = "\n      <div class=\"popup smart-select-popup\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar" + (ss.params.navbarColorTheme ? ("theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                <div class=\"left\">\n                  <a href=\"#\" class=\"link popup-close\">\n                    <i class=\"icon icon-back\"></i>\n                    <span class=\"ios-only\">" + (ss.params.popupCloseLinkText) + "</span>\n                  </a>\n                </div>\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
+    return popupHtml;
+  };
+  SmartSelect.prototype.renderSheet = function renderSheet () {
+    var ss = this;
+    if (ss.params.renderSheet) { return ss.params.renderSheet.call(ss, ss.items); }
+    var sheetHtml = "\n      <div class=\"sheet-modal smart-select-sheet\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"toolbar " + (ss.params.toolbarColorTheme ? ("theme-" + (ss.params.toolbarColorTheme)) : '') + "\">\n          <div class=\"toolbar-inner\">\n            <div class=\"left\"></div>\n            <div class=\"right\">\n              <a class=\"link sheet-close\">" + (ss.params.sheetCloseLinkText) + "</a>\n            </div>\n          </div>\n        </div>\n        <div class=\"sheet-modal-inner\">\n          <div class=\"page-content\">\n            <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n              <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
+    return sheetHtml;
+  };
+  SmartSelect.prototype.renderPopover = function renderPopover () {
+    var ss = this;
+    if (ss.params.renderPopover) { return ss.params.renderPopover.call(ss, ss.items); }
+    var popoverHtml = "\n      <div class=\"popover smart-select-popover\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"popover-inner\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
+    return popoverHtml;
+  };
   SmartSelect.prototype.onOpen = function onOpen (type, containerEl) {
     var ss = this;
     var app = ss.app;
@@ -13745,7 +14040,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
         items: ss.items,
         renderItem: ss.renderItem.bind(ss),
         height: ss.params.virtualListHeight,
-        searchByItem: function searchByItem(query, index, item) {
+        searchByItem: function searchByItem(query, item) {
           if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >= 0) { return true; }
           return false;
         },
@@ -13778,23 +14073,13 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     ss.attachInputsEvents();
 
     ss.$el.trigger('smartselect:open', ss);
-    ss.emit({
-      events: 'open',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpen', ss);
+    ss.emit('local::open smartSelectOpen', ss);
   };
   SmartSelect.prototype.onOpened = function onOpened () {
     var ss = this;
 
     ss.$el.trigger('smartselect:opened', ss);
-    ss.emit({
-      events: 'opened',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpened', ss);
+    ss.emit('local::opened smartSelectOpened', ss);
   };
   SmartSelect.prototype.onClose = function onClose () {
     var ss = this;
@@ -13817,12 +14102,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     ss.detachInputsEvents();
 
     ss.$el.trigger('smartselect:close', ss);
-    ss.emit({
-      events: 'close',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClose', ss);
+    ss.emit('local::close smartSelectClose', ss);
   };
   SmartSelect.prototype.onClosed = function onClosed () {
     var ss = this;
@@ -13832,45 +14112,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     delete ss.$containerEl;
 
     ss.$el.trigger('smartselect:closed', ss);
-    ss.emit({
-      events: 'closed',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClosed', ss);
-  };
-  SmartSelect.prototype.renderSearchbar = function renderSearchbar () {
-    var ss = this;
-    if (ss.params.renderSearchbar) { return ss.params.renderSearchbar.call(ss); }
-    var searchbarHTML = "\n      <form class=\"searchbar\">\n        <div class=\"searchbar-inner\">\n          <div class=\"searchbar-input-wrap\">\n            <input type=\"search\" placeholder=\"" + (ss.params.searchbarPlaceholder) + "\"/>\n            <i class=\"searchbar-icon\"></i>\n            <span class=\"input-clear-button\"></span>\n          </div>\n          <span class=\"searchbar-disable-button\">" + (ss.params.searchbarDisableText) + "</span>\n        </div>\n      </form>\n    ";
-    return searchbarHTML;
-  };
-  SmartSelect.prototype.renderItem = function renderItem (index, item) {
-    var ss = this;
-    if (ss.params.renderItem) { return ss.params.renderItem.call(ss, index, item); }
-    var itemHtml;
-    if (item.isLabel) {
-      itemHtml = "<li class=\"item-divider\">" + (item.groupLabel) + "</li>";
-    } else {
-      itemHtml = "\n        <li class=\"" + (item.className || '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (item.selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
-    }
-    return itemHtml;
-  };
-  SmartSelect.prototype.renderItems = function renderItems () {
-    var ss = this;
-    if (ss.params.renderItems) { return ss.params.renderItems.call(ss, ss.items); }
-    var itemsHtml = "\n      " + (ss.items.map(function (item, index) { return ("" + (ss.renderItem(index, item))); }).join('')) + "\n    ";
-    return itemsHtml;
-  };
-  SmartSelect.prototype.renderPage = function renderPage () {
-    var ss = this;
-    if (ss.params.renderPage) { return ss.params.renderPage.call(ss, ss.items); }
-    var pageTitle = ss.params.pageTitle;
-    if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
-    }
-    var pageHtml = "\n      <div class=\"page smart-select-page\" data-name=\"smart-select-page\" data-select-name=\"" + (ss.name) + "\">\n        <div class=\"navbar" + (ss.params.navbarColorTheme ? ("theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n          <div class=\"navbar-inner sliding\">\n            <div class=\"left\">\n              <a href=\"#\" class=\"link back\">\n                <i class=\"icon icon-back\"></i>\n                <span class=\"ios-only\">" + (ss.params.pageBackLinkText) + "</span>\n              </a>\n            </div>\n            " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n            " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n          </div>\n        </div>\n        " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n        <div class=\"page-content\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
-    return pageHtml;
+    ss.emit('local::closed smartSelectClosed', ss);
   };
   SmartSelect.prototype.openPage = function openPage () {
     var ss = this;
@@ -13901,16 +14143,6 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       },
     });
     return ss;
-  };
-  SmartSelect.prototype.renderPopup = function renderPopup () {
-    var ss = this;
-    if (ss.params.renderPopup) { return ss.params.renderPopup(ss, ss.items); }
-    var pageTitle = ss.params.pageTitle;
-    if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
-    }
-    var popupHtml = "\n      <div class=\"popup smart-select-popup\" data-select-name=\"" + (ss.name) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar" + (ss.params.navbarColorTheme ? ("theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                <div class=\"left\">\n                  <a href=\"#\" class=\"link popup-close\">\n                    <i class=\"icon icon-back\"></i>\n                    <span class=\"ios-only\">" + (ss.params.popupCloseLinkText) + "</span>\n                  </a>\n                </div>\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
-    return popupHtml;
   };
   SmartSelect.prototype.openPopup = function openPopup () {
     var ss = this;
@@ -13947,12 +14179,6 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       ss.modal = ss.app.popup.create(popupParams).open();
     }
     return ss;
-  };
-  SmartSelect.prototype.renderSheet = function renderSheet () {
-    var ss = this;
-    if (ss.params.renderSheet) { return ss.params.renderSheet(ss, ss.items); }
-    var sheetHtml = "\n      <div class=\"sheet-modal smart-select-sheet\" data-select-name=\"" + (ss.name) + "\">\n        <div class=\"toolbar " + (ss.params.toolbarColorTheme ? ("theme-" + (ss.params.toolbarColorTheme)) : '') + "\">\n          <div class=\"toolbar-inner\">\n            <div class=\"left\"></div>\n            <div class=\"right\">\n              <a class=\"link sheet-close\">" + (ss.params.sheetCloseLinkText) + "</a>\n            </div>\n          </div>\n        </div>\n        <div class=\"sheet-modal-inner\">\n          <div class=\"page-content\">\n            <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n              <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
-    return sheetHtml;
   };
   SmartSelect.prototype.openSheet = function openSheet () {
     var ss = this;
@@ -13992,12 +14218,6 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       ss.modal = ss.app.sheet.create(sheetParams).open();
     }
     return ss;
-  };
-  SmartSelect.prototype.renderPopover = function renderPopover () {
-    var ss = this;
-    if (ss.params.renderPopover) { return ss.params.renderPopover(ss, ss.items); }
-    var popoverHtml = "\n      <div class=\"popover smart-select-popover\" data-select-name=\"" + (ss.name) + "\">\n        <div class=\"popover-inner\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
-    return popoverHtml;
   };
   SmartSelect.prototype.openPopover = function openPopover () {
     var ss = this;
@@ -14067,7 +14287,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
   };
   SmartSelect.prototype.destroy = function destroy () {
     var ss = this;
-    ss.emit('smartSelectBeforeDestroy', ss);
+    ss.emit('local::beforeDestroy smartSelectBeforeDestroy', ss);
     ss.$el.trigger('smartselect:beforedestroy', ss);
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
@@ -14098,6 +14318,7 @@ var SmartSelect = {
       formColorTheme: undefined,
       navbarColorTheme: undefined,
       routableModals: true,
+      url: 'select',
       /*
         Custom render functions
       */
@@ -14105,17 +14326,7 @@ var SmartSelect = {
       renderPopup: undefined,
       renderSheet: undefined,
       renderPopover: undefined,
-      /*
-        Custom render functions:
-        function (items)
-        must return HTML string
-      */
       renderItems: undefined,
-      /*
-        Custom render functions:
-        function (index, item)
-        must return HTML string
-      */
       renderItem: undefined,
       renderSearchbar: undefined,
     },
@@ -14125,11 +14336,14 @@ var SmartSelect = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      smartSelect: {
-        create: function create(params) {
-          return new SmartSelect$1(app, params);
-        },
+    app.smartSelect = Utils$1.extend(
+      ConstructorMethods({
+        defaultSelector: '.smart-select',
+        constructor: SmartSelect$1,
+        app: app,
+        domProp: 'f7SmartSelect',
+      }),
+      {
         open: function open(smartSelectEl) {
           var ss = app.smartSelect.get(smartSelectEl);
           if (ss && ss.open) { return ss.open(); }
@@ -14140,13 +14354,8 @@ var SmartSelect = {
           if (ss && ss.close) { return ss.close(); }
           return undefined;
         },
-        get: function get(smartSelectEl) {
-          var $smartSelectEl = $$1(smartSelectEl);
-          if (!$smartSelectEl.length) { return undefined; }
-          return $smartSelectEl[0].f7SmartSelect;
-        },
-      },
-    });
+      }
+    );
   },
 
   on: {
@@ -14359,7 +14568,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
       $transitionTarget.transitionEnd(function () {
         $el.removeClass('ptr-transitioning ptr-pull-up ptr-pull-down');
         $el.trigger('ptr:done');
-        ptr.emit('ptrDone', $el[0]);
+        ptr.emit('local::done ptrDone', $el[0]);
       });
       $el.removeClass('ptr-refreshing').addClass('ptr-transitioning');
       return ptr;
@@ -14369,7 +14578,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
       if ($el.hasClass('ptr-refreshing')) { return ptr; }
       $el.addClass('ptr-transitioning ptr-refreshing');
       $el.trigger('ptr:refresh', ptr.done);
-      ptr.emit('ptrRefresh', $el[0], ptr.done);
+      ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
       return ptr;
     };
 
@@ -14501,7 +14710,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
         }
         if (!pullStarted) {
           $el.trigger('ptr:pullstart');
-          ptr.emit('ptrPullstart', $el[0]);
+          ptr.emit('local::pullStart ptrPullStart', $el[0]);
           pullStarted = true;
         }
         $el.trigger('ptr:pullmove', {
@@ -14510,7 +14719,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
           translate: translate,
           touchesDiff: touchesDiff,
         });
-        ptr.emit('ptrPullmove', $el[0], {
+        ptr.emit('local::pullMove ptrPullMove', $el[0], {
           event: e,
           scrollTop: scrollTop,
           translate: translate,
@@ -14551,7 +14760,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
       if (refresh) {
         $el.addClass('ptr-refreshing');
         $el.trigger('ptr:refresh', ptr.done);
-        ptr.emit('ptrRefresh', $el[0], ptr.done);
+        ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
       } else {
         $el.removeClass('ptr-pull-down');
       }
@@ -14559,7 +14768,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
       isMoved = false;
       if (pullStarted) {
         $el.trigger('ptr:pullend');
-        ptr.emit('ptrPullend', $el[0]);
+        ptr.emit('local::pullEnd ptrPullEnd', $el[0]);
       }
     }
 
@@ -14599,7 +14808,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
   };
   PullToRefresh.prototype.destroy = function destroy () {
     var ptr = this;
-    ptr.emit('ptrBeforeDestroy', ptr);
+    ptr.emit('local::beforeDestroy ptrBeforeDestroy', ptr);
     ptr.$el.trigger('ptr:beforedestroy', ptr);
     delete ptr.el.f7PullToRefresh;
     ptr.detachEvents();
@@ -14614,42 +14823,26 @@ var PullToRefresh = {
   name: 'pullToRefresh',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      ptr: {
-        create: function create(el) {
-          var $el = $$1(el);
-          if (!$el.length) { return undefined; }
-          if ($el[0].f7PullToRefresh) {
-            return $el[0].f7PullToRefresh;
-          }
-          return new PullToRefresh$1(app, el);
-        },
-        destroy: function destroy(el) {
-          var $el = $$1(el);
-          if (!$el.length) { return undefined; }
-          if ($el[0].f7PullToRefresh) {
-            $el[0].f7PullToRefresh.destroy();
-          }
-          return undefined;
-        },
+    app.ptr = Utils$1.extend(
+      ConstructorMethods({
+        defaultSelector: '.ptr-content',
+        constructor: PullToRefresh$1,
+        app: app,
+        domProp: 'f7PullToRefresh',
+      }),
+      {
         done: function done(el) {
-          var $el = $$1(el);
-          if (!$el.length) { return undefined; }
-          if ($el[0].f7PullToRefresh) {
-            return $el[0].f7PullToRefresh.done();
-          }
+          var ptr = app.ptr.get(el);
+          if (ptr) { return ptr.done(); }
           return undefined;
         },
         refresh: function refresh(el) {
-          var $el = $$1(el);
-          if (!$el.length) { return undefined; }
-          if ($el[0].f7PullToRefresh) {
-            return $el[0].f7PullToRefresh.refresh();
-          }
+          var ptr = app.ptr.get(el);
+          if (ptr) { return ptr.refresh(); }
           return undefined;
         },
-      },
-    });
+      }
+    );
   },
   static: {
     PullToRefresh: PullToRefresh$1,
@@ -15020,8 +15213,8 @@ var DataTable$1 = (function (Framework7Class$$1) {
   DataTable.prototype.destroy = function destroy () {
     var table = this;
 
-    table.emit('datatableBeforeDestroy', table);
     table.$el.trigger('datatable:beforedestroy', table);
+    table.emit('local::beforeDestroy datatableBeforeDestroy', table);
 
     table.attachEvents();
     table.$el[0].f7DataTable = null;
@@ -15040,19 +15233,11 @@ var DataTable = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      dataTable: {
-        create: function create(params) {
-          return new DataTable$1(app, params);
-        },
-        destroy: function destroy(tableEl) {
-          var $tableEl = $$1(tableEl);
-          if (!$tableEl.length) { return undefined; }
-          var dataTable = $tableEl[0].f7DataTable;
-          if (!dataTable) { return undefined; }
-          return dataTable.destroy();
-        },
-      },
+    app.dataTable = ConstructorMethods({
+      defaultSelector: '.data-table',
+      constructor: DataTable$1,
+      app: app,
+      domProp: 'f7DataTable',
     });
   },
   on: {
@@ -15317,7 +15502,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       foundEl: '.searchbar-found',
       notFoundEl: '.searchbar-not-found',
       backdrop: true,
-      removeDiacritics: false,
+      removeDiacritics: true,
       customSearch: false,
       hideDividers: true,
       hideGroups: true,
@@ -15413,6 +15598,7 @@ var Searchbar$1 = (function (FrameworkClass) {
 
     Utils$1.extend(sb, {
       app: app,
+      view: app.views.get($el.parents('.view')),
       $el: $el,
       el: $el[0],
       $backdropEl: $backdropEl,
@@ -15426,6 +15612,8 @@ var Searchbar$1 = (function (FrameworkClass) {
       disableButtonHasMargin: false,
       $pageEl: $pageEl,
       pageEl: $pageEl && $pageEl[0],
+      $navbarEl: $navbarEl,
+      navbarEl: $navbarEl && $navbarEl[0],
       $foundEl: $foundEl,
       foundEl: $foundEl && $foundEl[0],
       $notFoundEl: $notFoundEl,
@@ -15448,18 +15636,33 @@ var Searchbar$1 = (function (FrameworkClass) {
     function onInputChange() {
       var value = sb.$inputEl.val().trim();
       if (
-          ((sb.$searchContainer && sb.$searchContainer.length > 0) || sb.params.customSearch) &&
-          (sb.params.searchIn || sb.isVirtualList)
+          (
+            (sb.$searchContainer && sb.$searchContainer.length > 0) &&
+            (sb.params.searchIn || sb.isVirtualList)
+          ) ||
+          sb.params.customSearch
         ) {
         sb.search(value, true);
       }
     }
     function onInputClear(e, previousValue) {
       sb.$el.trigger('searchbar:clear', previousValue);
-      sb.emit('searchbarClear', previousValue);
+      sb.emit('local::clear searchbarClear', previousValue);
     }
     function disableOnClick(e) {
       sb.disable(e);
+    }
+    function onPageBeforeOut() {
+      if (!sb || (sb && !sb.$el)) { return; }
+      if (sb.enabled) {
+        sb.$el.removeClass('searchbar-enabled');
+      }
+    }
+    function onPageBeforeIn() {
+      if (!sb || (sb && !sb.$el)) { return; }
+      if (sb.enabled) {
+        sb.$el.addClass('searchbar-enabled');
+      }
     }
     sb.attachEvents = function attachEvents() {
       $el.on('submit', preventSubmit);
@@ -15468,6 +15671,10 @@ var Searchbar$1 = (function (FrameworkClass) {
       }
       if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
         sb.$backdropEl.on('click', disableOnClick);
+      }
+      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+        sb.$pageEl.on('page:beforeout', onPageBeforeOut);
+        sb.$pageEl.on('page:beforein', onPageBeforeIn);
       }
       sb.$inputEl.on('focus', onInputFocus);
       sb.$inputEl.on('change input compositionend', onInputChange);
@@ -15480,6 +15687,10 @@ var Searchbar$1 = (function (FrameworkClass) {
       }
       if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
         sb.$backdropEl.off('click', disableOnClick);
+      }
+      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+        sb.$pageEl.on('page:beforeout', onPageBeforeOut);
+        sb.$pageEl.on('page:beforein', onPageBeforeIn);
       }
       sb.$inputEl.off('focus', onInputFocus);
       sb.$inputEl.off('change input compositionend', onInputChange);
@@ -15507,7 +15718,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     var previousQuery = sb.value;
     sb.$inputEl.val('').trigger('change').focus();
     sb.$el.trigger('searchbar:clear', previousQuery);
-    sb.emit('searchbarClear', previousQuery);
+    sb.emit('local::clear searchbarClear', previousQuery);
     return sb;
   };
   Searchbar.prototype.setDisableButtonMargin = function setDisableButtonMargin () {
@@ -15527,7 +15738,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     sb.enabled = true;
     function enable() {
       if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch) && !sb.$el.hasClass('searchbar-enabled') && !sb.query) {
-        sb.$backdropEl.addClass('searchbar-backdrop-in');
+        sb.backdropShow();
       }
       sb.$el.addClass('searchbar-enabled');
       if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
@@ -15537,7 +15748,7 @@ var Searchbar$1 = (function (FrameworkClass) {
         sb.$disableButtonEl.css(("margin-" + (app.rtl ? 'left' : 'right')), '0px');
       }
       sb.$el.trigger('searchbar:enable');
-      sb.emit('searchbarEnable');
+      sb.emit('local::enable searchbarEnable');
     }
     var needsFocus = false;
     if (setFocus === true) {
@@ -15577,7 +15788,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     }
 
     if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch)) {
-      sb.$backdropEl.removeClass('searchbar-backdrop-in');
+      sb.backdropHide();
     }
 
     sb.enabled = false;
@@ -15585,13 +15796,27 @@ var Searchbar$1 = (function (FrameworkClass) {
     sb.$inputEl.blur();
 
     sb.$el.trigger('searchbar:disable');
-    sb.emit('searchbarDisable');
+    sb.emit('local::disable searchbarDisable');
     return sb;
   };
   Searchbar.prototype.toggle = function toggle () {
     var sb = this;
     if (sb.enabled) { sb.disable(); }
     else { sb.enable(true); }
+    return sb;
+  };
+  Searchbar.prototype.backdropShow = function backdropShow () {
+    var sb = this;
+    if (sb.$backdropEl) {
+      sb.$backdropEl.addClass('searchbar-backdrop-in');
+    }
+    return sb;
+  };
+  Searchbar.prototype.backdropHide = function backdropHide () {
+    var sb = this;
+    if (sb.$backdropEl) {
+      sb.$backdropEl.removeClass('searchbar-backdrop-in');
+    }
     return sb;
   };
   Searchbar.prototype.search = function search (query, internal) {
@@ -15618,14 +15843,14 @@ var Searchbar$1 = (function (FrameworkClass) {
 
     // Add active/inactive classes on overlay
     if (query.length === 0) {
-      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) { $backdropEl.addClass('searchbar-backdrop-in'); }
+      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) { sb.backdropShow(); }
     } else if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) {
-      $backdropEl.removeClass('searchbar-backdrop-in');
+      sb.backdropHide();
     }
 
     if (sb.params.customSearch) {
-      $el.trigger('searhbar:search', query);
-      sb.emit('searhbarSearch', query);
+      $el.trigger('searchbar:search', query, sb.previousQuery);
+      sb.emit('local::search searchbarSearch', query, sb.previousQuery);
       return sb;
     }
 
@@ -15644,7 +15869,7 @@ var Searchbar$1 = (function (FrameworkClass) {
         foundItems = sb.virtualList.params.searchAll(vlQuery, sb.virtualList.items) || [];
       } else if (sb.virtualList.params.searchByItem) {
         for (var i = 0; i < sb.virtualList.items.length; i += 1) {
-          if (sb.virtualList.params.searchByItem(vlQuery, i, sb.virtualList.params.items[i])) {
+          if (sb.virtualList.params.searchByItem(vlQuery, sb.virtualList.params.items[i], i)) {
             foundItems.push(i);
           }
         }
@@ -15705,8 +15930,8 @@ var Searchbar$1 = (function (FrameworkClass) {
         });
       }
     }
-    $el.trigger('searchbar:search', query, foundItems);
-    sb.emit('searchbarSearch', query, foundItems);
+    $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
+    sb.emit('local::search searchbarSearch', query, sb.previousQuery, foundItems);
     if (foundItems.length === 0) {
       if ($notFoundEl) { $notFoundEl.show(); }
       if ($foundEl) { $foundEl.hide(); }
@@ -15725,7 +15950,7 @@ var Searchbar$1 = (function (FrameworkClass) {
   };
   Searchbar.prototype.destroy = function destroy () {
     var sb = this;
-    sb.emit('searchbarBeforeDestroy', sb);
+    sb.emit('local::beforeDestroy searchbarBeforeDestroy', sb);
     sb.$el.trigger('searchbar:beforedestroy', sb);
     sb.detachEvents();
     delete sb.$el.f7Searchbar;
@@ -15737,37 +15962,18 @@ var Searchbar$1 = (function (FrameworkClass) {
 
 var Searchbar = {
   name: 'searchbar',
-  create: function create() {
-    var app = this;
-    var searchbar = {
-      create: function create(params) {
-        return new Searchbar$1(app, params);
-      },
-      get: function get(searchbarEl) {
-        var $searchbarEl = $$1(searchbarEl);
-        if ($searchbarEl.length && $searchbarEl[0].f7Searchbar) {
-          return $searchbarEl[0].f7Searchbar;
-        }
-        return undefined;
-      },
-    };
-    ('clear enable disable toggle search destroy').split(' ').forEach(function (searchbarMethod) {
-      searchbar[searchbarMethod] = function (searchbarEl) {
-        var args = [], len = arguments.length - 1;
-        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-        if ( searchbarEl === void 0 ) searchbarEl = '.searchbar';
-        var sb = app.searchbar.get(searchbarEl);
-        if (sb) { return sb[searchbarMethod].apply(sb, args); }
-        return undefined;
-      };
-    });
-    Utils$1.extend(app, {
-      searchbar: searchbar,
-    });
-  },
   static: {
     Searchbar: Searchbar$1,
+  },
+  create: function create() {
+    var app = this;
+    app.searchbar = ConstructorMethods({
+      defaultSelector: '.searchbar',
+      constructor: Searchbar$1,
+      app: app,
+      domProp: 'f7Searchbar',
+      addMethods: 'clear enable disable toggle search'.split(' '),
+    });
   },
   on: {
     tabMounted: function tabMounted(tabEl) {
@@ -16291,7 +16497,7 @@ var Messages$1 = (function (Framework7Class$$1) {
   };
   Messages.prototype.destroy = function destroy () {
     var m = this;
-    m.emit('messagesBeforeDestroy', m);
+    m.emit('local::beforeDestroy messagesBeforeDestroy', m);
     m.$el.trigger('messages:beforedestroy', m);
     m.$el[0].f7Messages = null;
     delete m.$el[0].f7Messages;
@@ -16308,31 +16514,12 @@ var Messages = {
   },
   create: function create() {
     var app = this;
-    var messages = {
-      create: function create(params) {
-        return new Messages$1(app, params);
-      },
-      get: function get(messagesEl) {
-        var $messagesEl = $$1(messagesEl);
-        if ($messagesEl.length && $messagesEl[0].f7Messages) {
-          return $messagesEl[0].f7Messages;
-        }
-        return undefined;
-      },
-    };
-    ('renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages destroy').split(' ').forEach(function (messagesMethod) {
-      messages[messagesMethod] = function (messagesEl) {
-        var args = [], len = arguments.length - 1;
-        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-        if ( messagesEl === void 0 ) messagesEl = '.messages';
-        var m = app.messages.get(messagesEl);
-        if (m) { return m[messagesMethod].apply(m, args); }
-        return undefined;
-      };
-    });
-    Utils$1.extend(app, {
-      messages: messages,
+    app.messages = ConstructorMethods({
+      defaultSelector: '.messages',
+      constructor: Messages$1,
+      app: app,
+      domProp: 'f7Messages',
+      addMethods: 'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(' '),
     });
   },
   on: {
@@ -16444,20 +16631,10 @@ var Messagebar$1 = (function (Framework7Class$$1) {
       var index = $$1(this).index();
       if ($$1(e.target).closest('.messagebar-attachment-delete').length) {
         $$1(this).trigger('messagebar:attachmentdelete', index);
-        messagebar.emit('messagebarAttachmentDelete', this, index);
-        messagebar.emit({
-          events: 'attachmentDelete',
-          data: [this, index],
-          local: true,
-        });
+        messagebar.emit('local::attachmentDelete messagebarAttachmentDelete', this, index);
       } else {
         $$1(this).trigger('messagebar:attachmentclick', index);
-        messagebar.emit('messagebarAttachmentClick', this, index);
-        messagebar.emit({
-          events: 'attachmentClick',
-          data: [this, index],
-          local: true,
-        });
+        messagebar.emit('local::attachmentClick messagebarAttachmentClick', this, index);
       }
     }
     function onTextareaChange() {
@@ -16546,7 +16723,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
         $textareaEl.css('max-height', (maxHeight + "px"));
         $pageContentEl.css('padding-top', (requiredPaddingTop + "px"));
         $el.trigger('messagebar:resize');
-        messagebar.emit('messagebarResize');
+        messagebar.emit('local::resize messagebarResize');
       }
     } else {
       var currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
@@ -16564,7 +16741,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
         $el.trigger('messagebar:resize');
-        messagebar.emit('messagebarResize');
+        messagebar.emit('local::resize messagebarResize');
       }
     }
   };
@@ -16688,7 +16865,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
   };
   Messagebar.prototype.destroy = function destroy () {
     var messagebar = this;
-    messagebar.emit('messagebarBeforeDestroy', messagebar);
+    messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
     messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
     messagebar.detachEvents();
     messagebar.$el[0].f7Messagebar = null;
@@ -16706,31 +16883,12 @@ var Messagebar = {
   },
   create: function create() {
     var app = this;
-    var messagebar = {
-      create: function create(params) {
-        return new Messagebar$1(app, params);
-      },
-      get: function get(messagebarEl) {
-        var $messagebarEl = $$1(messagebarEl);
-        if ($messagebarEl.length && $messagebarEl[0].f7Messagebar) {
-          return $messagebarEl[0].f7Messagebar;
-        }
-        return undefined;
-      },
-    };
-    ('clear getValue setValue setPlaceholder resize focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle destroy').split(' ').forEach(function (messagebarMethod) {
-      messagebar[messagebarMethod] = function (messagebarEl) {
-        var args = [], len = arguments.length - 1;
-        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-        if ( messagebarEl === void 0 ) messagebarEl = '.messagebar';
-        var mb = app.messagebar.get(messagebarEl);
-        if (mb) { return mb[messagebarMethod].apply(mb, args); }
-        return undefined;
-      };
-    });
-    Utils$1.extend(app, {
-      messagebar: messagebar,
+    app.messagebar = ConstructorMethods({
+      defaultSelector: '.messagebar',
+      constructor: Messagebar$1,
+      app: app,
+      domProp: 'f7Messagebar',
+      addMethods: 'clear getValue setValue setPlaceholder resize focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(' '),
     });
   },
   on: {
@@ -22076,33 +22234,22 @@ var Swiper = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      swiper: {
+    app.swiper = Utils$1.extend(
+      ConstructorMethods({
+        defaultSelector: '.swiper-container',
+        constructor: Swiper$2,
+        app: app,
+        domProp: 'swiper',
+      }),
+      {
         create: function create() {
           var args = [], len = arguments.length;
           while ( len-- ) args[ len ] = arguments[ len ];
 
           return new (Function.prototype.bind.apply( Swiper$2, [ null ].concat( args) ));
         },
-        get: function get(swiperEl) {
-          if ( swiperEl === void 0 ) swiperEl = '.swiper-container';
-
-          var $swiperEl = $$1(swiperEl);
-          if ($swiperEl.length && $swiperEl[0].swiper) { return $swiperEl[0].swiper; }
-          return undefined;
-        },
-        destroy: function destroy(swiperEl) {
-          if (swiperEl && (swiperEl instanceof Swiper$2) && swiperEl.destroy) {
-            return swiperEl.destroy();
-          }
-          var $swiperEl = $$1(swiperEl);
-          if (!$swiperEl.length) { return undefined; }
-          var swiper = $swiperEl[0].swiper;
-          if (swiper && swiper.destroy) { return swiper.destroy(); }
-          return undefined;
-        },
-      },
-    });
+      }
+    );
   },
   on: {
     pageBeforeRemove: function pageBeforeRemove(page) {
@@ -22168,7 +22315,6 @@ var Swiper = {
       });
     },
   },
-
 };
 
 var PhotoBrowser$1 = (function (Framework7Class$$1) {
@@ -22298,7 +22444,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
           if (swipeToClose.diff < 0) { pb.$containerEl.addClass('swiper-close-to-bottom'); }
           else { pb.$containerEl.addClass('swiper-close-to-top'); }
         }
-        pb.emit({ events: 'swipeToClose', data: [pb], parents: [] });
+        pb.emit('local::swipeToClose', pb);
         pb.close();
         swipeToClose.allow = true;
       });
@@ -22337,7 +22483,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     var iconsColor = pb.params.iconsColor;
     if (!pb.params.iconsColor && pb.params.theme === 'dark') { iconsColor = 'white'; }
 
-    var toolbarHtml = ("\n      <div class=\"toolbar tabbar toolbar-bottom\">\n        <div class=\"toolbar-inner\">\n          <a href=\"#\" class=\"link photo-browser-prev\">\n            <i class=\"icon icon-prev " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n          </a>\n          <a href=\"#\" class=\"link photo-browser-next\">\n            <i class=\"icon icon-next " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n          </a>\n        </div>\n      </div>\n    ").trim();
+    var toolbarHtml = ("\n      <div class=\"toolbar tabbar toolbar-bottom\">\n        <div class=\"toolbar-inner\">\n          <a href=\"#\" class=\"link photo-browser-prev\">\n            <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n          </a>\n          <a href=\"#\" class=\"link photo-browser-next\">\n            <i class=\"icon icon-forward " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n          </a>\n        </div>\n      </div>\n    ").trim();
     return toolbarHtml;
   };
   PhotoBrowser.prototype.renderCaption = function renderCaption (caption, index) {
@@ -22367,7 +22513,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
   PhotoBrowser.prototype.render = function render () {
     var pb = this;
     if (pb.params.render) { return pb.params.render.call(pb, pb.params); }
-    var html = ("\n      <div class=\"photo-browser photo-browser-" + (pb.params.theme) + "\">\n        <div class=\"view\">\n          <div class=\"page photo-browser-page photo-browser-page-" + (pb.params.theme) + " no-toolbar " + (!pb.params.navbar ? 'no-navbar' : '') + "\" data-page=\"photo-browser-slides\">\n            " + (pb.params.navbar ? pb.renderNavbar() : '') + "\n            " + (pb.params.toolbar ? pb.renderToolbar() : '') + "\n            <div class=\"photo-browser-captions photo-browser-captions-" + (pb.params.captionsTheme || pb.params.theme) + "\">\n              " + (pb.params.photos.filter(function (photo) { return photo.caption; }).map(function (photo, index) { return pb.renderCaption(photo.caption, index); }).join(' ')) + "\n            </div>\n            <div class=\"photo-browser-swiper-container swiper-container\">\n              <div class=\"photo-browser-swiper-wrapper swiper-wrapper\">\n                " + (pb.params.photos.map(function (photo, index) {
+    var html = ("\n      <div class=\"photo-browser photo-browser-" + (pb.params.theme) + "\">\n        <div class=\"view\">\n          <div class=\"page photo-browser-page photo-browser-page-" + (pb.params.theme) + " no-toolbar " + (!pb.params.navbar ? 'no-navbar' : '') + "\" data-name=\"photo-browser-page\">\n            " + (pb.params.navbar ? pb.renderNavbar() : '') + "\n            " + (pb.params.toolbar ? pb.renderToolbar() : '') + "\n            <div class=\"photo-browser-captions photo-browser-captions-" + (pb.params.captionsTheme || pb.params.theme) + "\">\n              " + (pb.params.photos.filter(function (photo) { return photo.caption; }).map(function (photo, index) { return pb.renderCaption(photo.caption, index); }).join(' ')) + "\n            </div>\n            <div class=\"photo-browser-swiper-container swiper-container\">\n              <div class=\"photo-browser-swiper-wrapper swiper-wrapper\">\n                " + (pb.params.photos.map(function (photo, index) {
                   if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
                     return pb.renderObject(photo, index);
                   } else if (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled) {
@@ -22421,40 +22567,40 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       initialSlide: pb.activeIndex,
       on: {
         tap: function tap(e) {
-          pb.emit({ events: 'tap', data: [e], parents: [] });
+          pb.emit('local::tap', e);
         },
         click: function click(e) {
           if (pb.params.exposition) {
             pb.expositionToggle();
           }
-          pb.emit({ events: 'click', data: [e], parents: [] });
+          pb.emit('local::click', e);
         },
         doubleTap: function doubleTap(e) {
-          pb.emit({ events: 'doubleTap', data: [e], parents: [] });
+          pb.emit('local::doubleTap', e);
         },
         transitionStart: function transitionStart() {
           var swiper = this;
           pb.onTransitionStart(swiper);
-          pb.emit({ events: 'transitionStart', data: [swiper], parents: [] });
+          pb.emit('local::transitionStart', swiper);
         },
         transitionEnd: function transitionEnd() {
           var swiper = this;
-          pb.emit({ events: 'transitionStart', data: [swiper], parents: [] });
+          pb.emit('local::transitionEnd', swiper);
         },
         slideChangeStart: function slideChangeStart() {
           var swiper = this;
-          pb.emit({ events: 'slideChangeStart', data: [swiper], parents: [] });
+          pb.emit('local::slideChangeStart', swiper);
         },
         slideChangeEnd: function slideChangeEnd() {
           var swiper = this;
-          pb.emit({ events: 'slideChangeEnd', data: [swiper], parents: [] });
+          pb.emit('local::slideChangeEnd', swiper);
         },
         lazyImageLoad: function lazyImageLoad(slideEl, imgEl) {
-          pb.emit({ events: 'lazyImageLoad', data: [slideEl, imgEl], parents: [] });
+          pb.emit('local::lazyImageLoad', slideEl, imgEl);
         },
         lazyImageReady: function lazyImageReady(slideEl, imgEl) {
           $$1(slideEl).removeClass('photo-browser-slide-lazy');
-          pb.emit({ events: 'lazyImageReady', data: [slideEl, imgEl], parents: [] });
+          pb.emit('local::lazyImageReady', slideEl, imgEl);
         },
       },
     });
@@ -22478,22 +22624,12 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       pb.onTransitionStart(pb.swiper);
     }
 
-    pb.emit({
-      events: 'open',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserOpen', pb);
+    pb.emit('local::open photoBrowserOpen', pb);
   };
   PhotoBrowser.prototype.onOpened = function onOpened () {
     var pb = this;
 
-    pb.emit({
-      events: 'opened',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserOpened', pb);
+    pb.emit('local::opened photoBrowserOpened', pb);
   };
   PhotoBrowser.prototype.onClose = function onClose () {
     var pb = this;
@@ -22506,12 +22642,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       delete pb.swiper;
     }
 
-    pb.emit({
-      events: 'close',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserClose', pb);
+    pb.emit('local::close photoBrowserClose', pb);
   };
   PhotoBrowser.prototype.onClosed = function onClosed () {
     var pb = this;
@@ -22520,12 +22651,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     pb.$containerEl = null;
     delete pb.$containerEl;
 
-    pb.emit({
-      events: 'closed',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserClosed', pb);
+    pb.emit('local::closed photoBrowserClosed', pb);
   };
 
   // Open
@@ -22711,8 +22837,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
   };
   PhotoBrowser.prototype.destroy = function destroy () {
     var pb = this;
-    pb.emit('photoBrowserBeforeDestroy', pb);
-    pb.emit({ events: 'beforeDestroy', parents: [], data: [pb] });
+    pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
     if (pb.$containerEl) {
       pb.$containerEl.trigger('photobrowser:beforedestroy');
       delete pb.$containerEl[0].f7PhotoBrowser;
@@ -22777,25 +22902,11 @@ var PhotoBrowser = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      photoBrowser: {
-        create: function create(params) {
-          return new PhotoBrowser$1(app, params);
-        },
-        get: function get(el) {
-          if ( el === void 0 ) el = '.photo-browser';
-
-          var $el = $$1(el);
-          if ($el.length) { return $el[0].f7PhotoBrowser; }
-          return undefined;
-        },
-        destroy: function destroy(el) {
-          if (el && (el instanceof PhotoBrowser$1) && el.destroy) { return el.destroy(); }
-          var $el = $$1(el);
-          if ($el.length) { return $el[0].f7PhotoBrowser.destroy(); }
-          return undefined;
-        },
-      },
+    app.photoBrowser = ConstructorMethods({
+      defaultSelector: '.photo-browser',
+      constructor: PhotoBrowser$1,
+      app: app,
+      domProp: 'f7PhotoBrowser',
     });
   },
   static: {
@@ -22991,6 +23102,771 @@ var Notification$1 = {
   },
 };
 
+/* eslint "no-useless-escape": "off" */
+var Autocomplete$1 = (function (Framework7Class$$1) {
+  function Autocomplete(app, params) {
+    if ( params === void 0 ) params = {};
+
+    Framework7Class$$1.call(this, params, [app]);
+
+    var ac = this;
+    ac.app = app;
+
+    var defaults = Utils$1.extend({
+      on: {},
+    }, app.modules.autocomplete.params.autocomplete);
+
+
+    // Extend defaults with modules params
+    ac.useInstanceModulesParams(defaults);
+
+    ac.params = Utils$1.extend(defaults, params);
+
+    var $openerEl;
+    if (ac.params.openerEl) {
+      $openerEl = $$1(ac.params.openerEl);
+      if ($openerEl.length) { $openerEl[0].f7Autocomplete = ac; }
+    }
+
+    var $inputEl;
+    if (ac.params.inputEl) {
+      $inputEl = $$1(ac.params.inputEl);
+      if ($inputEl.length) { $inputEl[0].f7Autocomplete = ac; }
+    }
+
+    var view;
+    if (ac.params.view) {
+      view = ac.params.view;
+    } else if ($openerEl || $inputEl) {
+      view = app.views.get($openerEl || $inputEl);
+    }
+    if (!view) { view = app.views.main; }
+
+    var id = Utils$1.now();
+
+    var url = params.url;
+    if (!url && $openerEl && $openerEl.length) {
+      if ($openerEl.attr('href')) { url = $openerEl.attr('href'); }
+      else if ($openerEl.find('a').length > 0) {
+        url = $openerEl.find('a').attr('href');
+      }
+    }
+    if (!url || url === '#' || url === '') { url = ac.params.url; }
+
+    var inputType = ac.params.multiple ? 'checkbox' : 'radio';
+
+    Utils$1.extend(ac, {
+      $openerEl: $openerEl,
+      openerEl: $openerEl && $openerEl[0],
+      $inputEl: $inputEl,
+      inputEl: $inputEl && $inputEl[0],
+      id: id,
+      view: view,
+      url: url,
+      value: ac.params.value || [],
+      inputType: inputType,
+      inputName: (inputType + "-" + id),
+      $modalEl: undefined,
+      $dropdownEl: undefined,
+    });
+
+    var previousQuery = '';
+    function onInputChange() {
+      var query = ac.$inputEl.val().trim();
+
+      if (!ac.params.source) { return; }
+      ac.params.source.call(ac, query, function (items) {
+        var itemsHTML = '';
+        var limit = ac.params.limit ? Math.min(ac.params.limit, items.length) : items.length;
+        ac.items = items;
+        var regExp;
+        if (ac.params.highlightMatches) {
+          query = query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+          regExp = new RegExp(("(" + query + ")"), 'i');
+        }
+
+        var firstValue;
+        var firstItem;
+        for (var i = 0; i < limit; i += 1) {
+          var itemValue = typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
+          var itemText = typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i];
+          if (i === 0) {
+            firstValue = itemValue;
+            firstItem = ac.items[i];
+          }
+          itemsHTML += ac.renderItem({
+            value: itemValue,
+            text: ac.params.highlightMatches ? itemText.replace(regExp, '<b>$1</b>') : itemText,
+          }, i);
+        }
+        if (itemsHTML === '' && query === '' && ac.params.dropdownPlaceholderText) {
+          itemsHTML += ac.renderItem({
+            placeholder: true,
+            text: ac.params.dropdownPlaceholderText,
+          });
+        }
+        ac.$dropdownEl.find('ul').html(itemsHTML);
+        if (ac.params.typeahead) {
+          if (!firstValue || !firstItem) {
+            return;
+          }
+          if (firstValue.toLowerCase().indexOf(query.toLowerCase()) !== 0) {
+            return;
+          }
+          if (previousQuery.toLowerCase() === query.toLowerCase()) {
+            ac.value = [];
+            return;
+          }
+
+          if (previousQuery.toLowerCase().indexOf(query.toLowerCase()) === 0) {
+            previousQuery = query;
+            ac.value = [];
+            return;
+          }
+          $inputEl.val(firstValue);
+          $inputEl[0].setSelectionRange(query.length, firstValue.length);
+
+          var previousValue = typeof ac.value[0] === 'object' ? ac.value[0][ac.params.valueProperty] : ac.value[0];
+          if (!previousValue || firstValue.toLowerCase() !== previousValue.toLowerCase()) {
+            ac.value = [firstItem];
+            ac.emit('local::change autocompleteChange', [firstItem]);
+          }
+        }
+
+        previousQuery = query;
+      });
+    }
+    function onPageInputChange() {
+      var input = this;
+      var value = input.value;
+      var isValues = $$1(input).parents('.autocomplete-values').length > 0;
+      var item;
+      var itemValue;
+      var aValue;
+      if (isValues) {
+        if (ac.inputType === 'checkbox' && !input.checked) {
+          for (var i = 0; i < ac.value.length; i += 1) {
+            aValue = typeof ac.value[i] === 'string' ? ac.value[i] : ac.value[i][ac.params.valueProperty];
+            if (aValue === value || aValue * 1 === value * 1) {
+              ac.value.splice(i, 1);
+            }
+          }
+          ac.updateValues();
+          ac.emit('local::change autocompleteChange', ac.value);
+        }
+        return;
+      }
+
+      // Find Related Item
+      for (var i$1 = 0; i$1 < ac.items.length; i$1 += 1) {
+        itemValue = typeof ac.items[i$1] === 'object' ? ac.items[i$1][ac.params.valueProperty] : ac.items[i$1];
+        if (itemValue === value || itemValue * 1 === value * 1) { item = ac.items[i$1]; }
+      }
+      if (ac.inputType === 'radio') {
+        ac.value = [item];
+      } else if (input.checked) {
+        ac.value.push(item);
+      } else {
+        for (var i$2 = 0; i$2 < ac.value.length; i$2 += 1) {
+          aValue = typeof ac.value[i$2] === 'object' ? ac.value[i$2][ac.params.valueProperty] : ac.value[i$2];
+          if (aValue === value || aValue * 1 === value * 1) {
+            ac.value.splice(i$2, 1);
+          }
+        }
+      }
+
+      // Update Values Block
+      ac.updateValues();
+
+      // On Select Callback
+      if (((ac.inputType === 'radio' && input.checked) || ac.inputType === 'checkbox')) {
+        ac.emit('local::change autocompleteChange', ac.value);
+      }
+    }
+    function onHtmlClick(e) {
+      var $targetEl = $$1(e.target);
+      if ($targetEl.is(ac.$inputEl[0]) || ($targetEl.closest(ac.$dropdownEl[0]).length)) { return; }
+      ac.close();
+    }
+    function onOpenerClick() {
+      ac.open();
+    }
+    function onInputFocus() {
+      ac.open();
+    }
+    function onInputBlur() {
+      if (ac.$dropdownEl.find('label.active-state').length > 0) { return; }
+      ac.close();
+    }
+    function onResize() {
+      ac.positionDropDown();
+    }
+
+    function onKeyDown(e) {
+      if (ac.opened && e.keyCode === 13) {
+        e.preventDefault();
+        ac.$inputEl.blur();
+      }
+    }
+    function onDropdownclick() {
+      var $clickedEl = $$1(this);
+      var clickedItem;
+      for (var i = 0; i < ac.items.length; i += 1) {
+        var itemValue = typeof ac.items[i] === 'object' ? ac.items[i][ac.params.valueProperty] : ac.items[i];
+        var value = $clickedEl.attr('data-value');
+        if (itemValue === value || itemValue * 1 === value * 1) {
+          clickedItem = ac.items[i];
+        }
+      }
+      if (ac.params.updateInputValueOnSelect) {
+        ac.$inputEl.val(typeof clickedItem === 'object' ? clickedItem[ac.params.valueProperty] : clickedItem);
+        ac.$inputEl.trigger('input change');
+      }
+      ac.value = [clickedItem];
+      ac.emit('local::change autocompleteChange', [clickedItem]);
+
+      ac.close();
+    }
+
+    ac.attachEvents = function attachEvents() {
+      if (ac.params.openIn !== 'dropdown' && ac.$openerEl) {
+        ac.$openerEl.on('click', onOpenerClick);
+      }
+      if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
+        ac.$inputEl.on('focus', onInputFocus);
+        ac.$inputEl.on('input', onInputChange);
+        if (app.device.android) {
+          $$1('html').on('click', onHtmlClick);
+        } else {
+          ac.$inputEl.on('blur', onInputBlur);
+        }
+        if (ac.params.typeahead) {
+          ac.$inputEl.on('keydown', onKeyDown);
+        }
+      }
+    };
+    ac.detachEvents = function attachEvents() {
+      if (ac.params.openIn !== 'dropdown' && ac.$openerEl) {
+        ac.$openerEl.off('click', onOpenerClick);
+      }
+      if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
+        ac.$inputEl.off('focus', onInputFocus);
+        ac.$inputEl.off('input', onInputChange);
+        if (app.device.android) {
+          $$1('html').off('click', onHtmlClick);
+        } else {
+          ac.$inputEl.off('blur', onInputBlur);
+        }
+        if (ac.params.typeahead) {
+          ac.$inputEl.off('keydown', onKeyDown);
+        }
+      }
+    };
+    ac.attachDropdownEvents = function attachDropdownEvents() {
+      ac.$dropdownEl.on('click', 'label', onDropdownclick);
+      app.on('resize', onResize);
+    };
+    ac.detachDropdownEvents = function detachDropdownEvents() {
+      ac.$dropdownEl.off('click', 'label', onDropdownclick);
+      app.off('resize', onResize);
+    };
+
+    ac.attachPageEvents = function attachPageEvents() {
+      ac.$containerEl.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
+      if (ac.params.closeOnSelect && !ac.params.multiple) {
+        ac.$containerEl.once('click', '.list label', function () {
+          Utils$1.nextTick(function () {
+            ac.close();
+          });
+        });
+      }
+    };
+    ac.detachPageEvents = function detachPageEvents() {
+      ac.$containerEl.off('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
+    };
+
+    // Install Modules
+    ac.useInstanceModules();
+
+    // Init
+    ac.init();
+
+    return ac;
+  }
+
+  if ( Framework7Class$$1 ) Autocomplete.__proto__ = Framework7Class$$1;
+  Autocomplete.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
+  Autocomplete.prototype.constructor = Autocomplete;
+  Autocomplete.prototype.positionDropDown = function positionDropDown () {
+    var ac = this;
+    var $inputEl = ac.$inputEl;
+    var app = ac.app;
+    var $dropdownEl = ac.$dropdownEl;
+
+    var $pageContentEl = $inputEl.parents('.page-content');
+    if ($pageContentEl.length === 0) { return; }
+
+    var inputOffset = $inputEl.offset();
+    var inputOffsetWidth = $inputEl[0].offsetWidth;
+    var inputOffsetHeight = $inputEl[0].offsetHeight;
+    var $listEl = $inputEl.parents('.list');
+    var listOffset = $listEl.offset();
+    var paddingBottom = parseInt($pageContentEl.css('padding-top'), 10);
+    var listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
+    var inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0);
+    var inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
+    var maxHeight = $pageContentEl[0].scrollHeight - paddingBottom - (inputOffsetTop + $pageContentEl[0].scrollTop) - $inputEl[0].offsetHeight;
+
+    $dropdownEl.css({
+      left: (($listEl.length > 0 ? listOffsetLeft : inputOffsetLeft) + "px"),
+      top: ((inputOffsetTop + $pageContentEl[0].scrollTop + inputOffsetHeight) + "px"),
+      width: (($listEl.length > 0 ? $listEl[0].offsetWidth : inputOffsetWidth) + "px"),
+    });
+    $dropdownEl.children('.autocomplete-dropdown-inner').css({
+      maxHeight: (maxHeight + "px"),
+      paddingLeft: $listEl.length > 0 && !ac.params.expandInput ? ((inputOffsetLeft - (app.theme === 'md' ? 16 : 15)) + "px") : '',
+    });
+  };
+  Autocomplete.prototype.focus = function focus () {
+    var ac = this;
+    ac.$containerEl.find('input[type=search]').focus();
+  };
+  Autocomplete.prototype.source = function source (query) {
+    var ac = this;
+    if (!ac.params.source) { return; }
+
+    var $containerEl = ac.$containerEl;
+
+    ac.params.source.call(ac, query, function (items) {
+      var itemsHTML = '';
+      var limit = ac.params.limit ? Math.min(ac.params.limit, items.length) : items.length;
+      ac.items = items;
+      for (var i = 0; i < limit; i += 1) {
+        var selected = false;
+        var itemValue = typeof items[i] === 'object' ? items[i][ac.params.valueProperty] : items[i];
+        for (var j = 0; j < ac.value.length; j += 1) {
+          var aValue = typeof ac.value[j] === 'object' ? ac.value[j][ac.params.valueProperty] : ac.value[j];
+          if (aValue === itemValue || aValue * 1 === itemValue * 1) { selected = true; }
+        }
+        itemsHTML += ac.renderItem({
+          value: itemValue,
+          text: typeof items[i] === 'object' ? items[i][ac.params.textProperty] : items[i],
+          inputType: ac.inputType,
+          id: ac.id,
+          inputName: ac.inputName,
+          selected: selected,
+        }, i);
+      }
+      $containerEl.find('.autocomplete-found ul').html(itemsHTML);
+      if (items.length === 0) {
+        if (query.length !== 0) {
+          $containerEl.find('.autocomplete-not-found').show();
+          $containerEl.find('.autocomplete-found, .autocomplete-values').hide();
+        } else {
+          $containerEl.find('.autocomplete-values').show();
+          $containerEl.find('.autocomplete-found, .autocomplete-not-found').hide();
+        }
+      } else {
+        $containerEl.find('.autocomplete-found').show();
+        $containerEl.find('.autocomplete-not-found, .autocomplete-values').hide();
+      }
+    });
+  };
+  Autocomplete.prototype.updateValues = function updateValues () {
+    var ac = this;
+    var valuesHTML = '';
+    for (var i = 0; i < ac.value.length; i += 1) {
+      valuesHTML += ac.renderItem({
+        value: typeof ac.value[i] === 'object' ? ac.value[i][ac.params.valueProperty] : ac.value[i],
+        text: typeof ac.value[i] === 'object' ? ac.value[i][ac.params.textProperty] : ac.value[i],
+        inputType: ac.inputType,
+        id: ac.id,
+        inputName: ((ac.inputName) + "-checked}"),
+        selected: true,
+      }, i);
+    }
+    ac.$containerEl.find('.autocomplete-values ul').html(valuesHTML);
+  };
+  Autocomplete.prototype.preloaderHide = function preloaderHide () {
+    var ac = this;
+    if (ac.params.openIn === 'dropdown' && ac.$dropdownEl) {
+      ac.$dropdownEl.find('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
+    } else {
+      $$1('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
+    }
+  };
+  Autocomplete.prototype.preloaderShow = function preloaderShow () {
+    var ac = this;
+    if (ac.params.openIn === 'dropdown' && ac.$dropdownEl) {
+      ac.$dropdownEl.find('.autocomplete-preloader').addClass('autocomplete-preloader-visible');
+    } else {
+      $$1('.autocomplete-preloader').addClass('autocomplete-preloader-visible');
+    }
+  };
+  Autocomplete.prototype.renderPreloader = function renderPreloader () {
+    var ac = this;
+    return ("\n      <div class=\"autocomplete-preloader preloader " + (ac.params.preloaderColor ? ("color-" + (ac.params.preloaderColor)) : '') + "\">" + (ac.app.theme === 'md' ? "\n        <span class=\"preloader-inner\">\n          <span class=\"preloader-inner-gap\"></span>\n          <span class=\"preloader-inner-left\">\n            <span class=\"preloader-inner-half-circle\"></span>\n          </span>\n          <span class=\"preloader-inner-right\">\n            <span class=\"preloader-inner-half-circle\"></span>\n          </span>\n        </span>\n      ".trim() : '') + "</div>\n    ").trim();
+  };
+  Autocomplete.prototype.renderSearchbar = function renderSearchbar () {
+    var ac = this;
+    if (ac.params.renderSearchbar) { return ac.params.renderSearchbar.call(ac); }
+    var searchbarHTML = ("\n      <form class=\"searchbar\">\n        <div class=\"searchbar-inner\">\n          <div class=\"searchbar-input-wrap\">\n            <input type=\"search\" placeholder=\"" + (ac.params.searchbarPlaceholder) + "\"/>\n            <i class=\"searchbar-icon\"></i>\n            <span class=\"input-clear-button\"></span>\n          </div>\n          <span class=\"searchbar-disable-button\">" + (ac.params.searchbarDisableText) + "</span>\n        </div>\n      </form>\n    ").trim();
+    return searchbarHTML;
+  };
+  Autocomplete.prototype.renderItem = function renderItem (item, index) {
+    var ac = this;
+    if (ac.params.renderItem) { return ac.params.renderItem.call(ac, item, index); }
+    var itemHtml;
+    if (ac.params.openIn !== 'dropdown') {
+      itemHtml = "\n        <li>\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (item.selected ? 'checked' : '') + ">\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+    } else if (!item.placeholder) {
+      // Dropdown
+      itemHtml = "\n        <li>\n          <label class=\"item-radio item-content\" data-value=\"" + (item.value) + "\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+    } else {
+      // Dropwdown placeholder
+      itemHtml = "\n        <li class=\"autocomplete-dropdown-placeholder\">\n          <div class=\"item-content\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+    }
+    return itemHtml.trim();
+  };
+
+  Autocomplete.prototype.renderNavbar = function renderNavbar () {
+    var ac = this;
+    if (ac.params.renderNavbar) { return ac.params.renderNavbar.call(ac); }
+    var pageTitle = ac.params.pageTitle;
+    if (typeof pageTitle === 'undefined' && ac.$openerEl && ac.$openerEl.length) {
+      pageTitle = ac.$openerEl.find('.item-title').text().trim();
+    }
+    var navbarHtml = ("\n      <div class=\"navbar " + (ac.params.navbarColorTheme ? ("color-theme-" + (ac.params.navbarColorTheme)) : '') + "\">\n        <div class=\"navbar-inner " + (ac.params.navbarColorTheme ? ("color-theme-" + (ac.params.navbarColorTheme)) : '') + "\">\n          <div class=\"left sliding\">\n            <a href=\"#\" class=\"link " + (ac.params.openIn === 'page' ? 'back' : 'popup-close') + "\">\n              <i class=\"icon icon-back\"></i>\n              <span class=\"ios-only\">" + (ac.params.openIn === 'page' ? ac.params.pageBackLinkText : ac.params.popupCloseLinkText) + "</span>\n            </a>\n          </div>\n          " + (pageTitle ? ("<div class=\"title sliding\">" + pageTitle + "</div>") : '') + "\n          " + (ac.params.preloader ? ("\n          <div class=\"right\">\n            " + (ac.renderPreloader()) + "\n          </div>\n          ") : '') + "\n          <div class=\"subnavbar sliding\">" + (ac.renderSearchbar()) + "</div>\n        </div>\n      </div>\n    ").trim();
+    return navbarHtml;
+  };
+  Autocomplete.prototype.renderDropdown = function renderDropdown () {
+    var ac = this;
+    if (ac.params.renderDropdown) { return ac.params.renderDropdown.call(ac, ac.items); }
+    var dropdownHtml = ("\n      <div class=\"autocomplete-dropdown\">\n        <div class=\"autocomplete-dropdown-inner\">\n          <div class=\"list\">\n            <ul></ul>\n          </div>\n        </div>\n        " + (ac.params.preloader ? ac.renderPreloader() : '') + "\n      </div>\n    ").trim();
+    return dropdownHtml;
+  };
+  Autocomplete.prototype.renderPage = function renderPage () {
+    var ac = this;
+    if (ac.params.renderPage) { return ac.params.renderPage.call(ac, ac.items); }
+
+    var pageHtml = ("\n      <div class=\"page page-with-subnavbar autocomplete-page\" data-name=\"autocomplete-page\">\n        " + (ac.renderNavbar()) + "\n        <div class=\"searchbar-backdrop\"></div>\n        <div class=\"page-content\">\n          <div class=\"list autocomplete-list autocomplete-found autocomplete-list-" + (ac.id) + " " + (ac.params.formColorTheme ? ("color-theme-" + (ac.params.formColorTheme)) : '') + "\">\n            <ul></ul>\n          </div>\n          <div class=\"list autocomplete-not-found\">\n            <ul>\n              <li class=\"item-content\"><div class=\"item-inner\"><div class=\"item-title\">" + (ac.params.notFoundText) + "</div></div></li>\n            </ul>\n          </div>\n          <div class=\"list autocomplete-values\">\n            <ul></ul>\n          </div>\n        </div>\n      </div>\n    ").trim();
+    return pageHtml;
+  };
+  Autocomplete.prototype.renderPopup = function renderPopup () {
+    var ac = this;
+    if (ac.params.renderPopup) { return ac.params.renderPopup.call(ac, ac.items); }
+    var popupHtml = ("\n      <div class=\"popup autocomplete-popup\">\n        <div class=\"view\">\n          " + (ac.renderPage()) + ";\n        </div>\n      </div>\n    ").trim();
+    return popupHtml;
+  };
+  Autocomplete.prototype.onOpen = function onOpen (type, containerEl) {
+    var ac = this;
+    var app = ac.app;
+    var $containerEl = $$1(containerEl);
+    ac.$containerEl = $containerEl;
+    ac.openedIn = type;
+    ac.opened = true;
+
+    if (ac.params.openIn === 'dropdown') {
+      ac.attachDropdownEvents();
+
+      ac.$dropdownEl.addClass('autocomplete-dropdown-in');
+      ac.$inputEl.trigger('input');
+    } else {
+      // Init SB
+      var $searchbarEl = $containerEl.find('.searchbar');
+      if (ac.params.openIn === 'page' && app.theme === 'ios' && $searchbarEl.length === 0) {
+        $searchbarEl = $$1(app.navbar.getElByPage($containerEl)).find('.searchbar');
+      }
+      ac.searchbar = app.searchbar.create({
+        el: $searchbarEl,
+        backdropEl: $containerEl.find('.searchbar-backdrop'),
+        customSearch: true,
+        on: {
+          searchbarSearch: function searchbarSearch(query) {
+            if (query.length === 0 && ac.searchbar.enabled) {
+              ac.searchbar.backdropShow();
+            } else {
+              ac.searchbar.backdropHide();
+            }
+            ac.source(query);
+          },
+        },
+      });
+
+      // Attach page events
+      ac.attachPageEvents();
+
+      // Update Values On Page Init
+      ac.updateValues();
+
+      // Source on load
+      if (ac.params.requestSourceOnOpen) { ac.source(''); }
+    }
+
+    ac.emit('local::open autocompleteOpen', ac);
+  };
+  Autocomplete.prototype.onOpened = function onOpened () {
+    var ac = this;
+    if (ac.params.openIn !== 'dropdown' && ac.params.autoFocus) {
+      ac.autoFocus();
+    }
+    ac.emit('local::opened autocompleteOpened', ac);
+  };
+  Autocomplete.prototype.onClose = function onClose () {
+    var ac = this;
+    if (ac.destroyed) { return; }
+
+    // Destroy SB
+    if (ac.searchbar && ac.searchbar.destroy) {
+      ac.searchbar.destroy();
+      ac.searchbar = null;
+      delete ac.searchbar;
+    }
+
+    if (ac.params.openIn === 'dropdown') {
+      ac.detachDropdownEvents();
+      ac.$dropdownEl.removeClass('autocomplete-dropdown-in').remove();
+      ac.$inputEl.parents('.item-content-dropdown-expanded').removeClass('item-content-dropdown-expanded');
+    } else {
+      ac.detachPageEvents();
+    }
+
+    ac.emit('local::close autocompleteClose', ac);
+  };
+  Autocomplete.prototype.onClosed = function onClosed () {
+    var ac = this;
+    if (ac.destroyed) { return; }
+    ac.opened = false;
+    ac.$containerEl = null;
+    delete ac.$containerEl;
+
+    ac.emit('local::closed autocompleteClosed', ac);
+  };
+  Autocomplete.prototype.openPage = function openPage () {
+    var ac = this;
+    if (ac.opened) { return ac; }
+    var pageHtml = ac.renderPage();
+    ac.view.router.navigate(ac.url, {
+      createRoute: {
+        content: pageHtml,
+        path: ac.url,
+        options: {
+          animate: ac.params.animate,
+          pageEvents: {
+            pageBeforeIn: function pageBeforeIn(e, page) {
+              ac.onOpen('page', page.el);
+            },
+            pageAfterIn: function pageAfterIn(e, page) {
+              ac.onOpened('page', page.el);
+            },
+            pageBeforeOut: function pageBeforeOut(e, page) {
+              ac.onClose('page', page.el);
+            },
+            pageAfterOut: function pageAfterOut(e, page) {
+              ac.onClosed('page', page.el);
+            },
+          },
+        },
+      },
+    });
+    return ac;
+  };
+  Autocomplete.prototype.openPopup = function openPopup () {
+    var ac = this;
+    if (ac.opened) { return ac; }
+    var popupHtml = ac.renderPopup();
+
+    var popupParams = {
+      content: popupHtml,
+      animate: ac.params.animate,
+      on: {
+        popupOpen: function popupOpen(popup) {
+          ac.onOpen('popup', popup.el);
+        },
+        popupOpened: function popupOpened(popup) {
+          ac.onOpened('popup', popup.el);
+        },
+        popupClose: function popupClose(popup) {
+          ac.onClose('popup', popup.el);
+        },
+        popupClosed: function popupClosed(popup) {
+          ac.onClosed('popup', popup.el);
+        },
+      },
+    };
+
+    if (ac.params.routableModals) {
+      ac.view.router.navigate(ac.url, {
+        createRoute: {
+          path: ac.url,
+          popup: popupParams,
+        },
+      });
+    } else {
+      ac.modal = ac.app.popup.create(popupParams).open(ac.params.animate);
+    }
+    return ac;
+  };
+  Autocomplete.prototype.openDropdown = function openDropdown () {
+    var ac = this;
+
+    if (!ac.$dropdownEl) {
+      ac.$dropdownEl = $$1(ac.renderDropdown());
+    }
+    var $listEl = ac.$inputEl.parents('.list');
+    if ($listEl.length && ac.$inputEl.parents('.item-content').length > 0 && ac.params.expandInput) {
+      ac.$inputEl.parents('.item-content').addClass('item-content-dropdown-expanded');
+    }
+    ac.positionDropDown();
+    var $pageContentEl = ac.$inputEl.parents('.page-content');
+    if (ac.params.dropdownContainerEl) {
+      $$1(ac.params.dropdownContainerEl).append(ac.$dropdownEl);
+    } else if ($pageContentEl.length === 0) {
+      ac.$dropdownEl.insertAfter(ac.$inputEl);
+    } else {
+      $pageContentEl.append(ac.$dropdownEl);
+    }
+    ac.onOpen('dropdown', ac.$dropdownEl);
+    ac.onOpened('dropdown', ac.$dropdownEl);
+  };
+  Autocomplete.prototype.open = function open () {
+    var ac = this;
+    if (ac.opened) { return ac; }
+    var openIn = ac.params.openIn;
+    ac[("open" + (openIn.split('').map(function (el, index) {
+      if (index === 0) { return el.toUpperCase(); }
+      return el;
+    }).join('')))]();
+    return ac;
+  };
+  Autocomplete.prototype.close = function close () {
+    var ac = this;
+    if (!ac.opened) { return ac; }
+    if (ac.params.openIn === 'dropdown') {
+      ac.onClose();
+      ac.onClosed();
+    } else if (ac.params.routableModals || ac.openedIn === 'page') {
+      ac.view.router.back({ animate: ac.params.animate });
+    } else {
+      ac.modal.once('modalClosed', function () {
+        Utils$1.nextTick(function () {
+          ac.modal.destroy();
+          delete ac.modal;
+        });
+      });
+      ac.modal.close();
+    }
+    return ac;
+  };
+  Autocomplete.prototype.init = function init () {
+    var ac = this;
+    ac.attachEvents();
+  };
+  Autocomplete.prototype.destroy = function destroy () {
+    var ac = this;
+    ac.emit('local::beforeDestroy autocompleteBeforeDestroy', ac);
+    ac.detachEvents();
+    if (ac.$inputEl && ac.$inputEl[0]) {
+      delete ac.$inputEl[0].f7Autocomplete;
+    }
+    if (ac.$openerEl && ac.$openerEl[0]) {
+      delete ac.$openerEl[0].f7Autocomplete;
+    }
+    Utils$1.deleteProps(ac);
+    ac.destroyed = true;
+  };
+
+  return Autocomplete;
+}(Framework7Class));
+
+var Autocomplete = {
+  name: 'autocomplete',
+  params: {
+    autocomplete: {
+      openerEl: undefined,
+      inputEl: undefined,
+      view: undefined,
+
+      // DropDown
+      dropdownContainerEl: undefined,
+      dropdownPlaceholderText: undefined,
+      typeahead: false,
+      highlightMatches: true,
+      expandInput: false,
+      updateInputValueOnSelect: true,
+
+      value: undefined,
+      multiple: false,
+
+      source: undefined,
+      limit: undefined,
+      valueProperty: 'id',
+      textProperty: 'text',
+
+      openIn: 'page', // or 'popup' or 'dropdown'
+      pageBackLinkText: 'Back',
+      popupCloseLinkText: 'Close',
+      searchbarPlaceholder: 'Search...',
+      searchbarDisableText: 'Cancel',
+
+      animate: true,
+
+      autoFocus: false,
+      closeOnSelect: false,
+      notFoundText: 'Nothing found',
+      requestSourceOnOpen: false,
+
+      // Preloader
+      preloaderColor: undefined,
+      preloader: false,
+
+      // Colors
+      formColorTheme: undefined,
+      navbarColorTheme: undefined,
+
+      // Routing
+      routableModals: true,
+      url: 'select',
+
+      // Custom render functions
+      renderDropdown: undefined,
+      renderPage: undefined,
+      renderPopup: undefined,
+      renderItems: undefined,
+      renderItem: undefined,
+      renderSearchbar: undefined,
+      renderNavbar: undefined,
+
+    },
+  },
+  static: {
+    Autocomplete: Autocomplete$1,
+  },
+  create: function create() {
+    var app = this;
+    app.autocomplete = Utils$1.extend(
+      ConstructorMethods({
+        defaultSelector: undefined,
+        constructor: Autocomplete$1,
+        app: app,
+        domProp: 'f7Autocomplete',
+      }),
+      {
+        open: function open(autocompleteEl) {
+          var ac = app.autocomplete.get(autocompleteEl);
+          if (ac && ac.open) { return ac.open(); }
+          return undefined;
+        },
+        close: function close(autocompleteEl) {
+          var ac = app.autocomplete.get(autocompleteEl);
+          if (ac && ac.close) { return ac.close(); }
+          return undefined;
+        },
+      }
+    );
+  },
+};
+
 // F7 Class
 // Import Core Modules
 // Core Components
@@ -23009,6 +23885,8 @@ if (typeof $$1 !== 'undefined') {
 // Install Modules & Components
 Framework7$1
   // Core Modules
+  .use(Utils$3)
+  .use(Storage$1)
   .use(Support)
   .use(Device$2)
   .use(Resize)
@@ -23023,6 +23901,7 @@ Framework7$1
   .use(Toolbar$1)
   .use(Subnavbar)
   .use(TouchRipple)
+  // Additional Components
   .use(Modal)
   .use(Dialog)
   .use(Popup)
@@ -23030,6 +23909,7 @@ Framework7$1
   .use(Popover)
   .use(Actions)
   .use(Sheet)
+  .use(Toast)
   .use(Preloader$1)
   .use(Progressbar$1)
   .use(Sortable$1)
@@ -23060,7 +23940,8 @@ Framework7$1
   .use(Messagebar)
   .use(Swiper)
   .use(PhotoBrowser)
-  .use(Notification$1);
+  .use(Notification$1)
+  .use(Autocomplete);
 
 return Framework7$1;
 

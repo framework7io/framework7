@@ -649,7 +649,7 @@ class Framework7Class {
   }
 }
 
-class Framework7$1 extends Framework7Class {
+class Framework7 extends Framework7Class {
   constructor(params) {
     super(params);
 
@@ -743,7 +743,7 @@ class Framework7$1 extends Framework7Class {
   }
 }
 
-Framework7$1.Class = Framework7Class;
+Framework7.Class = Framework7Class;
 
 var Utils$2 = {
   name: 'utils',
@@ -5820,7 +5820,7 @@ function clearDialogsQueue() {
   const dialog = dialogsQueue.shift();
   dialog.open();
 }
-class Modal$1 extends Framework7Class {
+class Modal extends Framework7Class {
   constructor(app, params) {
     super(params, [app]);
 
@@ -6029,10 +6029,10 @@ class Modal$1 extends Framework7Class {
   }
 }
 
-var Modal = {
+var modal = {
   name: 'modal',
   static: {
-    Modal: Modal$1,
+    Modal,
   },
   params: {
     modals: {
@@ -6068,7 +6068,7 @@ var Modal = {
   },
 };
 
-class Dialog$1 extends Modal$1 {
+class Dialog extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       title: app.params.modals.dialogTitle,
@@ -6259,17 +6259,17 @@ var ModalMethods = function (parameters = {}) {
   return methods;
 };
 
-var Dialog = {
+var dialog = {
   name: 'dialog',
   static: {
-    Dialog: Dialog$1,
+    Dialog,
   },
   create() {
     const app = this;
     app.dialog = Utils.extend(
       ModalMethods({
         app,
-        constructor: Dialog$1,
+        constructor: Dialog,
         defaultSelector: '.dialog.modal-in',
       }),
       {
@@ -6279,7 +6279,7 @@ var Dialog = {
           if (args.length === 2 && typeof args[1] === 'function') {
             [text, callbackOk, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
             buttons: [{
@@ -6294,7 +6294,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
             content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
@@ -6319,7 +6319,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
             buttons: [
@@ -6340,7 +6340,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
             content: `
@@ -6376,7 +6376,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
             text,
             content: `
@@ -6412,7 +6412,7 @@ var Dialog = {
                     '<span class="preloader-inner-half-circle"></span>' +
                 '</span>' +
             '</span>';
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogPreloaderTitle : title,
             content: `<div class="preloader">${preloaderInner}</div>`,
             cssClass: 'dialog-preloader',
@@ -6432,7 +6432,7 @@ var Dialog = {
             }
           }
           const infinite = typeof progress === 'undefined';
-          const dialog = new Dialog$1(app, {
+          const dialog = new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.modals.dialogProgressTitle : title,
             cssClass: 'dialog-progress',
             content: `
@@ -6456,7 +6456,7 @@ var Dialog = {
   },
 };
 
-class Popup$1 extends Modal$1 {
+class Popup extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       on: {},
@@ -6509,16 +6509,16 @@ class Popup$1 extends Modal$1 {
   }
 }
 
-var Popup = {
+var popup = {
   name: 'popup',
   static: {
-    Popup: Popup$1,
+    Popup,
   },
   create() {
     const app = this;
     app.popup = ModalMethods({
       app,
-      constructor: Popup$1,
+      constructor: Popup,
       defaultSelector: '.popup.modal-in',
     });
   },
@@ -6539,7 +6539,7 @@ var Popup = {
   },
 };
 
-class LoginScreen$1 extends Modal$1 {
+class LoginScreen extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       on: {},
@@ -6581,16 +6581,16 @@ class LoginScreen$1 extends Modal$1 {
   }
 }
 
-var LoginScreen = {
+var loginScreen = {
   name: 'loginScreen',
   static: {
-    LoginScreen: LoginScreen$1,
+    LoginScreen,
   },
   create() {
     const app = this;
     app.loginScreen = ModalMethods({
       app,
-      constructor: LoginScreen$1,
+      constructor: LoginScreen,
       defaultSelector: '.login-screen.modal-in',
     });
   },
@@ -6606,7 +6606,7 @@ var LoginScreen = {
   },
 };
 
-class Popover$1 extends Modal$1 {
+class Popover extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: true,
@@ -6837,21 +6837,21 @@ class Popover$1 extends Modal$1 {
   }
 }
 
-var Popover = {
+var popover = {
   name: 'popover',
   create() {
     const app = this;
     app.popover = Utils.extend(
       ModalMethods({
         app,
-        constructor: Popover$1,
+        constructor: Popover,
         defaultSelector: '.popover.modal-in',
       }),
       {
         open(popoverEl, targetEl, animate) {
           const $popoverEl = $(popoverEl);
           let popover = $popoverEl[0].f7Modal;
-          if (!popover) popover = new Popover$1(app, { el: $popoverEl, targetEl });
+          if (!popover) popover = new Popover(app, { el: $popoverEl, targetEl });
           return popover.open(targetEl, animate);
         },
       }
@@ -6874,7 +6874,7 @@ var Popover = {
   },
 };
 
-class Actions$1 extends Modal$1 {
+class Actions extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       toPopover: app.params.modals.actionsToPopover,
@@ -7075,13 +7075,13 @@ class Actions$1 extends Modal$1 {
   }
 }
 
-var Actions = {
+var actions = {
   name: 'actions',
   create() {
     const app = this;
     app.actions = ModalMethods({
       app,
-      constructor: Actions$1,
+      constructor: Actions,
       defaultSelector: '.actions-modal.modal-in',
     });
   },
@@ -7102,7 +7102,7 @@ var Actions = {
   },
 };
 
-class Sheet$1 extends Modal$1 {
+class Sheet extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: app.theme === 'md',
@@ -7220,17 +7220,17 @@ class Sheet$1 extends Modal$1 {
   }
 }
 
-var Sheet = {
+var sheet = {
   name: 'sheet',
   static: {
-    Sheet: Sheet$1,
+    Sheet,
   },
   create() {
     const app = this;
     app.sheet = Utils.extend({},
       ModalMethods({
         app,
-        constructor: Sheet$1,
+        constructor: Sheet,
         defaultSelector: '.sheet-modal.modal-in',
       })
     );
@@ -7252,7 +7252,7 @@ var Sheet = {
   },
 };
 
-class Toast$1 extends Modal$1 {
+class Toast extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       message: undefined,
@@ -7341,17 +7341,17 @@ class Toast$1 extends Modal$1 {
   }
 }
 
-var Toast = {
+var toast = {
   name: 'toast',
   static: {
-    Toast: Toast$1,
+    Toast,
   },
   create() {
     const app = this;
     app.toast = Utils.extend({},
       ModalMethods({
         app,
-        constructor: Toast$1,
+        constructor: Toast,
         defaultSelector: '.toast.modal-in',
       })
     );
@@ -7407,7 +7407,7 @@ const Preloader = {
     Preloader.visible = false;
   },
 };
-var Preloader$1 = {
+var preloader = {
   name: 'preloader',
   create() {
     const app = this;
@@ -7550,7 +7550,7 @@ const Progressbar = {
   },
 };
 
-var Progressbar$1 = {
+var progressbar = {
   name: 'progressbar',
   create() {
     const app = this;
@@ -7760,7 +7760,7 @@ const Sortable = {
     }
   },
 };
-var Sortable$1 = {
+var sortable = {
   name: 'sortable',
   params: {
     sortable: true,
@@ -8262,7 +8262,7 @@ const Swipeout = {
     });
   },
 };
-var Swipeout$1 = {
+var swipeout = {
   name: 'swipeout',
   params: {
     swipeout: {
@@ -8405,7 +8405,7 @@ const Accordion = {
   },
 };
 
-var Accordion$1 = {
+var accordion = {
   name: 'accordion',
   create() {
     const app = this;
@@ -8425,7 +8425,7 @@ var Accordion$1 = {
   },
 };
 
-class VirtualList$1 extends Framework7Class {
+class VirtualList extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const vl = this;
@@ -8960,23 +8960,23 @@ class VirtualList$1 extends Framework7Class {
   }
 }
 
-var VirtualList = {
+var virtualList = {
   name: 'virtualList',
   static: {
-    VirtualList: VirtualList$1,
+    VirtualList,
   },
   create() {
     const app = this;
     app.virtualList = ConstructorMethods({
       defaultSelector: '.virtual-list',
-      constructor: VirtualList$1,
+      constructor: VirtualList,
       app,
       domProp: 'f7VirtualList',
     });
   },
 };
 
-var Timeline = {
+var timeline = {
   name: 'timeline',
 };
 
@@ -9107,7 +9107,7 @@ const Tab = {
     };
   },
 };
-var Tabs = {
+var tabs = {
   name: 'tabs',
   create() {
     const app = this;
@@ -9411,7 +9411,7 @@ function swipePanel(panel) {
   });
 }
 
-class Panel$1 extends Framework7Class {
+class Panel extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const panel = this;
@@ -9663,7 +9663,7 @@ class Panel$1 extends Framework7Class {
   }
 }
 
-var Panel = {
+var panel = {
   name: 'panel',
   params: {
     panel: {
@@ -9679,7 +9679,7 @@ var Panel = {
     },
   },
   static: {
-    Panel: Panel$1,
+    Panel,
   },
   instance: {
     panel: {
@@ -9739,7 +9739,7 @@ var Panel = {
         }
       },
       create(el) {
-        return new Panel$1(app, { el });
+        return new Panel(app, { el });
       },
 
       open(side, animate) {
@@ -9756,7 +9756,7 @@ var Panel = {
         }
         const $panelEl = $(`.panel-${panelSide}`);
         if ($panelEl.length > 0) {
-          return new Panel$1(app, { el: $panelEl }).open(animate);
+          return new Panel(app, { el: $panelEl }).open(animate);
         }
         return false;
       },
@@ -9775,7 +9775,7 @@ var Panel = {
           return app.panel[panelSide].close(animate);
         }
         if ($panelEl.length > 0) {
-          return new Panel$1(app, { el: $panelEl }).close(animate);
+          return new Panel(app, { el: $panelEl }).close(animate);
         }
         return false;
       },
@@ -9793,7 +9793,7 @@ var Panel = {
         }
         const $panelEl = $(`.panel-${panelSide}`);
         if ($panelEl.length > 0) {
-          return new Panel$1(app, { el: $panelEl });
+          return new Panel(app, { el: $panelEl });
         }
         return undefined;
       },
@@ -9806,7 +9806,7 @@ var Panel = {
       // Create Panels
       $('.panel').each((index, panelEl) => {
         const side = $(panelEl).hasClass('panel-left') ? 'left' : 'right';
-        app.panel[side] = new Panel$1(app, { el: panelEl, side });
+        app.panel[side] = new Panel(app, { el: panelEl, side });
       });
     },
   },
@@ -9833,11 +9833,11 @@ var Panel = {
   },
 };
 
-var Card = {
+var card = {
   name: 'card',
 };
 
-var Chip = {
+var chip = {
   name: 'chip',
 };
 
@@ -10096,7 +10096,7 @@ function initAjaxForm() {
   $(document).on('submit change', 'form.form-ajax-submit, form.form-ajax-submit-onchange', onSubmitChange);
 }
 
-var Form = {
+var form = {
   name: 'form',
   create() {
     const app = this;
@@ -10315,7 +10315,7 @@ const Input = {
   },
 };
 
-var Input$1 = {
+var input = {
   name: 'input',
   create() {
     const app = this;
@@ -10369,15 +10369,15 @@ var Input$1 = {
   },
 };
 
-var Checkbox = {
+var checkbox = {
   name: 'checkbox',
 };
 
-var Radio = {
+var radio = {
   name: 'radio',
 };
 
-class Toggle$1 extends Framework7Class {
+class Toggle extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const toggle = this;
@@ -10548,14 +10548,14 @@ class Toggle$1 extends Framework7Class {
   }
 }
 
-var Toggle = {
+var toggle = {
   name: 'toggle',
   create() {
     const app = this;
     Utils.extend(app, {
       toggle: {
         create(params) {
-          return new Toggle$1(app, params);
+          return new Toggle(app, params);
         },
         get(el) {
           const $el = $(el);
@@ -10563,7 +10563,7 @@ var Toggle = {
           return undefined;
         },
         destroy(el) {
-          if (el && (el instanceof Toggle$1) && el.destroy) return el.destroy();
+          if (el && (el instanceof Toggle) && el.destroy) return el.destroy();
           const $el = $(el);
           if ($el.length) return $el[0].f7Toggle.destroy();
           return undefined;
@@ -10572,12 +10572,12 @@ var Toggle = {
     });
   },
   static: {
-    Toggle: Toggle$1,
+    Toggle,
   },
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('label.toggle').each((index, toggleEl) => new Toggle$1(app, { el: toggleEl }));
+      $(tabEl).find('label.toggle').each((index, toggleEl) => new Toggle(app, { el: toggleEl }));
     },
     tabBeforeRemove(tabEl) {
       $(tabEl).find('label.toggle').each((index, toggleEl) => {
@@ -10586,7 +10586,7 @@ var Toggle = {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('label.toggle').each((index, toggleEl) => new Toggle$1(app, { el: toggleEl }));
+      page.$el.find('label.toggle').each((index, toggleEl) => new Toggle(app, { el: toggleEl }));
     },
     pageBeforeRemove(page) {
       page.$el.find('label.toggle').each((index, toggleEl) => {
@@ -10596,7 +10596,7 @@ var Toggle = {
   },
 };
 
-class Range$1 extends Framework7Class {
+class Range extends Framework7Class {
   constructor(app, params) {
     super(params, [app]);
     const range = this;
@@ -10926,14 +10926,14 @@ class Range$1 extends Framework7Class {
   }
 }
 
-var Range = {
+var range = {
   name: 'range',
   create() {
     const app = this;
     app.range = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.range-slider',
-        constructor: Range$1,
+        constructor: Range,
         app,
         domProp: 'f7Range',
       }),
@@ -10952,12 +10952,12 @@ var Range = {
     );
   },
   static: {
-    Range: Range$1,
+    Range,
   },
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.range-slider-init').each((index, rangeEl) => new Range$1(app, {
+      $(tabEl).find('.range-slider-init').each((index, rangeEl) => new Range(app, {
         el: rangeEl,
       }));
     },
@@ -10968,7 +10968,7 @@ var Range = {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.range-slider-init').each((index, rangeEl) => new Range$1(app, {
+      page.$el.find('.range-slider-init').each((index, rangeEl) => new Range(app, {
         el: rangeEl,
       }));
     },
@@ -10980,7 +10980,7 @@ var Range = {
   },
 };
 
-class SmartSelect$1 extends Framework7Class {
+class SmartSelect extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const ss = this;
@@ -11623,7 +11623,7 @@ class SmartSelect$1 extends Framework7Class {
   }
 }
 
-var SmartSelect = {
+var smartSelect = {
   name: 'smartSelect',
   params: {
     smartSelect: {
@@ -11657,14 +11657,14 @@ var SmartSelect = {
     },
   },
   static: {
-    SmartSelect: SmartSelect$1,
+    SmartSelect,
   },
   create() {
     const app = this;
     app.smartSelect = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.smart-select',
-        constructor: SmartSelect$1,
+        constructor: SmartSelect,
         app,
         domProp: 'f7SmartSelect',
       }),
@@ -11722,7 +11722,7 @@ var SmartSelect = {
   },
 };
 
-class Calendar$1 extends Framework7Class {
+class Calendar extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const calendar = this;
@@ -11733,19 +11733,19 @@ class Calendar$1 extends Framework7Class {
   }
 }
 
-var Calendar = {
+var calendar = {
   name: 'calendar',
   static: {
-    Calendar: Calendar$1,
+    Calendar,
   },
   instance: {
     calendar(params) {
-      return new Calendar$1(this, params);
+      return new Calendar(this, params);
     },
   },
 };
 
-class Picker$1 extends Framework7Class {
+class Picker extends Framework7Class {
   constructor(app, params = {}) {
     super(params);
     const picker = this;
@@ -11756,14 +11756,14 @@ class Picker$1 extends Framework7Class {
   }
 }
 
-var Picker = {
+var picker = {
   name: 'picker',
   static: {
-    Picker: Picker$1,
+    Picker,
   },
   instance: {
     picker(params) {
-      return new Picker$1(this, params);
+      return new Picker(this, params);
     },
   },
 };
@@ -11814,7 +11814,7 @@ const InfiniteScroll = {
     $el.off('scroll');
   },
 };
-var InfiniteScroll$1 = {
+var infiniteScroll = {
   name: 'infiniteScroll',
   create() {
     const app = this;
@@ -11856,7 +11856,7 @@ var InfiniteScroll$1 = {
   },
 };
 
-class PullToRefresh$1 extends Framework7Class {
+class PullToRefresh extends Framework7Class {
   constructor(app, el) {
     super({}, [app]);
     const ptr = this;
@@ -12122,14 +12122,14 @@ class PullToRefresh$1 extends Framework7Class {
   }
 }
 
-var PullToRefresh = {
+var pullToRefresh = {
   name: 'pullToRefresh',
   create() {
     const app = this;
     app.ptr = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.ptr-content',
-        constructor: PullToRefresh$1,
+        constructor: PullToRefresh,
         app,
         domProp: 'f7PullToRefresh',
       }),
@@ -12148,7 +12148,7 @@ var PullToRefresh = {
     );
   },
   static: {
-    PullToRefresh: PullToRefresh$1,
+    PullToRefresh,
   },
   on: {
     tabMounted(tabEl) {
@@ -12326,7 +12326,7 @@ const Lazy = {
   },
 
 };
-var Lazy$1 = {
+var lazy = {
   name: 'lazy',
   params: {
     lazy: {
@@ -12383,7 +12383,7 @@ var Lazy$1 = {
   },
 };
 
-class DataTable$1 extends Framework7Class {
+class DataTable extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -12521,16 +12521,16 @@ class DataTable$1 extends Framework7Class {
   }
 }
 
-var DataTable = {
+var dataTable = {
   name: 'dataTable',
   static: {
-    DataTable: DataTable$1,
+    DataTable,
   },
   create() {
     const app = this;
     app.dataTable = ConstructorMethods({
       defaultSelector: '.data-table',
-      constructor: DataTable$1,
+      constructor: DataTable,
       app,
       domProp: 'f7DataTable',
     });
@@ -12737,7 +12737,7 @@ const Fab = {
   },
 };
 
-var Fab$1 = {
+var fab = {
   name: 'fab',
   create() {
     const app = this;
@@ -12768,7 +12768,7 @@ var Fab$1 = {
   },
 };
 
-class Searchbar$1 extends Framework7Class {
+class Searchbar extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -13234,16 +13234,16 @@ class Searchbar$1 extends Framework7Class {
   }
 }
 
-var Searchbar = {
+var searchbar = {
   name: 'searchbar',
   static: {
-    Searchbar: Searchbar$1,
+    Searchbar,
   },
   create() {
     const app = this;
     app.searchbar = ConstructorMethods({
       defaultSelector: '.searchbar',
-      constructor: Searchbar$1,
+      constructor: Searchbar,
       app,
       domProp: 'f7Searchbar',
       addMethods: 'clear enable disable toggle search'.split(' '),
@@ -13317,7 +13317,7 @@ var Searchbar = {
   },
 };
 
-class Messages$1 extends Framework7Class {
+class Messages extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -13730,16 +13730,16 @@ class Messages$1 extends Framework7Class {
   }
 }
 
-var Messages = {
+var messages = {
   name: 'messages',
   static: {
-    Messages: Messages$1,
+    Messages,
   },
   create() {
     const app = this;
     app.messages = ConstructorMethods({
       defaultSelector: '.messages',
-      constructor: Messages$1,
+      constructor: Messages,
       app,
       domProp: 'f7Messages',
       addMethods: 'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(' '),
@@ -13776,7 +13776,7 @@ var Messages = {
   },
 };
 
-class Messagebar$1 extends Framework7Class {
+class Messagebar extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -14079,16 +14079,16 @@ class Messagebar$1 extends Framework7Class {
   }
 }
 
-var Messagebar = {
+var messagebar = {
   name: 'messagebar',
   static: {
-    Messagebar: Messagebar$1,
+    Messagebar,
   },
   create() {
     const app = this;
     app.messagebar = ConstructorMethods({
       defaultSelector: '.messagebar',
-      constructor: Messagebar$1,
+      constructor: Messagebar,
       app,
       domProp: 'f7Messagebar',
       addMethods: 'clear getValue setValue setPlaceholder resize focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(' '),
@@ -16235,7 +16235,7 @@ var defaults = {
   runCallbacksOnInit: true,
 };
 
-class Swiper$2 extends SwiperClass {
+class Swiper$1 extends SwiperClass {
   constructor(...args) {
     let el;
     let params;
@@ -16275,7 +16275,7 @@ class Swiper$2 extends SwiperClass {
       const swipers = [];
       $el.each((index, containerEl) => {
         const newParams = Utils.extend({}, params, { el: containerEl });
-        swipers.push(new Swiper$2(newParams));
+        swipers.push(new Swiper$1(newParams));
       });
       return swipers;
     }
@@ -16561,10 +16561,10 @@ const prototypes = Utils.extend(
 );
 
 Object.keys(prototypes).forEach((protoMethod) => {
-  Swiper$2.prototype[protoMethod] = prototypes[protoMethod];
+  Swiper$1.prototype[protoMethod] = prototypes[protoMethod];
 });
 
-Swiper$2.Class = SwiperClass;
+Swiper$1.Class = SwiperClass;
 
 var Device$4 = {
   name: 'device',
@@ -18058,7 +18058,7 @@ var Zoom$1 = {
   },
 };
 
-const Lazy$2 = {
+const Lazy$1 = {
   loadImagesInSlide(index, loadInDuplicate = true) {
     const swiper = this;
     const params = swiper.params.lazy;
@@ -18166,7 +18166,7 @@ const Lazy$2 = {
   },
 };
 
-var Lazy$3 = {
+var Lazy$2 = {
   name: 'lazy',
   params: {
     lazy: {
@@ -18186,8 +18186,8 @@ var Lazy$3 = {
     Utils.extend(swiper, {
       lazy: {
         initialImageLoaded: false,
-        load: Lazy$2.load.bind(swiper),
-        loadImagesInSlide: Lazy$2.loadImagesInSlide.bind(swiper),
+        load: Lazy$1.load.bind(swiper),
+        loadImagesInSlide: Lazy$1.loadImagesInSlide.bind(swiper),
       },
     });
   },
@@ -18317,11 +18317,11 @@ const Controller = {
     }
     if (Array.isArray(controlled)) {
       for (let i = 0; i < controlled.length; i += 1) {
-        if (controlled[i] !== byController && controlled[i] instanceof Swiper$2) {
+        if (controlled[i] !== byController && controlled[i] instanceof Swiper$1) {
           setControlledTranslate(controlled[i]);
         }
       }
-    } else if (controlled instanceof Swiper$2 && byController !== controlled) {
+    } else if (controlled instanceof Swiper$1 && byController !== controlled) {
       setControlledTranslate(controlled);
     }
   },
@@ -18344,11 +18344,11 @@ const Controller = {
     }
     if (Array.isArray(controlled)) {
       for (i = 0; i < controlled.length; i += 1) {
-        if (controlled[i] !== byController && controlled[i] instanceof Swiper$2) {
+        if (controlled[i] !== byController && controlled[i] instanceof Swiper$1) {
           setControlledTransition(controlled[i]);
         }
       }
-    } else if (controlled instanceof Swiper$2 && byController !== controlled) {
+    } else if (controlled instanceof Swiper$1 && byController !== controlled) {
       setControlledTransition(controlled);
     }
   },
@@ -19230,7 +19230,7 @@ var EffectCoverflow = {
 // Swiper Class
 // Core Modules
 // Components
-Swiper$2
+Swiper$1
   .use(Device$4)
   .use(Support$5)
   .use(Browser$2)
@@ -19242,7 +19242,7 @@ Swiper$2
   .use(Scrollbar$1)
   .use(Parallax$1)
   .use(Zoom$1)
-  .use(Lazy$3)
+  .use(Lazy$2)
   .use(Controller$1)
   .use(A11y)
   .use(Autoplay$1)
@@ -19252,26 +19252,26 @@ Swiper$2
   .use(EffectCoverflow);
 
 if (!window.Swiper) {
-  window.Swiper = Swiper$2;
+  window.Swiper = Swiper$1;
 }
 
-var Swiper = {
+var swiper = {
   name: 'swiper',
   static: {
-    Swiper: Swiper$2,
+    Swiper: Swiper$1,
   },
   create() {
     const app = this;
     app.swiper = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.swiper-container',
-        constructor: Swiper$2,
+        constructor: Swiper$1,
         app,
         domProp: 'swiper',
       }),
       {
         create(...args) {
-          return new Swiper$2(...args);
+          return new Swiper$1(...args);
         },
       }
     );
@@ -19342,7 +19342,7 @@ var Swiper = {
   },
 };
 
-class PhotoBrowser$1 extends Framework7Class {
+class PhotoBrowser extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -19930,7 +19930,7 @@ class PhotoBrowser$1 extends Framework7Class {
   }
 }
 
-var PhotoBrowser = {
+var photoBrowser = {
   name: 'photoBrowser',
   params: {
     photoBrowser: {
@@ -19985,13 +19985,13 @@ var PhotoBrowser = {
     const app = this;
     app.photoBrowser = ConstructorMethods({
       defaultSelector: '.photo-browser',
-      constructor: PhotoBrowser$1,
+      constructor: PhotoBrowser,
       app,
       domProp: 'f7PhotoBrowser',
     });
   },
   static: {
-    PhotoBrowser: PhotoBrowser$1,
+    PhotoBrowser,
   },
 };
 
@@ -20163,7 +20163,7 @@ const Notification = {
 
   },
 };
-var Notification$1 = {
+var notification = {
   name: 'notification',
   create() {
     const app = this;
@@ -20184,7 +20184,7 @@ var Notification$1 = {
 };
 
 /* eslint "no-useless-escape": "off" */
-class Autocomplete$1 extends Framework7Class {
+class Autocomplete extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -20950,7 +20950,7 @@ class Autocomplete$1 extends Framework7Class {
   }
 }
 
-var Autocomplete = {
+var autocomplete = {
   name: 'autocomplete',
   params: {
     autocomplete: {
@@ -21011,14 +21011,14 @@ var Autocomplete = {
     },
   },
   static: {
-    Autocomplete: Autocomplete$1,
+    Autocomplete,
   },
   create() {
     const app = this;
     app.autocomplete = Utils.extend(
       ConstructorMethods({
         defaultSelector: undefined,
-        constructor: Autocomplete$1,
+        constructor: Autocomplete,
         app,
         domProp: 'f7Autocomplete',
       }),
@@ -21043,18 +21043,18 @@ var Autocomplete = {
 // Core Components
 // Template7
 if (typeof t7 !== 'undefined') {
-  Framework7$1.prototype.t7 = t7;
+  Framework7.prototype.t7 = t7;
   if (!window.Template7) window.Template7 = t7;
 }
 
 // Dom7
 if (typeof $ !== 'undefined') {
-  Framework7$1.prototype.$ = $;
+  Framework7.prototype.$ = $;
   if (!window.Dom7) window.Dom7 = $;
 }
 
 // Install Modules & Components
-Framework7$1
+Framework7
   // Core Modules
   .use(Utils$2)
   .use(Storage$1)
@@ -21071,47 +21071,6 @@ Framework7$1
   .use(Navbar$1)
   .use(Toolbar$1)
   .use(Subnavbar)
-  .use(TouchRipple)
-  // Additional Components
-  .use(Modal)
-  .use(Dialog)
-  .use(Popup)
-  .use(LoginScreen)
-  .use(Popover)
-  .use(Actions)
-  .use(Sheet)
-  .use(Toast)
-  .use(Preloader$1)
-  .use(Progressbar$1)
-  .use(Sortable$1)
-  .use(Swipeout$1)
-  .use(Accordion$1)
-  .use(VirtualList)
-  .use(Timeline)
-  .use(Tabs)
-  .use(Panel)
-  .use(Card)
-  .use(Chip)
-  .use(Form)
-  .use(Input$1)
-  .use(Checkbox)
-  .use(Radio)
-  .use(Toggle)
-  .use(Range)
-  .use(SmartSelect)
-  .use(Calendar)
-  .use(Picker)
-  .use(InfiniteScroll$1)
-  .use(PullToRefresh)
-  .use(Lazy$1)
-  .use(DataTable)
-  .use(Fab$1)
-  .use(Searchbar)
-  .use(Messages)
-  .use(Messagebar)
-  .use(Swiper)
-  .use(PhotoBrowser)
-  .use(Notification$1)
-  .use(Autocomplete);
+  .use(TouchRipple);
 
-export default Framework7$1;
+export { Framework7, modal as Modal, dialog as Dialog, popup as Popup, loginScreen as LoginScreen, popover as Popover, actions as Actions, sheet as Sheet, toast as Toast, preloader as Preloader, progressbar as Progressbar, sortable as Sortable, swipeout as Swipeout, accordion as Accordion, virtualList as VirtualList, timeline as Timeline, tabs as Tabs, panel as Panel, card as Card, chip as Chip, form as Form, input as Input, checkbox as Checkbox, radio as Radio, toggle as Toggle, range as Range, smartSelect as SmartSelect, calendar as Calendar, picker as Picker, infiniteScroll as InfiniteScroll, pullToRefresh as PullToRefresh, lazy as Lazy, dataTable as DataTable, fab as Fab, searchbar as Searchbar, messages as Messages, messagebar as Messagebar, swiper as Swiper, photoBrowser as PhotoBrowser, notification as Notification, autocomplete as Autocomplete };
