@@ -247,5 +247,13 @@
             "material": ["src/less/material/calendar.less"]
         },
         "dependencies" : ["modals"]
+    },
+    "timeline": {
+        "js" : [],
+        "less": {
+            "ios": ["src/less/ios/timeline.less"],
+            "material": ["src/less/material/timeline.less"]
+        },
+        "dependencies" : []
     }
 }
