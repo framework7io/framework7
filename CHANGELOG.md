@@ -1,5 +1,19 @@
 # Change Log
 
+## Framework7 v1.6.5 - Updated on September 7, 2017
+  * Searchbar will remove accents (removeDiacritics: true) by default now
+  * Fix issue with wrong element selected when scrolling on iOS
+  * Data Table header "select all" checkbox will now only select checkboxes in same columns
+  * Added `timeline` to custom build
+  * Update Dom7 to latest version addresing issue with throwing error in cordova "resume" event (when there is no event target)
+  * Update Template7 to latest version:
+    * Fixed issue with not being able to access parent context `../`
+    * `js_compare` helper has been renamed to `js_if` helper. `js_compare` is still available for backwards compatibility
+    * Added support for `@index`, `@first`, `@last`, `@key`, `@root`, `@global` variables to `js` and `js_if` helpers
+    * Added support for parent access (e.g. `../title`)  to `js` and `js_if` helpers
+    * Added support for parent data access within loops, e.g. `../../@index`
+  * Minor fixes
+
 ## Framework7 v1.6.4 - Updated on May 31, 2017
   * Fixed issue with Dom7 and Template7 being missing when using bundler
 
