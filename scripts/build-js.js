@@ -37,7 +37,6 @@ function es(components, cb) {
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
       }),
-      buble(),
     ],
     format: 'es',
     moduleName: 'Framework7',
