@@ -20,7 +20,7 @@ class Router extends Framework7Class {
 
     if (router.isAppRouter) {
       // App Router
-      Utils.extend(router, {
+      Utils.extend(false, router, {
         app,
         params: app.params.view,
         routes: app.routes || [],
@@ -28,11 +28,11 @@ class Router extends Framework7Class {
       });
     } else {
       // View Router
-      Utils.extend(router, {
+      Utils.extend(false, router, {
         app,
         view,
         params: view.params,
-        routes: view.routes || [],
+        routes: view.routes,
         $el: view.$el,
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
