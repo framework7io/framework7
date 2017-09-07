@@ -14,8 +14,16 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 
-const config = require('./build-config.js');
+let config = require('./build-config.js');
 const banner = require('./banner.js');
+
+// Overwrite with local config
+try {
+  const customConfig = require('./build-config-custom.js');
+  config = Object.assign({}, config, customConfig);
+} catch (err) {
+  // No local config
+}
 
 function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';

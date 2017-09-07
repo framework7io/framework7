@@ -1,7 +1,7 @@
 /**
 * F7 Build Configuration
 * Don't modify this file!
-* If you want to build custom version of F7, just put build-config-local.js with the required configuration in this folder
+* If you want to build custom version of F7, just put build-config-custom.js with the required configuration in this folder
 */
 
 let config = {
@@ -148,14 +148,5 @@ let config = {
     },
   },
 };
-
-// Overwrite with local config
-let localConfig;
-try {
-  localConfig = require('./build-config-local.js');
-  config = Object.assign({}, config, localConfig);
-} catch (err) {
-  // No local config
-}
 
 module.exports = config;
