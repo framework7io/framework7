@@ -22,7 +22,9 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $100
 
-[Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
+Juergen Schimmoeller
+
+[Join here!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
 
 ---
 
