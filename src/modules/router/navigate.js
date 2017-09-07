@@ -342,7 +342,8 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const { url, content, el, name, template, templateUrl, component, componentUrl } = params;
   const { ignoreCache } = options;
 
-  if (options.route.route &&
+  if (options.route &&
+    options.route.route &&
     options.route.route.parentPath &&
     router.currentRoute.route.parentPath &&
     options.route.route.parentPath === router.currentRoute.route.parentPath) {
@@ -355,6 +356,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
 
   if (
+    options.route &&
     options.route.url &&
     router.url === options.route.url &&
     !(options.reloadCurrent || options.reloadPrevious) &&
@@ -365,6 +367,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
 
   if (!options.route && url) {
     options.route = router.findMatchingRoute(url, true);
+    Utils.extend(options.route, { route: { url, path: url } });
   }
 
   // Component Callbacks
