@@ -45,11 +45,7 @@ class Framework7 extends Framework7Class {
     }
 
     // Install Modules
-    app.useInstanceModules({
-      router: {
-        app,
-      },
-    });
+    app.useInstanceModules();
 
     // Init
     if (app.params.init) {

@@ -12,15 +12,14 @@ export default {
       components: [],
     },
   },
-  create(params) {
+  create() {
     const instance = this;
-    const { app, view } = params;
-    if (view) {
+    if (instance.app) {
       // View Router
-      instance.router = new Router(app, view);
+      instance.router = new Router(instance.app, instance);
     } else {
       // App Router
-      instance.router = new Router(app);
+      instance.router = new Router(instance);
     }
   },
 };

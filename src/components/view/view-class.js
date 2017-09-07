@@ -48,7 +48,7 @@ class View extends Framework7Class {
     }
 
     // View Props
-    Utils.extend(view, {
+    Utils.extend(false, view, {
       app,
       $el,
       el: $el[0],
@@ -64,12 +64,7 @@ class View extends Framework7Class {
     $el[0].f7View = view;
 
     // Install Modules
-    view.useInstanceModules({
-      router: {
-        app,
-        view,
-      },
-    });
+    view.useInstanceModules();
 
     // Add to app
     app.views.push(view);
