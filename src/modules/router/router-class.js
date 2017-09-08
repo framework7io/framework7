@@ -861,11 +861,7 @@ class Router extends Framework7Class {
           $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEvents[eventName]);
         });
       }
-    }
-
-    if (callback === 'beforeRemove') {
       $pageEl[0].f7Page = null;
-      page = null;
     }
   }
   saveHistory() {
