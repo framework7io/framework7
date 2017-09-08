@@ -34,6 +34,7 @@ class Router extends Framework7Class {
         params: view.params,
         routes: view.routes,
         $el: view.$el,
+        el: view.el,
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
         history: view.history,
@@ -406,6 +407,22 @@ class Router extends Framework7Class {
     } else {
       router.animateWithCSS(...args);
     }
+  }
+  removeModal(modalEl) {
+    const router = this;
+    router.removeEl(modalEl);
+  }
+  removeTabContent(tabEl) {
+    const $tabEl = $(tabEl);
+    $tabEl.html('');
+  }
+  removeNavbar(el) {
+    const router = this;
+    router.removeEl(el);
+  }
+  removePage(el) {
+    const router = this;
+    router.removeEl(el);
   }
   removeEl(el) {
     if (!el) return;
