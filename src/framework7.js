@@ -26,16 +26,14 @@ import TouchRipple from './components/touch-ripple/touch-ripple';
 //IMPORT_COMPONENTS
 
 // Template7
-if (typeof t7 !== 'undefined') {
-  Framework7.prototype.t7 = t7;
-  if (!window.Template7) window.Template7 = t7;
-}
+Framework7.prototype.t7 = t7;
+Framework7.Template7 = t7;
+if (!window.Template7) window.Template7 = t7;
 
 // Dom7
-if (typeof $ !== 'undefined') {
-  Framework7.prototype.$ = $;
-  if (!window.Dom7) window.Dom7 = $;
-}
+Framework7.prototype.$ = $;
+Framework7.Dom7 = $;
+if (!window.Dom7) window.Dom7 = $;
 
 // Install Modules & Components
 Framework7
