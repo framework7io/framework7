@@ -5,15 +5,16 @@ import $ from 'dom7';
 import Framework7 from './components/app/app-class';
 
 // Import Core Modules
-import Utils from './modules/utils/utils';
-import Storage from './modules/storage/storage';
-import Resize from './modules/resize/resize';
 import Device from './modules/device/device';
 import Support from './modules/support/support';
+import Utils from './modules/utils/utils';
+import Resize from './modules/resize/resize';
+import Request from './modules/request/request';
 import Touch from './modules/touch/touch';
+import Clicks from './modules/clicks/clicks';
 import Router from './modules/router/router';
 import History from './modules/history/history';
-import Clicks from './modules/clicks/clicks';
+import Storage from './modules/storage/storage';
 
 // Core Components
 import Statusbar from './components/statusbar/statusbar';
@@ -38,15 +39,16 @@ if (!window.Dom7) window.Dom7 = $;
 // Install Modules & Components
 Framework7
   // Core Modules
-  .use(Utils)
-  .use(Storage)
-  .use(Support)
   .use(Device)
+  .use(Support)
+  .use(Utils)
   .use(Resize)
+  .use(Request)
   .use(Touch)
+  .use(Clicks)
   .use(Router)
   .use(History)
-  .use(Clicks)
+  .use(Storage)
   // Core Components
   .use(Statusbar)
   .use(View)
