@@ -7,5 +7,6 @@ export default {
   },
   static: {
     Utils,
+    utils: Utils,
   },
 };

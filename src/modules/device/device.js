@@ -7,6 +7,7 @@ export default {
   },
   static: {
     Device,
+    device: Device,
   },
   on: {
     init() {

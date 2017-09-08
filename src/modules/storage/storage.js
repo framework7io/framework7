@@ -73,5 +73,6 @@ export default {
   name: 'storage',
   static: {
     Storage,
+    storage: Storage,
   },
 };

@@ -7,6 +7,7 @@ export default {
   },
   static: {
     Support,
+    support: Support,
   },
   on: {
     init() {
