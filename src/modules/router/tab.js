@@ -121,7 +121,7 @@ function tabRemove($oldTabEl, $newTabEl, tabRoute) {
       tabChild.f7Component.destroy();
     }
   });
-  $oldTabEl.html('');
+  router.removeTabContent($oldTabEl[0], tabRoute);
 }
 
 export { tabLoad, tabRemove };
