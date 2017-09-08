@@ -98,7 +98,7 @@ for (let i = 0; i < defaultDiacriticsRemovalap.length; i += 1) {
   }
 }
 
-const createPromise = function(handler) {
+const createPromise = function createPromise(handler) {
   let resolved = false;
   let rejected = false;
   let resolveArgs;
@@ -139,7 +139,7 @@ const createPromise = function(handler) {
   handler(resolve, reject);
 
   return promise;
-}
+};
 
 const Utils = {
   deleteProps(obj) {
@@ -241,6 +241,55 @@ const Utils = {
       else curTransform = parseFloat(matrix[5]);
     }
     return curTransform || 0;
+  },
+  serializeObject(obj, parents = []) {
+    if (typeof obj === 'string') return obj;
+    const resultArray = [];
+    const separator = '&';
+    let newParents;
+    function varName(name) {
+      if (parents.length > 0) {
+        let parentParts = '';
+        for (let j = 0; j < parents.length; j += 1) {
+          if (j === 0) parentParts += parents[j];
+          else parentParts += `[${encodeURIComponent(parents[j])}]`;
+        }
+        return `${parentParts}[${encodeURIComponent(name)}]`;
+      }
+      return encodeURIComponent(name);
+    }
+    function varValue(value) {
+      return encodeURIComponent(value);
+    }
+    Object.keys(obj).forEach((prop) => {
+      let toPush;
+      if (Array.isArray(obj[prop])) {
+        toPush = [];
+        for (let i = 0; i < obj[prop].length; i += 1) {
+          if (!Array.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
+            newParents = parents.slice();
+            newParents.push(prop);
+            newParents.push(String(i));
+            toPush.push(Utils.serializeObject(obj[prop][i], newParents));
+          } else {
+            toPush.push(`${varName(prop)}[]=${varValue(obj[prop][i])}`);
+          }
+        }
+        if (toPush.length > 0) resultArray.push(toPush.join(separator));
+      } else if (obj[prop] === null || obj[prop] === '') {
+        resultArray.push(`${varName(prop)}=`);
+      } else if (typeof obj[prop] === 'object') {
+        // Object, convert to named array
+        newParents = parents.slice();
+        newParents.push(prop);
+        toPush = Utils.serializeObject(obj[prop], newParents);
+        if (toPush !== '') resultArray.push(toPush);
+      } else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
+        // Should be string or plain value
+        resultArray.push(`${varName(prop)}=${varValue(obj[prop])}`);
+      } else if (obj[prop] === '') resultArray.push(varName(prop));
+    });
+    return resultArray.join(separator);
   },
   isObject(o) {
     return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
