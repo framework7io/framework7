@@ -6,7 +6,6 @@ export default {
     support: Support,
   },
   static: {
-    Support,
     support: Support,
   },
   on: {
