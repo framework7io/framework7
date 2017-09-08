@@ -5,7 +5,11 @@ module.exports = {
   ],
   'globals': {
     "window": true,
-    "document": true
+    "document": true,
+    "XMLHttpRequest": true,
+    "Blob": true,
+    "Document": true,
+    "FormData": true,
   },
   rules: {
     'max-len': ['error', 1000, 2, {
