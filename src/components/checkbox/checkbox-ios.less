@@ -26,10 +26,18 @@
   }
   label.item-checkbox {
     > .icon-checkbox {
-      margin-right: 15px;
-      + .item-media {
-        margin-left: -10px;
-      }
+      .ltr({
+         margin-right: 15px;
+        + .item-media {
+          margin-left: -10px;
+        }
+      });
+      .rtl({
+         margin-left: 15px;
+        + .item-media {
+          margin-right: -10px;
+        }
+      });
     }
     .item-content, &.item-content {
       .item-media {
