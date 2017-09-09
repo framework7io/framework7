@@ -76,7 +76,6 @@ textarea {
   visibility: hidden;
   transition-duration: 100ms;
   position: absolute;
-  right: 0;
   top: 50%;
   border-radius: 50%;
   border: none;
@@ -86,6 +85,12 @@ textarea {
   z-index: 1;
   cursor: pointer;
   background: none;
+  .ltr({
+    right: 0;
+  });
+  .rtl({
+    left: 0;
+  });
   &:after {
     content: '';
     position: absolute;

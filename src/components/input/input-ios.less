@@ -58,8 +58,13 @@
       align-self: flex-start;
       padding-top: 3px;
       + .item-input-wrap {
-        margin-left: 5px;
         margin-top: -8px;
+        .ltr({
+          margin-left: 5px;
+        });
+        .rtl({
+          margin-right: 5px;
+        });
       }
     }
     .item-input-wrap {
