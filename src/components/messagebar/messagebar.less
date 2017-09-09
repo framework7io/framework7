@@ -5,6 +5,9 @@
   height: auto;
   .toolbar-inner {
     position: relative;
+    .rtl({
+      flex-direction: row-reverse;
+    });
   }
   .messagebar-area {
     width: 100%;
@@ -28,6 +31,7 @@
   white-space: nowrap;
   box-sizing: border-box;
   position: relative;
+  direction: ltr;
 }
 .messagebar:not(.messagebar-attachments-visible) .messagebar-attachments {
   display: none;
@@ -60,6 +64,7 @@
   flex-direction: column;
   align-content: flex-start;
   height: 252px;
+  direction: ltr;
   @media (orientation: landscape) {
     height: 192px;
   }
