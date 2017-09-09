@@ -611,7 +611,7 @@ class Router extends Framework7Class {
           }
         }
       }
-      router.xhr = $.ajax({
+      router.xhr = router.app.request({
         url,
         method: 'GET',
         beforeSend() {
