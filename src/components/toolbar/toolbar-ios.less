@@ -14,7 +14,12 @@
       line-height: @toolbarSize;
       height: @toolbarSize;
       i + span, i + i, span + i, span + span {
-        margin-left: 7px;
+        .ltr({
+          margin-left: 7px;
+        });
+        .rtl({
+          margin-right: 7px;
+        });
       }
     }
     a.icon-only {

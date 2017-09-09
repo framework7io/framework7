@@ -23,7 +23,12 @@
       height: @toolbarSize;
       .md-link-highlight();
       i + span, i + i, span + i, span + span {
-        margin-left: 8px;
+        .ltr({
+          margin-left: 8px;
+        });
+        .rtl({
+          margin-right: 8px;
+        });
       }
     }
     a.icon-only {
@@ -61,6 +66,12 @@
       height: 3px;
       background: rgba(255,255,255,0.5);
       transition-duration: 300ms;
+      .ltr({
+        left: 0;
+      });
+      .rtl({
+        right: 0;
+      })
     }
   }
   .toolbar-bottom, .messagebar {
