@@ -54,6 +54,13 @@ textarea {
   input[type="date"], input[type="datetime-local"] {
     line-height: 44px;
   }
+  .rtl({
+    input[type="date"], input[type="datetime-local"] {
+      text-align: right;
+      flex-direction: row-reverse;
+      width: auto;
+    }
+  });
   textarea {
     resize: none;
     line-height: 1.4;
