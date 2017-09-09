@@ -44,7 +44,12 @@
 }
 
 .list li.accordion-item ul {
-  padding-left: 0;
+  .ltr({
+    padding-left: 0;
+  });
+  .rtl({
+    padding-right: 0;
+  })
 }
 .accordion-item-content {
   position: relative;
