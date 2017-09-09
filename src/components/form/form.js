@@ -42,7 +42,7 @@ const FormData = {
     }
     return undefined;
   },
-  delete(form) {
+  remove(form) {
     const app = this;
     let formId = form;
 
@@ -228,9 +228,9 @@ function initAjaxForm() {
 
     let data;
     if (method === 'POST') data = new FormData($formEl[0]);
-    else data = $.serializeObject(app.form.toData($formEl[0]));
+    else data = Utils.serializeObject(app.form.toData($formEl[0]));
 
-    const xhr = $.ajax({
+    const xhr = app.request({
       method,
       url,
       contentType,
@@ -265,7 +265,7 @@ export default {
         data: {
           store: FormData.store.bind(app),
           get: FormData.get.bind(app),
-          delete: FormData.delete.bind(app),
+          remove: FormData.remove.bind(app),
         },
         toData: formToData.bind(app),
         fromData: formFromData.bind(app),
