@@ -58,9 +58,14 @@
   .item-after {
     white-space: nowrap;
     flex-shrink: 0;
-    margin-left: auto;
     display: flex;
     max-height: 28px;
+    .ltr({
+      margin-left: auto;
+    });
+    .rtl({
+      margin-right: auto;
+    });
   }
   .item-link, .list-button {
     transition-duration: 300ms;
@@ -199,7 +204,12 @@ li.media-item .item-link .item-inner {
 .media-list .item-link .item-title-row,
 li.media-item .item-link .item-title-row
 {
-  background-position: right center !important;
+  .ltr({
+    background-position: right center !important;
+  });
+  .rtl({
+    background-position: left center !important;
+  });
 }
 .list-group {
   ul {
