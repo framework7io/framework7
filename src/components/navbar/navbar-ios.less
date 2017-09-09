@@ -36,20 +36,40 @@
     }
     .left, .right {
       a + a {
-        margin-left: 15px;
+        .ltr({
+          margin-left: 15px;
+        });
+        .rtl({
+          margin-right: 15px;
+        });
       }
     }
     b, .title {
       font-weight: 600;
     }
     .left {
-      margin-right: 10px;
+      .ltr({
+        margin-right: 10px;
+      });
+      .rtl({
+        margin-left: 10px;
+      });
     }
     .right {
-      margin-left: 10px;
+      .ltr({
+        margin-left: 10px;
+      });
+      .rtl({
+        margin-right: 10px;
+      });
     }
     .right:first-child {
-      right: 8px;
+      .ltr({
+        right: 8px;
+      });
+      .rtl({
+        left: 8px;
+      });
     }
   }
   .hairline-root('.navbar', bottom, @navbarBorderColor);
