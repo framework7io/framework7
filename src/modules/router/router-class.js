@@ -328,15 +328,16 @@ class Router extends Framework7Class {
       if (progress >= 1) {
         done = true;
       }
+      const inverter = router.app.rtl ? -1 : 1;
       if (ios) {
         if (direction === 'forward') {
-          newPage.transform(`translate3d(${(1 - easeProgress) * 100}%,0,0)`);
-          oldPage.transform(`translate3d(${-easeProgress * 20}%,0,0)`);
+          newPage.transform(`translate3d(${(1 - easeProgress) * 100 * inverter}%,0,0)`);
+          oldPage.transform(`translate3d(${-easeProgress * 20 * inverter}%,0,0)`);
           $shadowEl[0].style.opacity = easeProgress;
           $opacityEl[0].style.opacity = easeProgress;
         } else {
-          newPage.transform(`translate3d(${-(1 - easeProgress) * 20}%,0,0)`);
-          oldPage.transform(`translate3d(${easeProgress * 100}%,0,0)`);
+          newPage.transform(`translate3d(${-(1 - easeProgress) * 20 * inverter}%,0,0)`);
+          oldPage.transform(`translate3d(${easeProgress * 100 * inverter}%,0,0)`);
           $shadowEl[0].style.opacity = 1 - easeProgress;
           $opacityEl[0].style.opacity = 1 - easeProgress;
         }
