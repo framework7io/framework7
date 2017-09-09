@@ -2,7 +2,12 @@
   .link {
     transition: opacity 300ms;
     i + span, i + i, span + i, span + span {
-      margin-left: 7px;
+      .ltr({
+        margin-left: 7px;
+      });
+      .rtl({
+        margin-right: 7px;
+      });
     }
     &.active-state {
       opacity: 0.3;
