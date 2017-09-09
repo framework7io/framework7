@@ -37,6 +37,9 @@
 .dialog-buttons {
   position: relative;
   display: flex;
+  .rtl({
+    flex-direction: row-reverse;
+  });
   .dialog-buttons-vertical & {
     display: block;
     height: auto !important;
