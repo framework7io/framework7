@@ -34,7 +34,12 @@
   }
   .toast-button {
     color: #fff;
-    margin-left: 15px;
+    .ltr({
+      margin-left: 15px;
+    });
+    .rtl({
+      margin-right: 15px;
+    });
   }
   &.with-statusbar {
     &.device-ios .toast-top, &:not(.device-ios):not(.device-android) .toast-top {
