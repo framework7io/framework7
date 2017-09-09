@@ -2,15 +2,21 @@
   @duration: 400ms;
   .fake-shadow() {
     position: absolute;
-    right: 100%;
     top: 0;
     width: 16px;
     bottom: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
     z-index: -1;
     content: '';
     will-change: opacity;
     opacity: 0;
+    .rtl({
+      left: 100%;
+      background: linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    });
+    .ltr({
+      right: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    });
   }
   .fake-opacity() {
     position: absolute;
@@ -38,8 +44,23 @@
   .page {
     background: #efeff4;
   }
+  .rtl({
+    .page-previous {
+      transform: translate3d(20%, 0, 0);
+    }
+    .page-next {
+      transform: translate3d(-100%, 0, 0);
+    }
+  });
+  .ltr({
+    .page-previous {
+      transform: translate3d(-20%, 0, 0);
+    }
+    .page-next {
+      transform: translate3d(100%, 0, 0);
+    }
+  });
   .page-previous {
-    transform: translate3d(-20%, 0, 0);
     .page-opacity-effect {
       opacity: 1;
     }
@@ -51,9 +72,6 @@
     .page-shadow-effect {
       opacity: 1;
     }
-  }
-  .page-next {
-    transform: translate3d(100%, 0, 0);
   }
 
   .page-transitioning {
@@ -120,28 +138,80 @@
     }
   }
 }
-@keyframes ios-page-next-to-current {
-  from {
-    transform: translate3d(100%,0,0);
+.ltr({
+  @keyframes ios-page-next-to-current {
+    from {
+      transform: translate3d(100%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
   }
-  to {
-    transform: translate3d(0%,0,0);
+  @keyframes ios-page-previous-to-current {
+    from {
+      transform: translate3d(-20%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
   }
-}
+  @keyframes ios-page-current-to-previous {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(-20%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-next {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(100%,0,0);
+    }
+  }
+});
+.rtl({
+  @keyframes ios-page-next-to-current {
+    from {
+      transform: translate3d(-100%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-previous-to-current {
+    from {
+      transform: translate3d(20%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-previous {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(20%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-next {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(-100%,0,0);
+    }
+  }
+});
 @keyframes ios-page-next-to-current-shadow {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
-  }
-}
-@keyframes ios-page-previous-to-current {
-  from {
-    transform: translate3d(-20%,0,0);
-  }
-  to {
-    transform: translate3d(0%,0,0);
   }
 }
 @keyframes ios-page-previous-to-current-opacity {
@@ -152,28 +222,12 @@
     opacity: 0;
   }
 }
-@keyframes ios-page-current-to-previous {
-  from {
-    transform: translate3d(0,0,0);
-  }
-  to {
-    transform: translate3d(-20%,0,0);
-  }
-}
 @keyframes ios-page-current-to-previous-opacity {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
-  }
-}
-@keyframes ios-page-current-to-next {
-  from {
-    transform: translate3d(0,0,0);
-  }
-  to {
-    transform: translate3d(100%,0,0);
   }
 }
 @keyframes ios-page-current-to-next-shadow {
