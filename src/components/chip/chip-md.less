@@ -13,21 +13,34 @@
   .chip-media {
     width: 32px;
     height: 32px;
-    margin-left: -12px;
     vertical-align: top;
     border-radius: 50%;
     text-align: center;
     line-height: 32px;
     color: #fff;
     font-size: 16px;
+    .ltr({
+      margin-left: -12px;
+      + .chip-label {
+        margin-left: 8px;
+      }
+    });
+    .rtl({
+      margin-right: -12px;
+      + .chip-label {
+        margin-right: 8px;
+      }
+    });
 
-    + .chip-label {
-      margin-left: 8px;
-    }
   }
   .chip-label {
     + .chip-delete {
-      margin-left: 4px;
+      .ltr({
+        margin-left: 4px;
+      });
+      .rtl({
+        margin-right: 4px;
+      });
     }
   }
   .chip-delete {
@@ -39,6 +52,12 @@
     background-position: center;
     background-size: 20px 20px;
     opacity: 0.54;
+    .ltr({
+      margin-right: -8px;
+    });
+    .rtl({
+      margin-left: -8px;
+    });
   }
   .color-loop({
     .chip.color-@{colorName} {

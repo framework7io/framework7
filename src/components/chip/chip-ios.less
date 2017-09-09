@@ -20,11 +20,18 @@
     color: #fff;
     font-size: 12px;
     box-sizing: border-box;
-    margin-left: -6px;
-
-    + .chip-label {
-      margin-left: 4px;
-    }
+    .ltr({
+      margin-left: -6px;
+      + .chip-label {
+        margin-left: 4px;
+      }
+    });
+    .rtl({
+      margin-right: -6px;
+      + .chip-label {
+        margin-right: 4px;
+      }
+    });
 
     i.icon {
       font-size: 16px;
@@ -32,7 +39,6 @@
     }
   }
   .chip-delete {
-    margin-right: -6px;
     width: 23px;
     height: 23px;
     line-height: 23px;
@@ -40,6 +46,12 @@
     background-position: center;
     background-size: 13px 13px;
     opacity: 0.7;
+    .ltr({
+      margin-right: -6px;
+    });
+    .rtl({
+      margin-left: -6px;
+    });
   }
   .color-loop({
     .chip.color-@{colorName} {
