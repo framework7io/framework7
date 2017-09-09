@@ -123,7 +123,9 @@
 .fab-buttons-left {
   right: 100%;
   margin-right: 16px;
-  flex-direction: row-reverse;
+  .ltr({
+    flex-direction: row-reverse;
+  });
   a {
     transform: translate3d(8px, 0px, 0) scale(0.3);
     transform-origin: right center;
@@ -135,6 +137,9 @@
 .fab-buttons-right {
   left: 100%;
   margin-left: 16px;
+  .rtl({
+    flex-direction: row-reverse;
+  });
   a {
     transform: translate3d(-8px, 0, 0) scale(0.3);
     transform-origin: left center;
