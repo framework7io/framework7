@@ -6,7 +6,8 @@
     input[type="checkbox"]:checked + .toggle-icon {
       background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), 0.5);
       &:after {
-        transform: translateX(16px);
+        .ltr({ transform: translateX(16px); });
+        .rtl({ transform: translateX(-16px); });
         background: @themeColor;
       }
     }
@@ -20,9 +21,10 @@
       height: 20px;
       width: 20px;
       top: -3px;
-      left: 0;
       box-shadow: 0 2px 5px rgba(0,0,0,0.4);
       border-radius: 10px;
+      .ltr({ left: 0; });
+      .rtl({ right: 0; });
     }
   }
 

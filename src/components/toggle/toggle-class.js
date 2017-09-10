@@ -79,6 +79,7 @@ class Toggle extends Framework7Class {
       if (!isTouched || toggle.disabled) return;
       const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      const inverter = app.rtl ? -1 : 1;
 
       if (typeof isScrolling === 'undefined') {
         isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
@@ -91,11 +92,12 @@ class Toggle extends Framework7Class {
 
       touchesDiff = pageX - touchesStart.x;
 
+
       let changed;
-      if (touchesDiff < 0 && Math.abs(touchesDiff) > toggleWidth / 3 && touchStartChecked) {
+      if (touchesDiff * inverter < 0 && Math.abs(touchesDiff) > toggleWidth / 3 && touchStartChecked) {
         changed = true;
       }
-      if (touchesDiff > 0 && Math.abs(touchesDiff) > toggleWidth / 3 && !touchStartChecked) {
+      if (touchesDiff * inverter > 0 && Math.abs(touchesDiff) > toggleWidth / 3 && !touchStartChecked) {
         changed = true;
       }
       if (changed) {
@@ -110,16 +112,17 @@ class Toggle extends Framework7Class {
         isTouched = false;
         return;
       }
+      const inverter = app.rtl ? -1 : 1;
       isTouched = false;
 
       $el.removeClass('toggle-active-state');
 
       let changed;
       if ((Utils.now() - touchStartTime) < 300) {
-        if (touchesDiff < 0 && touchStartChecked) {
+        if (touchesDiff * inverter < 0 && touchStartChecked) {
           changed = true;
         }
-        if (touchesDiff > 0 && !touchStartChecked) {
+        if (touchesDiff * inverter > 0 && !touchStartChecked) {
           changed = true;
         }
         if (changed) {
