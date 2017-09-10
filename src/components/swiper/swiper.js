@@ -7,6 +7,56 @@ if (!window.Swiper) {
   window.Swiper = Swiper;
 }
 
+function initSwipers(swiperEl) {
+  const app = this;
+  const $swiperEl = $(swiperEl);
+  if ($swiperEl.length === 0) return;
+  if ($swiperEl[0].swiper) return;
+  let initialSlide;
+  let params = {};
+  let isTabs;
+  if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
+    $swiperEl
+      .addClass('swiper-container')
+      .children('.tabs')
+      .addClass('swiper-wrapper')
+      .children('.tab')
+      .addClass('swiper-slide');
+    initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
+    isTabs = true;
+  }
+  if ($swiperEl.attr('data-swiper')) {
+    params = JSON.parse($swiperEl.attr('data-swiper'));
+  } else {
+    params = $swiperEl.dataset();
+    Object.keys(params).forEach((key) => {
+      const value = params[key];
+      if (typeof value === 'string' && value.indexOf('{') === 0 && value.indexOf('}') > 0) {
+        try {
+          params[key] = JSON.parse(value);
+        } catch (e) {
+          // not JSON
+        }
+      }
+    });
+  }
+  if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
+    params.initialSlide = initialSlide;
+  }
+  if (isTabs) {
+    Utils.extend(params, {
+      on: {
+        slideChangeStart() {
+          const swiper = this;
+          app.tab.show(swiper.slides.eq(swiper.activeIndex));
+        },
+      },
+    });
+  }
+
+  app.swiper.create($swiperEl[0], params);
+}
+
 export default {
   name: 'swiper',
   static: {
@@ -35,53 +85,16 @@ export default {
         app.swiper.destroy(swiperEl);
       });
     },
+    pageMounted(page) {
+      const app = this;
+      page.$el.find('.tabs-swipeable-wrap').each((index, swiperEl) => {
+        initSwipers.call(app, swiperEl);
+      });
+    },
     pageInit(page) {
       const app = this;
       page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
-        const $swiperEl = $(swiperEl);
-        let initialSlide;
-        let params = {};
-        let isTabs;
-        if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
-          $swiperEl
-            .addClass('swiper-container')
-            .children('.tabs')
-            .addClass('swiper-wrapper')
-            .children('.tab')
-            .addClass('swiper-slide');
-          initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
-          isTabs = true;
-        }
-        if ($swiperEl.attr('data-swiper')) {
-          params = JSON.parse($swiperEl.attr('data-swiper'));
-        } else {
-          params = $swiperEl.dataset();
-          Object.keys(params).forEach((key) => {
-            const value = params[key];
-            if (typeof value === 'string' && value.indexOf('{') === 0 && value.indexOf('}') > 0) {
-              try {
-                params[key] = JSON.parse(value);
-              } catch (e) {
-                // not JSON
-              }
-            }
-          });
-        }
-        if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
-          params.initialSlide = initialSlide;
-        }
-        if (isTabs) {
-          Utils.extend(params, {
-            on: {
-              slideChangeStart() {
-                const swiper = this;
-                app.tab.show(swiper.slides.eq(swiper.activeIndex));
-              },
-            },
-          });
-        }
-
-        app.swiper.create($swiperEl[0], params);
+        initSwipers.call(app, swiperEl);
       });
     },
     pageReinit(page) {
