@@ -906,8 +906,10 @@ class Router extends Framework7Class {
     const app = router.app;
 
     // Init Swipeback
-    if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
-      SwipeBack(router);
+    if (process.env.TARGET !== 'desktop') {
+      if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
+        SwipeBack(router);
+      }
     }
 
     // Dynamic not separated navbbar
