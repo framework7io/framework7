@@ -117,7 +117,12 @@
       height: 6px;
       opacity: 0.6;
       + div {
-        margin-left: 6px;
+        .ltr({
+          margin-left: 6px;
+        });
+        .rtl({
+          margin-right: 6px;
+        });
       }
     }
     > div:nth-child(1) {

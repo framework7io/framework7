@@ -64,19 +64,42 @@
   text-align: left;
 }
 .message-sent {
-  flex-direction: row-reverse;
   text-align: right;
-  align-self: flex-end;
+  .ltr({
+    flex-direction: row-reverse;
+    align-self: flex-end;
+  });
+  .rtl({
+    flex-direction: row;
+    align-self: flex-start;
+  });
 }
 // Rules
 .message-received {
+  .ltr({
+    flex-direction: row;
+  });
+  .rtl({
+    flex-direction: row-reverse;
+    align-self: flex-end;
+  });
   .message-content {
-    align-items: flex-start;
+    .ltr({
+      align-items: flex-start;
+    });
+    .rtl({
+      align-items: flex-end;
+    });
   }
 }
 .message-sent {
   .message-content {
-    align-items: flex-end;
+    .ltr({
+      align-items: flex-end;
+    });
+    .rtl({
+      align-items: flex-start;
+    });
   }
 }
 .message:not(.message-last) {
