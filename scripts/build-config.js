@@ -5,6 +5,7 @@
 */
 
 let config = {
+  target: 'universal',
   components: [
     // Modals
     'modal',

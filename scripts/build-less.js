@@ -46,7 +46,8 @@ function build(buildTheme, cb) {
         .replace('$themeColorIos', config.ios.themeColor)
         .replace('$colorsIos', colorsIos.join(', '))
         .replace('$themeColorMd', config.md.themeColor)
-        .replace('$colorsMd', colorsMd.join(', '));
+        .replace('$colorsMd', colorsMd.join(', '))
+        .replace('$rtl', 'false');
       return newContent;
     }))
     .pipe(less())

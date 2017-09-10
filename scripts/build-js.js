@@ -13,6 +13,7 @@ const header = require('gulp-header');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
+const gulpif = require('gulp-if');
 
 let config = require('./build-config.js');
 const banner = require('./banner.js');
@@ -27,7 +28,7 @@ try {
 
 function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || 'universal';
+  const target = process.env.TARGET || config.target || 'universal';
   let cbs = 0;
 
   // Bundle
@@ -93,7 +94,7 @@ function es(components, cb) {
 }
 function umd(components, cb) {
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || 'universal';
+  const target = process.env.TARGET || config.target || 'universal';
   rollup({
     entry: './src/framework7.js',
     plugins: [
@@ -119,6 +120,8 @@ function umd(components, cb) {
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
+    .pipe(gulpif(env === 'development', sourcemaps.init({ loadMaps: true })))
+    .pipe(gulpif(env === 'development', sourcemaps.write('./')))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       if (env === 'development') {
