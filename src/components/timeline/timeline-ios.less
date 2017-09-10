@@ -12,6 +12,9 @@
   }
   .timeline-item {
     padding: 2px 0px 15px;
+    &:last-child {
+      padding-bottom: 2px;
+    }
   }
   .timeline-item-content {
     .card, .list, .block {
@@ -36,7 +39,8 @@
     border: 1px solid rgba(0,0,0,0.1);
   }
   .timeline-item-divider {
-    margin: 0 15px;
+    margin-left: 15px;
+    margin-right: 15px;
   }
   .timeline-item-time {
     margin-top: 15px;
@@ -53,19 +57,37 @@
     font-size: 15px;
   }
   .timelineItemLeft() {
-    margin-right: ~"calc(50% - (30px + 10px) / 2 - 50px)";
     flex-direction: row-reverse;
-    margin-left: 0;
-    .timeline-item-date {
-      text-align: left;
-    }
+    .ltr({
+      margin-right: ~"calc(50% - (30px + 10px) / 2 - 50px)";
+      margin-left: 0;
+      .timeline-item-date {
+        text-align: left;
+      }
+    });
+    .rtl({
+      margin-left: ~"calc(50% - (30px + 10px) / 2 - 50px)";
+      margin-right: 0;
+      .timeline-item-date {
+        text-align: right;
+      }
+    });
   }
   .timelineItemRight() {
-    margin-left: ~"calc(50% - (30px + 10px) / 2 - 50px)";
-    margin-right: 0;
-    .timeline-item-date {
-      text-align: right;
-    }
+    .ltr({
+      margin-left: ~"calc(50% - (30px + 10px) / 2 - 50px)";
+      margin-right: 0;
+      .timeline-item-date {
+        text-align: right;
+      }
+    });
+    .rtl({
+      margin-right: ~"calc(50% - (30px + 10px) / 2 - 50px)";
+      margin-left: 0;
+      .timeline-item-date {
+        text-align: left;
+      }
+    });
   }
   .timeline-sides {
     .timeline-item {
@@ -105,20 +127,25 @@
       height: ~"calc(100% - 10px)";
     }
   }
-  .hairline-root('.timeline-horizontal .timeline-item', right, @barsBorderColor);
   .hairline-root('.timeline-horizontal .timeline-item-date', bottom, @barsBorderColor);
+  .hairline-root('.timeline-horizontal .timeline-month .timeline-item', top, @barsBorderColor);
+  .hairline-root('.timeline-horizontal .timeline-item', right, @barsBorderColor);
+  .hairline-root('.timeline-horizontal .timeline-year', right, @barsBorderColor);
   .timeline-year {
     &:last-child {
       .hairline-remove(right);
     }
   }
-  .hairline-root('.timeline-horizontal .timeline-year', right, @barsBorderColor);
-  .hairline-root('.timeline-horizontal .timeline-month .timeline-item', top, @barsBorderColor);
   .timeline-year-title, .timeline-month-title {
     padding: 0 10px;
     background: @barsBg;
     span {
-      left: 10px;
+      .ltr({
+        left: 10px;
+      });
+      .rtl({
+        right: 10px;
+      });
     }
   }
   .timeline-year-title {
