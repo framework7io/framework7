@@ -22,7 +22,8 @@
 }
 .range-bar-active {
   position: absolute;
-  left: 0;
+  .ltr({ left: 0; });
+  .rtl({ right: 0; });
   top: 0;
   height: 100%;
 }
@@ -30,7 +31,8 @@
   z-index: 20;
   position: absolute;
   top: 50%;
-  left: 0;
+  .ltr({ left: 0; });
+  .rtl({ right: 0; });
 }
 .range-knob {
   box-sizing: border-box;

@@ -116,6 +116,7 @@ class Range extends Framework7Class {
     }
 
     Utils.extend(range, {
+      app,
       knobs,
       labels,
       $barEl,
@@ -131,6 +132,7 @@ class Range extends Framework7Class {
     let rangeOffsetLeft;
     let $touchedKnobEl;
     let dualValueIndex;
+
     function handleTouchStart(e) {
       if (isTouched) return;
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
@@ -140,7 +142,12 @@ class Range extends Framework7Class {
       isScrolling = undefined;
       rangeOffsetLeft = $el.offset().left;
 
-      const progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
+      let progress;
+      if (range.app.rtl) {
+        progress = ((rangeOffsetLeft + range.rangeWidth) - touchesStart.x) / range.rangeWidth;
+      } else {
+        progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
+      }
 
       let newValue = (progress * (range.max - range.min)) + range.min;
       if (range.dual) {
@@ -176,7 +183,13 @@ class Range extends Framework7Class {
       }
       e.preventDefault();
 
-      const progress = (pageX - rangeOffsetLeft) / range.rangeWidth;
+      let progress;
+      if (range.app.rtl) {
+        progress = ((rangeOffsetLeft + range.rangeWidth) - pageX) / range.rangeWidth;
+      } else {
+        progress = (pageX - rangeOffsetLeft) / range.rangeWidth;
+      }
+
       let newValue = (progress * (range.max - range.min)) + range.min;
       if (range.dual) {
         let leftValue;
@@ -195,8 +208,6 @@ class Range extends Framework7Class {
           }
         }
         newValue = [leftValue, rightValue];
-      } else {
-        newValue = (progress * (range.max - range.min)) + range.min;
       }
       range.setValue(newValue);
     }
@@ -244,11 +255,12 @@ class Range extends Framework7Class {
   }
   layout() {
     const range = this;
-    const { knobWidth, rangeWidth, min, max, knobs, $barActiveEl, value, label, labels } = range;
+    const { app, knobWidth, rangeWidth, min, max, knobs, $barActiveEl, value, label, labels } = range;
+    const positionProperty = app.rtl ? 'right' : 'left';
     if (range.dual) {
       const progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
       $barActiveEl.css({
-        left: `${progress[0] * 100}%`,
+        [positionProperty]: `${progress[0] * 100}%`,
         width: `${(progress[1] - progress[0]) * 100}%`,
       });
       knobs.forEach(($knobEl, knobIndex) => {
@@ -256,7 +268,7 @@ class Range extends Framework7Class {
         const realLeft = (rangeWidth * progress[knobIndex]) - (knobWidth / 2);
         if (realLeft < 0) leftPos = knobWidth / 2;
         if ((realLeft + knobWidth) > rangeWidth) leftPos = rangeWidth - (knobWidth / 2);
-        $knobEl.css('left', `${leftPos}px`);
+        $knobEl.css(positionProperty, `${leftPos}px`);
         if (label) labels[knobIndex].text(value[knobIndex]);
       });
     } else {
@@ -267,7 +279,7 @@ class Range extends Framework7Class {
       const realLeft = (rangeWidth * progress) - (knobWidth / 2);
       if (realLeft < 0) leftPos = knobWidth / 2;
       if ((realLeft + knobWidth) > rangeWidth) leftPos = rangeWidth - (knobWidth / 2);
-      knobs[0].css('left', `${leftPos}px`);
+      knobs[0].css(positionProperty, `${leftPos}px`);
       if (label) labels[0].text(value);
     }
     if ((range.dual && value.indexOf(min) >= 0) || (!range.dual && value === min)) {
@@ -286,12 +298,11 @@ class Range extends Framework7Class {
     const { step, min, max } = range;
     if (range.dual) {
       let newValues = newValue;
+      if (!Array.isArray(newValues)) newValues = [newValue, newValue];
       if (newValue[0] > newValue[1]) {
         newValues = [newValues[0], newValues[0]];
       }
-      newValues = newValues.map((value) => {
-        return Math.max(Math.min(Math.round(value / step) * step, max), min);
-      });
+      newValues = newValues.map(value => Math.max(Math.min(Math.round(value / step) * step, max), min));
       if (newValues[0] === range.value[0] && newValues[1] === range.value[1]) {
         return range;
       }
