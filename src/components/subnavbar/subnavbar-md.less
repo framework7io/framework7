@@ -18,15 +18,28 @@
       text-align: left;
       font-weight: 500;
     }
-    .title:first-child {
-      margin-left: 56px;
-    }
-    .right {
-      margin-left: auto;
-    }
-    .right:first-child {
-      right: 16px;
-    }
+    .ltr ({
+      .title:first-child {
+        margin-left: 56px;
+      }
+      .right {
+        margin-left: auto;
+      }
+      .right:first-child {
+        right: 16px;
+      }
+    });
+    .rtl ({
+      .title:first-child {
+        margin-right: 56px;
+      }
+      .right {
+        margin-right: auto;
+      }
+      .right:first-child {
+        left: 16px;
+      }
+    });
     a {
       color: inherit;
     }
@@ -45,12 +58,22 @@
   }
   .subnavbar-inner {
     padding: 0 16px;
-    > a.link:first-child {
-      margin-left: -16px;
-    }
-    > a.link:last-child {
-      margin-right: -16px;
-    }
+    .ltr({
+      > a.link:first-child {
+        margin-left: -16px;
+      }
+      > a.link:last-child {
+        margin-right: -16px;
+      }
+    });
+    .rtl({
+      > a.link:first-child {
+        margin-right: -16px;
+      }
+      > a.link:last-child {
+        margin-left: -16px;
+      }
+    });
   }
 
   // Relation with page and navbar
