@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.3
+ * Framework7 2.0.0-beta.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 7, 2017
+ * Released on: September 11, 2017
  */
 
 (function (global, factory) {
@@ -574,7 +574,7 @@ t7.helpers = Template7.prototype.helpers;
 t7.partials = Template7.prototype.partials;
 
 /**
- * Dom7 1.7.0
+ * Dom7 2.0.0
  * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
  * http://framework7.io/docs/dom.html
  *
@@ -584,7 +584,7 @@ t7.partials = Template7.prototype.partials;
  *
  * Licensed under MIT
  *
- * Released on: August 30, 2017
+ * Released on: September 11, 2017
  */
 var Dom7 = function Dom7(arr) {
   var self = this;
@@ -651,58 +651,23 @@ function $$1(selector, context) {
 $$1.fn = Dom7.prototype;
 $$1.Class = Dom7;
 
-function parseUrlQuery(url) {
-  var query = {};
-  var urlToParse = url || window.location.href;
-  var i;
-  var params;
-  var param;
-  var length;
-  if (typeof urlToParse === 'string' && urlToParse.length) {
-    urlToParse = urlToParse.indexOf('?') > -1 ? urlToParse.replace(/\S*\?/, '') : '';
-    params = urlToParse.split('&').filter(function (paramsPart) { return paramsPart !== ''; });
-    length = params.length;
+$$1.use = function use() {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
 
-    for (i = 0; i < length; i += 1) {
-      param = params[i].replace(/#\S+/g, '').split('=');
-      query[decodeURIComponent(param[0])] = typeof param[1] === 'undefined' ? undefined : decodeURIComponent(param[1]) || '';
-    }
-  }
-  return query;
-}
-function isArray$1(arr) {
-  return Array.isArray(arr);
-}
-function each(obj, callback) {
-  // Check it's iterable
-  // TODO: Should probably raise a value error here
-  if (typeof obj !== 'object') { return; }
-  // Don't bother continuing without a callback
-  if (!callback) { return; }
-  if (Array.isArray(obj) || obj instanceof Dom7) {
-    // Array
-    for (var i = 0; i < obj.length; i += 1) {
-      // If callback returns false
-      if (callback(i, obj[i]) === false) {
-        // Break out of the loop
-        return;
+  args.forEach(function (methods) {
+    var isUtils = '__utils' in methods;
+    Object.keys(methods).forEach(function (methodName) {
+      if (methodName === '__utils') { return; }
+      if (isUtils) {
+        $$1[methodName] = methods[methodName];
+      } else {
+        $$1.fn[methodName] = methods[methodName];
       }
-    }
-  } else {
-    // Object
-    for (var prop in obj) {
-      // Check the propertie belongs to the object
-      // not it's prototype
-      if (obj.hasOwnProperty(prop)) {
-        // If the callback returns false
-        if (callback(prop, obj[prop]) === false) {
-          // Break out of the loop;
-          return;
-        }
-      }
-    }
-  }
-}
+    });
+  });
+};
+
 function unique(arr) {
   var uniqueArray = [];
   for (var i = 0; i < arr.length; i += 1) {
@@ -710,103 +675,10 @@ function unique(arr) {
   }
   return uniqueArray;
 }
-function serializeObject(obj, parents) {
-  if ( parents === void 0 ) parents = [];
-
-  if (typeof obj === 'string') { return obj; }
-  var resultArray = [];
-  var separator = '&';
-  var newParents;
-  function varName(name) {
-    if (parents.length > 0) {
-      var parentParts = '';
-      for (var j = 0; j < parents.length; j += 1) {
-        if (j === 0) { parentParts += parents[j]; }
-        else { parentParts += "[" + (encodeURIComponent(parents[j])) + "]"; }
-      }
-      return (parentParts + "[" + (encodeURIComponent(name)) + "]");
-    }
-    return encodeURIComponent(name);
-  }
-  function varValue(value) {
-    return encodeURIComponent(value);
-  }
-  Object.keys(obj).forEach(function (prop) {
-    var toPush;
-    if (Array.isArray(obj[prop])) {
-      toPush = [];
-      for (var i = 0; i < obj[prop].length; i += 1) {
-        if (!Array.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
-          newParents = parents.slice();
-          newParents.push(prop);
-          newParents.push(String(i));
-          toPush.push(serializeObject(obj[prop][i], newParents));
-        } else {
-          toPush.push(((varName(prop)) + "[]=" + (varValue(obj[prop][i]))));
-        }
-      }
-      if (toPush.length > 0) { resultArray.push(toPush.join(separator)); }
-    } else if (obj[prop] === null || obj[prop] === '') {
-      resultArray.push(((varName(prop)) + "="));
-    } else if (typeof obj[prop] === 'object') {
-      // Object, convert to named array
-      newParents = parents.slice();
-      newParents.push(prop);
-      toPush = serializeObject(obj[prop], newParents);
-      if (toPush !== '') { resultArray.push(toPush); }
-    } else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
-      // Should be string or plain value
-      resultArray.push(((varName(prop)) + "=" + (varValue(obj[prop]))));
-    } else if (obj[prop] === '') { resultArray.push(varName(prop)); }
-  });
-  return resultArray.join(separator);
-}
 function toCamelCase(string) {
   return string.toLowerCase().replace(/-(.)/g, function (match, group1) { return group1.toUpperCase(); });
 }
-function dataset(el) {
-  return $$1(el).dataset();
-}
-function getTranslate(el, axis) {
-  if ( axis === void 0 ) axis = 'x';
 
-  var curStyle = window.getComputedStyle(el, null);
-  var matrix;
-  var curTransform;
-  var transformMatrix;
-
-  if (window.WebKitCSSMatrix) {
-    curTransform = curStyle.transform || curStyle.webkitTransform;
-    if (curTransform.split(',').length > 6) {
-      curTransform = curTransform.split(', ').map(function (a) { return a.replace(',', '.'); }).join(', ');
-    }
-    // Some old versions of Webkit choke when 'none' is passed; pass
-    // empty string instead in this case
-    transformMatrix = new window.WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
-  } else {
-    transformMatrix = curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
-    matrix = transformMatrix.toString().split(',');
-  }
-
-  if (axis === 'x') {
-    // Latest Chrome and webkits Fix
-    if (window.WebKitCSSMatrix) { curTransform = transformMatrix.m41; }
-    // Crazy IE10 Matrix
-    else if (matrix.length === 16) { curTransform = parseFloat(matrix[12]); }
-    // Normal Browsers
-    else { curTransform = parseFloat(matrix[4]); }
-  }
-  if (axis === 'y') {
-    // Latest Chrome and webkits Fix
-    if (window.WebKitCSSMatrix) { curTransform = transformMatrix.m42; }
-    // Crazy IE10 Matrix
-    else if (matrix.length === 16) { curTransform = parseFloat(matrix[13]); }
-    // Normal Browsers
-    else { curTransform = parseFloat(matrix[5]); }
-  }
-
-  return curTransform || 0;
-}
 function requestAnimationFrame(callback) {
   if (window.requestAnimationFrame) { return window.requestAnimationFrame(callback); }
   else if (window.webkitRequestAnimationFrame) { return window.webkitRequestAnimationFrame(callback); }
@@ -817,507 +689,6 @@ function cancelAnimationFrame(id) {
   else if (window.webkitCancelAnimationFrame) { return window.webkitCancelAnimationFrame(id); }
   return window.clearTimeout(id);
 }
-function extend() {
-  var args = [], len$1 = arguments.length;
-  while ( len$1-- ) args[ len$1 ] = arguments[ len$1 ];
-
-  var to = Object(args[0]);
-  for (var i = 1; i < args.length; i += 1) {
-    var nextSource = args[i];
-    if (nextSource !== undefined && nextSource !== null) {
-      var keysArray = Object.keys(Object(nextSource));
-      for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
-        var nextKey = keysArray[nextIndex];
-        var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
-        if (desc !== undefined && desc.enumerable) {
-          if (typeof to[nextKey] === 'object' && typeof nextSource[nextKey] === 'object') {
-            extend(to[nextKey], nextSource[nextKey]);
-          } else {
-            to[nextKey] = nextSource[nextKey];
-          }
-        }
-      }
-    }
-  }
-  return to;
-}
-
-var Utils = {
-  parseUrlQuery: parseUrlQuery,
-  parseQuery: parseUrlQuery,
-  isArray: isArray$1,
-  each: each,
-  unique: unique,
-  serializeObject: serializeObject,
-  param: serializeObject,
-  toCamelCase: toCamelCase,
-  dataset: dataset,
-  getTranslate: getTranslate,
-  requestAnimationFrame: requestAnimationFrame,
-  cancelAnimationFrame: cancelAnimationFrame,
-  extend: extend,
-};
-
-// Global Ajax Setup
-var globalAjaxOptions = {};
-function ajaxSetup(options) {
-  if (options.type && !options.method) { options.method = options.type; }
-  each(options, function (optionName, optionValue) {
-    globalAjaxOptions[optionName] = optionValue;
-  });
-}
-
-// JSONP Requests
-var jsonpRequests = 0;
-
-// Ajax
-function ajax(options) {
-  var defaults = {
-    method: 'GET',
-    data: false,
-    async: true,
-    cache: true,
-    user: '',
-    password: '',
-    headers: {},
-    xhrFields: {},
-    statusCode: {},
-    processData: true,
-    dataType: 'text',
-    contentType: 'application/x-www-form-urlencoded',
-    timeout: 0,
-  };
-  var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
-
-  // For jQuery guys
-  if (options.type) { options.method = options.type; }
-
-  // Global options
-  var globals = globalAjaxOptions;
-
-  // Merge global and defaults
-  each(globals, function (globalOptionName, globalOptionValue) {
-    if (callbacks.indexOf(globalOptionName) < 0) { defaults[globalOptionName] = globalOptionValue; }
-  });
-
-  // Function to run XHR callbacks and events
-  function fireAjaxCallback(eventName, eventData, callbackName) {
-    var a = arguments;
-    if (eventName) { $$1(document).trigger(eventName, eventData); }
-    if (callbackName) {
-      // Global callback
-      if (callbackName in globals) { globals[callbackName](a[3], a[4], a[5], a[6]); }
-      // Options callback
-      if (options[callbackName]) { options[callbackName](a[3], a[4], a[5], a[6]); }
-    }
-  }
-
-  // Merge options and defaults
-  each(defaults, function (prop, defaultValue) {
-    if (!(prop in options)) { options[prop] = defaultValue; }
-  });
-
-  // Default URL
-  if (!options.url) {
-    options.url = window.location.toString();
-  }
-  // Parameters Prefix
-  var paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
-
-  // UC method
-  var method = options.method.toUpperCase();
-
-  // Data to modify GET URL
-  if ((method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') && options.data) {
-    var stringData;
-    if (typeof options.data === 'string') {
-      // Should be key=value string
-      if (options.data.indexOf('?') >= 0) { stringData = options.data.split('?')[1]; }
-      else { stringData = options.data; }
-    } else {
-      // Should be key=value object
-      stringData = serializeObject(options.data);
-    }
-    if (stringData.length) {
-      options.url += paramsPrefix + stringData;
-      if (paramsPrefix === '?') { paramsPrefix = '&'; }
-    }
-  }
-  // JSONP
-  if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-    var callbackName = "f7jsonp_" + (Date.now() + ((jsonpRequests += 1)));
-    var abortTimeout;
-    var callbackSplit = options.url.split('callback=');
-    var requestUrl = (callbackSplit[0]) + "callback=" + callbackName;
-    if (callbackSplit[1].indexOf('&') >= 0) {
-      var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
-      if (addVars.length > 0) { requestUrl += "&" + addVars; }
-    }
-
-    // Create script
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.onerror = function onerror() {
-      clearTimeout(abortTimeout);
-      fireAjaxCallback(undefined, undefined, 'error', null, 'scripterror');
-      fireAjaxCallback('ajaxComplete ajax:complete', { scripterror: true }, 'complete', null, 'scripterror');
-    };
-    script.src = requestUrl;
-
-    // Handler
-    window[callbackName] = function jsonpCallback(data) {
-      clearTimeout(abortTimeout);
-      fireAjaxCallback(undefined, undefined, 'success', data);
-      script.parentNode.removeChild(script);
-      script = null;
-      delete window[callbackName];
-    };
-    document.querySelector('head').appendChild(script);
-
-    if (options.timeout > 0) {
-      abortTimeout = setTimeout(function () {
-        script.parentNode.removeChild(script);
-        script = null;
-        fireAjaxCallback(undefined, undefined, 'error', null, 'timeout');
-      }, options.timeout);
-    }
-
-    return;
-  }
-
-  // Cache for GET/HEAD requests
-  if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') {
-    if (options.cache === false) {
-      options.url += paramsPrefix + "_nocache" + (Date.now());
-    }
-  }
-
-  // Create XHR
-  var xhr = new XMLHttpRequest();
-
-  // Save Request URL
-  xhr.requestUrl = options.url;
-  xhr.requestParameters = options;
-
-  // Open XHR
-  xhr.open(method, options.url, options.async, options.user, options.password);
-
-  // Create POST Data
-  var postData = null;
-
-  if ((method === 'POST' || method === 'PUT' || method === 'PATCH') && options.data) {
-    if (options.processData) {
-      var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
-      // Post Data
-      if (postDataInstances.indexOf(options.data.constructor) >= 0) {
-        postData = options.data;
-      } else {
-        // POST Headers
-        var boundary = "---------------------------" + (Date.now().toString(16));
-
-        if (options.contentType === 'multipart/form-data') {
-          xhr.setRequestHeader('Content-Type', ("multipart/form-data; boundary=" + boundary));
-        } else {
-          xhr.setRequestHeader('Content-Type', options.contentType);
-        }
-        postData = '';
-        var data = serializeObject(options.data);
-        if (options.contentType === 'multipart/form-data') {
-          data = data.split('&');
-          var newData = [];
-          for (var i = 0; i < data.length; i += 1) {
-            newData.push(("Content-Disposition: form-data; name=\"" + (data[i].split('=')[0]) + "\"\r\n\r\n" + (data[i].split('=')[1]) + "\r\n"));
-          }
-          postData = "--" + boundary + "\r\n" + (newData.join(("--" + boundary + "\r\n"))) + "--" + boundary + "--\r\n";
-        } else {
-          postData = data;
-        }
-      }
-    } else {
-      postData = options.data;
-    }
-  }
-
-  // Additional headers
-  if (options.headers) {
-    each(options.headers, function (headerName, headerCallback) {
-      xhr.setRequestHeader(headerName, headerCallback);
-    });
-  }
-
-  // Check for crossDomain
-  if (typeof options.crossDomain === 'undefined') {
-    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
-  }
-
-  if (!options.crossDomain) {
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  }
-
-  if (options.xhrFields) {
-    each(options.xhrFields, function (fieldName, fieldValue) {
-      xhr[fieldName] = fieldValue;
-    });
-  }
-
-  var xhrTimeout;
-  // Handle XHR
-  xhr.onload = function onload(e) {
-    if (xhrTimeout) { clearTimeout(xhrTimeout); }
-    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
-      var responseData;
-      if (options.dataType === 'json') {
-        try {
-          responseData = JSON.parse(xhr.responseText);
-          fireAjaxCallback('ajaxSuccess ajax:success', { xhr: xhr }, 'success', responseData, xhr.status, xhr);
-        } catch (err) {
-          fireAjaxCallback('ajaxError ajax:error', { xhr: xhr, parseerror: true }, 'error', xhr, 'parseerror');
-        }
-      } else {
-        responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
-        fireAjaxCallback('ajaxSuccess ajax:success', { xhr: xhr }, 'success', responseData, xhr.status, xhr);
-      }
-    } else {
-      fireAjaxCallback('ajaxError ajax:error', { xhr: xhr }, 'error', xhr, xhr.status);
-    }
-    if (options.statusCode) {
-      if (globals.statusCode && globals.statusCode[xhr.status]) { globals.statusCode[xhr.status](xhr); }
-      if (options.statusCode[xhr.status]) { options.statusCode[xhr.status](xhr); }
-    }
-    fireAjaxCallback('ajaxComplete ajax:complete', { xhr: xhr }, 'complete', xhr, xhr.status);
-  };
-
-  xhr.onerror = function onerror(e) {
-    if (xhrTimeout) { clearTimeout(xhrTimeout); }
-    fireAjaxCallback('ajaxError ajax:error', { xhr: xhr }, 'error', xhr, xhr.status);
-    fireAjaxCallback('ajaxComplete ajax:complete', { xhr: xhr, error: true }, 'complete', xhr, 'error');
-  };
-
-  // Ajax start callback
-  fireAjaxCallback('ajaxStart ajax:start', { xhr: xhr }, 'start', xhr);
-  fireAjaxCallback(undefined, undefined, 'beforeSend', xhr);
-
-  // Timeout
-  if (options.timeout > 0) {
-    xhr.onabort = function onabort() {
-      if (xhrTimeout) { clearTimeout(xhrTimeout); }
-    };
-    xhrTimeout = setTimeout(function () {
-      xhr.abort();
-      fireAjaxCallback('ajaxError ajax:error', { xhr: xhr, timeout: true }, 'error', xhr, 'timeout');
-      fireAjaxCallback('ajaxComplete ajax:complete', { xhr: xhr, timeout: true }, 'complete', xhr, 'timeout');
-    }, options.timeout);
-  }
-
-  // Send XHR
-  xhr.send(postData);
-
-  // Return XHR object
-  return xhr;
-}
-
-function ajaxShortcut(method) {
-  var args = [], len = arguments.length - 1;
-  while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-  var url;
-  var data;
-  var success;
-  var error;
-  var dataType;
-  if (typeof args[1] === 'function') {
-    var assign;
-    (assign = args, url = assign[0], success = assign[1], error = assign[2], dataType = assign[3]);
-  } else {
-    var assign$1;
-    (assign$1 = args, url = assign$1[0], data = assign$1[1], success = assign$1[2], error = assign$1[3], dataType = assign$1[4]);
-  }
-  [success, error].forEach(function (callback) {
-    if (typeof callback === 'string') {
-      dataType = callback;
-      if (callback === success) { success = undefined; }
-      else { error = undefined; }
-    }
-  });
-  dataType = dataType || (method === 'getJSON' ? 'json' : undefined);
-  return ajax({
-    url: url,
-    method: method === 'post' ? 'POST' : 'GET',
-    data: data,
-    success: success,
-    error: error,
-    dataType: dataType,
-  });
-}
-
-function get() {
-  var args = [], len = arguments.length;
-  while ( len-- ) args[ len ] = arguments[ len ];
-
-  args.unshift('get');
-  return ajaxShortcut.apply(this, args);
-}
-function post() {
-  var args = [], len = arguments.length;
-  while ( len-- ) args[ len ] = arguments[ len ];
-
-  args.unshift('post');
-  return ajaxShortcut.apply(this, args);
-}
-function getJSON() {
-  var args = [], len = arguments.length;
-  while ( len-- ) args[ len ] = arguments[ len ];
-
-  args.unshift('getJSON');
-  return ajaxShortcut.apply(this, args);
-}
-
-
-
-
-var Ajax = Object.freeze({
-	ajaxSetup: ajaxSetup,
-	ajax: ajax,
-	get: get,
-	post: post,
-	getJSON: getJSON
-});
-
-var Scroll = {
-  scrollTo: function scrollTo() {
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var left = args[0];
-    var top = args[1];
-    var duration = args[2];
-    var easing = args[3];
-    var callback = args[4];
-    if (args.length === 4 && typeof easing === 'function') {
-      callback = easing;
-      var assign;
-      (assign = args, left = assign[0], top = assign[1], duration = assign[2], callback = assign[3], easing = assign[4]);
-    }
-    if (typeof easing === 'undefined') { easing = 'swing'; }
-
-    return this.each(function animate() {
-      var el = this;
-      var currentTop;
-      var currentLeft;
-      var maxTop;
-      var maxLeft;
-      var newTop;
-      var newLeft;
-      var scrollTop;
-      var scrollLeft;
-      var animateTop = top > 0 || top === 0;
-      var animateLeft = left > 0 || left === 0;
-      if (typeof easing === 'undefined') {
-        easing = 'swing';
-      }
-      if (animateTop) {
-        currentTop = el.scrollTop;
-        if (!duration) {
-          el.scrollTop = top;
-        }
-      }
-      if (animateLeft) {
-        currentLeft = el.scrollLeft;
-        if (!duration) {
-          el.scrollLeft = left;
-        }
-      }
-      if (!duration) { return; }
-      if (animateTop) {
-        maxTop = el.scrollHeight - el.offsetHeight;
-        newTop = Math.max(Math.min(top, maxTop), 0);
-      }
-      if (animateLeft) {
-        maxLeft = el.scrollWidth - el.offsetWidth;
-        newLeft = Math.max(Math.min(left, maxLeft), 0);
-      }
-      var startTime = null;
-      if (animateTop && newTop === currentTop) { animateTop = false; }
-      if (animateLeft && newLeft === currentLeft) { animateLeft = false; }
-      function render(time) {
-        if ( time === void 0 ) time = new Date().getTime();
-
-        if (startTime === null) {
-          startTime = time;
-        }
-        var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
-        var easeProgress = easing === 'linear' ? progress : (0.5 - (Math.cos(progress * Math.PI) / 2));
-        var done;
-        if (animateTop) { scrollTop = currentTop + (easeProgress * (newTop - currentTop)); }
-        if (animateLeft) { scrollLeft = currentLeft + (easeProgress * (newLeft - currentLeft)); }
-        if (animateTop && newTop > currentTop && scrollTop >= newTop) {
-          el.scrollTop = newTop;
-          done = true;
-        }
-        if (animateTop && newTop < currentTop && scrollTop <= newTop) {
-          el.scrollTop = newTop;
-          done = true;
-        }
-        if (animateLeft && newLeft > currentLeft && scrollLeft >= newLeft) {
-          el.scrollLeft = newLeft;
-          done = true;
-        }
-        if (animateLeft && newLeft < currentLeft && scrollLeft <= newLeft) {
-          el.scrollLeft = newLeft;
-          done = true;
-        }
-
-        if (done) {
-          if (callback) { callback(); }
-          return;
-        }
-        if (animateTop) { el.scrollTop = scrollTop; }
-        if (animateLeft) { el.scrollLeft = scrollLeft; }
-        requestAnimationFrame(render);
-      }
-      requestAnimationFrame(render);
-    });
-  },
-  // scrollTop(top, duration, easing, callback) {
-  scrollTop: function scrollTop() {
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var top = args[0];
-    var duration = args[1];
-    var easing = args[2];
-    var callback = args[3];
-    if (args.length === 3 && typeof easing === 'function') {
-      var assign;
-      (assign = args, top = assign[0], duration = assign[1], callback = assign[2], easing = assign[3]);
-    }
-    var dom = this;
-    if (typeof top === 'undefined') {
-      if (dom.length > 0) { return dom[0].scrollTop; }
-      return null;
-    }
-    return dom.scrollTo(undefined, top, duration, easing, callback);
-  },
-  scrollLeft: function scrollLeft() {
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-    var left = args[0];
-    var duration = args[1];
-    var easing = args[2];
-    var callback = args[3];
-    if (args.length === 3 && typeof easing === 'function') {
-      var assign;
-      (assign = args, left = assign[0], duration = assign[1], callback = assign[2], easing = assign[3]);
-    }
-    var dom = this;
-    if (typeof left === 'undefined') {
-      if (dom.length > 0) { return dom[0].scrollLeft; }
-      return null;
-    }
-    return dom.scrollTo(left, undefined, duration, easing, callback);
-  },
-};
 
 var Methods = {
   // Classes and attributes
@@ -1460,25 +831,25 @@ var Methods = {
   dataset: function dataset() {
     var el = this[0];
     if (!el) { return undefined; }
-    var dataset$$1 = {};
+    var dataset = {};
     if (el.dataset) {
       for (var dataKey in el.dataset) {
-        dataset$$1[dataKey] = el.dataset[dataKey];
+        dataset[dataKey] = el.dataset[dataKey];
       }
     } else {
       for (var i = 0; i < el.attributes.length; i += 1) {
         var attr = el.attributes[i];
         if (attr.name.indexOf('data-') >= 0) {
-          dataset$$1[toCamelCase(attr.name.split('data-')[1])] = attr.value;
+          dataset[toCamelCase(attr.name.split('data-')[1])] = attr.value;
         }
       }
     }
-    for (var key in dataset$$1) {
-      if (dataset$$1[key] === 'false') { dataset$$1[key] = false; }
-      else if (dataset$$1[key] === 'true') { dataset$$1[key] = true; }
-      else if (parseFloat(dataset$$1[key]) === dataset$$1[key] * 1) { dataset$$1[key] *= 1; }
+    for (var key in dataset) {
+      if (dataset[key] === 'false') { dataset[key] = false; }
+      else if (dataset[key] === 'true') { dataset[key] = true; }
+      else if (parseFloat(dataset[key]) === dataset[key] * 1) { dataset[key] *= 1; }
     }
-    return dataset$$1;
+    return dataset;
   },
   val: function val(value) {
     var this$1 = this;
@@ -1545,21 +916,16 @@ var Methods = {
       listener = args[2];
       capture = args[3];
     }
-
     function handleLiveEvent(e) {
       var target = e.target;
-      // console.log('target', eventType, target);
       if (!target) { return; }
-      // console.log('here');
       var eventData = e.target.dom7EventData || [];
       eventData.unshift(e);
       if ($$1(target).is(targetSelector)) { listener.apply(target, eventData); }
       else {
         var parents = $$1(target).parents();
         for (var k = 0; k < parents.length; k += 1) {
-          if ($$1(parents[k]).is(targetSelector)) {
-            listener.apply(parents[k], eventData);
-          }
+          if ($$1(parents[k]).is(targetSelector)) { listener.apply(parents[k], eventData); }
         }
       }
     }
@@ -1709,7 +1075,8 @@ var Methods = {
     var dom = this;
     var i;
     function fireCallBack(e) {
-      callback(e);
+      if (e.target !== this) { return; }
+      callback.call(this, e);
       for (i = 0; i < events.length; i += 1) {
         dom.off(events[i], fireCallBack);
       }
@@ -1793,12 +1160,20 @@ var Methods = {
     var this$1 = this;
 
     for (var i = 0; i < this.length; i += 1) {
-      this$1[i].style.display = 'block';
+      var el = this$1[i];
+      if (el.style.display === 'none') {
+        el.style.display = '';
+      }
+      if (window.getComputedStyle(el, null).getPropertyValue('display') === 'none') {
+        // Still not visible
+        el.style.display = 'block';
+      }
     }
     return this;
   },
   styles: function styles() {
     if (this[0]) { return window.getComputedStyle(this[0], null); }
+    return {};
   },
   css: function css(props, value) {
     var this$1 = this;
@@ -1830,7 +1205,7 @@ var Methods = {
     var this$1 = this;
 
     var arr = [];
-    for (var i = 0; i < this.length; i+= 1) {
+    for (var i = 0; i < this.length; i += 1) {
       arr.push(this$1[i]);
     }
     return arr;
@@ -2249,225 +1624,333 @@ for (var i = 0; i < shortcuts.length; i += 1) {
   createMethod(shortcuts[i]);
 }
 
-function animate(initialProps, initialParams) {
-  var els = this;
-  var a = {
-    props: $$1.extend({}, initialProps),
-    params: $$1.extend({
-      duration: 300,
-      easing: 'swing', // or 'linear'
-      /* Callbacks
-      begin(elements)
-      complete(elements)
-      progress(elements, complete, remaining, start, tweenValue)
-      */
-    }, initialParams),
+var Scroll = {
+  scrollTo: function scrollTo() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
 
-    elements: els,
-    animating: false,
-    que: [],
+    var left = args[0];
+    var top = args[1];
+    var duration = args[2];
+    var easing = args[3];
+    var callback = args[4];
+    if (args.length === 4 && typeof easing === 'function') {
+      callback = easing;
+      var assign;
+      (assign = args, left = assign[0], top = assign[1], duration = assign[2], callback = assign[3], easing = assign[4]);
+    }
+    if (typeof easing === 'undefined') { easing = 'swing'; }
 
-    easingProgress: function easingProgress(easing, progress) {
-      if (easing === 'swing') {
-        return 0.5 - (Math.cos(progress * Math.PI) / 2);
+    return this.each(function animate() {
+      var el = this;
+      var currentTop;
+      var currentLeft;
+      var maxTop;
+      var maxLeft;
+      var newTop;
+      var newLeft;
+      var scrollTop;
+      var scrollLeft;
+      var animateTop = top > 0 || top === 0;
+      var animateLeft = left > 0 || left === 0;
+      if (typeof easing === 'undefined') {
+        easing = 'swing';
       }
-      if (typeof easing === 'function') {
-        return easing(progress);
-      }
-      return progress;
-    },
-    stop: function stop() {
-      if (a.frameId) {
-        cancelAnimationFrame(a.frameId);
-      }
-      a.animating = false;
-      a.elements.each(function (index, el) {
-        var element = el;
-        delete element.dom7AnimateInstance;
-      });
-      a.que = [];
-    },
-    done: function done(complete) {
-      a.animating = false;
-      a.elements.each(function (index, el) {
-        var element = el;
-        delete element.dom7AnimateInstance;
-      });
-      if (complete) { complete(els); }
-      if (a.que.length > 0) {
-        var que = a.que.shift();
-        a.animate(que[0], que[1]);
-      }
-    },
-    animate: function animate(props, params) {
-      if (a.animating) {
-        a.que.push([props, params]);
-        return a;
-      }
-      var elements = [];
-
-      // Define & Cache Initials & Units
-      a.elements.each(function (index, el) {
-        var initialFullValue;
-        var initialValue;
-        var unit;
-        var finalValue;
-        var finalFullValue;
-
-        if (!el.dom7AnimateInstance) { a.elements[index].dom7AnimateInstance = a; }
-
-        elements[index] = {
-          container: el,
-        };
-        Object.keys(props).forEach(function (prop) {
-          initialFullValue = window.getComputedStyle(el, null).getPropertyValue(prop).replace(',', '.');
-          initialValue = parseFloat(initialFullValue);
-          unit = initialFullValue.replace(initialValue, '');
-          finalValue = parseFloat(props[prop]);
-          finalFullValue = props[prop] + unit;
-          elements[index][prop] = {
-            initialFullValue: initialFullValue,
-            initialValue: initialValue,
-            unit: unit,
-            finalValue: finalValue,
-            finalFullValue: finalFullValue,
-            currentValue: initialValue,
-          };
-        });
-      });
-
-      var startTime = null;
-      var time;
-      var elementsDone = 0;
-      var propsDone = 0;
-      var done;
-      var began = false;
-
-      a.animating = true;
-
-      function render() {
-        time = new Date().getTime();
-        var progress;
-        var easeProgress;
-        // let el;
-        if (!began) {
-          began = true;
-          if (params.begin) { params.begin(els); }
+      if (animateTop) {
+        currentTop = el.scrollTop;
+        if (!duration) {
+          el.scrollTop = top;
         }
+      }
+      if (animateLeft) {
+        currentLeft = el.scrollLeft;
+        if (!duration) {
+          el.scrollLeft = left;
+        }
+      }
+      if (!duration) { return; }
+      if (animateTop) {
+        maxTop = el.scrollHeight - el.offsetHeight;
+        newTop = Math.max(Math.min(top, maxTop), 0);
+      }
+      if (animateLeft) {
+        maxLeft = el.scrollWidth - el.offsetWidth;
+        newLeft = Math.max(Math.min(left, maxLeft), 0);
+      }
+      var startTime = null;
+      if (animateTop && newTop === currentTop) { animateTop = false; }
+      if (animateLeft && newLeft === currentLeft) { animateLeft = false; }
+      function render(time) {
+        if ( time === void 0 ) time = new Date().getTime();
+
         if (startTime === null) {
           startTime = time;
         }
-        if (params.progress) {
-          params.progress(els, Math.max(Math.min((time - startTime) / params.duration, 1), 0), ((startTime + params.duration) - time < 0 ? 0 : (startTime + params.duration) - time), startTime);
+        var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
+        var easeProgress = easing === 'linear' ? progress : (0.5 - (Math.cos(progress * Math.PI) / 2));
+        var done;
+        if (animateTop) { scrollTop = currentTop + (easeProgress * (newTop - currentTop)); }
+        if (animateLeft) { scrollLeft = currentLeft + (easeProgress * (newLeft - currentLeft)); }
+        if (animateTop && newTop > currentTop && scrollTop >= newTop) {
+          el.scrollTop = newTop;
+          done = true;
+        }
+        if (animateTop && newTop < currentTop && scrollTop <= newTop) {
+          el.scrollTop = newTop;
+          done = true;
+        }
+        if (animateLeft && newLeft > currentLeft && scrollLeft >= newLeft) {
+          el.scrollLeft = newLeft;
+          done = true;
+        }
+        if (animateLeft && newLeft < currentLeft && scrollLeft <= newLeft) {
+          el.scrollLeft = newLeft;
+          done = true;
         }
 
-        elements.forEach(function (element) {
-          var el = element;
-          if (done || el.done) { return; }
-          Object.keys(props).forEach(function (prop) {
-            if (done || el.done) { return; }
-            progress = Math.max(Math.min((time - startTime) / params.duration, 1), 0);
-            easeProgress = a.easingProgress(params.easing, progress);
-            var ref = el[prop];
-            var initialValue = ref.initialValue;
-            var finalValue = ref.finalValue;
-            var unit = ref.unit;
-            el[prop].currentValue = initialValue + (easeProgress * (finalValue - initialValue));
-            var currentValue = el[prop].currentValue;
+        if (done) {
+          if (callback) { callback(); }
+          return;
+        }
+        if (animateTop) { el.scrollTop = scrollTop; }
+        if (animateLeft) { el.scrollLeft = scrollLeft; }
+        requestAnimationFrame(render);
+      }
+      requestAnimationFrame(render);
+    });
+  },
+  // scrollTop(top, duration, easing, callback) {
+  scrollTop: function scrollTop() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
 
-            if (
-              (finalValue > initialValue && currentValue >= finalValue) ||
-              (finalValue < initialValue && currentValue <= finalValue)) {
-              el.container.style[prop] = finalValue + unit;
-              propsDone += 1;
-              if (propsDone === Object.keys(props).length) {
-                el.done = true;
-                elementsDone += 1;
-              }
-              if (elementsDone === elements.length) {
-                done = true;
-              }
-            }
-            if (done) {
-              a.done(params.complete);
-              return;
-            }
-            el.container.style[prop] = currentValue + unit;
+    var top = args[0];
+    var duration = args[1];
+    var easing = args[2];
+    var callback = args[3];
+    if (args.length === 3 && typeof easing === 'function') {
+      var assign;
+      (assign = args, top = assign[0], duration = assign[1], callback = assign[2], easing = assign[3]);
+    }
+    var dom = this;
+    if (typeof top === 'undefined') {
+      if (dom.length > 0) { return dom[0].scrollTop; }
+      return null;
+    }
+    return dom.scrollTo(undefined, top, duration, easing, callback);
+  },
+  scrollLeft: function scrollLeft() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    var left = args[0];
+    var duration = args[1];
+    var easing = args[2];
+    var callback = args[3];
+    if (args.length === 3 && typeof easing === 'function') {
+      var assign;
+      (assign = args, left = assign[0], duration = assign[1], callback = assign[2], easing = assign[3]);
+    }
+    var dom = this;
+    if (typeof left === 'undefined') {
+      if (dom.length > 0) { return dom[0].scrollLeft; }
+      return null;
+    }
+    return dom.scrollTo(left, undefined, duration, easing, callback);
+  },
+};
+
+var Animate = {
+  animate: function animate(initialProps, initialParams) {
+    var els = this;
+    var a = {
+      props: $$1.extend({}, initialProps),
+      params: $$1.extend({
+        duration: 300,
+        easing: 'swing', // or 'linear'
+        /* Callbacks
+        begin(elements)
+        complete(elements)
+        progress(elements, complete, remaining, start, tweenValue)
+        */
+      }, initialParams),
+
+      elements: els,
+      animating: false,
+      que: [],
+
+      easingProgress: function easingProgress(easing, progress) {
+        if (easing === 'swing') {
+          return 0.5 - (Math.cos(progress * Math.PI) / 2);
+        }
+        if (typeof easing === 'function') {
+          return easing(progress);
+        }
+        return progress;
+      },
+      stop: function stop() {
+        if (a.frameId) {
+          cancelAnimationFrame(a.frameId);
+        }
+        a.animating = false;
+        a.elements.each(function (index, el) {
+          var element = el;
+          delete element.dom7AnimateInstance;
+        });
+        a.que = [];
+      },
+      done: function done(complete) {
+        a.animating = false;
+        a.elements.each(function (index, el) {
+          var element = el;
+          delete element.dom7AnimateInstance;
+        });
+        if (complete) { complete(els); }
+        if (a.que.length > 0) {
+          var que = a.que.shift();
+          a.animate(que[0], que[1]);
+        }
+      },
+      animate: function animate(props, params) {
+        if (a.animating) {
+          a.que.push([props, params]);
+          return a;
+        }
+        var elements = [];
+
+        // Define & Cache Initials & Units
+        a.elements.each(function (index, el) {
+          var initialFullValue;
+          var initialValue;
+          var unit;
+          var finalValue;
+          var finalFullValue;
+
+          if (!el.dom7AnimateInstance) { a.elements[index].dom7AnimateInstance = a; }
+
+          elements[index] = {
+            container: el,
+          };
+          Object.keys(props).forEach(function (prop) {
+            initialFullValue = window.getComputedStyle(el, null).getPropertyValue(prop).replace(',', '.');
+            initialValue = parseFloat(initialFullValue);
+            unit = initialFullValue.replace(initialValue, '');
+            finalValue = parseFloat(props[prop]);
+            finalFullValue = props[prop] + unit;
+            elements[index][prop] = {
+              initialFullValue: initialFullValue,
+              initialValue: initialValue,
+              unit: unit,
+              finalValue: finalValue,
+              finalFullValue: finalFullValue,
+              currentValue: initialValue,
+            };
           });
         });
-        if (done) { return; }
-        // Then call
+
+        var startTime = null;
+        var time;
+        var elementsDone = 0;
+        var propsDone = 0;
+        var done;
+        var began = false;
+
+        a.animating = true;
+
+        function render() {
+          time = new Date().getTime();
+          var progress;
+          var easeProgress;
+          // let el;
+          if (!began) {
+            began = true;
+            if (params.begin) { params.begin(els); }
+          }
+          if (startTime === null) {
+            startTime = time;
+          }
+          if (params.progress) {
+            params.progress(els, Math.max(Math.min((time - startTime) / params.duration, 1), 0), ((startTime + params.duration) - time < 0 ? 0 : (startTime + params.duration) - time), startTime);
+          }
+
+          elements.forEach(function (element) {
+            var el = element;
+            if (done || el.done) { return; }
+            Object.keys(props).forEach(function (prop) {
+              if (done || el.done) { return; }
+              progress = Math.max(Math.min((time - startTime) / params.duration, 1), 0);
+              easeProgress = a.easingProgress(params.easing, progress);
+              var ref = el[prop];
+              var initialValue = ref.initialValue;
+              var finalValue = ref.finalValue;
+              var unit = ref.unit;
+              el[prop].currentValue = initialValue + (easeProgress * (finalValue - initialValue));
+              var currentValue = el[prop].currentValue;
+
+              if (
+                (finalValue > initialValue && currentValue >= finalValue) ||
+                (finalValue < initialValue && currentValue <= finalValue)) {
+                el.container.style[prop] = finalValue + unit;
+                propsDone += 1;
+                if (propsDone === Object.keys(props).length) {
+                  el.done = true;
+                  elementsDone += 1;
+                }
+                if (elementsDone === elements.length) {
+                  done = true;
+                }
+              }
+              if (done) {
+                a.done(params.complete);
+                return;
+              }
+              el.container.style[prop] = currentValue + unit;
+            });
+          });
+          if (done) { return; }
+          // Then call
+          a.frameId = requestAnimationFrame(render);
+        }
         a.frameId = requestAnimationFrame(render);
-      }
-      a.frameId = requestAnimationFrame(render);
-      return a;
-    },
-  };
+        return a;
+      },
+    };
 
-  if (a.elements.length === 0) {
-    return els;
-  }
-
-  var animateInstance;
-  for (var i = 0; i < a.elements.length; i += 1) {
-    if (a.elements[i].dom7AnimateInstance) {
-      animateInstance = a.elements[i].dom7AnimateInstance;
-    } else { a.elements[i].dom7AnimateInstance = a; }
-  }
-  if (!animateInstance) {
-    animateInstance = a;
-  }
-
-  if (initialProps === 'stop') {
-    animateInstance.stop();
-  } else {
-    animateInstance.animate(a.props, a.params);
-  }
-
-  return els;
-}
-
-function stop() {
-  var els = this;
-  for (var i = 0; i < els.length; i += 1) {
-    if (els[i].dom7AnimateInstance) {
-      els[i].dom7AnimateInstance.stop();
+    if (a.elements.length === 0) {
+      return els;
     }
-  }
-}
 
+    var animateInstance;
+    for (var i = 0; i < a.elements.length; i += 1) {
+      if (a.elements[i].dom7AnimateInstance) {
+        animateInstance = a.elements[i].dom7AnimateInstance;
+      } else { a.elements[i].dom7AnimateInstance = a; }
+    }
+    if (!animateInstance) {
+      animateInstance = a;
+    }
 
+    if (initialProps === 'stop') {
+      animateInstance.stop();
+    } else {
+      animateInstance.animate(a.props, a.params);
+    }
 
+    return els;
+  },
 
-var Animate = Object.freeze({
-	animate: animate,
-	stop: stop
-});
+  stop: function stop() {
+    var els = this;
+    for (var i = 0; i < els.length; i += 1) {
+      if (els[i].dom7AnimateInstance) {
+        els[i].dom7AnimateInstance.stop();
+      }
+    }
+  },
+};
 
-// Utils & Helpers
-Object.keys(Utils).forEach(function (key) {
-  $$1[key] = Utils[key];
-});
-
-// Methods
-Object.keys(Methods).forEach(function (key) {
-  $$1.fn[key] = Methods[key];
-});
-
-// Scroll
-Object.keys(Scroll).forEach(function (key) {
-  $$1.fn[key] = Scroll[key];
-});
-
-// Animate
-Object.keys(Animate).forEach(function (key) {
-  $$1.fn[key] = Animate[key];
-});
-
-// Ajax
-Object.keys(Ajax).forEach(function (key) {
-  $$1[key] = Ajax[key];
-});
+// Install methods
+$$1.use(Methods, Scroll, Animate);
 
 /**
  * https://github.com/gre/bezier-easing
@@ -2671,7 +2154,56 @@ for (var i$1 = 0; i$1 < defaultDiacriticsRemovalap.length; i$1 += 1) {
   }
 }
 
-var Utils$1 = {
+var createPromise = function createPromise(handler) {
+  var resolved = false;
+  var rejected = false;
+  var resolveArgs;
+  var rejectArgs;
+  var promiseHandlers = {
+    then: undefined,
+    catch: undefined,
+  };
+  var promise = {
+    then: function then(thenHandler) {
+      if (resolved) {
+        thenHandler.apply(void 0, resolveArgs);
+      } else {
+        promiseHandlers.then = thenHandler;
+      }
+      return promise;
+    },
+    catch: function catch$1(catchHandler) {
+      if (rejected) {
+        catchHandler.apply(void 0, rejectArgs);
+      } else {
+        promiseHandlers.catch = catchHandler;
+      }
+      return promise;
+    },
+  };
+
+  function resolve() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    resolved = true;
+    if (promiseHandlers.then) { promiseHandlers.then.apply(promiseHandlers, args); }
+    else { resolveArgs = args; }
+  }
+  function reject() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    rejected = true;
+    if (promiseHandlers.catch) { promiseHandlers.catch.apply(promiseHandlers, args); }
+    else { rejectArgs = args; }
+  }
+  handler(resolve, reject);
+
+  return promise;
+};
+
+var Utils = {
   deleteProps: function deleteProps(obj) {
     var object = obj;
     Object.keys(object).forEach(function (key) {
@@ -2699,58 +2231,13 @@ var Utils$1 = {
     return setTimeout(callback, delay);
   },
   nextFrame: function nextFrame(callback) {
-    return Utils$1.requestAnimationFrame(callback);
+    return Utils.requestAnimationFrame(callback);
   },
   now: function now() {
     return Date.now();
   },
   promise: function promise(handler) {
-    var resolved = false;
-    var rejected = false;
-    var resolveArgs;
-    var rejectArgs;
-    var promiseHandlers = {
-      then: undefined,
-      catch: undefined,
-    };
-    var promise = {
-      then: function then(thenHandler) {
-        if (resolved) {
-          thenHandler.apply(void 0, resolveArgs);
-        } else {
-          promiseHandlers.then = thenHandler;
-        }
-        return promise;
-      },
-      catch: function catch$1(catchHandler) {
-        if (rejected) {
-          catchHandler.apply(void 0, rejectArgs);
-        } else {
-          promiseHandlers.catch = catchHandler;
-        }
-        return promise;
-      },
-    };
-
-    function resolve() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      resolved = true;
-      if (promiseHandlers.then) { promiseHandlers.then.apply(promiseHandlers, args); }
-      else { resolveArgs = args; }
-    }
-    function reject() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      rejected = true;
-      if (promiseHandlers.catch) { promiseHandlers.catch.apply(promiseHandlers, args); }
-      else { rejectArgs = args; }
-    }
-    handler(resolve, reject);
-
-    return promise;
+    return window.Promise ? new Promise(handler) : createPromise(handler);
   },
   requestAnimationFrame: function requestAnimationFrame(callback) {
     if (window.requestAnimationFrame) { return window.requestAnimationFrame(callback); }
@@ -2824,6 +2311,57 @@ var Utils$1 = {
     }
     return curTransform || 0;
   },
+  serializeObject: function serializeObject(obj, parents) {
+    if ( parents === void 0 ) parents = [];
+
+    if (typeof obj === 'string') { return obj; }
+    var resultArray = [];
+    var separator = '&';
+    var newParents;
+    function varName(name) {
+      if (parents.length > 0) {
+        var parentParts = '';
+        for (var j = 0; j < parents.length; j += 1) {
+          if (j === 0) { parentParts += parents[j]; }
+          else { parentParts += "[" + (encodeURIComponent(parents[j])) + "]"; }
+        }
+        return (parentParts + "[" + (encodeURIComponent(name)) + "]");
+      }
+      return encodeURIComponent(name);
+    }
+    function varValue(value) {
+      return encodeURIComponent(value);
+    }
+    Object.keys(obj).forEach(function (prop) {
+      var toPush;
+      if (Array.isArray(obj[prop])) {
+        toPush = [];
+        for (var i = 0; i < obj[prop].length; i += 1) {
+          if (!Array.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
+            newParents = parents.slice();
+            newParents.push(prop);
+            newParents.push(String(i));
+            toPush.push(Utils.serializeObject(obj[prop][i], newParents));
+          } else {
+            toPush.push(((varName(prop)) + "[]=" + (varValue(obj[prop][i]))));
+          }
+        }
+        if (toPush.length > 0) { resultArray.push(toPush.join(separator)); }
+      } else if (obj[prop] === null || obj[prop] === '') {
+        resultArray.push(((varName(prop)) + "="));
+      } else if (typeof obj[prop] === 'object') {
+        // Object, convert to named array
+        newParents = parents.slice();
+        newParents.push(prop);
+        toPush = Utils.serializeObject(obj[prop], newParents);
+        if (toPush !== '') { resultArray.push(toPush); }
+      } else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
+        // Should be string or plain value
+        resultArray.push(((varName(prop)) + "=" + (varValue(obj[prop]))));
+      } else if (obj[prop] === '') { resultArray.push(varName(prop)); }
+    });
+    return resultArray.join(separator);
+  },
   isObject: function isObject(o) {
     return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
   },
@@ -2854,11 +2392,11 @@ var Utils$1 = {
           if (desc !== undefined && desc.enumerable) {
             if (!deep) {
               to[nextKey] = nextSource[nextKey];
-            } else if (Utils$1.isObject(to[nextKey]) && Utils$1.isObject(nextSource[nextKey])) {
-              Utils$1.extend(to[nextKey], nextSource[nextKey]);
-            } else if (!Utils$1.isObject(to[nextKey]) && Utils$1.isObject(nextSource[nextKey])) {
+            } else if (Utils.isObject(to[nextKey]) && Utils.isObject(nextSource[nextKey])) {
+              Utils.extend(to[nextKey], nextSource[nextKey]);
+            } else if (!Utils.isObject(to[nextKey]) && Utils.isObject(nextSource[nextKey])) {
               to[nextKey] = {};
-              Utils$1.extend(to[nextKey], nextSource[nextKey]);
+              Utils.extend(to[nextKey], nextSource[nextKey]);
             } else {
               to[nextKey] = nextSource[nextKey];
             }
@@ -3055,18 +2593,18 @@ Framework7Class.prototype.emit = function emit () {
   }
   return self;
 };
-Framework7Class.prototype.useInstanceModulesParams = function useInstanceModulesParams (instanceParams) {
+Framework7Class.prototype.useModulesParams = function useModulesParams (instanceParams) {
   var instance = this;
   if (!instance.modules) { return; }
   Object.keys(instance.modules).forEach(function (moduleName) {
     var module = instance.modules[moduleName];
     // Extend params
     if (module.params) {
-      Utils$1.extend(instanceParams, module.params);
+      Utils.extend(instanceParams, module.params);
     }
   });
 };
-Framework7Class.prototype.useInstanceModules = function useInstanceModules (modulesParams) {
+Framework7Class.prototype.useModules = function useModules (modulesParams) {
     if ( modulesParams === void 0 ) modulesParams = {};
 
   var instance = this;
@@ -3104,7 +2642,7 @@ Framework7Class.installModule = function installModule (module) {
 
   var Class = this;
   if (!Class.prototype.modules) { Class.prototype.modules = {}; }
-  var name = module.name || (((Object.keys(Class.prototype.modules).length) + "_" + (Utils$1.now())));
+  var name = module.name || (((Object.keys(Class.prototype.modules).length) + "_" + (Utils.now())));
   Class.prototype.modules[name] = module;
   // Prototype
   if (module.proto) {
@@ -3151,10 +2689,10 @@ var Framework7$1 = (function (Framework7Class$$1) {
     };
 
     // Extend defaults with modules params
-    app.useInstanceModulesParams(defaults);
+    app.useModulesParams(defaults);
 
     // Extend defaults with passed params
-    app.params = Utils$1.extend(defaults, params);
+    app.params = Utils.extend(defaults, params);
 
     // Routes
     app.routes = app.params.routes;
@@ -3177,7 +2715,7 @@ var Framework7$1 = (function (Framework7Class$$1) {
     }
 
     // Install Modules
-    app.useInstanceModules();
+    app.useModules();
 
     // Init
     if (app.params.init) {
@@ -3211,17 +2749,17 @@ var Framework7$1 = (function (Framework7Class$$1) {
     // Data
     app.data = {};
     if (app.params.data && typeof app.params.data === 'function') {
-      Utils$1.extend(app.data, app.params.data.bind(app)());
+      Utils.extend(app.data, app.params.data.bind(app)());
     } else if (app.params.data) {
-      Utils$1.extend(app.data, app.params.data);
+      Utils.extend(app.data, app.params.data);
     }
     // Methods
     app.methods = {};
     if (app.params.methods) {
-      Utils$1.extend(app.methods, app.params.methods);
+      Utils.extend(app.methods, app.params.methods);
     }
     // Init class
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       app.root.removeClass('framework7-initializing');
     });
     // Emit, init other modules
@@ -3240,89 +2778,160 @@ var Framework7$1 = (function (Framework7Class$$1) {
 
 Framework7$1.Class = Framework7Class;
 
-var Utils$3 = {
+var Device$2 = {
+  name: 'device',
+  proto: {
+    device: Device$1,
+  },
+  static: {
+    device: Device$1,
+  },
+  on: {
+    init: function init() {
+      var classNames = [];
+      var html = document.querySelector('html');
+      // Pixel Ratio
+      classNames.push(("device-pixel-ratio-" + (Math.floor(Device$1.pixelRatio))));
+      if (Device$1.pixelRatio >= 2) {
+        classNames.push('device-retina');
+      }
+      // OS classes
+      if (Device$1.os) {
+        classNames.push(("device-" + (Device$1.os)), ("device-" + (Device$1.os) + "-" + (Device$1.osVersion.split('.')[0])), ("device-" + (Device$1.os) + "-" + (Device$1.osVersion.replace(/\./g, '-'))));
+        if (Device$1.os === 'ios') {
+          var major = parseInt(Device$1.osVersion.split('.')[0], 10);
+          for (var i = major - 1; i >= 6; i -= 1) {
+            classNames.push(("device-ios-gt-" + i));
+          }
+        }
+      } else if (Device$1.desktop) {
+        classNames.push('device-desktop');
+      }
+      // Status bar classes
+      if (Device$1.statusBar) {
+        classNames.push('with-statusbar-overlay');
+      } else {
+        html.classList.remove('with-statusbar-overlay');
+      }
+
+      // Add html classes
+      classNames.forEach(function (className) {
+        html.classList.add(className);
+      });
+    },
+  },
+};
+
+function Support$1() {
+  var positionStickyProp;
+  var positionSticky = (function supportPositionSticky() {
+    var support = false;
+    var div = document.createElement('div');
+    ('sticky -webkit-sticky -moz-sticky').split(' ').forEach(function (prop) {
+      if (support) { return; }
+      div.style.position = prop;
+      if (div.style.position === prop) {
+        support = true;
+        positionStickyProp = prop;
+      }
+    });
+    return support;
+  }());
+
+  var positionStickyFalsy = (function positionStickyFalsy() {
+    var falsy = false;
+    if (!positionStickyProp) { return false; }
+    var div = document.createElement('div');
+    div.innerHTML = "\n      <div id=\"position-sticky-test\" style=\"overflow:scroll; height: 100px; width:100px; position: absolute; left:0px; top:0px; padding-top:50px; visibility: hidden;\">\n        <div id=\"position-sticky-test-element\" style=\"margin:0; padding:0; height:10px; width:100%; position:" + positionStickyProp + "; top:0\"></div>\n        <div style=\"height: 1000px\"></div>\n      </div>";
+    document.body.appendChild(div);
+    document.getElementById('position-sticky-test').scrollTop = 50;
+    if (document.getElementById('position-sticky-test-element').offsetTop === 50) {
+      falsy = true;
+    }
+    div.parentNode.removeChild(div);
+    return falsy;
+  }());
+
+  return {
+    positionSticky: positionSticky,
+    positionStickyFalsy: positionStickyFalsy,
+    touch: (function checkTouch() {
+      return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
+    }()),
+
+    transforms3d: (function checkTransforms3d() {
+      var div = document.createElement('div').style;
+      return ('webkitPerspective' in div || 'MozPerspective' in div || 'OPerspective' in div || 'MsPerspective' in div || 'perspective' in div);
+    }()),
+
+    flexbox: (function checkFlexbox() {
+      var div = document.createElement('div').style;
+      var styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
+      for (var i = 0; i < styles.length; i += 1) {
+        if (styles[i] in div) { return true; }
+      }
+      return false;
+    }()),
+
+    observer: (function checkObserver() {
+      return ('MutationObserver' in window || 'WebkitMutationObserver' in window);
+    }()),
+
+    passiveListener: (function checkPassiveListener() {
+      var supportsPassive = false;
+      try {
+        var opts = Object.defineProperty({}, 'passive', {
+          get: function get() {
+            supportsPassive = true;
+          },
+        });
+        window.addEventListener('testPassiveListener', null, opts);
+      } catch (e) {
+        // No support
+      }
+      return supportsPassive;
+    }()),
+
+    gestures: (function checkGestures() {
+      return 'ongesturestart' in window;
+    }()),
+  };
+}
+var Support$2 = Support$1();
+
+var Support = {
+  name: 'support',
+  proto: {
+    support: Support$2,
+  },
+  static: {
+    support: Support$2,
+  },
+  on: {
+    init: function init() {
+      var html = document.querySelector('html');
+      var classNames = [];
+      if (Support$2.positionSticky) {
+        classNames.push('support-position-sticky');
+        if (Support$2.positionStickyFalsy) {
+          classNames.push('support-position-sticky-falsy');
+        }
+      }
+      // Add html classes
+      classNames.forEach(function (className) {
+        html.classList.add(className);
+      });
+    },
+  },
+};
+
+var Utils$2 = {
   name: 'utils',
   proto: {
-    utils: Utils$1,
+    utils: Utils,
   },
   static: {
-    Utils: Utils$1,
-  },
-};
-
-var keyPrefix = 'f7storage-';
-var Storage = {
-  get: function get(key) {
-    return Utils$1.promise(function (resolve, reject) {
-      try {
-        var value = JSON.parse(window.localStorage.getItem(("" + keyPrefix + key)));
-        resolve(value);
-      } catch (e) {
-        reject(e);
-      }
-    });
-  },
-  set: function set(key, value) {
-    return Utils$1.promise(function (resolve, reject) {
-      try {
-        window.localStorage.setItem(("" + keyPrefix + key), JSON.stringify(value));
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
-  },
-  remove: function remove(key) {
-    return Utils$1.promise(function (resolve, reject) {
-      try {
-        window.localStorage.removeItem(("" + keyPrefix + key));
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
-  },
-  clear: function clear() {
-
-  },
-  length: function length() {
-
-  },
-  keys: function keys() {
-    return Utils$1.promise(function (resolve, reject) {
-      try {
-        var keys = Object.keys(window.localStorage)
-          .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
-          .map(function (keyName) { return keyName.replace(keyPrefix, ''); });
-        resolve(keys);
-      } catch (e) {
-        reject(e);
-      }
-    });
-  },
-  forEach: function forEach(callback) {
-    return Utils$1.promise(function (resolve, reject) {
-      try {
-        Object.keys(window.localStorage)
-          .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
-          .forEach(function (keyName, index) {
-            var key = keyName.replace(keyPrefix, '');
-            Storage.get(key).then(function (value) {
-              callback(key, value, index);
-            });
-          });
-        resolve();
-      } catch (e) {
-        reject(e);
-      }
-    });
-  },
-};
-
-var Storage$1 = {
-  name: 'storage',
-  static: {
-    Storage: Storage,
+    utils: Utils,
   },
 };
 
@@ -3383,122 +2992,302 @@ var Resize = {
   },
 };
 
-var Device$2 = {
-  name: 'device',
-  proto: {
-    device: Device$1,
-  },
-  static: {
-    Device: Device$1,
-  },
-  on: {
-    init: function init() {
-      var classNames = [];
-      var html = document.querySelector('html');
-      // Pixel Ratio
-      classNames.push(("device-pixel-ratio-" + (Math.floor(Device$1.pixelRatio))));
-      if (Device$1.pixelRatio >= 2) {
-        classNames.push('device-retina');
-      }
-      // OS classes
-      if (Device$1.os) {
-        classNames.push(("device-" + (Device$1.os)), ("device-" + (Device$1.os) + "-" + (Device$1.osVersion.split('.')[0])), ("device-" + (Device$1.os) + "-" + (Device$1.osVersion.replace(/\./g, '-'))));
-        if (Device$1.os === 'ios') {
-          var major = parseInt(Device$1.osVersion.split('.')[0], 10);
-          for (var i = major - 1; i >= 6; i -= 1) {
-            classNames.push(("device-ios-gt-" + i));
-          }
-        }
-      } else if (Device$1.desktop) {
-        classNames.push('device-desktop');
-      }
-      // Status bar classes
-      if (Device$1.statusBar) {
-        classNames.push('with-statusbar-overlay');
-      } else {
-        html.classList.remove('with-statusbar-overlay');
-      }
+/* eslint no-param-reassign: "off" */
+var globals = {};
+var jsonpRequests = 0;
 
-      // Add html classes
-      classNames.forEach(function (className) {
-        html.classList.add(className);
-      });
-    },
-  },
-};
-
-function supportsPassiveListener() {
-  var supportsPassive = false;
-  try {
-    var opts = Object.defineProperty({}, 'passive', {
-      get: function get() {
-        supportsPassive = true;
-      },
-    });
-    window.addEventListener('testPassiveListener', null, opts);
-  } catch (e) {
-    supportsPassive = false;
-  }
-  return supportsPassive;
-}
-function supportTouch() {
-  return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
-}
-
-var positionSticky = false;
-function supportPositionSticky() {
-  var div = document.createElement('div');
-  ('sticky -webkit-sticky -moz-sticky').split(' ').forEach(function (prop) {
-    if (positionSticky) { return; }
-    div.style.position = prop;
-    if (div.style.position === prop) { positionSticky = prop; }
+function Request$1(options) {
+  var globalsNoCallbacks = Utils.extend({}, globals);
+  ('start beforeSend error complete success statusCode').split(' ').forEach(function (callbackName) {
+    delete globalsNoCallbacks[callbackName];
   });
-}
-supportPositionSticky();
-function positionStickyFalsy() {
-  var falsy = false;
-  if (!positionSticky) { return falsy; }
-  var div = document.createElement('div');
-  div.innerHTML = "\n    <div id=\"position-sticky-test\" style=\"overflow:scroll; height: 100px; width:100px; position: absolute; left:0px; top:0px; padding-top:50px; visibility: hidden;\">\n      <div id=\"position-sticky-test-element\" style=\"margin:0; padding:0; height:10px; width:100%; position:" + positionSticky + "; top:0\"></div>\n      <div style=\"height: 1000px\"></div>\n    </div>";
-  document.body.appendChild(div);
-  document.getElementById('position-sticky-test').scrollTop = 50;
-  if (document.getElementById('position-sticky-test-element').offsetTop === 50) {
-    falsy = true;
-  }
-  div.parentNode.removeChild(div);
-  return falsy;
-}
-var Support$1 = {
-  touch: supportTouch(),
-  // Passive Listeners
-  passiveListener: supportsPassiveListener(),
-  positionSticky: positionSticky,
-  positionStickyFalsy: positionStickyFalsy(),
-};
+  var defaults = Utils.extend({
+    url: window.location.toString(),
+    method: 'GET',
+    data: false,
+    async: true,
+    cache: true,
+    user: '',
+    password: '',
+    headers: {},
+    xhrFields: {},
+    statusCode: {},
+    processData: true,
+    dataType: 'text',
+    contentType: 'application/x-www-form-urlencoded',
+    timeout: 0,
+  }, globalsNoCallbacks);
 
-var Support = {
-  name: 'support',
-  proto: {
-    support: Support$1,
-  },
-  static: {
-    Support: Support$1,
-  },
-  on: {
-    init: function init() {
-      var html = document.querySelector('html');
-      var classNames = [];
-      if (Support$1.positionSticky) {
-        classNames.push('support-position-sticky');
-        if (Support$1.positionStickyFalsy) {
-          classNames.push('support-position-sticky-falsy');
+  options = Utils.extend({}, defaults, options);
+
+  // For jQuery guys
+  if (options.type) { options.method = options.type; }
+
+  // Function to run XHR callbacks and events
+  function fireCallback(callbackName) {
+    var data = [], len = arguments.length - 1;
+    while ( len-- > 0 ) data[ len ] = arguments[ len + 1 ];
+
+    /*
+      Callbacks:
+      start/beforeSend (xhr),
+      error (xhr, status),
+      complete (xhr, stautus),
+      success (response, status, xhr),
+      statusCode ()
+    */
+    if (globals[callbackName]) { globals[callbackName].apply(globals, data); }
+    if (options[callbackName]) { options[callbackName].apply(options, data); }
+  }
+
+  // Parameters Prefix
+  var paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
+
+  // UC method
+  var method = options.method.toUpperCase();
+
+  // Data to modify GET URL
+  if ((method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') && options.data) {
+    var stringData;
+    if (typeof options.data === 'string') {
+      // Should be key=value string
+      if (options.data.indexOf('?') >= 0) { stringData = options.data.split('?')[1]; }
+      else { stringData = options.data; }
+    } else {
+      // Should be key=value object
+      stringData = Utils.serializeObject(options.data);
+    }
+    if (stringData.length) {
+      options.url += paramsPrefix + stringData;
+      if (paramsPrefix === '?') { paramsPrefix = '&'; }
+    }
+  }
+
+  // JSONP
+  if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
+    var callbackName = "f7jsonp_" + (Date.now() + ((jsonpRequests += 1)));
+    var abortTimeout;
+    var callbackSplit = options.url.split('callback=');
+    var requestUrl = (callbackSplit[0]) + "callback=" + callbackName;
+    if (callbackSplit[1].indexOf('&') >= 0) {
+      var addVars = callbackSplit[1].split('&').filter(function (el) { return el.indexOf('=') > 0; }).join('&');
+      if (addVars.length > 0) { requestUrl += "&" + addVars; }
+    }
+
+    // Create script
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.onerror = function onerror() {
+      clearTimeout(abortTimeout);
+      fireCallback('error', null, 'scripterror');
+      fireCallback('complete', null, 'scripterror');
+    };
+    script.src = requestUrl;
+
+    // Handler
+    window[callbackName] = function jsonpCallback(data) {
+      clearTimeout(abortTimeout);
+      fireCallback('success', data);
+      script.parentNode.removeChild(script);
+      script = null;
+      delete window[callbackName];
+    };
+    document.querySelector('head').appendChild(script);
+
+    if (options.timeout > 0) {
+      abortTimeout = setTimeout(function () {
+        script.parentNode.removeChild(script);
+        script = null;
+        fireCallback('error', null, 'timeout');
+      }, options.timeout);
+    }
+
+    return undefined;
+  }
+
+  // Cache for GET/HEAD requests
+  if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') {
+    if (options.cache === false) {
+      options.url += paramsPrefix + "_nocache" + (Date.now());
+    }
+  }
+
+  // Create XHR
+  var xhr = new XMLHttpRequest();
+
+  // Save Request URL
+  xhr.requestUrl = options.url;
+  xhr.requestParameters = options;
+
+  // Open XHR
+  xhr.open(method, options.url, options.async, options.user, options.password);
+
+  // Create POST Data
+  var postData = null;
+
+  if ((method === 'POST' || method === 'PUT' || method === 'PATCH') && options.data) {
+    if (options.processData) {
+      var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
+      // Post Data
+      if (postDataInstances.indexOf(options.data.constructor) >= 0) {
+        postData = options.data;
+      } else {
+        // POST Headers
+        var boundary = "---------------------------" + (Date.now().toString(16));
+
+        if (options.contentType === 'multipart/form-data') {
+          xhr.setRequestHeader('Content-Type', ("multipart/form-data; boundary=" + boundary));
+        } else {
+          xhr.setRequestHeader('Content-Type', options.contentType);
+        }
+        postData = '';
+        var data$1 = Utils.serializeObject(options.data);
+        if (options.contentType === 'multipart/form-data') {
+          data$1 = data$1.split('&');
+          var newData = [];
+          for (var i = 0; i < data$1.length; i += 1) {
+            newData.push(("Content-Disposition: form-data; name=\"" + (data$1[i].split('=')[0]) + "\"\r\n\r\n" + (data$1[i].split('=')[1]) + "\r\n"));
+          }
+          postData = "--" + boundary + "\r\n" + (newData.join(("--" + boundary + "\r\n"))) + "--" + boundary + "--\r\n";
+        } else {
+          postData = data$1;
         }
       }
-      // Add html classes
-      classNames.forEach(function (className) {
-        html.classList.add(className);
-      });
-    },
+    } else {
+      postData = options.data;
+    }
+  }
+
+  // Additional headers
+  if (options.headers) {
+    Object.keys(options.headers).forEach(function (headerName) {
+      xhr.setRequestHeader(headerName, options[headerName]);
+    });
+  }
+
+  // Check for crossDomain
+  if (typeof options.crossDomain === 'undefined') {
+    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+  }
+
+  if (!options.crossDomain) {
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  }
+
+  if (options.xhrFields) {
+    Utils.extend(xhr, options.xhrFields);
+  }
+
+  var xhrTimeout;
+
+  // Handle XHR
+  xhr.onload = function onload() {
+    if (xhrTimeout) { clearTimeout(xhrTimeout); }
+    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
+      var responseData;
+      if (options.dataType === 'json') {
+        try {
+          responseData = JSON.parse(xhr.responseText);
+          fireCallback('success', responseData, xhr.status, xhr);
+        } catch (err) {
+          fireCallback('error', xhr, 'parseerror');
+        }
+      } else {
+        responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
+        fireCallback('success', responseData, xhr.status, xhr);
+      }
+    } else {
+      fireCallback('error', xhr, xhr.status);
+    }
+    if (options.statusCode) {
+      if (globals.statusCode && globals.statusCode[xhr.status]) { globals.statusCode[xhr.status](xhr); }
+      if (options.statusCode[xhr.status]) { options.statusCode[xhr.status](xhr); }
+    }
+    fireCallback('complete', xhr, xhr.status);
+  };
+
+  xhr.onerror = function onerror() {
+    if (xhrTimeout) { clearTimeout(xhrTimeout); }
+    fireCallback('error', xhr, xhr.status);
+    fireCallback('complete', xhr, 'error');
+  };
+
+  // Ajax start callback
+  fireCallback('start', xhr);
+  fireCallback('beforeSend', xhr);
+
+  // Timeout
+  if (options.timeout > 0) {
+    xhr.onabort = function onabort() {
+      if (xhrTimeout) { clearTimeout(xhrTimeout); }
+    };
+    xhrTimeout = setTimeout(function () {
+      xhr.abort();
+      fireCallback('error', xhr, 'timeout');
+      fireCallback('complete', xhr, 'timeout');
+    }, options.timeout);
+  }
+
+  // Send XHR
+  xhr.send(postData);
+
+  // Return XHR object
+  return xhr;
+}
+
+('get post json').split(' ').forEach(function (methodName) {
+  Request$1[methodName] = function requestMethod() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    var ref = [];
+    var url = ref[0];
+    var data = ref[1];
+    var success = ref[2];
+    var error = ref[3];
+    var dataType = ref[4];
+    if (typeof args[1] === 'function') {
+      var assign;
+      (assign = args, url = assign[0], success = assign[1], error = assign[2], dataType = assign[3]);
+    } else {
+      var assign$1;
+      (assign$1 = args, url = assign$1[0], data = assign$1[1], success = assign$1[2], error = assign$1[3], dataType = assign$1[4]);
+    }
+    [success, error].forEach(function (callback) {
+      if (typeof callback === 'string') {
+        dataType = callback;
+        if (callback === success) { success = undefined; }
+        else { error = undefined; }
+      }
+    });
+    dataType = dataType || (methodName === 'json' ? 'json' : undefined);
+    return Request$1({
+      url: url,
+      method: methodName === 'post' ? 'POST' : 'GET',
+      data: data,
+      success: success,
+      error: error,
+      dataType: dataType,
+    });
+  };
+});
+
+Request$1.setup = function setup(options) {
+  if (options.type && !options.method) {
+    Utils.extend(options, { method: options.type });
+  }
+  Utils.extend(globals, options);
+};
+
+/* eslint no-param-reassign: "off" */
+var Request = {
+  name: 'request',
+  create: function create() {
+    var app = this;
+    app.request = Request$1;
+  },
+  static: {
+    request: Request$1,
   },
 };
 
@@ -4038,12 +3827,12 @@ function initTouch() {
     emitAppTouchEvent('touchend:passive', this, e);
   }
 
-  var passiveListener = Support$1.passiveListener ? { passive: true } : false;
-  var activeListener = Support$1.passiveListener ? { passive: false } : false;
+  var passiveListener = Support$2.passiveListener ? { passive: true } : false;
+  var activeListener = Support$2.passiveListener ? { passive: false } : false;
 
   document.addEventListener('click', appClick, true);
 
-  if (Support$1.passiveListener) {
+  if (Support$2.passiveListener) {
     document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
     document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
     document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
@@ -4066,7 +3855,7 @@ function initTouch() {
     }, false);
   }
 
-  if (Support$1.touch) {
+  if (Support$2.touch) {
     app.on('click', handleClick);
     app.on('touchstart', handleTouchStart);
     app.on('touchmove', handleTouchMove);
@@ -4108,9 +3897,9 @@ var Touch = {
   },
   instance: {
     touchEvents: {
-      start: Support$1.touch ? 'touchstart' : 'mousedown',
-      move: Support$1.touch ? 'touchmove' : 'mousemove',
-      end: Support$1.touch ? 'touchend' : 'mouseup',
+      start: Support$2.touch ? 'touchstart' : 'mousedown',
+      move: Support$2.touch ? 'touchmove' : 'mousemove',
+      end: Support$2.touch ? 'touchend' : 'mouseup',
     },
   },
   on: {
@@ -4123,8 +3912,8 @@ var tempDom = document.createElement('div');
 var Framework7Component = function Framework7Component(c, extend) {
   if ( extend === void 0 ) extend = {};
 
-  var context = Utils$1.extend({}, extend);
-  var component = Utils$1.extend(this, c, { context: context });
+  var context = Utils.extend({}, extend);
+  var component = Utils.extend(this, c, { context: context });
 
   // Apply context
   ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach(function (cycleKey) {
@@ -4134,7 +3923,7 @@ var Framework7Component = function Framework7Component(c, extend) {
   if (component.data) {
     component.data = component.data.bind(context);
     // Data
-    Utils$1.extend(context, component.data());
+    Utils.extend(context, component.data());
   }
   if (component.render) { component.render = component.render.bind(context); }
   if (component.methods) {
@@ -4347,7 +4136,7 @@ var Component = {
 
     // Styles
     var style;
-    var styleScopeId = Utils$1.now();
+    var styleScopeId = Utils.now();
     if (componentString.indexOf('<style>') >= 0) {
       style = componentString.split('<style>')[1].split('</style>')[0];
     } else if (componentString.indexOf('<style scoped>') >= 0) {
@@ -4549,7 +4338,7 @@ function SwipeBack(r) {
   var navbarWidth;
 
   function handleTouchStart(e) {
-    if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || app.swipeout.el || !router.allowPageChange) { return; }
+    if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) { return; }
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
@@ -4858,9 +4647,9 @@ function SwipeBack(r) {
           }
         } else {
           router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next');
-          router.removeEl(currentPage);
+          router.removePage(currentPage);
           if (separateNavbar) {
-            router.removeEl(currentNavbar);
+            router.removeNavbar(currentNavbar);
           }
         }
 
@@ -4882,15 +4671,15 @@ function SwipeBack(r) {
   }
 
   function attachEvents() {
-    var passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
-    var activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
+    var passiveListener = (app.touchEvents.start === 'touchstart' && Support$2.passiveListener) ? { passive: true, capture: false } : false;
+    var activeListener = Support$2.passiveListener ? { passive: false, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
     $el.on(app.touchEvents.move, handleTouchMove, activeListener);
     $el.on(app.touchEvents.end, handleTouchEnd, passiveListener);
   }
   function detachEvents() {
-    var passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
-    var activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
+    var passiveListener = (app.touchEvents.start === 'touchstart' && Support$2.passiveListener) ? { passive: true, capture: false } : false;
+    var activeListener = Support$2.passiveListener ? { passive: false, capture: false } : false;
     $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
     $el.off(app.touchEvents.move, handleTouchMove, activeListener);
     $el.off(app.touchEvents.end, handleTouchEnd, passiveListener);
@@ -4908,7 +4697,7 @@ function forward(el, forwardOptions) {
   var app = router.app;
   var view = router.view;
 
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
@@ -5024,10 +4813,9 @@ function forward(el, forwardOptions) {
         } else {
           // Page remove event
           router.pageCallback('beforeRemove', $pagesInView[i], $navbarsInView && $navbarsInView[i], 'previous', undefined, options);
-          router.removeEl($pagesInView[i]);
+          router.removePage($pagesInView[i]);
           if (separateNavbar && oldNavbarInnerEl) {
-            // router.removeEl($navbarsInView[i]);
-            router.removeEl(oldNavbarInnerEl);
+            router.removeNavbar(oldNavbarInnerEl);
           }
         }
       }
@@ -5090,13 +4878,15 @@ function forward(el, forwardOptions) {
         $navbarEl.append($newNavbarInner);
       }
     }
-  } else if ($oldPage.next('.page')[0] !== $newPage[0]) {
-    if (f7Component && !newPageInDom) {
-      f7Component.mount(function (componentEl) {
-        $viewEl.append(componentEl);
-      });
-    } else {
-      $viewEl.append($newPage[0]);
+  } else {
+    if ($oldPage.next('.page')[0] !== $newPage[0]) {
+      if (f7Component && !newPageInDom) {
+        f7Component.mount(function (componentEl) {
+          $viewEl.append(componentEl);
+        });
+      } else {
+        $viewEl.append($newPage[0]);
+      }
     }
     if (separateNavbar && $newNavbarInner.length) {
       $navbarEl.append($newNavbarInner[0]);
@@ -5116,9 +4906,9 @@ function forward(el, forwardOptions) {
     } else {
       // Page remove event
       router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', undefined, options);
-      router.removeEl($oldPage);
+      router.removePage($oldPage);
       if (separateNavbar && $oldNavbarInner.length) {
-        router.removeEl($oldNavbarInner);
+        router.removeNavbar($oldNavbarInner);
       }
     }
   } else if (options.reloadAll) {
@@ -5128,16 +4918,14 @@ function forward(el, forwardOptions) {
       if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
         $oldPageEl.addClass('stacked');
         if (separateNavbar) {
-          // $oldNavbarInner.eq(index).addClass('stacked');
           $oldNavbarInnerEl.addClass('stacked');
         }
       } else {
         // Page remove event
         router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner && $oldNavbarInner.eq(index), 'previous', undefined, options);
-        router.removeEl($oldPageEl);
+        router.removePage($oldPageEl);
         if (separateNavbar && $oldNavbarInnerEl.length) {
-          // router.removeEl($oldNavbarInner.eq(index));
-          router.removeEl($oldNavbarInnerEl);
+          router.removeNavbar($oldNavbarInnerEl);
         }
       }
     });
@@ -5145,7 +4933,7 @@ function forward(el, forwardOptions) {
 
   // Load Tab
   if (options.route.route.tab) {
-    router.tabLoad(options.route.route.tab, Utils$1.extend({}, options, {
+    router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
       history: false,
       pushState: false,
     }));
@@ -5193,9 +4981,9 @@ function forward(el, forwardOptions) {
       } else if (!($newPage.attr('data-name') && $newPage.attr('data-name') === 'smart-select-page')) {
         // Remove event
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
-        router.removeEl($oldPage);
+        router.removePage($oldPage);
         if (separateNavbar && $oldNavbarInner.length) {
-          router.removeEl($oldNavbarInner);
+          router.removeNavbar($oldNavbarInner);
         }
       }
     }
@@ -5278,12 +5066,12 @@ function load(loadParams, loadOptions, ignorePageChange) {
 
   if (!options.route && url) {
     options.route = router.findMatchingRoute(url, true);
-    Utils$1.extend(options.route, { route: { url: url, path: url } });
+    Utils.extend(options.route, { route: { url: url, path: url } });
   }
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.forward(pageEl, Utils$1.extend(options, newOptions));
+    return router.forward(pageEl, Utils.extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -5351,8 +5139,8 @@ function navigate(url, navigateOptions) {
   }
   var route;
   if (navigateOptions.createRoute) {
-    route = Utils$1.extend(router.findMatchingRoute(navigateUrl, true), {
-      route: Utils$1.extend({}, navigateOptions.createRoute),
+    route = Utils.extend(router.findMatchingRoute(navigateUrl, true), {
+      route: Utils.extend({}, navigateOptions.createRoute),
     });
   } else {
     route = router.findMatchingRoute(navigateUrl);
@@ -5363,9 +5151,9 @@ function navigate(url, navigateOptions) {
   }
   var options = {};
   if (route.route.options) {
-    Utils$1.extend(options, route.route.options, navigateOptions, { route: route });
+    Utils.extend(options, route.route.options, navigateOptions, { route: route });
   } else {
-    Utils$1.extend(options, navigateOptions, { route: route });
+    Utils.extend(options, navigateOptions, { route: route });
   }
   ('popup popover sheet loginScreen actions').split(' ').forEach(function (modalLoadProp) {
     if (route.route[modalLoadProp]) {
@@ -5385,13 +5173,13 @@ function navigate(url, navigateOptions) {
     ('popup popover sheet loginScreen actions').split(' ').forEach(function (modalLoadProp) {
       if (resolveParams[modalLoadProp]) {
         resolvedAsModal = true;
-        var modalRoute = Utils$1.extend({}, route, { route: resolveParams });
+        var modalRoute = Utils.extend({}, route, { route: resolveParams });
         router.allowPageChange = true;
-        router.modalLoad(modalLoadProp, modalRoute, Utils$1.extend(options, resolveOptions));
+        router.modalLoad(modalLoadProp, modalRoute, Utils.extend(options, resolveOptions));
       }
     });
     if (resolvedAsModal) { return; }
-    router.load(resolveParams, Utils$1.extend(options, resolveOptions), true);
+    router.load(resolveParams, Utils.extend(options, resolveOptions), true);
   }
   function asyncReject() {
     router.allowPageChange = true;
@@ -5409,7 +5197,7 @@ function tabLoad(tabRoute, loadOptions) {
   if ( loadOptions === void 0 ) loadOptions = {};
 
   var router = this;
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
@@ -5535,7 +5323,7 @@ function tabRemove($oldTabEl, $newTabEl, tabRoute) {
       tabChild.f7Component.destroy();
     }
   });
-  $oldTabEl.html('');
+  router.removeTabContent($oldTabEl[0], tabRoute);
 }
 
 function modalLoad(modalType, route, loadOptions) {
@@ -5543,7 +5331,7 @@ function modalLoad(modalType, route, loadOptions) {
 
   var router = this;
   var app = router.app;
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
@@ -5583,10 +5371,14 @@ function modalLoad(modalType, route, loadOptions) {
     modal.on('modalClosed', function () {
       modal.$el.trigger(((modalType.toLowerCase()) + ":beforeremove"), route, modal);
       modal.emit((modalType + "BeforeRemove"), modal.el, route, modal);
-      if (modal.el.f7Component) {
-        modal.el.f7Component.destroy();
+      var modalComponent = modal.el.f7Component;
+      if (modalComponent) {
+        modalComponent.destroy();
       }
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
+        if (modalComponent) {
+          router.removeModal(modal.el);
+        }
         modal.destroy();
         delete modalRoute.modalInstance;
       });
@@ -5606,7 +5398,7 @@ function modalLoad(modalType, route, loadOptions) {
 
       // Set Route
       if (options.route !== router.currentRoute) {
-        router.currentRoute = Utils$1.extend(options.route, { modal: modal });
+        router.currentRoute = Utils.extend(options.route, { modal: modal });
       }
 
       // Update Router History
@@ -5681,7 +5473,7 @@ function modalLoad(modalType, route, loadOptions) {
   }
 }
 function modalRemove(modal) {
-  Utils$1.extend(modal, { closeByRouter: true });
+  Utils.extend(modal, { closeByRouter: true });
   modal.close();
 }
 
@@ -5690,7 +5482,7 @@ function backward(el, backwardOptions) {
   var app = router.app;
   var view = router.view;
 
-  var options = Utils$1.extend({
+  var options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
   }, backwardOptions);
@@ -5780,9 +5572,9 @@ function backward(el, backwardOptions) {
               }
             } else {
               router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
-              router.removeEl($pageToRemove);
+              router.removePage($pageToRemove);
               if (separateNavbar && $navbarToRemove.length > 0) {
-                router.removeEl($navbarToRemove);
+                router.removeNavbar($navbarToRemove);
               }
             }
           }
@@ -5799,9 +5591,9 @@ function backward(el, backwardOptions) {
           $navbarToRemove.addClass('stacked');
         } else if ($pageToRemove.length > 0) {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
-          router.removeEl($pageToRemove);
+          router.removePage($pageToRemove);
           if (separateNavbar && $navbarToRemove.length) {
-            router.removeEl($navbarToRemove);
+            router.removeNavbar($navbarToRemove);
           }
         }
       }
@@ -5855,9 +5647,9 @@ function backward(el, backwardOptions) {
           }
         } else {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined);
-          router.removeEl($pageToRemove);
+          router.removePage($pageToRemove);
           if (separateNavbar && $navbarToRemove.length) {
-            router.removeEl($navbarToRemove);
+            router.removeNavbar($navbarToRemove);
           }
         }
       });
@@ -5887,7 +5679,7 @@ function backward(el, backwardOptions) {
 
   // Load Tab
   if (options.route.route.tab) {
-    router.tabLoad(options.route.route.tab, Utils$1.extend({}, options, {
+    router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
       history: false,
       pushState: false,
     }));
@@ -5924,9 +5716,9 @@ function backward(el, backwardOptions) {
       }
     } else {
       router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined, options);
-      router.removeEl($oldPage);
+      router.removePage($oldPage);
       if (separateNavbar && $oldNavbarInner.length) {
-        router.removeEl($oldNavbarInner);
+        router.removeNavbar($oldNavbarInner);
       }
     }
 
@@ -5996,7 +5788,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 
   // Component Callbacks
   function resolve(pageEl, newOptions) {
-    return router.backward(pageEl, Utils$1.extend(options, newOptions));
+    return router.backward(pageEl, Utils.extend(options, newOptions));
   }
   function reject() {
     router.allowPageChange = true;
@@ -6084,7 +5876,7 @@ function back() {
       previousRoute = {
         url: previousUrl,
         path: previousUrl.split('?')[0],
-        query: Utils$1.parseUrlQuery(previousUrl),
+        query: Utils.parseUrlQuery(previousUrl),
         route: {
           path: previousUrl.split('?')[0],
           url: previousUrl,
@@ -6106,10 +5898,10 @@ function back() {
   var $previousPage = router.$el.children('.page-current').prevAll('.page-previous').eq(0);
   if (!navigateOptions.force && $previousPage.length > 0) {
     if (router.params.pushState && $previousPage[0].f7Page && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url) {
-      router.back(router.history[router.history.length - 2], Utils$1.extend(navigateOptions, { force: true }));
+      router.back(router.history[router.history.length - 2], Utils.extend(navigateOptions, { force: true }));
       return router;
     }
-    router.loadBack({ el: $previousPage }, Utils$1.extend(navigateOptions, {
+    router.loadBack({ el: $previousPage }, Utils.extend(navigateOptions, {
       route: $previousPage[0].f7Page.route,
     }));
     return router;
@@ -6133,7 +5925,7 @@ function back() {
       route = {
         url: navigateUrl,
         path: navigateUrl.split('?')[0],
-        query: Utils$1.parseUrlQuery(navigateUrl),
+        query: Utils.parseUrlQuery(navigateUrl),
         route: {
           path: navigateUrl.split('?')[0],
           url: navigateUrl,
@@ -6146,9 +5938,9 @@ function back() {
   }
   var options = {};
   if (route.route.options) {
-    Utils$1.extend(options, route.route.options, navigateOptions, { route: route });
+    Utils.extend(options, route.route.options, navigateOptions, { route: route });
   } else {
-    Utils$1.extend(options, navigateOptions, { route: route });
+    Utils.extend(options, navigateOptions, { route: route });
   }
 
   if (options.force && router.params.stackPages) {
@@ -6168,7 +5960,7 @@ function back() {
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
-    router.loadBack(resolveParams, Utils$1.extend(options, resolveOptions), true);
+    router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
   }
   function asyncReject() {
     router.allowPageChange = true;
@@ -6192,7 +5984,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     if (router.isAppRouter) {
       // App Router
-      Utils$1.extend(false, router, {
+      Utils.extend(false, router, {
         app: app,
         params: app.params.view,
         routes: app.routes || [],
@@ -6200,12 +5992,13 @@ var Router$1 = (function (Framework7Class$$1) {
       });
     } else {
       // View Router
-      Utils$1.extend(false, router, {
+      Utils.extend(false, router, {
         app: app,
         view: view,
         params: view.params,
         routes: view.routes,
         $el: view.$el,
+        el: view.el,
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
         history: view.history,
@@ -6219,7 +6012,7 @@ var Router$1 = (function (Framework7Class$$1) {
     }
 
     // Install Modules
-    router.useInstanceModules();
+    router.useModules();
 
     // Temporary Dom
     router.tempDom = document.createElement('div');
@@ -6236,7 +6029,7 @@ var Router$1 = (function (Framework7Class$$1) {
       set: function set(newRoute) {
         if ( newRoute === void 0 ) newRoute = {};
 
-        previousRoute = Utils$1.extend({}, currentRoute);
+        previousRoute = Utils.extend({}, currentRoute);
         currentRoute = newRoute;
         if (!currentRoute) { return; }
         router.url = currentRoute.url;
@@ -6256,7 +6049,7 @@ var Router$1 = (function (Framework7Class$$1) {
         previousRoute = newRoute;
       },
     });
-    Utils$1.extend(router, {
+    Utils.extend(router, {
       // Load
       forward: forward,
       load: load,
@@ -6381,7 +6174,7 @@ var Router$1 = (function (Framework7Class$$1) {
     if (router.dynamicNavbar) {
       // Prepare Navbars
       prepareNavbars();
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         // Add class, start animation
         animateNavbars();
         router.$el.addClass(routerTransitionClass);
@@ -6470,7 +6263,7 @@ var Router$1 = (function (Framework7Class$$1) {
         oldPage.append($shadowEl);
       }
     }
-    var easing = Utils$1.bezier(0.25, 0.1, 0.25, 1);
+    var easing = Utils.bezier(0.25, 0.1, 0.25, 1);
 
     function onDone() {
       newPage.transform('').css('opacity', '');
@@ -6498,7 +6291,7 @@ var Router$1 = (function (Framework7Class$$1) {
     }
 
     function render() {
-      var time = Utils$1.now();
+      var time = Utils.now();
       if (!startTime) { startTime = time; }
       var progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
       var easeProgress = easing(progress);
@@ -6506,15 +6299,16 @@ var Router$1 = (function (Framework7Class$$1) {
       if (progress >= 1) {
         done = true;
       }
+      var inverter = router.app.rtl ? -1 : 1;
       if (ios) {
         if (direction === 'forward') {
-          newPage.transform(("translate3d(" + ((1 - easeProgress) * 100) + "%,0,0)"));
-          oldPage.transform(("translate3d(" + (-easeProgress * 20) + "%,0,0)"));
+          newPage.transform(("translate3d(" + ((1 - easeProgress) * 100 * inverter) + "%,0,0)"));
+          oldPage.transform(("translate3d(" + (-easeProgress * 20 * inverter) + "%,0,0)"));
           $shadowEl[0].style.opacity = easeProgress;
           $opacityEl[0].style.opacity = easeProgress;
         } else {
-          newPage.transform(("translate3d(" + (-(1 - easeProgress) * 20) + "%,0,0)"));
-          oldPage.transform(("translate3d(" + (easeProgress * 100) + "%,0,0)"));
+          newPage.transform(("translate3d(" + (-(1 - easeProgress) * 20 * inverter) + "%,0,0)"));
+          oldPage.transform(("translate3d(" + (easeProgress * 100 * inverter) + "%,0,0)"));
           $shadowEl[0].style.opacity = 1 - easeProgress;
           $opacityEl[0].style.opacity = 1 - easeProgress;
         }
@@ -6568,12 +6362,12 @@ var Router$1 = (function (Framework7Class$$1) {
         onDone();
         return;
       }
-      Utils$1.nextFrame(render);
+      Utils.nextFrame(render);
     }
 
     router.$el.addClass(routerTransitionClass);
 
-    Utils$1.nextFrame(render);
+    Utils.nextFrame(render);
   };
   Router.prototype.animate = function animate () {
     var args = [], len = arguments.length;
@@ -6588,6 +6382,22 @@ var Router$1 = (function (Framework7Class$$1) {
     } else {
       router.animateWithCSS.apply(router, args);
     }
+  };
+  Router.prototype.removeModal = function removeModal (modalEl) {
+    var router = this;
+    router.removeEl(modalEl);
+  };
+  Router.prototype.removeTabContent = function removeTabContent (tabEl) {
+    var $tabEl = $$1(tabEl);
+    $tabEl.html('');
+  };
+  Router.prototype.removeNavbar = function removeNavbar (el) {
+    var router = this;
+    router.removeEl(el);
+  };
+  Router.prototype.removePage = function removePage (el) {
+    var router = this;
+    router.removeEl(el);
   };
   Router.prototype.removeEl = function removeEl (el) {
     if (!el) { return; }
@@ -6664,14 +6474,14 @@ var Router$1 = (function (Framework7Class$$1) {
     routes.forEach(function (route) {
       if ('routes' in route) {
         var mergedPathsRoutes = route.routes.map(function (childRoute) {
-          var cRoute = Utils$1.extend({}, childRoute);
+          var cRoute = Utils.extend({}, childRoute);
           cRoute.path = (((route.path) + "/" + (cRoute.path))).replace('///', '/').replace('//', '/');
           return cRoute;
         });
         flattenedRoutes = flattenedRoutes.concat(route, this$1.flattenRoutes(mergedPathsRoutes));
       } else if ('tabs' in route && route.tabs) {
         var mergedPathsRoutes$1 = route.tabs.map(function (tabRoute) {
-          var tRoute = Utils$1.extend({}, route, {
+          var tRoute = Utils.extend({}, route, {
             path: (((route.path) + "/" + (tabRoute.path))).replace('///', '/').replace('//', '/'),
             parentPath: route.path,
             tab: tabRoute,
@@ -6691,7 +6501,7 @@ var Router$1 = (function (Framework7Class$$1) {
     var router = this;
     var routes = router.routes;
     var flattenedRoutes = router.flattenRoutes(routes);
-    var query = Utils$1.parseUrlQuery(url);
+    var query = Utils.parseUrlQuery(url);
     var hash = url.split('#')[1];
     var params = {};
     var path = url.split('#')[0].split('?')[0];
@@ -6767,13 +6577,13 @@ var Router$1 = (function (Framework7Class$$1) {
       url = url.split('?')[0];
     }
 
-    return Utils$1.promise(function (resolve, reject) {
+    return Utils.promise(function (resolve, reject) {
       if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
         for (var i = 0; i < router.cache.xhr.length; i += 1) {
           var cachedUrl = router.cache.xhr[i];
           if (cachedUrl.url === url) {
             // Check expiration
-            if (Utils$1.now() - cachedUrl.time < params.xhrCacheDuration) {
+            if (Utils.now() - cachedUrl.time < params.xhrCacheDuration) {
               // Load from cache
               resolve(cachedUrl.content);
               return;
@@ -6781,7 +6591,7 @@ var Router$1 = (function (Framework7Class$$1) {
           }
         }
       }
-      router.xhr = $$1.ajax({
+      router.xhr = router.app.request({
         url: url,
         method: 'GET',
         beforeSend: function beforeSend() {
@@ -6794,7 +6604,7 @@ var Router$1 = (function (Framework7Class$$1) {
               router.removeFromXhrCache(url);
               router.cache.xhr.push({
                 url: url,
-                time: Utils$1.now(),
+                time: Utils.now(),
                 content: xhr.responseText,
               });
             }
@@ -6837,9 +6647,9 @@ var Router$1 = (function (Framework7Class$$1) {
         if (typeof t === 'function') {
           compiledHtml = t(context);
         } else {
-          compiledHtml = t7.compile(t)(Utils$1.extend({}, context || {}, {
+          compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
             $app: router.app,
-            $root: Utils$1.extend({}, router.app.data, router.app.methods),
+            $root: Utils.extend({}, router.app.data, router.app.methods),
             $route: options.route,
             $router: router,
             $theme: {
@@ -6900,7 +6710,7 @@ var Router$1 = (function (Framework7Class$$1) {
         $: $$1,
         $$: $$1,
         $app: router.app,
-        $root: Utils$1.extend({}, router.app.data, router.app.methods),
+        $root: Utils.extend({}, router.app.data, router.app.methods),
         $route: options.route,
         $router: router,
         $dom7: $$1,
@@ -7007,7 +6817,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     var page = {};
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
-      page = Utils$1.extend($pageEl[0].f7Page, { from: from, to: to, position: from });
+      page = Utils.extend($pageEl[0].f7Page, { from: from, to: to, position: from });
     } else {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
@@ -7057,11 +6867,7 @@ var Router$1 = (function (Framework7Class$$1) {
           $pageEl.off(("page:" + (eventName.split('page')[1].toLowerCase())), $pageEl[0].f7PageEvents[eventName]);
         });
       }
-    }
-
-    if (callback === 'beforeRemove') {
       $pageEl[0].f7Page = null;
-      page = null;
     }
   };
   Router.prototype.saveHistory = function saveHistory () {
@@ -7088,8 +6894,10 @@ var Router$1 = (function (Framework7Class$$1) {
     var app = router.app;
 
     // Init Swipeback
-    if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
-      SwipeBack(router);
+    {
+      if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
+        SwipeBack(router);
+      }
     }
 
     // Dynamic not separated navbbar
@@ -7134,7 +6942,7 @@ var Router$1 = (function (Framework7Class$$1) {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
-        currentRoute = Utils$1.extend(router.findMatchingRoute(router.history[0], true), {
+        currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -7145,7 +6953,7 @@ var Router$1 = (function (Framework7Class$$1) {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
-        currentRoute = Utils$1.extend(router.findMatchingRoute(initUrl, true), {
+        currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
@@ -7249,15 +7057,6 @@ var Router = {
   },
 };
 
-var History$2 = {
-  name: 'history',
-  on: {
-    init: function init() {
-      History.init(this);
-    },
-  },
-};
-
 var View = (function (Framework7Class$$1) {
   function View(appInstance, el, viewParams) {
     if ( viewParams === void 0 ) viewParams = {};
@@ -7277,7 +7076,7 @@ var View = (function (Framework7Class$$1) {
     };
 
     // Default View params
-    view.params = Utils$1.extend(defaults, app.params.view, viewParams);
+    view.params = Utils.extend(defaults, app.params.view, viewParams);
 
     // Routes
     if (view.params.routes.length > 0) {
@@ -7305,7 +7104,7 @@ var View = (function (Framework7Class$$1) {
     }
 
     // View Props
-    Utils$1.extend(false, view, {
+    Utils.extend(false, view, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -7321,7 +7120,7 @@ var View = (function (Framework7Class$$1) {
     $el[0].f7View = view;
 
     // Install Modules
-    view.useInstanceModules();
+    view.useModules();
 
     // Add to app
     app.views.push(view);
@@ -7454,8 +7253,8 @@ function initClicks(app) {
   function preventScrolling(e) {
     e.preventDefault();
   }
-  if (Support$1.touch && !Device$1.android) {
-    var activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
+  if (Support$2.touch && !Device$1.android) {
+    var activeListener = Support$2.passiveListener ? { passive: false, capture: false } : false;
     $$1(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-indicator-overlay, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
@@ -7472,6 +7271,92 @@ var Clicks = {
       var app = this;
       initClicks(app);
     },
+  },
+};
+
+var History$2 = {
+  name: 'history',
+  on: {
+    init: function init() {
+      History.init(this);
+    },
+  },
+};
+
+var keyPrefix = 'f7storage-';
+var Storage = {
+  get: function get(key) {
+    return Utils.promise(function (resolve, reject) {
+      try {
+        var value = JSON.parse(window.localStorage.getItem(("" + keyPrefix + key)));
+        resolve(value);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  set: function set(key, value) {
+    return Utils.promise(function (resolve, reject) {
+      try {
+        window.localStorage.setItem(("" + keyPrefix + key), JSON.stringify(value));
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  remove: function remove(key) {
+    return Utils.promise(function (resolve, reject) {
+      try {
+        window.localStorage.removeItem(("" + keyPrefix + key));
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  clear: function clear() {
+
+  },
+  length: function length() {
+
+  },
+  keys: function keys() {
+    return Utils.promise(function (resolve, reject) {
+      try {
+        var keys = Object.keys(window.localStorage)
+          .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
+          .map(function (keyName) { return keyName.replace(keyPrefix, ''); });
+        resolve(keys);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+  forEach: function forEach(callback) {
+    return Utils.promise(function (resolve, reject) {
+      try {
+        Object.keys(window.localStorage)
+          .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
+          .forEach(function (keyName, index) {
+            var key = keyName.replace(keyPrefix, '');
+            Storage.get(key).then(function (value) {
+              callback(key, value, index);
+            });
+          });
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
+};
+
+var Storage$1 = {
+  name: 'storage',
+  static: {
+    Storage: Storage,
+    storage: Storage,
   },
 };
 
@@ -7603,7 +7488,7 @@ var Statusbar$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       statusbar: {
         hide: Statusbar.hide,
         show: Statusbar.show,
@@ -7706,8 +7591,8 @@ var View$2 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
-      views: Utils$1.extend([], {
+    Utils.extend(app, {
+      views: Utils.extend([], {
         create: function create(el, params) {
           return new View(app, el, params);
         },
@@ -7994,7 +7879,7 @@ var Navbar$1 = {
   name: 'navbar',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       navbar: {
         size: Navbar.size.bind(app),
         hide: Navbar.hide.bind(app),
@@ -8249,7 +8134,7 @@ var Toolbar$1 = {
   name: 'toolbar',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       toolbar: {
         hide: Toolbar.hide.bind(app),
         show: Toolbar.show.bind(app),
@@ -8359,7 +8244,7 @@ TouchRipple$1.prototype.remove = function remove () {
   if (ripple.removing) { return; }
   var $rippleWaveEl = this.$rippleWaveEl;
   var rippleTransform = this.rippleTransform;
-  var removeTimeout = Utils$1.nextTick(function () {
+  var removeTimeout = Utils.nextTick(function () {
     ripple.onRemove();
   }, 400);
   ripple.removing = true;
@@ -8368,12 +8253,12 @@ TouchRipple$1.prototype.remove = function remove () {
     .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'))
     .transitionEnd(function () {
       clearTimeout(removeTimeout);
-      Utils$1.nextFrame(function () {
+      Utils.nextFrame(function () {
         $rippleWaveEl
           .addClass('ripple-wave-out')
           .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
-        removeTimeout = Utils$1.nextTick(function () {
+        removeTimeout = Utils.nextTick(function () {
           ripple.onRemove();
         }, 700);
 
@@ -8419,12 +8304,12 @@ var Modal$1 = (function (Framework7Class$$1) {
     var defaults = {};
 
     // Extend defaults with modules params
-    modal.useInstanceModulesParams(defaults);
+    modal.useModulesParams(defaults);
 
-    modal.params = Utils$1.extend(defaults, params);
+    modal.params = Utils.extend(defaults, params);
 
     // Install Modules
-    modal.useInstanceModules();
+    modal.useModules();
 
     return this;
   }
@@ -8618,7 +8503,7 @@ var Modal$1 = (function (Framework7Class$$1) {
         delete modal.$el[0].f7Modal;
       }
     }
-    Utils$1.deleteProps(modal);
+    Utils.deleteProps(modal);
     modal = null;
   };
 
@@ -8666,7 +8551,7 @@ var Modal = {
 
 var Dialog$1 = (function (Modal) {
   function Dialog(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       title: app.params.modals.dialogTitle,
       text: undefined,
       content: '',
@@ -8744,7 +8629,7 @@ var Dialog$1 = (function (Modal) {
         });
       });
     }
-    Utils$1.extend(dialog, {
+    Utils.extend(dialog, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -8841,7 +8726,7 @@ var ModalMethods = function (parameters) {
   var defaultSelector = parameters.defaultSelector;
   var constructor = parameters.constructor;
   var app = parameters.app;
-  var methods = Utils$1.extend(
+  var methods = Utils.extend(
     ConstructorMethods({
       defaultSelector: defaultSelector,
       constructor: constructor,
@@ -8876,7 +8761,7 @@ var Dialog = {
   },
   create: function create() {
     var app = this;
-    app.dialog = Utils$1.extend(
+    app.dialog = Utils.extend(
       ModalMethods({
         app: app,
         constructor: Dialog$1,
@@ -9087,7 +8972,7 @@ var Dialog = {
 
 var Popup$1 = (function (Modal) {
   function Popup(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       on: {},
     }, params);
 
@@ -9123,7 +9008,7 @@ var Popup$1 = (function (Modal) {
       }
     }
 
-    Utils$1.extend(popup, {
+    Utils.extend(popup, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -9180,7 +9065,7 @@ var Popup = {
 
 var LoginScreen$1 = (function (Modal) {
   function LoginScreen(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       on: {},
     }, params);
 
@@ -9207,7 +9092,7 @@ var LoginScreen$1 = (function (Modal) {
       return loginScreen.destroy();
     }
 
-    Utils$1.extend(loginScreen, {
+    Utils.extend(loginScreen, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -9257,7 +9142,7 @@ var LoginScreen = {
 
 var Popover$1 = (function (Modal) {
   function Popover(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       backdrop: true,
       closeByOutsideClick: app.params.modals.popoverCloseByOutsideClick,
       on: {},
@@ -9311,7 +9196,7 @@ var Popover$1 = (function (Modal) {
     // Open
     var originalOpen = popover.open;
 
-    Utils$1.extend(popover, {
+    Utils.extend(popover, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -9509,7 +9394,7 @@ var Popover = {
   name: 'popover',
   create: function create() {
     var app = this;
-    app.popover = Utils$1.extend(
+    app.popover = Utils.extend(
       ModalMethods({
         app: app,
         constructor: Popover$1,
@@ -9548,7 +9433,7 @@ var Popover = {
 
 var Actions$1 = (function (Modal) {
   function Actions(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       toPopover: app.params.modals.actionsToPopover,
       on: {},
     }, params);
@@ -9694,7 +9579,7 @@ var Actions$1 = (function (Modal) {
       }
     };
 
-    Utils$1.extend(actions, {
+    Utils.extend(actions, {
       app: app,
       $el: $el,
       el: $el ? $el[0] : undefined,
@@ -9750,7 +9635,7 @@ var Actions = {
 
 var Sheet$1 = (function (Modal) {
   function Sheet(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       backdrop: app.theme === 'md',
       closeByOutsideClick: app.params.modals.sheetCloseByOutsideClick,
       on: {},
@@ -9851,7 +9736,7 @@ var Sheet$1 = (function (Modal) {
       }
     });
 
-    Utils$1.extend(sheet, {
+    Utils.extend(sheet, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -9879,7 +9764,7 @@ var Sheet = {
   },
   create: function create() {
     var app = this;
-    app.sheet = Utils$1.extend({},
+    app.sheet = Utils.extend({},
       ModalMethods({
         app: app,
         constructor: Sheet$1,
@@ -9910,7 +9795,7 @@ var Sheet = {
 
 var Toast$1 = (function (Modal) {
   function Toast(app, params) {
-    var extendedParams = Utils$1.extend({
+    var extendedParams = Utils.extend({
       message: undefined,
       position: app.params.modals.toastPosition,
       closeButton: app.params.modals.toastCloseButton,
@@ -9955,7 +9840,7 @@ var Toast$1 = (function (Modal) {
       return toast.destroy();
     }
 
-    Utils$1.extend(toast, {
+    Utils.extend(toast, {
       app: app,
       $el: $el,
       el: $el[0],
@@ -9982,7 +9867,7 @@ var Toast$1 = (function (Modal) {
         openedToast.close();
       }
       if (closeTimeout) {
-        timeoutId = Utils$1.nextTick(function () {
+        timeoutId = Utils.nextTick(function () {
           toast.close();
         }, closeTimeout);
       }
@@ -10008,7 +9893,7 @@ var Toast = {
   },
   create: function create() {
     var app = this;
-    app.toast = Utils$1.extend({},
+    app.toast = Utils.extend({},
       ModalMethods({
         app: app,
         constructor: Toast$1,
@@ -10068,7 +9953,7 @@ var Preloader$1 = {
   name: 'preloader',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       preloader: {
         init: Preloader.init.bind(app),
         show: Preloader.show.bind(app),
@@ -10223,7 +10108,7 @@ var Progressbar$1 = {
   name: 'progressbar',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       progressbar: {
         set: Progressbar.set.bind(app),
         show: Progressbar.show.bind(app),
@@ -10274,8 +10159,8 @@ var Sortable = {
       indexFrom = $sortingEl.index();
       $sortableContainer = $sortingEl.parents('.sortable');
       $sortingItems = $sortableContainer.children('ul').children('li');
-      app.panel.allowOpen = false;
-      app.swipeout.allow = false;
+      if (app.panel) { app.panel.allowOpen = false; }
+      if (app.swipeout) { app.swipeout.allow = false; }
     }
     function handleTouchMove(e) {
       if (!isTouched || !$sortingEl) { return; }
@@ -10359,13 +10244,13 @@ var Sortable = {
         isTouched = false;
         isMoved = false;
         if (isTouched && !isMoved) {
-          app.panel.allowOpen = true;
-          app.swipeout.allow = true;
+          if (app.panel) { app.panel.allowOpen = true; }
+          if (app.swipeout) { app.swipeout.allow = true; }
         }
         return;
       }
-      app.panel.allowOpen = true;
-      app.swipeout.allow = true;
+      if (app.panel) { app.panel.allowOpen = true; }
+      if (app.swipeout) { app.swipeout.allow = true; }
 
       $sortingItems.transform('');
       $sortingEl.removeClass('sorting');
@@ -10442,7 +10327,7 @@ var Sortable$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       sortable: {
         init: Sortable.init.bind(app),
         enable: Sortable.enable.bind(app),
@@ -10867,7 +10752,7 @@ var Swipeout = {
       app.emit('swipeoutOpened', $el[0]);
       if (callback) { callback.call($el[0]); }
     });
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       $buttons.transform(("translate3d(" + translate + "px,0,0)"));
       $swipeoutContent.transform(("translate3d(" + translate + "px,0,0)"));
     });
@@ -10940,7 +10825,7 @@ var Swipeout = {
         $el.removeClass('swipeout-deleting swipeout-transitioning');
       }
     });
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       $el
         .addClass('swipeout-deleting swipeout-transitioning')
         .css({ height: '0px' })
@@ -10962,7 +10847,7 @@ var Swipeout$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       swipeout: {
         init: Swipeout.init.bind(app),
         open: Swipeout.open.bind(app),
@@ -11081,7 +10966,7 @@ var Accordion = {
         app.emit('accordionClosed', $el[0]);
       }
     });
-    Utils$1.nextFrame(function () {
+    Utils.nextFrame(function () {
       $contentEl.transition('');
       $contentEl.css('height', '');
       $el.trigger('accordion:close');
@@ -11101,7 +10986,7 @@ var Accordion$1 = {
   name: 'accordion',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       accordion: {
         open: Accordion.open.bind(app),
         close: Accordion.close.bind(app),
@@ -11147,9 +11032,9 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     };
 
     // Extend defaults with modules params
-    vl.useInstanceModulesParams(defaults);
+    vl.useModulesParams(defaults);
 
-    vl.params = Utils$1.extend(defaults, params);
+    vl.params = Utils.extend(defaults, params);
     if (vl.params.height === undefined || !vl.params.height) {
       vl.params.height = app.theme === 'md' ? 48 : 44;
     }
@@ -11187,7 +11072,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
       vl.ul = vl.$el.children('ul');
     }
 
-    Utils$1.extend(vl, {
+    Utils.extend(vl, {
       // DOM cached items
       domCache: {},
       displayDomCache: {},
@@ -11209,7 +11094,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     });
 
     // Install Modules
-    vl.useInstanceModules();
+    vl.useModules();
 
     // Attach events
     var handleScrollBound = vl.handleScroll.bind(vl);
@@ -11657,7 +11542,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     vl.detachEvents();
     vl.$el[0].f7VirtualList = null;
     delete vl.$el[0].f7VirtualList;
-    Utils$1.deleteProps(vl);
+    Utils.deleteProps(vl);
     vl = null;
   };
 
@@ -11823,7 +11708,7 @@ var Tabs = {
   name: 'tabs',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       tab: {
         show: Tab.show.bind(app),
       },
@@ -11843,7 +11728,7 @@ var Tabs = {
 
 function swipePanel(panel) {
   var app = panel.app;
-  Utils$1.extend(panel, {
+  Utils.extend(panel, {
     swipeable: true,
     swipeInitialized: true,
   });
@@ -11898,7 +11783,7 @@ function swipePanel(panel) {
     isTouched = true;
     isScrolling = undefined;
 
-    touchStartTime = Utils$1.now();
+    touchStartTime = Utils.now();
     direction = undefined;
   }
   function handleTouchMove(e) {
@@ -12109,7 +11994,7 @@ function swipePanel(panel) {
       }
     }
     if (effect === 'reveal') {
-      Utils$1.nextFrame(function () {
+      Utils.nextFrame(function () {
         $viewEl.transition('');
         $viewEl.transform('');
       });
@@ -12151,7 +12036,7 @@ var Panel$1 = (function (Framework7Class$$1) {
     if (typeof effect === 'undefined') { effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal'; }
 
     if (!app.panel[side]) {
-      Utils$1.extend(app.panel, ( obj = {}, obj[side] = panel, obj ));
+      Utils.extend(app.panel, ( obj = {}, obj[side] = panel, obj ));
       var obj;
     }
 
@@ -12168,7 +12053,7 @@ var Panel$1 = (function (Framework7Class$$1) {
       $viewEl = app.root.children('.view').eq(0);
     }
 
-    Utils$1.extend(panel, {
+    Utils.extend(panel, {
       app: app,
       side: side,
       effect: effect,
@@ -12182,7 +12067,7 @@ var Panel$1 = (function (Framework7Class$$1) {
     });
 
     // Install Modules
-    panel.useInstanceModules();
+    panel.useModules();
 
     // Init
     panel.init();
@@ -12425,7 +12310,7 @@ var Panel = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app.panel, {
+    Utils.extend(app.panel, {
       disableSwipe: function disableSwipe(panel) {
         if ( panel === void 0 ) panel = 'both';
 
@@ -12443,7 +12328,7 @@ var Panel = {
           panels = [panel];
         }
         panels.forEach(function (panelInstance) {
-          if (panelInstance) { Utils$1.extend(panelInstance, { swipeable: false }); }
+          if (panelInstance) { Utils.extend(panelInstance, { swipeable: false }); }
         });
       },
       enableSwipe: function enableSwipe(panel) {
@@ -12474,7 +12359,7 @@ var Panel = {
             if (!panelInstance.swipeInitialized) {
               panelInstance.initSwipePanel();
             } else {
-              Utils$1.extend(panelInstance, { swipeable: true });
+              Utils.extend(panelInstance, { swipeable: true });
             }
           });
         }
@@ -12627,7 +12512,7 @@ var FormData$1 = {
     }
     return undefined;
   },
-  delete: function delete$1(form) {
+  remove: function remove(form) {
     var app = this;
     var formId = form;
 
@@ -12813,9 +12698,9 @@ function initAjaxForm() {
 
     var data;
     if (method === 'POST') { data = new FormData$1($formEl[0]); }
-    else { data = $$1.serializeObject(app.form.toData($formEl[0])); }
+    else { data = Utils.serializeObject(app.form.toData($formEl[0])); }
 
-    var xhr = $$1.ajax({
+    var xhr = app.request({
       method: method,
       url: url,
       contentType: contentType,
@@ -12845,12 +12730,12 @@ var Form = {
   name: 'form',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       form: {
         data: {
           store: FormData$1.store.bind(app),
           get: FormData$1.get.bind(app),
-          delete: FormData$1.delete.bind(app),
+          remove: FormData$1.remove.bind(app),
         },
         toData: formToData.bind(app),
         fromData: formFromData.bind(app),
@@ -13064,7 +12949,7 @@ var Input$1 = {
   name: 'input',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       input: {
         focus: Input.focus.bind(app),
         blur: Input.blur.bind(app),
@@ -13132,9 +13017,9 @@ var Toggle$1 = (function (Framework7Class$$1) {
     var defaults = {};
 
     // Extend defaults with modules params
-    toggle.useInstanceModulesParams(defaults);
+    toggle.useModulesParams(defaults);
 
-    toggle.params = Utils$1.extend(defaults, params);
+    toggle.params = Utils.extend(defaults, params);
 
     var el = toggle.params.el;
     if (!el) { return toggle; }
@@ -13146,7 +13031,7 @@ var Toggle$1 = (function (Framework7Class$$1) {
 
     var $inputEl = $el.children('input[type="checkbox"]');
 
-    Utils$1.extend(toggle, {
+    Utils.extend(toggle, {
       $el: $el,
       el: $el[0],
       dataset: dataset,
@@ -13186,11 +13071,11 @@ var Toggle$1 = (function (Framework7Class$$1) {
 
       isTouched = true;
       isScrolling = undefined;
-      touchStartTime = Utils$1.now();
+      touchStartTime = Utils.now();
       touchStartChecked = toggle.checked;
 
       toggleWidth = $el[0].offsetWidth;
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         if (isTouched) {
           $el.addClass('toggle-active-state');
         }
@@ -13200,6 +13085,7 @@ var Toggle$1 = (function (Framework7Class$$1) {
       if (!isTouched || toggle.disabled) { return; }
       var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      var inverter = app.rtl ? -1 : 1;
 
       if (typeof isScrolling === 'undefined') {
         isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
@@ -13212,11 +13098,12 @@ var Toggle$1 = (function (Framework7Class$$1) {
 
       touchesDiff = pageX - touchesStart.x;
 
+
       var changed;
-      if (touchesDiff < 0 && Math.abs(touchesDiff) > toggleWidth / 3 && touchStartChecked) {
+      if (touchesDiff * inverter < 0 && Math.abs(touchesDiff) > toggleWidth / 3 && touchStartChecked) {
         changed = true;
       }
-      if (touchesDiff > 0 && Math.abs(touchesDiff) > toggleWidth / 3 && !touchStartChecked) {
+      if (touchesDiff * inverter > 0 && Math.abs(touchesDiff) > toggleWidth / 3 && !touchStartChecked) {
         changed = true;
       }
       if (changed) {
@@ -13231,16 +13118,17 @@ var Toggle$1 = (function (Framework7Class$$1) {
         isTouched = false;
         return;
       }
+      var inverter = app.rtl ? -1 : 1;
       isTouched = false;
 
       $el.removeClass('toggle-active-state');
 
       var changed;
-      if ((Utils$1.now() - touchStartTime) < 300) {
-        if (touchesDiff < 0 && touchStartChecked) {
+      if ((Utils.now() - touchStartTime) < 300) {
+        if (touchesDiff * inverter < 0 && touchStartChecked) {
           changed = true;
         }
-        if (touchesDiff > 0 && !touchStartChecked) {
+        if (touchesDiff * inverter > 0 && !touchStartChecked) {
           changed = true;
         }
         if (changed) {
@@ -13253,25 +13141,29 @@ var Toggle$1 = (function (Framework7Class$$1) {
       toggle.emit('local::change toggleChange', toggle);
     }
     toggle.attachEvents = function attachEvents() {
-      if (!Support$1.touch) { return; }
-      var passive = Support$1.passiveListener ? { passive: true } : false;
-      $el.on(app.touchEvents.start, handleTouchStart, passive);
-      app.on('touchmove', handleTouchMove);
-      app.on('touchend:passive', handleTouchEnd);
+      {
+        if (!Support$2.touch) { return; }
+        var passive = Support$2.passiveListener ? { passive: true } : false;
+        $el.on(app.touchEvents.start, handleTouchStart, passive);
+        app.on('touchmove', handleTouchMove);
+        app.on('touchend:passive', handleTouchEnd);
+      }
       toggle.$inputEl.on('change', handleInputChange);
     };
     toggle.detachEvents = function detachEvents() {
-      if (!Support$1.touch) { return; }
-      var passive = Support$1.passiveListener ? { passive: true } : false;
-      $el.off(app.touchEvents.start, handleTouchStart, passive);
-      app.off('touchmove', handleTouchMove);
-      app.off('touchend:passive', handleTouchEnd);
+      {
+        if (!Support$2.touch) { return; }
+        var passive = Support$2.passiveListener ? { passive: true } : false;
+        $el.off(app.touchEvents.start, handleTouchStart, passive);
+        app.off('touchmove', handleTouchMove);
+        app.off('touchend:passive', handleTouchEnd);
+      }
       toggle.$inputEl.off('change', handleInputChange);
     };
 
 
     // Install Modules
-    toggle.useInstanceModules();
+    toggle.useModules();
 
     // Init
     toggle.init();
@@ -13294,7 +13186,7 @@ var Toggle$1 = (function (Framework7Class$$1) {
     toggle.emit('local::beforeDestroy toggleBeforeDestroy', toggle);
     delete toggle.$el[0].f7Toggle;
     toggle.detachEvents();
-    Utils$1.deleteProps(toggle);
+    Utils.deleteProps(toggle);
     toggle = null;
   };
 
@@ -13305,7 +13197,7 @@ var Toggle = {
   name: 'toggle',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       toggle: {
         create: function create(params) {
           return new Toggle$1(app, params);
@@ -13360,9 +13252,9 @@ var Range$1 = (function (Framework7Class$$1) {
     };
 
     // Extend defaults with modules params
-    range.useInstanceModulesParams(defaults);
+    range.useModulesParams(defaults);
 
-    range.params = Utils$1.extend(defaults, params);
+    range.params = Utils.extend(defaults, params);
 
     var el = range.params.el;
     if (!el) { return range; }
@@ -13401,7 +13293,7 @@ var Range$1 = (function (Framework7Class$$1) {
     }
 
 
-    Utils$1.extend(range, range.params, {
+    Utils.extend(range, range.params, {
       $el: $el,
       el: $el[0],
       $inputEl: $inputEl,
@@ -13456,7 +13348,8 @@ var Range$1 = (function (Framework7Class$$1) {
       }
     }
 
-    Utils$1.extend(range, {
+    Utils.extend(range, {
+      app: app,
       knobs: knobs,
       labels: labels,
       $barEl: $barEl,
@@ -13472,6 +13365,7 @@ var Range$1 = (function (Framework7Class$$1) {
     var rangeOffsetLeft;
     var $touchedKnobEl;
     var dualValueIndex;
+
     function handleTouchStart(e) {
       if (isTouched) { return; }
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
@@ -13481,7 +13375,12 @@ var Range$1 = (function (Framework7Class$$1) {
       isScrolling = undefined;
       rangeOffsetLeft = $el.offset().left;
 
-      var progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
+      var progress;
+      if (range.app.rtl) {
+        progress = ((rangeOffsetLeft + range.rangeWidth) - touchesStart.x) / range.rangeWidth;
+      } else {
+        progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
+      }
 
       var newValue = (progress * (range.max - range.min)) + range.min;
       if (range.dual) {
@@ -13498,7 +13397,7 @@ var Range$1 = (function (Framework7Class$$1) {
         $touchedKnobEl = range.knobs[0];
         newValue = (progress * (range.max - range.min)) + range.min;
       }
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         if (isTouched) { $touchedKnobEl.addClass('range-knob-active-state'); }
       }, 70);
       range.setValue(newValue);
@@ -13517,7 +13416,13 @@ var Range$1 = (function (Framework7Class$$1) {
       }
       e.preventDefault();
 
-      var progress = (pageX - rangeOffsetLeft) / range.rangeWidth;
+      var progress;
+      if (range.app.rtl) {
+        progress = ((rangeOffsetLeft + range.rangeWidth) - pageX) / range.rangeWidth;
+      } else {
+        progress = (pageX - rangeOffsetLeft) / range.rangeWidth;
+      }
+
       var newValue = (progress * (range.max - range.min)) + range.min;
       if (range.dual) {
         var leftValue;
@@ -13536,8 +13441,6 @@ var Range$1 = (function (Framework7Class$$1) {
           }
         }
         newValue = [leftValue, rightValue];
-      } else {
-        newValue = (progress * (range.max - range.min)) + range.min;
       }
       range.setValue(newValue);
     }
@@ -13556,14 +13459,14 @@ var Range$1 = (function (Framework7Class$$1) {
       range.layout();
     }
     range.attachEvents = function attachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support$2.passiveListener ? { passive: true } : false;
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
       app.on('resize', handleResize);
     };
     range.detachEvents = function detachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support$2.passiveListener ? { passive: true } : false;
       range.$el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
@@ -13571,7 +13474,7 @@ var Range$1 = (function (Framework7Class$$1) {
     };
 
     // Install Modules
-    range.useInstanceModules();
+    range.useModules();
 
     // Init
     range.init();
@@ -13589,6 +13492,7 @@ var Range$1 = (function (Framework7Class$$1) {
   };
   Range.prototype.layout = function layout () {
     var range = this;
+    var app = range.app;
     var knobWidth = range.knobWidth;
     var rangeWidth = range.rangeWidth;
     var min = range.min;
@@ -13598,18 +13502,19 @@ var Range$1 = (function (Framework7Class$$1) {
     var value = range.value;
     var label = range.label;
     var labels = range.labels;
+    var positionProperty = app.rtl ? 'right' : 'left';
     if (range.dual) {
       var progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
-      $barActiveEl.css({
-        left: ((progress[0] * 100) + "%"),
+      $barActiveEl.css(( obj = {
         width: (((progress[1] - progress[0]) * 100) + "%"),
-      });
+      }, obj[positionProperty] = ((progress[0] * 100) + "%"), obj ));
+      var obj;
       knobs.forEach(function ($knobEl, knobIndex) {
         var leftPos = rangeWidth * progress[knobIndex];
         var realLeft = (rangeWidth * progress[knobIndex]) - (knobWidth / 2);
         if (realLeft < 0) { leftPos = knobWidth / 2; }
         if ((realLeft + knobWidth) > rangeWidth) { leftPos = rangeWidth - (knobWidth / 2); }
-        $knobEl.css('left', (leftPos + "px"));
+        $knobEl.css(positionProperty, (leftPos + "px"));
         if (label) { labels[knobIndex].text(value[knobIndex]); }
       });
     } else {
@@ -13620,7 +13525,7 @@ var Range$1 = (function (Framework7Class$$1) {
       var realLeft = (rangeWidth * progress$1) - (knobWidth / 2);
       if (realLeft < 0) { leftPos = knobWidth / 2; }
       if ((realLeft + knobWidth) > rangeWidth) { leftPos = rangeWidth - (knobWidth / 2); }
-      knobs[0].css('left', (leftPos + "px"));
+      knobs[0].css(positionProperty, (leftPos + "px"));
       if (label) { labels[0].text(value); }
     }
     if ((range.dual && value.indexOf(min) >= 0) || (!range.dual && value === min)) {
@@ -13641,12 +13546,11 @@ var Range$1 = (function (Framework7Class$$1) {
     var max = range.max;
     if (range.dual) {
       var newValues = newValue;
+      if (!Array.isArray(newValues)) { newValues = [newValue, newValue]; }
       if (newValue[0] > newValue[1]) {
         newValues = [newValues[0], newValues[0]];
       }
-      newValues = newValues.map(function (value) {
-        return Math.max(Math.min(Math.round(value / step) * step, max), min);
-      });
+      newValues = newValues.map(function (value) { return Math.max(Math.min(Math.round(value / step) * step, max), min); });
       if (newValues[0] === range.value[0] && newValues[1] === range.value[1]) {
         return range;
       }
@@ -13683,7 +13587,7 @@ var Range$1 = (function (Framework7Class$$1) {
     range.emit('local::beforeDestroy rangeBeforeDestroy', range);
     delete range.$el[0].f7Range;
     range.detachEvents();
-    Utils$1.deleteProps(range);
+    Utils.deleteProps(range);
     range = null;
   };
 
@@ -13694,7 +13598,7 @@ var Range = {
   name: 'range',
   create: function create() {
     var app = this;
-    app.range = Utils$1.extend(
+    app.range = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.range-slider',
         constructor: Range$1,
@@ -13755,7 +13659,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     Framework7Class$$1.call(this, params, [app]);
     var ss = this;
     ss.app = app;
-    var defaults = Utils$1.extend({
+    var defaults = Utils.extend({
       on: {},
     }, app.modules.smartSelect.params.smartSelect);
 
@@ -13772,7 +13676,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     }
 
     // Extend defaults with modules params
-    ss.useInstanceModulesParams(defaults);
+    ss.useModulesParams(defaults);
 
     // View
     var view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
@@ -13790,9 +13694,9 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
 
     var multiple = $selectEl[0].multiple;
     var inputType = multiple ? 'checkbox' : 'radio';
-    var id = Utils$1.now();
-    Utils$1.extend(ss, {
-      params: Utils$1.extend(defaults, params),
+    var id = Utils.now();
+    Utils.extend(ss, {
+      params: Utils.extend(defaults, params),
       $el: $el,
       el: $el[0],
       $selectEl: $selectEl,
@@ -13871,7 +13775,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     };
 
     // Install Modules
-    ss.useInstanceModules();
+    ss.useModules();
 
     // Init
     ss.init();
@@ -14271,7 +14175,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
       ss.view.router.back();
     } else {
       ss.modal.once('modalClosed', function () {
-        Utils$1.nextTick(function () {
+        Utils.nextTick(function () {
           ss.modal.destroy();
           delete ss.modal;
         });
@@ -14291,7 +14195,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     ss.$el.trigger('smartselect:beforedestroy', ss);
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
-    Utils$1.deleteProps(ss);
+    Utils.deleteProps(ss);
     ss.destroyed = true;
   };
 
@@ -14336,7 +14240,7 @@ var SmartSelect = {
   },
   create: function create() {
     var app = this;
-    app.smartSelect = Utils$1.extend(
+    app.smartSelect = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.smart-select',
         constructor: SmartSelect$1,
@@ -14362,7 +14266,7 @@ var SmartSelect = {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
       $$1(tabEl).find('.smart-select-init').each(function (index, smartSelectEl) {
-        app.smartSelect.create(Utils$1.extend({ el: smartSelectEl }, $$1(smartSelectEl).dataset()));
+        app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $$1(smartSelectEl).dataset()));
       });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
@@ -14375,7 +14279,7 @@ var SmartSelect = {
     pageInit: function pageInit(page) {
       var app = this;
       page.$el.find('.smart-select-init').each(function (index, smartSelectEl) {
-        app.smartSelect.create(Utils$1.extend({ el: smartSelectEl }, $$1(smartSelectEl).dataset()));
+        app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $$1(smartSelectEl).dataset()));
       });
     },
     pageBeforeRemove: function pageBeforeRemove(page) {
@@ -14390,7 +14294,7 @@ var SmartSelect = {
     '.smart-select': function open($clickedEl, data) {
       var app = this;
       if (!$clickedEl[0].f7SmartSelect) {
-        var ss = app.smartSelect.create(Utils$1.extend({ el: $clickedEl }, data));
+        var ss = app.smartSelect.create(Utils.extend({ el: $clickedEl }, data));
         ss.open();
       }
     },
@@ -14403,7 +14307,7 @@ var Calendar$1 = (function (Framework7Class$$1) {
 
     Framework7Class$$1.call(this, params, [app]);
     var calendar = this;
-    calendar.params = Utils$1.extend({
+    calendar.params = Utils.extend({
 
     }, params);
     return calendar;
@@ -14434,7 +14338,7 @@ var Picker$1 = (function (Framework7Class$$1) {
 
     Framework7Class$$1.call(this, params);
     var picker = this;
-    picker.params = Utils$1.extend({
+    picker.params = Utils.extend({
 
     }, params);
     return picker;
@@ -14509,7 +14413,7 @@ var InfiniteScroll$1 = {
   name: 'infiniteScroll',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       infiniteScroll: {
         handle: InfiniteScroll.handleScroll.bind(app),
         create: InfiniteScroll.create.bind(app),
@@ -14558,7 +14462,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
     ptr.el = $el[0];
 
     // Extend defaults with modules params
-    ptr.useInstanceModulesParams({});
+    ptr.useModulesParams({});
 
     var isMaterial = app.theme === 'md';
 
@@ -14778,20 +14682,20 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
 
     // Events
     ptr.attachEvents = function attachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support$2.passiveListener ? { passive: true } : false;
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
     };
     ptr.detachEvents = function detachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support$2.passiveListener ? { passive: true } : false;
       $el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
     };
 
     // Install Modules
-    ptr.useInstanceModules();
+    ptr.useModules();
 
     // Init
     ptr.init();
@@ -14812,7 +14716,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
     ptr.$el.trigger('ptr:beforedestroy', ptr);
     delete ptr.el.f7PullToRefresh;
     ptr.detachEvents();
-    Utils$1.deleteProps(ptr);
+    Utils.deleteProps(ptr);
     ptr = null;
   };
 
@@ -14823,7 +14727,7 @@ var PullToRefresh = {
   name: 'pullToRefresh',
   create: function create() {
     var app = this;
-    app.ptr = Utils$1.extend(
+    app.ptr = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.ptr-content',
         constructor: PullToRefresh$1,
@@ -15034,7 +14938,7 @@ var Lazy$1 = {
   },
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       lazy: {
         init: Lazy.init.bind(app),
         destroy: Lazy.destroy.bind(app),
@@ -15093,9 +14997,9 @@ var DataTable$1 = (function (Framework7Class$$1) {
     };
 
     // Extend defaults with modules params
-    table.useInstanceModulesParams(defaults);
+    table.useModulesParams(defaults);
 
-    table.params = Utils$1.extend(defaults, params);
+    table.params = Utils.extend(defaults, params);
 
     // El
     var $el = $$1(table.params.el);
@@ -15112,7 +15016,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
 
     table.$el[0].f7DataTable = table;
 
-    Utils$1.extend(table, {
+    Utils.extend(table, {
       collapsible: $el.hasClass('data-table-collapsible'),
       // Headers
       $headerEl: $el.find('.data-table-header'),
@@ -15173,7 +15077,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
     };
 
     // Install Modules
-    table.useInstanceModules();
+    table.useModules();
 
     // Init
     table.init();
@@ -15219,7 +15123,7 @@ var DataTable$1 = (function (Framework7Class$$1) {
     table.attachEvents();
     table.$el[0].f7DataTable = null;
     delete table.$el[0].f7DataTable;
-    Utils$1.deleteProps(table);
+    Utils.deleteProps(table);
     table = null;
   };
 
@@ -15290,8 +15194,8 @@ var Fab = {
       width: $fabEl[0].offsetWidth,
       height: $fabEl[0].offsetHeight,
       offset: $fabEl.offset(),
-      translateX: Utils$1.getTranslate($fabEl[0], 'x'),
-      translateY: Utils$1.getTranslate($fabEl[0], 'y'),
+      translateX: Utils.getTranslate($fabEl[0], 'x'),
+      translateY: Utils.getTranslate($fabEl[0], 'y'),
     };
 
     $fabEl[0].f7FabMorphData = {
@@ -15341,7 +15245,7 @@ var Fab = {
       .transform(("translate3d(" + (-diffX) + "px, " + (-diffY) + "px, 0)"));
     $fabEl.transitionEnd(function () {
       $targetEl.transition('');
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         $targetEl.css('opacity', 1).transform('scale(1,1)');
       });
       $fabEl.transform(("translate3d(" + (-diffX) + "px, " + (-diffY) + "px, 0) scale(" + scaleX + ", " + scaleY + ")"))
@@ -15390,7 +15294,7 @@ var Fab = {
         .css('z-index', '')
         .removeClass('fab-opened')
         .transform('');
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         $fabEl.transitionEnd(function () {
           $targetEl
             .removeClass('fab-morph-target-visible')
@@ -15450,7 +15354,7 @@ var Fab$1 = {
   name: 'fab',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       fab: {
         openedEl: null,
         morphOpen: Fab.morphOpen.bind(app),
@@ -15511,9 +15415,9 @@ var Searchbar$1 = (function (FrameworkClass) {
     };
 
     // Extend defaults with modules params
-    sb.useInstanceModulesParams(defaults);
+    sb.useModulesParams(defaults);
 
-    sb.params = Utils$1.extend(defaults, params);
+    sb.params = Utils.extend(defaults, params);
 
     var $el = $$1(sb.params.el);
     if ($el.length === 0) { return sb; }
@@ -15596,7 +15500,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       }
     }
 
-    Utils$1.extend(sb, {
+    Utils.extend(sb, {
       app: app,
       view: app.views.get($el.parents('.view')),
       $el: $el,
@@ -15698,7 +15602,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     };
 
     // Install Modules
-    sb.useInstanceModules();
+    sb.useModules();
 
     // Init
     sb.init();
@@ -15764,7 +15668,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       } else {
         if (needsFocus) { sb.$inputEl.focus(); }
         if (setFocus && (setFocus.type === 'focus' || setFocus === true)) {
-          Utils$1.nextTick(function () {
+          Utils.nextTick(function () {
             enable();
           }, 400);
         } else {
@@ -15864,7 +15768,7 @@ var Searchbar$1 = (function (FrameworkClass) {
         if ($foundEl) { $foundEl.show(); }
         return sb;
       }
-      vlQuery = sb.params.removeDiacritics ? Utils$1.removeDiacritics(query) : query;
+      vlQuery = sb.params.removeDiacritics ? Utils.removeDiacritics(query) : query;
       if (sb.virtualList.params.searchAll) {
         foundItems = sb.virtualList.params.searchAll(vlQuery, sb.virtualList.items) || [];
       } else if (sb.virtualList.params.searchByItem) {
@@ -15876,7 +15780,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       }
     } else {
       var values;
-      if (sb.params.removeDiacritics) { values = Utils$1.removeDiacritics(query.trim().toLowerCase()).split(' '); }
+      if (sb.params.removeDiacritics) { values = Utils.removeDiacritics(query.trim().toLowerCase()).split(' '); }
       else {
         values = query.trim().toLowerCase().split(' ');
       }
@@ -15885,7 +15789,7 @@ var Searchbar$1 = (function (FrameworkClass) {
         var compareWithText = [];
         $itemEl.find(sb.params.searchIn).each(function (searchInIndex, searchInEl) {
           var itemText = $$1(searchInEl).text().trim().toLowerCase();
-          if (sb.params.removeDiacritics) { itemText = Utils$1.removeDiacritics(itemText); }
+          if (sb.params.removeDiacritics) { itemText = Utils.removeDiacritics(itemText); }
           compareWithText.push(itemText);
         });
         compareWithText = compareWithText.join(' ');
@@ -15954,7 +15858,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     sb.$el.trigger('searchbar:beforedestroy', sb);
     sb.detachEvents();
     delete sb.$el.f7Searchbar;
-    Utils$1.deleteProps(sb);
+    Utils.deleteProps(sb);
   };
 
   return Searchbar;
@@ -15980,7 +15884,7 @@ var Searchbar = {
       var app = this;
       $$1(tabEl).find('.searchbar-init').each(function (index, searchbarEl) {
         var $searchbarEl = $$1(searchbarEl);
-        app.searchbar.create(Utils$1.extend($searchbarEl.dataset(), { el: searchbarEl }));
+        app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
       });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
@@ -15994,12 +15898,12 @@ var Searchbar = {
       var app = this;
       page.$el.find('.searchbar-init').each(function (index, searchbarEl) {
         var $searchbarEl = $$1(searchbarEl);
-        app.searchbar.create(Utils$1.extend($searchbarEl.dataset(), { el: searchbarEl }));
+        app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
       });
       if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
         page.$navbarEl.find('.searchbar-init').each(function (index, searchbarEl) {
           var $searchbarEl = $$1(searchbarEl);
-          app.searchbar.create(Utils$1.extend($searchbarEl.dataset(), { el: searchbarEl }));
+          app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
         });
       }
     },
@@ -16077,9 +15981,9 @@ var Messages$1 = (function (Framework7Class$$1) {
     };
 
     // Extend defaults with modules params
-    m.useInstanceModulesParams(defaults);
+    m.useModulesParams(defaults);
 
-    m.params = Utils$1.extend(defaults, params);
+    m.params = Utils.extend(defaults, params);
 
     var $el = $$1(params.el).eq(0);
     if ($el.length === 0) { return m; }
@@ -16088,7 +15992,7 @@ var Messages$1 = (function (Framework7Class$$1) {
 
     var $pageContentEl = $el.closest('.page-content').eq(0);
 
-    Utils$1.extend(m, {
+    Utils.extend(m, {
       messages: m.params.messages,
       $el: $el,
       el: $el[0],
@@ -16097,7 +16001,7 @@ var Messages$1 = (function (Framework7Class$$1) {
 
     });
     // Install Modules
-    m.useInstanceModules();
+    m.useModules();
 
     // Init
     m.init();
@@ -16150,7 +16054,7 @@ var Messages$1 = (function (Framework7Class$$1) {
   };
   Messages.prototype.renderMessage = function renderMessage (messageToRender) {
     var m = this;
-    var message = Utils$1.extend({
+    var message = Utils.extend({
       type: 'sent',
     }, messageToRender);
     if (m.params.renderMessage) {
@@ -16453,7 +16357,7 @@ var Messages$1 = (function (Framework7Class$$1) {
     if (typingMessage) {
       m.removeMessage(m.messages.indexOf(typingMessage));
     }
-    m.addMessage(Utils$1.extend({
+    m.addMessage(Utils.extend({
       type: 'received',
       isTyping: true,
     }, message));
@@ -16501,7 +16405,7 @@ var Messages$1 = (function (Framework7Class$$1) {
     m.$el.trigger('messages:beforedestroy', m);
     m.$el[0].f7Messages = null;
     delete m.$el[0].f7Messages;
-    Utils$1.deleteProps(m);
+    Utils.deleteProps(m);
   };
 
   return Messages;
@@ -16570,9 +16474,9 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     };
 
     // Extend defaults with modules params
-    messagebar.useInstanceModulesParams(defaults);
+    messagebar.useModulesParams(defaults);
 
-    messagebar.params = Utils$1.extend(defaults, params);
+    messagebar.params = Utils.extend(defaults, params);
 
     // El
     var $el = $$1(messagebar.params.el);
@@ -16599,7 +16503,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var $attachmentsEl = $el.find('.messagebar-attachments');
     var $sheetEl = $el.find('.messagebar-sheet');
 
-    Utils$1.extend(messagebar, {
+    Utils.extend(messagebar, {
       $el: $el,
       el: $el[0],
       $areaEl: $areaEl,
@@ -16663,7 +16567,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
 
 
     // Install Modules
-    messagebar.useInstanceModules();
+    messagebar.useModules();
 
     // Init
     messagebar.init();
@@ -16762,7 +16666,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var messagebar = this;
     var $attachmentsEl = $$1(("<div class=\"messagebar-attachments\">" + innerHTML + "</div>"));
     $attachmentsEl.insertBefore(messagebar.$textareaEl);
-    Utils$1.extend(messagebar, {
+    Utils.extend(messagebar, {
       $attachmentsEl: $attachmentsEl,
       attachmentsEl: $attachmentsEl[0],
     });
@@ -16823,7 +16727,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var messagebar = this;
     var $sheetEl = $$1(("<div class=\"messagebar-sheet\">" + innerHTML + "</div>"));
     messagebar.append($sheetEl);
-    Utils$1.extend(messagebar, {
+    Utils.extend(messagebar, {
       $sheetEl: $sheetEl,
       sheetEl: $sheetEl[0],
     });
@@ -16870,7 +16774,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     messagebar.detachEvents();
     messagebar.$el[0].f7Messagebar = null;
     delete messagebar.$el[0].f7Messagebar;
-    Utils$1.deleteProps(messagebar);
+    Utils.deleteProps(messagebar);
   };
 
   return Messagebar;
@@ -16901,7 +16805,7 @@ var Messagebar = {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
       $$1(tabEl).find('.messagebar-init').each(function (index, messagebarEl) {
-        app.messagebar.create(Utils$1.extend({ el: messagebarEl }, $$1(messagebarEl).dataset()));
+        app.messagebar.create(Utils.extend({ el: messagebarEl }, $$1(messagebarEl).dataset()));
       });
     },
     pageBeforeRemove: function pageBeforeRemove(page) {
@@ -16913,217 +16817,13 @@ var Messagebar = {
     pageInit: function pageInit(page) {
       var app = this;
       page.$el.find('.messagebar-init').each(function (index, messagebarEl) {
-        app.messagebar.create(Utils$1.extend({ el: messagebarEl }, $$1(messagebarEl).dataset()));
+        app.messagebar.create(Utils.extend({ el: messagebarEl }, $$1(messagebarEl).dataset()));
       });
     },
   },
   clicks: {
 
   },
-};
-
-function Support$3() {
-  return {
-    touch: (window.Modernizr && window.Modernizr.touch === true) || (function checkTouch() {
-      return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
-    }()),
-
-    transforms3d: (window.Modernizr && window.Modernizr.csstransforms3d === true) || (function checkTransforms3d() {
-      var div = document.createElement('div').style;
-      return ('webkitPerspective' in div || 'MozPerspective' in div || 'OPerspective' in div || 'MsPerspective' in div || 'perspective' in div);
-    }()),
-
-    flexbox: (function checkFlexbox() {
-      var div = document.createElement('div').style;
-      var styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
-      for (var i = 0; i < styles.length; i += 1) {
-        if (styles[i] in div) { return true; }
-      }
-      return false;
-    }()),
-
-    observer: (function checkObserver() {
-      return ('MutationObserver' in window || 'WebkitMutationObserver' in window);
-    }()),
-
-    passiveListener: (function checkPassiveListener() {
-      var supportsPassive = false;
-      try {
-        var opts = Object.defineProperty({}, 'passive', {
-          get: function get() {
-            supportsPassive = true;
-          },
-        });
-        window.addEventListener('testPassiveListener', null, opts);
-      } catch (e) {
-        // No support
-      }
-      return supportsPassive;
-    }()),
-
-    gestures: (function checkGestures() {
-      return 'ongesturestart' in window;
-    }()),
-  };
-}
-var Support$4 = Support$3();
-
-var SwiperClass = function SwiperClass(params) {
-  if ( params === void 0 ) params = {};
-
-  var self = this;
-  self.params = params;
-
-  // Events
-  self.eventsListeners = {};
-
-  if (self.params && self.params.on) {
-    Object.keys(self.params.on).forEach(function (eventName) {
-      self.on(eventName, self.params.on[eventName]);
-    });
-  }
-};
-SwiperClass.prototype.on = function on (events, handler) {
-  var self = this;
-  if (typeof handler !== 'function') { return self; }
-  events.split(' ').forEach(function (event) {
-    if (!self.eventsListeners[event]) { self.eventsListeners[event] = []; }
-    self.eventsListeners[event].push(handler);
-  });
-  return self;
-};
-SwiperClass.prototype.once = function once (events, handler) {
-  var self = this;
-  if (typeof handler !== 'function') { return self; }
-  function onceHandler() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-    handler.apply(self, args);
-    self.off(events, onceHandler);
-  }
-  return self.on(events, onceHandler);
-};
-SwiperClass.prototype.off = function off (events, handler) {
-  var self = this;
-  events.split(' ').forEach(function (event) {
-    if (typeof handler === 'undefined') {
-      self.eventsListeners[event] = [];
-    } else {
-      self.eventsListeners[event].forEach(function (eventHandler, index) {
-        if (eventHandler === handler) {
-          self.eventsListeners[event].splice(index, 1);
-        }
-      });
-    }
-  });
-  return self;
-};
-SwiperClass.prototype.emit = function emit () {
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
-  var self = this;
-  var events;
-  var data;
-  var context;
-  if (typeof args[0] === 'string' || Array.isArray(args[0])) {
-    events = args[0];
-    data = args.slice(1, args.length);
-    context = self;
-  } else {
-    events = args[0].events;
-    data = args[0].data;
-    context = args[0].context || self;
-  }
-  var eventsArray = Array.isArray(events) ? events : events.split(' ');
-  eventsArray.forEach(function (event) {
-    if (self.eventsListeners[event]) {
-      self.eventsListeners[event].forEach(function (eventHandler) {
-        eventHandler.apply(context, data);
-      });
-    }
-  });
-  return self;
-};
-SwiperClass.prototype.useModulesParams = function useModulesParams (instanceParams) {
-  var instance = this;
-  if (!instance.modules) { return; }
-  Object.keys(instance.modules).forEach(function (moduleName) {
-    var module = instance.modules[moduleName];
-    // Extend params
-    if (module.params) {
-      Utils$1.extend(instanceParams, module.params);
-    }
-  });
-};
-SwiperClass.prototype.useModules = function useModules (modulesParams) {
-    if ( modulesParams === void 0 ) modulesParams = {};
-
-  var instance = this;
-  if (!instance.modules) { return; }
-  Object.keys(instance.modules).forEach(function (moduleName) {
-    var module = instance.modules[moduleName];
-    var moduleParams = modulesParams[moduleName] || {};
-    // Extend instance methods and props
-    if (module.instance) {
-      Object.keys(module.instance).forEach(function (modulePropName) {
-        var moduleProp = module.instance[modulePropName];
-        if (typeof moduleProp === 'function') {
-          instance[modulePropName] = moduleProp.bind(instance);
-        } else {
-          instance[modulePropName] = moduleProp;
-        }
-      });
-    }
-    // Add event listeners
-    if (module.on && instance.on) {
-      Object.keys(module.on).forEach(function (moduleEventName) {
-        instance.on(moduleEventName, module.on[moduleEventName]);
-      });
-    }
-
-    // Module create callback
-    if (module.create) {
-      module.create.bind(instance)(moduleParams);
-    }
-  });
-};
-SwiperClass.installModule = function installModule (module) {
-    var params = [], len = arguments.length - 1;
-    while ( len-- > 0 ) params[ len ] = arguments[ len + 1 ];
-
-  var Class = this;
-  if (!Class.prototype.modules) { Class.prototype.modules = {}; }
-  var name = module.name || (((Object.keys(Class.prototype.modules).length) + "_" + (Utils$1.now())));
-  Class.prototype.modules[name] = module;
-  // Prototype
-  if (module.proto) {
-    Object.keys(module.proto).forEach(function (key) {
-      Class.prototype[key] = module.proto[key];
-    });
-  }
-  // Class
-  if (module.static) {
-    Object.keys(module.static).forEach(function (key) {
-      Class[key] = module.static[key];
-    });
-  }
-  // Callback
-  if (module.install) {
-    module.install.apply(Class, params);
-  }
-  return Class;
-};
-SwiperClass.use = function use (module) {
-    var params = [], len = arguments.length - 1;
-    while ( len-- > 0 ) params[ len ] = arguments[ len + 1 ];
-
-  var Class = this;
-  if (Array.isArray(module)) {
-    module.forEach(function (m) { return Class.installModule(m); });
-  }
-  return Class.installModule.apply(Class, [ module ].concat( params ));
 };
 
 var touchEventsData = {
@@ -17138,7 +16838,7 @@ var touchEventsData = {
   // Form elements to match
   formElements: 'input, select, textarea, button, video',
   // Last click time
-  lastClickTime: Utils$1.now(),
+  lastClickTime: Utils.now(),
   clickTimeout: undefined,
   // Velocities
   velocities: [],
@@ -17170,7 +16870,7 @@ var updateSize = function () {
   width = width - parseInt($el.css('padding-left'), 10) - parseInt($el.css('padding-right'), 10);
   height = height - parseInt($el.css('padding-top'), 10) - parseInt($el.css('padding-bottom'), 10);
 
-  Utils$1.extend(swiper, {
+  Utils.extend(swiper, {
     width: width,
     height: height,
     size: swiper.isHorizontal() ? width : height,
@@ -17362,7 +17062,7 @@ var updateSlides = function () {
     } else { slides.css({ marginBottom: (spaceBetween + "px") }); }
   }
 
-  Utils$1.extend(swiper, {
+  Utils.extend(swiper, {
     slides: slides,
     snapGrid: snapGrid,
     slidesGrid: slidesGrid,
@@ -17481,7 +17181,7 @@ var updateProgress = function (translate) {
     isBeginning = progress <= 0;
     isEnd = progress >= 1;
   }
-  Utils$1.extend(swiper, {
+  Utils.extend(swiper, {
     progress: progress,
     isBeginning: isBeginning,
     isEnd: isEnd,
@@ -17604,7 +17304,7 @@ var updateActiveIndex = function () {
   if (newActiveIndex === activeIndex) {
     return;
   }
-  Utils$1.extend(swiper, {
+  Utils.extend(swiper, {
     snapIndex: snapIndex,
     previousIndex: activeIndex,
     activeIndex: newActiveIndex,
@@ -17650,7 +17350,7 @@ var update = {
   updateClickedSlide: updateClickedSlide,
 };
 
-var getTranslate$1 = function (axis) {
+var getTranslate = function (axis) {
   if ( axis === void 0 ) axis = this.isHorizontal() ? 'x' : 'y';
 
   var swiper = this;
@@ -17664,7 +17364,7 @@ var getTranslate$1 = function (axis) {
     return rtl ? -translate : translate;
   }
 
-  var currentTranslate = Utils$1.getTranslate($wrapperEl[0], axis);
+  var currentTranslate = Utils.getTranslate($wrapperEl[0], axis);
   if (rtl) { currentTranslate = -currentTranslate; }
 
   return currentTranslate || 0;
@@ -17692,7 +17392,7 @@ var setTranslate = function (translate, byController) {
   }
 
   if (!params.virtualTranslate) {
-    if (Support$4.transforms3d) { $wrapperEl.transform(("translate3d(" + x + "px, " + y + "px, " + z + "px)")); }
+    if (Support$2.transforms3d) { $wrapperEl.transform(("translate3d(" + x + "px, " + y + "px, " + z + "px)")); }
     else { $wrapperEl.transform(("translate(" + x + "px, " + y + "px)")); }
   }
 
@@ -17722,7 +17422,7 @@ var maxTranslate = function () {
 };
 
 var translate = {
-  getTranslate: getTranslate$1,
+  getTranslate: getTranslate,
   setTranslate: setTranslate,
   minTranslate: minTranslate,
   maxTranslate: maxTranslate,
@@ -17970,7 +17670,7 @@ var slideToClickedSlide = function () {
           .eq(0)
           .index();
 
-        Utils$1.nextTick(function () {
+        Utils.nextTick(function () {
           swiper.slideTo(slideToIndex);
         });
       } else {
@@ -17983,7 +17683,7 @@ var slideToClickedSlide = function () {
         .eq(0)
         .index();
 
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         swiper.slideTo(slideToIndex);
       });
     } else {
@@ -18084,7 +17784,7 @@ var loop = {
 
 var setGrabCursor = function (moving) {
   var swiper = this;
-  if (Support$4.touch || !swiper.params.simulateTouch) { return; }
+  if (Support$2.touch || !swiper.params.simulateTouch) { return; }
   var el = swiper.el;
   el.style.cursor = 'move';
   el.style.cursor = moving ? '-webkit-grabbing' : '-webkit-grab';
@@ -18094,7 +17794,7 @@ var setGrabCursor = function (moving) {
 
 var unsetGrabCursor = function () {
   var swiper = this;
-  if (Support$4.touch) { return; }
+  if (Support$2.touch) { return; }
   swiper.el.style.cursor = '';
 };
 
@@ -18120,7 +17820,7 @@ var appendSlide = function (slides) {
   if (params.loop) {
     swiper.loopCreate();
   }
-  if (!(params.observer && Support$4.observer)) {
+  if (!(params.observer && Support$2.observer)) {
     swiper.update();
   }
 };
@@ -18146,7 +17846,7 @@ var prependSlide = function (slides) {
   if (params.loop) {
     swiper.loopCreate();
   }
-  if (!(params.observer && Support$4.observer)) {
+  if (!(params.observer && Support$2.observer)) {
     swiper.update();
   }
   swiper.slideTo(newActiveIndex, 0, false);
@@ -18183,7 +17883,7 @@ var removeSlide = function (slidesIndexes) {
     swiper.loopCreate();
   }
 
-  if (!(params.observer && Support$4.observer)) {
+  if (!(params.observer && Support$2.observer)) {
     swiper.update();
   }
   if (params.loop) {
@@ -18236,7 +17936,7 @@ var onTouchStart = function (event) {
   if (Device$1.ios && params.iOSEdgeSwipeDetection && startX <= params.iOSEdgeSwipeThreshold) {
     return;
   }
-  Utils$1.extend(data, {
+  Utils.extend(data, {
     isTouched: true,
     isMoved: false,
     allowTouchCallbacks: true,
@@ -18246,7 +17946,7 @@ var onTouchStart = function (event) {
 
   touches.startX = startX;
   touches.startY = startY;
-  data.touchStartTime = Utils$1.now();
+  data.touchStartTime = Utils.now();
   swiper.allowClick = true;
   swiper.updateSize();
   swiper.swipeDirection = undefined;
@@ -18284,13 +17984,13 @@ var onTouchMove = function (event) {
     // isMoved = true;
     swiper.allowClick = false;
     if (data.isTouched) {
-      Utils$1.extend(touches, {
+      Utils.extend(touches, {
         startX: pageX,
         startY: pageY,
         currentX: pageX,
         currentY: pageY,
       });
-      data.touchStartTime = Utils$1.now();
+      data.touchStartTime = Utils.now();
     }
     return;
   }
@@ -18445,7 +18145,7 @@ var onTouchMove = function (event) {
     }
     data.velocities.push({
       position: touches[swiper.isHorizontal() ? 'currentX' : 'currentY'],
-      time: Utils$1.now(),
+      time: Utils.now(),
     });
   }
   // Update progress
@@ -18477,7 +18177,7 @@ var onTouchEnd = function (event) {
   }
 
   // Time diff
-  var touchEndTime = Utils$1.now();
+  var touchEndTime = Utils.now();
   var timeDiff = touchEndTime - data.touchStartTime;
 
   // Tap, doubleTap, Click
@@ -18486,7 +18186,7 @@ var onTouchEnd = function (event) {
     swiper.emit('tap', e);
     if (timeDiff < 300 && (touchEndTime - data.lastClickTime) > 300) {
       if (data.clickTimeout) { clearTimeout(data.clickTimeout); }
-      data.clickTimeout = Utils$1.nextTick(function () {
+      data.clickTimeout = Utils.nextTick(function () {
         if (!swiper) { return; }
         swiper.emit('click', e);
       }, 300);
@@ -18497,8 +18197,8 @@ var onTouchEnd = function (event) {
     }
   }
 
-  data.lastClickTime = Utils$1.now();
-  Utils$1.nextTick(function () {
+  data.lastClickTime = Utils.now();
+  Utils.nextTick(function () {
     if (swiper) { swiper.allowClick = true; }
   });
 
@@ -18543,7 +18243,7 @@ var onTouchEnd = function (event) {
         }
         // this implies that the user stopped moving a finger then released.
         // There would be no events with distance zero, so the last event is stale.
-        if (time > 150 || (Utils$1.now() - lastMoveEvent.time) > 300) {
+        if (time > 150 || (Utils.now() - lastMoveEvent.time) > 300) {
           swiper.velocity = 0;
         }
       } else {
@@ -18781,16 +18481,16 @@ function attachEvents() {
   {
     if (Browser$1.ie) {
       target.addEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support$4.touch ? target : document).addEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support$4.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      (Support$2.touch ? target : document).addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      (Support$2.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
-      if (Support$4.touch) {
-        var passiveListener = touchEvents.start === 'onTouchStart' && Support$4.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      if (Support$2.touch) {
+        var passiveListener = touchEvents.start === 'onTouchStart' && Support$2.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.addEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
         target.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
         target.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
-      if ((params.simulateTouch && !Device$1.ios && !Device$1.android) || (params.simulateTouch && !Support$4.touch && Device$1.ios)) {
+      if ((params.simulateTouch && !Device$1.ios && !Device$1.android) || (params.simulateTouch && !Support$2.touch && Device$1.ios)) {
         target.addEventListener('mousedown', swiper.onTouchStart, false);
         document.addEventListener('mousemove', swiper.onTouchMove, capture);
         document.addEventListener('mouseup', swiper.onTouchEnd, false);
@@ -18821,16 +18521,16 @@ function detachEvents() {
   {
     if (Browser$1.ie) {
       target.removeEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support$4.touch ? target : document).removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support$4.touch ? target : document).removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      (Support$2.touch ? target : document).removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      (Support$2.touch ? target : document).removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
-      if (Support$4.touch) {
-        var passiveListener = touchEvents.start === 'onTouchStart' && Support$4.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      if (Support$2.touch) {
+        var passiveListener = touchEvents.start === 'onTouchStart' && Support$2.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.removeEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
         target.removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
         target.removeEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
-      if ((params.simulateTouch && !Device$1.ios && !Device$1.android) || (params.simulateTouch && !Support$4.touch && Device$1.ios)) {
+      if ((params.simulateTouch && !Device$1.ios && !Device$1.android) || (params.simulateTouch && !Support$2.touch && Device$1.ios)) {
         target.removeEventListener('mousedown', swiper.onTouchStart, false);
         document.removeEventListener('mousemove', swiper.onTouchMove, capture);
         document.removeEventListener('mouseup', swiper.onTouchEnd, false);
@@ -18882,9 +18582,9 @@ var setBreakpoint = function () {
     var breakPointsParams = breakpoint in breakpoints ? breakpoints[breakpoint] : swiper.originalParams;
     var needsReLoop = params.loop && (breakPointsParams.slidesPerView !== params.slidesPerView);
 
-    Utils$1.extend(swiper.params, breakPointsParams);
+    Utils.extend(swiper.params, breakPointsParams);
 
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       allowTouchMove: swiper.params.allowTouchMove,
       allowSlideNext: swiper.params.allowSlideNext,
       allowSlidePrev: swiper.params.allowSlidePrev,
@@ -18917,7 +18617,7 @@ var addClasses = function () {
   if (params.freeMode) {
     suffixes.push('free-mode');
   }
-  if (!Support$4.flexbox) {
+  if (!Support$2.flexbox) {
     suffixes.push('no-flexbox');
   }
   if (params.autoHeight) {
@@ -19135,7 +18835,7 @@ var defaults = {
   runCallbacksOnInit: true,
 };
 
-var Swiper$2 = (function (SwiperClass$$1) {
+var Swiper$2 = (function (SwiperClass) {
   function Swiper() {
     var args = [], len = arguments.length;
     while ( len-- ) args[ len ] = arguments[ len ];
@@ -19150,22 +18850,22 @@ var Swiper$2 = (function (SwiperClass$$1) {
     }
     if (!params) { params = {}; }
 
-    params = Utils$1.extend({}, params);
+    params = Utils.extend({}, params);
     if (el && !params.el) { params.el = el; }
 
-    SwiperClass$$1.call(this, params);
+    SwiperClass.call(this, params);
 
     // Swiper Instance
     var swiper = this;
 
     // Extend defaults with modules params
-    var swiperParams = Utils$1.extend({}, defaults);
+    var swiperParams = Utils.extend({}, defaults);
     swiper.useModulesParams(swiperParams);
 
     // Extend defaults with passed params
-    swiper.params = Utils$1.extend({}, swiperParams, params);
-    swiper.originalParams = Utils$1.extend({}, swiper.params);
-    swiper.passedParams = Utils$1.extend({}, params);
+    swiper.params = Utils.extend({}, swiperParams, params);
+    swiper.originalParams = Utils.extend({}, swiper.params);
+    swiper.passedParams = Utils.extend({}, params);
 
     // Find el
     var $el = $$1(swiper.params.el);
@@ -19178,7 +18878,7 @@ var Swiper$2 = (function (SwiperClass$$1) {
     if ($el.length > 1) {
       var swipers = [];
       $el.each(function (index, containerEl) {
-        var newParams = Utils$1.extend({}, params, { el: containerEl });
+        var newParams = Utils.extend({}, params, { el: containerEl });
         swipers.push(new Swiper(newParams));
       });
       return swipers;
@@ -19191,7 +18891,7 @@ var Swiper$2 = (function (SwiperClass$$1) {
     var $wrapperEl = $el.children(("." + (swiper.params.wrapperClass)));
 
     // Extend Swiper
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       $el: $el,
       el: el,
       $wrapperEl: $wrapperEl,
@@ -19246,12 +18946,12 @@ var Swiper$2 = (function (SwiperClass$$1) {
         }
 
         return {
-          start: Support$4.touch || !swiper.params.simulateTouch ? touch[0] : desktop[0],
-          move: Support$4.touch || !swiper.params.simulateTouch ? touch[1] : desktop[1],
-          end: Support$4.touch || !swiper.params.simulateTouch ? touch[2] : desktop[2],
+          start: Support$2.touch || !swiper.params.simulateTouch ? touch[0] : desktop[0],
+          move: Support$2.touch || !swiper.params.simulateTouch ? touch[1] : desktop[1],
+          end: Support$2.touch || !swiper.params.simulateTouch ? touch[2] : desktop[2],
         };
       }()),
-      touchEventsData: Utils$1.extend({}, touchEventsData),
+      touchEventsData: Utils.extend({}, touchEventsData),
 
       // Clicks
       allowClick: true,
@@ -19285,8 +18985,8 @@ var Swiper$2 = (function (SwiperClass$$1) {
     return swiper;
   }
 
-  if ( SwiperClass$$1 ) Swiper.__proto__ = SwiperClass$$1;
-  Swiper.prototype = Object.create( SwiperClass$$1 && SwiperClass$$1.prototype );
+  if ( SwiperClass ) Swiper.__proto__ = SwiperClass;
+  Swiper.prototype = Object.create( SwiperClass && SwiperClass.prototype );
   Swiper.prototype.constructor = Swiper;
   Swiper.prototype.slidesPerView = function slidesPerView () {
     var swiper = this;
@@ -19456,15 +19156,15 @@ var Swiper$2 = (function (SwiperClass$$1) {
     if (deleteInstance !== false) {
       swiper.$el[0].swiper = null;
       swiper.$el.data('swiper', null);
-      Utils$1.deleteProps(swiper);
+      Utils.deleteProps(swiper);
       swiper = null;
     }
   };
 
   return Swiper;
-}(SwiperClass));
+}(Framework7Class));
 
-var prototypes = Utils$1.extend(
+var prototypes = Utils.extend(
   {},
   update,
   translate,
@@ -19483,7 +19183,7 @@ Object.keys(prototypes).forEach(function (protoMethod) {
   Swiper$2.prototype[protoMethod] = prototypes[protoMethod];
 });
 
-Swiper$2.Class = SwiperClass;
+Swiper$2.Class = Framework7Class;
 
 var Device$4 = {
   name: 'device',
@@ -19495,13 +19195,13 @@ var Device$4 = {
   },
 };
 
-var Support$5 = {
+var Support$4 = {
   name: 'support',
   proto: {
-    support: Support$4,
+    support: Support$2,
   },
   static: {
-    Support: Support$4,
+    Support: Support$2,
   },
 };
 
@@ -19519,7 +19219,7 @@ var Resize$1 = {
   name: 'resize',
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       resize: {
         resizeHandler: function resizeHandler() {
           if (!swiper || !swiper.initialized) { return; }
@@ -19573,7 +19273,7 @@ var Observer = {
   },
   init: function init() {
     var swiper = this;
-    if (!Support$4.observer || !swiper.params.observer) { return; }
+    if (!Support$2.observer || !swiper.params.observer) { return; }
     if (swiper.params.observeParents) {
       var containerParents = swiper.$el.parents();
       for (var i = 0; i < containerParents.length; i += 1) {
@@ -19603,7 +19303,7 @@ var Observer$1 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       observer: {
         init: Observer.init.bind(swiper),
         attach: Observer.attach.bind(swiper),
@@ -19695,7 +19395,7 @@ var Navigation = {
       });
     }
 
-    Utils$1.extend(swiper.navigation, {
+    Utils.extend(swiper.navigation, {
       $nextEl: $nextEl,
       nextEl: $nextEl && $nextEl[0],
       $prevEl: $prevEl,
@@ -19732,7 +19432,7 @@ var Navigation$1 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       navigation: {
         init: Navigation.init.bind(swiper),
         update: Navigation.update.bind(swiper),
@@ -19945,7 +19645,7 @@ var Pagination = {
       });
     }
 
-    Utils$1.extend(swiper.pagination, {
+    Utils.extend(swiper.pagination, {
       $el: $el,
       el: $el[0],
     });
@@ -19992,7 +19692,7 @@ var Pagination$1 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       pagination: {
         init: Pagination.init.bind(swiper),
         render: Pagination.render.bind(swiper),
@@ -20084,14 +19784,14 @@ var Scrollbar = {
       newSize = trackSize - newPos;
     }
     if (swiper.isHorizontal()) {
-      if (Support$4.transforms3d) {
+      if (Support$2.transforms3d) {
         $dragEl.transform(("translate3d(" + newPos + "px, 0, 0)"));
       } else {
         $dragEl.transform(("translateX(" + newPos + "px)"));
       }
       $dragEl[0].style.width = newSize + "px";
     } else {
-      if (Support$4.transforms3d) {
+      if (Support$2.transforms3d) {
         $dragEl.transform(("translate3d(0px, " + newPos + "px, 0)"));
       } else {
         $dragEl.transform(("translateY(" + newPos + "px)"));
@@ -20147,7 +19847,7 @@ var Scrollbar = {
     if (swiper.params.scrollbarHide) {
       $el[0].style.opacity = 0;
     }
-    Utils$1.extend(scrollbar, {
+    Utils.extend(scrollbar, {
       trackSize: trackSize,
       divider: divider,
       moveDivider: moveDivider,
@@ -20232,7 +19932,7 @@ var Scrollbar = {
     swiper.scrollbar.isTouched = false;
     if (params.hide) {
       clearTimeout(swiper.scrollbar.dragTimeout);
-      swiper.scrollbar.dragTimeout = Utils$1.nextTick(function () {
+      swiper.scrollbar.dragTimeout = Utils.nextTick(function () {
         $el.css('opacity', 0);
         $el.transition(400);
       }, 1000);
@@ -20247,7 +19947,7 @@ var Scrollbar = {
     if (!swiper.params.scrollbar.el) { return; }
     var scrollbar = swiper.scrollbar;
     var $el = scrollbar.$el;
-    var target = Support$4.touch ? $el[0] : document;
+    var target = Support$2.touch ? $el[0] : document;
     $el.on(swiper.scrollbar.dragEvents.start, swiper.scrollbar.onDragStart);
     $$1(target).on(swiper.scrollbar.dragEvents.move, swiper.scrollbar.onDragMove);
     $$1(target).on(swiper.scrollbar.dragEvents.end, swiper.scrollbar.onDragEnd);
@@ -20257,7 +19957,7 @@ var Scrollbar = {
     if (!swiper.params.scrollbar.el) { return; }
     var scrollbar = swiper.scrollbar;
     var $el = scrollbar.$el;
-    var target = Support$4.touch ? $el[0] : document;
+    var target = Support$2.touch ? $el[0] : document;
     $el.off(swiper.scrollbar.dragEvents.start);
     $$1(target).off(swiper.scrollbar.dragEvents.move);
     $$1(target).off(swiper.scrollbar.dragEvents.end);
@@ -20282,7 +19982,7 @@ var Scrollbar = {
     }
 
     swiper.scrollbar.dragEvents = (function dragEvents() {
-      if ((swiper.params.simulateTouch === false && !Support$4.touch)) {
+      if ((swiper.params.simulateTouch === false && !Support$2.touch)) {
         return {
           start: 'mousedown',
           move: 'mousemove',
@@ -20292,7 +19992,7 @@ var Scrollbar = {
       return touchEvents;
     }());
 
-    Utils$1.extend(scrollbar, {
+    Utils.extend(scrollbar, {
       $el: $el,
       el: $el[0],
       $dragEl: $dragEl,
@@ -20322,7 +20022,7 @@ var Scrollbar$1 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       scrollbar: {
         init: Scrollbar.init.bind(swiper),
         destroy: Scrollbar.destroy.bind(swiper),
@@ -20463,7 +20163,7 @@ var Parallax$1 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       parallax: {
         setTransform: Parallax.setTransform.bind(swiper),
         setTranslate: Parallax.setTranslate.bind(swiper),
@@ -20511,7 +20211,7 @@ var Zoom = {
     var params = swiper.params.zoom;
     var zoom = swiper.zoom;
     var gesture = zoom.gesture;
-    if (!Support$4.gestures) {
+    if (!Support$2.gestures) {
       if (e.type !== 'touchstart' || (e.type === 'touchstart' && e.targetTouches.length < 2)) {
         return;
       }
@@ -20536,14 +20236,14 @@ var Zoom = {
     var params = swiper.params.zoom;
     var zoom = swiper.zoom;
     var gesture = zoom.gesture;
-    if (!Support$4.gestures) {
+    if (!Support$2.gestures) {
       if (e.type !== 'touchmove' || (e.type === 'touchmove' && e.targetTouches.length < 2)) {
         return;
       }
       gesture.scaleMove = Zoom.getDistanceBetweenTouches(e);
     }
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
-    if (Support$4.gestures) {
+    if (Support$2.gestures) {
       swiper.zoom.scale = e.scale * zoom.currentScale;
     } else {
       zoom.scale = (gesture.scaleMove / gesture.scaleStart) * zoom.currentScale;
@@ -20561,7 +20261,7 @@ var Zoom = {
     var params = swiper.params.zoom;
     var zoom = swiper.zoom;
     var gesture = zoom.gesture;
-    if (!Support$4.gestures) {
+    if (!Support$2.gestures) {
       if (e.type !== 'touchend' || (e.type === 'touchend' && e.changedTouches.length < 2)) {
         return;
       }
@@ -20598,8 +20298,8 @@ var Zoom = {
     if (!image.isMoved) {
       image.width = gesture.$imageEl[0].offsetWidth;
       image.height = gesture.$imageEl[0].offsetHeight;
-      image.startX = Utils$1.getTranslate(gesture.$imageWrapEl[0], 'x') || 0;
-      image.startY = Utils$1.getTranslate(gesture.$imageWrapEl[0], 'y') || 0;
+      image.startX = Utils.getTranslate(gesture.$imageWrapEl[0], 'x') || 0;
+      image.startY = Utils.getTranslate(gesture.$imageWrapEl[0], 'y') || 0;
       gesture.slideWidth = gesture.$slideEl[0].offsetWidth;
       gesture.slideHeight = gesture.$slideEl[0].offsetHeight;
       gesture.$imageWrapEl.transition(0);
@@ -20862,10 +20562,10 @@ var Zoom = {
 
     var slides = swiper.slides;
 
-    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support$4.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support$2.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
 
     // Scale image
-    if (Support$4.gestures) {
+    if (Support$2.gestures) {
       slides.on('gesturestart', zoom.onGestureStart, passiveListener);
       slides.on('gesturechange', zoom.onGestureChange, passiveListener);
       slides.on('gestureend', zoom.onGestureEnd, passiveListener);
@@ -20892,10 +20592,10 @@ var Zoom = {
 
     var slides = swiper.slides;
 
-    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support$4.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support$2.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
 
     // Scale image
-    if (Support$4.gestures) {
+    if (Support$2.gestures) {
       slides.off('gesturestart', zoom.onGestureStart, passiveListener);
       slides.off('gesturechange', zoom.onGestureChange, passiveListener);
       slides.off('gestureend', zoom.onGestureEnd, passiveListener);
@@ -20969,7 +20669,7 @@ var Zoom$1 = {
     ('onGestureStart onGestureChange onGestureEnd onTouchStart onTouchMove onTouchEnd onTransitionEnd toggle enable disable in out').split(' ').forEach(function (methodName) {
       zoom[methodName] = Zoom[methodName].bind(swiper);
     });
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       zoom: zoom,
     });
   },
@@ -21139,7 +20839,7 @@ var Lazy$3 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       lazy: {
         initialImageLoaded: false,
         load: Lazy$2.load.bind(swiper),
@@ -21320,7 +21020,7 @@ var Controller$1 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       controller: {
         control: swiper.params.controller.control,
         getInterpolateFunction: Controller.getInterpolateFunction.bind(swiper),
@@ -21532,7 +21232,7 @@ var A11y = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       a11y: {
         liveRegion: $$1(("<span class=\"" + (swiper.params.a11y.notificationClass) + "\" aria-live=\"assertive\" aria-atomic=\"true\"></span>")),
       },
@@ -21579,7 +21279,7 @@ var Autoplay = {
     if ($activeSlideEl.attr('data-swiper-autoplay')) {
       delay = $activeSlideEl.attr('data-swiper-autoplay') || swiper.params.autoplay.delay;
     }
-    swiper.autoplay.timeout = Utils$1.nextTick(function () {
+    swiper.autoplay.timeout = Utils.nextTick(function () {
       if (swiper.params.loop) {
         swiper.loopFix();
         swiper.slideNext(swiper.params.speed, true, true);
@@ -21652,7 +21352,7 @@ var Autoplay$1 = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       autoplay: {
         running: false,
         paused: false,
@@ -21753,7 +21453,7 @@ var EffectFade = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       fadeEffect: {
         setTranslate: Fade.setTranslate.bind(swiper),
         setTransition: Fade.setTransition.bind(swiper),
@@ -21765,7 +21465,7 @@ var EffectFade = {
       var swiper = this;
       if (swiper.params.effect !== 'fade') { return; }
       swiper.classNames.push(((swiper.params.containerModifierClass) + "fade"));
-      Utils$1.extend(swiper.params, {
+      Utils.extend(swiper.params, {
         slidesPerView: 1,
         slidesPerColumn: 1,
         slidesPerGroup: 1,
@@ -21927,7 +21627,7 @@ var EffectCube = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       cubeEffect: {
         setTranslate: Cube.setTranslate.bind(swiper),
         setTransition: Cube.setTransition.bind(swiper),
@@ -21940,7 +21640,7 @@ var EffectCube = {
       if (swiper.params.effect !== 'cube') { return; }
       swiper.classNames.push(((swiper.params.containerModifierClass) + "cube"));
       swiper.classNames.push(((swiper.params.containerModifierClass) + "3d"));
-      Utils$1.extend(swiper.params, {
+      Utils.extend(swiper.params, {
         slidesPerView: 1,
         slidesPerColumn: 1,
         slidesPerGroup: 1,
@@ -22047,7 +21747,7 @@ var EffectFlip = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       flipEffect: {
         setTranslate: Flip.setTranslate.bind(swiper),
         setTransition: Flip.setTransition.bind(swiper),
@@ -22060,7 +21760,7 @@ var EffectFlip = {
       if (swiper.params.effect !== 'flip') { return; }
       swiper.classNames.push(((swiper.params.containerModifierClass) + "flip"));
       swiper.classNames.push(((swiper.params.containerModifierClass) + "3d"));
-      Utils$1.extend(swiper.params, {
+      Utils.extend(swiper.params, {
         slidesPerView: 1,
         slidesPerColumn: 1,
         slidesPerGroup: 1,
@@ -22169,7 +21869,7 @@ var EffectCoverflow = {
   },
   create: function create() {
     var swiper = this;
-    Utils$1.extend(swiper, {
+    Utils.extend(swiper, {
       coverflowEffect: {
         setTranslate: Coverflow.setTranslate.bind(swiper),
         setTransition: Coverflow.setTransition.bind(swiper),
@@ -22204,7 +21904,7 @@ var EffectCoverflow = {
 // Components
 Swiper$2
   .use(Device$4)
-  .use(Support$5)
+  .use(Support$4)
   .use(Browser$2)
   .use(Resize$1)
   .use(Observer$1)
@@ -22227,6 +21927,56 @@ if (!window.Swiper) {
   window.Swiper = Swiper$2;
 }
 
+function initSwipers(swiperEl) {
+  var app = this;
+  var $swiperEl = $$1(swiperEl);
+  if ($swiperEl.length === 0) { return; }
+  if ($swiperEl[0].swiper) { return; }
+  var initialSlide;
+  var params = {};
+  var isTabs;
+  if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
+    $swiperEl
+      .addClass('swiper-container')
+      .children('.tabs')
+      .addClass('swiper-wrapper')
+      .children('.tab')
+      .addClass('swiper-slide');
+    initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
+    isTabs = true;
+  }
+  if ($swiperEl.attr('data-swiper')) {
+    params = JSON.parse($swiperEl.attr('data-swiper'));
+  } else {
+    params = $swiperEl.dataset();
+    Object.keys(params).forEach(function (key) {
+      var value = params[key];
+      if (typeof value === 'string' && value.indexOf('{') === 0 && value.indexOf('}') > 0) {
+        try {
+          params[key] = JSON.parse(value);
+        } catch (e) {
+          // not JSON
+        }
+      }
+    });
+  }
+  if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
+    params.initialSlide = initialSlide;
+  }
+  if (isTabs) {
+    Utils.extend(params, {
+      on: {
+        slideChangeStart: function slideChangeStart() {
+          var swiper = this;
+          app.tab.show(swiper.slides.eq(swiper.activeIndex));
+        },
+      },
+    });
+  }
+
+  app.swiper.create($swiperEl[0], params);
+}
+
 var Swiper = {
   name: 'swiper',
   static: {
@@ -22234,7 +21984,7 @@ var Swiper = {
   },
   create: function create() {
     var app = this;
-    app.swiper = Utils$1.extend(
+    app.swiper = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.swiper-container',
         constructor: Swiper$2,
@@ -22258,53 +22008,16 @@ var Swiper = {
         app.swiper.destroy(swiperEl);
       });
     },
+    pageMounted: function pageMounted(page) {
+      var app = this;
+      page.$el.find('.tabs-swipeable-wrap').each(function (index, swiperEl) {
+        initSwipers.call(app, swiperEl);
+      });
+    },
     pageInit: function pageInit(page) {
       var app = this;
       page.$el.find('.swiper-init, .tabs-swipeable-wrap').each(function (index, swiperEl) {
-        var $swiperEl = $$1(swiperEl);
-        var initialSlide;
-        var params = {};
-        var isTabs;
-        if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
-          $swiperEl
-            .addClass('swiper-container')
-            .children('.tabs')
-            .addClass('swiper-wrapper')
-            .children('.tab')
-            .addClass('swiper-slide');
-          initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
-          isTabs = true;
-        }
-        if ($swiperEl.attr('data-swiper')) {
-          params = JSON.parse($swiperEl.attr('data-swiper'));
-        } else {
-          params = $swiperEl.dataset();
-          Object.keys(params).forEach(function (key) {
-            var value = params[key];
-            if (typeof value === 'string' && value.indexOf('{') === 0 && value.indexOf('}') > 0) {
-              try {
-                params[key] = JSON.parse(value);
-              } catch (e) {
-                // not JSON
-              }
-            }
-          });
-        }
-        if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
-          params.initialSlide = initialSlide;
-        }
-        if (isTabs) {
-          Utils$1.extend(params, {
-            on: {
-              slideChangeStart: function slideChangeStart() {
-                var swiper = this;
-                app.tab.show(swiper.slides.eq(swiper.activeIndex));
-              },
-            },
-          });
-        }
-
-        app.swiper.create($swiperEl[0], params);
+        initSwipers.call(app, swiperEl);
       });
     },
     pageReinit: function pageReinit(page) {
@@ -22326,16 +22039,16 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     var pb = this;
     pb.app = app;
 
-    var defaults = Utils$1.extend({
+    var defaults = Utils.extend({
       on: {},
     }, app.modules.photoBrowser.params.photoBrowser);
 
     // Extend defaults with modules params
-    pb.useInstanceModulesParams(defaults);
+    pb.useModulesParams(defaults);
 
-    pb.params = Utils$1.extend(defaults, params);
+    pb.params = Utils.extend(defaults, params);
 
-    Utils$1.extend(pb, {
+    Utils.extend(pb, {
       exposed: false,
       opened: false,
       activeIndex: pb.params.swiper.initialSlide,
@@ -22354,7 +22067,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     });
 
     // Install Modules
-    pb.useInstanceModules();
+    pb.useModules();
 
     // Init
     pb.init();
@@ -22416,7 +22129,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       swipeToClose.started = true;
       swipeToClose.start = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
       swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
-      swipeToClose.timeStart = Utils$1.now();
+      swipeToClose.timeStart = Utils.now();
     }
     e.preventDefault();
     swipeToClose.current = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
@@ -22439,7 +22152,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     var diff = Math.abs(swipeToClose.diff);
     var timeDiff = (new Date()).getTime() - swipeToClose.timeStart;
     if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
-      Utils$1.nextTick(function () {
+      Utils.nextTick(function () {
         if (pb.$containerEl) {
           if (swipeToClose.diff < 0) { pb.$containerEl.addClass('swiper-close-to-bottom'); }
           else { pb.$containerEl.addClass('swiper-close-to-top'); }
@@ -22563,7 +22276,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     pb.captions = pb.$containerEl.find('.photo-browser-caption');
 
     // Init Swiper
-    var swiperSettings = Utils$1.extend({}, pb.params.swiper, {
+    var swiperSettings = Utils.extend({}, pb.params.swiper, {
       initialSlide: pb.activeIndex,
       on: {
         tap: function tap(e) {
@@ -22605,7 +22318,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       },
     });
     if (pb.params.swipeToClose && pb.params.type !== 'page') {
-      Utils$1.extend(swiperSettings.on, {
+      Utils.extend(swiperSettings.on, {
         touchStart: function touchStart(e) {
           pb.onTouchStart(e);
         },
@@ -22823,7 +22536,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       if (pb.view) { pb.view.router.back(); }
     } else {
       pb.modal.once('modalClosed', function () {
-        Utils$1.nextTick(function () {
+        Utils.nextTick(function () {
           pb.modal.destroy();
           delete pb.modal;
         });
@@ -22842,7 +22555,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       pb.$containerEl.trigger('photobrowser:beforedestroy');
       delete pb.$containerEl[0].f7PhotoBrowser;
     }
-    Utils$1.deleteProps(pb);
+    Utils.deleteProps(pb);
     pb = null;
   };
 
@@ -23086,7 +22799,7 @@ var Notification$1 = {
   name: 'notification',
   create: function create() {
     var app = this;
-    Utils$1.extend(app, {
+    Utils.extend(app, {
       notification: {
         add: Notification.add.bind(app),
         close: Notification.close.bind(app),
@@ -23112,15 +22825,15 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     var ac = this;
     ac.app = app;
 
-    var defaults = Utils$1.extend({
+    var defaults = Utils.extend({
       on: {},
     }, app.modules.autocomplete.params.autocomplete);
 
 
     // Extend defaults with modules params
-    ac.useInstanceModulesParams(defaults);
+    ac.useModulesParams(defaults);
 
-    ac.params = Utils$1.extend(defaults, params);
+    ac.params = Utils.extend(defaults, params);
 
     var $openerEl;
     if (ac.params.openerEl) {
@@ -23142,7 +22855,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     }
     if (!view) { view = app.views.main; }
 
-    var id = Utils$1.now();
+    var id = Utils.now();
 
     var url = params.url;
     if (!url && $openerEl && $openerEl.length) {
@@ -23155,7 +22868,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
 
     var inputType = ac.params.multiple ? 'checkbox' : 'radio';
 
-    Utils$1.extend(ac, {
+    Utils.extend(ac, {
       $openerEl: $openerEl,
       openerEl: $openerEl && $openerEl[0],
       $inputEl: $inputEl,
@@ -23375,7 +23088,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
       ac.$containerEl.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
       if (ac.params.closeOnSelect && !ac.params.multiple) {
         ac.$containerEl.once('click', '.list label', function () {
-          Utils$1.nextTick(function () {
+          Utils.nextTick(function () {
             ac.close();
           });
         });
@@ -23386,7 +23099,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     };
 
     // Install Modules
-    ac.useInstanceModules();
+    ac.useModules();
 
     // Init
     ac.init();
@@ -23405,7 +23118,6 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
 
     var $pageContentEl = $inputEl.parents('.page-content');
     if ($pageContentEl.length === 0) { return; }
-
     var inputOffset = $inputEl.offset();
     var inputOffsetWidth = $inputEl[0].offsetWidth;
     var inputOffsetHeight = $inputEl[0].offsetHeight;
@@ -23413,19 +23125,26 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     var listOffset = $listEl.offset();
     var paddingBottom = parseInt($pageContentEl.css('padding-top'), 10);
     var listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
-    var inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0);
+    var inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
     var inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
     var maxHeight = $pageContentEl[0].scrollHeight - paddingBottom - (inputOffsetTop + $pageContentEl[0].scrollTop) - $inputEl[0].offsetHeight;
+
+    var paddingProp = app.rtl ? 'padding-right' : 'padding-left';
+    var paddingValue;
+    if ($listEl.length && !ac.params.expandInput) {
+      paddingValue = (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) - (app.theme === 'md' ? 16 : 15);
+    }
+
 
     $dropdownEl.css({
       left: (($listEl.length > 0 ? listOffsetLeft : inputOffsetLeft) + "px"),
       top: ((inputOffsetTop + $pageContentEl[0].scrollTop + inputOffsetHeight) + "px"),
       width: (($listEl.length > 0 ? $listEl[0].offsetWidth : inputOffsetWidth) + "px"),
     });
-    $dropdownEl.children('.autocomplete-dropdown-inner').css({
+    $dropdownEl.children('.autocomplete-dropdown-inner').css(( obj = {
       maxHeight: (maxHeight + "px"),
-      paddingLeft: $listEl.length > 0 && !ac.params.expandInput ? ((inputOffsetLeft - (app.theme === 'md' ? 16 : 15)) + "px") : '',
-    });
+    }, obj[paddingProp] = $listEl.length > 0 && !ac.params.expandInput ? (paddingValue + "px") : '', obj ));
+    var obj;
   };
   Autocomplete.prototype.focus = function focus () {
     var ac = this;
@@ -23749,7 +23468,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
       ac.view.router.back({ animate: ac.params.animate });
     } else {
       ac.modal.once('modalClosed', function () {
-        Utils$1.nextTick(function () {
+        Utils.nextTick(function () {
           ac.modal.destroy();
           delete ac.modal;
         });
@@ -23772,7 +23491,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     if (ac.$openerEl && ac.$openerEl[0]) {
       delete ac.$openerEl[0].f7Autocomplete;
     }
-    Utils$1.deleteProps(ac);
+    Utils.deleteProps(ac);
     ac.destroyed = true;
   };
 
@@ -23844,7 +23563,7 @@ var Autocomplete = {
   },
   create: function create() {
     var app = this;
-    app.autocomplete = Utils$1.extend(
+    app.autocomplete = Utils.extend(
       ConstructorMethods({
         defaultSelector: undefined,
         constructor: Autocomplete$1,
@@ -23871,29 +23590,29 @@ var Autocomplete = {
 // Import Core Modules
 // Core Components
 // Template7
-if (typeof t7 !== 'undefined') {
-  Framework7$1.prototype.t7 = t7;
-  if (!window.Template7) { window.Template7 = t7; }
-}
+Framework7$1.prototype.t7 = t7;
+Framework7$1.Template7 = t7;
+if (!window.Template7) { window.Template7 = t7; }
 
 // Dom7
-if (typeof $$1 !== 'undefined') {
-  Framework7$1.prototype.$ = $$1;
-  if (!window.Dom7) { window.Dom7 = $$1; }
-}
+Framework7$1.prototype.$ = $$1;
+Framework7$1.Dom7 = $$1;
+Framework7$1.$ = $$1;
+if (!window.Dom7) { window.Dom7 = $$1; }
 
 // Install Modules & Components
 Framework7$1
   // Core Modules
-  .use(Utils$3)
-  .use(Storage$1)
-  .use(Support)
   .use(Device$2)
+  .use(Support)
+  .use(Utils$2)
   .use(Resize)
+  .use(Request)
   .use(Touch)
+  .use(Clicks)
   .use(Router)
   .use(History$2)
-  .use(Clicks)
+  .use(Storage$1)
   // Core Components
   .use(Statusbar$1)
   .use(View$2)
