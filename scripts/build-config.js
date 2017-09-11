@@ -6,6 +6,7 @@
 
 let config = {
   target: 'universal',
+  rtl: false,
   components: [
     // Modals
     'modal',

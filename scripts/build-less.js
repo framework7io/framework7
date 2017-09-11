@@ -1,5 +1,8 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: "off" */
+/* eslint import/no-unresolved: "off" */
+/* eslint global-require: "off" */
+/* eslint no-param-reassign: ["error", { "props": false }] */
 
 const gulp = require('gulp');
 const fs = require('fs');
@@ -21,33 +24,33 @@ try {
   // No local config
 }
 
-function build(buildTheme, cb) {
+const components = [];
+config.components.forEach((name) => {
+  const lessFilePath = `./src/components/${name}/${name}.less`;
+  if (fs.existsSync(lessFilePath)) {
+    components.push(name);
+  }
+});
+
+function build(themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
-
-  const components = [];
-  config.components.forEach((name) => {
-    const lessFilePath = `./src/components/${name}/${name}.less`;
-    if (fs.existsSync(lessFilePath)) {
-      components.push(name);
-    }
-  });
-
-  const themes = buildTheme ? [buildTheme] : config.themes;
-
-  const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`);
-  const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`);
-
+  const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`).join(', ');
+  const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`).join(', ');
+  const includeIosTheme = themes.indexOf('ios') >= 0;
+  const includeMdTheme = themes.indexOf('md') >= 0;
+  const currentTheme = themes.length === 1 ? themes[0] : '';
+  const outputFileName = `framework7${rtl ? '.rtl' : ''}${currentTheme ? `.${currentTheme}` : ''}`;
   gulp.src('./src/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
-        .replace('$includeIosTheme', themes.indexOf('ios') >= 0)
-        .replace('$includeMdTheme', themes.indexOf('md') >= 0)
+        .replace('$includeIosTheme', includeIosTheme)
+        .replace('$includeMdTheme', includeMdTheme)
         .replace('$themeColorIos', config.ios.themeColor)
-        .replace('$colorsIos', colorsIos.join(', '))
+        .replace('$colorsIos', colorsIos)
         .replace('$themeColorMd', config.md.themeColor)
-        .replace('$colorsMd', colorsMd.join(', '))
-        .replace('$rtl', 'false');
+        .replace('$colorsMd', colorsMd)
+        .replace('$rtl', rtl);
       return newContent;
     }))
     .pipe(less())
@@ -64,8 +67,7 @@ function build(buildTheme, cb) {
     })
     .pipe(header(banner))
     .pipe(rename((filePath) => {
-      /* eslint no-param-reassign: ["error", { "props": false }] */
-      filePath.basename = buildTheme ? `framework7.${buildTheme}` : 'framework7';
+      filePath.basename = outputFileName;
     }))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/css/`))
     .on('end', () => {
@@ -73,32 +75,46 @@ function build(buildTheme, cb) {
         if (cb) cb();
         return;
       }
-      gulp.src(`./dist/css/${buildTheme ? `framework7.${buildTheme}` : 'framework7'}.css`)
+      gulp.src(`./dist/css/${outputFileName}.css`)
         .pipe(cleanCSS({
           advanced: false,
           aggressiveMerging: false,
         }))
         .pipe(header(banner))
         .pipe(rename((filePath) => {
-          /* eslint no-param-reassign: ["error", { "props": false }] */
           filePath.basename += '.min';
         }))
         .pipe(gulp.dest('./dist/css/'))
         .on('end', () => {
-          if (buildTheme && cb) {
-            cb();
-            return;
-          }
-          let cbs = 0;
-          const expectCbs = themes.length;
-          themes.forEach((theme) => {
-            build(theme, () => {
-              cbs += 1;
-              if (cbs === expectCbs && cb) cb();
-            });
-          });
+          if (cb) cb();
         });
     });
 }
 
-module.exports = build;
+
+function buildLess(cb) {
+  const env = process.env.NODE_ENV || 'development';
+  // Build development version
+  if (env === 'development') {
+    build(config.themes, config.rtl, () => {
+      if (cb) cb();
+    });
+    return;
+  }
+  // Build multiple files
+  let cbs = 0;
+  function onCb() {
+    cbs += 1;
+    if (cbs === 6 && cb) cb();
+  }
+  // Build Bundle
+  build(['ios', 'md'], false, onCb);
+  build(['ios', 'md'], true, onCb);
+  // Build Themes
+  build(['ios'], false, onCb);
+  build(['ios'], true, onCb);
+  build(['md'], false, onCb);
+  build(['md'], true, onCb);
+}
+
+module.exports = buildLess;

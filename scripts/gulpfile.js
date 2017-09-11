@@ -11,8 +11,8 @@ const buildLess = require('./build-less.js');
 
 gulp.task('diff', () => {
   const file = process.argv.slice(3).toString().replace('-', '');
-  const ios = fs.readFileSync('./src/_less-old/ios/' + file + '.less', 'utf8');
-  const md = fs.readFileSync('./src/_less-old/material/' + file + '.less', 'utf8');
+  const ios = fs.readFileSync(`./src/_less-old/ios/${file}.less`, 'utf8');
+  const md = fs.readFileSync(`./src/_less-old/material/${file}.less`, 'utf8');
   const result = diff.diffLines(ios, md);
 
   result.forEach((part) => {
@@ -52,7 +52,7 @@ gulp.task('js', (cb) => {
 });
 
 gulp.task('less', (cb) => {
-  buildLess(undefined, cb);
+  buildLess(cb);
 });
 
 gulp.task('build', ['js', 'less']);

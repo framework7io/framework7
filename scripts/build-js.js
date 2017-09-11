@@ -1,5 +1,8 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: "off" */
+/* eslint import/no-unresolved: "off" */
+/* eslint global-require: "off" */
+/* eslint no-param-reassign: ["error", { "props": false }] */
 
 const gulp = require('gulp');
 const fs = require('fs');
@@ -134,7 +137,6 @@ function umd(components, cb) {
         .pipe(uglify())
         .pipe(header(banner))
         .pipe(rename((filePath) => {
-          /* eslint no-param-reassign: ["error", { "props": false }] */
           filePath.basename += '.min';
         }))
         .pipe(sourcemaps.write('./'))
@@ -144,7 +146,7 @@ function umd(components, cb) {
         });
     });
 }
-function build(cb) {
+function buildJs(cb) {
   const env = process.env.NODE_ENV || 'development';
 
   const components = [];
@@ -177,4 +179,4 @@ function build(cb) {
   }
 }
 
-module.exports = build;
+module.exports = buildJs;
