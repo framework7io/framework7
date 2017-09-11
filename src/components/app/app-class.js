@@ -19,7 +19,7 @@ class Framework7 extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    app.useInstanceModulesParams(defaults);
+    app.useModulesParams(defaults);
 
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
@@ -45,7 +45,7 @@ class Framework7 extends Framework7Class {
     }
 
     // Install Modules
-    app.useInstanceModules();
+    app.useModules();
 
     // Init
     if (app.params.init) {

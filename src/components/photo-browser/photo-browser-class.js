@@ -14,7 +14,7 @@ class PhotoBrowser extends Framework7Class {
     }, app.modules.photoBrowser.params.photoBrowser);
 
     // Extend defaults with modules params
-    pb.useInstanceModulesParams(defaults);
+    pb.useModulesParams(defaults);
 
     pb.params = Utils.extend(defaults, params);
 
@@ -37,7 +37,7 @@ class PhotoBrowser extends Framework7Class {
     });
 
     // Install Modules
-    pb.useInstanceModules();
+    pb.useModules();
 
     // Init
     pb.init();

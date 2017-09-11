@@ -82,7 +82,7 @@ class Framework7Class {
     }
     return self;
   }
-  useInstanceModulesParams(instanceParams) {
+  useModulesParams(instanceParams) {
     const instance = this;
     if (!instance.modules) return;
     Object.keys(instance.modules).forEach((moduleName) => {
@@ -93,7 +93,7 @@ class Framework7Class {
       }
     });
   }
-  useInstanceModules(modulesParams = {}) {
+  useModules(modulesParams = {}) {
     const instance = this;
     if (!instance.modules) return;
     Object.keys(instance.modules).forEach((moduleName) => {

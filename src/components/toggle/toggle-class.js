@@ -11,7 +11,7 @@ class Toggle extends Framework7Class {
     const defaults = {};
 
     // Extend defaults with modules params
-    toggle.useInstanceModulesParams(defaults);
+    toggle.useModulesParams(defaults);
 
     toggle.params = Utils.extend(defaults, params);
 
@@ -157,7 +157,7 @@ class Toggle extends Framework7Class {
 
 
     // Install Modules
-    toggle.useInstanceModules();
+    toggle.useModules();
 
     // Init
     toggle.init();

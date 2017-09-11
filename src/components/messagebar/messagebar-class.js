@@ -17,7 +17,7 @@ class Messagebar extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    messagebar.useInstanceModulesParams(defaults);
+    messagebar.useModulesParams(defaults);
 
     messagebar.params = Utils.extend(defaults, params);
 
@@ -110,7 +110,7 @@ class Messagebar extends Framework7Class {
 
 
     // Install Modules
-    messagebar.useInstanceModules();
+    messagebar.useModules();
 
     // Init
     messagebar.init();

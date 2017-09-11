@@ -32,7 +32,7 @@ class VirtualList extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    vl.useInstanceModulesParams(defaults);
+    vl.useModulesParams(defaults);
 
     vl.params = Utils.extend(defaults, params);
     if (vl.params.height === undefined || !vl.params.height) {
@@ -94,7 +94,7 @@ class VirtualList extends Framework7Class {
     });
 
     // Install Modules
-    vl.useInstanceModules();
+    vl.useModules();
 
     // Attach events
     const handleScrollBound = vl.handleScroll.bind(vl);

@@ -14,7 +14,7 @@ class Range extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    range.useInstanceModulesParams(defaults);
+    range.useModulesParams(defaults);
 
     range.params = Utils.extend(defaults, params);
 
@@ -241,7 +241,7 @@ class Range extends Framework7Class {
     };
 
     // Install Modules
-    range.useInstanceModules();
+    range.useModules();
 
     // Init
     range.init();

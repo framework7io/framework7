@@ -24,7 +24,7 @@ class SmartSelect extends Framework7Class {
     }
 
     // Extend defaults with modules params
-    ss.useInstanceModulesParams(defaults);
+    ss.useModulesParams(defaults);
 
     // View
     const view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
@@ -123,7 +123,7 @@ class SmartSelect extends Framework7Class {
     };
 
     // Install Modules
-    ss.useInstanceModules();
+    ss.useModules();
 
     // Init
     ss.init();

@@ -15,7 +15,7 @@ class PullToRefresh extends Framework7Class {
     ptr.el = $el[0];
 
     // Extend defaults with modules params
-    ptr.useInstanceModulesParams({});
+    ptr.useModulesParams({});
 
     const isMaterial = app.theme === 'md';
 
@@ -248,7 +248,7 @@ class PullToRefresh extends Framework7Class {
     };
 
     // Install Modules
-    ptr.useInstanceModules();
+    ptr.useModules();
 
     // Init
     ptr.init();

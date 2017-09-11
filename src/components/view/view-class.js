@@ -64,7 +64,7 @@ class View extends Framework7Class {
     $el[0].f7View = view;
 
     // Install Modules
-    view.useInstanceModules();
+    view.useModules();
 
     // Add to app
     app.views.push(view);

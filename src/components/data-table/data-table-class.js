@@ -13,7 +13,7 @@ class DataTable extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    table.useInstanceModulesParams(defaults);
+    table.useModulesParams(defaults);
 
     table.params = Utils.extend(defaults, params);
 
@@ -93,7 +93,7 @@ class DataTable extends Framework7Class {
     };
 
     // Install Modules
-    table.useInstanceModules();
+    table.useModules();
 
     // Init
     table.init();

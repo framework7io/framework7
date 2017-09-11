@@ -53,7 +53,7 @@ class Panel extends Framework7Class {
     });
 
     // Install Modules
-    panel.useInstanceModules();
+    panel.useModules();
 
     // Init
     panel.init();

@@ -26,7 +26,7 @@ class Messages extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    m.useInstanceModulesParams(defaults);
+    m.useModulesParams(defaults);
 
     m.params = Utils.extend(defaults, params);
 
@@ -46,7 +46,7 @@ class Messages extends Framework7Class {
 
     });
     // Install Modules
-    m.useInstanceModules();
+    m.useModules();
 
     // Init
     m.init();

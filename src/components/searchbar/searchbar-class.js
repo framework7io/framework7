@@ -30,7 +30,7 @@ class Searchbar extends FrameworkClass {
     };
 
     // Extend defaults with modules params
-    sb.useInstanceModulesParams(defaults);
+    sb.useModulesParams(defaults);
 
     sb.params = Utils.extend(defaults, params);
 
@@ -217,7 +217,7 @@ class Searchbar extends FrameworkClass {
     };
 
     // Install Modules
-    sb.useInstanceModules();
+    sb.useModules();
 
     // Init
     sb.init();

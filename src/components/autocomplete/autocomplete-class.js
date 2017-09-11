@@ -16,7 +16,7 @@ class Autocomplete extends Framework7Class {
 
 
     // Extend defaults with modules params
-    ac.useInstanceModulesParams(defaults);
+    ac.useModulesParams(defaults);
 
     ac.params = Utils.extend(defaults, params);
 
@@ -284,7 +284,7 @@ class Autocomplete extends Framework7Class {
     };
 
     // Install Modules
-    ac.useInstanceModules();
+    ac.useModules();
 
     // Init
     ac.init();
