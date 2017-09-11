@@ -297,7 +297,6 @@ class Autocomplete extends Framework7Class {
 
     const $pageContentEl = $inputEl.parents('.page-content');
     if ($pageContentEl.length === 0) return;
-
     const inputOffset = $inputEl.offset();
     const inputOffsetWidth = $inputEl[0].offsetWidth;
     const inputOffsetHeight = $inputEl[0].offsetHeight;
@@ -305,9 +304,16 @@ class Autocomplete extends Framework7Class {
     const listOffset = $listEl.offset();
     const paddingBottom = parseInt($pageContentEl.css('padding-top'), 10);
     const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
-    const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0);
+    const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
     const inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
     const maxHeight = $pageContentEl[0].scrollHeight - paddingBottom - (inputOffsetTop + $pageContentEl[0].scrollTop) - $inputEl[0].offsetHeight;
+
+    const paddingProp = app.rtl ? 'padding-right' : 'padding-left';
+    let paddingValue;
+    if ($listEl.length && !ac.params.expandInput) {
+      paddingValue = (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) - (app.theme === 'md' ? 16 : 15);
+    }
+
 
     $dropdownEl.css({
       left: `${$listEl.length > 0 ? listOffsetLeft : inputOffsetLeft}px`,
@@ -316,7 +322,7 @@ class Autocomplete extends Framework7Class {
     });
     $dropdownEl.children('.autocomplete-dropdown-inner').css({
       maxHeight: `${maxHeight}px`,
-      paddingLeft: $listEl.length > 0 && !ac.params.expandInput ? `${inputOffsetLeft - (app.theme === 'md' ? 16 : 15)}px` : '',
+      [paddingProp]: $listEl.length > 0 && !ac.params.expandInput ? `${paddingValue}px` : '',
     });
   }
   focus() {

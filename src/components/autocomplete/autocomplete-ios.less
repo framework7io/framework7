@@ -4,7 +4,8 @@
   .autocomplete-dropdown {
     box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
     .autocomplete-preloader {
-      right: 15px;
+      .ltr({ right: 15px; });
+      .rtl({ left: 15px; });
       margin-bottom: 12px;
     }
     .list {
@@ -20,7 +21,8 @@
     z-index: 20;
     border-radius: 8px;
     .item-content {
-      padding-left: 28px;
+      .ltr({ padding-left: 28px; });
+      .rtl({ padding-right: 28px; });
     }
     li:last-child {
       border-radius: 0 0 8px 8px;

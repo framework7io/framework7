@@ -26,7 +26,8 @@
   position: absolute;
   z-index: 500;
   width: 100%;
-  left: 0;
+  .ltr({ left: 0; });
+  .rtl({ right: 0; });
   .autocomplete-dropdown-inner {
     position: relative;
     overflow: auto;
@@ -64,7 +65,8 @@
     flex-shrink: 10;
     overflow: hidden;
     + .item-input-wrap {
-      margin-left: 0;
+      .ltr({ margin-left: 0; });
+      .rtl({ margin-right: 0; });
     }
   }
   .item-input-wrap {
