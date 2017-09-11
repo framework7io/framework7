@@ -240,7 +240,7 @@ function Request(options) {
   return xhr;
 }
 
-('get post getJSON').split(' ').forEach((methodName) => {
+('get post json').split(' ').forEach((methodName) => {
   Request[methodName] = function requestMethod(...args) {
     let [url, data, success, error, dataType] = [];
     if (typeof args[1] === 'function') {
@@ -255,7 +255,7 @@ function Request(options) {
         else error = undefined;
       }
     });
-    dataType = dataType || (methodName === 'getJSON' ? 'json' : undefined);
+    dataType = dataType || (methodName === 'json' ? 'json' : undefined);
     return Request({
       url,
       method: methodName === 'post' ? 'POST' : 'GET',
