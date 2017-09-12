@@ -328,6 +328,9 @@ class Swiper extends SwiperClass {
       swiper = null;
     }
   }
+  static get Class() {
+    return SwiperClass;
+  }
 }
 
 const prototypes = Utils.extend(
@@ -348,7 +351,5 @@ const prototypes = Utils.extend(
 Object.keys(prototypes).forEach((protoMethod) => {
   Swiper.prototype[protoMethod] = prototypes[protoMethod];
 });
-
-Swiper.Class = SwiperClass;
 
 export default Swiper;
