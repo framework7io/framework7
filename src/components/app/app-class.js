@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import Template7 from 'template7';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
@@ -92,11 +93,24 @@ class Framework7 extends Framework7Class {
     app.initialized = true;
     app.emit('init');
   }
-  static Class(...args) {
-    return new Framework7Class(...args);
+  get $() {
+    return $;
+  }
+  get t7() {
+    return Template7;
+  }
+  static get Dom7() {
+    return $;
+  }
+  static get $() {
+    return $;
+  }
+  static get Template7() {
+    return Template7;
+  }
+  static get Class() {
+    return Framework7Class;
   }
 }
-
-Framework7.Class = Framework7Class;
 
 export default Framework7;
