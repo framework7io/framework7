@@ -26,20 +26,16 @@ import TouchRipple from './components/touch-ripple/touch-ripple';
 
 //IMPORT_COMPONENTS
 
-// Template7
-Framework7.prototype.t7 = Template7;
-Framework7.Template7 = Template7;
-if (!window.Template7) window.Template7 = Template7;
+if (process.env.FORMAT !== 'es') {
+  // Template7
+  if (!window.Template7) window.Template7 = Template7;
 
-// Dom7
-Framework7.prototype.$ = $;
-Framework7.Dom7 = $;
-Framework7.$ = $;
-if (!window.Dom7) window.Dom7 = $;
+  // Dom7
+  if (!window.Dom7) window.Dom7 = $;
+}
 
-// Install Modules & Components
+// Install Core Modules & Components
 Framework7
-  // Core Modules
   .use(Device)
   .use(Support)
   .use(Utils)
@@ -50,14 +46,12 @@ Framework7
   .use(Router)
   .use(History)
   .use(Storage)
-  // Core Components
   .use(Statusbar)
   .use(View)
   .use(Navbar)
   .use(Toolbar)
   .use(Subnavbar)
   .use(TouchRipple)
-  // Additional Components
   //INSTALL_COMPONENTS
 
 //EXPORT_COMPONENTS

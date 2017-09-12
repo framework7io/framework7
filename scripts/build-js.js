@@ -32,6 +32,7 @@ try {
 function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
+  const format = process.env.FORMAT || config.format || 'es';
   let cbs = 0;
 
   // Bundle
@@ -41,6 +42,7 @@ function es(components, cb) {
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
+        'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
         '//EXPORT_COMPONENTS': 'export default Framework7;',
@@ -72,6 +74,7 @@ function es(components, cb) {
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
+        'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//EXPORT_COMPONENTS': `export { $, Template7, Framework7, ${components.map(component => component.capitalized).join(', ')} };`,
       }),
@@ -98,12 +101,15 @@ function es(components, cb) {
 function umd(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
+  const format = process.env.FORMAT || config.format || 'umd';
+
   rollup({
     entry: './src/framework7.js',
     plugins: [
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
+        'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
         '//EXPORT_COMPONENTS': 'export default Framework7;',
