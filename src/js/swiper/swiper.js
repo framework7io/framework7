@@ -2404,7 +2404,7 @@ window.Swiper = function (container, params) {
         if (s.params.loop) {
             s.destroyLoop();
         }
-        if (typeof slides === 'object' && slides.length) {
+        if (typeof slides === 'object' && 'length' in slides) {
             for (var i = 0; i < slides.length; i++) {
                 if (slides[i]) s.wrapper.append(slides[i]);
             }
@@ -2424,7 +2424,7 @@ window.Swiper = function (container, params) {
             s.destroyLoop();
         }
         var newActiveIndex = s.activeIndex + 1;
-        if (typeof slides === 'object' && slides.length) {
+        if (typeof slides === 'object' && 'length' in slides) {
             for (var i = 0; i < slides.length; i++) {
                 if (slides[i]) s.wrapper.prepend(slides[i]);
             }
@@ -2448,7 +2448,7 @@ window.Swiper = function (container, params) {
         }
         var newActiveIndex = s.activeIndex,
             indexToRemove;
-        if (typeof slidesIndexes === 'object' && slidesIndexes.length) {
+        if (typeof slidesIndexes === 'object' && 'length' in slidesIndexes) {
             for (var i = 0; i < slidesIndexes.length; i++) {
                 indexToRemove = slidesIndexes[i];
                 if (s.slides[indexToRemove]) s.slides.eq(indexToRemove).remove();
