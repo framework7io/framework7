@@ -3,8 +3,10 @@ import Utils from '../../utils/utils';
 import Swiper from './swiper-class/swiper';
 import ConstructorMethods from '../../utils/constructor-methods';
 
-if (!window.Swiper) {
-  window.Swiper = Swiper;
+if (process.env.FORMAT !== 'es') {
+  if (!window.Swiper) {
+    window.Swiper = Swiper;
+  }
 }
 
 function initSwipers(swiperEl) {
@@ -64,19 +66,11 @@ export default {
   },
   create() {
     const app = this;
-    app.swiper = Utils.extend(
-      ConstructorMethods({
-        defaultSelector: '.swiper-container',
-        constructor: Swiper,
-        app,
-        domProp: 'swiper',
-      }),
-      {
-        create(...args) {
-          return new Swiper(...args);
-        },
-      }
-    );
+    app.swiper = ConstructorMethods({
+      defaultSelector: '.swiper-container',
+      constructor: Swiper,
+      domProp: 'swiper',
+    });
   },
   on: {
     pageBeforeRemove(page) {
