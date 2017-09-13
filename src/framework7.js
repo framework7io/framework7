@@ -4,7 +4,7 @@ import $ from 'dom7';
 // F7 Class
 import Framework7 from './components/app/app-class';
 
-// Import Core Modules
+// Core Modules
 import Device from './modules/device/device';
 import Support from './modules/support/support';
 import Utils from './modules/utils/utils';
@@ -35,23 +35,24 @@ if (process.env.FORMAT !== 'es') {
 }
 
 // Install Core Modules & Components
-Framework7
-  .use(Device)
-  .use(Support)
-  .use(Utils)
-  .use(Resize)
-  .use(Request)
-  .use(Touch)
-  .use(Clicks)
-  .use(Router)
-  .use(History)
-  .use(Storage)
-  .use(Statusbar)
-  .use(View)
-  .use(Navbar)
-  .use(Toolbar)
-  .use(Subnavbar)
-  .use(TouchRipple)
+Framework7.components = [
+  Device,
+  Support,
+  Utils,
+  Resize,
+  Request,
+  Touch,
+  Clicks,
+  Router,
+  History,
+  Storage,
+  Statusbar,
+  View,
+  Navbar,
+  Toolbar,
+  Subnavbar,
+  TouchRipple,
   //INSTALL_COMPONENTS
+];
 
 //EXPORT_COMPONENTS
