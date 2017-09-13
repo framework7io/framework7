@@ -18,7 +18,8 @@ export default class TouchRipple {
 
     $el.prepend(ripple.$rippleWaveEl);
 
-    const clientLeft = ripple.$rippleWaveEl[0].clientLeft;
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
+    ripple._clientLeft = ripple.$rippleWaveEl[0].clientLeft;
 
     ripple.rippleTransform = `translate3d(${-center.x + (width / 2)}px, ${-center.y + (height / 2)}px, 0) scale(1)`;
 
