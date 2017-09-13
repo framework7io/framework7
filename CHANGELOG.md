@@ -1,3 +1,6 @@
+# [v2.0.0-beta.6](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.5...v2.0.0-beta.6) - September 13, 2017
+  * Template7 updated to latest v1.3.0
+
 # [v2.0.0-beta.5](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.4...v2.0.0-beta.5) - September 13, 2017
   * Small core refactorings to work better in tree-shaking bundlers
 

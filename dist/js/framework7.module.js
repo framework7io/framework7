@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.5
+ * Framework7 2.0.0-beta.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -10,7 +10,7 @@
  * Released on: September 13, 2017
  */
 
-import t7 from 'template7';
+import Template7 from 'template7';
 import $ from 'dom7';
 
 /**
@@ -798,7 +798,7 @@ class Framework7$1 extends Framework7Class {
     return $;
   }
   get t7() {
-    return t7;
+    return Template7;
   }
   static get Dom7() {
     return $;
@@ -807,7 +807,7 @@ class Framework7$1 extends Framework7Class {
     return $;
   }
   static get Template7() {
-    return t7;
+    return Template7;
   }
   static get Class() {
     return Framework7Class;
@@ -1987,7 +1987,7 @@ class Framework7Component {
       html = component.render();
     } else if (component.template) {
       if (typeof component.template === 'string') {
-        html = t7.compile(component.template)(context);
+        html = Template7.compile(component.template)(context);
       } else {
         // Supposed to be function
         html = component.template(context);
@@ -4608,7 +4608,7 @@ class Router$1 extends Framework7Class {
         if (typeof t === 'function') {
           compiledHtml = t(context);
         } else {
-          compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
+          compiledHtml = Template7.compile(t)(Utils.extend({}, context || {}, {
             $app: router.app,
             $root: Utils.extend({}, router.app.data, router.app.methods),
             $route: options.route,
@@ -8877,7 +8877,7 @@ class VirtualList$1 extends Framework7Class {
       vl.filteredItems = [];
     }
     if (vl.params.itemTemplate && !vl.params.renderItem) {
-      if (typeof vl.params.itemTemplate === 'string') vl.itemTemplate = t7.compile(vl.params.template);
+      if (typeof vl.params.itemTemplate === 'string') vl.itemTemplate = Template7.compile(vl.params.template);
       else if (typeof vl.params.itemTemplate === 'function') vl.itemTemplate = vl.params.itemTemplate;
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');
@@ -20260,7 +20260,7 @@ const Notification = {
     }
     var list = container.children('ul');
 
-    var notificationTemplate = app.params.notificationTemplate || 
+    var notificationTemplate = app.params.notificationTemplate ||
         '{{#if custom}}' +
         '<li>{{custom}}</li>' +
         '{{else}}' +
@@ -20300,7 +20300,7 @@ const Notification = {
         '</li>' +
         '{{/if}}';
     if (!app.notificationCompiledTemplate) {
-        app.notificationCompiledTemplate = t7.compile(notificationTemplate);
+        app.notificationCompiledTemplate = Template7.compile(notificationTemplate);
     }
     _tempNotificationElement.innerHTML = app.notificationCompiledTemplate(params);
 

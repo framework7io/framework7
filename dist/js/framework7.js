@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.5
+ * Framework7 2.0.0-beta.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -17,7 +17,7 @@
 }(this, (function () { 'use strict';
 
 /**
- * Template7 1.2.5
+ * Template7 1.3.0
  * Mobile-first HTML template engine
  * 
  * http://www.idangero.us/template7/
@@ -28,232 +28,233 @@
  * 
  * Licensed under MIT
  * 
- * Released on: August 2, 2017
+ * Released on: September 13, 2017
  */
-var template7Context;
+var t7ctx;
 if (typeof window !== 'undefined') {
-  template7Context = window;
+  t7ctx = window;
 } else if (typeof global !== 'undefined') {
-  template7Context = global;
+  t7ctx = global;
 } else {
-  template7Context = undefined;
+  t7ctx = undefined;
 }
-function isArray(arr) {
-  return Array.isArray ? Array.isArray(arr) : Object.prototype.toString.apply(arr) === '[object Array]';
-}
-function isFunction(func) {
-  return typeof func === 'function';
-}
-function escape(string) {
-  return (typeof template7Context !== 'undefined' && template7Context.escape ? template7Context.escape(string) : string)
+
+var Template7Context = t7ctx;
+
+var Template7Utils = {
+  quoteSingleRexExp: new RegExp('\'', 'g'),
+  quoteDoubleRexExp: new RegExp('"', 'g'),
+  isFunction: function isFunction(func) {
+    return typeof func === 'function';
+  },
+  escape: function escape(string) {
+    return (typeof Template7Context !== 'undefined' && Template7Context.escape) ?
+      Template7Context.escape(string) :
+      string
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
-}
-var quoteSingleRexExp = new RegExp('\'', 'g');
-var quoteDoubleRexExp = new RegExp('"', 'g');
-function helperToSlices(string) {
-  var helperParts = string.replace(/[{}#}]/g, '').split(' ');
-  var slices = [];
-  var shiftIndex;
-  var i;
-  var j;
-  for (i = 0; i < helperParts.length; i += 1) {
-    var part = helperParts[i];
-    var blockQuoteRegExp = (void 0);
-    var openingQuote = (void 0);
-    if (i === 0) { slices.push(part); }
-    else if (part.indexOf('"') === 0 || part.indexOf('\'') === 0) {
-      blockQuoteRegExp = part.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
-      openingQuote = part.indexOf('"') === 0 ? '"' : '\'';
-      // Plain String
-      if (part.match(blockQuoteRegExp).length === 2) {
-        // One word string
-        slices.push(part);
-      } else {
-        // Find closed Index
-        shiftIndex = 0;
-        for (j = i + 1; j < helperParts.length; j += 1) {
-          part += " " + (helperParts[j]);
-          if (helperParts[j].indexOf(openingQuote) >= 0) {
-            shiftIndex = j;
-            slices.push(part);
-            break;
-          }
-        }
-        if (shiftIndex) { i = shiftIndex; }
-      }
-    } else if (part.indexOf('=') > 0) {
-      // Hash
-      var hashParts = part.split('=');
-      var hashName = hashParts[0];
-      var hashContent = hashParts[1];
-      if (!blockQuoteRegExp) {
-        blockQuoteRegExp = hashContent.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
-        openingQuote = hashContent.indexOf('"') === 0 ? '"' : '\'';
-      }
-      if (hashContent.match(blockQuoteRegExp).length !== 2) {
-        shiftIndex = 0;
-        for (j = i + 1; j < helperParts.length; j += 1) {
-          hashContent += " " + (helperParts[j]);
-          if (helperParts[j].indexOf(openingQuote) >= 0) {
-            shiftIndex = j;
-            break;
-          }
-        }
-        if (shiftIndex) { i = shiftIndex; }
-      }
-      var hash = [hashName, hashContent.replace(blockQuoteRegExp, '')];
-      slices.push(hash);
-    } else {
-      // Plain variable
-      slices.push(part);
-    }
-  }
-  return slices;
-}
-function stringToBlocks(string) {
-  var blocks = [];
-  var i;
-  var j;
-  if (!string) { return []; }
-  var stringBlocks = string.split(/({{[^{^}]*}})/);
-  for (i = 0; i < stringBlocks.length; i += 1) {
-    var block = stringBlocks[i];
-    if (block === '') { continue; }
-    if (block.indexOf('{{') < 0) {
-      blocks.push({
-        type: 'plain',
-        content: block,
-      });
-    } else {
-      if (block.indexOf('{/') >= 0) {
-        continue;
-      }
-      if (block.indexOf('{#') < 0 && block.indexOf(' ') < 0 && block.indexOf('else') < 0) {
-        // Simple variable
-        blocks.push({
-          type: 'variable',
-          contextName: block.replace(/[{}]/g, ''),
-        });
-        continue;
-      }
-      // Helpers
-      var helperSlices = helperToSlices(block);
-      var helperName = helperSlices[0];
-      var isPartial = helperName === '>';
-      var helperContext = [];
-      var helperHash = {};
-      for (j = 1; j < helperSlices.length; j += 1) {
-        var slice = helperSlices[j];
-        if (isArray(slice)) {
-          // Hash
-          helperHash[slice[0]] = slice[1] === 'false' ? false : slice[1];
+  },
+  helperToSlices: function helperToSlices(string) {
+    var quoteDoubleRexExp = Template7Utils.quoteDoubleRexExp;
+    var quoteSingleRexExp = Template7Utils.quoteSingleRexExp;
+    var helperParts = string.replace(/[{}#}]/g, '').split(' ');
+    var slices = [];
+    var shiftIndex;
+    var i;
+    var j;
+    for (i = 0; i < helperParts.length; i += 1) {
+      var part = helperParts[i];
+      var blockQuoteRegExp = (void 0);
+      var openingQuote = (void 0);
+      if (i === 0) { slices.push(part); }
+      else if (part.indexOf('"') === 0 || part.indexOf('\'') === 0) {
+        blockQuoteRegExp = part.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
+        openingQuote = part.indexOf('"') === 0 ? '"' : '\'';
+        // Plain String
+        if (part.match(blockQuoteRegExp).length === 2) {
+          // One word string
+          slices.push(part);
         } else {
-          helperContext.push(slice);
-        }
-      }
-
-      if (block.indexOf('{#') >= 0) {
-        // Condition/Helper
-        var helperContent = '';
-        var elseContent = '';
-        var toSkip = 0;
-        var shiftIndex = (void 0);
-        var foundClosed = false;
-        var foundElse = false;
-        var depth = 0;
-        for (j = i + 1; j < stringBlocks.length; j += 1) {
-          if (stringBlocks[j].indexOf('{{#') >= 0) {
-            depth += 1;
-          }
-          if (stringBlocks[j].indexOf('{{/') >= 0) {
-            depth -= 1;
-          }
-          if (stringBlocks[j].indexOf(("{{#" + helperName)) >= 0) {
-            helperContent += stringBlocks[j];
-            if (foundElse) { elseContent += stringBlocks[j]; }
-            toSkip += 1;
-          } else if (stringBlocks[j].indexOf(("{{/" + helperName)) >= 0) {
-            if (toSkip > 0) {
-              toSkip -= 1;
-              helperContent += stringBlocks[j];
-              if (foundElse) { elseContent += stringBlocks[j]; }
-            } else {
+          // Find closed Index
+          shiftIndex = 0;
+          for (j = i + 1; j < helperParts.length; j += 1) {
+            part += " " + (helperParts[j]);
+            if (helperParts[j].indexOf(openingQuote) >= 0) {
               shiftIndex = j;
-              foundClosed = true;
+              slices.push(part);
               break;
             }
-          } else if (stringBlocks[j].indexOf('else') >= 0 && depth === 0) {
-            foundElse = true;
+          }
+          if (shiftIndex) { i = shiftIndex; }
+        }
+      } else if (part.indexOf('=') > 0) {
+        // Hash
+        var hashParts = part.split('=');
+        var hashName = hashParts[0];
+        var hashContent = hashParts[1];
+        if (!blockQuoteRegExp) {
+          blockQuoteRegExp = hashContent.indexOf('"') === 0 ? quoteDoubleRexExp : quoteSingleRexExp;
+          openingQuote = hashContent.indexOf('"') === 0 ? '"' : '\'';
+        }
+        if (hashContent.match(blockQuoteRegExp).length !== 2) {
+          shiftIndex = 0;
+          for (j = i + 1; j < helperParts.length; j += 1) {
+            hashContent += " " + (helperParts[j]);
+            if (helperParts[j].indexOf(openingQuote) >= 0) {
+              shiftIndex = j;
+              break;
+            }
+          }
+          if (shiftIndex) { i = shiftIndex; }
+        }
+        var hash = [hashName, hashContent.replace(blockQuoteRegExp, '')];
+        slices.push(hash);
+      } else {
+        // Plain variable
+        slices.push(part);
+      }
+    }
+    return slices;
+  },
+  stringToBlocks: function stringToBlocks(string) {
+    var blocks = [];
+    var i;
+    var j;
+    if (!string) { return []; }
+    var stringBlocks = string.split(/({{[^{^}]*}})/);
+    for (i = 0; i < stringBlocks.length; i += 1) {
+      var block = stringBlocks[i];
+      if (block === '') { continue; }
+      if (block.indexOf('{{') < 0) {
+        blocks.push({
+          type: 'plain',
+          content: block,
+        });
+      } else {
+        if (block.indexOf('{/') >= 0) {
+          continue;
+        }
+        if (block.indexOf('{#') < 0 && block.indexOf(' ') < 0 && block.indexOf('else') < 0) {
+          // Simple variable
+          blocks.push({
+            type: 'variable',
+            contextName: block.replace(/[{}]/g, ''),
+          });
+          continue;
+        }
+        // Helpers
+        var helperSlices = Template7Utils.helperToSlices(block);
+        var helperName = helperSlices[0];
+        var isPartial = helperName === '>';
+        var helperContext = [];
+        var helperHash = {};
+        for (j = 1; j < helperSlices.length; j += 1) {
+          var slice = helperSlices[j];
+          if (Array.isArray(slice)) {
+            // Hash
+            helperHash[slice[0]] = slice[1] === 'false' ? false : slice[1];
           } else {
-            if (!foundElse) { helperContent += stringBlocks[j]; }
-            if (foundElse) { elseContent += stringBlocks[j]; }
+            helperContext.push(slice);
           }
         }
-        if (foundClosed) {
-          if (shiftIndex) { i = shiftIndex; }
+
+        if (block.indexOf('{#') >= 0) {
+          // Condition/Helper
+          var helperContent = '';
+          var elseContent = '';
+          var toSkip = 0;
+          var shiftIndex = (void 0);
+          var foundClosed = false;
+          var foundElse = false;
+          var depth = 0;
+          for (j = i + 1; j < stringBlocks.length; j += 1) {
+            if (stringBlocks[j].indexOf('{{#') >= 0) {
+              depth += 1;
+            }
+            if (stringBlocks[j].indexOf('{{/') >= 0) {
+              depth -= 1;
+            }
+            if (stringBlocks[j].indexOf(("{{#" + helperName)) >= 0) {
+              helperContent += stringBlocks[j];
+              if (foundElse) { elseContent += stringBlocks[j]; }
+              toSkip += 1;
+            } else if (stringBlocks[j].indexOf(("{{/" + helperName)) >= 0) {
+              if (toSkip > 0) {
+                toSkip -= 1;
+                helperContent += stringBlocks[j];
+                if (foundElse) { elseContent += stringBlocks[j]; }
+              } else {
+                shiftIndex = j;
+                foundClosed = true;
+                break;
+              }
+            } else if (stringBlocks[j].indexOf('else') >= 0 && depth === 0) {
+              foundElse = true;
+            } else {
+              if (!foundElse) { helperContent += stringBlocks[j]; }
+              if (foundElse) { elseContent += stringBlocks[j]; }
+            }
+          }
+          if (foundClosed) {
+            if (shiftIndex) { i = shiftIndex; }
+            blocks.push({
+              type: 'helper',
+              helperName: helperName,
+              contextName: helperContext,
+              content: helperContent,
+              inverseContent: elseContent,
+              hash: helperHash,
+            });
+          }
+        } else if (block.indexOf(' ') > 0) {
+          if (isPartial) {
+            helperName = '_partial';
+            if (helperContext[0]) { helperContext[0] = "\"" + (helperContext[0].replace(/"|'/g, '')) + "\""; }
+          }
           blocks.push({
             type: 'helper',
             helperName: helperName,
             contextName: helperContext,
-            content: helperContent,
-            inverseContent: elseContent,
             hash: helperHash,
           });
         }
-      } else if (block.indexOf(' ') > 0) {
-        if (isPartial) {
-          helperName = '_partial';
-          if (helperContext[0]) { helperContext[0] = "\"" + (helperContext[0].replace(/"|'/g, '')) + "\""; }
-        }
-        blocks.push({
-          type: 'helper',
-          helperName: helperName,
-          contextName: helperContext,
-          hash: helperHash,
-        });
       }
     }
-  }
-  return blocks;
-}
-function parseJsVariable(expression, replace, object) {
-  return expression.split(/([+ -*/^])/g).map(function (part) {
-    if (part.indexOf(replace) < 0) { return part; }
-    if (!object) { return JSON.stringify(''); }
-    var variable = object;
-    if (part.indexOf((replace + ".")) >= 0) {
-      part.split((replace + "."))[1].split('.').forEach(function (partName) {
+    return blocks;
+  },
+  parseJsVariable: function parseJsVariable(expression, replace, object) {
+    return expression.split(/([+ -*/^])/g).map(function (part) {
+      if (part.indexOf(replace) < 0) { return part; }
+      if (!object) { return JSON.stringify(''); }
+      var variable = object;
+      if (part.indexOf((replace + ".")) >= 0) {
+        part.split((replace + "."))[1].split('.').forEach(function (partName) {
+          if (variable[partName]) { variable = variable[partName]; }
+          else { variable = 'undefined'; }
+        });
+      }
+      return JSON.stringify(variable);
+    }).join('');
+  },
+  parseJsParents: function parseJsParents(expression, parents) {
+    return expression.split(/([+ -*^])/g).map(function (part) {
+      if (part.indexOf('../') < 0) { return part; }
+      if (!parents || parents.length === 0) { return JSON.stringify(''); }
+      var levelsUp = part.split('../').length - 1;
+      var parentData = levelsUp > parents.length ? parents[parents.length - 1] : parents[levelsUp - 1];
+
+      var variable = parentData;
+      var parentPart = part.replace(/..\//g, '');
+      parentPart.split('.').forEach(function (partName) {
         if (variable[partName]) { variable = variable[partName]; }
         else { variable = 'undefined'; }
       });
-    }
-    return JSON.stringify(variable);
-  }).join('');
-}
-function parseJsParents(expression, parents) {
-  return expression.split(/([+ -*^])/g).map(function (part) {
-    if (part.indexOf('../') < 0) { return part; }
-    if (!parents || parents.length === 0) { return JSON.stringify(''); }
-    var levelsUp = part.split('../').length - 1;
-    var parentData = levelsUp > parents.length ? parents[parents.length - 1] : parents[levelsUp - 1];
-
-    var variable = parentData;
-    var parentPart = part.replace(/..\//g, '');
-    parentPart.split('.').forEach(function (partName) {
-      if (variable[partName]) { variable = variable[partName]; }
-      else { variable = 'undefined'; }
-    });
-    return JSON.stringify(variable);
-  }).join('');
-}
-var Template7 = function Template7(template) {
-  var t = this;
-  t.template = template;
-
-  function getCompileVar(name, ctx, data) {
+      return JSON.stringify(variable);
+    }).join('');
+  },
+  getCompileVar: function getCompileVar(name, ctx, data) {
     if ( data === void 0 ) data = 'data_1';
 
     var variable = ctx;
@@ -295,283 +296,314 @@ var Template7 = function Template7(template) {
       }
     }
     return variable;
-  }
-  function getCompiledArguments(contextArray, ctx, data) {
+  },
+  getCompiledArguments: function getCompiledArguments(contextArray, ctx, data) {
     var arr = [];
     for (var i = 0; i < contextArray.length; i += 1) {
       if (/^['"]/.test(contextArray[i])) { arr.push(contextArray[i]); }
       else if (/^(true|false|\d+)$/.test(contextArray[i])) { arr.push(contextArray[i]); }
       else {
-        arr.push(getCompileVar(contextArray[i], ctx, data));
+        arr.push(Template7Utils.getCompileVar(contextArray[i], ctx, data));
       }
     }
 
     return arr.join(', ');
-  }
-  function compile(template, depth) {
-    if ( template === void 0 ) template = t.template;
-    if ( depth === void 0 ) depth = 1;
-
-    if (typeof template !== 'string') {
-      throw new Error('Template7: Template must be a string');
-    }
-    var blocks = stringToBlocks(template);
-    var ctx = "ctx_" + depth;
-    var data = "data_" + depth;
-    if (blocks.length === 0) {
-      return function empty() { return ''; };
-    }
-
-    function getCompileFn(block, newDepth) {
-      if (block.content) { return compile(block.content, newDepth); }
-      return function empty() { return ''; };
-    }
-    function getCompileInverse(block, newDepth) {
-      if (block.inverseContent) { return compile(block.inverseContent, newDepth); }
-      return function empty() { return ''; };
-    }
-
-    var resultString = '';
-    if (depth === 1) {
-      resultString += "(function (" + ctx + ", " + data + ", root) {\n";
-    } else {
-      resultString += "(function (" + ctx + ", " + data + ") {\n";
-    }
-    if (depth === 1) {
-      resultString += 'function isArray(arr){return Object.prototype.toString.apply(arr) === \'[object Array]\';}\n';
-      resultString += 'function isFunction(func){return (typeof func === \'function\');}\n';
-      resultString += 'function c(val, ctx) {if (typeof val !== "undefined" && val !== null) {if (isFunction(val)) {return val.call(ctx);} else return val;} else return "";}\n';
-      resultString += 'root = root || ctx_1 || {};\n';
-    }
-    resultString += 'var r = \'\';\n';
-    var i;
-    for (i = 0; i < blocks.length; i += 1) {
-      var block = blocks[i];
-      // Plain block
-      if (block.type === 'plain') {
-        resultString += "r +='" + ((block.content).replace(/\r/g, '\\r').replace(/\n/g, '\\n').replace(/'/g, '\\' + '\'')) + "';";
-        continue;
-      }
-      var variable = (void 0);
-      var compiledArguments = (void 0);
-      // Variable block
-      if (block.type === 'variable') {
-        variable = getCompileVar(block.contextName, ctx, data);
-        resultString += "r += c(" + variable + ", " + ctx + ");";
-      }
-      // Helpers block
-      if (block.type === 'helper') {
-        var parents = (void 0);
-        if (ctx !== 'ctx_1') {
-          var level = ctx.split('_')[1];
-          var parentsString = "ctx_" + (level - 1);
-          for (var j = level - 2; j >= 1; j -= 1) {
-            parentsString += ", ctx_" + j;
-          }
-          parents = "[" + parentsString + "]";
-        } else {
-          parents = "[" + ctx + "]";
-        }
-        if (block.helperName in t.helpers) {
-          compiledArguments = getCompiledArguments(block.contextName, ctx, data);
-          resultString += "r += (Template7.helpers." + (block.helperName) + ").call(" + ctx + ", " + (compiledArguments && ((compiledArguments + ", "))) + "{hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
-        } else if (block.contextName.length > 0) {
-          throw new Error(("Template7: Missing helper: \"" + (block.helperName) + "\""));
-        } else {
-          variable = getCompileVar(block.helperName, ctx, data);
-          resultString += "if (" + variable + ") {";
-          resultString += "if (isArray(" + variable + ")) {";
-          resultString += "r += (Template7.helpers.each).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
-          resultString += '}else {';
-          resultString += "r += (Template7.helpers.with).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
-          resultString += '}}';
-        }
-      }
-    }
-    resultString += '\nreturn r;})';
-    return eval.call(template7Context, resultString);
-  }
-  t.compile = function _compile(template) {
-    if (!t.compiled) {
-      t.compiled = compile(template);
-    }
-    return t.compiled;
-  };
-};
-
-Template7.prototype = {
-  options: {},
-  partials: {},
-  helpers: {
-    _partial: function _partial(partialName, options) {
-      var p = Template7.prototype.partials[partialName];
-      if (!p || (p && !p.template)) { return ''; }
-      if (!p.compiled) {
-        p.compiled = new Template7(p.template).compile();
-      }
-      var ctx = this;
-      for (var hashName in options.hash) {
-        ctx[hashName] = options.hash[hashName];
-      }
-      return p.compiled(ctx, options.data, options.root);
-    },
-    escape: function escape$1(context, options) {
-      if (typeof context !== 'string') {
-        throw new Error('Template7: Passed context to "escape" helper should be a string');
-      }
-      return escape(context);
-    },
-    if: function if$1(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      if (ctx) {
-        return options.fn(this, options.data);
-      }
-
-      return options.inverse(this, options.data);
-    },
-    unless: function unless(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      if (!ctx) {
-        return options.fn(this, options.data);
-      }
-
-      return options.inverse(this, options.data);
-    },
-    each: function each(context, options) {
-      var ctx = context;
-      var ret = '';
-      var i = 0;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      if (isArray(ctx)) {
-        if (options.hash.reverse) {
-          ctx = ctx.reverse();
-        }
-        for (i = 0; i < ctx.length; i += 1) {
-          ret += options.fn(ctx[i], { first: i === 0, last: i === ctx.length - 1, index: i });
-        }
-        if (options.hash.reverse) {
-          ctx = ctx.reverse();
-        }
-      } else {
-        for (var key in ctx) {
-          i += 1;
-          ret += options.fn(ctx[key], { key: key });
-        }
-      }
-      if (i > 0) { return ret; }
-      return options.inverse(this);
-    },
-    with: function with$1(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = context.call(this); }
-      return options.fn(ctx);
-    },
-    join: function join(context, options) {
-      var ctx = context;
-      if (isFunction(ctx)) { ctx = ctx.call(this); }
-      return ctx.join(options.hash.delimiter || options.hash.delimeter);
-    },
-    js: function js(expression, options) {
-      var data = options.data;
-      var func;
-      var execute = expression;
-      ('index first last key').split(' ').forEach(function (prop) {
-        if (typeof data[prop] !== 'undefined') {
-          var re1 = new RegExp(("this.@" + prop), 'g');
-          var re2 = new RegExp(("@" + prop), 'g');
-          execute = execute
-            .replace(re1, JSON.stringify(data[prop]))
-            .replace(re2, JSON.stringify(data[prop]));
-        }
-      });
-      if (options.root && execute.indexOf('@root') >= 0) {
-        execute = parseJsVariable(execute, '@root', options.root);
-      }
-      if (execute.indexOf('@global') >= 0) {
-        execute = parseJsVariable(execute, '@global', template7Context.Template7.global);
-      }
-      if (execute.indexOf('../') >= 0) {
-        execute = parseJsParents(execute, options.parents);
-      }
-      if (execute.indexOf('return') >= 0) {
-        func = "(function(){" + execute + "})";
-      } else {
-        func = "(function(){return (" + execute + ")})";
-      }
-      return eval.call(this, func).call(this);
-    },
-    js_if: function js_if(expression, options) {
-      var data = options.data;
-      var func;
-      var execute = expression;
-      ('index first last key').split(' ').forEach(function (prop) {
-        if (typeof data[prop] !== 'undefined') {
-          var re1 = new RegExp(("this.@" + prop), 'g');
-          var re2 = new RegExp(("@" + prop), 'g');
-          execute = execute
-            .replace(re1, JSON.stringify(data[prop]))
-            .replace(re2, JSON.stringify(data[prop]));
-        }
-      });
-      if (options.root && execute.indexOf('@root') >= 0) {
-        execute = parseJsVariable(execute, '@root', options.root);
-      }
-      if (execute.indexOf('@global') >= 0) {
-        execute = parseJsVariable(execute, '@global', Template7.global);
-      }
-      if (execute.indexOf('../') >= 0) {
-        execute = parseJsParents(execute, options.parents);
-      }
-      if (execute.indexOf('return') >= 0) {
-        func = "(function(){" + execute + "})";
-      } else {
-        func = "(function(){return (" + execute + ")})";
-      }
-      var condition = eval.call(this, func).call(this);
-      if (condition) {
-        return options.fn(this, options.data);
-      }
-
-      return options.inverse(this, options.data);
-    },
   },
 };
-Template7.prototype.helpers.js_compare = Template7.prototype.helpers.js_if;
-function t7(template, data) {
-  if (arguments.length === 2) {
-    var instance = new Template7(template);
+
+var Template7Helpers = {
+  _partial: function _partial(partialName, options) {
+    var p = Template7Class.partials[partialName];
+    if (!p || (p && !p.template)) { return ''; }
+    if (!p.compiled) {
+      p.compiled = new Template7Class(p.template).compile();
+    }
+    var ctx = this;
+    for (var hashName in options.hash) {
+      ctx[hashName] = options.hash[hashName];
+    }
+    return p.compiled(ctx, options.data, options.root);
+  },
+  escape: function escape(context) {
+    if (typeof context !== 'string') {
+      throw new Error('Template7: Passed context to "escape" helper should be a string');
+    }
+    return Template7Utils.escape(context);
+  },
+  if: function if$1(context, options) {
+    var ctx = context;
+    if (Template7Utils.isFunction(ctx)) { ctx = ctx.call(this); }
+    if (ctx) {
+      return options.fn(this, options.data);
+    }
+
+    return options.inverse(this, options.data);
+  },
+  unless: function unless(context, options) {
+    var ctx = context;
+    if (Template7Utils.isFunction(ctx)) { ctx = ctx.call(this); }
+    if (!ctx) {
+      return options.fn(this, options.data);
+    }
+
+    return options.inverse(this, options.data);
+  },
+  each: function each(context, options) {
+    var ctx = context;
+    var ret = '';
+    var i = 0;
+    if (Template7Utils.isFunction(ctx)) { ctx = ctx.call(this); }
+    if (Array.isArray(ctx)) {
+      if (options.hash.reverse) {
+        ctx = ctx.reverse();
+      }
+      for (i = 0; i < ctx.length; i += 1) {
+        ret += options.fn(ctx[i], { first: i === 0, last: i === ctx.length - 1, index: i });
+      }
+      if (options.hash.reverse) {
+        ctx = ctx.reverse();
+      }
+    } else {
+      for (var key in ctx) {
+        i += 1;
+        ret += options.fn(ctx[key], { key: key });
+      }
+    }
+    if (i > 0) { return ret; }
+    return options.inverse(this);
+  },
+  with: function with$1(context, options) {
+    var ctx = context;
+    if (Template7Utils.isFunction(ctx)) { ctx = context.call(this); }
+    return options.fn(ctx);
+  },
+  join: function join(context, options) {
+    var ctx = context;
+    if (Template7Utils.isFunction(ctx)) { ctx = ctx.call(this); }
+    return ctx.join(options.hash.delimiter || options.hash.delimeter);
+  },
+  js: function js(expression, options) {
+    var data = options.data;
+    var func;
+    var execute = expression;
+    ('index first last key').split(' ').forEach(function (prop) {
+      if (typeof data[prop] !== 'undefined') {
+        var re1 = new RegExp(("this.@" + prop), 'g');
+        var re2 = new RegExp(("@" + prop), 'g');
+        execute = execute
+          .replace(re1, JSON.stringify(data[prop]))
+          .replace(re2, JSON.stringify(data[prop]));
+      }
+    });
+    if (options.root && execute.indexOf('@root') >= 0) {
+      execute = Template7Utils.parseJsVariable(execute, '@root', options.root);
+    }
+    if (execute.indexOf('@global') >= 0) {
+      execute = Template7Utils.parseJsVariable(execute, '@global', Template7Context.Template7.global);
+    }
+    if (execute.indexOf('../') >= 0) {
+      execute = Template7Utils.parseJsParents(execute, options.parents);
+    }
+    if (execute.indexOf('return') >= 0) {
+      func = "(function(){" + execute + "})";
+    } else {
+      func = "(function(){return (" + execute + ")})";
+    }
+    return eval.call(this, func).call(this);
+  },
+  js_if: function js_if(expression, options) {
+    var data = options.data;
+    var func;
+    var execute = expression;
+    ('index first last key').split(' ').forEach(function (prop) {
+      if (typeof data[prop] !== 'undefined') {
+        var re1 = new RegExp(("this.@" + prop), 'g');
+        var re2 = new RegExp(("@" + prop), 'g');
+        execute = execute
+          .replace(re1, JSON.stringify(data[prop]))
+          .replace(re2, JSON.stringify(data[prop]));
+      }
+    });
+    if (options.root && execute.indexOf('@root') >= 0) {
+      execute = Template7Utils.parseJsVariable(execute, '@root', options.root);
+    }
+    if (execute.indexOf('@global') >= 0) {
+      execute = Template7Utils.parseJsVariable(execute, '@global', Template7Class.global);
+    }
+    if (execute.indexOf('../') >= 0) {
+      execute = Template7Utils.parseJsParents(execute, options.parents);
+    }
+    if (execute.indexOf('return') >= 0) {
+      func = "(function(){" + execute + "})";
+    } else {
+      func = "(function(){return (" + execute + ")})";
+    }
+    var condition = eval.call(this, func).call(this);
+    if (condition) {
+      return options.fn(this, options.data);
+    }
+
+    return options.inverse(this, options.data);
+  },
+};
+Template7Helpers.js_compare = Template7Helpers.js_if;
+
+var Template7Options = {};
+var Template7Partials = {};
+var script = Template7Context.document.createElement('script');
+Template7Context.document.head.appendChild(script);
+
+var Template7Class = function Template7Class(template) {
+  var t = this;
+  t.template = template;
+};
+
+var staticAccessors = { options: {},partials: {},helpers: {} };
+Template7Class.prototype.compile = function compile (template, depth) {
+    if ( template === void 0 ) template = this.template;
+    if ( depth === void 0 ) depth = 1;
+
+  var t = this;
+  if (t.compiled) { return t.compiled; }
+
+  if (typeof template !== 'string') {
+    throw new Error('Template7: Template must be a string');
+  }
+  var stringToBlocks = Template7Utils.stringToBlocks;
+    var getCompileVar = Template7Utils.getCompileVar;
+    var getCompiledArguments = Template7Utils.getCompiledArguments;
+
+  var blocks = stringToBlocks(template);
+  var ctx = "ctx_" + depth;
+  var data = "data_" + depth;
+  if (blocks.length === 0) {
+    return function empty() { return ''; };
+  }
+
+  function getCompileFn(block, newDepth) {
+    if (block.content) { return t.compile(block.content, newDepth); }
+    return function empty() { return ''; };
+  }
+  function getCompileInverse(block, newDepth) {
+    if (block.inverseContent) { return t.compile(block.inverseContent, newDepth); }
+    return function empty() { return ''; };
+  }
+
+  var resultString = '';
+  if (depth === 1) {
+    resultString += "(function (" + ctx + ", " + data + ", root) {\n";
+  } else {
+    resultString += "(function (" + ctx + ", " + data + ") {\n";
+  }
+  if (depth === 1) {
+    resultString += 'function isArray(arr){return Array.isArray(arr);}\n';
+    resultString += 'function isFunction(func){return (typeof func === \'function\');}\n';
+    resultString += 'function c(val, ctx) {if (typeof val !== "undefined" && val !== null) {if (isFunction(val)) {return val.call(ctx);} else return val;} else return "";}\n';
+    resultString += 'root = root || ctx_1 || {};\n';
+  }
+  resultString += 'var r = \'\';\n';
+  var i;
+  for (i = 0; i < blocks.length; i += 1) {
+    var block = blocks[i];
+    // Plain block
+    if (block.type === 'plain') {
+      resultString += "r +='" + ((block.content).replace(/\r/g, '\\r').replace(/\n/g, '\\n').replace(/'/g, '\\' + '\'')) + "';";
+      continue;
+    }
+    var variable = (void 0);
+    var compiledArguments = (void 0);
+    // Variable block
+    if (block.type === 'variable') {
+      variable = getCompileVar(block.contextName, ctx, data);
+      resultString += "r += c(" + variable + ", " + ctx + ");";
+    }
+    // Helpers block
+    if (block.type === 'helper') {
+      var parents = (void 0);
+      if (ctx !== 'ctx_1') {
+        var level = ctx.split('_')[1];
+        var parentsString = "ctx_" + (level - 1);
+        for (var j = level - 2; j >= 1; j -= 1) {
+          parentsString += ", ctx_" + j;
+        }
+        parents = "[" + parentsString + "]";
+      } else {
+        parents = "[" + ctx + "]";
+      }
+      if (block.helperName in Template7Helpers) {
+        compiledArguments = getCompiledArguments(block.contextName, ctx, data);
+        resultString += "r += (Template7.helpers." + (block.helperName) + ").call(" + ctx + ", " + (compiledArguments && ((compiledArguments + ", "))) + "{hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
+      } else if (block.contextName.length > 0) {
+        throw new Error(("Template7: Missing helper: \"" + (block.helperName) + "\""));
+      } else {
+        variable = getCompileVar(block.helperName, ctx, data);
+        resultString += "if (" + variable + ") {";
+        resultString += "if (isArray(" + variable + ")) {";
+        resultString += "r += (Template7.helpers.each).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
+        resultString += '}else {';
+        resultString += "r += (Template7.helpers.with).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
+        resultString += '}}';
+      }
+    }
+  }
+  resultString += '\nreturn r;})';
+
+  if (depth === 1) {
+    t.compiled = eval.call(Template7Context, resultString);
+    return t.compiled;
+  }
+  return resultString;
+};
+staticAccessors.options.get = function () {
+  return Template7Options;
+};
+staticAccessors.partials.get = function () {
+  return Template7Partials;
+};
+staticAccessors.helpers.get = function () {
+  return Template7Helpers;
+};
+
+Object.defineProperties( Template7Class, staticAccessors );
+
+function Template7() {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  var template = args[0];
+  var data = args[1];
+  if (args.length === 2) {
+    var instance = new Template7Class(template);
     var rendered = instance.compile()(data);
     instance = null;
     return (rendered);
   }
-  return new Template7(template);
+  return new Template7Class(template);
 }
-t7.registerHelper = function registerHelper(name, fn) {
-  Template7.prototype.helpers[name] = fn;
+Template7.registerHelper = function registerHelper(name, fn) {
+  Template7Class.helpers[name] = fn;
 };
-t7.unregisterHelper = function unregisterHelper(name) {
-  Template7.prototype.helpers[name] = undefined;
-  delete Template7.prototype.helpers[name];
+Template7.unregisterHelper = function unregisterHelper(name) {
+  Template7Class.helpers[name] = undefined;
+  delete Template7Class.helpers[name];
 };
-t7.registerPartial = function registerPartial(name, template) {
-  Template7.prototype.partials[name] = { template: template };
+Template7.registerPartial = function registerPartial(name, template) {
+  Template7Class.partials[name] = { template: template };
 };
-t7.unregisterPartial = function unregisterPartial(name) {
-  if (Template7.prototype.partials[name]) {
-    Template7.prototype.partials[name] = undefined;
-    delete Template7.prototype.partials[name];
+Template7.unregisterPartial = function unregisterPartial(name) {
+  if (Template7Class.partials[name]) {
+    Template7Class.partials[name] = undefined;
+    delete Template7Class.partials[name];
   }
 };
-t7.compile = function compile(template, options) {
-  var instance = new Template7(template, options);
+Template7.compile = function compile(template, options) {
+  var instance = new Template7Class(template, options);
   return instance.compile();
 };
 
-t7.options = Template7.prototype.options;
-t7.helpers = Template7.prototype.helpers;
-t7.partials = Template7.prototype.partials;
+Template7.options = Template7Class.options;
+Template7.helpers = Template7Class.helpers;
+Template7.partials = Template7Class.partials;
 
 /**
  * Dom7 2.0.0
@@ -2519,7 +2551,7 @@ var Framework7Class = function Framework7Class(params, parents) {
   }
 };
 
-var staticAccessors = { components: {} };
+var staticAccessors$1 = { components: {} };
 Framework7Class.prototype.on = function on (events, handler) {
   var self = this;
   if (typeof handler !== 'function') { return self; }
@@ -2636,7 +2668,7 @@ Framework7Class.prototype.useModules = function useModules (modulesParams) {
     }
   });
 };
-staticAccessors.components.set = function (components) {
+staticAccessors$1.components.set = function (components) {
   var Class = this;
   if (!Class.use) { return; }
   Class.use(components);
@@ -2678,7 +2710,7 @@ Framework7Class.use = function use (module) {
   return Class.installModule.apply(Class, [ module ].concat( params ));
 };
 
-Object.defineProperties( Framework7Class, staticAccessors );
+Object.defineProperties( Framework7Class, staticAccessors$1 );
 
 var Framework7$1 = (function (Framework7Class$$1) {
   function Framework7(params) {
@@ -2780,7 +2812,7 @@ var Framework7$1 = (function (Framework7Class$$1) {
     return $$1$1;
   };
   prototypeAccessors.t7.get = function () {
-    return t7;
+    return Template7;
   };
   staticAccessors.Dom7.get = function () {
     return $$1$1;
@@ -2789,7 +2821,7 @@ var Framework7$1 = (function (Framework7Class$$1) {
     return $$1$1;
   };
   staticAccessors.Template7.get = function () {
-    return t7;
+    return Template7;
   };
   staticAccessors.Class.get = function () {
     return Framework7Class$$1;
@@ -3999,7 +4031,7 @@ var Framework7Component = function Framework7Component(c, extend) {
     html = component.render();
   } else if (component.template) {
     if (typeof component.template === 'string') {
-      html = t7.compile(component.template)(context);
+      html = Template7.compile(component.template)(context);
     } else {
       // Supposed to be function
       html = component.template(context);
@@ -6683,7 +6715,7 @@ var Router$1 = (function (Framework7Class$$1) {
         if (typeof t === 'function') {
           compiledHtml = t(context);
         } else {
-          compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
+          compiledHtml = Template7.compile(t)(Utils.extend({}, context || {}, {
             $app: router.app,
             $root: Utils.extend({}, router.app.data, router.app.methods),
             $route: options.route,
@@ -11088,7 +11120,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
       vl.filteredItems = [];
     }
     if (vl.params.itemTemplate && !vl.params.renderItem) {
-      if (typeof vl.params.itemTemplate === 'string') { vl.itemTemplate = t7.compile(vl.params.template); }
+      if (typeof vl.params.itemTemplate === 'string') { vl.itemTemplate = Template7.compile(vl.params.template); }
       else if (typeof vl.params.itemTemplate === 'function') { vl.itemTemplate = vl.params.itemTemplate; }
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');
@@ -22689,7 +22721,7 @@ var Notification = {
     }
     var list = container.children('ul');
 
-    var notificationTemplate = app.params.notificationTemplate || 
+    var notificationTemplate = app.params.notificationTemplate ||
         '{{#if custom}}' +
         '<li>{{custom}}</li>' +
         '{{else}}' +
@@ -22729,7 +22761,7 @@ var Notification = {
         '</li>' +
         '{{/if}}';
     if (!app.notificationCompiledTemplate) {
-        app.notificationCompiledTemplate = t7.compile(notificationTemplate);
+        app.notificationCompiledTemplate = Template7.compile(notificationTemplate);
     }
     _tempNotificationElement.innerHTML = app.notificationCompiledTemplate(params);
 
@@ -23614,7 +23646,7 @@ var Autocomplete = {
 // Core Components
 {
   // Template7
-  if (!window.Template7) { window.Template7 = t7; }
+  if (!window.Template7) { window.Template7 = Template7; }
 
   // Dom7
   if (!window.Dom7) { window.Dom7 = $$1$1; }
