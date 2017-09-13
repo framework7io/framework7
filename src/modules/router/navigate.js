@@ -344,8 +344,8 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   if (options.route &&
     options.route.route &&
     options.route.route.parentPath &&
-    router.currentRoute.route.parentPath &&
-    options.route.route.parentPath === router.currentRoute.route.parentPath) {
+    router.currentRoute.route &&
+    router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
     if (options.route.url === router.url) return false;
     if (options.route.route.tab) {
