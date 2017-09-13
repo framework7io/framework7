@@ -124,7 +124,7 @@ class View extends Framework7Class {
 }
 
 // Use Router
-View.use(Router);
+View.components = [Router];
 
 
 export default View;
