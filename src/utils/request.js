@@ -239,34 +239,39 @@ function Request(options) {
   // Return XHR object
   return xhr;
 }
-
-('get post json').split(' ').forEach((methodName) => {
-  Request[methodName] = function requestMethod(...args) {
-    let [url, data, success, error, dataType] = [];
-    if (typeof args[1] === 'function') {
-      [url, success, error, dataType] = args;
-    } else {
-      [url, data, success, error, dataType] = args;
+function RequestShortcut(method, ...args) {
+  let [url, data, success, error, dataType] = [];
+  if (typeof args[1] === 'function') {
+    [url, success, error, dataType] = args;
+  } else {
+    [url, data, success, error, dataType] = args;
+  }
+  [success, error].forEach((callback) => {
+    if (typeof callback === 'string') {
+      dataType = callback;
+      if (callback === success) success = undefined;
+      else error = undefined;
     }
-    [success, error].forEach((callback) => {
-      if (typeof callback === 'string') {
-        dataType = callback;
-        if (callback === success) success = undefined;
-        else error = undefined;
-      }
-    });
-    dataType = dataType || (methodName === 'json' ? 'json' : undefined);
-    return Request({
-      url,
-      method: methodName === 'post' ? 'POST' : 'GET',
-      data,
-      success,
-      error,
-      dataType,
-    });
-  };
-});
-
+  });
+  dataType = dataType || (method === 'json' ? 'json' : undefined);
+  return Request({
+    url,
+    method: method === 'post' ? 'POST' : 'GET',
+    data,
+    success,
+    error,
+    dataType,
+  });
+}
+Request.get = function get(...args) {
+  return RequestShortcut('get', ...args);
+};
+Request.post = function post(...args) {
+  return RequestShortcut('post', ...args);
+};
+Request.json = function json(...args) {
+  return RequestShortcut('json', ...args);
+};
 Request.setup = function setup(options) {
   if (options.type && !options.method) {
     Utils.extend(options, { method: options.type });

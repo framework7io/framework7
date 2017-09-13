@@ -1,4 +1,4 @@
-function Support() {
+const Support = (function Support() {
   let positionStickyProp;
   const positionSticky = (function supportPositionSticky() {
     let support = false;
@@ -76,5 +76,6 @@ function Support() {
       return 'ongesturestart' in window;
     }()),
   };
-}
-export default Support();
+}());
+
+export default Support;
