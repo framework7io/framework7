@@ -23,25 +23,25 @@ import EffectCube from './components/effect-cube/effect-cube';
 import EffectFlip from './components/effect-flip/effect-flip';
 import EffectCoverflow from './components/effect-coverflow/effect-coverflow';
 
-Swiper
-  .use(Device)
-  .use(Support)
-  .use(Browser)
-  .use(Resize)
-  .use(Observer)
-  // Components
-  .use(Navigation)
-  .use(Pagination)
-  .use(Scrollbar)
-  .use(Parallax)
-  .use(Zoom)
-  .use(Lazy)
-  .use(Controller)
-  .use(A11y)
-  .use(Autoplay)
-  .use(EffectFade)
-  .use(EffectCube)
-  .use(EffectFlip)
-  .use(EffectCoverflow);
+Swiper.components = [
+  Device,
+  Browser,
+  Support,
+  Resize,
+  Observer,
+  Navigation,
+  Pagination,
+  Scrollbar,
+  Parallax,
+  Zoom,
+  Lazy,
+  Controller,
+  A11y,
+  Autoplay,
+  EffectFade,
+  EffectCube,
+  EffectFlip,
+  EffectCoverflow,
+];
 
 export default Swiper;
