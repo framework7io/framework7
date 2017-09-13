@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import t7 from 'template7';
+import Template7 from 'template7';
 import Utils from '../../utils/utils';
 
 var _tempNotificationElement;
@@ -33,7 +33,7 @@ const Notification = {
     }
     var list = container.children('ul');
 
-    var notificationTemplate = app.params.notificationTemplate || 
+    var notificationTemplate = app.params.notificationTemplate ||
         '{{#if custom}}' +
         '<li>{{custom}}</li>' +
         '{{else}}' +
@@ -73,7 +73,7 @@ const Notification = {
         '</li>' +
         '{{/if}}';
     if (!app.notificationCompiledTemplate) {
-        app.notificationCompiledTemplate = t7.compile(notificationTemplate);
+        app.notificationCompiledTemplate = Template7.compile(notificationTemplate);
     }
     _tempNotificationElement.innerHTML = app.notificationCompiledTemplate(params);
 

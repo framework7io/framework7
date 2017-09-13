@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import t7 from 'template7';
+import Template7 from 'template7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import Device from '../../utils/device';
@@ -50,7 +50,7 @@ class VirtualList extends Framework7Class {
       vl.filteredItems = [];
     }
     if (vl.params.itemTemplate && !vl.params.renderItem) {
-      if (typeof vl.params.itemTemplate === 'string') vl.itemTemplate = t7.compile(vl.params.template);
+      if (typeof vl.params.itemTemplate === 'string') vl.itemTemplate = Template7.compile(vl.params.template);
       else if (typeof vl.params.itemTemplate === 'function') vl.itemTemplate = vl.params.itemTemplate;
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');

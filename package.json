@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.6",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
   "jsnext:main": "dist/js/framework7.module.js",
@@ -51,7 +51,7 @@
   ],
   "dependencies": {
     "dom7": "^2.0.0",
-    "template7": "^1.2.5"
+    "template7": "^1.3.0"
   },
   "devDependencies": {
     "cross-env": "^5.0.5",

@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import t7 from 'template7';
+import Template7 from 'template7';
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import Component from '../../utils/component';
@@ -668,7 +668,7 @@ class Router extends Framework7Class {
         if (typeof t === 'function') {
           compiledHtml = t(context);
         } else {
-          compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
+          compiledHtml = Template7.compile(t)(Utils.extend({}, context || {}, {
             $app: router.app,
             $root: Utils.extend({}, router.app.data, router.app.methods),
             $route: options.route,

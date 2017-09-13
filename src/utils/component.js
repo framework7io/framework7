@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import t7 from 'template7';
+import Template7 from 'template7';
 import Utils from '../utils/utils';
 
 const tempDom = document.createElement('div');
@@ -57,7 +57,7 @@ class Framework7Component {
       html = component.render();
     } else if (component.template) {
       if (typeof component.template === 'string') {
-        html = t7.compile(component.template)(context);
+        html = Template7.compile(component.template)(context);
       } else {
         // Supposed to be function
         html = component.template(context);
