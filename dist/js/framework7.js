@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.6
+ * Framework7 2.0.0-beta.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -5112,8 +5112,8 @@ function load(loadParams, loadOptions, ignorePageChange) {
   if (options.route &&
     options.route.route &&
     options.route.route.parentPath &&
-    router.currentRoute.route.parentPath &&
-    options.route.route.parentPath === router.currentRoute.route.parentPath) {
+    router.currentRoute.route &&
+    router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
     if (options.route.url === router.url) { return false; }
     if (options.route.route.tab) {
@@ -8289,6 +8289,9 @@ var TouchRipple$1 = function TouchRipple($el, x, y) {
   ripple.$rippleWaveEl = $$1$1(("<div class=\"ripple-wave\" style=\"width: " + diameter + "px; height: " + diameter + "px; margin-top:-" + (diameter / 2) + "px; margin-left:-" + (diameter / 2) + "px; left:" + (center.x) + "px; top:" + (center.y) + "px;\"></div>"));
 
   $el.prepend(ripple.$rippleWaveEl);
+
+  /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
+  ripple._clientLeft = ripple.$rippleWaveEl[0].clientLeft;
 
   ripple.rippleTransform = "translate3d(" + (-center.x + (width / 2)) + "px, " + (-center.y + (height / 2)) + "px, 0) scale(1)";
 
@@ -15701,6 +15704,8 @@ var Searchbar$1 = (function (FrameworkClass) {
     var app = sb.app;
     sb.$disableButtonEl.transition(0).show();
     sb.$disableButtonEl.css(("margin-" + (app.rtl ? 'left' : 'right')), ((-sb.disableButtonEl.offsetWidth) + "px"));
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
+    sb._clientLeft = sb.$disableButtonEl[0].clientLeft;
     sb.$disableButtonEl.transition('');
     sb.disableButtonHasMargin = true;
   };

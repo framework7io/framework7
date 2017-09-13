@@ -1,3 +1,7 @@
+# [v2.0.0-beta.7](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.6...v2.0.0-beta.7) - September 13, 2017
+  * Fixed issue with Routable Tabs not working correctly on home page
+  * Fixed issue with touch ripple effect being broken after bundler optimization
+
 # [v2.0.0-beta.6](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.5...v2.0.0-beta.6) - September 13, 2017
   * Template7 updated to latest v1.3.0
 
