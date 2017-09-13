@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.4
+ * Framework7 2.0.0-beta.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 11, 2017
+ * Released on: September 13, 2017
  */
 
 import t7 from 'template7';
@@ -452,7 +452,7 @@ const Utils = {
   },
 };
 
-function Device() {
+const Device = (function Device() {
   const ua = window.navigator.userAgent;
 
   const device = {
@@ -543,9 +543,7 @@ function Device() {
 
   // Export object
   return device;
-}
-
-var Device$1 = Device();
+}());
 
 class Framework7Class {
   constructor(params = {}, parents = []) {
@@ -670,6 +668,11 @@ class Framework7Class {
       }
     });
   }
+  static set components(components) {
+    const Class = this;
+    if (!Class.use) return;
+    Class.use(components);
+  }
   static installModule(module, ...params) {
     const Class = this;
     if (!Class.prototype.modules) Class.prototype.modules = {};
@@ -738,7 +741,7 @@ class Framework7 extends Framework7Class {
 
     // Theme
     if (app.params.theme === 'auto') {
-      app.theme = Device$1.ios ? 'ios' : 'md';
+      app.theme = Device.ios ? 'ios' : 'md';
     } else {
       app.theme = app.params.theme;
     }
@@ -791,44 +794,57 @@ class Framework7 extends Framework7Class {
     app.initialized = true;
     app.emit('init');
   }
-  static Class(...args) {
-    return new Framework7Class(...args);
+  get $() {
+    return $;
+  }
+  get t7() {
+    return t7;
+  }
+  static get Dom7() {
+    return $;
+  }
+  static get $() {
+    return $;
+  }
+  static get Template7() {
+    return t7;
+  }
+  static get Class() {
+    return Framework7Class;
   }
 }
-
-Framework7.Class = Framework7Class;
 
 var Device$2 = {
   name: 'device',
   proto: {
-    device: Device$1,
+    device: Device,
   },
   static: {
-    device: Device$1,
+    device: Device,
   },
   on: {
     init() {
       const classNames = [];
       const html = document.querySelector('html');
       // Pixel Ratio
-      classNames.push(`device-pixel-ratio-${Math.floor(Device$1.pixelRatio)}`);
-      if (Device$1.pixelRatio >= 2) {
+      classNames.push(`device-pixel-ratio-${Math.floor(Device.pixelRatio)}`);
+      if (Device.pixelRatio >= 2) {
         classNames.push('device-retina');
       }
       // OS classes
-      if (Device$1.os) {
-        classNames.push(`device-${Device$1.os}`, `device-${Device$1.os}-${Device$1.osVersion.split('.')[0]}`, `device-${Device$1.os}-${Device$1.osVersion.replace(/\./g, '-')}`);
-        if (Device$1.os === 'ios') {
-          const major = parseInt(Device$1.osVersion.split('.')[0], 10);
+      if (Device.os) {
+        classNames.push(`device-${Device.os}`, `device-${Device.os}-${Device.osVersion.split('.')[0]}`, `device-${Device.os}-${Device.osVersion.replace(/\./g, '-')}`);
+        if (Device.os === 'ios') {
+          const major = parseInt(Device.osVersion.split('.')[0], 10);
           for (let i = major - 1; i >= 6; i -= 1) {
             classNames.push(`device-ios-gt-${i}`);
           }
         }
-      } else if (Device$1.desktop) {
+      } else if (Device.desktop) {
         classNames.push('device-desktop');
       }
       // Status bar classes
-      if (Device$1.statusBar) {
+      if (Device.statusBar) {
         classNames.push('with-statusbar-overlay');
       } else {
         html.classList.remove('with-statusbar-overlay');
@@ -842,7 +858,7 @@ var Device$2 = {
   },
 };
 
-function Support$1() {
+const Support$1 = (function Support() {
   let positionStickyProp;
   const positionSticky = (function supportPositionSticky() {
     let support = false;
@@ -920,24 +936,23 @@ function Support$1() {
       return 'ongesturestart' in window;
     }()),
   };
-}
-var Support$2 = Support$1();
+}());
 
 var Support = {
   name: 'support',
   proto: {
-    support: Support$2,
+    support: Support$1,
   },
   static: {
-    support: Support$2,
+    support: Support$1,
   },
   on: {
     init() {
       const html = document.querySelector('html');
       const classNames = [];
-      if (Support$2.positionSticky) {
+      if (Support$1.positionSticky) {
         classNames.push('support-position-sticky');
-        if (Support$2.positionStickyFalsy) {
+        if (Support$1.positionStickyFalsy) {
           classNames.push('support-position-sticky-falsy');
         }
       }
@@ -1251,34 +1266,39 @@ function Request$1(options) {
   // Return XHR object
   return xhr;
 }
-
-('get post json').split(' ').forEach((methodName) => {
-  Request$1[methodName] = function requestMethod(...args) {
-    let [url, data, success, error, dataType] = [];
-    if (typeof args[1] === 'function') {
-      [url, success, error, dataType] = args;
-    } else {
-      [url, data, success, error, dataType] = args;
+function RequestShortcut(method, ...args) {
+  let [url, data, success, error, dataType] = [];
+  if (typeof args[1] === 'function') {
+    [url, success, error, dataType] = args;
+  } else {
+    [url, data, success, error, dataType] = args;
+  }
+  [success, error].forEach((callback) => {
+    if (typeof callback === 'string') {
+      dataType = callback;
+      if (callback === success) success = undefined;
+      else error = undefined;
     }
-    [success, error].forEach((callback) => {
-      if (typeof callback === 'string') {
-        dataType = callback;
-        if (callback === success) success = undefined;
-        else error = undefined;
-      }
-    });
-    dataType = dataType || (methodName === 'json' ? 'json' : undefined);
-    return Request$1({
-      url,
-      method: methodName === 'post' ? 'POST' : 'GET',
-      data,
-      success,
-      error,
-      dataType,
-    });
-  };
-});
-
+  });
+  dataType = dataType || (method === 'json' ? 'json' : undefined);
+  return Request$1({
+    url,
+    method: method === 'post' ? 'POST' : 'GET',
+    data,
+    success,
+    error,
+    dataType,
+  });
+}
+Request$1.get = function get(...args) {
+  return RequestShortcut('get', ...args);
+};
+Request$1.post = function post(...args) {
+  return RequestShortcut('post', ...args);
+};
+Request$1.json = function json(...args) {
+  return RequestShortcut('json', ...args);
+};
 Request$1.setup = function setup(options) {
   if (options.type && !options.method) {
     Utils.extend(options, { method: options.type });
@@ -1303,7 +1323,7 @@ function initTouch() {
   const params = app.params.touch;
   const useRipple = app.theme === 'md' && params.materialRipple;
 
-  if (Device$1.ios && Device$1.webView) {
+  if (Device.ios && Device.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
     window.addEventListener('touchstart', () => {});
   }
@@ -1401,7 +1421,7 @@ function initTouch() {
     */
     const $el = $(el);
     if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) return false;
-    if (el.nodeName.toLowerCase() === 'select' && Device$1.android) return false;
+    if (el.nodeName.toLowerCase() === 'select' && Device.android) return false;
     if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) return false;
     if (params.fastClicksExclude && $el.is(params.fastClicksExclude)) return false;
     return true;
@@ -1415,7 +1435,7 @@ function initTouch() {
     if (el.disabled || el.readOnly) return false;
     if (tag === 'textarea') return true;
     if (tag === 'select') {
-      if (Device$1.android) return false;
+      if (Device.android) return false;
       return true;
     }
     if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
@@ -1425,9 +1445,9 @@ function initTouch() {
     const $el = $(el);
     let prevent = true;
     if ($el.is('label') || $el.parents('label').length > 0) {
-      if (Device$1.android) {
+      if (Device.android) {
         prevent = false;
-      } else if (Device$1.ios && $el.is('input')) {
+      } else if (Device.ios && $el.is('input')) {
         prevent = true;
       } else prevent = false;
     }
@@ -1525,7 +1545,7 @@ function initTouch() {
     const touch = e.changedTouches[0];
     const evt = document.createEvent('MouseEvents');
     let eventType = 'click';
-    if (Device$1.android && targetElement.nodeName.toLowerCase() === 'select') {
+    if (Device.android && targetElement.nodeName.toLowerCase() === 'select') {
       eventType = 'mousedown';
     }
     evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
@@ -1570,7 +1590,7 @@ function initTouch() {
       trackClick = false;
       return true;
     }
-    if (Device$1.ios || (Device$1.android && 'getSelection' in window)) {
+    if (Device.ios || (Device.android && 'getSelection' in window)) {
       const selection = window.getSelection();
       if (
         selection.rangeCount &&
@@ -1583,7 +1603,7 @@ function initTouch() {
 
       activeSelection = false;
     }
-    if (Device$1.android) {
+    if (Device.android) {
       if (androidNeedsBlur(e.target)) {
         document.activeElement.blur();
       }
@@ -1596,7 +1616,7 @@ function initTouch() {
     touchStartY = e.targetTouches[0].pageY;
 
       // Detect scroll parent
-    if (Device$1.ios) {
+    if (Device.ios) {
       scrollParent = undefined;
       $(targetElement).parents().each(() => {
         const parent = this;
@@ -1660,7 +1680,7 @@ function initTouch() {
 
     if (!trackClick) {
       if (!activeSelection && needsFastClick) {
-        if (!(Device$1.android && !e.cancelable) && e.cancelable) {
+        if (!(Device.android && !e.cancelable) && e.cancelable) {
           e.preventDefault();
         }
       }
@@ -1688,7 +1708,7 @@ function initTouch() {
 
     trackClick = false;
 
-    if (Device$1.ios && scrollParent) {
+    if (Device.ios && scrollParent) {
       if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
         return false;
       }
@@ -1708,7 +1728,7 @@ function initTouch() {
 
       // Trigger focus when required
     if (targetNeedsFocus(targetElement)) {
-      if (Device$1.ios && Device$1.webView) {
+      if (Device.ios && Device.webView) {
         if ((e.timeStamp - touchStartTime) > 159) {
           targetElement = null;
           return false;
@@ -1792,12 +1812,12 @@ function initTouch() {
     }
     needsFastClickTimeOut = setTimeout(() => {
       needsFastClick = false;
-    }, (Device$1.ios || Device$1.androidChrome ? 100 : 400));
+    }, (Device.ios || Device.androidChrome ? 100 : 400));
 
     if (params.tapHold) {
       tapHoldTimeout = setTimeout(() => {
         tapHoldFired = false;
-      }, (Device$1.ios || Device$1.androidChrome ? 100 : 400));
+      }, (Device.ios || Device.androidChrome ? 100 : 400));
     }
 
     return allowClick;
@@ -1832,12 +1852,12 @@ function initTouch() {
     emitAppTouchEvent('touchend:passive', this, e);
   }
 
-  const passiveListener = Support$2.passiveListener ? { passive: true } : false;
-  const activeListener = Support$2.passiveListener ? { passive: false } : false;
+  const passiveListener = Support$1.passiveListener ? { passive: true } : false;
+  const activeListener = Support$1.passiveListener ? { passive: false } : false;
 
   document.addEventListener('click', appClick, true);
 
-  if (Support$2.passiveListener) {
+  if (Support$1.passiveListener) {
     document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
     document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
     document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
@@ -1860,7 +1880,7 @@ function initTouch() {
     }, false);
   }
 
-  if (Support$2.touch) {
+  if (Support$1.touch) {
     app.on('click', handleClick);
     app.on('touchstart', handleTouchStart);
     app.on('touchmove', handleTouchMove);
@@ -1902,9 +1922,9 @@ var Touch = {
   },
   instance: {
     touchEvents: {
-      start: Support$2.touch ? 'touchstart' : 'mousedown',
-      move: Support$2.touch ? 'touchmove' : 'mousemove',
-      end: Support$2.touch ? 'touchend' : 'mouseup',
+      start: Support$1.touch ? 'touchstart' : 'mousedown',
+      move: Support$1.touch ? 'touchmove' : 'mousemove',
+      end: Support$1.touch ? 'touchend' : 'mouseup',
     },
   },
   on: {
@@ -2461,7 +2481,7 @@ function SwipeBack(r) {
     // Transform pages
     let currentPageTranslate = touchesDiff * inverter;
     let previousPageTranslate = ((touchesDiff / 5) - (viewContainerWidth / 5)) * inverter;
-    if (Device$1.pixelRatio === 1) {
+    if (Device.pixelRatio === 1) {
       currentPageTranslate = Math.round(currentPageTranslate);
       previousPageTranslate = Math.round(previousPageTranslate);
     }
@@ -2479,7 +2499,7 @@ function SwipeBack(r) {
         if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (1 - (percentage * 1.3));
         if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
-          if (Device$1.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
+          if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
           $navEl.transform(`translate3d(${activeNavTranslate}px,0,0)`);
           if (router.params.iosAnimateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && activeNavBackIcon.length > 0) {
@@ -2502,7 +2522,7 @@ function SwipeBack(r) {
           } else {
             previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
           }
-          if (Device$1.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
+          if (Device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
           $navEl.transform(`translate3d(${previousNavTranslate}px,0,0)`);
           if (router.params.iosAnimateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && previousNavBackIcon.length > 0) {
@@ -2669,15 +2689,15 @@ function SwipeBack(r) {
   }
 
   function attachEvents() {
-    const passiveListener = (app.touchEvents.start === 'touchstart' && Support$2.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support$2.passiveListener ? { passive: false, capture: false } : false;
+    const passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
+    const activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
     $el.on(app.touchEvents.move, handleTouchMove, activeListener);
     $el.on(app.touchEvents.end, handleTouchEnd, passiveListener);
   }
   function detachEvents() {
-    const passiveListener = (app.touchEvents.start === 'touchstart' && Support$2.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support$2.passiveListener ? { passive: false, capture: false } : false;
+    const passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
+    const activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
     $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
     $el.off(app.touchEvents.move, handleTouchMove, activeListener);
     $el.off(app.touchEvents.end, handleTouchEnd, passiveListener);
@@ -5108,7 +5128,7 @@ class View extends Framework7Class {
 }
 
 // Use Router
-View.use(Router);
+View.components = [Router];
 
 function initClicks(app) {
   function handleClicks(e) {
@@ -5175,8 +5195,8 @@ function initClicks(app) {
   function preventScrolling(e) {
     e.preventDefault();
   }
-  if (Support$2.touch && !Device$1.android) {
-    const activeListener = Support$2.passiveListener ? { passive: false, capture: false } : false;
+  if (Support$1.touch && !Device.android) {
+    const activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
     $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-indicator-overlay, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
@@ -5285,13 +5305,13 @@ var Storage$1 = {
 const Statusbar = {
   hide() {
     $('html').removeClass('with-statusbar');
-    if (Device$1.cordova && window.StatusBar) {
+    if (Device.cordova && window.StatusBar) {
       window.StatusBar.hide();
     }
   },
   show() {
     $('html').addClass('with-statusbar');
-    if (Device$1.cordova && window.StatusBar) {
+    if (Device.cordova && window.StatusBar) {
       window.StatusBar.show();
     }
   },
@@ -5322,7 +5342,7 @@ const Statusbar = {
     }
   },
   setIosTextColor(color) {
-    if (Device$1.cordova && window.StatusBar) {
+    if (Device.cordova && window.StatusBar) {
       if (color === 'white') {
         window.StatusBar.styleLightContent();
       } else {
@@ -5331,8 +5351,8 @@ const Statusbar = {
     }
   },
   setBackgroundColor(color) {
-    if (Device$1.cordova && window.StatusBar) {
-      if (Device$1.needsStatusbar()) {
+    if (Device.cordova && window.StatusBar) {
+      if (Device.needsStatusbar()) {
         // Change Overlay Color;
         $('.statusbar').css('background-color', color);
       } else {
@@ -5344,7 +5364,7 @@ const Statusbar = {
     }
   },
   isVisible() {
-    if (Device$1.cordova && window.StatusBar) {
+    if (Device.cordova && window.StatusBar) {
       return window.StatusBar.isVisible;
     }
     return undefined;
@@ -5354,12 +5374,12 @@ const Statusbar = {
     const params = app.params.statusbar;
 
     if (params.overlay === 'auto') {
-      if (Device$1.needsStatusbar()) {
+      if (Device.needsStatusbar()) {
         $('html').addClass('with-statusbar');
       }
-      if (Device$1.cordova) {
+      if (Device.cordova) {
         $(document).on('resume', () => {
-          if (Device$1.needsStatusbar()) {
+          if (Device.needsStatusbar()) {
             $('html').addClass('with-statusbar');
           } else {
             $('html').removeClass('with-statusbar');
@@ -5372,7 +5392,7 @@ const Statusbar = {
       $('html').removeClass('with-statusbar');
     }
 
-    if (Device$1.cordova && window.StatusBar) {
+    if (Device.cordova && window.StatusBar) {
       if (params.scrollTopOnClick) {
         $(window).on('statusTap', Statusbar.onClick.bind(app));
       }
@@ -6136,8 +6156,6 @@ class TouchRipple$1 {
 
     $el.prepend(ripple.$rippleWaveEl);
 
-    const clientLeft = ripple.$rippleWaveEl[0].clientLeft;
-
     ripple.rippleTransform = `translate3d(${-center.x + (width / 2)}px, ${-center.y + (height / 2)}px, 0) scale(1)`;
 
     ripple.$rippleWaveEl.transform(ripple.rippleTransform);
@@ -6185,7 +6203,7 @@ class TouchRipple$1 {
   }
 }
 
-var TouchRipple = {
+var TouchRipple$$1 = {
   name: 'touch-ripple',
   static: {
     TouchRipple: TouchRipple$1,
@@ -6591,8 +6609,9 @@ class Dialog extends Modal {
 var ConstructorMethods = function (parameters = {}) {
   const { defaultSelector, constructor, domProp, app, addMethods } = parameters;
   const methods = {
-    create(params) {
-      return new constructor(app, params);
+    create(...args) {
+      if (app) return new constructor(app, ...args);
+      return new constructor(...args);
     },
     get(el = defaultSelector) {
       if (el instanceof constructor) return el;
@@ -8868,7 +8887,7 @@ class VirtualList extends Framework7Class {
       vl.updatableScroll = vl.params.updatableScroll;
     } else {
       vl.updatableScroll = true;
-      if (Device$1.ios && Device$1.osVersion.split('.')[0] < 8) {
+      if (Device.ios && Device.osVersion.split('.')[0] < 8) {
         vl.updatableScroll = false;
       }
     }
@@ -9514,7 +9533,7 @@ var tabs = {
   },
 };
 
-function swipePanel(panel) {
+function swipePanel$1(panel) {
   const app = panel.app;
   Utils.extend(panel, {
     swipeable: true,
@@ -9911,7 +9930,7 @@ class Panel extends Framework7Class {
     return panel;
   }
   initSwipePanel() {
-    swipePanel(this);
+    swipePanel$1(this);
   }
   destroy() {
     let panel = this;
@@ -10897,8 +10916,8 @@ class Toggle extends Framework7Class {
     }
     toggle.attachEvents = function attachEvents() {
       {
-        if (!Support$2.touch) return;
-        const passive = Support$2.passiveListener ? { passive: true } : false;
+        if (!Support$1.touch) return;
+        const passive = Support$1.passiveListener ? { passive: true } : false;
         $el.on(app.touchEvents.start, handleTouchStart, passive);
         app.on('touchmove', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
@@ -10907,8 +10926,8 @@ class Toggle extends Framework7Class {
     };
     toggle.detachEvents = function detachEvents() {
       {
-        if (!Support$2.touch) return;
-        const passive = Support$2.passiveListener ? { passive: true } : false;
+        if (!Support$1.touch) return;
+        const passive = Support$1.passiveListener ? { passive: true } : false;
         $el.off(app.touchEvents.start, handleTouchStart, passive);
         app.off('touchmove', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
@@ -11213,14 +11232,14 @@ class Range extends Framework7Class {
       range.layout();
     }
     range.attachEvents = function attachEvents() {
-      const passive = Support$2.passiveListener ? { passive: true } : false;
+      const passive = Support$1.passiveListener ? { passive: true } : false;
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
       app.on('resize', handleResize);
     };
     range.detachEvents = function detachEvents() {
-      const passive = Support$2.passiveListener ? { passive: true } : false;
+      const passive = Support$1.passiveListener ? { passive: true } : false;
       range.$el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
@@ -12328,7 +12347,7 @@ class PullToRefresh extends Framework7Class {
 
     function handleTouchStart(e) {
       if (isTouched) {
-        if (Device$1.os === 'android') {
+        if (Device.os === 'android') {
           if ('targetTouches' in e && e.targetTouches.length > 1) return;
         } else return;
       }
@@ -12392,7 +12411,7 @@ class PullToRefresh extends Framework7Class {
           if (triggerDistance.indexOf('%') >= 0) triggerDistance = ($el[0].offsetHeight * parseInt(triggerDistance, 10)) / 100;
         }
         startTranslate = $el.hasClass('ptr-refreshing') ? triggerDistance : 0;
-        if ($el[0].scrollHeight === $el[0].offsetHeight || Device$1.os !== 'ios' || isMaterial) {
+        if ($el[0].scrollHeight === $el[0].offsetHeight || Device.os !== 'ios' || isMaterial) {
           useTranslate = true;
         } else {
           useTranslate = false;
@@ -12403,7 +12422,7 @@ class PullToRefresh extends Framework7Class {
 
       if ((touchesDiff > 0 && scrollTop <= 0) || scrollTop < 0) {
         // iOS 8 fix
-        if (Device$1.os === 'ios' && parseInt(Device$1.osVersion.split('.')[0], 10) > 7 && scrollTop === 0 && !wasScrolled) useTranslate = true;
+        if (Device.os === 'ios' && parseInt(Device.osVersion.split('.')[0], 10) > 7 && scrollTop === 0 && !wasScrolled) useTranslate = true;
 
         if (useTranslate) {
           e.preventDefault();
@@ -12492,13 +12511,13 @@ class PullToRefresh extends Framework7Class {
 
     // Events
     ptr.attachEvents = function attachEvents() {
-      const passive = Support$2.passiveListener ? { passive: true } : false;
+      const passive = Support$1.passiveListener ? { passive: true } : false;
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
     };
     ptr.detachEvents = function detachEvents() {
-      const passive = Support$2.passiveListener ? { passive: true } : false;
+      const passive = Support$1.passiveListener ? { passive: true } : false;
       $el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
@@ -13413,7 +13432,6 @@ class Searchbar extends Framework7Class {
     const app = sb.app;
     sb.$disableButtonEl.transition(0).show();
     sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
-    const clientLeft = sb.$disableButtonEl[0].clientLeft;
     sb.$disableButtonEl.transition('');
     sb.disableButtonHasMargin = true;
   }
@@ -13774,7 +13792,6 @@ class Messages extends Framework7Class {
     return m;
   }
   getMessageData(messageEl) {
-    const m = this;
     const $messageEl = $(messageEl);
     const data = {
       avatar: $messageEl.css('background-image'),
@@ -14530,27 +14547,6 @@ var messagebar = {
   },
 };
 
-var touchEventsData = {
-  isTouched: undefined,
-  isMoved: undefined,
-  allowTouchCallbacks: undefined,
-  touchStartTime: undefined,
-  isScrolling: undefined,
-  currentTranslate: undefined,
-  startTranslate: undefined,
-  allowThresholdMove: undefined,
-  // Form elements to match
-  formElements: 'input, select, textarea, button, video',
-  // Last click time
-  lastClickTime: Utils.now(),
-  clickTimeout: undefined,
-  // Velocities
-  velocities: [],
-  allowMomentumBounce: undefined,
-  isTouchEvent: undefined,
-  startMoving: undefined,
-};
-
 var updateSize = function () {
   const swiper = this;
   let width;
@@ -15071,7 +15067,7 @@ var setTranslate = function (translate, byController) {
   }
 
   if (!params.virtualTranslate) {
-    if (Support$2.transforms3d) $wrapperEl.transform(`translate3d(${x}px, ${y}px, ${z}px)`);
+    if (Support$1.transforms3d) $wrapperEl.transform(`translate3d(${x}px, ${y}px, ${z}px)`);
     else $wrapperEl.transform(`translate(${x}px, ${y}px)`);
   }
 
@@ -15159,7 +15155,7 @@ var transition = {
   transitionEnd,
 };
 
-function Browser() {
+const Browser = (function Browser() {
   function isIE9() {
     // create temporary DIV
     const div = document.createElement('div');
@@ -15180,9 +15176,7 @@ function Browser() {
              (window.navigator.pointerEnabled && window.navigator.maxTouchPoints > 1),
     lteIE9: isIE9(),
   };
-}
-
-var Browser$1 = Browser();
+}());
 
 var slideTo = function (index = 0, speed = this.params.speed, runCallbacks = true, internal) {
   const swiper = this;
@@ -15246,7 +15240,7 @@ var slideTo = function (index = 0, speed = this.params.speed, runCallbacks = tru
   swiper.emit('beforeTransitionStart', speed, internal);
   swiper.transitionStart(runCallbacks);
 
-  if (speed === 0 || Browser$1.lteIE9) {
+  if (speed === 0 || Browser.lteIE9) {
     swiper.setTransition(0);
     swiper.setTranslate(translate);
     swiper.transitionEnd(runCallbacks);
@@ -15272,7 +15266,6 @@ var slideNext = function (speed = this.params.speed, runCallbacks = true, intern
   if (params.loop) {
     if (animating) return false;
     swiper.loopFix();
-    const clientLeft = swiper.$wrapperEl[0].clientLeft;
     return swiper.slideTo(swiper.activeIndex + params.slidesPerGroup, speed, runCallbacks, internal);
   }
   return swiper.slideTo(swiper.activeIndex + params.slidesPerGroup, speed, runCallbacks, internal);
@@ -15286,7 +15279,6 @@ var slidePrev = function (speed = this.params.speed, runCallbacks = true, intern
   if (params.loop) {
     if (animating) return false;
     swiper.loopFix();
-    const clientLeft = swiper.$wrapperEl[0].clientLeft;
     return swiper.slideTo(swiper.activeIndex - 1, speed, runCallbacks, internal);
   }
   return swiper.slideTo(swiper.activeIndex - 1, speed, runCallbacks, internal);
@@ -15427,7 +15419,7 @@ var loop = {
 
 var setGrabCursor = function (moving) {
   const swiper = this;
-  if (Support$2.touch || !swiper.params.simulateTouch) return;
+  if (Support$1.touch || !swiper.params.simulateTouch) return;
   const el = swiper.el;
   el.style.cursor = 'move';
   el.style.cursor = moving ? '-webkit-grabbing' : '-webkit-grab';
@@ -15437,7 +15429,7 @@ var setGrabCursor = function (moving) {
 
 var unsetGrabCursor = function () {
   const swiper = this;
-  if (Support$2.touch) return;
+  if (Support$1.touch) return;
   swiper.el.style.cursor = '';
 };
 
@@ -15462,7 +15454,7 @@ var appendSlide = function (slides) {
   if (params.loop) {
     swiper.loopCreate();
   }
-  if (!(params.observer && Support$2.observer)) {
+  if (!(params.observer && Support$1.observer)) {
     swiper.update();
   }
 };
@@ -15486,7 +15478,7 @@ var prependSlide = function (slides) {
   if (params.loop) {
     swiper.loopCreate();
   }
-  if (!(params.observer && Support$2.observer)) {
+  if (!(params.observer && Support$1.observer)) {
     swiper.update();
   }
   swiper.slideTo(newActiveIndex, 0, false);
@@ -15521,7 +15513,7 @@ var removeSlide = function (slidesIndexes) {
     swiper.loopCreate();
   }
 
-  if (!(params.observer && Support$2.observer)) {
+  if (!(params.observer && Support$1.observer)) {
     swiper.update();
   }
   if (params.loop) {
@@ -15570,7 +15562,7 @@ var onTouchStart = function (event) {
   const startY = touches.currentY;
 
   // Do NOT start if iOS edge swipe is detected. Otherwise iOS app (UIWebView) cannot swipe-to-go-back anymore
-  if (Device$1.ios && params.iOSEdgeSwipeDetection && startX <= params.iOSEdgeSwipeThreshold) {
+  if (Device.ios && params.iOSEdgeSwipeDetection && startX <= params.iOSEdgeSwipeThreshold) {
     return;
   }
   Utils.extend(data, {
@@ -16103,18 +16095,18 @@ function attachEvents() {
 
   // Touch Events
   {
-    if (Browser$1.ie) {
+    if (Browser.ie) {
       target.addEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support$2.touch ? target : document).addEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support$2.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      (Support$1.touch ? target : document).addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      (Support$1.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
-      if (Support$2.touch) {
-        const passiveListener = touchEvents.start === 'onTouchStart' && Support$2.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      if (Support$1.touch) {
+        const passiveListener = touchEvents.start === 'onTouchStart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.addEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
         target.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
         target.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
-      if ((params.simulateTouch && !Device$1.ios && !Device$1.android) || (params.simulateTouch && !Support$2.touch && Device$1.ios)) {
+      if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support$1.touch && Device.ios)) {
         target.addEventListener('mousedown', swiper.onTouchStart, false);
         document.addEventListener('mousemove', swiper.onTouchMove, capture);
         document.addEventListener('mouseup', swiper.onTouchEnd, false);
@@ -16140,18 +16132,18 @@ function detachEvents() {
 
   // Touch Events
   {
-    if (Browser$1.ie) {
+    if (Browser.ie) {
       target.removeEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support$2.touch ? target : document).removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support$2.touch ? target : document).removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      (Support$1.touch ? target : document).removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      (Support$1.touch ? target : document).removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
-      if (Support$2.touch) {
-        const passiveListener = touchEvents.start === 'onTouchStart' && Support$2.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      if (Support$1.touch) {
+        const passiveListener = touchEvents.start === 'onTouchStart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.removeEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
         target.removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
         target.removeEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
-      if ((params.simulateTouch && !Device$1.ios && !Device$1.android) || (params.simulateTouch && !Support$2.touch && Device$1.ios)) {
+      if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support$1.touch && Device.ios)) {
         target.removeEventListener('mousedown', swiper.onTouchStart, false);
         document.removeEventListener('mousemove', swiper.onTouchMove, capture);
         document.removeEventListener('mouseup', swiper.onTouchEnd, false);
@@ -16233,7 +16225,7 @@ var addClasses = function () {
   if (params.freeMode) {
     suffixes.push('free-mode');
   }
-  if (!Support$2.flexbox) {
+  if (!Support$1.flexbox) {
     suffixes.push('no-flexbox');
   }
   if (params.autoHeight) {
@@ -16245,10 +16237,10 @@ var addClasses = function () {
   if (params.slidesPerColumn > 1) {
     suffixes.push('multirow');
   }
-  if (Device$1.android) {
+  if (Device.android) {
     suffixes.push('android');
   }
-  if (Device$1.ios) {
+  if (Device.ios) {
     suffixes.push('ios');
   }
   // WP8 Touch Events Fix
@@ -16450,6 +16442,20 @@ var defaults = {
   runCallbacksOnInit: true,
 };
 
+const prototypes = {
+  update,
+  translate,
+  transition,
+  slide,
+  loop,
+  grabCursor,
+  manipulation,
+  events,
+  breakpoints,
+  classes,
+  images,
+};
+
 class Swiper$1 extends Framework7Class {
   constructor(...args) {
     let el;
@@ -16465,6 +16471,14 @@ class Swiper$1 extends Framework7Class {
     if (el && !params.el) params.el = el;
 
     super(params);
+
+    Object.keys(prototypes).forEach((prototypeGroup) => {
+      Object.keys(prototypes[prototypeGroup]).forEach((protoMethod) => {
+        if (!Swiper$1.prototype[protoMethod]) {
+          Swiper$1.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
+        }
+      });
+    });
 
     // Swiper Instance
     const swiper = this;
@@ -16557,12 +16571,31 @@ class Swiper$1 extends Framework7Class {
         }
 
         return {
-          start: Support$2.touch || !swiper.params.simulateTouch ? touch[0] : desktop[0],
-          move: Support$2.touch || !swiper.params.simulateTouch ? touch[1] : desktop[1],
-          end: Support$2.touch || !swiper.params.simulateTouch ? touch[2] : desktop[2],
+          start: Support$1.touch || !swiper.params.simulateTouch ? touch[0] : desktop[0],
+          move: Support$1.touch || !swiper.params.simulateTouch ? touch[1] : desktop[1],
+          end: Support$1.touch || !swiper.params.simulateTouch ? touch[2] : desktop[2],
         };
       }()),
-      touchEventsData: Utils.extend({}, touchEventsData),
+      touchEventsData: {
+        isTouched: undefined,
+        isMoved: undefined,
+        allowTouchCallbacks: undefined,
+        touchStartTime: undefined,
+        isScrolling: undefined,
+        currentTranslate: undefined,
+        startTranslate: undefined,
+        allowThresholdMove: undefined,
+        // Form elements to match
+        formElements: 'input, select, textarea, button, video',
+        // Last click time
+        lastClickTime: Utils.now(),
+        clickTimeout: undefined,
+        // Velocities
+        velocities: [],
+        allowMomentumBounce: undefined,
+        isTouchEvent: undefined,
+        startMoving: undefined,
+      },
 
       // Clicks
       allowClick: true,
@@ -16758,56 +16791,41 @@ class Swiper$1 extends Framework7Class {
       swiper = null;
     }
   }
+  static get Class() {
+    return Framework7Class;
+  }
+  static get $() {
+    return $;
+  }
 }
-
-const prototypes = Utils.extend(
-  {},
-  update,
-  translate,
-  transition,
-  slide,
-  loop,
-  grabCursor,
-  manipulation,
-  events,
-  breakpoints,
-  classes,
-  images
-);
-
-Object.keys(prototypes).forEach((protoMethod) => {
-  Swiper$1.prototype[protoMethod] = prototypes[protoMethod];
-});
-
-Swiper$1.Class = Framework7Class;
 
 var Device$4 = {
   name: 'device',
   proto: {
-    device: Device$1,
+    device: Device,
   },
   static: {
-    Device: Device$1,
+    device: Device,
   },
 };
 
 var Support$4 = {
   name: 'support',
   proto: {
-    support: Support$2,
+    support: Support$1,
   },
   static: {
-    Support: Support$2,
+    support: Support$1,
   },
 };
 
 var Browser$2 = {
   name: 'browser',
   proto: {
-    browser: Browser$1,
+    browser: Browser,
   },
   static: {
-    Browser: Browser$1,
+    browser: Browser,
   },
 };
 
@@ -16867,7 +16885,7 @@ const Observer = {
   },
   init() {
     const swiper = this;
-    if (!Support$2.observer || !swiper.params.observer) return;
+    if (!Support$1.observer || !swiper.params.observer) return;
     if (swiper.params.observeParents) {
       const containerParents = swiper.$el.parents();
       for (let i = 0; i < containerParents.length; i += 1) {
@@ -17367,14 +17385,14 @@ const Scrollbar = {
       newSize = trackSize - newPos;
     }
     if (swiper.isHorizontal()) {
-      if (Support$2.transforms3d) {
+      if (Support$1.transforms3d) {
         $dragEl.transform(`translate3d(${newPos}px, 0, 0)`);
       } else {
         $dragEl.transform(`translateX(${newPos}px)`);
       }
       $dragEl[0].style.width = `${newSize}px`;
     } else {
-      if (Support$2.transforms3d) {
+      if (Support$1.transforms3d) {
         $dragEl.transform(`translate3d(0px, ${newPos}px, 0)`);
       } else {
         $dragEl.transform(`translateY(${newPos}px)`);
@@ -17523,7 +17541,7 @@ const Scrollbar = {
     if (!swiper.params.scrollbar.el) return;
     const { scrollbar } = swiper;
     const $el = scrollbar.$el;
-    const target = Support$2.touch ? $el[0] : document;
+    const target = Support$1.touch ? $el[0] : document;
     $el.on(swiper.scrollbar.dragEvents.start, swiper.scrollbar.onDragStart);
     $(target).on(swiper.scrollbar.dragEvents.move, swiper.scrollbar.onDragMove);
     $(target).on(swiper.scrollbar.dragEvents.end, swiper.scrollbar.onDragEnd);
@@ -17533,7 +17551,7 @@ const Scrollbar = {
     if (!swiper.params.scrollbar.el) return;
     const { scrollbar } = swiper;
     const $el = scrollbar.$el;
-    const target = Support$2.touch ? $el[0] : document;
+    const target = Support$1.touch ? $el[0] : document;
     $el.off(swiper.scrollbar.dragEvents.start);
     $(target).off(swiper.scrollbar.dragEvents.move);
     $(target).off(swiper.scrollbar.dragEvents.end);
@@ -17556,7 +17574,7 @@ const Scrollbar = {
     }
 
     swiper.scrollbar.dragEvents = (function dragEvents() {
-      if ((swiper.params.simulateTouch === false && !Support$2.touch)) {
+      if ((swiper.params.simulateTouch === false && !Support$1.touch)) {
         return {
           start: 'mousedown',
           move: 'mousemove',
@@ -17781,7 +17799,7 @@ const Zoom = {
     const params = swiper.params.zoom;
     const zoom = swiper.zoom;
     const { gesture } = zoom;
-    if (!Support$2.gestures) {
+    if (!Support$1.gestures) {
       if (e.type !== 'touchstart' || (e.type === 'touchstart' && e.targetTouches.length < 2)) {
         return;
       }
@@ -17806,14 +17824,14 @@ const Zoom = {
     const params = swiper.params.zoom;
     const zoom = swiper.zoom;
     const { gesture } = zoom;
-    if (!Support$2.gestures) {
+    if (!Support$1.gestures) {
       if (e.type !== 'touchmove' || (e.type === 'touchmove' && e.targetTouches.length < 2)) {
         return;
       }
       gesture.scaleMove = Zoom.getDistanceBetweenTouches(e);
     }
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
-    if (Support$2.gestures) {
+    if (Support$1.gestures) {
       swiper.zoom.scale = e.scale * zoom.currentScale;
     } else {
       zoom.scale = (gesture.scaleMove / gesture.scaleStart) * zoom.currentScale;
@@ -17831,7 +17849,7 @@ const Zoom = {
     const params = swiper.params.zoom;
     const zoom = swiper.zoom;
     const { gesture } = zoom;
-    if (!Support$2.gestures) {
+    if (!Support$1.gestures) {
       if (e.type !== 'touchend' || (e.type === 'touchend' && e.changedTouches.length < 2)) {
         return;
       }
@@ -17849,7 +17867,7 @@ const Zoom = {
     const { gesture, image } = zoom;
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
     if (image.isTouched) return;
-    if (Device$1.android) e.preventDefault();
+    if (Device.android) e.preventDefault();
     image.isTouched = true;
     image.touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     image.touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
@@ -18126,10 +18144,10 @@ const Zoom = {
 
     const slides = swiper.slides;
 
-    const passiveListener = swiper.touchEvents.start === 'touchstart' && Support$2.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    const passiveListener = swiper.touchEvents.start === 'touchstart' && Support$1.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
 
     // Scale image
-    if (Support$2.gestures) {
+    if (Support$1.gestures) {
       slides.on('gesturestart', zoom.onGestureStart, passiveListener);
       slides.on('gesturechange', zoom.onGestureChange, passiveListener);
       slides.on('gestureend', zoom.onGestureEnd, passiveListener);
@@ -18156,10 +18174,10 @@ const Zoom = {
 
     const slides = swiper.slides;
 
-    const passiveListener = swiper.touchEvents.start === 'touchstart' && Support$2.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    const passiveListener = swiper.touchEvents.start === 'touchstart' && Support$1.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
 
     // Scale image
-    if (Support$2.gestures) {
+    if (Support$1.gestures) {
       slides.off('gesturestart', zoom.onGestureStart, passiveListener);
       slides.off('gesturechange', zoom.onGestureChange, passiveListener);
       slides.off('gestureend', zoom.onGestureEnd, passiveListener);
@@ -19147,7 +19165,7 @@ const Cube = {
         $cubeShadowEl.transform(`scale3d(${scale1}, 1, ${scale2}) translate3d(0px, ${(swiperHeight / 2) + offset}px, ${-swiperHeight / 2 / scale2}px) rotateX(-90deg)`);
       }
     }
-    const zFactor = (Browser$1.isSafari || Browser$1.isUiWebView) ? (-swiperSize / 2) : 0;
+    const zFactor = (Browser.isSafari || Browser.isUiWebView) ? (-swiperSize / 2) : 0;
     $wrapperEl
       .transform(`translate3d(0px,0,${zFactor}px) rotateX(${swiper.isHorizontal() ? 0 : wrapperRotate}deg) rotateY(${swiper.isHorizontal() ? -wrapperRotate : 0}deg)`);
   },
@@ -19385,7 +19403,7 @@ const Coverflow = {
     }
 
     // Set correct perspective for IE10
-    if (Browser$1.ie) {
+    if (Browser.ie) {
       const ws = $wrapperEl[0].style;
       ws.perspectiveOrigin = `${center}px 50%`;
     }
@@ -19445,30 +19463,26 @@ var EffectCoverflow = {
 // Swiper Class
 // Core Modules
 // Components
-Swiper$1
-  .use(Device$4)
-  .use(Support$4)
-  .use(Browser$2)
-  .use(Resize$1)
-  .use(Observer$1)
-  // Components
-  .use(Navigation$1)
-  .use(Pagination$1)
-  .use(Scrollbar$1)
-  .use(Parallax$1)
-  .use(Zoom$1)
-  .use(Lazy$2)
-  .use(Controller$1)
-  .use(A11y)
-  .use(Autoplay$1)
-  .use(EffectFade)
-  .use(EffectCube)
-  .use(EffectFlip)
-  .use(EffectCoverflow);
-
-if (!window.Swiper) {
-  window.Swiper = Swiper$1;
-}
+Swiper$1.components = [
+  Device$4,
+  Browser$2,
+  Support$4,
+  Resize$1,
+  Observer$1,
+  Navigation$1,
+  Pagination$1,
+  Scrollbar$1,
+  Parallax$1,
+  Zoom$1,
+  Lazy$2,
+  Controller$1,
+  A11y,
+  Autoplay$1,
+  EffectFade,
+  EffectCube,
+  EffectFlip,
+  EffectCoverflow,
+];
 
 function initSwipers(swiperEl) {
   const app = this;
@@ -19527,19 +19541,11 @@ var swiper = {
   },
   create() {
     const app = this;
-    app.swiper = Utils.extend(
-      ConstructorMethods({
-        defaultSelector: '.swiper-container',
-        constructor: Swiper$1,
-        app,
-        domProp: 'swiper',
-      }),
-      {
-        create(...args) {
-          return new Swiper$1(...args);
-        },
-      }
-    );
+    app.swiper = ConstructorMethods({
+      defaultSelector: '.swiper-container',
+      constructor: Swiper$1,
+      domProp: 'swiper',
+    });
   },
   on: {
     pageBeforeRemove(page) {
@@ -20144,7 +20150,7 @@ class PhotoBrowser extends Framework7Class {
     return pb;
   }
   init() {
-    const pb = this;
+    
   }
   destroy() {
     let pb = this;
@@ -20335,12 +20341,10 @@ const Notification = {
     list.append(item[0]);
     container.show();
 
-    var itemHeight = item.outerHeight(), clientLeft;
+    var itemHeight = item.outerHeight();
     if (app.theme === 'md') {
         container.transform('translate3d(0, '+itemHeight+'px, 0)');
         container.transition(0);
-
-        clientLeft = item[0].clientLeft;
 
         container.transform('translate3d(0, 0, 0)');
         container.transition('');
@@ -20348,8 +20352,6 @@ const Notification = {
     else {
         item.transform('translate3d(0,' + (-itemHeight) + 'px,0)');
         item.transition(0);
-
-        clientLeft = item[0].clientLeft;
 
         item.transition('');
         item.transform('translate3d(0,0px,0)');
@@ -20360,8 +20362,6 @@ const Notification = {
   },
 
   close(item, event) {
-    const app = this;
-
     item = $(item);
     if (item.length === 0) return;
     if (item.hasClass('notification-item-removing')) return;
@@ -20369,8 +20369,6 @@ const Notification = {
 
     var itemHeight = item.outerHeight();
     item.css('height', itemHeight + 'px').transition(0).addClass('notification-item-removing');
-    var clientLeft = item[0].clientLeft;
-
     item.css({
         height: '0px',
         marginBottom: '0px'
@@ -21273,38 +21271,27 @@ var autocomplete = {
 };
 
 // F7 Class
-// Import Core Modules
+// Core Modules
 // Core Components
-// Template7
-Framework7.prototype.t7 = t7;
-Framework7.Template7 = t7;
-if (!window.Template7) window.Template7 = t7;
-
-// Dom7
-Framework7.prototype.$ = $;
-Framework7.Dom7 = $;
-Framework7.$ = $;
-if (!window.Dom7) window.Dom7 = $;
-
-// Install Modules & Components
-Framework7
-  // Core Modules
-  .use(Device$2)
-  .use(Support)
-  .use(Utils$2)
-  .use(Resize)
-  .use(Request)
-  .use(Touch)
-  .use(Clicks)
-  .use(Router)
-  .use(History$2)
-  .use(Storage$1)
-  // Core Components
-  .use(Statusbar$1)
-  .use(View$2)
-  .use(Navbar$1)
-  .use(Toolbar$1)
-  .use(Subnavbar)
-  .use(TouchRipple);
+// Install Core Modules & Components
+Framework7.components = [
+  Device$2,
+  Support,
+  Utils$2,
+  Resize,
+  Request,
+  Touch,
+  Clicks,
+  Router,
+  History$2,
+  Storage$1,
+  Statusbar$1,
+  View$2,
+  Navbar$1,
+  Toolbar$1,
+  Subnavbar,
+  TouchRipple$$1,
+  
+];
 
 export { $, t7 as Template7, Framework7, modal as Modal, dialog as Dialog, popup as Popup, loginScreen as LoginScreen, popover as Popover, actions as Actions, sheet as Sheet, toast as Toast, preloader as Preloader, progressbar as Progressbar, sortable as Sortable, swipeout as Swipeout, accordion as Accordion, virtualList as VirtualList, timeline as Timeline, tabs as Tabs, panel as Panel, card as Card, chip as Chip, form as Form, input as Input, checkbox as Checkbox, radio as Radio, toggle as Toggle, range as Range, smartSelect as SmartSelect, calendar as Calendar, picker as Picker, infiniteScroll as InfiniteScroll, pullToRefresh as PullToRefresh, lazy as Lazy, dataTable as DataTable, fab as Fab, searchbar as Searchbar, messages as Messages, messagebar as Messagebar, swiper as Swiper, photoBrowser as PhotoBrowser, notification as Notification, autocomplete as Autocomplete };
