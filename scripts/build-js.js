@@ -37,21 +37,21 @@ function es(components, cb) {
 
   // Bundle
   rollup({
-    entry: './src/framework7.js',
+    input: './src/framework7.js',
     plugins: [
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
         'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
+        '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
         '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
     ],
     format: 'es',
-    moduleName: 'Framework7',
-    useStrict: true,
-    sourceMap: false,
+    name: 'Framework7',
+    strict: true,
+    sourcemap: false,
     banner,
   })
     .on('error', (err) => {
@@ -69,20 +69,21 @@ function es(components, cb) {
 
   // Modules
   rollup({
-    entry: './src/framework7.js',
+    input: './src/framework7.js',
     plugins: [
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
         'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
+        '//INSTALL_COMPONENTS': '',
         '//EXPORT_COMPONENTS': `export { $, Template7, Framework7, ${components.map(component => component.capitalized).join(', ')} };`,
       }),
     ],
     format: 'es',
-    moduleName: 'Framework7',
-    useStrict: true,
-    sourceMap: false,
+    name: 'Framework7',
+    strict: true,
+    sourcemap: false,
     banner,
   })
     .on('error', (err) => {
@@ -104,23 +105,23 @@ function umd(components, cb) {
   const format = process.env.FORMAT || config.format || 'umd';
 
   rollup({
-    entry: './src/framework7.js',
+    input: './src/framework7.js',
     plugins: [
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
         'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
+        '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
         '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
       resolve({ jsnext: true }),
       buble(),
     ],
     format: 'umd',
-    moduleName: 'Framework7',
-    useStrict: true,
-    sourceMap: env === 'development',
+    name: 'Framework7',
+    strict: true,
+    sourcemap: env === 'development',
     banner,
   })
     .on('error', (err) => {
@@ -175,14 +176,14 @@ function buildJs(cb) {
   umd(components, () => {
     cbs += 1;
     if (cbs === expectCbs) cb();
-  });
 
-  if (env === 'production') {
-    es(components, () => {
-      cbs += 1;
-      if (cbs === expectCbs) cb();
-    });
-  }
+    if (env === 'production') {
+      es(components, () => {
+        cbs += 1;
+        if (cbs === expectCbs) cb();
+      });
+    }
+  });
 }
 
 module.exports = buildJs;
