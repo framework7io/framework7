@@ -9,6 +9,7 @@ const Progressbar = {
       [progress, duration] = args;
       el = app.root;
     }
+    if (typeof progress === 'undefined' || progress === null) return el;
     if (!progress) progress = 0;
 
     const $el = $(el || app.root);
