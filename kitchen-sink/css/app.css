@@ -183,7 +183,7 @@ div.demo-lazy {
   background-position: center;
   color: #fff;
 }
-.demo-card-header-pic .card-content-inner .date{
+.demo-card-header-pic .card-content-padding .date{
   color: #8e8e93;
 }
 .demo-facebook-card .card-header {
@@ -213,10 +213,10 @@ div.demo-lazy {
 .demo-facebook-card .card-content img {
   display: block;
 }
-.demo-facebook-card .card-content-inner {
+.demo-facebook-card .card-content-padding {
   padding: 15px 10px;
 }
-.demo-facebook-card .card-content-inner .likes {
+.demo-facebook-card .card-content-padding .likes {
   color: #8e8e93;
 }
 /* Panels Demo */
