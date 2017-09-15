@@ -5,6 +5,7 @@ import Modal from '../modal/modal-class';
 class Toast extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
+      icon: undefined,
       message: undefined,
       position: app.params.modals.toastPosition,
       closeButton: app.params.modals.toastCloseButton,
@@ -22,16 +23,17 @@ class Toast extends Modal {
 
     toast.params = extendedParams;
 
-    const { message, position, closeButton, closeButtonColor, closeButtonText, closeTimeout, cssClass } = toast.params;
+    const { message, position, closeButton, closeButtonColor, closeButtonText, closeTimeout, cssClass, icon } = toast.params;
 
     let $el;
     if (!toast.params.el) {
       // Find Element
       const toastHtml = `
-        <div class="toast toast-${position} ${cssClass || ''}">
+        <div class="toast toast-${position} ${cssClass || ''} ${icon ? 'toast-with-icon' : ''}">
           <div class="toast-content">
+            ${icon ? `<div class="toast-icon">${icon}</div>` : ''}
             <div class="toast-message">${message}</div>
-            ${closeButton ? `
+            ${closeButton && !icon ? `
             <a class="toast-button ${app.theme === 'md' ? 'button' : 'link'} ${closeButtonColor ? `color-${closeButtonColor}` : ''}">${closeButtonText}</a>
             `.trim() : ''}
           </div>

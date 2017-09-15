@@ -24,6 +24,9 @@
           <a href="#" class="button button-raised" @click="showToastCenter">Toast on Center</a>
         </p>
         <p>
+          <a href="#" class="button button-raised" @click="showToastIcon">Toast with icon</a>
+        </p>
+        <p>
           <a href="#" class="button button-raised" @click="showToastLargeMessage">Toast with large message</a>
         </p>
         <p>
@@ -79,6 +82,20 @@
         }
         // Open it
         self.toastCenter.open();
+      },
+      showToastIcon: function () {
+        var self = this;
+        // Create toast
+        if (!self.toastIcon) {
+          self.toastIcon = self.$app.toast.create({
+            icon: self.$theme.ios ? '<i class="f7-icons">start</i>' : '<i class="material-icons">start</i>',
+            message: 'I\'m on center',
+            position: 'center',
+            closeTimeout: 2000,
+          });
+        }
+        // Open it
+        self.toastIcon.open();
       },
       showToastLargeMessage: function () {
         var self = this;
@@ -147,6 +164,7 @@
         if (self.toastBottom) self.toastBottom.destroy();
         if (self.toastTop) self.toastTop.destroy();
         if (self.toastCenter) self.toastCenter.destroy();
+        if (self.toastIcon) self.toastIcon.destroy();
         if (self.toastLargeMessage) self.toastLargeMessage.destroy();
         if (self.toastWithButton) self.toastWithButton.destroy();
         if (self.toastWithCustomButton) self.toastWithCustomButton.destroy();
