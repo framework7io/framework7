@@ -19,15 +19,18 @@ class VirtualList extends Framework7Class {
       setListHeight: true,
       searchByItem: undefined,
       searchAll: undefined,
-      renderItem: undefined,
-      itemTemplate:
-        '<li>' +
-          '<div class="item-content">' +
-            '<div class="item-inner">' +
-              '<div class="item-title">{{this}}</div>' +
-            '</div>' +
-          '</div>' +
-        '</li>',
+      itemTemplate: undefined,
+      renderItem(item) {
+        return `
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title">${item}</div>
+              </div>
+            </div>
+          </li>
+        `.trim();
+      },
       on: {},
     };
 
@@ -49,9 +52,11 @@ class VirtualList extends Framework7Class {
     if (vl.params.showFilteredItemsOnly) {
       vl.filteredItems = [];
     }
-    if (vl.params.itemTemplate && !vl.params.renderItem) {
-      if (typeof vl.params.itemTemplate === 'string') vl.itemTemplate = Template7.compile(vl.params.template);
-      else if (typeof vl.params.itemTemplate === 'function') vl.itemTemplate = vl.params.itemTemplate;
+    if (vl.params.itemTemplate) {
+      if (typeof vl.params.itemTemplate === 'string') vl.renderItem = Template7.compile(vl.params.itemTemplate);
+      else if (typeof vl.params.itemTemplate === 'function') vl.renderItem = vl.params.itemTemplate;
+    } else if (vl.params.renderItem) {
+      vl.renderItem = vl.params.renderItem;
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');
 
@@ -212,10 +217,8 @@ class VirtualList extends Framework7Class {
         itemEl = vl.domCache[index];
         itemEl.f7VirtualListIndex = index;
       } else {
-        if (vl.itemTemplate && !vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.itemTemplate(items[i], { index }).trim();
-        } else if (vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.params.renderItem.call(vl, items[i], index).trim();
+        if (vl.renderItem) {
+          vl.tempDomElement.innerHTML = vl.renderItem(items[i], { index }).trim();
         } else {
           vl.tempDomElement.innerHTML = items[i].toString().trim();
         }
