@@ -207,45 +207,45 @@
   }
 
   // Toolbar
-  .page > .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .searchbar {
+  .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar {
     top: @toolbarSize;
   }
-  .page > .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .searchbar ~ * .page-content,
-  .page > .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .searchbar ~ .page-content {
+  .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
+  .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
     padding-top: @toolbarSize + @searchbarSize;
   }
 
-  .page > .tabbar-labels:not(.toolbar-bottom) ~ .searchbar {
+  .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
     top: @tabbarLabelsSize;
   }
-  .page > .tabbar-labels:not(.toolbar-bottom) ~ .searchbar ~ * .page-content,
-  .page > .tabbar-labels:not(.toolbar-bottom) ~ .searchbar ~ .page-content {
+  .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
+  .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
     padding-top: @tabbarLabelsSize + @searchbarSize;
   }
 
   // Navbar + Toolbar
-  .page > .navbar ~ .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .searchbar {
+  .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar {
     top: @navbarSize + @toolbarSize;
     @media (min-width: 768px) {
       top: @navbarSizeTablet + @toolbarSize;
     }
   }
-  .page > .navbar ~ .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .searchbar ~ * .page-content,
-  .page > .navbar ~ .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .searchbar ~ .page-content {
+  .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
+  .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
     padding-top: @navbarSize + @toolbarSize + @searchbarSize;
     @media (min-width: 768px) {
       padding-top: @navbarSizeTablet + @toolbarSize + @searchbarSize;
     }
   }
 
-  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom) ~ .searchbar {
+  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
     top: @navbarSize + @tabbarLabelsSize;
     @media (min-width: 768px) {
       top: @navbarSizeTablet + @tabbarLabelsSize;
     }
   }
-  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom) ~ .searchbar ~ * .page-content,
-  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom) ~ .searchbar ~ .page-content {
+  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
+  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
     padding-top: @navbarSize + @tabbarLabelsSize + @searchbarSize;
     @media (min-width: 768px) {
       padding-top: @navbarSizeTablet + @tabbarLabelsSize + @searchbarSize;
