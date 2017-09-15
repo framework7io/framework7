@@ -1,5 +1,4 @@
 const Support = (function Support() {
-  let positionStickyProp;
   const positionSticky = (function supportPositionSticky() {
     let support = false;
     const div = document.createElement('div');
@@ -8,33 +7,13 @@ const Support = (function Support() {
       div.style.position = prop;
       if (div.style.position === prop) {
         support = true;
-        positionStickyProp = prop;
       }
     });
     return support;
   }());
 
-  const positionStickyFalsy = (function positionStickyFalsy() {
-    let falsy = false;
-    if (!positionStickyProp) return false;
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <div id="position-sticky-test" style="overflow:scroll; height: 100px; width:100px; position: absolute; left:0px; top:0px; padding-top:50px; visibility: hidden;">
-        <div id="position-sticky-test-element" style="margin:0; padding:0; height:10px; width:100%; position:${positionStickyProp}; top:0"></div>
-        <div style="height: 1000px"></div>
-      </div>`;
-    document.body.appendChild(div);
-    document.getElementById('position-sticky-test').scrollTop = 50;
-    if (document.getElementById('position-sticky-test-element').offsetTop === 50) {
-      falsy = true;
-    }
-    div.parentNode.removeChild(div);
-    return falsy;
-  }());
-
   return {
     positionSticky,
-    positionStickyFalsy,
     touch: (function checkTouch() {
       return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
     }()),

@@ -276,33 +276,6 @@
     }
   }
 
-  // Sticky Fix
-  &.support-position-sticky-falsy {
-    .navbar:not(.navbar-hidden) ~ * .page-content,
-    .navbar:not(.navbar-hidden) ~ .page-content,
-    .page-with-subnavbar .page-content,
-    .subnavbar ~ .page-content,
-    .subnavbar ~ * .page-content,
-    .searchbar ~ .page-content,
-    .searchbar ~ * .page-content {
-      li.list-group-title {
-        top: @navbarSize;
-      }
-    }
-    .navbar:not(.navbar-hidden) ~ .page-with-subnavbar .page-content,
-    .page-with-subnavbar .navbar:not(.navbar-hidden) ~ .page-content,
-    .navbar:not(.navbar-hidden) ~ * .subnavbar ~ .page-content,
-    .navbar:not(.navbar-hidden) ~ * .subnavbar ~ * .page-content,
-    .navbar:not(.navbar-hidden) ~ .page > .searchbar ~ .page-content,
-    .navbar:not(.navbar-hidden) ~ .page > .searchbar ~ * .page-content,
-    .page > .navbar:not(.navbar-hidden) ~ .searchbar ~ .page-content,
-    .page > .navbar:not(.navbar-hidden) ~ .searchbar ~ * .page-content {
-      li.list-group-title {
-        top: @navbarSize * 2;
-      }
-    }
-  }
-
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .list-button {
