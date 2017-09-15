@@ -166,16 +166,16 @@ const Sortable = {
     const $el = $(el);
     if ($el.length === 0) return;
     $el.addClass('sortable-enabled');
-    $el.trigger('sortable:open');
-    app.emit('sortableOpen', $el[0]);
+    $el.trigger('sortable:enable');
+    app.emit('sortableEnable', $el[0]);
   },
   disable(el = '.list.sortable') {
     const app = this;
     const $el = $(el);
     if ($el.length === 0) return;
     $el.removeClass('sortable-enabled');
-    $el.trigger('sortable:close');
-    app.emit('sortableClose', $el[0]);
+    $el.trigger('sortable:disable');
+    app.emit('sortableDisable', $el[0]);
   },
   toggle(el = '.list.sortable') {
     const app = this;
