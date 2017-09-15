@@ -23,6 +23,7 @@ import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
+import Modal from './components/modal/modal';
 
 //IMPORT_COMPONENTS
 
@@ -52,6 +53,7 @@ Framework7.components = [
   Toolbar,
   Subnavbar,
   TouchRipple,
+  Modal,
   //INSTALL_COMPONENTS
 ];
 

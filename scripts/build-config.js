@@ -9,7 +9,6 @@ let config = {
   rtl: false,
   components: [
     // Modals
-    'modal',
     'dialog',
     'popup',
     'login-screen',
