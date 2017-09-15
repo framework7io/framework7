@@ -41,6 +41,7 @@ class Modal extends Framework7Class {
   }
   onClose() {
     const modal = this;
+    if (!modal.type || !modal.$el) return;
     openedModals.splice(openedModals.indexOf(modal), 1);
     $('html').removeClass(`with-modal-${modal.type.toLowerCase()}`);
     modal.$el.trigger(`modal:close ${modal.type.toLowerCase()}:close`, modal);
@@ -48,6 +49,7 @@ class Modal extends Framework7Class {
   }
   onClosed() {
     const modal = this;
+    if (!modal.type || !modal.$el) return;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`, modal);
@@ -214,6 +216,7 @@ class Modal extends Framework7Class {
       }
     }
     Utils.deleteProps(modal);
+    modal.des
     modal = null;
   }
 }

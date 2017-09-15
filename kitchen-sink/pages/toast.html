@@ -137,6 +137,10 @@
       },
     },
     on: {
+      pageBeforeOut: function () {
+        var self = this;
+        self.$app.toast.close();
+      },
       pageBeforeRemove: function () {
         var self = this;
         // Destroy toasts when page removed
