@@ -7,6 +7,9 @@
   display: inline-block;
   vertical-align: middle;
   z-index: 1;
+  &.disabled {
+    .disabled();
+  }
 }
 label.item-checkbox, .checkbox {
   cursor: pointer;
