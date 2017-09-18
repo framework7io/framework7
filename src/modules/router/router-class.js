@@ -794,6 +794,7 @@ class Router extends Framework7Class {
     const page = {
       app: router.app,
       view: router.view,
+      router,
       $el: $pageEl,
       el: $pageEl[0],
       $pageEl,
