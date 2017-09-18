@@ -254,6 +254,8 @@ function forward(el, forwardOptions = {}) {
 
   if (options.reloadCurrent || options.reloadAll) {
     router.allowPageChange = true;
+    router.pageCallback('beforeIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
     return router;
   }
 
