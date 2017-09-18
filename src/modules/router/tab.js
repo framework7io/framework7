@@ -37,6 +37,13 @@ function tabLoad(tabRoute, loadOptions = {}) {
   // Show Tab
   const { $newTabEl, $oldTabEl } = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
 
+  if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
+    const tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
+    if (tabParentPageData && options.route) {
+      tabParentPageData.route = options.route;
+    }
+  }
+
   // Load Tab Content
   const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
 
