@@ -48,7 +48,7 @@ function initSwipers(swiperEl) {
   if (isTabs) {
     Utils.extend(params, {
       on: {
-        slideChangeStart() {
+        transitionStart() {
           const swiper = this;
           app.tab.show(swiper.slides.eq(swiper.activeIndex));
         },
