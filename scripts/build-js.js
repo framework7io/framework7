@@ -21,6 +21,8 @@ const gulpif = require('gulp-if');
 let config = require('./build-config.js');
 const banner = require('./banner.js');
 
+let cache;
+
 // Overwrite with local config
 try {
   const customConfig = require('./build-config-custom.js');
@@ -32,7 +34,7 @@ try {
 function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
-  const format = process.env.FORMAT || config.format || 'es';
+  const format = 'es';
   let cbs = 0;
 
   // Bundle
@@ -123,10 +125,14 @@ function umd(components, cb) {
     strict: true,
     sourcemap: env === 'development',
     banner,
+    cache,
   })
     .on('error', (err) => {
       if (cb) cb();
       console.log(err.toString());
+    })
+    .on('bundle', (bundle) => {
+      cache = bundle;
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
