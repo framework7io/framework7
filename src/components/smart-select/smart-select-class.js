@@ -35,7 +35,7 @@ class SmartSelect extends Framework7Class {
     // Url
     let url = params.url;
     if (!url) {
-      if ($el.attr('href')) url = $el.attr('href');
+      if ($el.attr('href') && $el.attr('href') !== '#') url = $el.attr('href');
       else url = `${$selectEl.attr('name').toLowerCase()}-select/`;
     }
     if (!url) url = ss.params.url;
