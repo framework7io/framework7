@@ -35,7 +35,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  const { $newTabEl, $oldTabEl } = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+  const { $newTabEl, $oldTabEl, animated, onTabsChanged } = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
     const tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
@@ -53,28 +53,34 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     $newTabEl.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
+
     if ($oldTabEl) {
-      router.tabRemove($oldTabEl, $newTabEl, tabRoute);
+      if (animated) {
+        onTabsChanged(() => {
+          router.tabRemove($oldTabEl, $newTabEl, tabRoute);
+        });
+      } else {
+        router.tabRemove($oldTabEl, $newTabEl, tabRoute);
+      }
     }
   }
 
   // Component/Template Callbacks
   function resolve(contentEl) {
-    if (contentEl) {
-      if (typeof contentEl === 'string') {
-        $newTabEl.html(contentEl);
+    if (!contentEl) return;
+    if (typeof contentEl === 'string') {
+      $newTabEl.html(contentEl);
+    } else {
+      $newTabEl.html('');
+      if (contentEl.f7Component) {
+        contentEl.f7Component.mount((componentEl) => {
+          $newTabEl.append(componentEl);
+        });
       } else {
-        $newTabEl.html('');
-        if (contentEl.f7Component) {
-          contentEl.f7Component.mount((componentEl) => {
-            $newTabEl.append(componentEl);
-          });
-        } else {
-          $newTabEl.append(contentEl);
-        }
+        $newTabEl.append(contentEl);
       }
-      onTabLoaded();
     }
+    onTabLoaded();
   }
   function reject() {
     router.allowPageChange = true;
@@ -82,8 +88,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   if (content) {
-    $newTabEl.html(content);
-    onTabLoaded();
+    resolve(content);
   } else if (template || templateUrl) {
     try {
       router.tabTemplateLoader(template, templateUrl, options, resolve, reject);
@@ -92,9 +97,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
       throw err;
     }
   } else if (el) {
-    $newTabEl.html('');
-    $newTabEl.append(el);
-    onTabLoaded();
+    resolve(el);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
@@ -111,8 +114,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     }
     router.xhrRequest(url, ignoreCache)
       .then((tabContent) => {
-        $newTabEl.html(tabContent);
-        onTabLoaded();
+        resolve(tabContent);
       })
       .catch(() => {
         router.allowPageChange = true;
