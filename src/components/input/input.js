@@ -28,7 +28,7 @@ const Input = {
 
     const styles = window.getComputedStyle($textareaEl[0]);
     ('padding margin width font border box-sizing display').split(' ').forEach((style) => {
-      $shadowEl.css(style, styles[style]);
+      $shadowEl.css(style, styles[style].replace(',', '.'));
     });
     const currentHeight = $textareaEl[0].clientHeight;
 
@@ -38,6 +38,7 @@ const Input = {
     $shadowEl.val($textareaEl.val());
     $shadowEl.css('height', 0);
     const scrollHeight = $shadowEl[0].scrollHeight;
+
     if (currentHeight !== scrollHeight) {
       if (scrollHeight > initialHeight) {
         $textareaEl.css('height', `${scrollHeight}px`);
