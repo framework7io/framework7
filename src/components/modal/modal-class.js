@@ -216,7 +216,6 @@ class Modal extends Framework7Class {
       }
     }
     Utils.deleteProps(modal);
-    modal.des
     modal = null;
   }
 }
