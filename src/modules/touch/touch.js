@@ -244,7 +244,7 @@ function initTouch() {
       }, 10);
     } else {
         targetElement.dispatchEvent(evt);
-    }    
+    }
   }
 
   // Touch Handlers
@@ -601,7 +601,7 @@ export default {
       activeState: true,
       activeStateElements: 'a, button, label, span, .actions-button',
       materialRipple: true,
-      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell',
+      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell, .notification-close-button',
     },
   },
   instance: {
