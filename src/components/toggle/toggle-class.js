@@ -21,14 +21,12 @@ class Toggle extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return toggle;
 
-    const dataset = $el.dataset();
 
     const $inputEl = $el.children('input[type="checkbox"]');
 
     Utils.extend(toggle, {
       $el,
       el: $el[0],
-      dataset,
       $inputEl,
       inputEl: $inputEl[0],
       disabled: $el.hasClass('disabled') || $inputEl.hasClass('disabled') || $inputEl.attr('disabled') || $inputEl[0].disabled,
