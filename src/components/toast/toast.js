@@ -17,4 +17,17 @@ export default {
       })
     );
   },
+  params: {
+    toast: {
+      icon: null,
+      text: null,
+      position: 'bottom',
+      closeButton: false,
+      closeButtonColor: null,
+      closeButtonText: 'Ok',
+      closeTimeout: null,
+      cssClass: null,
+      render: null,
+    },
+  },
 };
