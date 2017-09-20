@@ -14,7 +14,7 @@ export default {
       ModalMethods({
         app,
         constructor: Notification,
-        defaultSelector: '.toast.modal-in',
+        defaultSelector: '.notification.modal-in',
       })
     );
   },
