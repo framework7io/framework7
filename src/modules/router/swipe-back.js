@@ -2,6 +2,7 @@ import $ from 'dom7';
 import History from '../../utils/history';
 import Support from '../../utils/support';
 import Device from '../../utils/device';
+import Utils from '../../utils/utils';
 
 function SwipeBack(r) {
   const router = r;
@@ -37,7 +38,7 @@ function SwipeBack(r) {
     isScrolling = undefined;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-    touchStartTime = (new Date()).getTime();
+    touchStartTime = Utils.now();
     dynamicNavbar = router.dynamicNavbar;
     separateNavbar = router.separateNavbar;
   }
@@ -230,7 +231,7 @@ function SwipeBack(r) {
       }
       return;
     }
-    const timeDiff = (new Date()).getTime() - touchStartTime;
+    const timeDiff = Utils.now() - touchStartTime;
     let pageChanged = false;
     // Swipe back to previous page
     if (
