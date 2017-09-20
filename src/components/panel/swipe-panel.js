@@ -59,7 +59,10 @@ function swipePanel(panel) {
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
-    if (e.f7PreventPanelSwipe) return;
+    if (e.f7PreventPanelSwipe) {
+      isTouched = false;
+      return;
+    }
     const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
     const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
@@ -276,11 +279,11 @@ function swipePanel(panel) {
 
   // Add Events
   app.on('touchstart:passive', handleTouchStart);
-  app.on('touchmove', handleTouchMove);
+  app.on('touchmove:active', handleTouchMove);
   app.on('touchend:passive', handleTouchEnd);
   panel.on('panelDestroy', () => {
     app.off('touchstart:passive', handleTouchStart);
-    app.off('touchmove', handleTouchMove);
+    app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
   });
 }

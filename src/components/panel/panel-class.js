@@ -66,14 +66,16 @@ class Panel extends Framework7Class {
     if (app.params.panel[`${panel.side}Breakpoint`]) {
       panel.initBreakpoints();
     }
-    if (
-      (app.params.panel.swipe === panel.side)
-      ||
-      (app.params.panel.swipe === 'both')
-      ||
-      (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
-    ) {
-      panel.initSwipePanel();
+    if (process.env.TARGET !== 'desktop') {
+      if (
+        (app.params.panel.swipe === panel.side)
+        ||
+        (app.params.panel.swipe === 'both')
+        ||
+        (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
+      ) {
+        panel.initSwipePanel();
+      }
     }
   }
   setBreakpoint() {
@@ -116,7 +118,9 @@ class Panel extends Framework7Class {
     return panel;
   }
   initSwipePanel() {
-    SwipePanel(this);
+    if (process.env.TARGET !== 'desktop') {
+      SwipePanel(this);
+    }
   }
   destroy() {
     let panel = this;

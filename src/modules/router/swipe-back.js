@@ -366,17 +366,15 @@ function SwipeBack(r) {
 
   function attachEvents() {
     const passiveListener = (app.touchEvents.start === 'touchstart' && Support.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
-    $el.on(app.touchEvents.move, handleTouchMove, activeListener);
-    $el.on(app.touchEvents.end, handleTouchEnd, passiveListener);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
   }
   function detachEvents() {
     const passiveListener = (app.touchEvents.start === 'touchstart' && Support.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
     $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
-    $el.off(app.touchEvents.move, handleTouchMove, activeListener);
-    $el.off(app.touchEvents.end, handleTouchEnd, passiveListener);
+    app.off('touchmove:active', handleTouchMove);
+    app.off('touchend:passive', handleTouchEnd);
   }
 
   attachEvents();

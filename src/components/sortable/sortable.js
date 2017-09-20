@@ -158,7 +158,7 @@ const Sortable = {
     const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
 
     $(document).on(app.touchEvents.start, '.list.sortable .sortable-handler', handleTouchStart, activeListener);
-    app.on('touchmove', handleTouchMove);
+    app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
   },
   enable(el = '.list.sortable') {
