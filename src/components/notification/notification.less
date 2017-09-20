@@ -23,6 +23,14 @@
   margin-left: auto;
   cursor: pointer;
 }
+html.with-statusbar {
+  &.device-ios .notification, &.ios:not(.device-ios):not(.device-android) .notification {
+    margin-top: 20px;
+  }
+  &.device-android .notification, &.md:not(.device-ios):not(.device-android) .notification {
+    margin-top: 24px;
+  }
+}
 & when (@include-ios-theme) {
   @import url('./notification-ios.less');
 }
