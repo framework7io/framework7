@@ -19,6 +19,10 @@ module.exports = {
       ignoreStrings: true,
       ignoreTemplateLiterals: true,
     }],
+    'object-curly-newline': ['error', {
+      ObjectExpression: { minProperties: 9, multiline: true, consistent: true },
+      ObjectPattern: { minProperties: 9, multiline: true, consistent: true }
+    }],
     'comma-dangle': ['error', {
       arrays: 'always-multiline',
       objects: 'always-multiline',
@@ -26,5 +30,6 @@ module.exports = {
       exports: 'always-multiline',
       functions: 'never',
     }],
+    'prefer-destructuring': ['off'],
   },
 };
