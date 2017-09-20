@@ -10,7 +10,9 @@
     "build-prod": "cross-env NODE_ENV=production gulp build",
     "dev": "cross-env NODE_ENV=development gulp build && cross-env NODE_ENV=development gulp ks && cross-env NODE_ENV=development gulp server",
     "prod": "cross-env NODE_ENV=production gulp ks && cross-env NODE_ENV=production gulp server",
-    "test": "npm run build-dev"
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "test": "npm run build-dev && eslint ."
   },
   "repository": {
     "type": "git",
@@ -56,12 +58,12 @@
   "devDependencies": {
     "cross-env": "^5.0.5",
     "diff": "^3.3.1",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint": "^4.7.1",
+    "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-clean-css": "^3.8.0",
+    "gulp-clean-css": "^3.9.0",
     "gulp-connect": "^5.0.0",
     "gulp-header": "^1.8.9",
     "gulp-if": "^2.0.2",
