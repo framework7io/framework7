@@ -151,7 +151,8 @@ function forward(el, forwardOptions = {}) {
         url: options.route.url,
         viewIndex: view.index,
       },
-      pushStateRoot + router.params.pushStateSeparator + options.route.url);
+      pushStateRoot + router.params.pushStateSeparator + options.route.url
+    );
   }
 
   // Current Route
@@ -362,7 +363,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     router.url === options.route.url &&
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
-    ) {
+  ) {
     return false;
   }
 

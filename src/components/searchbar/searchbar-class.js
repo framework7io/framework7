@@ -155,12 +155,12 @@ class Searchbar extends FrameworkClass {
     function onInputChange() {
       const value = sb.$inputEl.val().trim();
       if (
-          (
-            (sb.$searchContainer && sb.$searchContainer.length > 0) &&
-            (sb.params.searchIn || sb.isVirtualList)
-          ) ||
-          sb.params.customSearch
-        ) {
+        (
+          (sb.$searchContainer && sb.$searchContainer.length > 0) &&
+          (sb.params.searchIn || sb.isVirtualList)
+        ) ||
+        sb.params.customSearch
+      ) {
         sb.search(value, true);
       }
     }

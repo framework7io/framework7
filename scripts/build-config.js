@@ -4,7 +4,7 @@
 * If you want to build custom version of F7, just put build-config-custom.js with the required configuration in this folder
 */
 
-let config = {
+const config = {
   target: 'universal',
   rtl: false,
   components: [

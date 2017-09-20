@@ -40,6 +40,7 @@ const Support = (function Support() {
       let supportsPassive = false;
       try {
         const opts = Object.defineProperty({}, 'passive', {
+          // eslint-disable-next-line
           get() {
             supportsPassive = true;
           },

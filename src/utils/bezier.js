@@ -4,6 +4,8 @@
  * by Gaëtan Renaudeau 2014 - 2015 – MIT License
  */
 
+/* eslint-disable */
+
 // These values are established by empiricism with tests (tradeoff: performance VS precision)
 var NEWTON_ITERATIONS = 4;
 var NEWTON_MIN_SLOPE = 0.001;

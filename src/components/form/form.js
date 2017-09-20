@@ -122,20 +122,20 @@ function formToData(formEl) {
       });
     } else {
       switch (type) {
-        case 'checkbox' :
+        case 'checkbox':
           skipNames.push(name);
           data[name] = [];
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             if (el.checked) data[name].push(el.value);
           });
           break;
-        case 'radio' :
+        case 'radio':
           skipNames.push(name);
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             if (el.checked) data[name] = el.value;
           });
           break;
-        default :
+        default:
           data[name] = $inputEl.val();
           break;
       }
@@ -181,7 +181,7 @@ function formFromData(formEl, formData) {
       });
     } else {
       switch (type) {
-        case 'checkbox' :
+        case 'checkbox':
           skipNames.push(name);
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             const checkboxEl = el;
@@ -189,7 +189,7 @@ function formFromData(formEl, formData) {
             else checkboxEl.checked = false;
           });
           break;
-        case 'radio' :
+        case 'radio':
           skipNames.push(name);
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             const radioEl = el;
@@ -197,7 +197,7 @@ function formFromData(formEl, formData) {
             else radioEl.checked = false;
           });
           break;
-        default :
+        default:
           $inputEl.val(data[name]);
           break;
       }

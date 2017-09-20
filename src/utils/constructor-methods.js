@@ -1,7 +1,13 @@
 import $ from 'dom7';
 
 export default function (parameters = {}) {
-  const { defaultSelector, constructor, domProp, app, addMethods } = parameters;
+  const {
+    defaultSelector,
+    constructor,
+    domProp,
+    app,
+    addMethods,
+  } = parameters;
   const methods = {
     create(...args) {
       if (app) return new constructor(app, ...args);

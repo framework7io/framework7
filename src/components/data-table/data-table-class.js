@@ -56,8 +56,8 @@ class DataTable extends Framework7Class {
         }
         $el
           .find(`tbody tr td:nth-child(${columnIndex + 1}) input`)
-            .prop('checked', checked)
-            .trigger('change', { sentByF7DataTable: true });
+          .prop('checked', checked)
+          .trigger('change', { sentByF7DataTable: true });
       } else {
         if (columnIndex === 0) {
           $inputEl.parents('tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected');

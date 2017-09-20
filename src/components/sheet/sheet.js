@@ -10,7 +10,8 @@ export default {
   },
   create() {
     const app = this;
-    app.sheet = Utils.extend({},
+    app.sheet = Utils.extend(
+      {},
       ModalMethods({
         app,
         constructor: Sheet,

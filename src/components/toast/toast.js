@@ -9,7 +9,8 @@ export default {
   },
   create() {
     const app = this;
-    app.toast = Utils.extend({},
+    app.toast = Utils.extend(
+      {},
       ModalMethods({
         app,
         constructor: Toast,

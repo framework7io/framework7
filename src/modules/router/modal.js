@@ -62,7 +62,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
             viewIndex: router.view.index,
             modal: modalType,
           },
-          (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
+          (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
+        );
       }
 
       // Set Route

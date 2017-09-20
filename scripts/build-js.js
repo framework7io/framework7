@@ -164,6 +164,7 @@ function buildJs(cb) {
 
   const components = [];
   config.components.forEach((name) => {
+    // eslint-disable-next-line
     const capitalized = name.split('-').map((word) => {
       return word.split('').map((char, index) => {
         if (index === 0) return char.toUpperCase();

@@ -93,9 +93,11 @@ class Framework7 extends Framework7Class {
     app.initialized = true;
     app.emit('init');
   }
+  // eslint-disable-next-line
   get $() {
     return $;
   }
+  // eslint-disable-next-line
   get t7() {
     return Template7;
   }

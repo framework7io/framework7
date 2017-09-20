@@ -235,15 +235,15 @@ function initTouch() {
     evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
     evt.forwardedTouchEvent = true;
 
-    if (app.device.ios && navigator.standalone) {
-      //Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
-      //Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
-      setTimeout(function () {
-          targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-          targetElement.dispatchEvent(evt);
+    if (app.device.ios && window.navigator.standalone) {
+      // Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
+      // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
+      setTimeout(() => {
+        targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        targetElement.dispatchEvent(evt);
       }, 10);
     } else {
-        targetElement.dispatchEvent(evt);
+      targetElement.dispatchEvent(evt);
     }
   }
 
@@ -299,7 +299,7 @@ function initTouch() {
     touchStartX = e.targetTouches[0].pageX;
     touchStartY = e.targetTouches[0].pageY;
 
-      // Detect scroll parent
+    // Detect scroll parent
     if (Device.ios) {
       scrollParent = undefined;
       $(targetElement).parents().each(() => {
@@ -410,7 +410,7 @@ function initTouch() {
       rippleTouchEnd();
     }
 
-      // Trigger focus when required
+    // Trigger focus when required
     if (targetNeedsFocus(targetElement)) {
       if (Device.ios && Device.webView) {
         if ((e.timeStamp - touchStartTime) > 159) {
@@ -424,12 +424,12 @@ function initTouch() {
       targetElement.focus();
     }
 
-      // Blur active elements
+    // Blur active elements
     if (document.activeElement && targetElement !== document.activeElement && document.activeElement !== document.body && targetElement.nodeName.toLowerCase() !== 'label') {
       document.activeElement.blur();
     }
 
-      // Send click
+    // Send click
     e.preventDefault();
     sendClick(e);
     return false;
@@ -438,14 +438,14 @@ function initTouch() {
     trackClick = false;
     targetElement = null;
 
-      // Remove Active State
+    // Remove Active State
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
     if (params.activeState) {
       removeActive();
     }
 
-      // Remove Ripple
+    // Remove Ripple
     if (useRipple) {
       rippleTouchEnd();
     }

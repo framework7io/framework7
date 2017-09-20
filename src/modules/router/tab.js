@@ -24,7 +24,8 @@ function tabLoad(tabRoute, loadOptions = {}) {
           url: options.route.url,
           viewIndex: router.view.index,
         },
-        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
+        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
+      );
     }
 
     // Update Router History

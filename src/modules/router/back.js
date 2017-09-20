@@ -73,12 +73,10 @@ function backward(el, backwardOptions) {
         backIndex = router.history.length - router.history.indexOf(options.route.url) - 1;
         router.history = router.history.slice(0, router.history.indexOf(options.route.url) + 2);
         view.history = router.history;
+      } else if (router.history[[router.history.length - 2]]) {
+        router.history[router.history.length - 2] = options.route.url;
       } else {
-        if (router.history[[router.history.length - 2]]) {
-          router.history[router.history.length - 2] = options.route.url;
-        } else {
-          router.history.unshift(router.url);
-        }
+        router.history.unshift(router.url);
       }
 
       if (backIndex && router.params.stackPages) {
@@ -296,7 +294,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     router.url === options.route.url &&
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
-    ) {
+  ) {
     return false;
   }
 

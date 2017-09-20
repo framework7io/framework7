@@ -377,14 +377,12 @@ class Router extends Framework7Class {
             }
           });
         }
+      } else if (direction === 'forward') {
+        newPage.transform(`translate3d(0, ${(1 - easeProgress) * 56}px,0)`);
+        newPage.css('opacity', easeProgress);
       } else {
-        if (direction === 'forward') {
-          newPage.transform(`translate3d(0, ${(1 - easeProgress) * 56}px,0)`);
-          newPage.css('opacity', easeProgress);
-        } else {
-          oldPage.transform(`translate3d(0, ${easeProgress * 56}px,0)`);
-          oldPage.css('opacity', 1 - easeProgress);
-        }
+        oldPage.transform(`translate3d(0, ${easeProgress * 56}px,0)`);
+        oldPage.css('opacity', 1 - easeProgress);
       }
 
       if (done) {
@@ -413,6 +411,7 @@ class Router extends Framework7Class {
     const router = this;
     router.removeEl(modalEl);
   }
+  // eslint-disable-next-line
   removeTabContent(tabEl) {
     const $tabEl = $(tabEl);
     $tabEl.html('');

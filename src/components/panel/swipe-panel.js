@@ -233,10 +233,10 @@ function swipePanel(panel) {
     } else if (translate === -panelWidth) {
       action = 'reset';
     } else if (
-        (timeDiff < 300 && Math.abs(translate) >= 0)
-        ||
-        (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
-      ) {
+      (timeDiff < 300 && Math.abs(translate) >= 0)
+      ||
+      (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
+    ) {
       if (side === 'left' && translate === panelWidth) action = 'reset';
       else action = 'swap';
     } else {

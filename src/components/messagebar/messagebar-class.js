@@ -148,7 +148,17 @@ class Messagebar extends Framework7Class {
   }
   resize() {
     const messagebar = this;
-    const { params, $el, top, $pageEl, $pageContentEl, $areaEl, $textareaEl, $sheetEl, $attachmentsEl } = messagebar;
+    const {
+      params,
+      $el,
+      top,
+      $pageEl,
+      $pageContentEl,
+      $areaEl,
+      $textareaEl,
+      $sheetEl,
+      $attachmentsEl,
+    } = messagebar;
     const elHeight = $el[0].offsetHeight;
     if (top) {
       const requiredPaddingTop = elHeight + params.topOffset;

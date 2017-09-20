@@ -260,7 +260,7 @@ class VirtualList extends Framework7Class {
       }
     }
 
-      // Update list html
+    // Update list html
     if (vl.params.renderExternal) {
       if (items && items.length === 0) {
         vl.reachEnd = true;
@@ -414,17 +414,17 @@ class VirtualList extends Framework7Class {
     const fromIndex = from;
     let toIndex = to;
     if (fromIndex === toIndex) return;
-      // remove item from array
+    // remove item from array
     const item = vl.items.splice(fromIndex, 1)[0];
     if (toIndex >= vl.items.length) {
       // Add item to the end
       vl.items.push(item);
       toIndex = vl.items.length - 1;
     } else {
-      // Add item to new index
+    // Add item to new index
       vl.items.splice(toIndex, 0, item);
     }
-      // Update cache
+    // Update cache
     if (vl.params.cache) {
       const newCache = {};
       Object.keys(vl.domCache).forEach((cached) => {
@@ -452,7 +452,7 @@ class VirtualList extends Framework7Class {
       return;
     }
     vl.items.splice(index, 0, item);
-      // Update cache
+    // Update cache
     if (vl.params.cache) {
       const newCache = {};
       Object.keys(vl.domCache).forEach((cached) => {

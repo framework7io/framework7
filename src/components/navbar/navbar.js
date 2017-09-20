@@ -82,7 +82,7 @@ const Navbar = {
     if (dynamicNavbar) {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
         let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
-        let titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
+        const titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
 
         if (isPrevious) {
           if (router && router.params.iosAnimateNavbarBackIcon) {

@@ -17,7 +17,17 @@ class Notification extends Modal {
 
     notification.params = extendedParams;
 
-    const { icon, title, titleRightText, subtitle, text, closeButton, closeTimeout, cssClass, closeOnClick } = notification.params;
+    const {
+      icon,
+      title,
+      titleRightText,
+      subtitle,
+      text,
+      closeButton,
+      closeTimeout,
+      cssClass,
+      closeOnClick,
+    } = notification.params;
 
     let $el;
     if (!notification.params.el) {

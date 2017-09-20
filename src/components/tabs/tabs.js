@@ -109,7 +109,7 @@ const Tab = {
         // Search by id
         const oldTabId = $oldTabEl.attr('id');
         if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
-          // Search by data-tab
+        // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
           $('[data-tab]').each((index, tabLinkEl) => {
             if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);

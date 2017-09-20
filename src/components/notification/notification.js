@@ -9,7 +9,8 @@ export default {
   },
   create() {
     const app = this;
-    app.notification = Utils.extend({},
+    app.notification = Utils.extend(
+      {},
       ModalMethods({
         app,
         constructor: Notification,

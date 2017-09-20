@@ -172,6 +172,7 @@ function Request(options) {
 
   // Check for crossDomain
   if (typeof options.crossDomain === 'undefined') {
+    // eslint-disable-next-line
     options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
   }
 

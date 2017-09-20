@@ -1,3 +1,4 @@
+/* eslint indent: ["off"] */
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Modal from '../modal/modal-class';

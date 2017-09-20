@@ -1,3 +1,4 @@
+/* eslint indent: ["off"] */
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
@@ -575,9 +576,8 @@ class PhotoBrowser extends Framework7Class {
     }
     return pb;
   }
-  init() {
-    const pb = this;
-  }
+  // eslint-disable-next-line
+  init() {}
   destroy() {
     let pb = this;
     pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);

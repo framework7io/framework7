@@ -53,8 +53,8 @@ class Messages extends Framework7Class {
 
     return m;
   }
+  // eslint-disable-next-line
   getMessageData(messageEl) {
-    const m = this;
     const $messageEl = $(messageEl);
     const data = {
       avatar: $messageEl.css('background-image'),

@@ -255,7 +255,18 @@ class Range extends Framework7Class {
   }
   layout() {
     const range = this;
-    const { app, knobWidth, rangeWidth, min, max, knobs, $barActiveEl, value, label, labels } = range;
+    const {
+      app,
+      knobWidth,
+      rangeWidth,
+      min,
+      max,
+      knobs,
+      $barActiveEl,
+      value,
+      label,
+      labels,
+    } = range;
     const positionProperty = app.rtl ? 'right' : 'left';
     if (range.dual) {
       const progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
