@@ -121,8 +121,8 @@ class PhotoBrowser extends Framework7Class {
     if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
       Utils.nextTick(() => {
         if (pb.$containerEl) {
-          if (swipeToClose.diff < 0) pb.$containerEl.addClass('swiper-close-to-bottom');
-          else pb.$containerEl.addClass('swiper-close-to-top');
+          if (swipeToClose.diff < 0) pb.$containerEl.addClass('swipe-close-to-bottom');
+          else pb.$containerEl.addClass('swipe-close-to-top');
         }
         pb.emit('local::swipeToClose', pb);
         pb.close();
@@ -131,9 +131,9 @@ class PhotoBrowser extends Framework7Class {
       return;
     }
     if (diff !== 0) {
-      swipeToClose.activeSlide.addClass('transitioning').transitionEnd(() => {
+      swipeToClose.activeSlide.addClass('photo-browser-transitioning').transitionEnd(() => {
         swipeToClose.allow = true;
-        swipeToClose.activeSlide.removeClass('transitioning');
+        swipeToClose.activeSlide.removeClass('photo-browser-transitioning');
       });
     } else {
       swipeToClose.allow = true;
