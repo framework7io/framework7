@@ -23,6 +23,16 @@ const banner = require('./banner.js');
 
 let cache;
 
+const external = [
+  'dom7',
+  'template7'
+]
+
+const globals = {
+  'template7': 'Template7',
+  'dom7': '$'
+}
+
 // Overwrite with local config
 try {
   const customConfig = require('./build-config-custom.js');
@@ -54,6 +64,8 @@ function es(components, cb) {
     name: 'Framework7',
     strict: true,
     sourcemap: false,
+    external,
+    globals,
     banner,
   })
     .on('error', (err) => {
@@ -86,6 +98,8 @@ function es(components, cb) {
     name: 'Framework7',
     strict: true,
     sourcemap: false,
+    external,
+    globals,
     banner,
   })
     .on('error', (err) => {
@@ -124,6 +138,8 @@ function umd(components, cb) {
     name: 'Framework7',
     strict: true,
     sourcemap: env === 'development',
+    external,
+    globals,
     banner,
     cache,
   })

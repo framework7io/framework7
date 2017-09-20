@@ -929,7 +929,7 @@ class Router extends Framework7Class {
         documentUrl = documentUrl.split(router.params.pushStateRoot)[1];
         if (documentUrl === '') documentUrl = '/';
       }
-      if (documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
+      if (router.params.pushStateSeparator.length > 0 && documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
         initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
       } else {
         initUrl = documentUrl;
