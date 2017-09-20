@@ -41,20 +41,4 @@
       margin-right: 15px;
     });
   }
-  &.with-statusbar {
-    &.device-ios .toast-top, &:not(.device-ios):not(.device-android) .toast-top {
-      top: 20px;
-    }
-    &.device-android .toast-top {
-      top: 24px;
-    }
-    @media (min-width: 569px) {
-      &.device-ios .toast-top, &:not(.device-ios):not(.device-android) .toast-top {
-        top: 20px + 15px;
-      }
-      &.device-android .toast-top {
-        top: 24px + 15px;
-      }
-    }
-  }
 }

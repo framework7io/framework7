@@ -89,6 +89,15 @@
   }
 }
 
+html.with-statusbar {
+  &.device-ios .toast-top, &.ios:not(.device-ios):not(.device-android) .toast-top {
+    margin-top: 20px;
+  }
+  &.device-android .toast-top, &.md:not(.device-ios):not(.device-android) .toast-top {
+    margin-top: 24px;
+  }
+}
+
 & when (@include-ios-theme) {
   @import url('./toast-ios.less');
 }
