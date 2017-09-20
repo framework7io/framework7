@@ -108,6 +108,7 @@ class Notification extends Modal {
         isTouched = false;
         return;
       }
+      e.preventDefault();
       if (!isMoved) {
         notification.$el.removeClass('notification-transitioning');
         notification.$el.transition(0);
@@ -149,14 +150,14 @@ class Notification extends Modal {
     function attachTouchEvents() {
       if (process.env.TARGET !== 'desktop') {
         notification.$el.on(app.touchEvents.start, handleTouchStart, { passive: true });
-        app.on('touchmove:passive', handleTouchMove);
+        app.on('touchmove:active', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
       }
     }
     function detachTouchEvents() {
       if (process.env.TARGET !== 'desktop') {
         notification.$el.off(app.touchEvents.start, handleTouchStart, { passive: true });
-        app.off('touchmove:passive', handleTouchMove);
+        app.off('touchmove:active', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
       }
     }
