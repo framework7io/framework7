@@ -507,33 +507,32 @@ function initTouch() {
     return allowClick;
   }
 
-  function emitAppTouchEvent(name, context, e) {
+  function emitAppTouchEvent(name, e) {
     app.emit({
       events: name,
       data: [e],
-      context,
     });
   }
   function appClick(e) {
-    emitAppTouchEvent('click', this, e);
+    emitAppTouchEvent('click', e);
   }
   function appTouchStartActive(e) {
-    emitAppTouchEvent('touchstart', this, e);
+    emitAppTouchEvent('touchstart touchstart:active', e);
   }
   function appTouchMoveActive(e) {
-    emitAppTouchEvent('touchmove', this, e);
+    emitAppTouchEvent('touchmove touchmove:active', e);
   }
   function appTouchEndActive(e) {
-    emitAppTouchEvent('touchend', this, e);
+    emitAppTouchEvent('touchend touchend:active', e);
   }
   function appTouchStartPassive(e) {
-    emitAppTouchEvent('touchstart:passive', this, e);
+    emitAppTouchEvent('touchstart:passive', e);
   }
   function appTouchMovePassive(e) {
-    emitAppTouchEvent('touchmove:passive', this, e);
+    emitAppTouchEvent('touchmove:passive', e);
   }
   function appTouchEndPassive(e) {
-    emitAppTouchEvent('touchend:passive', this, e);
+    emitAppTouchEvent('touchend:passive', e);
   }
 
   const passiveListener = Support.passiveListener ? { passive: true } : false;
@@ -550,17 +549,17 @@ function initTouch() {
     document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
     document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
   } else {
-    document.addEventListener(app.touchEvents.start, function handler(e) {
-      appTouchStartActive.call(this, e);
-      appTouchStartPassive.call(this, e);
+    document.addEventListener(app.touchEvents.start, (e) => {
+      appTouchStartActive(e);
+      appTouchStartPassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.move, function handler(e) {
-      appTouchMoveActive.call(this, e);
-      appTouchMovePassive.call(this, e);
+    document.addEventListener(app.touchEvents.move, (e) => {
+      appTouchMoveActive(e);
+      appTouchMovePassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.end, function handler(e) {
-      appTouchEndActive.call(this, e);
-      appTouchEndPassive.call(this, e);
+    document.addEventListener(app.touchEvents.end, (e) => {
+      appTouchEndActive(e);
+      appTouchEndPassive(e);
     }, false);
   }
 
