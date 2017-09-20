@@ -82,10 +82,12 @@ class Notification extends Modal {
 
     let timeoutId;
     notification.on('open', () => {
-      const openedNotification = app.notification.get('.notification.modal-in');
-      if (openedNotification && openedNotification.el && openedNotification.el !== notification.el) {
-        openedNotification.close();
-      }
+      $('.notification.modal-in').each((index, openedEl) => {
+        const notificationInstance = app.notification.get(openedEl);
+        if (openedEl !== notification.el && notificationInstance) {
+          notificationInstance.close();
+        }
+      });
       if (closeTimeout) {
         timeoutId = Utils.nextTick(() => {
           notification.close();

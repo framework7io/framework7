@@ -58,10 +58,12 @@ class Toast extends Modal {
 
     let timeoutId;
     toast.on('open', () => {
-      const openedToast = app.toast.get('.toast.modal-in');
-      if (openedToast && openedToast.el && openedToast.el !== toast.el) {
-        openedToast.close();
-      }
+      $('.toast.modal-in').each((index, openedEl) => {
+        const toastInstance = app.toast.get(openedEl);
+        if (openedEl !== toast.el && toastInstance) {
+          toastInstance.close();
+        }
+      });
       if (closeTimeout) {
         timeoutId = Utils.nextTick(() => {
           toast.close();
