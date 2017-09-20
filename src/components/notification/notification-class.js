@@ -80,8 +80,99 @@ class Notification extends Modal {
       $el.off('click');
     });
 
+    /* Touch Events */
+    let isTouched;
+    let isMoved;
+    let isScrolling;
+    let touchesDiff;
+    let touchStartTime;
+    let notificationHeight;
+    const touchesStart = {};
+    function handleTouchStart(e) {
+      if (isTouched) return;
+      isTouched = true;
+      isMoved = false;
+      isScrolling = undefined;
+      touchStartTime = Utils.now();
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+    }
+    function handleTouchMove(e) {
+      if (!isTouched) return;
+      const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+      const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      if (typeof isScrolling === 'undefined') {
+        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) < Math.abs(pageX - touchesStart.x));
+      }
+      if (isScrolling) {
+        isTouched = false;
+        return;
+      }
+      if (!isMoved) {
+        notification.$el.removeClass('notification-transitioning');
+        notification.$el.transition(0);
+        notificationHeight = notification.$el[0].offsetHeight / 2;
+      }
+      isMoved = true;
+      touchesDiff = (pageY - touchesStart.y);
+      let newTranslate = touchesDiff;
+      if (touchesDiff > 0) {
+        newTranslate = touchesDiff ** 0.8;
+      }
+      notification.$el.transform(`translate3d(0, ${newTranslate}px, 0)`);
+    }
+    function handleTouchEnd() {
+      if (!isTouched || !isMoved) {
+        isTouched = false;
+        isMoved = false;
+        return;
+      }
+      isTouched = false;
+      isMoved = false;
+      if (touchesDiff === 0) {
+        return;
+      }
+
+      const timeDiff = Utils.now() - touchStartTime;
+      notification.$el.transition('');
+      notification.$el.addClass('notification-transitioning');
+      notification.$el.transform('');
+
+      if (
+        (touchesDiff < -10 && timeDiff < 300) ||
+        (-touchesDiff >= notificationHeight / 1)
+      ) {
+        notification.close();
+      }
+    }
+
+    function attachTouchEvents() {
+      if (process.env.TARGET !== 'desktop') {
+        notification.$el.on(app.touchEvents.start, handleTouchStart, { passive: true });
+        app.on('touchmove:passive', handleTouchMove);
+        app.on('touchend:passive', handleTouchEnd);
+      }
+    }
+    function detachTouchEvents() {
+      if (process.env.TARGET !== 'desktop') {
+        notification.$el.off(app.touchEvents.start, handleTouchStart, { passive: true });
+        app.off('touchmove:passive', handleTouchMove);
+        app.off('touchend:passive', handleTouchEnd);
+      }
+    }
+
     let timeoutId;
+    function closeOnTimeout() {
+      timeoutId = Utils.nextTick(() => {
+        if (isTouched && isMoved) {
+          closeOnTimeout();
+          return;
+        }
+        notification.close();
+      }, closeTimeout);
+    }
     notification.on('open', () => {
+      attachTouchEvents();
       $('.notification.modal-in').each((index, openedEl) => {
         const notificationInstance = app.notification.get(openedEl);
         if (openedEl !== notification.el && notificationInstance) {
@@ -89,12 +180,11 @@ class Notification extends Modal {
         }
       });
       if (closeTimeout) {
-        timeoutId = Utils.nextTick(() => {
-          notification.close();
-        }, closeTimeout);
+        closeOnTimeout();
       }
     });
-    notification.on('close', () => {
+    notification.on('close beforeDestroy', () => {
+      detachTouchEvents();
       window.clearTimeout(timeoutId);
     });
 
