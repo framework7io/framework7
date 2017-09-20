@@ -79,6 +79,7 @@ class PullToRefresh extends Framework7Class {
       if ($el.hasClass('ptr-refreshing')) {
         return;
       }
+      if ($(e.target).closest('.sortable-handler').length) return;
 
       isMoved = false;
       pullStarted = false;
