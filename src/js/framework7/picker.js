@@ -314,7 +314,7 @@ var Picker = function (params) {
             col.updateItems(undefined, currentTranslate, 0, p.params.updateValuesOnTouchmove);
 
             // Calc velocity
-            velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
+            velocityTranslate = currentTranslate - (prevTranslate || currentTranslate);
             velocityTime = (new Date()).getTime();
             prevTranslate = currentTranslate;
         }
