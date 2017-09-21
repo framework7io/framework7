@@ -173,7 +173,9 @@ class Notification extends Modal {
       }, closeTimeout);
     }
     notification.on('open', () => {
-      attachTouchEvents();
+      if (notification.params.swipeToClose) {
+        attachTouchEvents();
+      }
       $('.notification.modal-in').each((index, openedEl) => {
         const notificationInstance = app.notification.get(openedEl);
         if (openedEl !== notification.el && notificationInstance) {
@@ -185,7 +187,9 @@ class Notification extends Modal {
       }
     });
     notification.on('close beforeDestroy', () => {
-      detachTouchEvents();
+      if (notification.params.swipeToClose) {
+        detachTouchEvents();
+      }
       window.clearTimeout(timeoutId);
     });
 

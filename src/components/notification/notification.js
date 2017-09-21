@@ -28,6 +28,7 @@ export default {
       closeButton: false,
       closeTimeout: null,
       closeOnClick: false,
+      swipeToClose: true,
       cssClass: null,
       render: null,
     },
