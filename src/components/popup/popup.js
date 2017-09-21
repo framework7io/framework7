@@ -3,6 +3,11 @@ import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'popup',
+  params: {
+    popup: {
+      closeByBackdropClick: true,
+    },
+  },
   static: {
     Popup,
   },
@@ -25,7 +30,7 @@ export default {
     },
     '.popup-backdrop': function closePopup() {
       const app = this;
-      if (!app.params.modals.popupCloseByBackdropClick) return;
+      if (!app.params.popup.closeByBackdropClick) return;
       app.popup.close();
     },
   },
