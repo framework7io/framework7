@@ -6,7 +6,7 @@ import Modal from '../modal/modal-class';
 class Actions extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
-      toPopover: app.params.modals.actionsToPopover,
+      toPopover: app.params.actions.convertToPopover,
       on: {},
     }, params);
 
@@ -23,6 +23,7 @@ class Actions extends Modal {
       groups = actions.params.buttons;
       if (!Array.isArray(groups[0])) groups = [groups];
     }
+    actions.groups = groups;
 
     // Find Element
     let $el;
@@ -32,72 +33,9 @@ class Actions extends Modal {
       $el = $(actions.params.content);
     } else if (actions.params.buttons) {
       if (actions.params.toPopover) {
-        actions.popoverHtml = `
-          <div class="popover popover-from-actions">
-            <div class="popover-inner">
-              ${groups.map(group => `
-                <div class="list">
-                  <ul>
-                    ${group.map((button) => {
-                      const itemClasses = [];
-                      if (button.color) itemClasses.push(`color-${button.color}`);
-                      if (button.bg) itemClasses.push(`bg-${button.bg}`);
-                      if (button.bold) itemClasses.push('popover-from-actions-bold');
-                      if (button.disabled) itemClasses.push('disabled');
-                      if (button.label) {
-                        itemClasses.push('popover-from-actions-label');
-                        return `<li class="${itemClasses.join(' ')}">${button.text}</li>`;
-                      }
-                      itemClasses.push('item-link');
-                      if (button.icon) {
-                        itemClasses.push('item-content');
-                        return `
-                          <li>
-                            <a class="${itemClasses.join(' ')}">
-                              <div class="item-media">
-                                ${button.icon}
-                              </div>
-                              <div class="item-inner">
-                                <div class="item-title">
-                                  ${button.text}
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                        `;
-                      }
-                      itemClasses.push('list-button');
-                      return `
-                        <li>
-                          <a href="#" class="${itemClasses.join(' ')}">${button.text}</a>
-                        </li>
-                      `;
-                    }).join('')}
-                  </ul>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
+        actions.popoverHtml = actions.renderPopover();
       }
-      actions.actionsHtml = `
-        <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''}">
-          ${groups.map(group =>
-            `<div class="actions-group">
-              ${group.map((button) => {
-                const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
-                if (button.color) buttonClasses.push(`color-${button.color}`);
-                if (button.bg) buttonClasses.push(`bg-${button.color}`);
-                if (button.bold) buttonClasses.push('actions-button-bold');
-                if (button.disabled) buttonClasses.push('disabled');
-                if (button.label) {
-                  return `<div class="${buttonClasses.join(' ')}">${button.text}</div>`;
-                }
-                return `<div class="${buttonClasses.join(' ')}">${button.icon ? `<div class="actions-button-media">${button.icon}</div>` : ''}<div class="actions-button-text">${button.text}</div></div>`;
-              }).join('')}
-            </div>`).join('')}
-        </div>
-      `;
+      actions.actionsHtml = actions.render();
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -201,6 +139,87 @@ class Actions extends Modal {
     }
 
     return actions;
+  }
+  render() {
+    const actions = this;
+    if (actions.params.render) return actions.params.render.call(actions, actions);
+    const { groups } = actions;
+    return `
+      <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''}">
+        ${groups.map(group =>
+          `<div class="actions-group">
+            ${group.map((button) => {
+              const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
+              const { color, bg, bold, disabled, label, text, icon } = button;
+              if (color) buttonClasses.push(`color-${color}`);
+              if (bg) buttonClasses.push(`bg-${color}`);
+              if (bold) buttonClasses.push('actions-button-bold');
+              if (disabled) buttonClasses.push('disabled');
+              if (label) {
+                return `<div class="${buttonClasses.join(' ')}">${text}</div>`;
+              }
+              return `
+                <div class="${buttonClasses.join(' ')}">
+                  ${icon ? `<div class="actions-button-media">${icon}</div>` : ''}
+                  <div class="actions-button-text">${text}</div>
+                </div>`.trim();
+            }).join('')}
+          </div>`).join('')}
+      </div>
+    `.trim();
+  }
+  renderPopover() {
+    const actions = this;
+    if (actions.params.renderPopover) return actions.params.renderPopover.call(actions, actions);
+    const { groups } = actions;
+    return `
+      <div class="popover popover-from-actions">
+        <div class="popover-inner">
+          ${groups.map(group => `
+            <div class="list">
+              <ul>
+                ${group.map((button) => {
+                  const itemClasses = [];
+                  const { color, bg, bold, disabled, label, text, icon } = button;
+                  if (color) itemClasses.push(`color-${color}`);
+                  if (bg) itemClasses.push(`bg-${bg}`);
+                  if (bold) itemClasses.push('popover-from-actions-bold');
+                  if (disabled) itemClasses.push('disabled');
+                  if (label) {
+                    itemClasses.push('popover-from-actions-label');
+                    return `<li class="${itemClasses.join(' ')}">${text}</li>`;
+                  }
+                  itemClasses.push('item-link');
+                  if (icon) {
+                    itemClasses.push('item-content');
+                    return `
+                      <li>
+                        <a class="${itemClasses.join(' ')}">
+                          <div class="item-media">
+                            ${icon}
+                          </div>
+                          <div class="item-inner">
+                            <div class="item-title">
+                              ${text}
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                    `;
+                  }
+                  itemClasses.push('list-button');
+                  return `
+                    <li>
+                      <a href="#" class="list-button ${itemClasses.join(' ')}">${text}</a>
+                    </li>
+                  `;
+                }).join('')}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `.trim();
   }
 }
 
