@@ -5,6 +5,15 @@ import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'popover',
+  params: {
+    popover: {
+      closeByBackdropClick: true,
+      closeByOutsideClick: false,
+    },
+  },
+  static: {
+    Popover,
+  },
   create() {
     const app = this;
     app.popover = Utils.extend(
@@ -34,7 +43,7 @@ export default {
     },
     '.popover-backdrop': function closePopover() {
       const app = this;
-      if (!app.params.modals.popoverCloseByBackdropClick) return;
+      if (!app.params.popover.closeByBackdropClick) return;
       app.popover.close();
     },
   },
