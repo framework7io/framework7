@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "2.0.0-beta.7",
+  "version": "2.0.0-beta.8",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
   "jsnext:main": "dist/js/framework7.module.js",
