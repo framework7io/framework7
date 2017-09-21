@@ -1,3 +1,24 @@
+# [v2.0.0-beta.8](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.7...v2.0.0-beta.8) - September 21, 2017
+  * Toolbar
+    * Class `toolbar-bottom` to display it on the bottom for MD theme has been renamed to `toolbar-bottom-md`.
+  * Sortable
+    * Renamed events `sortable:open` -> `sortable:enable`, `sortable:close` -> `sortable:disable`.
+  * Grid
+    * `no-gutter` class renamed to `no-gap`.
+  * Card
+    * `card-content-inner` element has been removed. Now to have the same effect it is required additional `card-content-padding` class to `card-content` element.
+  * Modal is now a part of a core components.
+  * Toast
+    * Added icon support for center-positioned Toast.
+  * Router
+    * Reloaded page (called with `reloadAll` or `reloadCurrent` parameters) now also fires `pageBeforeIn` and `pageAfterIn` events.
+    * Improved routable Tabs. Now it also works with Animated Tabs.
+  * Notification
+    * All new Notification component arrived, with better unified look and swipe-to-close support.
+  * Buttons
+    * `small` buttons now can be round and not round.
+  * Lots of minor fixes.
+
 # [v2.0.0-beta.7](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.6...v2.0.0-beta.7) - September 13, 2017
   * Fixed issue with Routable Tabs not working correctly on home page
   * Fixed issue with touch ripple effect being broken after bundler optimization

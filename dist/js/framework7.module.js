@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 13, 2017
+ * Released on: September 21, 2017
  */
 
 import Template7 from 'template7';
@@ -18,6 +18,8 @@ import $ from 'dom7';
  * BezierEasing - use bezier curve for transition easing function
  * by Gaëtan Renaudeau 2014 - 2015 – MIT License
  */
+
+/* eslint-disable */
 
 // These values are established by empiricism with tests (tradeoff: performance VS precision)
 var NEWTON_ITERATIONS = 4;
@@ -468,8 +470,8 @@ const Device = (function Device() {
     phonegap: window.cordova || window.phonegap,
   };
 
-  const windows = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/);
-  const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
+  const windows = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
+  const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
@@ -794,9 +796,11 @@ class Framework7$1 extends Framework7Class {
     app.initialized = true;
     app.emit('init');
   }
+  // eslint-disable-next-line
   get $() {
     return $;
   }
+  // eslint-disable-next-line
   get t7() {
     return Template7;
   }
@@ -859,7 +863,6 @@ var Device$2 = {
 };
 
 const Support$1 = (function Support() {
-  let positionStickyProp;
   const positionSticky = (function supportPositionSticky() {
     let support = false;
     const div = document.createElement('div');
@@ -868,33 +871,13 @@ const Support$1 = (function Support() {
       div.style.position = prop;
       if (div.style.position === prop) {
         support = true;
-        positionStickyProp = prop;
       }
     });
     return support;
   }());
 
-  const positionStickyFalsy = (function positionStickyFalsy() {
-    let falsy = false;
-    if (!positionStickyProp) return false;
-    const div = document.createElement('div');
-    div.innerHTML = `
-      <div id="position-sticky-test" style="overflow:scroll; height: 100px; width:100px; position: absolute; left:0px; top:0px; padding-top:50px; visibility: hidden;">
-        <div id="position-sticky-test-element" style="margin:0; padding:0; height:10px; width:100%; position:${positionStickyProp}; top:0"></div>
-        <div style="height: 1000px"></div>
-      </div>`;
-    document.body.appendChild(div);
-    document.getElementById('position-sticky-test').scrollTop = 50;
-    if (document.getElementById('position-sticky-test-element').offsetTop === 50) {
-      falsy = true;
-    }
-    div.parentNode.removeChild(div);
-    return falsy;
-  }());
-
   return {
     positionSticky,
-    positionStickyFalsy,
     touch: (function checkTouch() {
       return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
     }()),
@@ -921,6 +904,7 @@ const Support$1 = (function Support() {
       let supportsPassive = false;
       try {
         const opts = Object.defineProperty({}, 'passive', {
+          // eslint-disable-next-line
           get() {
             supportsPassive = true;
           },
@@ -952,9 +936,6 @@ var Support = {
       const classNames = [];
       if (Support$1.positionSticky) {
         classNames.push('support-position-sticky');
-        if (Support$1.positionStickyFalsy) {
-          classNames.push('support-position-sticky-falsy');
-        }
       }
       // Add html classes
       classNames.forEach((className) => {
@@ -1199,6 +1180,7 @@ function Request$1(options) {
 
   // Check for crossDomain
   if (typeof options.crossDomain === 'undefined') {
+    // eslint-disable-next-line
     options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
   }
 
@@ -1551,16 +1533,16 @@ function initTouch() {
     evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
     evt.forwardedTouchEvent = true;
 
-    if (app.device.ios && navigator.standalone) {
-      //Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
-      //Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
-      setTimeout(function () {
-          targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-          targetElement.dispatchEvent(evt);
+    if (app.device.ios && window.navigator.standalone) {
+      // Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
+      // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
+      setTimeout(() => {
+        targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        targetElement.dispatchEvent(evt);
       }, 10);
     } else {
-        targetElement.dispatchEvent(evt);
-    }    
+      targetElement.dispatchEvent(evt);
+    }
   }
 
   // Touch Handlers
@@ -1615,7 +1597,7 @@ function initTouch() {
     touchStartX = e.targetTouches[0].pageX;
     touchStartY = e.targetTouches[0].pageY;
 
-      // Detect scroll parent
+    // Detect scroll parent
     if (Device.ios) {
       scrollParent = undefined;
       $(targetElement).parents().each(() => {
@@ -1726,7 +1708,7 @@ function initTouch() {
       rippleTouchEnd();
     }
 
-      // Trigger focus when required
+    // Trigger focus when required
     if (targetNeedsFocus(targetElement)) {
       if (Device.ios && Device.webView) {
         if ((e.timeStamp - touchStartTime) > 159) {
@@ -1740,12 +1722,12 @@ function initTouch() {
       targetElement.focus();
     }
 
-      // Blur active elements
+    // Blur active elements
     if (document.activeElement && targetElement !== document.activeElement && document.activeElement !== document.body && targetElement.nodeName.toLowerCase() !== 'label') {
       document.activeElement.blur();
     }
 
-      // Send click
+    // Send click
     e.preventDefault();
     sendClick(e);
     return false;
@@ -1754,14 +1736,14 @@ function initTouch() {
     trackClick = false;
     targetElement = null;
 
-      // Remove Active State
+    // Remove Active State
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
     if (params.activeState) {
       removeActive();
     }
 
-      // Remove Ripple
+    // Remove Ripple
     if (useRipple) {
       rippleTouchEnd();
     }
@@ -1823,33 +1805,32 @@ function initTouch() {
     return allowClick;
   }
 
-  function emitAppTouchEvent(name, context, e) {
+  function emitAppTouchEvent(name, e) {
     app.emit({
       events: name,
       data: [e],
-      context,
     });
   }
   function appClick(e) {
-    emitAppTouchEvent('click', this, e);
+    emitAppTouchEvent('click', e);
   }
   function appTouchStartActive(e) {
-    emitAppTouchEvent('touchstart', this, e);
+    emitAppTouchEvent('touchstart touchstart:active', e);
   }
   function appTouchMoveActive(e) {
-    emitAppTouchEvent('touchmove', this, e);
+    emitAppTouchEvent('touchmove touchmove:active', e);
   }
   function appTouchEndActive(e) {
-    emitAppTouchEvent('touchend', this, e);
+    emitAppTouchEvent('touchend touchend:active', e);
   }
   function appTouchStartPassive(e) {
-    emitAppTouchEvent('touchstart:passive', this, e);
+    emitAppTouchEvent('touchstart:passive', e);
   }
   function appTouchMovePassive(e) {
-    emitAppTouchEvent('touchmove:passive', this, e);
+    emitAppTouchEvent('touchmove:passive', e);
   }
   function appTouchEndPassive(e) {
-    emitAppTouchEvent('touchend:passive', this, e);
+    emitAppTouchEvent('touchend:passive', e);
   }
 
   const passiveListener = Support$1.passiveListener ? { passive: true } : false;
@@ -1866,17 +1847,17 @@ function initTouch() {
     document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
     document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
   } else {
-    document.addEventListener(app.touchEvents.start, function handler(e) {
-      appTouchStartActive.call(this, e);
-      appTouchStartPassive.call(this, e);
+    document.addEventListener(app.touchEvents.start, (e) => {
+      appTouchStartActive(e);
+      appTouchStartPassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.move, function handler(e) {
-      appTouchMoveActive.call(this, e);
-      appTouchMovePassive.call(this, e);
+    document.addEventListener(app.touchEvents.move, (e) => {
+      appTouchMoveActive(e);
+      appTouchMovePassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.end, function handler(e) {
-      appTouchEndActive.call(this, e);
-      appTouchEndPassive.call(this, e);
+    document.addEventListener(app.touchEvents.end, (e) => {
+      appTouchEndActive(e);
+      appTouchEndPassive(e);
     }, false);
   }
 
@@ -1917,7 +1898,7 @@ var Touch = {
       activeState: true,
       activeStateElements: 'a, button, label, span, .actions-button',
       materialRipple: true,
-      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell',
+      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell, .notification-close-button',
     },
   },
   instance: {
@@ -2050,7 +2031,7 @@ class Framework7Component {
                 methodName = value.split('(')[0];
                 value.split('(')[1].split(')')[0].split(',').forEach((argument) => {
                   let arg = argument.trim();
-
+                  // eslint-disable-next-line
                   if (!isNaN(arg)) arg = parseFloat(arg);
                   else if (arg === 'true') arg = true;
                   else if (arg === 'false') arg = false;
@@ -2348,7 +2329,7 @@ function SwipeBack(r) {
   let activeNavBackIcon;
   let activeNavBackIconText;
   let previousNavBackIcon;
-  let previousNavBackIconText;
+  // let previousNavBackIconText;
   let dynamicNavbar;
   let separateNavbar;
   let pageShadow;
@@ -2362,7 +2343,7 @@ function SwipeBack(r) {
     isScrolling = undefined;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-    touchStartTime = (new Date()).getTime();
+    touchStartTime = Utils.now();
     dynamicNavbar = router.dynamicNavbar;
     separateNavbar = router.separateNavbar;
   }
@@ -2442,10 +2423,10 @@ function SwipeBack(r) {
           }
           if (previousNavbar.hasClass('sliding')) {
             previousNavBackIcon = previousNavbar.children('.left').find('.back .icon');
-            previousNavBackIconText = previousNavbar.children('left').find('.back span').eq(0);
+            // previousNavBackIconText = previousNavbar.children('left').find('.back span').eq(0);
           } else {
             previousNavBackIcon = previousNavbar.children('.left.sliding').find('.back .icon');
-            previousNavBackIconText = previousNavbar.children('.left.sliding').find('.back span').eq(0);
+            // previousNavBackIconText = previousNavbar.children('.left.sliding').find('.back span').eq(0);
           }
         }
       }
@@ -2555,13 +2536,13 @@ function SwipeBack(r) {
       }
       return;
     }
-    const timeDiff = (new Date()).getTime() - touchStartTime;
+    const timeDiff = Utils.now() - touchStartTime;
     let pageChanged = false;
     // Swipe back to previous page
     if (
-        (timeDiff < 300 && touchesDiff > 10) ||
-        (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
-      ) {
+      (timeDiff < 300 && touchesDiff > 10) ||
+      (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
+    ) {
       currentPage.removeClass('page-current').addClass('page-next');
       previousPage.removeClass('page-previous').addClass('page-current');
       if (pageShadow) pageShadow[0].style.opacity = '';
@@ -2690,17 +2671,15 @@ function SwipeBack(r) {
 
   function attachEvents() {
     const passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
-    $el.on(app.touchEvents.move, handleTouchMove, activeListener);
-    $el.on(app.touchEvents.end, handleTouchEnd, passiveListener);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
   }
   function detachEvents() {
     const passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
     $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
-    $el.off(app.touchEvents.move, handleTouchMove, activeListener);
-    $el.off(app.touchEvents.end, handleTouchEnd, passiveListener);
+    app.off('touchmove:active', handleTouchMove);
+    app.off('touchend:passive', handleTouchEnd);
   }
 
   attachEvents();
@@ -2857,7 +2836,8 @@ function forward(el, forwardOptions = {}) {
         url: options.route.url,
         viewIndex: view.index,
       },
-      pushStateRoot + router.params.pushStateSeparator + options.route.url);
+      pushStateRoot + router.params.pushStateSeparator + options.route.url
+    );
   }
 
   // Current Route
@@ -2960,6 +2940,8 @@ function forward(el, forwardOptions = {}) {
 
   if (options.reloadCurrent || options.reloadAll) {
     router.allowPageChange = true;
+    router.pageCallback('beforeIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
     return router;
   }
 
@@ -3066,7 +3048,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     router.url === options.route.url &&
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
-    ) {
+  ) {
     return false;
   }
 
@@ -3219,7 +3201,8 @@ function tabLoad(tabRoute, loadOptions = {}) {
           url: options.route.url,
           viewIndex: router.view.index,
         },
-        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
+        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
+      );
     }
 
     // Update Router History
@@ -3230,7 +3213,14 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  const { $newTabEl, $oldTabEl } = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+  const { $newTabEl, $oldTabEl, animated, onTabsChanged } = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+
+  if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
+    const tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
+    if (tabParentPageData && options.route) {
+      tabParentPageData.route = options.route;
+    }
+  }
 
   // Load Tab Content
   const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
@@ -3241,28 +3231,34 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     $newTabEl.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
+
     if ($oldTabEl) {
-      router.tabRemove($oldTabEl, $newTabEl, tabRoute);
+      if (animated) {
+        onTabsChanged(() => {
+          router.tabRemove($oldTabEl, $newTabEl, tabRoute);
+        });
+      } else {
+        router.tabRemove($oldTabEl, $newTabEl, tabRoute);
+      }
     }
   }
 
   // Component/Template Callbacks
   function resolve(contentEl) {
-    if (contentEl) {
-      if (typeof contentEl === 'string') {
-        $newTabEl.html(contentEl);
+    if (!contentEl) return;
+    if (typeof contentEl === 'string') {
+      $newTabEl.html(contentEl);
+    } else {
+      $newTabEl.html('');
+      if (contentEl.f7Component) {
+        contentEl.f7Component.mount((componentEl) => {
+          $newTabEl.append(componentEl);
+        });
       } else {
-        $newTabEl.html('');
-        if (contentEl.f7Component) {
-          contentEl.f7Component.mount((componentEl) => {
-            $newTabEl.append(componentEl);
-          });
-        } else {
-          $newTabEl.append(contentEl);
-        }
+        $newTabEl.append(contentEl);
       }
-      onTabLoaded();
     }
+    onTabLoaded();
   }
   function reject() {
     router.allowPageChange = true;
@@ -3270,8 +3266,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   if (content) {
-    $newTabEl.html(content);
-    onTabLoaded();
+    resolve(content);
   } else if (template || templateUrl) {
     try {
       router.tabTemplateLoader(template, templateUrl, options, resolve, reject);
@@ -3280,9 +3275,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
       throw err;
     }
   } else if (el) {
-    $newTabEl.html('');
-    $newTabEl.append(el);
-    onTabLoaded();
+    resolve(el);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
@@ -3299,8 +3292,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     }
     router.xhrRequest(url, ignoreCache)
       .then((tabContent) => {
-        $newTabEl.html(tabContent);
-        onTabLoaded();
+        resolve(tabContent);
       })
       .catch(() => {
         router.allowPageChange = true;
@@ -3380,7 +3372,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
             viewIndex: router.view.index,
             modal: modalType,
           },
-          (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
+          (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
+        );
       }
 
       // Set Route
@@ -3535,12 +3528,10 @@ function backward(el, backwardOptions) {
         backIndex = router.history.length - router.history.indexOf(options.route.url) - 1;
         router.history = router.history.slice(0, router.history.indexOf(options.route.url) + 2);
         view.history = router.history;
+      } else if (router.history[[router.history.length - 2]]) {
+        router.history[router.history.length - 2] = options.route.url;
       } else {
-        if (router.history[[router.history.length - 2]]) {
-          router.history[router.history.length - 2] = options.route.url;
-        } else {
-          router.history.unshift(router.url);
-        }
+        router.history.unshift(router.url);
       }
 
       if (backIndex && router.params.stackPages) {
@@ -3758,7 +3749,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     router.url === options.route.url &&
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
-    ) {
+  ) {
     return false;
   }
 
@@ -4317,14 +4308,12 @@ class Router$1 extends Framework7Class {
             }
           });
         }
+      } else if (direction === 'forward') {
+        newPage.transform(`translate3d(0, ${(1 - easeProgress) * 56}px,0)`);
+        newPage.css('opacity', easeProgress);
       } else {
-        if (direction === 'forward') {
-          newPage.transform(`translate3d(0, ${(1 - easeProgress) * 56}px,0)`);
-          newPage.css('opacity', easeProgress);
-        } else {
-          oldPage.transform(`translate3d(0, ${easeProgress * 56}px,0)`);
-          oldPage.css('opacity', 1 - easeProgress);
-        }
+        oldPage.transform(`translate3d(0, ${easeProgress * 56}px,0)`);
+        oldPage.css('opacity', 1 - easeProgress);
       }
 
       if (done) {
@@ -4353,6 +4342,7 @@ class Router$1 extends Framework7Class {
     const router = this;
     router.removeEl(modalEl);
   }
+  // eslint-disable-next-line
   removeTabContent(tabEl) {
     const $tabEl = $(tabEl);
     $tabEl.html('');
@@ -4734,6 +4724,7 @@ class Router$1 extends Framework7Class {
     const page = {
       app: router.app,
       view: router.view,
+      router,
       $el: $pageEl,
       el: $pageEl[0],
       $pageEl,
@@ -4869,7 +4860,7 @@ class Router$1 extends Framework7Class {
         documentUrl = documentUrl.split(router.params.pushStateRoot)[1];
         if (documentUrl === '') documentUrl = '/';
       }
-      if (documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
+      if (router.params.pushStateSeparator.length > 0 && documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
         initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
       } else {
         initUrl = documentUrl;
@@ -5140,6 +5131,7 @@ function initClicks(app) {
 
     // Check if link is external
     if (isLink) {
+      // eslint-disable-next-line
       if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
         if (url && clickedLink.attr('target') === '_system') {
           e.preventDefault();
@@ -5662,7 +5654,7 @@ const Navbar = {
     if (dynamicNavbar) {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
         let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
-        let titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
+        const titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
 
         if (isPrevious) {
           if (router && router.params.iosAnimateNavbarBackIcon) {
@@ -5860,7 +5852,8 @@ var Navbar$1 = {
         $navbarEl = $(navbarInnerEl).parents('.navbar');
       }
       if (page.$el.hasClass('no-navbar') || (view.router.dynamicNavbar && !navbarInnerEl)) {
-        app.navbar.hide($navbarEl);
+        const animate = !!(page.pageFrom && page.router.history.length > 1);
+        app.navbar.hide($navbarEl, animate);
       } else {
         app.navbar.show($navbarEl);
       }
@@ -6260,6 +6253,7 @@ class Modal$1 extends Framework7Class {
   }
   onClose() {
     const modal = this;
+    if (!modal.type || !modal.$el) return;
     openedModals.splice(openedModals.indexOf(modal), 1);
     $('html').removeClass(`with-modal-${modal.type.toLowerCase()}`);
     modal.$el.trigger(`modal:close ${modal.type.toLowerCase()}:close`, modal);
@@ -6267,6 +6261,7 @@ class Modal$1 extends Framework7Class {
   }
   onClosed() {
     const modal = this;
+    if (!modal.type || !modal.$el) return;
     modal.$el.removeClass('modal-out');
     modal.$el.hide();
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`, modal);
@@ -6445,33 +6440,7 @@ var Modal = {
   params: {
     modals: {
       moveToRoot: true,
-
       queueDialogs: true,
-      dialogTitle: 'Framework7',
-      dialogButtonOk: 'OK',
-      dialogButtonCancel: 'Cancel',
-      dialogUsernamePlaceholder: 'Username',
-      dialogPasswordPlaceholder: 'Password',
-      dialogPreloaderTitle: 'Loading... ',
-      dialogProgressTitle: 'Loading... ',
-      dialogCloseByBackdropClick: false,
-
-      popupCloseByBackdropClick: true,
-
-      popoverCloseByBackdropClick: true,
-      popoverCloseByOutsideClick: false,
-
-      actionsToPopover: true,
-      actionsCloseByBackdropClick: true,
-
-      sheetCloseByBackdropClick: true,
-      sheetCloseByOutsideClick: false,
-
-      toastPosition: 'bottom', // or 'top' or 'center'
-      toastCloseButton: false,
-      toastCloseButtonColor: undefined,
-      toastCloseButtonText: 'Ok',
-      toastCloseTimeout: undefined,
     },
   },
 };
@@ -6479,7 +6448,7 @@ var Modal = {
 class Dialog$1 extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
-      title: app.params.modals.dialogTitle,
+      title: app.params.dialog.title,
       text: undefined,
       content: '',
       buttons: [],
@@ -6610,7 +6579,13 @@ class Dialog$1 extends Modal$1 {
 }
 
 var ConstructorMethods = function (parameters = {}) {
-  const { defaultSelector, constructor, domProp, app, addMethods } = parameters;
+  const {
+    defaultSelector,
+    constructor,
+    domProp,
+    app,
+    addMethods,
+  } = parameters;
   const methods = {
     create(...args) {
       if (app) return new constructor(app, ...args);
@@ -6670,6 +6645,18 @@ var ModalMethods = function (parameters = {}) {
 
 var Dialog = {
   name: 'dialog',
+  params: {
+    dialog: {
+      title: 'Framework7',
+      buttonOk: 'OK',
+      buttonCancel: 'Cancel',
+      usernamePlaceholder: 'Username',
+      passwordPlaceholder: 'Password',
+      preloaderTitle: 'Loading... ',
+      progressTitle: 'Loading... ',
+      closeByBackdropClick: false,
+    },
+  },
   static: {
     Dialog: Dialog$1,
   },
@@ -6689,10 +6676,10 @@ var Dialog = {
             [text, callbackOk, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
+            title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             buttons: [{
-              text: app.params.modals.dialogButtonOk,
+              text: app.params.dialog.buttonOk,
               bold: true,
               onClick: callbackOk,
             }],
@@ -6704,15 +6691,15 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
+            title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
             buttons: [
               {
-                text: app.params.modals.dialogButtonCancel,
+                text: app.params.dialog.buttonCancel,
               },
               {
-                text: app.params.modals.dialogButtonOk,
+                text: app.params.dialog.buttonOk,
                 bold: true,
               },
             ],
@@ -6729,15 +6716,15 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
+            title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             buttons: [
               {
-                text: app.params.modals.dialogButtonCancel,
+                text: app.params.dialog.buttonCancel,
                 onClick: callbackCancel,
               },
               {
-                text: app.params.modals.dialogButtonOk,
+                text: app.params.dialog.buttonOk,
                 bold: true,
                 onClick: callbackOk,
               },
@@ -6750,25 +6737,25 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
+            title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             content: `
               <div class="dialog-input-field dialog-input-double item-input">
                 <div class="item-input-wrap">
-                  <input type="text" name="dialog-username" placeholder="${app.params.modals.dialogUsernamePlaceholder}" class="dialog-input">
+                  <input type="text" name="dialog-username" placeholder="${app.params.dialog.usernamePlaceholder}" class="dialog-input">
                 </div>
               </div>
               <div class="dialog-input-field dialog-input-double item-input">
                 <div class="item-input-wrap">
-                  <input type="password" name="dialog-password" placeholder="${app.params.modals.dialogPasswordPlaceholder}" class="dialog-input">
+                  <input type="password" name="dialog-password" placeholder="${app.params.dialog.passwordPlaceholder}" class="dialog-input">
                 </div>
               </div>`,
             buttons: [
               {
-                text: app.params.modals.dialogButtonCancel,
+                text: app.params.dialog.buttonCancel,
               },
               {
-                text: app.params.modals.dialogButtonOk,
+                text: app.params.dialog.buttonOk,
                 bold: true,
               },
             ],
@@ -6786,20 +6773,20 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogTitle : title,
+            title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             content: `
               <div class="dialog-input-field item-input">
                 <div class="item-input-wrap">
-                  <input type="password" name="dialog-password" placeholder="${app.params.modals.dialogPasswordPlaceholder}" class="dialog-input">
+                  <input type="password" name="dialog-password" placeholder="${app.params.dialog.passwordPlaceholder}" class="dialog-input">
                 </div>
               </div>`,
             buttons: [
               {
-                text: app.params.modals.dialogButtonCancel,
+                text: app.params.dialog.buttonCancel,
               },
               {
-                text: app.params.modals.dialogButtonOk,
+                text: app.params.dialog.buttonOk,
                 bold: true,
               },
             ],
@@ -6822,7 +6809,7 @@ var Dialog = {
                 '</span>' +
             '</span>';
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogPreloaderTitle : title,
+            title: typeof title === 'undefined' ? app.params.dialog.preloaderTitle : title,
             content: `<div class="preloader">${preloaderInner}</div>`,
             cssClass: 'dialog-preloader',
           }).open();
@@ -6842,7 +6829,7 @@ var Dialog = {
           }
           const infinite = typeof progress === 'undefined';
           const dialog = new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.modals.dialogProgressTitle : title,
+            title: typeof title === 'undefined' ? app.params.dialog.progressTitle : title,
             cssClass: 'dialog-progress',
             content: `
               <div class="progressbar${infinite ? '-infinite' : ''}${color ? ` color-${color}` : ''}">
@@ -6859,7 +6846,7 @@ var Dialog = {
   clicks: {
     '.dialog-backdrop': function closeDialog() {
       const app = this;
-      if (!app.params.modals.dialogCloseByBackdropClick) return;
+      if (!app.params.dialog.closeByBackdropClick) return;
       app.dialog.close();
     },
   },
@@ -6920,6 +6907,11 @@ class Popup$1 extends Modal$1 {
 
 var Popup = {
   name: 'popup',
+  params: {
+    popup: {
+      closeByBackdropClick: true,
+    },
+  },
   static: {
     Popup: Popup$1,
   },
@@ -6942,7 +6934,7 @@ var Popup = {
     },
     '.popup-backdrop': function closePopup() {
       const app = this;
-      if (!app.params.modals.popupCloseByBackdropClick) return;
+      if (!app.params.popup.closeByBackdropClick) return;
       app.popup.close();
     },
   },
@@ -7019,7 +7011,7 @@ class Popover$1 extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: true,
-      closeByOutsideClick: app.params.modals.popoverCloseByOutsideClick,
+      closeByOutsideClick: app.params.popover.closeByOutsideClick,
       on: {},
     }, params);
 
@@ -7248,6 +7240,15 @@ class Popover$1 extends Modal$1 {
 
 var Popover = {
   name: 'popover',
+  params: {
+    popover: {
+      closeByBackdropClick: true,
+      closeByOutsideClick: false,
+    },
+  },
+  static: {
+    Popover: Popover$1,
+  },
   create() {
     const app = this;
     app.popover = Utils.extend(
@@ -7277,16 +7278,17 @@ var Popover = {
     },
     '.popover-backdrop': function closePopover() {
       const app = this;
-      if (!app.params.modals.popoverCloseByBackdropClick) return;
+      if (!app.params.popover.closeByBackdropClick) return;
       app.popover.close();
     },
   },
 };
 
+/* eslint indent: ["off"] */
 class Actions$1 extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
-      toPopover: app.params.modals.actionsToPopover,
+      toPopover: app.params.actions.convertToPopover,
       on: {},
     }, params);
 
@@ -7303,6 +7305,7 @@ class Actions$1 extends Modal$1 {
       groups = actions.params.buttons;
       if (!Array.isArray(groups[0])) groups = [groups];
     }
+    actions.groups = groups;
 
     // Find Element
     let $el;
@@ -7312,72 +7315,9 @@ class Actions$1 extends Modal$1 {
       $el = $(actions.params.content);
     } else if (actions.params.buttons) {
       if (actions.params.toPopover) {
-        actions.popoverHtml = `
-          <div class="popover popover-from-actions">
-            <div class="popover-inner">
-              ${groups.map(group => `
-                <div class="list">
-                  <ul>
-                    ${group.map((button) => {
-                      const itemClasses = [];
-                      if (button.color) itemClasses.push(`color-${button.color}`);
-                      if (button.bg) itemClasses.push(`bg-${button.bg}`);
-                      if (button.bold) itemClasses.push('popover-from-actions-bold');
-                      if (button.disabled) itemClasses.push('disabled');
-                      if (button.label) {
-                        itemClasses.push('popover-from-actions-label');
-                        return `<li class="${itemClasses.join(' ')}">${button.text}</li>`;
-                      }
-                      itemClasses.push('item-link');
-                      if (button.icon) {
-                        itemClasses.push('item-content');
-                        return `
-                          <li>
-                            <a class="${itemClasses.join(' ')}">
-                              <div class="item-media">
-                                ${button.icon}
-                              </div>
-                              <div class="item-inner">
-                                <div class="item-title">
-                                  ${button.text}
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                        `;
-                      }
-                      itemClasses.push('list-button');
-                      return `
-                        <li>
-                          <a href="#" class="${itemClasses.join(' ')}">${button.text}</a>
-                        </li>
-                      `;
-                    }).join('')}
-                  </ul>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
+        actions.popoverHtml = actions.renderPopover();
       }
-      actions.actionsHtml = `
-        <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''}">
-          ${groups.map(group =>
-            `<div class="actions-group">
-              ${group.map((button) => {
-                const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
-                if (button.color) buttonClasses.push(`color-${button.color}`);
-                if (button.bg) buttonClasses.push(`bg-${button.color}`);
-                if (button.bold) buttonClasses.push('actions-button-bold');
-                if (button.disabled) buttonClasses.push('disabled');
-                if (button.label) {
-                  return `<div class="${buttonClasses.join(' ')}">${button.text}</div>`;
-                }
-                return `<div class="${buttonClasses.join(' ')}">${button.icon ? `<div class="actions-button-media">${button.icon}</div>` : ''}<div class="actions-button-text">${button.text}</div></div>`;
-              }).join('')}
-            </div>`).join('')}
-        </div>
-      `;
+      actions.actionsHtml = actions.render();
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -7482,10 +7422,102 @@ class Actions$1 extends Modal$1 {
 
     return actions;
   }
+  render() {
+    const actions = this;
+    if (actions.params.render) return actions.params.render.call(actions, actions);
+    const { groups } = actions;
+    return `
+      <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''}">
+        ${groups.map(group =>
+          `<div class="actions-group">
+            ${group.map((button) => {
+              const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
+              const { color, bg, bold, disabled, label, text, icon } = button;
+              if (color) buttonClasses.push(`color-${color}`);
+              if (bg) buttonClasses.push(`bg-${color}`);
+              if (bold) buttonClasses.push('actions-button-bold');
+              if (disabled) buttonClasses.push('disabled');
+              if (label) {
+                return `<div class="${buttonClasses.join(' ')}">${text}</div>`;
+              }
+              return `
+                <div class="${buttonClasses.join(' ')}">
+                  ${icon ? `<div class="actions-button-media">${icon}</div>` : ''}
+                  <div class="actions-button-text">${text}</div>
+                </div>`.trim();
+            }).join('')}
+          </div>`).join('')}
+      </div>
+    `.trim();
+  }
+  renderPopover() {
+    const actions = this;
+    if (actions.params.renderPopover) return actions.params.renderPopover.call(actions, actions);
+    const { groups } = actions;
+    return `
+      <div class="popover popover-from-actions">
+        <div class="popover-inner">
+          ${groups.map(group => `
+            <div class="list">
+              <ul>
+                ${group.map((button) => {
+                  const itemClasses = [];
+                  const { color, bg, bold, disabled, label, text, icon } = button;
+                  if (color) itemClasses.push(`color-${color}`);
+                  if (bg) itemClasses.push(`bg-${bg}`);
+                  if (bold) itemClasses.push('popover-from-actions-bold');
+                  if (disabled) itemClasses.push('disabled');
+                  if (label) {
+                    itemClasses.push('popover-from-actions-label');
+                    return `<li class="${itemClasses.join(' ')}">${text}</li>`;
+                  }
+                  itemClasses.push('item-link');
+                  if (icon) {
+                    itemClasses.push('item-content');
+                    return `
+                      <li>
+                        <a class="${itemClasses.join(' ')}">
+                          <div class="item-media">
+                            ${icon}
+                          </div>
+                          <div class="item-inner">
+                            <div class="item-title">
+                              ${text}
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                    `;
+                  }
+                  itemClasses.push('list-button');
+                  return `
+                    <li>
+                      <a href="#" class="list-button ${itemClasses.join(' ')}">${text}</a>
+                    </li>
+                  `;
+                }).join('')}
+              </ul>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `.trim();
+  }
 }
 
 var Actions = {
   name: 'actions',
+  params: {
+    actions: {
+      convertToPopover: true,
+      closeByBackdropClick: true,
+      render: null,
+      renderPopover: null,
+    },
+  },
+  static: {
+    Actions: Actions$1,
+  },
   create() {
     const app = this;
     app.actions = ModalMethods({
@@ -7505,7 +7537,7 @@ var Actions = {
     },
     '.actions-backdrop': function closeActions() {
       const app = this;
-      if (!app.params.modals.actionsCloseByBackdropClick) return;
+      if (!app.params.actions.closeByBackdropClick) return;
       app.actions.close();
     },
   },
@@ -7515,7 +7547,7 @@ class Sheet$1 extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: app.theme === 'md',
-      closeByOutsideClick: app.params.modals.sheetCloseByOutsideClick,
+      closeByOutsideClick: app.params.sheet.closeByOutsideClick,
       on: {},
     }, params);
 
@@ -7631,12 +7663,19 @@ class Sheet$1 extends Modal$1 {
 
 var Sheet = {
   name: 'sheet',
+  params: {
+    sheet: {
+      closeByBackdropClick: true,
+      closeByOutsideClick: false,
+    },
+  },
   static: {
     Sheet: Sheet$1,
   },
   create() {
     const app = this;
-    app.sheet = Utils.extend({},
+    app.sheet = Utils.extend(
+      {},
       ModalMethods({
         app,
         constructor: Sheet$1,
@@ -7647,6 +7686,9 @@ var Sheet = {
   clicks: {
     '.sheet-open': function openSheet($clickedEl, data = {}) {
       const app = this;
+      if ($('.sheet-modal.modal-in').length > 0 && data.sheet && $(data.sheet)[0] !== $('.sheet-modal.modal-in')[0]) {
+        app.sheet.close('.sheet-modal.modal-in');
+      }
       app.sheet.open(data.sheet, data.animate);
     },
     '.sheet-close': function closeSheet($clickedEl, data = {}) {
@@ -7655,7 +7697,7 @@ var Sheet = {
     },
     '.sheet-backdrop': function closeSheet() {
       const app = this;
-      if (!app.params.modals.sheetCloseByBackdropClick) return;
+      if (!app.params.sheet.closeByBackdropClick) return;
       app.sheet.close();
     },
   },
@@ -7664,38 +7706,24 @@ var Sheet = {
 class Toast$1 extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
-      message: undefined,
-      position: app.params.modals.toastPosition,
-      closeButton: app.params.modals.toastCloseButton,
-      closeButtonColor: app.params.modals.toastCloseButtonColor,
-      closeButtonText: app.params.modals.toastCloseButtonText,
-      closeTimeout: app.params.modals.toastCloseTimeout,
-      cssClass: undefined,
       on: {},
-    }, params);
+    }, app.params.toast, params);
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
 
     const toast = this;
 
+    toast.app = app;
+
     toast.params = extendedParams;
 
-    const { message, position, closeButton, closeButtonColor, closeButtonText, closeTimeout, cssClass } = toast.params;
+    const { closeButton, closeTimeout } = toast.params;
 
     let $el;
     if (!toast.params.el) {
       // Find Element
-      const toastHtml = `
-        <div class="toast toast-${position} ${cssClass || ''}">
-          <div class="toast-content">
-            <div class="toast-message">${message}</div>
-            ${closeButton ? `
-            <a class="toast-button ${app.theme === 'md' ? 'button' : 'link'} ${closeButtonColor ? `color-${closeButtonColor}` : ''}">${closeButtonText}</a>
-            `.trim() : ''}
-          </div>
-        </div>
-      `.trim();
+      const toastHtml = toast.render();
 
       $el = $(toastHtml);
     } else {
@@ -7711,7 +7739,6 @@ class Toast$1 extends Modal$1 {
     }
 
     Utils.extend(toast, {
-      app,
       $el,
       el: $el[0],
       type: 'toast',
@@ -7732,10 +7759,12 @@ class Toast$1 extends Modal$1 {
 
     let timeoutId;
     toast.on('open', () => {
-      const openedToast = app.toast.get('.toast.modal-in');
-      if (openedToast && openedToast.el && openedToast.el !== toast.el) {
-        openedToast.close();
-      }
+      $('.toast.modal-in').each((index, openedEl) => {
+        const toastInstance = app.toast.get(openedEl);
+        if (openedEl !== toast.el && toastInstance) {
+          toastInstance.close();
+        }
+      });
       if (closeTimeout) {
         timeoutId = Utils.nextTick(() => {
           toast.close();
@@ -7748,6 +7777,23 @@ class Toast$1 extends Modal$1 {
 
     return toast;
   }
+  render() {
+    const toast = this;
+    const app = toast.app;
+    if (toast.params.render) return toast.params.render.call(toast, toast);
+    const { position, cssClass, icon, text, closeButton, closeButtonColor, closeButtonText } = toast.params;
+    return `
+      <div class="toast toast-${position} ${cssClass || ''} ${icon ? 'toast-with-icon' : ''}">
+        <div class="toast-content">
+          ${icon ? `<div class="toast-icon">${icon}</div>` : ''}
+          <div class="toast-text">${text}</div>
+          ${closeButton && !icon ? `
+          <a class="toast-button ${app.theme === 'md' ? 'button' : 'link'} ${closeButtonColor ? `color-${closeButtonColor}` : ''}">${closeButtonText}</a>
+          `.trim() : ''}
+        </div>
+      </div>
+    `.trim();
+  }
 }
 
 var Toast = {
@@ -7757,13 +7803,27 @@ var Toast = {
   },
   create() {
     const app = this;
-    app.toast = Utils.extend({},
+    app.toast = Utils.extend(
+      {},
       ModalMethods({
         app,
         constructor: Toast$1,
         defaultSelector: '.toast.modal-in',
       })
     );
+  },
+  params: {
+    toast: {
+      icon: null,
+      text: null,
+      position: 'bottom',
+      closeButton: false,
+      closeButtonColor: null,
+      closeButtonText: 'Ok',
+      closeTimeout: null,
+      cssClass: null,
+      render: null,
+    },
   },
 };
 
@@ -7773,16 +7833,17 @@ const Preloader = {
     if (app.theme !== 'md') return;
     const $el = $(el);
     if ($el.length === 0 || $el.children('.preloader-inner').length > 0) return;
-    $el.append(
-      '<span class="preloader-inner">' +
-          '<span class="preloader-inner-gap"></span>' +
-          '<span class="preloader-inner-left">' +
-              '<span class="preloader-inner-half-circle"></span>' +
-          '</span>' +
-          '<span class="preloader-inner-right">' +
-              '<span class="preloader-inner-half-circle"></span>' +
-          '</span>' +
-      '</span>');
+    $el.append(`
+      <span class="preloader-inner">
+          <span class="preloader-inner-gap"></span>
+          <span class="preloader-inner-left">
+              <span class="preloader-inner-half-circle"></span>
+          </span>
+          <span class="preloader-inner-right">
+              <span class="preloader-inner-half-circle"></span>
+          </span>
+      </span>
+      `.trim());
   },
   // Modal
   visible: false,
@@ -7854,6 +7915,7 @@ const Progressbar = {
       [progress, duration] = args;
       el = app.root;
     }
+    if (typeof progress === 'undefined' || progress === null) return el;
     if (!progress) progress = 0;
 
     const $el = $(el || app.root);
@@ -8139,7 +8201,7 @@ const Sortable = {
     const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
 
     $(document).on(app.touchEvents.start, '.list.sortable .sortable-handler', handleTouchStart, activeListener);
-    app.on('touchmove', handleTouchMove);
+    app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
   },
   enable(el = '.list.sortable') {
@@ -8147,16 +8209,16 @@ const Sortable = {
     const $el = $(el);
     if ($el.length === 0) return;
     $el.addClass('sortable-enabled');
-    $el.trigger('sortable:open');
-    app.emit('sortableOpen', $el[0]);
+    $el.trigger('sortable:enable');
+    app.emit('sortableEnable', $el[0]);
   },
   disable(el = '.list.sortable') {
     const app = this;
     const $el = $(el);
     if ($el.length === 0) return;
     $el.removeClass('sortable-enabled');
-    $el.trigger('sortable:close');
-    app.emit('sortableClose', $el[0]);
+    $el.trigger('sortable:disable');
+    app.emit('sortableDisable', $el[0]);
   },
   toggle(el = '.list.sortable') {
     const app = this;
@@ -8241,6 +8303,7 @@ const Swipeout = {
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
       touchStartTime = (new Date()).getTime();
+      $swipeoutEl = $(this);
     }
     function handleTouchMove(e) {
       if (!isTouched) return;
@@ -8256,7 +8319,6 @@ const Swipeout = {
 
       if (!isMoved) {
         if ($('.list.sortable-opened').length > 0) return;
-        $swipeoutEl = $(this);
         $swipeoutContent = $swipeoutEl.find('.swipeout-content');
         $actionsRight = $swipeoutEl.find('.swipeout-actions-right');
         $actionsLeft = $swipeoutEl.find('.swipeout-actions-left');
@@ -8298,9 +8360,9 @@ const Swipeout = {
       }
 
       if (
-          (translate > 0 && $actionsLeft.length === 0)
-          ||
-          (translate < 0 && $actionsRight.length === 0)
+        (translate > 0 && $actionsLeft.length === 0)
+        ||
+        (translate < 0 && $actionsRight.length === 0)
       ) {
         if (!opened) {
           isTouched = false;
@@ -8526,7 +8588,6 @@ const Swipeout = {
       });
     }
 
-    const activeListener = app.support.passiveListener ? { passive: false } : false;
     const passiveListener = app.support.passiveListener ? { passive: true } : false;
 
     app.on('touchstart', (e) => {
@@ -8539,14 +8600,14 @@ const Swipeout = {
           $targetEl[0].className.indexOf('-backdrop') > 0 ||
           $targetEl.hasClass('actions-modal') ||
           $targetEl.parents('.actions-modal.modal-in, .dialog.modal-in').length > 0
-          )) {
+        )) {
           app.swipeout.close(Swipeout.el);
         }
       }
     });
     $(document).on(app.touchEvents.start, 'li.swipeout', handleTouchStart, passiveListener);
-    $(document).on(app.touchEvents.move, 'li.swipeout', handleTouchMove, activeListener);
-    $(document).on(app.touchEvents.end, 'li.swipeout', handleTouchEnd, passiveListener);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
   },
   allow: true,
   el: undefined,
@@ -8849,15 +8910,18 @@ class VirtualList$1 extends Framework7Class {
       setListHeight: true,
       searchByItem: undefined,
       searchAll: undefined,
-      renderItem: undefined,
-      itemTemplate:
-        '<li>' +
-          '<div class="item-content">' +
-            '<div class="item-inner">' +
-              '<div class="item-title">{{this}}</div>' +
-            '</div>' +
-          '</div>' +
-        '</li>',
+      itemTemplate: undefined,
+      renderItem(item) {
+        return `
+          <li>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title">${item}</div>
+              </div>
+            </div>
+          </li>
+        `.trim();
+      },
       on: {},
     };
 
@@ -8879,9 +8943,11 @@ class VirtualList$1 extends Framework7Class {
     if (vl.params.showFilteredItemsOnly) {
       vl.filteredItems = [];
     }
-    if (vl.params.itemTemplate && !vl.params.renderItem) {
-      if (typeof vl.params.itemTemplate === 'string') vl.itemTemplate = Template7.compile(vl.params.template);
-      else if (typeof vl.params.itemTemplate === 'function') vl.itemTemplate = vl.params.itemTemplate;
+    if (vl.params.itemTemplate) {
+      if (typeof vl.params.itemTemplate === 'string') vl.renderItem = Template7.compile(vl.params.itemTemplate);
+      else if (typeof vl.params.itemTemplate === 'function') vl.renderItem = vl.params.itemTemplate;
+    } else if (vl.params.renderItem) {
+      vl.renderItem = vl.params.renderItem;
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');
 
@@ -9042,10 +9108,8 @@ class VirtualList$1 extends Framework7Class {
         itemEl = vl.domCache[index];
         itemEl.f7VirtualListIndex = index;
       } else {
-        if (vl.itemTemplate && !vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.itemTemplate(items[i], { index }).trim();
-        } else if (vl.params.renderItem) {
-          vl.tempDomElement.innerHTML = vl.params.renderItem.call(vl, items[i], index).trim();
+        if (vl.renderItem) {
+          vl.tempDomElement.innerHTML = vl.renderItem(items[i], { index }).trim();
         } else {
           vl.tempDomElement.innerHTML = items[i].toString().trim();
         }
@@ -9087,7 +9151,7 @@ class VirtualList$1 extends Framework7Class {
       }
     }
 
-      // Update list html
+    // Update list html
     if (vl.params.renderExternal) {
       if (items && items.length === 0) {
         vl.reachEnd = true;
@@ -9241,17 +9305,17 @@ class VirtualList$1 extends Framework7Class {
     const fromIndex = from;
     let toIndex = to;
     if (fromIndex === toIndex) return;
-      // remove item from array
+    // remove item from array
     const item = vl.items.splice(fromIndex, 1)[0];
     if (toIndex >= vl.items.length) {
       // Add item to the end
       vl.items.push(item);
       toIndex = vl.items.length - 1;
     } else {
-      // Add item to new index
+    // Add item to new index
       vl.items.splice(toIndex, 0, item);
     }
-      // Update cache
+    // Update cache
     if (vl.params.cache) {
       const newCache = {};
       Object.keys(vl.domCache).forEach((cached) => {
@@ -9279,7 +9343,7 @@ class VirtualList$1 extends Framework7Class {
       return;
     }
     vl.items.splice(index, 0, item);
-      // Update cache
+    // Update cache
     if (vl.params.cache) {
       const newCache = {};
       Object.keys(vl.domCache).forEach((cached) => {
@@ -9410,7 +9474,6 @@ const Tab = {
       };
     }
 
-
     let $tabLinkEl;
     if (tabLink) $tabLinkEl = $(tabLink);
 
@@ -9426,18 +9489,35 @@ const Tab = {
     if (app.swipeout) app.swipeout.allowOpen = true;
 
     // Animated tabs
-    const isAnimatedTabs = $tabsEl.parent().hasClass('tabs-animated-wrap');
-    if (isAnimatedTabs) {
+    const tabsChangedCallbacks = [];
+
+    function onTabsChanged(callback) {
+      tabsChangedCallbacks.push(callback);
+    }
+    function tabsChanged() {
+      tabsChangedCallbacks.forEach((callback) => {
+        callback();
+      });
+    }
+
+    let animated = false;
+
+    if ($tabsEl.parent().hasClass('tabs-animated-wrap')) {
       $tabsEl.parent()[animate ? 'removeClass' : 'addClass']('not-animated');
+
+      const transitionDuration = parseFloat($tabsEl.css('transition-duration').replace(',', '.'));
+      if (animate && transitionDuration) {
+        $tabsEl.transitionEnd(tabsChanged);
+        animated = true;
+      }
+
       const tabsTranslate = (app.rtl ? $newTabEl.index() : -$newTabEl.index()) * 100;
       $tabsEl.transform(`translate3d(${tabsTranslate}%,0,0)`);
     }
 
     // Swipeable tabs
-    const isSwipeableTabs = $tabsEl.parent().hasClass('tabs-swipeable-wrap');
-    let swiper;
-    if (isSwipeableTabs && app.swiper) {
-      swiper = $tabsEl.parent()[0].swiper;
+    if ($tabsEl.parent().hasClass('tabs-swipeable-wrap') && app.swiper) {
+      const swiper = $tabsEl.parent()[0].swiper;
       if (swiper.activeIndex !== $newTabEl.index()) {
         swiper.slideTo($newTabEl.index(), animate ? undefined : 0, false);
       }
@@ -9481,7 +9561,7 @@ const Tab = {
         // Search by id
         const oldTabId = $oldTabEl.attr('id');
         if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
-          // Search by data-tab
+        // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
           $('[data-tab]').each((index, tabLinkEl) => {
             if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);
@@ -9513,6 +9593,8 @@ const Tab = {
       newTabEl: $newTabEl[0],
       $oldTabEl,
       oldTabEl: $oldTabEl[0],
+      onTabsChanged,
+      animated,
     };
   },
 };
@@ -9594,7 +9676,10 @@ function swipePanel$1(panel) {
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
-    if (e.f7PreventPanelSwipe) return;
+    if (e.f7PreventPanelSwipe) {
+      isTouched = false;
+      return;
+    }
     const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
     const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
@@ -9768,10 +9853,10 @@ function swipePanel$1(panel) {
     } else if (translate === -panelWidth) {
       action = 'reset';
     } else if (
-        (timeDiff < 300 && Math.abs(translate) >= 0)
-        ||
-        (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
-      ) {
+      (timeDiff < 300 && Math.abs(translate) >= 0)
+      ||
+      (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
+    ) {
       if (side === 'left' && translate === panelWidth) action = 'reset';
       else action = 'swap';
     } else {
@@ -9811,11 +9896,11 @@ function swipePanel$1(panel) {
 
   // Add Events
   app.on('touchstart:passive', handleTouchStart);
-  app.on('touchmove', handleTouchMove);
+  app.on('touchmove:active', handleTouchMove);
   app.on('touchend:passive', handleTouchEnd);
   panel.on('panelDestroy', () => {
     app.off('touchstart:passive', handleTouchStart);
-    app.off('touchmove', handleTouchMove);
+    app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
   });
 }
@@ -9883,14 +9968,16 @@ class Panel$1 extends Framework7Class {
     if (app.params.panel[`${panel.side}Breakpoint`]) {
       panel.initBreakpoints();
     }
-    if (
-      (app.params.panel.swipe === panel.side)
-      ||
-      (app.params.panel.swipe === 'both')
-      ||
-      (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
+    {
+      if (
+        (app.params.panel.swipe === panel.side)
+        ||
+        (app.params.panel.swipe === 'both')
+        ||
+        (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
       ) {
-      panel.initSwipePanel();
+        panel.initSwipePanel();
+      }
     }
   }
   setBreakpoint() {
@@ -9933,7 +10020,9 @@ class Panel$1 extends Framework7Class {
     return panel;
   }
   initSwipePanel() {
-    swipePanel$1(this);
+    {
+      swipePanel$1(this);
+    }
   }
   destroy() {
     let panel = this;
@@ -10079,7 +10168,7 @@ var Panel = {
       leftBreakpoint: 0,
       rightBreakpoint: 0,
       swipe: undefined, // or 'left' or 'right' or 'both'
-      swipeActiveArea: 0,
+      swipeActiveArea: null,
       swipeCloseOpposite: true,
       swipeOnlyClose: false,
       swipeNoFollow: false,
@@ -10371,20 +10460,20 @@ function formToData(formEl) {
       });
     } else {
       switch (type) {
-        case 'checkbox' :
+        case 'checkbox':
           skipNames.push(name);
           data[name] = [];
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             if (el.checked) data[name].push(el.value);
           });
           break;
-        case 'radio' :
+        case 'radio':
           skipNames.push(name);
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             if (el.checked) data[name] = el.value;
           });
           break;
-        default :
+        default:
           data[name] = $inputEl.val();
           break;
       }
@@ -10430,7 +10519,7 @@ function formFromData(formEl, formData) {
       });
     } else {
       switch (type) {
-        case 'checkbox' :
+        case 'checkbox':
           skipNames.push(name);
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             const checkboxEl = el;
@@ -10438,7 +10527,7 @@ function formFromData(formEl, formData) {
             else checkboxEl.checked = false;
           });
           break;
-        case 'radio' :
+        case 'radio':
           skipNames.push(name);
           $formEl.find(`input[name="${name}"]`).each((index, el) => {
             const radioEl = el;
@@ -10446,7 +10535,7 @@ function formFromData(formEl, formData) {
             else radioEl.checked = false;
           });
           break;
-        default :
+        default:
           $inputEl.val(data[name]);
           break;
       }
@@ -10583,8 +10672,12 @@ const Input = {
     }
 
     const styles = window.getComputedStyle($textareaEl[0]);
-    ('padding margin width font border box-sizing display').split(' ').forEach((style) => {
-      $shadowEl.css(style, styles[style]);
+    ('padding margin width font-size font-family font-style font-weight line-height font-variant text-transform letter-spacing border box-sizing display').split(' ').forEach((style) => {
+      let styleValue = styles[style];
+      if (('font-size line-height letter-spacing width').split(' ').indexOf(style) >= 0) {
+        styleValue = styleValue.replace(',', '.');
+      }
+      $shadowEl.css(style, styleValue);
     });
     const currentHeight = $textareaEl[0].clientHeight;
 
@@ -10594,6 +10687,7 @@ const Input = {
     $shadowEl.val($textareaEl.val());
     $shadowEl.css('height', 0);
     const scrollHeight = $shadowEl[0].scrollHeight;
+
     if (currentHeight !== scrollHeight) {
       if (scrollHeight > initialHeight) {
         $textareaEl.css('height', `${scrollHeight}px`);
@@ -10804,14 +10898,12 @@ class Toggle$1 extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return toggle;
 
-    const dataset = $el.dataset();
 
     const $inputEl = $el.children('input[type="checkbox"]');
 
     Utils.extend(toggle, {
       $el,
       el: $el[0],
-      dataset,
       $inputEl,
       inputEl: $inputEl[0],
       disabled: $el.hasClass('disabled') || $inputEl.hasClass('disabled') || $inputEl.attr('disabled') || $inputEl[0].disabled,
@@ -11264,7 +11356,18 @@ class Range$1 extends Framework7Class {
   }
   layout() {
     const range = this;
-    const { app, knobWidth, rangeWidth, min, max, knobs, $barActiveEl, value, label, labels } = range;
+    const {
+      app,
+      knobWidth,
+      rangeWidth,
+      min,
+      max,
+      knobs,
+      $barActiveEl,
+      value,
+      label,
+      labels,
+    } = range;
     const positionProperty = app.rtl ? 'right' : 'left';
     if (range.dual) {
       const progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
@@ -11440,7 +11543,7 @@ class SmartSelect$1 extends Framework7Class {
     // Url
     let url = params.url;
     if (!url) {
-      if ($el.attr('href')) url = $el.attr('href');
+      if ($el.attr('href') && $el.attr('href') !== '#') url = $el.attr('href');
       else url = `${$selectEl.attr('name').toLowerCase()}-select/`;
     }
     if (!url) url = ss.params.url;
@@ -12358,6 +12461,7 @@ class PullToRefresh$1 extends Framework7Class {
       if ($el.hasClass('ptr-refreshing')) {
         return;
       }
+      if ($(e.target).closest('.sortable-handler').length) return;
 
       isMoved = false;
       pullStarted = false;
@@ -12864,8 +12968,8 @@ class DataTable$1 extends Framework7Class {
         }
         $el
           .find(`tbody tr td:nth-child(${columnIndex + 1}) input`)
-            .prop('checked', checked)
-            .trigger('change', { sentByF7DataTable: true });
+          .prop('checked', checked)
+          .trigger('change', { sentByF7DataTable: true });
       } else {
         if (columnIndex === 0) {
           $inputEl.parents('tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected');
@@ -13067,8 +13171,8 @@ const Fab = {
         $targetEl.css('opacity', 1).transform('scale(1,1)');
       });
       $fabEl.transform(`translate3d(${-diffX}px, ${-diffY}px, 0) scale(${scaleX}, ${scaleY})`)
-            .css('border-radius', `${borderRadius}px`)
-            .css('box-shadow', 'none');
+        .css('border-radius', `${borderRadius}px`)
+        .css('box-shadow', 'none');
       app.on('resize', $fabEl[0].f7FabMorphResizeHandler);
       if ($targetEl.parents('.page-content').length > 0) {
         $targetEl.parents('.page-content').on('scroll', $fabEl[0].f7FabMorphResizeHandler);
@@ -13213,6 +13317,8 @@ class Searchbar$1 extends Framework7Class {
       ignore: '.searchbar-ignore',
       foundEl: '.searchbar-found',
       notFoundEl: '.searchbar-not-found',
+      hideOnEnableEl: '.searchbar-hide-on-enable',
+      hideOnSearchEl: '.searchbar-hide-on-search',
       backdrop: true,
       removeDiacritics: true,
       customSearch: false,
@@ -13253,15 +13359,29 @@ class Searchbar$1 extends Framework7Class {
     let $foundEl;
     if (params.foundEl) {
       $foundEl = $(params.foundEl);
-    } else if ($pageEl) {
+    } else if (typeof sb.params.foundEl === 'string' && $pageEl) {
       $foundEl = $pageEl.find(sb.params.foundEl);
     }
 
     let $notFoundEl;
     if (params.notFoundEl) {
       $notFoundEl = $(params.notFoundEl);
-    } else if ($pageEl) {
+    } else if (typeof sb.params.notFoundEl === 'string' && $pageEl) {
       $notFoundEl = $pageEl.find(sb.params.notFoundEl);
+    }
+
+    let $hideOnEnableEl;
+    if (params.hideOnEnableEl) {
+      $hideOnEnableEl = $(params.hideOnEnableEl);
+    } else if (typeof sb.params.hideOnEnableEl === 'string' && $pageEl) {
+      $hideOnEnableEl = $pageEl.find(sb.params.hideOnEnableEl);
+    }
+
+    let $hideOnSearchEl;
+    if (params.hideOnSearchEl) {
+      $hideOnSearchEl = $(params.hideOnSearchEl);
+    } else if (typeof sb.params.hideOnSearchEl === 'string' && $pageEl) {
+      $hideOnSearchEl = $pageEl.find(sb.params.hideOnSearchEl);
     }
 
     let $backdropEl;
@@ -13330,6 +13450,10 @@ class Searchbar$1 extends Framework7Class {
       foundEl: $foundEl && $foundEl[0],
       $notFoundEl,
       notFoundEl: $notFoundEl && $notFoundEl[0],
+      $hideOnEnableEl,
+      hideOnEnableEl: $hideOnEnableEl && $hideOnEnableEl[0],
+      $hideOnSearchEl,
+      hideOnSearchEl: $hideOnSearchEl && $hideOnSearchEl[0],
       previousQuery: '',
       query: '',
       isVirtualList: $searchContainer && $searchContainer.hasClass('virtual-list'),
@@ -13344,16 +13468,20 @@ class Searchbar$1 extends Framework7Class {
     }
     function onInputFocus(e) {
       sb.enable(e);
+      sb.$el.addClass('searchbar-focused');
+    }
+    function onInputBlur() {
+      sb.$el.removeClass('searchbar-focused');
     }
     function onInputChange() {
       const value = sb.$inputEl.val().trim();
       if (
-          (
-            (sb.$searchContainer && sb.$searchContainer.length > 0) &&
-            (sb.params.searchIn || sb.isVirtualList)
-          ) ||
-          sb.params.customSearch
-        ) {
+        (
+          (sb.$searchContainer && sb.$searchContainer.length > 0) &&
+          (sb.params.searchIn || sb.isVirtualList)
+        ) ||
+        sb.params.customSearch
+      ) {
         sb.search(value, true);
       }
     }
@@ -13389,6 +13517,7 @@ class Searchbar$1 extends Framework7Class {
         sb.$pageEl.on('page:beforein', onPageBeforeIn);
       }
       sb.$inputEl.on('focus', onInputFocus);
+      sb.$inputEl.on('blur', onInputBlur);
       sb.$inputEl.on('change input compositionend', onInputChange);
       sb.$inputEl.on('input:clear', onInputClear);
     };
@@ -13405,6 +13534,7 @@ class Searchbar$1 extends Framework7Class {
         sb.$pageEl.on('page:beforein', onPageBeforeIn);
       }
       sb.$inputEl.off('focus', onInputFocus);
+      sb.$inputEl.off('blur', onInputBlur);
       sb.$inputEl.off('change input compositionend', onInputChange);
       sb.$inputEl.off('input:clear', onInputClear);
     };
@@ -13456,6 +13586,7 @@ class Searchbar$1 extends Framework7Class {
         }
         sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, '0px');
       }
+      if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.hide();
       sb.$el.trigger('searchbar:enable');
       sb.emit('local::enable searchbarEnable');
     }
@@ -13492,6 +13623,7 @@ class Searchbar$1 extends Framework7Class {
     const app = sb.app;
     sb.$inputEl.val('').trigger('change');
     sb.$el.removeClass('searchbar-enabled');
+    sb.$el.removeClass('searchbar-focused');
     if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
       sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
     }
@@ -13503,6 +13635,8 @@ class Searchbar$1 extends Framework7Class {
     sb.enabled = false;
 
     sb.$inputEl.blur();
+
+    if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.show();
 
     sb.$el.trigger('searchbar:disable');
     sb.emit('local::disable searchbarDisable');
@@ -13543,8 +13677,14 @@ class Searchbar$1 extends Framework7Class {
     sb.query = query;
     sb.value = query;
 
-    const { $searchContainer, $el, $backdropEl, $foundEl, $notFoundEl, isVirtualList } = sb;
+    const { $searchContainer, $el, $backdropEl, $foundEl, $notFoundEl, $hideOnSearchEl, isVirtualList } = sb;
 
+    // Hide on search element
+    if (query.length > 0 && $hideOnSearchEl) {
+      $hideOnSearchEl.hide();
+    } else if ($hideOnSearchEl) {
+      $hideOnSearchEl.show();
+    }
     // Add active/inactive classes on overlay
     if (query.length === 0) {
       if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) sb.backdropShow();
@@ -13634,8 +13774,7 @@ class Searchbar$1 extends Framework7Class {
         });
       }
     }
-    $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
-    sb.emit('local::search searchbarSearch', query, sb.previousQuery, foundItems);
+
     if (foundItems.length === 0) {
       if ($notFoundEl) $notFoundEl.show();
       if ($foundEl) $foundEl.hide();
@@ -13646,6 +13785,10 @@ class Searchbar$1 extends Framework7Class {
     if (isVirtualList && sb.virtualList) {
       sb.virtualList.filterItems(foundItems);
     }
+
+    $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
+    sb.emit('local::search searchbarSearch', query, sb.previousQuery, foundItems);
+
     return sb;
   }
   init() {
@@ -13796,6 +13939,7 @@ class Messages$1 extends Framework7Class {
 
     return m;
   }
+  // eslint-disable-next-line
   getMessageData(messageEl) {
     const $messageEl = $(messageEl);
     const data = {
@@ -14349,7 +14493,17 @@ class Messagebar$1 extends Framework7Class {
   }
   resize() {
     const messagebar = this;
-    const { params, $el, top, $pageEl, $pageContentEl, $areaEl, $textareaEl, $sheetEl, $attachmentsEl } = messagebar;
+    const {
+      params,
+      $el,
+      top,
+      $pageEl,
+      $pageContentEl,
+      $areaEl,
+      $textareaEl,
+      $sheetEl,
+      $attachmentsEl,
+    } = messagebar;
     const elHeight = $el[0].offsetHeight;
     if (top) {
       const requiredPaddingTop = elHeight + params.topOffset;
@@ -14679,7 +14833,7 @@ var updateSlides = function () {
         .attr('data-swiper-column', column)
         .attr('data-swiper-row', row);
     }
-    if (slide.css('display') === 'none') continue;
+    if (slide.css('display') === 'none') continue; // eslint-disable-line
     if (params.slidesPerView === 'auto') {
       slideSize = swiper.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
       if (params.roundLengths) slideSize = Math.floor(slideSize);
@@ -15271,6 +15425,8 @@ var slideNext = function (speed = this.params.speed, runCallbacks = true, intern
   if (params.loop) {
     if (animating) return false;
     swiper.loopFix();
+    // eslint-disable-next-line
+    swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
     return swiper.slideTo(swiper.activeIndex + params.slidesPerGroup, speed, runCallbacks, internal);
   }
   return swiper.slideTo(swiper.activeIndex + params.slidesPerGroup, speed, runCallbacks, internal);
@@ -15284,6 +15440,8 @@ var slidePrev = function (speed = this.params.speed, runCallbacks = true, intern
   if (params.loop) {
     if (animating) return false;
     swiper.loopFix();
+    // eslint-disable-next-line
+    swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
     return swiper.slideTo(swiper.activeIndex - 1, speed, runCallbacks, internal);
   }
   return swiper.slideTo(swiper.activeIndex - 1, speed, runCallbacks, internal);
@@ -15449,7 +15607,7 @@ var appendSlide = function (slides) {
   if (params.loop) {
     swiper.loopDestroy();
   }
-  if (typeof slides === 'object' && slides.length) {
+  if (typeof slides === 'object' && 'length' in slides) {
     for (let i = 0; i < slides.length; i += 1) {
       if (slides[i]) $wrapperEl.append(slides[i]);
     }
@@ -15472,7 +15630,7 @@ var prependSlide = function (slides) {
     swiper.loopDestroy();
   }
   let newActiveIndex = activeIndex + 1;
-  if (typeof slides === 'object' && slides.length) {
+  if (typeof slides === 'object' && 'length' in slides) {
     for (let i = 0; i < slides.length; i += 1) {
       if (slides[i]) $wrapperEl.prepend(slides[i]);
     }
@@ -15500,7 +15658,7 @@ var removeSlide = function (slidesIndexes) {
   let newActiveIndex = activeIndex;
   let indexToRemove;
 
-  if (typeof slidesIndexes === 'object' && slidesIndexes.length) {
+  if (typeof slidesIndexes === 'object' && 'length' in slidesIndexes) {
     for (let i = 0; i < slidesIndexes.length; i += 1) {
       indexToRemove = slidesIndexes[i];
       if (swiper.slides[indexToRemove]) swiper.slides.eq(indexToRemove).remove();
@@ -19528,7 +19686,7 @@ function initSwipers(swiperEl) {
   if (isTabs) {
     Utils.extend(params, {
       on: {
-        slideChangeStart() {
+        transitionStart() {
           const swiper = this;
           app.tab.show(swiper.slides.eq(swiper.activeIndex));
         },
@@ -19581,6 +19739,7 @@ var Swiper = {
   },
 };
 
+/* eslint indent: ["off"] */
 class PhotoBrowser$1 extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
@@ -19699,8 +19858,8 @@ class PhotoBrowser$1 extends Framework7Class {
     if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
       Utils.nextTick(() => {
         if (pb.$containerEl) {
-          if (swipeToClose.diff < 0) pb.$containerEl.addClass('swiper-close-to-bottom');
-          else pb.$containerEl.addClass('swiper-close-to-top');
+          if (swipeToClose.diff < 0) pb.$containerEl.addClass('swipe-close-to-bottom');
+          else pb.$containerEl.addClass('swipe-close-to-top');
         }
         pb.emit('local::swipeToClose', pb);
         pb.close();
@@ -19709,9 +19868,9 @@ class PhotoBrowser$1 extends Framework7Class {
       return;
     }
     if (diff !== 0) {
-      swipeToClose.activeSlide.addClass('transitioning').transitionEnd(() => {
+      swipeToClose.activeSlide.addClass('photo-browser-transitioning').transitionEnd(() => {
         swipeToClose.allow = true;
-        swipeToClose.activeSlide.removeClass('transitioning');
+        swipeToClose.activeSlide.removeClass('photo-browser-transitioning');
       });
     } else {
       swipeToClose.allow = true;
@@ -19759,7 +19918,7 @@ class PhotoBrowser$1 extends Framework7Class {
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
     const toolbarHtml = `
-      <div class="toolbar tabbar toolbar-bottom">
+      <div class="toolbar tabbar toolbar-bottom-md">
         <div class="toolbar-inner">
           <a href="#" class="link photo-browser-prev">
             <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
@@ -20154,9 +20313,8 @@ class PhotoBrowser$1 extends Framework7Class {
     }
     return pb;
   }
-  init() {
-    
-  }
+  // eslint-disable-next-line
+  init() {}
   destroy() {
     let pb = this;
     pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
@@ -20234,182 +20392,249 @@ var PhotoBrowser = {
   },
 };
 
-var _tempNotificationElement;
+class Notification$1 extends Modal$1 {
+  constructor(app, params) {
+    const extendedParams = Utils.extend({
+      on: {},
+    }, app.params.notification, params);
 
-const Notification = {
-  // Modal
-  add(params) {
-    const app = this;
+    // Extends with open/close Modal methods;
+    super(app, extendedParams);
 
-    if (!params) return;
+    const notification = this;
 
-    if (typeof params.media === 'undefined') params.media = app.params.notification.media;
-    if (typeof params.title === 'undefined') params.title = app.params.notification.title;
-    if (typeof params.subtitle === 'undefined') params.subtitle = app.params.notification.subtitle;
-    if (typeof params.closeIcon === 'undefined') params.closeIcon = app.params.notification.closeIcon;
-    if (typeof params.hold === 'undefined') params.hold = app.params.notification.hold;
-    if (typeof params.closeOnClick === 'undefined') params.closeOnClick = app.params.notification.closeOnClick;
-    if (typeof params.button === 'undefined') params.button = app.params.notification.closeButtonText && {
-        text: app.params.notification.closeButtonText,
-        close: true
-    };
+    notification.app = app;
 
-    params.material = app.theme === 'md';  // this is used in the default template
+    notification.params = extendedParams;
 
-    if (!_tempNotificationElement) _tempNotificationElement = document.createElement('div');
+    const {
+      icon,
+      title,
+      titleRightText,
+      subtitle,
+      text,
+      closeButton,
+      closeTimeout,
+      cssClass,
+      closeOnClick,
+    } = notification.params;
 
-    var container = $('.notifications');
-    if (container.length === 0) {
-        app.root.append('<div class="notifications list-block' + (app.theme === 'md' ? '' : ' media-list') + '"><ul></ul></div>');
-        container = $('.notifications');
-    }
-    var list = container.children('ul');
+    let $el;
+    if (!notification.params.el) {
+      // Find Element
+      const notificationHtml = notification.render({
+        icon,
+        title,
+        titleRightText,
+        subtitle,
+        text,
+        closeButton,
+        cssClass,
+      });
 
-    var notificationTemplate = app.params.notificationTemplate ||
-        '{{#if custom}}' +
-        '<li>{{custom}}</li>' +
-        '{{else}}' +
-        '<li class="notification-item notification-hidden">' +
-            '<div class="item-content">' +
-                '{{#if material}}' +
-                    '<div class="item-inner">' +
-                        '<div class="item-title">{{js "this.message || this.title || this.subtitle"}}</div>' +
-                        '{{#if ../button}}{{#button}}' +
-                        '<div class="item-after">' +
-                            '<a href="#" class="button {{#if color}}color-{{color}}{{/if}} {{#js_compare "this.close !== false"}}close-notification{{/js_compare}}">{{text}}</a>' +
-                        '</div>' +
-                        '{{/button}}{{/if}}' +
-                    '</div>' +
-                '{{else}}' +
-                    '{{#if media}}' +
-                    '<div class="item-media">{{media}}</div>' +
-                    '{{/if}}' +
-                    '<div class="item-inner">' +
-                        '<div class="item-title-row">' +
-                            '{{#if title}}' +
-                            '<div class="item-title">{{title}}</div>' +
-                            '{{/if}}' +
-                            '{{#if closeIcon}}' +
-                            '<div class="item-after"><a href="#" class="close-notification"><span></span></a></div>' +
-                            '{{/if}}' +
-                        '</div>' +
-                        '{{#if subtitle}}' +
-                        '<div class="item-subtitle">{{subtitle}}</div>' +
-                        '{{/if}}' +
-                        '{{#if message}}' +
-                        '<div class="item-text">{{message}}</div>' +
-                        '</div>' +
-                    '{{/if}}' +
-                '{{/if}}' +
-            '</div>' +
-        '</li>' +
-        '{{/if}}';
-    if (!app.notificationCompiledTemplate) {
-        app.notificationCompiledTemplate = Template7.compile(notificationTemplate);
-    }
-    _tempNotificationElement.innerHTML = app.notificationCompiledTemplate(params);
-
-    var item = $(_tempNotificationElement).children();
-
-    item.on('click', function (e) {
-        var close = false;
-        var target = $(e.target);
-        if (app.theme === 'md' && target.hasClass('button')) {
-            if (params.button && params.button.onClick) params.button.onClick.call(target[0], e, item[0]);
-        }
-        if (target.is('.close-notification') || $(e.target).parents('.close-notification').length > 0) {
-            close = true;
-        }
-        else {
-            if (params.onClick) params.onClick(e, item[0]);
-            if (params.closeOnClick) close = true;
-        }
-        if (close) Notification.close(item[0], e);
-    });
-    if (params.onClose) {
-        item.data('f7NotificationOnClose', function (e) {
-            params.onClose(item[0], e);
-        });
-    }
-    if (params.additionalClass) {
-        item.addClass(params.additionalClass);
-    }
-    if (params.hold) {
-        setTimeout(function () {
-            if (item.length > 0) Notification.close(item[0]);
-        }, params.hold);
+      $el = $(notificationHtml);
+    } else {
+      $el = $(notification.params.el);
     }
 
-    if (app.theme !== 'md') {
-        Notification.close(list.children('li.notification-item:last-child'));
-    }
-    list.append(item[0]);
-    container.show();
-
-    var itemHeight = item.outerHeight();
-    if (app.theme === 'md') {
-        container.transform('translate3d(0, '+itemHeight+'px, 0)');
-        container.transition(0);
-
-        container.transform('translate3d(0, 0, 0)');
-        container.transition('');
-    }
-    else {
-        item.transform('translate3d(0,' + (-itemHeight) + 'px,0)');
-        item.transition(0);
-
-        item.transition('');
-        item.transform('translate3d(0,0px,0)');
+    if ($el && $el.length > 0 && $el[0].f7Modal) {
+      return $el[0].f7Modal;
     }
 
-    container.transform('translate3d(0, 0,0)');
-    item.removeClass('notification-hidden');
-  },
-
-  close(item, event) {
-    item = $(item);
-    if (item.length === 0) return;
-    if (item.hasClass('notification-item-removing')) return;
-    var container = $('.notifications');
-
-    var itemHeight = item.outerHeight();
-    item.css('height', itemHeight + 'px').transition(0).addClass('notification-item-removing');
-    item.css({
-        height: '0px',
-        marginBottom: '0px'
-    }).transition('');
-
-    if (item.data('f7NotificationOnClose')) item.data('f7NotificationOnClose')(event);
-
-    if (container.find('.notification-item:not(.notification-item-removing)').length === 0) {
-        container.transform('');
+    if ($el.length === 0) {
+      return notification.destroy();
     }
 
-    item.addClass('notification-hidden').transitionEnd(function () {
-        item.remove();
-        if (container.find('.notification-item').length === 0) {
-            container.hide();
-        }
+    Utils.extend(notification, {
+      $el,
+      el: $el[0],
+      type: 'notification',
     });
 
-  },
-};
-var Notification$1 = {
+    $el[0].f7Modal = notification;
+
+    if (closeButton) {
+      $el.find('.notification-close-button').on('click', () => {
+        notification.close();
+      });
+    }
+    $el.on('click', (e) => {
+      if (closeButton && $(e.target).closest('.notification-close-button').length) {
+        return;
+      }
+      notification.emit('local::click notificationClick', notification);
+      if (closeOnClick) notification.close();
+    });
+
+    notification.on('beforeDestroy', () => {
+      $el.off('click');
+    });
+
+    /* Touch Events */
+    let isTouched;
+    let isMoved;
+    let isScrolling;
+    let touchesDiff;
+    let touchStartTime;
+    let notificationHeight;
+    const touchesStart = {};
+    function handleTouchStart(e) {
+      if (isTouched) return;
+      isTouched = true;
+      isMoved = false;
+      isScrolling = undefined;
+      touchStartTime = Utils.now();
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+    }
+    function handleTouchMove(e) {
+      if (!isTouched) return;
+      const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+      const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      if (typeof isScrolling === 'undefined') {
+        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) < Math.abs(pageX - touchesStart.x));
+      }
+      if (isScrolling) {
+        isTouched = false;
+        return;
+      }
+      e.preventDefault();
+      if (!isMoved) {
+        notification.$el.removeClass('notification-transitioning');
+        notification.$el.transition(0);
+        notificationHeight = notification.$el[0].offsetHeight / 2;
+      }
+      isMoved = true;
+      touchesDiff = (pageY - touchesStart.y);
+      let newTranslate = touchesDiff;
+      if (touchesDiff > 0) {
+        newTranslate = touchesDiff ** 0.8;
+      }
+      notification.$el.transform(`translate3d(0, ${newTranslate}px, 0)`);
+    }
+    function handleTouchEnd() {
+      if (!isTouched || !isMoved) {
+        isTouched = false;
+        isMoved = false;
+        return;
+      }
+      isTouched = false;
+      isMoved = false;
+      if (touchesDiff === 0) {
+        return;
+      }
+
+      const timeDiff = Utils.now() - touchStartTime;
+      notification.$el.transition('');
+      notification.$el.addClass('notification-transitioning');
+      notification.$el.transform('');
+
+      if (
+        (touchesDiff < -10 && timeDiff < 300) ||
+        (-touchesDiff >= notificationHeight / 1)
+      ) {
+        notification.close();
+      }
+    }
+
+    function attachTouchEvents() {
+      {
+        notification.$el.on(app.touchEvents.start, handleTouchStart, { passive: true });
+        app.on('touchmove:active', handleTouchMove);
+        app.on('touchend:passive', handleTouchEnd);
+      }
+    }
+    function detachTouchEvents() {
+      {
+        notification.$el.off(app.touchEvents.start, handleTouchStart, { passive: true });
+        app.off('touchmove:active', handleTouchMove);
+        app.off('touchend:passive', handleTouchEnd);
+      }
+    }
+
+    let timeoutId;
+    function closeOnTimeout() {
+      timeoutId = Utils.nextTick(() => {
+        if (isTouched && isMoved) {
+          closeOnTimeout();
+          return;
+        }
+        notification.close();
+      }, closeTimeout);
+    }
+    notification.on('open', () => {
+      if (notification.params.swipeToClose) {
+        attachTouchEvents();
+      }
+      $('.notification.modal-in').each((index, openedEl) => {
+        const notificationInstance = app.notification.get(openedEl);
+        if (openedEl !== notification.el && notificationInstance) {
+          notificationInstance.close();
+        }
+      });
+      if (closeTimeout) {
+        closeOnTimeout();
+      }
+    });
+    notification.on('close beforeDestroy', () => {
+      if (notification.params.swipeToClose) {
+        detachTouchEvents();
+      }
+      window.clearTimeout(timeoutId);
+    });
+
+    return notification;
+  }
+  render() {
+    const notification = this;
+    if (notification.params.render) return notification.params.render.call(notification, notification);
+    const { icon, title, titleRightText, subtitle, text, closeButton, cssClass } = notification.params;
+    return `
+      <div class="notification ${cssClass || ''}">
+        <div class="notification-header">
+          ${icon ? `<div class="notification-icon">${icon}</div>` : ''}
+          ${title ? `<div class="notification-title">${title}</div>` : ''}
+          ${titleRightText ? `<div class="notification-title-right-text">${titleRightText}</div>` : ''}
+          ${closeButton ? '<span class="notification-close-button"></span>' : ''}
+        </div>
+        <div class="notification-content">
+          ${subtitle ? `<div class="notification-subtitle">${subtitle}</div>` : ''}
+          ${text ? `<div class="notification-text">${text}</div>` : ''}
+        </div>
+      </div>
+    `.trim();
+  }
+}
+
+var Notification = {
   name: 'notification',
+  static: {
+    Notification: Notification$1,
+  },
   create() {
     const app = this;
-    Utils.extend(app, {
-      notification: {
-        add: Notification.add.bind(app),
-        close: Notification.close.bind(app),
-      },
-    });
+    app.notification = Utils.extend(
+      {},
+      ModalMethods({
+        app,
+        constructor: Notification$1,
+        defaultSelector: '.notification.modal-in',
+      })
+    );
   },
   params: {
     notification: {
+      icon: null,
+      title: null,
+      titleRightText: null,
+      subtitle: null,
+      text: null,
+      closeButton: false,
+      closeTimeout: null,
       closeOnClick: false,
-      closeIcon: true,
-      closeButtonText: 'Close'
+      swipeToClose: true,
+      cssClass: null,
+      render: null,
     },
   },
 };
@@ -21334,7 +21559,7 @@ Framework7$1.components = [
   Messagebar,
   Swiper,
   PhotoBrowser,
-  Notification$1,
+  Notification,
   Autocomplete
 ];
 
