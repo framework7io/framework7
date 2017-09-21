@@ -25,13 +25,13 @@ let cache;
 
 const external = [
   'dom7',
-  'template7'
-]
+  'template7',
+];
 
 const globals = {
-  'template7': 'Template7',
-  'dom7': '$'
-}
+  template7: 'Template7',
+  dom7: '$',
+};
 
 // Overwrite with local config
 try {
@@ -138,8 +138,6 @@ function umd(components, cb) {
     name: 'Framework7',
     strict: true,
     sourcemap: env === 'development',
-    external,
-    globals,
     banner,
     cache,
   })
