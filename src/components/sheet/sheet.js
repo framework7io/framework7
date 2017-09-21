@@ -5,6 +5,12 @@ import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'sheet',
+  params: {
+    sheet: {
+      closeByBackdropClick: true,
+      closeByOutsideClick: false,
+    },
+  },
   static: {
     Sheet,
   },
@@ -33,7 +39,7 @@ export default {
     },
     '.sheet-backdrop': function closeSheet() {
       const app = this;
-      if (!app.params.modals.sheetCloseByBackdropClick) return;
+      if (!app.params.sheet.closeByBackdropClick) return;
       app.sheet.close();
     },
   },
