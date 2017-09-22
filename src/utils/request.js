@@ -1,12 +1,11 @@
-/* eslint no-param-reassign: "off" */
 import Utils from './utils';
 
 const globals = {};
 let jsonpRequests = 0;
 
-function Request(options) {
+function Request(requestOptions) {
   const globalsNoCallbacks = Utils.extend({}, globals);
-  ('start beforeSend error complete success statusCode').split(' ').forEach((callbackName) => {
+  ('beforeCreate beforeOpen beforeSend error complete success statusCode').split(' ').forEach((callbackName) => {
     delete globalsNoCallbacks[callbackName];
   });
   const defaults = Utils.extend({
@@ -26,16 +25,15 @@ function Request(options) {
     timeout: 0,
   }, globalsNoCallbacks);
 
-  options = Utils.extend({}, defaults, options);
-
-  // For jQuery guys
-  if (options.type) options.method = options.type;
+  const options = Utils.extend({}, defaults, requestOptions);
 
   // Function to run XHR callbacks and events
   function fireCallback(callbackName, ...data) {
     /*
       Callbacks:
-      start/beforeSend (xhr),
+      beforeCreate (xhr, options),
+      beforeOpen (xhr, options),
+      beforeSend (xhr, options),
       error (xhr, status),
       complete (xhr, stautus),
       success (response, status, xhr),
@@ -44,6 +42,12 @@ function Request(options) {
     if (globals[callbackName]) globals[callbackName](...data);
     if (options[callbackName]) options[callbackName](...data);
   }
+
+  // Before create callback
+  fireCallback('beforeCreate', options);
+
+  // For jQuery guys
+  if (options.type) options.method = options.type;
 
   // Parameters Prefix
   let paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
@@ -124,8 +128,8 @@ function Request(options) {
   xhr.requestUrl = options.url;
   xhr.requestParameters = options;
 
-  // Ajax start callback
-  fireCallback('beforeSend', xhr, options);
+  // Before open callback
+  fireCallback('beforeOpen', xhr, options);
 
   // Open XHR
   xhr.open(method, options.url, options.async, options.user, options.password);
@@ -232,6 +236,9 @@ function Request(options) {
       fireCallback('complete', xhr, 'timeout');
     }, options.timeout);
   }
+
+  // Ajax start callback
+  fireCallback('beforeSend', xhr, options);
 
   // Send XHR
   xhr.send(postData);
