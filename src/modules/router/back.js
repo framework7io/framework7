@@ -299,7 +299,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   }
 
   if (!options.route && url) {
-    options.route = router.findMatchingRoute(url, true);
+    options.route = router.parseUrl(url);
   }
 
   // Component Callbacks

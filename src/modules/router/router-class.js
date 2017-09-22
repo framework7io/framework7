@@ -518,25 +518,28 @@ class Router extends Framework7Class {
     });
     return flattenedRoutes;
   }
-  findMatchingRoute(url, parseOnly) {
-    if (!url) return undefined;
-    const router = this;
-    const routes = router.routes;
-    const flattenedRoutes = router.flattenRoutes(routes);
+  // eslint-disable-next-line
+  parseUrl(url) {
+    if (!url) return {};
     const query = Utils.parseUrlQuery(url);
     const hash = url.split('#')[1];
     const params = {};
     const path = url.split('#')[0].split('?')[0];
+    return {
+      query,
+      hash,
+      params,
+      url,
+      path,
+    };
+  }
+  findMatchingRoute(url) {
+    if (!url) return undefined;
+    const router = this;
+    const routes = router.routes;
+    const flattenedRoutes = router.flattenRoutes(routes);
+    const { path, query, hash, params } = router.parseUrl(url);
     const urlParts = path.split('/').filter(part => part !== '');
-    if (parseOnly) {
-      return {
-        query,
-        hash,
-        params,
-        url,
-        path,
-      };
-    }
 
     let matchingRoute;
     function parseRoute(str = '') {
@@ -954,7 +957,7 @@ class Router extends Framework7Class {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
+        currentRoute = Utils.extend(router.parseUrl(router.history[0]), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -965,7 +968,7 @@ class Router extends Framework7Class {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
+        currentRoute = Utils.extend(router.parseUrl(initUrl), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],

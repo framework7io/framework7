@@ -368,7 +368,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
 
   if (!options.route && url) {
-    options.route = router.findMatchingRoute(url, true);
+    options.route = router.parseUrl(url);
     Utils.extend(options.route, { route: { url, path: url } });
   }
 
@@ -440,7 +440,7 @@ function navigate(url, navigateOptions = {}) {
   }
   let route;
   if (navigateOptions.createRoute) {
-    route = Utils.extend(router.findMatchingRoute(navigateUrl, true), {
+    route = Utils.extend(router.parseUrl(navigateUrl), {
       route: Utils.extend({}, navigateOptions.createRoute),
     });
   } else {
