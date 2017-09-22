@@ -56,7 +56,7 @@ function initSwipers(swiperEl) {
     });
   }
 
-  app.swiper.create($swiperEl[0], params);
+  $swiperEl[0].swiper = app.swiper.create($swiperEl[0], params);
 }
 
 export default {
