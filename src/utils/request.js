@@ -124,6 +124,9 @@ function Request(options) {
   xhr.requestUrl = options.url;
   xhr.requestParameters = options;
 
+  // Ajax start callback
+  fireCallback('beforeSend', xhr, options);
+
   // Open XHR
   xhr.open(method, options.url, options.async, options.user, options.password);
 
@@ -217,10 +220,6 @@ function Request(options) {
     fireCallback('error', xhr, xhr.status);
     fireCallback('complete', xhr, 'error');
   };
-
-  // Ajax start callback
-  fireCallback('start', xhr);
-  fireCallback('beforeSend', xhr);
 
   // Timeout
   if (options.timeout > 0) {
