@@ -66,7 +66,7 @@ const Tab = {
     // Swipeable tabs
     if ($tabsEl.parent().hasClass('tabs-swipeable-wrap') && app.swiper) {
       const swiper = $tabsEl.parent()[0].swiper;
-      if (swiper.activeIndex !== $newTabEl.index()) {
+      if (swiper && swiper.activeIndex !== $newTabEl.index()) {
         swiper.slideTo($newTabEl.index(), animate ? undefined : 0, false);
       }
     }
