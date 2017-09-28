@@ -461,7 +461,7 @@ function navigate(url, navigateOptions = {}) {
       router.modalLoad(modalLoadProp, route, options);
     }
   });
-  ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+  ('url content component name el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }

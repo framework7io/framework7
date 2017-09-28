@@ -464,7 +464,7 @@ function back(...args) {
     });
   }
 
-  ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+  ('url content component name el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }
