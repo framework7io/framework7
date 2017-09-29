@@ -13,13 +13,23 @@
   }
   label.item-radio input[type="radio"] ~ .icon-radio {
     position: absolute;
-    right: 10px;
     top: 50%;
     margin-top: -11px;
+    .ltr({
+      right: 10px;
+    });
+    .rtl({
+      left: 10px;;
+    })
   }
   label.item-radio {
     .item-inner {
-      padding-right: 35px;
+      .ltr({
+        padding-right: 35px;
+      });
+      .rtl({
+        padding-left: 35px;
+      });
     }
   }
   label.item-radio input[type="radio"]:checked ~ .icon-radio,

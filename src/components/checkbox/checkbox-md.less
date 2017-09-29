@@ -33,10 +33,18 @@
     overflow: hidden;
     z-index: 0;
     > .icon-checkbox {
-      margin-right: 38px;
-      + .item-media {
-        margin-left: -30px;
-      }
+      .ltr({
+        margin-right: 38px;
+        + .item-media {
+          margin-left: -30px;
+        }
+      });
+      .rtl({
+        margin-left: 38px;
+        + .item-media {
+          margin-right: -30px;
+        }
+      });
     }
     .item-content, &.item-content {
       .item-media {

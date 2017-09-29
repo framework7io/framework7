@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.8",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
   "jsnext:main": "dist/js/framework7.module.js",
@@ -10,11 +10,13 @@
     "build-prod": "cross-env NODE_ENV=production gulp build",
     "dev": "cross-env NODE_ENV=development gulp build && cross-env NODE_ENV=development gulp ks && cross-env NODE_ENV=development gulp server",
     "prod": "cross-env NODE_ENV=production gulp ks && cross-env NODE_ENV=production gulp server",
-    "test": "npm run build-dev"
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "test": "npm run build-dev && eslint ."
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nolimits4web/Framework7.git"
+    "url": "https://github.com/framework7io/Framework7.git"
   },
   "keywords": [
     "mobile",
@@ -40,7 +42,7 @@
   "author": "Vladimir Kharlampidi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nolimits4web/Framework7/issues"
+    "url": "https://github.com/framework7io/Framework7/issues"
   },
   "homepage": "http://framework7.io/",
   "browserslist": [
@@ -50,30 +52,31 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "dom7": "^1.7.0",
-    "template7": "^1.2.5"
+    "dom7": "^2.0.0",
+    "template7": "^1.3.0"
   },
   "devDependencies": {
     "cross-env": "^5.0.5",
-    "diff": "^3.2.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.1.3",
-    "eslint-plugin-import": "^2.2.0",
+    "diff": "^3.3.1",
+    "eslint": "^4.7.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-clean-css": "^3.7.0",
+    "gulp-clean-css": "^3.9.0",
     "gulp-connect": "^5.0.0",
-    "gulp-header": "^1.8.8",
-    "gulp-less": "^3.3.0",
+    "gulp-header": "^1.8.9",
+    "gulp-if": "^2.0.2",
+    "gulp-less": "^3.3.2",
     "gulp-modify-file": "^0.1.0",
     "gulp-open": "^2.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^2.6.0",
+    "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^2.1.2",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-replace": "^1.1.1",
-    "rollup-stream": "^1.19.0",
+    "rollup-plugin-replace": "^1.2.1",
+    "rollup-stream": "^1.24.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }

@@ -5,6 +5,9 @@
   height: auto;
   .toolbar-inner {
     position: relative;
+    .rtl({
+      flex-direction: row-reverse;
+    });
   }
   .messagebar-area {
     width: 100%;
@@ -50,7 +53,12 @@
     height: 100%;
   }
   + .messagebar-attachment {
-    margin-left: 8px;
+    .ltr({
+      margin-left: 8px;
+    });
+    .rtl({
+      margin-right: 8px;
+    });
   }
 }
 .messagebar-sheet {
@@ -67,12 +75,17 @@
 .messagebar-sheet-image, .messagebar-sheet-item {
   box-sizing: border-box;
   flex-shrink: 0;
-  margin-left: 1px;
   margin-top: 1px;
   position: relative;
   overflow: hidden;
   height: 125px;
   width: 125px;
+  .ltr({
+    margin-left: 1px;
+  });
+  .rtl({
+    margin-right: 1px;
+  });
   @media (orientation: landscape) {
     width: 190px / 2;
     height: 190px / 2;

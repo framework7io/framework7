@@ -13,6 +13,7 @@ function initClicks(app) {
 
     // Check if link is external
     if (isLink) {
+      // eslint-disable-next-line
       if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
         if (url && clickedLink.attr('target') === '_system') {
           e.preventDefault();

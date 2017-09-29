@@ -1,24 +1,18 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
 import VirtualList from './virtual-list-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'virtualList',
+  static: {
+    VirtualList,
+  },
   create() {
     const app = this;
-    Utils.extend(app, {
-      virtualList: {
-        create(params) {
-          return new VirtualList(app, params);
-        },
-        destroy(listEl) {
-          const $listEl = $(listEl);
-          if (!$listEl.length) return undefined;
-          const virtualList = $listEl[0].f7VirtualList;
-          if (!virtualList) return undefined;
-          return virtualList.destroy();
-        },
-      },
+    app.virtualList = ConstructorMethods({
+      defaultSelector: '.virtual-list',
+      constructor: VirtualList,
+      app,
+      domProp: 'f7VirtualList',
     });
   },
 };

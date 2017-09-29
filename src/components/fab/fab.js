@@ -75,8 +75,8 @@ const Fab = {
         $targetEl.css('opacity', 1).transform('scale(1,1)');
       });
       $fabEl.transform(`translate3d(${-diffX}px, ${-diffY}px, 0) scale(${scaleX}, ${scaleY})`)
-            .css('border-radius', `${borderRadius}px`)
-            .css('box-shadow', 'none');
+        .css('border-radius', `${borderRadius}px`)
+        .css('box-shadow', 'none');
       app.on('resize', $fabEl[0].f7FabMorphResizeHandler);
       if ($targetEl.parents('.page-content').length > 0) {
         $targetEl.parents('.page-content').on('scroll', $fabEl[0].f7FabMorphResizeHandler);

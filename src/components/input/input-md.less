@@ -48,7 +48,6 @@
     transition-property: transform, color;
   }
   .item-floating-label {
-    transform-origin: left;
     transform: scale(16/12) translateY(18px);
     color: rgba(0,0,0,0.35);
     width: auto;
@@ -57,6 +56,12 @@
     ~ .item-input-wrap input::placeholder, ~ .item-input-wrap textarea::placeholder, {
       color: transparent;
     }
+    .ltr({
+      transform-origin: left;
+    });
+    .rtl({
+      transform-origin: right;
+    });
   }
   .item-input-with-value .item-floating-label, .item-input-focused .item-floating-label {
     transform: scale(1) translateY(0);
@@ -88,7 +93,12 @@
       align-self: flex-start;
       padding-top: 7px;
       + .item-input-wrap {
-        margin-left: 8px;
+        .ltr({
+          margin-left: 8px;
+        });
+        .rtl({
+          margin-right: 8px;
+        });
       }
     }
   }
@@ -100,13 +110,19 @@
     line-height: 1.4;
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 16px;
     margin-top: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
+    .ltr({
+      left: 0;
+      right: 16px;
+    });
+    .rtl({
+      right: 0;
+      left: 16px;
+    });
   }
   .item-input-info {
     color: rgba(0,0,0,.45);

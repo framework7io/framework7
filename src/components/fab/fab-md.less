@@ -36,39 +36,39 @@
     }
   }
   // Relation with toolbar
-  .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .fab[class*="-top"],
-  .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .fab[class*="-top"] {
+  .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .fab[class*="-top"],
+  .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .fab[class*="-top"] {
     margin-top: @toolbarSize;
   }
-  .tabbar-labels:not(.toolbar-bottom) ~ * .fab[class*="-top"], .tabbar-labels:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+  .tabbar-labels:not(.toolbar-bottom-md) ~ * .fab[class*="-top"], .tabbar-labels:not(.toolbar-bottom-md) ~ .fab[class*="-top"] {
     margin-top: @tabbarLabelsSize;
   }
   .navbar {
-    + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .fab[class*="-top"],
-    + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .fab[class*="-top"] {
+    + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .fab[class*="-top"],
+    + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .fab[class*="-top"] {
       margin-top: @toolbarSize + @navbarSize;
     }
-    + .tabbar-labels:not(.toolbar-bottom) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+    + .tabbar-labels:not(.toolbar-bottom-md) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom-md) ~ .fab[class*="-top"] {
       margin-top: @tabbarLabelsSize + @navbarSize;
     }
     @media (min-width: 768px) {
-      + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .fab[class*="-top"],
-      + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .fab[class*="-top"] {
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .fab[class*="-top"],
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .fab[class*="-top"] {
         margin-top: @toolbarSize + @navbarSizeTablet;
       }
-      + .tabbar-labels:not(.toolbar-bottom) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom) ~ .fab[class*="-top"] {
+      + .tabbar-labels:not(.toolbar-bottom-md) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom-md) ~ .fab[class*="-top"] {
         margin-top: @tabbarLabelsSize + @navbarSizeTablet;
       }
     }
   }
   // Bottom
-  .toolbar-bottom ~ * .fab[class*="-bottom"],
-  .toolbar-bottom ~ .fab[class*="-bottom"],
+  .toolbar-bottom-md ~ * .fab[class*="-bottom"],
+  .toolbar-bottom-md ~ .fab[class*="-bottom"],
   .messagebar ~ * .fab[class*="-bottom"],
   .messagebar ~ .fab[class*="-bottom"] {
     margin-bottom: @toolbarSize;
   }
-  .toolbar-bottom.tabbar-labels ~ * .fab[class*="-bottom"], .toolbar-bottom.tabbar-labels ~ .fab[class*="-bottom"] {
+  .toolbar-bottom-md.tabbar-labels ~ * .fab[class*="-bottom"], .toolbar-bottom-md.tabbar-labels ~ .fab[class*="-bottom"] {
     margin-bottom: @tabbarLabelsSize;
   }
 

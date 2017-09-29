@@ -82,7 +82,7 @@ const Navbar = {
     if (dynamicNavbar) {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
         let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
-        let titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
+        const titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
 
         if (isPrevious) {
           if (router && router.params.iosAnimateNavbarBackIcon) {
@@ -171,6 +171,14 @@ const Navbar = {
     }
     if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) return undefined;
     return $navbarEl[0];
+  },
+  getPageByEl(navbarInnerEl) {
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner');
+      if ($navbarInnerEl.length > 1) return undefined;
+    }
+    return $navbarInnerEl[0].f7Page;
   },
   initHideNavbarOnScroll(pageEl, navbarInnerEl) {
     const app = this;
@@ -272,7 +280,8 @@ export default {
         $navbarEl = $(navbarInnerEl).parents('.navbar');
       }
       if (page.$el.hasClass('no-navbar') || (view.router.dynamicNavbar && !navbarInnerEl)) {
-        app.navbar.hide($navbarEl);
+        const animate = !!(page.pageFrom && page.router.history.length > 1);
+        app.navbar.hide($navbarEl, animate);
       } else {
         app.navbar.show($navbarEl);
       }

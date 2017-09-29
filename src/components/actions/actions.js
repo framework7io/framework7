@@ -1,35 +1,25 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
 import Actions from './actions-class';
+import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'actions',
+  params: {
+    actions: {
+      convertToPopover: true,
+      closeByBackdropClick: true,
+      render: null,
+      renderPopover: null,
+    },
+  },
+  static: {
+    Actions,
+  },
   create() {
     const app = this;
-    Utils.extend(app, {
-      actions: {
-        create(params) {
-          return new Actions(app, params);
-        },
-        open(actionsEl, animate) {
-          const $actionsEl = $(actionsEl);
-          let actions = $actionsEl[0].f7Modal;
-          if (!actions) actions = new Actions(app, { el: $actionsEl });
-          return actions.open(animate);
-        },
-        close(actionsEl = '.actions-modal.modal-in', animate) {
-          const $actionsEl = $(actionsEl);
-          if ($actionsEl.length === 0) return undefined;
-          let actions = $actionsEl[0].f7Modal;
-          if (!actions) actions = new Actions(app, { el: $actionsEl });
-          return actions.close(animate);
-        },
-        get(actionsEl = '.actions-modal.modal-in') {
-          const $actionsEl = $(actionsEl);
-          if ($actionsEl.length === 0) return undefined;
-          return $actionsEl[0].f7Modal;
-        },
-      },
+    app.actions = ModalMethods({
+      app,
+      constructor: Actions,
+      defaultSelector: '.actions-modal.modal-in',
     });
   },
   clicks: {
@@ -43,7 +33,7 @@ export default {
     },
     '.actions-backdrop': function closeActions() {
       const app = this;
-      if (!app.params.modals.actionsCloseByBackdropClick) return;
+      if (!app.params.actions.closeByBackdropClick) return;
       app.actions.close();
     },
   },

@@ -6,7 +6,7 @@ class Sheet extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: app.theme === 'md',
-      closeByOutsideClick: app.params.modals.sheetCloseByOutsideClick,
+      closeByOutsideClick: app.params.sheet.closeByOutsideClick,
       on: {},
     }, params);
 

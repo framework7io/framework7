@@ -1,7 +1,12 @@
 .md {
   .link {
     i + span, i + i, span + i, span + span {
-      margin-left: 8px;
+      .ltr({
+        margin-left: 8px;
+      });
+      .rtl({
+        margin-right: 8px;
+      });
     }
   }
 }

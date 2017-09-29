@@ -73,12 +73,10 @@ function backward(el, backwardOptions) {
         backIndex = router.history.length - router.history.indexOf(options.route.url) - 1;
         router.history = router.history.slice(0, router.history.indexOf(options.route.url) + 2);
         view.history = router.history;
+      } else if (router.history[[router.history.length - 2]]) {
+        router.history[router.history.length - 2] = options.route.url;
       } else {
-        if (router.history[[router.history.length - 2]]) {
-          router.history[router.history.length - 2] = options.route.url;
-        } else {
-          router.history.unshift(router.url);
-        }
+        router.history.unshift(router.url);
       }
 
       if (backIndex && router.params.stackPages) {
@@ -97,9 +95,9 @@ function backward(el, backwardOptions) {
               }
             } else {
               router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
-              router.removeEl($pageToRemove);
+              router.removePage($pageToRemove);
               if (separateNavbar && $navbarToRemove.length > 0) {
-                router.removeEl($navbarToRemove);
+                router.removeNavbar($navbarToRemove);
               }
             }
           }
@@ -116,9 +114,9 @@ function backward(el, backwardOptions) {
           $navbarToRemove.addClass('stacked');
         } else if ($pageToRemove.length > 0) {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
-          router.removeEl($pageToRemove);
+          router.removePage($pageToRemove);
           if (separateNavbar && $navbarToRemove.length) {
-            router.removeEl($navbarToRemove);
+            router.removeNavbar($navbarToRemove);
           }
         }
       }
@@ -172,9 +170,9 @@ function backward(el, backwardOptions) {
           }
         } else {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined);
-          router.removeEl($pageToRemove);
+          router.removePage($pageToRemove);
           if (separateNavbar && $navbarToRemove.length) {
-            router.removeEl($navbarToRemove);
+            router.removeNavbar($navbarToRemove);
           }
         }
       });
@@ -211,11 +209,11 @@ function backward(el, backwardOptions) {
   }
 
   // Page init and before init events
-  router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', $oldPage);
+  router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
 
   // Before animation callback
-  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current');
-  router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next');
+  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current', options);
+  router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
 
   // Animation
   function afterAnimation() {
@@ -230,8 +228,8 @@ function backward(el, backwardOptions) {
     }
 
     // After animation event
-    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current');
-    router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next');
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current', options);
+    router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
 
     // Remove Old Page
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
@@ -240,10 +238,10 @@ function backward(el, backwardOptions) {
         $oldNavbarInner.addClass('stacked');
       }
     } else {
-      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined);
-      router.removeEl($oldPage);
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined, options);
+      router.removePage($oldPage);
       if (separateNavbar && $oldNavbarInner.length) {
-        router.removeEl($oldNavbarInner);
+        router.removeNavbar($oldNavbarInner);
       }
     }
 
@@ -251,7 +249,8 @@ function backward(el, backwardOptions) {
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     // Preload previous page
-    if (router.params.preloadPreviousPage) {
+    const preloadPreviousPage = app.theme === 'ios' ? (router.params.preloadPreviousPage || router.params.iosSwipeBack) : router.params.preloadPreviousPage;
+    if (preloadPreviousPage) {
       router.back(router.history[router.history.length - 2], { preload: true });
     }
     if (router.params.pushState) {
@@ -295,7 +294,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
     router.url === options.route.url &&
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
-    ) {
+  ) {
     return false;
   }
 
@@ -481,7 +480,7 @@ function back(...args) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async(asyncResolve, asyncReject);
+    route.route.async.call(router, asyncResolve, asyncReject);
   }
   // Return Router
   return router;

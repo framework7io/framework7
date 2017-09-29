@@ -1,47 +1,32 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import PullToRefresh from './pull-to-refresh-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'pullToRefresh',
   create() {
     const app = this;
-    Utils.extend(app, {
-      ptr: {
-        create(el) {
-          const $el = $(el);
-          if (!$el.length) return undefined;
-          if ($el[0].f7PullToRefresh) {
-            return $el[0].f7PullToRefresh;
-          }
-          return new PullToRefresh(app, el);
-        },
-        destroy(el) {
-          const $el = $(el);
-          if (!$el.length) return undefined;
-          if ($el[0].f7PullToRefresh) {
-            $el[0].f7PullToRefresh.destroy();
-          }
-          return undefined;
-        },
+    app.ptr = Utils.extend(
+      ConstructorMethods({
+        defaultSelector: '.ptr-content',
+        constructor: PullToRefresh,
+        app,
+        domProp: 'f7PullToRefresh',
+      }),
+      {
         done(el) {
-          const $el = $(el);
-          if (!$el.length) return undefined;
-          if ($el[0].f7PullToRefresh) {
-            return $el[0].f7PullToRefresh.done();
-          }
+          const ptr = app.ptr.get(el);
+          if (ptr) return ptr.done();
           return undefined;
         },
         refresh(el) {
-          const $el = $(el);
-          if (!$el.length) return undefined;
-          if ($el[0].f7PullToRefresh) {
-            return $el[0].f7PullToRefresh.refresh();
-          }
+          const ptr = app.ptr.get(el);
+          if (ptr) return ptr.refresh();
           return undefined;
         },
-      },
-    });
+      }
+    );
   },
   static: {
     PullToRefresh,

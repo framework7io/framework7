@@ -9,7 +9,7 @@ export default {
       leftBreakpoint: 0,
       rightBreakpoint: 0,
       swipe: undefined, // or 'left' or 'right' or 'both'
-      swipeActiveArea: 0,
+      swipeActiveArea: null,
       swipeCloseOpposite: true,
       swipeOnlyClose: false,
       swipeNoFollow: false,
@@ -117,6 +117,24 @@ export default {
           return new Panel(app, { el: $panelEl }).close(animate);
         }
         return false;
+      },
+      get(side) {
+        let panelSide = side;
+        if (!panelSide) {
+          if ($('.panel').length > 1) {
+            return undefined;
+          }
+          panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
+        }
+        if (!panelSide) return undefined;
+        if (app.panel[panelSide]) {
+          return app.panel[panelSide];
+        }
+        const $panelEl = $(`.panel-${panelSide}`);
+        if ($panelEl.length > 0) {
+          return new Panel(app, { el: $panelEl });
+        }
+        return undefined;
       },
     });
   },

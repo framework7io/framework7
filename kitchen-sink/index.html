@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Framework7</title>
-  <link rel="stylesheet" href="../build/css/framework7.css">
+  <link rel="stylesheet" href="../dist/css/framework7.min.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -82,8 +82,8 @@
     <div class="view view-main view-init" data-url="/">
       <div class="page">
         <div class="navbar">
-          <div class="navbar-inner sliding">
-            <div class="title">Framework7</div>
+          <div class="navbar-inner">
+            <div class="title sliding">Framework7</div>
             <div class="right">
               <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-components">
                 <i class="icon f7-icons ios-only">search_strong</i>
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="page-content">
-          <div class="list links-list">
+          <div class="list links-list searchbar-hide-on-search">
             <ul>
               <li>
                 <a href="/about/">About Framework7</a>
@@ -120,7 +120,7 @@
                 <a href="/action-sheet/">Action Sheet</a>
               </li>
               <li>
-                <a href="/autocomplete/">Autocomplete <span class="badge">TODO</span></a>
+                <a href="/autocomplete/">Autocomplete</a>
               </li>
               <li>
                 <a href="/badge/">Badge</a>
@@ -249,7 +249,13 @@
                 <a href="/swiper/">Swiper Slider</a>
               </li>
               <li>
+                <a href="/tabs/">Tabs</a>
+              </li>
+              <li>
                 <a href="/timeline/">Timeline</a>
+              </li>
+              <li>
+                <a href="/toast/">Toast</a>
               </li>
               <li>
                 <a href="/toggle/">Toggle</a>
@@ -258,15 +264,17 @@
                 <a href="/toolbar-tabbar/">Toolbar & Tabbar</a>
               </li>
               <li>
-                <a href="/tabs/">Tabs</a>
-              </li>
-              <li>
                 <a href="/virtual-list/">Virtual List</a>
               </li>
             </ul>
           </div>
-          <div class="block-title">Themes</div>
-          <div class="list links-list">
+          <div class="list simple-list searchbar-not-found">
+            <ul>
+              <li>Nothing found</li>
+            </ul>
+          </div>
+          <div class="block-title searchbar-hide-on-search">Themes</div>
+          <div class="list links-list searchbar-hide-on-search">
             <ul>
               <li>
                 <a href="./?theme=ios" class="external">iOS Theme</a>
@@ -279,8 +287,8 @@
               </li>
             </ul>
           </div>
-          <div class="block-title">Page Loaders</div>
-          <div class="list links-list">
+          <div class="block-title searchbar-hide-on-search">Page Loaders</div>
+          <div class="list links-list searchbar-hide-on-search">
             <ul>
               <li>
                 <a href="/page-loader-template7/vladimir/123/about-me/1/?start=0&end=30#top">Template7 Page</a>
@@ -294,7 +302,7 @@
       </div>
     </div>
   </div>
-  <script src="../build/js/framework7.js"></script>
+  <script src="../dist/js/framework7.min.js"></script>
   <script src="js/routes.js"></script>
   <script src="js/app.js"></script>
 </body>

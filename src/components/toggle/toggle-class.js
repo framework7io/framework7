@@ -11,7 +11,7 @@ class Toggle extends Framework7Class {
     const defaults = {};
 
     // Extend defaults with modules params
-    toggle.useInstanceModulesParams(defaults);
+    toggle.useModulesParams(defaults);
 
     toggle.params = Utils.extend(defaults, params);
 
@@ -21,14 +21,12 @@ class Toggle extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return toggle;
 
-    const dataset = $el.dataset();
 
     const $inputEl = $el.children('input[type="checkbox"]');
 
     Utils.extend(toggle, {
       $el,
       el: $el[0],
-      dataset,
       $inputEl,
       inputEl: $inputEl[0],
       disabled: $el.hasClass('disabled') || $inputEl.hasClass('disabled') || $inputEl.attr('disabled') || $inputEl[0].disabled,
@@ -79,6 +77,7 @@ class Toggle extends Framework7Class {
       if (!isTouched || toggle.disabled) return;
       const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      const inverter = app.rtl ? -1 : 1;
 
       if (typeof isScrolling === 'undefined') {
         isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
@@ -91,11 +90,12 @@ class Toggle extends Framework7Class {
 
       touchesDiff = pageX - touchesStart.x;
 
+
       let changed;
-      if (touchesDiff < 0 && Math.abs(touchesDiff) > toggleWidth / 3 && touchStartChecked) {
+      if (touchesDiff * inverter < 0 && Math.abs(touchesDiff) > toggleWidth / 3 && touchStartChecked) {
         changed = true;
       }
-      if (touchesDiff > 0 && Math.abs(touchesDiff) > toggleWidth / 3 && !touchStartChecked) {
+      if (touchesDiff * inverter > 0 && Math.abs(touchesDiff) > toggleWidth / 3 && !touchStartChecked) {
         changed = true;
       }
       if (changed) {
@@ -110,16 +110,17 @@ class Toggle extends Framework7Class {
         isTouched = false;
         return;
       }
+      const inverter = app.rtl ? -1 : 1;
       isTouched = false;
 
       $el.removeClass('toggle-active-state');
 
       let changed;
       if ((Utils.now() - touchStartTime) < 300) {
-        if (touchesDiff < 0 && touchStartChecked) {
+        if (touchesDiff * inverter < 0 && touchStartChecked) {
           changed = true;
         }
-        if (touchesDiff > 0 && !touchStartChecked) {
+        if (touchesDiff * inverter > 0 && !touchStartChecked) {
           changed = true;
         }
         if (changed) {
@@ -128,32 +129,33 @@ class Toggle extends Framework7Class {
       }
     }
     function handleInputChange() {
-      toggle.emit({
-        events: 'change',
-        parents: [],
-      });
-      toggle.emit('toggleChange toggle:change', toggle);
+      toggle.$el.trigger('toggle:change', toggle);
+      toggle.emit('local::change toggleChange', toggle);
     }
     toggle.attachEvents = function attachEvents() {
-      if (!Support.touch) return;
-      const passive = Support.passiveListener ? { passive: true } : false;
-      $el.on(app.touchEvents.start, handleTouchStart, passive);
-      app.on('touchmove', handleTouchMove);
-      app.on('touchend:passive', handleTouchEnd);
+      if (process.env.TARGET !== 'desktop') {
+        if (!Support.touch) return;
+        const passive = Support.passiveListener ? { passive: true } : false;
+        $el.on(app.touchEvents.start, handleTouchStart, passive);
+        app.on('touchmove', handleTouchMove);
+        app.on('touchend:passive', handleTouchEnd);
+      }
       toggle.$inputEl.on('change', handleInputChange);
     };
     toggle.detachEvents = function detachEvents() {
-      if (!Support.touch) return;
-      const passive = Support.passiveListener ? { passive: true } : false;
-      $el.off(app.touchEvents.start, handleTouchStart, passive);
-      app.off('touchmove', handleTouchMove);
-      app.off('touchend:passive', handleTouchEnd);
+      if (process.env.TARGET !== 'desktop') {
+        if (!Support.touch) return;
+        const passive = Support.passiveListener ? { passive: true } : false;
+        $el.off(app.touchEvents.start, handleTouchStart, passive);
+        app.off('touchmove', handleTouchMove);
+        app.off('touchend:passive', handleTouchEnd);
+      }
       toggle.$inputEl.off('change', handleInputChange);
     };
 
 
     // Install Modules
-    toggle.useInstanceModules();
+    toggle.useModules();
 
     // Init
     toggle.init();
@@ -168,8 +170,8 @@ class Toggle extends Framework7Class {
   }
   destroy() {
     let toggle = this;
-    toggle.emit('toggleBeforeDestroy', toggle);
     toggle.$el.trigger('toggle:beforedestroy', toggle);
+    toggle.emit('local::beforeDestroy toggleBeforeDestroy', toggle);
     delete toggle.$el[0].f7Toggle;
     toggle.detachEvents();
     Utils.deleteProps(toggle);

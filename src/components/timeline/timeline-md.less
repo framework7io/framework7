@@ -11,6 +11,9 @@
   }
   .timeline-item {
     padding: 2px 0px 16px;
+    &:last-child {
+      padding-bottom: 2px;
+    }
   }
   .timeline-item-content {
     .card, .list, .block {
@@ -32,7 +35,8 @@
     }
   }
   .timeline-item-divider {
-    margin: 0 16px;
+    margin-left: 16px;
+    margin-right: 16px;
   }
   .timeline-item-time {
     margin-top: 16px;
@@ -45,19 +49,37 @@
     font-size: 16px;
   }
   .timelineItemLeft() {
-    margin-right: ~"calc(50% - (32px + 10px) / 2 - 50px)";
     flex-direction: row-reverse;
-    margin-left: 0;
-    .timeline-item-date {
-      text-align: left;
-    }
+    .ltr({
+      margin-right: ~"calc(50% - (32px + 10px) / 2 - 50px)";
+      margin-left: 0;
+      .timeline-item-date {
+        text-align: left;
+      }
+    });
+    .rtl({
+      margin-left: ~"calc(50% - (32px + 10px) / 2 - 50px)";
+      margin-right: 0;
+      .timeline-item-date {
+        text-align: right;
+      }
+    });
   }
   .timelineItemRight() {
-    margin-left: ~"calc(50% - (32px + 10px) / 2 - 50px)";
-    margin-right: 0;
-    .timeline-item-date {
-      text-align: right;
-    }
+    .ltr({
+      margin-left: ~"calc(50% - (32px + 10px) / 2 - 50px)";
+      margin-right: 0;
+      .timeline-item-date {
+        text-align: right;
+      }
+    });
+    .rtl({
+      margin-right: ~"calc(50% - (32px + 10px) / 2 - 50px)";
+      margin-left: 0;
+      .timeline-item-date {
+        text-align: left;
+      }
+    });
   }
   .timeline-sides {
     .timeline-item {
@@ -108,8 +130,14 @@
     padding: 0 12px;
     color: #fff;
     background: @themeColor;
+
     span {
-      left: 12px;
+      .ltr({
+        left: 12px;
+      });
+      .rtl({
+        right: 12px;
+      });
     }
   }
   .timeline-year-title {

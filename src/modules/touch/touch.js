@@ -235,16 +235,16 @@ function initTouch() {
     evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
     evt.forwardedTouchEvent = true;
 
-    if (app.device.ios && navigator.standalone) {
-      //Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
-      //Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
-      setTimeout(function () {
-          targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-          targetElement.dispatchEvent(evt);
+    if (app.device.ios && window.navigator.standalone) {
+      // Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
+      // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
+      setTimeout(() => {
+        targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        targetElement.dispatchEvent(evt);
       }, 10);
     } else {
-        targetElement.dispatchEvent(evt);
-    }    
+      targetElement.dispatchEvent(evt);
+    }
   }
 
   // Touch Handlers
@@ -299,7 +299,7 @@ function initTouch() {
     touchStartX = e.targetTouches[0].pageX;
     touchStartY = e.targetTouches[0].pageY;
 
-      // Detect scroll parent
+    // Detect scroll parent
     if (Device.ios) {
       scrollParent = undefined;
       $(targetElement).parents().each(() => {
@@ -410,7 +410,7 @@ function initTouch() {
       rippleTouchEnd();
     }
 
-      // Trigger focus when required
+    // Trigger focus when required
     if (targetNeedsFocus(targetElement)) {
       if (Device.ios && Device.webView) {
         if ((e.timeStamp - touchStartTime) > 159) {
@@ -424,12 +424,12 @@ function initTouch() {
       targetElement.focus();
     }
 
-      // Blur active elements
+    // Blur active elements
     if (document.activeElement && targetElement !== document.activeElement && document.activeElement !== document.body && targetElement.nodeName.toLowerCase() !== 'label') {
       document.activeElement.blur();
     }
 
-      // Send click
+    // Send click
     e.preventDefault();
     sendClick(e);
     return false;
@@ -438,14 +438,14 @@ function initTouch() {
     trackClick = false;
     targetElement = null;
 
-      // Remove Active State
+    // Remove Active State
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
     if (params.activeState) {
       removeActive();
     }
 
-      // Remove Ripple
+    // Remove Ripple
     if (useRipple) {
       rippleTouchEnd();
     }
@@ -507,33 +507,32 @@ function initTouch() {
     return allowClick;
   }
 
-  function emitAppTouchEvent(name, context, e) {
+  function emitAppTouchEvent(name, e) {
     app.emit({
       events: name,
       data: [e],
-      context,
     });
   }
   function appClick(e) {
-    emitAppTouchEvent('click', this, e);
+    emitAppTouchEvent('click', e);
   }
   function appTouchStartActive(e) {
-    emitAppTouchEvent('touchstart', this, e);
+    emitAppTouchEvent('touchstart touchstart:active', e);
   }
   function appTouchMoveActive(e) {
-    emitAppTouchEvent('touchmove', this, e);
+    emitAppTouchEvent('touchmove touchmove:active', e);
   }
   function appTouchEndActive(e) {
-    emitAppTouchEvent('touchend', this, e);
+    emitAppTouchEvent('touchend touchend:active', e);
   }
   function appTouchStartPassive(e) {
-    emitAppTouchEvent('touchstart:passive', this, e);
+    emitAppTouchEvent('touchstart:passive', e);
   }
   function appTouchMovePassive(e) {
-    emitAppTouchEvent('touchmove:passive', this, e);
+    emitAppTouchEvent('touchmove:passive', e);
   }
   function appTouchEndPassive(e) {
-    emitAppTouchEvent('touchend:passive', this, e);
+    emitAppTouchEvent('touchend:passive', e);
   }
 
   const passiveListener = Support.passiveListener ? { passive: true } : false;
@@ -550,17 +549,17 @@ function initTouch() {
     document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
     document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
   } else {
-    document.addEventListener(app.touchEvents.start, function handler(e) {
-      appTouchStartActive.call(this, e);
-      appTouchStartPassive.call(this, e);
+    document.addEventListener(app.touchEvents.start, (e) => {
+      appTouchStartActive(e);
+      appTouchStartPassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.move, function handler(e) {
-      appTouchMoveActive.call(this, e);
-      appTouchMovePassive.call(this, e);
+    document.addEventListener(app.touchEvents.move, (e) => {
+      appTouchMoveActive(e);
+      appTouchMovePassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.end, function handler(e) {
-      appTouchEndActive.call(this, e);
-      appTouchEndPassive.call(this, e);
+    document.addEventListener(app.touchEvents.end, (e) => {
+      appTouchEndActive(e);
+      appTouchEndPassive(e);
     }, false);
   }
 
@@ -601,7 +600,7 @@ export default {
       activeState: true,
       activeStateElements: 'a, button, label, span, .actions-button',
       materialRipple: true,
-      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell',
+      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell, .notification-close-button',
     },
   },
   instance: {

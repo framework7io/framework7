@@ -3,8 +3,15 @@
   .list {
     .accordion-item-toggle {
       .item-inner {
-        padding-right: 42px;
-        background: no-repeat calc(~"100% - 16px") center;
+        .ltr({
+          padding-right: 42px;
+          background: no-repeat calc(~"100% - 16px") center;
+        });
+        .rtl({
+          padding-left: 42px;
+          background-repeat: no-repeat;
+          background-position: 16px center;
+        });
       }
       &.active-state {
         background-color: rgba(0,0,0,0.1);

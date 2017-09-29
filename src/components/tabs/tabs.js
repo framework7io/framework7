@@ -22,7 +22,6 @@ const Tab = {
       };
     }
 
-
     let $tabLinkEl;
     if (tabLink) $tabLinkEl = $(tabLink);
 
@@ -38,19 +37,36 @@ const Tab = {
     if (app.swipeout) app.swipeout.allowOpen = true;
 
     // Animated tabs
-    const isAnimatedTabs = $tabsEl.parent().hasClass('tabs-animated-wrap');
-    if (isAnimatedTabs) {
+    const tabsChangedCallbacks = [];
+
+    function onTabsChanged(callback) {
+      tabsChangedCallbacks.push(callback);
+    }
+    function tabsChanged() {
+      tabsChangedCallbacks.forEach((callback) => {
+        callback();
+      });
+    }
+
+    let animated = false;
+
+    if ($tabsEl.parent().hasClass('tabs-animated-wrap')) {
       $tabsEl.parent()[animate ? 'removeClass' : 'addClass']('not-animated');
+
+      const transitionDuration = parseFloat($tabsEl.css('transition-duration').replace(',', '.'));
+      if (animate && transitionDuration) {
+        $tabsEl.transitionEnd(tabsChanged);
+        animated = true;
+      }
+
       const tabsTranslate = (app.rtl ? $newTabEl.index() : -$newTabEl.index()) * 100;
       $tabsEl.transform(`translate3d(${tabsTranslate}%,0,0)`);
     }
 
     // Swipeable tabs
-    const isSwipeableTabs = $tabsEl.parent().hasClass('tabs-swipeable-wrap');
-    let swiper;
-    if (isSwipeableTabs && app.swiper) {
-      swiper = $tabsEl.parent()[0].swiper;
-      if (swiper.activeIndex !== $newTabEl.index()) {
+    if ($tabsEl.parent().hasClass('tabs-swipeable-wrap') && app.swiper) {
+      const swiper = $tabsEl.parent()[0].swiper;
+      if (swiper && swiper.activeIndex !== $newTabEl.index()) {
         swiper.slideTo($newTabEl.index(), animate ? undefined : 0, false);
       }
     }
@@ -93,7 +109,7 @@ const Tab = {
         // Search by id
         const oldTabId = $oldTabEl.attr('id');
         if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
-          // Search by data-tab
+        // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
           $('[data-tab]').each((index, tabLinkEl) => {
             if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);
@@ -102,6 +118,8 @@ const Tab = {
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
           $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
         }
+      } else if (tabRoute) {
+        $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
       }
 
       if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass('tab-link-active');
@@ -123,6 +141,8 @@ const Tab = {
       newTabEl: $newTabEl[0],
       $oldTabEl,
       oldTabEl: $oldTabEl[0],
+      onTabsChanged,
+      animated,
     };
   },
 };

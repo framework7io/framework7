@@ -5,5 +5,4 @@ custom
 npm-debug.log
 .idea
 .vscode
-package-lock.json
-scripts/build-config-local.js
+scripts/build-config-custom.js

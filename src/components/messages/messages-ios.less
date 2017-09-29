@@ -157,7 +157,12 @@
       height: 9px;
       opacity: 0.35;
       + div {
-        margin-left: 4px;
+        .ltr({
+          margin-left: 4px;
+        });
+        .rtl({
+          margin-right: 4px;
+        });
       }
     }
     > div:nth-child(1) {

@@ -26,7 +26,7 @@ class Messages extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    m.useInstanceModulesParams(defaults);
+    m.useModulesParams(defaults);
 
     m.params = Utils.extend(defaults, params);
 
@@ -46,15 +46,15 @@ class Messages extends Framework7Class {
 
     });
     // Install Modules
-    m.useInstanceModules();
+    m.useModules();
 
     // Init
     m.init();
 
     return m;
   }
+  // eslint-disable-next-line
   getMessageData(messageEl) {
-    const m = this;
     const $messageEl = $(messageEl);
     const data = {
       avatar: $messageEl.css('background-image'),
@@ -407,7 +407,7 @@ class Messages extends Framework7Class {
   }
   destroy() {
     const m = this;
-    m.emit('messagesBeforeDestroy', m);
+    m.emit('local::beforeDestroy messagesBeforeDestroy', m);
     m.$el.trigger('messages:beforedestroy', m);
     m.$el[0].f7Messages = null;
     delete m.$el[0].f7Messages;

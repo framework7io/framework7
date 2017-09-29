@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import t7 from 'template7';
+import Template7 from 'template7';
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import Component from '../../utils/component';
@@ -20,7 +20,7 @@ class Router extends Framework7Class {
 
     if (router.isAppRouter) {
       // App Router
-      Utils.extend(router, {
+      Utils.extend(false, router, {
         app,
         params: app.params.view,
         routes: app.routes || [],
@@ -28,15 +28,17 @@ class Router extends Framework7Class {
       });
     } else {
       // View Router
-      Utils.extend(router, {
+      Utils.extend(false, router, {
         app,
         view,
         params: view.params,
-        routes: view.routes || [],
+        routes: view.routes,
         $el: view.$el,
+        el: view.el,
         $navbarEl: view.$navbarEl,
         navbarEl: view.navbarEl,
         history: view.history,
+        scrollHistory: view.scrollHistory,
         cache: app.cache,
         dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
         separateNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar,
@@ -46,7 +48,7 @@ class Router extends Framework7Class {
     }
 
     // Install Modules
-    router.useInstanceModules();
+    router.useModules();
 
     // Temporary Dom
     router.tempDom = document.createElement('div');
@@ -326,15 +328,16 @@ class Router extends Framework7Class {
       if (progress >= 1) {
         done = true;
       }
+      const inverter = router.app.rtl ? -1 : 1;
       if (ios) {
         if (direction === 'forward') {
-          newPage.transform(`translate3d(${(1 - easeProgress) * 100}%,0,0)`);
-          oldPage.transform(`translate3d(${-easeProgress * 20}%,0,0)`);
+          newPage.transform(`translate3d(${(1 - easeProgress) * 100 * inverter}%,0,0)`);
+          oldPage.transform(`translate3d(${-easeProgress * 20 * inverter}%,0,0)`);
           $shadowEl[0].style.opacity = easeProgress;
           $opacityEl[0].style.opacity = easeProgress;
         } else {
-          newPage.transform(`translate3d(${-(1 - easeProgress) * 20}%,0,0)`);
-          oldPage.transform(`translate3d(${easeProgress * 100}%,0,0)`);
+          newPage.transform(`translate3d(${-(1 - easeProgress) * 20 * inverter}%,0,0)`);
+          oldPage.transform(`translate3d(${easeProgress * 100 * inverter}%,0,0)`);
           $shadowEl[0].style.opacity = 1 - easeProgress;
           $opacityEl[0].style.opacity = 1 - easeProgress;
         }
@@ -374,14 +377,12 @@ class Router extends Framework7Class {
             }
           });
         }
+      } else if (direction === 'forward') {
+        newPage.transform(`translate3d(0, ${(1 - easeProgress) * 56}px,0)`);
+        newPage.css('opacity', easeProgress);
       } else {
-        if (direction === 'forward') {
-          newPage.transform(`translate3d(0, ${(1 - easeProgress) * 56}px,0)`);
-          newPage.css('opacity', easeProgress);
-        } else {
-          oldPage.transform(`translate3d(0, ${easeProgress * 56}px,0)`);
-          oldPage.css('opacity', 1 - easeProgress);
-        }
+        oldPage.transform(`translate3d(0, ${easeProgress * 56}px,0)`);
+        oldPage.css('opacity', 1 - easeProgress);
       }
 
       if (done) {
@@ -405,6 +406,23 @@ class Router extends Framework7Class {
     } else {
       router.animateWithCSS(...args);
     }
+  }
+  removeModal(modalEl) {
+    const router = this;
+    router.removeEl(modalEl);
+  }
+  // eslint-disable-next-line
+  removeTabContent(tabEl) {
+    const $tabEl = $(tabEl);
+    $tabEl.html('');
+  }
+  removeNavbar(el) {
+    const router = this;
+    router.removeEl(el);
+  }
+  removePage(el) {
+    const router = this;
+    router.removeEl(el);
   }
   removeEl(el) {
     if (!el) return;
@@ -593,14 +611,14 @@ class Router extends Framework7Class {
           }
         }
       }
-      router.xhr = $.ajax({
+      router.xhr = router.app.request({
         url,
         method: 'GET',
         beforeSend() {
-          router.emit('routerAjaxStart');
+          router.emit('routerAjaxStart', router.xhr);
         },
         complete(xhr, status) {
-          router.emit('routerAjaxComplete');
+          router.emit('routerAjaxComplete', xhr);
           if ((status !== 'error' && status !== 'timeout' && (xhr.status >= 200 && xhr.status < 300)) || xhr.status === 0) {
             if (params.xhrCache && xhr.responseText !== '') {
               router.removeFromXhrCache(url);
@@ -610,13 +628,15 @@ class Router extends Framework7Class {
                 content: xhr.responseText,
               });
             }
+            router.emit('routerAjaxSuccess', xhr);
             resolve(xhr.responseText);
           } else {
+            router.emit('routerAjaxError', xhr);
             reject(xhr);
           }
         },
         error(xhr) {
-          router.emit('ajaxError');
+          router.emit('routerAjaxError', xhr);
           reject(xhr);
         },
       });
@@ -635,7 +655,7 @@ class Router extends Framework7Class {
       let context;
       try {
         context = options.context || {};
-        if (typeof context === 'function') context = context.call(router.app);
+        if (typeof context === 'function') context = context.call(router);
         else if (typeof context === 'string') {
           try {
             context = JSON.parse(context);
@@ -647,7 +667,7 @@ class Router extends Framework7Class {
         if (typeof t === 'function') {
           compiledHtml = t(context);
         } else {
-          compiledHtml = t7.compile(t)(Utils.extend({}, context || {}, {
+          compiledHtml = Template7.compile(t)(Utils.extend({}, context || {}, {
             $app: router.app,
             $root: Utils.extend({}, router.app.data, router.app.methods),
             $route: options.route,
@@ -705,12 +725,12 @@ class Router extends Framework7Class {
     const url = typeof component === 'string' ? component : componentUrl;
     function compile(c) {
       const createdComponent = Component.create(c, {
+        $,
+        $$: $,
         $app: router.app,
         $root: Utils.extend({}, router.app.data, router.app.methods),
         $route: options.route,
         $router: router,
-        $,
-        $$: $,
         $dom7: $,
         $theme: {
           ios: router.app.theme === 'ios',
@@ -773,6 +793,7 @@ class Router extends Framework7Class {
     const page = {
       app: router.app,
       view: router.view,
+      router,
       $el: $pageEl,
       el: $pageEl[0],
       $pageEl,
@@ -799,7 +820,9 @@ class Router extends Framework7Class {
     if (!pageEl) return;
     const router = this;
     const $pageEl = $(pageEl);
+    if (!$pageEl.length) return;
     const { route, on = {} } = options;
+    const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack;
 
     const camelName = `page${callback[0].toUpperCase() + callback.slice(1, callback.length)}`;
     const colonName = `page:${callback.toLowerCase()}`;
@@ -814,7 +837,7 @@ class Router extends Framework7Class {
     function attachEvents() {
       if ($pageEl[0].f7PageEventsAttached) return;
       $pageEl[0].f7PageEventsAttached = true;
-      if (options.pageEvents) {
+      if (options.pageEvents && Object.keys(options.pageEvents).length > 0) {
         $pageEl[0].f7PageEvents = options.pageEvents;
         Object.keys(options.pageEvents).forEach((eventName) => {
           $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, options.pageEvents[eventName]);
@@ -825,6 +848,9 @@ class Router extends Framework7Class {
       attachEvents();
     }
     if (callback === 'init') {
+      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url]) {
+        $pageEl.find('.page-content').scrollTop(router.scrollHistory[page.route.url]);
+      }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
         if (on.pageReinit) on.pageReinit(page);
@@ -833,6 +859,14 @@ class Router extends Framework7Class {
         return;
       }
       $pageEl[0].f7PageInitialized = true;
+    }
+    if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'previous') {
+      // Save scroll position
+      router.scrollHistory[page.route.url] = $pageEl.find('.page-content').scrollTop();
+    }
+    if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'next') {
+      // Delete scroll position
+      delete router.scrollHistory[page.route.url];
     }
 
     if (on[camelName]) on[camelName](page);
@@ -845,24 +879,20 @@ class Router extends Framework7Class {
           $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEvents[eventName]);
         });
       }
-    }
-
-    if (callback === 'beforeRemove') {
       $pageEl[0].f7Page = null;
-      page = null;
     }
   }
   saveHistory() {
     const router = this;
     router.view.history = router.history;
     if (router.params.pushState) {
-      window.localStorage[`f7_router_${router.view.index}_history`] = JSON.stringify(router.history);
+      window.localStorage[`f7router-view${router.view.index}-history`] = JSON.stringify(router.history);
     }
   }
   restoreHistory() {
     const router = this;
-    if (router.params.pushState && window.localStorage[`f7_router_${router.view.index}_history`]) {
-      router.history = JSON.parse(window.localStorage[`f7_router_${router.view.index}_history`]);
+    if (router.params.pushState && window.localStorage[`f7router-view${router.view.index}-history`]) {
+      router.history = JSON.parse(window.localStorage[`f7router-view${router.view.index}-history`]);
       router.view.history = router.history;
     }
   }
@@ -876,8 +906,10 @@ class Router extends Framework7Class {
     const app = router.app;
 
     // Init Swipeback
-    if (router.view && router.params.swipeBackPage && app.theme === 'ios') {
-      SwipeBack(router);
+    if (process.env.TARGET !== 'desktop') {
+      if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
+        SwipeBack(router);
+      }
     }
 
     // Dynamic not separated navbbar
@@ -897,7 +929,7 @@ class Router extends Framework7Class {
         documentUrl = documentUrl.split(router.params.pushStateRoot)[1];
         if (documentUrl === '') documentUrl = '/';
       }
-      if (documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
+      if (router.params.pushStateSeparator.length > 0 && documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
         initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
       } else {
         initUrl = documentUrl;

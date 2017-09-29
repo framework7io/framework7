@@ -40,10 +40,14 @@ function modalLoad(modalType, route, loadOptions = {}) {
     modal.on('modalClosed', () => {
       modal.$el.trigger(`${modalType.toLowerCase()}:beforeremove`, route, modal);
       modal.emit(`${modalType}BeforeRemove`, modal.el, route, modal);
-      if (modal.el.f7Component) {
-        modal.el.f7Component.destroy();
+      const modalComponent = modal.el.f7Component;
+      if (modalComponent) {
+        modalComponent.destroy();
       }
       Utils.nextTick(() => {
+        if (modalComponent) {
+          router.removeModal(modal.el);
+        }
         modal.destroy();
         delete modalRoute.modalInstance;
       });
@@ -58,7 +62,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
             viewIndex: router.view.index,
             modal: modalType,
           },
-          (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
+          (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
+        );
       }
 
       // Set Route

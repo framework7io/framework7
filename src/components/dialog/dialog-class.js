@@ -5,12 +5,13 @@ import Modal from '../modal/modal-class';
 class Dialog extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
-      title: app.params.modals.dialogTitle,
+      title: app.params.dialog.title,
       text: undefined,
       content: '',
       buttons: [],
       verticalButtons: false,
       onClick: undefined,
+      cssClass: undefined,
       on: {},
     }, params);
 

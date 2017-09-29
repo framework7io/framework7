@@ -38,10 +38,20 @@
       color: rgba(255,255,255,0.85);
     }
     .right {
-      margin-left: auto;
+      .ltr({
+        margin-left: auto;
+      });
+      .rtl({
+        margin-right: auto;
+      });
     }
     .right:first-child {
-      right: 16px;
+      .ltr({
+        right: 16px;
+      });
+      .rtl({
+        left: 16px;
+      });
     }
   }
   .navbar-inner {

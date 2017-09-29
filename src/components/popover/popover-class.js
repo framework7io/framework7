@@ -6,7 +6,7 @@ class Popover extends Modal {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: true,
-      closeByOutsideClick: app.params.modals.popoverCloseByOutsideClick,
+      closeByOutsideClick: app.params.popover.closeByOutsideClick,
       on: {},
     }, params);
 

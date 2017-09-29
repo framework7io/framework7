@@ -18,7 +18,12 @@
       }
     }
     li:not(.list-group-title) {
-      padding-left: 40px + 16px;
+      .ltr({
+        padding-left: 40px + 16px;
+      });
+      .rtl({
+        padding-right: 40px + 16px;
+      })
     }
   }
 }

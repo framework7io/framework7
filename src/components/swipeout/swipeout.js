@@ -35,6 +35,7 @@ const Swipeout = {
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
       touchStartTime = (new Date()).getTime();
+      $swipeoutEl = $(this);
     }
     function handleTouchMove(e) {
       if (!isTouched) return;
@@ -50,7 +51,6 @@ const Swipeout = {
 
       if (!isMoved) {
         if ($('.list.sortable-opened').length > 0) return;
-        $swipeoutEl = $(this);
         $swipeoutContent = $swipeoutEl.find('.swipeout-content');
         $actionsRight = $swipeoutEl.find('.swipeout-actions-right');
         $actionsLeft = $swipeoutEl.find('.swipeout-actions-left');
@@ -92,9 +92,9 @@ const Swipeout = {
       }
 
       if (
-          (translate > 0 && $actionsLeft.length === 0)
-          ||
-          (translate < 0 && $actionsRight.length === 0)
+        (translate > 0 && $actionsLeft.length === 0)
+        ||
+        (translate < 0 && $actionsRight.length === 0)
       ) {
         if (!opened) {
           isTouched = false;
@@ -320,7 +320,6 @@ const Swipeout = {
       });
     }
 
-    const activeListener = app.support.passiveListener ? { passive: false } : false;
     const passiveListener = app.support.passiveListener ? { passive: true } : false;
 
     app.on('touchstart', (e) => {
@@ -333,14 +332,14 @@ const Swipeout = {
           $targetEl[0].className.indexOf('-backdrop') > 0 ||
           $targetEl.hasClass('actions-modal') ||
           $targetEl.parents('.actions-modal.modal-in, .dialog.modal-in').length > 0
-          )) {
+        )) {
           app.swipeout.close(Swipeout.el);
         }
       }
     });
     $(document).on(app.touchEvents.start, 'li.swipeout', handleTouchStart, passiveListener);
-    $(document).on(app.touchEvents.move, 'li.swipeout', handleTouchMove, activeListener);
-    $(document).on(app.touchEvents.end, 'li.swipeout', handleTouchEnd, passiveListener);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
   },
   allow: true,
   el: undefined,

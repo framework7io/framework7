@@ -14,7 +14,12 @@
       line-height: @toolbarSize;
       height: @toolbarSize;
       i + span, i + i, span + i, span + span {
-        margin-left: 7px;
+        .ltr({
+          margin-left: 7px;
+        });
+        .rtl({
+          margin-right: 7px;
+        });
       }
     }
     a.icon-only {
@@ -31,9 +36,6 @@
     &.no-hairline {
       .hairline-remove(top);
     }
-  }
-  .toolbar:not(.tabbar) a.link {
-    justify-content: flex-start;
   }
   .hairline-root('.toolbar', top, @toolbarBorderColor);
   .toolbar-inner {

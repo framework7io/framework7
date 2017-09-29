@@ -1,28 +1,16 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
+import ConstructorMethods from '../../utils/constructor-methods';
 import Toggle from './toggle-class';
 
 export default {
   name: 'toggle',
   create() {
     const app = this;
-    Utils.extend(app, {
-      toggle: {
-        create(params) {
-          return new Toggle(app, params);
-        },
-        get(el) {
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Toggle;
-          return undefined;
-        },
-        destroy(el) {
-          if (el && (el instanceof Toggle) && el.destroy) return el.destroy();
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Toggle.destroy();
-          return undefined;
-        },
-      },
+    app.toggle = ConstructorMethods({
+      defaultSelector: '.toggle',
+      constructor: Toggle,
+      app,
+      domProp: 'f7Toggle',
     });
   },
   static: {
@@ -31,19 +19,19 @@ export default {
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('label.toggle').each((index, toggleEl) => new Toggle(app, { el: toggleEl }));
+      $(tabEl).find('.toggle-init').each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
     },
     tabBeforeRemove(tabEl) {
-      $(tabEl).find('label.toggle').each((index, toggleEl) => {
+      $(tabEl).find('.toggle-init').each((index, toggleEl) => {
         if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('label.toggle').each((index, toggleEl) => new Toggle(app, { el: toggleEl }));
+      page.$el.find('.toggle-init').each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
     },
     pageBeforeRemove(page) {
-      page.$el.find('label.toggle').each((index, toggleEl) => {
+      page.$el.find('.toggle-init').each((index, toggleEl) => {
         if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
       });
     },

@@ -33,8 +33,8 @@ const Sortable = {
       indexFrom = $sortingEl.index();
       $sortableContainer = $sortingEl.parents('.sortable');
       $sortingItems = $sortableContainer.children('ul').children('li');
-      app.panel.allowOpen = false;
-      app.swipeout.allow = false;
+      if (app.panel) app.panel.allowOpen = false;
+      if (app.swipeout) app.swipeout.allow = false;
     }
     function handleTouchMove(e) {
       if (!isTouched || !$sortingEl) return;
@@ -118,13 +118,13 @@ const Sortable = {
         isTouched = false;
         isMoved = false;
         if (isTouched && !isMoved) {
-          app.panel.allowOpen = true;
-          app.swipeout.allow = true;
+          if (app.panel) app.panel.allowOpen = true;
+          if (app.swipeout) app.swipeout.allow = true;
         }
         return;
       }
-      app.panel.allowOpen = true;
-      app.swipeout.allow = true;
+      if (app.panel) app.panel.allowOpen = true;
+      if (app.swipeout) app.swipeout.allow = true;
 
       $sortingItems.transform('');
       $sortingEl.removeClass('sorting');
@@ -158,7 +158,7 @@ const Sortable = {
     const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
 
     $(document).on(app.touchEvents.start, '.list.sortable .sortable-handler', handleTouchStart, activeListener);
-    app.on('touchmove', handleTouchMove);
+    app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
   },
   enable(el = '.list.sortable') {
@@ -166,16 +166,16 @@ const Sortable = {
     const $el = $(el);
     if ($el.length === 0) return;
     $el.addClass('sortable-enabled');
-    $el.trigger('sortable:open');
-    app.emit('sortableOpen', $el[0]);
+    $el.trigger('sortable:enable');
+    app.emit('sortableEnable', $el[0]);
   },
   disable(el = '.list.sortable') {
     const app = this;
     const $el = $(el);
     if ($el.length === 0) return;
     $el.removeClass('sortable-enabled');
-    $el.trigger('sortable:close');
-    app.emit('sortableClose', $el[0]);
+    $el.trigger('sortable:disable');
+    app.emit('sortableDisable', $el[0]);
   },
   toggle(el = '.list.sortable') {
     const app = this;

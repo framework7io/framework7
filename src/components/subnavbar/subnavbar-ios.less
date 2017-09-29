@@ -19,22 +19,45 @@
       align-items: center;
       flex-shrink: 10;
       letter-spacing: -0.03em;
-      margin-left: 7px;
     }
-    .left, .right {
-      a + a {
-        margin-left: 15px;
+    .ltr({
+      .title {
+        margin-left: 7px;
       }
-    }
-    .left {
-      margin-right: 10px;
-    }
-    .right {
-      margin-left: 10px;
-    }
-    .right:first-child {
-      right: 8px;
-    }
+      .left, .right {
+        a + a {
+          margin-left: 15px;
+        }
+      }
+      .left {
+        margin-right: 10px;
+      }
+      .right {
+        margin-left: 10px;
+      }
+      .right:first-child {
+        right: 8px;
+      }
+    });
+    .rtl({
+      .title {
+        margin-right: 7px;
+      }
+      .left, .right {
+        a + a {
+          margin-right: 15px;
+        }
+      }
+      .left {
+        margin-left: 10px;
+      }
+      .right {
+        margin-right: 10px;
+      }
+      .right:first-child {
+        left: 8px;
+      }
+    });
 
     a.link {
       line-height: 44px;

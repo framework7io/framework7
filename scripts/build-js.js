@@ -1,5 +1,8 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: "off" */
+/* eslint import/no-unresolved: "off" */
+/* eslint global-require: "off" */
+/* eslint no-param-reassign: ["error", { "props": false }] */
 
 const gulp = require('gulp');
 const fs = require('fs');
@@ -13,28 +16,56 @@ const header = require('gulp-header');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
+const gulpif = require('gulp-if');
 
-const config = require('./build-config.js');
+let config = require('./build-config.js');
 const banner = require('./banner.js');
+
+let cache;
+
+const external = [
+  'dom7',
+  'template7',
+];
+
+const globals = {
+  template7: 'Template7',
+  dom7: '$',
+};
+
+// Overwrite with local config
+try {
+  const customConfig = require('./build-config-custom.js');
+  config = Object.assign({}, config, customConfig);
+} catch (err) {
+  // No local config
+}
 
 function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || 'universal';
+  const target = process.env.TARGET || config.target || 'universal';
+  const format = 'es';
+  let cbs = 0;
+
+  // Bundle
   rollup({
-    entry: './src/framework7.js',
+    input: './src/framework7.js',
     plugins: [
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
+        'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
+        '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
+        '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
-      buble(),
     ],
     format: 'es',
-    moduleName: 'Framework7',
-    useStrict: true,
-    sourceMap: false,
+    name: 'Framework7',
+    strict: true,
+    sourcemap: false,
+    external,
+    globals,
     banner,
   })
     .on('error', (err) => {
@@ -46,28 +77,29 @@ function es(components, cb) {
     .pipe(rename('framework7.module.js'))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
-      if (cb) cb();
+      cbs += 1;
+      if (cbs === 2 && cb) cb();
     });
-}
-function umd(components, cb) {
-  const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || 'universal';
+
+  // Modules
   rollup({
-    entry: './src/framework7.js',
+    input: './src/framework7.js',
     plugins: [
       replace({
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
+        'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-        '//INSTALL_COMPONENTS': components.map(component => `.use(${component.capitalized})`).join('\n  '),
+        '//INSTALL_COMPONENTS': '',
+        '//EXPORT_COMPONENTS': `export { $, Template7, Framework7, ${components.map(component => component.capitalized).join(', ')} };`,
       }),
-      resolve({ jsnext: true }),
-      buble(),
     ],
-    format: 'umd',
-    moduleName: 'Framework7',
-    useStrict: true,
-    sourceMap: env === 'development',
+    format: 'es',
+    name: 'Framework7',
+    strict: true,
+    sourcemap: false,
+    external,
+    globals,
     banner,
   })
     .on('error', (err) => {
@@ -76,6 +108,50 @@ function umd(components, cb) {
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
+    .pipe(rename('framework7.modular.js'))
+    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .on('end', () => {
+      cbs += 1;
+      if (cbs === 2 && cb) cb();
+    });
+}
+function umd(components, cb) {
+  const env = process.env.NODE_ENV || 'development';
+  const target = process.env.TARGET || config.target || 'universal';
+  const format = process.env.FORMAT || config.format || 'umd';
+
+  rollup({
+    input: './src/framework7.js',
+    plugins: [
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        'process.env.TARGET': JSON.stringify(target),
+        'process.env.FORMAT': JSON.stringify(format),
+        '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
+        '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
+        '//EXPORT_COMPONENTS': 'export default Framework7;',
+      }),
+      resolve({ jsnext: true }),
+      buble(),
+    ],
+    format: 'umd',
+    name: 'Framework7',
+    strict: true,
+    sourcemap: env === 'development',
+    banner,
+    cache,
+  })
+    .on('error', (err) => {
+      if (cb) cb();
+      console.log(err.toString());
+    })
+    .on('bundle', (bundle) => {
+      cache = bundle;
+    })
+    .pipe(source('framework7.js', './src'))
+    .pipe(buffer())
+    .pipe(gulpif(env === 'development', sourcemaps.init({ loadMaps: true })))
+    .pipe(gulpif(env === 'development', sourcemaps.write('./')))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       if (env === 'development') {
@@ -88,7 +164,6 @@ function umd(components, cb) {
         .pipe(uglify())
         .pipe(header(banner))
         .pipe(rename((filePath) => {
-          /* eslint no-param-reassign: ["error", { "props": false }] */
           filePath.basename += '.min';
         }))
         .pipe(sourcemaps.write('./'))
@@ -98,11 +173,12 @@ function umd(components, cb) {
         });
     });
 }
-function build(cb) {
+function buildJs(cb) {
   const env = process.env.NODE_ENV || 'development';
 
   const components = [];
   config.components.forEach((name) => {
+    // eslint-disable-next-line
     const capitalized = name.split('-').map((word) => {
       return word.split('').map((char, index) => {
         if (index === 0) return char.toUpperCase();
@@ -121,14 +197,14 @@ function build(cb) {
   umd(components, () => {
     cbs += 1;
     if (cbs === expectCbs) cb();
-  });
 
-  if (env === 'production') {
-    es(components, () => {
-      cbs += 1;
-      if (cbs === expectCbs) cb();
-    });
-  }
+    if (env === 'production') {
+      es(components, () => {
+        cbs += 1;
+        if (cbs === expectCbs) cb();
+      });
+    }
+  });
 }
 
-module.exports = build;
+module.exports = buildJs;

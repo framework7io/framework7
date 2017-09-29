@@ -41,7 +41,6 @@
     &.button-small, &.button-small-md {
       height: 28px;
       line-height: 28px;
-      border-radius: 28px;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.03em;
@@ -54,7 +53,12 @@
     span:not(.ripple-wave) + span,
     span:not(.ripple-wave) + i.icon,
     i.icon + i.icon {
-      margin-left: 8px;
+      .ltr({
+        margin-left: 8px;
+      });
+      .rtl({
+        margin-right: 8px;
+      });
     }
 
     // Raised (with shadow) buttons
@@ -65,18 +69,20 @@
       }
     }
 
-    .navbar &, .toolbar &, .subnavbar &, .notifications & {
-      &:not(.button-fill, .button-fill-md) {
-        color:#fff;
-        &.active-state {
-          background: rgba(255,255,255,0.15);
-        }
+  }
+  .navbar, .subnavbar, .toolbar {
+    .button:not(.button-fill):not(.button-fill-md) {
+      color: #fff;
+      &.active-state {
+        background: rgba(255,255,255,0.15);
       }
     }
   }
-  .navbar, .subnavbar, .toolbar {
-    .button:not(.button-fill) {
-      color: #fff;
+  .toast {
+    .button:not(.button-fill):not(.button-fill-md) {
+      &.active-state {
+        background: rgba(255,255,255,0.15);
+      }
     }
   }
 
@@ -91,34 +97,61 @@
     }
     .button {
       border-radius: 0;
-      border-left: 1px solid rgba(0,0,0,0.1);
-      &:first-child {
-        border-radius: 3px 0 0 3px;
-        border-left: none;
-      }
-      &.button-outline {
-        border: 1px solid @themeColor;
-        &:nth-child(n + 2) {
+      .ltr({
+        border-left: 1px solid rgba(0,0,0,0.1);
+        &:first-child {
+          border-radius: 3px 0 0 3px;
           border-left: none;
         }
-      }
-      &:last-child {
-        border-radius: 0 3px 3px 0;
-      }
-      &:first-child:last-child {
-        border-radius: 5px;
-      }
-      &.button-round:first-child {
-        border-radius: 36px 0 0 36px;
-      }
-      &.button-round:last-child {
-        border-radius: 0 36px 36px 0;
-      }
+        &.button-outline {
+          border: 1px solid @themeColor;
+          &:nth-child(n + 2) {
+            border-left: none;
+          }
+        }
+        &:last-child {
+          border-radius: 0 3px 3px 0;
+        }
+        &:first-child:last-child {
+          border-radius: 5px;
+        }
+        &.button-round:first-child {
+          border-radius: 36px 0 0 36px;
+        }
+        &.button-round:last-child {
+          border-radius: 0 36px 36px 0;
+        }
+      });
+      .rtl({
+        border-right: 1px solid rgba(0,0,0,0.1);
+        &:first-child {
+          border-radius: 0 3px 3px 0;
+          border-right: none;
+        }
+        &.button-outline {
+          border: 1px solid @themeColor;
+          &:nth-child(n + 2) {
+            border-right: none;
+          }
+        }
+        &:last-child {
+          border-radius: 3px 0 0 3px;
+        }
+        &:first-child:last-child {
+          border-radius: 5px;
+        }
+        &.button-round:first-child {
+          border-radius: 0 36px 36px 0;
+        }
+        &.button-round:last-child {
+          border-radius: 36px 0 0 36px;
+        }
+      });
     }
   }
 
   .color-theme-loop({
-    .color-theme-@{colorThemeName} {
+    .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
       .button {
         color:@colorThemeValue;
         &.button-fill, &.button-fill-md, &.button-active, &.tab-link-active {
@@ -130,20 +163,6 @@
         }
         &.button-outline {
           border-color: @colorThemeValue;
-        }
-      }
-
-      // Segmented Control
-      .segmented .button {
-        border-left: 1px solid rgba(0,0,0,0.1);
-        &:first-child {
-          border-left: none;
-        }
-        &.button-outline {
-          border: 1px solid @colorThemeValue;
-          &:nth-child(n + 2) {
-            border-left: none;
-          }
         }
       }
     }
@@ -160,18 +179,6 @@
       }
       &.button-outline {
         border-color: @colorValue;
-      }
-    }
-    .segmented.color-@{colorName} .button {
-      border-left: 1px solid rgba(0,0,0,0.1);
-      &:first-child {
-        border-left: none;
-      }
-      &.button-outline {
-        border: 1px solid @colorValue;
-        &:nth-child(n + 2) {
-          border-left: none;
-        }
       }
     }
   });

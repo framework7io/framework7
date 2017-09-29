@@ -70,11 +70,18 @@ return {
           '
         });
       }
+      // Close inline sheet
+      if (self.$('.demo-sheet.modal-in').length > 0) self.$app.sheet.close('.demo-sheet');
       // Open it
       self.sheet.open();
     },
   },
   on: {
+    pageBeforeOut: function () {
+      var self = this;
+      // Close opened sheets on page out
+      self.$app.sheet.close();
+    },
     pageBeforeRemove: function () {
       var self = this;
       // Destroy sheet modal when page removed

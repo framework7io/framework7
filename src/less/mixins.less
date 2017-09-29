@@ -22,6 +22,18 @@
   }
 }
 
+// RTL, LTR
+.ltr(@ruleset) {
+  & when not (@rtl) {
+    @ruleset();
+  }
+}
+.rtl(@ruleset) {
+  & when (@rtl) {
+    @ruleset();
+  }
+}
+
 // Scrollable
 .scrollable() {
   overflow: auto;
@@ -61,13 +73,13 @@
 }
 // No Hairlines
 .no-hairlines() {
-  &.no-hairlines, &.no-hairlines ul {
+  &.no-hairlines, &.no-hairlines ul, .md &.no-hairlines-md, .md &.no-hairlines-md ul, .ios &.no-hairlines-ios, .ios &.no-hairlines-ios ul {
     .hairline-remove(top);
     .hairline-remove(bottom);
   }
 }
 .no-hairlines-between() {
-  &.no-hairlines-between {
+  &.no-hairlines-between, .md &.no-hairlines-between-md, .ios &.no-hairlines-between-ios {
     .item-inner, .list-button, .item-divider, .list-group-title, .list-group-title {
       .hairline-remove(bottom);
     }

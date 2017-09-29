@@ -16,7 +16,7 @@
   .list, .block {
     margin: 0;
   }
-  .row:not(.no-gutter) .col > & {
+  .row:not(.no-gap) .col > & {
     margin-left: 0;
     margin-right: 0;
   }
@@ -25,16 +25,13 @@
 .card-content {
   position: relative;
 }
-.card-content-inner {
+.card-content-padding {
   position: relative;
   > p:first-child {
     margin-top: 0;
   }
   > p:last-child {
     margin-bottom: 0;
-  }
-  > .list, >.block {
-    margin: -15px;
   }
 }
 .card-header, .card-footer {

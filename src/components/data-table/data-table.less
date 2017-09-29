@@ -7,7 +7,8 @@
     padding: 0;
     margin: 0;
     border-collapse: collapse;
-    text-align: left;
+    .ltr({ text-align: left; });
+    .rtl({ text-align: right; });
   }
   thead {
     font-size: 12px;
@@ -25,16 +26,19 @@
     padding: 0;
     position: relative;
     &.numeric-cell {
-      text-align: right;
+      .ltr({ text-align: right; });
+      .rtl({ text-align: left; });
     }
     &.checkbox-cell {
       overflow: visible;
       label + span {
-        margin-left: 8px;
+        .ltr({ margin-left: 8px; });
+        .rtl({ margin-right: 8px; });
       }
     }
     &.actions-cell {
-      text-align: right;
+      .ltr({ text-align: right; });
+      .rtl({ text-align: left; });
       white-space: nowrap;
     }
     a.icon-only, .card & a.icon-only, .card& a.icon-only {
@@ -101,7 +105,8 @@
     display: flex;
   }
   .data-table-actions {
-    margin-left: auto;
+    .ltr({ margin-left: auto; });
+    .rtl({ margin-right: auto; });
     align-items: center;
     a.link {
       min-width: 0;
@@ -149,12 +154,17 @@
         background-color: inherit;
       }
       td {
-        text-align: left;
         .hairline-remove(top);
         display: flex;
         align-content: center;
         align-items: center;
         justify-content: flex-start;
+        .ltr({
+          text-align: left;
+        });
+        .rtl({
+          text-align: right;
+        });
       }
       td:not(.checkbox-cell) {
         &:before {
@@ -166,20 +176,32 @@
           background: none;
           transform: none !important;
           font-size: 12px;
-          margin-right: 16px;
+          .ltr({ margin-right: 16px; });
+          .rtl({ margin-left: 16px; });
           flex-shrink: 0;
         }
       }
       td.checkbox-cell {
         position: absolute;
-        left: 0;
         top: 0;
-        + td {
-          padding-left: 16px;
-        }
-        ~ td {
-          margin-left: 16px + 16px;
-        }
+        .ltr({
+          left: 0;
+          + td {
+            padding-left: 16px;
+          }
+          ~ td {
+            margin-left: 16px + 16px;
+          }
+        });
+        .rtl({
+          right: 0;
+          + td {
+            padding-right: 16px;
+          }
+          ~ td {
+            margin-right: 16px + 16px;
+          }
+        });
       }
     }
   }

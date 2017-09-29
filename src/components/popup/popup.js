@@ -1,38 +1,22 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
 import Popup from './popup-class';
+import ModalMethods from '../../utils/modal-methods';
 
 export default {
   name: 'popup',
+  params: {
+    popup: {
+      closeByBackdropClick: true,
+    },
+  },
   static: {
     Popup,
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      popup: {
-        create(params) {
-          return new Popup(app, params);
-        },
-        open(popupEl, animate) {
-          const $popupEl = $(popupEl);
-          let popup = $popupEl[0].f7Modal;
-          if (!popup) popup = new Popup(app, { el: $popupEl });
-          return popup.open(animate);
-        },
-        close(popupEl = '.popup.modal-in', animate) {
-          const $popupEl = $(popupEl);
-          if ($popupEl.length === 0) return undefined;
-          let popup = $popupEl[0].f7Modal;
-          if (!popup) popup = new Popup(app, { el: $popupEl });
-          return popup.close(animate);
-        },
-        get(popupEl = '.popup.modal-in') {
-          const $popupEl = $(popupEl);
-          if ($popupEl.length === 0) return undefined;
-          return $popupEl[0].f7Modal;
-        },
-      },
+    app.popup = ModalMethods({
+      app,
+      constructor: Popup,
+      defaultSelector: '.popup.modal-in',
     });
   },
   clicks: {
@@ -46,7 +30,7 @@ export default {
     },
     '.popup-backdrop': function closePopup() {
       const app = this;
-      if (!app.params.modals.popupCloseByBackdropClick) return;
+      if (!app.params.popup.closeByBackdropClick) return;
       app.popup.close();
     },
   },

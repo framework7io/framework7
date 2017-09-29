@@ -10,7 +10,12 @@
   }
   .sortable-enabled {
     .item-inner, .item-link .item-inner {
-      padding-right: 35px;
+      .ltr({
+        padding-right: 35px;
+      });
+      .rtl({
+        padding-left: 35px;
+      });
     }
   }
 }

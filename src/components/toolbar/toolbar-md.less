@@ -23,7 +23,12 @@
       height: @toolbarSize;
       .md-link-highlight();
       i + span, i + i, span + i, span + span {
-        margin-left: 8px;
+        .ltr({
+          margin-left: 8px;
+        });
+        .rtl({
+          margin-right: 8px;
+        });
       }
     }
     a.icon-only {
@@ -61,9 +66,15 @@
       height: 3px;
       background: rgba(255,255,255,0.5);
       transition-duration: 300ms;
+      .ltr({
+        left: 0;
+      });
+      .rtl({
+        right: 0;
+      })
     }
   }
-  .toolbar-bottom, .messagebar {
+  .toolbar-bottom-md, .messagebar {
     top: auto !important;
     bottom: 0 !important;
     .md-bar-shadow-to-top();
@@ -83,7 +94,7 @@
       max-width: 100%;
       overflow: hidden;
     }
-    &.toolbar-bottom {
+    &.toolbar-bottom-md {
       height: @tabbarLabelsBottomSize;
       a.tab-link, a.link {
         padding-top: 7px;
@@ -108,11 +119,11 @@
   }
 
   // Relation with page and navbar
-  .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .page-content,
-  .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content {
+  .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
+  .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
     padding-top: @toolbarSize;
   }
-  .toolbar.tabbar-labels:not(.toolbar-bottom) ~ * .page-content, .toolbar.tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+  .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
     padding-top: @tabbarLabelsSize;
   }
 
@@ -120,57 +131,57 @@
   .toolbar-hidden {
     transform: translate3d(0, -100%, 0);
     .md-bar-no-shadow();
-    &.toolbar-bottom, &.messagebar {
+    &.toolbar-bottom-md, &.messagebar {
       transform: translate3d(0, 100%, 0);
     }
   }
 
   // With Navbar
   .navbar {
-    + .toolbar:not(.toolbar-bottom):not(.messagebar) {
+    + .toolbar:not(.toolbar-bottom-md):not(.messagebar) {
       top: @navbarSize;
     }
-    + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .page-content,
-    + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content {
+    + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
+    + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
       padding-top: @toolbarSize + @navbarSize;
     }
-    + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+    + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
       padding-top: @tabbarLabelsSize + @navbarSize;
     }
-    + .toolbar-hidden:not(.toolbar-bottom):not(.messagebar) {
+    + .toolbar-hidden:not(.toolbar-bottom-md):not(.messagebar) {
       @translate: @navbarSize + @toolbarSize;
       transform: translate3d(0, -@translate, 0);
     }
-    + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom) {
+    + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom-md) {
       @translate: @navbarSize + @tabbarLabelsSize;
       transform: translate3d(0, -@translate, 0);
     }
     &.navbar-hidden {
-      + .toolbar:not(.toolbar-bottom):not(.messagebar) {
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) {
         transform: translate3d(0, -@navbarSize, 0);
       }
     }
     @media (min-width: 768px) {
-      + .toolbar:not(.toolbar-bottom):not(.messagebar) {
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) {
         top: @navbarSizeTablet;
       }
-      + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ * .page-content,
-      + .toolbar:not(.toolbar-bottom):not(.messagebar) ~ .page-content {
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
         padding-top: @toolbarSize + @navbarSizeTablet;
       }
-      + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom) ~ .page-content {
+      + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
         padding-top: @tabbarLabelsSize + @navbarSizeTablet;
       }
       &.navbar-hidden {
-        + .toolbar:not(.toolbar-bottom) {
+        + .toolbar:not(.toolbar-bottom-md) {
           transform: translate3d(0, -@navbarSizeTablet, 0);
         }
       }
-      + .toolbar-hidden:not(.toolbar-bottom):not(.messagebar) {
+      + .toolbar-hidden:not(.toolbar-bottom-md):not(.messagebar) {
         @translate: @navbarSizeTablet + @toolbarSize;
         transform: translate3d(0, -@translate, 0);
       }
-      + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom) {
+      + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom-md) {
         @translate: @navbarSizeTablet + @tabbarLabelsSize;
         transform: translate3d(0, -@translate, 0);
       }
@@ -178,13 +189,13 @@
   }
 
   // Bottom
-  .toolbar-bottom ~ * .page-content,
-  .toolbar-bottom ~ .page-content,
+  .toolbar-bottom-md ~ * .page-content,
+  .toolbar-bottom-md ~ .page-content,
   .messagebar ~ * .page-content,
   .messagebar ~ .page-content {
     padding-bottom: @toolbarSize;
   }
-  .toolbar-bottom.tabbar-labels ~ * .page-content, .toolbar-bottom.tabbar-labels ~ .page-content {
+  .toolbar-bottom-md.tabbar-labels ~ * .page-content, .toolbar-bottom-md.tabbar-labels ~ .page-content {
     padding-bottom: @tabbarLabelsBottomSize;
   }
 

@@ -1,36 +1,22 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Searchbar from './searchbar-class';
+import ConstructorMethods from '../../utils/constructor-methods';
 
 export default {
   name: 'searchbar',
-  create() {
-    const app = this;
-    const searchbar = {
-      create(params) {
-        return new Searchbar(app, params);
-      },
-      get(searchbarEl) {
-        const $searchbarEl = $(searchbarEl);
-        if ($searchbarEl.length && $searchbarEl[0].f7Searchbar) {
-          return $searchbarEl[0].f7Searchbar;
-        }
-        return undefined;
-      },
-    };
-    ('clear enable disable toggle search destroy').split(' ').forEach((searchbarMethod) => {
-      searchbar[searchbarMethod] = (searchbarEl = '.searchbar', ...args) => {
-        const sb = app.searchbar.get(searchbarEl);
-        if (sb) return sb[searchbarMethod](...args);
-        return undefined;
-      };
-    });
-    Utils.extend(app, {
-      searchbar,
-    });
-  },
   static: {
     Searchbar,
+  },
+  create() {
+    const app = this;
+    app.searchbar = ConstructorMethods({
+      defaultSelector: '.searchbar',
+      constructor: Searchbar,
+      app,
+      domProp: 'f7Searchbar',
+      addMethods: 'clear enable disable toggle search'.split(' '),
+    });
   },
   on: {
     tabMounted(tabEl) {

@@ -11,7 +11,8 @@
         transform: scale(0);
       }
       &:after {
-        transform: translateX(20px);
+        .ltr({ transform: translateX(20px); });
+        .rtl({ transform: translateX(-20px); });
       }
     }
   }
@@ -22,7 +23,8 @@
     background: #e5e5e5;
     &:before {
       position: absolute;
-      left: 2px;
+      .ltr({ left: 2px; });
+      .rtl({ right: 2px; });
       top: 2px;
       width: 48px;
       height: 28px;
@@ -37,7 +39,8 @@
       height: 28px;
       width: 28px;
       top: 2px;
-      left: 2px;
+      .ltr({ left: 2px; });
+      .rtl({ right: 2px; });
       box-shadow: 0 2px 4px rgba(0,0,0,0.3);
       border-radius: 14px;
     }
@@ -56,7 +59,8 @@
     input[type="checkbox"]:checked + .toggle-icon {
       &:after {
         width: 35px;
-        transform: translateX(13px);
+        .ltr({ transform: translateX(13px); });
+        .rtl({ transform: translateX(-13px); });
       }
     }
   }

@@ -1,3 +1,4 @@
+/* eslint indent: ["off"] */
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
@@ -14,7 +15,7 @@ class PhotoBrowser extends Framework7Class {
     }, app.modules.photoBrowser.params.photoBrowser);
 
     // Extend defaults with modules params
-    pb.useInstanceModulesParams(defaults);
+    pb.useModulesParams(defaults);
 
     pb.params = Utils.extend(defaults, params);
 
@@ -37,7 +38,7 @@ class PhotoBrowser extends Framework7Class {
     });
 
     // Install Modules
-    pb.useInstanceModules();
+    pb.useModules();
 
     // Init
     pb.init();
@@ -120,19 +121,19 @@ class PhotoBrowser extends Framework7Class {
     if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
       Utils.nextTick(() => {
         if (pb.$containerEl) {
-          if (swipeToClose.diff < 0) pb.$containerEl.addClass('swiper-close-to-bottom');
-          else pb.$containerEl.addClass('swiper-close-to-top');
+          if (swipeToClose.diff < 0) pb.$containerEl.addClass('swipe-close-to-bottom');
+          else pb.$containerEl.addClass('swipe-close-to-top');
         }
-        pb.emit({ events: 'swipeToClose', data: [pb], parents: [] });
+        pb.emit('local::swipeToClose', pb);
         pb.close();
         swipeToClose.allow = true;
       });
       return;
     }
     if (diff !== 0) {
-      swipeToClose.activeSlide.addClass('transitioning').transitionEnd(() => {
+      swipeToClose.activeSlide.addClass('photo-browser-transitioning').transitionEnd(() => {
         swipeToClose.allow = true;
-        swipeToClose.activeSlide.removeClass('transitioning');
+        swipeToClose.activeSlide.removeClass('photo-browser-transitioning');
       });
     } else {
       swipeToClose.allow = true;
@@ -180,13 +181,13 @@ class PhotoBrowser extends Framework7Class {
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
     const toolbarHtml = `
-      <div class="toolbar tabbar toolbar-bottom">
+      <div class="toolbar tabbar toolbar-bottom-md">
         <div class="toolbar-inner">
           <a href="#" class="link photo-browser-prev">
-            <i class="icon icon-prev ${iconsColor ? `color-${iconsColor}` : ''}"></i>
+            <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
           </a>
           <a href="#" class="link photo-browser-next">
-            <i class="icon icon-next ${iconsColor ? `color-${iconsColor}` : ''}"></i>
+            <i class="icon icon-forward ${iconsColor ? `color-${iconsColor}` : ''}"></i>
           </a>
         </div>
       </div>
@@ -242,7 +243,7 @@ class PhotoBrowser extends Framework7Class {
     const html = `
       <div class="photo-browser photo-browser-${pb.params.theme}">
         <div class="view">
-          <div class="page photo-browser-page photo-browser-page-${pb.params.theme} no-toolbar ${!pb.params.navbar ? 'no-navbar' : ''}" data-page="photo-browser-slides">
+          <div class="page photo-browser-page photo-browser-page-${pb.params.theme} no-toolbar ${!pb.params.navbar ? 'no-navbar' : ''}" data-name="photo-browser-page">
             ${pb.params.navbar ? pb.renderNavbar() : ''}
             ${pb.params.toolbar ? pb.renderToolbar() : ''}
             <div class="photo-browser-captions photo-browser-captions-${pb.params.captionsTheme || pb.params.theme}">
@@ -310,40 +311,40 @@ class PhotoBrowser extends Framework7Class {
       initialSlide: pb.activeIndex,
       on: {
         tap(e) {
-          pb.emit({ events: 'tap', data: [e], parents: [] });
+          pb.emit('local::tap', e);
         },
         click(e) {
           if (pb.params.exposition) {
             pb.expositionToggle();
           }
-          pb.emit({ events: 'click', data: [e], parents: [] });
+          pb.emit('local::click', e);
         },
         doubleTap(e) {
-          pb.emit({ events: 'doubleTap', data: [e], parents: [] });
+          pb.emit('local::doubleTap', e);
         },
         transitionStart() {
           const swiper = this;
           pb.onTransitionStart(swiper);
-          pb.emit({ events: 'transitionStart', data: [swiper], parents: [] });
+          pb.emit('local::transitionStart', swiper);
         },
         transitionEnd() {
           const swiper = this;
-          pb.emit({ events: 'transitionStart', data: [swiper], parents: [] });
+          pb.emit('local::transitionEnd', swiper);
         },
         slideChangeStart() {
           const swiper = this;
-          pb.emit({ events: 'slideChangeStart', data: [swiper], parents: [] });
+          pb.emit('local::slideChangeStart', swiper);
         },
         slideChangeEnd() {
           const swiper = this;
-          pb.emit({ events: 'slideChangeEnd', data: [swiper], parents: [] });
+          pb.emit('local::slideChangeEnd', swiper);
         },
         lazyImageLoad(slideEl, imgEl) {
-          pb.emit({ events: 'lazyImageLoad', data: [slideEl, imgEl], parents: [] });
+          pb.emit('local::lazyImageLoad', slideEl, imgEl);
         },
         lazyImageReady(slideEl, imgEl) {
           $(slideEl).removeClass('photo-browser-slide-lazy');
-          pb.emit({ events: 'lazyImageReady', data: [slideEl, imgEl], parents: [] });
+          pb.emit('local::lazyImageReady', slideEl, imgEl);
         },
       },
     });
@@ -367,22 +368,12 @@ class PhotoBrowser extends Framework7Class {
       pb.onTransitionStart(pb.swiper);
     }
 
-    pb.emit({
-      events: 'open',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserOpen', pb);
+    pb.emit('local::open photoBrowserOpen', pb);
   }
   onOpened() {
     const pb = this;
 
-    pb.emit({
-      events: 'opened',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserOpened', pb);
+    pb.emit('local::opened photoBrowserOpened', pb);
   }
   onClose() {
     const pb = this;
@@ -395,12 +386,7 @@ class PhotoBrowser extends Framework7Class {
       delete pb.swiper;
     }
 
-    pb.emit({
-      events: 'close',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserClose', pb);
+    pb.emit('local::close photoBrowserClose', pb);
   }
   onClosed() {
     const pb = this;
@@ -409,12 +395,7 @@ class PhotoBrowser extends Framework7Class {
     pb.$containerEl = null;
     delete pb.$containerEl;
 
-    pb.emit({
-      events: 'closed',
-      data: [pb],
-      parents: [],
-    });
-    pb.emit('photoBrowserClosed', pb);
+    pb.emit('local::closed photoBrowserClosed', pb);
   }
 
   // Open
@@ -595,13 +576,11 @@ class PhotoBrowser extends Framework7Class {
     }
     return pb;
   }
-  init() {
-    const pb = this;
-  }
+  // eslint-disable-next-line
+  init() {}
   destroy() {
     let pb = this;
-    pb.emit('photoBrowserBeforeDestroy', pb);
-    pb.emit({ events: 'beforeDestroy', parents: [], data: [pb] });
+    pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
     if (pb.$containerEl) {
       pb.$containerEl.trigger('photobrowser:beforedestroy');
       delete pb.$containerEl[0].f7PhotoBrowser;

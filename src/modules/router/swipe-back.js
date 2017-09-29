@@ -2,6 +2,7 @@ import $ from 'dom7';
 import History from '../../utils/history';
 import Support from '../../utils/support';
 import Device from '../../utils/device';
+import Utils from '../../utils/utils';
 
 function SwipeBack(r) {
   const router = r;
@@ -23,7 +24,7 @@ function SwipeBack(r) {
   let activeNavBackIcon;
   let activeNavBackIconText;
   let previousNavBackIcon;
-  let previousNavBackIconText;
+  // let previousNavBackIconText;
   let dynamicNavbar;
   let separateNavbar;
   let pageShadow;
@@ -31,13 +32,13 @@ function SwipeBack(r) {
   let navbarWidth;
 
   function handleTouchStart(e) {
-    if (!allowViewTouchMove || !router.params.swipeBackPage || isTouched || app.swipeout.el || !router.allowPageChange) return;
+    if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) return;
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
-    touchStartTime = (new Date()).getTime();
+    touchStartTime = Utils.now();
     dynamicNavbar = router.dynamicNavbar;
     separateNavbar = router.separateNavbar;
   }
@@ -67,12 +68,12 @@ function SwipeBack(r) {
       if (currentPage.hasClass('no-swipeback')) cancel = true;
       previousPage = $el.find('.page-previous:not(.stacked)');
 
-      let notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
+      let notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
       viewContainerWidth = $el.width();
       if (app.rtl) {
-        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.swipeBackPageActiveArea);
+        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.iosSwipeBackActiveArea);
       } else {
-        notFromBorder = touchesStart.x - $el.offset().left > router.params.swipeBackPageActiveArea;
+        notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
       }
       if (notFromBorder) cancel = true;
       if (previousPage.length === 0 || currentPage.length === 0) cancel = true;
@@ -81,14 +82,14 @@ function SwipeBack(r) {
         return;
       }
 
-      if (router.params.swipeBackPageAnimateShadow) {
+      if (router.params.iosSwipeBackAnimateShadow) {
         pageShadow = currentPage.find('.page-shadow-effect');
         if (pageShadow.length === 0) {
           pageShadow = $('<div class="page-shadow-effect"></div>');
           currentPage.append(pageShadow);
         }
       }
-      if (router.params.swipeBackPageAnimateOpacity) {
+      if (router.params.iosSwipeBackAnimateOpacity) {
         pageOpacity = previousPage.find('.page-opacity-effect');
         if (pageOpacity.length === 0) {
           pageOpacity = $('<div class="page-opacity-effect"></div>');
@@ -117,10 +118,10 @@ function SwipeBack(r) {
           }
           if (previousNavbar.hasClass('sliding')) {
             previousNavBackIcon = previousNavbar.children('.left').find('.back .icon');
-            previousNavBackIconText = previousNavbar.children('left').find('.back span').eq(0);
+            // previousNavBackIconText = previousNavbar.children('left').find('.back span').eq(0);
           } else {
             previousNavBackIcon = previousNavbar.children('.left.sliding').find('.back .icon');
-            previousNavBackIconText = previousNavbar.children('.left.sliding').find('.back span').eq(0);
+            // previousNavBackIconText = previousNavbar.children('.left.sliding').find('.back span').eq(0);
           }
         }
       }
@@ -138,7 +139,7 @@ function SwipeBack(r) {
     const inverter = app.rtl ? -1 : 1;
 
     // Touches diff
-    touchesDiff = (pageX - touchesStart.x - router.params.swipeBackPageThreshold) * inverter;
+    touchesDiff = (pageX - touchesStart.x - router.params.iosSwipeBackThreshold) * inverter;
     if (touchesDiff < 0) touchesDiff = 0;
     const percentage = touchesDiff / viewContainerWidth;
 
@@ -162,10 +163,10 @@ function SwipeBack(r) {
     }
 
     currentPage.transform(`translate3d(${currentPageTranslate}px,0,0)`);
-    if (router.params.swipeBackPageAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
+    if (router.params.iosSwipeBackAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
 
     previousPage.transform(`translate3d(${previousPageTranslate}px,0,0)`);
-    if (router.params.swipeBackPageAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
+    if (router.params.iosSwipeBackAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
 
     // Dynamic Navbars Animation
     if (dynamicNavbar) {
@@ -230,13 +231,13 @@ function SwipeBack(r) {
       }
       return;
     }
-    const timeDiff = (new Date()).getTime() - touchStartTime;
+    const timeDiff = Utils.now() - touchStartTime;
     let pageChanged = false;
     // Swipe back to previous page
     if (
-        (timeDiff < 300 && touchesDiff > 10) ||
-        (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
-      ) {
+      (timeDiff < 300 && touchesDiff > 10) ||
+      (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
+    ) {
       currentPage.removeClass('page-current').addClass('page-next');
       previousPage.removeClass('page-previous').addClass('page-current');
       if (pageShadow) pageShadow[0].style.opacity = '';
@@ -340,9 +341,9 @@ function SwipeBack(r) {
           }
         } else {
           router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next');
-          router.removeEl(currentPage);
+          router.removePage(currentPage);
           if (separateNavbar) {
-            router.removeEl(currentNavbar);
+            router.removeNavbar(currentNavbar);
           }
         }
 
@@ -365,17 +366,15 @@ function SwipeBack(r) {
 
   function attachEvents() {
     const passiveListener = (app.touchEvents.start === 'touchstart' && Support.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
-    $el.on(app.touchEvents.move, handleTouchMove, activeListener);
-    $el.on(app.touchEvents.end, handleTouchEnd, passiveListener);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
   }
   function detachEvents() {
     const passiveListener = (app.touchEvents.start === 'touchstart' && Support.passiveListener) ? { passive: true, capture: false } : false;
-    const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
     $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
-    $el.off(app.touchEvents.move, handleTouchMove, activeListener);
-    $el.off(app.touchEvents.end, handleTouchEnd, passiveListener);
+    app.off('touchmove:active', handleTouchMove);
+    app.off('touchend:passive', handleTouchEnd);
   }
 
   attachEvents();

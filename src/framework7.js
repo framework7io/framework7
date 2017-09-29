@@ -1,17 +1,20 @@
-import t7 from 'template7';
+import Template7 from 'template7';
 import $ from 'dom7';
 
 // F7 Class
 import Framework7 from './components/app/app-class';
 
-// Import Core Modules
-import Resize from './modules/resize/resize';
+// Core Modules
 import Device from './modules/device/device';
 import Support from './modules/support/support';
+import Utils from './modules/utils/utils';
+import Resize from './modules/resize/resize';
+import Request from './modules/request/request';
 import Touch from './modules/touch/touch';
+import Clicks from './modules/clicks/clicks';
 import Router from './modules/router/router';
 import History from './modules/history/history';
-import Clicks from './modules/clicks/clicks';
+import Storage from './modules/storage/storage';
 
 // Core Components
 import Statusbar from './components/statusbar/statusbar';
@@ -20,38 +23,38 @@ import Navbar from './components/navbar/navbar';
 import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
+import Modal from './components/modal/modal';
 
 //IMPORT_COMPONENTS
 
-// Template7
-if (typeof t7 !== 'undefined') {
-  Framework7.prototype.t7 = t7;
-  if (!window.Template7) window.Template7 = t7;
-}
+if (process.env.FORMAT !== 'es') {
+  // Template7
+  if (!window.Template7) window.Template7 = Template7;
 
-// Dom7
-if (typeof $ !== 'undefined') {
-  Framework7.prototype.$ = $;
+  // Dom7
   if (!window.Dom7) window.Dom7 = $;
 }
 
-// Install Modules & Components
-Framework7
-  // Core Modules
-  .use(Support)
-  .use(Device)
-  .use(Resize)
-  .use(Touch)
-  .use(Router)
-  .use(History)
-  .use(Clicks)
-  // Core Components
-  .use(Statusbar)
-  .use(View)
-  .use(Navbar)
-  .use(Toolbar)
-  .use(Subnavbar)
-  .use(TouchRipple)
+// Install Core Modules & Components
+Framework7.components = [
+  Device,
+  Support,
+  Utils,
+  Resize,
+  Request,
+  Touch,
+  Clicks,
+  Router,
+  History,
+  Storage,
+  Statusbar,
+  View,
+  Navbar,
+  Toolbar,
+  Subnavbar,
+  TouchRipple,
+  Modal,
   //INSTALL_COMPONENTS
+];
 
-export default Framework7;
+//EXPORT_COMPONENTS

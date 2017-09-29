@@ -1,9 +1,62 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Swiper from './swiper-class/swiper';
+import ConstructorMethods from '../../utils/constructor-methods';
 
-if (!window.Swiper) {
-  window.Swiper = Swiper;
+if (process.env.FORMAT !== 'es') {
+  if (!window.Swiper) {
+    window.Swiper = Swiper;
+  }
+}
+
+function initSwipers(swiperEl) {
+  const app = this;
+  const $swiperEl = $(swiperEl);
+  if ($swiperEl.length === 0) return;
+  if ($swiperEl[0].swiper) return;
+  let initialSlide;
+  let params = {};
+  let isTabs;
+  if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
+    $swiperEl
+      .addClass('swiper-container')
+      .children('.tabs')
+      .addClass('swiper-wrapper')
+      .children('.tab')
+      .addClass('swiper-slide');
+    initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
+    isTabs = true;
+  }
+  if ($swiperEl.attr('data-swiper')) {
+    params = JSON.parse($swiperEl.attr('data-swiper'));
+  } else {
+    params = $swiperEl.dataset();
+    Object.keys(params).forEach((key) => {
+      const value = params[key];
+      if (typeof value === 'string' && value.indexOf('{') === 0 && value.indexOf('}') > 0) {
+        try {
+          params[key] = JSON.parse(value);
+        } catch (e) {
+          // not JSON
+        }
+      }
+    });
+  }
+  if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
+    params.initialSlide = initialSlide;
+  }
+  if (isTabs) {
+    Utils.extend(params, {
+      on: {
+        transitionStart() {
+          const swiper = this;
+          app.tab.show(swiper.slides.eq(swiper.activeIndex));
+        },
+      },
+    });
+  }
+
+  app.swiper.create($swiperEl[0], params);
 }
 
 export default {
@@ -13,27 +66,10 @@ export default {
   },
   create() {
     const app = this;
-    Utils.extend(app, {
-      swiper: {
-        create(...args) {
-          return new Swiper(...args);
-        },
-        get(swiperEl = '.swiper-container') {
-          const $swiperEl = $(swiperEl);
-          if ($swiperEl.length && $swiperEl[0].swiper) return $swiperEl[0].swiper;
-          return undefined;
-        },
-        destroy(swiperEl) {
-          if (swiperEl && (swiperEl instanceof Swiper) && swiperEl.destroy) {
-            return swiperEl.destroy();
-          }
-          const $swiperEl = $(swiperEl);
-          if (!$swiperEl.length) return undefined;
-          const swiper = $swiperEl[0].swiper;
-          if (swiper && swiper.destroy) return swiper.destroy();
-          return undefined;
-        },
-      },
+    app.swiper = ConstructorMethods({
+      defaultSelector: '.swiper-container',
+      constructor: Swiper,
+      domProp: 'swiper',
     });
   },
   on: {
@@ -43,53 +79,16 @@ export default {
         app.swiper.destroy(swiperEl);
       });
     },
+    pageMounted(page) {
+      const app = this;
+      page.$el.find('.tabs-swipeable-wrap').each((index, swiperEl) => {
+        initSwipers.call(app, swiperEl);
+      });
+    },
     pageInit(page) {
       const app = this;
       page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
-        const $swiperEl = $(swiperEl);
-        let initialSlide;
-        let params = {};
-        let isTabs;
-        if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
-          $swiperEl
-            .addClass('swiper-container')
-            .children('.tabs')
-            .addClass('swiper-wrapper')
-            .children('.tab')
-            .addClass('swiper-slide');
-          initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
-          isTabs = true;
-        }
-        if ($swiperEl.attr('data-swiper')) {
-          params = JSON.parse($swiperEl.attr('data-swiper'));
-        } else {
-          params = $swiperEl.dataset();
-          Object.keys(params).forEach((key) => {
-            const value = params[key];
-            if (typeof value === 'string' && value.indexOf('{') === 0 && value.indexOf('}') > 0) {
-              try {
-                params[key] = JSON.parse(value);
-              } catch (e) {
-                // not JSON
-              }
-            }
-          });
-        }
-        if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
-          params.initialSlide = initialSlide;
-        }
-        if (isTabs) {
-          Utils.extend(params, {
-            on: {
-              slideChangeStart() {
-                const swiper = this;
-                app.tab.show(swiper.slides.eq(swiper.activeIndex));
-              },
-            },
-          });
-        }
-
-        app.swiper.create($swiperEl[0], params);
+        initSwipers.call(app, swiperEl);
       });
     },
     pageReinit(page) {
@@ -100,5 +99,4 @@ export default {
       });
     },
   },
-
 };

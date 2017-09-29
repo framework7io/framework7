@@ -1,0 +1,44 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+
+  .toast {
+    background: rgba(0,0,0,0.75);
+    opacity: 0;
+
+    @supports (backdrop-filter: blur(10px)) {
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(10px);
+    }
+
+    &.toast-center {
+      border-radius: 8px;
+    }
+
+    @media (min-width: 569px) {
+      border-radius: 8px;
+      &.toast-bottom {
+        bottom: 15px;
+      }
+      &.toast-top {
+        top: 15px;
+      }
+    }
+    @media (min-width: 1024px) {
+      &.toast-bottom, &.toast-top {
+        left: 15px;
+      }
+    }
+  }
+  .toast-content {
+    padding: 12px 15px;
+  }
+  .toast-button {
+    color: #fff;
+    .ltr({
+      margin-left: 15px;
+    });
+    .rtl({
+      margin-right: 15px;
+    });
+  }
+}

@@ -48,7 +48,7 @@ class View extends Framework7Class {
     }
 
     // View Props
-    Utils.extend(view, {
+    Utils.extend(false, view, {
       app,
       $el,
       el: $el[0],
@@ -58,17 +58,13 @@ class View extends Framework7Class {
       navbarEl: $navbarEl ? $navbarEl[0] : undefined,
       selector,
       history: [],
+      scrollHistory: {},
     });
 
     $el[0].f7View = view;
 
     // Install Modules
-    view.useInstanceModules({
-      router: {
-        app,
-        view,
-      },
-    });
+    view.useModules();
 
     // Add to app
     app.views.push(view);
@@ -93,8 +89,8 @@ class View extends Framework7Class {
     let view = this;
     const app = view.app;
 
-    view.emit('viewBeforeDestroy', view);
     view.$el.trigger('view:beforedestroy', view);
+    view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
     if (view.main) {
       app.views.main = null;
@@ -111,7 +107,7 @@ class View extends Framework7Class {
     // Destroy Router
     view.router.destroy();
 
-    view.emit('viewDestroy', view);
+    view.emit('local::destroy viewDestroy', view);
 
     // Delete props & methods
     Object.keys(view).forEach((viewProp) => {
@@ -128,7 +124,7 @@ class View extends Framework7Class {
 }
 
 // Use Router
-View.use(Router);
+View.components = [Router];
 
 
 export default View;

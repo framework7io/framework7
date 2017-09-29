@@ -27,8 +27,12 @@ const Input = {
     }
 
     const styles = window.getComputedStyle($textareaEl[0]);
-    ('padding margin width font border box-sizing display').split(' ').forEach((style) => {
-      $shadowEl.css(style, styles[style]);
+    ('padding margin width font-size font-family font-style font-weight line-height font-variant text-transform letter-spacing border box-sizing display').split(' ').forEach((style) => {
+      let styleValue = styles[style];
+      if (('font-size line-height letter-spacing width').split(' ').indexOf(style) >= 0) {
+        styleValue = styleValue.replace(',', '.');
+      }
+      $shadowEl.css(style, styleValue);
     });
     const currentHeight = $textareaEl[0].clientHeight;
 
@@ -38,6 +42,7 @@ const Input = {
     $shadowEl.val($textareaEl.val());
     $shadowEl.css('height', 0);
     const scrollHeight = $shadowEl[0].scrollHeight;
+
     if (currentHeight !== scrollHeight) {
       if (scrollHeight > initialHeight) {
         $textareaEl.css('height', `${scrollHeight}px`);

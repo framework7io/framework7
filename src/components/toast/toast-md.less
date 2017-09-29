@@ -1,0 +1,39 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .toast {
+    background: #323232;
+    &.toast-center {
+      border-radius: 2px;
+      background: rgba(0,0,0,0.75);
+    }
+    @media (min-width: 569px) {
+      border-radius: 2px;
+    }
+    @media (min-width: 1024px) {
+      &.toast-bottom, &.toast-top {
+        left: 24px;
+      }
+      &.toast-bottom {
+        bottom: 24px;
+      }
+      &.toast-top {
+        top: 24px;
+      }
+    }
+  }
+  .toast-content {
+    padding: 14px 24px;
+  }
+  .toast-button {
+    margin-top: -8px;
+    margin-bottom: -8px;
+    .ltr({
+      margin-left: 16px;
+      margin-right: -8px;
+    });
+    .rtl({
+      margin-right: 16px;
+      margin-left: -8px;
+    });
+  }
+}

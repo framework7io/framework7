@@ -59,7 +59,10 @@ function swipePanel(panel) {
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
-    if (e.f7PreventPanelSwipe) return;
+    if (e.f7PreventPanelSwipe) {
+      isTouched = false;
+      return;
+    }
     const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
     const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
@@ -133,7 +136,7 @@ function swipePanel(panel) {
         $el.show();
         $backdropEl.show();
         $el.trigger('panel:swipeopen', panel);
-        panel.emit('panelSwipeOpen', panel);
+        panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
       panelWidth = $el[0].offsetWidth;
       $el.transition(0);
@@ -173,7 +176,7 @@ function swipePanel(panel) {
       $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
       $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
-      panel.emit('panelSwipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     } else {
       if (side === 'left') translate -= panelWidth;
       $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
@@ -183,7 +186,7 @@ function swipePanel(panel) {
       $backdropEl.css({ opacity: backdropOpacity });
 
       $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
-      panel.emit('panelSwipe', panel, Math.abs(translate / panelWidth));
+      panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     }
   }
   function handleTouchEnd() {
@@ -233,10 +236,10 @@ function swipePanel(panel) {
     } else if (translate === -panelWidth) {
       action = 'reset';
     } else if (
-        (timeDiff < 300 && Math.abs(translate) >= 0)
-        ||
-        (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
-      ) {
+      (timeDiff < 300 && Math.abs(translate) >= 0)
+      ||
+      (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
+    ) {
       if (side === 'left' && translate === panelWidth) action = 'reset';
       else action = 'swap';
     } else {
@@ -276,11 +279,11 @@ function swipePanel(panel) {
 
   // Add Events
   app.on('touchstart:passive', handleTouchStart);
-  app.on('touchmove', handleTouchMove);
+  app.on('touchmove:active', handleTouchMove);
   app.on('touchend:passive', handleTouchEnd);
   panel.on('panelDestroy', () => {
     app.off('touchstart:passive', handleTouchStart);
-    app.off('touchmove', handleTouchMove);
+    app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
   });
 }

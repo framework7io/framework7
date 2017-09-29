@@ -8,26 +8,27 @@
   z-index: 400;
 }
 .photo-browser-standalone {
-  transition-duration: 0ms;
   &.modal-in {
+    transition-duration: 0ms;
     animation: photo-browser-in 400ms;
   }
   &.modal-out {
+    transition-duration: 0ms;
     animation: photo-browser-out 400ms;
-    &.swiper-close-to-bottom, &.swiper-close-to-top {
+    &.swipe-close-to-bottom, &.swipe-close-to-top {
       animation: none;
     }
   }
 }
 .photo-browser-popup {
   &.modal-out {
-    &.swiper-close-to-bottom, &.swiper-close-to-top {
+    &.swipe-close-to-bottom, &.swipe-close-to-top {
       transition-duration: 300ms;
     }
-    &.swiper-close-to-bottom {
+    &.swipe-close-to-bottom {
       transform: translate3d(0, 100%, 0);
     }
-    &.swiper-close-to-top {
+    &.swipe-close-to-top {
       transform: translate3d(0, -100%, 0);
     }
   }
@@ -126,7 +127,7 @@
   flex-shrink: 0;
   box-sizing: border-box;
 
-  &.transitioning {
+  &.photo-browser-transitioning {
     transition: 400ms;
     transition-property: transform;
   }

@@ -66,7 +66,9 @@ class Framework7Class {
       eventsParents = args[0].local ? [] : args[0].parents || self.eventsParents;
     }
     const eventsArray = Array.isArray(events) ? events : events.split(' ');
-    eventsArray.forEach((event) => {
+    const localEvents = eventsArray.map(eventName => eventName.replace('local::', ''));
+    const parentEvents = eventsArray.filter(eventName => eventName.indexOf('local::') < 0);
+    localEvents.forEach((event) => {
       if (self.eventsListeners[event]) {
         self.eventsListeners[event].forEach((eventHandler) => {
           eventHandler.apply(context, data);
@@ -75,12 +77,12 @@ class Framework7Class {
     });
     if (eventsParents && eventsParents.length > 0) {
       eventsParents.forEach((eventsParent) => {
-        eventsParent.emit(events, ...data);
+        eventsParent.emit(parentEvents, ...data);
       });
     }
     return self;
   }
-  useInstanceModulesParams(instanceParams) {
+  useModulesParams(instanceParams) {
     const instance = this;
     if (!instance.modules) return;
     Object.keys(instance.modules).forEach((moduleName) => {
@@ -91,7 +93,7 @@ class Framework7Class {
       }
     });
   }
-  useInstanceModules(modulesParams = {}) {
+  useModules(modulesParams = {}) {
     const instance = this;
     if (!instance.modules) return;
     Object.keys(instance.modules).forEach((moduleName) => {
@@ -120,6 +122,11 @@ class Framework7Class {
         module.create.bind(instance)(moduleParams);
       }
     });
+  }
+  static set components(components) {
+    const Class = this;
+    if (!Class.use) return;
+    Class.use(components);
   }
   static installModule(module, ...params) {
     const Class = this;

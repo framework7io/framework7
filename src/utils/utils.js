@@ -98,6 +98,49 @@ for (let i = 0; i < defaultDiacriticsRemovalap.length; i += 1) {
   }
 }
 
+const createPromise = function createPromise(handler) {
+  let resolved = false;
+  let rejected = false;
+  let resolveArgs;
+  let rejectArgs;
+  const promiseHandlers = {
+    then: undefined,
+    catch: undefined,
+  };
+  const promise = {
+    then(thenHandler) {
+      if (resolved) {
+        thenHandler(...resolveArgs);
+      } else {
+        promiseHandlers.then = thenHandler;
+      }
+      return promise;
+    },
+    catch(catchHandler) {
+      if (rejected) {
+        catchHandler(...rejectArgs);
+      } else {
+        promiseHandlers.catch = catchHandler;
+      }
+      return promise;
+    },
+  };
+
+  function resolve(...args) {
+    resolved = true;
+    if (promiseHandlers.then) promiseHandlers.then(...args);
+    else resolveArgs = args;
+  }
+  function reject(...args) {
+    rejected = true;
+    if (promiseHandlers.catch) promiseHandlers.catch(...args);
+    else rejectArgs = args;
+  }
+  handler(resolve, reject);
+
+  return promise;
+};
+
 const Utils = {
   deleteProps(obj) {
     const object = obj;
@@ -127,46 +170,7 @@ const Utils = {
     return Date.now();
   },
   promise(handler) {
-    let resolved = false;
-    let rejected = false;
-    let resolveArgs;
-    let rejectArgs;
-    const promiseHandlers = {
-      then: undefined,
-      catch: undefined,
-    };
-    const promise = {
-      then(thenHandler) {
-        if (resolved) {
-          thenHandler(...resolveArgs);
-        } else {
-          promiseHandlers.then = thenHandler;
-        }
-        return promise;
-      },
-      catch(catchHandler) {
-        if (rejected) {
-          catchHandler(...rejectArgs);
-        } else {
-          promiseHandlers.catch = catchHandler;
-        }
-        return promise;
-      },
-    };
-
-    function resolve(...args) {
-      resolved = true;
-      if (promiseHandlers.then) promiseHandlers.then(...args);
-      else resolveArgs = args;
-    }
-    function reject(...args) {
-      rejected = true;
-      if (promiseHandlers.catch) promiseHandlers.catch(...args);
-      else rejectArgs = args;
-    }
-    handler(resolve, reject);
-
-    return promise;
+    return window.Promise ? new Promise(handler) : createPromise(handler);
   },
   requestAnimationFrame(callback) {
     if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
@@ -238,12 +242,73 @@ const Utils = {
     }
     return curTransform || 0;
   },
+  serializeObject(obj, parents = []) {
+    if (typeof obj === 'string') return obj;
+    const resultArray = [];
+    const separator = '&';
+    let newParents;
+    function varName(name) {
+      if (parents.length > 0) {
+        let parentParts = '';
+        for (let j = 0; j < parents.length; j += 1) {
+          if (j === 0) parentParts += parents[j];
+          else parentParts += `[${encodeURIComponent(parents[j])}]`;
+        }
+        return `${parentParts}[${encodeURIComponent(name)}]`;
+      }
+      return encodeURIComponent(name);
+    }
+    function varValue(value) {
+      return encodeURIComponent(value);
+    }
+    Object.keys(obj).forEach((prop) => {
+      let toPush;
+      if (Array.isArray(obj[prop])) {
+        toPush = [];
+        for (let i = 0; i < obj[prop].length; i += 1) {
+          if (!Array.isArray(obj[prop][i]) && typeof obj[prop][i] === 'object') {
+            newParents = parents.slice();
+            newParents.push(prop);
+            newParents.push(String(i));
+            toPush.push(Utils.serializeObject(obj[prop][i], newParents));
+          } else {
+            toPush.push(`${varName(prop)}[]=${varValue(obj[prop][i])}`);
+          }
+        }
+        if (toPush.length > 0) resultArray.push(toPush.join(separator));
+      } else if (obj[prop] === null || obj[prop] === '') {
+        resultArray.push(`${varName(prop)}=`);
+      } else if (typeof obj[prop] === 'object') {
+        // Object, convert to named array
+        newParents = parents.slice();
+        newParents.push(prop);
+        toPush = Utils.serializeObject(obj[prop], newParents);
+        if (toPush !== '') resultArray.push(toPush);
+      } else if (typeof obj[prop] !== 'undefined' && obj[prop] !== '') {
+        // Should be string or plain value
+        resultArray.push(`${varName(prop)}=${varValue(obj[prop])}`);
+      } else if (obj[prop] === '') resultArray.push(varName(prop));
+    });
+    return resultArray.join(separator);
+  },
   isObject(o) {
     return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
   },
   extend(...args) {
-    const to = Object(args[0]);
-    for (let i = 1; i < args.length; i += 1) {
+    let deep = true;
+    let to;
+    let from;
+    if (typeof args[0] === 'boolean') {
+      deep = args[0];
+      to = args[1];
+      args.splice(0, 2);
+      from = args;
+    } else {
+      to = args[0];
+      args.splice(0, 1);
+      from = args;
+    }
+    for (let i = 0; i < from.length; i += 1) {
       const nextSource = args[i];
       if (nextSource !== undefined && nextSource !== null) {
         const keysArray = Object.keys(Object(nextSource));
@@ -251,7 +316,9 @@ const Utils = {
           const nextKey = keysArray[nextIndex];
           const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
           if (desc !== undefined && desc.enumerable) {
-            if (Utils.isObject(to[nextKey]) && Utils.isObject(nextSource[nextKey])) {
+            if (!deep) {
+              to[nextKey] = nextSource[nextKey];
+            } else if (Utils.isObject(to[nextKey]) && Utils.isObject(nextSource[nextKey])) {
               Utils.extend(to[nextKey], nextSource[nextKey]);
             } else if (!Utils.isObject(to[nextKey]) && Utils.isObject(nextSource[nextKey])) {
               to[nextKey] = {};

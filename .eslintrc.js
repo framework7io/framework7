@@ -5,7 +5,11 @@ module.exports = {
   ],
   'globals': {
     "window": true,
-    "document": true
+    "document": true,
+    "XMLHttpRequest": true,
+    "Blob": true,
+    "Document": true,
+    "FormData": true,
   },
   rules: {
     'max-len': ['error', 1000, 2, {
@@ -15,6 +19,10 @@ module.exports = {
       ignoreStrings: true,
       ignoreTemplateLiterals: true,
     }],
+    'object-curly-newline': ['error', {
+      ObjectExpression: { minProperties: 9, multiline: true, consistent: true },
+      ObjectPattern: { minProperties: 9, multiline: true, consistent: true }
+    }],
     'comma-dangle': ['error', {
       arrays: 'always-multiline',
       objects: 'always-multiline',
@@ -22,5 +30,6 @@ module.exports = {
       exports: 'always-multiline',
       functions: 'never',
     }],
+    'prefer-destructuring': ['off'],
   },
 };

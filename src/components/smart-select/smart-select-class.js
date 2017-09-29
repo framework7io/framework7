@@ -24,13 +24,21 @@ class SmartSelect extends Framework7Class {
     }
 
     // Extend defaults with modules params
-    ss.useInstanceModulesParams(defaults);
+    ss.useModulesParams(defaults);
 
     // View
     const view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
     if (!view) {
       throw Error('Smart Select requires initialized View');
     }
+
+    // Url
+    let url = params.url;
+    if (!url) {
+      if ($el.attr('href') && $el.attr('href') !== '#') url = $el.attr('href');
+      else url = `${$selectEl.attr('name').toLowerCase()}-select/`;
+    }
+    if (!url) url = ss.params.url;
 
     const multiple = $selectEl[0].multiple;
     const inputType = multiple ? 'checkbox' : 'radio';
@@ -43,13 +51,13 @@ class SmartSelect extends Framework7Class {
       selectEl: $selectEl[0],
       $valueEl,
       valueEl: $valueEl[0],
-      url: params.url || $el.attr('href') || `${$selectEl.attr('name').toLowerCase()}-select/`,
+      url,
       multiple,
       inputType,
       id,
       view,
       inputName: `${inputType}-${id}`,
-      name: $selectEl.attr('name'),
+      selectName: $selectEl.attr('name'),
       maxLength: $selectEl.attr('maxlength') || params.maxLength,
     });
     $el[0].f7SmartSelect = ss;
@@ -115,7 +123,7 @@ class SmartSelect extends Framework7Class {
     };
 
     // Install Modules
-    ss.useInstanceModules();
+    ss.useModules();
 
     // Init
     ss.init();
@@ -210,6 +218,162 @@ class SmartSelect extends Framework7Class {
     ss.items = items;
     return items;
   }
+  renderSearchbar() {
+    const ss = this;
+    if (ss.params.renderSearchbar) return ss.params.renderSearchbar.call(ss);
+    const searchbarHTML = `
+      <form class="searchbar">
+        <div class="searchbar-inner">
+          <div class="searchbar-input-wrap">
+            <input type="search" placeholder="${ss.params.searchbarPlaceholder}"/>
+            <i class="searchbar-icon"></i>
+            <span class="input-clear-button"></span>
+          </div>
+          <span class="searchbar-disable-button">${ss.params.searchbarDisableText}</span>
+        </div>
+      </form>
+    `;
+    return searchbarHTML;
+  }
+  renderItem(item, index) {
+    const ss = this;
+    if (ss.params.renderItem) return ss.params.renderItem.call(ss, item, index);
+    let itemHtml;
+    if (item.isLabel) {
+      itemHtml = `<li class="item-divider">${item.groupLabel}</li>`;
+    } else {
+      itemHtml = `
+        <li class="${item.className || ''}">
+          <label class="item-${item.inputType} item-content">
+            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${item.selected ? 'checked' : ''}/>
+            <i class="icon icon-${item.inputType}"></i>
+            ${item.hasMedia ? `
+              <div class="item-media">
+                ${item.icon ? `<i class="icon ${item.icon}"></i>` : ''}
+                ${item.image ? `<img src="${item.image}">` : ''}
+              </div>
+            ` : ''}
+            <div class="item-inner">
+              <div class="item-title${item.color ? ` color-${item.color}` : ''}">${item.text}</div>
+            </div>
+          </label>
+        </li>
+      `;
+    }
+    return itemHtml;
+  }
+  renderItems() {
+    const ss = this;
+    if (ss.params.renderItems) return ss.params.renderItems.call(ss, ss.items);
+    const itemsHtml = `
+      ${ss.items.map((item, index) => `${ss.renderItem(item, index)}`).join('')}
+    `;
+    return itemsHtml;
+  }
+  renderPage() {
+    const ss = this;
+    if (ss.params.renderPage) return ss.params.renderPage.call(ss, ss.items);
+    let pageTitle = ss.params.pageTitle;
+    if (typeof pageTitle === 'undefined') {
+      pageTitle = ss.$el.find('.item-title').text().trim();
+    }
+    const pageHtml = `
+      <div class="page smart-select-page" data-name="smart-select-page" data-select-name="${ss.selectName}">
+        <div class="navbar ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
+          <div class="navbar-inner sliding ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
+            <div class="left">
+              <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="ios-only">${ss.params.pageBackLinkText}</span>
+              </a>
+            </div>
+            ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
+            ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
+          </div>
+        </div>
+        ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
+        <div class="page-content">
+          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
+            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+          </div>
+        </div>
+      </div>
+    `;
+    return pageHtml;
+  }
+  renderPopup() {
+    const ss = this;
+    if (ss.params.renderPopup) return ss.params.renderPopup.call(ss, ss.items);
+    let pageTitle = ss.params.pageTitle;
+    if (typeof pageTitle === 'undefined') {
+      pageTitle = ss.$el.find('.item-title').text().trim();
+    }
+    const popupHtml = `
+      <div class="popup smart-select-popup" data-select-name="${ss.selectName}">
+        <div class="view">
+          <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
+            <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
+              <div class="navbar-inner sliding">
+                <div class="left">
+                  <a href="#" class="link popup-close">
+                    <i class="icon icon-back"></i>
+                    <span class="ios-only">${ss.params.popupCloseLinkText}</span>
+                  </a>
+                </div>
+                ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
+                ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
+              </div>
+            </div>
+            ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
+            <div class="page-content">
+              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+                <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    return popupHtml;
+  }
+  renderSheet() {
+    const ss = this;
+    if (ss.params.renderSheet) return ss.params.renderSheet.call(ss, ss.items);
+    const sheetHtml = `
+      <div class="sheet-modal smart-select-sheet" data-select-name="${ss.selectName}">
+        <div class="toolbar ${ss.params.toolbarColorTheme ? `theme-${ss.params.toolbarColorTheme}` : ''}">
+          <div class="toolbar-inner">
+            <div class="left"></div>
+            <div class="right">
+              <a class="link sheet-close">${ss.params.sheetCloseLinkText}</a>
+            </div>
+          </div>
+        </div>
+        <div class="sheet-modal-inner">
+          <div class="page-content">
+            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+              <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    return sheetHtml;
+  }
+  renderPopover() {
+    const ss = this;
+    if (ss.params.renderPopover) return ss.params.renderPopover.call(ss, ss.items);
+    const popoverHtml = `
+      <div class="popover smart-select-popover" data-select-name="${ss.selectName}">
+        <div class="popover-inner">
+          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
+          </div>
+        </div>
+      </div>
+    `;
+    return popoverHtml;
+  }
   onOpen(type, containerEl) {
     const ss = this;
     const app = ss.app;
@@ -225,7 +389,7 @@ class SmartSelect extends Framework7Class {
         items: ss.items,
         renderItem: ss.renderItem.bind(ss),
         height: ss.params.virtualListHeight,
-        searchByItem(query, index, item) {
+        searchByItem(query, item) {
           if (item.text && item.text.toLowerCase().indexOf(query.trim().toLowerCase()) >= 0) return true;
           return false;
         },
@@ -258,23 +422,13 @@ class SmartSelect extends Framework7Class {
     ss.attachInputsEvents();
 
     ss.$el.trigger('smartselect:open', ss);
-    ss.emit({
-      events: 'open',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpen', ss);
+    ss.emit('local::open smartSelectOpen', ss);
   }
   onOpened() {
     const ss = this;
 
     ss.$el.trigger('smartselect:opened', ss);
-    ss.emit({
-      events: 'opened',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectOpened', ss);
+    ss.emit('local::opened smartSelectOpened', ss);
   }
   onClose() {
     const ss = this;
@@ -297,12 +451,7 @@ class SmartSelect extends Framework7Class {
     ss.detachInputsEvents();
 
     ss.$el.trigger('smartselect:close', ss);
-    ss.emit({
-      events: 'close',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClose', ss);
+    ss.emit('local::close smartSelectClose', ss);
   }
   onClosed() {
     const ss = this;
@@ -312,95 +461,7 @@ class SmartSelect extends Framework7Class {
     delete ss.$containerEl;
 
     ss.$el.trigger('smartselect:closed', ss);
-    ss.emit({
-      events: 'closed',
-      data: [ss],
-      parents: [],
-    });
-    ss.emit('smartSelectClosed', ss);
-  }
-  renderSearchbar() {
-    const ss = this;
-    if (ss.params.renderSearchbar) return ss.params.renderSearchbar.call(ss);
-    const searchbarHTML = `
-      <form class="searchbar">
-        <div class="searchbar-inner">
-          <div class="searchbar-input-wrap">
-            <input type="search" placeholder="${ss.params.searchbarPlaceholder}"/>
-            <i class="searchbar-icon"></i>
-            <span class="input-clear-button"></span>
-          </div>
-          <span class="searchbar-disable-button">${ss.params.searchbarDisableText}</span>
-        </div>
-      </form>
-    `;
-    return searchbarHTML;
-  }
-  renderItem(index, item) {
-    const ss = this;
-    if (ss.params.renderItem) return ss.params.renderItem.call(ss, index, item);
-    let itemHtml;
-    if (item.isLabel) {
-      itemHtml = `<li class="item-divider">${item.groupLabel}</li>`;
-    } else {
-      itemHtml = `
-        <li class="${item.className || ''}">
-          <label class="item-${item.inputType} item-content">
-            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${item.selected ? 'checked' : ''}/>
-            <i class="icon icon-${item.inputType}"></i>
-            ${item.hasMedia ? `
-              <div class="item-media">
-                ${item.icon ? `<i class="icon ${item.icon}"></i>` : ''}
-                ${item.image ? `<img src="${item.image}">` : ''}
-              </div>
-            ` : ''}
-            <div class="item-inner">
-              <div class="item-title${item.color ? ` color-${item.color}` : ''}">${item.text}</div>
-            </div>
-          </label>
-        </li>
-      `;
-    }
-    return itemHtml;
-  }
-  renderItems() {
-    const ss = this;
-    if (ss.params.renderItems) return ss.params.renderItems.call(ss, ss.items);
-    const itemsHtml = `
-      ${ss.items.map((item, index) => `${ss.renderItem(index, item)}`).join('')}
-    `;
-    return itemsHtml;
-  }
-  renderPage() {
-    const ss = this;
-    if (ss.params.renderPage) return ss.params.renderPage.call(ss, ss.items);
-    let pageTitle = ss.params.pageTitle;
-    if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
-    }
-    const pageHtml = `
-      <div class="page smart-select-page" data-name="smart-select-page" data-select-name="${ss.name}">
-        <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
-          <div class="navbar-inner sliding">
-            <div class="left">
-              <a href="#" class="link back">
-                <i class="icon icon-back"></i>
-                <span class="ios-only">${ss.params.pageBackLinkText}</span>
-              </a>
-            </div>
-            ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
-            ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
-          </div>
-        </div>
-        ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
-        <div class="page-content">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
-          </div>
-        </div>
-      </div>
-    `;
-    return pageHtml;
+    ss.emit('local::closed smartSelectClosed', ss);
   }
   openPage() {
     const ss = this;
@@ -431,41 +492,6 @@ class SmartSelect extends Framework7Class {
       },
     });
     return ss;
-  }
-  renderPopup() {
-    const ss = this;
-    if (ss.params.renderPopup) return ss.params.renderPopup(ss, ss.items);
-    let pageTitle = ss.params.pageTitle;
-    if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
-    }
-    const popupHtml = `
-      <div class="popup smart-select-popup" data-select-name="${ss.name}">
-        <div class="view">
-          <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
-            <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
-              <div class="navbar-inner sliding">
-                <div class="left">
-                  <a href="#" class="link popup-close">
-                    <i class="icon icon-back"></i>
-                    <span class="ios-only">${ss.params.popupCloseLinkText}</span>
-                  </a>
-                </div>
-                ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
-                ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
-              </div>
-            </div>
-            ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
-            <div class="page-content">
-              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-                <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    return popupHtml;
   }
   openPopup() {
     const ss = this;
@@ -502,30 +528,6 @@ class SmartSelect extends Framework7Class {
       ss.modal = ss.app.popup.create(popupParams).open();
     }
     return ss;
-  }
-  renderSheet() {
-    const ss = this;
-    if (ss.params.renderSheet) return ss.params.renderSheet(ss, ss.items);
-    const sheetHtml = `
-      <div class="sheet-modal smart-select-sheet" data-select-name="${ss.name}">
-        <div class="toolbar ${ss.params.toolbarColorTheme ? `theme-${ss.params.toolbarColorTheme}` : ''}">
-          <div class="toolbar-inner">
-            <div class="left"></div>
-            <div class="right">
-              <a class="link sheet-close">${ss.params.sheetCloseLinkText}</a>
-            </div>
-          </div>
-        </div>
-        <div class="sheet-modal-inner">
-          <div class="page-content">
-            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-              <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    return sheetHtml;
   }
   openSheet() {
     const ss = this;
@@ -565,20 +567,6 @@ class SmartSelect extends Framework7Class {
       ss.modal = ss.app.sheet.create(sheetParams).open();
     }
     return ss;
-  }
-  renderPopover() {
-    const ss = this;
-    if (ss.params.renderPopover) return ss.params.renderPopover(ss, ss.items);
-    const popoverHtml = `
-      <div class="popover smart-select-popover" data-select-name="${ss.name}">
-        <div class="popover-inner">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
-            <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
-          </div>
-        </div>
-      </div>
-    `;
-    return popoverHtml;
   }
   openPopover() {
     const ss = this;
@@ -648,7 +636,7 @@ class SmartSelect extends Framework7Class {
   }
   destroy() {
     const ss = this;
-    ss.emit('smartSelectBeforeDestroy', ss);
+    ss.emit('local::beforeDestroy smartSelectBeforeDestroy', ss);
     ss.$el.trigger('smartselect:beforedestroy', ss);
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;

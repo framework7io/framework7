@@ -31,7 +31,7 @@ $ npm install
 
 And build development version of Framework7:
 ```
-$ npm run build
+$ npm run build-dev
 ```
 
 The result is available in `build/` folder.
@@ -41,7 +41,7 @@ The result is available in `build/` folder.
 To build production version of Framework7:
 
 ```
-$ npm run dist
+$ npm run build-prod
 ```
 
 Production version will be available in `dist/` folder.

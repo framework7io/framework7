@@ -13,7 +13,7 @@ class DataTable extends Framework7Class {
     };
 
     // Extend defaults with modules params
-    table.useInstanceModulesParams(defaults);
+    table.useModulesParams(defaults);
 
     table.params = Utils.extend(defaults, params);
 
@@ -56,8 +56,8 @@ class DataTable extends Framework7Class {
         }
         $el
           .find(`tbody tr td:nth-child(${columnIndex + 1}) input`)
-            .prop('checked', checked)
-            .trigger('change', { sentByF7DataTable: true });
+          .prop('checked', checked)
+          .trigger('change', { sentByF7DataTable: true });
       } else {
         if (columnIndex === 0) {
           $inputEl.parents('tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected');
@@ -93,7 +93,7 @@ class DataTable extends Framework7Class {
     };
 
     // Install Modules
-    table.useInstanceModules();
+    table.useModules();
 
     // Init
     table.init();
@@ -129,8 +129,8 @@ class DataTable extends Framework7Class {
   destroy() {
     let table = this;
 
-    table.emit('datatableBeforeDestroy', table);
     table.$el.trigger('datatable:beforedestroy', table);
+    table.emit('local::beforeDestroy datatableBeforeDestroy', table);
 
     table.attachEvents();
     table.$el[0].f7DataTable = null;
