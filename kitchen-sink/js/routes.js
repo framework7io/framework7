@@ -442,4 +442,8 @@ var routes = [
     path: '/page-loader-component/:user/:userId/:posts/:postId/',
     componentUrl: './pages/page-loader-component.html',
   },
+  {
+    path: '/page-loader-component-binding/:user/:userId/:posts/:postId/',
+    componentUrl: './pages/page-loader-component-binding.html',
+  },
 ];
