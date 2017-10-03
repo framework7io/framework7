@@ -1,14 +1,20 @@
 import $ from 'dom7';
 import Template7 from 'template7';
 import Utils from '../utils/utils';
+
 import morphdom from 'morphdom';
+
 
 const eventAttrNamePrefix = 'data-f7event-';
 
 class Framework7Component {
   constructor(c, extend = {}) {
     const context = Utils.extend({}, extend);
-    const component = Utils.extend(this, c, { context });
+    const component = Utils.extend(this, c, {
+      context
+    }, {
+      isMounted: false
+    });
 
     let tempDom = document.createElement('div');
 
@@ -118,7 +124,7 @@ class Framework7Component {
                 }
               });
             }
- 
+
             const value = attr.value;
             element.removeAttribute(attr.name);
             events.push({
@@ -216,6 +222,7 @@ class Framework7Component {
       if (styleEl) $('head').append(styleEl);
       if (mountMethod) mountMethod(el);
       if (component.mounted) component.mounted();
+      component.isMounted = true;
     };
 
     // Destroy
@@ -238,22 +245,38 @@ class Framework7Component {
 
     // Wrap component data elements with proxy objects to catch viewmodel changes
     function wrapComponentDataWithProxy(obj) {
-      var result = new Proxy({}, {set: onViewModelChange});
+      var result = new Proxy({}, {
+        set: onViewModelChange
+      });
 
       for (var p in obj) {
-        if( obj.hasOwnProperty(p) ) {
+        if (obj.hasOwnProperty(p)) {
           var t = "";
-          if (typeof obj[p] === "object") { t = "object" }
-          if (Array.isArray(obj[p])) { t = "array" }
-          if (typeof obj[p] === "string") { t = "string" }
-          if (Number.isFinite(obj[p])) { t = "number" }
-          if (Number.isInteger(obj[p])) { t = "integer" }
-          if (Object.prototype.toString.call(obj[p]) === "[object Date]") { t = "date" }
+          if (typeof obj[p] === "object") {
+            t = "object"
+          }
+          if (Array.isArray(obj[p])) {
+            t = "array"
+          }
+          if (typeof obj[p] === "string") {
+            t = "string"
+          }
+          if (Number.isFinite(obj[p])) {
+            t = "number"
+          }
+          if (Number.isInteger(obj[p])) {
+            t = "integer"
+          }
+          if (Object.prototype.toString.call(obj[p]) === "[object Date]") {
+            t = "date"
+          }
 
           if (t === "object") {
             result[p] = wrapComponentDataWithProxy(obj[p]);
           } else if (t === "array") {
-            result[p] = new Proxy(obj[p], {set: onViewModelChange});
+            result[p] = new Proxy(obj[p], {
+              set: onViewModelChange
+            });
           } else {
             result[p] = obj[p];
           }
@@ -267,12 +290,12 @@ class Framework7Component {
     function onViewModelChange(obj, prop, newval, receiver) {
 
       let oldval = obj[prop];
+      obj[prop] = newval;
 
-      if (oldval !== newval) {
+      if (component.isMounted && oldval !== newval) {
 
-        obj[prop] = newval;
-
-        if (oldval) {
+        // "Run to completion"
+        setTimeout(function() {
 
           let t7context = {
             $root: context.$root,
@@ -295,23 +318,23 @@ class Framework7Component {
             newHtml = newHtml.trim();
           }
           newHtml = newHtml.replace(/@/g, eventAttrNamePrefix);
+          let newDom = $(newHtml)[0];
+          context.$router.removeThemeElements(newDom);
 
           tempDom = component.el;
 
           detachEvents();
           events.length = 0;
 
-          morphdom(tempDom, newHtml, {childrenOnly: true});
+          morphdom(tempDom, newDom, { childrenOnly: true });
 
           findEvents();
           attachEvents();
 
-          let el = tempDom.children[0];
-          context.$el = $(el);
-
           storeComponentInstance();
-        }
+        }, 0);
       }
+
       return true;
     }
 
