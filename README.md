@@ -96,6 +96,7 @@ After that you will find created `custom/` folder with generated JS and CSS file
 * calendar
 * notifications
 * timeline
+* data-table
 
 ## Contributing
 
