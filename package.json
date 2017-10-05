@@ -3,8 +3,8 @@
   "version": "2.0.0-beta.8",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
-  "jsnext:main": "dist/js/framework7.module.js",
-  "module": "dist/js/framework7.module.js",
+  "jsnext:main": "dist/js/framework7.esm.js",
+  "module": "dist/js/framework7.esm.js",
   "scripts": {
     "build-dev": "cross-env NODE_ENV=development gulp build",
     "build-prod": "cross-env NODE_ENV=production gulp build",
@@ -52,7 +52,7 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "dom7": "^2.0.0",
+    "dom7": "^2.0.1",
     "template7": "^1.3.0"
   },
   "devDependencies": {

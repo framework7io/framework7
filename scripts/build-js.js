@@ -74,7 +74,7 @@ function es(components, cb) {
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
-    .pipe(rename('framework7.module.js'))
+    .pipe(rename('framework7.esm.bundle.js'))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       cbs += 1;
@@ -108,7 +108,7 @@ function es(components, cb) {
     })
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
-    .pipe(rename('framework7.modular.js'))
+    .pipe(rename('framework7.esm.js'))
     .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       cbs += 1;
