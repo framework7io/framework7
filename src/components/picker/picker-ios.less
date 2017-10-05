@@ -1,0 +1,19 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .picker-columns {
+    font-size: 24px;
+  }
+  .picker-column-divider {
+    color: #000;
+  }
+
+  .picker-item {
+    color:#707274;
+    &.picker-item-selected {
+      color: #000;
+    }
+  }
+  .hairline-root('.picker-center-highlight', top, #a8abb0);
+  .hairline-root('.picker-center-highlight', bottom, #a8abb0);
+}

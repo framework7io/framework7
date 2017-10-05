@@ -177,6 +177,10 @@ var routes = [
     componentUrl: './pages/photo-browser.html',
   },
   {
+    path: '/picker/',
+    componentUrl: './pages/picker.html',
+  },
+  {
     path: '/popup/',
     componentUrl: './pages/popup.html',
   },
