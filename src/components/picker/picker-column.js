@@ -27,11 +27,10 @@ export default function (colEl, updateItems) {
   }
 
   col.replaceValues = function replaceColValues(values, displayValues) {
-    const newItemsHTML = picker.renderColumn(col, true);
     col.detachEvents();
     col.values = values;
     col.displayValues = displayValues;
-    col.$itemsEl.html(newItemsHTML);
+    col.$itemsEl.html(picker.renderColumn(col, true));
     col.items = col.$itemsEl.find('.picker-item');
     col.calcSize();
     col.setValue(col.values[0], 0, true);
