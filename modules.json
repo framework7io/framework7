@@ -255,5 +255,13 @@
             "material": ["src/less/material/timeline.less"]
         },
         "dependencies" : []
+    },
+    "data-table": {
+        "js" : ["src/js/framework7/data-table.js"],
+        "less": {
+            "ios": ["src/less/ios/data-table.less"],
+            "material": ["src/less/material/data-table.less"]
+        },
+        "dependencies" : []
     }
 }
