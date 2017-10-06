@@ -194,8 +194,12 @@ class Picker extends Framework7Class {
   }
   // eslint-disable-next-line
   destroyColumn(colEl) {
+    const picker = this;
     const $colEl = $(colEl);
-    if ('f7DestroyPickerColumn' in $colEl[0]) $colEl[0].f7DestroyPickerColumn();
+    const index = $colEl.index();
+    if (picker.cols[index] && picker.cols[index].destroy) {
+      picker.cols[index].destroy();
+    }
   }
   renderToolbar() {
     const picker = this;
@@ -406,13 +410,14 @@ class Picker extends Framework7Class {
     const modalType = isPopover ? 'popover' : 'sheet';
     const modalParams = {
       targetEl: $inputEl,
-      scrollToEl: $inputEl,
+      scrollToEl: picker.params.scrollToInput ? $inputEl : undefined,
       content: picker[isPopover ? 'renderPopover' : 'renderSheet'](),
       on: {
         open() {
           const modal = this;
           picker.modal = modal;
           picker.$el = isPopover ? modal.$el.find('.picker') : modal.$el;
+          picker.$el[0].f7Picker = picker;
           picker.onOpen();
         },
         opened() { picker.onOpened(); },
@@ -435,12 +440,23 @@ class Picker extends Framework7Class {
   close() {
     const picker = this;
     const { opened, inline } = picker;
-    if (!opened || inline) {
+    if (!opened) return;
+    if (inline) {
       picker.onClose();
       picker.onClosed();
       return;
     }
-    if (picker.modal && picker.modal.close) picker.modal.close();
+    if (picker.params.routableModals) {
+      picker.view.router.back();
+    } else {
+      picker.modal.once('modalClosed', () => {
+        Utils.nextTick(() => {
+          picker.modal.destroy();
+          delete picker.modal;
+        });
+      });
+      picker.modal.close();
+    }
   }
   init() {
     const picker = this;
@@ -482,7 +498,6 @@ class Picker extends Framework7Class {
 
     if ($el && $el.length) delete picker.$el[0].f7Picker;
     Utils.deleteProps(picker);
-    picker.destroyed = true;
   }
 }
 
