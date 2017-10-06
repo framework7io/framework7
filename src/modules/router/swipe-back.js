@@ -127,8 +127,8 @@ function SwipeBack(r) {
       }
 
       // Close/Hide Any Picker
-      if ($('.picker.modal-in').length > 0) {
-        app.closeModal($('.picker.modal-in'));
+      if ($('.sheet.modal-in').length > 0 && app.sheet) {
+        app.sheet.close($('.sheet.modal-in'));
       }
     }
     e.f7PreventPanelSwipe = true;
