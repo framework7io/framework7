@@ -20,6 +20,12 @@ class Picker extends Framework7Class {
       $inputEl = $(picker.params.inputEl);
     }
 
+    let view;
+    if ($inputEl) {
+      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view) view = app.views.main;
+
     Utils.extend(picker, {
       app,
       $containerEl,
@@ -31,6 +37,8 @@ class Picker extends Framework7Class {
       inputEl: $inputEl && $inputEl[0],
       initialized: false,
       opened: false,
+      url: picker.params.url,
+      view,
     });
 
     function onResize() {
@@ -395,20 +403,34 @@ class Picker extends Framework7Class {
       return;
     }
     const isPopover = picker.isPopover();
-    const modal = app[isPopover ? 'popover' : 'sheet'].create({
+    const modalType = isPopover ? 'popover' : 'sheet';
+    const modalParams = {
       targetEl: $inputEl,
       scrollToEl: $inputEl,
       content: picker[isPopover ? 'renderPopover' : 'renderSheet'](),
       on: {
-        open() { picker.onOpen(); },
+        open() {
+          const modal = this;
+          picker.modal = modal;
+          picker.$el = isPopover ? modal.$el.find('.picker') : modal.$el;
+          picker.onOpen();
+        },
         opened() { picker.onOpened(); },
         close() { picker.onClose(); },
         closed() { picker.onClosed(); },
       },
-    });
-    picker.modal = modal;
-    picker.$el = isPopover ? modal.$el.find('.picker') : modal.$el;
-    modal.open();
+    };
+    if (picker.params.routableModals) {
+      picker.view.router.navigate(picker.url, {
+        createRoute: {
+          path: picker.url,
+          [modalType]: modalParams,
+        },
+      });
+    } else {
+      picker.modal = app[modalType].create(modalParams);
+      picker.modal.open();
+    }
   }
   close() {
     const picker = this;

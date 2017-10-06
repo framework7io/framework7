@@ -14,6 +14,14 @@
       color: #000;
     }
   }
+  .picker-popover .toolbar {
+    background: none;
+    .hairline-remove(top);
+  }
+  .picker-popover .picker > .toolbar + .picker-columns {
+    height: ~"calc(100% - @{toolbarSize})";
+  }
+  .hairline-root('.picker-popover .toolbar', bottom, @toolbarBorderColor);
   .hairline-root('.picker-center-highlight', top, #a8abb0);
   .hairline-root('.picker-center-highlight', bottom, #a8abb0);
 }

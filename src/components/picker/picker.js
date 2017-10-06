@@ -14,6 +14,13 @@ export default {
       app,
       domProp: 'f7Picker',
     });
+    app.picker.close = function close(el = '.picker') {
+      const $el = $(el);
+      if ($el.length === 0) return;
+      const picker = $el[0].f7Picker;
+      if (!picker || (picker && !picker.opened)) return;
+      picker.close();
+    };
   },
   params: {
     picker: {
@@ -24,24 +31,28 @@ export default {
       momentumRatio: 7,
       freeMode: false,
       containerEl: null,
+      formatValue: null,
       cols: [],
       // Common opener settings
       inputEl: null,
       inputReadOnly: true,
-      formatValue: null,
       closeByOutsideClick: true,
       scrollToInput: true,
       convertToPopover: true,
       onlyInPopover: false,
       toolbar: true,
       toolbarCloseText: 'Done',
+      cssClass: null,
+      routableModals: true,
+      view: null,
+      url: 'select',
+      // Render functions
       renderColumn: null,
       renderToolbar: null,
       renderInline: null,
       renderPopover: null,
       renderSheet: null,
       render: null,
-      cssClass: null,
     },
   },
   instance: {

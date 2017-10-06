@@ -12,6 +12,9 @@
   .picker-column-divider {
     color: rgba(0,0,0,0.87);
   }
+  .picker-popover .picker > .toolbar + .picker-columns {
+    height: ~"calc(100% - @{toolbarSize})";
+  }
   .hairline-root('.picker-center-highlight', top, rgba(0,0,0,0.15));
   .hairline-root('.picker-center-highlight', bottom, rgba(0,0,0,0.15));
 }
