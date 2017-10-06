@@ -73,23 +73,21 @@
         </ul>
       </div>
       <div class="block-title">Inline Picker / Date-time</div>
-      <div class="block">
-        <!-- <div style="padding:0; margin-right:-15px; width:auto" class="content-block-inner"> -->
-          <div style="margin:0" class="list">
-            <ul>
-              <li>
-                <div class="item-content item-input">
-                  <div class="item-inner">
-                    <div class="item-input">
-                      <input type="text" placeholder="Date Time" readonly="readonly" id="demo-picker-date"/>
-                    </div>
-                  </div>
+      <div class="list no-margin">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Date Time" readonly="readonly" id="demo-picker-date"/>
                 </div>
-              </li>
-            </ul>
-          </div>
-          <div id="demo-picker-date-container"></div>
-        <!-- </div> -->
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block block-strong no-padding no-margin margin-bottom">
+        <div id="demo-picker-date-container"></div>
       </div>
     </div>
   </div>
@@ -167,7 +165,7 @@
                   '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
                 '</div>' +
                 '<div class="right">' +
-                  '<a href="#" class="link sheet-close">That\'s me</a>' +
+                  '<a href="#" class="link sheet-close popover-close">That\'s me</a>' +
                 '</div>' +
               '</div>' +
             '</div>';
@@ -272,7 +270,14 @@
             },
           }
         });
-      }
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.pickerDevice.destroy();
+        self.pickerDescribe.destroy();
+        self.pickerDependent.destroy();
+        self.pickerCustomToolbar.destroy();
+      },
     }
   }
 </script>
