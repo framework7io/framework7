@@ -1,3 +1,4 @@
+import $ from 'dom7';
 import ConstructorMethods from '../../utils/constructor-methods';
 import Picker from './picker-class';
 
@@ -30,10 +31,10 @@ export default {
       rotateEffect: false,
       momentumRatio: 7,
       freeMode: false,
-      containerEl: null,
-      formatValue: null,
       cols: [],
       // Common opener settings
+      containerEl: null,
+      formatValue: null,
       inputEl: null,
       inputReadOnly: true,
       closeByOutsideClick: true,
@@ -53,11 +54,6 @@ export default {
       renderPopover: null,
       renderSheet: null,
       render: null,
-    },
-  },
-  instance: {
-    picker(params) {
-      return new Picker(this, params);
     },
   },
 };
