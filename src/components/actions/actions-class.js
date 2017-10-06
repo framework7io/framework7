@@ -98,6 +98,10 @@ class Actions extends Modal {
           popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).on('click', buttonOnClick);
           });
+          Utils.nextTick(() => {
+            popover.destroy();
+            popover = undefined;
+          });
         });
       } else {
         actions.$el = $(actions.actionsHtml);
@@ -112,6 +116,7 @@ class Actions extends Modal {
         });
         originalOpen.call(actions, animate);
       }
+      return actions;
     };
 
     actions.close = function close(animate) {
@@ -123,6 +128,7 @@ class Actions extends Modal {
       } else {
         originalClose.call(actions, animate);
       }
+      return actions;
     };
 
     Utils.extend(actions, {
