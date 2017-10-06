@@ -9,7 +9,7 @@ class SmartSelect extends Framework7Class {
     ss.app = app;
     const defaults = Utils.extend({
       on: {},
-    }, app.modules.smartSelect.params.smartSelect);
+    }, app.params.smartSelect);
 
     const $el = $(params.el).eq(0);
     if ($el.length === 0) return ss;
