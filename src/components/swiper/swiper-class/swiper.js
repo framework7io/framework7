@@ -9,6 +9,7 @@ import Resize from './modules/resize/resize';
 import Observer from './modules/observer/observer';
 
 // Components
+import Virtual from './components/virtual/virtual';
 import Navigation from './components/navigation/navigation';
 import Pagination from './components/pagination/pagination';
 import Scrollbar from './components/scrollbar/scrollbar';
@@ -29,6 +30,7 @@ Swiper.components = [
   Support,
   Resize,
   Observer,
+  Virtual,
   Navigation,
   Pagination,
   Scrollbar,

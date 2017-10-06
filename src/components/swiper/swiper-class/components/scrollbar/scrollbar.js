@@ -115,6 +115,9 @@ const Scrollbar = {
     } else if (position > positionMax) {
       position = positionMax;
     }
+    if (swiper.rtl) {
+      position = positionMax - position;
+    }
     position = -position / moveDivider;
     swiper.updateProgress(position);
     swiper.setTranslate(position);
@@ -251,7 +254,7 @@ export default {
       dragSize: 'auto',
       hide: false,
       draggable: false,
-      snapOnRelease: false,
+      snapOnRelease: true,
     },
   },
   create() {

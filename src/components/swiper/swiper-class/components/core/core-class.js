@@ -33,6 +33,8 @@ const prototypes = {
   images,
 };
 
+const extendedDefaults = {};
+
 class Swiper extends SwiperClass {
   constructor(...args) {
     let el;
@@ -60,12 +62,32 @@ class Swiper extends SwiperClass {
     // Swiper Instance
     const swiper = this;
 
+    Object.keys(swiper.modules).forEach((moduleName) => {
+      const module = swiper.modules[moduleName];
+      if (module.params) {
+        const moduleParamName = Object.keys(module.params)[0];
+        const moduleParams = module.params[moduleParamName];
+        if (typeof moduleParams !== 'object') return;
+        if (!(moduleParamName in params && 'enabled' in moduleParams)) return;
+        if (params[moduleParamName] === true) {
+          params[moduleParamName] = { enabled: true };
+        }
+        if (
+          typeof params[moduleParamName] === 'object' &&
+          !('enabled' in params[moduleParamName])
+        ) {
+          params[moduleParamName].enabled = true;
+        }
+        if (!params[moduleParamName]) params[moduleParamName] = { enabled: false };
+      }
+    });
+
     // Extend defaults with modules params
     const swiperParams = Utils.extend({}, defaults);
     swiper.useModulesParams(swiperParams);
 
     // Extend defaults with passed params
-    swiper.params = Utils.extend({}, swiperParams, params);
+    swiper.params = Utils.extend({}, swiperParams, extendedDefaults, params);
     swiper.originalParams = Utils.extend({}, swiper.params);
     swiper.passedParams = Utils.extend({}, params);
 
@@ -205,7 +227,7 @@ class Swiper extends SwiperClass {
     // Return app instance
     return swiper;
   }
-  slidesPerView() {
+  slidesPerViewDynamic() {
     const swiper = this;
     const { params, slides, slidesGrid, size: swiperSize, activeIndex } = swiper;
     let spv = 1;
@@ -367,6 +389,15 @@ class Swiper extends SwiperClass {
       Utils.deleteProps(swiper);
       swiper = null;
     }
+  }
+  static extendDefaults(newDefaults) {
+    Utils.extend(extendedDefaults, newDefaults);
+  }
+  static get extendedDefaults() {
+    return extendedDefaults;
+  }
+  static get defaults() {
+    return defaults;
   }
   static get Class() {
     return SwiperClass;
