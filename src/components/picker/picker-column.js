@@ -287,11 +287,6 @@ export default function (colEl, updateItems) {
 
   col.destroy = function destroyCol() {
     col.detachEvents();
-    delete col.$el[0].f7DestroyPickerColumn;
-  };
-
-  col.$el[0].f7DestroyPickerColumn = function destroyPickerCol() {
-    col.destroy();
   };
 
   col.init();
