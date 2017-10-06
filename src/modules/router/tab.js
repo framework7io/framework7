@@ -55,7 +55,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     $newTabEl.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
-    if ($oldTabEl) {
+    if ($oldTabEl && router.params.unloadTabContent) {
       if (animated) {
         onTabsChanged(() => {
           router.tabRemove($oldTabEl, $newTabEl, tabRoute);
@@ -64,6 +64,9 @@ function tabLoad(tabRoute, loadOptions = {}) {
         router.tabRemove($oldTabEl, $newTabEl, tabRoute);
       }
     }
+  }
+  if (!router.params.unloadTabContent) {
+    if ($newTabEl[0].f7RouterTabLoaded) return;
   }
 
   // Component/Template Callbacks
@@ -80,6 +83,9 @@ function tabLoad(tabRoute, loadOptions = {}) {
       } else {
         $newTabEl.append(contentEl);
       }
+    }
+    if (!router.params.unloadTabContent) {
+      $newTabEl[0].f7RouterTabLoaded = true;
     }
     onTabLoaded();
   }

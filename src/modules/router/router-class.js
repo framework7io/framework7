@@ -533,6 +533,24 @@ class Router extends Framework7Class {
       path,
     };
   }
+  findTabRoute(tabEl) {
+    const router = this;
+    const $tabEl = $(tabEl);
+    const parentPath = router.currentRoute.route.parentPath;
+    const tabId = $tabEl.attr('id');
+    const flattenedRoutes = router.flattenRoutes(router.routes);
+    let foundTabRoute;
+    flattenedRoutes.forEach((route) => {
+      if (
+        route.parentPath === parentPath &&
+        route.tab &&
+        route.tab.id === tabId
+      ) {
+        foundTabRoute = route;
+      }
+    });
+    return foundTabRoute;
+  }
   findMatchingRoute(url) {
     if (!url) return undefined;
     const router = this;

@@ -49,6 +49,7 @@ export default {
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
       restoreScrollTopOnBack: true,
+      unloadTabContent: true,
       // Swipe Back
       iosSwipeBack: true,
       iosSwipeBackAnimateShadow: true,

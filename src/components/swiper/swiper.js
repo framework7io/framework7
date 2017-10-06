@@ -1,5 +1,4 @@
 import $ from 'dom7';
-import Utils from '../../utils/utils';
 import Swiper from './swiper-class/swiper';
 import ConstructorMethods from '../../utils/constructor-methods';
 
@@ -17,6 +16,7 @@ function initSwipers(swiperEl) {
   let initialSlide;
   let params = {};
   let isTabs;
+  let isRoutableTabs;
   if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
     $swiperEl
       .addClass('swiper-container')
@@ -26,6 +26,7 @@ function initSwipers(swiperEl) {
       .addClass('swiper-slide');
     initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
     isTabs = true;
+    isRoutableTabs = $swiperEl.find('.tabs-routable').length > 0;
   }
   if ($swiperEl.attr('data-swiper')) {
     params = JSON.parse($swiperEl.attr('data-swiper'));
@@ -45,18 +46,21 @@ function initSwipers(swiperEl) {
   if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
     params.initialSlide = initialSlide;
   }
+
+  const swiper = app.swiper.create($swiperEl[0], params);
   if (isTabs) {
-    Utils.extend(params, {
-      on: {
-        transitionStart() {
-          const swiper = this;
-          app.tab.show(swiper.slides.eq(swiper.activeIndex));
-        },
-      },
+    swiper.on('slideChange', () => {
+      if (isRoutableTabs) {
+        let view = app.views.get($swiperEl.parents('.view'));
+        if (!view) view = app.views.main;
+        const router = view.router;
+        const tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
+        if (tabRoute) router.navigate(tabRoute.path);
+      } else {
+        app.tab.show(swiper.slides.eq(swiper.activeIndex));
+      }
     });
   }
-
-  app.swiper.create($swiperEl[0], params);
 }
 
 export default {
