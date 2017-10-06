@@ -1,0 +1,113 @@
+/* === Calendar/Datepicker === */
+.calendar {
+  overflow: hidden;
+  &.calendar-inline, &.calendar-popover .calendar {
+    position: relative;
+  }
+}
+.calendar-popover {
+  width: 320px;
+}
+.calendar-week-days {
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  .calendar-week-day {
+    flex-shink: 1;
+    width: 100% / 7;
+    width: ~"calc(100% / 7)";
+    text-align: center;
+  }
+}
+.calendar-months {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-months-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+.calendar-month {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.calendar-row {
+  height: 100% / 6;
+  height: ~"calc(100% / 6)";
+  display: flex;
+  flex-shink: 1;
+  width: 100%;
+  position: relative;
+}
+.calendar-day {
+  flex-shink: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100% / 7;
+  width: ~"calc(100% / 7)";
+  text-align: center;
+  cursor: pointer;
+  &.calendar-day-weekend {
+  }
+  &.calendar-day-prev, &.calendar-day-next {}
+  .calendar-month-prev &, .calendar-month-next & {}
+  &.calendar-day-disabled {
+    color: #d4d4d4;
+    cursor: auto;
+  }
+  &.calendar-day-selected span {
+    color:#fff;
+  }
+  &.calendar-day-has-events span {
+    &:after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      position: absolute;
+      margin-left: -2px;
+      left: 50%;
+    }
+  }
+  &.calendar-day-has-events.calendar-day-selected span:after {
+      display: none;
+  }
+  span {
+    display: inline-block;
+    border-radius: 100%;
+    position: relative;
+  }
+}
+.calendar-month-selector, .calendar-year-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  max-width: 200px;
+  flex-shink: 10;
+  span {
+    flex-shrink: 1;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+
+& when (@include-ios-theme) {
+  @import url('./calendar-ios.less');
+}
+& when (@include-md-theme) {
+  @import url('./calendar-md.less');
+}
