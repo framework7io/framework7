@@ -456,7 +456,7 @@ function navigate(url, navigateOptions = {}) {
   } else {
     Utils.extend(options, navigateOptions, { route });
   }
-  ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+  ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
     if (route.route[modalLoadProp]) {
       router.modalLoad(modalLoadProp, route, options);
     }
@@ -470,7 +470,7 @@ function navigate(url, navigateOptions = {}) {
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
     let resolvedAsModal = false;
-    ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+    ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
       if (resolveParams[modalLoadProp]) {
         resolvedAsModal = true;
         const modalRoute = Utils.extend({}, route, { route: resolveParams });

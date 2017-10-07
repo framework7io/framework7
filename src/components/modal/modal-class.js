@@ -71,7 +71,7 @@ class Modal extends Framework7Class {
       return modal;
     }
 
-    if (type === 'dialog' && app.params.modals.queueDialogs) {
+    if (type === 'dialog' && app.params.modal.queueDialogs) {
       let pushToQueue;
       if ($('.dialog.modal-in').length > 0) {
         pushToQueue = true;
@@ -88,7 +88,7 @@ class Modal extends Framework7Class {
 
     const $modalParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
-    if (app.params.modals.moveToRoot && !$modalParentEl.is(app.root)) {
+    if (app.params.modal.moveToRoot && !$modalParentEl.is(app.root)) {
       app.root.append($el);
       modal.once(`${type}Closed`, () => {
         if (wasInDom) {
