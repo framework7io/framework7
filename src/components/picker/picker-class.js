@@ -51,10 +51,12 @@ class Picker extends Framework7Class {
       e.preventDefault();
     }
     function onHtmlClick(e) {
+      const $targetEl = $(e.target);
       if (picker.isPopover()) return;
       if (!picker.opened) return;
+      if ($targetEl.closest('[class*="backdrop"]').length) return;
       if ($inputEl && $inputEl.length > 0) {
-        if (e.target !== $inputEl[0] && $(e.target).closest('.sheet-modal').length === 0) {
+        if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal').length === 0) {
           picker.close();
         }
       } else if ($(e.target).closest('.sheet-modal').length === 0) {
@@ -111,7 +113,9 @@ class Picker extends Framework7Class {
   }
   isPopover() {
     const picker = this;
-    const { app } = picker;
+    const { app, modal } = picker;
+    if (modal && modal.type !== 'popover') return false;
+
     if (!picker.params.convertToPopover && !picker.params.onlyInPopover) return false;
 
     if (!picker.inline && picker.inputEl) {
@@ -381,6 +385,17 @@ class Picker extends Framework7Class {
     const picker = this;
     picker.opened = false;
 
+    if (!picker.inline) {
+      Utils.nextTick(() => {
+        if (picker.modal && picker.modal.el && picker.modal.destroy) {
+          if (!picker.params.routableModals) {
+            picker.modal.destroy();
+          }
+        }
+        delete picker.modal;
+      });
+    }
+
     if (picker.$el) {
       picker.$el.trigger('picker:closed', picker);
     }
@@ -412,6 +427,7 @@ class Picker extends Framework7Class {
       targetEl: $inputEl,
       scrollToEl: picker.params.scrollToInput ? $inputEl : undefined,
       content: picker[isPopover ? 'renderPopover' : 'renderSheet'](),
+      backdrop: isPopover,
       on: {
         open() {
           const modal = this;
@@ -449,12 +465,6 @@ class Picker extends Framework7Class {
     if (picker.params.routableModals) {
       picker.view.router.back();
     } else {
-      picker.modal.once('modalClosed', () => {
-        Utils.nextTick(() => {
-          picker.modal.destroy();
-          delete picker.modal;
-        });
-      });
       picker.modal.close();
     }
   }
@@ -465,6 +475,7 @@ class Picker extends Framework7Class {
 
     if (picker.inline) {
       picker.open();
+      picker.emit('local::init pickerInit', picker);
       return;
     }
 
@@ -479,9 +490,11 @@ class Picker extends Framework7Class {
     if (picker.params.closeByOutsideClick) {
       picker.attachHtmlEvents();
     }
+    picker.emit('local::init pickerInit', picker);
   }
   destroy() {
     const picker = this;
+    if (picker.destroyed) return;
     const { $el } = picker;
     picker.emit('local::beforeDestroy pickerBeforeDestroy', picker);
     if ($el) $el.trigger('picker:beforedestroy', picker);
@@ -498,6 +511,7 @@ class Picker extends Framework7Class {
 
     if ($el && $el.length) delete picker.$el[0].f7Picker;
     Utils.deleteProps(picker);
+    picker.destroyed = true;
   }
 }
 
