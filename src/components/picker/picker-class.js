@@ -113,13 +113,12 @@ class Picker extends Framework7Class {
   }
   isPopover() {
     const picker = this;
-    const { app, modal } = picker;
+    const { app, modal, params } = picker;
+    if (params.openIn === 'sheet') return false;
     if (modal && modal.type !== 'popover') return false;
 
-    if (!picker.params.convertToPopover && !picker.params.onlyInPopover) return false;
-
     if (!picker.inline && picker.inputEl) {
-      if (picker.params.onlyInPopover) return true;
+      if (params.openIn === 'popover') return true;
       else if (app.device.ios) {
         return !!app.device.ipad;
       } else if (app.width >= 768) {
@@ -426,7 +425,7 @@ class Picker extends Framework7Class {
     const modalParams = {
       targetEl: $inputEl,
       scrollToEl: picker.params.scrollToInput ? $inputEl : undefined,
-      content: picker[isPopover ? 'renderPopover' : 'renderSheet'](),
+      content: picker.render(),
       backdrop: isPopover,
       on: {
         open() {

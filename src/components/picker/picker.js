@@ -34,13 +34,12 @@ export default {
       cols: [],
       // Common opener settings
       containerEl: null,
+      openIn: 'auto', // or 'popover' or 'sheet'
       formatValue: null,
       inputEl: null,
       inputReadOnly: true,
       closeByOutsideClick: true,
       scrollToInput: true,
-      convertToPopover: true,
-      onlyInPopover: false,
       toolbar: true,
       toolbarCloseText: 'Done',
       cssClass: null,
