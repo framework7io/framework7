@@ -8,11 +8,6 @@ class Calendar extends Framework7Class {
     const calendar = this;
     calendar.params = Utils.extend({}, app.params.calendar, params);
 
-    if (app.theme === 'md') {
-      if (typeof calendar.params.header === 'undefined') calendar.params.header = true;
-      if (typeof calendar.params.footer === 'undefined') calendar.params.footer = true;
-    }
-
     let $containerEl;
     if (calendar.params.containerEl) {
       $containerEl = $(calendar.params.containerEl);
@@ -60,10 +55,12 @@ class Calendar extends Framework7Class {
       e.preventDefault();
     }
     function onHtmlClick(e) {
+      const $targetEl = $(e.target);
       if (calendar.isPopover()) return;
       if (!calendar.opened) return;
+      if ($targetEl.closest('[class*="backdrop"]').length) return;
       if ($inputEl && $inputEl.length > 0) {
-        if (e.target !== $inputEl[0] && $(e.target).closest('.sheet-modal').length === 0) {
+        if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal').length === 0) {
           calendar.close();
         }
       } else if ($(e.target).closest('.sheet-modal').length === 0) {
@@ -285,7 +282,9 @@ class Calendar extends Framework7Class {
   }
   isPopover() {
     const calendar = this;
-    const { app } = calendar;
+    const { app, modal } = calendar;
+    if (modal && modal.type !== 'popover') return false;
+
     if (!calendar.params.convertToPopover && !calendar.params.onlyInPopover) return false;
 
     if (!calendar.inline && calendar.inputEl) {
@@ -378,7 +377,6 @@ class Calendar extends Framework7Class {
       $inputEl,
       value,
       params,
-      app,
     } = calendar;
     let i;
     if ($el && $el.length > 0) {
@@ -399,9 +397,9 @@ class Calendar extends Framework7Class {
 
     calendar.emit('local::change calendarChange', calendar, value);
 
-    if (($inputEl && $inputEl.length) || (app.theme === 'md' && params.header)) {
+    if (($inputEl && $inputEl.length) || params.header) {
       const inputValue = calendar.formatValue(value);
-      if (app.theme === 'md' && params.header && $el && $el.length) {
+      if (params.header && $el && $el.length) {
         $el.find('.calendar-selected-date').text(inputValue);
       }
       if ($inputEl && $inputEl.length && !onlyHeader) {
@@ -887,7 +885,7 @@ class Calendar extends Framework7Class {
       weekDaysHtml += `<div class="calendar-week-day">${dayName}</div>`;
     }
     return `
-      <div class="calendar-week-days">
+      <div class="calendar-week-header">
         ${weekDaysHtml}
       </div>
     `.trim();
@@ -939,12 +937,13 @@ class Calendar extends Framework7Class {
   }
   renderFooter() {
     const calendar = this;
+    const app = calendar.app;
     if (calendar.params.renderFooter) {
       return calendar.params.renderFooter.call(calendar);
     }
     return `
       <div class="calendar-footer">
-        <a href="#" class="button calendar-close sheet-close popover-close">${calendar.params.toolbarCloseText}</a>
+        <a href="#" class="${app.theme === 'md' ? 'button' : 'link'} calendar-close sheet-close popover-close">${calendar.params.toolbarCloseText}</a>
       </div>
     `.trim();
   }
@@ -968,13 +967,14 @@ class Calendar extends Framework7Class {
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
     const { value } = calendar;
     const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    const bars = [header, footer, toolbar].filter(bar => bar);
     const inlineHtml = `
       <div class="calendar calendar-inline ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
         ${header ? calendar.renderHeader() : ''}
         ${footer ? calendar.renderFooter() : ''}
         ${toolbar ? calendar.renderToolbar() : ''}
         ${weekHeader ? calendar.renderWeekHeader() : ''}
-        <div class="calendar-months">
+        <div class="calendar-months${bars.length ? ` calendar-months-with-${bars.length}-bars` : ''}${weekHeader ? ' calendar-months-with-week-header' : ''}">
           ${calendar.renderMonths(date)}
         </div>
       </div>
@@ -987,13 +987,14 @@ class Calendar extends Framework7Class {
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
     const { value } = calendar;
     const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    const bars = [header, footer, toolbar].filter(bar => bar);
     const sheetHtml = `
       <div class="sheet-modal calendar calendar-sheet ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
         ${header ? calendar.renderHeader() : ''}
         ${footer ? calendar.renderFooter() : ''}
         ${toolbar ? calendar.renderToolbar() : ''}
         ${weekHeader ? calendar.renderWeekHeader() : ''}
-        <div class="sheet-modal-inner calendar-months">
+        <div class="sheet-modal-inner calendar-months${bars.length ? ` calendar-months-with-${bars.length}-bars` : ''}${weekHeader ? ' calendar-months-with-week-header' : ''}">
           ${calendar.renderMonths(date)}
         </div>
       </div>
@@ -1006,15 +1007,16 @@ class Calendar extends Framework7Class {
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
     const { value } = calendar;
     const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    const bars = [header, footer, toolbar].filter(bar => bar);
     const popoverHtml = `
       <div class="popover calendar-popover">
         <div class="popover-inner">
-          <div class="calendar calendar-inline ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
+          <div class="calendar ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
             ${header ? calendar.renderHeader() : ''}
             ${footer ? calendar.renderFooter() : ''}
             ${toolbar ? calendar.renderToolbar() : ''}
             ${weekHeader ? calendar.renderWeekHeader() : ''}
-            <div class="calendar-months">
+            <div class="calendar-months${bars.length ? ` calendar-months-with-${bars.length}-bars` : ''}${weekHeader ? ' calendar-months-with-week-header' : ''}">
               ${calendar.renderMonths(date)}
             </div>
           </div>
@@ -1099,9 +1101,6 @@ class Calendar extends Framework7Class {
     const calendar = this;
     const app = calendar.app;
 
-    calendar.cols.forEach((col) => {
-      if (col.destroy) col.destroy();
-    });
     if (calendar.$inputEl && app.theme === 'md') {
       calendar.$inputEl.trigger('blur');
     }
@@ -1121,6 +1120,16 @@ class Calendar extends Framework7Class {
     const calendar = this;
     calendar.opened = false;
 
+    if (!calendar.inline) {
+      Utils.nextTick(() => {
+        if (calendar.modal && calendar.modal.el && calendar.modal.destroy) {
+          if (!calendar.params.routableModals) {
+            calendar.modal.destroy();
+          }
+        }
+        delete calendar.modal;
+      });
+    }
     if (calendar.$el) {
       calendar.$el.trigger('calendar:closed', calendar);
     }
@@ -1150,6 +1159,7 @@ class Calendar extends Framework7Class {
       targetEl: $inputEl,
       scrollToEl: calendar.params.scrollToInput ? $inputEl : undefined,
       content: calendar[isPopover ? 'renderPopover' : 'renderSheet'](),
+      backdrop: isPopover,
       on: {
         open() {
           const modal = this;
@@ -1189,12 +1199,6 @@ class Calendar extends Framework7Class {
     if (calendar.params.routableModals) {
       calendar.view.router.back();
     } else {
-      calendar.modal.once('modalClosed', () => {
-        Utils.nextTick(() => {
-          calendar.modal.destroy();
-          delete calendar.modal;
-        });
-      });
       calendar.modal.close();
     }
   }
@@ -1205,6 +1209,7 @@ class Calendar extends Framework7Class {
 
     if (calendar.inline) {
       calendar.open();
+      calendar.emit('local::init calendarInit', calendar);
       return;
     }
 
@@ -1219,9 +1224,11 @@ class Calendar extends Framework7Class {
     if (calendar.params.closeByOutsideClick) {
       calendar.attachHtmlEvents();
     }
+    calendar.emit('local::init calendarInit', calendar);
   }
   destroy() {
     const calendar = this;
+    if (calendar.destroyed) return;
     const { $el } = calendar;
     calendar.emit('local::beforeDestroy calendarBeforeDestroy', calendar);
     if ($el) $el.trigger('calendar:beforedestroy', calendar);
@@ -1238,6 +1245,7 @@ class Calendar extends Framework7Class {
 
     if ($el && $el.length) delete calendar.$el[0].f7Calendar;
     Utils.deleteProps(calendar);
+    calendar.destroyed = true;
   }
 }
 

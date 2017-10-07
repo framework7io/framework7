@@ -1,22 +1,35 @@
 /* === Calendar/Datepicker === */
 .calendar {
   overflow: hidden;
+  height: 320px;
+  width: 100%;
+  @media (orientation: landscape) and (max-height: 415px) {
+    &:not(.calendar-inline) {
+      height: 220px;
+    }
+  }
   &.calendar-inline, &.calendar-popover .calendar {
     position: relative;
   }
 }
 .calendar-popover {
   width: 320px;
+  .calendar {
+    height: 320px;
+  }
 }
-.calendar-week-days {
+.calendar-week-header {
   display: flex;
   box-sizing: border-box;
   position: relative;
+  height: 18px;
+  font-size: 11px;
   .calendar-week-day {
-    flex-shink: 1;
+    flex-shrink: 1;
     width: 100% / 7;
     width: ~"calc(100% / 7)";
     text-align: center;
+    line-height: 17px;
   }
 }
 .calendar-months {
@@ -58,6 +71,12 @@
   width: ~"calc(100% / 7)";
   text-align: center;
   cursor: pointer;
+  z-index: 20;
+  color:#000;
+  height: 100%;
+  &.calendar-day-prev, &.calendar-day-next {
+    color: #b8b8b8;
+  }
   &.calendar-day-weekend {
   }
   &.calendar-day-prev, &.calendar-day-next {}
@@ -78,6 +97,7 @@
       position: absolute;
       margin-left: -2px;
       left: 50%;
+      bottom: 1px;
     }
   }
   &.calendar-day-has-events.calendar-day-selected span:after {
@@ -87,6 +107,19 @@
     display: inline-block;
     border-radius: 100%;
     position: relative;
+  }
+}
+.calendar-range .calendar-day.calendar-day-selected {
+  align-items: stretch;
+  align-content: stretch;
+  span {
+    width: 100%;
+    border-radius: 0;
+    height: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 .calendar-month-selector, .calendar-year-selector {
@@ -103,7 +136,6 @@
     text-overflow: ellipsis;
   }
 }
-
 
 & when (@include-ios-theme) {
   @import url('./calendar-ios.less');

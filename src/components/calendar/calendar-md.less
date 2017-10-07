@@ -1,10 +1,86 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
   @import (multiple) '../../less/vars-md.less';
-  .calendar {
-    height: 320px;
+  .calendar-header {
+    height: @toolbarSize;
+    background: @toolbarBg;
+    font-size: 20px;
+    line-height: @toolbarSize;
+    padding: 0 24px;
+    color:#fff;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
   }
-  .calendar-sheet {
+  .calendar-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 48px;
+    padding: 6px 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+  }
 
+  .calendar-week-header {
+    background: @toolbarBg;
+    color: #fff;
+  }
+
+  .calendar-months-with-week-header {
+    height: ~"calc(100% - 18px)";
+  }
+  .calendar-months-with-1-bars {
+    height: ~"calc(100% - @{toolbarSize})";
+    &.calendar-months-with-week-header {
+      height: ~"calc(100% - @{toolbarSize} - 18px)";
+    }
+  }
+  .calendar-months-with-2-bars {
+    height: ~"calc(100% - @{toolbarSize} * 2)";
+    &.calendar-months-with-week-header {
+      height: ~"calc(100% - @{toolbarSize} * 2 - 18px)";
+    }
+  }
+  .calendar-months-with-3-bars {
+    height: ~"calc(100% - @{toolbarSize} * 3)";
+    &.calendar-months-with-week-header {
+      height: ~"calc(100% - @{toolbarSize} * 3 - 18px)";
+    }
+  }
+
+  .calendar-day {
+    &.calendar-day-today span {
+      color: @themeColor;
+    }
+    &.calendar-day-has-events span {
+      &:after {
+        background: @themeColor;
+      }
+    }
+    &.calendar-day-selected span {
+      background: @themeColor;
+      color: #fff;
+    }
+    span {
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+    }
+  }
+  .calendar-range .calendar-day.calendar-day-selected {
+    span {
+      color: #fff;
+    }
+  }
+  .calendar-month-selector, .calendar-year-selector {
+    a.icon-only {
+      min-width: 36px;
+    }
   }
 }
