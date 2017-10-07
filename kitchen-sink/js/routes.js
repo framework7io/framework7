@@ -81,6 +81,10 @@ var routes = [
     url: './pages/buttons.html',
   },
   {
+    path: '/calendar/',
+    componentUrl: './pages/calendar.html',
+  },
+  {
     path: '/cards/',
     url: './pages/cards.html',
   },
