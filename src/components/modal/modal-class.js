@@ -207,7 +207,8 @@ class Modal extends Framework7Class {
     return modal;
   }
   destroy() {
-    let modal = this;
+    const modal = this;
+    if (modal.destroyed) return;
     modal.emit(`local::beforeDestroy modalBeforeDestroy ${modal.type}BeforeDestroy`, modal);
     if (modal.$el) {
       modal.$el.trigger(`modal:beforedestroy ${modal.type.toLowerCase()}:beforedestroy`, modal);
@@ -216,7 +217,7 @@ class Modal extends Framework7Class {
       }
     }
     Utils.deleteProps(modal);
-    modal = null;
+    modal.destroyed = true;
   }
 }
 
