@@ -49,13 +49,12 @@ export default {
       weekHeader: true,
       // Common opener settings
       containerEl: null,
+      openIn: 'customModal', // or 'popover' or 'sheet' or 'customModal'
       formatValue: null,
       inputEl: null,
       inputReadOnly: true,
       closeByOutsideClick: true,
       scrollToInput: true,
-      convertToPopover: true,
-      onlyInPopover: false,
       header: false,
       headerPlaceholder: 'Select date',
       footer: false,

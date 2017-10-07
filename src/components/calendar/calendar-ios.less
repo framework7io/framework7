@@ -15,10 +15,8 @@
     box-sizing: border-box;
   }
   .calendar-footer {
+    position: relative;
     padding: 0 8px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
     width: 100%;
     height: @toolbarSize;
     background: @toolbarBg;
@@ -31,27 +29,9 @@
 
   .calendar-week-header {
     background: @toolbarBg;
-  }
-
-  .calendar-months-with-week-header {
-    height: ~"calc(100% - 18px)";
-  }
-  .calendar-months-with-1-bars {
-    height: ~"calc(100% - @{toolbarSize})";
-    &.calendar-months-with-week-header {
-      height: ~"calc(100% - @{toolbarSize} - 18px)";
-    }
-  }
-  .calendar-months-with-2-bars {
-    height: ~"calc(100% - @{toolbarSize} * 2)";
-    &.calendar-months-with-week-header {
-      height: ~"calc(100% - @{toolbarSize} * 2 - 18px)";
-    }
-  }
-  .calendar-months-with-3-bars {
-    height: ~"calc(100% - @{toolbarSize} * 3)";
-    &.calendar-months-with-week-header {
-      height: ~"calc(100% - @{toolbarSize} * 3 - 18px)";
+    height: 18px;
+    .calendar-week-day {
+      line-height: 18px;
     }
   }
 
@@ -87,16 +67,20 @@
     }
   }
   .hairline-root('.calendar-sheet', top, #929499);
-  .calendar-popover {
+  .calendar-modal, .calendar-popover {
     .toolbar {
-      background: none;
       .hairline-remove(top);
-    }
-    .calendar-week-header, .calendar-header, .calendar-footer {
-      background: none;
     }
     .calendar-months:first-child .calendar-row:first-child {
       .hairline-remove(top);
+    }
+  }
+  .calendar-popover {
+    .toolbar {
+      background: none;
+    }
+    .calendar-week-header, .calendar-header, .calendar-footer {
+      background: none;
     }
   }
 }

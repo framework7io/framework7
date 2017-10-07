@@ -3,6 +3,11 @@
   overflow: hidden;
   height: 320px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  &.modal-in {
+    display: flex;
+  }
   @media (orientation: landscape) and (max-height: 415px) {
     &:not(.calendar-inline) {
       height: 220px;
@@ -10,6 +15,31 @@
   }
   &.calendar-inline, &.calendar-popover .calendar {
     position: relative;
+  }
+}
+.calendar-modal {
+  position: absolute;
+  height: 420px;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  min-width: 300px;
+  max-width: 380px;
+  transform: translate3d(-50%, 100%, 0);
+  transition-property: transform;
+  display: flex;
+  z-index: 12000;
+  background: #fff;
+  width: 90%;
+  .md-depth(5);
+  &.modal-in, &.modal-out {
+    transition-duration: 400ms;
+  }
+  &.modal-in {
+    transform: translate3d(-50%, -50%, 0);
+  }
+  &.modal-out {
+    transform: translate3d(-50%, 100%, 0);
   }
 }
 .calendar-popover {
@@ -22,14 +52,12 @@
   display: flex;
   box-sizing: border-box;
   position: relative;
-  height: 18px;
   font-size: 11px;
   .calendar-week-day {
     flex-shrink: 1;
     width: 100% / 7;
     width: ~"calc(100% / 7)";
     text-align: center;
-    line-height: 17px;
   }
 }
 .calendar-months {
@@ -37,6 +65,7 @@
   height: 100%;
   overflow: hidden;
   position: relative;
+  flex-shrink: 10;
 }
 .calendar-months-wrapper {
   position: relative;
