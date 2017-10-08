@@ -77,6 +77,12 @@
     .hairline-remove(top);
     .hairline-remove(bottom);
   }
+  &.no-hairline-top, &.no-hairline-top ul, .md &.no-hairline-top-md, .md &.no-hairline-top-md ul, .ios &.no-hairline-top-ios, .ios &.no-hairline-top-ios ul {
+    .hairline-remove(top);
+  }
+  &.no-hairline-bottom, &.no-hairline-bottom ul, .md &.no-hairline-bottom-md, .md &.no-hairline-bottom-md ul, .ios &.no-hairline-bottom-ios, .ios &.no-hairline-bottom-ios ul {
+    .hairline-remove(bottom);
+  }
 }
 .no-hairlines-between() {
   &.no-hairlines-between, .md &.no-hairlines-between-md, .ios &.no-hairlines-between-ios {
