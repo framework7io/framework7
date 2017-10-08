@@ -504,14 +504,13 @@ class Calendar extends Framework7Class {
   }
   nextMonth(transition) {
     const calendar = this;
-    const { params, inverter, currentMonth, isHorizontal: isH, $wrapperEl } = calendar;
-    let { $months } = calendar;
+    const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
     if (typeof transition === 'undefined' || typeof transition === 'object') {
       transition = ''; // eslint-disable-line
       if (!params.animate) transition = 0; // eslint-disable-line
     }
-    const nextMonth = parseInt($months.eq($months.length - 1).attr('data-month'), 10);
-    const nextYear = parseInt($months.eq($months.length - 1).attr('data-year'), 10);
+    const nextMonth = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-month'), 10);
+    const nextYear = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-year'), 10);
     const nextDate = new Date(nextYear, nextMonth);
     const nextDateTime = nextDate.getTime();
     const transitionEndCallback = !calendar.animating;
@@ -522,26 +521,23 @@ class Calendar extends Framework7Class {
       }
     }
     calendar.monthsTranslate -= 1;
-    if (nextMonth === currentMonth) {
+    if (nextMonth === calendar.currentMonth) {
       const nextMonthTranslate = -(calendar.monthsTranslate) * 100 * inverter;
       const nextMonthHTML = $(calendar.renderMonth(nextDateTime, 'next'))
         .transform(`translate3d(${isH ? nextMonthTranslate : 0}%, ${isH ? 0 : nextMonthTranslate}%, 0)`)
         .addClass('calendar-month-next');
       $wrapperEl.append(nextMonthHTML[0]);
-      $months = $wrapperEl.find('.calendar-month');
+      calendar.$months = $wrapperEl.find('.calendar-month');
       calendar.emit(
         'local::monthAdd calendarMonthAdd',
-        calendar,
-        $months.eq($months.length - 1)[0]
+        calendar.$months.eq(calendar.$months.length - 1)[0]
       );
     }
     calendar.animating = true;
     calendar.onMonthChangeStart('next');
     const translate = (calendar.monthsTranslate * 100) * inverter;
 
-    $wrapperEl
-      .transition(transition)
-      .transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
+    $wrapperEl.transition(transition).transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
     if (transitionEndCallback) {
       $wrapperEl.transitionEnd(() => {
         calendar.onMonthChangeEnd('next');
@@ -553,14 +549,13 @@ class Calendar extends Framework7Class {
   }
   prevMonth(transition) {
     const calendar = this;
-    const { params, inverter, currentMonth, isHorizontal: isH, $wrapperEl } = calendar;
-    let { $months } = calendar;
+    const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
     if (typeof transition === 'undefined' || typeof transition === 'object') {
       transition = ''; // eslint-disable-line
       if (!params.animate) transition = 0; // eslint-disable-line
     }
-    const prevMonth = parseInt($months.eq(0).attr('data-month'), 10);
-    const prevYear = parseInt($months.eq(0).attr('data-year'), 10);
+    const prevMonth = parseInt(calendar.$months.eq(0).attr('data-month'), 10);
+    const prevYear = parseInt(calendar.$months.eq(0).attr('data-year'), 10);
     const prevDate = new Date(prevYear, prevMonth + 1, -1);
     const prevDateTime = prevDate.getTime();
     const transitionEndCallback = !calendar.animating;
@@ -571,17 +566,16 @@ class Calendar extends Framework7Class {
       }
     }
     calendar.monthsTranslate += 1;
-    if (prevMonth === currentMonth) {
+    if (prevMonth === calendar.currentMonth) {
       const prevMonthTranslate = -(calendar.monthsTranslate) * 100 * inverter;
       const prevMonthHTML = $(calendar.renderMonth(prevDateTime, 'prev'))
         .transform(`translate3d(${isH ? prevMonthTranslate : 0}%, ${isH ? 0 : prevMonthTranslate}%, 0)`)
         .addClass('calendar-month-prev');
       $wrapperEl.prepend(prevMonthHTML[0]);
-      $months = $wrapperEl.find('.calendar-month');
+      calendar.$months = $wrapperEl.find('.calendar-month');
       calendar.emit(
         'local::monthAdd calendarMonthAdd',
-        calendar,
-        $months.eq(0)[0]
+        calendar.$months.eq(0)[0]
       );
     }
     calendar.animating = true;
@@ -772,6 +766,7 @@ class Calendar extends Framework7Class {
     const cols = 7;
     const daysInPrevMonth = calendar.daysInMonth(new Date(date.getFullYear(), date.getMonth()).getTime() - (10 * 24 * 60 * 60 * 1000));
     const daysInMonth = calendar.daysInMonth(date);
+    const minDayNumber = params.firstDay === 6 ? 0 : 1;
 
     let monthHTML = '';
     let dayIndex = 0 + (params.firstDay - 1);
@@ -786,14 +781,17 @@ class Calendar extends Framework7Class {
       }
     }
 
-    for (let i = 1; i <= rows; i += 1) {
+    for (let row = 1; row <= rows; row += 1) {
       let rowHTML = '';
-      for (let j = 1; j <= cols; j += 1) {
-        const col = j;
+      for (let col = 1; col <= cols; col += 1) {
         dayIndex += 1;
         let dayDate;
         let dayNumber = dayIndex - firstDayOfMonthIndex;
         let addClass = '';
+        if (row === 1 && col === 1 && dayNumber > minDayNumber && params.firstDay !== 1) {
+          dayIndex -= 7;
+          dayNumber = dayIndex - firstDayOfMonthIndex;
+        }
 
         const weekDayIndex = ((col - 1) + params.firstDay > 6)
           ? ((col - 1 - 7) + params.firstDay)
