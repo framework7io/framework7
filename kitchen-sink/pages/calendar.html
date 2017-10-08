@@ -72,6 +72,32 @@
           </li>
         </ul>
       </div>
+      <div class="block-title">Open in Mondal</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-modal"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Calendar Page</div>
+      <div class="list">
+        <ul>
+          <li>
+            <a href="/calendar-page/" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Open Calendar Page</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
       <div class="block-title">Inline with custom toolbar</div>
       <div class="block block-strong no-padding">
         <div id="demo-calendar-inline-container"></div>
@@ -108,21 +134,28 @@
           dateFormat: 'M dd yyyy',
           rangePicker: true
         });
+        // Range Picker
+        self.calendarModal = app.calendar.create({
+          inputEl: '#demo-calendar-modal',
+          openIn: 'customModal',
+          header: true,
+          footer: true,
+          dateFormat: 'MM dd yyyy',
+        });
         // Inline with custom toolbar
         var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December'];
         self.calendarInline = app.calendar.create({
           containerEl: '#demo-calendar-inline-container',
           value: [new Date()],
-          weekHeader: false,
           renderToolbar: function () {
-            return '<div class="toolbar calendar-custom-toolbar">' +
+            return '<div class="toolbar calendar-custom-toolbar no-shadow">' +
               '<div class="toolbar-inner">' +
                 '<div class="left">' +
-                  '<a href="#" class="link icon-only"><i class="icon icon-back"></i></a>' +
+                  '<a href="#" class="link icon-only"><i class="icon icon-back ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
                 '</div>' +
                 '<div class="center"></div>' +
                 '<div class="right">' +
-                  '<a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>' +
+                  '<a href="#" class="link icon-only"><i class="icon icon-forward ' + (self.$theme.md ? 'color-black' : '') + '"></i></a>' +
                 '</div>' +
               '</div>' +
             '</div>';
@@ -149,6 +182,7 @@
         self.calendarDateFormat.destroy();
         self.calendarMultiple.destroy();
         self.calendarRange.destroy();
+        self.calendarModal.destroy();
         self.calendarInline.destroy();
       },
     },

@@ -85,6 +85,10 @@ var routes = [
     componentUrl: './pages/calendar.html',
   },
   {
+    path: '/calendar-page/',
+    componentUrl: './pages/calendar-page.html',
+  },
+  {
     path: '/cards/',
     url: './pages/cards.html',
   },
