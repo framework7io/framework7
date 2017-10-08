@@ -76,13 +76,13 @@ const Device = (function Device() {
   }
 
   // Check for status bar and fullscreen app mode
-  device.needsStatusbar = function needsStatusbar() {
+  device.needsStatusbarOverlay = function needsStatusbarOverlay() {
     if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
       return true;
     }
     return false;
   };
-  device.statusbar = device.needsStatusbar();
+  device.statusbar = device.needsStatusbarOverlay();
 
   // Pixel Ratio
   device.pixelRatio = window.devicePixelRatio || 1;
