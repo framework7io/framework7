@@ -33,6 +33,7 @@ function SwipeBack(r) {
 
   function handleTouchStart(e) {
     if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) return;
+    if ($(e.target).closest('.range-slider, .calendar-months').length > 0) return;
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
