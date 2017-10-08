@@ -1,3 +1,16 @@
+# [v2.0.0-beta.9](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.8...v2.0.0-beta.9) - October 8, 2017
+  * New Picker component
+  * New Calendar component
+  * New Custom Modal component
+  * Router
+    * Added support for swipeable routable tabs
+  * Swiper
+    * Update to latest version with Virtual Slides support
+  * ES-next modules renamed
+    * `framework7.module.js` -> `framework7.esm.bundle.js` (exported by default)
+    * `framework7.modular.js` -> `framework7.esm.js`
+  * Numerous fixes and improvements
+
 # [v2.0.0-beta.8](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.7...v2.0.0-beta.8) - September 21, 2017
   * Toolbar
     * Class `toolbar-bottom` to display it on the bottom for MD theme has been renamed to `toolbar-bottom-md`.

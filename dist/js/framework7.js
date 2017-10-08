@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.8
+ * Framework7 2.0.0-beta.9
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 21, 2017
+ * Released on: October 8, 2017
  */
 
 (function (global, factory) {
@@ -2520,13 +2520,13 @@ var Device = (function Device() {
   }
 
   // Check for status bar and fullscreen app mode
-  device.needsStatusbar = function needsStatusbar() {
+  device.needsStatusbarOverlay = function needsStatusbarOverlay() {
     if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
       return true;
     }
     return false;
   };
-  device.statusbar = device.needsStatusbar();
+  device.statusbar = device.needsStatusbarOverlay();
 
   // Pixel Ratio
   device.pixelRatio = window.devicePixelRatio || 1;
@@ -2613,9 +2613,14 @@ Framework7Class.prototype.emit = function emit () {
   var eventsArray = Array.isArray(events) ? events : events.split(' ');
   var localEvents = eventsArray.map(function (eventName) { return eventName.replace('local::', ''); });
   var parentEvents = eventsArray.filter(function (eventName) { return eventName.indexOf('local::') < 0; });
+
   localEvents.forEach(function (event) {
     if (self.eventsListeners[event]) {
+      var handlers = [];
       self.eventsListeners[event].forEach(function (eventHandler) {
+        handlers.push(eventHandler);
+      });
+      handlers.forEach(function (eventHandler) {
         eventHandler.apply(context, data);
       });
     }
@@ -2708,6 +2713,7 @@ Framework7Class.use = function use (module) {
   var Class = this;
   if (Array.isArray(module)) {
     module.forEach(function (m) { return Class.installModule(m); });
+    return Class;
   }
   return Class.installModule.apply(Class, [ module ].concat( params ));
 };
@@ -2760,7 +2766,13 @@ var Framework7$1 = (function (Framework7Class$$1) {
 
     // Init
     if (app.params.init) {
-      app.init();
+      if (Device.cordova) {
+        $$1$1(document).on('deviceready', function () {
+          app.init();
+        });
+      } else {
+        app.init();
+      }
     }
 
     // Return app instance
@@ -3031,13 +3043,12 @@ var Resize = {
   },
 };
 
-/* eslint no-param-reassign: "off" */
 var globals = {};
 var jsonpRequests = 0;
 
-function Request$1(options) {
+function Request$1(requestOptions) {
   var globalsNoCallbacks = Utils.extend({}, globals);
-  ('start beforeSend error complete success statusCode').split(' ').forEach(function (callbackName) {
+  ('beforeCreate beforeOpen beforeSend error complete success statusCode').split(' ').forEach(function (callbackName) {
     delete globalsNoCallbacks[callbackName];
   });
   var defaults = Utils.extend({
@@ -3057,10 +3068,7 @@ function Request$1(options) {
     timeout: 0,
   }, globalsNoCallbacks);
 
-  options = Utils.extend({}, defaults, options);
-
-  // For jQuery guys
-  if (options.type) { options.method = options.type; }
+  var options = Utils.extend({}, defaults, requestOptions);
 
   // Function to run XHR callbacks and events
   function fireCallback(callbackName) {
@@ -3069,7 +3077,9 @@ function Request$1(options) {
 
     /*
       Callbacks:
-      start/beforeSend (xhr),
+      beforeCreate (xhr, options),
+      beforeOpen (xhr, options),
+      beforeSend (xhr, options),
       error (xhr, status),
       complete (xhr, stautus),
       success (response, status, xhr),
@@ -3078,6 +3088,12 @@ function Request$1(options) {
     if (globals[callbackName]) { globals[callbackName].apply(globals, data); }
     if (options[callbackName]) { options[callbackName].apply(options, data); }
   }
+
+  // Before create callback
+  fireCallback('beforeCreate', options);
+
+  // For jQuery guys
+  if (options.type) { options.method = options.type; }
 
   // Parameters Prefix
   var paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
@@ -3157,6 +3173,9 @@ function Request$1(options) {
   // Save Request URL
   xhr.requestUrl = options.url;
   xhr.requestParameters = options;
+
+  // Before open callback
+  fireCallback('beforeOpen', xhr, options);
 
   // Open XHR
   xhr.open(method, options.url, options.async, options.user, options.password);
@@ -3252,10 +3271,6 @@ function Request$1(options) {
     fireCallback('complete', xhr, 'error');
   };
 
-  // Ajax start callback
-  fireCallback('start', xhr);
-  fireCallback('beforeSend', xhr);
-
   // Timeout
   if (options.timeout > 0) {
     xhr.onabort = function onabort() {
@@ -3267,6 +3282,9 @@ function Request$1(options) {
       fireCallback('complete', xhr, 'timeout');
     }, options.timeout);
   }
+
+  // Ajax start callback
+  fireCallback('beforeSend', xhr, options);
 
   // Send XHR
   xhr.send(postData);
@@ -3919,13 +3937,15 @@ function initTouch() {
     app.on('touchmove', handleMouseMove);
     app.on('touchend', handleMouseUp);
   }
-
-  if (useRipple) {
-    document.addEventListener('contextmenu', function () {
+  document.addEventListener('contextmenu', function (e) {
+    if (Device.ios || Device.android || Device.cordova) {
+      e.preventDefault();
+    }
+    if (useRipple) {
       if (activableElement) { removeActive(); }
       rippleTouchEnd();
-    });
-  }
+    }
+  });
 }
 
 var Touch = {
@@ -4392,6 +4412,7 @@ function SwipeBack(r) {
 
   function handleTouchStart(e) {
     if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) { return; }
+    if ($$1$1(e.target).closest('.range-slider, .calendar-months').length > 0) { return; }
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
@@ -4486,8 +4507,8 @@ function SwipeBack(r) {
       }
 
       // Close/Hide Any Picker
-      if ($$1$1('.picker.modal-in').length > 0) {
-        app.closeModal($$1$1('.picker.modal-in'));
+      if ($$1$1('.sheet.modal-in').length > 0 && app.sheet) {
+        app.sheet.close($$1$1('.sheet.modal-in'));
       }
     }
     e.f7PreventPanelSwipe = true;
@@ -5119,7 +5140,7 @@ function load(loadParams, loadOptions, ignorePageChange) {
   }
 
   if (!options.route && url) {
-    options.route = router.findMatchingRoute(url, true);
+    options.route = router.parseUrl(url);
     Utils.extend(options.route, { route: { url: url, path: url } });
   }
 
@@ -5193,7 +5214,7 @@ function navigate(url, navigateOptions) {
   }
   var route;
   if (navigateOptions.createRoute) {
-    route = Utils.extend(router.findMatchingRoute(navigateUrl, true), {
+    route = Utils.extend(router.parseUrl(navigateUrl), {
       route: Utils.extend({}, navigateOptions.createRoute),
     });
   } else {
@@ -5209,12 +5230,12 @@ function navigate(url, navigateOptions) {
   } else {
     Utils.extend(options, navigateOptions, { route: route });
   }
-  ('popup popover sheet loginScreen actions').split(' ').forEach(function (modalLoadProp) {
+  ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
     if (route.route[modalLoadProp]) {
       router.modalLoad(modalLoadProp, route, options);
     }
   });
-  ('url content name el component componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
+  ('url content component name el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
     if (route.route[pageLoadProp]) {
       router.load(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
       var obj;
@@ -5224,7 +5245,7 @@ function navigate(url, navigateOptions) {
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
     var resolvedAsModal = false;
-    ('popup popover sheet loginScreen actions').split(' ').forEach(function (modalLoadProp) {
+    ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
       if (resolveParams[modalLoadProp]) {
         resolvedAsModal = true;
         var modalRoute = Utils.extend({}, route, { route: resolveParams });
@@ -5313,7 +5334,7 @@ function tabLoad(tabRoute, loadOptions) {
     $newTabEl.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
-    if ($oldTabEl) {
+    if ($oldTabEl && router.params.unloadTabContent) {
       if (animated) {
         onTabsChanged(function () {
           router.tabRemove($oldTabEl, $newTabEl, tabRoute);
@@ -5322,6 +5343,9 @@ function tabLoad(tabRoute, loadOptions) {
         router.tabRemove($oldTabEl, $newTabEl, tabRoute);
       }
     }
+  }
+  if (!router.params.unloadTabContent) {
+    if ($newTabEl[0].f7RouterTabLoaded) { return; }
   }
 
   // Component/Template Callbacks
@@ -5338,6 +5362,9 @@ function tabLoad(tabRoute, loadOptions) {
       } else {
         $newTabEl.append(contentEl);
       }
+    }
+    if (!router.params.unloadTabContent) {
+      $newTabEl[0].f7RouterTabLoaded = true;
     }
     onTabLoaded();
   }
@@ -5848,7 +5875,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   }
 
   if (!options.route && url) {
-    options.route = router.findMatchingRoute(url, true);
+    options.route = router.parseUrl(url);
   }
 
   // Component Callbacks
@@ -5924,7 +5951,7 @@ function back() {
   var currentRouteIsModal = router.currentRoute.modal;
   var modalType;
   if (!currentRouteIsModal) {
-    ('popup popover sheet loginScreen actions').split(' ').forEach(function (modalLoadProp) {
+    ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
       if (router.currentRoute.route[modalLoadProp]) {
         currentRouteIsModal = true;
         modalType = modalLoadProp;
@@ -6016,7 +6043,7 @@ function back() {
     });
   }
 
-  ('url content name el component componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
+  ('url content component name el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
     if (route.route[pageLoadProp]) {
       router.loadBack(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
       var obj;
@@ -6560,25 +6587,50 @@ var Router$1 = (function (Framework7Class$$1) {
     });
     return flattenedRoutes;
   };
-  Router.prototype.findMatchingRoute = function findMatchingRoute (url, parseOnly) {
-    if (!url) { return undefined; }
-    var router = this;
-    var routes = router.routes;
-    var flattenedRoutes = router.flattenRoutes(routes);
+  // eslint-disable-next-line
+  Router.prototype.parseUrl = function parseUrl (url) {
+    if (!url) { return {}; }
     var query = Utils.parseUrlQuery(url);
     var hash = url.split('#')[1];
     var params = {};
     var path = url.split('#')[0].split('?')[0];
+    return {
+      query: query,
+      hash: hash,
+      params: params,
+      url: url,
+      path: path,
+    };
+  };
+  Router.prototype.findTabRoute = function findTabRoute (tabEl) {
+    var router = this;
+    var $tabEl = $$1$1(tabEl);
+    var parentPath = router.currentRoute.route.parentPath;
+    var tabId = $tabEl.attr('id');
+    var flattenedRoutes = router.flattenRoutes(router.routes);
+    var foundTabRoute;
+    flattenedRoutes.forEach(function (route) {
+      if (
+        route.parentPath === parentPath &&
+        route.tab &&
+        route.tab.id === tabId
+      ) {
+        foundTabRoute = route;
+      }
+    });
+    return foundTabRoute;
+  };
+  Router.prototype.findMatchingRoute = function findMatchingRoute (url) {
+    if (!url) { return undefined; }
+    var router = this;
+    var routes = router.routes;
+    var flattenedRoutes = router.flattenRoutes(routes);
+    var ref = router.parseUrl(url);
+    var path = ref.path;
+    var query = ref.query;
+    var hash = ref.hash;
+    var params = ref.params;
     var urlParts = path.split('/').filter(function (part) { return part !== ''; });
-    if (parseOnly) {
-      return {
-        query: query,
-        hash: hash,
-        params: params,
-        url: url,
-        path: path,
-      };
-    }
 
     var matchingRoute;
     function parseRoute(str) {
@@ -7007,7 +7059,7 @@ var Router$1 = (function (Framework7Class$$1) {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
+        currentRoute = Utils.extend(router.parseUrl(router.history[0]), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -7018,7 +7070,7 @@ var Router$1 = (function (Framework7Class$$1) {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
+        currentRoute = Utils.extend(router.parseUrl(initUrl), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
@@ -7434,9 +7486,17 @@ var Statusbar = {
     }
   },
   show: function show() {
-    $$1$1('html').addClass('with-statusbar');
     if (Device.cordova && window.StatusBar) {
       window.StatusBar.show();
+      Utils.nextTick(function () {
+        if (Device.needsStatusbarOverlay()) {
+          $$1$1('html').addClass('with-statusbar');
+        }
+      });
+      return;
+    }
+    if (Device.needsStatusbarOverlay()) {
+      $$1$1('html').addClass('with-statusbar');
     }
   },
   onClick: function onClick() {
@@ -7475,35 +7535,41 @@ var Statusbar = {
     }
   },
   setBackgroundColor: function setBackgroundColor(color) {
+    $$1$1('.statusbar').css('background-color', color);
     if (Device.cordova && window.StatusBar) {
-      if (Device.needsStatusbar()) {
-        // Change Overlay Color;
-        $$1$1('.statusbar').css('background-color', color);
-      } else {
-        // Change Real Status bar color
-        window.StatusBar.backgroundColorByHexString(color);
-      }
-    } else {
-      $$1$1('.statusbar').css('background-color', color);
+      window.StatusBar.backgroundColorByHexString(color);
     }
   },
   isVisible: function isVisible() {
     if (Device.cordova && window.StatusBar) {
       return window.StatusBar.isVisible;
     }
-    return undefined;
+    return false;
+  },
+  iosOverlaysWebView: function iosOverlaysWebView(overlays) {
+    if ( overlays === void 0 ) overlays = true;
+
+    if (!Device.ios) { return; }
+    if (Device.cordova && window.StatusBar) {
+      window.StatusBar.overlaysWebView(overlays);
+      if (overlays) {
+        $$1$1('html').addClass('with-statusbar');
+      } else {
+        $$1$1('html').removeClass('with-statusbar');
+      }
+    }
   },
   init: function init() {
     var app = this;
     var params = app.params.statusbar;
 
     if (params.overlay === 'auto') {
-      if (Device.needsStatusbar()) {
+      if (Device.needsStatusbarOverlay()) {
         $$1$1('html').addClass('with-statusbar');
       }
       if (Device.cordova) {
         $$1$1(document).on('resume', function () {
-          if (Device.needsStatusbar()) {
+          if (Device.needsStatusbarOverlay()) {
             $$1$1('html').addClass('with-statusbar');
           } else {
             $$1$1('html').removeClass('with-statusbar');
@@ -7532,9 +7598,11 @@ var Statusbar = {
         window.StatusBar.styleDefault();
       }
     }
-
-    if (params.setBackgroundColor) {
-      Statusbar.setBackgroundColor(app.theme === 'ios' ? params.iosBackgroundColor : params.materialBackgroundColor);
+    if (params.iosBackgroundColor && app.theme === 'ios') {
+      Statusbar.setBackgroundColor(params.iosBackgroundColor);
+    }
+    if (params.materialBackgroundColor && app.theme === 'md') {
+      Statusbar.setBackgroundColor(params.materialBackgroundColor);
     }
   },
 };
@@ -7547,9 +7615,8 @@ var Statusbar$1 = {
       scrollTopOnClick: true,
       iosOverlaysWebView: true,
       iosTextColor: 'black',
-      setBackgroundColor: true,
-      iosBackgroundColor: '#F7F7F8',
-      materialBackgroundColor: '#0D47A1',
+      iosBackgroundColor: null,
+      materialBackgroundColor: null,
     },
   },
   create: function create() {
@@ -7558,6 +7625,7 @@ var Statusbar$1 = {
       statusbar: {
         hide: Statusbar.hide,
         show: Statusbar.show,
+        iosOverlaysWebView: Statusbar.iosOverlaysWebView,
         setIosTextColor: Statusbar.setIosTextColor,
         setBackgroundColor: Statusbar.setBackgroundColor,
         isVisible: Statusbar.isVisible,
@@ -7627,6 +7695,7 @@ var View$2 = {
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
       restoreScrollTopOnBack: true,
+      unloadTabContent: true,
       // Swipe Back
       iosSwipeBack: true,
       iosSwipeBackAnimateShadow: true,
@@ -8429,7 +8498,7 @@ var Modal$1 = (function (Framework7Class$$1) {
       return modal;
     }
 
-    if (type === 'dialog' && app.params.modals.queueDialogs) {
+    if (type === 'dialog' && app.params.modal.queueDialogs) {
       var pushToQueue;
       if ($$1$1('.dialog.modal-in').length > 0) {
         pushToQueue = true;
@@ -8446,7 +8515,7 @@ var Modal$1 = (function (Framework7Class$$1) {
 
     var $modalParentEl = $el.parent();
     var wasInDom = $el.parents(document).length > 0;
-    if (app.params.modals.moveToRoot && !$modalParentEl.is(app.root)) {
+    if (app.params.modal.moveToRoot && !$modalParentEl.is(app.root)) {
       app.root.append($el);
       modal.once((type + "Closed"), function () {
         if (wasInDom) {
@@ -8566,6 +8635,7 @@ var Modal$1 = (function (Framework7Class$$1) {
   };
   Modal.prototype.destroy = function destroy () {
     var modal = this;
+    if (modal.destroyed) { return; }
     modal.emit(("local::beforeDestroy modalBeforeDestroy " + (modal.type) + "BeforeDestroy"), modal);
     if (modal.$el) {
       modal.$el.trigger(("modal:beforedestroy " + (modal.type.toLowerCase()) + ":beforedestroy"), modal);
@@ -8574,19 +8644,106 @@ var Modal$1 = (function (Framework7Class$$1) {
       }
     }
     Utils.deleteProps(modal);
-    modal = null;
+    modal.destroyed = true;
   };
 
   return Modal;
 }(Framework7Class));
 
+var CustomModal = (function (Modal) {
+  function CustomModal(app, params) {
+    var extendedParams = Utils.extend({
+      backdrop: true,
+      closeByBackdropClick: true,
+      on: {},
+    }, params);
+
+    // Extends with open/close Modal methods;
+    Modal.call(this, app, extendedParams);
+
+    var customModal = this;
+
+    customModal.params = extendedParams;
+
+    // Find Element
+    var $el;
+    if (!customModal.params.el) {
+      $el = $$1$1(customModal.params.content);
+    } else {
+      $el = $$1$1(customModal.params.el);
+    }
+
+    if ($el && $el.length > 0 && $el[0].f7Modal) {
+      return $el[0].f7Modal;
+    }
+
+    if ($el.length === 0) {
+      return customModal.destroy();
+    }
+    var $backdropEl;
+    if (customModal.params.backdrop) {
+      $backdropEl = app.root.children('.custom-modal-backdrop');
+      if ($backdropEl.length === 0) {
+        $backdropEl = $$1$1('<div class="custom-modal-backdrop"></div>');
+        app.root.append($backdropEl);
+      }
+    }
+
+    function handleClick(e) {
+      if (!customModal || customModal.destroyed) { return; }
+      if ($backdropEl && e.target === $backdropEl[0]) {
+        customModal.close();
+      }
+    }
+
+    customModal.on('customModalOpened', function () {
+      if (customModal.params.closeByBackdropClick && customModal.params.backdrop) {
+        app.on('click', handleClick);
+      }
+    });
+    customModal.on('customModalClose', function () {
+      if (customModal.params.closeByBackdropClick && customModal.params.backdrop) {
+        app.off('click', handleClick);
+      }
+    });
+
+    Utils.extend(customModal, {
+      app: app,
+      $el: $el,
+      el: $el[0],
+      $backdropEl: $backdropEl,
+      backdropEl: $backdropEl && $backdropEl[0],
+      type: 'customModal',
+    });
+
+    $el[0].f7Modal = customModal;
+
+    return customModal;
+  }
+
+  if ( Modal ) CustomModal.__proto__ = Modal;
+  CustomModal.prototype = Object.create( Modal && Modal.prototype );
+  CustomModal.prototype.constructor = CustomModal;
+
+  return CustomModal;
+}(Modal$1));
+
 var Modal = {
   name: 'modal',
   static: {
     Modal: Modal$1,
+    CustomModal: CustomModal,
+  },
+  create: function create() {
+    var app = this;
+    app.customModal = {
+      create: function create(params) {
+        return new CustomModal(app, params);
+      },
+    };
   },
   params: {
-    modals: {
+    modal: {
       moveToRoot: true,
       queueDialogs: true,
     },
@@ -9601,6 +9758,10 @@ var Actions$1 = (function (Modal) {
           popover.$el.find('.item-link').each(function (groupIndex, buttonEl) {
             $$1$1(buttonEl).on('click', buttonOnClick);
           });
+          Utils.nextTick(function () {
+            popover.destroy();
+            popover = undefined;
+          });
         });
       } else {
         actions.$el = $$1$1(actions.actionsHtml);
@@ -9615,6 +9776,7 @@ var Actions$1 = (function (Modal) {
         });
         originalOpen.call(actions, animate);
       }
+      return actions;
     };
 
     actions.close = function close(animate) {
@@ -9626,6 +9788,7 @@ var Actions$1 = (function (Modal) {
       } else {
         originalClose.call(actions, animate);
       }
+      return actions;
     };
 
     Utils.extend(actions, {
@@ -11770,8 +11933,13 @@ var Tab = {
     // Swipeable tabs
     if ($tabsEl.parent().hasClass('tabs-swipeable-wrap') && app.swiper) {
       var swiper = $tabsEl.parent()[0].swiper;
-      if (swiper.activeIndex !== $newTabEl.index()) {
-        swiper.slideTo($newTabEl.index(), animate ? undefined : 0, false);
+      if (swiper && swiper.activeIndex !== $newTabEl.index()) {
+        animated = true;
+        swiper
+          .once('slideChangeTransitionEnd', function () {
+            tabsChanged();
+          })
+          .slideTo($newTabEl.index(), animate ? undefined : 0);
       }
     }
 
@@ -11907,8 +12075,7 @@ function swipePanel$1(panel) {
       if (otherPanel.opened) { return; }
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') { return; }
-    if ($$1$1(e.target).closest('.range-slider').length > 0) { return; }
-    if ($$1$1(e.target).closest('.tabs-swipeable-wrap').length > 0) { return; }
+    if ($$1$1(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months').length > 0) { return; }
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     if (params.swipeOnlyClose && !panel.opened) {
@@ -13353,23 +13520,11 @@ var Toggle = {
   name: 'toggle',
   create: function create() {
     var app = this;
-    Utils.extend(app, {
-      toggle: {
-        create: function create(params) {
-          return new Toggle$1(app, params);
-        },
-        get: function get(el) {
-          var $el = $$1$1(el);
-          if ($el.length) { return $el[0].f7Toggle; }
-          return undefined;
-        },
-        destroy: function destroy(el) {
-          if (el && (el instanceof Toggle$1) && el.destroy) { return el.destroy(); }
-          var $el = $$1$1(el);
-          if ($el.length) { return $el[0].f7Toggle.destroy(); }
-          return undefined;
-        },
-      },
+    app.toggle = ConstructorMethods({
+      defaultSelector: '.toggle',
+      constructor: Toggle$1,
+      app: app,
+      domProp: 'f7Toggle',
     });
   },
   static: {
@@ -13378,19 +13533,19 @@ var Toggle = {
   on: {
     tabMounted: function tabMounted(tabEl) {
       var app = this;
-      $$1$1(tabEl).find('label.toggle').each(function (index, toggleEl) { return new Toggle$1(app, { el: toggleEl }); });
+      $$1$1(tabEl).find('.toggle-init').each(function (index, toggleEl) { return app.toggle.create({ el: toggleEl }); });
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
-      $$1$1(tabEl).find('label.toggle').each(function (index, toggleEl) {
+      $$1$1(tabEl).find('.toggle-init').each(function (index, toggleEl) {
         if (toggleEl.f7Toggle) { toggleEl.f7Toggle.destroy(); }
       });
     },
     pageInit: function pageInit(page) {
       var app = this;
-      page.$el.find('label.toggle').each(function (index, toggleEl) { return new Toggle$1(app, { el: toggleEl }); });
+      page.$el.find('.toggle-init').each(function (index, toggleEl) { return app.toggle.create({ el: toggleEl }); });
     },
     pageBeforeRemove: function pageBeforeRemove(page) {
-      page.$el.find('label.toggle').each(function (index, toggleEl) {
+      page.$el.find('.toggle-init').each(function (index, toggleEl) {
         if (toggleEl.f7Toggle) { toggleEl.f7Toggle.destroy(); }
       });
     },
@@ -13817,7 +13972,7 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     ss.app = app;
     var defaults = Utils.extend({
       on: {},
-    }, app.modules.smartSelect.params.smartSelect);
+    }, app.params.smartSelect);
 
     var $el = $$1$1(params.el).eq(0);
     if ($el.length === 0) { return ss; }
@@ -14463,15 +14618,1289 @@ var Calendar$1 = (function (Framework7Class$$1) {
 
     Framework7Class$$1.call(this, params, [app]);
     var calendar = this;
-    calendar.params = Utils.extend({
+    calendar.params = Utils.extend({}, app.params.calendar, params);
 
-    }, params);
+    var $containerEl;
+    if (calendar.params.containerEl) {
+      $containerEl = $$1$1(calendar.params.containerEl);
+      if ($containerEl.length === 0) { return calendar; }
+    }
+
+    var $inputEl;
+    if (calendar.params.inputEl) {
+      $inputEl = $$1$1(calendar.params.inputEl);
+    }
+
+    var view;
+    if ($inputEl) {
+      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view) { view = app.views.main; }
+
+    var isHorizontal = calendar.params.direction === 'horizontal';
+
+    var inverter = 1;
+    if (isHorizontal) {
+      inverter = app.rtl ? -1 : 1;
+    }
+
+    Utils.extend(calendar, {
+      app: app,
+      $containerEl: $containerEl,
+      containerEl: $containerEl && $containerEl[0],
+      inline: $containerEl && $containerEl.length > 0,
+      $inputEl: $inputEl,
+      inputEl: $inputEl && $inputEl[0],
+      initialized: false,
+      opened: false,
+      url: calendar.params.url,
+      isHorizontal: isHorizontal,
+      inverter: inverter,
+      view: view,
+      animating: false,
+    });
+
+    function onInputClick() {
+      calendar.open();
+    }
+    function onInputFocus(e) {
+      e.preventDefault();
+    }
+    function onHtmlClick(e) {
+      var $targetEl = $$1$1(e.target);
+      if (calendar.isPopover()) { return; }
+      if (!calendar.opened) { return; }
+      if ($targetEl.closest('[class*="backdrop"]').length) { return; }
+      if ($inputEl && $inputEl.length > 0) {
+        if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal, .calendar-modal').length === 0) {
+          calendar.close();
+        }
+      } else if ($$1$1(e.target).closest('.sheet-modal, .calendar-modal').length === 0) {
+        calendar.close();
+      }
+    }
+
+    // Events
+    Utils.extend(calendar, {
+      attachInputEvents: function attachInputEvents() {
+        calendar.$inputEl.on('click', onInputClick);
+        if (calendar.params.inputReadOnly) {
+          calendar.$inputEl.on('focus mousedown', onInputFocus);
+        }
+      },
+      detachInputEvents: function detachInputEvents() {
+        calendar.$inputEl.off('click', onInputClick);
+        if (calendar.params.inputReadOnly) {
+          calendar.$inputEl.off('focus mousedown', onInputFocus);
+        }
+      },
+      attachHtmlEvents: function attachHtmlEvents() {
+        app.on('click', onHtmlClick);
+      },
+      detachHtmlEvents: function detachHtmlEvents() {
+        app.off('click', onHtmlClick);
+      },
+    });
+    calendar.attachCalendarEvents = function attachCalendarEvents() {
+      var allowItemClick = true;
+      var isTouched;
+      var isMoved;
+      var touchStartX;
+      var touchStartY;
+      var touchCurrentX;
+      var touchCurrentY;
+      var touchStartTime;
+      var touchEndTime;
+      var currentTranslate;
+      var wrapperWidth;
+      var wrapperHeight;
+      var percentage;
+      var touchesDiff;
+      var isScrolling;
+
+      var $el = calendar.$el;
+      var $wrapperEl = calendar.$wrapperEl;
+
+      function handleTouchStart(e) {
+        if (isMoved || isTouched) { return; }
+        isTouched = true;
+        touchStartX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentX = touchStartX;
+        touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        touchCurrentY = touchStartY;
+        touchStartTime = (new Date()).getTime();
+        percentage = 0;
+        allowItemClick = true;
+        isScrolling = undefined;
+        currentTranslate = calendar.monthsTranslate;
+      }
+      function handleTouchMove(e) {
+        if (!isTouched) { return; }
+        var isH = calendar.isHorizontal;
+
+        touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        if (typeof isScrolling === 'undefined') {
+          isScrolling = !!(isScrolling || Math.abs(touchCurrentY - touchStartY) > Math.abs(touchCurrentX - touchStartX));
+        }
+        if (isH && isScrolling) {
+          isTouched = false;
+          return;
+        }
+        e.preventDefault();
+        if (calendar.animating) {
+          isTouched = false;
+          return;
+        }
+        allowItemClick = false;
+        if (!isMoved) {
+          // First move
+          isMoved = true;
+          wrapperWidth = $wrapperEl[0].offsetWidth;
+          wrapperHeight = $wrapperEl[0].offsetHeight;
+          $wrapperEl.transition(0);
+        }
+
+        touchesDiff = isH ? touchCurrentX - touchStartX : touchCurrentY - touchStartY;
+        percentage = touchesDiff / (isH ? wrapperWidth : wrapperHeight);
+        currentTranslate = ((calendar.monthsTranslate * calendar.inverter) + percentage) * 100;
+
+        // Transform wrapper
+        $wrapperEl.transform(("translate3d(" + (isH ? currentTranslate : 0) + "%, " + (isH ? 0 : currentTranslate) + "%, 0)"));
+      }
+      function handleTouchEnd() {
+        if (!isTouched || !isMoved) {
+          isTouched = false;
+          isMoved = false;
+          return;
+        }
+        isTouched = false;
+        isMoved = false;
+
+        touchEndTime = new Date().getTime();
+        if (touchEndTime - touchStartTime < 300) {
+          if (Math.abs(touchesDiff) < 10) {
+            calendar.resetMonth();
+          } else if (touchesDiff >= 10) {
+            if (app.rtl) { calendar.nextMonth(); }
+            else { calendar.prevMonth(); }
+          } else if (app.rtl) { calendar.prevMonth(); }
+          else { calendar.nextMonth(); }
+        } else if (percentage <= -0.5) {
+          if (app.rtl) { calendar.prevMonth(); }
+          else { calendar.nextMonth(); }
+        } else if (percentage >= 0.5) {
+          if (app.rtl) { calendar.nextMonth(); }
+          else { calendar.prevMonth(); }
+        } else {
+          calendar.resetMonth();
+        }
+
+        // Allow click
+        setTimeout(function () {
+          allowItemClick = true;
+        }, 100);
+      }
+
+      function handleDayClick(e) {
+        if (!allowItemClick) { return; }
+        var $dayEl = $$1$1(e.target).parents('.calendar-day');
+        if ($dayEl.length === 0 && $$1$1(e.target).hasClass('calendar-day')) {
+          $dayEl = $$1$1(e.target);
+        }
+        if ($dayEl.length === 0) { return; }
+        if ($dayEl.hasClass('calendar-day-disabled')) { return; }
+        if (!calendar.params.rangePicker) {
+          if ($dayEl.hasClass('calendar-day-next')) { calendar.nextMonth(); }
+          if ($dayEl.hasClass('calendar-day-prev')) { calendar.prevMonth(); }
+        }
+        var dateYear = $dayEl.attr('data-year');
+        var dateMonth = $dayEl.attr('data-month');
+        var dateDay = $dayEl.attr('data-day');
+        calendar.emit(
+          'local::dayClick calendarDayClick',
+          calendar,
+          $dayEl[0],
+          dateYear,
+          dateMonth,
+          dateDay
+        );
+        if (!$dayEl.hasClass('calendar-day-selected') || calendar.params.multiple || calendar.params.rangePicker) {
+          calendar.addValue(new Date(dateYear, dateMonth, dateDay, 0, 0, 0));
+        }
+        if (calendar.params.closeOnSelect) {
+          if (
+            (calendar.params.rangePicker && calendar.value.length === 2) ||
+            !calendar.params.rangePicker
+          ) {
+            calendar.close();
+          }
+        }
+      }
+      function onNextMonthClick() {
+        calendar.nextMonth();
+      }
+      function onPrevMonthClick() {
+        calendar.prevMonth();
+      }
+      function onNextYearClick() {
+        calendar.nextYear();
+      }
+      function onPrevYearClick() {
+        calendar.prevYear();
+      }
+
+      var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
+      // Selectors clicks
+      $el.find('.calendar-prev-month-button').on('click', onPrevMonthClick);
+      $el.find('.calendar-next-month-button').on('click', onNextMonthClick);
+      $el.find('.calendar-prev-year-button').on('click', onPrevYearClick);
+      $el.find('.calendar-next-year-button').on('click', onNextYearClick);
+      // Day clicks
+      $wrapperEl.on('click', handleDayClick);
+      // Touch events
+      {
+        if (calendar.params.touchMove) {
+          $wrapperEl.on(app.touchEvents.start, handleTouchStart, passiveListener);
+          app.on('touchmove:active', handleTouchMove);
+          app.on('touchend:passive', handleTouchEnd);
+        }
+      }
+
+      calendar.detachCalendarEvents = function detachCalendarEvents() {
+        $el.find('.calendar-prev-month-button').off('click', onPrevMonthClick);
+        $el.find('.calendar-next-month-button').off('click', onNextMonthClick);
+        $el.find('.calendar-prev-year-button').off('click', onPrevYearClick);
+        $el.find('.calendar-next-year-button').off('click', onNextYearClick);
+        $wrapperEl.off('click', handleDayClick);
+        {
+          if (calendar.params.touchMove) {
+            $wrapperEl.off(app.touchEvents.start, handleTouchStart, passiveListener);
+            app.off('touchmove:active', handleTouchMove);
+            app.off('touchend:passive', handleTouchEnd);
+          }
+        }
+      };
+    };
+
+    calendar.init();
+
     return calendar;
   }
 
   if ( Framework7Class$$1 ) Calendar.__proto__ = Framework7Class$$1;
   Calendar.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
   Calendar.prototype.constructor = Calendar;
+  Calendar.prototype.initInput = function initInput () {
+    var calendar = this;
+    if (!calendar.$inputEl) { return; }
+    if (calendar.params.inputReadOnly) { calendar.$inputEl.prop('readOnly', true); }
+  };
+  Calendar.prototype.isPopover = function isPopover () {
+    var calendar = this;
+    var app = calendar.app;
+    var modal = calendar.modal;
+    var params = calendar.params;
+    if (params.openIn === 'sheet') { return false; }
+    if (modal && modal.type !== 'popover') { return false; }
+
+    if (!calendar.inline && calendar.inputEl) {
+      if (params.openIn === 'popover') { return true; }
+      else if (app.device.ios) {
+        return !!app.device.ipad;
+      } else if (app.width >= 768) {
+        return true;
+      }
+    }
+    return false;
+  };
+  Calendar.prototype.formatDate = function formatDate (d) {
+    var calendar = this;
+    var date = new Date(d);
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var month1 = month + 1;
+    var day = date.getDate();
+    var weekDay = date.getDay();
+    var ref = calendar.params;
+    var dateFormat = ref.dateFormat;
+    var monthNames = ref.monthNames;
+    var monthNamesShort = ref.monthNamesShort;
+    var dayNames = ref.dayNames;
+    var dayNamesShort = ref.dayNamesShort;
+
+    return dateFormat
+      .replace(/yyyy/g, year)
+      .replace(/yy/g, String(year).substring(2))
+      .replace(/mm/g, month1 < 10 ? ("0" + month1) : month1)
+      .replace(/m(\W+)/g, (month1 + "$1"))
+      .replace(/MM/g, monthNames[month])
+      .replace(/M(\W+)/g, ((monthNamesShort[month]) + "$1"))
+      .replace(/dd/g, day < 10 ? ("0" + day) : day)
+      .replace(/d(\W+)/g, (day + "$1"))
+      .replace(/DD/g, dayNames[weekDay])
+      .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"));
+  };
+  Calendar.prototype.formatValue = function formatValue () {
+    var calendar = this;
+    var value = calendar.value;
+    if (calendar.params.formatValue) {
+      return calendar.params.formatValue.call(calendar, value);
+    }
+    return value
+      .map(function (v) { return calendar.formatDate(v); })
+      .join(calendar.params.rangePicker ? ' - ' : ', ');
+  };
+  Calendar.prototype.addValue = function addValue (newValue) {
+    var calendar = this;
+    var ref = calendar.params;
+    var multiple = ref.multiple;
+    var rangePicker = ref.rangePicker;
+    if (multiple) {
+      if (!calendar.value) { calendar.value = []; }
+      var inValuesIndex;
+      for (var i = 0; i < calendar.value.length; i += 1) {
+        if (new Date(newValue).getTime() === new Date(calendar.value[i]).getTime()) {
+          inValuesIndex = i;
+        }
+      }
+      if (typeof inValuesIndex === 'undefined') {
+        calendar.value.push(newValue);
+      } else {
+        calendar.value.splice(inValuesIndex, 1);
+      }
+      calendar.updateValue();
+    } else if (rangePicker) {
+      if (!calendar.value) { calendar.value = []; }
+      if (calendar.value.length === 2 || calendar.value.length === 0) {
+        calendar.value = [];
+      }
+      if (calendar.value[0] !== newValue) { calendar.value.push(newValue); }
+      else { calendar.value = []; }
+      calendar.value.sort(function (a, b) { return a - b; });
+      calendar.updateValue();
+    } else {
+      calendar.value = [newValue];
+      calendar.updateValue();
+    }
+  };
+  Calendar.prototype.setValue = function setValue (values) {
+    var calendar = this;
+    calendar.value = values;
+    calendar.updateValue();
+  };
+  Calendar.prototype.getValue = function getValue () {
+    var calendar = this;
+    return calendar.value;
+  };
+  Calendar.prototype.updateValue = function updateValue (onlyHeader) {
+    var calendar = this;
+    var $el = calendar.$el;
+    var $wrapperEl = calendar.$wrapperEl;
+    var $inputEl = calendar.$inputEl;
+    var value = calendar.value;
+    var params = calendar.params;
+    var i;
+    if ($el && $el.length > 0) {
+      $wrapperEl.find('.calendar-day-selected').removeClass('calendar-day-selected');
+      var valueDate;
+      if (params.rangePicker && value.length === 2) {
+        for (i = new Date(value[0]).getTime(); i <= new Date(value[1]).getTime(); i += 24 * 60 * 60 * 1000) {
+          valueDate = new Date(i);
+          $wrapperEl.find((".calendar-day[data-date=\"" + (valueDate.getFullYear()) + "-" + (valueDate.getMonth()) + "-" + (valueDate.getDate()) + "\"]")).addClass('calendar-day-selected');
+        }
+      } else {
+        for (i = 0; i < calendar.value.length; i += 1) {
+          valueDate = new Date(value[i]);
+          $wrapperEl.find((".calendar-day[data-date=\"" + (valueDate.getFullYear()) + "-" + (valueDate.getMonth()) + "-" + (valueDate.getDate()) + "\"]")).addClass('calendar-day-selected');
+        }
+      }
+    }
+
+    calendar.emit('local::change calendarChange', calendar, value);
+
+    if (($inputEl && $inputEl.length) || params.header) {
+      var inputValue = calendar.formatValue(value);
+      if (params.header && $el && $el.length) {
+        $el.find('.calendar-selected-date').text(inputValue);
+      }
+      if ($inputEl && $inputEl.length && !onlyHeader) {
+        $inputEl.val(inputValue);
+        $inputEl.trigger('change');
+      }
+    }
+  };
+  Calendar.prototype.updateCurrentMonthYear = function updateCurrentMonthYear (dir) {
+    var calendar = this;
+    var $months = calendar.$months;
+    var $el = calendar.$el;
+    var params = calendar.params;
+    if (typeof dir === 'undefined') {
+      calendar.currentMonth = parseInt($months.eq(1).attr('data-month'), 10);
+      calendar.currentYear = parseInt($months.eq(1).attr('data-year'), 10);
+    } else {
+      calendar.currentMonth = parseInt($months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-month'), 10);
+      calendar.currentYear = parseInt($months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-year'), 10);
+    }
+    $el.find('.current-month-value').text(params.monthNames[calendar.currentMonth]);
+    $el.find('.current-year-value').text(calendar.currentYear);
+  };
+  Calendar.prototype.update = function update () {
+    var calendar = this;
+    var currentYear = calendar.currentYear;
+    var currentMonth = calendar.currentMonth;
+    var $wrapperEl = calendar.$wrapperEl;
+    var currentDate = new Date(currentYear, currentMonth);
+    var prevMonthHtml = calendar.renderMonth(currentDate, 'prev');
+    var currentMonthHtml = calendar.renderMonth(currentDate);
+    var nextMonthHtml = calendar.renderMonth(currentDate, 'next');
+
+    $wrapperEl
+      .html(("" + prevMonthHtml + currentMonthHtml + nextMonthHtml))
+      .transform('translate3d(0,0,0)');
+    calendar.$months = $wrapperEl.find('.calendar-month');
+    calendar.monthsTranslate = 0;
+    calendar.setMonthsTranslate();
+    calendar.$months.each(function (index, monthEl) {
+      calendar.emit(
+        'local::monthAdd calendarMonthAdd',
+        monthEl
+      );
+    });
+  };
+  Calendar.prototype.onMonthChangeStart = function onMonthChangeStart (dir) {
+    var calendar = this;
+    var $months = calendar.$months;
+    var currentYear = calendar.currentYear;
+    var currentMonth = calendar.currentMonth;
+    calendar.updateCurrentMonthYear(dir);
+    $months.removeClass('calendar-month-current calendar-month-prev calendar-month-next');
+    var currentIndex = dir === 'next' ? $months.length - 1 : 0;
+
+    $months.eq(currentIndex).addClass('calendar-month-current');
+    $months.eq(dir === 'next' ? currentIndex - 1 : currentIndex + 1).addClass(dir === 'next' ? 'calendar-month-prev' : 'calendar-month-next');
+
+    calendar.emit(
+      'local::monthYearChangeStart calendarMonthYearChangeStart',
+      calendar,
+      currentYear,
+      currentMonth
+    );
+  };
+  Calendar.prototype.onMonthChangeEnd = function onMonthChangeEnd (dir, rebuildBoth) {
+    var calendar = this;
+    var currentYear = calendar.currentYear;
+    var currentMonth = calendar.currentMonth;
+    var $wrapperEl = calendar.$wrapperEl;
+    var monthsTranslate = calendar.monthsTranslate;
+    calendar.animating = false;
+    var nextMonthHtml;
+    var prevMonthHtml;
+    var currentMonthHtml;
+    $wrapperEl
+      .find('.calendar-month:not(.calendar-month-prev):not(.calendar-month-current):not(.calendar-month-next)')
+      .remove();
+
+    if (typeof dir === 'undefined') {
+      dir = 'next'; // eslint-disable-line
+      rebuildBoth = true; // eslint-disable-line
+    }
+    if (!rebuildBoth) {
+      currentMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), dir);
+    } else {
+      $wrapperEl.find('.calendar-month-next, .calendar-month-prev').remove();
+      prevMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), 'prev');
+      nextMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), 'next');
+    }
+    if (dir === 'next' || rebuildBoth) {
+      $wrapperEl.append(currentMonthHtml || nextMonthHtml);
+    }
+    if (dir === 'prev' || rebuildBoth) {
+      $wrapperEl.prepend(currentMonthHtml || prevMonthHtml);
+    }
+    var $months = $wrapperEl.find('.calendar-month');
+    calendar.$months = $months;
+    calendar.setMonthsTranslate(monthsTranslate);
+    calendar.emit(
+      'local::monthAdd calendarMonthAdd',
+      calendar,
+      dir === 'next' ? $months.eq($months.length - 1)[0] : $months.eq(0)[0]
+    );
+    calendar.emit(
+      'local::monthYearChangeEnd calendarMonthYearChangeEnd',
+      calendar,
+      currentYear,
+      currentMonth
+    );
+  };
+  Calendar.prototype.setMonthsTranslate = function setMonthsTranslate (translate) {
+    var calendar = this;
+    var $months = calendar.$months;
+    var isH = calendar.isHorizontal;
+    var inverter = calendar.inverter;
+    // eslint-disable-next-line
+    translate = translate || calendar.monthsTranslate || 0;
+    if (typeof calendar.monthsTranslate === 'undefined') {
+      calendar.monthsTranslate = translate;
+    }
+    $months.removeClass('calendar-month-current calendar-month-prev calendar-month-next');
+    var prevMonthTranslate = -(translate + 1) * 100 * inverter;
+    var currentMonthTranslate = -translate * 100 * inverter;
+    var nextMonthTranslate = -(translate - 1) * 100 * inverter;
+    $months.eq(0)
+      .transform(("translate3d(" + (isH ? prevMonthTranslate : 0) + "%, " + (isH ? 0 : prevMonthTranslate) + "%, 0)"))
+      .addClass('calendar-month-prev');
+    $months.eq(1)
+      .transform(("translate3d(" + (isH ? currentMonthTranslate : 0) + "%, " + (isH ? 0 : currentMonthTranslate) + "%, 0)"))
+      .addClass('calendar-month-current');
+    $months.eq(2)
+      .transform(("translate3d(" + (isH ? nextMonthTranslate : 0) + "%, " + (isH ? 0 : nextMonthTranslate) + "%, 0)"))
+      .addClass('calendar-month-next');
+  };
+  Calendar.prototype.nextMonth = function nextMonth (transition) {
+    var calendar = this;
+    var params = calendar.params;
+    var $wrapperEl = calendar.$wrapperEl;
+    var inverter = calendar.inverter;
+    var isH = calendar.isHorizontal;
+    if (typeof transition === 'undefined' || typeof transition === 'object') {
+      transition = ''; // eslint-disable-line
+      if (!params.animate) { transition = 0; } // eslint-disable-line
+    }
+    var nextMonth = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-month'), 10);
+    var nextYear = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-year'), 10);
+    var nextDate = new Date(nextYear, nextMonth);
+    var nextDateTime = nextDate.getTime();
+    var transitionEndCallback = !calendar.animating;
+    if (params.maxDate) {
+      if (nextDateTime > new Date(params.maxDate).getTime()) {
+        calendar.resetMonth();
+        return;
+      }
+    }
+    calendar.monthsTranslate -= 1;
+    if (nextMonth === calendar.currentMonth) {
+      var nextMonthTranslate = -(calendar.monthsTranslate) * 100 * inverter;
+      var nextMonthHtml = $$1$1(calendar.renderMonth(nextDateTime, 'next'))
+        .transform(("translate3d(" + (isH ? nextMonthTranslate : 0) + "%, " + (isH ? 0 : nextMonthTranslate) + "%, 0)"))
+        .addClass('calendar-month-next');
+      $wrapperEl.append(nextMonthHtml[0]);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      calendar.emit(
+        'local::monthAdd calendarMonthAdd',
+        calendar.$months.eq(calendar.$months.length - 1)[0]
+      );
+    }
+    calendar.animating = true;
+    calendar.onMonthChangeStart('next');
+    var translate = (calendar.monthsTranslate * 100) * inverter;
+
+    $wrapperEl.transition(transition).transform(("translate3d(" + (isH ? translate : 0) + "%, " + (isH ? 0 : translate) + "%, 0)"));
+    if (transitionEndCallback) {
+      $wrapperEl.transitionEnd(function () {
+        calendar.onMonthChangeEnd('next');
+      });
+    }
+    if (!params.animate) {
+      calendar.onMonthChangeEnd('next');
+    }
+  };
+  Calendar.prototype.prevMonth = function prevMonth (transition) {
+    var calendar = this;
+    var params = calendar.params;
+    var $wrapperEl = calendar.$wrapperEl;
+    var inverter = calendar.inverter;
+    var isH = calendar.isHorizontal;
+    if (typeof transition === 'undefined' || typeof transition === 'object') {
+      transition = ''; // eslint-disable-line
+      if (!params.animate) { transition = 0; } // eslint-disable-line
+    }
+    var prevMonth = parseInt(calendar.$months.eq(0).attr('data-month'), 10);
+    var prevYear = parseInt(calendar.$months.eq(0).attr('data-year'), 10);
+    var prevDate = new Date(prevYear, prevMonth + 1, -1);
+    var prevDateTime = prevDate.getTime();
+    var transitionEndCallback = !calendar.animating;
+    if (params.minDate) {
+      if (prevDateTime < new Date(params.minDate).getTime()) {
+        calendar.resetMonth();
+        return;
+      }
+    }
+    calendar.monthsTranslate += 1;
+    if (prevMonth === calendar.currentMonth) {
+      var prevMonthTranslate = -(calendar.monthsTranslate) * 100 * inverter;
+      var prevMonthHtml = $$1$1(calendar.renderMonth(prevDateTime, 'prev'))
+        .transform(("translate3d(" + (isH ? prevMonthTranslate : 0) + "%, " + (isH ? 0 : prevMonthTranslate) + "%, 0)"))
+        .addClass('calendar-month-prev');
+      $wrapperEl.prepend(prevMonthHtml[0]);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      calendar.emit(
+        'local::monthAdd calendarMonthAdd',
+        calendar.$months.eq(0)[0]
+      );
+    }
+    calendar.animating = true;
+    calendar.onMonthChangeStart('prev');
+    var translate = (calendar.monthsTranslate * 100) * inverter;
+    $wrapperEl
+      .transition(transition)
+      .transform(("translate3d(" + (isH ? translate : 0) + "%, " + (isH ? 0 : translate) + "%, 0)"));
+    if (transitionEndCallback) {
+      $wrapperEl.transitionEnd(function () {
+        calendar.onMonthChangeEnd('prev');
+      });
+    }
+    if (!params.animate) {
+      calendar.onMonthChangeEnd('prev');
+    }
+  };
+  Calendar.prototype.resetMonth = function resetMonth (transition) {
+    if ( transition === void 0 ) transition = '';
+
+    var calendar = this;
+    var $wrapperEl = calendar.$wrapperEl;
+    var inverter = calendar.inverter;
+    var isH = calendar.isHorizontal;
+    var monthsTranslate = calendar.monthsTranslate;
+    var translate = (monthsTranslate * 100) * inverter;
+    $wrapperEl
+      .transition(transition)
+      .transform(("translate3d(" + (isH ? translate : 0) + "%, " + (isH ? 0 : translate) + "%, 0)"));
+  };
+  Calendar.prototype.setYearMonth = function setYearMonth (year, month, transition) {
+    var calendar = this;
+    var params = calendar.params;
+    var isH = calendar.isHorizontal;
+    var $wrapperEl = calendar.$wrapperEl;
+    var inverter = calendar.inverter;
+    if (typeof year === 'undefined') { year = calendar.currentYear; }
+    if (typeof month === 'undefined') { month = calendar.currentMonth; }
+    if (typeof transition === 'undefined' || typeof transition === 'object') {
+      transition = '';
+      if (!params.animate) { transition = 0; }
+    }
+    var targetDate;
+    if (year < calendar.currentYear) {
+      targetDate = new Date(year, month + 1, -1).getTime();
+    } else {
+      targetDate = new Date(year, month).getTime();
+    }
+    if (params.maxDate && targetDate > new Date(params.maxDate).getTime()) {
+      return false;
+    }
+    if (params.minDate && targetDate < new Date(params.minDate).getTime()) {
+      return false;
+    }
+    var currentDate = new Date(calendar.currentYear, calendar.currentMonth).getTime();
+    var dir = targetDate > currentDate ? 'next' : 'prev';
+    var newMonthHTML = calendar.renderMonth(new Date(year, month));
+    calendar.monthsTranslate = calendar.monthsTranslate || 0;
+    var prevTranslate = calendar.monthsTranslate;
+    var monthTranslate;
+    var transitionEndCallback = !calendar.animating;
+    if (targetDate > currentDate) {
+      // To next
+      calendar.monthsTranslate -= 1;
+      if (!calendar.animating) { calendar.$months.eq(calendar.$months.length - 1).remove(); }
+      $wrapperEl.append(newMonthHTML);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      monthTranslate = -(prevTranslate - 1) * 100 * inverter;
+      calendar.$months
+        .eq(calendar.$months.length - 1)
+        .transform(("translate3d(" + (isH ? monthTranslate : 0) + "%, " + (isH ? 0 : monthTranslate) + "%, 0)"))
+        .addClass('calendar-month-next');
+    } else {
+      // To prev
+      calendar.monthsTranslate += 1;
+      if (!calendar.animating) { calendar.$months.eq(0).remove(); }
+      $wrapperEl.prepend(newMonthHTML);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      monthTranslate = -(prevTranslate + 1) * 100 * inverter;
+      calendar.$months
+        .eq(0)
+        .transform(("translate3d(" + (isH ? monthTranslate : 0) + "%, " + (isH ? 0 : monthTranslate) + "%, 0)"))
+        .addClass('calendar-month-prev');
+    }
+    calendar.emit(
+      'local::monthAdd calendarMonthAdd',
+      dir === 'next'
+        ? calendar.$months.eq(calendar.$months.length - 1)[0]
+        : calendar.$months.eq(0)[0]
+    );
+
+    calendar.animating = true;
+    calendar.onMonthChangeStart(dir);
+    var wrapperTranslate = (calendar.monthsTranslate * 100) * inverter;
+    $wrapperEl
+      .transition(transition)
+      .transform(("translate3d(" + (isH ? wrapperTranslate : 0) + "%, " + (isH ? 0 : wrapperTranslate) + "%, 0)"));
+    if (transitionEndCallback) {
+      $wrapperEl.transitionEnd(function () {
+        calendar.onMonthChangeEnd(dir, true);
+      });
+    }
+    if (!params.animate) {
+      calendar.onMonthChangeEnd(dir);
+    }
+  };
+  Calendar.prototype.nextYear = function nextYear () {
+    var calendar = this;
+    calendar.setYearMonth(calendar.currentYear + 1);
+  };
+  Calendar.prototype.prevYear = function prevYear () {
+    var calendar = this;
+    calendar.setYearMonth(calendar.currentYear - 1);
+  };
+  // eslint-disable-next-line
+  Calendar.prototype.dateInRange = function dateInRange (dayDate, range) {
+    var match = false;
+    var i;
+    if (!range) { return false; }
+    if (Array.isArray(range)) {
+      for (i = 0; i < range.length; i += 1) {
+        if (range[i].from || range[i].to) {
+          if (range[i].from && range[i].to) {
+            if ((dayDate <= new Date(range[i].to).getTime()) && (dayDate >= new Date(range[i].from).getTime())) {
+              match = true;
+            }
+          } else if (range[i].from) {
+            if (dayDate >= new Date(range[i].from).getTime()) {
+              match = true;
+            }
+          } else if (range[i].to) {
+            if (dayDate <= new Date(range[i].to).getTime()) {
+              match = true;
+            }
+          }
+        } else if (dayDate === new Date(range[i]).getTime()) {
+          match = true;
+        }
+      }
+    } else if (range.from || range.to) {
+      if (range.from && range.to) {
+        if ((dayDate <= new Date(range.to).getTime()) && (dayDate >= new Date(range.from).getTime())) {
+          match = true;
+        }
+      } else if (range.from) {
+        if (dayDate >= new Date(range.from).getTime()) {
+          match = true;
+        }
+      } else if (range.to) {
+        if (dayDate <= new Date(range.to).getTime()) {
+          match = true;
+        }
+      }
+    } else if (typeof range === 'function') {
+      match = range(new Date(dayDate));
+    }
+    return match;
+  };
+  // eslint-disable-next-line
+  Calendar.prototype.daysInMonth = function daysInMonth (date) {
+    var d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  };
+  Calendar.prototype.renderMonths = function renderMonths (date) {
+    var calendar = this;
+    if (calendar.params.renderMonths) {
+      return calendar.params.renderMonths.call(calendar, date);
+    }
+    return ("\n      <div class=\"calendar-months-wrapper\">\n        " + (calendar.renderMonth(date, 'prev')) + "\n        " + (calendar.renderMonth(date)) + "\n        " + (calendar.renderMonth(date, 'next')) + "\n      </div>\n    ").trim();
+  };
+  Calendar.prototype.renderMonth = function renderMonth (d, offset) {
+    var calendar = this;
+    var params = calendar.params;
+    var value = calendar.value;
+    if (params.renderMonth) {
+      return params.renderMonth.call(calendar, d, offset);
+    }
+    var date = new Date(d);
+    var year = date.getFullYear();
+    var month = date.getMonth();
+
+    if (offset === 'next') {
+      if (month === 11) { date = new Date(year + 1, 0); }
+      else { date = new Date(year, month + 1, 1); }
+    }
+    if (offset === 'prev') {
+      if (month === 0) { date = new Date(year - 1, 11); }
+      else { date = new Date(year, month - 1, 1); }
+    }
+    if (offset === 'next' || offset === 'prev') {
+      month = date.getMonth();
+      year = date.getFullYear();
+    }
+
+    var currentValues = [];
+    var today = new Date().setHours(0, 0, 0, 0);
+    var minDate = params.minDate ? new Date(params.minDate).getTime() : null;
+    var maxDate = params.maxDate ? new Date(params.maxDate).getTime() : null;
+    var rows = 6;
+    var cols = 7;
+    var daysInPrevMonth = calendar.daysInMonth(new Date(date.getFullYear(), date.getMonth()).getTime() - (10 * 24 * 60 * 60 * 1000));
+    var daysInMonth = calendar.daysInMonth(date);
+    var minDayNumber = params.firstDay === 6 ? 0 : 1;
+
+    var monthHtml = '';
+    var dayIndex = 0 + (params.firstDay - 1);
+    var disabled;
+    var hasEvent;
+    var firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay();
+    if (firstDayOfMonthIndex === 0) { firstDayOfMonthIndex = 7; }
+
+    if (value && value.length) {
+      for (var i = 0; i < value.length; i += 1) {
+        currentValues.push(new Date(value[i]).setHours(0, 0, 0, 0));
+      }
+    }
+
+    for (var row = 1; row <= rows; row += 1) {
+      var rowHtml = '';
+      for (var col = 1; col <= cols; col += 1) {
+        dayIndex += 1;
+        var dayDate = (void 0);
+        var dayNumber = dayIndex - firstDayOfMonthIndex;
+        var addClass = '';
+        if (row === 1 && col === 1 && dayNumber > minDayNumber && params.firstDay !== 1) {
+          dayIndex -= 7;
+          dayNumber = dayIndex - firstDayOfMonthIndex;
+        }
+
+        var weekDayIndex = ((col - 1) + params.firstDay > 6)
+          ? ((col - 1 - 7) + params.firstDay)
+          : ((col - 1) + params.firstDay);
+
+        if (dayNumber < 0) {
+          dayNumber = daysInPrevMonth + dayNumber + 1;
+          addClass += ' calendar-day-prev';
+          dayDate = new Date(month - 1 < 0 ? year - 1 : year, month - 1 < 0 ? 11 : month - 1, dayNumber).getTime();
+        } else {
+          dayNumber += 1;
+          if (dayNumber > daysInMonth) {
+            dayNumber -= daysInMonth;
+            addClass += ' calendar-day-next';
+            dayDate = new Date(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime();
+          } else {
+            dayDate = new Date(year, month, dayNumber).getTime();
+          }
+        }
+        // Today
+        if (dayDate === today) { addClass += ' calendar-day-today'; }
+
+        // Selected
+        if (params.rangePicker && currentValues.length === 2) {
+          if (dayDate >= currentValues[0] && dayDate <= currentValues[1]) { addClass += ' calendar-day-selected'; }
+        } else if (currentValues.indexOf(dayDate) >= 0) { addClass += ' calendar-day-selected'; }
+        // Weekend
+        if (params.weekendDays.indexOf(weekDayIndex) >= 0) {
+          addClass += ' calendar-day-weekend';
+        }
+        // Has Events
+        hasEvent = false;
+        if (params.events) {
+          if (calendar.dateInRange(dayDate, params.events)) {
+            hasEvent = true;
+          }
+        }
+        if (hasEvent) {
+          addClass += ' calendar-day-has-events';
+        }
+        // Custom Ranges
+        if (params.rangesClasses) {
+          for (var k = 0; k < params.rangesClasses.length; k += 1) {
+            if (calendar.dateInRange(dayDate, params.rangesClasses[k].range)) {
+              addClass += " " + (params.rangesClasses[k].cssClass);
+            }
+          }
+        }
+        // Disabled
+        disabled = false;
+        if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
+          disabled = true;
+        }
+        if (params.disabled) {
+          if (calendar.dateInRange(dayDate, params.disabled)) {
+            disabled = true;
+          }
+        }
+        if (disabled) {
+          addClass += ' calendar-day-disabled';
+        }
+
+        dayDate = new Date(dayDate);
+        var dayYear = dayDate.getFullYear();
+        var dayMonth = dayDate.getMonth();
+        rowHtml += ("\n          <div data-year=\"" + dayYear + "\" data-month=\"" + dayMonth + "\" data-day=\"" + dayNumber + "\" class=\"calendar-day" + addClass + "\" data-date=\"" + dayYear + "-" + dayMonth + "-" + dayNumber + "\">\n            <span>" + dayNumber + "</span>\n          </div>").trim();
+      }
+      monthHtml += "<div class=\"calendar-row\">" + rowHtml + "</div>";
+    }
+    monthHtml = "<div class=\"calendar-month\" data-year=\"" + year + "\" data-month=\"" + month + "\">" + monthHtml + "</div>";
+    return monthHtml;
+  };
+  Calendar.prototype.renderWeekHeader = function renderWeekHeader () {
+    var calendar = this;
+    if (calendar.params.renderWeekHeader) {
+      return calendar.params.renderWeekHeader.call(calendar);
+    }
+    var params = calendar.params;
+    var weekDaysHtml = '';
+    for (var i = 0; i < 7; i += 1) {
+      var dayIndex = (i + params.firstDay > 6)
+        ? ((i - 7) + params.firstDay)
+        : (i + params.firstDay);
+      var dayName = params.dayNamesShort[dayIndex];
+      weekDaysHtml += "<div class=\"calendar-week-day\">" + dayName + "</div>";
+    }
+    return ("\n      <div class=\"calendar-week-header\">\n        " + weekDaysHtml + "\n      </div>\n    ").trim();
+  };
+  Calendar.prototype.renderMonthSelector = function renderMonthSelector () {
+    var calendar = this;
+    var app = calendar.app;
+    if (calendar.params.renderMonthSelector) {
+      return calendar.params.renderMonthSelector.call(calendar);
+    }
+
+    var iconColor = app.theme === 'md' ? 'color-black' : '';
+    return ("\n      <div class=\"calendar-month-selector\">\n        <a href=\"#\" class=\"link icon-only calendar-prev-month-button\">\n          <i class=\"icon icon-prev " + iconColor + "\"></i>\n        </a>\n        <span class=\"current-month-value\"></span>\n        <a href=\"#\" class=\"link icon-only calendar-next-month-button\">\n          <i class=\"icon icon-next " + iconColor + "\"></i>\n        </a>\n      </div>\n    ").trim();
+  };
+  Calendar.prototype.renderYearSelector = function renderYearSelector () {
+    var calendar = this;
+    var app = calendar.app;
+    if (calendar.params.renderYearSelector) {
+      return calendar.params.renderYearSelector.call(calendar);
+    }
+
+    var iconColor = app.theme === 'md' ? 'color-black' : '';
+    return ("\n      <div class=\"calendar-year-selector\">\n        <a href=\"#\" class=\"link icon-only calendar-prev-year-button\">\n          <i class=\"icon icon-prev " + iconColor + "\"></i>\n        </a>\n        <span class=\"current-year-value\"></span>\n        <a href=\"#\" class=\"link icon-only calendar-next-year-button\">\n          <i class=\"icon icon-next " + iconColor + "\"></i>\n        </a>\n      </div>\n    ").trim();
+  };
+  Calendar.prototype.renderHeader = function renderHeader () {
+    var calendar = this;
+    if (calendar.params.renderHeader) {
+      return calendar.params.renderHeader.call(calendar);
+    }
+    return ("\n      <div class=\"calendar-header\">\n        <div class=\"calendar-selected-date\">" + (calendar.params.headerPlaceholder) + "</div>\n      </div>\n    ").trim();
+  };
+  Calendar.prototype.renderFooter = function renderFooter () {
+    var calendar = this;
+    var app = calendar.app;
+    if (calendar.params.renderFooter) {
+      return calendar.params.renderFooter.call(calendar);
+    }
+    return ("\n      <div class=\"calendar-footer\">\n        <a href=\"#\" class=\"" + (app.theme === 'md' ? 'button' : 'link') + " calendar-close sheet-close popover-close\">" + (calendar.params.toolbarCloseText) + "</a>\n      </div>\n    ").trim();
+  };
+  Calendar.prototype.renderToolbar = function renderToolbar () {
+    var calendar = this;
+    if (calendar.params.renderToolbar) {
+      return calendar.params.renderToolbar.call(calendar, calendar);
+    }
+    return ("\n      <div class=\"toolbar no-shadow\">\n        <div class=\"toolbar-inner\">\n          " + (calendar.renderMonthSelector()) + "\n          " + (calendar.renderYearSelector()) + "\n        </div>\n      </div>\n    ").trim();
+  };
+  // eslint-disable-next-line
+  Calendar.prototype.renderInline = function renderInline () {
+    var calendar = this;
+    var ref = calendar.params;
+    var cssClass = ref.cssClass;
+    var toolbar = ref.toolbar;
+    var header = ref.header;
+    var footer = ref.footer;
+    var rangePicker = ref.rangePicker;
+    var weekHeader = ref.weekHeader;
+    var value = calendar.value;
+    var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    var inlineHtml = ("\n      <div class=\"calendar calendar-inline " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n        " + (header ? calendar.renderHeader() : '') + "\n        " + (toolbar ? calendar.renderToolbar() : '') + "\n        " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n        <div class=\"calendar-months\">\n          " + (calendar.renderMonths(date)) + "\n        </div>\n        " + (footer ? calendar.renderFooter() : '') + "\n      </div>\n    ").trim();
+
+    return inlineHtml;
+  };
+  Calendar.prototype.renderCustomModal = function renderCustomModal () {
+    var calendar = this;
+    var ref = calendar.params;
+    var cssClass = ref.cssClass;
+    var toolbar = ref.toolbar;
+    var header = ref.header;
+    var footer = ref.footer;
+    var rangePicker = ref.rangePicker;
+    var weekHeader = ref.weekHeader;
+    var value = calendar.value;
+    var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    var sheetHtml = ("\n      <div class=\"calendar calendar-modal " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n        " + (header ? calendar.renderHeader() : '') + "\n        " + (toolbar ? calendar.renderToolbar() : '') + "\n        " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n        <div class=\"calendar-months\">\n          " + (calendar.renderMonths(date)) + "\n        </div>\n        " + (footer ? calendar.renderFooter() : '') + "\n      </div>\n    ").trim();
+
+    return sheetHtml;
+  };
+  Calendar.prototype.renderSheet = function renderSheet () {
+    var calendar = this;
+    var ref = calendar.params;
+    var cssClass = ref.cssClass;
+    var toolbar = ref.toolbar;
+    var header = ref.header;
+    var footer = ref.footer;
+    var rangePicker = ref.rangePicker;
+    var weekHeader = ref.weekHeader;
+    var value = calendar.value;
+    var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    var sheetHtml = ("\n      <div class=\"sheet-modal calendar calendar-sheet " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n        " + (header ? calendar.renderHeader() : '') + "\n        " + (toolbar ? calendar.renderToolbar() : '') + "\n        " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n        <div class=\"sheet-modal-inner calendar-months\">\n          " + (calendar.renderMonths(date)) + "\n        </div>\n        " + (footer ? calendar.renderFooter() : '') + "\n      </div>\n    ").trim();
+
+    return sheetHtml;
+  };
+  Calendar.prototype.renderPopover = function renderPopover () {
+    var calendar = this;
+    var ref = calendar.params;
+    var cssClass = ref.cssClass;
+    var toolbar = ref.toolbar;
+    var header = ref.header;
+    var footer = ref.footer;
+    var rangePicker = ref.rangePicker;
+    var weekHeader = ref.weekHeader;
+    var value = calendar.value;
+    var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    var popoverHtml = ("\n      <div class=\"popover calendar-popover\">\n        <div class=\"popover-inner\">\n          <div class=\"calendar " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n            " + (header ? calendar.renderHeader() : '') + "\n            " + (toolbar ? calendar.renderToolbar() : '') + "\n            " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n            <div class=\"calendar-months\">\n              " + (calendar.renderMonths(date)) + "\n            </div>\n            " + (footer ? calendar.renderFooter() : '') + "\n          </div>\n        </div>\n      </div>\n    ").trim();
+
+    return popoverHtml;
+  };
+  Calendar.prototype.render = function render () {
+    var calendar = this;
+    var params = calendar.params;
+    if (params.render) { return params.render.call(calendar); }
+    if (!calendar.inline) {
+      var modalType = params.openIn;
+      if (modalType === 'auto') { modalType = calendar.isPopover() ? 'popover' : 'sheet'; }
+
+      if (modalType === 'popover') { return calendar.renderPopover(); }
+      else if (modalType === 'sheet') { return calendar.renderSheet(); }
+      return calendar.renderCustomModal();
+    }
+    return calendar.renderInline();
+  };
+  Calendar.prototype.onOpen = function onOpen () {
+    var calendar = this;
+    var initialized = calendar.initialized;
+    var $el = calendar.$el;
+    var app = calendar.app;
+    var $inputEl = calendar.$inputEl;
+    var inline = calendar.inline;
+    var value = calendar.value;
+    var params = calendar.params;
+    calendar.opened = true;
+
+    // Init main events
+    calendar.attachCalendarEvents();
+
+    var updateValue = !value && params.value;
+
+    // Set value
+    if (!initialized) {
+      if (value) { calendar.setValue(value, 0); }
+      else if (params.value) {
+        calendar.setValue(params.value, 0);
+      }
+    } else if (value) {
+      calendar.setValue(value, 0);
+    }
+
+    // Update current month and year
+    calendar.updateCurrentMonthYear();
+
+    // Set initial translate
+    calendar.monthsTranslate = 0;
+    calendar.setMonthsTranslate();
+
+    // Update input value
+    if (updateValue) { calendar.updateValue(); }
+    else if (app.theme === 'md' && value) { calendar.updateValue(true); }
+
+    // Extra focus
+    if (!inline && $inputEl.length && app.theme === 'md') {
+      $inputEl.trigger('focus');
+    }
+
+    calendar.initialized = true;
+
+    calendar.$months.each(function (index, monthEl) {
+      calendar.emit('local::monthAdd calendarMonthAdd', monthEl);
+    });
+
+    // Trigger events
+    if ($el) {
+      $el.trigger('calendar:open', calendar);
+    }
+    if ($inputEl) {
+      $inputEl.trigger('calendar:open', calendar);
+    }
+    calendar.emit('local::open calendarOpen', calendar);
+  };
+  Calendar.prototype.onOpened = function onOpened () {
+    var calendar = this;
+    if (calendar.$el) {
+      calendar.$el.trigger('calendar:opened', calendar);
+    }
+    if (calendar.$inputEl) {
+      calendar.$inputEl.trigger('calendar:opened', calendar);
+    }
+    calendar.emit('local::opened calendarOpened', calendar);
+  };
+  Calendar.prototype.onClose = function onClose () {
+    var calendar = this;
+    var app = calendar.app;
+
+    if (calendar.$inputEl && app.theme === 'md') {
+      calendar.$inputEl.trigger('blur');
+    }
+    if (calendar.detachCalendarEvents) {
+      calendar.detachCalendarEvents();
+    }
+
+    if (calendar.$el) {
+      calendar.$el.trigger('calendar:close', calendar);
+    }
+    if (calendar.$inputEl) {
+      calendar.$inputEl.trigger('calendar:close', calendar);
+    }
+    calendar.emit('local::close calendarClose', calendar);
+  };
+  Calendar.prototype.onClosed = function onClosed () {
+    var calendar = this;
+    calendar.opened = false;
+
+    if (!calendar.inline) {
+      Utils.nextTick(function () {
+        if (calendar.modal && calendar.modal.el && calendar.modal.destroy) {
+          if (!calendar.params.routableModals) {
+            calendar.modal.destroy();
+          }
+        }
+        delete calendar.modal;
+      });
+    }
+    if (calendar.$el) {
+      calendar.$el.trigger('calendar:closed', calendar);
+    }
+    if (calendar.$inputEl) {
+      calendar.$inputEl.trigger('calendar:closed', calendar);
+    }
+    calendar.emit('local::closed calendarClosed', calendar);
+  };
+  Calendar.prototype.open = function open () {
+    var calendar = this;
+    var app = calendar.app;
+    var opened = calendar.opened;
+    var inline = calendar.inline;
+    var $inputEl = calendar.$inputEl;
+    var params = calendar.params;
+    if (opened) { return; }
+
+    if (inline) {
+      calendar.$el = $$1$1(calendar.render());
+      calendar.$el[0].f7Calendar = calendar;
+      calendar.$wrapperEl = calendar.$el.find('.calendar-months-wrapper');
+      calendar.$months = calendar.$wrapperEl.find('.calendar-month');
+      calendar.$containerEl.append(calendar.$el);
+      calendar.onOpen();
+      calendar.onOpened();
+      return;
+    }
+    var modalType = params.openIn;
+    if (modalType === 'auto') {
+      modalType = calendar.isPopover() ? 'popover' : 'sheet';
+    }
+    var modalContent = calendar.render();
+
+    var modalParams = {
+      targetEl: $inputEl,
+      scrollToEl: calendar.params.scrollToInput ? $inputEl : undefined,
+      content: modalContent,
+      backdrop: modalType !== 'sheet',
+      on: {
+        open: function open() {
+          var modal = this;
+          calendar.modal = modal;
+          calendar.$el = modalType === 'popover' ? modal.$el.find('.calendar') : modal.$el;
+          calendar.$wrapperEl = calendar.$el.find('.calendar-months-wrapper');
+          calendar.$months = calendar.$wrapperEl.find('.calendar-month');
+          calendar.$el[0].f7Calendar = calendar;
+          if (modalType === 'customModal') {
+            $$1$1(calendar.$el).find('.calendar-close').once('click', function () {
+              calendar.close();
+            });
+          }
+          calendar.onOpen();
+        },
+        opened: function opened() { calendar.onOpened(); },
+        close: function close() { calendar.onClose(); },
+        closed: function closed() { calendar.onClosed(); },
+      },
+    };
+    if (calendar.params.routableModals) {
+      calendar.view.router.navigate(calendar.url, {
+        createRoute: ( obj = {
+          path: calendar.url,
+        }, obj[modalType] = modalParams, obj ),
+      });
+      var obj;
+    } else {
+      calendar.modal = app[modalType].create(modalParams);
+      calendar.modal.open();
+    }
+  };
+  Calendar.prototype.close = function close () {
+    var calendar = this;
+    var opened = calendar.opened;
+    var inline = calendar.inline;
+    if (!opened) { return; }
+    if (inline) {
+      calendar.onClose();
+      calendar.onClosed();
+      return;
+    }
+    if (calendar.params.routableModals) {
+      calendar.view.router.back();
+    } else {
+      calendar.modal.close();
+    }
+  };
+  Calendar.prototype.init = function init () {
+    var calendar = this;
+
+    calendar.initInput();
+
+    if (calendar.inline) {
+      calendar.open();
+      calendar.emit('local::init calendarInit', calendar);
+      return;
+    }
+
+    if (!calendar.initialized && calendar.params.value) {
+      calendar.setValue(calendar.params.value);
+    }
+
+    // Attach input Events
+    if (calendar.$inputEl) {
+      calendar.attachInputEvents();
+    }
+    if (calendar.params.closeByOutsideClick) {
+      calendar.attachHtmlEvents();
+    }
+    calendar.emit('local::init calendarInit', calendar);
+  };
+  Calendar.prototype.destroy = function destroy () {
+    var calendar = this;
+    if (calendar.destroyed) { return; }
+    var $el = calendar.$el;
+    calendar.emit('local::beforeDestroy calendarBeforeDestroy', calendar);
+    if ($el) { $el.trigger('calendar:beforedestroy', calendar); }
+
+    calendar.close();
+
+    // Detach Events
+    if (calendar.$inputEl) {
+      calendar.detachInputEvents();
+    }
+    if (calendar.params.closeByOutsideClick) {
+      calendar.detachHtmlEvents();
+    }
+
+    if ($el && $el.length) { delete calendar.$el[0].f7Calendar; }
+    Utils.deleteProps(calendar);
+    calendar.destroyed = true;
+  };
 
   return Calendar;
 }(Framework7Class));
@@ -14481,28 +15910,866 @@ var Calendar = {
   static: {
     Calendar: Calendar$1,
   },
-  instance: {
-    calendar: function calendar(params) {
-      return new Calendar$1(this, params);
+  create: function create() {
+    var app = this;
+    app.calendar = ConstructorMethods({
+      defaultSelector: '.calendar',
+      constructor: Calendar$1,
+      app: app,
+      domProp: 'f7Calendar',
+    });
+    app.calendar.close = function close(el) {
+      if ( el === void 0 ) el = '.calendar';
+
+      var $el = $$1$1(el);
+      if ($el.length === 0) { return; }
+      var calendar = $el[0].f7Calendar;
+      if (!calendar || (calendar && !calendar.opened)) { return; }
+      calendar.close();
+    };
+  },
+  params: {
+    calendar: {
+      // Calendar settings
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      firstDay: 1, // First day of the week, Monday
+      weekendDays: [0, 6], // Sunday and Saturday
+      multiple: false,
+      rangePicker: false,
+      dateFormat: 'yyyy-mm-dd',
+      direction: 'horizontal', // or 'vertical'
+      minDate: null,
+      maxDate: null,
+      disabled: null, // dates range of disabled days
+      events: null, // dates range of days with events
+      rangesClasses: null, // array with custom classes date ranges
+      touchMove: true,
+      animate: true,
+      closeOnSelect: false,
+      monthSelector: true,
+      yearSelector: true,
+      weekHeader: true,
+      value: null,
+      // Common opener settings
+      containerEl: null,
+      openIn: 'auto', // or 'popover' or 'sheet' or 'customModal'
+      formatValue: null,
+      inputEl: null,
+      inputReadOnly: true,
+      closeByOutsideClick: true,
+      scrollToInput: true,
+      header: false,
+      headerPlaceholder: 'Select date',
+      footer: false,
+      toolbar: true,
+      toolbarCloseText: 'Done',
+      cssClass: null,
+      routableModals: true,
+      view: null,
+      url: 'date',
+      // Render functions
+      renderWeekHeader: null,
+      renderMonths: null,
+      renderMonth: null,
+      renderMonthSelector: null,
+      renderYearSelector: null,
+      renderHeader: null,
+      renderFooter: null,
+      renderToolbar: null,
+      renderInline: null,
+      renderPopover: null,
+      renderSheet: null,
+      render: null,
     },
   },
+};
+
+var pickerColumn = function (colEl, updateItems) {
+  var picker = this;
+  var app = picker.app;
+  var $colEl = $$1$1(colEl);
+  var colIndex = $colEl.index();
+  var col = picker.cols[colIndex];
+  if (col.divider) { return; }
+
+  col.$el = $colEl;
+  col.$itemsEl = col.$el.find('.picker-items');
+  col.items = col.$itemsEl.find('.picker-item');
+
+  var itemHeight;
+  var itemsHeight;
+  var minTranslate;
+  var maxTranslate;
+  var animationFrameId;
+
+  function updateDuringScroll() {
+    animationFrameId = Utils.requestAnimationFrame(function () {
+      col.updateItems(undefined, undefined, 0);
+      updateDuringScroll();
+    });
+  }
+
+  col.replaceValues = function replaceColValues(values, displayValues) {
+    col.detachEvents();
+    col.values = values;
+    col.displayValues = displayValues;
+    col.$itemsEl.html(picker.renderColumn(col, true));
+    col.items = col.$itemsEl.find('.picker-item');
+    col.calcSize();
+    col.setValue(col.values[0], 0, true);
+    col.attachEvents();
+  };
+  col.calcSize = function calcColSize() {
+    if (picker.params.rotateEffect) {
+      col.$el.removeClass('picker-column-absolute');
+      if (!col.width) { col.$el.css({ width: '' }); }
+    }
+    var colWidth = 0;
+    var colHeight = col.$el[0].offsetHeight;
+    itemHeight = col.items[0].offsetHeight;
+    itemsHeight = itemHeight * col.items.length;
+    minTranslate = ((colHeight / 2) - itemsHeight) + (itemHeight / 2);
+    maxTranslate = (colHeight / 2) - (itemHeight / 2);
+    if (col.width) {
+      colWidth = col.width;
+      if (parseInt(colWidth, 10) === colWidth) { colWidth += 'px'; }
+      col.$el.css({ width: colWidth });
+    }
+    if (picker.params.rotateEffect) {
+      if (!col.width) {
+        col.items.each(function (index, itemEl) {
+          var item = $$1$1(itemEl).children('span');
+          colWidth = Math.max(colWidth, item[0].offsetWidth);
+        });
+        col.$el.css({ width: ((colWidth + 2) + "px") });
+      }
+      col.$el.addClass('picker-column-absolute');
+    }
+  };
+
+  col.setValue = function setColValue(newValue, transition, valueCallbacks) {
+    if ( transition === void 0 ) transition = '';
+
+    var newActiveIndex = col.$itemsEl.find((".picker-item[data-picker-value=\"" + newValue + "\"]")).index();
+    if (typeof newActiveIndex === 'undefined' || newActiveIndex === -1) {
+      return;
+    }
+    var newTranslate = (-newActiveIndex * itemHeight) + maxTranslate;
+    // Update wrapper
+    col.$itemsEl.transition(transition);
+    col.$itemsEl.transform(("translate3d(0," + newTranslate + "px,0)"));
+
+    // Watch items
+    if (picker.params.updateValuesOnMomentum && col.activeIndex && col.activeIndex !== newActiveIndex) {
+      Utils.cancelAnimationFrame(animationFrameId);
+      col.$itemsEl.transitionEnd(function () {
+        Utils.cancelAnimationFrame(animationFrameId);
+      });
+      updateDuringScroll();
+    }
+
+    // Update items
+    col.updateItems(newActiveIndex, newTranslate, transition, valueCallbacks);
+  };
+
+  col.updateItems = function updateColItems(activeIndex, translate, transition, valueCallbacks) {
+    if (typeof translate === 'undefined') {
+      // eslint-disable-next-line
+      translate = Utils.getTranslate(col.$itemsEl[0], 'y');
+    }
+    // eslint-disable-next-line
+    if (typeof activeIndex === 'undefined') { activeIndex = -Math.round((translate - maxTranslate) / itemHeight); }
+    // eslint-disable-next-line
+    if (activeIndex < 0) { activeIndex = 0; }
+    // eslint-disable-next-line
+    if (activeIndex >= col.items.length) { activeIndex = col.items.length - 1; }
+    var previousActiveIndex = col.activeIndex;
+    col.activeIndex = activeIndex;
+    col.$itemsEl.find('.picker-item-selected').removeClass('picker-item-selected');
+
+    col.items.transition(transition);
+
+    var selectedItem = col.items.eq(activeIndex).addClass('picker-item-selected').transform('');
+
+    // Set 3D rotate effect
+    if (picker.params.rotateEffect) {
+      col.items.each(function (index, itemEl) {
+        var $itemEl = $$1$1(itemEl);
+        var itemOffsetTop = $itemEl.index() * itemHeight;
+        var translateOffset = maxTranslate - translate;
+        var itemOffset = itemOffsetTop - translateOffset;
+        var percentage = itemOffset / itemHeight;
+        var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
+
+        var angle = (-18 * percentage);
+        if (angle > 180) { angle = 180; }
+        if (angle < -180) { angle = -180; }
+        if (Math.abs(percentage) > itemsFit) {
+          $itemEl.addClass('picker-item-far');
+        } else {
+          $itemEl.removeClass('picker-item-far');
+        }
+        $itemEl.transform(("translate3d(0, " + (-translate + maxTranslate) + "px, " + (picker.needsOriginFix ? -110 : 0) + "px) rotateX(" + angle + "deg)"));
+      });
+    }
+
+    if (valueCallbacks || typeof valueCallbacks === 'undefined') {
+      // Update values
+      col.value = selectedItem.attr('data-picker-value');
+      col.displayValue = col.displayValues ? col.displayValues[activeIndex] : col.value;
+      // On change callback
+      if (previousActiveIndex !== activeIndex) {
+        if (col.onChange) {
+          col.onChange(picker, col.value, col.displayValue);
+        }
+        picker.updateValue();
+      }
+    }
+  };
+
+  var allowItemClick = true;
+  var isTouched;
+  var isMoved;
+  var touchStartY;
+  var touchCurrentY;
+  var touchStartTime;
+  var touchEndTime;
+  var startTranslate;
+  var returnTo;
+  var currentTranslate;
+  var prevTranslate;
+  var velocityTranslate;
+  function handleTouchStart(e) {
+    if (isMoved || isTouched) { return; }
+    e.preventDefault();
+    isTouched = true;
+    touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+    touchCurrentY = touchStartY;
+    touchStartTime = (new Date()).getTime();
+
+    allowItemClick = true;
+    startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+    currentTranslate = startTranslate;
+  }
+  function handleTouchMove(e) {
+    if (!isTouched) { return; }
+    e.preventDefault();
+    allowItemClick = false;
+    touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+    if (!isMoved) {
+      // First move
+      Utils.cancelAnimationFrame(animationFrameId);
+      isMoved = true;
+      startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+      currentTranslate = startTranslate;
+      col.$itemsEl.transition(0);
+    }
+
+    var diff = touchCurrentY - touchStartY;
+    currentTranslate = startTranslate + diff;
+    returnTo = undefined;
+
+    // Normalize translate
+    if (currentTranslate < minTranslate) {
+      currentTranslate = minTranslate - (Math.pow( (minTranslate - currentTranslate), 0.8 ));
+      returnTo = 'min';
+    }
+    if (currentTranslate > maxTranslate) {
+      currentTranslate = maxTranslate + (Math.pow( (currentTranslate - maxTranslate), 0.8 ));
+      returnTo = 'max';
+    }
+    // Transform wrapper
+    col.$itemsEl.transform(("translate3d(0," + currentTranslate + "px,0)"));
+
+    // Update items
+    col.updateItems(undefined, currentTranslate, 0, picker.params.updateValuesOnTouchmove);
+
+    // Calc velocity
+    velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
+    prevTranslate = currentTranslate;
+  }
+  function handleTouchEnd() {
+    if (!isTouched || !isMoved) {
+      isTouched = false;
+      isMoved = false;
+      return;
+    }
+    isTouched = false;
+    isMoved = false;
+    col.$itemsEl.transition('');
+    if (returnTo) {
+      if (returnTo === 'min') {
+        col.$itemsEl.transform(("translate3d(0," + minTranslate + "px,0)"));
+      } else { col.$itemsEl.transform(("translate3d(0," + maxTranslate + "px,0)")); }
+    }
+    touchEndTime = new Date().getTime();
+    var newTranslate;
+    if (touchEndTime - touchStartTime > 300) {
+      newTranslate = currentTranslate;
+    } else {
+      newTranslate = currentTranslate + (velocityTranslate * picker.params.momentumRatio);
+    }
+
+    newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
+
+    // Active Index
+    var activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
+
+    // Normalize translate
+    if (!picker.params.freeMode) { newTranslate = (-activeIndex * itemHeight) + maxTranslate; }
+
+    // Transform wrapper
+    col.$itemsEl.transform(("translate3d(0," + (parseInt(newTranslate, 10)) + "px,0)"));
+
+    // Update items
+    col.updateItems(activeIndex, newTranslate, '', true);
+
+    // Watch items
+    if (picker.params.updateValuesOnMomentum) {
+      updateDuringScroll();
+      col.$itemsEl.transitionEnd(function () {
+        Utils.cancelAnimationFrame(animationFrameId);
+      });
+    }
+
+    // Allow click
+    setTimeout(function () {
+      allowItemClick = true;
+    }, 100);
+  }
+
+  function handleClick() {
+    if (!allowItemClick) { return; }
+    Utils.cancelAnimationFrame(animationFrameId);
+    var value = $$1$1(this).attr('data-picker-value');
+    col.setValue(value);
+  }
+
+  var activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
+  col.attachEvents = function attachColEvents() {
+    col.$el.on(app.touchEvents.start, handleTouchStart, activeListener);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
+    col.items.on('click', handleClick);
+  };
+  col.detachEvents = function detachColEvents() {
+    col.$el.off(app.touchEvents.start, handleTouchStart, activeListener);
+    app.off('touchmove:active', handleTouchMove);
+    app.off('touchend:passive', handleTouchEnd);
+    col.items.off('click', handleClick);
+  };
+
+  col.init = function initCol() {
+    col.calcSize();
+    col.$itemsEl.transform(("translate3d(0," + maxTranslate + "px,0)")).transition(0);
+    if (colIndex === 0) { col.$el.addClass('picker-column-first'); }
+    if (colIndex === picker.cols.length - 1) { col.$el.addClass('picker-column-last'); }
+    // Update items on init
+    if (updateItems) { col.updateItems(0, maxTranslate, 0); }
+
+    col.attachEvents();
+  };
+
+  col.destroy = function destroyCol() {
+    col.detachEvents();
+  };
+
+  col.init();
 };
 
 var Picker$1 = (function (Framework7Class$$1) {
   function Picker(app, params) {
     if ( params === void 0 ) params = {};
 
-    Framework7Class$$1.call(this, params);
+    Framework7Class$$1.call(this, params, [app]);
     var picker = this;
-    picker.params = Utils.extend({
+    picker.params = Utils.extend({}, app.params.picker, params);
 
-    }, params);
+    var $containerEl;
+    if (picker.params.containerEl) {
+      $containerEl = $$1$1(picker.params.containerEl);
+      if ($containerEl.length === 0) { return picker; }
+    }
+
+    var $inputEl;
+    if (picker.params.inputEl) {
+      $inputEl = $$1$1(picker.params.inputEl);
+    }
+
+    var view;
+    if ($inputEl) {
+      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view) { view = app.views.main; }
+
+    Utils.extend(picker, {
+      app: app,
+      $containerEl: $containerEl,
+      containerEl: $containerEl && $containerEl[0],
+      inline: $containerEl && $containerEl.length > 0,
+      needsOriginFix: app.device.ios || ((window.navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && window.navigator.userAgent.toLowerCase().indexOf('chrome') < 0) && !app.device.android),
+      cols: [],
+      $inputEl: $inputEl,
+      inputEl: $inputEl && $inputEl[0],
+      initialized: false,
+      opened: false,
+      url: picker.params.url,
+      view: view,
+    });
+
+    function onResize() {
+      picker.resizeCols();
+    }
+    function onInputClick() {
+      picker.open();
+    }
+    function onInputFocus(e) {
+      e.preventDefault();
+    }
+    function onHtmlClick(e) {
+      var $targetEl = $$1$1(e.target);
+      if (picker.isPopover()) { return; }
+      if (!picker.opened) { return; }
+      if ($targetEl.closest('[class*="backdrop"]').length) { return; }
+      if ($inputEl && $inputEl.length > 0) {
+        if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal').length === 0) {
+          picker.close();
+        }
+      } else if ($$1$1(e.target).closest('.sheet-modal').length === 0) {
+        picker.close();
+      }
+    }
+
+    // Events
+    Utils.extend(picker, {
+      attachResizeEvent: function attachResizeEvent() {
+        app.on('resize', onResize);
+      },
+      detachResizeEvent: function detachResizeEvent() {
+        app.off('resize', onResize);
+      },
+      attachInputEvents: function attachInputEvents() {
+        picker.$inputEl.on('click', onInputClick);
+        if (picker.params.inputReadOnly) {
+          picker.$inputEl.on('focus mousedown', onInputFocus);
+        }
+      },
+      detachInputEvents: function detachInputEvents() {
+        picker.$inputEl.off('click', onInputClick);
+        if (picker.params.inputReadOnly) {
+          picker.$inputEl.off('focus mousedown', onInputFocus);
+        }
+      },
+      attachHtmlEvents: function attachHtmlEvents() {
+        app.on('click', onHtmlClick);
+      },
+      detachHtmlEvents: function detachHtmlEvents() {
+        app.off('click', onHtmlClick);
+      },
+    });
+
+    picker.init();
+
     return picker;
   }
 
   if ( Framework7Class$$1 ) Picker.__proto__ = Framework7Class$$1;
   Picker.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
   Picker.prototype.constructor = Picker;
+  Picker.prototype.initInput = function initInput () {
+    var picker = this;
+    if (!picker.$inputEl) { return; }
+    if (picker.params.inputReadOnly) { picker.$inputEl.prop('readOnly', true); }
+  };
+  Picker.prototype.resizeCols = function resizeCols () {
+    var picker = this;
+    if (!picker.opened) { return; }
+    for (var i = 0; i < picker.cols.length; i += 1) {
+      if (!picker.cols[i].divider) {
+        picker.cols[i].calcSize();
+        picker.cols[i].setValue(picker.cols[i].value, 0, false);
+      }
+    }
+  };
+  Picker.prototype.isPopover = function isPopover () {
+    var picker = this;
+    var app = picker.app;
+    var modal = picker.modal;
+    var params = picker.params;
+    if (params.openIn === 'sheet') { return false; }
+    if (modal && modal.type !== 'popover') { return false; }
+
+    if (!picker.inline && picker.inputEl) {
+      if (params.openIn === 'popover') { return true; }
+      else if (app.device.ios) {
+        return !!app.device.ipad;
+      } else if (app.width >= 768) {
+        return true;
+      }
+    }
+    return false;
+  };
+  Picker.prototype.formatValue = function formatValue () {
+    var picker = this;
+    var value = picker.value;
+    var displayValue = picker.displayValue;
+    if (picker.params.formatValue) {
+      return picker.params.formatValue.call(picker, value, displayValue);
+    }
+    return value.join(' ');
+  };
+  Picker.prototype.setValue = function setValue (values, transition) {
+    var picker = this;
+    var valueIndex = 0;
+    if (picker.cols.length === 0) {
+      picker.value = values;
+      picker.updateValue(values);
+      return;
+    }
+    for (var i = 0; i < picker.cols.length; i += 1) {
+      if (picker.cols[i] && !picker.cols[i].divider) {
+        picker.cols[i].setValue(values[valueIndex], transition);
+        valueIndex += 1;
+      }
+    }
+  };
+  Picker.prototype.getValue = function getValue () {
+    var picker = this;
+    return picker.value;
+  };
+  Picker.prototype.updateValue = function updateValue (forceValues) {
+    var picker = this;
+    var newValue = forceValues || [];
+    var newDisplayValue = [];
+    var column;
+    if (picker.cols.length === 0) {
+      var noDividerColumns = picker.params.cols.filter(function (c) { return !c.divider; });
+      for (var i = 0; i < noDividerColumns.length; i += 1) {
+        column = noDividerColumns[i];
+        if (column.displayValues !== undefined && column.values !== undefined && column.values.indexOf(newValue[i]) !== -1) {
+          newDisplayValue.push(column.displayValues[column.values.indexOf(newValue[i])]);
+        } else {
+          newDisplayValue.push(newValue[i]);
+        }
+      }
+    } else {
+      for (var i$1 = 0; i$1 < picker.cols.length; i$1 += 1) {
+        if (!picker.cols[i$1].divider) {
+          newValue.push(picker.cols[i$1].value);
+          newDisplayValue.push(picker.cols[i$1].displayValue);
+        }
+      }
+    }
+
+    if (newValue.indexOf(undefined) >= 0) {
+      return;
+    }
+    picker.value = newValue;
+    picker.displayValue = newDisplayValue;
+    if (picker.params.onChange) {
+      picker.emit('local::change pickerChange', picker, picker.value, picker.displayValue);
+    }
+    if (picker.inputEl) {
+      picker.$inputEl.val(picker.formatValue());
+      picker.$inputEl.trigger('change');
+    }
+  };
+  Picker.prototype.initColumn = function initColumn (colEl, updateItems) {
+    var picker = this;
+    pickerColumn.call(picker, colEl, updateItems);
+  };
+  // eslint-disable-next-line
+  Picker.prototype.destroyColumn = function destroyColumn (colEl) {
+    var picker = this;
+    var $colEl = $$1$1(colEl);
+    var index = $colEl.index();
+    if (picker.cols[index] && picker.cols[index].destroy) {
+      picker.cols[index].destroy();
+    }
+  };
+  Picker.prototype.renderToolbar = function renderToolbar () {
+    var picker = this;
+    if (picker.params.renderToolbar) { return picker.params.renderToolbar.call(picker, picker); }
+    return ("\n      <div class=\"toolbar no-shadow\">\n        <div class=\"toolbar-inner\">\n          <div class=\"left\"></div>\n          <div class=\"right\">\n            <a href=\"#\" class=\"link sheet-close popover-close\">" + (picker.params.toolbarCloseText) + "</a>\n          </div>\n        </div>\n      </div>\n    ").trim();
+  };
+  // eslint-disable-next-line
+  Picker.prototype.renderColumn = function renderColumn (col, onlyItems) {
+    var colClasses = "picker-column " + (col.textAlign ? ("picker-column-" + (col.textAlign)) : '') + " " + (col.cssClass || '');
+    var columnHtml;
+    var columnItemsHtml;
+
+    if (col.divider) {
+      columnHtml = "\n        <div class=\"" + colClasses + " picker-column-divider\">" + (col.content) + "</div>\n      ";
+    } else {
+      columnItemsHtml = col.values.map(function (value, index) { return ("\n        <div class=\"picker-item\" data-picker-value=\"" + value + "\">\n          <span>" + (col.displayValues ? col.displayValues[index] : value) + "</span>\n        </div>\n      "); }).join('');
+      columnHtml = "\n        <div class=\"" + colClasses + "\">\n          <div class=\"picker-items\">" + columnItemsHtml + "</div>\n        </div>\n      ";
+    }
+
+    return onlyItems ? columnItemsHtml.trim() : columnHtml.trim();
+  };
+  Picker.prototype.renderInline = function renderInline () {
+    var picker = this;
+    var ref = picker.params;
+    var rotateEffect = ref.rotateEffect;
+    var cssClass = ref.cssClass;
+    var toolbar = ref.toolbar;
+    var inlineHtml = ("\n      <div class=\"picker picker-inline " + (rotateEffect ? 'picker-3d' : '') + " " + (cssClass || '') + "\">\n        " + (toolbar ? picker.renderToolbar() : '') + "\n        <div class=\"picker-columns\">\n          " + (picker.cols.map(function (col) { return picker.renderColumn(col); }).join('')) + "\n          <div class=\"picker-center-highlight\"></div>\n        </div>\n      </div>\n    ").trim();
+
+    return inlineHtml;
+  };
+  Picker.prototype.renderSheet = function renderSheet () {
+    var picker = this;
+    var ref = picker.params;
+    var rotateEffect = ref.rotateEffect;
+    var cssClass = ref.cssClass;
+    var toolbar = ref.toolbar;
+    var sheetHtml = ("\n      <div class=\"sheet-modal picker picker-sheet " + (rotateEffect ? 'picker-3d' : '') + " " + (cssClass || '') + "\">\n        " + (toolbar ? picker.renderToolbar() : '') + "\n        <div class=\"sheet-modal-inner picker-columns\">\n          " + (picker.cols.map(function (col) { return picker.renderColumn(col); }).join('')) + "\n          <div class=\"picker-center-highlight\"></div>\n        </div>\n      </div>\n    ").trim();
+
+    return sheetHtml;
+  };
+  Picker.prototype.renderPopover = function renderPopover () {
+    var picker = this;
+    var ref = picker.params;
+    var rotateEffect = ref.rotateEffect;
+    var cssClass = ref.cssClass;
+    var toolbar = ref.toolbar;
+    var popoverHtml = ("\n      <div class=\"popover picker-popover\">\n        <div class=\"popover-inner\">\n          <div class=\"picker " + (rotateEffect ? 'picker-3d' : '') + " " + (cssClass || '') + "\">\n            " + (toolbar ? picker.renderToolbar() : '') + "\n            <div class=\"picker-columns\">\n              " + (picker.cols.map(function (col) { return picker.renderColumn(col); }).join('')) + "\n              <div class=\"picker-center-highlight\"></div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ").trim();
+
+    return popoverHtml;
+  };
+  Picker.prototype.render = function render () {
+    var picker = this;
+    if (picker.params.render) { return picker.params.render.call(picker); }
+    if (!picker.inline) {
+      if (picker.isPopover()) { return picker.renderPopover(); }
+      return picker.renderSheet();
+    }
+    return picker.renderInline();
+  };
+  Picker.prototype.onOpen = function onOpen () {
+    var picker = this;
+    var initialized = picker.initialized;
+    var $el = picker.$el;
+    var app = picker.app;
+    var $inputEl = picker.$inputEl;
+    var inline = picker.inline;
+    var value = picker.value;
+    var params = picker.params;
+    picker.opened = true;
+
+    // Init main events
+    picker.attachResizeEvent();
+
+    // Init cols
+    $el.find('.picker-column').each(function (index, colEl) {
+      var updateItems = true;
+      if (
+        (!initialized && params.value) ||
+        (initialized && value)
+      ) {
+        updateItems = false;
+      }
+      picker.initColumn(colEl, updateItems);
+    });
+
+    // Set value
+    if (!initialized) {
+      if (value) { picker.setValue(value, 0); }
+      else if (params.value) {
+        picker.setValue(params.value, 0);
+      }
+    } else if (value) {
+      picker.setValue(value, 0);
+    }
+
+    // Extra focus
+    if (!inline && $inputEl.length && app.theme === 'md') {
+      $inputEl.trigger('focus');
+    }
+
+    picker.initialized = true;
+
+    // Trigger events
+    if ($el) {
+      $el.trigger('picker:open', picker);
+    }
+    if ($inputEl) {
+      $inputEl.trigger('picker:open', picker);
+    }
+    picker.emit('local::open pickerOpen', picker);
+  };
+  Picker.prototype.onOpened = function onOpened () {
+    var picker = this;
+
+    if (picker.$el) {
+      picker.$el.trigger('picker:opened', picker);
+    }
+    if (picker.$inputEl) {
+      picker.$inputEl.trigger('picker:opened', picker);
+    }
+    picker.emit('local::opened pickerOpened', picker);
+  };
+  Picker.prototype.onClose = function onClose () {
+    var picker = this;
+    var app = picker.app;
+
+    // Detach events
+    picker.detachResizeEvent();
+
+    picker.cols.forEach(function (col) {
+      if (col.destroy) { col.destroy(); }
+    });
+    if (picker.$inputEl && app.theme === 'md') {
+      picker.$inputEl.trigger('blur');
+    }
+
+    if (picker.$el) {
+      picker.$el.trigger('picker:close', picker);
+    }
+    if (picker.$inputEl) {
+      picker.$inputEl.trigger('picker:close', picker);
+    }
+    picker.emit('local::close pickerClose', picker);
+  };
+  Picker.prototype.onClosed = function onClosed () {
+    var picker = this;
+    picker.opened = false;
+
+    if (!picker.inline) {
+      Utils.nextTick(function () {
+        if (picker.modal && picker.modal.el && picker.modal.destroy) {
+          if (!picker.params.routableModals) {
+            picker.modal.destroy();
+          }
+        }
+        delete picker.modal;
+      });
+    }
+
+    if (picker.$el) {
+      picker.$el.trigger('picker:closed', picker);
+    }
+    if (picker.$inputEl) {
+      picker.$inputEl.trigger('picker:closed', picker);
+    }
+    picker.emit('local::closed pickerClosed', picker);
+  };
+  Picker.prototype.open = function open () {
+    var picker = this;
+    var app = picker.app;
+    var opened = picker.opened;
+    var inline = picker.inline;
+    var $inputEl = picker.$inputEl;
+    if (opened) { return; }
+    if (picker.cols.length === 0 && picker.params.cols.length) {
+      picker.params.cols.forEach(function (col) {
+        picker.cols.push(col);
+      });
+    }
+    if (inline) {
+      picker.$el = $$1$1(picker.render());
+      picker.$el[0].f7Picker = picker;
+      picker.$containerEl.append(picker.$el);
+      picker.onOpen();
+      picker.onOpened();
+      return;
+    }
+    var isPopover = picker.isPopover();
+    var modalType = isPopover ? 'popover' : 'sheet';
+    var modalParams = {
+      targetEl: $inputEl,
+      scrollToEl: picker.params.scrollToInput ? $inputEl : undefined,
+      content: picker.render(),
+      backdrop: isPopover,
+      on: {
+        open: function open() {
+          var modal = this;
+          picker.modal = modal;
+          picker.$el = isPopover ? modal.$el.find('.picker') : modal.$el;
+          picker.$el[0].f7Picker = picker;
+          picker.onOpen();
+        },
+        opened: function opened() { picker.onOpened(); },
+        close: function close() { picker.onClose(); },
+        closed: function closed() { picker.onClosed(); },
+      },
+    };
+    if (picker.params.routableModals) {
+      picker.view.router.navigate(picker.url, {
+        createRoute: ( obj = {
+          path: picker.url,
+        }, obj[modalType] = modalParams, obj ),
+      });
+      var obj;
+    } else {
+      picker.modal = app[modalType].create(modalParams);
+      picker.modal.open();
+    }
+  };
+  Picker.prototype.close = function close () {
+    var picker = this;
+    var opened = picker.opened;
+    var inline = picker.inline;
+    if (!opened) { return; }
+    if (inline) {
+      picker.onClose();
+      picker.onClosed();
+      return;
+    }
+    if (picker.params.routableModals) {
+      picker.view.router.back();
+    } else {
+      picker.modal.close();
+    }
+  };
+  Picker.prototype.init = function init () {
+    var picker = this;
+
+    picker.initInput();
+
+    if (picker.inline) {
+      picker.open();
+      picker.emit('local::init pickerInit', picker);
+      return;
+    }
+
+    if (!picker.initialized && picker.params.value) {
+      picker.setValue(picker.params.value);
+    }
+
+    // Attach input Events
+    if (picker.$inputEl) {
+      picker.attachInputEvents();
+    }
+    if (picker.params.closeByOutsideClick) {
+      picker.attachHtmlEvents();
+    }
+    picker.emit('local::init pickerInit', picker);
+  };
+  Picker.prototype.destroy = function destroy () {
+    var picker = this;
+    if (picker.destroyed) { return; }
+    var $el = picker.$el;
+    picker.emit('local::beforeDestroy pickerBeforeDestroy', picker);
+    if ($el) { $el.trigger('picker:beforedestroy', picker); }
+
+    picker.close();
+
+    // Detach Events
+    if (picker.$inputEl) {
+      picker.detachInputEvents();
+    }
+    if (picker.params.closeByOutsideClick) {
+      picker.detachHtmlEvents();
+    }
+
+    if ($el && $el.length) { delete picker.$el[0].f7Picker; }
+    Utils.deleteProps(picker);
+    picker.destroyed = true;
+  };
 
   return Picker;
 }(Framework7Class));
@@ -14512,9 +16779,54 @@ var Picker = {
   static: {
     Picker: Picker$1,
   },
-  instance: {
-    picker: function picker(params) {
-      return new Picker$1(this, params);
+  create: function create() {
+    var app = this;
+    app.picker = ConstructorMethods({
+      defaultSelector: '.picker',
+      constructor: Picker$1,
+      app: app,
+      domProp: 'f7Picker',
+    });
+    app.picker.close = function close(el) {
+      if ( el === void 0 ) el = '.picker';
+
+      var $el = $$1$1(el);
+      if ($el.length === 0) { return; }
+      var picker = $el[0].f7Picker;
+      if (!picker || (picker && !picker.opened)) { return; }
+      picker.close();
+    };
+  },
+  params: {
+    picker: {
+      // Picker settings
+      updateValuesOnMomentum: false,
+      updateValuesOnTouchmove: true,
+      rotateEffect: false,
+      momentumRatio: 7,
+      freeMode: false,
+      cols: [],
+      // Common opener settings
+      containerEl: null,
+      openIn: 'auto', // or 'popover' or 'sheet'
+      formatValue: null,
+      inputEl: null,
+      inputReadOnly: true,
+      closeByOutsideClick: true,
+      scrollToInput: true,
+      toolbar: true,
+      toolbarCloseText: 'Done',
+      cssClass: null,
+      routableModals: true,
+      view: null,
+      url: 'select',
+      // Render functions
+      renderColumn: null,
+      renderToolbar: null,
+      renderInline: null,
+      renderPopover: null,
+      renderSheet: null,
+      render: null,
     },
   },
 };
@@ -17063,6 +19375,8 @@ var updateSlides = function () {
   var rtl = swiper.rtl;
   var wrongRTL = swiper.wrongRTL;
   var slides = $wrapperEl.children(("." + (swiper.params.slideClass)));
+  var isVirtual = swiper.virtual && params.virtual.enabled;
+  var slidesLength = isVirtual ? swiper.virtual.slides.length : slides.length;
   var snapGrid = [];
   var slidesGrid = [];
   var slidesSizesGrid = [];
@@ -17077,7 +19391,7 @@ var updateSlides = function () {
     offsetAfter = params.slidesOffsetAfter.call(swiper);
   }
 
-  var previousSlidesLength = swiper.slides.length;
+  var previousSlidesLength = slidesLength;
   var previousSnapGridLength = swiper.snapGrid.length;
   var previousSlidesGridLength = swiper.snapGrid.length;
 
@@ -17100,10 +19414,10 @@ var updateSlides = function () {
 
   var slidesNumberEvenToRows;
   if (params.slidesPerColumn > 1) {
-    if (Math.floor(slides.length / params.slidesPerColumn) === slides.length / swiper.params.slidesPerColumn) {
-      slidesNumberEvenToRows = slides.length;
+    if (Math.floor(slidesLength / params.slidesPerColumn) === slidesLength / swiper.params.slidesPerColumn) {
+      slidesNumberEvenToRows = slidesLength;
     } else {
-      slidesNumberEvenToRows = Math.ceil(slides.length / params.slidesPerColumn) * params.slidesPerColumn;
+      slidesNumberEvenToRows = Math.ceil(slidesLength / params.slidesPerColumn) * params.slidesPerColumn;
     }
     if (params.slidesPerView !== 'auto' && params.slidesPerColumnFill === 'row') {
       slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, params.slidesPerView * params.slidesPerColumn);
@@ -17114,8 +19428,8 @@ var updateSlides = function () {
   var slideSize;
   var slidesPerColumn = params.slidesPerColumn;
   var slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
-  var numFullColumns = slidesPerRow - ((params.slidesPerColumn * slidesPerRow) - slides.length);
-  for (var i = 0; i < slides.length; i += 1) {
+  var numFullColumns = slidesPerRow - ((params.slidesPerColumn * slidesPerRow) - slidesLength);
+  for (var i = 0; i < slidesLength; i += 1) {
     slideSize = 0;
     var slide = slides.eq(i);
     if (params.slidesPerColumn > 1) {
@@ -17162,13 +19476,17 @@ var updateSlides = function () {
       slideSize = (swiperSize - ((params.slidesPerView - 1) * spaceBetween)) / params.slidesPerView;
       if (params.roundLengths) { slideSize = Math.floor(slideSize); }
 
-      if (swiper.isHorizontal()) {
-        slides[i].style.width = slideSize + "px";
-      } else {
-        slides[i].style.height = slideSize + "px";
+      if (slides[i]) {
+        if (swiper.isHorizontal()) {
+          slides[i].style.width = slideSize + "px";
+        } else {
+          slides[i].style.height = slideSize + "px";
+        }
       }
     }
-    slides[i].swiperSlideSize = slideSize;
+    if (slides[i]) {
+      slides[i].swiperSlideSize = slideSize;
+    }
     slidesSizesGrid.push(slideSize);
 
 
@@ -17198,7 +19516,7 @@ var updateSlides = function () {
     rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
     $wrapperEl.css({ width: ((swiper.virtualSize + params.spaceBetween) + "px") });
   }
-  if (!swiper.support.flexbox || params.setWrapperSize) {
+  if (!Support$1.flexbox || params.setWrapperSize) {
     if (swiper.isHorizontal()) { $wrapperEl.css({ width: ((swiper.virtualSize + params.spaceBetween) + "px") }); }
     else { $wrapperEl.css({ height: ((swiper.virtualSize + params.spaceBetween) + "px") }); }
   }
@@ -17246,7 +19564,7 @@ var updateSlides = function () {
     slidesSizesGrid: slidesSizesGrid,
   });
 
-  if (slides.length !== previousSlidesLength) {
+  if (slidesLength !== previousSlidesLength) {
     swiper.emit('slidesLengthChange');
   }
   if (snapGrid.length !== previousSnapGridLength) {
@@ -17396,10 +19714,16 @@ var updateSlidesClasses = function () {
   var $wrapperEl = swiper.$wrapperEl;
   var activeIndex = swiper.activeIndex;
   var realIndex = swiper.realIndex;
+  var isVirtual = swiper.virtual && params.virtual.enabled;
 
   slides.removeClass(((params.slideActiveClass) + " " + (params.slideNextClass) + " " + (params.slidePrevClass) + " " + (params.slideDuplicateActiveClass) + " " + (params.slideDuplicateNextClass) + " " + (params.slideDuplicatePrevClass)));
 
-  var activeSlide = slides.eq(activeIndex);
+  var activeSlide;
+  if (isVirtual) {
+    activeSlide = swiper.$wrapperEl.find(("." + (params.slideClass) + "[data-swiper-slide-index=\"" + activeIndex + "\"]"));
+  } else {
+    activeSlide = slides.eq(activeIndex);
+  }
 
   // Active classes
   activeSlide.addClass(params.slideActiveClass);
@@ -17417,13 +19741,13 @@ var updateSlidesClasses = function () {
     }
   }
   // Next Slide
-  var nextSlide = activeSlide.next(("." + (params.slideClass))).addClass(params.slideNextClass);
+  var nextSlide = activeSlide.nextAll(("." + (params.slideClass))).eq(0).addClass(params.slideNextClass);
   if (params.loop && nextSlide.length === 0) {
     nextSlide = slides.eq(0);
     nextSlide.addClass(params.slideNextClass);
   }
   // Prev Slide
-  var prevSlide = activeSlide.prev(("." + (params.slideClass))).addClass(params.slidePrevClass);
+  var prevSlide = activeSlide.prevAll(("." + (params.slideClass))).eq(0).addClass(params.slidePrevClass);
   if (params.loop && prevSlide.length === 0) {
     prevSlide = slides.eq(-1);
     prevSlide.addClass(params.slidePrevClass);
@@ -17486,6 +19810,7 @@ var updateActiveIndex = function () {
     previousIndex: activeIndex,
     activeIndex: newActiveIndex,
   });
+  swiper.emit('slideChange');
   swiper.emit('aciveIndexChange');
   swiper.emit('snapIndexChange');
 };
@@ -17503,7 +19828,11 @@ var updateClickedSlide = function (e) {
 
   if (slide && slideFound) {
     swiper.clickedSlide = slide;
-    swiper.clickedIndex = $$1$1(slide).index();
+    if (swiper.virtual && swiper.params.virtual.enabled) {
+      swiper.clickedIndex = parseInt($$1$1(slide).attr('data-swiper-slide-index'), 10);
+    } else {
+      swiper.clickedIndex = $$1$1(slide).index();
+    }
   } else {
     swiper.clickedSlide = undefined;
     swiper.clickedIndex = undefined;
@@ -17627,11 +19956,11 @@ var transitionStart = function (runCallbacks) {
 
   if (!runCallbacks) { return; }
   if (activeIndex !== previousIndex) {
-    swiper.emit('slideChangeStart');
+    swiper.emit('slideChangeTransitionStart');
     if (activeIndex > previousIndex) {
-      swiper.emit('slideNextStart');
+      swiper.emit('slideNextTransitionStart');
     } else {
-      swiper.emit('slidePrevStart');
+      swiper.emit('slidePrevTransitionStart');
     }
   }
 };
@@ -17648,11 +19977,11 @@ var transitionEnd = function (runCallbacks) {
   swiper.emit('transitionEnd');
   if (runCallbacks) {
     if (activeIndex !== previousIndex) {
-      swiper.emit('slideChangeEnd');
+      swiper.emit('slideChangeTransitionEnd');
       if (activeIndex > previousIndex) {
-        swiper.emit('slideNextEnd');
+        swiper.emit('slideNextTransitionEnd');
       } else {
-        swiper.emit('slidePrevEnd');
+        swiper.emit('slidePrevTransitionEnd');
       }
     }
   }
@@ -17739,6 +20068,7 @@ var slideTo = function (index, speed, runCallbacks, internal) {
   swiper.activeIndex = slideIndex;
   if (previousIndex !== slideIndex || activeIndex !== slideIndex) {
     swiper.emit('activeIndexChange');
+    swiper.emit('slideChange');
   }
   if (previousSnapIndex !== swiper.snapIndex) {
     swiper.emit('snapIndexChange');
@@ -17830,7 +20160,7 @@ var slideToClickedSlide = function () {
   var params = swiper.params;
   var $wrapperEl = swiper.$wrapperEl;
 
-  var slidesPerView = params.slidesPerView === 'auto' ? swiper.slidesPerView() : params.slidesPerView;
+  var slidesPerView = params.slidesPerView === 'auto' ? swiper.slidesPerViewDynamic() : params.slidesPerView;
   var slideToIndex = swiper.clickedIndex;
   var realIndex;
   if (params.loop) {
@@ -17929,8 +20259,11 @@ var loopFix = function () {
   var activeIndex = swiper.activeIndex;
   var slides = swiper.slides;
   var loopedSlides = swiper.loopedSlides;
-
+  var allowSlidePrev = swiper.allowSlidePrev;
+  var allowSlideNext = swiper.allowSlideNext;
   var newIndex;
+  swiper.allowSlidePrev = true;
+  swiper.allowSlideNext = true;
   // Fix For Negative Oversliding
   if (activeIndex < loopedSlides) {
     newIndex = (slides.length - (loopedSlides * 3)) + activeIndex;
@@ -17942,6 +20275,8 @@ var loopFix = function () {
     newIndex += loopedSlides;
     swiper.slideTo(newIndex, 0, false, true);
   }
+  swiper.allowSlidePrev = allowSlidePrev;
+  swiper.allowSlideNext = allowSlideNext;
 };
 
 var loopDestroy = function () {
@@ -19026,6 +21361,8 @@ var prototypes = {
   images: images,
 };
 
+var extendedDefaults = {};
+
 var Swiper$2 = (function (SwiperClass$$1) {
   function Swiper() {
     var args = [], len = arguments.length;
@@ -19057,12 +21394,32 @@ var Swiper$2 = (function (SwiperClass$$1) {
     // Swiper Instance
     var swiper = this;
 
+    Object.keys(swiper.modules).forEach(function (moduleName) {
+      var module = swiper.modules[moduleName];
+      if (module.params) {
+        var moduleParamName = Object.keys(module.params)[0];
+        var moduleParams = module.params[moduleParamName];
+        if (typeof moduleParams !== 'object') { return; }
+        if (!(moduleParamName in params && 'enabled' in moduleParams)) { return; }
+        if (params[moduleParamName] === true) {
+          params[moduleParamName] = { enabled: true };
+        }
+        if (
+          typeof params[moduleParamName] === 'object' &&
+          !('enabled' in params[moduleParamName])
+        ) {
+          params[moduleParamName].enabled = true;
+        }
+        if (!params[moduleParamName]) { params[moduleParamName] = { enabled: false }; }
+      }
+    });
+
     // Extend defaults with modules params
     var swiperParams = Utils.extend({}, defaults);
     swiper.useModulesParams(swiperParams);
 
     // Extend defaults with passed params
-    swiper.params = Utils.extend({}, swiperParams, params);
+    swiper.params = Utils.extend({}, swiperParams, extendedDefaults, params);
     swiper.originalParams = Utils.extend({}, swiper.params);
     swiper.passedParams = Utils.extend({}, params);
 
@@ -19207,8 +21564,8 @@ var Swiper$2 = (function (SwiperClass$$1) {
   Swiper.prototype = Object.create( SwiperClass$$1 && SwiperClass$$1.prototype );
   Swiper.prototype.constructor = Swiper;
 
-  var staticAccessors = { Class: {},$: {} };
-  Swiper.prototype.slidesPerView = function slidesPerView () {
+  var staticAccessors = { extendedDefaults: {},defaults: {},Class: {},$: {} };
+  Swiper.prototype.slidesPerViewDynamic = function slidesPerViewDynamic () {
     var swiper = this;
     var params = swiper.params;
     var slides = swiper.slides;
@@ -19380,6 +21737,15 @@ var Swiper$2 = (function (SwiperClass$$1) {
       swiper = null;
     }
   };
+  Swiper.extendDefaults = function extendDefaults (newDefaults) {
+    Utils.extend(extendedDefaults, newDefaults);
+  };
+  staticAccessors.extendedDefaults.get = function () {
+    return extendedDefaults;
+  };
+  staticAccessors.defaults.get = function () {
+    return defaults;
+  };
   staticAccessors.Class.get = function () {
     return SwiperClass$$1;
   };
@@ -19527,6 +21893,185 @@ var Observer$1 = {
     destroy: function destroy() {
       var swiper = this;
       swiper.observer.destroy();
+    },
+  },
+};
+
+var Virtual = {
+  update: function update(force) {
+    var swiper = this;
+    var ref = swiper.params;
+    var slidesPerView = ref.slidesPerView;
+    var slidesPerGroup = ref.slidesPerGroup;
+    var centeredSlides = ref.centeredSlides;
+    var ref$1 = swiper.virtual;
+    var previousFrom = ref$1.from;
+    var previousTo = ref$1.to;
+    var slides = ref$1.slides;
+    var previousSlidesGrid = ref$1.slidesGrid;
+    var renderSlide = ref$1.renderSlide;
+    var previousOffset = ref$1.offset;
+    swiper.updateActiveIndex();
+    var activeIndex = swiper.activeIndex || 0;
+
+    var offsetProp;
+    if (swiper.rtl && swiper.isHorizontal()) { offsetProp = 'right'; }
+    else { offsetProp = swiper.isHorizontal() ? 'left' : 'top'; }
+
+    var slidesAfter;
+    var slidesBefore;
+    if (centeredSlides) {
+      slidesAfter = Math.floor(slidesPerView / 2) + slidesPerGroup;
+      slidesBefore = Math.floor(slidesPerView / 2) + slidesPerGroup;
+    } else {
+      slidesAfter = slidesPerView + (slidesPerGroup - 1);
+      slidesBefore = slidesPerGroup;
+    }
+    var from = Math.max((activeIndex || 0) - slidesBefore, 0);
+    var to = Math.min((activeIndex || 0) + slidesAfter, slides.length - 1);
+    var offset = (swiper.slidesGrid[from] || 0) - (swiper.slidesGrid[0] || 0);
+
+    Utils.extend(swiper.virtual, {
+      from: from,
+      to: to,
+      offset: offset,
+      slidesGrid: swiper.slidesGrid,
+    });
+
+    function onRendered() {
+      swiper.updateSlides();
+      swiper.updateProgress();
+      swiper.updateSlidesClasses();
+      if (swiper.lazy && swiper.params.lazy.enabled) {
+        swiper.lazy.load();
+      }
+    }
+
+    if (previousFrom === from && previousTo === to && !force) {
+      if (swiper.slidesGrid !== previousSlidesGrid && offset !== previousOffset) {
+        swiper.slides.css(offsetProp, (offset + "px"));
+      }
+      swiper.updateProgress();
+      return;
+    }
+    if (swiper.params.virtual.renderExternal) {
+      swiper.params.virtual.renderExternal.call(swiper, {
+        offset: offset,
+        from: from,
+        to: to,
+        slides: (function getSlides() {
+          var slidesToRender = [];
+          for (var i = from; i <= to; i += 1) {
+            slidesToRender.push(slides[i]);
+          }
+          return slidesToRender;
+        }()),
+      });
+      onRendered();
+      return;
+    }
+    var prependIndexes = [];
+    var appendIndexes = [];
+    if (force) {
+      swiper.$wrapperEl.find(("." + (swiper.params.slideClass))).remove();
+    } else {
+      for (var i = previousFrom; i <= previousTo; i += 1) {
+        if (i < from || i > to) {
+          swiper.$wrapperEl.find(("." + (swiper.params.slideClass) + "[data-swiper-slide-index=\"" + i + "\"]")).remove();
+        }
+      }
+    }
+    for (var i$1 = 0; i$1 < slides.length; i$1 += 1) {
+      if (i$1 >= from && i$1 <= to) {
+        if (typeof previousTo === 'undefined' || force) {
+          appendIndexes.push(i$1);
+        } else {
+          if (i$1 > previousTo) { appendIndexes.push(i$1); }
+          if (i$1 < previousFrom) { prependIndexes.push(i$1); }
+        }
+      }
+    }
+    appendIndexes.forEach(function (index) {
+      swiper.$wrapperEl.append(renderSlide(slides[index], index));
+    });
+    prependIndexes.sort(function (a, b) { return a < b; }).forEach(function (index) {
+      swiper.$wrapperEl.prepend(renderSlide(slides[index], index));
+    });
+    swiper.$wrapperEl.children('.swiper-slide').css(offsetProp, (offset + "px"));
+    onRendered();
+  },
+  renderSlide: function renderSlide(slide, index) {
+    var swiper = this;
+    var params = swiper.params.virtual;
+    if (params.cache && swiper.virtual.cache[index]) {
+      return swiper.virtual.cache[index];
+    }
+    var $slideEl = params.renderSlide
+      ? $$1$1(params.renderSlide.call(swiper, slide, index))
+      : $$1$1(("<div class=\"" + (swiper.params.slideClass) + "\" data-swiper-slide-index=\"" + index + "\">" + slide + "</div>"));
+
+    if (params.cache) { swiper.virtual.cache[index] = $slideEl; }
+    return $slideEl;
+  },
+  appendSlide: function appendSlide(slide) {
+    var swiper = this;
+    swiper.virtual.slides.push(slide);
+    swiper.virtual.update(true);
+  },
+  prependSlide: function prependSlide(slide) {
+    var swiper = this;
+    swiper.virtual.slides.unshift(slide);
+    if (swiper.params.virtual.cache) {
+      var cache = swiper.virtual.cache;
+      var newCache = {};
+      Object.keys(cache).forEach(function (cachedIndex) {
+        newCache[cachedIndex + 1] = cache[cachedIndex];
+      });
+      swiper.virtual.cache = newCache;
+    }
+    swiper.virtual.update(true);
+    swiper.slideNext(0);
+  },
+};
+
+var Virtual$1 = {
+  name: 'virtual',
+  params: {
+    virtual: {
+      enabled: false,
+      slides: [],
+      cache: true,
+      renderSlide: null,
+      renderExternal: null,
+    },
+  },
+  create: function create() {
+    var swiper = this;
+    Utils.extend(swiper, {
+      virtual: {
+        update: Virtual.update.bind(swiper),
+        appendSlide: Virtual.appendSlide.bind(swiper),
+        prependSlide: Virtual.prependSlide.bind(swiper),
+        renderSlide: Virtual.renderSlide.bind(swiper),
+        slides: swiper.params.virtual.slides,
+        cache: {},
+      },
+    });
+  },
+  on: {
+    beforeInit: function beforeInit() {
+      var swiper = this;
+      if (!swiper.params.virtual.enabled) { return; }
+      swiper.classNames.push(((swiper.params.containerModifierClass) + "virtual"));
+      Utils.extend(swiper.params, {
+        watchSlidesProgress: true,
+      });
+      swiper.virtual.update();
+    },
+    setTranslate: function setTranslate() {
+      var swiper = this;
+      if (!swiper.params.virtual.enabled) { return; }
+      swiper.virtual.update();
     },
   },
 };
@@ -19688,14 +22233,15 @@ var Pagination = {
     var swiper = this;
     var params = swiper.params.pagination;
     if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) { return; }
+    var slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
     var $el = swiper.pagination.$el;
     // Current/Total
     var current;
-    var total = swiper.params.loop ? Math.ceil((swiper.slides.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+    var total = swiper.params.loop ? Math.ceil((slidesLength.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
     if (swiper.params.loop) {
       current = Math.ceil((swiper.activeIndex - swiper.loopedSlides) / swiper.params.slidesPerGroup);
-      if (current > swiper.slides.length - 1 - (swiper.loopedSlides * 2)) {
-        current -= (swiper.slides.length - (swiper.loopedSlides * 2));
+      if (current > slidesLength.length - 1 - (swiper.loopedSlides * 2)) {
+        current -= (slidesLength.length - (swiper.loopedSlides * 2));
       }
       if (current > total - 1) { current -= total; }
       if (current < 0 && swiper.params.paginationType !== 'bullets') { current = total + current; }
@@ -19778,11 +22324,12 @@ var Pagination = {
     var swiper = this;
     var params = swiper.params.pagination;
     if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) { return; }
+    var slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
 
     var $el = swiper.pagination.$el;
     var paginationHTML = '';
     if (params.type === 'bullets') {
-      var numberOfBullets = swiper.params.loop ? Math.ceil((swiper.slides.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+      var numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
       for (var i = 0; i < numberOfBullets; i += 1) {
         if (params.renderBullet) {
           paginationHTML += params.renderBullet.call(swiper, i, params.bulletClass);
@@ -20082,6 +22629,9 @@ var Scrollbar = {
     } else if (position > positionMax) {
       position = positionMax;
     }
+    if (swiper.rtl) {
+      position = positionMax - position;
+    }
     position = -position / moveDivider;
     swiper.updateProgress(position);
     swiper.setTranslate(position);
@@ -20224,7 +22774,7 @@ var Scrollbar$1 = {
       dragSize: 'auto',
       hide: false,
       draggable: false,
-      snapOnRelease: false,
+      snapOnRelease: true,
     },
   },
   create: function create() {
@@ -21077,6 +23627,12 @@ var Lazy$3 = {
         swiper.lazy.load();
       }
     },
+    scrollbarDragMove: function scrollbarDragMove() {
+      var swiper = this;
+      if (swiper.params.lazy.enabled) {
+        swiper.lazy.load();
+      }
+    },
     transitionStart: function transitionStart() {
       var swiper = this;
       if (swiper.params.lazy.enabled) {
@@ -21678,10 +24234,8 @@ var EffectFade = {
         slidesPerGroup: 1,
         watchSlidesProgress: true,
         spaceBetween: 0,
+        virtualTranslate: true,
       });
-      if (typeof swiper.passedParams.virtualTranslate === 'undefined') {
-        swiper.params.virtualTranslate = true;
-      }
     },
     setTranslate: function setTranslate() {
       var swiper = this;
@@ -21708,6 +24262,7 @@ var Cube = {
     var swiperSize = swiper.size;
     var params = swiper.params.cubeEffect;
     var isHorizontal = swiper.isHorizontal();
+    var isVirtual = swiper.virtual && swiper.params.virtual.enabled;
     var wrapperRotate = 0;
     var $cubeShadowEl;
     if (params.shadow) {
@@ -21728,7 +24283,11 @@ var Cube = {
     }
     for (var i = 0; i < slides.length; i += 1) {
       var $slideEl = slides.eq(i);
-      var slideAngle = i * 90;
+      var slideIndex = i;
+      if (isVirtual) {
+        slideIndex = parseInt($slideEl.attr('data-swiper-slide-index'), 10);
+      }
+      var slideAngle = slideIndex * 90;
       var round = Math.floor(slideAngle / 360);
       if (rtl) {
         slideAngle = -slideAngle;
@@ -21738,16 +24297,16 @@ var Cube = {
       var tx = 0;
       var ty = 0;
       var tz = 0;
-      if (i % 4 === 0) {
+      if (slideIndex % 4 === 0) {
         tx = -round * 4 * swiperSize;
         tz = 0;
-      } else if ((i - 1) % 4 === 0) {
+      } else if ((slideIndex - 1) % 4 === 0) {
         tx = 0;
         tz = -round * 4 * swiperSize;
-      } else if ((i - 2) % 4 === 0) {
+      } else if ((slideIndex - 2) % 4 === 0) {
         tx = swiperSize + (round * 4 * swiperSize);
         tz = swiperSize;
-      } else if ((i - 3) % 4 === 0) {
+      } else if ((slideIndex - 3) % 4 === 0) {
         tx = -swiperSize;
         tz = (3 * swiperSize) + (swiperSize * 4 * round);
       }
@@ -21762,8 +24321,8 @@ var Cube = {
 
       var transform = "rotateX(" + (isHorizontal ? 0 : -slideAngle) + "deg) rotateY(" + (isHorizontal ? slideAngle : 0) + "deg) translate3d(" + tx + "px, " + ty + "px, " + tz + "px)";
       if (progress <= 1 && progress > -1) {
-        wrapperRotate = (i * 90) + (progress * 90);
-        if (rtl) { wrapperRotate = (-i * 90) - (progress * 90); }
+        wrapperRotate = (slideIndex * 90) + (progress * 90);
+        if (rtl) { wrapperRotate = (-slideIndex * 90) - (progress * 90); }
       }
       $slideEl.transform(transform);
       if (params.slideShadows) {
@@ -21973,10 +24532,8 @@ var EffectFlip = {
         slidesPerGroup: 1,
         watchSlidesProgress: true,
         spaceBetween: 0,
+        virtualTranslate: true,
       });
-      if (typeof swiper.passedParams.virtualTranslate === 'undefined') {
-        swiper.params.virtualTranslate = true;
-      }
     },
     setTranslate: function setTranslate() {
       var swiper = this;
@@ -22115,6 +24672,7 @@ Swiper$2.components = [
   Support$4,
   Resize$1,
   Observer$1,
+  Virtual$1,
   Navigation$1,
   Pagination$1,
   Scrollbar$1,
@@ -22143,6 +24701,7 @@ function initSwipers(swiperEl) {
   var initialSlide;
   var params = {};
   var isTabs;
+  var isRoutableTabs;
   if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
     $swiperEl
       .addClass('swiper-container')
@@ -22152,6 +24711,7 @@ function initSwipers(swiperEl) {
       .addClass('swiper-slide');
     initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
     isTabs = true;
+    isRoutableTabs = $swiperEl.find('.tabs-routable').length > 0;
   }
   if ($swiperEl.attr('data-swiper')) {
     params = JSON.parse($swiperEl.attr('data-swiper'));
@@ -22171,18 +24731,21 @@ function initSwipers(swiperEl) {
   if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
     params.initialSlide = initialSlide;
   }
+
+  var swiper = app.swiper.create($swiperEl[0], params);
   if (isTabs) {
-    Utils.extend(params, {
-      on: {
-        transitionStart: function transitionStart() {
-          var swiper = this;
-          app.tab.show(swiper.slides.eq(swiper.activeIndex));
-        },
-      },
+    swiper.on('slideChange', function () {
+      if (isRoutableTabs) {
+        var view = app.views.get($swiperEl.parents('.view'));
+        if (!view) { view = app.views.main; }
+        var router = view.router;
+        var tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
+        if (tabRoute) { router.navigate(tabRoute.path); }
+      } else {
+        app.tab.show(swiper.slides.eq(swiper.activeIndex));
+      }
     });
   }
-
-  app.swiper.create($swiperEl[0], params);
 }
 
 var Swiper = {

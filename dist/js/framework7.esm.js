@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.8
+ * Framework7 2.0.0-beta.9
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 21, 2017
+ * Released on: October 8, 2017
  */
 
 import Template7 from 'template7';
@@ -532,13 +532,13 @@ const Device = (function Device() {
   }
 
   // Check for status bar and fullscreen app mode
-  device.needsStatusbar = function needsStatusbar() {
+  device.needsStatusbarOverlay = function needsStatusbarOverlay() {
     if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
       return true;
     }
     return false;
   };
-  device.statusbar = device.needsStatusbar();
+  device.statusbar = device.needsStatusbarOverlay();
 
   // Pixel Ratio
   device.pixelRatio = window.devicePixelRatio || 1;
@@ -615,9 +615,14 @@ class Framework7Class {
     const eventsArray = Array.isArray(events) ? events : events.split(' ');
     const localEvents = eventsArray.map(eventName => eventName.replace('local::', ''));
     const parentEvents = eventsArray.filter(eventName => eventName.indexOf('local::') < 0);
+
     localEvents.forEach((event) => {
       if (self.eventsListeners[event]) {
+        const handlers = [];
         self.eventsListeners[event].forEach((eventHandler) => {
+          handlers.push(eventHandler);
+        });
+        handlers.forEach((eventHandler) => {
           eventHandler.apply(context, data);
         });
       }
@@ -702,12 +707,13 @@ class Framework7Class {
     const Class = this;
     if (Array.isArray(module)) {
       module.forEach(m => Class.installModule(m));
+      return Class;
     }
     return Class.installModule(module, ...params);
   }
 }
 
-class Framework7$1 extends Framework7Class {
+class Framework7 extends Framework7Class {
   constructor(params) {
     super(params);
 
@@ -753,7 +759,13 @@ class Framework7$1 extends Framework7Class {
 
     // Init
     if (app.params.init) {
-      app.init();
+      if (Device.cordova) {
+        $(document).on('deviceready', () => {
+          app.init();
+        });
+      } else {
+        app.init();
+      }
     }
 
     // Return app instance
@@ -1008,13 +1020,12 @@ var Resize = {
   },
 };
 
-/* eslint no-param-reassign: "off" */
 const globals = {};
 let jsonpRequests = 0;
 
-function Request$1(options) {
+function Request$1(requestOptions) {
   const globalsNoCallbacks = Utils.extend({}, globals);
-  ('start beforeSend error complete success statusCode').split(' ').forEach((callbackName) => {
+  ('beforeCreate beforeOpen beforeSend error complete success statusCode').split(' ').forEach((callbackName) => {
     delete globalsNoCallbacks[callbackName];
   });
   const defaults = Utils.extend({
@@ -1034,16 +1045,15 @@ function Request$1(options) {
     timeout: 0,
   }, globalsNoCallbacks);
 
-  options = Utils.extend({}, defaults, options);
-
-  // For jQuery guys
-  if (options.type) options.method = options.type;
+  const options = Utils.extend({}, defaults, requestOptions);
 
   // Function to run XHR callbacks and events
   function fireCallback(callbackName, ...data) {
     /*
       Callbacks:
-      start/beforeSend (xhr),
+      beforeCreate (xhr, options),
+      beforeOpen (xhr, options),
+      beforeSend (xhr, options),
       error (xhr, status),
       complete (xhr, stautus),
       success (response, status, xhr),
@@ -1052,6 +1062,12 @@ function Request$1(options) {
     if (globals[callbackName]) globals[callbackName](...data);
     if (options[callbackName]) options[callbackName](...data);
   }
+
+  // Before create callback
+  fireCallback('beforeCreate', options);
+
+  // For jQuery guys
+  if (options.type) options.method = options.type;
 
   // Parameters Prefix
   let paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
@@ -1131,6 +1147,9 @@ function Request$1(options) {
   // Save Request URL
   xhr.requestUrl = options.url;
   xhr.requestParameters = options;
+
+  // Before open callback
+  fireCallback('beforeOpen', xhr, options);
 
   // Open XHR
   xhr.open(method, options.url, options.async, options.user, options.password);
@@ -1226,10 +1245,6 @@ function Request$1(options) {
     fireCallback('complete', xhr, 'error');
   };
 
-  // Ajax start callback
-  fireCallback('start', xhr);
-  fireCallback('beforeSend', xhr);
-
   // Timeout
   if (options.timeout > 0) {
     xhr.onabort = function onabort() {
@@ -1241,6 +1256,9 @@ function Request$1(options) {
       fireCallback('complete', xhr, 'timeout');
     }, options.timeout);
   }
+
+  // Ajax start callback
+  fireCallback('beforeSend', xhr, options);
 
   // Send XHR
   xhr.send(postData);
@@ -1872,13 +1890,15 @@ function initTouch() {
     app.on('touchmove', handleMouseMove);
     app.on('touchend', handleMouseUp);
   }
-
-  if (useRipple) {
-    document.addEventListener('contextmenu', () => {
+  document.addEventListener('contextmenu', (e) => {
+    if (Device.ios || Device.android || Device.cordova) {
+      e.preventDefault();
+    }
+    if (useRipple) {
       if (activableElement) removeActive();
       rippleTouchEnd();
-    });
-  }
+    }
+  });
 }
 
 var Touch = {
@@ -2338,6 +2358,7 @@ function SwipeBack(r) {
 
   function handleTouchStart(e) {
     if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) return;
+    if ($(e.target).closest('.range-slider, .calendar-months').length > 0) return;
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
@@ -2432,8 +2453,8 @@ function SwipeBack(r) {
       }
 
       // Close/Hide Any Picker
-      if ($('.picker.modal-in').length > 0) {
-        app.closeModal($('.picker.modal-in'));
+      if ($('.sheet.modal-in').length > 0 && app.sheet) {
+        app.sheet.close($('.sheet.modal-in'));
       }
     }
     e.f7PreventPanelSwipe = true;
@@ -3053,7 +3074,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
 
   if (!options.route && url) {
-    options.route = router.findMatchingRoute(url, true);
+    options.route = router.parseUrl(url);
     Utils.extend(options.route, { route: { url, path: url } });
   }
 
@@ -3125,7 +3146,7 @@ function navigate(url, navigateOptions = {}) {
   }
   let route;
   if (navigateOptions.createRoute) {
-    route = Utils.extend(router.findMatchingRoute(navigateUrl, true), {
+    route = Utils.extend(router.parseUrl(navigateUrl), {
       route: Utils.extend({}, navigateOptions.createRoute),
     });
   } else {
@@ -3141,12 +3162,12 @@ function navigate(url, navigateOptions = {}) {
   } else {
     Utils.extend(options, navigateOptions, { route });
   }
-  ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+  ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
     if (route.route[modalLoadProp]) {
       router.modalLoad(modalLoadProp, route, options);
     }
   });
-  ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+  ('url content component name el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }
@@ -3155,7 +3176,7 @@ function navigate(url, navigateOptions = {}) {
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
     let resolvedAsModal = false;
-    ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+    ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
       if (resolveParams[modalLoadProp]) {
         resolvedAsModal = true;
         const modalRoute = Utils.extend({}, route, { route: resolveParams });
@@ -3232,7 +3253,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     $newTabEl.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
-    if ($oldTabEl) {
+    if ($oldTabEl && router.params.unloadTabContent) {
       if (animated) {
         onTabsChanged(() => {
           router.tabRemove($oldTabEl, $newTabEl, tabRoute);
@@ -3241,6 +3262,9 @@ function tabLoad(tabRoute, loadOptions = {}) {
         router.tabRemove($oldTabEl, $newTabEl, tabRoute);
       }
     }
+  }
+  if (!router.params.unloadTabContent) {
+    if ($newTabEl[0].f7RouterTabLoaded) return;
   }
 
   // Component/Template Callbacks
@@ -3257,6 +3281,9 @@ function tabLoad(tabRoute, loadOptions = {}) {
       } else {
         $newTabEl.append(contentEl);
       }
+    }
+    if (!router.params.unloadTabContent) {
+      $newTabEl[0].f7RouterTabLoaded = true;
     }
     onTabLoaded();
   }
@@ -3754,7 +3781,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   }
 
   if (!options.route && url) {
-    options.route = router.findMatchingRoute(url, true);
+    options.route = router.parseUrl(url);
   }
 
   // Component Callbacks
@@ -3827,7 +3854,7 @@ function back(...args) {
   let currentRouteIsModal = router.currentRoute.modal;
   let modalType;
   if (!currentRouteIsModal) {
-    ('popup popover sheet loginScreen actions').split(' ').forEach((modalLoadProp) => {
+    ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
       if (router.currentRoute.route[modalLoadProp]) {
         currentRouteIsModal = true;
         modalType = modalLoadProp;
@@ -3919,7 +3946,7 @@ function back(...args) {
     });
   }
 
-  ('url content name el component componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+  ('url content component name el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }
@@ -4449,25 +4476,46 @@ class Router$1 extends Framework7Class {
     });
     return flattenedRoutes;
   }
-  findMatchingRoute(url, parseOnly) {
-    if (!url) return undefined;
-    const router = this;
-    const routes = router.routes;
-    const flattenedRoutes = router.flattenRoutes(routes);
+  // eslint-disable-next-line
+  parseUrl(url) {
+    if (!url) return {};
     const query = Utils.parseUrlQuery(url);
     const hash = url.split('#')[1];
     const params = {};
     const path = url.split('#')[0].split('?')[0];
+    return {
+      query,
+      hash,
+      params,
+      url,
+      path,
+    };
+  }
+  findTabRoute(tabEl) {
+    const router = this;
+    const $tabEl = $(tabEl);
+    const parentPath = router.currentRoute.route.parentPath;
+    const tabId = $tabEl.attr('id');
+    const flattenedRoutes = router.flattenRoutes(router.routes);
+    let foundTabRoute;
+    flattenedRoutes.forEach((route) => {
+      if (
+        route.parentPath === parentPath &&
+        route.tab &&
+        route.tab.id === tabId
+      ) {
+        foundTabRoute = route;
+      }
+    });
+    return foundTabRoute;
+  }
+  findMatchingRoute(url) {
+    if (!url) return undefined;
+    const router = this;
+    const routes = router.routes;
+    const flattenedRoutes = router.flattenRoutes(routes);
+    const { path, query, hash, params } = router.parseUrl(url);
     const urlParts = path.split('/').filter(part => part !== '');
-    if (parseOnly) {
-      return {
-        query,
-        hash,
-        params,
-        url,
-        path,
-      };
-    }
 
     let matchingRoute;
     function parseRoute(str = '') {
@@ -4885,7 +4933,7 @@ class Router$1 extends Framework7Class {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.findMatchingRoute(router.history[0], true), {
+        currentRoute = Utils.extend(router.parseUrl(router.history[0]), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -4896,7 +4944,7 @@ class Router$1 extends Framework7Class {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.findMatchingRoute(initUrl, true), {
+        currentRoute = Utils.extend(router.parseUrl(initUrl), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
@@ -5302,9 +5350,17 @@ const Statusbar = {
     }
   },
   show() {
-    $('html').addClass('with-statusbar');
     if (Device.cordova && window.StatusBar) {
       window.StatusBar.show();
+      Utils.nextTick(() => {
+        if (Device.needsStatusbarOverlay()) {
+          $('html').addClass('with-statusbar');
+        }
+      });
+      return;
+    }
+    if (Device.needsStatusbarOverlay()) {
+      $('html').addClass('with-statusbar');
     }
   },
   onClick() {
@@ -5343,35 +5399,39 @@ const Statusbar = {
     }
   },
   setBackgroundColor(color) {
+    $('.statusbar').css('background-color', color);
     if (Device.cordova && window.StatusBar) {
-      if (Device.needsStatusbar()) {
-        // Change Overlay Color;
-        $('.statusbar').css('background-color', color);
-      } else {
-        // Change Real Status bar color
-        window.StatusBar.backgroundColorByHexString(color);
-      }
-    } else {
-      $('.statusbar').css('background-color', color);
+      window.StatusBar.backgroundColorByHexString(color);
     }
   },
   isVisible() {
     if (Device.cordova && window.StatusBar) {
       return window.StatusBar.isVisible;
     }
-    return undefined;
+    return false;
+  },
+  iosOverlaysWebView(overlays = true) {
+    if (!Device.ios) return;
+    if (Device.cordova && window.StatusBar) {
+      window.StatusBar.overlaysWebView(overlays);
+      if (overlays) {
+        $('html').addClass('with-statusbar');
+      } else {
+        $('html').removeClass('with-statusbar');
+      }
+    }
   },
   init() {
     const app = this;
     const params = app.params.statusbar;
 
     if (params.overlay === 'auto') {
-      if (Device.needsStatusbar()) {
+      if (Device.needsStatusbarOverlay()) {
         $('html').addClass('with-statusbar');
       }
       if (Device.cordova) {
         $(document).on('resume', () => {
-          if (Device.needsStatusbar()) {
+          if (Device.needsStatusbarOverlay()) {
             $('html').addClass('with-statusbar');
           } else {
             $('html').removeClass('with-statusbar');
@@ -5400,9 +5460,11 @@ const Statusbar = {
         window.StatusBar.styleDefault();
       }
     }
-
-    if (params.setBackgroundColor) {
-      Statusbar.setBackgroundColor(app.theme === 'ios' ? params.iosBackgroundColor : params.materialBackgroundColor);
+    if (params.iosBackgroundColor && app.theme === 'ios') {
+      Statusbar.setBackgroundColor(params.iosBackgroundColor);
+    }
+    if (params.materialBackgroundColor && app.theme === 'md') {
+      Statusbar.setBackgroundColor(params.materialBackgroundColor);
     }
   },
 };
@@ -5415,9 +5477,8 @@ var Statusbar$1 = {
       scrollTopOnClick: true,
       iosOverlaysWebView: true,
       iosTextColor: 'black',
-      setBackgroundColor: true,
-      iosBackgroundColor: '#F7F7F8',
-      materialBackgroundColor: '#0D47A1',
+      iosBackgroundColor: null,
+      materialBackgroundColor: null,
     },
   },
   create() {
@@ -5426,6 +5487,7 @@ var Statusbar$1 = {
       statusbar: {
         hide: Statusbar.hide,
         show: Statusbar.show,
+        iosOverlaysWebView: Statusbar.iosOverlaysWebView,
         setIosTextColor: Statusbar.setIosTextColor,
         setBackgroundColor: Statusbar.setBackgroundColor,
         isVisible: Statusbar.isVisible,
@@ -5495,6 +5557,7 @@ var View$2 = {
       removeElementsWithTimeout: false,
       removeElementsTimeout: 0,
       restoreScrollTopOnBack: true,
+      unloadTabContent: true,
       // Swipe Back
       iosSwipeBack: true,
       iosSwipeBackAnimateShadow: true,
@@ -6283,7 +6346,7 @@ class Modal$1 extends Framework7Class {
       return modal;
     }
 
-    if (type === 'dialog' && app.params.modals.queueDialogs) {
+    if (type === 'dialog' && app.params.modal.queueDialogs) {
       let pushToQueue;
       if ($('.dialog.modal-in').length > 0) {
         pushToQueue = true;
@@ -6300,7 +6363,7 @@ class Modal$1 extends Framework7Class {
 
     const $modalParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
-    if (app.params.modals.moveToRoot && !$modalParentEl.is(app.root)) {
+    if (app.params.modal.moveToRoot && !$modalParentEl.is(app.root)) {
       app.root.append($el);
       modal.once(`${type}Closed`, () => {
         if (wasInDom) {
@@ -6419,7 +6482,8 @@ class Modal$1 extends Framework7Class {
     return modal;
   }
   destroy() {
-    let modal = this;
+    const modal = this;
+    if (modal.destroyed) return;
     modal.emit(`local::beforeDestroy modalBeforeDestroy ${modal.type}BeforeDestroy`, modal);
     if (modal.$el) {
       modal.$el.trigger(`modal:beforedestroy ${modal.type.toLowerCase()}:beforedestroy`, modal);
@@ -6428,7 +6492,79 @@ class Modal$1 extends Framework7Class {
       }
     }
     Utils.deleteProps(modal);
-    modal = null;
+    modal.destroyed = true;
+  }
+}
+
+class CustomModal extends Modal$1 {
+  constructor(app, params) {
+    const extendedParams = Utils.extend({
+      backdrop: true,
+      closeByBackdropClick: true,
+      on: {},
+    }, params);
+
+    // Extends with open/close Modal methods;
+    super(app, extendedParams);
+
+    const customModal = this;
+
+    customModal.params = extendedParams;
+
+    // Find Element
+    let $el;
+    if (!customModal.params.el) {
+      $el = $(customModal.params.content);
+    } else {
+      $el = $(customModal.params.el);
+    }
+
+    if ($el && $el.length > 0 && $el[0].f7Modal) {
+      return $el[0].f7Modal;
+    }
+
+    if ($el.length === 0) {
+      return customModal.destroy();
+    }
+    let $backdropEl;
+    if (customModal.params.backdrop) {
+      $backdropEl = app.root.children('.custom-modal-backdrop');
+      if ($backdropEl.length === 0) {
+        $backdropEl = $('<div class="custom-modal-backdrop"></div>');
+        app.root.append($backdropEl);
+      }
+    }
+
+    function handleClick(e) {
+      if (!customModal || customModal.destroyed) return;
+      if ($backdropEl && e.target === $backdropEl[0]) {
+        customModal.close();
+      }
+    }
+
+    customModal.on('customModalOpened', () => {
+      if (customModal.params.closeByBackdropClick && customModal.params.backdrop) {
+        app.on('click', handleClick);
+      }
+    });
+    customModal.on('customModalClose', () => {
+      if (customModal.params.closeByBackdropClick && customModal.params.backdrop) {
+        app.off('click', handleClick);
+      }
+    });
+
+    Utils.extend(customModal, {
+      app,
+      $el,
+      el: $el[0],
+      $backdropEl,
+      backdropEl: $backdropEl && $backdropEl[0],
+      type: 'customModal',
+    });
+
+    $el[0].f7Modal = customModal;
+
+    return customModal;
   }
 }
 
@@ -6436,16 +6572,25 @@ var Modal = {
   name: 'modal',
   static: {
     Modal: Modal$1,
+    CustomModal,
+  },
+  create() {
+    const app = this;
+    app.customModal = {
+      create(params) {
+        return new CustomModal(app, params);
+      },
+    };
   },
   params: {
-    modals: {
+    modal: {
       moveToRoot: true,
       queueDialogs: true,
     },
   },
 };
 
-class Dialog$1 extends Modal$1 {
+class Dialog extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       title: app.params.dialog.title,
@@ -6643,7 +6788,7 @@ var ModalMethods = function (parameters = {}) {
   return methods;
 };
 
-var Dialog = {
+var dialog = {
   name: 'dialog',
   params: {
     dialog: {
@@ -6658,14 +6803,14 @@ var Dialog = {
     },
   },
   static: {
-    Dialog: Dialog$1,
+    Dialog,
   },
   create() {
     const app = this;
     app.dialog = Utils.extend(
       ModalMethods({
         app,
-        constructor: Dialog$1,
+        constructor: Dialog,
         defaultSelector: '.dialog.modal-in',
       }),
       {
@@ -6675,7 +6820,7 @@ var Dialog = {
           if (args.length === 2 && typeof args[1] === 'function') {
             [text, callbackOk, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             buttons: [{
@@ -6690,7 +6835,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
@@ -6715,7 +6860,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             buttons: [
@@ -6736,7 +6881,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             content: `
@@ -6772,7 +6917,7 @@ var Dialog = {
           if (typeof args[1] === 'function') {
             [text, callbackOk, callbackCancel, title] = args;
           }
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.title : title,
             text,
             content: `
@@ -6808,7 +6953,7 @@ var Dialog = {
                     '<span class="preloader-inner-half-circle"></span>' +
                 '</span>' +
             '</span>';
-          return new Dialog$1(app, {
+          return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.preloaderTitle : title,
             content: `<div class="preloader">${preloaderInner}</div>`,
             cssClass: 'dialog-preloader',
@@ -6828,7 +6973,7 @@ var Dialog = {
             }
           }
           const infinite = typeof progress === 'undefined';
-          const dialog = new Dialog$1(app, {
+          const dialog = new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.progressTitle : title,
             cssClass: 'dialog-progress',
             content: `
@@ -6852,7 +6997,7 @@ var Dialog = {
   },
 };
 
-class Popup$1 extends Modal$1 {
+class Popup extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       on: {},
@@ -6905,7 +7050,7 @@ class Popup$1 extends Modal$1 {
   }
 }
 
-var Popup = {
+var popup = {
   name: 'popup',
   params: {
     popup: {
@@ -6913,13 +7058,13 @@ var Popup = {
     },
   },
   static: {
-    Popup: Popup$1,
+    Popup,
   },
   create() {
     const app = this;
     app.popup = ModalMethods({
       app,
-      constructor: Popup$1,
+      constructor: Popup,
       defaultSelector: '.popup.modal-in',
     });
   },
@@ -6940,7 +7085,7 @@ var Popup = {
   },
 };
 
-class LoginScreen$1 extends Modal$1 {
+class LoginScreen extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       on: {},
@@ -6982,16 +7127,16 @@ class LoginScreen$1 extends Modal$1 {
   }
 }
 
-var LoginScreen = {
+var loginScreen = {
   name: 'loginScreen',
   static: {
-    LoginScreen: LoginScreen$1,
+    LoginScreen,
   },
   create() {
     const app = this;
     app.loginScreen = ModalMethods({
       app,
-      constructor: LoginScreen$1,
+      constructor: LoginScreen,
       defaultSelector: '.login-screen.modal-in',
     });
   },
@@ -7007,7 +7152,7 @@ var LoginScreen = {
   },
 };
 
-class Popover$1 extends Modal$1 {
+class Popover extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: true,
@@ -7238,7 +7383,7 @@ class Popover$1 extends Modal$1 {
   }
 }
 
-var Popover = {
+var popover = {
   name: 'popover',
   params: {
     popover: {
@@ -7247,21 +7392,21 @@ var Popover = {
     },
   },
   static: {
-    Popover: Popover$1,
+    Popover,
   },
   create() {
     const app = this;
     app.popover = Utils.extend(
       ModalMethods({
         app,
-        constructor: Popover$1,
+        constructor: Popover,
         defaultSelector: '.popover.modal-in',
       }),
       {
         open(popoverEl, targetEl, animate) {
           const $popoverEl = $(popoverEl);
           let popover = $popoverEl[0].f7Modal;
-          if (!popover) popover = new Popover$1(app, { el: $popoverEl, targetEl });
+          if (!popover) popover = new Popover(app, { el: $popoverEl, targetEl });
           return popover.open(targetEl, animate);
         },
       }
@@ -7285,7 +7430,7 @@ var Popover = {
 };
 
 /* eslint indent: ["off"] */
-class Actions$1 extends Modal$1 {
+class Actions extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       toPopover: app.params.actions.convertToPopover,
@@ -7380,6 +7525,10 @@ class Actions$1 extends Modal$1 {
           popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).on('click', buttonOnClick);
           });
+          Utils.nextTick(() => {
+            popover.destroy();
+            popover = undefined;
+          });
         });
       } else {
         actions.$el = $(actions.actionsHtml);
@@ -7394,6 +7543,7 @@ class Actions$1 extends Modal$1 {
         });
         originalOpen.call(actions, animate);
       }
+      return actions;
     };
 
     actions.close = function close(animate) {
@@ -7405,6 +7555,7 @@ class Actions$1 extends Modal$1 {
       } else {
         originalClose.call(actions, animate);
       }
+      return actions;
     };
 
     Utils.extend(actions, {
@@ -7505,7 +7656,7 @@ class Actions$1 extends Modal$1 {
   }
 }
 
-var Actions = {
+var actions = {
   name: 'actions',
   params: {
     actions: {
@@ -7516,13 +7667,13 @@ var Actions = {
     },
   },
   static: {
-    Actions: Actions$1,
+    Actions,
   },
   create() {
     const app = this;
     app.actions = ModalMethods({
       app,
-      constructor: Actions$1,
+      constructor: Actions,
       defaultSelector: '.actions-modal.modal-in',
     });
   },
@@ -7543,7 +7694,7 @@ var Actions = {
   },
 };
 
-class Sheet$1 extends Modal$1 {
+class Sheet extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       backdrop: app.theme === 'md',
@@ -7661,7 +7812,7 @@ class Sheet$1 extends Modal$1 {
   }
 }
 
-var Sheet = {
+var sheet = {
   name: 'sheet',
   params: {
     sheet: {
@@ -7670,7 +7821,7 @@ var Sheet = {
     },
   },
   static: {
-    Sheet: Sheet$1,
+    Sheet,
   },
   create() {
     const app = this;
@@ -7678,7 +7829,7 @@ var Sheet = {
       {},
       ModalMethods({
         app,
-        constructor: Sheet$1,
+        constructor: Sheet,
         defaultSelector: '.sheet-modal.modal-in',
       })
     );
@@ -7703,7 +7854,7 @@ var Sheet = {
   },
 };
 
-class Toast$1 extends Modal$1 {
+class Toast extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       on: {},
@@ -7796,10 +7947,10 @@ class Toast$1 extends Modal$1 {
   }
 }
 
-var Toast = {
+var toast = {
   name: 'toast',
   static: {
-    Toast: Toast$1,
+    Toast,
   },
   create() {
     const app = this;
@@ -7807,7 +7958,7 @@ var Toast = {
       {},
       ModalMethods({
         app,
-        constructor: Toast$1,
+        constructor: Toast,
         defaultSelector: '.toast.modal-in',
       })
     );
@@ -7877,7 +8028,7 @@ const Preloader = {
     Preloader.visible = false;
   },
 };
-var Preloader$1 = {
+var preloader = {
   name: 'preloader',
   create() {
     const app = this;
@@ -8021,7 +8172,7 @@ const Progressbar = {
   },
 };
 
-var Progressbar$1 = {
+var progressbar = {
   name: 'progressbar',
   create() {
     const app = this;
@@ -8231,7 +8382,7 @@ const Sortable = {
     }
   },
 };
-var Sortable$1 = {
+var sortable = {
   name: 'sortable',
   params: {
     sortable: true,
@@ -8732,7 +8883,7 @@ const Swipeout = {
     });
   },
 };
-var Swipeout$1 = {
+var swipeout = {
   name: 'swipeout',
   params: {
     swipeout: {
@@ -8875,7 +9026,7 @@ const Accordion = {
   },
 };
 
-var Accordion$1 = {
+var accordion = {
   name: 'accordion',
   create() {
     const app = this;
@@ -8895,7 +9046,7 @@ var Accordion$1 = {
   },
 };
 
-class VirtualList$1 extends Framework7Class {
+class VirtualList extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const vl = this;
@@ -9433,23 +9584,23 @@ class VirtualList$1 extends Framework7Class {
   }
 }
 
-var VirtualList = {
+var virtualList = {
   name: 'virtualList',
   static: {
-    VirtualList: VirtualList$1,
+    VirtualList,
   },
   create() {
     const app = this;
     app.virtualList = ConstructorMethods({
       defaultSelector: '.virtual-list',
-      constructor: VirtualList$1,
+      constructor: VirtualList,
       app,
       domProp: 'f7VirtualList',
     });
   },
 };
 
-var Timeline = {
+var timeline = {
   name: 'timeline',
 };
 
@@ -9518,8 +9669,13 @@ const Tab = {
     // Swipeable tabs
     if ($tabsEl.parent().hasClass('tabs-swipeable-wrap') && app.swiper) {
       const swiper = $tabsEl.parent()[0].swiper;
-      if (swiper.activeIndex !== $newTabEl.index()) {
-        swiper.slideTo($newTabEl.index(), animate ? undefined : 0, false);
+      if (swiper && swiper.activeIndex !== $newTabEl.index()) {
+        animated = true;
+        swiper
+          .once('slideChangeTransitionEnd', () => {
+            tabsChanged();
+          })
+          .slideTo($newTabEl.index(), animate ? undefined : 0);
       }
     }
 
@@ -9598,7 +9754,7 @@ const Tab = {
     };
   },
 };
-var Tabs = {
+var tabs = {
   name: 'tabs',
   create() {
     const app = this;
@@ -9649,8 +9805,7 @@ function swipePanel$1(panel) {
       if (otherPanel.opened) return;
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
-    if ($(e.target).closest('.range-slider').length > 0) return;
-    if ($(e.target).closest('.tabs-swipeable-wrap').length > 0) return;
+    if ($(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months').length > 0) return;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     if (params.swipeOnlyClose && !panel.opened) {
@@ -9905,7 +10060,7 @@ function swipePanel$1(panel) {
   });
 }
 
-class Panel$1 extends Framework7Class {
+class Panel extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const panel = this;
@@ -10161,7 +10316,7 @@ class Panel$1 extends Framework7Class {
   }
 }
 
-var Panel = {
+var panel = {
   name: 'panel',
   params: {
     panel: {
@@ -10177,7 +10332,7 @@ var Panel = {
     },
   },
   static: {
-    Panel: Panel$1,
+    Panel,
   },
   instance: {
     panel: {
@@ -10237,7 +10392,7 @@ var Panel = {
         }
       },
       create(el) {
-        return new Panel$1(app, { el });
+        return new Panel(app, { el });
       },
 
       open(side, animate) {
@@ -10254,7 +10409,7 @@ var Panel = {
         }
         const $panelEl = $(`.panel-${panelSide}`);
         if ($panelEl.length > 0) {
-          return new Panel$1(app, { el: $panelEl }).open(animate);
+          return new Panel(app, { el: $panelEl }).open(animate);
         }
         return false;
       },
@@ -10273,7 +10428,7 @@ var Panel = {
           return app.panel[panelSide].close(animate);
         }
         if ($panelEl.length > 0) {
-          return new Panel$1(app, { el: $panelEl }).close(animate);
+          return new Panel(app, { el: $panelEl }).close(animate);
         }
         return false;
       },
@@ -10291,7 +10446,7 @@ var Panel = {
         }
         const $panelEl = $(`.panel-${panelSide}`);
         if ($panelEl.length > 0) {
-          return new Panel$1(app, { el: $panelEl });
+          return new Panel(app, { el: $panelEl });
         }
         return undefined;
       },
@@ -10304,7 +10459,7 @@ var Panel = {
       // Create Panels
       $('.panel').each((index, panelEl) => {
         const side = $(panelEl).hasClass('panel-left') ? 'left' : 'right';
-        app.panel[side] = new Panel$1(app, { el: panelEl, side });
+        app.panel[side] = new Panel(app, { el: panelEl, side });
       });
     },
   },
@@ -10331,11 +10486,11 @@ var Panel = {
   },
 };
 
-var Card = {
+var card = {
   name: 'card',
 };
 
-var Chip = {
+var chip = {
   name: 'chip',
 };
 
@@ -10594,7 +10749,7 @@ function initAjaxForm() {
   $(document).on('submit change', 'form.form-ajax-submit, form.form-ajax-submit-onchange', onSubmitChange);
 }
 
-var Form = {
+var form = {
   name: 'form',
   create() {
     const app = this;
@@ -10818,7 +10973,7 @@ const Input = {
   },
 };
 
-var Input$1 = {
+var input = {
   name: 'input',
   create() {
     const app = this;
@@ -10872,15 +11027,15 @@ var Input$1 = {
   },
 };
 
-var Checkbox = {
+var checkbox = {
   name: 'checkbox',
 };
 
-var Radio = {
+var radio = {
   name: 'radio',
 };
 
-class Toggle$1 extends Framework7Class {
+class Toggle extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const toggle = this;
@@ -11056,55 +11211,43 @@ class Toggle$1 extends Framework7Class {
   }
 }
 
-var Toggle = {
+var toggle = {
   name: 'toggle',
   create() {
     const app = this;
-    Utils.extend(app, {
-      toggle: {
-        create(params) {
-          return new Toggle$1(app, params);
-        },
-        get(el) {
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Toggle;
-          return undefined;
-        },
-        destroy(el) {
-          if (el && (el instanceof Toggle$1) && el.destroy) return el.destroy();
-          const $el = $(el);
-          if ($el.length) return $el[0].f7Toggle.destroy();
-          return undefined;
-        },
-      },
+    app.toggle = ConstructorMethods({
+      defaultSelector: '.toggle',
+      constructor: Toggle,
+      app,
+      domProp: 'f7Toggle',
     });
   },
   static: {
-    Toggle: Toggle$1,
+    Toggle,
   },
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('label.toggle').each((index, toggleEl) => new Toggle$1(app, { el: toggleEl }));
+      $(tabEl).find('.toggle-init').each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
     },
     tabBeforeRemove(tabEl) {
-      $(tabEl).find('label.toggle').each((index, toggleEl) => {
+      $(tabEl).find('.toggle-init').each((index, toggleEl) => {
         if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
       });
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('label.toggle').each((index, toggleEl) => new Toggle$1(app, { el: toggleEl }));
+      page.$el.find('.toggle-init').each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
     },
     pageBeforeRemove(page) {
-      page.$el.find('label.toggle').each((index, toggleEl) => {
+      page.$el.find('.toggle-init').each((index, toggleEl) => {
         if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
       });
     },
   },
 };
 
-class Range$1 extends Framework7Class {
+class Range extends Framework7Class {
   constructor(app, params) {
     super(params, [app]);
     const range = this;
@@ -11456,14 +11599,14 @@ class Range$1 extends Framework7Class {
   }
 }
 
-var Range = {
+var range = {
   name: 'range',
   create() {
     const app = this;
     app.range = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.range-slider',
-        constructor: Range$1,
+        constructor: Range,
         app,
         domProp: 'f7Range',
       }),
@@ -11482,12 +11625,12 @@ var Range = {
     );
   },
   static: {
-    Range: Range$1,
+    Range,
   },
   on: {
     tabMounted(tabEl) {
       const app = this;
-      $(tabEl).find('.range-slider-init').each((index, rangeEl) => new Range$1(app, {
+      $(tabEl).find('.range-slider-init').each((index, rangeEl) => new Range(app, {
         el: rangeEl,
       }));
     },
@@ -11498,7 +11641,7 @@ var Range = {
     },
     pageInit(page) {
       const app = this;
-      page.$el.find('.range-slider-init').each((index, rangeEl) => new Range$1(app, {
+      page.$el.find('.range-slider-init').each((index, rangeEl) => new Range(app, {
         el: rangeEl,
       }));
     },
@@ -11510,14 +11653,14 @@ var Range = {
   },
 };
 
-class SmartSelect$1 extends Framework7Class {
+class SmartSelect extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const ss = this;
     ss.app = app;
     const defaults = Utils.extend({
       on: {},
-    }, app.modules.smartSelect.params.smartSelect);
+    }, app.params.smartSelect);
 
     const $el = $(params.el).eq(0);
     if ($el.length === 0) return ss;
@@ -12153,7 +12296,7 @@ class SmartSelect$1 extends Framework7Class {
   }
 }
 
-var SmartSelect = {
+var smartSelect = {
   name: 'smartSelect',
   params: {
     smartSelect: {
@@ -12187,14 +12330,14 @@ var SmartSelect = {
     },
   },
   static: {
-    SmartSelect: SmartSelect$1,
+    SmartSelect,
   },
   create() {
     const app = this;
     app.smartSelect = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.smart-select',
-        constructor: SmartSelect$1,
+        constructor: SmartSelect,
         app,
         domProp: 'f7SmartSelect',
       }),
@@ -12252,48 +12395,2247 @@ var SmartSelect = {
   },
 };
 
-class Calendar$1 extends Framework7Class {
+class Calendar extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const calendar = this;
-    calendar.params = Utils.extend({
+    calendar.params = Utils.extend({}, app.params.calendar, params);
 
-    }, params);
+    let $containerEl;
+    if (calendar.params.containerEl) {
+      $containerEl = $(calendar.params.containerEl);
+      if ($containerEl.length === 0) return calendar;
+    }
+
+    let $inputEl;
+    if (calendar.params.inputEl) {
+      $inputEl = $(calendar.params.inputEl);
+    }
+
+    let view;
+    if ($inputEl) {
+      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view) view = app.views.main;
+
+    const isHorizontal = calendar.params.direction === 'horizontal';
+
+    let inverter = 1;
+    if (isHorizontal) {
+      inverter = app.rtl ? -1 : 1;
+    }
+
+    Utils.extend(calendar, {
+      app,
+      $containerEl,
+      containerEl: $containerEl && $containerEl[0],
+      inline: $containerEl && $containerEl.length > 0,
+      $inputEl,
+      inputEl: $inputEl && $inputEl[0],
+      initialized: false,
+      opened: false,
+      url: calendar.params.url,
+      isHorizontal,
+      inverter,
+      view,
+      animating: false,
+    });
+
+    function onInputClick() {
+      calendar.open();
+    }
+    function onInputFocus(e) {
+      e.preventDefault();
+    }
+    function onHtmlClick(e) {
+      const $targetEl = $(e.target);
+      if (calendar.isPopover()) return;
+      if (!calendar.opened) return;
+      if ($targetEl.closest('[class*="backdrop"]').length) return;
+      if ($inputEl && $inputEl.length > 0) {
+        if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal, .calendar-modal').length === 0) {
+          calendar.close();
+        }
+      } else if ($(e.target).closest('.sheet-modal, .calendar-modal').length === 0) {
+        calendar.close();
+      }
+    }
+
+    // Events
+    Utils.extend(calendar, {
+      attachInputEvents() {
+        calendar.$inputEl.on('click', onInputClick);
+        if (calendar.params.inputReadOnly) {
+          calendar.$inputEl.on('focus mousedown', onInputFocus);
+        }
+      },
+      detachInputEvents() {
+        calendar.$inputEl.off('click', onInputClick);
+        if (calendar.params.inputReadOnly) {
+          calendar.$inputEl.off('focus mousedown', onInputFocus);
+        }
+      },
+      attachHtmlEvents() {
+        app.on('click', onHtmlClick);
+      },
+      detachHtmlEvents() {
+        app.off('click', onHtmlClick);
+      },
+    });
+    calendar.attachCalendarEvents = function attachCalendarEvents() {
+      let allowItemClick = true;
+      let isTouched;
+      let isMoved;
+      let touchStartX;
+      let touchStartY;
+      let touchCurrentX;
+      let touchCurrentY;
+      let touchStartTime;
+      let touchEndTime;
+      let currentTranslate;
+      let wrapperWidth;
+      let wrapperHeight;
+      let percentage;
+      let touchesDiff;
+      let isScrolling;
+
+      const { $el, $wrapperEl } = calendar;
+
+      function handleTouchStart(e) {
+        if (isMoved || isTouched) return;
+        isTouched = true;
+        touchStartX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentX = touchStartX;
+        touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        touchCurrentY = touchStartY;
+        touchStartTime = (new Date()).getTime();
+        percentage = 0;
+        allowItemClick = true;
+        isScrolling = undefined;
+        currentTranslate = calendar.monthsTranslate;
+      }
+      function handleTouchMove(e) {
+        if (!isTouched) return;
+        const { isHorizontal: isH } = calendar;
+
+        touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        if (typeof isScrolling === 'undefined') {
+          isScrolling = !!(isScrolling || Math.abs(touchCurrentY - touchStartY) > Math.abs(touchCurrentX - touchStartX));
+        }
+        if (isH && isScrolling) {
+          isTouched = false;
+          return;
+        }
+        e.preventDefault();
+        if (calendar.animating) {
+          isTouched = false;
+          return;
+        }
+        allowItemClick = false;
+        if (!isMoved) {
+          // First move
+          isMoved = true;
+          wrapperWidth = $wrapperEl[0].offsetWidth;
+          wrapperHeight = $wrapperEl[0].offsetHeight;
+          $wrapperEl.transition(0);
+        }
+
+        touchesDiff = isH ? touchCurrentX - touchStartX : touchCurrentY - touchStartY;
+        percentage = touchesDiff / (isH ? wrapperWidth : wrapperHeight);
+        currentTranslate = ((calendar.monthsTranslate * calendar.inverter) + percentage) * 100;
+
+        // Transform wrapper
+        $wrapperEl.transform(`translate3d(${isH ? currentTranslate : 0}%, ${isH ? 0 : currentTranslate}%, 0)`);
+      }
+      function handleTouchEnd() {
+        if (!isTouched || !isMoved) {
+          isTouched = false;
+          isMoved = false;
+          return;
+        }
+        isTouched = false;
+        isMoved = false;
+
+        touchEndTime = new Date().getTime();
+        if (touchEndTime - touchStartTime < 300) {
+          if (Math.abs(touchesDiff) < 10) {
+            calendar.resetMonth();
+          } else if (touchesDiff >= 10) {
+            if (app.rtl) calendar.nextMonth();
+            else calendar.prevMonth();
+          } else if (app.rtl) calendar.prevMonth();
+          else calendar.nextMonth();
+        } else if (percentage <= -0.5) {
+          if (app.rtl) calendar.prevMonth();
+          else calendar.nextMonth();
+        } else if (percentage >= 0.5) {
+          if (app.rtl) calendar.nextMonth();
+          else calendar.prevMonth();
+        } else {
+          calendar.resetMonth();
+        }
+
+        // Allow click
+        setTimeout(() => {
+          allowItemClick = true;
+        }, 100);
+      }
+
+      function handleDayClick(e) {
+        if (!allowItemClick) return;
+        let $dayEl = $(e.target).parents('.calendar-day');
+        if ($dayEl.length === 0 && $(e.target).hasClass('calendar-day')) {
+          $dayEl = $(e.target);
+        }
+        if ($dayEl.length === 0) return;
+        if ($dayEl.hasClass('calendar-day-disabled')) return;
+        if (!calendar.params.rangePicker) {
+          if ($dayEl.hasClass('calendar-day-next')) calendar.nextMonth();
+          if ($dayEl.hasClass('calendar-day-prev')) calendar.prevMonth();
+        }
+        const dateYear = $dayEl.attr('data-year');
+        const dateMonth = $dayEl.attr('data-month');
+        const dateDay = $dayEl.attr('data-day');
+        calendar.emit(
+          'local::dayClick calendarDayClick',
+          calendar,
+          $dayEl[0],
+          dateYear,
+          dateMonth,
+          dateDay
+        );
+        if (!$dayEl.hasClass('calendar-day-selected') || calendar.params.multiple || calendar.params.rangePicker) {
+          calendar.addValue(new Date(dateYear, dateMonth, dateDay, 0, 0, 0));
+        }
+        if (calendar.params.closeOnSelect) {
+          if (
+            (calendar.params.rangePicker && calendar.value.length === 2) ||
+            !calendar.params.rangePicker
+          ) {
+            calendar.close();
+          }
+        }
+      }
+      function onNextMonthClick() {
+        calendar.nextMonth();
+      }
+      function onPrevMonthClick() {
+        calendar.prevMonth();
+      }
+      function onNextYearClick() {
+        calendar.nextYear();
+      }
+      function onPrevYearClick() {
+        calendar.prevYear();
+      }
+
+      const passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
+      // Selectors clicks
+      $el.find('.calendar-prev-month-button').on('click', onPrevMonthClick);
+      $el.find('.calendar-next-month-button').on('click', onNextMonthClick);
+      $el.find('.calendar-prev-year-button').on('click', onPrevYearClick);
+      $el.find('.calendar-next-year-button').on('click', onNextYearClick);
+      // Day clicks
+      $wrapperEl.on('click', handleDayClick);
+      // Touch events
+      {
+        if (calendar.params.touchMove) {
+          $wrapperEl.on(app.touchEvents.start, handleTouchStart, passiveListener);
+          app.on('touchmove:active', handleTouchMove);
+          app.on('touchend:passive', handleTouchEnd);
+        }
+      }
+
+      calendar.detachCalendarEvents = function detachCalendarEvents() {
+        $el.find('.calendar-prev-month-button').off('click', onPrevMonthClick);
+        $el.find('.calendar-next-month-button').off('click', onNextMonthClick);
+        $el.find('.calendar-prev-year-button').off('click', onPrevYearClick);
+        $el.find('.calendar-next-year-button').off('click', onNextYearClick);
+        $wrapperEl.off('click', handleDayClick);
+        {
+          if (calendar.params.touchMove) {
+            $wrapperEl.off(app.touchEvents.start, handleTouchStart, passiveListener);
+            app.off('touchmove:active', handleTouchMove);
+            app.off('touchend:passive', handleTouchEnd);
+          }
+        }
+      };
+    };
+
+    calendar.init();
+
     return calendar;
+  }
+  initInput() {
+    const calendar = this;
+    if (!calendar.$inputEl) return;
+    if (calendar.params.inputReadOnly) calendar.$inputEl.prop('readOnly', true);
+  }
+  isPopover() {
+    const calendar = this;
+    const { app, modal, params } = calendar;
+    if (params.openIn === 'sheet') return false;
+    if (modal && modal.type !== 'popover') return false;
+
+    if (!calendar.inline && calendar.inputEl) {
+      if (params.openIn === 'popover') return true;
+      else if (app.device.ios) {
+        return !!app.device.ipad;
+      } else if (app.width >= 768) {
+        return true;
+      }
+    }
+    return false;
+  }
+  formatDate(d) {
+    const calendar = this;
+    const date = new Date(d);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const month1 = month + 1;
+    const day = date.getDate();
+    const weekDay = date.getDay();
+    const { dateFormat, monthNames, monthNamesShort, dayNames, dayNamesShort } = calendar.params;
+
+    return dateFormat
+      .replace(/yyyy/g, year)
+      .replace(/yy/g, String(year).substring(2))
+      .replace(/mm/g, month1 < 10 ? `0${month1}` : month1)
+      .replace(/m(\W+)/g, `${month1}$1`)
+      .replace(/MM/g, monthNames[month])
+      .replace(/M(\W+)/g, `${monthNamesShort[month]}$1`)
+      .replace(/dd/g, day < 10 ? `0${day}` : day)
+      .replace(/d(\W+)/g, `${day}$1`)
+      .replace(/DD/g, dayNames[weekDay])
+      .replace(/D(\W+)/g, `${dayNamesShort[weekDay]}$1`);
+  }
+  formatValue() {
+    const calendar = this;
+    const { value } = calendar;
+    if (calendar.params.formatValue) {
+      return calendar.params.formatValue.call(calendar, value);
+    }
+    return value
+      .map(v => calendar.formatDate(v))
+      .join(calendar.params.rangePicker ? ' - ' : ', ');
+  }
+  addValue(newValue) {
+    const calendar = this;
+    const { multiple, rangePicker } = calendar.params;
+    if (multiple) {
+      if (!calendar.value) calendar.value = [];
+      let inValuesIndex;
+      for (let i = 0; i < calendar.value.length; i += 1) {
+        if (new Date(newValue).getTime() === new Date(calendar.value[i]).getTime()) {
+          inValuesIndex = i;
+        }
+      }
+      if (typeof inValuesIndex === 'undefined') {
+        calendar.value.push(newValue);
+      } else {
+        calendar.value.splice(inValuesIndex, 1);
+      }
+      calendar.updateValue();
+    } else if (rangePicker) {
+      if (!calendar.value) calendar.value = [];
+      if (calendar.value.length === 2 || calendar.value.length === 0) {
+        calendar.value = [];
+      }
+      if (calendar.value[0] !== newValue) calendar.value.push(newValue);
+      else calendar.value = [];
+      calendar.value.sort((a, b) => a - b);
+      calendar.updateValue();
+    } else {
+      calendar.value = [newValue];
+      calendar.updateValue();
+    }
+  }
+  setValue(values) {
+    const calendar = this;
+    calendar.value = values;
+    calendar.updateValue();
+  }
+  getValue() {
+    const calendar = this;
+    return calendar.value;
+  }
+  updateValue(onlyHeader) {
+    const calendar = this;
+    const {
+      $el,
+      $wrapperEl,
+      $inputEl,
+      value,
+      params,
+    } = calendar;
+    let i;
+    if ($el && $el.length > 0) {
+      $wrapperEl.find('.calendar-day-selected').removeClass('calendar-day-selected');
+      let valueDate;
+      if (params.rangePicker && value.length === 2) {
+        for (i = new Date(value[0]).getTime(); i <= new Date(value[1]).getTime(); i += 24 * 60 * 60 * 1000) {
+          valueDate = new Date(i);
+          $wrapperEl.find(`.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`).addClass('calendar-day-selected');
+        }
+      } else {
+        for (i = 0; i < calendar.value.length; i += 1) {
+          valueDate = new Date(value[i]);
+          $wrapperEl.find(`.calendar-day[data-date="${valueDate.getFullYear()}-${valueDate.getMonth()}-${valueDate.getDate()}"]`).addClass('calendar-day-selected');
+        }
+      }
+    }
+
+    calendar.emit('local::change calendarChange', calendar, value);
+
+    if (($inputEl && $inputEl.length) || params.header) {
+      const inputValue = calendar.formatValue(value);
+      if (params.header && $el && $el.length) {
+        $el.find('.calendar-selected-date').text(inputValue);
+      }
+      if ($inputEl && $inputEl.length && !onlyHeader) {
+        $inputEl.val(inputValue);
+        $inputEl.trigger('change');
+      }
+    }
+  }
+  updateCurrentMonthYear(dir) {
+    const calendar = this;
+    const { $months, $el, params } = calendar;
+    if (typeof dir === 'undefined') {
+      calendar.currentMonth = parseInt($months.eq(1).attr('data-month'), 10);
+      calendar.currentYear = parseInt($months.eq(1).attr('data-year'), 10);
+    } else {
+      calendar.currentMonth = parseInt($months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-month'), 10);
+      calendar.currentYear = parseInt($months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-year'), 10);
+    }
+    $el.find('.current-month-value').text(params.monthNames[calendar.currentMonth]);
+    $el.find('.current-year-value').text(calendar.currentYear);
+  }
+  update() {
+    const calendar = this;
+    const { currentYear, currentMonth, $wrapperEl } = calendar;
+    const currentDate = new Date(currentYear, currentMonth);
+    const prevMonthHtml = calendar.renderMonth(currentDate, 'prev');
+    const currentMonthHtml = calendar.renderMonth(currentDate);
+    const nextMonthHtml = calendar.renderMonth(currentDate, 'next');
+
+    $wrapperEl
+      .html(`${prevMonthHtml}${currentMonthHtml}${nextMonthHtml}`)
+      .transform('translate3d(0,0,0)');
+    calendar.$months = $wrapperEl.find('.calendar-month');
+    calendar.monthsTranslate = 0;
+    calendar.setMonthsTranslate();
+    calendar.$months.each((index, monthEl) => {
+      calendar.emit(
+        'local::monthAdd calendarMonthAdd',
+        monthEl
+      );
+    });
+  }
+  onMonthChangeStart(dir) {
+    const calendar = this;
+    const { $months, currentYear, currentMonth } = calendar;
+    calendar.updateCurrentMonthYear(dir);
+    $months.removeClass('calendar-month-current calendar-month-prev calendar-month-next');
+    const currentIndex = dir === 'next' ? $months.length - 1 : 0;
+
+    $months.eq(currentIndex).addClass('calendar-month-current');
+    $months.eq(dir === 'next' ? currentIndex - 1 : currentIndex + 1).addClass(dir === 'next' ? 'calendar-month-prev' : 'calendar-month-next');
+
+    calendar.emit(
+      'local::monthYearChangeStart calendarMonthYearChangeStart',
+      calendar,
+      currentYear,
+      currentMonth
+    );
+  }
+  onMonthChangeEnd(dir, rebuildBoth) {
+    const calendar = this;
+    const { currentYear, currentMonth, $wrapperEl, monthsTranslate } = calendar;
+    calendar.animating = false;
+    let nextMonthHtml;
+    let prevMonthHtml;
+    let currentMonthHtml;
+    $wrapperEl
+      .find('.calendar-month:not(.calendar-month-prev):not(.calendar-month-current):not(.calendar-month-next)')
+      .remove();
+
+    if (typeof dir === 'undefined') {
+      dir = 'next'; // eslint-disable-line
+      rebuildBoth = true; // eslint-disable-line
+    }
+    if (!rebuildBoth) {
+      currentMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), dir);
+    } else {
+      $wrapperEl.find('.calendar-month-next, .calendar-month-prev').remove();
+      prevMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), 'prev');
+      nextMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), 'next');
+    }
+    if (dir === 'next' || rebuildBoth) {
+      $wrapperEl.append(currentMonthHtml || nextMonthHtml);
+    }
+    if (dir === 'prev' || rebuildBoth) {
+      $wrapperEl.prepend(currentMonthHtml || prevMonthHtml);
+    }
+    const $months = $wrapperEl.find('.calendar-month');
+    calendar.$months = $months;
+    calendar.setMonthsTranslate(monthsTranslate);
+    calendar.emit(
+      'local::monthAdd calendarMonthAdd',
+      calendar,
+      dir === 'next' ? $months.eq($months.length - 1)[0] : $months.eq(0)[0]
+    );
+    calendar.emit(
+      'local::monthYearChangeEnd calendarMonthYearChangeEnd',
+      calendar,
+      currentYear,
+      currentMonth
+    );
+  }
+  setMonthsTranslate(translate) {
+    const calendar = this;
+    const { $months, isHorizontal: isH, inverter } = calendar;
+    // eslint-disable-next-line
+    translate = translate || calendar.monthsTranslate || 0;
+    if (typeof calendar.monthsTranslate === 'undefined') {
+      calendar.monthsTranslate = translate;
+    }
+    $months.removeClass('calendar-month-current calendar-month-prev calendar-month-next');
+    const prevMonthTranslate = -(translate + 1) * 100 * inverter;
+    const currentMonthTranslate = -translate * 100 * inverter;
+    const nextMonthTranslate = -(translate - 1) * 100 * inverter;
+    $months.eq(0)
+      .transform(`translate3d(${isH ? prevMonthTranslate : 0}%, ${isH ? 0 : prevMonthTranslate}%, 0)`)
+      .addClass('calendar-month-prev');
+    $months.eq(1)
+      .transform(`translate3d(${isH ? currentMonthTranslate : 0}%, ${isH ? 0 : currentMonthTranslate}%, 0)`)
+      .addClass('calendar-month-current');
+    $months.eq(2)
+      .transform(`translate3d(${isH ? nextMonthTranslate : 0}%, ${isH ? 0 : nextMonthTranslate}%, 0)`)
+      .addClass('calendar-month-next');
+  }
+  nextMonth(transition) {
+    const calendar = this;
+    const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
+    if (typeof transition === 'undefined' || typeof transition === 'object') {
+      transition = ''; // eslint-disable-line
+      if (!params.animate) transition = 0; // eslint-disable-line
+    }
+    const nextMonth = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-month'), 10);
+    const nextYear = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-year'), 10);
+    const nextDate = new Date(nextYear, nextMonth);
+    const nextDateTime = nextDate.getTime();
+    const transitionEndCallback = !calendar.animating;
+    if (params.maxDate) {
+      if (nextDateTime > new Date(params.maxDate).getTime()) {
+        calendar.resetMonth();
+        return;
+      }
+    }
+    calendar.monthsTranslate -= 1;
+    if (nextMonth === calendar.currentMonth) {
+      const nextMonthTranslate = -(calendar.monthsTranslate) * 100 * inverter;
+      const nextMonthHtml = $(calendar.renderMonth(nextDateTime, 'next'))
+        .transform(`translate3d(${isH ? nextMonthTranslate : 0}%, ${isH ? 0 : nextMonthTranslate}%, 0)`)
+        .addClass('calendar-month-next');
+      $wrapperEl.append(nextMonthHtml[0]);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      calendar.emit(
+        'local::monthAdd calendarMonthAdd',
+        calendar.$months.eq(calendar.$months.length - 1)[0]
+      );
+    }
+    calendar.animating = true;
+    calendar.onMonthChangeStart('next');
+    const translate = (calendar.monthsTranslate * 100) * inverter;
+
+    $wrapperEl.transition(transition).transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
+    if (transitionEndCallback) {
+      $wrapperEl.transitionEnd(() => {
+        calendar.onMonthChangeEnd('next');
+      });
+    }
+    if (!params.animate) {
+      calendar.onMonthChangeEnd('next');
+    }
+  }
+  prevMonth(transition) {
+    const calendar = this;
+    const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
+    if (typeof transition === 'undefined' || typeof transition === 'object') {
+      transition = ''; // eslint-disable-line
+      if (!params.animate) transition = 0; // eslint-disable-line
+    }
+    const prevMonth = parseInt(calendar.$months.eq(0).attr('data-month'), 10);
+    const prevYear = parseInt(calendar.$months.eq(0).attr('data-year'), 10);
+    const prevDate = new Date(prevYear, prevMonth + 1, -1);
+    const prevDateTime = prevDate.getTime();
+    const transitionEndCallback = !calendar.animating;
+    if (params.minDate) {
+      if (prevDateTime < new Date(params.minDate).getTime()) {
+        calendar.resetMonth();
+        return;
+      }
+    }
+    calendar.monthsTranslate += 1;
+    if (prevMonth === calendar.currentMonth) {
+      const prevMonthTranslate = -(calendar.monthsTranslate) * 100 * inverter;
+      const prevMonthHtml = $(calendar.renderMonth(prevDateTime, 'prev'))
+        .transform(`translate3d(${isH ? prevMonthTranslate : 0}%, ${isH ? 0 : prevMonthTranslate}%, 0)`)
+        .addClass('calendar-month-prev');
+      $wrapperEl.prepend(prevMonthHtml[0]);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      calendar.emit(
+        'local::monthAdd calendarMonthAdd',
+        calendar.$months.eq(0)[0]
+      );
+    }
+    calendar.animating = true;
+    calendar.onMonthChangeStart('prev');
+    const translate = (calendar.monthsTranslate * 100) * inverter;
+    $wrapperEl
+      .transition(transition)
+      .transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
+    if (transitionEndCallback) {
+      $wrapperEl.transitionEnd(() => {
+        calendar.onMonthChangeEnd('prev');
+      });
+    }
+    if (!params.animate) {
+      calendar.onMonthChangeEnd('prev');
+    }
+  }
+  resetMonth(transition = '') {
+    const calendar = this;
+    const { $wrapperEl, inverter, isHorizontal: isH, monthsTranslate } = calendar;
+    const translate = (monthsTranslate * 100) * inverter;
+    $wrapperEl
+      .transition(transition)
+      .transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
+  }
+  setYearMonth(year, month, transition) {
+    const calendar = this;
+    const { params, isHorizontal: isH, $wrapperEl, inverter } = calendar;
+    if (typeof year === 'undefined') year = calendar.currentYear;
+    if (typeof month === 'undefined') month = calendar.currentMonth;
+    if (typeof transition === 'undefined' || typeof transition === 'object') {
+      transition = '';
+      if (!params.animate) transition = 0;
+    }
+    let targetDate;
+    if (year < calendar.currentYear) {
+      targetDate = new Date(year, month + 1, -1).getTime();
+    } else {
+      targetDate = new Date(year, month).getTime();
+    }
+    if (params.maxDate && targetDate > new Date(params.maxDate).getTime()) {
+      return false;
+    }
+    if (params.minDate && targetDate < new Date(params.minDate).getTime()) {
+      return false;
+    }
+    const currentDate = new Date(calendar.currentYear, calendar.currentMonth).getTime();
+    const dir = targetDate > currentDate ? 'next' : 'prev';
+    const newMonthHTML = calendar.renderMonth(new Date(year, month));
+    calendar.monthsTranslate = calendar.monthsTranslate || 0;
+    const prevTranslate = calendar.monthsTranslate;
+    let monthTranslate;
+    const transitionEndCallback = !calendar.animating;
+    if (targetDate > currentDate) {
+      // To next
+      calendar.monthsTranslate -= 1;
+      if (!calendar.animating) calendar.$months.eq(calendar.$months.length - 1).remove();
+      $wrapperEl.append(newMonthHTML);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      monthTranslate = -(prevTranslate - 1) * 100 * inverter;
+      calendar.$months
+        .eq(calendar.$months.length - 1)
+        .transform(`translate3d(${isH ? monthTranslate : 0}%, ${isH ? 0 : monthTranslate}%, 0)`)
+        .addClass('calendar-month-next');
+    } else {
+      // To prev
+      calendar.monthsTranslate += 1;
+      if (!calendar.animating) calendar.$months.eq(0).remove();
+      $wrapperEl.prepend(newMonthHTML);
+      calendar.$months = $wrapperEl.find('.calendar-month');
+      monthTranslate = -(prevTranslate + 1) * 100 * inverter;
+      calendar.$months
+        .eq(0)
+        .transform(`translate3d(${isH ? monthTranslate : 0}%, ${isH ? 0 : monthTranslate}%, 0)`)
+        .addClass('calendar-month-prev');
+    }
+    calendar.emit(
+      'local::monthAdd calendarMonthAdd',
+      dir === 'next'
+        ? calendar.$months.eq(calendar.$months.length - 1)[0]
+        : calendar.$months.eq(0)[0]
+    );
+
+    calendar.animating = true;
+    calendar.onMonthChangeStart(dir);
+    const wrapperTranslate = (calendar.monthsTranslate * 100) * inverter;
+    $wrapperEl
+      .transition(transition)
+      .transform(`translate3d(${isH ? wrapperTranslate : 0}%, ${isH ? 0 : wrapperTranslate}%, 0)`);
+    if (transitionEndCallback) {
+      $wrapperEl.transitionEnd(() => {
+        calendar.onMonthChangeEnd(dir, true);
+      });
+    }
+    if (!params.animate) {
+      calendar.onMonthChangeEnd(dir);
+    }
+  }
+  nextYear() {
+    const calendar = this;
+    calendar.setYearMonth(calendar.currentYear + 1);
+  }
+  prevYear() {
+    const calendar = this;
+    calendar.setYearMonth(calendar.currentYear - 1);
+  }
+  // eslint-disable-next-line
+  dateInRange(dayDate, range) {
+    let match = false;
+    let i;
+    if (!range) return false;
+    if (Array.isArray(range)) {
+      for (i = 0; i < range.length; i += 1) {
+        if (range[i].from || range[i].to) {
+          if (range[i].from && range[i].to) {
+            if ((dayDate <= new Date(range[i].to).getTime()) && (dayDate >= new Date(range[i].from).getTime())) {
+              match = true;
+            }
+          } else if (range[i].from) {
+            if (dayDate >= new Date(range[i].from).getTime()) {
+              match = true;
+            }
+          } else if (range[i].to) {
+            if (dayDate <= new Date(range[i].to).getTime()) {
+              match = true;
+            }
+          }
+        } else if (dayDate === new Date(range[i]).getTime()) {
+          match = true;
+        }
+      }
+    } else if (range.from || range.to) {
+      if (range.from && range.to) {
+        if ((dayDate <= new Date(range.to).getTime()) && (dayDate >= new Date(range.from).getTime())) {
+          match = true;
+        }
+      } else if (range.from) {
+        if (dayDate >= new Date(range.from).getTime()) {
+          match = true;
+        }
+      } else if (range.to) {
+        if (dayDate <= new Date(range.to).getTime()) {
+          match = true;
+        }
+      }
+    } else if (typeof range === 'function') {
+      match = range(new Date(dayDate));
+    }
+    return match;
+  }
+  // eslint-disable-next-line
+  daysInMonth(date) {
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  }
+  renderMonths(date) {
+    const calendar = this;
+    if (calendar.params.renderMonths) {
+      return calendar.params.renderMonths.call(calendar, date);
+    }
+    return `
+      <div class="calendar-months-wrapper">
+        ${calendar.renderMonth(date, 'prev')}
+        ${calendar.renderMonth(date)}
+        ${calendar.renderMonth(date, 'next')}
+      </div>
+    `.trim();
+  }
+  renderMonth(d, offset) {
+    const calendar = this;
+    const { params, value } = calendar;
+    if (params.renderMonth) {
+      return params.renderMonth.call(calendar, d, offset);
+    }
+    let date = new Date(d);
+    let year = date.getFullYear();
+    let month = date.getMonth();
+
+    if (offset === 'next') {
+      if (month === 11) date = new Date(year + 1, 0);
+      else date = new Date(year, month + 1, 1);
+    }
+    if (offset === 'prev') {
+      if (month === 0) date = new Date(year - 1, 11);
+      else date = new Date(year, month - 1, 1);
+    }
+    if (offset === 'next' || offset === 'prev') {
+      month = date.getMonth();
+      year = date.getFullYear();
+    }
+
+    const currentValues = [];
+    const today = new Date().setHours(0, 0, 0, 0);
+    const minDate = params.minDate ? new Date(params.minDate).getTime() : null;
+    const maxDate = params.maxDate ? new Date(params.maxDate).getTime() : null;
+    const rows = 6;
+    const cols = 7;
+    const daysInPrevMonth = calendar.daysInMonth(new Date(date.getFullYear(), date.getMonth()).getTime() - (10 * 24 * 60 * 60 * 1000));
+    const daysInMonth = calendar.daysInMonth(date);
+    const minDayNumber = params.firstDay === 6 ? 0 : 1;
+
+    let monthHtml = '';
+    let dayIndex = 0 + (params.firstDay - 1);
+    let disabled;
+    let hasEvent;
+    let firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay();
+    if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7;
+
+    if (value && value.length) {
+      for (let i = 0; i < value.length; i += 1) {
+        currentValues.push(new Date(value[i]).setHours(0, 0, 0, 0));
+      }
+    }
+
+    for (let row = 1; row <= rows; row += 1) {
+      let rowHtml = '';
+      for (let col = 1; col <= cols; col += 1) {
+        dayIndex += 1;
+        let dayDate;
+        let dayNumber = dayIndex - firstDayOfMonthIndex;
+        let addClass = '';
+        if (row === 1 && col === 1 && dayNumber > minDayNumber && params.firstDay !== 1) {
+          dayIndex -= 7;
+          dayNumber = dayIndex - firstDayOfMonthIndex;
+        }
+
+        const weekDayIndex = ((col - 1) + params.firstDay > 6)
+          ? ((col - 1 - 7) + params.firstDay)
+          : ((col - 1) + params.firstDay);
+
+        if (dayNumber < 0) {
+          dayNumber = daysInPrevMonth + dayNumber + 1;
+          addClass += ' calendar-day-prev';
+          dayDate = new Date(month - 1 < 0 ? year - 1 : year, month - 1 < 0 ? 11 : month - 1, dayNumber).getTime();
+        } else {
+          dayNumber += 1;
+          if (dayNumber > daysInMonth) {
+            dayNumber -= daysInMonth;
+            addClass += ' calendar-day-next';
+            dayDate = new Date(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime();
+          } else {
+            dayDate = new Date(year, month, dayNumber).getTime();
+          }
+        }
+        // Today
+        if (dayDate === today) addClass += ' calendar-day-today';
+
+        // Selected
+        if (params.rangePicker && currentValues.length === 2) {
+          if (dayDate >= currentValues[0] && dayDate <= currentValues[1]) addClass += ' calendar-day-selected';
+        } else if (currentValues.indexOf(dayDate) >= 0) addClass += ' calendar-day-selected';
+        // Weekend
+        if (params.weekendDays.indexOf(weekDayIndex) >= 0) {
+          addClass += ' calendar-day-weekend';
+        }
+        // Has Events
+        hasEvent = false;
+        if (params.events) {
+          if (calendar.dateInRange(dayDate, params.events)) {
+            hasEvent = true;
+          }
+        }
+        if (hasEvent) {
+          addClass += ' calendar-day-has-events';
+        }
+        // Custom Ranges
+        if (params.rangesClasses) {
+          for (let k = 0; k < params.rangesClasses.length; k += 1) {
+            if (calendar.dateInRange(dayDate, params.rangesClasses[k].range)) {
+              addClass += ` ${params.rangesClasses[k].cssClass}`;
+            }
+          }
+        }
+        // Disabled
+        disabled = false;
+        if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
+          disabled = true;
+        }
+        if (params.disabled) {
+          if (calendar.dateInRange(dayDate, params.disabled)) {
+            disabled = true;
+          }
+        }
+        if (disabled) {
+          addClass += ' calendar-day-disabled';
+        }
+
+        dayDate = new Date(dayDate);
+        const dayYear = dayDate.getFullYear();
+        const dayMonth = dayDate.getMonth();
+        rowHtml += `
+          <div data-year="${dayYear}" data-month="${dayMonth}" data-day="${dayNumber}" class="calendar-day${addClass}" data-date="${dayYear}-${dayMonth}-${dayNumber}">
+            <span>${dayNumber}</span>
+          </div>`.trim();
+      }
+      monthHtml += `<div class="calendar-row">${rowHtml}</div>`;
+    }
+    monthHtml = `<div class="calendar-month" data-year="${year}" data-month="${month}">${monthHtml}</div>`;
+    return monthHtml;
+  }
+  renderWeekHeader() {
+    const calendar = this;
+    if (calendar.params.renderWeekHeader) {
+      return calendar.params.renderWeekHeader.call(calendar);
+    }
+    const { params } = calendar;
+    let weekDaysHtml = '';
+    for (let i = 0; i < 7; i += 1) {
+      const dayIndex = (i + params.firstDay > 6)
+        ? ((i - 7) + params.firstDay)
+        : (i + params.firstDay);
+      const dayName = params.dayNamesShort[dayIndex];
+      weekDaysHtml += `<div class="calendar-week-day">${dayName}</div>`;
+    }
+    return `
+      <div class="calendar-week-header">
+        ${weekDaysHtml}
+      </div>
+    `.trim();
+  }
+  renderMonthSelector() {
+    const calendar = this;
+    const app = calendar.app;
+    if (calendar.params.renderMonthSelector) {
+      return calendar.params.renderMonthSelector.call(calendar);
+    }
+
+    const iconColor = app.theme === 'md' ? 'color-black' : '';
+    return `
+      <div class="calendar-month-selector">
+        <a href="#" class="link icon-only calendar-prev-month-button">
+          <i class="icon icon-prev ${iconColor}"></i>
+        </a>
+        <span class="current-month-value"></span>
+        <a href="#" class="link icon-only calendar-next-month-button">
+          <i class="icon icon-next ${iconColor}"></i>
+        </a>
+      </div>
+    `.trim();
+  }
+  renderYearSelector() {
+    const calendar = this;
+    const app = calendar.app;
+    if (calendar.params.renderYearSelector) {
+      return calendar.params.renderYearSelector.call(calendar);
+    }
+
+    const iconColor = app.theme === 'md' ? 'color-black' : '';
+    return `
+      <div class="calendar-year-selector">
+        <a href="#" class="link icon-only calendar-prev-year-button">
+          <i class="icon icon-prev ${iconColor}"></i>
+        </a>
+        <span class="current-year-value"></span>
+        <a href="#" class="link icon-only calendar-next-year-button">
+          <i class="icon icon-next ${iconColor}"></i>
+        </a>
+      </div>
+    `.trim();
+  }
+  renderHeader() {
+    const calendar = this;
+    if (calendar.params.renderHeader) {
+      return calendar.params.renderHeader.call(calendar);
+    }
+    return `
+      <div class="calendar-header">
+        <div class="calendar-selected-date">${calendar.params.headerPlaceholder}</div>
+      </div>
+    `.trim();
+  }
+  renderFooter() {
+    const calendar = this;
+    const app = calendar.app;
+    if (calendar.params.renderFooter) {
+      return calendar.params.renderFooter.call(calendar);
+    }
+    return `
+      <div class="calendar-footer">
+        <a href="#" class="${app.theme === 'md' ? 'button' : 'link'} calendar-close sheet-close popover-close">${calendar.params.toolbarCloseText}</a>
+      </div>
+    `.trim();
+  }
+  renderToolbar() {
+    const calendar = this;
+    if (calendar.params.renderToolbar) {
+      return calendar.params.renderToolbar.call(calendar, calendar);
+    }
+    return `
+      <div class="toolbar no-shadow">
+        <div class="toolbar-inner">
+          ${calendar.renderMonthSelector()}
+          ${calendar.renderYearSelector()}
+        </div>
+      </div>
+    `.trim();
+  }
+  // eslint-disable-next-line
+  renderInline() {
+    const calendar = this;
+    const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
+    const { value } = calendar;
+    const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    const inlineHtml = `
+      <div class="calendar calendar-inline ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
+        ${header ? calendar.renderHeader() : ''}
+        ${toolbar ? calendar.renderToolbar() : ''}
+        ${weekHeader ? calendar.renderWeekHeader() : ''}
+        <div class="calendar-months">
+          ${calendar.renderMonths(date)}
+        </div>
+        ${footer ? calendar.renderFooter() : ''}
+      </div>
+    `.trim();
+
+    return inlineHtml;
+  }
+  renderCustomModal() {
+    const calendar = this;
+    const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
+    const { value } = calendar;
+    const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    const sheetHtml = `
+      <div class="calendar calendar-modal ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
+        ${header ? calendar.renderHeader() : ''}
+        ${toolbar ? calendar.renderToolbar() : ''}
+        ${weekHeader ? calendar.renderWeekHeader() : ''}
+        <div class="calendar-months">
+          ${calendar.renderMonths(date)}
+        </div>
+        ${footer ? calendar.renderFooter() : ''}
+      </div>
+    `.trim();
+
+    return sheetHtml;
+  }
+  renderSheet() {
+    const calendar = this;
+    const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
+    const { value } = calendar;
+    const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    const sheetHtml = `
+      <div class="sheet-modal calendar calendar-sheet ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
+        ${header ? calendar.renderHeader() : ''}
+        ${toolbar ? calendar.renderToolbar() : ''}
+        ${weekHeader ? calendar.renderWeekHeader() : ''}
+        <div class="sheet-modal-inner calendar-months">
+          ${calendar.renderMonths(date)}
+        </div>
+        ${footer ? calendar.renderFooter() : ''}
+      </div>
+    `.trim();
+
+    return sheetHtml;
+  }
+  renderPopover() {
+    const calendar = this;
+    const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
+    const { value } = calendar;
+    const date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+    const popoverHtml = `
+      <div class="popover calendar-popover">
+        <div class="popover-inner">
+          <div class="calendar ${rangePicker ? 'calendar-range' : ''} ${cssClass || ''}">
+            ${header ? calendar.renderHeader() : ''}
+            ${toolbar ? calendar.renderToolbar() : ''}
+            ${weekHeader ? calendar.renderWeekHeader() : ''}
+            <div class="calendar-months">
+              ${calendar.renderMonths(date)}
+            </div>
+            ${footer ? calendar.renderFooter() : ''}
+          </div>
+        </div>
+      </div>
+    `.trim();
+
+    return popoverHtml;
+  }
+  render() {
+    const calendar = this;
+    const { params } = calendar;
+    if (params.render) return params.render.call(calendar);
+    if (!calendar.inline) {
+      let modalType = params.openIn;
+      if (modalType === 'auto') modalType = calendar.isPopover() ? 'popover' : 'sheet';
+
+      if (modalType === 'popover') return calendar.renderPopover();
+      else if (modalType === 'sheet') return calendar.renderSheet();
+      return calendar.renderCustomModal();
+    }
+    return calendar.renderInline();
+  }
+  onOpen() {
+    const calendar = this;
+    const { initialized, $el, app, $inputEl, inline, value, params } = calendar;
+    calendar.opened = true;
+
+    // Init main events
+    calendar.attachCalendarEvents();
+
+    const updateValue = !value && params.value;
+
+    // Set value
+    if (!initialized) {
+      if (value) calendar.setValue(value, 0);
+      else if (params.value) {
+        calendar.setValue(params.value, 0);
+      }
+    } else if (value) {
+      calendar.setValue(value, 0);
+    }
+
+    // Update current month and year
+    calendar.updateCurrentMonthYear();
+
+    // Set initial translate
+    calendar.monthsTranslate = 0;
+    calendar.setMonthsTranslate();
+
+    // Update input value
+    if (updateValue) calendar.updateValue();
+    else if (app.theme === 'md' && value) calendar.updateValue(true);
+
+    // Extra focus
+    if (!inline && $inputEl.length && app.theme === 'md') {
+      $inputEl.trigger('focus');
+    }
+
+    calendar.initialized = true;
+
+    calendar.$months.each((index, monthEl) => {
+      calendar.emit('local::monthAdd calendarMonthAdd', monthEl);
+    });
+
+    // Trigger events
+    if ($el) {
+      $el.trigger('calendar:open', calendar);
+    }
+    if ($inputEl) {
+      $inputEl.trigger('calendar:open', calendar);
+    }
+    calendar.emit('local::open calendarOpen', calendar);
+  }
+  onOpened() {
+    const calendar = this;
+    if (calendar.$el) {
+      calendar.$el.trigger('calendar:opened', calendar);
+    }
+    if (calendar.$inputEl) {
+      calendar.$inputEl.trigger('calendar:opened', calendar);
+    }
+    calendar.emit('local::opened calendarOpened', calendar);
+  }
+  onClose() {
+    const calendar = this;
+    const app = calendar.app;
+
+    if (calendar.$inputEl && app.theme === 'md') {
+      calendar.$inputEl.trigger('blur');
+    }
+    if (calendar.detachCalendarEvents) {
+      calendar.detachCalendarEvents();
+    }
+
+    if (calendar.$el) {
+      calendar.$el.trigger('calendar:close', calendar);
+    }
+    if (calendar.$inputEl) {
+      calendar.$inputEl.trigger('calendar:close', calendar);
+    }
+    calendar.emit('local::close calendarClose', calendar);
+  }
+  onClosed() {
+    const calendar = this;
+    calendar.opened = false;
+
+    if (!calendar.inline) {
+      Utils.nextTick(() => {
+        if (calendar.modal && calendar.modal.el && calendar.modal.destroy) {
+          if (!calendar.params.routableModals) {
+            calendar.modal.destroy();
+          }
+        }
+        delete calendar.modal;
+      });
+    }
+    if (calendar.$el) {
+      calendar.$el.trigger('calendar:closed', calendar);
+    }
+    if (calendar.$inputEl) {
+      calendar.$inputEl.trigger('calendar:closed', calendar);
+    }
+    calendar.emit('local::closed calendarClosed', calendar);
+  }
+  open() {
+    const calendar = this;
+    const { app, opened, inline, $inputEl, params } = calendar;
+    if (opened) return;
+
+    if (inline) {
+      calendar.$el = $(calendar.render());
+      calendar.$el[0].f7Calendar = calendar;
+      calendar.$wrapperEl = calendar.$el.find('.calendar-months-wrapper');
+      calendar.$months = calendar.$wrapperEl.find('.calendar-month');
+      calendar.$containerEl.append(calendar.$el);
+      calendar.onOpen();
+      calendar.onOpened();
+      return;
+    }
+    let modalType = params.openIn;
+    if (modalType === 'auto') {
+      modalType = calendar.isPopover() ? 'popover' : 'sheet';
+    }
+    const modalContent = calendar.render();
+
+    const modalParams = {
+      targetEl: $inputEl,
+      scrollToEl: calendar.params.scrollToInput ? $inputEl : undefined,
+      content: modalContent,
+      backdrop: modalType !== 'sheet',
+      on: {
+        open() {
+          const modal = this;
+          calendar.modal = modal;
+          calendar.$el = modalType === 'popover' ? modal.$el.find('.calendar') : modal.$el;
+          calendar.$wrapperEl = calendar.$el.find('.calendar-months-wrapper');
+          calendar.$months = calendar.$wrapperEl.find('.calendar-month');
+          calendar.$el[0].f7Calendar = calendar;
+          if (modalType === 'customModal') {
+            $(calendar.$el).find('.calendar-close').once('click', () => {
+              calendar.close();
+            });
+          }
+          calendar.onOpen();
+        },
+        opened() { calendar.onOpened(); },
+        close() { calendar.onClose(); },
+        closed() { calendar.onClosed(); },
+      },
+    };
+    if (calendar.params.routableModals) {
+      calendar.view.router.navigate(calendar.url, {
+        createRoute: {
+          path: calendar.url,
+          [modalType]: modalParams,
+        },
+      });
+    } else {
+      calendar.modal = app[modalType].create(modalParams);
+      calendar.modal.open();
+    }
+  }
+  close() {
+    const calendar = this;
+    const { opened, inline } = calendar;
+    if (!opened) return;
+    if (inline) {
+      calendar.onClose();
+      calendar.onClosed();
+      return;
+    }
+    if (calendar.params.routableModals) {
+      calendar.view.router.back();
+    } else {
+      calendar.modal.close();
+    }
+  }
+  init() {
+    const calendar = this;
+
+    calendar.initInput();
+
+    if (calendar.inline) {
+      calendar.open();
+      calendar.emit('local::init calendarInit', calendar);
+      return;
+    }
+
+    if (!calendar.initialized && calendar.params.value) {
+      calendar.setValue(calendar.params.value);
+    }
+
+    // Attach input Events
+    if (calendar.$inputEl) {
+      calendar.attachInputEvents();
+    }
+    if (calendar.params.closeByOutsideClick) {
+      calendar.attachHtmlEvents();
+    }
+    calendar.emit('local::init calendarInit', calendar);
+  }
+  destroy() {
+    const calendar = this;
+    if (calendar.destroyed) return;
+    const { $el } = calendar;
+    calendar.emit('local::beforeDestroy calendarBeforeDestroy', calendar);
+    if ($el) $el.trigger('calendar:beforedestroy', calendar);
+
+    calendar.close();
+
+    // Detach Events
+    if (calendar.$inputEl) {
+      calendar.detachInputEvents();
+    }
+    if (calendar.params.closeByOutsideClick) {
+      calendar.detachHtmlEvents();
+    }
+
+    if ($el && $el.length) delete calendar.$el[0].f7Calendar;
+    Utils.deleteProps(calendar);
+    calendar.destroyed = true;
   }
 }
 
-var Calendar = {
+var calendar = {
   name: 'calendar',
   static: {
-    Calendar: Calendar$1,
+    Calendar,
   },
-  instance: {
-    calendar(params) {
-      return new Calendar$1(this, params);
+  create() {
+    const app = this;
+    app.calendar = ConstructorMethods({
+      defaultSelector: '.calendar',
+      constructor: Calendar,
+      app,
+      domProp: 'f7Calendar',
+    });
+    app.calendar.close = function close(el = '.calendar') {
+      const $el = $(el);
+      if ($el.length === 0) return;
+      const calendar = $el[0].f7Calendar;
+      if (!calendar || (calendar && !calendar.opened)) return;
+      calendar.close();
+    };
+  },
+  params: {
+    calendar: {
+      // Calendar settings
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      firstDay: 1, // First day of the week, Monday
+      weekendDays: [0, 6], // Sunday and Saturday
+      multiple: false,
+      rangePicker: false,
+      dateFormat: 'yyyy-mm-dd',
+      direction: 'horizontal', // or 'vertical'
+      minDate: null,
+      maxDate: null,
+      disabled: null, // dates range of disabled days
+      events: null, // dates range of days with events
+      rangesClasses: null, // array with custom classes date ranges
+      touchMove: true,
+      animate: true,
+      closeOnSelect: false,
+      monthSelector: true,
+      yearSelector: true,
+      weekHeader: true,
+      value: null,
+      // Common opener settings
+      containerEl: null,
+      openIn: 'auto', // or 'popover' or 'sheet' or 'customModal'
+      formatValue: null,
+      inputEl: null,
+      inputReadOnly: true,
+      closeByOutsideClick: true,
+      scrollToInput: true,
+      header: false,
+      headerPlaceholder: 'Select date',
+      footer: false,
+      toolbar: true,
+      toolbarCloseText: 'Done',
+      cssClass: null,
+      routableModals: true,
+      view: null,
+      url: 'date',
+      // Render functions
+      renderWeekHeader: null,
+      renderMonths: null,
+      renderMonth: null,
+      renderMonthSelector: null,
+      renderYearSelector: null,
+      renderHeader: null,
+      renderFooter: null,
+      renderToolbar: null,
+      renderInline: null,
+      renderPopover: null,
+      renderSheet: null,
+      render: null,
     },
   },
 };
 
-class Picker$1 extends Framework7Class {
-  constructor(app, params = {}) {
-    super(params);
-    const picker = this;
-    picker.params = Utils.extend({
+var pickerColumn = function (colEl, updateItems) {
+  const picker = this;
+  const app = picker.app;
+  const $colEl = $(colEl);
+  const colIndex = $colEl.index();
+  const col = picker.cols[colIndex];
+  if (col.divider) return;
 
-    }, params);
+  col.$el = $colEl;
+  col.$itemsEl = col.$el.find('.picker-items');
+  col.items = col.$itemsEl.find('.picker-item');
+
+  let itemHeight;
+  let itemsHeight;
+  let minTranslate;
+  let maxTranslate;
+  let animationFrameId;
+
+  function updateDuringScroll() {
+    animationFrameId = Utils.requestAnimationFrame(() => {
+      col.updateItems(undefined, undefined, 0);
+      updateDuringScroll();
+    });
+  }
+
+  col.replaceValues = function replaceColValues(values, displayValues) {
+    col.detachEvents();
+    col.values = values;
+    col.displayValues = displayValues;
+    col.$itemsEl.html(picker.renderColumn(col, true));
+    col.items = col.$itemsEl.find('.picker-item');
+    col.calcSize();
+    col.setValue(col.values[0], 0, true);
+    col.attachEvents();
+  };
+  col.calcSize = function calcColSize() {
+    if (picker.params.rotateEffect) {
+      col.$el.removeClass('picker-column-absolute');
+      if (!col.width) col.$el.css({ width: '' });
+    }
+    let colWidth = 0;
+    const colHeight = col.$el[0].offsetHeight;
+    itemHeight = col.items[0].offsetHeight;
+    itemsHeight = itemHeight * col.items.length;
+    minTranslate = ((colHeight / 2) - itemsHeight) + (itemHeight / 2);
+    maxTranslate = (colHeight / 2) - (itemHeight / 2);
+    if (col.width) {
+      colWidth = col.width;
+      if (parseInt(colWidth, 10) === colWidth) colWidth += 'px';
+      col.$el.css({ width: colWidth });
+    }
+    if (picker.params.rotateEffect) {
+      if (!col.width) {
+        col.items.each((index, itemEl) => {
+          const item = $(itemEl).children('span');
+          colWidth = Math.max(colWidth, item[0].offsetWidth);
+        });
+        col.$el.css({ width: `${colWidth + 2}px` });
+      }
+      col.$el.addClass('picker-column-absolute');
+    }
+  };
+
+  col.setValue = function setColValue(newValue, transition = '', valueCallbacks) {
+    const newActiveIndex = col.$itemsEl.find(`.picker-item[data-picker-value="${newValue}"]`).index();
+    if (typeof newActiveIndex === 'undefined' || newActiveIndex === -1) {
+      return;
+    }
+    const newTranslate = (-newActiveIndex * itemHeight) + maxTranslate;
+    // Update wrapper
+    col.$itemsEl.transition(transition);
+    col.$itemsEl.transform(`translate3d(0,${newTranslate}px,0)`);
+
+    // Watch items
+    if (picker.params.updateValuesOnMomentum && col.activeIndex && col.activeIndex !== newActiveIndex) {
+      Utils.cancelAnimationFrame(animationFrameId);
+      col.$itemsEl.transitionEnd(() => {
+        Utils.cancelAnimationFrame(animationFrameId);
+      });
+      updateDuringScroll();
+    }
+
+    // Update items
+    col.updateItems(newActiveIndex, newTranslate, transition, valueCallbacks);
+  };
+
+  col.updateItems = function updateColItems(activeIndex, translate, transition, valueCallbacks) {
+    if (typeof translate === 'undefined') {
+      // eslint-disable-next-line
+      translate = Utils.getTranslate(col.$itemsEl[0], 'y');
+    }
+    // eslint-disable-next-line
+    if (typeof activeIndex === 'undefined') activeIndex = -Math.round((translate - maxTranslate) / itemHeight);
+    // eslint-disable-next-line
+    if (activeIndex < 0) activeIndex = 0;
+    // eslint-disable-next-line
+    if (activeIndex >= col.items.length) activeIndex = col.items.length - 1;
+    const previousActiveIndex = col.activeIndex;
+    col.activeIndex = activeIndex;
+    col.$itemsEl.find('.picker-item-selected').removeClass('picker-item-selected');
+
+    col.items.transition(transition);
+
+    const selectedItem = col.items.eq(activeIndex).addClass('picker-item-selected').transform('');
+
+    // Set 3D rotate effect
+    if (picker.params.rotateEffect) {
+      col.items.each((index, itemEl) => {
+        const $itemEl = $(itemEl);
+        const itemOffsetTop = $itemEl.index() * itemHeight;
+        const translateOffset = maxTranslate - translate;
+        const itemOffset = itemOffsetTop - translateOffset;
+        const percentage = itemOffset / itemHeight;
+        const itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
+
+        let angle = (-18 * percentage);
+        if (angle > 180) angle = 180;
+        if (angle < -180) angle = -180;
+        if (Math.abs(percentage) > itemsFit) {
+          $itemEl.addClass('picker-item-far');
+        } else {
+          $itemEl.removeClass('picker-item-far');
+        }
+        $itemEl.transform(`translate3d(0, ${-translate + maxTranslate}px, ${picker.needsOriginFix ? -110 : 0}px) rotateX(${angle}deg)`);
+      });
+    }
+
+    if (valueCallbacks || typeof valueCallbacks === 'undefined') {
+      // Update values
+      col.value = selectedItem.attr('data-picker-value');
+      col.displayValue = col.displayValues ? col.displayValues[activeIndex] : col.value;
+      // On change callback
+      if (previousActiveIndex !== activeIndex) {
+        if (col.onChange) {
+          col.onChange(picker, col.value, col.displayValue);
+        }
+        picker.updateValue();
+      }
+    }
+  };
+
+  let allowItemClick = true;
+  let isTouched;
+  let isMoved;
+  let touchStartY;
+  let touchCurrentY;
+  let touchStartTime;
+  let touchEndTime;
+  let startTranslate;
+  let returnTo;
+  let currentTranslate;
+  let prevTranslate;
+  let velocityTranslate;
+  function handleTouchStart(e) {
+    if (isMoved || isTouched) return;
+    e.preventDefault();
+    isTouched = true;
+    touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+    touchCurrentY = touchStartY;
+    touchStartTime = (new Date()).getTime();
+
+    allowItemClick = true;
+    startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+    currentTranslate = startTranslate;
+  }
+  function handleTouchMove(e) {
+    if (!isTouched) return;
+    e.preventDefault();
+    allowItemClick = false;
+    touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+    if (!isMoved) {
+      // First move
+      Utils.cancelAnimationFrame(animationFrameId);
+      isMoved = true;
+      startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+      currentTranslate = startTranslate;
+      col.$itemsEl.transition(0);
+    }
+
+    const diff = touchCurrentY - touchStartY;
+    currentTranslate = startTranslate + diff;
+    returnTo = undefined;
+
+    // Normalize translate
+    if (currentTranslate < minTranslate) {
+      currentTranslate = minTranslate - ((minTranslate - currentTranslate) ** 0.8);
+      returnTo = 'min';
+    }
+    if (currentTranslate > maxTranslate) {
+      currentTranslate = maxTranslate + ((currentTranslate - maxTranslate) ** 0.8);
+      returnTo = 'max';
+    }
+    // Transform wrapper
+    col.$itemsEl.transform(`translate3d(0,${currentTranslate}px,0)`);
+
+    // Update items
+    col.updateItems(undefined, currentTranslate, 0, picker.params.updateValuesOnTouchmove);
+
+    // Calc velocity
+    velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
+    prevTranslate = currentTranslate;
+  }
+  function handleTouchEnd() {
+    if (!isTouched || !isMoved) {
+      isTouched = false;
+      isMoved = false;
+      return;
+    }
+    isTouched = false;
+    isMoved = false;
+    col.$itemsEl.transition('');
+    if (returnTo) {
+      if (returnTo === 'min') {
+        col.$itemsEl.transform(`translate3d(0,${minTranslate}px,0)`);
+      } else col.$itemsEl.transform(`translate3d(0,${maxTranslate}px,0)`);
+    }
+    touchEndTime = new Date().getTime();
+    let newTranslate;
+    if (touchEndTime - touchStartTime > 300) {
+      newTranslate = currentTranslate;
+    } else {
+      newTranslate = currentTranslate + (velocityTranslate * picker.params.momentumRatio);
+    }
+
+    newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
+
+    // Active Index
+    const activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
+
+    // Normalize translate
+    if (!picker.params.freeMode) newTranslate = (-activeIndex * itemHeight) + maxTranslate;
+
+    // Transform wrapper
+    col.$itemsEl.transform(`translate3d(0,${parseInt(newTranslate, 10)}px,0)`);
+
+    // Update items
+    col.updateItems(activeIndex, newTranslate, '', true);
+
+    // Watch items
+    if (picker.params.updateValuesOnMomentum) {
+      updateDuringScroll();
+      col.$itemsEl.transitionEnd(() => {
+        Utils.cancelAnimationFrame(animationFrameId);
+      });
+    }
+
+    // Allow click
+    setTimeout(() => {
+      allowItemClick = true;
+    }, 100);
+  }
+
+  function handleClick() {
+    if (!allowItemClick) return;
+    Utils.cancelAnimationFrame(animationFrameId);
+    const value = $(this).attr('data-picker-value');
+    col.setValue(value);
+  }
+
+  const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
+  col.attachEvents = function attachColEvents() {
+    col.$el.on(app.touchEvents.start, handleTouchStart, activeListener);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
+    col.items.on('click', handleClick);
+  };
+  col.detachEvents = function detachColEvents() {
+    col.$el.off(app.touchEvents.start, handleTouchStart, activeListener);
+    app.off('touchmove:active', handleTouchMove);
+    app.off('touchend:passive', handleTouchEnd);
+    col.items.off('click', handleClick);
+  };
+
+  col.init = function initCol() {
+    col.calcSize();
+    col.$itemsEl.transform(`translate3d(0,${maxTranslate}px,0)`).transition(0);
+    if (colIndex === 0) col.$el.addClass('picker-column-first');
+    if (colIndex === picker.cols.length - 1) col.$el.addClass('picker-column-last');
+    // Update items on init
+    if (updateItems) col.updateItems(0, maxTranslate, 0);
+
+    col.attachEvents();
+  };
+
+  col.destroy = function destroyCol() {
+    col.detachEvents();
+  };
+
+  col.init();
+};
+
+class Picker extends Framework7Class {
+  constructor(app, params = {}) {
+    super(params, [app]);
+    const picker = this;
+    picker.params = Utils.extend({}, app.params.picker, params);
+
+    let $containerEl;
+    if (picker.params.containerEl) {
+      $containerEl = $(picker.params.containerEl);
+      if ($containerEl.length === 0) return picker;
+    }
+
+    let $inputEl;
+    if (picker.params.inputEl) {
+      $inputEl = $(picker.params.inputEl);
+    }
+
+    let view;
+    if ($inputEl) {
+      view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view) view = app.views.main;
+
+    Utils.extend(picker, {
+      app,
+      $containerEl,
+      containerEl: $containerEl && $containerEl[0],
+      inline: $containerEl && $containerEl.length > 0,
+      needsOriginFix: app.device.ios || ((window.navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && window.navigator.userAgent.toLowerCase().indexOf('chrome') < 0) && !app.device.android),
+      cols: [],
+      $inputEl,
+      inputEl: $inputEl && $inputEl[0],
+      initialized: false,
+      opened: false,
+      url: picker.params.url,
+      view,
+    });
+
+    function onResize() {
+      picker.resizeCols();
+    }
+    function onInputClick() {
+      picker.open();
+    }
+    function onInputFocus(e) {
+      e.preventDefault();
+    }
+    function onHtmlClick(e) {
+      const $targetEl = $(e.target);
+      if (picker.isPopover()) return;
+      if (!picker.opened) return;
+      if ($targetEl.closest('[class*="backdrop"]').length) return;
+      if ($inputEl && $inputEl.length > 0) {
+        if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal').length === 0) {
+          picker.close();
+        }
+      } else if ($(e.target).closest('.sheet-modal').length === 0) {
+        picker.close();
+      }
+    }
+
+    // Events
+    Utils.extend(picker, {
+      attachResizeEvent() {
+        app.on('resize', onResize);
+      },
+      detachResizeEvent() {
+        app.off('resize', onResize);
+      },
+      attachInputEvents() {
+        picker.$inputEl.on('click', onInputClick);
+        if (picker.params.inputReadOnly) {
+          picker.$inputEl.on('focus mousedown', onInputFocus);
+        }
+      },
+      detachInputEvents() {
+        picker.$inputEl.off('click', onInputClick);
+        if (picker.params.inputReadOnly) {
+          picker.$inputEl.off('focus mousedown', onInputFocus);
+        }
+      },
+      attachHtmlEvents() {
+        app.on('click', onHtmlClick);
+      },
+      detachHtmlEvents() {
+        app.off('click', onHtmlClick);
+      },
+    });
+
+    picker.init();
+
     return picker;
+  }
+  initInput() {
+    const picker = this;
+    if (!picker.$inputEl) return;
+    if (picker.params.inputReadOnly) picker.$inputEl.prop('readOnly', true);
+  }
+  resizeCols() {
+    const picker = this;
+    if (!picker.opened) return;
+    for (let i = 0; i < picker.cols.length; i += 1) {
+      if (!picker.cols[i].divider) {
+        picker.cols[i].calcSize();
+        picker.cols[i].setValue(picker.cols[i].value, 0, false);
+      }
+    }
+  }
+  isPopover() {
+    const picker = this;
+    const { app, modal, params } = picker;
+    if (params.openIn === 'sheet') return false;
+    if (modal && modal.type !== 'popover') return false;
+
+    if (!picker.inline && picker.inputEl) {
+      if (params.openIn === 'popover') return true;
+      else if (app.device.ios) {
+        return !!app.device.ipad;
+      } else if (app.width >= 768) {
+        return true;
+      }
+    }
+    return false;
+  }
+  formatValue() {
+    const picker = this;
+    const { value, displayValue } = picker;
+    if (picker.params.formatValue) {
+      return picker.params.formatValue.call(picker, value, displayValue);
+    }
+    return value.join(' ');
+  }
+  setValue(values, transition) {
+    const picker = this;
+    let valueIndex = 0;
+    if (picker.cols.length === 0) {
+      picker.value = values;
+      picker.updateValue(values);
+      return;
+    }
+    for (let i = 0; i < picker.cols.length; i += 1) {
+      if (picker.cols[i] && !picker.cols[i].divider) {
+        picker.cols[i].setValue(values[valueIndex], transition);
+        valueIndex += 1;
+      }
+    }
+  }
+  getValue() {
+    const picker = this;
+    return picker.value;
+  }
+  updateValue(forceValues) {
+    const picker = this;
+    const newValue = forceValues || [];
+    const newDisplayValue = [];
+    let column;
+    if (picker.cols.length === 0) {
+      const noDividerColumns = picker.params.cols.filter(c => !c.divider);
+      for (let i = 0; i < noDividerColumns.length; i += 1) {
+        column = noDividerColumns[i];
+        if (column.displayValues !== undefined && column.values !== undefined && column.values.indexOf(newValue[i]) !== -1) {
+          newDisplayValue.push(column.displayValues[column.values.indexOf(newValue[i])]);
+        } else {
+          newDisplayValue.push(newValue[i]);
+        }
+      }
+    } else {
+      for (let i = 0; i < picker.cols.length; i += 1) {
+        if (!picker.cols[i].divider) {
+          newValue.push(picker.cols[i].value);
+          newDisplayValue.push(picker.cols[i].displayValue);
+        }
+      }
+    }
+
+    if (newValue.indexOf(undefined) >= 0) {
+      return;
+    }
+    picker.value = newValue;
+    picker.displayValue = newDisplayValue;
+    if (picker.params.onChange) {
+      picker.emit('local::change pickerChange', picker, picker.value, picker.displayValue);
+    }
+    if (picker.inputEl) {
+      picker.$inputEl.val(picker.formatValue());
+      picker.$inputEl.trigger('change');
+    }
+  }
+  initColumn(colEl, updateItems) {
+    const picker = this;
+    pickerColumn.call(picker, colEl, updateItems);
+  }
+  // eslint-disable-next-line
+  destroyColumn(colEl) {
+    const picker = this;
+    const $colEl = $(colEl);
+    const index = $colEl.index();
+    if (picker.cols[index] && picker.cols[index].destroy) {
+      picker.cols[index].destroy();
+    }
+  }
+  renderToolbar() {
+    const picker = this;
+    if (picker.params.renderToolbar) return picker.params.renderToolbar.call(picker, picker);
+    return `
+      <div class="toolbar no-shadow">
+        <div class="toolbar-inner">
+          <div class="left"></div>
+          <div class="right">
+            <a href="#" class="link sheet-close popover-close">${picker.params.toolbarCloseText}</a>
+          </div>
+        </div>
+      </div>
+    `.trim();
+  }
+  // eslint-disable-next-line
+  renderColumn(col, onlyItems) {
+    const colClasses = `picker-column ${col.textAlign ? `picker-column-${col.textAlign}` : ''} ${col.cssClass || ''}`;
+    let columnHtml;
+    let columnItemsHtml;
+
+    if (col.divider) {
+      columnHtml = `
+        <div class="${colClasses} picker-column-divider">${col.content}</div>
+      `;
+    } else {
+      columnItemsHtml = col.values.map((value, index) => `
+        <div class="picker-item" data-picker-value="${value}">
+          <span>${col.displayValues ? col.displayValues[index] : value}</span>
+        </div>
+      `).join('');
+      columnHtml = `
+        <div class="${colClasses}">
+          <div class="picker-items">${columnItemsHtml}</div>
+        </div>
+      `;
+    }
+
+    return onlyItems ? columnItemsHtml.trim() : columnHtml.trim();
+  }
+  renderInline() {
+    const picker = this;
+    const { rotateEffect, cssClass, toolbar } = picker.params;
+    const inlineHtml = `
+      <div class="picker picker-inline ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
+        ${toolbar ? picker.renderToolbar() : ''}
+        <div class="picker-columns">
+          ${picker.cols.map(col => picker.renderColumn(col)).join('')}
+          <div class="picker-center-highlight"></div>
+        </div>
+      </div>
+    `.trim();
+
+    return inlineHtml;
+  }
+  renderSheet() {
+    const picker = this;
+    const { rotateEffect, cssClass, toolbar } = picker.params;
+    const sheetHtml = `
+      <div class="sheet-modal picker picker-sheet ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
+        ${toolbar ? picker.renderToolbar() : ''}
+        <div class="sheet-modal-inner picker-columns">
+          ${picker.cols.map(col => picker.renderColumn(col)).join('')}
+          <div class="picker-center-highlight"></div>
+        </div>
+      </div>
+    `.trim();
+
+    return sheetHtml;
+  }
+  renderPopover() {
+    const picker = this;
+    const { rotateEffect, cssClass, toolbar } = picker.params;
+    const popoverHtml = `
+      <div class="popover picker-popover">
+        <div class="popover-inner">
+          <div class="picker ${rotateEffect ? 'picker-3d' : ''} ${cssClass || ''}">
+            ${toolbar ? picker.renderToolbar() : ''}
+            <div class="picker-columns">
+              ${picker.cols.map(col => picker.renderColumn(col)).join('')}
+              <div class="picker-center-highlight"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `.trim();
+
+    return popoverHtml;
+  }
+  render() {
+    const picker = this;
+    if (picker.params.render) return picker.params.render.call(picker);
+    if (!picker.inline) {
+      if (picker.isPopover()) return picker.renderPopover();
+      return picker.renderSheet();
+    }
+    return picker.renderInline();
+  }
+  onOpen() {
+    const picker = this;
+    const { initialized, $el, app, $inputEl, inline, value, params } = picker;
+    picker.opened = true;
+
+    // Init main events
+    picker.attachResizeEvent();
+
+    // Init cols
+    $el.find('.picker-column').each((index, colEl) => {
+      let updateItems = true;
+      if (
+        (!initialized && params.value) ||
+        (initialized && value)
+      ) {
+        updateItems = false;
+      }
+      picker.initColumn(colEl, updateItems);
+    });
+
+    // Set value
+    if (!initialized) {
+      if (value) picker.setValue(value, 0);
+      else if (params.value) {
+        picker.setValue(params.value, 0);
+      }
+    } else if (value) {
+      picker.setValue(value, 0);
+    }
+
+    // Extra focus
+    if (!inline && $inputEl.length && app.theme === 'md') {
+      $inputEl.trigger('focus');
+    }
+
+    picker.initialized = true;
+
+    // Trigger events
+    if ($el) {
+      $el.trigger('picker:open', picker);
+    }
+    if ($inputEl) {
+      $inputEl.trigger('picker:open', picker);
+    }
+    picker.emit('local::open pickerOpen', picker);
+  }
+  onOpened() {
+    const picker = this;
+
+    if (picker.$el) {
+      picker.$el.trigger('picker:opened', picker);
+    }
+    if (picker.$inputEl) {
+      picker.$inputEl.trigger('picker:opened', picker);
+    }
+    picker.emit('local::opened pickerOpened', picker);
+  }
+  onClose() {
+    const picker = this;
+    const app = picker.app;
+
+    // Detach events
+    picker.detachResizeEvent();
+
+    picker.cols.forEach((col) => {
+      if (col.destroy) col.destroy();
+    });
+    if (picker.$inputEl && app.theme === 'md') {
+      picker.$inputEl.trigger('blur');
+    }
+
+    if (picker.$el) {
+      picker.$el.trigger('picker:close', picker);
+    }
+    if (picker.$inputEl) {
+      picker.$inputEl.trigger('picker:close', picker);
+    }
+    picker.emit('local::close pickerClose', picker);
+  }
+  onClosed() {
+    const picker = this;
+    picker.opened = false;
+
+    if (!picker.inline) {
+      Utils.nextTick(() => {
+        if (picker.modal && picker.modal.el && picker.modal.destroy) {
+          if (!picker.params.routableModals) {
+            picker.modal.destroy();
+          }
+        }
+        delete picker.modal;
+      });
+    }
+
+    if (picker.$el) {
+      picker.$el.trigger('picker:closed', picker);
+    }
+    if (picker.$inputEl) {
+      picker.$inputEl.trigger('picker:closed', picker);
+    }
+    picker.emit('local::closed pickerClosed', picker);
+  }
+  open() {
+    const picker = this;
+    const { app, opened, inline, $inputEl } = picker;
+    if (opened) return;
+    if (picker.cols.length === 0 && picker.params.cols.length) {
+      picker.params.cols.forEach((col) => {
+        picker.cols.push(col);
+      });
+    }
+    if (inline) {
+      picker.$el = $(picker.render());
+      picker.$el[0].f7Picker = picker;
+      picker.$containerEl.append(picker.$el);
+      picker.onOpen();
+      picker.onOpened();
+      return;
+    }
+    const isPopover = picker.isPopover();
+    const modalType = isPopover ? 'popover' : 'sheet';
+    const modalParams = {
+      targetEl: $inputEl,
+      scrollToEl: picker.params.scrollToInput ? $inputEl : undefined,
+      content: picker.render(),
+      backdrop: isPopover,
+      on: {
+        open() {
+          const modal = this;
+          picker.modal = modal;
+          picker.$el = isPopover ? modal.$el.find('.picker') : modal.$el;
+          picker.$el[0].f7Picker = picker;
+          picker.onOpen();
+        },
+        opened() { picker.onOpened(); },
+        close() { picker.onClose(); },
+        closed() { picker.onClosed(); },
+      },
+    };
+    if (picker.params.routableModals) {
+      picker.view.router.navigate(picker.url, {
+        createRoute: {
+          path: picker.url,
+          [modalType]: modalParams,
+        },
+      });
+    } else {
+      picker.modal = app[modalType].create(modalParams);
+      picker.modal.open();
+    }
+  }
+  close() {
+    const picker = this;
+    const { opened, inline } = picker;
+    if (!opened) return;
+    if (inline) {
+      picker.onClose();
+      picker.onClosed();
+      return;
+    }
+    if (picker.params.routableModals) {
+      picker.view.router.back();
+    } else {
+      picker.modal.close();
+    }
+  }
+  init() {
+    const picker = this;
+
+    picker.initInput();
+
+    if (picker.inline) {
+      picker.open();
+      picker.emit('local::init pickerInit', picker);
+      return;
+    }
+
+    if (!picker.initialized && picker.params.value) {
+      picker.setValue(picker.params.value);
+    }
+
+    // Attach input Events
+    if (picker.$inputEl) {
+      picker.attachInputEvents();
+    }
+    if (picker.params.closeByOutsideClick) {
+      picker.attachHtmlEvents();
+    }
+    picker.emit('local::init pickerInit', picker);
+  }
+  destroy() {
+    const picker = this;
+    if (picker.destroyed) return;
+    const { $el } = picker;
+    picker.emit('local::beforeDestroy pickerBeforeDestroy', picker);
+    if ($el) $el.trigger('picker:beforedestroy', picker);
+
+    picker.close();
+
+    // Detach Events
+    if (picker.$inputEl) {
+      picker.detachInputEvents();
+    }
+    if (picker.params.closeByOutsideClick) {
+      picker.detachHtmlEvents();
+    }
+
+    if ($el && $el.length) delete picker.$el[0].f7Picker;
+    Utils.deleteProps(picker);
+    picker.destroyed = true;
   }
 }
 
-var Picker = {
+var picker = {
   name: 'picker',
   static: {
-    Picker: Picker$1,
+    Picker,
   },
-  instance: {
-    picker(params) {
-      return new Picker$1(this, params);
+  create() {
+    const app = this;
+    app.picker = ConstructorMethods({
+      defaultSelector: '.picker',
+      constructor: Picker,
+      app,
+      domProp: 'f7Picker',
+    });
+    app.picker.close = function close(el = '.picker') {
+      const $el = $(el);
+      if ($el.length === 0) return;
+      const picker = $el[0].f7Picker;
+      if (!picker || (picker && !picker.opened)) return;
+      picker.close();
+    };
+  },
+  params: {
+    picker: {
+      // Picker settings
+      updateValuesOnMomentum: false,
+      updateValuesOnTouchmove: true,
+      rotateEffect: false,
+      momentumRatio: 7,
+      freeMode: false,
+      cols: [],
+      // Common opener settings
+      containerEl: null,
+      openIn: 'auto', // or 'popover' or 'sheet'
+      formatValue: null,
+      inputEl: null,
+      inputReadOnly: true,
+      closeByOutsideClick: true,
+      scrollToInput: true,
+      toolbar: true,
+      toolbarCloseText: 'Done',
+      cssClass: null,
+      routableModals: true,
+      view: null,
+      url: 'select',
+      // Render functions
+      renderColumn: null,
+      renderToolbar: null,
+      renderInline: null,
+      renderPopover: null,
+      renderSheet: null,
+      render: null,
     },
   },
 };
@@ -12344,7 +14686,7 @@ const InfiniteScroll = {
     $el.off('scroll');
   },
 };
-var InfiniteScroll$1 = {
+var infiniteScroll = {
   name: 'infiniteScroll',
   create() {
     const app = this;
@@ -12386,7 +14728,7 @@ var InfiniteScroll$1 = {
   },
 };
 
-class PullToRefresh$1 extends Framework7Class {
+class PullToRefresh extends Framework7Class {
   constructor(app, el) {
     super({}, [app]);
     const ptr = this;
@@ -12653,14 +14995,14 @@ class PullToRefresh$1 extends Framework7Class {
   }
 }
 
-var PullToRefresh = {
+var pullToRefresh = {
   name: 'pullToRefresh',
   create() {
     const app = this;
     app.ptr = Utils.extend(
       ConstructorMethods({
         defaultSelector: '.ptr-content',
-        constructor: PullToRefresh$1,
+        constructor: PullToRefresh,
         app,
         domProp: 'f7PullToRefresh',
       }),
@@ -12679,7 +15021,7 @@ var PullToRefresh = {
     );
   },
   static: {
-    PullToRefresh: PullToRefresh$1,
+    PullToRefresh,
   },
   on: {
     tabMounted(tabEl) {
@@ -12857,7 +15199,7 @@ const Lazy = {
   },
 
 };
-var Lazy$1 = {
+var lazy = {
   name: 'lazy',
   params: {
     lazy: {
@@ -12914,7 +15256,7 @@ var Lazy$1 = {
   },
 };
 
-class DataTable$1 extends Framework7Class {
+class DataTable extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -13052,16 +15394,16 @@ class DataTable$1 extends Framework7Class {
   }
 }
 
-var DataTable = {
+var dataTable = {
   name: 'dataTable',
   static: {
-    DataTable: DataTable$1,
+    DataTable,
   },
   create() {
     const app = this;
     app.dataTable = ConstructorMethods({
       defaultSelector: '.data-table',
-      constructor: DataTable$1,
+      constructor: DataTable,
       app,
       domProp: 'f7DataTable',
     });
@@ -13268,7 +15610,7 @@ const Fab = {
   },
 };
 
-var Fab$1 = {
+var fab = {
   name: 'fab',
   create() {
     const app = this;
@@ -13299,7 +15641,7 @@ var Fab$1 = {
   },
 };
 
-class Searchbar$1 extends Framework7Class {
+class Searchbar extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -13805,16 +16147,16 @@ class Searchbar$1 extends Framework7Class {
   }
 }
 
-var Searchbar = {
+var searchbar = {
   name: 'searchbar',
   static: {
-    Searchbar: Searchbar$1,
+    Searchbar,
   },
   create() {
     const app = this;
     app.searchbar = ConstructorMethods({
       defaultSelector: '.searchbar',
-      constructor: Searchbar$1,
+      constructor: Searchbar,
       app,
       domProp: 'f7Searchbar',
       addMethods: 'clear enable disable toggle search'.split(' '),
@@ -13888,7 +16230,7 @@ var Searchbar = {
   },
 };
 
-class Messages$1 extends Framework7Class {
+class Messages extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -14301,16 +16643,16 @@ class Messages$1 extends Framework7Class {
   }
 }
 
-var Messages = {
+var messages = {
   name: 'messages',
   static: {
-    Messages: Messages$1,
+    Messages,
   },
   create() {
     const app = this;
     app.messages = ConstructorMethods({
       defaultSelector: '.messages',
-      constructor: Messages$1,
+      constructor: Messages,
       app,
       domProp: 'f7Messages',
       addMethods: 'renderMessages layout scroll clear removeMessage removeMessages addMessage addMessages'.split(' '),
@@ -14347,7 +16689,7 @@ var Messages = {
   },
 };
 
-class Messagebar$1 extends Framework7Class {
+class Messagebar extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -14660,16 +17002,16 @@ class Messagebar$1 extends Framework7Class {
   }
 }
 
-var Messagebar = {
+var messagebar = {
   name: 'messagebar',
   static: {
-    Messagebar: Messagebar$1,
+    Messagebar,
   },
   create() {
     const app = this;
     app.messagebar = ConstructorMethods({
       defaultSelector: '.messagebar',
-      constructor: Messagebar$1,
+      constructor: Messagebar,
       app,
       domProp: 'f7Messagebar',
       addMethods: 'clear getValue setValue setPlaceholder resize focus blur attachmentsCreate attachmentsShow attachmentsHide attachmentsToggle renderAttachments sheetCreate sheetShow sheetHide sheetToggle'.split(' '),
@@ -14742,6 +17084,8 @@ var updateSlides = function () {
 
   const { $wrapperEl, size: swiperSize, rtl, wrongRTL } = swiper;
   const slides = $wrapperEl.children(`.${swiper.params.slideClass}`);
+  const isVirtual = swiper.virtual && params.virtual.enabled;
+  const slidesLength = isVirtual ? swiper.virtual.slides.length : slides.length;
   let snapGrid = [];
   const slidesGrid = [];
   const slidesSizesGrid = [];
@@ -14756,7 +17100,7 @@ var updateSlides = function () {
     offsetAfter = params.slidesOffsetAfter.call(swiper);
   }
 
-  const previousSlidesLength = swiper.slides.length;
+  const previousSlidesLength = slidesLength;
   const previousSnapGridLength = swiper.snapGrid.length;
   const previousSlidesGridLength = swiper.snapGrid.length;
 
@@ -14779,10 +17123,10 @@ var updateSlides = function () {
 
   let slidesNumberEvenToRows;
   if (params.slidesPerColumn > 1) {
-    if (Math.floor(slides.length / params.slidesPerColumn) === slides.length / swiper.params.slidesPerColumn) {
-      slidesNumberEvenToRows = slides.length;
+    if (Math.floor(slidesLength / params.slidesPerColumn) === slidesLength / swiper.params.slidesPerColumn) {
+      slidesNumberEvenToRows = slidesLength;
     } else {
-      slidesNumberEvenToRows = Math.ceil(slides.length / params.slidesPerColumn) * params.slidesPerColumn;
+      slidesNumberEvenToRows = Math.ceil(slidesLength / params.slidesPerColumn) * params.slidesPerColumn;
     }
     if (params.slidesPerView !== 'auto' && params.slidesPerColumnFill === 'row') {
       slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, params.slidesPerView * params.slidesPerColumn);
@@ -14793,8 +17137,8 @@ var updateSlides = function () {
   let slideSize;
   const slidesPerColumn = params.slidesPerColumn;
   const slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
-  const numFullColumns = slidesPerRow - ((params.slidesPerColumn * slidesPerRow) - slides.length);
-  for (let i = 0; i < slides.length; i += 1) {
+  const numFullColumns = slidesPerRow - ((params.slidesPerColumn * slidesPerRow) - slidesLength);
+  for (let i = 0; i < slidesLength; i += 1) {
     slideSize = 0;
     const slide = slides.eq(i);
     if (params.slidesPerColumn > 1) {
@@ -14841,13 +17185,17 @@ var updateSlides = function () {
       slideSize = (swiperSize - ((params.slidesPerView - 1) * spaceBetween)) / params.slidesPerView;
       if (params.roundLengths) slideSize = Math.floor(slideSize);
 
-      if (swiper.isHorizontal()) {
-        slides[i].style.width = `${slideSize}px`;
-      } else {
-        slides[i].style.height = `${slideSize}px`;
+      if (slides[i]) {
+        if (swiper.isHorizontal()) {
+          slides[i].style.width = `${slideSize}px`;
+        } else {
+          slides[i].style.height = `${slideSize}px`;
+        }
       }
     }
-    slides[i].swiperSlideSize = slideSize;
+    if (slides[i]) {
+      slides[i].swiperSlideSize = slideSize;
+    }
     slidesSizesGrid.push(slideSize);
 
 
@@ -14877,7 +17225,7 @@ var updateSlides = function () {
     rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
     $wrapperEl.css({ width: `${swiper.virtualSize + params.spaceBetween}px` });
   }
-  if (!swiper.support.flexbox || params.setWrapperSize) {
+  if (!Support$1.flexbox || params.setWrapperSize) {
     if (swiper.isHorizontal()) $wrapperEl.css({ width: `${swiper.virtualSize + params.spaceBetween}px` });
     else $wrapperEl.css({ height: `${swiper.virtualSize + params.spaceBetween}px` });
   }
@@ -14925,7 +17273,7 @@ var updateSlides = function () {
     slidesSizesGrid,
   });
 
-  if (slides.length !== previousSlidesLength) {
+  if (slidesLength !== previousSlidesLength) {
     swiper.emit('slidesLengthChange');
   }
   if (snapGrid.length !== previousSnapGridLength) {
@@ -15064,10 +17412,16 @@ var updateSlidesClasses = function () {
   const swiper = this;
 
   const { slides, params, $wrapperEl, activeIndex, realIndex } = swiper;
+  const isVirtual = swiper.virtual && params.virtual.enabled;
 
   slides.removeClass(`${params.slideActiveClass} ${params.slideNextClass} ${params.slidePrevClass} ${params.slideDuplicateActiveClass} ${params.slideDuplicateNextClass} ${params.slideDuplicatePrevClass}`);
 
-  const activeSlide = slides.eq(activeIndex);
+  let activeSlide;
+  if (isVirtual) {
+    activeSlide = swiper.$wrapperEl.find(`.${params.slideClass}[data-swiper-slide-index="${activeIndex}"]`);
+  } else {
+    activeSlide = slides.eq(activeIndex);
+  }
 
   // Active classes
   activeSlide.addClass(params.slideActiveClass);
@@ -15085,13 +17439,13 @@ var updateSlidesClasses = function () {
     }
   }
   // Next Slide
-  let nextSlide = activeSlide.next(`.${params.slideClass}`).addClass(params.slideNextClass);
+  let nextSlide = activeSlide.nextAll(`.${params.slideClass}`).eq(0).addClass(params.slideNextClass);
   if (params.loop && nextSlide.length === 0) {
     nextSlide = slides.eq(0);
     nextSlide.addClass(params.slideNextClass);
   }
   // Prev Slide
-  let prevSlide = activeSlide.prev(`.${params.slideClass}`).addClass(params.slidePrevClass);
+  let prevSlide = activeSlide.prevAll(`.${params.slideClass}`).eq(0).addClass(params.slidePrevClass);
   if (params.loop && prevSlide.length === 0) {
     prevSlide = slides.eq(-1);
     prevSlide.addClass(params.slidePrevClass);
@@ -15151,6 +17505,7 @@ var updateActiveIndex = function () {
     previousIndex: activeIndex,
     activeIndex: newActiveIndex,
   });
+  swiper.emit('slideChange');
   swiper.emit('aciveIndexChange');
   swiper.emit('snapIndexChange');
 };
@@ -15168,7 +17523,11 @@ var updateClickedSlide = function (e) {
 
   if (slide && slideFound) {
     swiper.clickedSlide = slide;
-    swiper.clickedIndex = $(slide).index();
+    if (swiper.virtual && swiper.params.virtual.enabled) {
+      swiper.clickedIndex = parseInt($(slide).attr('data-swiper-slide-index'), 10);
+    } else {
+      swiper.clickedIndex = $(slide).index();
+    }
   } else {
     swiper.clickedSlide = undefined;
     swiper.clickedIndex = undefined;
@@ -15280,11 +17639,11 @@ var transitionStart = function (runCallbacks = true) {
 
   if (!runCallbacks) return;
   if (activeIndex !== previousIndex) {
-    swiper.emit('slideChangeStart');
+    swiper.emit('slideChangeTransitionStart');
     if (activeIndex > previousIndex) {
-      swiper.emit('slideNextStart');
+      swiper.emit('slideNextTransitionStart');
     } else {
-      swiper.emit('slidePrevStart');
+      swiper.emit('slidePrevTransitionStart');
     }
   }
 };
@@ -15298,11 +17657,11 @@ var transitionEnd = function (runCallbacks = true) {
   swiper.emit('transitionEnd');
   if (runCallbacks) {
     if (activeIndex !== previousIndex) {
-      swiper.emit('slideChangeEnd');
+      swiper.emit('slideChangeTransitionEnd');
       if (activeIndex > previousIndex) {
-        swiper.emit('slideNextEnd');
+        swiper.emit('slideNextTransitionEnd');
       } else {
-        swiper.emit('slidePrevEnd');
+        swiper.emit('slidePrevTransitionEnd');
       }
     }
   }
@@ -15378,6 +17737,7 @@ var slideTo = function (index = 0, speed = this.params.speed, runCallbacks = tru
   swiper.activeIndex = slideIndex;
   if (previousIndex !== slideIndex || activeIndex !== slideIndex) {
     swiper.emit('activeIndexChange');
+    swiper.emit('slideChange');
   }
   if (previousSnapIndex !== swiper.snapIndex) {
     swiper.emit('snapIndexChange');
@@ -15457,7 +17817,7 @@ var slideToClickedSlide = function () {
   const swiper = this;
   const { params, $wrapperEl } = swiper;
 
-  const slidesPerView = params.slidesPerView === 'auto' ? swiper.slidesPerView() : params.slidesPerView;
+  const slidesPerView = params.slidesPerView === 'auto' ? swiper.slidesPerViewDynamic() : params.slidesPerView;
   let slideToIndex = swiper.clickedIndex;
   let realIndex;
   if (params.loop) {
@@ -15551,9 +17911,10 @@ var loopCreate = function () {
 
 var loopFix = function () {
   const swiper = this;
-  const { params, activeIndex, slides, loopedSlides } = swiper;
-
+  const { params, activeIndex, slides, loopedSlides, allowSlidePrev, allowSlideNext } = swiper;
   let newIndex;
+  swiper.allowSlidePrev = true;
+  swiper.allowSlideNext = true;
   // Fix For Negative Oversliding
   if (activeIndex < loopedSlides) {
     newIndex = (slides.length - (loopedSlides * 3)) + activeIndex;
@@ -15565,6 +17926,8 @@ var loopFix = function () {
     newIndex += loopedSlides;
     swiper.slideTo(newIndex, 0, false, true);
   }
+  swiper.allowSlidePrev = allowSlidePrev;
+  swiper.allowSlideNext = allowSlideNext;
 };
 
 var loopDestroy = function () {
@@ -16619,7 +18982,9 @@ const prototypes = {
   images,
 };
 
-class Swiper$2 extends Framework7Class {
+const extendedDefaults = {};
+
+class Swiper$1 extends Framework7Class {
   constructor(...args) {
     let el;
     let params;
@@ -16637,8 +19002,8 @@ class Swiper$2 extends Framework7Class {
 
     Object.keys(prototypes).forEach((prototypeGroup) => {
       Object.keys(prototypes[prototypeGroup]).forEach((protoMethod) => {
-        if (!Swiper$2.prototype[protoMethod]) {
-          Swiper$2.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
+        if (!Swiper$1.prototype[protoMethod]) {
+          Swiper$1.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
         }
       });
     });
@@ -16646,12 +19011,32 @@ class Swiper$2 extends Framework7Class {
     // Swiper Instance
     const swiper = this;
 
+    Object.keys(swiper.modules).forEach((moduleName) => {
+      const module = swiper.modules[moduleName];
+      if (module.params) {
+        const moduleParamName = Object.keys(module.params)[0];
+        const moduleParams = module.params[moduleParamName];
+        if (typeof moduleParams !== 'object') return;
+        if (!(moduleParamName in params && 'enabled' in moduleParams)) return;
+        if (params[moduleParamName] === true) {
+          params[moduleParamName] = { enabled: true };
+        }
+        if (
+          typeof params[moduleParamName] === 'object' &&
+          !('enabled' in params[moduleParamName])
+        ) {
+          params[moduleParamName].enabled = true;
+        }
+        if (!params[moduleParamName]) params[moduleParamName] = { enabled: false };
+      }
+    });
+
     // Extend defaults with modules params
     const swiperParams = Utils.extend({}, defaults);
     swiper.useModulesParams(swiperParams);
 
     // Extend defaults with passed params
-    swiper.params = Utils.extend({}, swiperParams, params);
+    swiper.params = Utils.extend({}, swiperParams, extendedDefaults, params);
     swiper.originalParams = Utils.extend({}, swiper.params);
     swiper.passedParams = Utils.extend({}, params);
 
@@ -16667,7 +19052,7 @@ class Swiper$2 extends Framework7Class {
       const swipers = [];
       $el.each((index, containerEl) => {
         const newParams = Utils.extend({}, params, { el: containerEl });
-        swipers.push(new Swiper$2(newParams));
+        swipers.push(new Swiper$1(newParams));
       });
       return swipers;
     }
@@ -16791,7 +19176,7 @@ class Swiper$2 extends Framework7Class {
     // Return app instance
     return swiper;
   }
-  slidesPerView() {
+  slidesPerViewDynamic() {
     const swiper = this;
     const { params, slides, slidesGrid, size: swiperSize, activeIndex } = swiper;
     let spv = 1;
@@ -16954,6 +19339,15 @@ class Swiper$2 extends Framework7Class {
       swiper = null;
     }
   }
+  static extendDefaults(newDefaults) {
+    Utils.extend(extendedDefaults, newDefaults);
+  }
+  static get extendedDefaults() {
+    return extendedDefaults;
+  }
+  static get defaults() {
+    return defaults;
+  }
   static get Class() {
     return Framework7Class;
   }
@@ -17095,6 +19489,183 @@ var Observer$1 = {
     destroy() {
       const swiper = this;
       swiper.observer.destroy();
+    },
+  },
+};
+
+const Virtual = {
+  update(force) {
+    const swiper = this;
+    const { slidesPerView, slidesPerGroup, centeredSlides } = swiper.params;
+    const {
+      from: previousFrom,
+      to: previousTo,
+      slides,
+      slidesGrid: previousSlidesGrid,
+      renderSlide,
+      offset: previousOffset,
+    } = swiper.virtual;
+    swiper.updateActiveIndex();
+    const activeIndex = swiper.activeIndex || 0;
+
+    let offsetProp;
+    if (swiper.rtl && swiper.isHorizontal()) offsetProp = 'right';
+    else offsetProp = swiper.isHorizontal() ? 'left' : 'top';
+
+    let slidesAfter;
+    let slidesBefore;
+    if (centeredSlides) {
+      slidesAfter = Math.floor(slidesPerView / 2) + slidesPerGroup;
+      slidesBefore = Math.floor(slidesPerView / 2) + slidesPerGroup;
+    } else {
+      slidesAfter = slidesPerView + (slidesPerGroup - 1);
+      slidesBefore = slidesPerGroup;
+    }
+    const from = Math.max((activeIndex || 0) - slidesBefore, 0);
+    const to = Math.min((activeIndex || 0) + slidesAfter, slides.length - 1);
+    const offset = (swiper.slidesGrid[from] || 0) - (swiper.slidesGrid[0] || 0);
+
+    Utils.extend(swiper.virtual, {
+      from,
+      to,
+      offset,
+      slidesGrid: swiper.slidesGrid,
+    });
+
+    function onRendered() {
+      swiper.updateSlides();
+      swiper.updateProgress();
+      swiper.updateSlidesClasses();
+      if (swiper.lazy && swiper.params.lazy.enabled) {
+        swiper.lazy.load();
+      }
+    }
+
+    if (previousFrom === from && previousTo === to && !force) {
+      if (swiper.slidesGrid !== previousSlidesGrid && offset !== previousOffset) {
+        swiper.slides.css(offsetProp, `${offset}px`);
+      }
+      swiper.updateProgress();
+      return;
+    }
+    if (swiper.params.virtual.renderExternal) {
+      swiper.params.virtual.renderExternal.call(swiper, {
+        offset,
+        from,
+        to,
+        slides: (function getSlides() {
+          const slidesToRender = [];
+          for (let i = from; i <= to; i += 1) {
+            slidesToRender.push(slides[i]);
+          }
+          return slidesToRender;
+        }()),
+      });
+      onRendered();
+      return;
+    }
+    const prependIndexes = [];
+    const appendIndexes = [];
+    if (force) {
+      swiper.$wrapperEl.find(`.${swiper.params.slideClass}`).remove();
+    } else {
+      for (let i = previousFrom; i <= previousTo; i += 1) {
+        if (i < from || i > to) {
+          swiper.$wrapperEl.find(`.${swiper.params.slideClass}[data-swiper-slide-index="${i}"]`).remove();
+        }
+      }
+    }
+    for (let i = 0; i < slides.length; i += 1) {
+      if (i >= from && i <= to) {
+        if (typeof previousTo === 'undefined' || force) {
+          appendIndexes.push(i);
+        } else {
+          if (i > previousTo) appendIndexes.push(i);
+          if (i < previousFrom) prependIndexes.push(i);
+        }
+      }
+    }
+    appendIndexes.forEach((index) => {
+      swiper.$wrapperEl.append(renderSlide(slides[index], index));
+    });
+    prependIndexes.sort((a, b) => a < b).forEach((index) => {
+      swiper.$wrapperEl.prepend(renderSlide(slides[index], index));
+    });
+    swiper.$wrapperEl.children('.swiper-slide').css(offsetProp, `${offset}px`);
+    onRendered();
+  },
+  renderSlide(slide, index) {
+    const swiper = this;
+    const params = swiper.params.virtual;
+    if (params.cache && swiper.virtual.cache[index]) {
+      return swiper.virtual.cache[index];
+    }
+    const $slideEl = params.renderSlide
+      ? $(params.renderSlide.call(swiper, slide, index))
+      : $(`<div class="${swiper.params.slideClass}" data-swiper-slide-index="${index}">${slide}</div>`);
+
+    if (params.cache) swiper.virtual.cache[index] = $slideEl;
+    return $slideEl;
+  },
+  appendSlide(slide) {
+    const swiper = this;
+    swiper.virtual.slides.push(slide);
+    swiper.virtual.update(true);
+  },
+  prependSlide(slide) {
+    const swiper = this;
+    swiper.virtual.slides.unshift(slide);
+    if (swiper.params.virtual.cache) {
+      const cache = swiper.virtual.cache;
+      const newCache = {};
+      Object.keys(cache).forEach((cachedIndex) => {
+        newCache[cachedIndex + 1] = cache[cachedIndex];
+      });
+      swiper.virtual.cache = newCache;
+    }
+    swiper.virtual.update(true);
+    swiper.slideNext(0);
+  },
+};
+
+var Virtual$1 = {
+  name: 'virtual',
+  params: {
+    virtual: {
+      enabled: false,
+      slides: [],
+      cache: true,
+      renderSlide: null,
+      renderExternal: null,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      virtual: {
+        update: Virtual.update.bind(swiper),
+        appendSlide: Virtual.appendSlide.bind(swiper),
+        prependSlide: Virtual.prependSlide.bind(swiper),
+        renderSlide: Virtual.renderSlide.bind(swiper),
+        slides: swiper.params.virtual.slides,
+        cache: {},
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (!swiper.params.virtual.enabled) return;
+      swiper.classNames.push(`${swiper.params.containerModifierClass}virtual`);
+      Utils.extend(swiper.params, {
+        watchSlidesProgress: true,
+      });
+      swiper.virtual.update();
+    },
+    setTranslate() {
+      const swiper = this;
+      if (!swiper.params.virtual.enabled) return;
+      swiper.virtual.update();
     },
   },
 };
@@ -17250,14 +19821,15 @@ const Pagination = {
     const swiper = this;
     const params = swiper.params.pagination;
     if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+    const slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
     const $el = swiper.pagination.$el;
     // Current/Total
     let current;
-    const total = swiper.params.loop ? Math.ceil((swiper.slides.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+    const total = swiper.params.loop ? Math.ceil((slidesLength.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
     if (swiper.params.loop) {
       current = Math.ceil((swiper.activeIndex - swiper.loopedSlides) / swiper.params.slidesPerGroup);
-      if (current > swiper.slides.length - 1 - (swiper.loopedSlides * 2)) {
-        current -= (swiper.slides.length - (swiper.loopedSlides * 2));
+      if (current > slidesLength.length - 1 - (swiper.loopedSlides * 2)) {
+        current -= (slidesLength.length - (swiper.loopedSlides * 2));
       }
       if (current > total - 1) current -= total;
       if (current < 0 && swiper.params.paginationType !== 'bullets') current = total + current;
@@ -17340,11 +19912,12 @@ const Pagination = {
     const swiper = this;
     const params = swiper.params.pagination;
     if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+    const slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
 
     const $el = swiper.pagination.$el;
     let paginationHTML = '';
     if (params.type === 'bullets') {
-      const numberOfBullets = swiper.params.loop ? Math.ceil((swiper.slides.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+      const numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
       for (let i = 0; i < numberOfBullets; i += 1) {
         if (params.renderBullet) {
           paginationHTML += params.renderBullet.call(swiper, i, params.bulletClass);
@@ -17636,6 +20209,9 @@ const Scrollbar = {
     } else if (position > positionMax) {
       position = positionMax;
     }
+    if (swiper.rtl) {
+      position = positionMax - position;
+    }
     position = -position / moveDivider;
     swiper.updateProgress(position);
     swiper.setTranslate(position);
@@ -17772,7 +20348,7 @@ var Scrollbar$1 = {
       dragSize: 'auto',
       hide: false,
       draggable: false,
-      snapOnRelease: false,
+      snapOnRelease: true,
     },
   },
   create() {
@@ -18454,7 +21030,7 @@ var Zoom$1 = {
   },
 };
 
-const Lazy$2 = {
+const Lazy$1 = {
   loadImagesInSlide(index, loadInDuplicate = true) {
     const swiper = this;
     const params = swiper.params.lazy;
@@ -18562,7 +21138,7 @@ const Lazy$2 = {
   },
 };
 
-var Lazy$3 = {
+var Lazy$2 = {
   name: 'lazy',
   params: {
     lazy: {
@@ -18582,8 +21158,8 @@ var Lazy$3 = {
     Utils.extend(swiper, {
       lazy: {
         initialImageLoaded: false,
-        load: Lazy$2.load.bind(swiper),
-        loadImagesInSlide: Lazy$2.loadImagesInSlide.bind(swiper),
+        load: Lazy$1.load.bind(swiper),
+        loadImagesInSlide: Lazy$1.loadImagesInSlide.bind(swiper),
       },
     });
   },
@@ -18605,6 +21181,12 @@ var Lazy$3 = {
       }
     },
     resize() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled) {
+        swiper.lazy.load();
+      }
+    },
+    scrollbarDragMove() {
       const swiper = this;
       if (swiper.params.lazy.enabled) {
         swiper.lazy.load();
@@ -18713,11 +21295,11 @@ const Controller = {
     }
     if (Array.isArray(controlled)) {
       for (let i = 0; i < controlled.length; i += 1) {
-        if (controlled[i] !== byController && controlled[i] instanceof Swiper$2) {
+        if (controlled[i] !== byController && controlled[i] instanceof Swiper$1) {
           setControlledTranslate(controlled[i]);
         }
       }
-    } else if (controlled instanceof Swiper$2 && byController !== controlled) {
+    } else if (controlled instanceof Swiper$1 && byController !== controlled) {
       setControlledTranslate(controlled);
     }
   },
@@ -18740,11 +21322,11 @@ const Controller = {
     }
     if (Array.isArray(controlled)) {
       for (i = 0; i < controlled.length; i += 1) {
-        if (controlled[i] !== byController && controlled[i] instanceof Swiper$2) {
+        if (controlled[i] !== byController && controlled[i] instanceof Swiper$1) {
           setControlledTransition(controlled[i]);
         }
       }
-    } else if (controlled instanceof Swiper$2 && byController !== controlled) {
+    } else if (controlled instanceof Swiper$1 && byController !== controlled) {
       setControlledTransition(controlled);
     }
   },
@@ -19208,10 +21790,8 @@ var EffectFade = {
         slidesPerGroup: 1,
         watchSlidesProgress: true,
         spaceBetween: 0,
+        virtualTranslate: true,
       });
-      if (typeof swiper.passedParams.virtualTranslate === 'undefined') {
-        swiper.params.virtualTranslate = true;
-      }
     },
     setTranslate() {
       const swiper = this;
@@ -19232,6 +21812,7 @@ const Cube = {
     const { $el, $wrapperEl, slides, width: swiperWidth, height: swiperHeight, rtl, size: swiperSize } = swiper;
     const params = swiper.params.cubeEffect;
     const isHorizontal = swiper.isHorizontal();
+    const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
     let wrapperRotate = 0;
     let $cubeShadowEl;
     if (params.shadow) {
@@ -19252,7 +21833,11 @@ const Cube = {
     }
     for (let i = 0; i < slides.length; i += 1) {
       const $slideEl = slides.eq(i);
-      let slideAngle = i * 90;
+      let slideIndex = i;
+      if (isVirtual) {
+        slideIndex = parseInt($slideEl.attr('data-swiper-slide-index'), 10);
+      }
+      let slideAngle = slideIndex * 90;
       let round = Math.floor(slideAngle / 360);
       if (rtl) {
         slideAngle = -slideAngle;
@@ -19262,16 +21847,16 @@ const Cube = {
       let tx = 0;
       let ty = 0;
       let tz = 0;
-      if (i % 4 === 0) {
+      if (slideIndex % 4 === 0) {
         tx = -round * 4 * swiperSize;
         tz = 0;
-      } else if ((i - 1) % 4 === 0) {
+      } else if ((slideIndex - 1) % 4 === 0) {
         tx = 0;
         tz = -round * 4 * swiperSize;
-      } else if ((i - 2) % 4 === 0) {
+      } else if ((slideIndex - 2) % 4 === 0) {
         tx = swiperSize + (round * 4 * swiperSize);
         tz = swiperSize;
-      } else if ((i - 3) % 4 === 0) {
+      } else if ((slideIndex - 3) % 4 === 0) {
         tx = -swiperSize;
         tz = (3 * swiperSize) + (swiperSize * 4 * round);
       }
@@ -19286,8 +21871,8 @@ const Cube = {
 
       const transform = `rotateX(${isHorizontal ? 0 : -slideAngle}deg) rotateY(${isHorizontal ? slideAngle : 0}deg) translate3d(${tx}px, ${ty}px, ${tz}px)`;
       if (progress <= 1 && progress > -1) {
-        wrapperRotate = (i * 90) + (progress * 90);
-        if (rtl) wrapperRotate = (-i * 90) - (progress * 90);
+        wrapperRotate = (slideIndex * 90) + (progress * 90);
+        if (rtl) wrapperRotate = (-slideIndex * 90) - (progress * 90);
       }
       $slideEl.transform(transform);
       if (params.slideShadows) {
@@ -19494,10 +22079,8 @@ var EffectFlip = {
         slidesPerGroup: 1,
         watchSlidesProgress: true,
         spaceBetween: 0,
+        virtualTranslate: true,
       });
-      if (typeof swiper.passedParams.virtualTranslate === 'undefined') {
-        swiper.params.virtualTranslate = true;
-      }
     },
     setTranslate() {
       const swiper = this;
@@ -19626,18 +22209,19 @@ var EffectCoverflow = {
 // Swiper Class
 // Core Modules
 // Components
-Swiper$2.components = [
+Swiper$1.components = [
   Device$4,
   Browser$2,
   Support$4,
   Resize$1,
   Observer$1,
+  Virtual$1,
   Navigation$1,
   Pagination$1,
   Scrollbar$1,
   Parallax$1,
   Zoom$1,
-  Lazy$3,
+  Lazy$2,
   Controller$1,
   A11y,
   Autoplay$1,
@@ -19655,6 +22239,7 @@ function initSwipers(swiperEl) {
   let initialSlide;
   let params = {};
   let isTabs;
+  let isRoutableTabs;
   if ($swiperEl.hasClass('tabs-swipeable-wrap')) {
     $swiperEl
       .addClass('swiper-container')
@@ -19664,6 +22249,7 @@ function initSwipers(swiperEl) {
       .addClass('swiper-slide');
     initialSlide = $swiperEl.children('.tabs').children('.tab-active').index();
     isTabs = true;
+    isRoutableTabs = $swiperEl.find('.tabs-routable').length > 0;
   }
   if ($swiperEl.attr('data-swiper')) {
     params = JSON.parse($swiperEl.attr('data-swiper'));
@@ -19683,30 +22269,33 @@ function initSwipers(swiperEl) {
   if (typeof params.initialSlide === 'undefined' && typeof initialSlide !== 'undefined') {
     params.initialSlide = initialSlide;
   }
+
+  const swiper = app.swiper.create($swiperEl[0], params);
   if (isTabs) {
-    Utils.extend(params, {
-      on: {
-        transitionStart() {
-          const swiper = this;
-          app.tab.show(swiper.slides.eq(swiper.activeIndex));
-        },
-      },
+    swiper.on('slideChange', () => {
+      if (isRoutableTabs) {
+        let view = app.views.get($swiperEl.parents('.view'));
+        if (!view) view = app.views.main;
+        const router = view.router;
+        const tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
+        if (tabRoute) router.navigate(tabRoute.path);
+      } else {
+        app.tab.show(swiper.slides.eq(swiper.activeIndex));
+      }
     });
   }
-
-  app.swiper.create($swiperEl[0], params);
 }
 
-var Swiper = {
+var swiper = {
   name: 'swiper',
   static: {
-    Swiper: Swiper$2,
+    Swiper: Swiper$1,
   },
   create() {
     const app = this;
     app.swiper = ConstructorMethods({
       defaultSelector: '.swiper-container',
-      constructor: Swiper$2,
+      constructor: Swiper$1,
       domProp: 'swiper',
     });
   },
@@ -19740,7 +22329,7 @@ var Swiper = {
 };
 
 /* eslint indent: ["off"] */
-class PhotoBrowser$1 extends Framework7Class {
+class PhotoBrowser extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -20327,7 +22916,7 @@ class PhotoBrowser$1 extends Framework7Class {
   }
 }
 
-var PhotoBrowser = {
+var photoBrowser = {
   name: 'photoBrowser',
   params: {
     photoBrowser: {
@@ -20382,17 +22971,17 @@ var PhotoBrowser = {
     const app = this;
     app.photoBrowser = ConstructorMethods({
       defaultSelector: '.photo-browser',
-      constructor: PhotoBrowser$1,
+      constructor: PhotoBrowser,
       app,
       domProp: 'f7PhotoBrowser',
     });
   },
   static: {
-    PhotoBrowser: PhotoBrowser$1,
+    PhotoBrowser,
   },
 };
 
-class Notification$1 extends Modal$1 {
+class Notification extends Modal$1 {
   constructor(app, params) {
     const extendedParams = Utils.extend({
       on: {},
@@ -20606,10 +23195,10 @@ class Notification$1 extends Modal$1 {
   }
 }
 
-var Notification = {
+var notification = {
   name: 'notification',
   static: {
-    Notification: Notification$1,
+    Notification,
   },
   create() {
     const app = this;
@@ -20617,7 +23206,7 @@ var Notification = {
       {},
       ModalMethods({
         app,
-        constructor: Notification$1,
+        constructor: Notification,
         defaultSelector: '.notification.modal-in',
       })
     );
@@ -20640,7 +23229,7 @@ var Notification = {
 };
 
 /* eslint "no-useless-escape": "off" */
-class Autocomplete$1 extends Framework7Class {
+class Autocomplete extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
 
@@ -21412,7 +24001,7 @@ class Autocomplete$1 extends Framework7Class {
   }
 }
 
-var Autocomplete = {
+var autocomplete = {
   name: 'autocomplete',
   params: {
     autocomplete: {
@@ -21473,14 +24062,14 @@ var Autocomplete = {
     },
   },
   static: {
-    Autocomplete: Autocomplete$1,
+    Autocomplete,
   },
   create() {
     const app = this;
     app.autocomplete = Utils.extend(
       ConstructorMethods({
         defaultSelector: undefined,
-        constructor: Autocomplete$1,
+        constructor: Autocomplete,
         app,
         domProp: 'f7Autocomplete',
       }),
@@ -21504,7 +24093,7 @@ var Autocomplete = {
 // Core Modules
 // Core Components
 // Install Core Modules & Components
-Framework7$1.components = [
+Framework7.components = [
   Device$2,
   Support,
   Utils$2,
@@ -21522,45 +24111,7 @@ Framework7$1.components = [
   Subnavbar,
   TouchRipple$$1,
   Modal,
-  Dialog,
-  Popup,
-  LoginScreen,
-  Popover,
-  Actions,
-  Sheet,
-  Toast,
-  Preloader$1,
-  Progressbar$1,
-  Sortable$1,
-  Swipeout$1,
-  Accordion$1,
-  VirtualList,
-  Timeline,
-  Tabs,
-  Panel,
-  Card,
-  Chip,
-  Form,
-  Input$1,
-  Checkbox,
-  Radio,
-  Toggle,
-  Range,
-  SmartSelect,
-  Calendar,
-  Picker,
-  InfiniteScroll$1,
-  PullToRefresh,
-  Lazy$1,
-  DataTable,
-  Fab$1,
-  Searchbar,
-  Messages,
-  Messagebar,
-  Swiper,
-  PhotoBrowser,
-  Notification,
-  Autocomplete
+  
 ];
 
-export default Framework7$1;
+export { $, Template7, Framework7, dialog as Dialog, popup as Popup, loginScreen as LoginScreen, popover as Popover, actions as Actions, sheet as Sheet, toast as Toast, preloader as Preloader, progressbar as Progressbar, sortable as Sortable, swipeout as Swipeout, accordion as Accordion, virtualList as VirtualList, timeline as Timeline, tabs as Tabs, panel as Panel, card as Card, chip as Chip, form as Form, input as Input, checkbox as Checkbox, radio as Radio, toggle as Toggle, range as Range, smartSelect as SmartSelect, calendar as Calendar, picker as Picker, infiniteScroll as InfiniteScroll, pullToRefresh as PullToRefresh, lazy as Lazy, dataTable as DataTable, fab as Fab, searchbar as Searchbar, messages as Messages, messagebar as Messagebar, swiper as Swiper, photoBrowser as PhotoBrowser, notification as Notification, autocomplete as Autocomplete };
