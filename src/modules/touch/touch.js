@@ -574,13 +574,15 @@ function initTouch() {
     app.on('touchmove', handleMouseMove);
     app.on('touchend', handleMouseUp);
   }
-
-  if (useRipple) {
-    document.addEventListener('contextmenu', () => {
+  document.addEventListener('contextmenu', (e) => {
+    if (Device.ios || Device.android || Device.cordova) {
+      e.preventDefault();
+    }
+    if (useRipple) {
       if (activableElement) removeActive();
       rippleTouchEnd();
-    });
-  }
+    }
+  });
 }
 
 export default {
