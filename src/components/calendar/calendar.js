@@ -47,9 +47,10 @@ export default {
       monthSelector: true,
       yearSelector: true,
       weekHeader: true,
+      value: null,
       // Common opener settings
       containerEl: null,
-      openIn: 'customModal', // or 'popover' or 'sheet' or 'customModal'
+      openIn: 'auto', // or 'popover' or 'sheet' or 'customModal'
       formatValue: null,
       inputEl: null,
       inputReadOnly: true,
