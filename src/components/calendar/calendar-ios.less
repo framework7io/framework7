@@ -46,6 +46,9 @@
         background: #ccc;
       }
     }
+    &.calendar-day-has-events.calendar-day-selected span:after {
+      background-color: #fff;
+    }
     &.calendar-day-selected span {
       background: @themeColor;
     }
@@ -60,13 +63,16 @@
       min-width: 36px;
     }
   }
+  .hairline-root('.calendar-sheet', top, #929499);
   .calendar-sheet {
     background: #fff;
+    &:before {
+      z-index: 600;
+    }
     .toolbar {
       .hairline-remove(top);
     }
   }
-  .hairline-root('.calendar-sheet', top, #929499);
   .calendar-modal, .calendar-popover {
     .toolbar {
       .hairline-remove(top);
@@ -83,4 +89,12 @@
       background: none;
     }
   }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
+      .calendar-day.calendar-day-selected span {
+        background: @colorThemeValue;
+      }
+    }
+  });
 }
