@@ -1021,6 +1021,9 @@ class Router extends Framework7Class {
         if (router.separateNavbar) {
           $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
           if ($navbarInnerEl.length > 0) {
+            if (!router.$navbarEl.parents(document).length) {
+              router.$el.prepend(router.$navbarEl);
+            }
             router.$navbarEl.append($navbarInnerEl);
             $pageEl.children('.navbar').remove();
           } else {

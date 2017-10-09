@@ -186,6 +186,9 @@ function forward(el, forwardOptions = {}) {
       if ($oldNavbarInner.length) {
         $newNavbarInner.insertBefore($oldNavbarInner);
       } else {
+        if (!router.$navbarEl.parents(document).length) {
+          router.$el.prepend(router.$navbarEl);
+        }
         $navbarEl.append($newNavbarInner);
       }
     }
@@ -200,6 +203,9 @@ function forward(el, forwardOptions = {}) {
       }
     }
     if (separateNavbar && $newNavbarInner.length) {
+      if (!router.$navbarEl.parents(document).length) {
+        router.$el.prepend(router.$navbarEl);
+      }
       $navbarEl.append($newNavbarInner[0]);
     }
   }
@@ -218,7 +224,7 @@ function forward(el, forwardOptions = {}) {
       // Page remove event
       router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', undefined, options);
       router.removePage($oldPage);
-      if (separateNavbar && $oldNavbarInner.length) {
+      if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
         router.removeNavbar($oldNavbarInner);
       }
     }

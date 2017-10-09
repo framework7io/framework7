@@ -142,6 +142,9 @@ function backward(el, backwardOptions) {
       if ($oldNavbarInner.length > 0) {
         $newNavbarInner.insertBefore($oldNavbarInner);
       } else {
+        if (!router.$navbarEl.parents(document).length) {
+          router.$el.prepend(router.$navbarEl);
+        }
         $navbarEl.append($newNavbarInner);
       }
     }
