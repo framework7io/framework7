@@ -280,7 +280,7 @@ export default {
         $navbarEl = $(navbarInnerEl).parents('.navbar');
       }
       if (page.$el.hasClass('no-navbar') || (view.router.dynamicNavbar && !navbarInnerEl)) {
-        const animate = !!(page.pageFrom && page.router.history.length > 1);
+        const animate = !!(page.pageFrom && page.router.history.length > 0);
         app.navbar.hide($navbarEl, animate);
       } else {
         app.navbar.show($navbarEl);
