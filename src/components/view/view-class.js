@@ -43,7 +43,6 @@ class View extends Framework7Class {
       $navbarEl = $el.children('.navbar').eq(0);
       if ($navbarEl.length === 0) {
         $navbarEl = $('<div class="navbar"></div>');
-        $el.prepend($navbarEl);
       }
     }
 
