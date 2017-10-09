@@ -19,9 +19,7 @@ const Statusbar = {
       });
       return;
     }
-    if (Device.needsStatusbarOverlay()) {
-      $('html').addClass('with-statusbar');
-    }
+    $('html').addClass('with-statusbar');
   },
   onClick() {
     const app = this;
