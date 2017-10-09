@@ -75,7 +75,7 @@ const Swipeout = {
           openedActionsSide = $swipeoutEl.find('.swipeout-actions-left.swipeout-actions-opened').length > 0 ? 'left' : 'right';
         }
         $swipeoutEl.removeClass('swipeout-transitioning');
-        if (!app.params.swipeoutNoFollow) {
+        if (!app.params.swipeout.noFollow) {
           $swipeoutEl.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
           $swipeoutEl.removeClass('swipeout-opened');
         }
@@ -119,7 +119,7 @@ const Swipeout = {
       let progress;
 
       e.f7PreventPanelSwipe = true;
-      if (app.params.swipeoutNoFollow) {
+      if (app.params.swipeout.noFollow) {
         if (opened) {
           if (openedActionsSide === 'right' && touchesDiff > 0) {
             app.swipeout.close($swipeoutEl);
@@ -530,6 +530,7 @@ export default {
   on: {
     init() {
       const app = this;
+      if (!app.params.swipeout) return;
       app.swipeout.init();
     },
   },
