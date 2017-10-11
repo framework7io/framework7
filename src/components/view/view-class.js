@@ -12,11 +12,8 @@ class View extends Framework7Class {
     const view = this;
 
     const defaults = {
-      name: undefined,
-      main: false,
       routes: [],
       routesAdd: [],
-      linksView: undefined,
     };
 
     // Default View params

@@ -35,6 +35,9 @@ export default {
   name: 'view',
   params: {
     view: {
+      name: undefined,
+      main: false,
+      linksView: null,
       stackPages: false,
       xhrCache: true,
       xhrCacheIgnore: [],
