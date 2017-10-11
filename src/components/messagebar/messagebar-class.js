@@ -9,6 +9,7 @@ class Messagebar extends Framework7Class {
     const messagebar = this;
 
     const defaults = {
+      top: false,
       topOffset: 0,
       bottomOffset: 0,
       attachments: [],
@@ -46,6 +47,10 @@ class Messagebar extends Framework7Class {
     // Attachments & Library
     const $attachmentsEl = $el.find('.messagebar-attachments');
     const $sheetEl = $el.find('.messagebar-sheet');
+
+    if (messagebar.params.top) {
+      $el.addClass('messagebar-top');
+    }
 
     Utils.extend(messagebar, {
       $el,
