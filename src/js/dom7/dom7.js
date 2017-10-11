@@ -1688,7 +1688,7 @@ function ajax(options) {
     contentType: 'application/x-www-form-urlencoded',
     timeout: 0,
   };
-  var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
+  var callbacks = ['beforeCreate', 'beforeSend', 'error', 'complete', 'success', 'statusCode'];
 
   // For jQuery guys
   if (options.type) { options.method = options.type; }
@@ -1717,6 +1717,9 @@ function ajax(options) {
   each(defaults, function (prop, defaultValue) {
     if (!(prop in options)) { options[prop] = defaultValue; }
   });
+
+  fireAjaxCallback('ajaxBeforeCreate ajax:beforecreate', {options: options}, 'beforeCreate', options)
+
 
   // Default URL
   if (!options.url) {
