@@ -61,7 +61,7 @@
       }
       .-;
       .--(@j: 1) when (@j < length(@cols)) {
-        .tablet-auto:nth-last-child(@{j}), .tablet-auto:nth-last-child(@{j}) ~ .col {
+        .tablet-auto:nth-last-child(@{j}), .tablet-auto:nth-last-child(@{j}) ~ .tablet-auto {
           @j-1: @j - 1;
           width: 100% / @j;
           width: ~"-webkit-calc((100% - 15px*@{j-1}) / @{j})";
@@ -98,7 +98,7 @@
       }
       .-;
       .--(@j: 1) when (@j < length(@cols)) {
-        .desktop-auto:nth-last-child(@{j}), .desktop-auto:nth-last-child(@{j}) ~ .col {
+        .desktop-auto:nth-last-child(@{j}), .desktop-auto:nth-last-child(@{j}) ~ .desktop-auto {
           @j-1: @j - 1;
           width: 100% / @j;
           width: ~"-webkit-calc((100% - 15px*@{j-1}) / @{j})";
