@@ -8,7 +8,7 @@ function swipePanel(panel) {
     swipeInitialized: true,
   });
   const params = app.params.panel;
-  const { $el, $backdropEl, side, effect, $viewEl } = panel;
+  const { $el, $backdropEl, side, effect } = panel;
   let otherPanel;
 
   let isTouched;
@@ -21,6 +21,8 @@ function swipePanel(panel) {
   let backdropOpacity;
   let panelWidth;
   let direction;
+
+  let $viewEl;
 
   function handleTouchStart(e) {
     if (!panel.swipeable) return;
@@ -49,6 +51,7 @@ function swipePanel(panel) {
         if (touchesStart.x < app.width - params.swipeActiveArea) return;
       }
     }
+    $viewEl = $(panel.getViewEl());
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;

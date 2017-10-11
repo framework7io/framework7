@@ -32,13 +32,6 @@ class Panel extends Framework7Class {
       $backdropEl.insertBefore($el);
     }
 
-    let $viewEl;
-    if (app.root.children('.views').length > 0) {
-      $viewEl = app.root.children('.views');
-    } else {
-      $viewEl = app.root.children('.view').eq(0);
-    }
-
     Utils.extend(panel, {
       app,
       side,
@@ -48,8 +41,6 @@ class Panel extends Framework7Class {
       opened,
       $backdropEl,
       backdropEl: $backdropEl[0],
-      $viewEl,
-      viewEl: $viewEl[0],
     });
 
     // Install Modules
@@ -78,10 +69,22 @@ class Panel extends Framework7Class {
       }
     }
   }
+  getViewEl() {
+    const panel = this;
+    const app = panel.app;
+    let viewEl;
+    if (app.root.children('.views').length > 0) {
+      viewEl = app.root.children('.views')[0];
+    } else {
+      viewEl = app.root.children('.view')[0];
+    }
+    return viewEl;
+  }
   setBreakpoint() {
     const panel = this;
     const app = panel.app;
-    const { side, $el, $viewEl } = panel;
+    const { side, $el } = panel;
+    const $viewEl = $(panel.getViewEl());
     const breakpoint = app.params.panel[`${side}Breakpoint`];
     const wasVisible = $el.hasClass('panel-visible-by-breakpoint');
 
