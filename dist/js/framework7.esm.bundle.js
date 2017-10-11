@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.9
+ * Framework7 2.0.0-beta.10
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 8, 2017
+ * Released on: October 11, 2017
  */
 
 import Template7 from 'template7';
@@ -2892,6 +2892,9 @@ function forward(el, forwardOptions = {}) {
       if ($oldNavbarInner.length) {
         $newNavbarInner.insertBefore($oldNavbarInner);
       } else {
+        if (!router.$navbarEl.parents(document).length) {
+          router.$el.prepend(router.$navbarEl);
+        }
         $navbarEl.append($newNavbarInner);
       }
     }
@@ -2906,6 +2909,9 @@ function forward(el, forwardOptions = {}) {
       }
     }
     if (separateNavbar && $newNavbarInner.length) {
+      if (!router.$navbarEl.parents(document).length) {
+        router.$el.prepend(router.$navbarEl);
+      }
       $navbarEl.append($newNavbarInner[0]);
     }
   }
@@ -2924,7 +2930,7 @@ function forward(el, forwardOptions = {}) {
       // Page remove event
       router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', undefined, options);
       router.removePage($oldPage);
-      if (separateNavbar && $oldNavbarInner.length) {
+      if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
         router.removeNavbar($oldNavbarInner);
       }
     }
@@ -3624,6 +3630,9 @@ function backward(el, backwardOptions) {
       if ($oldNavbarInner.length > 0) {
         $newNavbarInner.insertBefore($oldNavbarInner);
       } else {
+        if (!router.$navbarEl.parents(document).length) {
+          router.$el.prepend(router.$navbarEl);
+        }
         $navbarEl.append($newNavbarInner);
       }
     }
@@ -4979,6 +4988,9 @@ class Router$1 extends Framework7Class {
         if (router.separateNavbar) {
           $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
           if ($navbarInnerEl.length > 0) {
+            if (!router.$navbarEl.parents(document).length) {
+              router.$el.prepend(router.$navbarEl);
+            }
             router.$navbarEl.append($navbarInnerEl);
             $pageEl.children('.navbar').remove();
           } else {
@@ -5055,11 +5067,8 @@ class View extends Framework7Class {
     const view = this;
 
     const defaults = {
-      name: undefined,
-      main: false,
       routes: [],
       routesAdd: [],
-      linksView: undefined,
     };
 
     // Default View params
@@ -5086,7 +5095,6 @@ class View extends Framework7Class {
       $navbarEl = $el.children('.navbar').eq(0);
       if ($navbarEl.length === 0) {
         $navbarEl = $('<div class="navbar"></div>');
-        $el.prepend($navbarEl);
       }
     }
 
@@ -5359,9 +5367,7 @@ const Statusbar = {
       });
       return;
     }
-    if (Device.needsStatusbarOverlay()) {
-      $('html').addClass('with-statusbar');
-    }
+    $('html').addClass('with-statusbar');
   },
   onClick() {
     const app = this;
@@ -5543,6 +5549,9 @@ var View$2 = {
   name: 'view',
   params: {
     view: {
+      name: undefined,
+      main: false,
+      linksView: null,
       stackPages: false,
       xhrCache: true,
       xhrCacheIgnore: [],
@@ -5915,7 +5924,7 @@ var Navbar$1 = {
         $navbarEl = $(navbarInnerEl).parents('.navbar');
       }
       if (page.$el.hasClass('no-navbar') || (view.router.dynamicNavbar && !navbarInnerEl)) {
-        const animate = !!(page.pageFrom && page.router.history.length > 1);
+        const animate = !!(page.pageFrom && page.router.history.length > 0);
         app.navbar.hide($navbarEl, animate);
       } else {
         app.navbar.show($navbarEl);
@@ -8494,7 +8503,7 @@ const Swipeout = {
           openedActionsSide = $swipeoutEl.find('.swipeout-actions-left.swipeout-actions-opened').length > 0 ? 'left' : 'right';
         }
         $swipeoutEl.removeClass('swipeout-transitioning');
-        if (!app.params.swipeoutNoFollow) {
+        if (!app.params.swipeout.noFollow) {
           $swipeoutEl.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
           $swipeoutEl.removeClass('swipeout-opened');
         }
@@ -8538,7 +8547,7 @@ const Swipeout = {
       let progress;
 
       e.f7PreventPanelSwipe = true;
-      if (app.params.swipeoutNoFollow) {
+      if (app.params.swipeout.noFollow) {
         if (opened) {
           if (openedActionsSide === 'right' && touchesDiff > 0) {
             app.swipeout.close($swipeoutEl);
@@ -8949,6 +8958,7 @@ var Swipeout$1 = {
   on: {
     init() {
       const app = this;
+      if (!app.params.swipeout) return;
       app.swipeout.init();
     },
   },
@@ -17399,15 +17409,6 @@ var updateProgress = function (translate = this.translate || 0) {
   swiper.emit('progress', progress);
 };
 
-var updateRealIndex = function () {
-  const swiper = this;
-  const previousRealIndex = swiper.realIndex;
-  swiper.realIndex = parseInt(swiper.slides.eq(swiper.activeIndex).attr('data-swiper-slide-index') || swiper.activeIndex, 10);
-  if (previousRealIndex !== swiper.realIndex) {
-    swiper.emit('realIndexChange');
-  }
-};
-
 var updateSlidesClasses = function () {
   const swiper = this;
 
@@ -17473,41 +17474,52 @@ var updateSlidesClasses = function () {
   }
 };
 
-var updateActiveIndex = function () {
+var updateActiveIndex = function (newActiveIndex) {
   const swiper = this;
   const translate = swiper.rtl ? swiper.translate : -swiper.translate;
-  const { slidesGrid, snapGrid, params, activeIndex } = swiper;
-  let newActiveIndex;
+  const { slidesGrid, snapGrid, params, activeIndex: previousIndex, realIndex: previousRealIndex } = swiper;
+  let activeIndex = newActiveIndex;
   let snapIndex;
-  for (let i = 0; i < slidesGrid.length; i += 1) {
-    if (typeof slidesGrid[i + 1] !== 'undefined') {
-      if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1] - ((slidesGrid[i + 1] - slidesGrid[i]) / 2)) {
-        newActiveIndex = i;
-      } else if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1]) {
-        newActiveIndex = i + 1;
+  if (typeof activeIndex === 'undefined') {
+    for (let i = 0; i < slidesGrid.length; i += 1) {
+      if (typeof slidesGrid[i + 1] !== 'undefined') {
+        if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1] - ((slidesGrid[i + 1] - slidesGrid[i]) / 2)) {
+          activeIndex = i;
+        } else if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1]) {
+          activeIndex = i + 1;
+        }
+      } else if (translate >= slidesGrid[i]) {
+        activeIndex = i;
       }
-    } else if (translate >= slidesGrid[i]) {
-      newActiveIndex = i;
+    }
+    // Normalize slideIndex
+    if (params.normalizeSlideIndex) {
+      if (activeIndex < 0 || typeof activeIndex === 'undefined') activeIndex = 0;
     }
   }
-  // Normalize slideIndex
-  if (params.normalizeSlideIndex) {
-    if (newActiveIndex < 0 || typeof newActiveIndex === 'undefined') newActiveIndex = 0;
-  }
-  snapIndex = Math.floor(newActiveIndex / params.slidesPerGroup);
+
+  snapIndex = Math.floor(activeIndex / params.slidesPerGroup);
   if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
 
-  if (newActiveIndex === activeIndex) {
+  if (activeIndex === previousIndex) {
     return;
   }
+
+  // Get real index
+  const realIndex = parseInt(swiper.slides.eq(activeIndex).attr('data-swiper-slide-index') || activeIndex, 10);
+
   Utils.extend(swiper, {
     snapIndex,
-    previousIndex: activeIndex,
-    activeIndex: newActiveIndex,
+    realIndex,
+    previousIndex,
+    activeIndex,
   });
-  swiper.emit('slideChange');
-  swiper.emit('aciveIndexChange');
+  swiper.emit('activeIndexChange');
   swiper.emit('snapIndexChange');
+  if (previousRealIndex !== realIndex) {
+    swiper.emit('realIndexChange');
+  }
+  swiper.emit('slideChange');
 };
 
 var updateClickedSlide = function (e) {
@@ -17545,7 +17557,6 @@ var update = {
   updateSlidesOffset,
   updateSlidesProgress,
   updateProgress,
-  updateRealIndex,
   updateSlidesClasses,
   updateActiveIndex,
   updateClickedSlide,
@@ -17701,16 +17712,16 @@ var slideTo = function (index = 0, speed = this.params.speed, runCallbacks = tru
   let slideIndex = index;
   if (slideIndex < 0) slideIndex = 0;
 
-  const { params, snapGrid, slidesGrid, previousIndex, activeIndex, snapIndex: previousSnapIndex, rtl, $wrapperEl } = swiper;
+  const { params, snapGrid, slidesGrid, previousIndex, activeIndex, rtl, $wrapperEl } = swiper;
 
-  swiper.snapIndex = Math.floor(slideIndex / params.slidesPerGroup);
-  if (swiper.snapIndex >= snapGrid.length) swiper.snapIndex = snapGrid.length - 1;
+  let snapIndex = Math.floor(slideIndex / params.slidesPerGroup);
+  if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
 
   if ((activeIndex || params.initialSlide || 0) === (previousIndex || 0) && runCallbacks) {
     swiper.emit('beforeSlideChangeStart');
   }
 
-  const translate = -snapGrid[swiper.snapIndex];
+  const translate = -snapGrid[snapIndex];
 
   // Update progress
   swiper.updateProgress(translate);
@@ -17729,20 +17740,12 @@ var slideTo = function (index = 0, speed = this.params.speed, runCallbacks = tru
     return false;
   }
   if (!swiper.allowSlidePrev && translate > swiper.translate && translate > swiper.maxTranslate()) {
-    if ((swiper.activeIndex || 0) !== slideIndex) return false;
+    if ((activeIndex || 0) !== slideIndex) return false;
   }
 
   // Update Index
-  swiper.previousIndex = activeIndex || 0;
-  swiper.activeIndex = slideIndex;
-  if (previousIndex !== slideIndex || activeIndex !== slideIndex) {
-    swiper.emit('activeIndexChange');
-    swiper.emit('slideChange');
-  }
-  if (previousSnapIndex !== swiper.snapIndex) {
-    swiper.emit('snapIndexChange');
-  }
-  swiper.updateRealIndex();
+  swiper.updateActiveIndex(slideIndex);
+
   if ((rtl && -translate === swiper.translate) || (!rtl && translate === swiper.translate)) {
     // Update Height
     if (params.autoHeight) {
@@ -18216,7 +18219,7 @@ var onTouchMove = function (event) {
     data.startTranslate = swiper.getTranslate();
     swiper.setTransition(0);
     if (swiper.animating) {
-      swiper.$wrapperEl.trigger('webkitTransitionEnd transitionend oTransitionEnd MSTransitionEnd msTransitionEnd');
+      swiper.$wrapperEl.trigger('webkitTransitionEnd transitionend');
     }
     data.allowMomentumBounce = false;
     // Grab Cursor
@@ -18286,7 +18289,6 @@ var onTouchMove = function (event) {
   if (params.freeMode || params.watchSlidesProgress || params.watchSlidesVisibility) {
     swiper.updateActiveIndex();
     swiper.updateSlidesClasses();
-    swiper.updateRealIndex();
   }
   if (params.freeMode) {
     // Velocity
@@ -18492,13 +18494,11 @@ var onTouchEnd = function (event) {
 
       swiper.updateActiveIndex();
       swiper.updateSlidesClasses();
-      swiper.updateRealIndex();
     }
     if (!params.freeModeMomentum || timeDiff >= params.longSwipesMs) {
       swiper.updateProgress();
       swiper.updateActiveIndex();
       swiper.updateSlidesClasses();
-      swiper.updateRealIndex();
     }
     return;
   }
@@ -18574,7 +18574,6 @@ var onResize = function () {
     swiper.setTranslate(newTranslate);
     swiper.updateActiveIndex();
     swiper.updateSlidesClasses();
-    swiper.updateRealIndex();
 
     if (params.autoHeight) {
       swiper.updateAutoHeight();
@@ -19825,11 +19824,11 @@ const Pagination = {
     const $el = swiper.pagination.$el;
     // Current/Total
     let current;
-    const total = swiper.params.loop ? Math.ceil((slidesLength.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+    const total = swiper.params.loop ? Math.ceil((slidesLength - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
     if (swiper.params.loop) {
       current = Math.ceil((swiper.activeIndex - swiper.loopedSlides) / swiper.params.slidesPerGroup);
-      if (current > slidesLength.length - 1 - (swiper.loopedSlides * 2)) {
-        current -= (slidesLength.length - (swiper.loopedSlides * 2));
+      if (current > slidesLength - 1 - (swiper.loopedSlides * 2)) {
+        current -= (slidesLength - (swiper.loopedSlides * 2));
       }
       if (current > total - 1) current -= total;
       if (current < 0 && swiper.params.paginationType !== 'bullets') current = total + current;
@@ -19917,7 +19916,7 @@ const Pagination = {
     const $el = swiper.pagination.$el;
     let paginationHTML = '';
     if (params.type === 'bullets') {
-      const numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength.length - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+      const numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
       for (let i = 0; i < numberOfBullets; i += 1) {
         if (params.renderBullet) {
           paginationHTML += params.renderBullet.call(swiper, i, params.bulletClass);
@@ -20217,7 +20216,6 @@ const Scrollbar = {
     swiper.setTranslate(position);
     swiper.updateActiveIndex();
     swiper.updateSlidesClasses();
-    swiper.updateRealIndex();
   },
   onDragStart(e) {
     const swiper = this;
@@ -21291,7 +21289,6 @@ const Controller = {
       c.setTranslate(controlledTranslate, swiper);
       c.updateActiveIndex();
       c.updateSlidesClasses();
-      c.updateRealIndex();
     }
     if (Array.isArray(controlled)) {
       for (let i = 0; i < controlled.length; i += 1) {
@@ -21754,7 +21751,7 @@ const Fade = {
         if (!swiper) return;
         eventTriggered = true;
         swiper.animating = false;
-        const triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
+        const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
         for (let i = 0; i < triggerEvents.length; i += 1) {
           $wrapperEl.trigger(triggerEvents[i]);
         }
@@ -22041,7 +22038,7 @@ const Flip = {
         if (!$(this).hasClass(swiper.params.slideActiveClass)) return;
         eventTriggered = true;
         swiper.animating = false;
-        const triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
+        const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
         for (let i = 0; i < triggerEvents.length; i += 1) {
           $wrapperEl.trigger(triggerEvents[i]);
         }

@@ -1,3 +1,14 @@
+# [v2.0.0-beta.10](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.9...v2.0.0-beta.10) - October 11, 2017
+  * Swiper update to latest 4.0.1:
+    * Fixed issue with pagination being broken with loop mode
+    * Reworked `realIndex` calculation ordering
+  * Router
+    * Now it creates dynamically navbar (for isDynamicNavbar) only when the page with navbar appears
+  * Statusbar
+    * Fixed broken `statusbar.show` method
+  * Package
+    * Now it exports by default modular `framework7.esm.js` version instead of bundle
+
 # [v2.0.0-beta.9](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.8...v2.0.0-beta.9) - October 8, 2017
   * New Picker component
   * New Calendar component
