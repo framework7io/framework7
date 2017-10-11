@@ -98,7 +98,7 @@ export default function (event) {
     data.startTranslate = swiper.getTranslate();
     swiper.setTransition(0);
     if (swiper.animating) {
-      swiper.$wrapperEl.trigger('webkitTransitionEnd transitionend oTransitionEnd MSTransitionEnd msTransitionEnd');
+      swiper.$wrapperEl.trigger('webkitTransitionEnd transitionend');
     }
     data.allowMomentumBounce = false;
     // Grab Cursor
@@ -168,7 +168,6 @@ export default function (event) {
   if (params.freeMode || params.watchSlidesProgress || params.watchSlidesVisibility) {
     swiper.updateActiveIndex();
     swiper.updateSlidesClasses();
-    swiper.updateRealIndex();
   }
   if (params.freeMode) {
     // Velocity
