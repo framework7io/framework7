@@ -14,6 +14,7 @@ class Messagebar extends Framework7Class {
       attachments: [],
       renderAttachments: undefined,
       renderAttachment: undefined,
+      maxHeight: null,
     };
 
     // Extend defaults with modules params
@@ -160,11 +161,14 @@ class Messagebar extends Framework7Class {
       $attachmentsEl,
     } = messagebar;
     const elHeight = $el[0].offsetHeight;
+    let maxHeight = params.maxHeight;
     if (top) {
       const requiredPaddingTop = elHeight + params.topOffset;
       const currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
       if (requiredPaddingTop !== currentPaddingTop) {
-        const maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        if (!maxHeight) {
+          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        }
         $textareaEl.css('max-height', `${maxHeight}px`);
         $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
         $el.trigger('messagebar:resize');
@@ -179,7 +183,9 @@ class Messagebar extends Framework7Class {
         const pageOffsetHeight = $pageContentEl[0].offsetHeight;
         const pageScrollTop = $pageContentEl[0].scrollTop;
         const scrollOnBottom = (pageScrollTop === pageScrollHeight - pageOffsetHeight);
-        const maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        if (!maxHeight) {
+          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        }
         $textareaEl.css('max-height', `${maxHeight}px`);
         $pageContentEl.css('padding-bottom', `${requiredPaddingBottom}px`);
         if (scrollOnBottom) {
