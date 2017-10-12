@@ -1,0 +1,90 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">vi</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Welcome to Framework7</div>
+      <div class="block block-strong">
+        <p><a class="button button-raised" @click="showPrepared">Prepaired Ad</a></p>
+        <p><a class="button button-raised" @click="createAndShow">Create & Show</a></p>
+        <p><a class="button button-raised" @click="createAndShowCustom">Create & Show With Custom Fallback</a></p>
+        <p><a class="button button-raised" @click="createAndShowRewarded">Create & Show Rewarded Ad</a></p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    beforeDestroy() {
+      if (this.prepairedAd) this.prepairedAd.destroy();
+    },
+    mounted: function () {
+      var app = this.$app;
+      // Prepare Ad
+      this.prepairedAd = app.vi.createAd({
+        appId: 'ai.vi.testapp',
+        autoplay: false,
+      });
+    },
+    methods: {
+      // Play Prepared Ad
+      showPrepared: function () {
+        this.prepairedAd.start();
+      },
+      // Create and play in place
+      createAndShow: function() {
+        var app = this.$app;
+        app.vi.createAd({
+          appId: 'ai.vi.testapp',
+        });
+      },
+      // Create and play in place
+      createAndShowCustom: function() {
+        var app = this.$app;
+        app.vi.createAd({
+          appId: 'ai.vi.testapp',
+          overlay: false,
+          on: {
+            autoplayFailed() {
+              const ad = this;
+              app.dialog.alert('Check out this awesome ad', () => {
+                ad.start();
+              })
+            }
+          }
+        });
+      },
+      // Create and play in place
+      createAndShowRewarded: function() {
+        var app = this.$app;
+        app.vi.createAd({
+          appId: 'ai.vi.testapp',
+          autoplay: false,
+          on: {
+            ready() {
+              const ad = this;
+              app.dialog.alert('Check out this awesome ad to get the reward', () => {
+                ad.start();
+              })
+            },
+            complete() {
+              app.dialog.alert('Congrats! You got the reward!')
+            },
+            userexit() {
+              app.dialog.alert('Sorry, no reward for you!')
+            },
+          }
+        });
+      },
+    }
+  }
+</script>

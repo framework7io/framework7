@@ -25,6 +25,7 @@ class Toggle extends Framework7Class {
     const $inputEl = $el.children('input[type="checkbox"]');
 
     Utils.extend(toggle, {
+      app,
       $el,
       el: $el[0],
       $inputEl,

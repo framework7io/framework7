@@ -91,6 +91,9 @@ const config = {
 
     // Typography
     'typography',
+
+    // VI
+    'vi',
   ],
   themes: [
     'ios',
