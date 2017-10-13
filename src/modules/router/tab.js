@@ -36,7 +36,13 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  const { $newTabEl, $oldTabEl, animated, onTabsChanged } = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+  let tabShowResult;
+  if (router.view.selector) {
+    tabShowResult = router.app.tab.show(`${router.view.selector} #${tabRoute.id}`, options.animate, options.route);
+  } else {
+    tabShowResult = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+  }
+  const { $newTabEl, $oldTabEl, animated, onTabsChanged } = tabShowResult;
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
     const tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
