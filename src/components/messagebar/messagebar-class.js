@@ -229,6 +229,7 @@ class Messagebar extends Framework7Class {
   }
   attachmentsShow(innerHTML = '') {
     const messagebar = this;
+    messagebar.$attachmentsEl = messagebar.$el.find('.messagebar-attachments');
     if (messagebar.$attachmentsEl.length === 0) {
       messagebar.attachmentsCreate(innerHTML);
     }
@@ -295,6 +296,7 @@ class Messagebar extends Framework7Class {
   }
   sheetShow(innerHTML = '') {
     const messagebar = this;
+    messagebar.$sheetEl = messagebar.$el.find('.messagebar-attachments');
     if (messagebar.$sheetEl.length === 0) {
       messagebar.sheetCreate(innerHTML);
     }
