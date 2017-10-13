@@ -58,7 +58,7 @@ const Sortable = {
       isMoved = true;
 
       e.preventDefault();
-      e.f7PreventPanelSwipe = true;
+      e.f7PreventSwipePanel = true;
 
       touchesDiff = pageY - touchStartY;
 

@@ -118,7 +118,7 @@ const Swipeout = {
       let buttonOffset;
       let progress;
 
-      e.f7PreventPanelSwipe = true;
+      e.f7PreventSwipePanel = true;
       if (app.params.swipeout.noFollow) {
         if (opened) {
           if (openedActionsSide === 'right' && touchesDiff > 0) {

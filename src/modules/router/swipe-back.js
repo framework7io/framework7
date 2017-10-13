@@ -134,6 +134,7 @@ function SwipeBack(r) {
     }
     e.f7PreventPanelSwipe = true;
     isMoved = true;
+    app.preventSwipePanelBySwipeBack = true;
     e.preventDefault();
 
     // RTL inverter
@@ -215,6 +216,7 @@ function SwipeBack(r) {
     }
   }
   function handleTouchEnd() {
+    app.preventSwipePanelBySwipeBack = false;
     if (!isTouched || !isMoved) {
       isTouched = false;
       isMoved = false;
