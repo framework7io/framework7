@@ -6,6 +6,7 @@ export default {
   name: 'vi',
   params: {
     vi: {
+      enabled: true,
       autoplay: true,
       fallbackOverlay: true,
       fallbackOverlayText: 'Please watch this ad',
@@ -43,17 +44,17 @@ export default {
       createAd(adParams) {
         return new ViAd(app, adParams);
       },
+      loadSdk() {
+        const script = document.createElement('script');
+        script.src = 'vi.js';
+        $('head').append(script);
+      },
     };
   },
   on: {
     init() {
-      const s1 = document.createElement('script');
-      s1.src = 'vi.js';
-      const s2 = document.createElement('script');
-      s2.src = 'viFrame.js';
-
-      $('head').append(s1);
-      $('head').append(s2);
+      const app = this;
+      if (app.params.vi.enabled) app.vi.loadSdk();
     },
   },
 };

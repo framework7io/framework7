@@ -8,7 +8,7 @@ class ViAd extends Framework7Class {
     super(params, [app]);
     const vi = this;
     if (!window.vi) {
-      throw new Error('f7:vi SDK not found');
+      throw new Error('f7:vi SDK not found.');
     }
 
     const defaults = Utils.extend(
@@ -33,7 +33,7 @@ class ViAd extends Framework7Class {
     vi.params = Utils.extend(defaults, params);
 
     const adParams = {};
-    const skipParams = ('on autoplay fallbackOverlay fallbackOverlayText').split(' ');
+    const skipParams = ('on autoplay fallbackOverlay fallbackOverlayText enabled').split(' ');
     Object.keys(vi.params).forEach((paramName) => {
       if (skipParams.indexOf(paramName) >= 0) return;
       const paramValue = vi.params[paramName];
@@ -42,10 +42,10 @@ class ViAd extends Framework7Class {
     });
 
     if (!vi.params.appId) {
-      throw new Error('"app.id" required to display an ad. Make sure you have specified on app initialization');
+      throw new Error('f7:"app.id" is required to display an ad. Make sure you have specified it on app initialization.');
     }
     if (!vi.params.placementId) {
-      throw new Error('"placementId" required to display an ad');
+      throw new Error('f7:"placementId" is required to display an ad.');
     }
 
     function onResize() {
@@ -104,8 +104,8 @@ class ViAd extends Framework7Class {
       onAdStarted() {
         vi.emit('local::started');
       },
-      onAdClick() {
-        vi.emit('local::click');
+      onAdClick(targetUrl) {
+        vi.emit('local::click', targetUrl);
       },
       onAdImpression() {
         vi.emit('local::impression');
