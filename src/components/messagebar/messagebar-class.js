@@ -16,6 +16,7 @@ class Messagebar extends Framework7Class {
       renderAttachments: undefined,
       renderAttachment: undefined,
       maxHeight: null,
+      resizePage: true,
     };
 
     // Extend defaults with modules params
@@ -75,7 +76,9 @@ class Messagebar extends Framework7Class {
 
     // Events
     function onAppResize() {
-      messagebar.resize();
+      if (messagebar.params.resizePage) {
+        messagebar.resizePage();
+      }
     }
     function onSubmit(e) {
       e.preventDefault();
@@ -152,7 +155,7 @@ class Messagebar extends Framework7Class {
     messagebar.$textareaEl.attr('placeholder', placeholder);
     return messagebar;
   }
-  resize() {
+  resizePage() {
     const messagebar = this;
     const {
       params,
@@ -168,6 +171,8 @@ class Messagebar extends Framework7Class {
     const elHeight = $el[0].offsetHeight;
     let maxHeight = params.maxHeight;
     if (top) {
+      /*
+      Disable at the moment
       const requiredPaddingTop = elHeight + params.topOffset;
       const currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
       if (requiredPaddingTop !== currentPaddingTop) {
@@ -179,6 +184,7 @@ class Messagebar extends Framework7Class {
         $el.trigger('messagebar:resize');
         messagebar.emit('local::resize messagebarResize');
       }
+      */
     } else {
       const currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
       const requiredPaddingBottom = elHeight + params.bottomOffset;
@@ -228,14 +234,18 @@ class Messagebar extends Framework7Class {
     }
     messagebar.$el.addClass('messagebar-attachments-visible');
     messagebar.attachmentsVisible = true;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   attachmentsHide() {
     const messagebar = this;
     messagebar.$el.removeClass('messagebar-attachments-visible');
     messagebar.attachmentsVisible = false;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   attachmentsToggle() {
@@ -290,14 +300,18 @@ class Messagebar extends Framework7Class {
     }
     messagebar.$el.addClass('messagebar-sheet-visible');
     messagebar.sheetVisible = true;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   sheetHide() {
     const messagebar = this;
     messagebar.$el.removeClass('messagebar-sheet-visible');
     messagebar.sheetVisible = false;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   sheetToggle() {
