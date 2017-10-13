@@ -8,12 +8,8 @@ class ViAd extends Framework7Class {
     super(params, [app]);
     const vi = this;
     if (!window.vi) {
-      throw new Error('vi SDK not found');
+      throw new Error('f7:vi SDK not found');
     }
-    if (ViAd.current) {
-      throw new Error('vi ad is already created');
-    }
-    ViAd.current = vi;
 
     const defaults = Utils.extend(
       {},
@@ -37,7 +33,7 @@ class ViAd extends Framework7Class {
     vi.params = Utils.extend(defaults, params);
 
     const adParams = {};
-    const skipParams = ('on autoplay overlay overlayText').split(' ');
+    const skipParams = ('on autoplay fallbackOverlay fallbackOverlayText').split(' ');
     Object.keys(vi.params).forEach((paramName) => {
       if (skipParams.indexOf(paramName) >= 0) return;
       const paramValue = vi.params[paramName];
@@ -71,7 +67,7 @@ class ViAd extends Framework7Class {
       if (!videoEl) return;
       vi.$overlayEl = $(`
         <div class="vi-overlay no-fastclick">
-          ${vi.params.overlayText ? `<div class="vi-overlay-text">${vi.params.overlayText}</div>` : ''}
+          ${vi.params.fallbackOverlayText ? `<div class="vi-overlay-text">${vi.params.fallbackOverlayText}</div>` : ''}
           <div class="vi-overlay-play-button"></div>
         </div>
       `.trim());
@@ -93,35 +89,6 @@ class ViAd extends Framework7Class {
       });
       app.root.append(vi.$overlayEl);
     }
-
-    /*
-    =====================
-    DISABLE VIDEO SEEKING
-    =====================
-
-    var videoElement = document.querySelector('iframe').contentDocument.querySelector('video')
-    var trackingTime;
-    function onTimeUpdate() {
-      if (!videoElement.seeking) {
-        trackingTime = videoElement.currentTime;
-      }
-    }
-    function onSeeking() {
-      var delta = Math.abs(videoElement.currentTime - trackingTime);
-      if (delta > 0.01) {
-        videoElement.currentTime = trackingTime;
-      }
-    }
-    videoElement.addEventListener('timeupdate', onTimeUpdate, false)
-    videoElement.addEventListener('seeking', onSeeking, false)
-
-var videoElement = document.querySelector('iframe').contentDocument.querySelector('video')
-videoElement.addEventListener('pause', (e) => {
-  videoElement.play()
-  .then(() => {})
-  .catch((e) => {console.log(e)})
-}, false)
-    */
 
     // Create ad
     vi.ad = new window.vi.Ad(adParams);
@@ -146,7 +113,6 @@ videoElement.addEventListener('pause', (e) => {
       onAdStopped(reason) {
         app.off('resize', onResize);
         removeOverlay();
-        ViAd.current = null;
 
         vi.emit('local::stopped', reason);
         if (reason === 'complete') {
@@ -155,21 +121,21 @@ videoElement.addEventListener('pause', (e) => {
         if (reason === 'userexit') {
           vi.emit('local::userexit');
         }
+        vi.destroyed = true;
       },
       onAutoPlayFailed(reason, videoEl) {
         vi.emit('local::autoplayFailed', reason, videoEl);
-        if (reason && reason.name && reason.name.indexOf('NotAllowedError') !== -1 && vi.params.overlay) {
+        if (reason && reason.name && reason.name.indexOf('NotAllowedError') !== -1 && vi.params.fallbackOverlay) {
           createOverlay(videoEl);
         }
       },
       onAdError(msg) {
         removeOverlay();
         app.off('resize', onResize);
-        ViAd.current = null;
         vi.emit('local::error', msg);
+        vi.destroyed = true;
       },
     });
-
 
     vi.init();
 
@@ -179,32 +145,32 @@ videoElement.addEventListener('pause', (e) => {
   }
   start() {
     const vi = this;
-    if (vi !== ViAd.current) return;
+    if (vi.destroyed) return;
     if (vi.ad) vi.ad.startAd();
   }
   pause() {
     const vi = this;
-    if (vi !== ViAd.current) return;
+    if (vi.destroyed) return;
     if (vi.ad) vi.ad.pauseAd();
   }
   resume() {
     const vi = this;
-    if (vi !== ViAd.current) return;
+    if (vi.destroyed) return;
     if (vi.ad) vi.ad.resumeAd();
   }
   stop() {
     const vi = this;
-    if (vi !== ViAd.current) return;
+    if (vi.destroyed) return;
     if (vi.ad) vi.ad.stopAd();
   }
   init() {
     const vi = this;
-    if (vi !== ViAd.current) return;
+    if (vi.destroyed) return;
     if (vi.ad) vi.ad.initAd();
   }
   destroy() {
     const vi = this;
-    ViAd.current = null;
+    vi.destroyed = true;
     vi.emit('local::beforeDestroy');
     Utils.deleteProps(vi);
   }

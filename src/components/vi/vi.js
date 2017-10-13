@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import Device from '../../utils/device';
 import ViAd from './vi-class';
 
 export default {
@@ -6,8 +7,10 @@ export default {
   params: {
     vi: {
       autoplay: true,
-      overlay: true,
-      overlayText: 'Please watch this ad',
+      fallbackOverlay: true,
+      fallbackOverlayText: 'Please watch this ad',
+      showMute: true,
+      startMuted: (Device.ios || Device.android) && !Device.cordova,
       appId: null,
       appVer: null,
       language: null,
