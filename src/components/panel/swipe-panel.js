@@ -24,6 +24,7 @@ function swipePanel(panel) {
 
   let $viewEl;
 
+  let touchMoves = 0;
   function handleTouchStart(e) {
     if (!panel.swipeable) return;
     if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
@@ -51,6 +52,7 @@ function swipePanel(panel) {
         if (touchesStart.x < app.width - params.swipeActiveArea) return;
       }
     }
+    touchMoves = 0;
     $viewEl = $(panel.getViewEl());
     isMoved = false;
     isTouched = true;
@@ -61,7 +63,9 @@ function swipePanel(panel) {
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
-    if (e.f7PreventPanelSwipe) {
+    touchMoves += 1;
+    if (touchMoves < 2) return;
+    if (e.f7PreventSwipePanel || app.preventSwipePanelBySwipeBack || app.preventSwipePanel) {
       isTouched = false;
       return;
     }
