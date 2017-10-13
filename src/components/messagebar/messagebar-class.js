@@ -181,8 +181,8 @@ class Messagebar extends Framework7Class {
         }
         $textareaEl.css('max-height', `${maxHeight}px`);
         $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
-        $el.trigger('messagebar:resize');
-        messagebar.emit('local::resize messagebarResize');
+        $el.trigger('messagebar:resizePage');
+        messagebar.emit('local::resizePage messagebarResizePage');
       }
       */
     } else {
@@ -202,8 +202,8 @@ class Messagebar extends Framework7Class {
         if (scrollOnBottom) {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
-        $el.trigger('messagebar:resize');
-        messagebar.emit('local::resize messagebarResize');
+        $el.trigger('messagebar:resizePage');
+        messagebar.emit('local::resizePage messagebarResizePage');
       }
     }
   }
