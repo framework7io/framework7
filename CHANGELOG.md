@@ -1,3 +1,10 @@
+# [v2.0.0-beta.11](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.10...v2.0.0-beta.11) - October 13, 2017
+  * Messagebar
+    * Added `top` parameter to consider it as top messagebar
+    * Added `resizePage` parameter to define whether it should resize the page
+    * Added `maxHeight` parameter to specify messagebar max-height on resize
+  * Minor fixes
+
 # [v2.0.0-beta.10](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.9...v2.0.0-beta.10) - October 11, 2017
   * Swiper update to latest 4.0.1:
     * Fixed issue with pagination being broken with loop mode

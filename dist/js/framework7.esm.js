@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.10
+ * Framework7 2.0.0-beta.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 11, 2017
+ * Released on: October 13, 2017
  */
 
 import Template7 from 'template7';
@@ -3240,7 +3240,13 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  const { $newTabEl, $oldTabEl, animated, onTabsChanged } = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+  let tabShowResult;
+  if (router.view.selector) {
+    tabShowResult = router.app.tab.show(`${router.view.selector} #${tabRoute.id}`, options.animate, options.route);
+  } else {
+    tabShowResult = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+  }
+  const { $newTabEl, $oldTabEl, animated, onTabsChanged } = tabShowResult;
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
     const tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
@@ -5189,9 +5195,14 @@ function initClicks(app) {
     if (isLink) {
       // eslint-disable-next-line
       if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
-        if (url && clickedLink.attr('target') === '_system') {
+        const target = clickedLink.attr('target');
+        if (url && (target === '_system' || target === '_blank')) {
           e.preventDefault();
-          window.open(url, '_system');
+          if (window.cordova && window.cordova.InAppBrowser) {
+            window.cordova.InAppBrowser.open(url, target);
+          } else {
+            window.open(url, target);
+          }
         }
         return;
       }
@@ -9791,7 +9802,7 @@ function swipePanel$1(panel) {
     swipeInitialized: true,
   });
   const params = app.params.panel;
-  const { $el, $backdropEl, side, effect, $viewEl } = panel;
+  const { $el, $backdropEl, side, effect } = panel;
   let otherPanel;
 
   let isTouched;
@@ -9804,6 +9815,8 @@ function swipePanel$1(panel) {
   let backdropOpacity;
   let panelWidth;
   let direction;
+
+  let $viewEl;
 
   function handleTouchStart(e) {
     if (!panel.swipeable) return;
@@ -9832,6 +9845,7 @@ function swipePanel$1(panel) {
         if (touchesStart.x < app.width - params.swipeActiveArea) return;
       }
     }
+    $viewEl = $(panel.getViewEl());
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
@@ -10099,13 +10113,6 @@ class Panel extends Framework7Class {
       $backdropEl.insertBefore($el);
     }
 
-    let $viewEl;
-    if (app.root.children('.views').length > 0) {
-      $viewEl = app.root.children('.views');
-    } else {
-      $viewEl = app.root.children('.view').eq(0);
-    }
-
     Utils.extend(panel, {
       app,
       side,
@@ -10115,8 +10122,6 @@ class Panel extends Framework7Class {
       opened,
       $backdropEl,
       backdropEl: $backdropEl[0],
-      $viewEl,
-      viewEl: $viewEl[0],
     });
 
     // Install Modules
@@ -10145,10 +10150,22 @@ class Panel extends Framework7Class {
       }
     }
   }
+  getViewEl() {
+    const panel = this;
+    const app = panel.app;
+    let viewEl;
+    if (app.root.children('.views').length > 0) {
+      viewEl = app.root.children('.views')[0];
+    } else {
+      viewEl = app.root.children('.view')[0];
+    }
+    return viewEl;
+  }
   setBreakpoint() {
     const panel = this;
     const app = panel.app;
-    const { side, $el, $viewEl } = panel;
+    const { side, $el } = panel;
+    const $viewEl = $(panel.getViewEl());
     const breakpoint = app.params.panel[`${side}Breakpoint`];
     const wasVisible = $el.hasClass('panel-visible-by-breakpoint');
 
@@ -16706,11 +16723,14 @@ class Messagebar extends Framework7Class {
     const messagebar = this;
 
     const defaults = {
+      top: false,
       topOffset: 0,
       bottomOffset: 0,
       attachments: [],
       renderAttachments: undefined,
       renderAttachment: undefined,
+      maxHeight: null,
+      resizePage: true,
     };
 
     // Extend defaults with modules params
@@ -16743,6 +16763,10 @@ class Messagebar extends Framework7Class {
     const $attachmentsEl = $el.find('.messagebar-attachments');
     const $sheetEl = $el.find('.messagebar-sheet');
 
+    if (messagebar.params.top) {
+      $el.addClass('messagebar-top');
+    }
+
     Utils.extend(messagebar, {
       $el,
       el: $el[0],
@@ -16766,7 +16790,9 @@ class Messagebar extends Framework7Class {
 
     // Events
     function onAppResize() {
-      messagebar.resize();
+      if (messagebar.params.resizePage) {
+        messagebar.resizePage();
+      }
     }
     function onSubmit(e) {
       e.preventDefault();
@@ -16843,7 +16869,7 @@ class Messagebar extends Framework7Class {
     messagebar.$textareaEl.attr('placeholder', placeholder);
     return messagebar;
   }
-  resize() {
+  resizePage() {
     const messagebar = this;
     const {
       params,
@@ -16857,16 +16883,22 @@ class Messagebar extends Framework7Class {
       $attachmentsEl,
     } = messagebar;
     const elHeight = $el[0].offsetHeight;
+    let maxHeight = params.maxHeight;
     if (top) {
+      /*
+      Disable at the moment
       const requiredPaddingTop = elHeight + params.topOffset;
       const currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
       if (requiredPaddingTop !== currentPaddingTop) {
-        const maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        if (!maxHeight) {
+          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        }
         $textareaEl.css('max-height', `${maxHeight}px`);
         $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
-        $el.trigger('messagebar:resize');
-        messagebar.emit('local::resize messagebarResize');
+        $el.trigger('messagebar:resizePage');
+        messagebar.emit('local::resizePage messagebarResizePage');
       }
+      */
     } else {
       const currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
       const requiredPaddingBottom = elHeight + params.bottomOffset;
@@ -16876,14 +16908,16 @@ class Messagebar extends Framework7Class {
         const pageOffsetHeight = $pageContentEl[0].offsetHeight;
         const pageScrollTop = $pageContentEl[0].scrollTop;
         const scrollOnBottom = (pageScrollTop === pageScrollHeight - pageOffsetHeight);
-        const maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        if (!maxHeight) {
+          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        }
         $textareaEl.css('max-height', `${maxHeight}px`);
         $pageContentEl.css('padding-bottom', `${requiredPaddingBottom}px`);
         if (scrollOnBottom) {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
-        $el.trigger('messagebar:resize');
-        messagebar.emit('local::resize messagebarResize');
+        $el.trigger('messagebar:resizePage');
+        messagebar.emit('local::resizePage messagebarResizePage');
       }
     }
   }
@@ -16914,14 +16948,18 @@ class Messagebar extends Framework7Class {
     }
     messagebar.$el.addClass('messagebar-attachments-visible');
     messagebar.attachmentsVisible = true;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   attachmentsHide() {
     const messagebar = this;
     messagebar.$el.removeClass('messagebar-attachments-visible');
     messagebar.attachmentsVisible = false;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   attachmentsToggle() {
@@ -16976,14 +17014,18 @@ class Messagebar extends Framework7Class {
     }
     messagebar.$el.addClass('messagebar-sheet-visible');
     messagebar.sheetVisible = true;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   sheetHide() {
     const messagebar = this;
     messagebar.$el.removeClass('messagebar-sheet-visible');
     messagebar.sheetVisible = false;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   }
   sheetToggle() {

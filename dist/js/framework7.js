@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.10
+ * Framework7 2.0.0-beta.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 11, 2017
+ * Released on: October 13, 2017
  */
 
 (function (global, factory) {
@@ -5311,11 +5311,16 @@ function tabLoad(tabRoute, loadOptions) {
   }
 
   // Show Tab
-  var ref = router.app.tab.show(("#" + (tabRoute.id)), options.animate, options.route);
-  var $newTabEl = ref.$newTabEl;
-  var $oldTabEl = ref.$oldTabEl;
-  var animated = ref.animated;
-  var onTabsChanged = ref.onTabsChanged;
+  var tabShowResult;
+  if (router.view.selector) {
+    tabShowResult = router.app.tab.show(((router.view.selector) + " #" + (tabRoute.id)), options.animate, options.route);
+  } else {
+    tabShowResult = router.app.tab.show(("#" + (tabRoute.id)), options.animate, options.route);
+  }
+  var $newTabEl = tabShowResult.$newTabEl;
+  var $oldTabEl = tabShowResult.$oldTabEl;
+  var animated = tabShowResult.animated;
+  var onTabsChanged = tabShowResult.onTabsChanged;
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
     var tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
@@ -7325,9 +7330,14 @@ function initClicks(app) {
     if (isLink) {
       // eslint-disable-next-line
       if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
-        if (url && clickedLink.attr('target') === '_system') {
+        var target = clickedLink.attr('target');
+        if (url && (target === '_system' || target === '_blank')) {
           e.preventDefault();
-          window.open(url, '_system');
+          if (window.cordova && window.cordova.InAppBrowser) {
+            window.cordova.InAppBrowser.open(url, target);
+          } else {
+            window.open(url, target);
+          }
         }
         return;
       }
@@ -12061,7 +12071,6 @@ function swipePanel$1(panel) {
   var $backdropEl = panel.$backdropEl;
   var side = panel.side;
   var effect = panel.effect;
-  var $viewEl = panel.$viewEl;
   var otherPanel;
 
   var isTouched;
@@ -12074,6 +12083,8 @@ function swipePanel$1(panel) {
   var backdropOpacity;
   var panelWidth;
   var direction;
+
+  var $viewEl;
 
   function handleTouchStart(e) {
     if (!panel.swipeable) { return; }
@@ -12102,6 +12113,7 @@ function swipePanel$1(panel) {
         if (touchesStart.x < app.width - params.swipeActiveArea) { return; }
       }
     }
+    $viewEl = $$1$1(panel.getViewEl());
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
@@ -12372,13 +12384,6 @@ var Panel$1 = (function (Framework7Class$$1) {
       $backdropEl.insertBefore($el);
     }
 
-    var $viewEl;
-    if (app.root.children('.views').length > 0) {
-      $viewEl = app.root.children('.views');
-    } else {
-      $viewEl = app.root.children('.view').eq(0);
-    }
-
     Utils.extend(panel, {
       app: app,
       side: side,
@@ -12388,8 +12393,6 @@ var Panel$1 = (function (Framework7Class$$1) {
       opened: opened,
       $backdropEl: $backdropEl,
       backdropEl: $backdropEl[0],
-      $viewEl: $viewEl,
-      viewEl: $viewEl[0],
     });
 
     // Install Modules
@@ -12422,12 +12425,23 @@ var Panel$1 = (function (Framework7Class$$1) {
       }
     }
   };
+  Panel.prototype.getViewEl = function getViewEl () {
+    var panel = this;
+    var app = panel.app;
+    var viewEl;
+    if (app.root.children('.views').length > 0) {
+      viewEl = app.root.children('.views')[0];
+    } else {
+      viewEl = app.root.children('.view')[0];
+    }
+    return viewEl;
+  };
   Panel.prototype.setBreakpoint = function setBreakpoint () {
     var panel = this;
     var app = panel.app;
     var side = panel.side;
     var $el = panel.$el;
-    var $viewEl = panel.$viewEl;
+    var $viewEl = $$1$1(panel.getViewEl());
     var breakpoint = app.params.panel[(side + "Breakpoint")];
     var wasVisible = $el.hasClass('panel-visible-by-breakpoint');
 
@@ -18986,11 +19000,14 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var messagebar = this;
 
     var defaults = {
+      top: false,
       topOffset: 0,
       bottomOffset: 0,
       attachments: [],
       renderAttachments: undefined,
       renderAttachment: undefined,
+      maxHeight: null,
+      resizePage: true,
     };
 
     // Extend defaults with modules params
@@ -19023,6 +19040,10 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var $attachmentsEl = $el.find('.messagebar-attachments');
     var $sheetEl = $el.find('.messagebar-sheet');
 
+    if (messagebar.params.top) {
+      $el.addClass('messagebar-top');
+    }
+
     Utils.extend(messagebar, {
       $el: $el,
       el: $el[0],
@@ -19046,7 +19067,9 @@ var Messagebar$1 = (function (Framework7Class$$1) {
 
     // Events
     function onAppResize() {
-      messagebar.resize();
+      if (messagebar.params.resizePage) {
+        messagebar.resizePage();
+      }
     }
     function onSubmit(e) {
       e.preventDefault();
@@ -19127,7 +19150,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     messagebar.$textareaEl.attr('placeholder', placeholder);
     return messagebar;
   };
-  Messagebar.prototype.resize = function resize () {
+  Messagebar.prototype.resizePage = function resizePage () {
     var messagebar = this;
     var params = messagebar.params;
     var $el = messagebar.$el;
@@ -19139,33 +19162,41 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var $sheetEl = messagebar.$sheetEl;
     var $attachmentsEl = messagebar.$attachmentsEl;
     var elHeight = $el[0].offsetHeight;
+    var maxHeight = params.maxHeight;
     if (top) {
-      var requiredPaddingTop = elHeight + params.topOffset;
-      var currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+      /*
+      Disable at the moment
+      const requiredPaddingTop = elHeight + params.topOffset;
+      const currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
       if (requiredPaddingTop !== currentPaddingTop) {
-        var maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
-        $textareaEl.css('max-height', (maxHeight + "px"));
-        $pageContentEl.css('padding-top', (requiredPaddingTop + "px"));
-        $el.trigger('messagebar:resize');
-        messagebar.emit('local::resize messagebarResize');
+        if (!maxHeight) {
+          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        }
+        $textareaEl.css('max-height', `${maxHeight}px`);
+        $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
+        $el.trigger('messagebar:resizePage');
+        messagebar.emit('local::resizePage messagebarResizePage');
       }
+      */
     } else {
       var currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
       var requiredPaddingBottom = elHeight + params.bottomOffset;
       if (requiredPaddingBottom !== currentPaddingBottom && $pageContentEl.length) {
-        var currentPaddingTop$1 = parseInt($pageContentEl.css('padding-top'), 10);
+        var currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
         var pageScrollHeight = $pageContentEl[0].scrollHeight;
         var pageOffsetHeight = $pageContentEl[0].offsetHeight;
         var pageScrollTop = $pageContentEl[0].scrollTop;
         var scrollOnBottom = (pageScrollTop === pageScrollHeight - pageOffsetHeight);
-        var maxHeight$1 = $pageEl[0].offsetHeight - currentPaddingTop$1 - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
-        $textareaEl.css('max-height', (maxHeight$1 + "px"));
+        if (!maxHeight) {
+          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        }
+        $textareaEl.css('max-height', (maxHeight + "px"));
         $pageContentEl.css('padding-bottom', (requiredPaddingBottom + "px"));
         if (scrollOnBottom) {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
-        $el.trigger('messagebar:resize');
-        messagebar.emit('local::resize messagebarResize');
+        $el.trigger('messagebar:resizePage');
+        messagebar.emit('local::resizePage messagebarResizePage');
       }
     }
   };
@@ -19201,14 +19232,18 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     }
     messagebar.$el.addClass('messagebar-attachments-visible');
     messagebar.attachmentsVisible = true;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   };
   Messagebar.prototype.attachmentsHide = function attachmentsHide () {
     var messagebar = this;
     messagebar.$el.removeClass('messagebar-attachments-visible');
     messagebar.attachmentsVisible = false;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   };
   Messagebar.prototype.attachmentsToggle = function attachmentsToggle () {
@@ -19262,14 +19297,18 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     }
     messagebar.$el.addClass('messagebar-sheet-visible');
     messagebar.sheetVisible = true;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   };
   Messagebar.prototype.sheetHide = function sheetHide () {
     var messagebar = this;
     messagebar.$el.removeClass('messagebar-sheet-visible');
     messagebar.sheetVisible = false;
-    messagebar.resize();
+    if (messagebar.params.resizePage) {
+      messagebar.resizePage();
+    }
     return messagebar;
   };
   Messagebar.prototype.sheetToggle = function sheetToggle () {
