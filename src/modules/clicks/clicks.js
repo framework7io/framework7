@@ -15,9 +15,14 @@ function initClicks(app) {
     if (isLink) {
       // eslint-disable-next-line
       if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
-        if (url && clickedLink.attr('target') === '_system') {
+        const target = clickedLink.attr('target');
+        if (url && (target === '_system' || target === '_blank')) {
           e.preventDefault();
-          window.open(url, '_system');
+          if (window.cordova && window.cordova.InAppBrowser) {
+            window.cordova.InAppBrowser.open(url, target);
+          } else {
+            window.open(url, target);
+          }
         }
         return;
       }
