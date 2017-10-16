@@ -57,9 +57,9 @@ function modalLoad(modalType, route, loadOptions = {}) {
       // Update Browser History
       if (router.params.pushState && options.pushState) {
         History.push(
+          router.view.id,
           {
             url: options.route.url,
-            viewIndex: router.view.index,
             modal: modalType,
           },
           (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url

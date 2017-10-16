@@ -4,6 +4,7 @@ import Regexp from 'path-to-regexp'; // eslint-disable-line
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import Component from '../../utils/component';
+import History from '../../utils/history';
 import SwipeBack from './swipe-back';
 
 import { forward, load, navigate } from './navigate';
@@ -32,6 +33,7 @@ class Router extends Framework7Class {
       Utils.extend(false, router, {
         app,
         view,
+        viewId: view.id,
         params: view.params,
         routes: view.routes,
         $el: view.$el,
@@ -84,6 +86,7 @@ class Router extends Framework7Class {
         previousRoute = newRoute;
       },
     });
+
     Utils.extend(router, {
       // Load
       forward,
@@ -889,13 +892,13 @@ class Router extends Framework7Class {
     const router = this;
     router.view.history = router.history;
     if (router.params.pushState) {
-      window.localStorage[`f7router-view${router.view.index}-history`] = JSON.stringify(router.history);
+      window.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
     }
   }
   restoreHistory() {
     const router = this;
-    if (router.params.pushState && window.localStorage[`f7router-view${router.view.index}-history`]) {
-      router.history = JSON.parse(window.localStorage[`f7router-view${router.view.index}-history`]);
+    if (router.params.pushState && window.localStorage[`f7router-${router.view.id}-history`]) {
+      router.history = JSON.parse(window.localStorage[`f7router-${router.view.id}-history`]);
       router.view.history = router.history;
     }
   }
@@ -906,11 +909,11 @@ class Router extends Framework7Class {
   }
   init() {
     const router = this;
-    const app = router.app;
+    const { app, view } = router;
 
     // Init Swipeback
     if (process.env.TARGET !== 'desktop') {
-      if (router.view && router.params.iosSwipeBack && app.theme === 'ios') {
+      if (view && router.params.iosSwipeBack && app.theme === 'ios') {
         SwipeBack(router);
       }
     }
@@ -942,6 +945,8 @@ class Router extends Framework7Class {
         router.history = router.history.slice(0, router.history.indexOf(initUrl) + 1);
       } else if (router.params.url === initUrl) {
         router.history = [initUrl];
+      } else if (History.state && History.state[view.id] && History.state[view.id].url === router.history[router.history.length - 1]) {
+        initUrl = router.history[router.history.length - 1];
       } else {
         router.history = [documentUrl.split(router.params.pushStateSeparator)[0] || '/', initUrl];
       }
@@ -1014,6 +1019,7 @@ class Router extends Framework7Class {
         }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, { route: router.currentRoute });
       });
+      console.log(initUrl);
       if (historyRestored) {
         router.navigate(initUrl, {
           pushState: false,

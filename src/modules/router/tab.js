@@ -20,9 +20,9 @@ function tabLoad(tabRoute, loadOptions = {}) {
     // Update Browser History
     if (router.params.pushState && options.pushState && !options.reloadPrevious) {
       History.replace(
+        router.view.id,
         {
           url: options.route.url,
-          viewIndex: router.view.index,
         },
         (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
       );

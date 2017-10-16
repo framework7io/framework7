@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import Utils from './utils';
 
 const History = {
   queue: [],
@@ -11,22 +12,22 @@ const History = {
   clearRouterQueue() {
     if (History.routerQueue.length === 0) return;
     const currentQueue = History.routerQueue.pop();
-    const router = currentQueue.router;
+    const { router, stateUrl, action } = currentQueue;
 
     let animate = router.params.animate;
     if (router.params.pushStateAnimate === false) animate = false;
 
-    if (currentQueue.action === 'back') {
+    if (action === 'back') {
       router.back({ animate, pushState: false });
     }
-    if (currentQueue.action === 'load') {
-      router.navigate(currentQueue.stateUrl, { animate, pushState: false });
+    if (action === 'load') {
+      router.navigate(stateUrl, { animate, pushState: false });
     }
   },
   handle(e) {
     if (History.blockPopstate) return;
     const app = this;
-    const mainView = app.views.main;
+    // const mainView = app.views.main;
     let state = e.state;
     History.previousState = History.state;
     History.state = state;
@@ -35,65 +36,73 @@ const History = {
     History.clearQueue();
 
     state = History.state;
+    if (!state) state = {};
 
-    if (!state && mainView) {
-      state = {
-        viewIndex: mainView.index,
-        url: mainView.router.history[0],
-      };
-    }
-    if (state.viewIndex < 0) return;
-    const view = app.views[state.viewIndex];
-    const router = view.router;
-    const stateUrl = (state && state.url) || undefined;
+    app.views.forEach((view) => {
+      const router = view.router;
+      let viewState = state[view.id];
+      if (!viewState && view.params.pushState) {
+        viewState = {
+          url: view.router.history[0],
+        };
+      }
+      if (!viewState) return;
+      const stateUrl = viewState.url || undefined;
 
-    let animate = router.params.animate;
-    if (router.params.pushStateAnimate === false) animate = false;
+      let animate = router.params.animate;
+      if (router.params.pushStateAnimate === false) animate = false;
 
-    if (stateUrl !== router.url) {
-      if (router.history.indexOf(stateUrl) >= 0) {
-        // Go Back
-        if (router.allowPageChange) {
-          router.back({ animate, pushState: false });
+      if (stateUrl !== router.url) {
+        if (router.history.indexOf(stateUrl) >= 0) {
+          // Go Back
+          if (router.allowPageChange) {
+            router.back({ animate, pushState: false });
+          } else {
+            History.routerQueue.push({
+              action: 'back',
+              router,
+            });
+          }
+        } else if (router.allowPageChange) {
+          // Load page
+          router.navigate(stateUrl, { animate, pushState: false });
         } else {
-          History.routerQueue.push({
-            action: 'back',
+          History.routerQueue.unshift({
+            action: 'load',
+            stateUrl,
             router,
           });
         }
-      } else if (router.allowPageChange) {
-        // Load page
-        router.navigate(stateUrl, { animate, pushState: false });
-      } else {
-        History.routerQueue.unshift({
-          action: 'load',
-          stateUrl,
-          router,
-        });
       }
-    }
+    });
   },
-  push(state, url) {
+  push(viewId, viewState, url) {
     if (!History.allowChange) {
       History.queue.push(() => {
-        History.push(state, url);
+        History.push(viewId, viewState, url);
       });
       return;
     }
     History.previousState = History.state;
-    History.state = state;
-    window.history.pushState(state, '', url);
+    const newState = Utils.extend({}, (History.previousState || {}), {
+      [viewId]: viewState,
+    });
+    History.state = newState;
+    window.history.pushState(newState, '', url);
   },
-  replace(state, url) {
+  replace(viewId, viewState, url) {
     if (!History.allowChange) {
       History.queue.push(() => {
-        History.replace(state, url);
+        History.replace(viewId, viewState, url);
       });
       return;
     }
     History.previousState = History.state;
-    History.state = state;
-    window.history.replaceState(state, '', url);
+    const newState = Utils.extend({}, (History.previousState || {}), {
+      [viewId]: viewState,
+    });
+    History.state = newState;
+    window.history.replaceState(newState, '', url);
   },
   go(index) {
     History.allowChange = false;

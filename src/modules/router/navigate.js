@@ -147,9 +147,9 @@ function forward(el, forwardOptions = {}) {
   if (router.params.pushState && options.pushState && !options.reloadPrevious) {
     const pushStateRoot = router.params.pushStateRoot || '';
     History[options.reloadCurrent || options.reloadAll ? 'replace' : 'push'](
+      view.id,
       {
         url: options.route.url,
-        viewIndex: view.index,
       },
       pushStateRoot + router.params.pushStateSeparator + options.route.url
     );
