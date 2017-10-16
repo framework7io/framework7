@@ -483,7 +483,7 @@ function back(...args) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async.call(router, asyncResolve, asyncReject);
+    route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
   }
   // Return Router
   return router;

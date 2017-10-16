@@ -493,7 +493,7 @@ function navigate(url, navigateOptions = {}) {
   if (route.route.async) {
     router.allowPageChange = false;
 
-    route.route.async.call(router, asyncResolve, asyncReject);
+    route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
   }
   // Retur Router
   return router;
