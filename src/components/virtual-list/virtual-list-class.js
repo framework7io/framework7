@@ -104,20 +104,29 @@ class VirtualList extends Framework7Class {
     // Attach events
     const handleScrollBound = vl.handleScroll.bind(vl);
     const handleResizeBound = vl.handleResize.bind(vl);
+    let $pageEl;
+    let $tabEl;
+    let $panelEl;
+    let $popupEl;
     vl.attachEvents = function attachEvents() {
+      $pageEl = vl.$el.parents('.page').eq(0);
+      $tabEl = vl.$el.parents('.tab').eq(0);
+      $panelEl = vl.$el.parents('.panel').eq(0);
+      $popupEl = vl.$el.parents('.popup').eq(0);
+
       vl.$pageContentEl.on('scroll', handleScrollBound);
-      vl.$el.parents('.page').eq(0).on('page:reinit', handleResizeBound);
-      vl.$el.parents('.tab').eq(0).on('tab:show', handleResizeBound);
-      vl.$el.parents('.panel').eq(0).on('panel:open', handleResizeBound);
-      vl.$el.parents('.popup').eq(0).on('popup:open', handleResizeBound);
+      if ($pageEl) $pageEl.on('page:reinit', handleResizeBound);
+      if ($tabEl) $tabEl.on('tab:show', handleResizeBound);
+      if ($panelEl) $panelEl.on('panel:open', handleResizeBound);
+      if ($popupEl) $popupEl.on('popup:open', handleResizeBound);
       app.on('resize', handleResizeBound);
     };
     vl.detachEvents = function attachEvents() {
       vl.$pageContentEl.off('scroll', handleScrollBound);
-      vl.$el.parents('.page').eq(0).off('page:reinit', handleResizeBound);
-      vl.$el.parents('.tab').eq(0).off('tab:show', handleResizeBound);
-      vl.$el.parents('.panel').eq(0).off('panel:open', handleResizeBound);
-      vl.$el.parents('.popup').eq(0).off('popup:open', handleResizeBound);
+      if ($pageEl) $pageEl.off('page:reinit', handleResizeBound);
+      if ($tabEl) $tabEl.off('tab:show', handleResizeBound);
+      if ($panelEl) $panelEl.off('panel:open', handleResizeBound);
+      if ($popupEl) $popupEl.off('popup:open', handleResizeBound);
       app.off('resize', handleResizeBound);
     };
     // Init
