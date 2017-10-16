@@ -17,6 +17,7 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const gulpif = require('gulp-if');
+const commonjs = require('rollup-plugin-commonjs');
 
 let config = require('./build-config.js');
 const banner = require('./banner.js');
@@ -59,6 +60,8 @@ function es(components, cb) {
         '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
         '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
+      resolve({ jsnext: true }),
+      commonjs(),
     ],
     format: 'es',
     name: 'Framework7',
@@ -93,6 +96,8 @@ function es(components, cb) {
         '//INSTALL_COMPONENTS': '',
         '//EXPORT_COMPONENTS': `export { $, Template7, Framework7, ${components.map(component => component.capitalized).join(', ')} };`,
       }),
+      resolve({ jsnext: true }),
+      commonjs(),
     ],
     format: 'es',
     name: 'Framework7',
@@ -132,6 +137,7 @@ function umd(components, cb) {
         '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
       resolve({ jsnext: true }),
+      commonjs(),
       buble(),
     ],
     format: 'umd',
