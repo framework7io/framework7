@@ -347,7 +347,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = loadParams;
   const options = loadOptions;
-  const { url, content, el, name, template, templateUrl, component, componentUrl } = params;
+  const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
   const { ignoreCache } = options;
 
   if (options.route &&
@@ -401,9 +401,9 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
     router.forward(router.getPageEl(el), options);
-  } else if (name) {
+  } else if (pageName) {
     // Load page by page name in pages container
-    router.forward(router.$el.children(`.page[data-name="${name}"]`).eq(0), options);
+    router.forward(router.$el.children(`.page[data-name="${pageName}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
@@ -467,7 +467,7 @@ function navigate(url, navigateOptions = {}) {
       router.modalLoad(modalLoadProp, route, options);
     }
   });
-  ('url content component name el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+  ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }

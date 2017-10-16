@@ -289,7 +289,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = backParams;
   const options = backOptions;
-  const { url, content, el, name, template, templateUrl, component, componentUrl } = params;
+  const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
   const { ignoreCache } = options;
 
   if (
@@ -328,9 +328,9 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   } else if (el) {
     // Load page from specified HTMLElement or by page name in pages container
     router.backward(router.getPageEl(el), options);
-  } else if (name) {
+  } else if (pageName) {
     // Load page by page name in pages container
-    router.backward(router.$el.children(`.page[data-name="${name}"]`).eq(0), options);
+    router.backward(router.$el.children(`.page[data-name="${pageName}"]`).eq(0), options);
   } else if (component || componentUrl) {
     // Load from component (F7/Vue/React/...)
     try {
@@ -467,7 +467,7 @@ function back(...args) {
     });
   }
 
-  ('url content component name el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+  ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
     if (route.route[pageLoadProp]) {
       router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
     }
