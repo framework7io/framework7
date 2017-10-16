@@ -302,7 +302,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   }
 
   if (!options.route && url) {
-    options.route = router.parseUrl(url);
+    options.route = router.parseRouteUrl(url);
   }
 
   // Component Callbacks

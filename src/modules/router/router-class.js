@@ -1,5 +1,6 @@
 import $ from 'dom7';
 import Template7 from 'template7';
+import Regexp from 'path-to-regexp'; // eslint-disable-line
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import Component from '../../utils/component';
@@ -519,7 +520,7 @@ class Router extends Framework7Class {
     return flattenedRoutes;
   }
   // eslint-disable-next-line
-  parseUrl(url) {
+  parseRouteUrl(url) {
     if (!url) return {};
     const query = Utils.parseUrlQuery(url);
     const hash = url.split('#')[1];
@@ -556,38 +557,18 @@ class Router extends Framework7Class {
     const router = this;
     const routes = router.routes;
     const flattenedRoutes = router.flattenRoutes(routes);
-    const { path, query, hash, params } = router.parseUrl(url);
-    const urlParts = path.split('/').filter(part => part !== '');
-
+    const { path, query, hash, params } = router.parseRouteUrl(url);
     let matchingRoute;
-    function parseRoute(str = '') {
-      const parts = [];
-      str.split('/').forEach((part) => {
-        if (part !== '') {
-          if (part.indexOf(':') === 0) {
-            parts.push({
-              name: part.replace(':', ''),
-            });
-          } else parts.push(part);
-        }
-      });
-      return parts;
-    }
     flattenedRoutes.forEach((route) => {
       if (matchingRoute) return;
-      const parsedRoute = parseRoute(route.path);
-      if (parsedRoute.length !== urlParts.length) return;
-      let matchedParts = 0;
-      parsedRoute.forEach((routePart, index) => {
-        if (typeof routePart === 'string' && urlParts[index] === routePart) {
-          matchedParts += 1;
-        }
-        if (typeof routePart === 'object') {
-          params[routePart.name] = urlParts[index];
-          matchedParts += 1;
-        }
-      });
-      if (matchedParts === urlParts.length) {
+      const keys = [];
+      const re = Regexp(route.path, keys);
+      const matched = re.exec(path);
+      if (matched) {
+        keys.forEach((keyObj, index) => {
+          const paramValue = matched[index + 1];
+          params[keyObj.name] = paramValue;
+        });
         matchingRoute = {
           query,
           hash,
@@ -975,7 +956,7 @@ class Router extends Framework7Class {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.parseUrl(router.history[0]), {
+        currentRoute = Utils.extend(router.parseRouteUrl(router.history[0]), {
           route: {
             url: router.history[0],
             path: router.history[0].split('?')[0],
@@ -986,7 +967,7 @@ class Router extends Framework7Class {
       // Don't load page
       currentRoute = router.findMatchingRoute(initUrl);
       if (!currentRoute) {
-        currentRoute = Utils.extend(router.parseUrl(initUrl), {
+        currentRoute = Utils.extend(router.parseRouteUrl(initUrl), {
           route: {
             url: initUrl,
             path: initUrl.split('?')[0],
