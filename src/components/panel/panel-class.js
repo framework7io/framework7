@@ -139,9 +139,7 @@ class Panel extends Framework7Class {
     panel.emit('local::destroy panelDestroy');
     delete app.panel[panel.side];
     delete panel.el.f7Panel;
-    Object.keys(panel).forEach((key) => {
-      delete panel[key];
-    });
+    Utils.deleteProps(panel);
     panel = null;
   }
   open(animate = true) {
