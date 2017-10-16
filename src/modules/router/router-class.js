@@ -576,6 +576,7 @@ class Router extends Framework7Class {
           url,
           path,
           route,
+          name: route.name,
         };
       }
     });

@@ -3,11 +3,13 @@ var routes = [
   {
     path: '/',
     url: './index.html',
+    name: 'home',
   },
   // About page
   {
     path: '/about/',
     url: './pages/about.html',
+    name: 'about',
   },
   // Right Panel pages
   {
