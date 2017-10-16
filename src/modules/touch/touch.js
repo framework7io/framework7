@@ -575,7 +575,7 @@ function initTouch() {
     app.on('touchend', handleMouseUp);
   }
   document.addEventListener('contextmenu', (e) => {
-    if (Device.ios || Device.android || Device.cordova) {
+    if (params.disableContextMenu && (Device.ios || Device.android || Device.cordova)) {
       e.preventDefault();
     }
     if (useRipple) {
@@ -594,6 +594,8 @@ export default {
       fastClicksDistanceThreshold: 10,
       fastClicksDelayBetweenClicks: 50,
       fastClicksExclude: '', // CSS selector
+      // ContextMenu
+      disableContextMenu: true,
       // Tap Hold
       tapHold: false,
       tapHoldDelay: 750,
