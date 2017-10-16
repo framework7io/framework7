@@ -316,6 +316,9 @@ class Searchbar extends FrameworkClass {
       }
     } else {
       if (needsFocus) sb.$inputEl.focus();
+      if (app.device.ios && app.theme === 'md' && sb.expandable) {
+        sb.$el.parents('.navbar-inner').scrollLeft(0);
+      }
       enable();
     }
     return sb;
