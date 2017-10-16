@@ -77,8 +77,8 @@ export default {
           });
         }
       },
-      create(el) {
-        return new Panel(app, { el });
+      create(params) {
+        return new Panel(app, params);
       },
 
       open(side, animate) {
@@ -95,7 +95,7 @@ export default {
         }
         const $panelEl = $(`.panel-${panelSide}`);
         if ($panelEl.length > 0) {
-          return new Panel(app, { el: $panelEl }).open(animate);
+          return app.panel.create({ el: $panelEl }).open(animate);
         }
         return false;
       },
@@ -114,7 +114,7 @@ export default {
           return app.panel[panelSide].close(animate);
         }
         if ($panelEl.length > 0) {
-          return new Panel(app, { el: $panelEl }).close(animate);
+          return app.panel.create({ el: $panelEl }).close(animate);
         }
         return false;
       },
@@ -132,7 +132,7 @@ export default {
         }
         const $panelEl = $(`.panel-${panelSide}`);
         if ($panelEl.length > 0) {
-          return new Panel(app, { el: $panelEl });
+          return app.panel.create({ el: $panelEl });
         }
         return undefined;
       },
@@ -145,7 +145,7 @@ export default {
       // Create Panels
       $('.panel').each((index, panelEl) => {
         const side = $(panelEl).hasClass('panel-left') ? 'left' : 'right';
-        app.panel[side] = new Panel(app, { el: panelEl, side });
+        app.panel[side] = app.panel.create({ el: panelEl, side });
       });
     },
   },
