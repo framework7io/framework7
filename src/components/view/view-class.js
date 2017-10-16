@@ -57,6 +57,7 @@ class View extends Framework7Class {
       scrollHistory: {},
     });
 
+    // Save in DOM
     $el[0].f7View = view;
 
     // Install Modules
@@ -66,11 +67,24 @@ class View extends Framework7Class {
     app.views.push(view);
     if (view.main) {
       app.views.main = view;
-    } else if (view.name) {
+    }
+    if (view.name) {
       app.views[view.name] = view;
     }
 
+    // Index
     view.index = app.views.indexOf(view);
+
+    // View ID
+    let viewId;
+    if (view.name) {
+      viewId = `view_${view.name}`;
+    } else if (view.main) {
+      viewId = 'view_main';
+    } else {
+      viewId = `view_${view.index}`;
+    }
+    view.id = viewId;
 
     // Init View
     if (app.initialized) {
