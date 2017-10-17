@@ -20,6 +20,7 @@ export default {
       view: undefined,
       url: 'photos/',
       routableModals: true,
+      virtualSlides: true,
 
       renderNavbar: undefined,
       renderToolbar: undefined,

@@ -43,18 +43,25 @@ class PhotoBrowser extends Framework7Class {
     // Init
     pb.init();
   }
-  onTransitionStart(swiper) {
+  onSlideChange(swiper) {
     const pb = this;
     pb.activeIndex = swiper.activeIndex;
 
     let current = swiper.activeIndex + 1;
-    let total = swiper.slides.length;
+    let total = pb.params.virtualSlides ? pb.params.photos.length : swiper.slides.length;
     if (swiper.params.loop) {
       total -= 2;
       current -= swiper.loopedSlides;
       if (current < 1) current = total + current;
       if (current > total) current -= total;
     }
+
+    const $activeSlideEl = pb.params.virtualSlides
+      ? swiper.$wrapperEl.find(`.swiper-slide[data-swiper-slide-index="${swiper.activeIndex}"]`)
+      : swiper.slides.eq(swiper.activeIndex);
+    const $previousSlideEl = pb.params.virtualSlides
+      ? swiper.$wrapperEl.find(`.swiper-slide[data-swiper-slide-index="${swiper.previousIndex}"]`)
+      : swiper.slides.eq(swiper.previousIndex);
 
     let $currentEl = pb.$containerEl.find('.photo-browser-current');
     let $totalEl = pb.$containerEl.find('.photo-browser-total');
@@ -70,13 +77,13 @@ class PhotoBrowser extends Framework7Class {
 
     // Update captions
     if (pb.captions.length > 0) {
-      const captionIndex = swiper.params.loop ? swiper.slides.eq(swiper.activeIndex).attr('data-swiper-slide-index') : pb.activeIndex;
+      const captionIndex = swiper.params.loop ? $activeSlideEl.attr('data-swiper-slide-index') : pb.activeIndex;
       pb.$captionsContainerEl.find('.photo-browser-caption-active').removeClass('photo-browser-caption-active');
       pb.$captionsContainerEl.find(`[data-caption-index="${captionIndex}"]`).addClass('photo-browser-caption-active');
     }
 
     // Stop Video
-    const previousSlideVideo = swiper.slides.eq(swiper.previousIndex).find('video');
+    const previousSlideVideo = $previousSlideEl.find('video');
     if (previousSlideVideo.length > 0) {
       if ('pause' in previousSlideVideo[0]) previousSlideVideo[0].pause();
     }
@@ -208,7 +215,7 @@ class PhotoBrowser extends Framework7Class {
     const pb = this;
     if (pb.params.renderObject) return pb.params.renderObject.call(pb, photo, index);
     const objHtml = `
-      <div class="photo-browser-slide photo-browser-object-slide swiper-slide">${photo.html ? photo.html : photo}</div>
+      <div class="photo-browser-slide photo-browser-object-slide swiper-slide" data-swiper-slide-index="${index}">${photo.html ? photo.html : photo}</div>
     `;
     return objHtml;
   }
@@ -216,7 +223,7 @@ class PhotoBrowser extends Framework7Class {
     const pb = this;
     if (pb.params.renderLazyPhoto) return pb.params.renderLazyPhoto.call(pb, photo, index);
     const photoHtml = `
-      <div class="photo-browser-slide photo-browser-slide-lazy swiper-slide">
+      <div class="photo-browser-slide photo-browser-slide-lazy swiper-slide" data-swiper-slide-index="${index}">
           <div class="preloader swiper-lazy-preloader ${pb.params.theme === 'dark' ? 'color-white' : ''}"></div>
           <span class="swiper-zoom-container">
               <img data-src="${photo.url ? photo.url : photo}" class="swiper-lazy">
@@ -229,7 +236,7 @@ class PhotoBrowser extends Framework7Class {
     const pb = this;
     if (pb.params.renderPhoto) return pb.params.renderPhoto.call(pb, photo, index);
     const photoHtml = `
-      <div class="photo-browser-slide swiper-slide">
+      <div class="photo-browser-slide swiper-slide" data-swiper-slide-index="${index}">
         <span class="swiper-zoom-container">
           <img src="${photo.url ? photo.url : photo}">
         </span>
@@ -247,11 +254,14 @@ class PhotoBrowser extends Framework7Class {
             ${pb.params.navbar ? pb.renderNavbar() : ''}
             ${pb.params.toolbar ? pb.renderToolbar() : ''}
             <div class="photo-browser-captions photo-browser-captions-${pb.params.captionsTheme || pb.params.theme}">
-              ${pb.params.photos.filter(photo => photo.caption).map((photo, index) => pb.renderCaption(photo.caption, index)).join(' ')}
+              ${pb.params.photos.map((photo, index) => {
+                if (photo.caption) return pb.renderCaption(photo.caption, index);
+                return '';
+              }).join(' ')}
             </div>
             <div class="photo-browser-swiper-container swiper-container">
               <div class="photo-browser-swiper-wrapper swiper-wrapper">
-                ${pb.params.photos.map((photo, index) => {
+                ${pb.params.virtualSlides ? '' : pb.params.photos.map((photo, index) => {
                   if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
                     return pb.renderObject(photo, index);
                   } else if (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled) {
@@ -307,7 +317,7 @@ class PhotoBrowser extends Framework7Class {
     pb.captions = pb.$containerEl.find('.photo-browser-caption');
 
     // Init Swiper
-    const swiperSettings = Utils.extend({}, pb.params.swiper, {
+    const swiperParams = Utils.extend({}, pb.params.swiper, {
       initialSlide: pb.activeIndex,
       on: {
         tap(e) {
@@ -322,50 +332,69 @@ class PhotoBrowser extends Framework7Class {
         doubleTap(e) {
           pb.emit('local::doubleTap', e);
         },
-        transitionStart() {
+        slideChange(...args) {
           const swiper = this;
-          pb.onTransitionStart(swiper);
-          pb.emit('local::transitionStart', swiper);
+          pb.onSlideChange(swiper);
+          pb.emit('local::slideChange', ...args);
         },
-        transitionEnd() {
-          const swiper = this;
-          pb.emit('local::transitionEnd', swiper);
+        transitionStart(...args) {
+          pb.emit('local::transitionStart', ...args);
         },
-        slideChangeStart() {
-          const swiper = this;
-          pb.emit('local::slideChangeStart', swiper);
+        transitionEnd(...args) {
+          pb.emit('local::transitionEnd', ...args);
         },
-        slideChangeEnd() {
-          const swiper = this;
-          pb.emit('local::slideChangeEnd', swiper);
+        slideChangeStart(...args) {
+          pb.emit('local::slideChangeStart', ...args);
         },
-        lazyImageLoad(slideEl, imgEl) {
-          pb.emit('local::lazyImageLoad', slideEl, imgEl);
+        slideChangeEnd(...args) {
+          pb.emit('local::slideChangeEnd', ...args);
         },
-        lazyImageReady(slideEl, imgEl) {
+        lazyImageLoad(...args) {
+          pb.emit('local::lazyImageLoad', ...args);
+        },
+        lazyImageReady(...args) {
+          const slideEl = args[0];
           $(slideEl).removeClass('photo-browser-slide-lazy');
-          pb.emit('local::lazyImageReady', slideEl, imgEl);
+          pb.emit('local::lazyImageReady', ...args);
         },
       },
     });
     if (pb.params.swipeToClose && pb.params.type !== 'page') {
-      Utils.extend(swiperSettings.on, {
+      Utils.extend(swiperParams.on, {
         touchStart(e) {
           pb.onTouchStart(e);
+          pb.emit('local::touchStart', e);
         },
         touchMoveOpposite(e) {
           pb.onTouchMove(e);
+          pb.emit('local::touchMoveOpposite', e);
         },
         touchEnd(e) {
           pb.onTouchEnd(e);
+          pb.emit('local::touchEnd', e);
+        },
+      });
+    }
+    if (pb.params.virtualSlides) {
+      Utils.extend(swiperParams, {
+        virtual: {
+          slides: pb.params.photos,
+          renderSlide(photo, index) {
+            if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
+              return pb.renderObject(photo, index);
+            } else if (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled) {
+              return pb.renderLazyPhoto(photo, index);
+            }
+            return pb.renderPhoto(photo, index);
+          },
         },
       });
     }
 
-    pb.swiper = app.swiper.create(pb.$swiperContainerEl, swiperSettings);
+    pb.swiper = app.swiper.create(pb.$swiperContainerEl, swiperParams);
 
     if (pb.activeIndex === 0) {
-      pb.onTransitionStart(pb.swiper);
+      pb.onSlideChange(pb.swiper);
     }
 
     pb.emit('local::open photoBrowserOpen', pb);
