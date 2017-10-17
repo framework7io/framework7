@@ -1019,7 +1019,6 @@ class Router extends Framework7Class {
         }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, { route: router.currentRoute });
       });
-      console.log(initUrl);
       if (historyRestored) {
         router.navigate(initUrl, {
           pushState: false,
