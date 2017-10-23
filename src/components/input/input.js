@@ -1,5 +1,6 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
+import Device from '../../utils/device';
 
 const Input = {
   ignoreTypes: ['checkbox', 'button', 'submit', 'range', 'radio', 'image'],
@@ -111,11 +112,41 @@ const Input = {
       $inputEl.trigger('input:empty');
     }
   },
+  scrollIntoView(inputEl) {
+    const $inputEl = $(inputEl);
+    const $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
+    if (!$scrollableEl.length) {
+      return;
+    }
+    const contentHeight = $scrollableEl[0].offsetHeight;
+    const contentScrollTop = $scrollableEl[0].scrollTop;
+    const contentPaddingTop = parseInt($scrollableEl.css('padding-top'), 10);
+    const contentPaddingBottom = parseInt($scrollableEl.css('padding-bottom'), 10);
+    const contentOffsetTop = $scrollableEl.offset().top - contentScrollTop;
+
+    const inputOffsetTop = $inputEl.offset().top - contentOffsetTop;
+    const inputHeight = $inputEl[0].offsetHeight;
+
+    const min = (inputOffsetTop + contentScrollTop) - contentPaddingTop;
+    const max = ((inputOffsetTop + contentScrollTop) - contentHeight) + contentPaddingBottom + inputHeight;
+
+    if (contentScrollTop > min) {
+      $scrollableEl.scrollTop(min);
+    } else if (contentScrollTop < max) {
+      $scrollableEl.scrollTop(max);
+    }
+  },
   init() {
     const app = this;
     Input.createTextareaResizableShadow();
     function onFocus() {
-      app.input.focus(this);
+      const inputEl = this;
+      if (Device.android) {
+        $(window).once('resize', () => {
+          app.input.scrollIntoView(inputEl);
+        });
+      }
+      app.input.focus(inputEl);
     }
     function onBlur() {
       const $inputEl = $(this);
@@ -179,6 +210,7 @@ export default {
     const app = this;
     Utils.extend(app, {
       input: {
+        scrollIntoView: Input.scrollIntoView.bind(app),
         focus: Input.focus.bind(app),
         blur: Input.blur.bind(app),
         validate: Input.validate.bind(app),
