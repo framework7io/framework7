@@ -726,23 +726,28 @@ class Router extends Framework7Class {
       resolve(router.getPageEl(html), newOptions);
     }, reject);
   }
-  componentLoader(component, componentUrl, options, resolve, reject) {
+  componentLoader(component, componentUrl, options = {}, resolve, reject) {
     const router = this;
     const url = typeof component === 'string' ? component : componentUrl;
     function compile(c) {
-      const createdComponent = Component.create(c, {
-        $,
-        $$: $,
-        $app: router.app,
-        $root: Utils.extend({}, router.app.data, router.app.methods),
-        $route: options.route,
-        $router: router,
-        $dom7: $,
-        $theme: {
-          ios: router.app.theme === 'ios',
-          md: router.app.theme === 'md',
-        },
-      });
+      const extendContext = Utils.extend(
+        {},
+        options.context || {},
+        {
+          $,
+          $$: $,
+          $app: router.app,
+          $root: Utils.extend({}, router.app.data, router.app.methods),
+          $route: options.route,
+          $router: router,
+          $dom7: $,
+          $theme: {
+            ios: router.app.theme === 'ios',
+            md: router.app.theme === 'md',
+          },
+        }
+      );
+      const createdComponent = Component.create(c, extendContext);
       resolve(createdComponent.el, { pageEvents: createdComponent.on });
     }
     if (url) {
