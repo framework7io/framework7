@@ -287,7 +287,7 @@ class Messagebar extends Framework7Class {
   sheetCreate(innerHTML = '') {
     const messagebar = this;
     const $sheetEl = $(`<div class="messagebar-sheet">${innerHTML}</div>`);
-    messagebar.append($sheetEl);
+    messagebar.$el.append($sheetEl);
     Utils.extend(messagebar, {
       $sheetEl,
       sheetEl: $sheetEl[0],
@@ -296,7 +296,7 @@ class Messagebar extends Framework7Class {
   }
   sheetShow(innerHTML = '') {
     const messagebar = this;
-    messagebar.$sheetEl = messagebar.$el.find('.messagebar-attachments');
+    messagebar.$sheetEl = messagebar.$el.find('.messagebar-sheet');
     if (messagebar.$sheetEl.length === 0) {
       messagebar.sheetCreate(innerHTML);
     }
