@@ -18,8 +18,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const gulpif = require('gulp-if');
 const commonjs = require('rollup-plugin-commonjs');
-
-let config = require('./build-config.js');
+const getConfig = require('./get-config.js');
 const banner = require('./banner.js');
 
 let cache;
@@ -34,15 +33,8 @@ const globals = {
   dom7: '$',
 };
 
-// Overwrite with local config
-try {
-  const customConfig = require('./build-config-custom.js');
-  config = Object.assign({}, config, customConfig);
-} catch (err) {
-  // No local config
-}
-
 function es(components, cb) {
+  const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = 'es';
@@ -121,6 +113,7 @@ function es(components, cb) {
     });
 }
 function umd(components, cb) {
+  const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
@@ -180,6 +173,7 @@ function umd(components, cb) {
     });
 }
 function buildJs(cb) {
+  const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
 
   const components = [];

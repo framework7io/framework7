@@ -12,27 +12,10 @@ const autoprefixer = require('gulp-autoprefixer');
 const header = require('gulp-header');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
-
-let config = require('./build-config.js');
+const getConfig = require('./get-config.js');
 const banner = require('./banner.js');
 
-// Overwrite with local config
-try {
-  const customConfig = require('./build-config-custom.js');
-  config = Object.assign({}, config, customConfig);
-} catch (err) {
-  // No local config
-}
-
-const components = [];
-config.components.forEach((name) => {
-  const lessFilePath = `./src/components/${name}/${name}.less`;
-  if (fs.existsSync(lessFilePath)) {
-    components.push(name);
-  }
-});
-
-function build(themes, rtl, cb) {
+function build(config, components, themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
   const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`).join(', ');
   const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`).join(', ');
@@ -93,10 +76,20 @@ function build(themes, rtl, cb) {
 
 
 function buildLess(cb) {
+  const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
+
+  const components = [];
+  config.components.forEach((name) => {
+    const lessFilePath = `./src/components/${name}/${name}.less`;
+    if (fs.existsSync(lessFilePath)) {
+      components.push(name);
+    }
+  });
+
   // Build development version
   if (env === 'development') {
-    build(config.themes, config.rtl, () => {
+    build(config, components, config.themes, config.rtl, () => {
       if (cb) cb();
     });
     return;
@@ -108,13 +101,13 @@ function buildLess(cb) {
     if (cbs === 6 && cb) cb();
   }
   // Build Bundle
-  build(['ios', 'md'], false, onCb);
-  build(['ios', 'md'], true, onCb);
+  build(config, components, ['ios', 'md'], false, onCb);
+  build(config, components, ['ios', 'md'], true, onCb);
   // Build Themes
-  build(['ios'], false, onCb);
-  build(['ios'], true, onCb);
-  build(['md'], false, onCb);
-  build(['md'], true, onCb);
+  build(config, components, ['ios'], false, onCb);
+  build(config, components, ['ios'], true, onCb);
+  build(config, components, ['md'], false, onCb);
+  build(config, components, ['md'], true, onCb);
 }
 
 module.exports = buildLess;
