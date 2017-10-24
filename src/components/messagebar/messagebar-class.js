@@ -202,7 +202,7 @@ class Messagebar extends Framework7Class {
         if (scrollOnBottom) {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
-        $el.trigger('messagebar:resizePage');
+        $el.trigger('messagebar:resizepage');
         messagebar.emit('local::resizePage messagebarResizePage');
       }
     }
