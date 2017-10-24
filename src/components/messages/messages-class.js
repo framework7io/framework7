@@ -57,7 +57,6 @@ class Messages extends Framework7Class {
   getMessageData(messageEl) {
     const $messageEl = $(messageEl);
     const data = {
-      avatar: $messageEl.css('background-image'),
       name: $messageEl.find('.message-name').html(),
       header: $messageEl.find('.message-header').html(),
       textHeader: $messageEl.find('.message-text-header').html(),
@@ -79,8 +78,13 @@ class Messages extends Framework7Class {
     if (data.text && data.textFooter) {
       data.text = data.text.replace(`<div class="message-text-footer">${data.textFooter}</div>`, '');
     }
-    let avatar = $messageEl.css('background-image');
+    let avatar = $messageEl.find('.message-avatar').css('background-image');
     if (avatar === 'none' || avatar === '') avatar = undefined;
+    if (avatar && typeof avatar === 'string') {
+      avatar = avatar.replace('url(', '').replace(')', '').replace(/"/g, '').replace(/'/g, '');
+    } else {
+      avatar = undefined;
+    }
     data.avatar = avatar;
 
     return data;
@@ -374,11 +378,21 @@ class Messages extends Framework7Class {
   hideTyping() {
     const m = this;
     let typingMessageIndex;
+    let typingFound;
     m.messages.forEach((message, index) => {
       if (message.isTyping) typingMessageIndex = index;
     });
     if (typeof typingMessageIndex !== 'undefined') {
-      m.removeMessage(typingMessageIndex);
+      if (m.$el.find('.message').eq(typingMessageIndex).hasClass('message-typing')) {
+        typingFound = true;
+        m.removeMessage(typingMessageIndex);
+      }
+    }
+    if (!typingFound) {
+      const $typingMessageEl = m.$el.find('.message-typing');
+      if ($typingMessageEl.length) {
+        m.removeMessage($typingMessageEl);
+      }
     }
     return m;
   }
