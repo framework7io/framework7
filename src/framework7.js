@@ -2,7 +2,7 @@ import Template7 from 'template7';
 import $ from 'dom7';
 
 // F7 Class
-import Framework7 from './components/app/app-class';
+import Framework7 from './components/core/core-class';
 
 // Core Modules
 import Device from './modules/device/device';
