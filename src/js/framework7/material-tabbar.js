@@ -5,17 +5,17 @@ app.materialTabbarSetHighlight = function (tabbar, activeLink) {
     $(tabbar).each(function () {
         var tabbar = $(this);
         activeLink = activeLink || tabbar.find('.tab-link.active');
-
-        if (activeLink && activeLink.length > 0) {
+         var checkActivity = activeLink && activeLink.length > 0;
+        if (checkActivity) {
             var tabLinkWidth, highlightTranslate;
-            if (tabbar.hasClass('tabbar-scrollable')) {
-                tabLinkWidth = activeLink[0].offsetWidth + 'px';
-                highlightTranslate = activeLink[0].offsetLeft + 'px';
-            }
-            else {
-                tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100 + '%';
-                highlightTranslate = (app.rtl ? - activeLink.index(): activeLink.index()) * 100 + '%';
-            }
+                if (tabbar.hasClass('tabbar-scrollable')) {
+                    tabLinkWidth = activeLink[0].offsetWidth + 'px';
+                    highlightTranslate = activeLink[0].offsetLeft + 'px';
+                 }
+                else {
+                    tabLinkWidth = 1 / tabbar.find('.tab-link').length * 100 + '%';
+                    highlightTranslate = (app.rtl ? - activeLink.index(): activeLink.index()) * 100 + '%';
+                }
 
             tabbar.find('.tab-link-highlight')
                 .css({width: tabLinkWidth})
