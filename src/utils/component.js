@@ -57,7 +57,11 @@ class Framework7Component {
       html = component.render();
     } else if (component.template) {
       if (typeof component.template === 'string') {
-        html = Template7.compile(component.template)(context);
+        try {
+          html = Template7.compile(component.template)(context);
+        } catch (err) {
+          throw err;
+        }
       } else {
         // Supposed to be function
         html = component.template(context);
@@ -223,7 +227,17 @@ const Component = {
     // Template
     let template;
     if (componentString.indexOf('<template>') >= 0) {
-      template = componentString.split('<template>')[1].split('</template>')[0].trim();
+      template = componentString
+        .split('<template>')
+        .filter((item, index) => index > 0)
+        .join('<template>')
+        .split('</template>')
+        .filter((item, index, arr) => index < arr.length - 1)
+        .join('</template>')
+        .replace(/{{#raw}}([ \n]*)<template/g, '{{#raw}}<template')
+        .replace(/\/template>([ \n]*){{\/raw}}/g, '/template>{{/raw}}')
+        .replace(/([ \n])<template/g, '$1{{#raw}}<template')
+        .replace(/\/template>([ \n])/g, '/template>{{/raw}}$1');
     }
 
     // Styles
@@ -246,7 +260,8 @@ const Component = {
 
     let scriptContent;
     if (componentString.indexOf('<script>') >= 0) {
-      scriptContent = componentString.split('<script>')[1].split('</script>')[0].trim();
+      const scripts = componentString.split('<script>');
+      scriptContent = scripts[scripts.length - 1].split('</script>')[0].trim();
     } else {
       scriptContent = 'return {}';
     }
