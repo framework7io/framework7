@@ -75,6 +75,14 @@ function tabLoad(tabRoute, loadOptions = {}) {
     if ($newTabEl[0].f7RouterTabLoaded) return;
   }
 
+  const { on = {}, once = {} } = tabRoute;
+  if (options.on) {
+    Utils.extend(on, options.on);
+  }
+  if (options.once) {
+    Utils.extend(once, options.once);
+  }
+
   // Component/Template Callbacks
   function resolve(contentEl) {
     if (!contentEl) return;
