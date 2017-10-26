@@ -8,6 +8,8 @@ class Framework7 extends Framework7Class {
   constructor(params) {
     super(params);
 
+    const passedParams = Utils.extend({}, params);
+
     // App Instance
     const app = this;
 
@@ -17,6 +19,10 @@ class Framework7 extends Framework7Class {
       theme: 'auto',
       init: true,
       routes: [],
+      id: 'io.framework7.test',
+      version: '1.0.0',
+      name: 'Framework7',
+      language: window.navigator.language,
     };
 
     // Extend defaults with modules params
@@ -25,25 +31,36 @@ class Framework7 extends Framework7Class {
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
 
-    // Routes
-    app.routes = app.params.routes;
+    const $rootEl = $(app.params.root);
 
-    // Root
-    app.root = $(app.params.root);
+    Utils.extend(app, {
+      // App Id
+      id: app.params.id,
+      // App version
+      version: app.params.version,
+      // Routes
+      routes: app.params.routes,
+      // Lang
+      language: app.params.language,
+      // Root
+      root: $rootEl,
+      // Local Storage
+      ls: window.localStorage,
+      // RTL
+      rtl: $rootEl.css('direction') === 'rtl',
+      // Theme
+      theme: (function getTheme() {
+        if (app.params.theme === 'auto') {
+          return Device.ios ? 'ios' : 'md';
+        }
+        return app.params.theme;
+      }()),
+      // Initially passed parameters
+      passedParams,
+    });
+
+    // Save Root
     app.root[0].f7 = app;
-
-    // Link to local storage
-    app.ls = window.localStorage;
-
-    // RTL
-    app.rtl = app.root.css('direction') === 'rtl';
-
-    // Theme
-    if (app.params.theme === 'auto') {
-      app.theme = Device.ios ? 'ios' : 'md';
-    } else {
-      app.theme = app.params.theme;
-    }
 
     // Install Modules
     app.useModules();
