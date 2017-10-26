@@ -64,7 +64,7 @@ export default {
       cssClass: null,
       routableModals: true,
       view: null,
-      url: 'date',
+      url: 'date/',
       // Render functions
       renderWeekHeader: null,
       renderMonths: null,

@@ -45,7 +45,7 @@ export default {
       cssClass: null,
       routableModals: true,
       view: null,
-      url: 'select',
+      url: 'select/',
       // Render functions
       renderColumn: null,
       renderToolbar: null,

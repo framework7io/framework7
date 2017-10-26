@@ -23,7 +23,7 @@ export default {
       formColorTheme: undefined,
       navbarColorTheme: undefined,
       routableModals: true,
-      url: 'select',
+      url: 'select/',
       /*
         Custom render functions
       */
