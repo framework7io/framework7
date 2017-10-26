@@ -182,7 +182,7 @@ class Messagebar extends Framework7Class {
         $textareaEl.css('max-height', `${maxHeight}px`);
         $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
         $el.trigger('messagebar:resizePage');
-        messagebar.emit('local::resizePage messagebarResizePage');
+        messagebar.emit('local::resizepage messagebarResizePage');
       }
       */
     } else {

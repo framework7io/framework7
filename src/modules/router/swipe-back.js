@@ -154,7 +154,7 @@ function SwipeBack(r) {
       previousNavbarEl: previousNavbar[0],
     };
     $el.trigger('swipeback:move', callbackData);
-    router.emit('swipeBackMove', callbackData);
+    router.emit('swipebackMove', callbackData);
 
     // Transform pages
     let currentPageTranslate = touchesDiff * inverter;
@@ -303,10 +303,10 @@ function SwipeBack(r) {
       router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
 
       $el.trigger('swipeback:beforechange', callbackData);
-      router.emit('swipeBackBeforeChange', callbackData);
+      router.emit('swipebackBeforeChange', callbackData);
     } else {
       $el.trigger('swipeback:beforereset', callbackData);
-      router.emit('swipeBackBeforeReset', callbackData);
+      router.emit('swipebackBeforeReset', callbackData);
     }
 
     currentPage.transitionEnd(() => {
@@ -351,7 +351,7 @@ function SwipeBack(r) {
         }
 
         $el.trigger('swipeback:afterchange', callbackData);
-        router.emit('swipeBackAfterChange', callbackData);
+        router.emit('swipebackAfterChange', callbackData);
 
         router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
@@ -360,7 +360,7 @@ function SwipeBack(r) {
         }
       } else {
         $el.trigger('swipeback:afterreset', callbackData);
-        router.emit('swipeBackAfterReset', callbackData);
+        router.emit('swipebackAfterReset', callbackData);
       }
       if (pageShadow && pageShadow.length > 0) pageShadow.remove();
       if (pageOpacity && pageOpacity.length > 0) pageOpacity.remove();

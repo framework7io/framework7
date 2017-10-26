@@ -344,10 +344,10 @@ class PhotoBrowser extends Framework7Class {
           pb.emit('local::transitionEnd', ...args);
         },
         slideChangeStart(...args) {
-          pb.emit('local::slideChangeStart', ...args);
+          pb.emit('local::slideChangeTransitionStart', ...args);
         },
         slideChangeEnd(...args) {
-          pb.emit('local::slideChangeEnd', ...args);
+          pb.emit('local::slideChangeTransitionEnd', ...args);
         },
         lazyImageLoad(...args) {
           pb.emit('local::lazyImageLoad', ...args);
