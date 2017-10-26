@@ -1237,8 +1237,9 @@ class Calendar extends Framework7Class {
       },
     };
     if (calendar.params.routableModals) {
-      calendar.view.router.navigate(calendar.url, {
-        createRoute: {
+      calendar.view.router.navigate({
+        url: calendar.url,
+        route: {
           path: calendar.url,
           [modalType]: modalParams,
         },

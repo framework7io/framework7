@@ -434,30 +434,33 @@ class PhotoBrowser extends Framework7Class {
 
     const pageHtml = pb.renderPage();
 
-    pb.view.router.navigate(pb.url, {
-      createRoute: {
-        content: pageHtml,
-        path: pb.url,
-        options: {
-          pageEvents: {
-            pageBeforeIn(e, page) {
-              pb.view.$el.addClass(`with-photo-browser-page with-photo-browser-page-${pb.params.theme}`);
-              pb.onOpen('page', page.el);
-            },
-            pageAfterIn(e, page) {
-              pb.onOpened('page', page.el);
-            },
-            pageBeforeOut(e, page) {
-              pb.view.$el.removeClass(`with-photo-browser-page with-photo-browser-page-exposed with-photo-browser-page-${pb.params.theme}`);
-              pb.onClose('page', page.el);
-            },
-            pageAfterOut(e, page) {
-              pb.onClosed('page', page.el);
-            },
-          },
+    pb.view.router.navigate(
+      {
+        url: pb.url,
+        route: {
+          content: pageHtml,
+          path: pb.url,
         },
       },
-    });
+      {
+        pageEvents: {
+          pageBeforeIn(e, page) {
+            pb.view.$el.addClass(`with-photo-browser-page with-photo-browser-page-${pb.params.theme}`);
+            pb.onOpen('page', page.el);
+          },
+          pageAfterIn(e, page) {
+            pb.onOpened('page', page.el);
+          },
+          pageBeforeOut(e, page) {
+            pb.view.$el.removeClass(`with-photo-browser-page with-photo-browser-page-exposed with-photo-browser-page-${pb.params.theme}`);
+            pb.onClose('page', page.el);
+          },
+          pageAfterOut(e, page) {
+            pb.onClosed('page', page.el);
+          },
+        },
+      }
+    );
     return pb;
   }
 
@@ -487,8 +490,9 @@ class PhotoBrowser extends Framework7Class {
     };
 
     if (pb.params.routableModals) {
-      pb.view.router.navigate(pb.url, {
-        createRoute: {
+      pb.view.router.navigate({
+        url: pb.url,
+        route: {
           path: pb.url,
           popup: popupParams,
         },
@@ -524,8 +528,9 @@ class PhotoBrowser extends Framework7Class {
     };
 
     if (pb.params.routableModals) {
-      pb.view.router.navigate(pb.url, {
-        createRoute: {
+      pb.view.router.navigate({
+        url: pb.url,
+        route: {
           path: pb.url,
           popup: popupParams,
         },

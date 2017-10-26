@@ -644,29 +644,32 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.opened) return ac;
     const pageHtml = ac.renderPage();
-    ac.view.router.navigate(ac.url, {
-      createRoute: {
-        content: pageHtml,
-        path: ac.url,
-        options: {
-          animate: ac.params.animate,
-          pageEvents: {
-            pageBeforeIn(e, page) {
-              ac.onOpen('page', page.el);
-            },
-            pageAfterIn(e, page) {
-              ac.onOpened('page', page.el);
-            },
-            pageBeforeOut(e, page) {
-              ac.onClose('page', page.el);
-            },
-            pageAfterOut(e, page) {
-              ac.onClosed('page', page.el);
-            },
-          },
+    ac.view.router.navigate(
+      {
+        url: ac.url,
+        route: {
+          content: pageHtml,
+          path: ac.url,
         },
       },
-    });
+      {
+        animate: ac.params.animate,
+        pageEvents: {
+          pageBeforeIn(e, page) {
+            ac.onOpen('page', page.el);
+          },
+          pageAfterIn(e, page) {
+            ac.onOpened('page', page.el);
+          },
+          pageBeforeOut(e, page) {
+            ac.onClose('page', page.el);
+          },
+          pageAfterOut(e, page) {
+            ac.onClosed('page', page.el);
+          },
+        },
+      }
+    );
     return ac;
   }
   openPopup() {
@@ -694,8 +697,9 @@ class Autocomplete extends Framework7Class {
     };
 
     if (ac.params.routableModals) {
-      ac.view.router.navigate(ac.url, {
-        createRoute: {
+      ac.view.router.navigate({
+        url: ac.url,
+        route: {
           path: ac.url,
           popup: popupParams,
         },

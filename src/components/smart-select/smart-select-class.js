@@ -469,28 +469,31 @@ class SmartSelect extends Framework7Class {
     ss.getItemsData();
     const pageHtml = ss.renderPage(ss.items);
 
-    ss.view.router.navigate(ss.url, {
-      createRoute: {
-        content: pageHtml,
-        path: ss.url,
-        options: {
-          pageEvents: {
-            pageBeforeIn(e, page) {
-              ss.onOpen('page', page.el);
-            },
-            pageAfterIn(e, page) {
-              ss.onOpened('page', page.el);
-            },
-            pageBeforeOut(e, page) {
-              ss.onClose('page', page.el);
-            },
-            pageAfterOut(e, page) {
-              ss.onClosed('page', page.el);
-            },
-          },
+    ss.view.router.navigate(
+      {
+        url: ss.url,
+        route: {
+          content: pageHtml,
+          path: ss.url,
         },
       },
-    });
+      {
+        pageEvents: {
+          pageBeforeIn(e, page) {
+            ss.onOpen('page', page.el);
+          },
+          pageAfterIn(e, page) {
+            ss.onOpened('page', page.el);
+          },
+          pageBeforeOut(e, page) {
+            ss.onClose('page', page.el);
+          },
+          pageAfterOut(e, page) {
+            ss.onClosed('page', page.el);
+          },
+        },
+      }
+    );
     return ss;
   }
   openPopup() {
@@ -518,8 +521,9 @@ class SmartSelect extends Framework7Class {
     };
 
     if (ss.params.routableModals) {
-      ss.view.router.navigate(ss.url, {
-        createRoute: {
+      ss.view.router.navigate({
+        url: ss.url,
+        route: {
           path: ss.url,
           popup: popupParams,
         },
@@ -557,8 +561,9 @@ class SmartSelect extends Framework7Class {
     };
 
     if (ss.params.routableModals) {
-      ss.view.router.navigate(ss.url, {
-        createRoute: {
+      ss.view.router.navigate({
+        url: ss.url,
+        route: {
           path: ss.url,
           sheet: sheetParams,
         },
@@ -592,8 +597,9 @@ class SmartSelect extends Framework7Class {
       },
     };
     if (ss.params.routableModals) {
-      ss.view.router.navigate(ss.url, {
-        createRoute: {
+      ss.view.router.navigate({
+        url: ss.url,
+        route: {
           path: ss.url,
           popover: popoverParams,
         },

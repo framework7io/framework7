@@ -441,8 +441,9 @@ class Picker extends Framework7Class {
       },
     };
     if (picker.params.routableModals) {
-      picker.view.router.navigate(picker.url, {
-        createRoute: {
+      picker.view.router.navigate({
+        url: picker.url,
+        route: {
           path: picker.url,
           [modalType]: modalParams,
         },
