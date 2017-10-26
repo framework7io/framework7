@@ -621,13 +621,18 @@ class Calendar extends Framework7Class {
       .transition(transition)
       .transform(`translate3d(${isH ? translate : 0}%, ${isH ? 0 : translate}%, 0)`);
   }
+  // eslint-disable-next-line
   setYearMonth(year, month, transition) {
     const calendar = this;
     const { params, isHorizontal: isH, $wrapperEl, inverter } = calendar;
+    // eslint-disable-next-line
     if (typeof year === 'undefined') year = calendar.currentYear;
+    // eslint-disable-next-line
     if (typeof month === 'undefined') month = calendar.currentMonth;
     if (typeof transition === 'undefined' || typeof transition === 'object') {
+      // eslint-disable-next-line
       transition = '';
+      // eslint-disable-next-line
       if (!params.animate) transition = 0;
     }
     let targetDate;
