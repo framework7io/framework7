@@ -5,8 +5,8 @@ import Utils from '../utils/utils';
 const tempDom = document.createElement('div');
 
 class Framework7Component {
-  constructor(c, extend = {}) {
-    const context = Utils.extend({}, extend);
+  constructor(c, extendContext = {}) {
+    const context = {};
     const component = Utils.extend(this, c, { context });
 
     // Apply context
@@ -25,6 +25,11 @@ class Framework7Component {
         context[methodName] = component.methods[methodName].bind(context);
       });
     }
+
+    // Extend with passed context
+    Utils.extend(context, extendContext);
+
+    // Bind Events
     if (component.on) {
       Object.keys(component.on).forEach((eventName) => {
         component.on[eventName] = component.on[eventName].bind(context);
