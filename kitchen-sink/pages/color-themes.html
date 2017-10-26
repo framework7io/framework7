@@ -21,6 +21,7 @@
             <button class="button button-fill button-round button-raised color-{{this}}" @click="setColorTheme('{{this}}')">{{this}}</button>
           </div>
         {{/each}}
+          <div class="col-33"></div>
         </div>
       </div>
     </div>
@@ -37,24 +38,13 @@
     data: function () {
       var colors = [
         'red',
-        'pink',
-        'purple',
-        'deeppurple',
-        'indigo',
-        'blue',
-        'lightblue',
-        'cyan',
-        'teal',
         'green',
-        'lightgreen',
-        'lime',
+        'blue',
+        'pink',
         'yellow',
-        'amber',
         'orange',
-        'deeporange',
-        'brown',
         'gray',
-        'bluegray',
+        'black',
       ];
       return {
         colors: colors,
