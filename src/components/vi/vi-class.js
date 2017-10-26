@@ -15,7 +15,7 @@ class ViAd extends Framework7Class {
       {},
       app.params.vi,
       {
-        appId: app.id,
+        appId: app.bundleId,
         appVer: app.version,
         language: app.language,
         width: app.width,

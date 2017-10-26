@@ -6,7 +6,7 @@ export default {
   name: 'vi',
   params: {
     vi: {
-      enabled: true,
+      enabled: false,
       autoplay: true,
       fallbackOverlay: true,
       fallbackOverlayText: 'Please watch this ad',
@@ -41,12 +41,17 @@ export default {
   create() {
     const app = this;
     app.vi = {
+      sdkReady: false,
       createAd(adParams) {
         return new ViAd(app, adParams);
       },
       loadSdk() {
+        if (app.vi.skdReady) return;
         const script = document.createElement('script');
-        script.src = 'vi.js';
+        script.onload = function onload() {
+          app.vi.skdReady = true;
+        };
+        script.src = 'http://sfiles.edgesuite.net/http_only/viadshtml/vi.min.js';
         $('head').append(script);
       },
     };
