@@ -428,8 +428,16 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
   return router;
 }
-function navigate(url, navigateOptions = {}) {
+function navigate(navigateParams, navigateOptions = {}) {
   const router = this;
+  let url;
+  let createRoute;
+  if (typeof navigateParams === 'string') {
+    url = navigateParams;
+  } else {
+    url = navigateParams.url;
+    createRoute = navigateParams.route;
+  }
   const app = router.app;
   if (!router.view) {
     app.views.main.router.navigate(url, navigateOptions);
@@ -445,9 +453,9 @@ function navigate(url, navigateOptions = {}) {
     navigateUrl = ((currentPath || '/') + navigateUrl).replace('//', '/');
   }
   let route;
-  if (navigateOptions.createRoute) {
+  if (createRoute) {
     route = Utils.extend(router.parseRouteUrl(navigateUrl), {
-      route: Utils.extend({}, navigateOptions.createRoute),
+      route: Utils.extend({}, createRoute),
     });
   } else {
     route = router.findMatchingRoute(navigateUrl);
