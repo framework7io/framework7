@@ -142,6 +142,16 @@ const createPromise = function createPromise(handler) {
 };
 
 const Utils = {
+  eventNameToColonCase(eventName) {
+    let hasColon;
+    return eventName.split('').map((char, index) => {
+      if (char.match(/[A-Z]/) && index !== 0 && !hasColon) {
+        hasColon = true;
+        return `:${char.toLowerCase()}`;
+      }
+      return char.toLowerCase();
+    }).join('');
+  },
   deleteProps(obj) {
     const object = obj;
     Object.keys(object).forEach((key) => {

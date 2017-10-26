@@ -188,29 +188,16 @@ class Framework7Component {
       el.setAttribute('data-scope', component.styleScopeId);
     }
 
-    // Camel to colon
-    function camelToColon(eventName) {
-      if (eventName.indexOf('page') === 0) {
-        return `page:${eventName.split('page')[1].toLowerCase()}`;
-      }
-      return eventName.split('').map((char, index) => {
-        if (char.toUpperCase() === char && index !== 0) {
-          return `:${char.toLowerCase()}`;
-        }
-        return char;
-      }).join('');
-    }
-
     // Attach events
     function attachEvents() {
       if (component.on) {
         Object.keys(component.on).forEach((eventName) => {
-          $el.on(camelToColon(eventName), component.on[eventName]);
+          $el.on(Utils.eventNameToColonCase(eventName), component.on[eventName]);
         });
       }
       if (component.once) {
         Object.keys(component.once).forEach((eventName) => {
-          $el.once(camelToColon(eventName), component.once[eventName]);
+          $el.once(Utils.eventNameToColonCase(eventName), component.once[eventName]);
         });
       }
       events.forEach((event) => {
@@ -221,12 +208,12 @@ class Framework7Component {
     function detachEvents() {
       if (component.on) {
         Object.keys(component.on).forEach((eventName) => {
-          $el.off(camelToColon(eventName), component.on[eventName]);
+          $el.off(Utils.eventNameToColonCase(eventName), component.on[eventName]);
         });
       }
       if (component.once) {
         Object.keys(component.once).forEach((eventName) => {
-          $el.off(camelToColon(eventName), component.once[eventName]);
+          $el.off(Utils.eventNameToColonCase(eventName), component.once[eventName]);
         });
       }
       events.forEach((event) => {
