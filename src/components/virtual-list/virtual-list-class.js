@@ -157,7 +157,7 @@ class VirtualList extends Framework7Class {
     }
 
     if (vl.updatableScroll || vl.params.setListHeight) {
-      vl.ul.css({ height: `${vl.listHeight}px` });
+      vl.$ul.css({ height: `${vl.listHeight}px` });
     }
   }
   render(force, forceScrollTop) {
@@ -264,9 +264,9 @@ class VirtualList extends Framework7Class {
     // Update list height with not updatable scroll
     if (!vl.updatableScroll) {
       if (vl.dynamicHeight) {
-        vl.ul[0].style.height = `${heightBeforeLastItem}px`;
+        vl.ul.style.height = `${heightBeforeLastItem}px`;
       } else {
-        vl.ul[0].style.height = `${(i * vl.params.height) / vl.params.cols}px`;
+        vl.ul.style.height = `${(i * vl.params.height) / vl.params.cols}px`;
       }
     }
 
@@ -282,7 +282,7 @@ class VirtualList extends Framework7Class {
         parents: [],
       });
       vl.emit('vlBeforeClear', vl, vl.fragment);
-      vl.ul[0].innerHTML = '';
+      vl.ul.innerHTML = '';
 
       vl.emit({
         events: 'itemsBeforeInsert',
@@ -293,9 +293,9 @@ class VirtualList extends Framework7Class {
 
       if (items && items.length === 0) {
         vl.reachEnd = true;
-        if (vl.params.emptyTemplate) vl.ul[0].innerHTML = vl.params.emptyTemplate;
+        if (vl.params.emptyTemplate) vl.ul.innerHTML = vl.params.emptyTemplate;
       } else {
-        vl.ul[0].appendChild(vl.fragment);
+        vl.ul.appendChild(vl.fragment);
       }
 
       vl.emit({
