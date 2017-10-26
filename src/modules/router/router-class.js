@@ -855,42 +855,42 @@ class Router extends Framework7Class {
     }
 
     function attachEvents() {
-      if ($pageEl[0].f7PageEventsAttached) return;
+      if ($pageEl[0].f7RouteEventsAttached) return;
       $pageEl[0].f7PageEventsAttached = true;
       if (on && Object.keys(on).length > 0) {
-        $pageEl[0].f7PageEventsOn = on;
+        $pageEl[0].f7RouteEventsOn = on;
         Object.keys(on).forEach((eventName) => {
           on[eventName] = on[eventName].bind(router);
-          $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, on[eventName]);
+          $pageEl.on(Utils.eventNameToColonCase(eventName), on[eventName]);
         });
       }
       if (once && Object.keys(once).length > 0) {
-        $pageEl[0].f7PageEventsOnce = once;
+        $pageEl[0].f7RouteEventsOnce = once;
         Object.keys(once).forEach((eventName) => {
           once[eventName] = once[eventName].bind(router);
-          $pageEl.once(`page:${eventName.split('page')[1].toLowerCase()}`, once[eventName]);
+          $pageEl.once(Utils.eventNameToColonCase(eventName), once[eventName]);
         });
       }
     }
 
     function detachEvents() {
-      if (!$pageEl[0].f7PageEventsAttached) return;
-      if ($pageEl[0].f7PageEventsOn) {
-        Object.keys($pageEl[0].f7PageEventsOn).forEach((eventName) => {
-          $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEventsOn[eventName]);
+      if (!$pageEl[0].f7RouteEventsAttached) return;
+      if ($pageEl[0].f7RouteEventsOn) {
+        Object.keys($pageEl[0].f7RouteEventsOn).forEach((eventName) => {
+          $pageEl.off(Utils.eventNameToColonCase(eventName), $pageEl[0].f7RouteEventsOn[eventName]);
         });
       }
-      if ($pageEl[0].f7PageEventsOnce) {
-        Object.keys($pageEl[0].f7PageEventsOnce).forEach((eventName) => {
-          $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEventsOnce[eventName]);
+      if ($pageEl[0].f7RouteEventsOnce) {
+        Object.keys($pageEl[0].f7RouteEventsOnce).forEach((eventName) => {
+          $pageEl.off(Utils.eventNameToColonCase(eventName), $pageEl[0].f7RouteEventsOnce[eventName]);
         });
       }
-      $pageEl[0].f7PageEventsAttached = null;
-      $pageEl[0].f7PageEventsOn = null;
-      $pageEl[0].f7PageEventsOnce = null;
-      delete $pageEl[0].f7PageEventsAttached;
-      delete $pageEl[0].f7PageEventsOn;
-      delete $pageEl[0].f7PageEventsOnce;
+      $pageEl[0].f7RouteEventsAttached = null;
+      $pageEl[0].f7RouteEventsOn = null;
+      $pageEl[0].f7RouteEventsOnce = null;
+      delete $pageEl[0].f7RouteEventsAttached;
+      delete $pageEl[0].f7RouteEventsOn;
+      delete $pageEl[0].f7RouteEventsOnce;
     }
 
     if (callback === 'mounted') {
