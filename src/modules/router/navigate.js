@@ -14,7 +14,6 @@ function forward(el, forwardOptions = {}) {
     reloadCurrent: router.params.reloadPages,
     reloadPrevious: false,
     reloadAll: false,
-    pageEvents: {},
     on: {},
   }, forwardOptions);
 
