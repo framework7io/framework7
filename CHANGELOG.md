@@ -1,3 +1,23 @@
+# [v2.0.0-beta.12](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.11...v2.0.0-beta.12) - October 26, 2017
+  * Router
+    * Added [path-to-regexp](https://github.com/pillarjs/path-to-regexp) for better route matching with support of RegExp in route path
+    * Route `name` renamed to `pageName` parameter to specify page's name to load. Route `name` now means name of the route
+    * Added additional routes arguments to `async` method. Now it is `async(routeTo, routeFrom, resolve, reject)`
+    * `pushState` now supports for multiple Views at a time
+    * Router component's context now can be extended with `options.context` route parameter
+    * Router component now supports inline nested `<template>` that won't be parsed by Template7
+    * Addded support for dynamic routes
+    * Route events, now it is possible to specify `on` object with page events on route object
+  * PhotoBrowser
+    * Now uses Virtual Slides by default
+  * Input
+    * Now automatically scrolls into view on Androids when keyboard becomes opened
+  * Colors
+    * Number of built-in colors reduced to red, green, blue, pink, yellow, orange, white, black, gray
+  * Build
+    * Now it is possible to specify path to config file like `npm run build:dev -- --config path/to/config.js`
+  * Lost of minor fixes
+
 # [v2.0.0-beta.11](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.10...v2.0.0-beta.11) - October 13, 2017
   * Messagebar
     * Added `top` parameter to consider it as top messagebar

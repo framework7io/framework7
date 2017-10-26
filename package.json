@@ -1,17 +1,17 @@
 {
   "name": "framework7",
-  "version": "2.0.0-beta.11",
+  "version": "2.0.0-beta.12",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "dist/js/framework7.js",
   "jsnext:main": "dist/js/framework7.esm.js",
   "module": "dist/js/framework7.esm.js",
   "scripts": {
-    "build-dev": "cross-env NODE_ENV=development gulp build",
-    "build-prod": "cross-env NODE_ENV=production gulp build",
+    "build:dev": "cross-env NODE_ENV=development gulp build",
+    "build:prod": "cross-env NODE_ENV=production gulp build",
     "dev": "cross-env NODE_ENV=development gulp build && cross-env NODE_ENV=development gulp ks && cross-env NODE_ENV=development gulp server",
     "prod": "cross-env NODE_ENV=production gulp ks && cross-env NODE_ENV=production gulp server",
     "lint": "eslint .",
-    "lint-fix": "eslint . --fix",
+    "lint:fix": "eslint . --fix",
     "test": "npm run build-dev && eslint ."
   },
   "repository": {
