@@ -469,15 +469,11 @@ class SmartSelect extends Framework7Class {
     ss.getItemsData();
     const pageHtml = ss.renderPage(ss.items);
 
-    ss.view.router.navigate(
-      {
-        url: ss.url,
-        route: {
-          content: pageHtml,
-          path: ss.url,
-        },
-      },
-      {
+    ss.view.router.navigate({
+      url: ss.url,
+      route: {
+        content: pageHtml,
+        path: ss.url,
         on: {
           pageBeforeIn(e, page) {
             ss.onOpen('page', page.el);
@@ -492,8 +488,8 @@ class SmartSelect extends Framework7Class {
             ss.onClosed('page', page.el);
           },
         },
-      }
-    );
+      },
+    });
     return ss;
   }
   openPopup() {

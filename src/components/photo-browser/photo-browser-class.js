@@ -434,15 +434,11 @@ class PhotoBrowser extends Framework7Class {
 
     const pageHtml = pb.renderPage();
 
-    pb.view.router.navigate(
-      {
-        url: pb.url,
-        route: {
-          content: pageHtml,
-          path: pb.url,
-        },
-      },
-      {
+    pb.view.router.navigate({
+      url: pb.url,
+      route: {
+        content: pageHtml,
+        path: pb.url,
         on: {
           pageBeforeIn(e, page) {
             pb.view.$el.addClass(`with-photo-browser-page with-photo-browser-page-${pb.params.theme}`);
@@ -459,8 +455,8 @@ class PhotoBrowser extends Framework7Class {
             pb.onClosed('page', page.el);
           },
         },
-      }
-    );
+      },
+    });
     return pb;
   }
 

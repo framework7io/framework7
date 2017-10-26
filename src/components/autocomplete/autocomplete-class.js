@@ -644,16 +644,11 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.opened) return ac;
     const pageHtml = ac.renderPage();
-    ac.view.router.navigate(
-      {
-        url: ac.url,
-        route: {
-          content: pageHtml,
-          path: ac.url,
-        },
-      },
-      {
-        animate: ac.params.animate,
+    ac.view.router.navigate({
+      url: ac.url,
+      route: {
+        content: pageHtml,
+        path: ac.url,
         on: {
           pageBeforeIn(e, page) {
             ac.onOpen('page', page.el);
@@ -668,8 +663,11 @@ class Autocomplete extends Framework7Class {
             ac.onClosed('page', page.el);
           },
         },
-      }
-    );
+        options: {
+          animate: ac.params.animate,
+        },
+      },
+    });
     return ac;
   }
   openPopup() {

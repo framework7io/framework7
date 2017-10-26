@@ -846,23 +846,29 @@ class Router extends Framework7Class {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
 
+    const { on = {}, once = {} } = options.route.route;
+    if (options.on) {
+      Utils.extend(on, options.on);
+    }
+    if (options.once) {
+      Utils.extend(once, options.once);
+    }
+
     function attachEvents() {
       if ($pageEl[0].f7PageEventsAttached) return;
       $pageEl[0].f7PageEventsAttached = true;
-      if (options.on && Object.keys(options.on).length > 0) {
-        $pageEl[0].f7PageEventsOn = options.on;
-        Object.keys(options.on).forEach((eventName) => {
-          // eslint-disable-next-line
-          options.on[eventName] = options.on[eventName].bind(router);
-          $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, options.on[eventName]);
+      if (on && Object.keys(on).length > 0) {
+        $pageEl[0].f7PageEventsOn = on;
+        Object.keys(on).forEach((eventName) => {
+          on[eventName] = on[eventName].bind(router);
+          $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, on[eventName]);
         });
       }
-      if (options.once && Object.keys(options.once).length > 0) {
-        $pageEl[0].f7PageEventsOnce = options.once;
-        Object.keys(options.once).forEach((eventName) => {
-          // eslint-disable-next-line
-          options.once[eventName] = options.once[eventName].bind(router);
-          $pageEl.once(`page:${eventName.split('page')[1].toLowerCase()}`, options.once[eventName]);
+      if (once && Object.keys(once).length > 0) {
+        $pageEl[0].f7PageEventsOnce = once;
+        Object.keys(once).forEach((eventName) => {
+          once[eventName] = once[eventName].bind(router);
+          $pageEl.once(`page:${eventName.split('page')[1].toLowerCase()}`, once[eventName]);
         });
       }
     }
