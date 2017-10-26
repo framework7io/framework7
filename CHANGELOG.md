@@ -1,3 +1,6 @@
+# [v2.0.0-beta.14](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.12...v2.0.0-beta.14) - October 26, 2017
+  * Fix router page events issue when no `route` passed to page callback
+
 # [v2.0.0-beta.12](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.11...v2.0.0-beta.12) - October 26, 2017
   * Router
     * Added [path-to-regexp](https://github.com/pillarjs/path-to-regexp) for better route matching with support of RegExp in route path

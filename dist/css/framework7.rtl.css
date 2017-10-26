@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.12
+ * Framework7 2.0.0-beta.14
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
