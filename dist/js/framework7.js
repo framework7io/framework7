@@ -7683,7 +7683,7 @@ var Router$1 = (function (Framework7Class$$1) {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
 
-    var ref = options.route.route;
+    var ref = options.route ? options.route.route : {};
     var on = ref.on; if ( on === void 0 ) on = {};
     var once = ref.once; if ( once === void 0 ) once = {};
     if (options.on) {
