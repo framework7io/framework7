@@ -846,7 +846,7 @@ class Router extends Framework7Class {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
 
-    const { on = {}, once = {} } = options.route.route;
+    const { on = {}, once = {} } = options.route ? options.route.route : {};
     if (options.on) {
       Utils.extend(on, options.on);
     }
