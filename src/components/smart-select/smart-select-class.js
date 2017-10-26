@@ -478,7 +478,7 @@ class SmartSelect extends Framework7Class {
         },
       },
       {
-        pageEvents: {
+        on: {
           pageBeforeIn(e, page) {
             ss.onOpen('page', page.el);
           },

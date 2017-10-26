@@ -748,7 +748,7 @@ class Router extends Framework7Class {
         }
       );
       const createdComponent = Component.create(c, extendContext);
-      resolve(createdComponent.el, { pageEvents: createdComponent.on });
+      resolve(createdComponent.el);
     }
     if (url) {
       // Load via XHR
@@ -833,7 +833,7 @@ class Router extends Framework7Class {
     const router = this;
     const $pageEl = $(pageEl);
     if (!$pageEl.length) return;
-    const { route, on = {} } = options;
+    const { route } = options;
     const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack;
 
     const camelName = `page${callback[0].toUpperCase() + callback.slice(1, callback.length)}`;
@@ -849,13 +849,44 @@ class Router extends Framework7Class {
     function attachEvents() {
       if ($pageEl[0].f7PageEventsAttached) return;
       $pageEl[0].f7PageEventsAttached = true;
-      if (options.pageEvents && Object.keys(options.pageEvents).length > 0) {
-        $pageEl[0].f7PageEvents = options.pageEvents;
-        Object.keys(options.pageEvents).forEach((eventName) => {
-          $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, options.pageEvents[eventName]);
+      if (options.on && Object.keys(options.on).length > 0) {
+        $pageEl[0].f7PageEventsOn = options.on;
+        Object.keys(options.on).forEach((eventName) => {
+          // eslint-disable-next-line
+          options.on[eventName] = options.on[eventName].bind(router);
+          $pageEl.on(`page:${eventName.split('page')[1].toLowerCase()}`, options.on[eventName]);
+        });
+      }
+      if (options.once && Object.keys(options.once).length > 0) {
+        $pageEl[0].f7PageEventsOnce = options.once;
+        Object.keys(options.once).forEach((eventName) => {
+          // eslint-disable-next-line
+          options.once[eventName] = options.once[eventName].bind(router);
+          $pageEl.once(`page:${eventName.split('page')[1].toLowerCase()}`, options.once[eventName]);
         });
       }
     }
+
+    function detachEvents() {
+      if (!$pageEl[0].f7PageEventsAttached) return;
+      if ($pageEl[0].f7PageEventsOn) {
+        Object.keys($pageEl[0].f7PageEventsOn).forEach((eventName) => {
+          $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEventsOn[eventName]);
+        });
+      }
+      if ($pageEl[0].f7PageEventsOnce) {
+        Object.keys($pageEl[0].f7PageEventsOnce).forEach((eventName) => {
+          $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEventsOnce[eventName]);
+        });
+      }
+      $pageEl[0].f7PageEventsAttached = null;
+      $pageEl[0].f7PageEventsOn = null;
+      $pageEl[0].f7PageEventsOnce = null;
+      delete $pageEl[0].f7PageEventsAttached;
+      delete $pageEl[0].f7PageEventsOn;
+      delete $pageEl[0].f7PageEventsOnce;
+    }
+
     if (callback === 'mounted') {
       attachEvents();
     }
@@ -865,7 +896,6 @@ class Router extends Framework7Class {
       }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
-        if (on.pageReinit) on.pageReinit(page);
         $pageEl.trigger('page:reinit', page);
         router.emit('pageReinit', page);
         return;
@@ -881,16 +911,11 @@ class Router extends Framework7Class {
       delete router.scrollHistory[page.route.url];
     }
 
-    if (on[camelName]) on[camelName](page);
     $pageEl.trigger(colonName, page);
     router.emit(camelName, page);
 
     if (callback === 'beforeRemove') {
-      if ($pageEl[0].f7PageEventsAttached && $pageEl[0].f7PageEvents) {
-        Object.keys($pageEl[0].f7PageEvents).forEach((eventName) => {
-          $pageEl.off(`page:${eventName.split('page')[1].toLowerCase()}`, $pageEl[0].f7PageEvents[eventName]);
-        });
-      }
+      detachEvents();
       $pageEl[0].f7Page = null;
     }
   }
@@ -1023,14 +1048,20 @@ class Router extends Framework7Class {
             router.$navbarEl.addClass('navbar-hidden');
           }
         }
-        router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, { route: router.currentRoute });
+        const initOptions = {
+          route: router.currentRoute,
+        };
+        if (router.currentRoute && router.currentRoute.route && router.currentRoute.route.options) {
+          Utils.extend(initOptions, router.currentRoute.route.options);
+        }
+        router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
         router.navigate(initUrl, {
           pushState: false,
           history: false,
           animate: router.params.pushStateAnimateOnLoad,
-          on: {
+          once: {
             pageAfterIn() {
               if (router.history.length > 2) {
                 router.back({ preload: true });

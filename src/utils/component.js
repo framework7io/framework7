@@ -35,6 +35,11 @@ class Framework7Component {
         component.on[eventName] = component.on[eventName].bind(context);
       });
     }
+    if (component.once) {
+      Object.keys(component.once).forEach((eventName) => {
+        component.once[eventName] = component.once[eventName].bind(context);
+      });
+    }
 
     if (component.beforeCreate) component.beforeCreate();
 
@@ -84,7 +89,9 @@ class Framework7Component {
 
     // Extend context with $el
     const el = tempDom.children[0];
-    context.$el = $(el);
+    const $el = $(el);
+    context.$el = $el;
+    context.el = el;
     component.el = el;
 
     // Find Events
@@ -181,14 +188,47 @@ class Framework7Component {
       el.setAttribute('data-scope', component.styleScopeId);
     }
 
+    // Camel to colon
+    function camelToColon(eventName) {
+      if (eventName.indexOf('page') === 0) {
+        return `page:${eventName.split('page')[1].toLowerCase()}`;
+      }
+      return eventName.split('').map((char, index) => {
+        if (char.toUpperCase() === char && index !== 0) {
+          return `:${char.toLowerCase()}`;
+        }
+        return char;
+      }).join('');
+    }
+
     // Attach events
     function attachEvents() {
+      if (component.on) {
+        Object.keys(component.on).forEach((eventName) => {
+          $el.on(camelToColon(eventName), component.on[eventName]);
+        });
+      }
+      if (component.once) {
+        Object.keys(component.once).forEach((eventName) => {
+          $el.once(camelToColon(eventName), component.once[eventName]);
+        });
+      }
       events.forEach((event) => {
         $(event.el)[event.once ? 'once' : 'on'](event.name, event.handler);
       });
     }
 
     function detachEvents() {
+      if (component.on) {
+        Object.keys(component.on).forEach((eventName) => {
+          $el.off(camelToColon(eventName), component.on[eventName]);
+        });
+      }
+      if (component.once) {
+        Object.keys(component.once).forEach((eventName) => {
+          $el.off(camelToColon(eventName), component.once[eventName]);
+        });
+      }
       events.forEach((event) => {
         $(event.el).off(event.name, event.handler);
       });

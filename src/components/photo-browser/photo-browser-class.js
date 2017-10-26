@@ -443,7 +443,7 @@ class PhotoBrowser extends Framework7Class {
         },
       },
       {
-        pageEvents: {
+        on: {
           pageBeforeIn(e, page) {
             pb.view.$el.addClass(`with-photo-browser-page with-photo-browser-page-${pb.params.theme}`);
             pb.onOpen('page', page.el);

@@ -654,7 +654,7 @@ class Autocomplete extends Framework7Class {
       },
       {
         animate: ac.params.animate,
-        pageEvents: {
+        on: {
           pageBeforeIn(e, page) {
             ac.onOpen('page', page.el);
           },
