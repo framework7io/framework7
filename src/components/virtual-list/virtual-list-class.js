@@ -71,11 +71,12 @@ class VirtualList extends Framework7Class {
     }
 
     // Append <ul>
-    vl.ul = vl.params.ul ? $(vl.params.ul) : vl.$el.children('ul');
-    if (vl.ul.length === 0) {
+    vl.$ul = vl.params.ul ? $(vl.params.ul) : vl.$el.children('ul');
+    if (vl.$ul.length === 0) {
       vl.$el.append('<ul></ul>');
-      vl.ul = vl.$el.children('ul');
+      vl.$ul = vl.$el.children('ul');
     }
+    vl.ul = vl.$ul[0];
 
     Utils.extend(vl, {
       // DOM cached items
@@ -227,7 +228,7 @@ class VirtualList extends Framework7Class {
         itemEl.f7VirtualListIndex = index;
       } else {
         if (vl.renderItem) {
-          vl.tempDomElement.innerHTML = vl.renderItem(items[i], { index }).trim();
+          vl.tempDomElement.innerHTML = vl.renderItem(items[i], index).trim();
         } else {
           vl.tempDomElement.innerHTML = items[i].toString().trim();
         }
