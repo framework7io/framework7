@@ -30,6 +30,7 @@ Juergen Schimmoeller
 
 ### $50+
 
+Bearr Dayss<br>
 Kris Reddy<br>
 Bart DJ
 
@@ -38,6 +39,7 @@ Bart DJ
 ---
 
 ### $10+
+Catalin Rogojeanu<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
 Firestream<br>
