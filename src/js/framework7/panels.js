@@ -194,14 +194,22 @@ app.initSwipePanels = function () {
         }
         panel = $('.panel.panel-' + side);
         opened = panel.hasClass('active');
-        if (app.params.swipePanelActiveArea && !opened) {
+        if (app.params.swipePanelActiveAreaOpen && !opened) {
             if (side === 'left') {
-                if (touchesStart.x > app.params.swipePanelActiveArea) return;
+                if (touchesStart.x > app.params.swipePanelActiveAreaOpen) return;
             }
             if (side === 'right') {
-                if (touchesStart.x < app.width - app.params.swipePanelActiveArea) return;
+                if (touchesStart.x < app.width - app.params.swipePanelActiveAreaOpen) return;
             }
         }
+        if (app.params.swipePanelActiveAreaClose && opened) {
+            if (side === 'left') {
+                if (touchesStart.x > app.params.swipePanelActiveAreaClose) return;
+            }                    
+            if (side === 'right') {
+               if (touchesStart.x > (app.width - panel.outerWidth() + app.params.swipePanelActiveAreaClose)) return;
+            }
+        }         
         isMoved = false;
         isTouched = true;
         isScrolling = undefined;
@@ -237,11 +245,11 @@ app.initSwipePanels = function () {
                     side = direction === 'to-right' ? 'left' : 'right';
                 }
                 if (app.params.swipePanelActiveArea > 0) {
-                    if (side === 'left' && touchesStart.x > app.params.swipePanelActiveArea) {
+                    if (side === 'left' && touchesStart.x > app.params.swipePanelActiveAreaOpen) {
                         isTouched = false;
                         return;
                     }
-                    if (side === 'right' && touchesStart.x < app.width - app.params.swipePanelActiveArea) {
+                    if (side === 'right' && touchesStart.x < app.width - app.params.swipePanelActiveAreaOpen) {
                         isTouched = false;
                         return;
                     }
