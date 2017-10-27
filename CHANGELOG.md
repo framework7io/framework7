@@ -1,3 +1,6 @@
+# [v2.0.0-beta.15](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.14...v2.0.0-beta.15) - October 27, 2017
+  * Fixed issue with extented context in router components
+
 # [v2.0.0-beta.14](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.12...v2.0.0-beta.14) - October 26, 2017
   * Fix router page events issue when no `route` passed to page callback
 

@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.14
+ * Framework7 2.0.0-beta.15
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -2342,7 +2342,7 @@ const tempDom = document.createElement('div');
 
 class Framework7Component {
   constructor(c, extendContext = {}) {
-    const context = {};
+    const context = Utils.extend({}, extendContext);
     const component = Utils.extend(this, c, { context });
 
     // Apply context
@@ -2361,9 +2361,6 @@ class Framework7Component {
         context[methodName] = component.methods[methodName].bind(context);
       });
     }
-
-    // Extend with passed context
-    Utils.extend(context, extendContext);
 
     // Bind Events
     if (component.on) {
