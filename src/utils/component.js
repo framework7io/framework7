@@ -6,7 +6,7 @@ const tempDom = document.createElement('div');
 
 class Framework7Component {
   constructor(c, extendContext = {}) {
-    const context = {};
+    const context = Utils.extend({}, extendContext);
     const component = Utils.extend(this, c, { context });
 
     // Apply context
@@ -25,9 +25,6 @@ class Framework7Component {
         context[methodName] = component.methods[methodName].bind(context);
       });
     }
-
-    // Extend with passed context
-    Utils.extend(context, extendContext);
 
     // Bind Events
     if (component.on) {
