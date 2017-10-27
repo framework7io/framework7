@@ -28,6 +28,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $50+
 
+Bearr Dayss<br>
 Kris Reddy<br>
 Bart DJ
 
@@ -36,6 +37,7 @@ Bart DJ
 ---
 
 ### $10+
+Catalin Rogojeanu<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
 Firestream<br>
