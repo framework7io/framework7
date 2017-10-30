@@ -280,6 +280,282 @@ Framework7 Color + Bg + Border
 /*==========================
 Framework7 Layouts Themes
 ==========================*/
+/* === Dark Blue layout === */
+.layout-dark-blue {
+    @pageBg: #19222a;
+    @barsBg: #101a23;
+    @barsBorder: #181c1f;
+    @barsText: #fff;
+    @tabBarText: #fff;
+    @text: #ddd;
+    @lightText: #bbb;
+    @strongText: #fff;
+    @activeLink: #29292f;
+    @blockBg: #1c1d1f;
+    @blockBorder: #393939;
+    @blockStrongBg: #1c1d1f;
+    @dividerBg: #1a1a1a;
+    @itemAfterText: @lightText;
+    @searchbarBg: #181c1f;
+    @searchbarBorder: #181c1f;
+    @swipeoutButton: #444;
+    @checkboxBorder: @blockBorder;
+    .navbar, .navbar&, .subnavbar, .subnavbar& {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+        color:@barsText;
+    }
+    .toolbar, .toolbar& {
+        .hairline-color(top, @barsBorder);
+        background-color: @barsBg;
+        color:@barsText;
+    }
+    // Picker
+    .picker-modal {
+        .toolbar {
+            background-color: @barsBg;
+        }
+    }
+    .popover .picker-modal .toolbar {
+        background: none;
+    }
+    .picker-calendar-week-days {
+        color:#fff;
+        background-color: @barsBg;
+    }
+    .popover .picker-modal, .picker-modal.picker-modal-inline {
+        .picker-center-highlight {
+            .hairline-color(top, @barsBorder);
+            .hairline-color(bottom, @barsBorder);
+        }
+        .picker-item.picker-selected {
+            color:#fff;
+        }
+        .picker-calendar-week-days {
+            color: #fff;
+        }
+        .picker-calendar-day {
+            color:#fff;
+            &.picker-calendar-day-prev, &.picker-calendar-day-next {
+                color: #777;
+            }
+            &.picker-calendar-day-disabled {
+                color: #555;
+            }
+            &.picker-calendar-day-today span {
+                background: #181c1f;
+            }
+            &.picker-calendar-day-has-events span:after {
+                background: #555;
+            }
+        }
+        .picker-calendar-week-days, .picker-calendar-row {
+            .hairline-color(bottom, @barsBorder);
+        }
+        .toolbar ~ .picker-modal-inner .picker-calendar-months,  .picker-calendar-week-days ~ .picker-calendar-months {
+            .hairline-color(top, @barsBorder);
+        }
+
+    }
+    .popover .picker-modal {
+        .toolbar {
+            .hairline-color(bottom, @barsBorder);
+        }
+    }
+    // Photo Browser
+    .photo-browser, .views .view[data-page="photo-browser-slides"] {
+        .navbar, .toolbar {
+            color:#000;
+            background: rgba(247,247,247,0.95);
+        }
+    }
+    .photo-browser-dark {
+        .navbar, .toolbar {
+            background: rgba(30,30,30,0.8);
+            color:#fff;
+        }
+    }
+
+    .tabbar a:not(.active) {
+        color:@tabBarText;
+    }
+    .page, .login-screen-content, .page&, .panel, .panel& {
+        background-color: @pageBg;
+        color:@text;
+    }
+    .content-block-title {
+        color:@strongText;
+    }
+    .content-block, .content-block& {
+        color:@lightText;
+    }
+    .content-block-inner {
+        background: @blockStrongBg;
+        color:@text;
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
+    }
+    .list-block, .list-block& {
+        ul {
+            background: @blockBg;
+            .hairline-color(top, @blockBorder);
+            .hairline-color(bottom, @blockBorder);
+        }
+        &.inset ul{
+            background: @blockStrongBg;
+        }
+        &.notifications > ul {
+            background: none;
+        }
+    }
+    .autocomplete-dropdown  {
+        background: @blockBg;
+        .list-block b {
+            color: #fff;
+        }
+    }
+    .card {
+        background: @blockBg;
+    }
+    .card-header{
+        .hairline-color(bottom, @blockBorder);
+    }
+    .card-footer {
+        .hairline-color(top, @blockBorder);
+        color:@lightText;
+    }
+    .popover, .popover& {
+        background: rgba(0,0,0,0.8);
+        .popover-angle:after {
+            background: rgba(0,0,0,0.8);
+        }
+        .list-block ul {
+            background: none;
+        }
+
+    }
+    .actions-popover .list-block ul {
+        .hairline-color(top, @blockBorder);
+        .hairline-color(bottom, @blockBorder);
+    }
+    .actions-popover .actions-popover-label {
+        .hairline-color(bottom, @blockBorder);
+    }
+    li.sorting {
+        background-color: @activeLink;
+    }
+    .swipeout-actions-left a, .swipeout-actions-right a {
+        background-color: @swipeoutButton;
+    }
+    .item-inner, .list-block ul ul li:last-child .item-inner {
+        .hairline-color(bottom, @blockBorder);
+    }
+    .item-after {
+        color:@itemAfterText;
+    }
+    .item-link, label.label-checkbox, label.label-radio {
+        html:not(.watch-active-state) &:active, &.active-state {
+            background-color: @activeLink;
+        }
+    }
+    .item-link.list-button, .list-button {
+        .hairline-color(bottom, @blockBorder);
+    }
+    .list-block-label {
+        color:@lightText;
+    }
+    .item-divider, .list-group-title {
+        background: @dividerBg;
+        color:@lightText;
+        .hairline-color(top, @blockBorder);
+    }
+
+    // Searchbar
+    .searchbar {
+        background: @searchbarBg;
+        .hairline-color(bottom, @searchbarBorder);
+    }
+
+    // Forms
+    .list-block, .list-block& {
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="date"], input[type="datetime-local"], input[type="number"], select, textarea {
+            color:@strongText;
+        }
+    }
+    .label-switch .checkbox {
+        background-color: @checkboxBorder;
+        &:before {
+            background-color: @blockBg;
+        }
+    }
+    .range-slider input[type="range"]:after {
+        background: @blockBg;
+    }
+    .range-slider input[type="range"]::-ms-thumb {
+        border: none;
+    }
+    // Timeline
+    .timeline-item-inner {
+        background: @blockBg;
+    }
+    .timeline-item-divider {
+        background: rgba(255,255,255,0.3);
+    }
+    .content-block-inner .timeline-item-inner {
+        border-color: @blockBorder;
+    }
+    .timeline-item-time {
+        color: #8e8e93;
+    }
+    .timeline-horizontal .timeline-item-date {
+        .hairline-color(bottom, @barsBorder);
+        background-color: @barsBg;
+    }
+    .timeline-horizontal .timeline-item {
+        .hairline-color(right, @barsBorder);
+    }
+    .timeline-year-title, .timeline-month-title {
+        background-color: @barsBg;
+    }
+    .timeline-month .timeline-item {
+        .hairline-color(top, @barsBorder);
+    }
+    .timeline-year {
+        .hairline-color(right, @barsBorder);
+    }
+    // Data Table
+    .data-table {
+        tbody {
+            tr.data-table-row-selected {
+                background: rgba(255,255,255,0.05);
+            }
+            td {
+                .hairline(top, @blockBorder);
+            }
+        }
+        html:not(.ios):not(.android) & {
+            tbody tr:hover {
+                background: rgba(255,255,255,0.05);
+            }
+        }
+        .sortable-cell:not(.numeric-cell):after, .sortable-cell.numeric-cell:before {
+            .encoded-svg-background("<svg fill='#ffffff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z' fill='#ffffff'/></svg>");
+        }
+
+        // Collapsible
+        @media (max-width:480px) and (orientation:portrait) {
+            &.data-table-collapsible {
+                tr {
+                    .hairline(top, @blockBorder);
+                }
+                tr:hover {
+                    background-color: inherit;
+                }
+            }
+        }
+    }
+}
+
 /* === Dark layout === */
 .layout-dark {
     @pageBg: #222426;
