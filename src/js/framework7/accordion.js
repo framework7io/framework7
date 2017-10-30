@@ -4,7 +4,10 @@
 app.accordionToggle = function (item) {
     item = $(item);
     if (item.length === 0) return;
-    if (item.hasClass('accordion-item-expanded')) app.accordionClose(item);
+    var itemsForClose = item.filter(function(item) {
+        return !item.dataset.closeManual;
+    });
+    if (itemsForClose.hasClass('accordion-item-expanded')) app.accordionClose(itemsForClose);
     else app.accordionOpen(item);
 };
 app.accordionOpen = function (item) {
@@ -12,8 +15,10 @@ app.accordionOpen = function (item) {
     var list = item.parents('.accordion-list').eq(0);
     var content = item.children('.accordion-item-content');
     if (content.length === 0) content = item.find('.accordion-item-content');
-    var expandedItem = list.length > 0 && item.parent().children('.accordion-item-expanded');
-    if (expandedItem.length > 0) {
+    var expandedItem = list.find('.accordion-item-expanded').filter(function(item) {
+        return !item.dataset.closeManual;
+    });
+    if (expandedItem.length) {
         app.accordionClose(expandedItem);
     }
     content.css('height', content[0].scrollHeight + 'px').transitionEnd(function () {
