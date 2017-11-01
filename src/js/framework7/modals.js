@@ -580,17 +580,20 @@ app.openModal = function (modal, animated) {
        modal.removeData('f7-modal-shown');
     });
 
+    var zIndex = 13000 + 1000 * $('.modal-overlay').length;
+
     if (isModal) {
         modal.show();
         modal.css({
-            marginTop: - Math.round(modal.outerHeight() / 2) + 'px'
+            marginTop: - Math.round(modal.outerHeight() / 2) + 'px',
+            zIndex: (zIndex + 500)
         });
     }
 
     var overlay;
     if (!isLoginScreen && !isPickerModal) {
-        if ($('.modal-overlay').length === 0 && !isPopup) {
-            app.root.append('<div class="modal-overlay"></div>');
+        if (!isPopup) {
+            app.root.append('<div class="modal-overlay" style="z-index:' + zIndex + '"></div>');
         }
         if ($('.popup-overlay').length === 0 && isPopup) {
             app.root.append('<div class="popup-overlay"></div>');
@@ -682,7 +685,7 @@ app.closeModal = function (modal, animated) {
     if (isPopup) overlay = $('.popup-overlay');
     else {
         if (isPickerModal && app.params.material) overlay = $('.picker-modal-overlay');
-        else if (!isPickerModal) overlay = $('.modal-overlay');
+        else if (!isPickerModal) overlay = $(modal).next('.modal-overlay');
     }
 
     if (isPopup){
@@ -752,5 +755,6 @@ app.closeModal = function (modal, animated) {
             modal.remove();
         }
     }
+    overlay.remove();
     return true;
 };
