@@ -1,3 +1,4 @@
+import document from '../../../utils/document';
 import $ from '../../../utils/dom';
 import Device from '../../../utils/device';
 import Utils from '../../../utils/utils';
@@ -10,7 +11,8 @@ export default function (event) {
   if (e.originalEvent) e = e.originalEvent;
   data.isTouchEvent = e.type === 'touchstart';
   if (!data.isTouchEvent && 'which' in e && e.which === 3) return;
-  if (params.noSwiping && $(e).closest(`.${params.noSwipingClass}`)[0]) {
+  if (data.isTouched && data.isMoved) return;
+  if (params.noSwiping && $(e.target).closest(`.${params.noSwipingClass}`)[0]) {
     swiper.allowClick = true;
     return;
   }

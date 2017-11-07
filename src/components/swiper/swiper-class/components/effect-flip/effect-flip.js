@@ -43,7 +43,6 @@ const Flip = {
         if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
         if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
       }
-
       $slideEl
         .transform(`translate3d(${tx}px, ${ty}px, 0px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`);
     }
@@ -57,10 +56,11 @@ const Flip = {
       .transition(duration);
     if (swiper.params.virtualTranslate && duration !== 0) {
       let eventTriggered = false;
+      // eslint-disable-next-line
       slides.eq(activeIndex).transitionEnd(function onTransitionEnd() {
         if (eventTriggered) return;
-        if (!swiper) return;
-        if (!$(this).hasClass(swiper.params.slideActiveClass)) return;
+        if (!swiper || swiper.destroyed) return;
+        // if (!$(this).hasClass(swiper.params.slideActiveClass)) return;
         eventTriggered = true;
         swiper.animating = false;
         const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
@@ -95,14 +95,16 @@ export default {
       if (swiper.params.effect !== 'flip') return;
       swiper.classNames.push(`${swiper.params.containerModifierClass}flip`);
       swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
-      Utils.extend(swiper.params, {
+      const overwriteParams = {
         slidesPerView: 1,
         slidesPerColumn: 1,
         slidesPerGroup: 1,
         watchSlidesProgress: true,
         spaceBetween: 0,
         virtualTranslate: true,
-      });
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
     },
     setTranslate() {
       const swiper = this;

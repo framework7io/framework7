@@ -5,6 +5,7 @@ const Pagination = {
   update() {
     // Render || Update Pagination bullets/items
     const swiper = this;
+    const rtl = swiper.rtl;
     const params = swiper.params.pagination;
     if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
     const slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
@@ -68,8 +69,10 @@ const Pagination = {
         }
       }
       if (params.dynamicBullets) {
-        const bulletsOffset = (((swiper.pagination.bulletSize * 5) - (swiper.pagination.bulletSize)) / 2) - (current * swiper.pagination.bulletSize);
-        bullets.css(swiper.isHorizontal() ? 'left' : 'top', `${bulletsOffset}px`);
+        const dynamicBulletsLength = Math.min(bullets.length, 5);
+        const bulletsOffset = (((swiper.pagination.bulletSize * dynamicBulletsLength) - (swiper.pagination.bulletSize)) / 2) - (current * swiper.pagination.bulletSize);
+        const offsetProp = rtl ? 'right' : 'left';
+        bullets.css(swiper.isHorizontal() ? offsetProp : 'top', `${bulletsOffset}px`);
       }
     }
     if (params.type === 'fraction') {
