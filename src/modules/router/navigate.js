@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
+import redirect from './redirect';
 
 function forward(el, forwardOptions = {}) {
   const router = this;
@@ -439,7 +440,9 @@ function navigate(navigateParams, navigateOptions = {}) {
   }
   const app = router.app;
   if (!router.view) {
-    app.views.main.router.navigate(url, navigateOptions);
+    if (app.views.main) {
+      app.views.main.router.navigate(url, navigateOptions);
+    }
     return router;
   }
   if (url === '#' || url === '') {
@@ -463,6 +466,11 @@ function navigate(navigateParams, navigateOptions = {}) {
   if (!route) {
     return router;
   }
+
+  if (route.route.redirect) {
+    return redirect.call(router, 'navigate', route, navigateOptions);
+  }
+
   const options = {};
   if (route.route.options) {
     Utils.extend(options, route.route.options, navigateOptions, { route });

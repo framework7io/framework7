@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
+import redirect from './redirect';
 
 function backward(el, backwardOptions) {
   const router = this;
@@ -452,6 +453,11 @@ function back(...args) {
   if (!route) {
     return router;
   }
+
+  if (route.route.redirect) {
+    return redirect.call(router, 'back', route, navigateOptions);
+  }
+
   const options = {};
   if (route.route.options) {
     Utils.extend(options, route.route.options, navigateOptions, { route });

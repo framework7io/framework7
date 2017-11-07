@@ -555,6 +555,20 @@ class Router extends Framework7Class {
     });
     return foundTabRoute;
   }
+  findRouteByKey(key, value) {
+    const router = this;
+    const routes = router.routes;
+    const flattenedRoutes = router.flattenRoutes(routes);
+    let matchingRoute;
+
+    flattenedRoutes.forEach((route) => {
+      if (matchingRoute) return;
+      if (route[key] === value) {
+        matchingRoute = route;
+      }
+    });
+    return matchingRoute;
+  }
   findMatchingRoute(url) {
     if (!url) return undefined;
     const router = this;
@@ -581,7 +595,6 @@ class Router extends Framework7Class {
         if (matched) return;
         matched = PathToRegexp(pathToMatch, keys).exec(path);
       });
-
 
       if (matched) {
         keys.forEach((keyObj, index) => {
