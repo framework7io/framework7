@@ -224,7 +224,7 @@ class PhotoBrowser extends Framework7Class {
     if (pb.params.renderLazyPhoto) return pb.params.renderLazyPhoto.call(pb, photo, index);
     const photoHtml = `
       <div class="photo-browser-slide photo-browser-slide-lazy swiper-slide" data-swiper-slide-index="${index}">
-          <div class="preloader swiper-lazy-preloader ${pb.params.theme === 'dark' ? 'color-white' : ''}"></div>
+          <div class="preloader swiper-lazy-preloader ${pb.params.theme === 'dark' ? 'color-white' : ''}">${pb.app.theme === 'md' ? Utils.mdPreloaderContent : ''}</div>
           <span class="swiper-zoom-container">
               <img data-src="${photo.url ? photo.url : photo}" class="swiper-lazy">
           </span>
@@ -264,7 +264,7 @@ class PhotoBrowser extends Framework7Class {
                 ${pb.params.virtualSlides ? '' : pb.params.photos.map((photo, index) => {
                   if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
                     return pb.renderObject(photo, index);
-                  } else if (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled) {
+                  } else if (pb.params.swiper.lazy === true || (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)) {
                     return pb.renderLazyPhoto(photo, index);
                   }
                   return pb.renderPhoto(photo, index);
@@ -382,7 +382,7 @@ class PhotoBrowser extends Framework7Class {
           renderSlide(photo, index) {
             if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
               return pb.renderObject(photo, index);
-            } else if (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled) {
+            } else if (pb.params.swiper.lazy === true || (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)) {
               return pb.renderLazyPhoto(photo, index);
             }
             return pb.renderPhoto(photo, index);
