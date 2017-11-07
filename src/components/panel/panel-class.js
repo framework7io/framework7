@@ -91,7 +91,7 @@ class Panel extends Framework7Class {
     if (app.width >= breakpoint) {
       if (!wasVisible) {
         $('html').removeClass(`with-panel-${side}-reveal with-panel-${side}-cover with-panel`);
-        $el.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('active');
+        $el.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('panel-active');
         panel.onOpen();
         panel.onOpened();
         $viewEl.css({
@@ -101,7 +101,7 @@ class Panel extends Framework7Class {
         app.emit('local::breakpointResize panelBreakpointResize');
       }
     } else if (wasVisible) {
-      $el.css('display', '').removeClass('panel-visible-by-breakpoint active');
+      $el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
       panel.onClose();
       panel.onClosed();
       $viewEl.css({
@@ -149,7 +149,10 @@ class Panel extends Framework7Class {
     const app = panel.app;
     if (!app.panel.allowOpen) return false;
 
-    const { side, effect, $el, $backdropEl } = panel;
+    const { side, effect, $el, $backdropEl, opened } = panel;
+
+    // Ignore if opened
+    if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-active')) return false;
 
     // Close if some panel is opened
     app.panel.close(side === 'left' ? 'right' : 'left', animate);
@@ -199,9 +202,9 @@ class Panel extends Framework7Class {
     const panel = this;
     const app = panel.app;
 
-    const { side, effect, $el, $backdropEl } = panel;
+    const { side, effect, $el, $backdropEl, opened } = panel;
 
-    if ($el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) return false;
+    if (!opened || $el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) return false;
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
     $el.removeClass('panel-active');
