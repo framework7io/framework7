@@ -98,7 +98,8 @@ class Panel extends Framework7Class {
           [`margin-${side}`]: `${$el.width()}px`,
         });
         app.allowPanelOpen = true;
-        app.emit('local::breakpointResize panelBreakpointResize');
+        app.emit('local::breakpoint panelBreakpoint');
+        panel.$el.trigger('panel:breakpoint', panel);
       }
     } else if (wasVisible) {
       $el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
@@ -107,7 +108,8 @@ class Panel extends Framework7Class {
       $viewEl.css({
         [`margin-${side}`]: '',
       });
-      app.emit('local::breakpointResize panelBreakpointResize');
+      app.emit('local::breakpoint panelBreakpoint');
+      panel.$el.trigger('panel:breakpoint', panel);
     }
   }
   initBreakpoints() {
