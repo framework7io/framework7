@@ -1,6 +1,6 @@
 import $ from 'dom7';
 import Template7 from 'template7';
-import Regexp from 'path-to-regexp'; // eslint-disable-line
+import PathToRegexp from 'path-to-regexp'; // eslint-disable-line
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
 import Component from '../../utils/component';
@@ -565,8 +565,24 @@ class Router extends Framework7Class {
     flattenedRoutes.forEach((route) => {
       if (matchingRoute) return;
       const keys = [];
-      const re = Regexp(route.path, keys);
-      const matched = re.exec(path);
+
+      const pathsToMatch = [route.path];
+      if (route.alias) {
+        if (typeof route.alias === 'string') pathsToMatch.push(route.alias);
+        else if (Array.isArray(route.alias)) {
+          route.alias.forEach((aliasPath) => {
+            pathsToMatch.push(aliasPath);
+          });
+        }
+      }
+
+      let matched;
+      pathsToMatch.forEach((pathToMatch) => {
+        if (matched) return;
+        matched = PathToRegexp(pathToMatch, keys).exec(path);
+      });
+
+
       if (matched) {
         keys.forEach((keyObj, index) => {
           const paramValue = matched[index + 1];
