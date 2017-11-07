@@ -98,6 +98,7 @@ class Panel extends Framework7Class {
           [`margin-${side}`]: `${$el.width()}px`,
         });
         app.allowPanelOpen = true;
+        app.emit('local::breakpointResize panelBreakpointResize');
       }
     } else if (wasVisible) {
       $el.css('display', '').removeClass('panel-visible-by-breakpoint active');
@@ -106,6 +107,7 @@ class Panel extends Framework7Class {
       $viewEl.css({
         [`margin-${side}`]: '',
       });
+      app.emit('local::breakpointResize panelBreakpointResize');
     }
   }
   initBreakpoints() {

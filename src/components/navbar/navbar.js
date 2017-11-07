@@ -256,7 +256,7 @@ export default {
     },
   },
   on: {
-    resize() {
+    'panelBreakpointResize resize': function onResize() {
       const app = this;
       if (app.theme !== 'ios') return;
       $('.navbar').each((index, navbarEl) => {
