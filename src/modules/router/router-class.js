@@ -885,7 +885,7 @@ class Router extends Framework7Class {
 
     function attachEvents() {
       if ($pageEl[0].f7RouteEventsAttached) return;
-      $pageEl[0].f7PageEventsAttached = true;
+      $pageEl[0].f7RouteEventsAttached = true;
       if (on && Object.keys(on).length > 0) {
         $pageEl[0].f7RouteEventsOn = on;
         Object.keys(on).forEach((eventName) => {
