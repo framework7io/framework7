@@ -142,6 +142,17 @@ const createPromise = function createPromise(handler) {
 };
 
 const Utils = {
+  mdPreloaderContent: `
+    <span class="preloader-inner">
+      <span class="preloader-inner-gap"></span>
+      <span class="preloader-inner-left">
+          <span class="preloader-inner-half-circle"></span>
+      </span>
+      <span class="preloader-inner-right">
+          <span class="preloader-inner-half-circle"></span>
+      </span>
+    </span>
+  `.trim(),
   eventNameToColonCase(eventName) {
     let hasColon;
     return eventName.split('').map((char, index) => {

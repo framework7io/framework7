@@ -7,33 +7,14 @@ const Preloader = {
     if (app.theme !== 'md') return;
     const $el = $(el);
     if ($el.length === 0 || $el.children('.preloader-inner').length > 0) return;
-    $el.append(`
-      <span class="preloader-inner">
-          <span class="preloader-inner-gap"></span>
-          <span class="preloader-inner-left">
-              <span class="preloader-inner-half-circle"></span>
-          </span>
-          <span class="preloader-inner-right">
-              <span class="preloader-inner-half-circle"></span>
-          </span>
-      </span>
-      `.trim());
+    $el.append(Utils.mdPreloaderContent);
   },
   // Modal
   visible: false,
   show(color = 'white') {
     const app = this;
     if (Preloader.visible) return;
-    const preloaderInner = app.theme !== 'md' ? '' :
-      '<span class="preloader-inner">' +
-          '<span class="preloader-inner-gap"></span>' +
-          '<span class="preloader-inner-left">' +
-              '<span class="preloader-inner-half-circle"></span>' +
-          '</span>' +
-          '<span class="preloader-inner-right">' +
-              '<span class="preloader-inner-half-circle"></span>' +
-          '</span>' +
-      '</span>';
+    const preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
     $('html').addClass('with-modal-preloader');
     app.root.append(`
       <div class="preloader-backdrop"></div>

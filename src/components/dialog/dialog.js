@@ -157,16 +157,7 @@ export default {
           }).open();
         },
         preloader(title) {
-          const preloaderInner = app.theme !== 'md' ? '' :
-            '<span class="preloader-inner">' +
-                '<span class="preloader-inner-gap"></span>' +
-                '<span class="preloader-inner-left">' +
-                    '<span class="preloader-inner-half-circle"></span>' +
-                '</span>' +
-                '<span class="preloader-inner-right">' +
-                    '<span class="preloader-inner-half-circle"></span>' +
-                '</span>' +
-            '</span>';
+          const preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
           return new Dialog(app, {
             title: typeof title === 'undefined' ? app.params.dialog.preloaderTitle : title,
             content: `<div class="preloader">${preloaderInner}</div>`,
