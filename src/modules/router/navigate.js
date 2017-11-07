@@ -95,13 +95,13 @@ function forward(el, forwardOptions = {}) {
     $oldPage = $pagesInView.eq($pagesInView.length - 1);
     if (separateNavbar) {
       // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 1);
-      $oldNavbarInner = app.navbar.getElByPage($oldPage);
+      $oldNavbarInner = $(app.navbar.getElByPage($oldPage));
     }
   } else if (options.reloadPrevious) {
     $oldPage = $pagesInView.eq($pagesInView.length - 2);
     if (separateNavbar) {
       // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 2);
-      $oldNavbarInner = app.navbar.getElByPage($oldPage);
+      $oldNavbarInner = $(app.navbar.getElByPage($oldPage));
     }
   } else if (options.reloadAll) {
     $oldPage = $pagesInView.filter((index, pageEl) => pageEl !== $newPage[0]);
@@ -221,7 +221,7 @@ function forward(el, forwardOptions = {}) {
       }
     } else {
       // Page remove event
-      router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', undefined, options);
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
       router.removePage($oldPage);
       if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
         router.removeNavbar($oldNavbarInner);
