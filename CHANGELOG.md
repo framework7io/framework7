@@ -1,3 +1,42 @@
+# [v2.0.0-beta.16](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.15...v2.0.0-beta.16) - November 8, 2017
+  * Swiper updated to latest version
+    * Fixed issue with not working `noSwiping` parameter
+    * Parallax now considers `slidesPerGroup` parameter
+    * Zoom: imporved gestures handling
+    * Pagination: fixed issues with wrong positioned dynamic-bullets when there are not enough slides
+    * Fixed issues with some effects being broken with enabled `breakpoints`
+  * Panels
+    * Fixed issue with wrong styles when panels become visible by breakpoints
+  * PhotoBrowser
+    * Improved zoom behavior on Androids (due to Swiper update)
+  * Router
+    * Added routes alias support
+      ```
+      routes = [
+        {
+          path: '/foo/',
+          url: 'somepage.html',
+          alias: '/bar/',
+        }
+      ]
+      ```
+    * Added routes redirect support
+      ```
+      routes = [
+        {
+          path: '/foo/',
+          url: 'somepage.html',
+        },
+        {
+          path: '/bar/',
+          redirect: '/foo/',
+        }
+      ]
+      ```
+  * Build
+    * Along with config file path now it is also possible to specify build output path like `npm run build:prod -- --config path/to/config.js --output path/to/build`
+  * Minor fixes
+
 # [v2.0.0-beta.15](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.14...v2.0.0-beta.15) - October 27, 2017
   * Fixed issue with extented context in router components
 

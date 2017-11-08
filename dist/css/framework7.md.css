@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.15
+ * Framework7 2.0.0-beta.16
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 27, 2017
+ * Released on: November 8, 2017
  */
 html,
 body,
@@ -215,7 +215,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
 /* === Views === */
 .views,
 .view {
-  width: 100%;
   position: relative;
   height: 100%;
   z-index: 5000;
@@ -242,8 +241,11 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
   transform: translate3d(0, 0, 0);
   contain: layout size style;
 }
-.page.cached {
+.page.stacked {
   display: none;
+}
+.page-previous {
+  pointer-events: none;
 }
 .page-content {
   overflow: auto;
@@ -358,6 +360,10 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
   -webkit-align-content: center;
   -ms-flex-line-pack: center;
   align-content: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   position: relative;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -7623,7 +7629,7 @@ textarea {
   color: rgba(0, 0, 0, 0.65);
   -webkit-transition-duration: 200ms;
   transition-duration: 200ms;
-  line-height: 1;
+  line-height: 13px;
   -webkit-transition-property: color, -webkit-transform;
   transition-property: color, -webkit-transform;
   transition-property: transform, color;
@@ -13121,10 +13127,11 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 /* === Swiper === */
 .swiper-container {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   position: relative;
   overflow: hidden;
+  list-style: none;
+  padding: 0;
   /* Fix of Webkit flickering */
   z-index: 1;
 }

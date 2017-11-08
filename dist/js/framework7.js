@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.15
+ * Framework7 2.0.0-beta.16
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 27, 2017
+ * Released on: November 8, 2017
  */
 
 (function (global, factory) {
@@ -468,7 +468,7 @@ var Template7Class = function Template7Class(template) {
   t.template = template;
 };
 
-var staticAccessors = { options: {},partials: {},helpers: {} };
+var staticAccessors = { options: { configurable: true },partials: { configurable: true },helpers: { configurable: true } };
 Template7Class.prototype.compile = function compile (template, depth) {
     if ( template === void 0 ) template = this.template;
     if ( depth === void 0 ) depth = 1;
@@ -2502,6 +2502,7 @@ var createPromise = function createPromise(handler) {
 };
 
 var Utils = {
+  mdPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-gap\"></span>\n      <span class=\"preloader-inner-left\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n      <span class=\"preloader-inner-right\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n    </span>\n  ".trim(),
   eventNameToColonCase: function eventNameToColonCase(eventName) {
     var hasColon;
     return eventName.split('').map(function (char, index) {
@@ -2827,7 +2828,7 @@ var Framework7Class = function Framework7Class(params, parents) {
   }
 };
 
-var staticAccessors$1 = { components: {} };
+var staticAccessors$1 = { components: { configurable: true } };
 Framework7Class.prototype.on = function on (events, handler) {
   var self = this;
   if (typeof handler !== 'function') { return self; }
@@ -2869,6 +2870,7 @@ Framework7Class.prototype.emit = function emit () {
     while ( len-- ) args[ len ] = arguments[ len ];
 
   var self = this;
+  if (!self.eventsListeners) { return self; }
   var events;
   var data;
   var context;
@@ -3074,8 +3076,8 @@ var Framework7$1 = (function (Framework7Class$$1) {
   Framework7.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
   Framework7.prototype.constructor = Framework7;
 
-  var prototypeAccessors = { $: {},t7: {} };
-  var staticAccessors = { Dom7: {},$: {},Template7: {},Class: {} };
+  var prototypeAccessors = { $: { configurable: true },t7: { configurable: true } };
+  var staticAccessors = { Dom7: { configurable: true },$: { configurable: true },Template7: { configurable: true },Class: { configurable: true } };
   Framework7.prototype.init = function init () {
     var app = this;
     if (app.initialized) { return; }
@@ -4276,11 +4278,17 @@ var Touch = {
 /**
  * Expose `pathToRegexp`.
  */
-var pathToRegexp_1$1 = pathToRegexp;
+var pathToRegexp_1 = pathToRegexp;
 var parse_1 = parse;
 var compile_1 = compile;
 var tokensToFunction_1 = tokensToFunction;
 var tokensToRegExp_1 = tokensToRegExp;
+
+/**
+ * Default configs.
+ */
+var DEFAULT_DELIMITER = '/';
+var DEFAULT_DELIMITERS = './';
 
 /**
  * The main path matching regexp utility.
@@ -4311,8 +4319,8 @@ function parse (str, options) {
   var key = 0;
   var index = 0;
   var path = '';
-  var defaultDelimiter = (options && options.delimiter) || '/';
-  var delimiters = (options && options.delimiters) || './';
+  var defaultDelimiter = (options && options.delimiter) || DEFAULT_DELIMITER;
+  var delimiters = (options && options.delimiters) || DEFAULT_DELIMITERS;
   var pathEscaped = false;
   var res;
 
@@ -4570,9 +4578,11 @@ function tokensToRegExp (tokens, keys, options) {
 
   var strict = options.strict;
   var end = options.end !== false;
-  var delimiter = escapeString(options.delimiter || '/');
+  var delimiter = escapeString(options.delimiter || DEFAULT_DELIMITER);
+  var delimiters = options.delimiters || DEFAULT_DELIMITERS;
   var endsWith = [].concat(options.endsWith || []).map(escapeString).concat('$').join('|');
   var route = '';
+  var isEndDelimited = false;
 
   // Iterate over the tokens and create our regexp string.
   for (var i = 0; i < tokens.length; i++) {
@@ -4580,41 +4590,34 @@ function tokensToRegExp (tokens, keys, options) {
 
     if (typeof token === 'string') {
       route += escapeString(token);
+      isEndDelimited = i === tokens.length - 1 && delimiters.indexOf(token[token.length - 1]) > -1;
     } else {
       var prefix = escapeString(token.prefix);
-      var capture = '(?:' + token.pattern + ')';
+      var capture = token.repeat
+        ? '(?:' + token.pattern + ')(?:' + prefix + '(?:' + token.pattern + '))*'
+        : token.pattern;
 
       if (keys) { keys.push(token); }
 
-      if (token.repeat) {
-        capture += '(?:' + prefix + capture + ')*';
-      }
-
       if (token.optional) {
-        if (!token.partial) {
-          capture = '(?:' + prefix + '(' + capture + '))?';
+        if (token.partial) {
+          route += prefix + '(' + capture + ')?';
         } else {
-          capture = prefix + '(' + capture + ')?';
+          route += '(?:' + prefix + '(' + capture + '))?';
         }
       } else {
-        capture = prefix + '(' + capture + ')';
+        route += prefix + '(' + capture + ')';
       }
-
-      route += capture;
     }
   }
 
-  // In non-strict mode we allow a delimiter at the end of a match.
-  if (!strict) {
-    route += '(?:' + delimiter + '(?=' + endsWith + '))?';
-  }
-
   if (end) {
-    route += endsWith === '$' ? endsWith : '(?=' + endsWith + ')';
+    if (!strict) { route += '(?:' + delimiter + ')?'; }
+
+    route += endsWith === '$' ? '$' : '(?=' + endsWith + ')';
   } else {
-    // In non-ending mode, we need the capturing groups to match as much as
-    // possible by using a positive lookahead to the end or next path segment.
-    route += '(?=' + delimiter + '|' + endsWith + ')';
+    if (!strict) { route += '(?:' + delimiter + '(?=' + endsWith + '))?'; }
+    if (!isEndDelimited) { route += '(?=' + delimiter + '|' + endsWith + ')'; }
   }
 
   return new RegExp('^' + route, flags(options))
@@ -4644,10 +4647,10 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(/** @type {string} */ (path), keys, options)
 }
 
-pathToRegexp_1$1.parse = parse_1;
-pathToRegexp_1$1.compile = compile_1;
-pathToRegexp_1$1.tokensToFunction = tokensToFunction_1;
-pathToRegexp_1$1.tokensToRegExp = tokensToRegExp_1;
+pathToRegexp_1.parse = parse_1;
+pathToRegexp_1.compile = compile_1;
+pathToRegexp_1.tokensToFunction = tokensToFunction_1;
+pathToRegexp_1.tokensToRegExp = tokensToRegExp_1;
 
 var tempDom = document.createElement('div');
 
@@ -5485,6 +5488,30 @@ function SwipeBack(r) {
   router.on('routerDestroy', detachEvents);
 }
 
+var redirect = function (direction, route, options) {
+  var router = this;
+  var redirect = route.route.redirect;
+  function redirectResolve(redirectUrl, redirectOptions) {
+    if ( redirectOptions === void 0 ) redirectOptions = {};
+
+    router.allowPageChange = true;
+    router[direction](redirectUrl, Utils.extend({}, options, redirectOptions));
+  }
+  function redirectReject() {
+    router.allowPageChange = true;
+  }
+  if (typeof redirect === 'function') {
+    router.allowPageChange = false;
+    var redirectUrl = redirect.call(router, route, redirectResolve, redirectReject);
+    if (redirectUrl && typeof redirectUrl === 'string') {
+      router.allowPageChange = true;
+      return router[direction](redirectUrl, options);
+    }
+    return router;
+  }
+  return router[direction](redirect, options);
+};
+
 function forward(el, forwardOptions) {
   if ( forwardOptions === void 0 ) forwardOptions = {};
 
@@ -5580,13 +5607,13 @@ function forward(el, forwardOptions) {
     $oldPage = $pagesInView.eq($pagesInView.length - 1);
     if (separateNavbar) {
       // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 1);
-      $oldNavbarInner = app.navbar.getElByPage($oldPage);
+      $oldNavbarInner = $$1$1(app.navbar.getElByPage($oldPage));
     }
   } else if (options.reloadPrevious) {
     $oldPage = $pagesInView.eq($pagesInView.length - 2);
     if (separateNavbar) {
       // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 2);
-      $oldNavbarInner = app.navbar.getElByPage($oldPage);
+      $oldNavbarInner = $$1$1(app.navbar.getElByPage($oldPage));
     }
   } else if (options.reloadAll) {
     $oldPage = $pagesInView.filter(function (index, pageEl) { return pageEl !== $newPage[0]; });
@@ -5706,7 +5733,7 @@ function forward(el, forwardOptions) {
       }
     } else {
       // Page remove event
-      router.pageCallback('beforeRemove', $oldPage, $newNavbarInner, 'previous', undefined, options);
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
       router.removePage($oldPage);
       if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
         router.removeNavbar($oldNavbarInner);
@@ -5758,11 +5785,11 @@ function forward(el, forwardOptions) {
   function afterAnimation() {
     var pageClasses = 'page-previous page-current page-next';
     var navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $newPage.removeClass(pageClasses).addClass('page-current');
-    $oldPage.removeClass(pageClasses).addClass('page-previous');
+    $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
+    $oldPage.removeClass(pageClasses).addClass('page-previous').attr('aria-hidden', 'true');
     if (dynamicNavbar) {
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-previous').attr('aria-hidden', 'true');
     }
     // After animation event
     router.allowPageChange = true;
@@ -5799,11 +5826,11 @@ function forward(el, forwardOptions) {
   function setPositionClasses() {
     var pageClasses = 'page-previous page-current page-next';
     var navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $oldPage.removeClass(pageClasses).addClass('page-current');
-    $newPage.removeClass(pageClasses).addClass('page-next');
+    $oldPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
+    $newPage.removeClass(pageClasses).addClass('page-next').removeAttr('aria-hidden');
     if (dynamicNavbar) {
-      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-next').removeAttr('aria-hidden');
     }
   }
   if (options.animate) {
@@ -5830,7 +5857,6 @@ function load(loadParams, loadOptions, ignorePageChange) {
   if ( loadOptions === void 0 ) loadOptions = {};
 
   var router = this;
-
   if (!router.allowPageChange && !ignorePageChange) { return router; }
   var params = loadParams;
   var options = loadOptions;
@@ -5879,6 +5905,10 @@ function load(loadParams, loadOptions, ignorePageChange) {
   function reject() {
     router.allowPageChange = true;
     return router;
+  }
+
+  if (url || templateUrl || componentUrl) {
+    router.allowPageChange = false;
   }
 
   // Proceed
@@ -5936,7 +5966,9 @@ function navigate(navigateParams, navigateOptions) {
   }
   var app = router.app;
   if (!router.view) {
-    app.views.main.router.navigate(url, navigateOptions);
+    if (app.views.main) {
+      app.views.main.router.navigate(url, navigateOptions);
+    }
     return router;
   }
   if (url === '#' || url === '') {
@@ -5960,6 +5992,11 @@ function navigate(navigateParams, navigateOptions) {
   if (!route) {
     return router;
   }
+
+  if (route.route.redirect) {
+    return redirect.call(router, 'navigate', route, navigateOptions);
+  }
+
   var options = {};
   if (route.route.options) {
     Utils.extend(options, route.route.options, navigateOptions, { route: route });
@@ -6375,12 +6412,14 @@ function backward(el, backwardOptions) {
   // New Page
   $newPage
     .addClass('page-previous')
-    .removeClass('stacked');
+    .removeClass('stacked')
+    .removeAttr('aria-hidden');
 
   if (dynamicNavbar && $newNavbarInner.length > 0) {
     $newNavbarInner
       .addClass('navbar-previous')
-      .removeClass('stacked');
+      .removeClass('stacked')
+      .removeAttr('aria-hidden');
   }
 
 
@@ -6542,11 +6581,11 @@ function backward(el, backwardOptions) {
     // Set classes
     var pageClasses = 'page-previous page-current page-next';
     var navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $newPage.removeClass(pageClasses).addClass('page-current');
-    $oldPage.removeClass(pageClasses).addClass('page-next');
+    $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
+    $oldPage.removeClass(pageClasses).addClass('page-next').attr('aria-hidden', 'true');
     if (dynamicNavbar) {
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next').attr('aria-hidden', 'true');
     }
 
     // After animation event
@@ -6584,10 +6623,10 @@ function backward(el, backwardOptions) {
     var pageClasses = 'page-previous page-current page-next';
     var navbarClasses = 'navbar-previous navbar-current navbar-next';
     $oldPage.removeClass(pageClasses).addClass('page-current');
-    $newPage.removeClass(pageClasses).addClass('page-previous');
+    $newPage.removeClass(pageClasses).addClass('page-previous').removeAttr('aria-hidden');
     if (dynamicNavbar) {
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous').removeAttr('aria-hidden');
     }
   }
 
@@ -6638,6 +6677,10 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   function reject() {
     router.allowPageChange = true;
     return router;
+  }
+
+  if (url || templateUrl || componentUrl) {
+    router.allowPageChange = false;
   }
 
   // Proceed
@@ -6781,6 +6824,11 @@ function back() {
   if (!route) {
     return router;
   }
+
+  if (route.route.redirect) {
+    return redirect.call(router, 'back', route, navigateOptions);
+  }
+
   var options = {};
   if (route.route.options) {
     Utils.extend(options, route.route.options, navigateOptions, { route: route });
@@ -7375,6 +7423,20 @@ var Router$1 = (function (Framework7Class$$1) {
     });
     return foundTabRoute;
   };
+  Router.prototype.findRouteByKey = function findRouteByKey (key, value) {
+    var router = this;
+    var routes = router.routes;
+    var flattenedRoutes = router.flattenRoutes(routes);
+    var matchingRoute;
+
+    flattenedRoutes.forEach(function (route) {
+      if (matchingRoute) { return; }
+      if (route[key] === value) {
+        matchingRoute = route;
+      }
+    });
+    return matchingRoute;
+  };
   Router.prototype.findMatchingRoute = function findMatchingRoute (url) {
     if (!url) { return undefined; }
     var router = this;
@@ -7389,8 +7451,23 @@ var Router$1 = (function (Framework7Class$$1) {
     flattenedRoutes.forEach(function (route) {
       if (matchingRoute) { return; }
       var keys = [];
-      var re = pathToRegexp_1$1(route.path, keys);
-      var matched = re.exec(path);
+
+      var pathsToMatch = [route.path];
+      if (route.alias) {
+        if (typeof route.alias === 'string') { pathsToMatch.push(route.alias); }
+        else if (Array.isArray(route.alias)) {
+          route.alias.forEach(function (aliasPath) {
+            pathsToMatch.push(aliasPath);
+          });
+        }
+      }
+
+      var matched;
+      pathsToMatch.forEach(function (pathToMatch) {
+        if (matched) { return; }
+        matched = pathToRegexp_1(pathToMatch, keys).exec(path);
+      });
+
       if (matched) {
         keys.forEach(function (keyObj, index) {
           var paramValue = matched[index + 1];
@@ -7692,7 +7769,7 @@ var Router$1 = (function (Framework7Class$$1) {
 
     function attachEvents() {
       if ($pageEl[0].f7RouteEventsAttached) { return; }
-      $pageEl[0].f7PageEventsAttached = true;
+      $pageEl[0].f7RouteEventsAttached = true;
       if (on && Object.keys(on).length > 0) {
         $pageEl[0].f7RouteEventsOn = on;
         Object.keys(on).forEach(function (eventName) {
@@ -7803,6 +7880,12 @@ var Router$1 = (function (Framework7Class$$1) {
     if (!router.params.pushState) {
       if (!initUrl) {
         initUrl = documentUrl;
+      }
+      if (document.location.search && initUrl.indexOf('?') < 0) {
+        initUrl += document.location.search;
+      }
+      if (document.location.hash && initUrl.indexOf('#') < 0) {
+        initUrl += document.location.hash;
       }
     } else {
       if (router.params.pushStateRoot && documentUrl.indexOf(router.params.pushStateRoot) >= 0) {
@@ -8839,7 +8922,7 @@ var Navbar$1 = {
     },
   },
   on: {
-    resize: function resize() {
+    'panelBreakpoint resize': function onResize() {
       var app = this;
       if (app.theme !== 'ios') { return; }
       $$1$1('.navbar').each(function (index, navbarEl) {
@@ -9934,16 +10017,7 @@ var Dialog = {
           }).open();
         },
         preloader: function preloader(title) {
-          var preloaderInner = app.theme !== 'md' ? '' :
-            '<span class="preloader-inner">' +
-                '<span class="preloader-inner-gap"></span>' +
-                '<span class="preloader-inner-left">' +
-                    '<span class="preloader-inner-half-circle"></span>' +
-                '</span>' +
-                '<span class="preloader-inner-right">' +
-                    '<span class="preloader-inner-half-circle"></span>' +
-                '</span>' +
-            '</span>';
+          var preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
           return new Dialog$1(app, {
             title: typeof title === 'undefined' ? app.params.dialog.preloaderTitle : title,
             content: ("<div class=\"preloader\">" + preloaderInner + "</div>"),
@@ -11019,7 +11093,7 @@ var Preloader = {
     if (app.theme !== 'md') { return; }
     var $el = $$1$1(el);
     if ($el.length === 0 || $el.children('.preloader-inner').length > 0) { return; }
-    $el.append("\n      <span class=\"preloader-inner\">\n          <span class=\"preloader-inner-gap\"></span>\n          <span class=\"preloader-inner-left\">\n              <span class=\"preloader-inner-half-circle\"></span>\n          </span>\n          <span class=\"preloader-inner-right\">\n              <span class=\"preloader-inner-half-circle\"></span>\n          </span>\n      </span>\n      ".trim());
+    $el.append(Utils.mdPreloaderContent);
   },
   // Modal
   visible: false,
@@ -11028,16 +11102,7 @@ var Preloader = {
 
     var app = this;
     if (Preloader.visible) { return; }
-    var preloaderInner = app.theme !== 'md' ? '' :
-      '<span class="preloader-inner">' +
-          '<span class="preloader-inner-gap"></span>' +
-          '<span class="preloader-inner-left">' +
-              '<span class="preloader-inner-half-circle"></span>' +
-          '</span>' +
-          '<span class="preloader-inner-right">' +
-              '<span class="preloader-inner-half-circle"></span>' +
-          '</span>' +
-      '</span>';
+    var preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
     $$1$1('html').addClass('with-modal-preloader');
     app.root.append(("\n      <div class=\"preloader-backdrop\"></div>\n      <div class=\"preloader-modal\">\n        <div class=\"preloader color-" + color + "\">" + preloaderInner + "</div>\n      </div>\n    "));
     Preloader.visible = true;
@@ -13248,19 +13313,23 @@ var Panel$1 = (function (Framework7Class$$1) {
     if (app.width >= breakpoint) {
       if (!wasVisible) {
         $$1$1('html').removeClass(("with-panel-" + side + "-reveal with-panel-" + side + "-cover with-panel"));
-        $el.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('active');
+        $el.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('panel-active');
         panel.onOpen();
         panel.onOpened();
         $viewEl.css(( obj = {}, obj[("margin-" + side)] = (($el.width()) + "px"), obj ));
         var obj;
         app.allowPanelOpen = true;
+        app.emit('local::breakpoint panelBreakpoint');
+        panel.$el.trigger('panel:breakpoint', panel);
       }
     } else if (wasVisible) {
-      $el.css('display', '').removeClass('panel-visible-by-breakpoint active');
+      $el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
       panel.onClose();
       panel.onClosed();
       $viewEl.css(( obj$1 = {}, obj$1[("margin-" + side)] = '', obj$1 ));
       var obj$1;
+      app.emit('local::breakpoint panelBreakpoint');
+      panel.$el.trigger('panel:breakpoint', panel);
     }
   };
   Panel.prototype.initBreakpoints = function initBreakpoints () {
@@ -13308,6 +13377,10 @@ var Panel$1 = (function (Framework7Class$$1) {
     var effect = panel.effect;
     var $el = panel.$el;
     var $backdropEl = panel.$backdropEl;
+    var opened = panel.opened;
+
+    // Ignore if opened
+    if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-active')) { return false; }
 
     // Close if some panel is opened
     app.panel.close(side === 'left' ? 'right' : 'left', animate);
@@ -13363,8 +13436,9 @@ var Panel$1 = (function (Framework7Class$$1) {
     var effect = panel.effect;
     var $el = panel.$el;
     var $backdropEl = panel.$backdropEl;
+    var opened = panel.opened;
 
-    if ($el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) { return false; }
+    if (!opened || $el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) { return false; }
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
     $el.removeClass('panel-active');
@@ -20680,6 +20754,7 @@ var updateActiveIndex = function (newActiveIndex) {
   var params = swiper.params;
   var previousIndex = swiper.activeIndex;
   var previousRealIndex = swiper.realIndex;
+  var previousSnapIndex = swiper.snapIndex;
   var activeIndex = newActiveIndex;
   var snapIndex;
   if (typeof activeIndex === 'undefined') {
@@ -20699,11 +20774,17 @@ var updateActiveIndex = function (newActiveIndex) {
       if (activeIndex < 0 || typeof activeIndex === 'undefined') { activeIndex = 0; }
     }
   }
-
-  snapIndex = Math.floor(activeIndex / params.slidesPerGroup);
+  if (snapGrid.indexOf(translate) >= 0) {
+    snapIndex = snapGrid.indexOf(translate);
+  } else {
+    snapIndex = Math.floor(activeIndex / params.slidesPerGroup);
+  }
   if (snapIndex >= snapGrid.length) { snapIndex = snapGrid.length - 1; }
-
   if (activeIndex === previousIndex) {
+    if (snapIndex !== previousSnapIndex) {
+      swiper.snapIndex = snapIndex;
+      swiper.emit('snapIndexChange');
+    }
     return;
   }
 
@@ -20971,9 +21052,8 @@ var slideTo = function (index, speed, runCallbacks, internal) {
   }
 
   // Update Index
-  swiper.updateActiveIndex(slideIndex);
-
   if ((rtl && -translate === swiper.translate) || (!rtl && translate === swiper.translate)) {
+    swiper.updateActiveIndex(slideIndex);
     // Update Height
     if (params.autoHeight) {
       swiper.updateAutoHeight();
@@ -20984,22 +21064,26 @@ var slideTo = function (index, speed, runCallbacks, internal) {
     }
     return false;
   }
-  swiper.updateSlidesClasses();
-
-  swiper.emit('beforeTransitionStart', speed, internal);
-  swiper.transitionStart(runCallbacks);
 
   if (speed === 0 || Browser.lteIE9) {
     swiper.setTransition(0);
     swiper.setTranslate(translate);
+    swiper.updateActiveIndex(slideIndex);
+    swiper.updateSlidesClasses();
+    swiper.emit('beforeTransitionStart', speed, internal);
+    swiper.transitionStart(runCallbacks);
     swiper.transitionEnd(runCallbacks);
   } else {
     swiper.setTransition(speed);
     swiper.setTranslate(translate);
+    swiper.updateActiveIndex(slideIndex);
+    swiper.updateSlidesClasses();
+    swiper.emit('beforeTransitionStart', speed, internal);
+    swiper.transitionStart(runCallbacks);
     if (!swiper.animating) {
       swiper.animating = true;
       $wrapperEl.transitionEnd(function () {
-        if (!swiper) { return; }
+        if (!swiper || swiper.destroyed) { return; }
         swiper.transitionEnd(runCallbacks);
       });
     }
@@ -21330,7 +21414,8 @@ var onTouchStart = function (event) {
   if (e.originalEvent) { e = e.originalEvent; }
   data.isTouchEvent = e.type === 'touchstart';
   if (!data.isTouchEvent && 'which' in e && e.which === 3) { return; }
-  if (params.noSwiping && $$1$1(e).closest(("." + (params.noSwipingClass)))[0]) {
+  if (data.isTouched && data.isMoved) { return; }
+  if (params.noSwiping && $$1$1(e.target).closest(("." + (params.noSwipingClass)))[0]) {
     swiper.allowClick = true;
     return;
   }
@@ -21597,7 +21682,7 @@ var onTouchEnd = function (event) {
     if (timeDiff < 300 && (touchEndTime - data.lastClickTime) > 300) {
       if (data.clickTimeout) { clearTimeout(data.clickTimeout); }
       data.clickTimeout = Utils.nextTick(function () {
-        if (!swiper) { return; }
+        if (!swiper || swiper.destroyed) { return; }
         swiper.emit('click', e);
       }, 300);
     }
@@ -21609,7 +21694,7 @@ var onTouchEnd = function (event) {
 
   data.lastClickTime = Utils.now();
   Utils.nextTick(function () {
-    if (swiper) { swiper.allowClick = true; }
+    if (!swiper.destroyed) { swiper.allowClick = true; }
   });
 
   if (!data.isTouched || !data.isMoved || !swiper.swipeDirection || touches.diff === 0 || data.currentTranslate === data.startTranslate) {
@@ -21726,13 +21811,13 @@ var onTouchEnd = function (event) {
         swiper.transitionStart();
         swiper.animating = true;
         $wrapperEl.transitionEnd(function () {
-          if (!swiper || !data.allowMomentumBounce) { return; }
+          if (!swiper || swiper.destroyed || !data.allowMomentumBounce) { return; }
           swiper.emit('momentumBounce');
 
           swiper.setTransition(params.speed);
           swiper.setTranslate(afterBouncePosition);
           $wrapperEl.transitionEnd(function () {
-            if (!swiper) { return; }
+            if (!swiper || swiper.destroyed) { return; }
             swiper.transitionEnd();
           });
         });
@@ -21744,7 +21829,7 @@ var onTouchEnd = function (event) {
         if (!swiper.animating) {
           swiper.animating = true;
           $wrapperEl.transitionEnd(function () {
-            if (!swiper) { return; }
+            if (!swiper || swiper.destroyed) { return; }
             swiper.transitionEnd();
           });
         }
@@ -21958,33 +22043,15 @@ var events = {
   detachEvents: detachEvents,
 };
 
-function getBreakpoint(breakpoints) {
-  // Get breakpoint for window width
-  if (!breakpoints) { return undefined; }
-  var breakpoint = false;
-  var points = [];
-  Object.keys(breakpoints).forEach(function (point) {
-    points.push(point);
-  });
-  points.sort(function (a, b) { return parseInt(a, 10) > parseInt(b, 10); });
-  for (var i = 0; i < points.length; i += 1) {
-    var point = points[i];
-    if (point >= window.innerWidth && !breakpoint) {
-      breakpoint = point;
-    }
-  }
-  return breakpoint || 'max';
-}
-
 var setBreakpoint = function () {
   var swiper = this;
   var activeIndex = swiper.activeIndex;
-  var loopedSlides = swiper.loopedSlides;
+  var loopedSlides = swiper.loopedSlides; if ( loopedSlides === void 0 ) loopedSlides = 0;
   var params = swiper.params;
   var breakpoints = params.breakpoints;
   if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) { return; }
   // Set breakpoint for window width and update parameters
-  var breakpoint = getBreakpoint(breakpoints);
+  var breakpoint = swiper.getBreakpoint(breakpoints);
   if (breakpoint && swiper.currentBreakpoint !== breakpoint) {
     var breakPointsParams = breakpoint in breakpoints ? breakpoints[breakpoint] : swiper.originalParams;
     var needsReLoop = params.loop && (breakPointsParams.slidesPerView !== params.slidesPerView);
@@ -22009,7 +22076,25 @@ var setBreakpoint = function () {
   }
 };
 
-var breakpoints = { setBreakpoint: setBreakpoint };
+var getBreakpoint = function (breakpoints) {
+  // Get breakpoint for window width
+  if (!breakpoints) { return undefined; }
+  var breakpoint = false;
+  var points = [];
+  Object.keys(breakpoints).forEach(function (point) {
+    points.push(point);
+  });
+  points.sort(function (a, b) { return parseInt(a, 10) > parseInt(b, 10); });
+  for (var i = 0; i < points.length; i += 1) {
+    var point = points[i];
+    if (point >= window.innerWidth && !breakpoint) {
+      breakpoint = point;
+    }
+  }
+  return breakpoint || 'max';
+};
+
+var breakpoints = { setBreakpoint: setBreakpoint, getBreakpoint: getBreakpoint };
 
 var addClasses = function () {
   var swiper = this;
@@ -22096,7 +22181,7 @@ var preloadImages = function () {
   var swiper = this;
   swiper.imagesToLoad = swiper.$el.find('img');
   function onReady() {
-    if (typeof swiper === 'undefined' || swiper === null || !swiper) { return; }
+    if (typeof swiper === 'undefined' || swiper === null || !swiper || swiper.destroyed) { return; }
     if (swiper.imagesLoaded !== undefined) { swiper.imagesLoaded += 1; }
     if (swiper.imagesLoaded === swiper.imagesToLoad.length) {
       if (swiper.params.updateOnImagesReady) { swiper.update(); }
@@ -22412,7 +22497,7 @@ var Swiper$2 = (function (SwiperClass$$1) {
         startTranslate: undefined,
         allowThresholdMove: undefined,
         // Form elements to match
-        formElements: 'input, select, textarea, button, video',
+        formElements: 'input, select, option, textarea, button, video',
         // Last click time
         lastClickTime: Utils.now(),
         clickTimeout: undefined,
@@ -22459,7 +22544,7 @@ var Swiper$2 = (function (SwiperClass$$1) {
   Swiper.prototype = Object.create( SwiperClass$$1 && SwiperClass$$1.prototype );
   Swiper.prototype.constructor = Swiper;
 
-  var staticAccessors = { extendedDefaults: {},defaults: {},Class: {},$: {} };
+  var staticAccessors = { extendedDefaults: { configurable: true },defaults: { configurable: true },Class: { configurable: true },$: { configurable: true } };
   Swiper.prototype.slidesPerViewDynamic = function slidesPerViewDynamic () {
     var swiper = this;
     var params = swiper.params;
@@ -22496,7 +22581,7 @@ var Swiper$2 = (function (SwiperClass$$1) {
   };
   Swiper.prototype.update = function update$$1 () {
     var swiper = this;
-    if (!swiper) { return; }
+    if (!swiper || swiper.destroyed) { return; }
     swiper.updateSize();
     swiper.updateSlides();
     swiper.updateProgress();
@@ -22629,8 +22714,8 @@ var Swiper$2 = (function (SwiperClass$$1) {
       swiper.$el[0].swiper = null;
       swiper.$el.data('swiper', null);
       Utils.deleteProps(swiper);
-      swiper = null;
     }
+    swiper.destroyed = true;
   };
   Swiper.extendDefaults = function extendDefaults (newDefaults) {
     Utils.extend(extendedDefaults, newDefaults);
@@ -22958,9 +23043,12 @@ var Virtual$1 = {
       var swiper = this;
       if (!swiper.params.virtual.enabled) { return; }
       swiper.classNames.push(((swiper.params.containerModifierClass) + "virtual"));
-      Utils.extend(swiper.params, {
+      var overwriteParams = {
         watchSlidesProgress: true,
-      });
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
+
       swiper.virtual.update();
     },
     setTranslate: function setTranslate() {
@@ -23126,6 +23214,7 @@ var Pagination = {
   update: function update() {
     // Render || Update Pagination bullets/items
     var swiper = this;
+    var rtl = swiper.rtl;
     var params = swiper.params.pagination;
     if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) { return; }
     var slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
@@ -23189,8 +23278,10 @@ var Pagination = {
         }
       }
       if (params.dynamicBullets) {
-        var bulletsOffset = (((swiper.pagination.bulletSize * 5) - (swiper.pagination.bulletSize)) / 2) - (current * swiper.pagination.bulletSize);
-        bullets.css(swiper.isHorizontal() ? 'left' : 'top', (bulletsOffset + "px"));
+        var dynamicBulletsLength = Math.min(bullets.length, 5);
+        var bulletsOffset = (((swiper.pagination.bulletSize * dynamicBulletsLength) - (swiper.pagination.bulletSize)) / 2) - (current * swiper.pagination.bulletSize);
+        var offsetProp = rtl ? 'right' : 'left';
+        bullets.css(swiper.isHorizontal() ? offsetProp : 'top', (bulletsOffset + "px"));
       }
     }
     if (params.type === 'fraction') {
@@ -23762,11 +23853,11 @@ var Parallax = {
       y = (y * progress) + "px";
     }
 
-    if (typeof pOpacity !== 'undefined' && opacity !== null) {
+    if (typeof opacity !== 'undefined' && opacity !== null) {
       var currentOpacity = opacity - ((opacity - 1) * (1 - Math.abs(progress)));
       $el[0].style.opacity = currentOpacity;
     }
-    if (typeof pScale === 'undefined' || scale === null) {
+    if (typeof scale === 'undefined' || scale === null) {
       $el.transform(("translate3d(" + x + ", " + y + ", 0px)"));
     } else {
       var currentScale = scale - ((scale - 1) * (1 - Math.abs(progress)));
@@ -23778,14 +23869,19 @@ var Parallax = {
     var $el = swiper.$el;
     var slides = swiper.slides;
     var progress = swiper.progress;
+    var snapGrid = swiper.snapGrid;
     $el.children('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]')
       .each(function (index, el) {
         swiper.parallax.setTransform(el, progress);
       });
     slides.each(function (slideIndex, slideEl) {
+      var slideProgress = slideEl.progress;
+      if (swiper.params.slidesPerGroup > 1 && swiper.params.slidesPerView !== 'auto') {
+        slideProgress += Math.ceil(slideIndex / 2) - (progress * (snapGrid.length - 1));
+      }
+      slideProgress = Math.min(Math.max(slideProgress, -1), 1);
       $$1$1(slideEl).find('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]')
         .each(function (index, el) {
-          var slideProgress = Math.min(Math.max(slideEl.progress, -1), 1);
           swiper.parallax.setTransform(el, slideProgress);
         });
     });
@@ -23862,10 +23958,13 @@ var Zoom = {
     var params = swiper.params.zoom;
     var zoom = swiper.zoom;
     var gesture = zoom.gesture;
+    zoom.fakeGestureTouched = false;
+    zoom.fakeGestureMoved = false;
     if (!Support$1.gestures) {
       if (e.type !== 'touchstart' || (e.type === 'touchstart' && e.targetTouches.length < 2)) {
         return;
       }
+      zoom.fakeGestureTouched = true;
       gesture.scaleStart = Zoom.getDistanceBetweenTouches(e);
     }
     if (!gesture.$slideEl || !gesture.$slideEl.length) {
@@ -23891,6 +23990,7 @@ var Zoom = {
       if (e.type !== 'touchmove' || (e.type === 'touchmove' && e.targetTouches.length < 2)) {
         return;
       }
+      zoom.fakeGestureMoved = true;
       gesture.scaleMove = Zoom.getDistanceBetweenTouches(e);
     }
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
@@ -23913,9 +24013,14 @@ var Zoom = {
     var zoom = swiper.zoom;
     var gesture = zoom.gesture;
     if (!Support$1.gestures) {
-      if (e.type !== 'touchend' || (e.type === 'touchend' && e.changedTouches.length < 2)) {
+      if (!zoom.fakeGestureTouched || !zoom.fakeGestureMoved) {
         return;
       }
+      if (e.type !== 'touchend' || (e.type === 'touchend' && e.changedTouches.length < 2 && !Device.android)) {
+        return;
+      }
+      zoom.fakeGestureTouched = false;
+      zoom.fakeGestureMoved = false;
     }
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
     zoom.scale = Math.max(Math.min(zoom.scale, gesture.maxRatio), params.minRatio);
@@ -24361,7 +24466,7 @@ var Zoom$1 = {
 };
 
 var Lazy$2 = {
-  loadImagesInSlide: function loadImagesInSlide(index, loadInDuplicate) {
+  loadInSlide: function loadInSlide(index, loadInDuplicate) {
     if ( loadInDuplicate === void 0 ) loadInDuplicate = true;
 
     var swiper = this;
@@ -24390,7 +24495,7 @@ var Lazy$2 = {
       var sizes = $imageEl.attr('data-sizes');
 
       swiper.loadImage($imageEl[0], (src || background), srcset, sizes, false, function () {
-        if (typeof swiper === 'undefined' || swiper === null || !swiper || (swiper && !swiper.params)) { return; }
+        if (typeof swiper === 'undefined' || swiper === null || !swiper || (swiper && !swiper.params) || swiper.destroyed) { return; }
         if (background) {
           $imageEl.css('background-image', ("url(\"" + background + "\")"));
           $imageEl.removeAttr('data-background');
@@ -24415,10 +24520,10 @@ var Lazy$2 = {
           var slideOriginalIndex = $slideEl.attr('data-swiper-slide-index');
           if ($slideEl.hasClass(swiper.params.slideDuplicateClass)) {
             var originalSlide = swiper.$wrapperEl.children(("[data-swiper-slide-index=\"" + slideOriginalIndex + "\"]:not(." + (swiper.params.slideDuplicateClass) + ")"));
-            swiper.lazy.loadImagesInSlide(originalSlide.index(), false);
+            swiper.lazy.loadInSlide(originalSlide.index(), false);
           } else {
             var duplicatedSlide = swiper.$wrapperEl.children(("." + (swiper.params.slideDuplicateClass) + "[data-swiper-slide-index=\"" + slideOriginalIndex + "\"]"));
-            swiper.lazy.loadImagesInSlide(duplicatedSlide.index(), false);
+            swiper.lazy.loadInSlide(duplicatedSlide.index(), false);
           }
         }
         swiper.emit('lazyImageReady', $slideEl[0], $imageEl[0]);
@@ -24460,14 +24565,14 @@ var Lazy$2 = {
     if (swiper.params.watchSlidesVisibility) {
       $wrapperEl.children(("." + (swiperParams.slideVisibleClass))).each(function (elIndex, slideEl) {
         var index = isVirtual ? $$1$1(slideEl).attr('data-swiper-slide-index') : $$1$1(slideEl).index();
-        swiper.lazy.loadImagesInSlide(index);
+        swiper.lazy.loadInSlide(index);
       });
     } else if (slidesPerView > 1) {
       for (var i = activeIndex; i < activeIndex + slidesPerView; i += 1) {
-        if (slideExist(i)) { swiper.lazy.loadImagesInSlide(i); }
+        if (slideExist(i)) { swiper.lazy.loadInSlide(i); }
       }
     } else {
-      swiper.lazy.loadImagesInSlide(activeIndex);
+      swiper.lazy.loadInSlide(activeIndex);
     }
     if (params.loadPrevNext) {
       if (slidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
@@ -24477,18 +24582,18 @@ var Lazy$2 = {
         var minIndex = Math.max(activeIndex - Math.max(spv, amount), 0);
         // Next Slides
         for (var i$1 = activeIndex + slidesPerView; i$1 < maxIndex; i$1 += 1) {
-          if (slideExist(i$1)) { swiper.lazy.loadImagesInSlide(i$1); }
+          if (slideExist(i$1)) { swiper.lazy.loadInSlide(i$1); }
         }
         // Prev Slides
         for (var i$2 = minIndex; i$2 < activeIndex; i$2 += 1) {
-          if (slideExist(i$2)) { swiper.lazy.loadImagesInSlide(i$2); }
+          if (slideExist(i$2)) { swiper.lazy.loadInSlide(i$2); }
         }
       } else {
         var nextSlide = $wrapperEl.children(("." + (swiperParams.slideNextClass)));
-        if (nextSlide.length > 0) { swiper.lazy.loadImagesInSlide(slideIndex(nextSlide)); }
+        if (nextSlide.length > 0) { swiper.lazy.loadInSlide(slideIndex(nextSlide)); }
 
         var prevSlide = $wrapperEl.children(("." + (swiperParams.slidePrevClass)));
-        if (prevSlide.length > 0) { swiper.lazy.loadImagesInSlide(slideIndex(prevSlide)); }
+        if (prevSlide.length > 0) { swiper.lazy.loadInSlide(slideIndex(prevSlide)); }
       }
     }
   },
@@ -24515,7 +24620,7 @@ var Lazy$3 = {
       lazy: {
         initialImageLoaded: false,
         load: Lazy$2.load.bind(swiper),
-        loadImagesInSlide: Lazy$2.loadImagesInSlide.bind(swiper),
+        loadInSlide: Lazy$2.loadInSlide.bind(swiper),
       },
     });
   },
@@ -25005,7 +25110,7 @@ var Autoplay = {
       swiper.autoplay.run();
     } else {
       swiper.$wrapperEl.transitionEnd(function () {
-        if (!swiper) { return; }
+        if (!swiper || swiper.destroyed) { return; }
         swiper.autoplay.paused = false;
         if (!swiper.autoplay.running) {
           swiper.autoplay.stop();
@@ -25109,7 +25214,7 @@ var Fade = {
       var eventTriggered = false;
       slides.transitionEnd(function () {
         if (eventTriggered) { return; }
-        if (!swiper) { return; }
+        if (!swiper || swiper.destroyed) { return; }
         eventTriggered = true;
         swiper.animating = false;
         var triggerEvents = ['webkitTransitionEnd', 'transitionend'];
@@ -25142,14 +25247,16 @@ var EffectFade = {
       var swiper = this;
       if (swiper.params.effect !== 'fade') { return; }
       swiper.classNames.push(((swiper.params.containerModifierClass) + "fade"));
-      Utils.extend(swiper.params, {
+      var overwriteParams = {
         slidesPerView: 1,
         slidesPerColumn: 1,
         slidesPerGroup: 1,
         watchSlidesProgress: true,
         spaceBetween: 0,
         virtualTranslate: true,
-      });
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
     },
     setTranslate: function setTranslate() {
       var swiper = this;
@@ -25320,7 +25427,7 @@ var EffectCube = {
       if (swiper.params.effect !== 'cube') { return; }
       swiper.classNames.push(((swiper.params.containerModifierClass) + "cube"));
       swiper.classNames.push(((swiper.params.containerModifierClass) + "3d"));
-      Utils.extend(swiper.params, {
+      var overwriteParams = {
         slidesPerView: 1,
         slidesPerColumn: 1,
         slidesPerGroup: 1,
@@ -25329,7 +25436,9 @@ var EffectCube = {
         spaceBetween: 0,
         centeredSlides: false,
         virtualTranslate: true,
-      });
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
     },
     setTranslate: function setTranslate() {
       var swiper = this;
@@ -25386,7 +25495,6 @@ var Flip = {
         if (shadowBefore.length) { shadowBefore[0].style.opacity = Math.max(-progress, 0); }
         if (shadowAfter.length) { shadowAfter[0].style.opacity = Math.max(progress, 0); }
       }
-
       $slideEl
         .transform(("translate3d(" + tx + "px, " + ty + "px, 0px) rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)"));
     }
@@ -25402,10 +25510,11 @@ var Flip = {
       .transition(duration);
     if (swiper.params.virtualTranslate && duration !== 0) {
       var eventTriggered = false;
+      // eslint-disable-next-line
       slides.eq(activeIndex).transitionEnd(function onTransitionEnd() {
         if (eventTriggered) { return; }
-        if (!swiper) { return; }
-        if (!$$1$1(this).hasClass(swiper.params.slideActiveClass)) { return; }
+        if (!swiper || swiper.destroyed) { return; }
+        // if (!$(this).hasClass(swiper.params.slideActiveClass)) return;
         eventTriggered = true;
         swiper.animating = false;
         var triggerEvents = ['webkitTransitionEnd', 'transitionend'];
@@ -25440,14 +25549,16 @@ var EffectFlip = {
       if (swiper.params.effect !== 'flip') { return; }
       swiper.classNames.push(((swiper.params.containerModifierClass) + "flip"));
       swiper.classNames.push(((swiper.params.containerModifierClass) + "3d"));
-      Utils.extend(swiper.params, {
+      var overwriteParams = {
         slidesPerView: 1,
         slidesPerColumn: 1,
         slidesPerGroup: 1,
         watchSlidesProgress: true,
         spaceBetween: 0,
         virtualTranslate: true,
-      });
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
     },
     setTranslate: function setTranslate() {
       var swiper = this;
@@ -25896,7 +26007,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
   PhotoBrowser.prototype.renderLazyPhoto = function renderLazyPhoto (photo, index) {
     var pb = this;
     if (pb.params.renderLazyPhoto) { return pb.params.renderLazyPhoto.call(pb, photo, index); }
-    var photoHtml = ("\n      <div class=\"photo-browser-slide photo-browser-slide-lazy swiper-slide\" data-swiper-slide-index=\"" + index + "\">\n          <div class=\"preloader swiper-lazy-preloader " + (pb.params.theme === 'dark' ? 'color-white' : '') + "\"></div>\n          <span class=\"swiper-zoom-container\">\n              <img data-src=\"" + (photo.url ? photo.url : photo) + "\" class=\"swiper-lazy\">\n          </span>\n      </div>\n    ").trim();
+    var photoHtml = ("\n      <div class=\"photo-browser-slide photo-browser-slide-lazy swiper-slide\" data-swiper-slide-index=\"" + index + "\">\n          <div class=\"preloader swiper-lazy-preloader " + (pb.params.theme === 'dark' ? 'color-white' : '') + "\">" + (pb.app.theme === 'md' ? Utils.mdPreloaderContent : '') + "</div>\n          <span class=\"swiper-zoom-container\">\n              <img data-src=\"" + (photo.url ? photo.url : photo) + "\" class=\"swiper-lazy\">\n          </span>\n      </div>\n    ").trim();
     return photoHtml;
   };
   PhotoBrowser.prototype.renderPhoto = function renderPhoto (photo, index) {
@@ -25914,7 +26025,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
               }).join(' ')) + "\n            </div>\n            <div class=\"photo-browser-swiper-container swiper-container\">\n              <div class=\"photo-browser-swiper-wrapper swiper-wrapper\">\n                " + (pb.params.virtualSlides ? '' : pb.params.photos.map(function (photo, index) {
                   if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
                     return pb.renderObject(photo, index);
-                  } else if (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled) {
+                  } else if (pb.params.swiper.lazy === true || (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)) {
                     return pb.renderLazyPhoto(photo, index);
                   }
                   return pb.renderPhoto(photo, index);
@@ -26047,7 +26158,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
           renderSlide: function renderSlide(photo, index) {
             if (photo.html || ((typeof photo === 'string' || photo instanceof String) && photo.indexOf('<') >= 0 && photo.indexOf('>') >= 0)) {
               return pb.renderObject(photo, index);
-            } else if (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled) {
+            } else if (pb.params.swiper.lazy === true || (pb.params.swiper.lazy && pb.params.swiper.lazy.enabled)) {
               return pb.renderLazyPhoto(photo, index);
             }
             return pb.renderPhoto(photo, index);
@@ -27008,7 +27119,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
   };
   Autocomplete.prototype.renderPreloader = function renderPreloader () {
     var ac = this;
-    return ("\n      <div class=\"autocomplete-preloader preloader " + (ac.params.preloaderColor ? ("color-" + (ac.params.preloaderColor)) : '') + "\">" + (ac.app.theme === 'md' ? "\n        <span class=\"preloader-inner\">\n          <span class=\"preloader-inner-gap\"></span>\n          <span class=\"preloader-inner-left\">\n            <span class=\"preloader-inner-half-circle\"></span>\n          </span>\n          <span class=\"preloader-inner-right\">\n            <span class=\"preloader-inner-half-circle\"></span>\n          </span>\n        </span>\n      ".trim() : '') + "</div>\n    ").trim();
+    return ("\n      <div class=\"autocomplete-preloader preloader " + (ac.params.preloaderColor ? ("color-" + (ac.params.preloaderColor)) : '') + "\">" + (ac.app.theme === 'md' ? Utils.mdPreloaderContent : '') + "</div>\n    ").trim();
   };
   Autocomplete.prototype.renderSearchbar = function renderSearchbar () {
     var ac = this;
