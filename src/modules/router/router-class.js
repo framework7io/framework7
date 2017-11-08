@@ -999,6 +999,9 @@ class Router extends Framework7Class {
       if (document.location.search && initUrl.indexOf('?') < 0) {
         initUrl += document.location.search;
       }
+      if (document.location.hash && initUrl.indexOf('#') < 0) {
+        initUrl += document.location.hash;
+      }
     } else {
       if (router.params.pushStateRoot && documentUrl.indexOf(router.params.pushStateRoot) >= 0) {
         documentUrl = documentUrl.split(router.params.pushStateRoot)[1];
