@@ -14,9 +14,12 @@
   height: 100%;
   transform: translate3d(0,0,0);
   contain: layout size style;
-  &.cached {
+  &.stacked {
     display: none;
   }
+}
+.page-previous {
+  pointer-events: none;
 }
 .page-content {
   .scrollable();
