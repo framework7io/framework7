@@ -57,12 +57,14 @@ function backward(el, backwardOptions) {
   // New Page
   $newPage
     .addClass('page-previous')
-    .removeClass('stacked');
+    .removeClass('stacked')
+    .removeAttr('aria-hidden');
 
   if (dynamicNavbar && $newNavbarInner.length > 0) {
     $newNavbarInner
       .addClass('navbar-previous')
-      .removeClass('stacked');
+      .removeClass('stacked')
+      .removeAttr('aria-hidden');
   }
 
 
@@ -224,11 +226,11 @@ function backward(el, backwardOptions) {
     // Set classes
     const pageClasses = 'page-previous page-current page-next';
     const navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $newPage.removeClass(pageClasses).addClass('page-current');
-    $oldPage.removeClass(pageClasses).addClass('page-next');
+    $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
+    $oldPage.removeClass(pageClasses).addClass('page-next').attr('aria-hidden', 'true');
     if (dynamicNavbar) {
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next').attr('aria-hidden', 'true');
     }
 
     // After animation event
@@ -266,10 +268,10 @@ function backward(el, backwardOptions) {
     const pageClasses = 'page-previous page-current page-next';
     const navbarClasses = 'navbar-previous navbar-current navbar-next';
     $oldPage.removeClass(pageClasses).addClass('page-current');
-    $newPage.removeClass(pageClasses).addClass('page-previous');
+    $newPage.removeClass(pageClasses).addClass('page-previous').removeAttr('aria-hidden');
     if (dynamicNavbar) {
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous').removeAttr('aria-hidden');
     }
   }
 
@@ -313,6 +315,10 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   function reject() {
     router.allowPageChange = true;
     return router;
+  }
+
+  if (url || templateUrl || componentUrl) {
+    router.allowPageChange = false;
   }
 
   // Proceed

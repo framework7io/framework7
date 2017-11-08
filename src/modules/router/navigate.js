@@ -274,11 +274,11 @@ function forward(el, forwardOptions = {}) {
   function afterAnimation() {
     const pageClasses = 'page-previous page-current page-next';
     const navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $newPage.removeClass(pageClasses).addClass('page-current');
-    $oldPage.removeClass(pageClasses).addClass('page-previous');
+    $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
+    $oldPage.removeClass(pageClasses).addClass('page-previous').attr('aria-hidden', 'true');
     if (dynamicNavbar) {
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-previous');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-previous').attr('aria-hidden', 'true');
     }
     // After animation event
     router.allowPageChange = true;
@@ -315,11 +315,11 @@ function forward(el, forwardOptions = {}) {
   function setPositionClasses() {
     const pageClasses = 'page-previous page-current page-next';
     const navbarClasses = 'navbar-previous navbar-current navbar-next';
-    $oldPage.removeClass(pageClasses).addClass('page-current');
-    $newPage.removeClass(pageClasses).addClass('page-next');
+    $oldPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
+    $newPage.removeClass(pageClasses).addClass('page-next').removeAttr('aria-hidden');
     if (dynamicNavbar) {
-      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-next');
+      $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-next').removeAttr('aria-hidden');
     }
   }
   if (options.animate) {
@@ -343,7 +343,6 @@ function forward(el, forwardOptions = {}) {
 }
 function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const router = this;
-
   if (!router.allowPageChange && !ignorePageChange) return router;
   const params = loadParams;
   const options = loadOptions;
@@ -385,6 +384,10 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   function reject() {
     router.allowPageChange = true;
     return router;
+  }
+
+  if (url || templateUrl || componentUrl) {
+    router.allowPageChange = false;
   }
 
   // Proceed
