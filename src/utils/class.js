@@ -50,6 +50,7 @@ class Framework7Class {
   }
   emit(...args) {
     const self = this;
+    if (!self.eventsListeners) return self;
     let events;
     let data;
     let context;
