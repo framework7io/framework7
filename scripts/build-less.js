@@ -13,6 +13,7 @@ const header = require('gulp-header');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
 const getConfig = require('./get-config.js');
+const getOutput = require('./get-output.js');
 const banner = require('./banner.js');
 
 function build(config, components, themes, rtl, cb) {
@@ -23,6 +24,8 @@ function build(config, components, themes, rtl, cb) {
   const includeMdTheme = themes.indexOf('md') >= 0;
   const currentTheme = themes.length === 1 ? themes[0] : '';
   const outputFileName = `framework7${rtl ? '.rtl' : ''}${currentTheme ? `.${currentTheme}` : ''}`;
+  const output = getOutput();
+
   gulp.src('./src/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
@@ -52,13 +55,13 @@ function build(config, components, themes, rtl, cb) {
     .pipe(rename((filePath) => {
       filePath.basename = outputFileName;
     }))
-    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/css/`))
+    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/css/`))
     .on('end', () => {
       if (env === 'development') {
         if (cb) cb();
         return;
       }
-      gulp.src(`./dist/css/${outputFileName}.css`)
+      gulp.src(`${output || './dist/css'}/${outputFileName}.css`)
         .pipe(cleanCSS({
           advanced: false,
           aggressiveMerging: false,
@@ -67,7 +70,7 @@ function build(config, components, themes, rtl, cb) {
         .pipe(rename((filePath) => {
           filePath.basename += '.min';
         }))
-        .pipe(gulp.dest('./dist/css/'))
+        .pipe(gulp.dest(output || './dist/css/'))
         .on('end', () => {
           if (cb) cb();
         });

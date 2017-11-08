@@ -17,8 +17,15 @@ let logged = false;
 
 function getConfig() {
   const args = process.argv;
-  if (args[3] && args[3].indexOf('--config') === 0 && args[4]) {
-    const configPath = path.resolve(args[4]);
+  let configArgIndex;
+  let configPath;
+  args.forEach((arg, argIndex) => {
+    if (arg === '--config') configArgIndex = argIndex;
+  });
+  if (configArgIndex && args[configArgIndex + 1]) {
+    configPath = path.resolve(args[configArgIndex + 1]);
+  }
+  if (configPath) {
     const overwriteConfig = require(configPath); // eslint-disable-line
     config = Object.assign({}, config, overwriteConfig);
     if (!logged) {

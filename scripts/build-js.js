@@ -20,6 +20,7 @@ const gulpif = require('gulp-if');
 const commonjs = require('rollup-plugin-commonjs');
 const getConfig = require('./get-config.js');
 const banner = require('./banner.js');
+const getOutput = require('./get-output.js');
 
 let cache;
 
@@ -38,7 +39,9 @@ function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = 'es';
+  const output = getOutput();
   let cbs = 0;
+
 
   // Bundle
   rollup({
@@ -70,7 +73,7 @@ function es(components, cb) {
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
     .pipe(rename('framework7.esm.bundle.js'))
-    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       cbs += 1;
       if (cbs === 2 && cb) cb();
@@ -106,7 +109,7 @@ function es(components, cb) {
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
     .pipe(rename('framework7.esm.js'))
-    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       cbs += 1;
       if (cbs === 2 && cb) cb();
@@ -117,6 +120,7 @@ function umd(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
+  const output = getOutput();
 
   rollup({
     input: './src/framework7.js',
@@ -151,14 +155,14 @@ function umd(components, cb) {
     .pipe(buffer())
     .pipe(gulpif(env === 'development', sourcemaps.init({ loadMaps: true })))
     .pipe(gulpif(env === 'development', sourcemaps.write('./')))
-    .pipe(gulp.dest(`./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/js/`))
     .on('end', () => {
       if (env === 'development') {
         if (cb) cb();
         return;
       }
       // Minified version
-      gulp.src('./dist/js/framework7.js')
+      gulp.src(`${output || './dist/js'}/framework7.js`)
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(header(banner))
@@ -166,7 +170,7 @@ function umd(components, cb) {
           filePath.basename += '.min';
         }))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./dist/js/'))
+        .pipe(gulp.dest(output || './dist/js/'))
         .on('end', () => {
           cb();
         });
