@@ -112,11 +112,11 @@ const Input = {
       $inputEl.trigger('input:empty');
     }
   },
-  scrollIntoView(inputEl) {
+  scrollIntoView(inputEl, duration = 0) {
     const $inputEl = $(inputEl);
     const $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
     if (!$scrollableEl.length) {
-      return;
+      return false;
     }
     const contentHeight = $scrollableEl[0].offsetHeight;
     const contentScrollTop = $scrollableEl[0].scrollTop;
@@ -131,10 +131,13 @@ const Input = {
     const max = ((inputOffsetTop + contentScrollTop) - contentHeight) + contentPaddingBottom + inputHeight;
 
     if (contentScrollTop > min) {
-      $scrollableEl.scrollTop(min);
+      $scrollableEl.scrollTop(min, duration);
+      return true;
     } else if (contentScrollTop < max) {
-      $scrollableEl.scrollTop(max);
+      $scrollableEl.scrollTop(max, duration);
+      return true;
     }
+    return false;
   },
   init() {
     const app = this;
