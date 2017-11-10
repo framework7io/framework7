@@ -1,7 +1,8 @@
 /**
 * F7 Build Configuration
 * Don't modify this file!
-* If you want to build custom version of F7, just put build-config-custom.js with the required configuration in this folder
+* If you want to build custom version of F7, just put build-config-custom.js with the required configuration in this folder. Or build it using command line:
+* $ npm run build:prod -- --config path/to/config.js --output path/to/output/folder
 */
 
 const config = {
