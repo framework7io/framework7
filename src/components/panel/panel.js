@@ -9,7 +9,7 @@ export default {
       leftBreakpoint: 0,
       rightBreakpoint: 0,
       swipe: undefined, // or 'left' or 'right' or 'both'
-      swipeActiveArea: null,
+      swipeActiveArea: 0,
       swipeCloseOpposite: true,
       swipeOnlyClose: false,
       swipeNoFollow: false,
