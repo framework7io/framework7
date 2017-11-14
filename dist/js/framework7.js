@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.16
+ * Framework7 2.0.0-beta.17
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 8, 2017
+ * Released on: November 14, 2017
  */
 
 (function (global, factory) {
@@ -5151,7 +5151,7 @@ function SwipeBack(r) {
     var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
     var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
-      isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+      isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)) || pageX < touchesStart.x;
     }
     if (isScrolling || e.f7PreventSwipeBack || app.preventSwipeBack) {
       isTouched = false;
@@ -8257,7 +8257,7 @@ function initClicks(app) {
   }
   if (Support$1.touch && !Device.android) {
     var activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
-    $$1$1(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-indicator-overlay, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
+    $$1$1(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
 var Clicks = {
@@ -13508,7 +13508,7 @@ var Panel = {
       leftBreakpoint: 0,
       rightBreakpoint: 0,
       swipe: undefined, // or 'left' or 'right' or 'both'
-      swipeActiveArea: null,
+      swipeActiveArea: 0,
       swipeCloseOpposite: true,
       swipeOnlyClose: false,
       swipeNoFollow: false,
@@ -14104,11 +14104,13 @@ var Input = {
       $inputEl.trigger('input:empty');
     }
   },
-  scrollIntoView: function scrollIntoView(inputEl) {
+  scrollIntoView: function scrollIntoView(inputEl, duration, centered) {
+    if ( duration === void 0 ) duration = 0;
+
     var $inputEl = $$1$1(inputEl);
     var $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
     if (!$scrollableEl.length) {
-      return;
+      return false;
     }
     var contentHeight = $scrollableEl[0].offsetHeight;
     var contentScrollTop = $scrollableEl[0].scrollTop;
@@ -14121,22 +14123,32 @@ var Input = {
 
     var min = (inputOffsetTop + contentScrollTop) - contentPaddingTop;
     var max = ((inputOffsetTop + contentScrollTop) - contentHeight) + contentPaddingBottom + inputHeight;
+    var centeredPosition = min + ((max - min) / 2);
 
     if (contentScrollTop > min) {
-      $scrollableEl.scrollTop(min);
+      $scrollableEl.scrollTop(centered ? centeredPosition : min, duration);
+      return true;
     } else if (contentScrollTop < max) {
-      $scrollableEl.scrollTop(max);
+      $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
+      return true;
     }
+    return false;
   },
   init: function init() {
     var app = this;
     Input.createTextareaResizableShadow();
     function onFocus() {
       var inputEl = this;
-      if (Device.android) {
-        $$1$1(window).once('resize', function () {
-          app.input.scrollIntoView(inputEl);
-        });
+      if (app.params.input.scrollIntoViewOnFocus) {
+        if (Device.android) {
+          $$1$1(window).once('resize', function () {
+            if (document && document.activeElement === inputEl) {
+              app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+            }
+          });
+        } else {
+          app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+        }
       }
       app.input.focus(inputEl);
     }
@@ -14198,6 +14210,12 @@ var Input = {
 
 var Input$1 = {
   name: 'input',
+  params: {
+    input: {
+      scrollIntoViewOnFocus: Device.android,
+      scrollIntoViewCentered: false,
+    },
+  },
   create: function create() {
     var app = this;
     Utils.extend(app, {

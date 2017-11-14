@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.16
+ * Framework7 2.0.0-beta.17
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 8, 2017
+ * Released on: November 14, 2017
  */
 
 import Template7 from 'template7';
@@ -2843,7 +2843,7 @@ function SwipeBack(r) {
     const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
     const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
-      isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+      isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)) || pageX < touchesStart.x;
     }
     if (isScrolling || e.f7PreventSwipeBack || app.preventSwipeBack) {
       isTouched = false;
@@ -5863,7 +5863,7 @@ function initClicks(app) {
   }
   if (Support$1.touch && !Device.android) {
     const activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
-    $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-indicator-overlay, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
+    $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
 var Clicks = {
@@ -10951,7 +10951,7 @@ var Panel = {
       leftBreakpoint: 0,
       rightBreakpoint: 0,
       swipe: undefined, // or 'left' or 'right' or 'both'
-      swipeActiveArea: null,
+      swipeActiveArea: 0,
       swipeCloseOpposite: true,
       swipeOnlyClose: false,
       swipeNoFollow: false,
@@ -11539,11 +11539,11 @@ const Input = {
       $inputEl.trigger('input:empty');
     }
   },
-  scrollIntoView(inputEl) {
+  scrollIntoView(inputEl, duration = 0, centered) {
     const $inputEl = $(inputEl);
     const $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
     if (!$scrollableEl.length) {
-      return;
+      return false;
     }
     const contentHeight = $scrollableEl[0].offsetHeight;
     const contentScrollTop = $scrollableEl[0].scrollTop;
@@ -11556,22 +11556,32 @@ const Input = {
 
     const min = (inputOffsetTop + contentScrollTop) - contentPaddingTop;
     const max = ((inputOffsetTop + contentScrollTop) - contentHeight) + contentPaddingBottom + inputHeight;
+    const centeredPosition = min + ((max - min) / 2);
 
     if (contentScrollTop > min) {
-      $scrollableEl.scrollTop(min);
+      $scrollableEl.scrollTop(centered ? centeredPosition : min, duration);
+      return true;
     } else if (contentScrollTop < max) {
-      $scrollableEl.scrollTop(max);
+      $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
+      return true;
     }
+    return false;
   },
   init() {
     const app = this;
     Input.createTextareaResizableShadow();
     function onFocus() {
       const inputEl = this;
-      if (Device.android) {
-        $(window).once('resize', () => {
-          app.input.scrollIntoView(inputEl);
-        });
+      if (app.params.input.scrollIntoViewOnFocus) {
+        if (Device.android) {
+          $(window).once('resize', () => {
+            if (document && document.activeElement === inputEl) {
+              app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+            }
+          });
+        } else {
+          app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+        }
       }
       app.input.focus(inputEl);
     }
@@ -11633,6 +11643,12 @@ const Input = {
 
 var Input$1 = {
   name: 'input',
+  params: {
+    input: {
+      scrollIntoViewOnFocus: Device.android,
+      scrollIntoViewCentered: false,
+    },
+  },
   create() {
     const app = this;
     Utils.extend(app, {

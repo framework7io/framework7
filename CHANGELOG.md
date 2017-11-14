@@ -1,3 +1,13 @@
+# [v2.0.0-beta.17](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.16...v2.0.0-beta.17) - November 14, 2017
+  * Preloader
+    * Fixed preloader backdrop styles to cover the screen behind it
+  * Router
+    * Cancels swipe back page in case of swipe left
+  * Input
+    * Added `scrollIntoViewOnFocus` parameter, that is by default enabled for Android
+    * Added `scrollIntoViewCentered` paramter to scroll input into center of view
+  * Minor fixes
+
 # [v2.0.0-beta.16](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.15...v2.0.0-beta.16) - November 8, 2017
   * Swiper updated to latest version
     * Fixed issue with not working `noSwiping` parameter
