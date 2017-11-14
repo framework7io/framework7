@@ -112,7 +112,7 @@ const Input = {
       $inputEl.trigger('input:empty');
     }
   },
-  scrollIntoView(inputEl, duration = 0) {
+  scrollIntoView(inputEl, duration = 0, centered) {
     const $inputEl = $(inputEl);
     const $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
     if (!$scrollableEl.length) {
@@ -129,12 +129,13 @@ const Input = {
 
     const min = (inputOffsetTop + contentScrollTop) - contentPaddingTop;
     const max = ((inputOffsetTop + contentScrollTop) - contentHeight) + contentPaddingBottom + inputHeight;
+    const centeredPosition = min + ((max - min) / 2);
 
     if (contentScrollTop > min) {
-      $scrollableEl.scrollTop(min, duration);
+      $scrollableEl.scrollTop(centered ? centeredPosition : min, duration);
       return true;
     } else if (contentScrollTop < max) {
-      $scrollableEl.scrollTop(max, duration);
+      $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
       return true;
     }
     return false;
@@ -144,10 +145,16 @@ const Input = {
     Input.createTextareaResizableShadow();
     function onFocus() {
       const inputEl = this;
-      if (Device.android) {
-        $(window).once('resize', () => {
-          app.input.scrollIntoView(inputEl);
-        });
+      if (app.params.input.scrollIntoViewOnFocus) {
+        if (Device.android) {
+          $(window).once('resize', () => {
+            if (document && document.activeElement === inputEl) {
+              app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+            }
+          });
+        } else {
+          app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+        }
       }
       app.input.focus(inputEl);
     }
@@ -209,6 +216,12 @@ const Input = {
 
 export default {
   name: 'input',
+  params: {
+    input: {
+      scrollIntoViewOnFocus: Device.android,
+      scrollIntoViewCentered: false,
+    },
+  },
   create() {
     const app = this;
     Utils.extend(app, {
