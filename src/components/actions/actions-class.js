@@ -5,10 +5,11 @@ import Modal from '../modal/modal-class';
 
 class Actions extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      toPopover: app.params.actions.convertToPopover,
-      on: {},
-    }, params);
+    const extendedParams = Utils.extend(
+      { on: {} },
+      app.params.actions,
+      params
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -32,7 +33,7 @@ class Actions extends Modal {
     } else if (actions.params.content) {
       $el = $(actions.params.content);
     } else if (actions.params.buttons) {
-      if (actions.params.toPopover) {
+      if (actions.params.convertToPopover) {
         actions.popoverHtml = actions.renderPopover();
       }
       actions.actionsHtml = actions.render();
@@ -47,10 +48,13 @@ class Actions extends Modal {
     }
 
     // Backdrop
-    let $backdropEl = app.root.children('.actions-backdrop');
-    if ($backdropEl.length === 0) {
-      $backdropEl = $('<div class="actions-backdrop"></div>');
-      app.root.append($backdropEl);
+    let $backdropEl;
+    if (actions.params.backdrop) {
+      $backdropEl = app.root.children('.actions-backdrop');
+      if ($backdropEl.length === 0) {
+        $backdropEl = $('<div class="actions-backdrop"></div>');
+        app.root.append($backdropEl);
+      }
     }
 
     const originalOpen = actions.open;
@@ -75,18 +79,26 @@ class Actions extends Modal {
     }
     actions.open = function open(animate) {
       let convertToPopover = false;
-      if (actions.params.toPopover && actions.params.targetEl) {
+      const { targetEl, targetX, targetY, targetWidth, targetHeight } = actions.params;
+      if (actions.params.convertToPopover && (targetEl || (targetX !== undefined && targetY !== undefined))) {
         // Popover
-        if (app.device.ios && app.device.ipad) {
-          convertToPopover = true;
-        } else if (app.width >= 768) {
+        if (
+          actions.params.forceToPopover ||
+          (app.device.ios && app.device.ipad) ||
+          app.width >= 768
+        ) {
           convertToPopover = true;
         }
       }
       if (convertToPopover) {
         popover = app.popover.create({
           content: actions.popoverHtml,
-          targetEl: actions.params.targetEl,
+          backdrop: actions.params.backdrop,
+          targetEl,
+          targetX,
+          targetY,
+          targetWidth,
+          targetHeight,
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
@@ -96,7 +108,7 @@ class Actions extends Modal {
         });
         popover.once('popoverClosed', () => {
           popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
-            $(buttonEl).on('click', buttonOnClick);
+            $(buttonEl).off('click', buttonOnClick);
           });
           Utils.nextTick(() => {
             popover.destroy();
@@ -121,10 +133,7 @@ class Actions extends Modal {
 
     actions.close = function close(animate) {
       if (popover) {
-        popover.close(animate).once('popoverClose', () => {
-          popover.destroy();
-          popover = undefined;
-        });
+        popover.close(animate);
       } else {
         originalClose.call(actions, animate);
       }
@@ -136,7 +145,7 @@ class Actions extends Modal {
       $el,
       el: $el ? $el[0] : undefined,
       $backdropEl,
-      backdropEl: $backdropEl[0],
+      backdropEl: $backdropEl && $backdropEl[0],
       type: 'actions',
     });
 

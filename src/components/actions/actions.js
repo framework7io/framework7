@@ -6,9 +6,11 @@ export default {
   params: {
     actions: {
       convertToPopover: true,
+      forceToPopover: false,
       closeByBackdropClick: true,
       render: null,
       renderPopover: null,
+      backdrop: true,
     },
   },
   static: {
