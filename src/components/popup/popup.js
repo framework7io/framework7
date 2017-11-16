@@ -5,6 +5,7 @@ export default {
   name: 'popup',
   params: {
     popup: {
+      backdrop: true,
       closeByBackdropClick: true,
     },
   },

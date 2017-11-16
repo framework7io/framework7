@@ -4,9 +4,11 @@ import Modal from '../modal/modal-class';
 
 class Popup extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      on: {},
-    }, params);
+    const extendedParams = Utils.extend(
+      { on: {} },
+      app.params.popup,
+      params
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -32,7 +34,7 @@ class Popup extends Modal {
     }
 
     let $backdropEl;
-    if (popup.params.backdrop !== false) {
+    if (popup.params.backdrop) {
       $backdropEl = app.root.children('.popup-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="popup-backdrop"></div>');
