@@ -12,7 +12,7 @@ class PhotoBrowser extends Framework7Class {
 
     const defaults = Utils.extend({
       on: {},
-    }, app.modules.photoBrowser.params.photoBrowser);
+    }, app.params.photoBrowser);
 
     // Extend defaults with modules params
     pb.useModulesParams(defaults);
@@ -102,7 +102,11 @@ class PhotoBrowser extends Framework7Class {
     if (!swipeToClose.started) {
       swipeToClose.started = true;
       swipeToClose.start = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-      swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
+      if (pb.params.virtualSlides) {
+        swipeToClose.activeSlide = pb.swiper.$wrapperEl.children('.swiper-slide-active');
+      } else {
+        swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
+      }
       swipeToClose.timeStart = Utils.now();
     }
     e.preventDefault();
