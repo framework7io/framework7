@@ -4,11 +4,11 @@ import Modal from '../modal/modal-class';
 
 class Popover extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      backdrop: true,
-      closeByOutsideClick: app.params.popover.closeByOutsideClick,
-      on: {},
-    }, params);
+    const extendedParams = Utils.extend(
+      { on: {} },
+      app.params.popover,
+      params
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -86,7 +86,7 @@ class Popover extends Modal {
     popover.on('popoverOpen', () => {
       popover.resize();
       app.on('resize', handleResize);
-      popover.on('popoverClose', () => {
+      popover.on('popoverClose popoverBeforeDestroy', () => {
         app.off('resize', handleResize);
       });
     });
@@ -116,6 +116,7 @@ class Popover extends Modal {
   resize() {
     const popover = this;
     const { app, $el, $targetEl, $angleEl } = popover;
+    const { targetX, targetY } = popover.params;
     $el.css({ left: '', top: '' });
     const [width, height] = [$el.width(), $el.height()];
     let angleSize = 0;
@@ -128,14 +129,27 @@ class Popover extends Modal {
       $el.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({ left: '', top: '' });
     }
 
-    const targetWidth = $targetEl.outerWidth();
-    const targetHeight = $targetEl.outerHeight();
-    const targetOffset = $targetEl.offset();
-    const targetOffsetLeft = targetOffset.left - app.left;
-    let targetOffsetTop = targetOffset.top - app.top;
-    const targetParentPage = $targetEl.parents('.page');
-    if (targetParentPage.length > 0) {
-      targetOffsetTop -= targetParentPage[0].scrollTop;
+    let targetWidth;
+    let targetHeight;
+    let targetOffsetLeft;
+    let targetOffsetTop;
+    if ($targetEl && $targetEl.length > 0) {
+      targetWidth = $targetEl.outerWidth();
+      targetHeight = $targetEl.outerHeight();
+
+      const targetOffset = $targetEl.offset();
+      targetOffsetLeft = targetOffset.left - app.left;
+      targetOffsetTop = targetOffset.top - app.top;
+
+      const targetParentPage = $targetEl.parents('.page');
+      if (targetParentPage.length > 0) {
+        targetOffsetTop -= targetParentPage[0].scrollTop;
+      }
+    } else if (typeof targetX !== 'undefined' && targetY !== 'undefined') {
+      targetOffsetLeft = targetX;
+      targetOffsetTop = targetY;
+      targetWidth = popover.params.targetWidth || 0;
+      targetHeight = popover.params.targetHeight || 0;
     }
 
     let [left, top, diff] = [0, 0, 0];
