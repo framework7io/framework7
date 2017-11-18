@@ -93,6 +93,7 @@ const config = {
     // Typography
     'typography',
   ],
+  darkTheme: true,
   themes: [
     'ios',
     'md',

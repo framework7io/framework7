@@ -22,6 +22,7 @@ function build(config, components, themes, rtl, cb) {
   const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`).join(', ');
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
+  const includeDarkTheme = config.darkTheme;
   const currentTheme = themes.length === 1 ? themes[0] : '';
   const outputFileName = `framework7${rtl ? '.rtl' : ''}${currentTheme ? `.${currentTheme}` : ''}`;
   const output = getOutput();
@@ -32,6 +33,7 @@ function build(config, components, themes, rtl, cb) {
         .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
         .replace('$includeIosTheme', includeIosTheme)
         .replace('$includeMdTheme', includeMdTheme)
+        .replace('$includeDarkTheme', includeDarkTheme)
         .replace('$themeColorIos', config.ios.themeColor)
         .replace('$colorsIos', colorsIos)
         .replace('$themeColorMd', config.md.themeColor)
