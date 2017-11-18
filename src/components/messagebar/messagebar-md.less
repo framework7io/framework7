@@ -51,4 +51,21 @@
       margin-top: -1px;
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .messagebar, .messagebar& {
+        background: #000;
+        .hairline-color(top, rgba(255,255,255,0.2));
+        a.link {
+          .md-link-highlight(rgba(255,255,255,0.15));
+          color: rgba(255,255,255,0.87);
+        }
+      }
+      .messagebar-attachments {
+        border-bottom-color: rgba(255,255,255,0.2);
+      }
+
+    }
+  }
 }

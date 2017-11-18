@@ -73,7 +73,7 @@
   position: relative;
 }
 .theme-dark .demo-list-icon {
-  background-color: #000;
+  background-color: #555;
 }
 .icon-f7 {
   background: url(../img/f7-icon.png) no-repeat center;
@@ -242,6 +242,11 @@ div.demo-lazy {
   background: #ddd;
   z-index: 1000;
 }
+.ios .theme-dark .panel-right.panel-active ~ .view-main:after,
+.ios .theme-dark .panel-right.panel-closing ~ .view-main:after {
+  background: #282828;
+}
+
 .ios .panel-left:after {
   content: '';
   height: 100%;
@@ -251,6 +256,9 @@ div.demo-lazy {
   top: 0;
   background: #ddd;
   z-index: 1000;
+}
+.ios .theme-dark .panel-left:after {
+  background: #282828;
 }
 
 /* Swipers Demo */

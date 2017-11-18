@@ -60,6 +60,19 @@
       background-color: rgba(0,0,0,0.1);
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      label.item-radio.active-state {
+        background-color: rgba(255,255,255,0.05);
+      }
+      .icon-radio {
+        border-color: rgba(255,255,255,0.54);
+      }
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .icon-radio {

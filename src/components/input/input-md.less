@@ -1,5 +1,6 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
   .list {
     input[type="text"],
     input[type="password"],
@@ -54,7 +55,7 @@
     max-width: 75%;
     pointer-events: none;
     ~ .item-input-wrap input::placeholder, ~ .item-input-wrap textarea::placeholder, {
-      color: transparent;
+      color: transparent !important;
     }
     .ltr({
       transform-origin: left;
@@ -180,6 +181,43 @@
       bottom: 6px;
       margin-top: 0;
       top: auto;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      input[type="text"],
+      input[type="password"],
+      input[type="search"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="url"],
+      input[type="date"],
+      input[type="datetime-local"],
+      input[type="time"],
+      input[type="number"],
+      select,
+      textarea {
+        color: rgba(255,255,255,0.87);
+        &::placeholder {
+          color: rgba(255,255,255,0.35);
+        }
+      }
+      .item-input:not(.item-input-focused) .item-input-wrap {
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+      .item-label, .item-floating-label {
+        color: rgba(255,255,255,.54);
+      }
+      .item-floating-label {
+        color: rgba(255,255,255,0.35);
+      }
+      .item-input-with-value .item-floating-label {
+        color: rgba(255,255,255,.54);
+      }
+      .input-clear-button {
+        background: #fff;
+      }
     }
   }
   .color-theme-loop({

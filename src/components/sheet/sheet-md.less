@@ -16,4 +16,12 @@
       padding-top: 0;
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .sheet-modal {
+        background-color: #202020;
+      }
+    }
+  }
 }

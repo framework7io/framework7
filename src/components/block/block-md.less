@@ -72,4 +72,14 @@
       border-radius: 4px;
     }
   }
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .block-title {
+        color: #fff;
+      }
+      .block-header, .block-footer {
+        color: rgba(255,255,255,0.54);
+      }
+    }
+  }
 }

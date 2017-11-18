@@ -135,6 +135,22 @@
       animation: md-message-typing-indicator 900ms 300ms infinite;
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .messages-content, .messages-content&,
+      .messages, .messages& {
+        background-color: transparent;
+      }
+      .messages-title {
+        color: rgba(255,255,255,0.54);
+      }
+      .message-header, .message-footer, .message-name {
+        color: rgba(255,255,255,0.54);
+      }
+    }
+  }
 }
 
 @keyframes md-message-typing-indicator {

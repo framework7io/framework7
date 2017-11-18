@@ -1,5 +1,6 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
   .popover {
     background: #fff;
     border-radius: 3px;
@@ -108,4 +109,17 @@
     padding-bottom: 12px;
   }
   .hairline-root('.popover-from-actions-label', bottom, #d2d2d6);
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .popover {
+        background-color: #202020;
+      }
+      .popover-from-actions-label {
+        color: rgba(255,255,255,0.54);
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+    }
+  }
 }

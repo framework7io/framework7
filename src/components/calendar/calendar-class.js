@@ -928,7 +928,14 @@ class Calendar extends Framework7Class {
       return calendar.params.renderMonthSelector.call(calendar);
     }
 
-    const iconColor = app.theme === 'md' ? 'color-black' : '';
+    let needsBlackIcon;
+    if (calendar.inline && calendar.$containerEl.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    } else if (app.root.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    }
+
+    const iconColor = app.theme === 'md' && needsBlackIcon ? 'color-black' : '';
     return `
       <div class="calendar-month-selector">
         <a href="#" class="link icon-only calendar-prev-month-button">
@@ -948,7 +955,14 @@ class Calendar extends Framework7Class {
       return calendar.params.renderYearSelector.call(calendar);
     }
 
-    const iconColor = app.theme === 'md' ? 'color-black' : '';
+    let needsBlackIcon;
+    if (calendar.inline && calendar.$containerEl.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    } else if (app.root.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    }
+
+    const iconColor = app.theme === 'md' && needsBlackIcon ? 'color-black' : '';
     return `
       <div class="calendar-year-selector">
         <a href="#" class="link icon-only calendar-prev-year-button">

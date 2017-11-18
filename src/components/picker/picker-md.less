@@ -17,4 +17,17 @@
   }
   .hairline-root('.picker-center-highlight', top, rgba(0,0,0,0.15));
   .hairline-root('.picker-center-highlight', bottom, rgba(0,0,0,0.15));
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .picker-column-divider {
+        color: rgba(255,255,255,0.87);
+      }
+      .picker-center-highlight {
+        .hairline-color(top, rgba(255,255,255,0.15));
+        .hairline-color(bottom, rgba(255,255,255,0.15));
+      }
+    }
+  }
 }

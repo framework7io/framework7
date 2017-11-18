@@ -52,4 +52,14 @@
       z-index: 0;
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .page-content, .messagebar, .popover, .calendar, .calendar& {
+        .ripple-wave {
+          background-color: rgba(255,255,255,0.3);
+        }
+      }
+    }
+  }
 }

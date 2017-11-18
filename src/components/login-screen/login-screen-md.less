@@ -12,6 +12,14 @@
   .login-screen-title {
     font-size: 34px;
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .login-screen-content, .login-screen-content& {
+        background: none;
+      }
+    }
+  }
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .login-screen-content .list-button {

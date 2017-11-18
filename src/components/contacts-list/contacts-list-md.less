@@ -26,4 +26,12 @@
       })
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .contacts-list .list-group-title {
+        color: #fff;
+      }
+    }
+  }
 }

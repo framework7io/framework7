@@ -11,6 +11,13 @@
   a {
     color: @themeColor;
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      color: rgba(255,255,255,0.87);
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       a {

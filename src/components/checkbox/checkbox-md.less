@@ -56,6 +56,18 @@
     }
   }
 
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      label.item-checkbox.active-state {
+        background-color: rgba(255,255,255,0.05);
+      }
+      .icon-checkbox, .checkbox i {
+        border-color: rgba(255,255,255,0.54);
+      }
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,

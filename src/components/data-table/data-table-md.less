@@ -1,5 +1,6 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
   .data-table {
     thead {
       th, td {
@@ -166,6 +167,41 @@
       }
     }
     .hairline-root('.data-table-collapsible tr', top, rgba(0,0,0,0.12));
+  }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .data-table, .data-table& {
+        thead th:not(.sortable-cell-active),
+        thead td:not(.sortable-cell-active),
+        .data-table-actions a.link,
+        td.actions-cell a.link,
+        th.actions-cell a.link {
+          color: rgba(255,255,255,0.54);
+        }
+        .data-table-links a.link {
+          .md-link-highlight(rgba(255,255,255,0.15));
+        }
+        tbody td {
+          .hairline-color(top, @blockBorderColorDark);
+        }
+        &.data-table-collapsible tr {
+          .hairline-color(top, @blockBorderColorDark);
+        }
+        tbody {
+          tr.data-table-row-selected {
+            background-color: rgba(255,255,255,0.05);
+          }
+        }
+      }
+    }
+    &.device-desktop .theme-dark .data-table,
+    &.device-desktop .theme-dark.data-table {
+      tbody tr:hover {
+        background-color: rgba(255,255,255,0.05);
+      }
+    }
   }
 
   .color-theme-loop({

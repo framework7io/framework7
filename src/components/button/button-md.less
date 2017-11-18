@@ -150,6 +150,15 @@
     }
   }
 
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .button:not(.button-fill):not(.button-fill-md):not(.button-active):not(.tab-link-active).active-state {
+        background-color: rgba(255,255,255,0.1);
+      }
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
       .button {

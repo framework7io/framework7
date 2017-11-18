@@ -1,6 +1,7 @@
 /* === Timeline MD === */
 .md {
   @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
   .timeline {
     margin: 32px 0;
     padding: 0 16px;
@@ -143,6 +144,18 @@
   .timeline-year-title {
     span {
       margin-top: 2px;
+    }
+  }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .timeline-item-inner {
+        background-color: @blockBgDark;
+      }
+      .timeline-item-time {
+        color: rgba(255,255,255,0.54);
+      }
     }
   }
 

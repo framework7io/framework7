@@ -1,5 +1,6 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
   .card {
     margin: 8px;
     .md-depth(1);
@@ -48,6 +49,21 @@
 
   .card-footer {
     color: #757575;
+  }
+
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .card {
+        background-color: @blockBgDark;
+      }
+      .card-header {
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+      .card-footer {
+        color: rgba(255,255,255,0.54);
+        .hairline-color(top, @blockBorderColorDark);
+      }
+    }
   }
 
   .color-theme-loop({
