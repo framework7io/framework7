@@ -79,6 +79,13 @@ const Statusbar = {
       }
     }
   },
+  checkOverlay() {
+    if (Device.needsStatusbarOverlay()) {
+      $('html').addClass('with-statusbar');
+    } else {
+      $('html').removeClass('with-statusbar');
+    }
+  },
   init() {
     const app = this;
     const params = app.params.statusbar;
@@ -89,12 +96,13 @@ const Statusbar = {
       }
       if (Device.cordova) {
         $(document).on('resume', () => {
-          if (Device.needsStatusbarOverlay()) {
-            $('html').addClass('with-statusbar');
-          } else {
-            $('html').removeClass('with-statusbar');
-          }
+          Statusbar.checkOverlay();
         }, false);
+        if (Device.iphoneX) {
+          app.on('orientationchange', () => {
+            Statusbar.checkOverlay();
+          });
+        }
       }
     } else if (params.overlay === true) {
       $('html').addClass('with-statusbar');
@@ -143,6 +151,7 @@ export default {
     const app = this;
     Utils.extend(app, {
       statusbar: {
+        check: Statusbar.check,
         hide: Statusbar.hide,
         show: Statusbar.show,
         iosOverlaysWebView: Statusbar.iosOverlaysWebView,
