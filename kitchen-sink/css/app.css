@@ -72,6 +72,9 @@
   display: block;
   position: relative;
 }
+.theme-dark .demo-list-icon {
+  background-color: #000;
+}
 .icon-f7 {
   background: url(../img/f7-icon.png) no-repeat center;
   background-size: cover;
@@ -176,6 +179,11 @@ div.demo-lazy {
   margin-bottom: 15px;
   font-size: 12px;
 }
+.theme-dark .grid-demo div[class*="col"] {
+  background-color: #000;
+  color: #fff;
+  border-color: #444;
+}
 /* Cards Demo */
 .demo-card-header-pic .card-header {
   height: 40vw;
@@ -205,6 +213,9 @@ div.demo-lazy {
 }
 .demo-facebook-card .card-footer {
   background: #fafafa;
+}
+.theme-dark .demo-facebook-card .card-footer {
+  background-color: transparent;
 }
 .demo-facebook-card .card-footer a {
   color: #81848b;
@@ -264,6 +275,7 @@ div.demo-lazy {
   -webkit-align-items: center;
   align-items: center;
   background: #fff;
+  color: #000;
 }
 .demo-swiper-multiple .swiper-slide {
   box-sizing: border-box;
@@ -421,15 +433,23 @@ code {
   padding: 5px;
   font-size: 12px;
 }
+.theme-dark code {
+  background: #000;
+}
 .demo-icon {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 15px;
   color: #333;
 }
+.theme-dark .demo-icon {
+  color: #fff;
+}
 .demo-icon .demo-icon-name {
   margin-top: 5px;
   font-size: 11px;
   color: #666;
 }
-
+.theme-dark .demo-icon .demo-icon-name {
+  color: #aaa;
+}
