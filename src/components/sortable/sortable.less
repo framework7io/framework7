@@ -46,9 +46,19 @@
     background-image: none;
   }
 }
-& when (@include-ios-theme) {
+// Dark Theme
+& when (@includeDarkTheme) {
+  .theme-dark {
+    .sortable, .sortable& {
+      li.sorting {
+        background-color: rgba(50, 50, 50, 0.8)
+      }
+    }
+  }
+}
+& when (@includeIosTheme) {
   @import url('./sortable-ios.less');
 }
-& when (@include-md-theme) {
+& when (@includeMdTheme) {
   @import url('./sortable-md.less');
 }

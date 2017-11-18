@@ -173,7 +173,7 @@
           content: attr(data-collapsible-title);
           position: relative;
           height: auto;
-          background: none;
+          background: none !important;
           transform: none !important;
           font-size: 12px;
           .ltr({ margin-right: 16px; });
@@ -220,9 +220,9 @@
     }
   }
 }
-& when (@include-ios-theme) {
+& when (@includeIosTheme) {
   @import url('./data-table-ios.less');
 }
-& when (@include-md-theme) {
+& when (@includeMdTheme) {
   @import url('./data-table-md.less');
 }

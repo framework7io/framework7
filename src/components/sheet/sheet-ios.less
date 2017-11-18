@@ -14,4 +14,17 @@
     }
   }
   .hairline-root('.sheet-modal .toolbar', top, #929499);
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .sheet-modal, .sheet-modal& {
+        background-color: #171717;
+        .toolbar {
+          background-color: @barsBgDark;
+          .hairline-color(top, @barsBorderColorDark)
+        }
+      }
+    }
+  }
 }

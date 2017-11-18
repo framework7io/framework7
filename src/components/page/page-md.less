@@ -39,6 +39,14 @@
       animation: none;
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .page {
+        background: #171717;
+      }
+    }
+  }
 }
 @keyframes md-page-next-to-current {
   from {

@@ -36,4 +36,16 @@
       color: #939398;
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .autocomplete-dropdown {
+        background-color: @blockBgDark;
+      }
+      .searchbar-input-wrap .autocomplete-dropdown {
+        background-color: #171717;
+      }
+    }
+  }
 }

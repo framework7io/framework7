@@ -68,4 +68,20 @@
       margin-top: -1px;
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .messagebar, .messagebar& {
+        textarea {
+          background-color: #000;
+          border-color: @barsBorderColorDark;
+          color: #fff;
+        }
+      }
+      .messagebar-attachments {
+        border-color: @barsBorderColorDark;
+        background-color: #000;
+      }
+    }
+  }
 }

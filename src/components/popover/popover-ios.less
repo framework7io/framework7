@@ -102,4 +102,19 @@
     text-align: center;
   }
   .hairline-root('.popover-from-actions-label', bottom, rgba(0,0,0,0.2));
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .popover, .popover& {
+        background: rgba(30,30,30,0.95);
+        .popover-angle:after {
+          background: rgba(30,30,30,0.95);
+        }
+        .list ul {
+          background-color: transparent;
+        }
+      }
+    }
+  }
 }

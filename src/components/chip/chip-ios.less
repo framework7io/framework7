@@ -53,6 +53,14 @@
       margin-left: -6px;
     });
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .chip {
+        background-color: #000;
+      }
+    }
+  }
   .color-loop({
     .chip.color-@{colorName} {
       background: @colorValue;

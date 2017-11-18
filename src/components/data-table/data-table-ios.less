@@ -1,5 +1,6 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
   .data-table {
     thead {
       th, td {
@@ -145,6 +146,31 @@
       }
     }
     .hairline-root('.data-table-collapsible tr', top, #c8c7cc);
+  }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .data-table, .data-table& {
+        tbody td {
+          .hairline-color(top, @blockBorderColorDark);
+        }
+        &.data-table-collapsible tr {
+          .hairline-color(top, @blockBorderColorDark);
+        }
+        tbody {
+          tr.data-table-row-selected {
+            background-color: #363636;
+          }
+        }
+      }
+    }
+    &.device-desktop .theme-dark .data-table,
+    &.device-desktop .theme-dark.data-table {
+      tbody tr:hover {
+        background: #363636;
+      }
+    }
   }
 
   .color-theme-loop({

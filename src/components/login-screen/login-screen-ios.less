@@ -8,4 +8,12 @@
   .login-screen-title {
     font-size: 30px;
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .login-screen-content, .login-screen-content .list ul {
+        background-color: transparent;
+      }
+    }
+  }
 }

@@ -74,4 +74,21 @@
       border-radius: 7px;
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .block-title, .block-header, .block-footer {
+        color: #8E8E93;
+      }
+      .block {
+        color: #8E8E93;
+      }
+      .block-strong, &.block-strong {
+        background-color: @blockBgDark;
+        color: #fff;
+        .hairline-color(top, @blockBorderColorDark);
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+    }
+  }
 }

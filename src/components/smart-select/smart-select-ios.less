@@ -7,4 +7,16 @@
     }
   }
   .hairline-root('.smart-select-sheet .toolbar', bottom, @barsBorderColor);
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .smart-select-sheet .page,
+      .smart-select-sheet .sheet-modal-inner {
+        background-color: @blockBgDark;
+      }
+      .smart-select-sheet .toolbar {
+        .hairline-color(bottom, @barsBorderColorDark);
+      }
+    }
+  }
 }

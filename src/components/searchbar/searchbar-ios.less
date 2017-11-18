@@ -127,6 +127,21 @@
     padding-top: @navbarSize + @searchbarSize;
   }
 
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .searchbar, .searchbar& {
+        background-color: #303030;
+        .hairline-color(bottom, @searchbarBorderColorDark);
+        input[type="search"], input[type="text"] {
+          background-color: #171717;
+          color: #fff;
+        }
+
+      }
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .searchbar-disable-button {

@@ -73,11 +73,10 @@
   &.no-hairline {
     .hairline-remove(top);
   }
-
 }
-& when (@include-ios-theme) {
+& when (@includeIosTheme) {
   @import url('./card-ios.less');
 }
-& when (@include-md-theme) {
+& when (@includeMdTheme) {
   @import url('./card-md.less');
 }

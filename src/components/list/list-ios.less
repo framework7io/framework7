@@ -276,6 +276,57 @@
     }
   }
 
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .list, .list& {
+        ul {
+          background: @blockBgDark;
+          .hairline-color(top, @blockBorderColorDark);
+          .hairline-color(bottom, @blockBorderColorDark);
+        }
+        li {
+          li:last-child, &:last-child li {
+            .item-inner {
+              .hairline-color(bottom, @blockBorderColorDark);
+            }
+          }
+        }
+      }
+      .item-divider {
+        .hairline-color(top, @blockBorderColorDark);
+      }
+      .list-group-title {
+        .hairline-color(top, @blockBorderColorDark);
+      }
+      .list-button {
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+      .item-inner {
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+      .item-divider, .list-group-title {
+        background-color: #111;
+      }
+      .links-list a,
+      .simple-list li,
+      .links-list a, .links-list& a
+      .simple-list li, .simple-list& li {
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+      .list .item-link,
+      .list& .item-link,
+      .list .list-button,
+      .list& .list-button,
+      .links-list a,
+      .links-list& a {
+        &.active-state {
+          background-color: #363636;
+        }
+      }
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .list-button {

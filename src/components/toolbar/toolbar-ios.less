@@ -114,6 +114,16 @@
     transform: translate3d(0, 100%, 0);
   }
 
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .toolbar, .toolbar& {
+        background: @toolbarBgDark;
+        .hairline-color(top, @toolbarBorderColorDark);
+      }
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .tabbar, .tabbar-labels, &.tabbar-labels, &.tabbar {

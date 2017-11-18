@@ -166,6 +166,19 @@
       opacity: 1 !important;
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .navbar, .navbar& {
+        background: @navbarBgDark;
+        .hairline-color(bottom, @navbarBorderColorDark);
+        .subtitle {
+          color: #8e8e93;
+        }
+      }
+    }
+  }
 }
 @keyframes ios-navbar-element-fade-in {
     from {

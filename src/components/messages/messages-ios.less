@@ -175,6 +175,30 @@
       animation: ios-message-typing-indicator 900ms 300ms infinite;
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .messages-content, .messages-content&,
+      .messages, .messages& {
+        background-color: transparent;
+      }
+      .message-received.message-typing {
+        .message-content {
+          &:after, &:before {
+            background: #333;
+          }
+        }
+      }
+      .message-typing-indicator > div {
+        background-color: #fff;
+      }
+      .message-received .message-bubble {
+        background-color: #333;
+        color: #fff;
+      }
+    }
+  }
 }
 
 @keyframes ios-message-typing-indicator {

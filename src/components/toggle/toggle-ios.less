@@ -1,5 +1,6 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
   .toggle {
     width: 52px;
     border-radius: 16px;
@@ -64,6 +65,19 @@
       }
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .toggle-icon {
+        background-color: #fff;
+      }
+      .toggle-icon:before {
+        background-color: @blockBgDark;
+      }
+    }
+  }
+  // Colors
   .color-loop({
     .toggle.color-@{colorName} input[type="checkbox"]:checked + .toggle-icon {
       background-color: @colorValue;

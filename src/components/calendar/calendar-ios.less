@@ -90,6 +90,38 @@
     }
   }
 
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .calendar, .calendar& {
+        .calendar-header, .calendar-week-header, .calendar-footer {
+          background-color: @toolbarBgDark;
+        }
+      }
+      .calendar-popover .calendar-week-header {
+        background-color: transparent;
+      }
+      .calendar-footer, .calendar-row, .calendar-sheet {
+        .hairline-color(top, @barsBorderColorDark);
+      }
+      .calendar-day {
+        color: #fff;
+        &.calendar-day-today:not(.calendar-day-selected) span {
+          background: #333;
+        }
+        &.calendar-day-disabled {
+          color: #8E8E93;
+        }
+      }
+      .calendar-day.calendar-day-prev, .calendar-day.calendar-day-next {
+        color: #555;
+      }
+      .calendar-modal, .calendar-modal&, .calendar-sheet {
+        background: #171717;
+      }
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
       .calendar-day.calendar-day-selected span {

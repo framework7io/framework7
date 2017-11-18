@@ -137,6 +137,15 @@
       }
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .page {
+        background: #171717;
+      }
+    }
+  }
 }
 .ltr({
   @keyframes ios-page-next-to-current {

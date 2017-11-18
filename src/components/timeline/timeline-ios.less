@@ -153,4 +153,34 @@
       margin-top: 3px;
     }
   }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .timeline-year-title, .timeline-month-title {
+        background: @barsBgDark;
+      }
+      .timeline-item-inner {
+        background-color: @blockBgDark;
+      }
+      .timeline-item-time {
+        color: #8E8E93;
+      }
+      .timeline-horizontal, .timeline-horizontal& {
+        .timeline-item-date {
+          background: @barsBgDark;
+          .hairline-color(bottom, @barsBorderColorDark);
+        }
+        .timeline-month .timeline-item {
+          .hairline-color(top, @barsBorderColorDark);
+        }
+        .timeline-item {
+          .hairline-color(right, @barsBorderColorDark);
+        }
+        .timeline-year {
+          .hairline-color(right, @barsBorderColorDark);
+        }
+      }
+    }
+  }
 }

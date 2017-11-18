@@ -24,4 +24,22 @@
   .hairline-root('.picker-popover .toolbar', bottom, @toolbarBorderColor);
   .hairline-root('.picker-center-highlight', top, #a8abb0);
   .hairline-root('.picker-center-highlight', bottom, #a8abb0);
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .picker-item.picker-item-selected {
+        color: #fff;
+      }
+      .picker-popover, .picker-popover& {
+        .toolbar {
+          .hairline-color(bottom, @toolbarBorderColorDark);
+        }
+      }
+      .picker-center-highlight {
+        .hairline-color(top, @blockBorderColorDark);
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+    }
+  }
 }

@@ -11,4 +11,15 @@
       height: 22px;
     }
   }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .contacts-list, .contacts-list& {
+        .list-group-title {
+          background-color: #111;
+          color: #fff;
+        }
+      }
+    }
+  }
 }

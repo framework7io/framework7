@@ -23,6 +23,13 @@
     }
   }
 
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      color: #fff;
+    }
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       a {
