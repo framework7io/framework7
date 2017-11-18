@@ -8,6 +8,7 @@ const Device = (function Device() {
     desktop: false,
     windows: false,
     iphone: false,
+    iphoneX: false,
     ipod: false,
     ipad: false,
     cordova: window.cordova || window.phonegap,
@@ -19,6 +20,7 @@ const Device = (function Device() {
   const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+  const iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
 
 
   // Windows
@@ -42,6 +44,7 @@ const Device = (function Device() {
   if (iphone && !ipod) {
     device.osVersion = iphone[2].replace(/_/g, '.');
     device.iphone = true;
+    device.iphoneX = iphoneX;
   }
   if (ipad) {
     device.osVersion = ipad[2].replace(/_/g, '.');
@@ -78,6 +81,9 @@ const Device = (function Device() {
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
     if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
+      if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
+        return false;
+      }
       return true;
     }
     return false;
