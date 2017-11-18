@@ -36,4 +36,14 @@
       }
     }
   }
+  &.device-iphone-x {
+    .photo-browser-captions {
+      bottom: constant(safe-area-inset-bottom);
+      bottom: env(safe-area-inset-bottom);
+    }
+    .toolbar ~ .photo-browser-captions {
+      bottom: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+      bottom: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+    }
+  }
 }

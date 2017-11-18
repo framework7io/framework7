@@ -29,6 +29,10 @@
   .fab[class*="-bottom"] {
     bottom: 15px;
   }
+  &.device-iphone-x .fab[class*="-bottom"] {
+    bottom: ~"calc(15px + constant(safe-area-inset-bottom))";
+    bottom: ~"calc(15px + env(safe-area-inset-bottom))";
+  }
 
   // Relation with navbar
   .navbar ~ * .fab[class*="-top"], .navbar ~ .fab[class*="-top"] {

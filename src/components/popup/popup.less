@@ -57,6 +57,12 @@ html.with-statusbar {
       height: ~"calc(100% - 20px)";
       top: 20px;
     }
+    &.device-iphone-x .popup {
+      height: ~"calc(100% - constant(safe-area-inset-top))";
+      height: ~"calc(100% - env(safe-area-inset-top))";
+      top: constant(safe-area-inset-top);
+      top: env(safe-area-inset-top);
+    }
     &.device-android .popup, &.md:not(.device-ios):not(.device-android) .popup {
       height: ~"calc(100% - 24px)";
       top: 24px;
@@ -66,6 +72,12 @@ html.with-statusbar {
     &.device-ios .popup-tablet-fullscreen, &.ios:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
       height: ~"calc(100% - 20px)";
       top: 20px;
+    }
+    &.device-iphone-x .popup-tablet-fullscreen {
+      height: ~"calc(100% - constant(safe-area-inset-top))";
+      height: ~"calc(100% - env(safe-area-inset-top))";
+      top: constant(safe-area-inset-top);
+      top: env(safe-area-inset-top);
     }
     &.device-android .popup-tablet-fullscreen, &.md:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
       height: ~"calc(100% - 24px)";

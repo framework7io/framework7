@@ -141,3 +141,42 @@
     }
   });
 }
+.device-iphone-x {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .views, .view, .page, .popup, .panel, .login-screen {
+    >.toolbar {
+      height: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+      height: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+      .toolbar-inner {
+        height: auto;
+        bottom: constant(safe-area-inset-bottom);
+        bottom: env(safe-area-inset-bottom);
+      }
+    }
+    >.tabbar-labels {
+      height: ~"calc(@{tabbarLabelsSize} + constant(safe-area-inset-bottom))";
+      height: ~"calc(@{tabbarLabelsSize} + env(safe-area-inset-bottom))";
+    }
+    @media (min-width: 768px) {
+      >.tabbar-labels {
+        height: ~"calc(@{tabbarLabelsSizeTablet} + constant(safe-area-inset-bottom))";
+        height: ~"calc(@{tabbarLabelsSizeTablet} + env(safe-area-inset-bottom))";
+      }
+    }
+  }
+
+  // Relation with page
+  .toolbar ~ * .page-content, .toolbar ~ .page-content {
+    padding-bottom: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+    padding-bottom: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+  }
+  .tabbar-labels ~ * .page-content, .tabbar-labels ~ .page-content {
+    padding-bottom: ~"calc(@{tabbarLabelsSize} + constant(safe-area-inset-bottom))";
+    padding-bottom: ~"calc(@{tabbarLabelsSize} + env(safe-area-inset-bottom))";
+    @media (min-width: 768px) {
+      padding-bottom: ~"calc(@{tabbarLabelsSizeTablet} + constant(safe-area-inset-bottom))";
+      padding-bottom: ~"calc(@{tabbarLabelsSizeTablet} + env(safe-area-inset-bottom))";
+    }
+  }
+}
