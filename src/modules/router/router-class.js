@@ -601,12 +601,19 @@ class Router extends Framework7Class {
           const paramValue = matched[index + 1];
           params[keyObj.name] = paramValue;
         });
+
+        let parentPath;
+        if (route.parentPath) {
+          parentPath = path.split('/').slice(0, route.parentPath.split('/').length - 1).join('/');
+        }
+
         matchingRoute = {
           query,
           hash,
           params,
           url,
           path,
+          parentPath,
           route,
           name: route.name,
         };
@@ -1095,6 +1102,10 @@ class Router extends Framework7Class {
         if (router.currentRoute && router.currentRoute.route && router.currentRoute.route.options) {
           Utils.extend(initOptions, router.currentRoute.route.options);
         }
+        router.currentPageEl = $pageEl[0];
+        if (router.dynamicNavbar && $navbarInnerEl.length) {
+          router.currentNavbarEl = $navbarInnerEl[0];
+        }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
@@ -1115,12 +1126,12 @@ class Router extends Framework7Class {
         router.saveHistory();
       }
     }
-    router.emit('routerInit', router);
+    router.emit('local::init routerInit', router);
   }
   destroy() {
     let router = this;
 
-    router.emit('routerDestroy', router);
+    router.emit('local::destroy routerDestroy', router);
 
     // Delete props & methods
     Object.keys(router).forEach((routerProp) => {
