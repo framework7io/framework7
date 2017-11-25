@@ -1,3 +1,4 @@
+import $ from 'dom7';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 
@@ -36,12 +37,21 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  let tabShowResult;
-  if (router.view.selector) {
-    tabShowResult = router.app.tab.show(`${router.view.selector} #${tabRoute.id}`, options.animate, options.route);
+  const $currentPageEl = $(router.currentPageEl);
+  let tabEl;
+  if ($currentPageEl.length && $currentPageEl.find(`#${tabRoute.id}`).length) {
+    tabEl = $currentPageEl.find(`#${tabRoute.id}`).eq(0);
+  } else if (router.view.selector) {
+    tabEl = `${router.view.selector} #${tabRoute.id}`;
   } else {
-    tabShowResult = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+    tabEl = `#${tabRoute.id}`;
   }
+  const tabShowResult = router.app.tab.show({
+    tabEl,
+    animate: options.animate,
+    tabRoute: options.route,
+  });
+
   const { $newTabEl, $oldTabEl, animated, onTabsChanged } = tabShowResult;
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
