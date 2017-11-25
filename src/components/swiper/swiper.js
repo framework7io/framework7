@@ -57,7 +57,9 @@ function initSwipers(swiperEl) {
         const tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
         if (tabRoute) router.navigate(tabRoute.path);
       } else {
-        app.tab.show(swiper.slides.eq(swiper.activeIndex));
+        app.tab.show({
+          tabEl: swiper.slides.eq(swiper.activeIndex),
+        });
       }
     });
   }
