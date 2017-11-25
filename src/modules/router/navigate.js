@@ -155,6 +155,14 @@ function forward(el, forwardOptions = {}) {
     );
   }
 
+  // Current Page & Navbar
+  router.currentPageEl = $newPage[0];
+  if (dynamicNavbar && $newNavbarInner.length) {
+    router.currentNavbarEl = $newNavbarInner[0];
+  } else {
+    delete router.currentNavbarEl;
+  }
+
   // Current Route
   router.currentRoute = options.route;
 
@@ -355,11 +363,28 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     router.currentRoute.route &&
     router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
-    if (options.route.url === router.url) return false;
-    if (options.route.route.tab) {
-      return router.tabLoad(options.route.route.tab, options);
+    if (options.route.url === router.url) {
+      return false;
     }
-    return false;
+    // Check for same params
+    let sameParams = Object.keys(options.route.params).length === Object.keys(router.currentRoute.params).length;
+    if (sameParams) {
+      // Check for equal params name
+      Object.keys(options.route.params).forEach((paramName) => {
+        if (
+          !(paramName in router.currentRoute.params) ||
+          (router.currentRoute.params[paramName] !== options.route.params[paramName])
+        ) {
+          sameParams = false;
+        }
+      });
+    }
+    if (sameParams) {
+      if (options.route.route.tab) {
+        return router.tabLoad(options.route.route.tab, options);
+      }
+      return false;
+    }
   }
 
   if (
@@ -454,8 +479,10 @@ function navigate(navigateParams, navigateOptions = {}) {
 
   let navigateUrl = url.replace('./', '');
   if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
-    const currentPath = router.currentRoute.route.parentPath || router.currentRoute.path;
-    navigateUrl = ((currentPath || '/') + navigateUrl).replace('//', '/');
+    const currentPath = router.currentRoute.parentPath || router.currentRoute.path;
+    navigateUrl = ((currentPath ? `${currentPath}/` : '/') + navigateUrl)
+      .replace('///', '/')
+      .replace('//', '/');
   }
   let route;
   if (createRoute) {
