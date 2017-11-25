@@ -4,16 +4,27 @@ import Utils from '../../utils/utils';
 const Tab = {
   show(...args) {
     const app = this;
-    let [tab, tabLink, animate, tabRoute] = args;
-    if (typeof args[1] === 'boolean') {
-      [tab, animate, tabLink, tabRoute] = args;
-      if (args.length > 2 && tabLink.constructor === Object) {
-        [tab, animate, tabRoute, tabLink] = args;
+    let tabEl;
+    let tabLinkEl;
+    let animate;
+    let tabRoute;
+    if (args.length === 1 && args[0].constructor === Object) {
+      tabEl = args[0].tabEl;
+      tabLinkEl = args[0].tabLinkEl;
+      animate = args[0].animate;
+      tabRoute = args[0].tabRoute;
+    } else {
+      [tabEl, tabLinkEl, animate, tabRoute] = args;
+      if (typeof args[1] === 'boolean') {
+        [tabEl, animate, tabLinkEl, tabRoute] = args;
+        if (args.length > 2 && tabLinkEl.constructor === Object) {
+          [tabEl, animate, tabRoute, tabLinkEl] = args;
+        }
       }
     }
     if (typeof animate === 'undefined') animate = true;
 
-    const $newTabEl = $(tab);
+    const $newTabEl = $(tabEl);
 
     if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
       return {
@@ -23,7 +34,7 @@ const Tab = {
     }
 
     let $tabLinkEl;
-    if (tabLink) $tabLinkEl = $(tabLink);
+    if (tabLinkEl) $tabLinkEl = $(tabLinkEl);
 
     const $tabsEl = $newTabEl.parent('.tabs');
     if ($tabsEl.length === 0) {
@@ -92,7 +103,7 @@ const Tab = {
     // Find related link for new tab
     if (!$tabLinkEl) {
       // Search by id
-      if (typeof tab === 'string') $tabLinkEl = $(`.tab-link[href="${tab}"]`);
+      if (typeof tabEl === 'string') $tabLinkEl = $(`.tab-link[href="${tabEl}"]`);
       else $tabLinkEl = $(`.tab-link[href="#${$newTabEl.attr('id')}"]`);
       // Search by data-tab
       if (!$tabLinkEl || ($tabLinkEl && $tabLinkEl.length === 0)) {
@@ -106,6 +117,12 @@ const Tab = {
           $tabLinkEl = $(`.tab-link[href="${tabRoute.url}"]`);
         }
       }
+      if ($tabLinkEl.length > 1 && $newTabEl.parents('.page').length) {
+        // eslint-disable-next-line
+        $tabLinkEl = $tabLinkEl.filter((index, tabLinkElement) => {
+          return $(tabLinkElement).parents('.page')[0] === $newTabEl.parents('.page')[0];
+        });
+      }
     }
     if ($tabLinkEl.length > 0) {
       // Find related link for old tab
@@ -116,8 +133,8 @@ const Tab = {
         if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
         // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
-          $('[data-tab]').each((index, tabLinkEl) => {
-            if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);
+          $('[data-tab]').each((index, tabLinkElement) => {
+            if ($oldTabEl.is($(tabLinkElement).attr('data-tab'))) $oldTabLinkEl = $(tabLinkElement);
           });
         }
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
@@ -125,6 +142,13 @@ const Tab = {
         }
       } else if (tabRoute) {
         $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
+      }
+
+      if ($oldTabLinkEl && $oldTabLinkEl.length > 1 && $oldTabEl && $oldTabEl.parents('.page').length) {
+        // eslint-disable-next-line
+        $oldTabLinkEl = $oldTabLinkEl.filter((index, tabLinkElement) => {
+          return $(tabLinkElement).parents('.page')[0] === $oldTabEl.parents('.page')[0];
+        });
       }
 
       if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass('tab-link-active');
@@ -165,7 +189,11 @@ export default {
     '.tab-link': function tabLinkClick($clickedEl, data = {}) {
       const app = this;
       if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
-        app.tab.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
+        app.tab.show({
+          tabEl: data.tab || $clickedEl.attr('href'),
+          tabLinkEl: $clickedEl,
+          animate: data.animate,
+        });
       }
     },
   },
