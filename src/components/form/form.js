@@ -76,14 +76,14 @@ const FormStorage = {
     const $formEl = $(formEl);
     const formId = $formEl.attr('id');
     if (!formId) return;
-    const initialData = app.form.data.get(formId);
+    const initialData = app.form.getFormData(formId);
     if (initialData) {
-      app.form.fromData($formEl, initialData);
+      app.form.fillFromData($formEl, initialData);
     }
     function store() {
-      const data = app.form.toData($formEl);
+      const data = app.form.convertToData($formEl);
       if (!data) return;
-      app.form.data.store(formId, data);
+      app.form.storeFormData(formId, data);
       $formEl.trigger('form:storedata', data);
       app.emit('formStoreData', $formEl[0], data);
     }
@@ -155,7 +155,7 @@ function formFromData(formEl, formData) {
   const formId = $formEl.attr('id');
 
   if (!data && formId) {
-    data = app.form.data.get(formId);
+    data = app.form.getFormData(formId);
   }
 
   if (!data) return;
@@ -228,7 +228,7 @@ function initAjaxForm() {
 
     let data;
     if (method === 'POST') data = new FormData($formEl[0]);
-    else data = Utils.serializeObject(app.form.toData($formEl[0]));
+    else data = Utils.serializeObject(app.form.convertToData($formEl[0]));
 
     const xhr = app.request({
       method,
@@ -262,13 +262,12 @@ export default {
     const app = this;
     Utils.extend(app, {
       form: {
-        data: {
-          store: FormData.store.bind(app),
-          get: FormData.get.bind(app),
-          remove: FormData.remove.bind(app),
-        },
-        toData: formToData.bind(app),
-        fromData: formFromData.bind(app),
+        data: {},
+        storeFormData: FormData.store.bind(app),
+        getFormData: FormData.get.bind(app),
+        removeFormData: FormData.remove.bind(app),
+        convertToData: formToData.bind(app),
+        fillFromData: formFromData.bind(app),
         storage: {
           init: FormStorage.init.bind(app),
           destroy: FormStorage.destroy.bind(app),
