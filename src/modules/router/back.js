@@ -200,6 +200,14 @@ function backward(el, backwardOptions) {
   router.history.pop();
   router.saveHistory();
 
+  // Current Page & Navbar
+  router.currentPageEl = $newPage[0];
+  if (dynamicNavbar && $newNavbarInner.length) {
+    router.currentNavbarEl = $newNavbarInner[0];
+  } else {
+    delete router.currentNavbarEl;
+  }
+
   // Current Route
   router.currentRoute = options.route;
 
