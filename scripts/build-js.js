@@ -42,7 +42,6 @@ function es(components, cb) {
   const output = getOutput();
   let cbs = 0;
 
-
   // Bundle
   rollup({
     input: './src/framework7.js',
@@ -53,7 +52,6 @@ function es(components, cb) {
         'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
-        '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
       resolve({ jsnext: true }),
       commonjs(),
@@ -73,43 +71,7 @@ function es(components, cb) {
     .pipe(source('framework7.js', './src'))
     .pipe(buffer())
     .pipe(rename('framework7.esm.bundle.js'))
-    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/js/`))
-    .on('end', () => {
-      cbs += 1;
-      if (cbs === 2 && cb) cb();
-    });
-
-  // Modules
-  rollup({
-    input: './src/framework7.js',
-    plugins: [
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-        'process.env.TARGET': JSON.stringify(target),
-        'process.env.FORMAT': JSON.stringify(format),
-        '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
-        '//INSTALL_COMPONENTS': '',
-        '//EXPORT_COMPONENTS': `export { $, Template7, Framework7, ${components.map(component => component.capitalized).join(', ')} };`,
-      }),
-      resolve({ jsnext: true }),
-      commonjs(),
-    ],
-    format: 'es',
-    name: 'Framework7',
-    strict: true,
-    sourcemap: false,
-    external,
-    globals,
-    banner,
-  })
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(source('framework7.js', './src'))
-    .pipe(buffer())
-    .pipe(rename('framework7.esm.js'))
-    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .pipe(gulp.dest(`${output || `./${env === 'development' ? 'build' : 'dist'}`}/`))
     .on('end', () => {
       cbs += 1;
       if (cbs === 2 && cb) cb();
@@ -131,7 +93,6 @@ function umd(components, cb) {
         'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
-        '//EXPORT_COMPONENTS': 'export default Framework7;',
       }),
       resolve({ jsnext: true }),
       commonjs(),
@@ -155,14 +116,14 @@ function umd(components, cb) {
     .pipe(buffer())
     .pipe(gulpif(env === 'development', sourcemaps.init({ loadMaps: true })))
     .pipe(gulpif(env === 'development', sourcemaps.write('./')))
-    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/js/`))
+    .pipe(gulp.dest(`${output || `./${env === 'development' ? 'build' : 'dist'}`}/js/`))
     .on('end', () => {
       if (env === 'development') {
         if (cb) cb();
         return;
       }
       // Minified version
-      gulp.src(`${output || './dist/js'}/framework7.js`)
+      gulp.src(`${output || './dist'}/js/framework7.js`)
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(header(banner))
@@ -170,7 +131,7 @@ function umd(components, cb) {
           filePath.basename += '.min';
         }))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(output || './dist/js/'))
+        .pipe(gulp.dest(`${output || './dist'}/js/`))
         .on('end', () => {
           cb();
         });
