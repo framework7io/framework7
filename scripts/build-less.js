@@ -57,13 +57,13 @@ function build(config, components, themes, rtl, cb) {
     .pipe(rename((filePath) => {
       filePath.basename = outputFileName;
     }))
-    .pipe(gulp.dest(output || `./${env === 'development' ? 'build' : 'dist'}/css/`))
+    .pipe(gulp.dest(`${output || `./${env === 'development' ? 'build' : 'dist'}`}/css/`))
     .on('end', () => {
       if (env === 'development') {
         if (cb) cb();
         return;
       }
-      gulp.src(`${output || './dist/css'}/${outputFileName}.css`)
+      gulp.src(`${output || './dist'}/css/${outputFileName}.css`)
         .pipe(cleanCSS({
           advanced: false,
           aggressiveMerging: false,
@@ -72,7 +72,7 @@ function build(config, components, themes, rtl, cb) {
         .pipe(rename((filePath) => {
           filePath.basename += '.min';
         }))
-        .pipe(gulp.dest(output || './dist/css/'))
+        .pipe(gulp.dest(`${output || './dist'}/css/`))
         .on('end', () => {
           if (cb) cb();
         });
