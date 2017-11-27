@@ -85,8 +85,16 @@
     }
   }
 }
-.device-iphone-x .messagebar:not(.messagebar-top) {
-  height: auto;
-  min-height: ~"calc(44px + constant(safe-area-inset-bottom))";
-  min-height: ~"calc(44px + env(safe-area-inset-bottom))";
+.device-iphone-x {
+  .messagebar:not(.messagebar-top) {
+    height: auto;
+  }
+  .messagebar:not(.messagebar-top):not(.messagebar-sheet-visible) {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .messagebar-sheet {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
