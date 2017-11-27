@@ -6,6 +6,7 @@ const gopen = require('gulp-open');
 const buildKs = require('./build-ks.js');
 const buildJs = require('./build-js.js');
 const buildLess = require('./build-less.js');
+const buildComponents = require('./build-components.js');
 
 // Tasks
 gulp.task('ks', (cb) => {
@@ -19,7 +20,11 @@ gulp.task('less', (cb) => {
   buildLess(cb);
 });
 
-gulp.task('build', ['js', 'less']);
+gulp.task('components', (cb) => {
+  buildComponents(cb);
+});
+
+gulp.task('build', ['js', 'less', 'components']);
 
 gulp.task('watch', () => {
   gulp.watch('./src/**/**/*.js', ['js']);
