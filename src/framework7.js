@@ -57,4 +57,4 @@ Framework7.components = [
   //INSTALL_COMPONENTS
 ];
 
-//EXPORT_COMPONENTS
+export default Framework7;
