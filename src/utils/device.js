@@ -61,11 +61,11 @@ const Device = (function Device() {
     }
   }
 
+  // Webview
+  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone);
+
   // Desktop
   device.desktop = !(device.os || device.android || device.webView);
-
-  // Webview
-  device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
 
   // Minimal UI
   if (device.os && device.os === 'ios') {
