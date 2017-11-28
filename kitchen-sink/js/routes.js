@@ -11,6 +11,11 @@ var routes = [
     url: './pages/about.html',
     name: 'about',
   },
+  // Index page
+  {
+    path: '/vi/',
+    componentUrl: './pages/vi.html',
+  },
   // Right Panel pages
   {
     path: '/panel-right-1/',

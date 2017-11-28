@@ -92,6 +92,9 @@ const config = {
 
     // Typography
     'typography',
+
+    // VI
+    'vi',
   ],
   darkTheme: true,
   themes: [

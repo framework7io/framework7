@@ -15,18 +15,19 @@ class Framework7 extends Framework7Class {
 
     // Default
     const defaults = {
+      version: '1.0.0',
+      id: 'io.framework7.test',
       root: 'body',
       theme: 'auto',
+      language: window.navigator.language,
       init: true,
       routes: [],
-      id: 'io.framework7.test',
-      version: '1.0.0',
       name: 'Framework7',
-      language: window.navigator.language,
     };
 
     // Extend defaults with modules params
     app.useModulesParams(defaults);
+
 
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
@@ -36,6 +37,8 @@ class Framework7 extends Framework7Class {
     Utils.extend(app, {
       // App Id
       id: app.params.id,
+      // App Name
+      name: app.params.name,
       // App version
       version: app.params.version,
       // Routes
