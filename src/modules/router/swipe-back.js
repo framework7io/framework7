@@ -174,7 +174,7 @@ function SwipeBack(r) {
     if (dynamicNavbar) {
       currentNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
-        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (1 - (percentage * 1.3));
+        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (1 - (percentage ** 0.33));
         if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
           if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
@@ -192,7 +192,7 @@ function SwipeBack(r) {
       });
       previousNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
-        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (percentage * 1.3) - 0.3;
+        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (percentage ** 3);
         if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           let previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
           if ($navEl[0].className.indexOf('title') >= 0 && activeNavBackIcon && activeNavBackIcon.length && activeNavBackIconText.length) {
