@@ -15,12 +15,14 @@
     height: 24px;
   }
 }
-.safe-areas({
-  .statusbar {
-    height: constant(safe-area-inset-top);
-    height: env(safe-area-inset-top);
-  }
-});
+html.device-ios {
+  .safe-areas({
+    .statusbar {
+      height: constant(safe-area-inset-top);
+      height: env(safe-area-inset-top);
+    }
+  });
+}
 html.with-statusbar {
   .statusbar {
     display: block;
