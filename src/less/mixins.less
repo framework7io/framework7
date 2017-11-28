@@ -34,6 +34,31 @@
   }
 }
 
+// iPhone X
+.safe-areas(@ruleset) {
+  &.device-iphone-x {
+    @ruleset();
+  }
+}
+.safe-area-left(@ruleset) {
+  .ios-left-edge,
+  .ios-edges,
+  .popup,
+  .sheet-modal,
+  .panel-left {
+    @ruleset();
+  }
+}
+.safe-area-right(@ruleset) {
+  .ios-right-edge,
+  .ios-edges,
+  .popup,
+  .sheet-modal,
+  .panel-right {
+    @ruleset();
+  }
+}
+
 // Scrollable
 .scrollable() {
   overflow: auto;
