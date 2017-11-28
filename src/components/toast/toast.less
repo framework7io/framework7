@@ -93,10 +93,12 @@ html.with-statusbar {
   &.device-ios .toast-top, &.ios:not(.device-ios):not(.device-android) .toast-top {
     margin-top: 20px;
   }
-  &.device-iphone-x .toast-top {
-    margin-top: constant(safe-area-inset-top);
-    margin-top: env(safe-area-inset-top);
-  }
+  .safe-areas({
+    .toast-top {
+      margin-top: constant(safe-area-inset-top);
+      margin-top: env(safe-area-inset-top);
+    }
+  });
   &.device-android .toast-top, &.md:not(.device-ios):not(.device-android) .toast-top {
     margin-top: 24px;
   }

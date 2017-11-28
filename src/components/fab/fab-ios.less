@@ -20,6 +20,7 @@
   .fab[class*="fab-left"] {
     left: 15px;
   }
+
   .fab[class*="fab-right"] {
     right: 15px;
   }
@@ -28,10 +29,6 @@
   }
   .fab[class*="-bottom"] {
     bottom: 15px;
-  }
-  &.device-iphone-x .fab[class*="-bottom"] {
-    bottom: ~"calc(15px + constant(safe-area-inset-bottom))";
-    bottom: ~"calc(15px + env(safe-area-inset-bottom))";
   }
 
   // Relation with navbar
@@ -85,5 +82,24 @@
     .fab-morph.color-@{colorName} {
       background: @colorValue;
     }
+  });
+
+  .safe-areas({
+    .fab[class*="-bottom"] {
+      bottom: ~"calc(15px + constant(safe-area-inset-bottom))";
+      bottom: ~"calc(15px + env(safe-area-inset-bottom))";
+    }
+    .safe-area-left({
+      .fab[class*="fab-left"] {
+        left: ~"calc(15px + constant(safe-area-inset-left))";
+        left: ~"calc(15px + env(safe-area-inset-left))";
+      }
+    });
+    .safe-area-right({
+      .fab[class*="fab-right"] {
+        right: ~"calc(15px + constant(safe-area-inset-right))";
+        right: ~"calc(15px + env(safe-area-inset-right))";
+      }
+    });
   });
 }

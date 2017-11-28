@@ -9,8 +9,11 @@
     display: flex;
   }
   @media (orientation: landscape) and (max-height: 415px) {
-    &:not(.calendar-inline) {
+    &.calendar-sheet {
       height: 220px;
+    }
+    &.calendar-modal {
+      height: ~"calc(100vh - 44px)";
     }
   }
   &.calendar-inline, &.calendar-popover .calendar {
@@ -90,6 +93,7 @@
   flex-shink: 1;
   width: 100%;
   position: relative;
+  box-sizing: border-box;
 }
 .calendar-day {
   flex-shink: 1;

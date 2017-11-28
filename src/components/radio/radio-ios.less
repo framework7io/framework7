@@ -53,6 +53,45 @@
       background-color: #d9d9d9;
     }
   }
+
+  .safe-areas({
+    .safe-area-left({
+      label.item-radio input[type="radio"] ~ .icon-radio {
+        .rtl({
+          left: ~"calc(10px + constant(safe-area-inset-left))";
+          left: ~"calc(10px + env(safe-area-inset-left))";
+        })
+      }
+      label.item-radio {
+        .list:not(.inset):not(.tablet-inset) {
+          .item-inner {
+            .rtl({
+              padding-left: ~"calc(35px + constant(safe-area-inset-left))";;
+              padding-left: ~"calc(35px + env(safe-area-inset-left))";;
+            });
+          }
+        }
+      }
+    });
+    .safe-area-right({
+      label.item-radio input[type="radio"] ~ .icon-radio {
+        .ltr({
+          right: ~"calc(10px + constant(safe-area-inset-right))";
+          right: ~"calc(10px + env(safe-area-inset-right))";
+        });
+      }
+      .list:not(.inset):not(.tablet-inset) {
+        label.item-radio {
+          .item-inner {
+            .ltr({
+              padding-right: ~"calc(35px + constant(safe-area-inset-right))" !important;
+              padding-right: ~"calc(35px + env(safe-area-inset-right))";
+            });
+          }
+        }
+      }
+    });
+  });
   // Dark Theme
   & when (@includeDarkTheme) {
     .theme-dark {

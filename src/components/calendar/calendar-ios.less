@@ -73,10 +73,7 @@
       .hairline-remove(top);
     }
   }
-  &.device-iphone-x .calendar-sheet .sheet-modal-inner {
-    margin-bottom: constant(safe-area-inset-bottom);
-    margin-bottom: env(safe-area-inset-bottom);
-  }
+
   .calendar-modal, .calendar-popover {
     .toolbar {
       .hairline-remove(top);
@@ -93,6 +90,28 @@
       background: none;
     }
   }
+  .safe-areas({
+    .calendar-sheet .sheet-modal-inner {
+      margin-bottom: constant(safe-area-inset-bottom);
+      margin-bottom: env(safe-area-inset-bottom);
+    }
+    .safe-area-left({
+      &.calendar,
+      .calendar:not(.no-ios-edges):not(.no-ios-left-edge) {
+        .calendar-row, .calendar-week-header {
+          padding-left: constant(safe-area-inset-left);
+        }
+      }
+    });
+    .safe-area-right({
+      &.calendar,
+      .calendar:not(.no-ios-edges):not(.no-ios-right-edge) {
+        .calendar-row, .calendar-week-header {
+          padding-right: constant(safe-area-inset-right);
+        }
+      }
+    });
+  });
 
   // Dark Theme
   & when (@includeDarkTheme) {

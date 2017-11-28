@@ -15,6 +15,17 @@
   }
   .hairline-root('.sheet-modal .toolbar', top, #929499);
 
+  .safe-areas({
+    .sheet-modal {
+      .toolbar {
+        ~ .sheet-modal-inner .page-content {
+          padding-bottom: constant(safe-area-inset-bottom);
+          padding-bottom: env(safe-area-inset-bottom);
+        }
+      }
+    }
+  });
+
   // Dark Theme
   & when (@includeDarkTheme) {
     .theme-dark {
@@ -24,16 +35,6 @@
           background-color: @barsBgDark;
           .hairline-color(top, @barsBorderColorDark)
         }
-      }
-    }
-  }
-}
-.device-iphone-x {
-  .sheet-modal {
-    .toolbar {
-      ~ .sheet-modal-inner .page-content {
-        padding-bottom: constant(safe-area-inset-bottom);
-        padding-bottom: env(safe-area-inset-bottom);
       }
     }
   }

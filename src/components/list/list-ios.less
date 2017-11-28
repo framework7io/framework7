@@ -255,6 +255,9 @@
       margin-left: 15px;
       margin-right: 15px;
       border-radius: 7px;
+      ul {
+        border-radius: 7px;
+      }
       li:first-child > a {
         border-radius: 7px 7px 0 0;
       }
@@ -275,6 +278,168 @@
       }
     }
   }
+
+  .safe-areas({
+    .safe-area-left({
+      .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) {
+        &.simple-list li {
+          padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+          padding-left: ~"calc(15px + env(safe-area-inset-left))";
+        }
+        .item-divider, .list-group-title {
+          padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+          padding-left: ~"calc(15px + env(safe-area-inset-left))";
+        }
+      }
+      .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+        margin-left: ~"calc(15px + constant(safe-area-inset-left))";
+        margin-left: ~"calc(15px + env(safe-area-inset-left))";
+        .block-header, .block-footer {
+          padding-left: 15px;
+        }
+      }
+      .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+        @media (min-width: 768px) {
+          margin-left: ~"calc(15px + constant(safe-area-inset-left))";
+          margin-left: ~"calc(15px + env(safe-area-inset-left))";
+          .block-header, .block-footer {
+            padding-left: 15px;
+          }
+        }
+      }
+      .ltr({
+        .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) {
+          .item-content {
+            padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+            padding-left: ~"calc(15px + env(safe-area-inset-left))";
+          }
+          &.simple-list {
+            li:after {
+              left: ~"calc(15px + constant(safe-area-inset-left))";
+              left: ~"calc(15px + env(safe-area-inset-left))";
+            }
+          }
+          &.links-list {
+            a {
+              padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+              padding-left: ~"calc(15px + env(safe-area-inset-left))";
+            }
+            a:after{
+              left: ~"calc(15px + constant(safe-area-inset-left))";
+              left: ~"calc(15px + env(safe-area-inset-left))";
+            }
+          }
+        }
+      });
+      .rtl({
+        .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) {
+          .item-link .item-inner,
+          &.links-list a {
+            background-position: ~"calc(15px + constant(safe-area-inset-left))" center;
+            background-position: ~"calc(15px + env(safe-area-inset-left))" center;
+          }
+          .item-inner {
+            padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+            padding-left: ~"calc(15px + env(safe-area-inset-left))";
+          }
+          .item-link .item-inner {
+            padding-left: ~"calc(35px + constant(safe-area-inset-left))";
+            padding-left: ~"calc(35px + env(safe-area-inset-left))";
+          }
+          &.media-list, li.media-item {
+            .item-link .item-inner {
+              padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+              padding-left: ~"calc(15px + env(safe-area-inset-left))";
+            }
+          }
+          &.links-list {
+            a {
+              padding-left: ~"calc(35px + constant(safe-area-inset-left))";
+              padding-left: ~"calc(35px + env(safe-area-inset-left))";
+            }
+          }
+        }
+      });
+    });
+    .safe-area-right({
+      .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+        margin-right: ~"calc(15px + constant(safe-area-inset-right))";
+        margin-right: ~"calc(15px + env(safe-area-inset-right))";
+        .block-header, .block-footer {
+          padding-right: 15px;
+        }
+      }
+      .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+        @media (min-width: 768px) {
+          margin-right: ~"calc(15px + constant(safe-area-inset-right))";
+          margin-right: ~"calc(15px + env(safe-area-inset-right))";
+        }
+        .block-header, .block-footer {
+          padding-right: 15px;
+        }
+      }
+      .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+        .item-divider, .list-group-title {
+          padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+          padding-right: ~"calc(15px + env(safe-area-inset-right))";
+        }
+        &.simple-list li {
+          padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+        }
+      }
+      .ltr({
+        .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+          .item-link .item-inner,
+          &.links-list a {
+            background-position: calc(~"100% - 15px - constant(safe-area-inset-right)") center;
+            background-position: calc(~"100% - 15px - env(safe-area-inset-right)") center;
+          }
+          .item-inner {
+            padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+            padding-right: ~"calc(15px + env(safe-area-inset-right))";
+          }
+          .item-link .item-inner {
+            padding-right: ~"calc(35px + constant(safe-area-inset-right))";
+            padding-right: ~"calc(35px + env(safe-area-inset-right))";
+          }
+          &.media-list, li.media-item {
+            .item-link .item-inner {
+              padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+              padding-right: ~"calc(15px + env(safe-area-inset-right))";
+            }
+          }
+          &.links-list {
+            a {
+              padding-right: ~"calc(35px + constant(safe-area-inset-right))";
+              padding-right: ~"calc(35px + env(safe-area-inset-right))";
+            }
+          }
+        }
+      });
+      .rtl({
+        .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+          .item-content {
+            padding-right:  ~"calc(15px + constant(safe-area-inset-right))";
+            padding-right:  ~"calc(15px + env(safe-area-inset-right))";
+          }
+          &.simple-list {
+            li:after {
+              right: ~"calc(15px + constant(safe-area-inset-right))";
+            }
+          }
+          &.links-list {
+            a {
+              padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+              padding-right: ~"calc(15px + env(safe-area-inset-right))";
+            }
+            a:after {
+              right: ~"calc(15px + env(safe-area-inset-right))";
+            }
+          }
+        }
+      });
+    });
+  });
 
   // Dark Theme
   & when (@includeDarkTheme) {
@@ -345,4 +510,6 @@
       color: @colorValue;
     }
   });
+
+
 }

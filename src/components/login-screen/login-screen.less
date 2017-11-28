@@ -32,12 +32,14 @@ html.with-statusbar {
     height: ~"calc(100% - 20px)";
     top: 20px;
   }
-  &.device-iphone-x .login-screen {
-    height: ~"calc(100% - constant(safe-area-inset-top))";
-    height: ~"calc(100% - env(safe-area-inset-top))";
-    top: constant(safe-area-inset-top);
-    top: env(safe-area-inset-top);
-  }
+  .safe-areas({
+    .login-screen {
+      height: ~"calc(100% - constant(safe-area-inset-top))";
+      height: ~"calc(100% - env(safe-area-inset-top))";
+      top: constant(safe-area-inset-top);
+      top: env(safe-area-inset-top);
+    }
+  });
   &.device-android .login-screen, &.md:not(.device-ios):not(.device-android) .login-screen {
     height: ~"calc(100% - 24px)";
     top: 24px;

@@ -500,7 +500,7 @@ class Autocomplete extends Framework7Class {
     const dropdownHtml = `
       <div class="autocomplete-dropdown">
         <div class="autocomplete-dropdown-inner">
-          <div class="list">
+          <div class="list ${!ac.params.expandInput ? 'no-ios-edge' : ''}">
             <ul></ul>
           </div>
         </div>

@@ -199,6 +199,20 @@
       }
     }
   }
+  .safe-areas({
+    .safe-area-left({
+      .message-received {
+        margin-left: ~"calc(10px + constant(safe-area-inset-left))";
+        margin-left: ~"calc(10px + env(safe-area-inset-left))";
+      }
+    });
+    .safe-area-right({
+      .message-sent {
+        margin-right: ~"calc(10px + constant(safe-area-inset-right))";
+        margin-right: ~"calc(10px + env(safe-area-inset-right))";
+      }
+    });
+  });
 }
 
 @keyframes ios-message-typing-indicator {
