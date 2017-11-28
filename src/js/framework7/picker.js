@@ -344,7 +344,7 @@ var Picker = function (params) {
             newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
 
             // Active Index
-            var activeIndex = -Math.floor((newTranslate - maxTranslate)/itemHeight);
+            var activeIndex = -Math.round((newTranslate - maxTranslate)/itemHeight);
 
             // Normalize translate
             if (!p.params.freeMode) newTranslate = -activeIndex * itemHeight + maxTranslate;
