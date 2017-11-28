@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Framework7</title>
-  <link rel="stylesheet" href="../dist/css/framework7.min.css">
+  <link rel="stylesheet" href="../build/css/framework7.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -79,10 +81,16 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init" data-url="/">
+    <div class="view view-main view-init ios-left-edge ios-right-edge" data-url="/">
       <div class="page">
         <div class="navbar">
           <div class="navbar-inner">
+            <div class="left">
+              <a href="#" class="link icon-only panel-open" data-panel="left">
+                <i class="icon f7-icons ios-only">menu</i>
+                <i class="icon material-icons md-only">menu</i>
+              </a>
+            </div>
             <div class="title sliding">Framework7</div>
             <div class="right">
               <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-components">
@@ -305,7 +313,7 @@
       </div>
     </div>
   </div>
-  <script src="../dist/js/framework7.min.js"></script>
+  <script src="../build/js/framework7.js"></script>
   <script src="js/routes.js"></script>
   <script src="js/app.js"></script>
 </body>
