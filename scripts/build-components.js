@@ -35,7 +35,7 @@ function build(cb) {
         .replace('process.env.FORMAT', JSON.stringify(format))
         .replace('//IMPORT_COMPONENTS\n', '')
         .replace('//INSTALL_COMPONENTS\n', '');
-      if (file.indexOf('src/framework7.js') || file.indexOf('src/framework7.less')) {
+      if (file.indexOf('src/framework7.js') >= 0 || file.indexOf('src/framework7.less') >= 0) {
         newContent = `${banner}\n${newContent}`;
       }
       if (file.indexOf('src/framework7.less')) {
