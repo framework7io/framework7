@@ -1,0 +1,21 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .sortable-handler {
+    width: 50px;
+  }
+  .sortable {
+    li.sorting {
+      .md-depth(2);
+    }
+  }
+  .sortable-enabled {
+    .item-inner, .item-link .item-inner {
+      .ltr({
+        padding-right: 50px;
+      });
+      .rtl({
+        padding-left: 50px;
+      });
+    }
+  }
+}

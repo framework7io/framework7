@@ -1,3 +1,40 @@
+# [v2.0.0-beta.18](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.17...v2.0.0-beta.18) - November 30, 2017
+  * New *vi* (video intelligence) component. *vi* is a mobile video SSP (Supply / Sell Side Platform). It provides self-serve tools for publishers to captivate and monetize audiences
+  * Popover
+    * Now may accept target elements coordinates with `targetX`, `targetY` parameters instead of `targetEl` target element itself
+  * Actions
+    * New `forceToPopover` parameter to always convert it to Popover
+    * `toPopover` parameter renamed to `convertToPopover`
+    * New `backdrop` (true/false) parameter to enable/disable Actions backdrop
+  * Router
+    * New `currentPageEl` router property that points to current page HTMLElement.
+    * Improved routable tabs support for different routes but with same tab IDs
+    * Improved dynamic navbar transition using CSS page transitions
+  * Form Storage
+    * Renamed methods:
+      * `app.form.data.get()` -> `app.form.getFormData()`
+      * `app.form.data.remove()` -> `app.form.removeFormData()`
+      * `app.form.data.store()` -> `app.form.storeFormData()`
+      * `app.form.toData()` -> `app.form.convertToData()`
+      * `app.form.fromData()` -> `app.form.fillFromData()`
+  * CSS & Theming
+    * New "Dark Colo Theme" for both "iOS" and "MD" themes. Can be added with `theme-dark` CSS class.
+    * Full iPhoneX support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
+      * `ios-edges` - for full-width elements (like main View)
+      * `ios-edge-left` - for elements that stick to the left edge of the screen (like left Panel)
+      * `ios-edge-right` - for elements that stick to the right edge of the screen (like right Panel)
+    * Common `disabled` class to make any elements disabled
+  * Swiper updated to latest 4.0.7:
+    * Fixed issue with not working correctly `touchReleaseOnEdges` on iOS
+    * Fixed issue with not working allowSlideNext/Prev change on Breakpoints
+    * Fixed wrong scrollbar dragging when using custom `dragSize`
+  * Build/Package - new files structure to improve tree-shaking as much as possible:
+    * Now the `framework7.esm.js` and `framework7.esm.bundle.js` are in the root of `/dist/` folder.
+    * `framework7.esm.js` now exports only Framework7 core library with single *default* export
+    * All additional components must be included from separate `/dist/components/` folder. For example `import Searchbar from 'framework7/dist/components/searchbar/searchbar.js';`
+    * Custom CSS build is now also possible with LESS. `framework7.less` is now in the root of `/dist/` and contains only Framework7 core library styles. Additional components must be included from separate `/dist/components/` folder. For example `import "framework7/dist/components/searchbar/searchbar.less";`
+  * Lost of minor fixes
+
 # [v2.0.0-beta.17](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.16...v2.0.0-beta.17) - November 14, 2017
   * Preloader
     * Fixed preloader backdrop styles to cover the screen behind it

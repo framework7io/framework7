@@ -1,0 +1,22 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .badge {
+    font-size: 10px;
+    border-radius: 3px;
+    padding: 1px 6px;
+    vertical-align: middle;
+  }
+  .icon, .f7-icons, .framework7-icons, .material-icons {
+    .badge {
+      line-height: 1.4;
+      padding: 1px 5px;
+      font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
+      font-size: 10px;
+    }
+  }
+  .color-loop({
+    .badge.color-@{colorName} {
+      background-color: @colorValue;
+    }
+  });
+}

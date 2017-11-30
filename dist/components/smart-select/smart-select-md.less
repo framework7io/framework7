@@ -1,0 +1,11 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .sheet-modal.smart-select-sheet .sheet-modal-inner {
+        background-color: transparent;
+      }
+    }
+  }
+}

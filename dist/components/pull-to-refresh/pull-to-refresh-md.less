@@ -1,0 +1,104 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .ptr-preloader {
+    position: absolute;
+    left: 50%;
+    top: 66px - 50px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    margin-left: -20px;
+    margin-top: -7px;
+    z-index: 100;
+    .md-depth(1);
+    @media (min-width:768px) {
+      top: 64px - 40px;
+    }
+    .preloader {
+      width: 22px;
+      height: 22px;
+      margin-left: -11px;
+      margin-top: -11px;
+      top: 50%;
+      visibility: hidden;
+      .preloader-inner-gap, .preloader-inner-half-circle {
+        border-width: 3px;
+      }
+    }
+  }
+  .ptr-arrow {
+    width: 22px;
+    height: 22px;
+    box-sizing: border-box;
+    border: 3px solid #757575;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -11px;
+    margin-top: -11px;
+    border-left-color: transparent;
+    border-radius: 50%;
+    opacity: 1;
+    transform: rotate(150deg);
+    &:after {
+      content: '';
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      left: -5px;
+      bottom: 0px;
+      border-bottom-width: 6px;
+      border-bottom-style: solid;
+      border-bottom-color: inherit;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      transform: rotate(-40deg);
+    }
+  }
+  .ptr-content:not(.ptr-refreshing):not(.ptr-pull-up) {
+    .ptr-preloader .preloader {
+      &, * {
+        animation: none;
+      }
+    }
+  }
+  .ptr-refreshing, .ptr-pull-up {
+    .ptr-preloader .preloader {
+      visibility: visible;
+    }
+    .ptr-arrow {
+      visibility: hidden;
+    }
+  }
+  .ptr-refreshing {
+    .ptr-preloader {
+      transform: translate3d(0, 66px, 0);
+    }
+  }
+  .ptr-transitioning {
+    .ptr-arrow {
+      transition: 300ms;
+    }
+  }
+  .ptr-pull-up {
+    .ptr-arrow {
+      transition: 400ms;
+      transform: rotate(620deg) !important;
+      opacity: 0;
+    }
+  }
+  .ptr-transitioning, .ptr-refreshing {
+    .ptr-preloader {
+      transition-duration: 300ms;
+      transition-property: transform;
+    }
+  }
+  .ptr-no-navbar {
+    .ptr-preloader {
+      top: auto;
+      bottom: 100%;
+      margin-bottom: 7px;
+    }
+  }
+}

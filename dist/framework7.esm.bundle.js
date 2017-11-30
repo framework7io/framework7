@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.17
+ * Framework7 2.0.0-beta.18
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 14, 2017
+ * Released on: November 30, 2017
  */
 
 import Template7 from 'template7';
@@ -485,6 +485,7 @@ const Device = (function Device() {
     desktop: false,
     windows: false,
     iphone: false,
+    iphoneX: false,
     ipod: false,
     ipad: false,
     cordova: window.cordova || window.phonegap,
@@ -496,6 +497,7 @@ const Device = (function Device() {
   const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+  const iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
 
 
   // Windows
@@ -519,6 +521,7 @@ const Device = (function Device() {
   if (iphone && !ipod) {
     device.osVersion = iphone[2].replace(/_/g, '.');
     device.iphone = true;
+    device.iphoneX = iphoneX;
   }
   if (ipad) {
     device.osVersion = ipad[2].replace(/_/g, '.');
@@ -535,11 +538,11 @@ const Device = (function Device() {
     }
   }
 
+  // Webview
+  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone);
+
   // Desktop
   device.desktop = !(device.os || device.android || device.webView);
-
-  // Webview
-  device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
 
   // Minimal UI
   if (device.os && device.os === 'ios') {
@@ -555,6 +558,9 @@ const Device = (function Device() {
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
     if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
+      if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
+        return false;
+      }
       return true;
     }
     return false;
@@ -603,6 +609,7 @@ class Framework7Class {
   }
   off(events, handler) {
     const self = this;
+    if (!self.eventsListeners) return self;
     events.split(' ').forEach((event) => {
       if (typeof handler === 'undefined') {
         self.eventsListeners[event] = [];
@@ -746,18 +753,20 @@ class Framework7$1 extends Framework7Class {
 
     // Default
     const defaults = {
+      version: '1.0.0',
+      id: 'io.framework7.test',
       root: 'body',
       theme: 'auto',
-      init: true,
-      routes: [],
-      id: 'io.framework7.test',
-      version: '1.0.0',
-      name: 'Framework7',
       language: window.navigator.language,
+      routes: [],
+      name: 'Framework7',
+      initOnDeviceReady: true,
+      init: true,
     };
 
     // Extend defaults with modules params
     app.useModulesParams(defaults);
+
 
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
@@ -767,6 +776,8 @@ class Framework7$1 extends Framework7Class {
     Utils.extend(app, {
       // App Id
       id: app.params.id,
+      // App Name
+      name: app.params.name,
       // App version
       version: app.params.version,
       // Routes
@@ -798,7 +809,7 @@ class Framework7$1 extends Framework7Class {
 
     // Init
     if (app.params.init) {
-      if (Device.cordova) {
+      if (Device.cordova && app.params.initOnDeviceReady) {
         $(document).on('deviceready', () => {
           app.init();
         });
@@ -888,21 +899,28 @@ var Device$2 = {
       }
       // OS classes
       if (Device.os) {
-        classNames.push(`device-${Device.os}`, `device-${Device.os}-${Device.osVersion.split('.')[0]}`, `device-${Device.os}-${Device.osVersion.replace(/\./g, '-')}`);
+        classNames.push(
+          `device-${Device.os}`,
+          `device-${Device.os}-${Device.osVersion.split('.')[0]}`,
+          `device-${Device.os}-${Device.osVersion.replace(/\./g, '-')}`
+        );
         if (Device.os === 'ios') {
           const major = parseInt(Device.osVersion.split('.')[0], 10);
           for (let i = major - 1; i >= 6; i -= 1) {
             classNames.push(`device-ios-gt-${i}`);
+          }
+          if (Device.iphoneX) {
+            classNames.push('device-iphone-x');
           }
         }
       } else if (Device.desktop) {
         classNames.push('device-desktop');
       }
       // Status bar classes
-      if (Device.statusBar) {
-        classNames.push('with-statusbar-overlay');
+      if (Device.statusbar) {
+        classNames.push('with-statusbar');
       } else {
-        html.classList.remove('with-statusbar-overlay');
+        html.classList.remove('with-statusbar');
       }
 
       // Add html classes
@@ -2969,7 +2987,7 @@ function SwipeBack(r) {
     if (dynamicNavbar) {
       currentNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
-        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (1 - (percentage * 1.3));
+        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (1 - (percentage ** 0.33));
         if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
           if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
@@ -2987,7 +3005,7 @@ function SwipeBack(r) {
       });
       previousNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
-        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (percentage * 1.3) - 0.3;
+        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (percentage ** 3);
         if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           let previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
           if ($navEl[0].className.indexOf('title') >= 0 && activeNavBackIcon && activeNavBackIcon.length && activeNavBackIconText.length) {
@@ -3354,6 +3372,14 @@ function forward(el, forwardOptions = {}) {
     );
   }
 
+  // Current Page & Navbar
+  router.currentPageEl = $newPage[0];
+  if (dynamicNavbar && $newNavbarInner.length) {
+    router.currentNavbarEl = $newNavbarInner[0];
+  } else {
+    delete router.currentNavbarEl;
+  }
+
   // Current Route
   router.currentRoute = options.route;
 
@@ -3522,13 +3548,14 @@ function forward(el, forwardOptions = {}) {
     }
   }
   if (options.animate) {
-    if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
+    const delay = router.app.theme === 'md' ? router.params.materialPageLoadDelay : router.params.iosPageLoadDelay;
+    if (delay) {
       setTimeout(() => {
         setPositionClasses();
         router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
           afterAnimation();
         });
-      }, router.params.materialPageLoadDelay);
+      }, delay);
     } else {
       setPositionClasses();
       router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
@@ -3554,11 +3581,28 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     router.currentRoute.route &&
     router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
-    if (options.route.url === router.url) return false;
-    if (options.route.route.tab) {
-      return router.tabLoad(options.route.route.tab, options);
+    if (options.route.url === router.url) {
+      return false;
     }
-    return false;
+    // Check for same params
+    let sameParams = Object.keys(options.route.params).length === Object.keys(router.currentRoute.params).length;
+    if (sameParams) {
+      // Check for equal params name
+      Object.keys(options.route.params).forEach((paramName) => {
+        if (
+          !(paramName in router.currentRoute.params) ||
+          (router.currentRoute.params[paramName] !== options.route.params[paramName])
+        ) {
+          sameParams = false;
+        }
+      });
+    }
+    if (sameParams) {
+      if (options.route.route.tab) {
+        return router.tabLoad(options.route.route.tab, options);
+      }
+      return false;
+    }
   }
 
   if (
@@ -3653,8 +3697,10 @@ function navigate(navigateParams, navigateOptions = {}) {
 
   let navigateUrl = url.replace('./', '');
   if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
-    const currentPath = router.currentRoute.route.parentPath || router.currentRoute.path;
-    navigateUrl = ((currentPath || '/') + navigateUrl).replace('//', '/');
+    const currentPath = router.currentRoute.parentPath || router.currentRoute.path;
+    navigateUrl = ((currentPath ? `${currentPath}/` : '/') + navigateUrl)
+      .replace('///', '/')
+      .replace('//', '/');
   }
   let route;
   if (createRoute) {
@@ -3751,12 +3797,21 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  let tabShowResult;
-  if (router.view.selector) {
-    tabShowResult = router.app.tab.show(`${router.view.selector} #${tabRoute.id}`, options.animate, options.route);
+  const $currentPageEl = $(router.currentPageEl);
+  let tabEl;
+  if ($currentPageEl.length && $currentPageEl.find(`#${tabRoute.id}`).length) {
+    tabEl = $currentPageEl.find(`#${tabRoute.id}`).eq(0);
+  } else if (router.view.selector) {
+    tabEl = `${router.view.selector} #${tabRoute.id}`;
   } else {
-    tabShowResult = router.app.tab.show(`#${tabRoute.id}`, options.animate, options.route);
+    tabEl = `#${tabRoute.id}`;
   }
+  const tabShowResult = router.app.tab.show({
+    tabEl,
+    animate: options.animate,
+    tabRoute: options.route,
+  });
+
   const { $newTabEl, $oldTabEl, animated, onTabsChanged } = tabShowResult;
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
@@ -4212,6 +4267,14 @@ function backward(el, backwardOptions) {
   router.history.pop();
   router.saveHistory();
 
+  // Current Page & Navbar
+  router.currentPageEl = $newPage[0];
+  if (dynamicNavbar && $newNavbarInner.length) {
+    router.currentNavbarEl = $newNavbarInner[0];
+  } else {
+    delete router.currentNavbarEl;
+  }
+
   // Current Route
   router.currentRoute = options.route;
 
@@ -4607,134 +4670,13 @@ class Router$1 extends Framework7Class {
 
     return router;
   }
-  animateWithCSS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
-    const router = this;
-    // Router Animation class
-    const routerTransitionClass = `router-transition-${direction} router-transition-css-${direction}`;
-
-    // AnimationEnd Callback
-    (direction === 'forward' ? newPage : oldPage).animationEnd(() => {
-      if (router.dynamicNavbar) {
-        if (newNavbarInner.hasClass('sliding')) {
-          newNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
-        } else {
-          newNavbarInner.find('.sliding').transform('');
-        }
-        if (oldNavbarInner.hasClass('sliding')) {
-          oldNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
-        } else {
-          oldNavbarInner.find('.sliding').transform('');
-        }
-      }
-      router.$el.removeClass(routerTransitionClass);
-      if (callback) callback();
-    });
-
-    function prepareNavbars() {
-      let slidingEls;
-      if (newNavbarInner.hasClass('sliding')) {
-        slidingEls = newNavbarInner.children('.left, .right, .title, .subnavbar');
-      } else {
-        slidingEls = newNavbarInner.find('.sliding');
-      }
-      if (!slidingEls) return;
-      let navbarWidth;
-      if (!router.separateNavbar) {
-        navbarWidth = newNavbarInner[0].offsetWidth;
-      }
-
-      let oldNavbarTitleEl;
-      if (oldNavbarInner.children('.title.sliding').length > 0) {
-        oldNavbarTitleEl = oldNavbarInner.children('.title.sliding');
-      } else {
-        oldNavbarTitleEl = oldNavbarInner.hasClass('sliding') && oldNavbarInner.children('.title');
-      }
-
-      slidingEls.each((index, slidingEl) => {
-        const $slidingEl = $(slidingEl);
-        const slidingOffset = direction === 'forward' ? slidingEl.f7NavbarRightOffset : slidingEl.f7NavbarLeftOffset;
-        if (router.params.iosAnimateNavbarBackIcon && $slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-          let iconSlidingOffset = -slidingOffset;
-          const iconTextEl = $slidingEl.find('.back span').eq(0);
-          if (!router.separateNavbar) {
-            if (direction === 'forward') {
-              iconSlidingOffset -= navbarWidth;
-            } else {
-              iconSlidingOffset += navbarWidth / 5;
-            }
-          }
-          $slidingEl.find('.back .icon').transform(`translate3d(${iconSlidingOffset}px,0,0)`);
-          if (oldNavbarTitleEl && iconTextEl.length > 0) {
-            oldNavbarTitleEl[0].f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
-          }
-        }
-        $slidingEl.transform(`translate3d(${slidingOffset}px,0,0)`);
-      });
-    }
-    function animateNavbars() {
-      const animateIcon = router.params.iosAnimateNavbarBackIcon;
-
-      let navbarIconOffset = 0;
-      let oldNavbarWidth;
-      if (!router.separateNavbar && animateIcon) {
-        oldNavbarWidth = oldNavbarInner[0].offsetWidth;
-        if (direction === 'forward') {
-          navbarIconOffset = oldNavbarWidth / 5;
-        } else {
-          navbarIconOffset = -oldNavbarWidth;
-        }
-      }
-
-      // Old Navbar Sliding
-      let oldNavbarSlidingEls;
-      if (oldNavbarInner.hasClass('sliding')) {
-        oldNavbarSlidingEls = oldNavbarInner.children('.left, .right, .title, .subnavbar');
-      } else {
-        oldNavbarSlidingEls = oldNavbarInner.find('.sliding');
-      }
-
-      if (oldNavbarSlidingEls) {
-        oldNavbarSlidingEls.each((index, slidingEl) => {
-          const $slidingEl = $(slidingEl);
-          const offset = direction === 'forward' ? slidingEl.f7NavbarLeftOffset : slidingEl.f7NavbarRightOffset;
-          $slidingEl.transform(`translate3d(${offset}px,0,0)`);
-          if (animateIcon) {
-            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-              $slidingEl.find('.back .icon').transform(`translate3d(${-offset + navbarIconOffset}px,0,0)`);
-            }
-          }
-        });
-      }
-    }
-    if (router.dynamicNavbar) {
-      // Prepare Navbars
-      prepareNavbars();
-      Utils.nextTick(() => {
-        // Add class, start animation
-        animateNavbars();
-        router.$el.addClass(routerTransitionClass);
-      });
-    } else {
-      // Add class, start animation
-      router.$el.addClass(routerTransitionClass);
-    }
-  }
-  animateWithJS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+  animatableNavElements(newNavbarInner, oldNavbarInner) {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
-    const separateNavbar = router.separateNavbar;
     const animateIcon = router.params.iosAnimateNavbarBackIcon;
-    const ios = router.app.theme === 'ios';
-    const duration = ios ? 400 : 250;
-    const routerTransitionClass = `router-transition-${direction} router-transition-js-${direction}`;
-
-    let startTime = null;
-    let done = false;
 
     let newNavEls;
     let oldNavEls;
-    let navbarWidth = 0;
-
     function animatableNavEl(el, navbarInner) {
       const $el = $(el);
       const isSliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
@@ -4763,9 +4705,6 @@ class Router$1 extends Framework7Class {
       oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
       });
-      if (!separateNavbar) {
-        navbarWidth = newNavbarInner[0].offsetWidth;
-      }
       [oldNavEls, newNavEls].forEach((navEls) => {
         navEls.forEach((navEl) => {
           const n = navEl;
@@ -4780,6 +4719,122 @@ class Router$1 extends Framework7Class {
           });
         });
       });
+    }
+
+    return { newNavEls, oldNavEls };
+  }
+  animateWithCSS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+    const router = this;
+    const dynamicNavbar = router.dynamicNavbar;
+    const separateNavbar = router.separateNavbar;
+    const ios = router.app.theme === 'ios';
+    // Router Animation class
+    const routerTransitionClass = `router-transition-${direction} router-transition-css-${direction}`;
+
+    let newNavEls;
+    let oldNavEls;
+    let navbarWidth = 0;
+
+    if (ios && dynamicNavbar) {
+      if (!separateNavbar) {
+        navbarWidth = newNavbarInner[0].offsetWidth;
+      }
+      const navEls = router.animatableNavElements(newNavbarInner, oldNavbarInner);
+      newNavEls = navEls.newNavEls;
+      oldNavEls = navEls.oldNavEls;
+    }
+
+    function animateNavbars(progress) {
+      if (ios && dynamicNavbar) {
+        newNavEls.forEach((navEl) => {
+          const $el = navEl.$el;
+          const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
+          if (navEl.isSliding) {
+            $el.transform(`translate3d(${offset * (1 - progress)}px,0,0)`);
+          }
+          if (navEl.hasIcon) {
+            if (direction === 'forward') {
+              navEl.$iconEl.transform(`translate3d(${(-offset - navbarWidth) * (1 - progress)}px,0,0)`);
+            } else {
+              navEl.$iconEl.transform(`translate3d(${(-offset + (navbarWidth / 5)) * (1 - progress)}px,0,0)`);
+            }
+          }
+        });
+        oldNavEls.forEach((navEl) => {
+          const $el = navEl.$el;
+          const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
+          if (navEl.isSliding) {
+            $el.transform(`translate3d(${offset * (progress)}px,0,0)`);
+          }
+          if (navEl.hasIcon) {
+            if (direction === 'forward') {
+              navEl.$iconEl.transform(`translate3d(${(-offset + (navbarWidth / 5)) * (progress)}px,0,0)`);
+            } else {
+              navEl.$iconEl.transform(`translate3d(${(-offset - navbarWidth) * (progress)}px,0,0)`);
+            }
+          }
+        });
+      }
+    }
+
+    // AnimationEnd Callback
+    function onDone() {
+      if (router.dynamicNavbar) {
+        if (newNavbarInner.hasClass('sliding')) {
+          newNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
+        } else {
+          newNavbarInner.find('.sliding').transform('');
+        }
+        if (oldNavbarInner.hasClass('sliding')) {
+          oldNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
+        } else {
+          oldNavbarInner.find('.sliding').transform('');
+        }
+      }
+      router.$el.removeClass(routerTransitionClass);
+      if (callback) callback();
+    }
+
+    (direction === 'forward' ? newPage : oldPage).animationEnd(() => {
+      onDone();
+    });
+
+    // Animate
+    if (dynamicNavbar) {
+      // Prepare Navbars
+      animateNavbars(0);
+      Utils.nextTick(() => {
+        // Add class, start animation
+        animateNavbars(1);
+        router.$el.addClass(routerTransitionClass);
+      });
+    } else {
+      // Add class, start animation
+      router.$el.addClass(routerTransitionClass);
+    }
+  }
+  animateWithJS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+    const router = this;
+    const dynamicNavbar = router.dynamicNavbar;
+    const separateNavbar = router.separateNavbar;
+    const ios = router.app.theme === 'ios';
+    const duration = ios ? 400 : 250;
+    const routerTransitionClass = `router-transition-${direction} router-transition-js-${direction}`;
+
+    let startTime = null;
+    let done = false;
+
+    let newNavEls;
+    let oldNavEls;
+    let navbarWidth = 0;
+
+    if (ios && dynamicNavbar) {
+      if (!separateNavbar) {
+        navbarWidth = newNavbarInner[0].offsetWidth;
+      }
+      const navEls = router.animatableNavElements(newNavbarInner, oldNavbarInner);
+      newNavEls = navEls.newNavEls;
+      oldNavEls = navEls.oldNavEls;
     }
 
     let $shadowEl;
@@ -5102,12 +5157,19 @@ class Router$1 extends Framework7Class {
           const paramValue = matched[index + 1];
           params[keyObj.name] = paramValue;
         });
+
+        let parentPath;
+        if (route.parentPath) {
+          parentPath = path.split('/').slice(0, route.parentPath.split('/').length - 1).join('/');
+        }
+
         matchingRoute = {
           query,
           hash,
           params,
           url,
           path,
+          parentPath,
           route,
           name: route.name,
         };
@@ -5596,6 +5658,14 @@ class Router$1 extends Framework7Class {
         if (router.currentRoute && router.currentRoute.route && router.currentRoute.route.options) {
           Utils.extend(initOptions, router.currentRoute.route.options);
         }
+        router.currentPageEl = $pageEl[0];
+        if (router.dynamicNavbar && $navbarInnerEl.length) {
+          router.currentNavbarEl = $navbarInnerEl[0];
+        }
+        router.removeThemeElements($pageEl);
+        if (router.dynamicNavbar && $navbarInnerEl.length) {
+          router.removeThemeElements($navbarInnerEl);
+        }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
@@ -5616,12 +5686,12 @@ class Router$1 extends Framework7Class {
         router.saveHistory();
       }
     }
-    router.emit('routerInit', router);
+    router.emit('local::init routerInit', router);
   }
   destroy() {
     let router = this;
 
-    router.emit('routerDestroy', router);
+    router.emit('local::destroy routerDestroy', router);
 
     // Delete props & methods
     Object.keys(router).forEach((routerProp) => {
@@ -5649,7 +5719,9 @@ var Router = {
     const instance = this;
     if (instance.app) {
       // View Router
-      instance.router = new Router$1(instance.app, instance);
+      if (instance.params.router) {
+        instance.router = new Router$1(instance.app, instance);
+      }
     } else {
       // App Router
       instance.router = new Router$1(instance);
@@ -5769,7 +5841,9 @@ class View extends Framework7Class {
     app.views.splice(app.views.indexOf(view), 1);
 
     // Destroy Router
-    view.router.destroy();
+    if (view.params.router && view.router) {
+      view.router.destroy();
+    }
 
     view.emit('local::destroy viewDestroy', view);
 
@@ -5783,12 +5857,14 @@ class View extends Framework7Class {
   }
   init() {
     const view = this;
-    view.router.init();
+    if (view.params.router) {
+      view.router.init();
+    }
   }
 }
 
 // Use Router
-View.components = [Router];
+View.use(Router);
 
 function initClicks(app) {
   function handleClicks(e) {
@@ -5849,7 +5925,7 @@ function initClicks(app) {
       if (!view) {
         if (app.views.main) view = app.views.main;
       }
-      if (!view) return;
+      if (!view || !view.router) return;
       if (clickedLink.hasClass('back')) view.router.back(url, clickedLinkData);
       else view.router.navigate(url, clickedLinkData);
     }
@@ -6048,6 +6124,13 @@ const Statusbar = {
       }
     }
   },
+  checkOverlay() {
+    if (Device.needsStatusbarOverlay()) {
+      $('html').addClass('with-statusbar');
+    } else {
+      $('html').removeClass('with-statusbar');
+    }
+  },
   init() {
     const app = this;
     const params = app.params.statusbar;
@@ -6058,12 +6141,13 @@ const Statusbar = {
       }
       if (Device.cordova) {
         $(document).on('resume', () => {
-          if (Device.needsStatusbarOverlay()) {
-            $('html').addClass('with-statusbar');
-          } else {
-            $('html').removeClass('with-statusbar');
-          }
+          Statusbar.checkOverlay();
         }, false);
+        if (Device.iphoneX) {
+          app.on('orientationchange', () => {
+            Statusbar.checkOverlay();
+          });
+        }
       }
     } else if (params.overlay === true) {
       $('html').addClass('with-statusbar');
@@ -6112,6 +6196,7 @@ var Statusbar$1 = {
     const app = this;
     Utils.extend(app, {
       statusbar: {
+        check: Statusbar.check,
         hide: Statusbar.hide,
         show: Statusbar.show,
         iosOverlaysWebView: Statusbar.iosOverlaysWebView,
@@ -6172,6 +6257,7 @@ var View$2 = {
     view: {
       name: undefined,
       main: false,
+      router: true,
       linksView: null,
       stackPages: false,
       xhrCache: true,
@@ -6203,13 +6289,14 @@ var View$2 = {
       pushStateOnLoad: true,
       // Animate Pages
       animate: true,
-      animateWithJS: true,
+      animateWithJS: false,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
       iosSeparateDynamicNavbar: true,
       // Animate iOS Navbar Back Icon
       iosAnimateNavbarBackIcon: true,
-      // MD Theme delay
+      // Delays
+      iosPageLoadDelay: 0,
       materialPageLoadDelay: 0,
     },
   },
@@ -6237,6 +6324,8 @@ var View$2 = {
         return getCurrentView(app);
       },
     });
+    // Alias
+    app.view = app.views;
   },
   on: {
     init() {
@@ -7422,7 +7511,7 @@ var Dialog = {
   name: 'dialog',
   params: {
     dialog: {
-      title: 'Framework7',
+      title: undefined,
       buttonOk: 'OK',
       buttonCancel: 'Cancel',
       usernamePlaceholder: 'Username',
@@ -7437,6 +7526,7 @@ var Dialog = {
   },
   create() {
     const app = this;
+    const defaultDialogTitle = app.params.dialog.title || app.name;
     app.dialog = Utils.extend(
       ModalMethods({
         app,
@@ -7451,7 +7541,7 @@ var Dialog = {
             [text, callbackOk, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             buttons: [{
               text: app.params.dialog.buttonOk,
@@ -7466,7 +7556,7 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
             buttons: [
@@ -7491,7 +7581,7 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             buttons: [
               {
@@ -7512,7 +7602,7 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             content: `
               <div class="dialog-input-field dialog-input-double item-input">
@@ -7548,7 +7638,7 @@ var Dialog = {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             content: `
               <div class="dialog-input-field item-input">
@@ -7620,9 +7710,11 @@ var Dialog = {
 
 class Popup$1 extends Modal$1 {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      on: {},
-    }, params);
+    const extendedParams = Utils.extend(
+      { on: {} },
+      app.params.popup,
+      params
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -7648,7 +7740,7 @@ class Popup$1 extends Modal$1 {
     }
 
     let $backdropEl;
-    if (popup.params.backdrop !== false) {
+    if (popup.params.backdrop) {
       $backdropEl = app.root.children('.popup-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="popup-backdrop"></div>');
@@ -7675,6 +7767,7 @@ var Popup = {
   name: 'popup',
   params: {
     popup: {
+      backdrop: true,
       closeByBackdropClick: true,
     },
   },
@@ -7775,11 +7868,11 @@ var LoginScreen = {
 
 class Popover$1 extends Modal$1 {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      backdrop: true,
-      closeByOutsideClick: app.params.popover.closeByOutsideClick,
-      on: {},
-    }, params);
+    const extendedParams = Utils.extend(
+      { on: {} },
+      app.params.popover,
+      params
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -7857,7 +7950,7 @@ class Popover$1 extends Modal$1 {
     popover.on('popoverOpen', () => {
       popover.resize();
       app.on('resize', handleResize);
-      popover.on('popoverClose', () => {
+      popover.on('popoverClose popoverBeforeDestroy', () => {
         app.off('resize', handleResize);
       });
     });
@@ -7887,6 +7980,7 @@ class Popover$1 extends Modal$1 {
   resize() {
     const popover = this;
     const { app, $el, $targetEl, $angleEl } = popover;
+    const { targetX, targetY } = popover.params;
     $el.css({ left: '', top: '' });
     const [width, height] = [$el.width(), $el.height()];
     let angleSize = 0;
@@ -7899,14 +7993,27 @@ class Popover$1 extends Modal$1 {
       $el.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({ left: '', top: '' });
     }
 
-    const targetWidth = $targetEl.outerWidth();
-    const targetHeight = $targetEl.outerHeight();
-    const targetOffset = $targetEl.offset();
-    const targetOffsetLeft = targetOffset.left - app.left;
-    let targetOffsetTop = targetOffset.top - app.top;
-    const targetParentPage = $targetEl.parents('.page');
-    if (targetParentPage.length > 0) {
-      targetOffsetTop -= targetParentPage[0].scrollTop;
+    let targetWidth;
+    let targetHeight;
+    let targetOffsetLeft;
+    let targetOffsetTop;
+    if ($targetEl && $targetEl.length > 0) {
+      targetWidth = $targetEl.outerWidth();
+      targetHeight = $targetEl.outerHeight();
+
+      const targetOffset = $targetEl.offset();
+      targetOffsetLeft = targetOffset.left - app.left;
+      targetOffsetTop = targetOffset.top - app.top;
+
+      const targetParentPage = $targetEl.parents('.page');
+      if (targetParentPage.length > 0) {
+        targetOffsetTop -= targetParentPage[0].scrollTop;
+      }
+    } else if (typeof targetX !== 'undefined' && targetY !== 'undefined') {
+      targetOffsetLeft = targetX;
+      targetOffsetTop = targetY;
+      targetWidth = popover.params.targetWidth || 0;
+      targetHeight = popover.params.targetHeight || 0;
     }
 
     let [left, top, diff] = [0, 0, 0];
@@ -8009,7 +8116,8 @@ var Popover = {
   params: {
     popover: {
       closeByBackdropClick: true,
-      closeByOutsideClick: false,
+      closeByOutsideClick: true,
+      backdrop: true,
     },
   },
   static: {
@@ -8053,10 +8161,11 @@ var Popover = {
 /* eslint indent: ["off"] */
 class Actions$1 extends Modal$1 {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      toPopover: app.params.actions.convertToPopover,
-      on: {},
-    }, params);
+    const extendedParams = Utils.extend(
+      { on: {} },
+      app.params.actions,
+      params
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -8080,7 +8189,7 @@ class Actions$1 extends Modal$1 {
     } else if (actions.params.content) {
       $el = $(actions.params.content);
     } else if (actions.params.buttons) {
-      if (actions.params.toPopover) {
+      if (actions.params.convertToPopover) {
         actions.popoverHtml = actions.renderPopover();
       }
       actions.actionsHtml = actions.render();
@@ -8095,10 +8204,13 @@ class Actions$1 extends Modal$1 {
     }
 
     // Backdrop
-    let $backdropEl = app.root.children('.actions-backdrop');
-    if ($backdropEl.length === 0) {
-      $backdropEl = $('<div class="actions-backdrop"></div>');
-      app.root.append($backdropEl);
+    let $backdropEl;
+    if (actions.params.backdrop) {
+      $backdropEl = app.root.children('.actions-backdrop');
+      if ($backdropEl.length === 0) {
+        $backdropEl = $('<div class="actions-backdrop"></div>');
+        app.root.append($backdropEl);
+      }
     }
 
     const originalOpen = actions.open;
@@ -8123,18 +8235,26 @@ class Actions$1 extends Modal$1 {
     }
     actions.open = function open(animate) {
       let convertToPopover = false;
-      if (actions.params.toPopover && actions.params.targetEl) {
+      const { targetEl, targetX, targetY, targetWidth, targetHeight } = actions.params;
+      if (actions.params.convertToPopover && (targetEl || (targetX !== undefined && targetY !== undefined))) {
         // Popover
-        if (app.device.ios && app.device.ipad) {
-          convertToPopover = true;
-        } else if (app.width >= 768) {
+        if (
+          actions.params.forceToPopover ||
+          (app.device.ios && app.device.ipad) ||
+          app.width >= 768
+        ) {
           convertToPopover = true;
         }
       }
       if (convertToPopover) {
         popover = app.popover.create({
           content: actions.popoverHtml,
-          targetEl: actions.params.targetEl,
+          backdrop: actions.params.backdrop,
+          targetEl,
+          targetX,
+          targetY,
+          targetWidth,
+          targetHeight,
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
@@ -8144,7 +8264,7 @@ class Actions$1 extends Modal$1 {
         });
         popover.once('popoverClosed', () => {
           popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
-            $(buttonEl).on('click', buttonOnClick);
+            $(buttonEl).off('click', buttonOnClick);
           });
           Utils.nextTick(() => {
             popover.destroy();
@@ -8169,10 +8289,7 @@ class Actions$1 extends Modal$1 {
 
     actions.close = function close(animate) {
       if (popover) {
-        popover.close(animate).once('popoverClose', () => {
-          popover.destroy();
-          popover = undefined;
-        });
+        popover.close(animate);
       } else {
         originalClose.call(actions, animate);
       }
@@ -8184,7 +8301,7 @@ class Actions$1 extends Modal$1 {
       $el,
       el: $el ? $el[0] : undefined,
       $backdropEl,
-      backdropEl: $backdropEl[0],
+      backdropEl: $backdropEl && $backdropEl[0],
       type: 'actions',
     });
 
@@ -8282,9 +8399,11 @@ var Actions = {
   params: {
     actions: {
       convertToPopover: true,
+      forceToPopover: false,
       closeByBackdropClick: true,
       render: null,
       renderPopover: null,
+      backdrop: true,
     },
   },
   static: {
@@ -10220,16 +10339,27 @@ var Timeline = {
 const Tab = {
   show(...args) {
     const app = this;
-    let [tab, tabLink, animate, tabRoute] = args;
-    if (typeof args[1] === 'boolean') {
-      [tab, animate, tabLink, tabRoute] = args;
-      if (args.length > 2 && tabLink.constructor === Object) {
-        [tab, animate, tabRoute, tabLink] = args;
+    let tabEl;
+    let tabLinkEl;
+    let animate;
+    let tabRoute;
+    if (args.length === 1 && args[0].constructor === Object) {
+      tabEl = args[0].tabEl;
+      tabLinkEl = args[0].tabLinkEl;
+      animate = args[0].animate;
+      tabRoute = args[0].tabRoute;
+    } else {
+      [tabEl, tabLinkEl, animate, tabRoute] = args;
+      if (typeof args[1] === 'boolean') {
+        [tabEl, animate, tabLinkEl, tabRoute] = args;
+        if (args.length > 2 && tabLinkEl.constructor === Object) {
+          [tabEl, animate, tabRoute, tabLinkEl] = args;
+        }
       }
     }
     if (typeof animate === 'undefined') animate = true;
 
-    const $newTabEl = $(tab);
+    const $newTabEl = $(tabEl);
 
     if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
       return {
@@ -10239,7 +10369,7 @@ const Tab = {
     }
 
     let $tabLinkEl;
-    if (tabLink) $tabLinkEl = $(tabLink);
+    if (tabLinkEl) $tabLinkEl = $(tabLinkEl);
 
     const $tabsEl = $newTabEl.parent('.tabs');
     if ($tabsEl.length === 0) {
@@ -10308,7 +10438,7 @@ const Tab = {
     // Find related link for new tab
     if (!$tabLinkEl) {
       // Search by id
-      if (typeof tab === 'string') $tabLinkEl = $(`.tab-link[href="${tab}"]`);
+      if (typeof tabEl === 'string') $tabLinkEl = $(`.tab-link[href="${tabEl}"]`);
       else $tabLinkEl = $(`.tab-link[href="#${$newTabEl.attr('id')}"]`);
       // Search by data-tab
       if (!$tabLinkEl || ($tabLinkEl && $tabLinkEl.length === 0)) {
@@ -10322,6 +10452,12 @@ const Tab = {
           $tabLinkEl = $(`.tab-link[href="${tabRoute.url}"]`);
         }
       }
+      if ($tabLinkEl.length > 1 && $newTabEl.parents('.page').length) {
+        // eslint-disable-next-line
+        $tabLinkEl = $tabLinkEl.filter((index, tabLinkElement) => {
+          return $(tabLinkElement).parents('.page')[0] === $newTabEl.parents('.page')[0];
+        });
+      }
     }
     if ($tabLinkEl.length > 0) {
       // Find related link for old tab
@@ -10332,8 +10468,8 @@ const Tab = {
         if (oldTabId) $oldTabLinkEl = $(`.tab-link[href="#${oldTabId}"]`);
         // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
-          $('[data-tab]').each((index, tabLinkEl) => {
-            if ($oldTabEl.is($(tabLinkEl).attr('data-tab'))) $oldTabLinkEl = $(tabLinkEl);
+          $('[data-tab]').each((index, tabLinkElement) => {
+            if ($oldTabEl.is($(tabLinkElement).attr('data-tab'))) $oldTabLinkEl = $(tabLinkElement);
           });
         }
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
@@ -10341,6 +10477,13 @@ const Tab = {
         }
       } else if (tabRoute) {
         $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
+      }
+
+      if ($oldTabLinkEl && $oldTabLinkEl.length > 1 && $oldTabEl && $oldTabEl.parents('.page').length) {
+        // eslint-disable-next-line
+        $oldTabLinkEl = $oldTabLinkEl.filter((index, tabLinkElement) => {
+          return $(tabLinkElement).parents('.page')[0] === $oldTabEl.parents('.page')[0];
+        });
       }
 
       if ($oldTabLinkEl && $oldTabLinkEl.length > 0) $oldTabLinkEl.removeClass('tab-link-active');
@@ -10381,7 +10524,11 @@ var Tabs = {
     '.tab-link': function tabLinkClick($clickedEl, data = {}) {
       const app = this;
       if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
-        app.tab.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
+        app.tab.show({
+          tabEl: data.tab || $clickedEl.attr('href'),
+          tabLinkEl: $clickedEl,
+          animate: data.animate,
+        });
       }
     },
   },
@@ -11197,14 +11344,14 @@ const FormStorage = {
     const $formEl = $(formEl);
     const formId = $formEl.attr('id');
     if (!formId) return;
-    const initialData = app.form.data.get(formId);
+    const initialData = app.form.getFormData(formId);
     if (initialData) {
-      app.form.fromData($formEl, initialData);
+      app.form.fillFromData($formEl, initialData);
     }
     function store() {
-      const data = app.form.toData($formEl);
+      const data = app.form.convertToData($formEl);
       if (!data) return;
-      app.form.data.store(formId, data);
+      app.form.storeFormData(formId, data);
       $formEl.trigger('form:storedata', data);
       app.emit('formStoreData', $formEl[0], data);
     }
@@ -11276,7 +11423,7 @@ function formFromData(formEl, formData) {
   const formId = $formEl.attr('id');
 
   if (!data && formId) {
-    data = app.form.data.get(formId);
+    data = app.form.getFormData(formId);
   }
 
   if (!data) return;
@@ -11349,7 +11496,7 @@ function initAjaxForm() {
 
     let data;
     if (method === 'POST') data = new FormData$1($formEl[0]);
-    else data = Utils.serializeObject(app.form.toData($formEl[0]));
+    else data = Utils.serializeObject(app.form.convertToData($formEl[0]));
 
     const xhr = app.request({
       method,
@@ -11383,13 +11530,12 @@ var Form = {
     const app = this;
     Utils.extend(app, {
       form: {
-        data: {
-          store: FormData$1.store.bind(app),
-          get: FormData$1.get.bind(app),
-          remove: FormData$1.remove.bind(app),
-        },
-        toData: formToData.bind(app),
-        fromData: formFromData.bind(app),
+        data: {},
+        storeFormData: FormData$1.store.bind(app),
+        getFormData: FormData$1.get.bind(app),
+        removeFormData: FormData$1.remove.bind(app),
+        convertToData: formToData.bind(app),
+        fillFromData: formFromData.bind(app),
         storage: {
           init: FormStorage.init.bind(app),
           destroy: FormStorage.destroy.bind(app),
@@ -11732,6 +11878,7 @@ class Toggle$1 extends Framework7Class {
     const $inputEl = $el.children('input[type="checkbox"]');
 
     Utils.extend(toggle, {
+      app,
       $el,
       el: $el[0],
       $inputEl,
@@ -13998,7 +14145,14 @@ class Calendar$1 extends Framework7Class {
       return calendar.params.renderMonthSelector.call(calendar);
     }
 
-    const iconColor = app.theme === 'md' ? 'color-black' : '';
+    let needsBlackIcon;
+    if (calendar.inline && calendar.$containerEl.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    } else if (app.root.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    }
+
+    const iconColor = app.theme === 'md' && needsBlackIcon ? 'color-black' : '';
     return `
       <div class="calendar-month-selector">
         <a href="#" class="link icon-only calendar-prev-month-button">
@@ -14018,7 +14172,14 @@ class Calendar$1 extends Framework7Class {
       return calendar.params.renderYearSelector.call(calendar);
     }
 
-    const iconColor = app.theme === 'md' ? 'color-black' : '';
+    let needsBlackIcon;
+    if (calendar.inline && calendar.$containerEl.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    } else if (app.root.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    }
+
+    const iconColor = app.theme === 'md' && needsBlackIcon ? 'color-black' : '';
     return `
       <div class="calendar-year-selector">
         <a href="#" class="link icon-only calendar-prev-year-button">
@@ -18819,9 +18980,17 @@ var onTouchStart = function (event) {
   const startY = touches.currentY;
 
   // Do NOT start if iOS edge swipe is detected. Otherwise iOS app (UIWebView) cannot swipe-to-go-back anymore
-  if (Device.ios && params.iOSEdgeSwipeDetection && startX <= params.iOSEdgeSwipeThreshold) {
+
+  if (
+    Device.ios &&
+    !Device.cordova &&
+    params.iOSEdgeSwipeDetection &&
+    (startX <= params.iOSEdgeSwipeThreshold) &&
+    (startX >= window.screen.width - params.iOSEdgeSwipeThreshold)
+  ) {
     return;
   }
+
   Utils.extend(data, {
     isTouched: true,
     isMoved: false,
@@ -18843,7 +19012,7 @@ var onTouchStart = function (event) {
     if (document.activeElement && $(document.activeElement).is(data.formElements)) {
       document.activeElement.blur();
     }
-    if (preventDefault) {
+    if (preventDefault && swiper.allowTouchMove) {
       e.preventDefault();
     }
   }
@@ -18882,14 +19051,16 @@ var onTouchMove = function (event) {
     if (swiper.isVertical()) {
       // Vertical
       if (
-        (touches.currentY < touches.startY && swiper.translate <= swiper.maxTranslate()) ||
-        (touches.currentY > touches.startY && swiper.translate >= swiper.minTranslate())
+        (pageY < touches.startY && swiper.translate <= swiper.maxTranslate()) ||
+        (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
       ) {
+        data.isTouched = false;
+        data.isMoved = false;
         return;
       }
     } else if (
-      (touches.currentX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
-      (touches.currentX > touches.startX && swiper.translate >= swiper.minTranslate())
+      (pageX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
+      (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
     ) {
       return;
     }
@@ -18906,16 +19077,22 @@ var onTouchMove = function (event) {
   }
   if (e.targetTouches && e.targetTouches.length > 1) return;
 
-  touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-  touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+  touches.currentX = pageX;
+  touches.currentY = pageY;
+
+  const diffX = touches.currentX - touches.startX;
+  const diffY = touches.currentY - touches.startY;
 
   if (typeof data.isScrolling === 'undefined') {
     let touchAngle;
     if ((swiper.isHorizontal() && touches.currentY === touches.startY) || (swiper.isVertical() && touches.currentX === touches.startX)) {
       data.isScrolling = false;
     } else {
-      touchAngle = (Math.atan2(Math.abs(touches.currentY - touches.startY), Math.abs(touches.currentX - touches.startX)) * 180) / Math.PI;
-      data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : (90 - touchAngle > params.touchAngle);
+      // eslint-disable-next-line
+      if ((diffX * diffX) + (diffY * diffY) >= 25) {
+        touchAngle = (Math.atan2(Math.abs(diffY), Math.abs(diffX)) * 180) / Math.PI;
+        data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : (90 - touchAngle > params.touchAngle);
+      }
     }
   }
   if (data.isScrolling) {
@@ -18959,7 +19136,7 @@ var onTouchMove = function (event) {
   swiper.emit('sliderMove', e);
   data.isMoved = true;
 
-  let diff = swiper.isHorizontal() ? touches.currentX - touches.startX : touches.currentY - touches.startY;
+  let diff = swiper.isHorizontal() ? diffX : diffY;
   touches.diff = diff;
 
   diff *= params.touchRatio;
@@ -19173,7 +19350,7 @@ var onTouchEnd = function (event) {
         } else {
           newPosition = snapGrid[nextSlide - 1];
         }
-        if (!rtl) newPosition = -newPosition;
+        newPosition = -newPosition;
       }
       // Fix duration
       if (swiper.velocity !== 0) {
@@ -19281,7 +19458,7 @@ var onTouchEnd = function (event) {
 var onResize = function () {
   const swiper = this;
 
-  const { params, el, allowSlideNext, allowSlidePrev } = swiper;
+  const { params, el } = swiper;
 
   if (el && el.offsetWidth === 0) return;
 
@@ -19289,6 +19466,9 @@ var onResize = function () {
   if (params.breakpoints) {
     swiper.setBreakpoint();
   }
+
+  // Save locks
+  const { allowSlideNext, allowSlidePrev } = swiper;
 
   // Disable locks on resize
   swiper.allowSlideNext = true;
@@ -19354,9 +19534,9 @@ function attachEvents() {
       (Support$1.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
       if (Support$1.touch) {
-        const passiveListener = touchEvents.start === 'onTouchStart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+        const passiveListener = touchEvents.start === 'touchstart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.addEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
-        target.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+        target.addEventListener(touchEvents.move, swiper.onTouchMove, Support$1.passiveListener ? { passive: false, capture } : capture);
         target.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
       if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support$1.touch && Device.ios)) {
@@ -19439,12 +19619,12 @@ var setBreakpoint = function () {
     swiper.currentBreakpoint = breakpoint;
 
     if (needsReLoop) {
-      const oldIndex = activeIndex - loopedSlides;
       swiper.loopDestroy();
       swiper.loopCreate();
       swiper.updateSlides();
-      swiper.slideTo(oldIndex + loopedSlides, 0, false);
+      swiper.slideTo((activeIndex - loopedSlides) + swiper.loopedSlides, 0, false);
     }
+    swiper.emit('breakpoint', breakPointsParams);
   }
 };
 
@@ -19456,7 +19636,7 @@ var getBreakpoint = function (breakpoints) {
   Object.keys(breakpoints).forEach((point) => {
     points.push(point);
   });
-  points.sort((a, b) => parseInt(a, 10) > parseInt(b, 10));
+  points.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
   for (let i = 0; i < points.length; i += 1) {
     const point = points[i];
     if (point >= window.innerWidth && !breakpoint) {
@@ -19737,7 +19917,9 @@ class Swiper$2 extends Framework7Class {
 
     // Swiper Instance
     const swiper = this;
-
+    if (typeof swiper.modules === 'undefined') {
+      swiper.modules = {};
+    }
     Object.keys(swiper.modules).forEach((moduleName) => {
       const module = swiper.modules[moduleName];
       if (module.params) {
@@ -20926,7 +21108,7 @@ const Scrollbar = {
   setDragPosition(e) {
     const swiper = this;
     const { scrollbar } = swiper;
-    const { $el, dragSize, moveDivider } = scrollbar;
+    const { $el, dragSize, trackSize } = scrollbar;
 
     let pointerPosition;
     if (swiper.isHorizontal()) {
@@ -20934,18 +21116,15 @@ const Scrollbar = {
     } else {
       pointerPosition = ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].pageY : e.pageY || e.clientY);
     }
-    let position = (pointerPosition) - $el.offset()[swiper.isHorizontal() ? 'left' : 'top'] - (dragSize / 2);
-    const positionMin = -swiper.minTranslate() * moveDivider;
-    const positionMax = -swiper.maxTranslate() * moveDivider;
-    if (position < positionMin) {
-      position = positionMin;
-    } else if (position > positionMax) {
-      position = positionMax;
-    }
+    let positionRatio;
+    positionRatio = ((pointerPosition) - $el.offset()[swiper.isHorizontal() ? 'left' : 'top'] - (dragSize / 2)) / (trackSize - dragSize);
+    positionRatio = Math.max(Math.min(positionRatio, 1), 0);
     if (swiper.rtl) {
-      position = positionMax - position;
+      positionRatio = 1 - positionRatio;
     }
-    position = -position / moveDivider;
+
+    const position = swiper.minTranslate() + ((swiper.maxTranslate() - swiper.minTranslate()) * positionRatio);
+
     swiper.updateProgress(position);
     swiper.setTranslate(position);
     swiper.updateActiveIndex();
@@ -21932,7 +22111,9 @@ var Lazy$3 = {
   on: {
     beforeInit() {
       const swiper = this;
-      if (swiper.params.preloadImages) swiper.params.preloadImages = false;
+      if (swiper.params.lazy.enabled && swiper.params.preloadImages) {
+        swiper.params.preloadImages = false;
+      }
     },
     init() {
       const swiper = this;
@@ -22963,6 +23144,7 @@ var EffectCoverflow = {
       swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
 
       swiper.params.watchSlidesProgress = true;
+      swiper.originalParams.watchSlidesProgress = true;
     },
     setTranslate() {
       const swiper = this;
@@ -22980,7 +23162,7 @@ var EffectCoverflow = {
 // Swiper Class
 // Core Modules
 // Components
-Swiper$2.components = [
+Swiper$2.use([
   Device$4,
   Browser$2,
   Support$4,
@@ -23000,7 +23182,7 @@ Swiper$2.components = [
   EffectCube,
   EffectFlip,
   EffectCoverflow,
-];
+]);
 
 function initSwipers(swiperEl) {
   const app = this;
@@ -23051,7 +23233,9 @@ function initSwipers(swiperEl) {
         const tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
         if (tabRoute) router.navigate(tabRoute.path);
       } else {
-        app.tab.show(swiper.slides.eq(swiper.activeIndex));
+        app.tab.show({
+          tabEl: swiper.slides.eq(swiper.activeIndex),
+        });
       }
     });
   }
@@ -23109,7 +23293,7 @@ class PhotoBrowser$1 extends Framework7Class {
 
     const defaults = Utils.extend({
       on: {},
-    }, app.modules.photoBrowser.params.photoBrowser);
+    }, app.params.photoBrowser);
 
     // Extend defaults with modules params
     pb.useModulesParams(defaults);
@@ -23199,7 +23383,11 @@ class PhotoBrowser$1 extends Framework7Class {
     if (!swipeToClose.started) {
       swipeToClose.started = true;
       swipeToClose.start = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-      swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
+      if (pb.params.virtualSlides) {
+        swipeToClose.activeSlide = pb.swiper.$wrapperEl.children('.swiper-slide-active');
+      } else {
+        swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
+      }
       swipeToClose.timeStart = Utils.now();
     }
     e.preventDefault();
@@ -24528,7 +24716,7 @@ class Autocomplete$1 extends Framework7Class {
     const dropdownHtml = `
       <div class="autocomplete-dropdown">
         <div class="autocomplete-dropdown-inner">
-          <div class="list">
+          <div class="list ${!ac.params.expandInput ? 'no-ios-edge' : ''}">
             <ul></ul>
           </div>
         </div>
@@ -24883,11 +25071,250 @@ var Autocomplete = {
   },
 };
 
+class ViAd extends Framework7Class {
+  constructor(app, params = {}) {
+    super(params, [app]);
+    const vi = this;
+    if (!window.vi) {
+      throw new Error('f7:vi SDK not found.');
+    }
+
+    let orientation;
+    if (typeof window.orientation !== 'undefined') {
+      orientation = window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical';
+    }
+    const defaults = Utils.extend(
+      {},
+      app.params.vi,
+      {
+        appId: app.id,
+        appVer: app.version,
+        language: app.language,
+        width: app.width,
+        height: app.height,
+        os: Device.os,
+        osVersion: Device.osVersion,
+        orientation,
+      }
+    );
+
+    // Extend defaults with modules params
+    vi.useModulesParams(defaults);
+
+    vi.params = Utils.extend(defaults, params);
+
+    const adParams = {};
+    const skipParams = ('on autoplay fallbackOverlay fallbackOverlayText enabled').split(' ');
+    Object.keys(vi.params).forEach((paramName) => {
+      if (skipParams.indexOf(paramName) >= 0) return;
+      const paramValue = vi.params[paramName];
+      if ([null, undefined].indexOf(paramValue) >= 0) return;
+      adParams[paramName] = paramValue;
+    });
+
+    if (!vi.params.appId) {
+      throw new Error('Framework7:"app.id" is required to display an ad. Make sure you have specified it on app initialization.');
+    }
+    if (!vi.params.placementId) {
+      throw new Error('Framework7:"placementId" is required to display an ad.');
+    }
+
+    function onResize() {
+      const $viFrame = $('iframe#viAd');
+      if ($viFrame.length === 0) return;
+      $viFrame
+        .css({
+          width: `${app.width}px`,
+          height: `${app.height}px`,
+        });
+    }
+
+    function removeOverlay() {
+      if (!vi.$overlayEl) return;
+      vi.$overlayEl.off('click touchstart');
+      vi.$overlayEl.remove();
+    }
+    function createOverlay(videoEl) {
+      if (!videoEl) return;
+      vi.$overlayEl = $(`
+        <div class="vi-overlay no-fastclick">
+          ${vi.params.fallbackOverlayText ? `<div class="vi-overlay-text">${vi.params.fallbackOverlayText}</div>` : ''}
+          <div class="vi-overlay-play-button"></div>
+        </div>
+      `.trim());
+
+      let touchStartTime;
+      vi.$overlayEl.on('touchstart', () => {
+        touchStartTime = Utils.now();
+      });
+      vi.$overlayEl.on('click', () => {
+        const timeDiff = Utils.now() - touchStartTime;
+        if (timeDiff > 300) return;
+        if (videoEl) {
+          videoEl.play();
+          removeOverlay();
+          return;
+        }
+        vi.start();
+        removeOverlay();
+      });
+      app.root.append(vi.$overlayEl);
+    }
+
+    // Create ad
+    vi.ad = new window.vi.Ad(adParams);
+
+    Utils.extend(vi.ad, {
+      onAdReady() {
+        app.on('resize', onResize);
+        vi.emit('local::ready');
+        if (vi.params.autoplay) {
+          vi.start();
+        }
+      },
+      onAdStarted() {
+        vi.emit('local::started');
+      },
+      onAdClick(targetUrl) {
+        vi.emit('local::click', targetUrl);
+      },
+      onAdImpression() {
+        vi.emit('local::impression');
+      },
+      onAdStopped(reason) {
+        app.off('resize', onResize);
+        removeOverlay();
+
+        vi.emit('local::stopped', reason);
+        if (reason === 'complete') {
+          vi.emit('local::complete');
+        }
+        if (reason === 'userexit') {
+          vi.emit('local::userexit');
+        }
+        vi.destroyed = true;
+      },
+      onAutoPlayFailed(reason, videoEl) {
+        vi.emit('local::autoplayFailed', reason, videoEl);
+        if (reason && reason.name && reason.name.indexOf('NotAllowedError') !== -1 && vi.params.fallbackOverlay) {
+          createOverlay(videoEl);
+        }
+      },
+      onAdError(msg) {
+        removeOverlay();
+        app.off('resize', onResize);
+        vi.emit('local::error', msg);
+        vi.destroyed = true;
+      },
+    });
+
+    vi.init();
+
+    Utils.extend(vi, {
+      app,
+    });
+  }
+  start() {
+    const vi = this;
+    if (vi.destroyed) return;
+    if (vi.ad) vi.ad.startAd();
+  }
+  pause() {
+    const vi = this;
+    if (vi.destroyed) return;
+    if (vi.ad) vi.ad.pauseAd();
+  }
+  resume() {
+    const vi = this;
+    if (vi.destroyed) return;
+    if (vi.ad) vi.ad.resumeAd();
+  }
+  stop() {
+    const vi = this;
+    if (vi.destroyed) return;
+    if (vi.ad) vi.ad.stopAd();
+  }
+  init() {
+    const vi = this;
+    if (vi.destroyed) return;
+    if (vi.ad) vi.ad.initAd();
+  }
+  destroy() {
+    const vi = this;
+    vi.destroyed = true;
+    vi.emit('local::beforeDestroy');
+    Utils.deleteProps(vi);
+  }
+}
+
+var Vi = {
+  name: 'vi',
+  params: {
+    vi: {
+      enabled: false,
+      autoplay: true,
+      fallbackOverlay: true,
+      fallbackOverlayText: 'Please watch this ad',
+      showMute: true,
+      startMuted: (Device.ios || Device.android) && !Device.cordova,
+      appId: null,
+      appVer: null,
+      language: null,
+      width: null,
+      height: null,
+      placementId: 'pltd4o7ibb9rc653x14',
+      videoSlot: null,
+      showProgress: true,
+      showBranding: true,
+      os: null,
+      osVersion: null,
+      orientation: null,
+      age: null,
+      gender: null,
+      advertiserId: null,
+      latitude: null,
+      longitude: null,
+      accuracy: null,
+      storeId: null,
+      ip: null,
+      manufacturer: null,
+      model: null,
+      connectionType: null,
+      connectionProvider: null,
+    },
+  },
+  create() {
+    const app = this;
+    app.vi = {
+      sdkReady: false,
+      createAd(adParams) {
+        return new ViAd(app, adParams);
+      },
+      loadSdk() {
+        if (app.vi.skdReady) return;
+        const script = document.createElement('script');
+        script.onload = function onload() {
+          app.emit('viSdkReady');
+          app.vi.skdReady = true;
+        };
+        script.src = 'http://c.vi-serve.com/viadshtml/vi.min.js';
+        $('head').append(script);
+      },
+    };
+  },
+  on: {
+    init() {
+      const app = this;
+      if (app.params.vi.enabled || (app.passedParams.vi && app.passedParams.vi.enabled !== false)) app.vi.loadSdk();
+    },
+  },
+};
+
 // F7 Class
 // Core Modules
 // Core Components
 // Install Core Modules & Components
-Framework7$1.components = [
+Framework7$1.use([
   Device$2,
   Support,
   Utils$2,
@@ -24943,7 +25370,8 @@ Framework7$1.components = [
   Swiper,
   PhotoBrowser,
   Notification,
-  Autocomplete
-];
+  Autocomplete,
+  Vi
+]);
 
 export default Framework7$1;

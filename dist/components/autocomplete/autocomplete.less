@@ -1,0 +1,82 @@
+/* === Autocomplete === */
+.autocomplete-page {
+  .autocomplete-found {
+    display: block;
+  }
+  .autocomplete-not-found {
+    display: none;
+  }
+  .autocomplete-values {
+    display: block;
+  }
+  .list ul:empty {
+    display: none;
+  }
+
+}
+.autocomplete-preloader:not(.autocomplete-preloader-visible) {
+  visibility: hidden;
+  &, * {
+    animation: none;
+  }
+}
+.autocomplete-dropdown {
+  background: #fff;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 500;
+  width: 100%;
+  .ltr({ left: 0; });
+  .rtl({ right: 0; });
+  .autocomplete-dropdown-inner {
+    position: relative;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    z-index: 1;
+  }
+  .autocomplete-preloader {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    width: 20px;
+    height: 20px;
+  }
+  .autocomplete-preloader-visible {
+    display: block;
+  }
+  .autocomplete-dropdown-placeholder {
+    color: #a9a9a9;
+  }
+  .list {
+    margin: 0;
+    ul {
+      .hairline-remove(top);
+      .hairline-remove(bottom);
+      background: none !important;
+    }
+  }
+}
+
+
+.list .item-content-dropdown-expanded {
+  .item-title.item-label {
+    width: 0;
+    flex-shrink: 10;
+    overflow: hidden;
+    + .item-input-wrap {
+      .ltr({ margin-left: 0; });
+      .rtl({ margin-right: 0; });
+    }
+  }
+  .item-input-wrap {
+    width: 100%;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./autocomplete-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./autocomplete-md.less');
+}

@@ -1,0 +1,35 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .login-screen-content {
+    .login-screen-title, .list, .block {
+      margin: 24px auto;
+    }
+    .list-button {
+      text-align: center;
+      color: @themeColor;
+    }
+  }
+  .login-screen-title {
+    font-size: 34px;
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .login-screen-content, .login-screen-content& {
+        background: none;
+      }
+    }
+  }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .login-screen-content .list-button {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .login-screen-content .list-button.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
+}

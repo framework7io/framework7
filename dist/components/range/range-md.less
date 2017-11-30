@@ -1,0 +1,80 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .range-slider {
+    height: 20px;
+  }
+  .range-bar {
+    background: #b9b9b9;
+    height: 2px;
+    margin-top: -1px;
+  }
+  .range-bar-active {
+    background: @themeColor;
+  }
+  .range-knob-wrap {
+    height: 12px;
+    width: 12px;
+    margin-left: -6px;
+    margin-top: -6px;
+  }
+  .range-knob {
+    background: @themeColor;
+    transition-duration: 200ms;
+    transition-property: transform, background-color;
+  }
+  .range-knob-active-state .range-knob {
+    transform: scale(1.5);
+  }
+  .range-slider-min:not(.range-slider-dual) {
+    .range-knob {
+      background: #fff !important;
+      border: 2px solid #b9b9b9;
+    }
+  }
+  .range-knob-label {
+    width: 26px;
+    height: 26px;
+    margin-left: -13px;
+    margin-bottom: 8px;
+    background: @themeColor;
+    color: #fff;
+    font-size: 10px;
+    border-radius: 50%;
+    line-height: 26px;
+    &:before {
+      content: '';
+      left: 50%;
+      top: 0px;
+      margin-left: -13px;
+      position: absolute;
+      z-index: -1;
+      width: 26px;
+      height: 26px;
+      background: @themeColor;
+      transform: rotate(-45deg);
+      border-radius: 50% 50% 50% 0;
+    }
+  }
+  .range-knob-active-state .range-knob-label {
+    transform: translateY(0%) scale(1);
+  }
+  .range-slider-label {
+    .range-knob-active-state .range-knob {
+      transform: scale(0);
+    }
+  }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} .range-slider {
+      .range-bar-active, .range-knob, .range-knob-label, .range-knob-label:before {
+        background-color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .range-slider.color-@{colorName} {
+      .range-bar-active, .range-knob, .range-knob-label, .range-knob-label:before {
+        background-color: @colorValue;
+      }
+    }
+  });
+}

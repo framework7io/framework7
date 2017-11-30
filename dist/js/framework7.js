@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.17
+ * Framework7 2.0.0-beta.18
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 14, 2017
+ * Released on: November 30, 2017
  */
 
 (function (global, factory) {
@@ -2727,6 +2727,7 @@ var Device = (function Device() {
     desktop: false,
     windows: false,
     iphone: false,
+    iphoneX: false,
     ipod: false,
     ipad: false,
     cordova: window.cordova || window.phonegap,
@@ -2738,6 +2739,7 @@ var Device = (function Device() {
   var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+  var iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
 
 
   // Windows
@@ -2761,6 +2763,7 @@ var Device = (function Device() {
   if (iphone && !ipod) {
     device.osVersion = iphone[2].replace(/_/g, '.');
     device.iphone = true;
+    device.iphoneX = iphoneX;
   }
   if (ipad) {
     device.osVersion = ipad[2].replace(/_/g, '.');
@@ -2777,11 +2780,11 @@ var Device = (function Device() {
     }
   }
 
+  // Webview
+  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone);
+
   // Desktop
   device.desktop = !(device.os || device.android || device.webView);
-
-  // Webview
-  device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
 
   // Minimal UI
   if (device.os && device.os === 'ios') {
@@ -2797,6 +2800,9 @@ var Device = (function Device() {
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
     if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
+      if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
+        return false;
+      }
       return true;
     }
     return false;
@@ -2852,6 +2858,7 @@ Framework7Class.prototype.once = function once (events, handler) {
 };
 Framework7Class.prototype.off = function off (events, handler) {
   var self = this;
+  if (!self.eventsListeners) { return self; }
   events.split(' ').forEach(function (event) {
     if (typeof handler === 'undefined') {
       self.eventsListeners[event] = [];
@@ -3007,18 +3014,20 @@ var Framework7$1 = (function (Framework7Class$$1) {
 
     // Default
     var defaults = {
+      version: '1.0.0',
+      id: 'io.framework7.test',
       root: 'body',
       theme: 'auto',
-      init: true,
-      routes: [],
-      id: 'io.framework7.test',
-      version: '1.0.0',
-      name: 'Framework7',
       language: window.navigator.language,
+      routes: [],
+      name: 'Framework7',
+      initOnDeviceReady: true,
+      init: true,
     };
 
     // Extend defaults with modules params
     app.useModulesParams(defaults);
+
 
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
@@ -3028,6 +3037,8 @@ var Framework7$1 = (function (Framework7Class$$1) {
     Utils.extend(app, {
       // App Id
       id: app.params.id,
+      // App Name
+      name: app.params.name,
       // App version
       version: app.params.version,
       // Routes
@@ -3059,7 +3070,7 @@ var Framework7$1 = (function (Framework7Class$$1) {
 
     // Init
     if (app.params.init) {
-      if (Device.cordova) {
+      if (Device.cordova && app.params.initOnDeviceReady) {
         $$1$1(document).on('deviceready', function () {
           app.init();
         });
@@ -3161,21 +3172,28 @@ var Device$2 = {
       }
       // OS classes
       if (Device.os) {
-        classNames.push(("device-" + (Device.os)), ("device-" + (Device.os) + "-" + (Device.osVersion.split('.')[0])), ("device-" + (Device.os) + "-" + (Device.osVersion.replace(/\./g, '-'))));
+        classNames.push(
+          ("device-" + (Device.os)),
+          ("device-" + (Device.os) + "-" + (Device.osVersion.split('.')[0])),
+          ("device-" + (Device.os) + "-" + (Device.osVersion.replace(/\./g, '-')))
+        );
         if (Device.os === 'ios') {
           var major = parseInt(Device.osVersion.split('.')[0], 10);
           for (var i = major - 1; i >= 6; i -= 1) {
             classNames.push(("device-ios-gt-" + i));
+          }
+          if (Device.iphoneX) {
+            classNames.push('device-iphone-x');
           }
         }
       } else if (Device.desktop) {
         classNames.push('device-desktop');
       }
       // Status bar classes
-      if (Device.statusBar) {
-        classNames.push('with-statusbar-overlay');
+      if (Device.statusbar) {
+        classNames.push('with-statusbar');
       } else {
-        html.classList.remove('with-statusbar-overlay');
+        html.classList.remove('with-statusbar');
       }
 
       // Add html classes
@@ -5053,6 +5071,8 @@ var History = {
     });
   },
   push: function push(viewId, viewState, url) {
+    var obj;
+
     if (!History.allowChange) {
       History.queue.push(function () {
         History.push(viewId, viewState, url);
@@ -5061,11 +5081,12 @@ var History = {
     }
     History.previousState = History.state;
     var newState = Utils.extend({}, (History.previousState || {}), ( obj = {}, obj[viewId] = viewState, obj ));
-    var obj;
     History.state = newState;
     window.history.pushState(newState, '', url);
   },
   replace: function replace(viewId, viewState, url) {
+    var obj;
+
     if (!History.allowChange) {
       History.queue.push(function () {
         History.replace(viewId, viewState, url);
@@ -5074,7 +5095,6 @@ var History = {
     }
     History.previousState = History.state;
     var newState = Utils.extend({}, (History.previousState || {}), ( obj = {}, obj[viewId] = viewState, obj ));
-    var obj;
     History.state = newState;
     window.history.replaceState(newState, '', url);
   },
@@ -5277,7 +5297,7 @@ function SwipeBack(r) {
     if (dynamicNavbar) {
       currentNavElements.each(function (index, navEl) {
         var $navEl = $$1$1(navEl);
-        if (!$navEl.is('.subnavbar')) { $navEl[0].style.opacity = (1 - (percentage * 1.3)); }
+        if (!$navEl.is('.subnavbar')) { $navEl[0].style.opacity = (1 - (Math.pow( percentage, 0.33 ))); }
         if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           var activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
           if (Device.pixelRatio === 1) { activeNavTranslate = Math.round(activeNavTranslate); }
@@ -5295,7 +5315,7 @@ function SwipeBack(r) {
       });
       previousNavElements.each(function (index, navEl) {
         var $navEl = $$1$1(navEl);
-        if (!$navEl.is('.subnavbar')) { $navEl[0].style.opacity = (percentage * 1.3) - 0.3; }
+        if (!$navEl.is('.subnavbar')) { $navEl[0].style.opacity = (Math.pow( percentage, 3 )); }
         if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           var previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
           if ($navEl[0].className.indexOf('title') >= 0 && activeNavBackIcon && activeNavBackIcon.length && activeNavBackIconText.length) {
@@ -5666,6 +5686,14 @@ function forward(el, forwardOptions) {
     );
   }
 
+  // Current Page & Navbar
+  router.currentPageEl = $newPage[0];
+  if (dynamicNavbar && $newNavbarInner.length) {
+    router.currentNavbarEl = $newNavbarInner[0];
+  } else {
+    delete router.currentNavbarEl;
+  }
+
   // Current Route
   router.currentRoute = options.route;
 
@@ -5834,13 +5862,14 @@ function forward(el, forwardOptions) {
     }
   }
   if (options.animate) {
-    if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
+    var delay = router.app.theme === 'md' ? router.params.materialPageLoadDelay : router.params.iosPageLoadDelay;
+    if (delay) {
       setTimeout(function () {
         setPositionClasses();
         router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', function () {
           afterAnimation();
         });
-      }, router.params.materialPageLoadDelay);
+      }, delay);
     } else {
       setPositionClasses();
       router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', function () {
@@ -5876,11 +5905,28 @@ function load(loadParams, loadOptions, ignorePageChange) {
     router.currentRoute.route &&
     router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
-    if (options.route.url === router.url) { return false; }
-    if (options.route.route.tab) {
-      return router.tabLoad(options.route.route.tab, options);
+    if (options.route.url === router.url) {
+      return false;
     }
-    return false;
+    // Check for same params
+    var sameParams = Object.keys(options.route.params).length === Object.keys(router.currentRoute.params).length;
+    if (sameParams) {
+      // Check for equal params name
+      Object.keys(options.route.params).forEach(function (paramName) {
+        if (
+          !(paramName in router.currentRoute.params) ||
+          (router.currentRoute.params[paramName] !== options.route.params[paramName])
+        ) {
+          sameParams = false;
+        }
+      });
+    }
+    if (sameParams) {
+      if (options.route.route.tab) {
+        return router.tabLoad(options.route.route.tab, options);
+      }
+      return false;
+    }
   }
 
   if (
@@ -5953,8 +5999,9 @@ function load(loadParams, loadOptions, ignorePageChange) {
   return router;
 }
 function navigate(navigateParams, navigateOptions) {
-  if ( navigateOptions === void 0 ) navigateOptions = {};
+  var obj;
 
+  if ( navigateOptions === void 0 ) navigateOptions = {};
   var router = this;
   var url;
   var createRoute;
@@ -5977,8 +6024,10 @@ function navigate(navigateParams, navigateOptions) {
 
   var navigateUrl = url.replace('./', '');
   if (navigateUrl[0] !== '/' && navigateUrl.indexOf('#') !== 0) {
-    var currentPath = router.currentRoute.route.parentPath || router.currentRoute.path;
-    navigateUrl = ((currentPath || '/') + navigateUrl).replace('//', '/');
+    var currentPath = router.currentRoute.parentPath || router.currentRoute.path;
+    navigateUrl = ((currentPath ? (currentPath + "/") : '/') + navigateUrl)
+      .replace('///', '/')
+      .replace('//', '/');
   }
   var route;
   if (createRoute) {
@@ -6011,7 +6060,6 @@ function navigate(navigateParams, navigateOptions) {
   ('url content component pageName el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
     if (route.route[pageLoadProp]) {
       router.load(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
-      var obj;
     }
   });
   // Async
@@ -6078,12 +6126,21 @@ function tabLoad(tabRoute, loadOptions) {
   }
 
   // Show Tab
-  var tabShowResult;
-  if (router.view.selector) {
-    tabShowResult = router.app.tab.show(((router.view.selector) + " #" + (tabRoute.id)), options.animate, options.route);
+  var $currentPageEl = $$1$1(router.currentPageEl);
+  var tabEl;
+  if ($currentPageEl.length && $currentPageEl.find(("#" + (tabRoute.id))).length) {
+    tabEl = $currentPageEl.find(("#" + (tabRoute.id))).eq(0);
+  } else if (router.view.selector) {
+    tabEl = (router.view.selector) + " #" + (tabRoute.id);
   } else {
-    tabShowResult = router.app.tab.show(("#" + (tabRoute.id)), options.animate, options.route);
+    tabEl = "#" + (tabRoute.id);
   }
+  var tabShowResult = router.app.tab.show({
+    tabEl: tabEl,
+    animate: options.animate,
+    tabRoute: options.route,
+  });
+
   var $newTabEl = tabShowResult.$newTabEl;
   var $oldTabEl = tabShowResult.$oldTabEl;
   var animated = tabShowResult.animated;
@@ -6555,6 +6612,14 @@ function backward(el, backwardOptions) {
   router.history.pop();
   router.saveHistory();
 
+  // Current Page & Navbar
+  router.currentPageEl = $newPage[0];
+  if (dynamicNavbar && $newNavbarInner.length) {
+    router.currentNavbarEl = $newNavbarInner[0];
+  } else {
+    delete router.currentNavbarEl;
+  }
+
   // Current Route
   router.currentRoute = options.route;
 
@@ -6725,9 +6790,10 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   return router;
 }
 function back() {
+  var obj;
+
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
-
   var navigateUrl;
   var navigateOptions;
   if (typeof args[0] === 'object') {
@@ -6847,7 +6913,6 @@ function back() {
   ('url content component pageName el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
     if (route.route[pageLoadProp]) {
       router.loadBack(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
-      var obj;
     }
   });
   // Async
@@ -6967,134 +7032,13 @@ var Router$1 = (function (Framework7Class$$1) {
   if ( Framework7Class$$1 ) Router.__proto__ = Framework7Class$$1;
   Router.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
   Router.prototype.constructor = Router;
-  Router.prototype.animateWithCSS = function animateWithCSS (oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
-    var router = this;
-    // Router Animation class
-    var routerTransitionClass = "router-transition-" + direction + " router-transition-css-" + direction;
-
-    // AnimationEnd Callback
-    (direction === 'forward' ? newPage : oldPage).animationEnd(function () {
-      if (router.dynamicNavbar) {
-        if (newNavbarInner.hasClass('sliding')) {
-          newNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
-        } else {
-          newNavbarInner.find('.sliding').transform('');
-        }
-        if (oldNavbarInner.hasClass('sliding')) {
-          oldNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
-        } else {
-          oldNavbarInner.find('.sliding').transform('');
-        }
-      }
-      router.$el.removeClass(routerTransitionClass);
-      if (callback) { callback(); }
-    });
-
-    function prepareNavbars() {
-      var slidingEls;
-      if (newNavbarInner.hasClass('sliding')) {
-        slidingEls = newNavbarInner.children('.left, .right, .title, .subnavbar');
-      } else {
-        slidingEls = newNavbarInner.find('.sliding');
-      }
-      if (!slidingEls) { return; }
-      var navbarWidth;
-      if (!router.separateNavbar) {
-        navbarWidth = newNavbarInner[0].offsetWidth;
-      }
-
-      var oldNavbarTitleEl;
-      if (oldNavbarInner.children('.title.sliding').length > 0) {
-        oldNavbarTitleEl = oldNavbarInner.children('.title.sliding');
-      } else {
-        oldNavbarTitleEl = oldNavbarInner.hasClass('sliding') && oldNavbarInner.children('.title');
-      }
-
-      slidingEls.each(function (index, slidingEl) {
-        var $slidingEl = $$1$1(slidingEl);
-        var slidingOffset = direction === 'forward' ? slidingEl.f7NavbarRightOffset : slidingEl.f7NavbarLeftOffset;
-        if (router.params.iosAnimateNavbarBackIcon && $slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-          var iconSlidingOffset = -slidingOffset;
-          var iconTextEl = $slidingEl.find('.back span').eq(0);
-          if (!router.separateNavbar) {
-            if (direction === 'forward') {
-              iconSlidingOffset -= navbarWidth;
-            } else {
-              iconSlidingOffset += navbarWidth / 5;
-            }
-          }
-          $slidingEl.find('.back .icon').transform(("translate3d(" + iconSlidingOffset + "px,0,0)"));
-          if (oldNavbarTitleEl && iconTextEl.length > 0) {
-            oldNavbarTitleEl[0].f7NavbarLeftOffset += iconTextEl[0].offsetLeft;
-          }
-        }
-        $slidingEl.transform(("translate3d(" + slidingOffset + "px,0,0)"));
-      });
-    }
-    function animateNavbars() {
-      var animateIcon = router.params.iosAnimateNavbarBackIcon;
-
-      var navbarIconOffset = 0;
-      var oldNavbarWidth;
-      if (!router.separateNavbar && animateIcon) {
-        oldNavbarWidth = oldNavbarInner[0].offsetWidth;
-        if (direction === 'forward') {
-          navbarIconOffset = oldNavbarWidth / 5;
-        } else {
-          navbarIconOffset = -oldNavbarWidth;
-        }
-      }
-
-      // Old Navbar Sliding
-      var oldNavbarSlidingEls;
-      if (oldNavbarInner.hasClass('sliding')) {
-        oldNavbarSlidingEls = oldNavbarInner.children('.left, .right, .title, .subnavbar');
-      } else {
-        oldNavbarSlidingEls = oldNavbarInner.find('.sliding');
-      }
-
-      if (oldNavbarSlidingEls) {
-        oldNavbarSlidingEls.each(function (index, slidingEl) {
-          var $slidingEl = $$1$1(slidingEl);
-          var offset = direction === 'forward' ? slidingEl.f7NavbarLeftOffset : slidingEl.f7NavbarRightOffset;
-          $slidingEl.transform(("translate3d(" + offset + "px,0,0)"));
-          if (animateIcon) {
-            if ($slidingEl.hasClass('left') && $slidingEl.find('.back .icon').length > 0) {
-              $slidingEl.find('.back .icon').transform(("translate3d(" + (-offset + navbarIconOffset) + "px,0,0)"));
-            }
-          }
-        });
-      }
-    }
-    if (router.dynamicNavbar) {
-      // Prepare Navbars
-      prepareNavbars();
-      Utils.nextTick(function () {
-        // Add class, start animation
-        animateNavbars();
-        router.$el.addClass(routerTransitionClass);
-      });
-    } else {
-      // Add class, start animation
-      router.$el.addClass(routerTransitionClass);
-    }
-  };
-  Router.prototype.animateWithJS = function animateWithJS (oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+  Router.prototype.animatableNavElements = function animatableNavElements (newNavbarInner, oldNavbarInner) {
     var router = this;
     var dynamicNavbar = router.dynamicNavbar;
-    var separateNavbar = router.separateNavbar;
     var animateIcon = router.params.iosAnimateNavbarBackIcon;
-    var ios = router.app.theme === 'ios';
-    var duration = ios ? 400 : 250;
-    var routerTransitionClass = "router-transition-" + direction + " router-transition-js-" + direction;
-
-    var startTime = null;
-    var done = false;
 
     var newNavEls;
     var oldNavEls;
-    var navbarWidth = 0;
-
     function animatableNavEl(el, navbarInner) {
       var $el = $$1$1(el);
       var isSliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
@@ -7123,9 +7067,6 @@ var Router$1 = (function (Framework7Class$$1) {
       oldNavbarInner.children('.left, .right, .title, .subnavbar').each(function (index, navEl) {
         oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
       });
-      if (!separateNavbar) {
-        navbarWidth = newNavbarInner[0].offsetWidth;
-      }
       [oldNavEls, newNavEls].forEach(function (navEls) {
         navEls.forEach(function (navEl) {
           var n = navEl;
@@ -7141,6 +7082,122 @@ var Router$1 = (function (Framework7Class$$1) {
           });
         });
       });
+    }
+
+    return { newNavEls: newNavEls, oldNavEls: oldNavEls };
+  };
+  Router.prototype.animateWithCSS = function animateWithCSS (oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+    var router = this;
+    var dynamicNavbar = router.dynamicNavbar;
+    var separateNavbar = router.separateNavbar;
+    var ios = router.app.theme === 'ios';
+    // Router Animation class
+    var routerTransitionClass = "router-transition-" + direction + " router-transition-css-" + direction;
+
+    var newNavEls;
+    var oldNavEls;
+    var navbarWidth = 0;
+
+    if (ios && dynamicNavbar) {
+      if (!separateNavbar) {
+        navbarWidth = newNavbarInner[0].offsetWidth;
+      }
+      var navEls = router.animatableNavElements(newNavbarInner, oldNavbarInner);
+      newNavEls = navEls.newNavEls;
+      oldNavEls = navEls.oldNavEls;
+    }
+
+    function animateNavbars(progress) {
+      if (ios && dynamicNavbar) {
+        newNavEls.forEach(function (navEl) {
+          var $el = navEl.$el;
+          var offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
+          if (navEl.isSliding) {
+            $el.transform(("translate3d(" + (offset * (1 - progress)) + "px,0,0)"));
+          }
+          if (navEl.hasIcon) {
+            if (direction === 'forward') {
+              navEl.$iconEl.transform(("translate3d(" + ((-offset - navbarWidth) * (1 - progress)) + "px,0,0)"));
+            } else {
+              navEl.$iconEl.transform(("translate3d(" + ((-offset + (navbarWidth / 5)) * (1 - progress)) + "px,0,0)"));
+            }
+          }
+        });
+        oldNavEls.forEach(function (navEl) {
+          var $el = navEl.$el;
+          var offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
+          if (navEl.isSliding) {
+            $el.transform(("translate3d(" + (offset * (progress)) + "px,0,0)"));
+          }
+          if (navEl.hasIcon) {
+            if (direction === 'forward') {
+              navEl.$iconEl.transform(("translate3d(" + ((-offset + (navbarWidth / 5)) * (progress)) + "px,0,0)"));
+            } else {
+              navEl.$iconEl.transform(("translate3d(" + ((-offset - navbarWidth) * (progress)) + "px,0,0)"));
+            }
+          }
+        });
+      }
+    }
+
+    // AnimationEnd Callback
+    function onDone() {
+      if (router.dynamicNavbar) {
+        if (newNavbarInner.hasClass('sliding')) {
+          newNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
+        } else {
+          newNavbarInner.find('.sliding').transform('');
+        }
+        if (oldNavbarInner.hasClass('sliding')) {
+          oldNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
+        } else {
+          oldNavbarInner.find('.sliding').transform('');
+        }
+      }
+      router.$el.removeClass(routerTransitionClass);
+      if (callback) { callback(); }
+    }
+
+    (direction === 'forward' ? newPage : oldPage).animationEnd(function () {
+      onDone();
+    });
+
+    // Animate
+    if (dynamicNavbar) {
+      // Prepare Navbars
+      animateNavbars(0);
+      Utils.nextTick(function () {
+        // Add class, start animation
+        animateNavbars(1);
+        router.$el.addClass(routerTransitionClass);
+      });
+    } else {
+      // Add class, start animation
+      router.$el.addClass(routerTransitionClass);
+    }
+  };
+  Router.prototype.animateWithJS = function animateWithJS (oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
+    var router = this;
+    var dynamicNavbar = router.dynamicNavbar;
+    var separateNavbar = router.separateNavbar;
+    var ios = router.app.theme === 'ios';
+    var duration = ios ? 400 : 250;
+    var routerTransitionClass = "router-transition-" + direction + " router-transition-js-" + direction;
+
+    var startTime = null;
+    var done = false;
+
+    var newNavEls;
+    var oldNavEls;
+    var navbarWidth = 0;
+
+    if (ios && dynamicNavbar) {
+      if (!separateNavbar) {
+        navbarWidth = newNavbarInner[0].offsetWidth;
+      }
+      var navEls = router.animatableNavElements(newNavbarInner, oldNavbarInner);
+      newNavEls = navEls.newNavEls;
+      oldNavEls = navEls.oldNavEls;
     }
 
     var $shadowEl;
@@ -7473,12 +7530,19 @@ var Router$1 = (function (Framework7Class$$1) {
           var paramValue = matched[index + 1];
           params[keyObj.name] = paramValue;
         });
+
+        var parentPath;
+        if (route.parentPath) {
+          parentPath = path.split('/').slice(0, route.parentPath.split('/').length - 1).join('/');
+        }
+
         matchingRoute = {
           query: query,
           hash: hash,
           params: params,
           url: url,
           path: path,
+          parentPath: parentPath,
           route: route,
           name: route.name,
         };
@@ -7980,6 +8044,14 @@ var Router$1 = (function (Framework7Class$$1) {
         if (router.currentRoute && router.currentRoute.route && router.currentRoute.route.options) {
           Utils.extend(initOptions, router.currentRoute.route.options);
         }
+        router.currentPageEl = $pageEl[0];
+        if (router.dynamicNavbar && $navbarInnerEl.length) {
+          router.currentNavbarEl = $navbarInnerEl[0];
+        }
+        router.removeThemeElements($pageEl);
+        if (router.dynamicNavbar && $navbarInnerEl.length) {
+          router.removeThemeElements($navbarInnerEl);
+        }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
@@ -8000,12 +8072,12 @@ var Router$1 = (function (Framework7Class$$1) {
         router.saveHistory();
       }
     }
-    router.emit('routerInit', router);
+    router.emit('local::init routerInit', router);
   };
   Router.prototype.destroy = function destroy () {
     var router = this;
 
-    router.emit('routerDestroy', router);
+    router.emit('local::destroy routerDestroy', router);
 
     // Delete props & methods
     Object.keys(router).forEach(function (routerProp) {
@@ -8035,7 +8107,9 @@ var Router = {
     var instance = this;
     if (instance.app) {
       // View Router
-      instance.router = new Router$1(instance.app, instance);
+      if (instance.params.router) {
+        instance.router = new Router$1(instance.app, instance);
+      }
     } else {
       // App Router
       instance.router = new Router$1(instance);
@@ -8161,7 +8235,9 @@ var View = (function (Framework7Class$$1) {
     app.views.splice(app.views.indexOf(view), 1);
 
     // Destroy Router
-    view.router.destroy();
+    if (view.params.router && view.router) {
+      view.router.destroy();
+    }
 
     view.emit('local::destroy viewDestroy', view);
 
@@ -8175,14 +8251,16 @@ var View = (function (Framework7Class$$1) {
   };
   View.prototype.init = function init () {
     var view = this;
-    view.router.init();
+    if (view.params.router) {
+      view.router.init();
+    }
   };
 
   return View;
 }(Framework7Class));
 
 // Use Router
-View.components = [Router];
+View.use(Router);
 
 function initClicks(app) {
   function handleClicks(e) {
@@ -8243,7 +8321,7 @@ function initClicks(app) {
       if (!view) {
         if (app.views.main) { view = app.views.main; }
       }
-      if (!view) { return; }
+      if (!view || !view.router) { return; }
       if (clickedLink.hasClass('back')) { view.router.back(url, clickedLinkData); }
       else { view.router.navigate(url, clickedLinkData); }
     }
@@ -8444,6 +8522,13 @@ var Statusbar = {
       }
     }
   },
+  checkOverlay: function checkOverlay() {
+    if (Device.needsStatusbarOverlay()) {
+      $$1$1('html').addClass('with-statusbar');
+    } else {
+      $$1$1('html').removeClass('with-statusbar');
+    }
+  },
   init: function init() {
     var app = this;
     var params = app.params.statusbar;
@@ -8454,12 +8539,13 @@ var Statusbar = {
       }
       if (Device.cordova) {
         $$1$1(document).on('resume', function () {
-          if (Device.needsStatusbarOverlay()) {
-            $$1$1('html').addClass('with-statusbar');
-          } else {
-            $$1$1('html').removeClass('with-statusbar');
-          }
+          Statusbar.checkOverlay();
         }, false);
+        if (Device.iphoneX) {
+          app.on('orientationchange', function () {
+            Statusbar.checkOverlay();
+          });
+        }
       }
     } else if (params.overlay === true) {
       $$1$1('html').addClass('with-statusbar');
@@ -8508,6 +8594,7 @@ var Statusbar$1 = {
     var app = this;
     Utils.extend(app, {
       statusbar: {
+        check: Statusbar.check,
         hide: Statusbar.hide,
         show: Statusbar.show,
         iosOverlaysWebView: Statusbar.iosOverlaysWebView,
@@ -8568,6 +8655,7 @@ var View$2 = {
     view: {
       name: undefined,
       main: false,
+      router: true,
       linksView: null,
       stackPages: false,
       xhrCache: true,
@@ -8599,13 +8687,14 @@ var View$2 = {
       pushStateOnLoad: true,
       // Animate Pages
       animate: true,
-      animateWithJS: true,
+      animateWithJS: false,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
       iosSeparateDynamicNavbar: true,
       // Animate iOS Navbar Back Icon
       iosAnimateNavbarBackIcon: true,
-      // MD Theme delay
+      // Delays
+      iosPageLoadDelay: 0,
       materialPageLoadDelay: 0,
     },
   },
@@ -8633,6 +8722,8 @@ var View$2 = {
         return getCurrentView(app);
       },
     });
+    // Alias
+    app.view = app.views;
   },
   on: {
     init: function init() {
@@ -9800,10 +9891,10 @@ var ConstructorMethods = function (parameters) {
   if (addMethods && Array.isArray(addMethods)) {
     addMethods.forEach(function (methodName) {
       methods[methodName] = function (el) {
+        if ( el === void 0 ) el = defaultSelector;
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
-        if ( el === void 0 ) el = defaultSelector;
         var instance = methods.get(el);
         if (instance && instance[methodName]) { return instance[methodName].apply(instance, args); }
         return undefined;
@@ -9851,7 +9942,7 @@ var Dialog = {
   name: 'dialog',
   params: {
     dialog: {
-      title: 'Framework7',
+      title: undefined,
       buttonOk: 'OK',
       buttonCancel: 'Cancel',
       usernamePlaceholder: 'Username',
@@ -9866,6 +9957,7 @@ var Dialog = {
   },
   create: function create() {
     var app = this;
+    var defaultDialogTitle = app.params.dialog.title || app.name;
     app.dialog = Utils.extend(
       ModalMethods({
         app: app,
@@ -9886,7 +9978,7 @@ var Dialog = {
             (assign = args, text = assign[0], callbackOk = assign[1], title = assign[2]);
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text: text,
             buttons: [{
               text: app.params.dialog.buttonOk,
@@ -9908,7 +10000,7 @@ var Dialog = {
             (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text: text,
             content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
             buttons: [
@@ -9939,7 +10031,7 @@ var Dialog = {
             (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text: text,
             buttons: [
               {
@@ -9966,7 +10058,7 @@ var Dialog = {
             (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text: text,
             content: ("\n              <div class=\"dialog-input-field dialog-input-double item-input\">\n                <div class=\"item-input-wrap\">\n                  <input type=\"text\" name=\"dialog-username\" placeholder=\"" + (app.params.dialog.usernamePlaceholder) + "\" class=\"dialog-input\">\n                </div>\n              </div>\n              <div class=\"dialog-input-field dialog-input-double item-input\">\n                <div class=\"item-input-wrap\">\n                  <input type=\"password\" name=\"dialog-password\" placeholder=\"" + (app.params.dialog.passwordPlaceholder) + "\" class=\"dialog-input\">\n                </div>\n              </div>"),
             buttons: [
@@ -9998,7 +10090,7 @@ var Dialog = {
             (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
           }
           return new Dialog$1(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text: text,
             content: ("\n              <div class=\"dialog-input-field item-input\">\n                <div class=\"item-input-wrap\">\n                  <input type=\"password\" name=\"dialog-password\" placeholder=\"" + (app.params.dialog.passwordPlaceholder) + "\" class=\"dialog-input\">\n                </div>\n              </div>"),
             buttons: [
@@ -10068,9 +10160,11 @@ var Dialog = {
 
 var Popup$1 = (function (Modal) {
   function Popup(app, params) {
-    var extendedParams = Utils.extend({
-      on: {},
-    }, params);
+    var extendedParams = Utils.extend(
+      { on: {} },
+      app.params.popup,
+      params
+    );
 
     // Extends with open/close Modal methods;
     Modal.call(this, app, extendedParams);
@@ -10096,7 +10190,7 @@ var Popup$1 = (function (Modal) {
     }
 
     var $backdropEl;
-    if (popup.params.backdrop !== false) {
+    if (popup.params.backdrop) {
       $backdropEl = app.root.children('.popup-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $$1$1('<div class="popup-backdrop"></div>');
@@ -10129,6 +10223,7 @@ var Popup = {
   name: 'popup',
   params: {
     popup: {
+      backdrop: true,
       closeByBackdropClick: true,
     },
   },
@@ -10243,11 +10338,11 @@ var LoginScreen = {
 
 var Popover$1 = (function (Modal) {
   function Popover(app, params) {
-    var extendedParams = Utils.extend({
-      backdrop: true,
-      closeByOutsideClick: app.params.popover.closeByOutsideClick,
-      on: {},
-    }, params);
+    var extendedParams = Utils.extend(
+      { on: {} },
+      app.params.popover,
+      params
+    );
 
     // Extends with open/close Modal methods;
     Modal.call(this, app, extendedParams);
@@ -10330,7 +10425,7 @@ var Popover$1 = (function (Modal) {
     popover.on('popoverOpen', function () {
       popover.resize();
       app.on('resize', handleResize);
-      popover.on('popoverClose', function () {
+      popover.on('popoverClose popoverBeforeDestroy', function () {
         app.off('resize', handleResize);
       });
     });
@@ -10367,10 +10462,13 @@ var Popover$1 = (function (Modal) {
     var $el = popover.$el;
     var $targetEl = popover.$targetEl;
     var $angleEl = popover.$angleEl;
+    var ref = popover.params;
+    var targetX = ref.targetX;
+    var targetY = ref.targetY;
     $el.css({ left: '', top: '' });
-    var ref = [$el.width(), $el.height()];
-    var width = ref[0];
-    var height = ref[1];
+    var ref$1 = [$el.width(), $el.height()];
+    var width = ref$1[0];
+    var height = ref$1[1];
     var angleSize = 0;
     var angleLeft;
     var angleTop;
@@ -10381,20 +10479,33 @@ var Popover$1 = (function (Modal) {
       $el.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({ left: '', top: '' });
     }
 
-    var targetWidth = $targetEl.outerWidth();
-    var targetHeight = $targetEl.outerHeight();
-    var targetOffset = $targetEl.offset();
-    var targetOffsetLeft = targetOffset.left - app.left;
-    var targetOffsetTop = targetOffset.top - app.top;
-    var targetParentPage = $targetEl.parents('.page');
-    if (targetParentPage.length > 0) {
-      targetOffsetTop -= targetParentPage[0].scrollTop;
+    var targetWidth;
+    var targetHeight;
+    var targetOffsetLeft;
+    var targetOffsetTop;
+    if ($targetEl && $targetEl.length > 0) {
+      targetWidth = $targetEl.outerWidth();
+      targetHeight = $targetEl.outerHeight();
+
+      var targetOffset = $targetEl.offset();
+      targetOffsetLeft = targetOffset.left - app.left;
+      targetOffsetTop = targetOffset.top - app.top;
+
+      var targetParentPage = $targetEl.parents('.page');
+      if (targetParentPage.length > 0) {
+        targetOffsetTop -= targetParentPage[0].scrollTop;
+      }
+    } else if (typeof targetX !== 'undefined' && targetY !== 'undefined') {
+      targetOffsetLeft = targetX;
+      targetOffsetTop = targetY;
+      targetWidth = popover.params.targetWidth || 0;
+      targetHeight = popover.params.targetHeight || 0;
     }
 
-    var ref$1 = [0, 0, 0];
-    var left = ref$1[0];
-    var top = ref$1[1];
-    var diff = ref$1[2];
+    var ref$2 = [0, 0, 0];
+    var left = ref$2[0];
+    var top = ref$2[1];
+    var diff = ref$2[2];
     // Top Position
     var position = app.theme === 'md' ? 'bottom' : 'top';
     if (app.theme === 'md') {
@@ -10496,7 +10607,8 @@ var Popover = {
   params: {
     popover: {
       closeByBackdropClick: true,
-      closeByOutsideClick: false,
+      closeByOutsideClick: true,
+      backdrop: true,
     },
   },
   static: {
@@ -10544,10 +10656,11 @@ var Popover = {
 /* eslint indent: ["off"] */
 var Actions$1 = (function (Modal) {
   function Actions(app, params) {
-    var extendedParams = Utils.extend({
-      toPopover: app.params.actions.convertToPopover,
-      on: {},
-    }, params);
+    var extendedParams = Utils.extend(
+      { on: {} },
+      app.params.actions,
+      params
+    );
 
     // Extends with open/close Modal methods;
     Modal.call(this, app, extendedParams);
@@ -10571,7 +10684,7 @@ var Actions$1 = (function (Modal) {
     } else if (actions.params.content) {
       $el = $$1$1(actions.params.content);
     } else if (actions.params.buttons) {
-      if (actions.params.toPopover) {
+      if (actions.params.convertToPopover) {
         actions.popoverHtml = actions.renderPopover();
       }
       actions.actionsHtml = actions.render();
@@ -10586,10 +10699,13 @@ var Actions$1 = (function (Modal) {
     }
 
     // Backdrop
-    var $backdropEl = app.root.children('.actions-backdrop');
-    if ($backdropEl.length === 0) {
-      $backdropEl = $$1$1('<div class="actions-backdrop"></div>');
-      app.root.append($backdropEl);
+    var $backdropEl;
+    if (actions.params.backdrop) {
+      $backdropEl = app.root.children('.actions-backdrop');
+      if ($backdropEl.length === 0) {
+        $backdropEl = $$1$1('<div class="actions-backdrop"></div>');
+        app.root.append($backdropEl);
+      }
     }
 
     var originalOpen = actions.open;
@@ -10614,18 +10730,31 @@ var Actions$1 = (function (Modal) {
     }
     actions.open = function open(animate) {
       var convertToPopover = false;
-      if (actions.params.toPopover && actions.params.targetEl) {
+      var ref = actions.params;
+      var targetEl = ref.targetEl;
+      var targetX = ref.targetX;
+      var targetY = ref.targetY;
+      var targetWidth = ref.targetWidth;
+      var targetHeight = ref.targetHeight;
+      if (actions.params.convertToPopover && (targetEl || (targetX !== undefined && targetY !== undefined))) {
         // Popover
-        if (app.device.ios && app.device.ipad) {
-          convertToPopover = true;
-        } else if (app.width >= 768) {
+        if (
+          actions.params.forceToPopover ||
+          (app.device.ios && app.device.ipad) ||
+          app.width >= 768
+        ) {
           convertToPopover = true;
         }
       }
       if (convertToPopover) {
         popover = app.popover.create({
           content: actions.popoverHtml,
-          targetEl: actions.params.targetEl,
+          backdrop: actions.params.backdrop,
+          targetEl: targetEl,
+          targetX: targetX,
+          targetY: targetY,
+          targetWidth: targetWidth,
+          targetHeight: targetHeight,
         });
         popover.open(animate);
         popover.once('popoverOpened', function () {
@@ -10635,7 +10764,7 @@ var Actions$1 = (function (Modal) {
         });
         popover.once('popoverClosed', function () {
           popover.$el.find('.item-link').each(function (groupIndex, buttonEl) {
-            $$1$1(buttonEl).on('click', buttonOnClick);
+            $$1$1(buttonEl).off('click', buttonOnClick);
           });
           Utils.nextTick(function () {
             popover.destroy();
@@ -10660,10 +10789,7 @@ var Actions$1 = (function (Modal) {
 
     actions.close = function close(animate) {
       if (popover) {
-        popover.close(animate).once('popoverClose', function () {
-          popover.destroy();
-          popover = undefined;
-        });
+        popover.close(animate);
       } else {
         originalClose.call(actions, animate);
       }
@@ -10675,7 +10801,7 @@ var Actions$1 = (function (Modal) {
       $el: $el,
       el: $el ? $el[0] : undefined,
       $backdropEl: $backdropEl,
-      backdropEl: $backdropEl[0],
+      backdropEl: $backdropEl && $backdropEl[0],
       type: 'actions',
     });
 
@@ -10751,9 +10877,11 @@ var Actions = {
   params: {
     actions: {
       convertToPopover: true,
+      forceToPopover: false,
       closeByBackdropClick: true,
       render: null,
       renderPopover: null,
+      backdrop: true,
     },
   },
   static: {
@@ -12747,21 +12875,30 @@ var Tab = {
     while ( len-- ) args[ len ] = arguments[ len ];
 
     var app = this;
-    var tab = args[0];
-    var tabLink = args[1];
-    var animate = args[2];
-    var tabRoute = args[3];
-    if (typeof args[1] === 'boolean') {
+    var tabEl;
+    var tabLinkEl;
+    var animate;
+    var tabRoute;
+    if (args.length === 1 && args[0].constructor === Object) {
+      tabEl = args[0].tabEl;
+      tabLinkEl = args[0].tabLinkEl;
+      animate = args[0].animate;
+      tabRoute = args[0].tabRoute;
+    } else {
       var assign;
-      (assign = args, tab = assign[0], animate = assign[1], tabLink = assign[2], tabRoute = assign[3]);
-      if (args.length > 2 && tabLink.constructor === Object) {
+      (assign = args, tabEl = assign[0], tabLinkEl = assign[1], animate = assign[2], tabRoute = assign[3]);
+      if (typeof args[1] === 'boolean') {
         var assign$1;
-        (assign$1 = args, tab = assign$1[0], animate = assign$1[1], tabRoute = assign$1[2], tabLink = assign$1[3]);
+        (assign$1 = args, tabEl = assign$1[0], animate = assign$1[1], tabLinkEl = assign$1[2], tabRoute = assign$1[3]);
+        if (args.length > 2 && tabLinkEl.constructor === Object) {
+          var assign$2;
+          (assign$2 = args, tabEl = assign$2[0], animate = assign$2[1], tabRoute = assign$2[2], tabLinkEl = assign$2[3]);
+        }
       }
     }
     if (typeof animate === 'undefined') { animate = true; }
 
-    var $newTabEl = $$1$1(tab);
+    var $newTabEl = $$1$1(tabEl);
 
     if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
       return {
@@ -12771,7 +12908,7 @@ var Tab = {
     }
 
     var $tabLinkEl;
-    if (tabLink) { $tabLinkEl = $$1$1(tabLink); }
+    if (tabLinkEl) { $tabLinkEl = $$1$1(tabLinkEl); }
 
     var $tabsEl = $newTabEl.parent('.tabs');
     if ($tabsEl.length === 0) {
@@ -12840,7 +12977,7 @@ var Tab = {
     // Find related link for new tab
     if (!$tabLinkEl) {
       // Search by id
-      if (typeof tab === 'string') { $tabLinkEl = $$1$1((".tab-link[href=\"" + tab + "\"]")); }
+      if (typeof tabEl === 'string') { $tabLinkEl = $$1$1((".tab-link[href=\"" + tabEl + "\"]")); }
       else { $tabLinkEl = $$1$1((".tab-link[href=\"#" + ($newTabEl.attr('id')) + "\"]")); }
       // Search by data-tab
       if (!$tabLinkEl || ($tabLinkEl && $tabLinkEl.length === 0)) {
@@ -12854,6 +12991,12 @@ var Tab = {
           $tabLinkEl = $$1$1((".tab-link[href=\"" + (tabRoute.url) + "\"]"));
         }
       }
+      if ($tabLinkEl.length > 1 && $newTabEl.parents('.page').length) {
+        // eslint-disable-next-line
+        $tabLinkEl = $tabLinkEl.filter(function (index, tabLinkElement) {
+          return $$1$1(tabLinkElement).parents('.page')[0] === $newTabEl.parents('.page')[0];
+        });
+      }
     }
     if ($tabLinkEl.length > 0) {
       // Find related link for old tab
@@ -12864,8 +13007,8 @@ var Tab = {
         if (oldTabId) { $oldTabLinkEl = $$1$1((".tab-link[href=\"#" + oldTabId + "\"]")); }
         // Search by data-tab
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
-          $$1$1('[data-tab]').each(function (index, tabLinkEl) {
-            if ($oldTabEl.is($$1$1(tabLinkEl).attr('data-tab'))) { $oldTabLinkEl = $$1$1(tabLinkEl); }
+          $$1$1('[data-tab]').each(function (index, tabLinkElement) {
+            if ($oldTabEl.is($$1$1(tabLinkElement).attr('data-tab'))) { $oldTabLinkEl = $$1$1(tabLinkElement); }
           });
         }
         if (!$oldTabLinkEl || ($oldTabLinkEl && $oldTabLinkEl.length === 0)) {
@@ -12873,6 +13016,13 @@ var Tab = {
         }
       } else if (tabRoute) {
         $oldTabLinkEl = $tabLinkEl.siblings('.tab-link-active');
+      }
+
+      if ($oldTabLinkEl && $oldTabLinkEl.length > 1 && $oldTabEl && $oldTabEl.parents('.page').length) {
+        // eslint-disable-next-line
+        $oldTabLinkEl = $oldTabLinkEl.filter(function (index, tabLinkElement) {
+          return $$1$1(tabLinkElement).parents('.page')[0] === $oldTabEl.parents('.page')[0];
+        });
       }
 
       if ($oldTabLinkEl && $oldTabLinkEl.length > 0) { $oldTabLinkEl.removeClass('tab-link-active'); }
@@ -12915,7 +13065,11 @@ var Tabs = {
 
       var app = this;
       if (($clickedEl.attr('href') && $clickedEl.attr('href').indexOf('#') === 0) || $clickedEl.attr('data-tab')) {
-        app.tab.show(data.tab || $clickedEl.attr('href'), $clickedEl, data.animate);
+        app.tab.show({
+          tabEl: data.tab || $clickedEl.attr('href'),
+          tabLinkEl: $clickedEl,
+          animate: data.animate,
+        });
       }
     },
   },
@@ -13219,8 +13373,9 @@ function swipePanel$1(panel) {
 
 var Panel$1 = (function (Framework7Class$$1) {
   function Panel(app, params) {
-    if ( params === void 0 ) params = {};
+    var obj;
 
+    if ( params === void 0 ) params = {};
     Framework7Class$$1.call(this, params, [app]);
     var panel = this;
 
@@ -13240,7 +13395,6 @@ var Panel$1 = (function (Framework7Class$$1) {
 
     if (!app.panel[side]) {
       Utils.extend(app.panel, ( obj = {}, obj[side] = panel, obj ));
-      var obj;
     }
 
     var $backdropEl = $$1$1('.panel-backdrop');
@@ -13302,6 +13456,8 @@ var Panel$1 = (function (Framework7Class$$1) {
     return viewEl;
   };
   Panel.prototype.setBreakpoint = function setBreakpoint () {
+    var obj, obj$1;
+
     var panel = this;
     var app = panel.app;
     var side = panel.side;
@@ -13317,7 +13473,6 @@ var Panel$1 = (function (Framework7Class$$1) {
         panel.onOpen();
         panel.onOpened();
         $viewEl.css(( obj = {}, obj[("margin-" + side)] = (($el.width()) + "px"), obj ));
-        var obj;
         app.allowPanelOpen = true;
         app.emit('local::breakpoint panelBreakpoint');
         panel.$el.trigger('panel:breakpoint', panel);
@@ -13327,7 +13482,6 @@ var Panel$1 = (function (Framework7Class$$1) {
       panel.onClose();
       panel.onClosed();
       $viewEl.css(( obj$1 = {}, obj$1[("margin-" + side)] = '', obj$1 ));
-      var obj$1;
       app.emit('local::breakpoint panelBreakpoint');
       panel.$el.trigger('panel:breakpoint', panel);
     }
@@ -13762,14 +13916,14 @@ var FormStorage = {
     var $formEl = $$1$1(formEl);
     var formId = $formEl.attr('id');
     if (!formId) { return; }
-    var initialData = app.form.data.get(formId);
+    var initialData = app.form.getFormData(formId);
     if (initialData) {
-      app.form.fromData($formEl, initialData);
+      app.form.fillFromData($formEl, initialData);
     }
     function store() {
-      var data = app.form.toData($formEl);
+      var data = app.form.convertToData($formEl);
       if (!data) { return; }
-      app.form.data.store(formId, data);
+      app.form.storeFormData(formId, data);
       $formEl.trigger('form:storedata', data);
       app.emit('formStoreData', $formEl[0], data);
     }
@@ -13841,7 +13995,7 @@ function formFromData(formEl, formData) {
   var formId = $formEl.attr('id');
 
   if (!data && formId) {
-    data = app.form.data.get(formId);
+    data = app.form.getFormData(formId);
   }
 
   if (!data) { return; }
@@ -13914,7 +14068,7 @@ function initAjaxForm() {
 
     var data;
     if (method === 'POST') { data = new FormData$1($formEl[0]); }
-    else { data = Utils.serializeObject(app.form.toData($formEl[0])); }
+    else { data = Utils.serializeObject(app.form.convertToData($formEl[0])); }
 
     var xhr = app.request({
       method: method,
@@ -13948,13 +14102,12 @@ var Form = {
     var app = this;
     Utils.extend(app, {
       form: {
-        data: {
-          store: FormData$1.store.bind(app),
-          get: FormData$1.get.bind(app),
-          remove: FormData$1.remove.bind(app),
-        },
-        toData: formToData.bind(app),
-        fromData: formFromData.bind(app),
+        data: {},
+        storeFormData: FormData$1.store.bind(app),
+        getFormData: FormData$1.get.bind(app),
+        removeFormData: FormData$1.remove.bind(app),
+        convertToData: formToData.bind(app),
+        fillFromData: formFromData.bind(app),
         storage: {
           init: FormStorage.init.bind(app),
           destroy: FormStorage.destroy.bind(app),
@@ -14301,6 +14454,7 @@ var Toggle$1 = (function (Framework7Class$$1) {
     var $inputEl = $el.children('input[type="checkbox"]');
 
     Utils.extend(toggle, {
+      app: app,
       $el: $el,
       el: $el[0],
       $inputEl: $inputEl,
@@ -14747,6 +14901,8 @@ var Range$1 = (function (Framework7Class$$1) {
     range.knobWidth = range.knobs[0].outerWidth();
   };
   Range.prototype.layout = function layout () {
+    var obj;
+
     var range = this;
     var app = range.app;
     var knobWidth = range.knobWidth;
@@ -14761,10 +14917,7 @@ var Range$1 = (function (Framework7Class$$1) {
     var positionProperty = app.rtl ? 'right' : 'left';
     if (range.dual) {
       var progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
-      $barActiveEl.css(( obj = {
-        width: (((progress[1] - progress[0]) * 100) + "%"),
-      }, obj[positionProperty] = ((progress[0] * 100) + "%"), obj ));
-      var obj;
+      $barActiveEl.css(( obj = {}, obj[positionProperty] = ((progress[0] * 100) + "%"), obj.width = (((progress[1] - progress[0]) * 100) + "%"), obj ));
       knobs.forEach(function ($knobEl, knobIndex) {
         var leftPos = rangeWidth * progress[knobIndex];
         var realLeft = (rangeWidth * progress[knobIndex]) - (knobWidth / 2);
@@ -16512,7 +16665,14 @@ var Calendar$1 = (function (Framework7Class$$1) {
       return calendar.params.renderMonthSelector.call(calendar);
     }
 
-    var iconColor = app.theme === 'md' ? 'color-black' : '';
+    var needsBlackIcon;
+    if (calendar.inline && calendar.$containerEl.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    } else if (app.root.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    }
+
+    var iconColor = app.theme === 'md' && needsBlackIcon ? 'color-black' : '';
     return ("\n      <div class=\"calendar-month-selector\">\n        <a href=\"#\" class=\"link icon-only calendar-prev-month-button\">\n          <i class=\"icon icon-prev " + iconColor + "\"></i>\n        </a>\n        <span class=\"current-month-value\"></span>\n        <a href=\"#\" class=\"link icon-only calendar-next-month-button\">\n          <i class=\"icon icon-next " + iconColor + "\"></i>\n        </a>\n      </div>\n    ").trim();
   };
   Calendar.prototype.renderYearSelector = function renderYearSelector () {
@@ -16522,7 +16682,14 @@ var Calendar$1 = (function (Framework7Class$$1) {
       return calendar.params.renderYearSelector.call(calendar);
     }
 
-    var iconColor = app.theme === 'md' ? 'color-black' : '';
+    var needsBlackIcon;
+    if (calendar.inline && calendar.$containerEl.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    } else if (app.root.closest('.theme-dark').length === 0) {
+      needsBlackIcon = true;
+    }
+
+    var iconColor = app.theme === 'md' && needsBlackIcon ? 'color-black' : '';
     return ("\n      <div class=\"calendar-year-selector\">\n        <a href=\"#\" class=\"link icon-only calendar-prev-year-button\">\n          <i class=\"icon icon-prev " + iconColor + "\"></i>\n        </a>\n        <span class=\"current-year-value\"></span>\n        <a href=\"#\" class=\"link icon-only calendar-next-year-button\">\n          <i class=\"icon icon-next " + iconColor + "\"></i>\n        </a>\n      </div>\n    ").trim();
   };
   Calendar.prototype.renderHeader = function renderHeader () {
@@ -16731,6 +16898,8 @@ var Calendar$1 = (function (Framework7Class$$1) {
     calendar.emit('local::closed calendarClosed', calendar);
   };
   Calendar.prototype.open = function open () {
+    var obj;
+
     var calendar = this;
     var app = calendar.app;
     var opened = calendar.opened;
@@ -16784,10 +16953,9 @@ var Calendar$1 = (function (Framework7Class$$1) {
       calendar.view.router.navigate({
         url: calendar.url,
         route: ( obj = {
-          path: calendar.url,
+          path: calendar.url
         }, obj[modalType] = modalParams, obj ),
       });
-      var obj;
     } else {
       calendar.modal = app[modalType].create(modalParams);
       calendar.modal.open();
@@ -17611,6 +17779,8 @@ var Picker$1 = (function (Framework7Class$$1) {
     picker.emit('local::closed pickerClosed', picker);
   };
   Picker.prototype.open = function open () {
+    var obj;
+
     var picker = this;
     var app = picker.app;
     var opened = picker.opened;
@@ -17654,10 +17824,9 @@ var Picker$1 = (function (Framework7Class$$1) {
       picker.view.router.navigate({
         url: picker.url,
         route: ( obj = {
-          path: picker.url,
+          path: picker.url
         }, obj[modalType] = modalParams, obj ),
       });
-      var obj;
     } else {
       picker.modal = app[modalType].create(modalParams);
       picker.modal.open();
@@ -21447,9 +21616,17 @@ var onTouchStart = function (event) {
   var startY = touches.currentY;
 
   // Do NOT start if iOS edge swipe is detected. Otherwise iOS app (UIWebView) cannot swipe-to-go-back anymore
-  if (Device.ios && params.iOSEdgeSwipeDetection && startX <= params.iOSEdgeSwipeThreshold) {
+
+  if (
+    Device.ios &&
+    !Device.cordova &&
+    params.iOSEdgeSwipeDetection &&
+    (startX <= params.iOSEdgeSwipeThreshold) &&
+    (startX >= window.screen.width - params.iOSEdgeSwipeThreshold)
+  ) {
     return;
   }
+
   Utils.extend(data, {
     isTouched: true,
     isMoved: false,
@@ -21471,7 +21648,7 @@ var onTouchStart = function (event) {
     if (document.activeElement && $$1$1(document.activeElement).is(data.formElements)) {
       document.activeElement.blur();
     }
-    if (preventDefault) {
+    if (preventDefault && swiper.allowTouchMove) {
       e.preventDefault();
     }
   }
@@ -21512,14 +21689,16 @@ var onTouchMove = function (event) {
     if (swiper.isVertical()) {
       // Vertical
       if (
-        (touches.currentY < touches.startY && swiper.translate <= swiper.maxTranslate()) ||
-        (touches.currentY > touches.startY && swiper.translate >= swiper.minTranslate())
+        (pageY < touches.startY && swiper.translate <= swiper.maxTranslate()) ||
+        (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
       ) {
+        data.isTouched = false;
+        data.isMoved = false;
         return;
       }
     } else if (
-      (touches.currentX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
-      (touches.currentX > touches.startX && swiper.translate >= swiper.minTranslate())
+      (pageX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
+      (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
     ) {
       return;
     }
@@ -21536,16 +21715,22 @@ var onTouchMove = function (event) {
   }
   if (e.targetTouches && e.targetTouches.length > 1) { return; }
 
-  touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-  touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+  touches.currentX = pageX;
+  touches.currentY = pageY;
+
+  var diffX = touches.currentX - touches.startX;
+  var diffY = touches.currentY - touches.startY;
 
   if (typeof data.isScrolling === 'undefined') {
     var touchAngle;
     if ((swiper.isHorizontal() && touches.currentY === touches.startY) || (swiper.isVertical() && touches.currentX === touches.startX)) {
       data.isScrolling = false;
     } else {
-      touchAngle = (Math.atan2(Math.abs(touches.currentY - touches.startY), Math.abs(touches.currentX - touches.startX)) * 180) / Math.PI;
-      data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : (90 - touchAngle > params.touchAngle);
+      // eslint-disable-next-line
+      if ((diffX * diffX) + (diffY * diffY) >= 25) {
+        touchAngle = (Math.atan2(Math.abs(diffY), Math.abs(diffX)) * 180) / Math.PI;
+        data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : (90 - touchAngle > params.touchAngle);
+      }
     }
   }
   if (data.isScrolling) {
@@ -21589,7 +21774,7 @@ var onTouchMove = function (event) {
   swiper.emit('sliderMove', e);
   data.isMoved = true;
 
-  var diff = swiper.isHorizontal() ? touches.currentX - touches.startX : touches.currentY - touches.startY;
+  var diff = swiper.isHorizontal() ? diffX : diffY;
   touches.diff = diff;
 
   diff *= params.touchRatio;
@@ -21808,7 +21993,7 @@ var onTouchEnd = function (event) {
         } else {
           newPosition = snapGrid[nextSlide - 1];
         }
-        if (!rtl) { newPosition = -newPosition; }
+        newPosition = -newPosition;
       }
       // Fix duration
       if (swiper.velocity !== 0) {
@@ -21918,8 +22103,6 @@ var onResize = function () {
 
   var params = swiper.params;
   var el = swiper.el;
-  var allowSlideNext = swiper.allowSlideNext;
-  var allowSlidePrev = swiper.allowSlidePrev;
 
   if (el && el.offsetWidth === 0) { return; }
 
@@ -21927,6 +22110,10 @@ var onResize = function () {
   if (params.breakpoints) {
     swiper.setBreakpoint();
   }
+
+  // Save locks
+  var allowSlideNext = swiper.allowSlideNext;
+  var allowSlidePrev = swiper.allowSlidePrev;
 
   // Disable locks on resize
   swiper.allowSlideNext = true;
@@ -21995,9 +22182,9 @@ function attachEvents() {
       (Support$1.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
       if (Support$1.touch) {
-        var passiveListener = touchEvents.start === 'onTouchStart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+        var passiveListener = touchEvents.start === 'touchstart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.addEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
-        target.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+        target.addEventListener(touchEvents.move, swiper.onTouchMove, Support$1.passiveListener ? { passive: false, capture: capture } : capture);
         target.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
       if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support$1.touch && Device.ios)) {
@@ -22085,12 +22272,12 @@ var setBreakpoint = function () {
     swiper.currentBreakpoint = breakpoint;
 
     if (needsReLoop) {
-      var oldIndex = activeIndex - loopedSlides;
       swiper.loopDestroy();
       swiper.loopCreate();
       swiper.updateSlides();
-      swiper.slideTo(oldIndex + loopedSlides, 0, false);
+      swiper.slideTo((activeIndex - loopedSlides) + swiper.loopedSlides, 0, false);
     }
+    swiper.emit('breakpoint', breakPointsParams);
   }
 };
 
@@ -22102,7 +22289,7 @@ var getBreakpoint = function (breakpoints) {
   Object.keys(breakpoints).forEach(function (point) {
     points.push(point);
   });
-  points.sort(function (a, b) { return parseInt(a, 10) > parseInt(b, 10); });
+  points.sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10); });
   for (var i = 0; i < points.length; i += 1) {
     var point = points[i];
     if (point >= window.innerWidth && !breakpoint) {
@@ -22391,7 +22578,9 @@ var Swiper$2 = (function (SwiperClass$$1) {
 
     // Swiper Instance
     var swiper = this;
-
+    if (typeof swiper.modules === 'undefined') {
+      swiper.modules = {};
+    }
     Object.keys(swiper.modules).forEach(function (moduleName) {
       var module = swiper.modules[moduleName];
       if (module.params) {
@@ -23617,7 +23806,7 @@ var Scrollbar = {
     var scrollbar = swiper.scrollbar;
     var $el = scrollbar.$el;
     var dragSize = scrollbar.dragSize;
-    var moveDivider = scrollbar.moveDivider;
+    var trackSize = scrollbar.trackSize;
 
     var pointerPosition;
     if (swiper.isHorizontal()) {
@@ -23625,18 +23814,15 @@ var Scrollbar = {
     } else {
       pointerPosition = ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].pageY : e.pageY || e.clientY);
     }
-    var position = (pointerPosition) - $el.offset()[swiper.isHorizontal() ? 'left' : 'top'] - (dragSize / 2);
-    var positionMin = -swiper.minTranslate() * moveDivider;
-    var positionMax = -swiper.maxTranslate() * moveDivider;
-    if (position < positionMin) {
-      position = positionMin;
-    } else if (position > positionMax) {
-      position = positionMax;
-    }
+    var positionRatio;
+    positionRatio = ((pointerPosition) - $el.offset()[swiper.isHorizontal() ? 'left' : 'top'] - (dragSize / 2)) / (trackSize - dragSize);
+    positionRatio = Math.max(Math.min(positionRatio, 1), 0);
     if (swiper.rtl) {
-      position = positionMax - position;
+      positionRatio = 1 - positionRatio;
     }
-    position = -position / moveDivider;
+
+    var position = swiper.minTranslate() + ((swiper.maxTranslate() - swiper.minTranslate()) * positionRatio);
+
     swiper.updateProgress(position);
     swiper.setTranslate(position);
     swiper.updateActiveIndex();
@@ -24645,7 +24831,9 @@ var Lazy$3 = {
   on: {
     beforeInit: function beforeInit() {
       var swiper = this;
-      if (swiper.params.preloadImages) { swiper.params.preloadImages = false; }
+      if (swiper.params.lazy.enabled && swiper.params.preloadImages) {
+        swiper.params.preloadImages = false;
+      }
     },
     init: function init() {
       var swiper = this;
@@ -25692,6 +25880,7 @@ var EffectCoverflow = {
       swiper.classNames.push(((swiper.params.containerModifierClass) + "3d"));
 
       swiper.params.watchSlidesProgress = true;
+      swiper.originalParams.watchSlidesProgress = true;
     },
     setTranslate: function setTranslate() {
       var swiper = this;
@@ -25709,7 +25898,7 @@ var EffectCoverflow = {
 // Swiper Class
 // Core Modules
 // Components
-Swiper$2.components = [
+Swiper$2.use([
   Device$4,
   Browser$2,
   Support$4,
@@ -25728,7 +25917,7 @@ Swiper$2.components = [
   EffectFade,
   EffectCube,
   EffectFlip,
-  EffectCoverflow ];
+  EffectCoverflow ]);
 
 {
   if (!window.Swiper) {
@@ -25785,7 +25974,9 @@ function initSwipers(swiperEl) {
         var tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
         if (tabRoute) { router.navigate(tabRoute.path); }
       } else {
-        app.tab.show(swiper.slides.eq(swiper.activeIndex));
+        app.tab.show({
+          tabEl: swiper.slides.eq(swiper.activeIndex),
+        });
       }
     });
   }
@@ -25845,7 +26036,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
 
     var defaults = Utils.extend({
       on: {},
-    }, app.modules.photoBrowser.params.photoBrowser);
+    }, app.params.photoBrowser);
 
     // Extend defaults with modules params
     pb.useModulesParams(defaults);
@@ -25939,7 +26130,11 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     if (!swipeToClose.started) {
       swipeToClose.started = true;
       swipeToClose.start = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
-      swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
+      if (pb.params.virtualSlides) {
+        swipeToClose.activeSlide = pb.swiper.$wrapperEl.children('.swiper-slide-active');
+      } else {
+        swipeToClose.activeSlide = pb.swiper.slides.eq(pb.swiper.activeIndex);
+      }
       swipeToClose.timeStart = Utils.now();
     }
     e.preventDefault();
@@ -27024,6 +27219,8 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
   Autocomplete.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
   Autocomplete.prototype.constructor = Autocomplete;
   Autocomplete.prototype.positionDropDown = function positionDropDown () {
+    var obj;
+
     var ac = this;
     var $inputEl = ac.$inputEl;
     var app = ac.app;
@@ -27055,9 +27252,8 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
       width: (($listEl.length > 0 ? $listEl[0].offsetWidth : inputOffsetWidth) + "px"),
     });
     $dropdownEl.children('.autocomplete-dropdown-inner').css(( obj = {
-      maxHeight: (maxHeight + "px"),
+      maxHeight: (maxHeight + "px")
     }, obj[paddingProp] = $listEl.length > 0 && !ac.params.expandInput ? (paddingValue + "px") : '', obj ));
-    var obj;
   };
   Autocomplete.prototype.focus = function focus () {
     var ac = this;
@@ -27174,7 +27370,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
   Autocomplete.prototype.renderDropdown = function renderDropdown () {
     var ac = this;
     if (ac.params.renderDropdown) { return ac.params.renderDropdown.call(ac, ac.items); }
-    var dropdownHtml = ("\n      <div class=\"autocomplete-dropdown\">\n        <div class=\"autocomplete-dropdown-inner\">\n          <div class=\"list\">\n            <ul></ul>\n          </div>\n        </div>\n        " + (ac.params.preloader ? ac.renderPreloader() : '') + "\n      </div>\n    ").trim();
+    var dropdownHtml = ("\n      <div class=\"autocomplete-dropdown\">\n        <div class=\"autocomplete-dropdown-inner\">\n          <div class=\"list " + (!ac.params.expandInput ? 'no-ios-edge' : '') + "\">\n            <ul></ul>\n          </div>\n        </div>\n        " + (ac.params.preloader ? ac.renderPreloader() : '') + "\n      </div>\n    ").trim();
     return dropdownHtml;
   };
   Autocomplete.prototype.renderPage = function renderPage () {
@@ -27501,6 +27697,248 @@ var Autocomplete = {
   },
 };
 
+var ViAd = (function (Framework7Class$$1) {
+  function ViAd(app, params) {
+    if ( params === void 0 ) params = {};
+
+    Framework7Class$$1.call(this, params, [app]);
+    var vi = this;
+    if (!window.vi) {
+      throw new Error('f7:vi SDK not found.');
+    }
+
+    var orientation;
+    if (typeof window.orientation !== 'undefined') {
+      orientation = window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical';
+    }
+    var defaults = Utils.extend(
+      {},
+      app.params.vi,
+      {
+        appId: app.id,
+        appVer: app.version,
+        language: app.language,
+        width: app.width,
+        height: app.height,
+        os: Device.os,
+        osVersion: Device.osVersion,
+        orientation: orientation,
+      }
+    );
+
+    // Extend defaults with modules params
+    vi.useModulesParams(defaults);
+
+    vi.params = Utils.extend(defaults, params);
+
+    var adParams = {};
+    var skipParams = ('on autoplay fallbackOverlay fallbackOverlayText enabled').split(' ');
+    Object.keys(vi.params).forEach(function (paramName) {
+      if (skipParams.indexOf(paramName) >= 0) { return; }
+      var paramValue = vi.params[paramName];
+      if ([null, undefined].indexOf(paramValue) >= 0) { return; }
+      adParams[paramName] = paramValue;
+    });
+
+    if (!vi.params.appId) {
+      throw new Error('Framework7:"app.id" is required to display an ad. Make sure you have specified it on app initialization.');
+    }
+    if (!vi.params.placementId) {
+      throw new Error('Framework7:"placementId" is required to display an ad.');
+    }
+
+    function onResize() {
+      var $viFrame = $$1$1('iframe#viAd');
+      if ($viFrame.length === 0) { return; }
+      $viFrame
+        .css({
+          width: ((app.width) + "px"),
+          height: ((app.height) + "px"),
+        });
+    }
+
+    function removeOverlay() {
+      if (!vi.$overlayEl) { return; }
+      vi.$overlayEl.off('click touchstart');
+      vi.$overlayEl.remove();
+    }
+    function createOverlay(videoEl) {
+      if (!videoEl) { return; }
+      vi.$overlayEl = $$1$1(("\n        <div class=\"vi-overlay no-fastclick\">\n          " + (vi.params.fallbackOverlayText ? ("<div class=\"vi-overlay-text\">" + (vi.params.fallbackOverlayText) + "</div>") : '') + "\n          <div class=\"vi-overlay-play-button\"></div>\n        </div>\n      ").trim());
+
+      var touchStartTime;
+      vi.$overlayEl.on('touchstart', function () {
+        touchStartTime = Utils.now();
+      });
+      vi.$overlayEl.on('click', function () {
+        var timeDiff = Utils.now() - touchStartTime;
+        if (timeDiff > 300) { return; }
+        if (videoEl) {
+          videoEl.play();
+          removeOverlay();
+          return;
+        }
+        vi.start();
+        removeOverlay();
+      });
+      app.root.append(vi.$overlayEl);
+    }
+
+    // Create ad
+    vi.ad = new window.vi.Ad(adParams);
+
+    Utils.extend(vi.ad, {
+      onAdReady: function onAdReady() {
+        app.on('resize', onResize);
+        vi.emit('local::ready');
+        if (vi.params.autoplay) {
+          vi.start();
+        }
+      },
+      onAdStarted: function onAdStarted() {
+        vi.emit('local::started');
+      },
+      onAdClick: function onAdClick(targetUrl) {
+        vi.emit('local::click', targetUrl);
+      },
+      onAdImpression: function onAdImpression() {
+        vi.emit('local::impression');
+      },
+      onAdStopped: function onAdStopped(reason) {
+        app.off('resize', onResize);
+        removeOverlay();
+
+        vi.emit('local::stopped', reason);
+        if (reason === 'complete') {
+          vi.emit('local::complete');
+        }
+        if (reason === 'userexit') {
+          vi.emit('local::userexit');
+        }
+        vi.destroyed = true;
+      },
+      onAutoPlayFailed: function onAutoPlayFailed(reason, videoEl) {
+        vi.emit('local::autoplayFailed', reason, videoEl);
+        if (reason && reason.name && reason.name.indexOf('NotAllowedError') !== -1 && vi.params.fallbackOverlay) {
+          createOverlay(videoEl);
+        }
+      },
+      onAdError: function onAdError(msg) {
+        removeOverlay();
+        app.off('resize', onResize);
+        vi.emit('local::error', msg);
+        vi.destroyed = true;
+      },
+    });
+
+    vi.init();
+
+    Utils.extend(vi, {
+      app: app,
+    });
+  }
+
+  if ( Framework7Class$$1 ) ViAd.__proto__ = Framework7Class$$1;
+  ViAd.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
+  ViAd.prototype.constructor = ViAd;
+  ViAd.prototype.start = function start () {
+    var vi = this;
+    if (vi.destroyed) { return; }
+    if (vi.ad) { vi.ad.startAd(); }
+  };
+  ViAd.prototype.pause = function pause () {
+    var vi = this;
+    if (vi.destroyed) { return; }
+    if (vi.ad) { vi.ad.pauseAd(); }
+  };
+  ViAd.prototype.resume = function resume () {
+    var vi = this;
+    if (vi.destroyed) { return; }
+    if (vi.ad) { vi.ad.resumeAd(); }
+  };
+  ViAd.prototype.stop = function stop () {
+    var vi = this;
+    if (vi.destroyed) { return; }
+    if (vi.ad) { vi.ad.stopAd(); }
+  };
+  ViAd.prototype.init = function init () {
+    var vi = this;
+    if (vi.destroyed) { return; }
+    if (vi.ad) { vi.ad.initAd(); }
+  };
+  ViAd.prototype.destroy = function destroy () {
+    var vi = this;
+    vi.destroyed = true;
+    vi.emit('local::beforeDestroy');
+    Utils.deleteProps(vi);
+  };
+
+  return ViAd;
+}(Framework7Class));
+
+var Vi = {
+  name: 'vi',
+  params: {
+    vi: {
+      enabled: false,
+      autoplay: true,
+      fallbackOverlay: true,
+      fallbackOverlayText: 'Please watch this ad',
+      showMute: true,
+      startMuted: (Device.ios || Device.android) && !Device.cordova,
+      appId: null,
+      appVer: null,
+      language: null,
+      width: null,
+      height: null,
+      placementId: 'pltd4o7ibb9rc653x14',
+      videoSlot: null,
+      showProgress: true,
+      showBranding: true,
+      os: null,
+      osVersion: null,
+      orientation: null,
+      age: null,
+      gender: null,
+      advertiserId: null,
+      latitude: null,
+      longitude: null,
+      accuracy: null,
+      storeId: null,
+      ip: null,
+      manufacturer: null,
+      model: null,
+      connectionType: null,
+      connectionProvider: null,
+    },
+  },
+  create: function create() {
+    var app = this;
+    app.vi = {
+      sdkReady: false,
+      createAd: function createAd(adParams) {
+        return new ViAd(app, adParams);
+      },
+      loadSdk: function loadSdk() {
+        if (app.vi.skdReady) { return; }
+        var script = document.createElement('script');
+        script.onload = function onload() {
+          app.emit('viSdkReady');
+          app.vi.skdReady = true;
+        };
+        script.src = 'http://c.vi-serve.com/viadshtml/vi.min.js';
+        $$1$1('head').append(script);
+      },
+    };
+  },
+  on: {
+    init: function init() {
+      var app = this;
+      if (app.params.vi.enabled || (app.passedParams.vi && app.passedParams.vi.enabled !== false)) { app.vi.loadSdk(); }
+    },
+  },
+};
+
 // F7 Class
 // Core Modules
 // Core Components
@@ -27513,7 +27951,7 @@ var Autocomplete = {
 }
 
 // Install Core Modules & Components
-Framework7$1.components = [
+Framework7$1.use([
   Device$2,
   Support,
   Utils$2,
@@ -27569,8 +28007,9 @@ Framework7$1.components = [
   Swiper,
   PhotoBrowser,
   Notification,
-  Autocomplete
-];
+  Autocomplete,
+  Vi
+]);
 
 return Framework7$1;
 

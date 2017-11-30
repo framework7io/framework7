@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.17
+ * Framework7 2.0.0-beta.18
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 14, 2017
+ * Released on: November 30, 2017
  */
 html,
 body,
@@ -75,6 +75,10 @@ a {
 p {
   margin: 1em 0;
 }
+.disabled {
+  opacity: 0.55 !important;
+  pointer-events: none !important;
+}
 .ios body {
   font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
   color: #000;
@@ -100,6 +104,9 @@ p {
   .ios .framework7-root {
     height: 672px;
   }
+}
+.ios .theme-dark {
+  color: #fff;
 }
 .ios .color-theme-red a {
   color: #ff3b30;
@@ -174,6 +181,10 @@ html.device-android .statusbar,
 html.md:not(.device-ios):not(.device-android) .statusbar {
   height: 24px;
 }
+html.device-ios.device-iphone-x .statusbar {
+  height: constant(safe-area-inset-top);
+  height: env(safe-area-inset-top);
+}
 html.with-statusbar .statusbar {
   display: block;
 }
@@ -195,9 +206,21 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
   top: 24px;
   height: calc(100% - 24px);
 }
+html.with-statusbar.device-iphone-x .framework7-root {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+html.with-statusbar.device-iphone-x .panel {
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
+  height: calc(100% - constant(safe-area-inset-top));
+  height: calc(100% - env(safe-area-inset-top));
+}
 .ios .statusbar {
   background: #f7f7f8;
-  height: 20px;
+}
+.ios .theme-dark .statusbar {
+  background-color: #1b1b1b;
 }
 /* === Views === */
 .views,
@@ -398,6 +421,10 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
 .ios .router-transition-css-backward.router-dynamic-navbar-inside .page-current:before,
 .ios .router-transition-css-backward.router-dynamic-navbar-inside .page-previous:after {
   top: 44px;
+}
+.ios .theme-dark .page,
+.page.ios .theme-dark {
+  background: #171717;
 }
 @-webkit-keyframes ios-page-next-to-current {
   from {
@@ -892,6 +919,34 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
   transform: translate3d(0, 0, 0) !important;
   opacity: 1 !important;
 }
+.ios .theme-dark .navbar,
+.navbar.ios .theme-dark {
+  background: #1b1b1b;
+}
+.ios .theme-dark .navbar:after,
+.navbar.ios .theme-dark:after {
+  background-color: #282829;
+}
+.ios .theme-dark .navbar .subtitle,
+.navbar.ios .theme-dark .subtitle {
+  color: #8e8e93;
+}
+.ios.device-iphone-x .ios-left-edge .navbar-inner,
+.ios.device-iphone-x .ios-edges .navbar-inner,
+.ios.device-iphone-x .popup .navbar-inner,
+.ios.device-iphone-x .sheet-modal .navbar-inner,
+.ios.device-iphone-x .panel-left .navbar-inner {
+  padding-left: calc(8px + constant(safe-area-inset-right));
+  padding-left: calc(8px + env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .navbar-inner,
+.ios.device-iphone-x .ios-edges .navbar-inner,
+.ios.device-iphone-x .popup .navbar-inner,
+.ios.device-iphone-x .sheet-modal .navbar-inner,
+.ios.device-iphone-x .panel-right .navbar-inner {
+  padding-right: calc(8px + constant(safe-area-inset-right));
+  padding-right: calc(8px + env(safe-area-inset-right));
+}
 @-webkit-keyframes ios-navbar-element-fade-in {
   from {
     opacity: 0;
@@ -1040,10 +1095,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
   white-space: nowrap;
 }
 .tabbar-scrollable .toolbar-inner {
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -1189,6 +1240,12 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
     font-size: 14px;
   }
 }
+.ios .tabbar-scrollable .toolbar-inner {
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
 .ios .tabbar-scrollable a.tab-link,
 .ios .tabbar-scrollable a.link {
   padding: 0 8px;
@@ -1214,6 +1271,14 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
 .ios .toolbar-hidden {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
+}
+.ios .theme-dark .toolbar,
+.toolbar.ios .theme-dark {
+  background: #1b1b1b;
+}
+.ios .theme-dark .toolbar:before,
+.toolbar.ios .theme-dark:before {
+  background-color: #282829;
 }
 .ios .color-theme-red .tabbar a.tab-link-active,
 .ios .color-theme-red .tabbar-labels a.tab-link-active,
@@ -1304,6 +1369,78 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
 .ios .tabbar-labels.color-black a.tab-link-active,
 .ios .tabbar.color-black a.tab-link-active {
   color: #000000;
+}
+.ios.device-iphone-x .views > .toolbar,
+.ios.device-iphone-x .view > .toolbar,
+.ios.device-iphone-x .page > .toolbar,
+.ios.device-iphone-x .popup > .toolbar,
+.ios.device-iphone-x .panel > .toolbar,
+.ios.device-iphone-x .login-screen > .toolbar {
+  height: calc(44px + constant(safe-area-inset-bottom));
+  height: calc(44px + env(safe-area-inset-bottom));
+}
+.ios.device-iphone-x .views > .toolbar .toolbar-inner,
+.ios.device-iphone-x .view > .toolbar .toolbar-inner,
+.ios.device-iphone-x .page > .toolbar .toolbar-inner,
+.ios.device-iphone-x .popup > .toolbar .toolbar-inner,
+.ios.device-iphone-x .panel > .toolbar .toolbar-inner,
+.ios.device-iphone-x .login-screen > .toolbar .toolbar-inner {
+  height: auto;
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
+}
+.ios.device-iphone-x .views > .tabbar-labels,
+.ios.device-iphone-x .view > .tabbar-labels,
+.ios.device-iphone-x .page > .tabbar-labels,
+.ios.device-iphone-x .popup > .tabbar-labels,
+.ios.device-iphone-x .panel > .tabbar-labels,
+.ios.device-iphone-x .login-screen > .tabbar-labels {
+  height: calc(50px + constant(safe-area-inset-bottom));
+  height: calc(50px + env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  .ios.device-iphone-x .views > .tabbar-labels,
+  .ios.device-iphone-x .view > .tabbar-labels,
+  .ios.device-iphone-x .page > .tabbar-labels,
+  .ios.device-iphone-x .popup > .tabbar-labels,
+  .ios.device-iphone-x .panel > .tabbar-labels,
+  .ios.device-iphone-x .login-screen > .tabbar-labels {
+    height: calc(56px + constant(safe-area-inset-bottom));
+    height: calc(56px + env(safe-area-inset-bottom));
+  }
+}
+.ios.device-iphone-x .toolbar ~ * .page-content,
+.ios.device-iphone-x .toolbar ~ .page-content {
+  padding-bottom: calc(44px + constant(safe-area-inset-bottom));
+  padding-bottom: calc(44px + env(safe-area-inset-bottom));
+}
+.ios.device-iphone-x .tabbar-labels ~ * .page-content,
+.ios.device-iphone-x .tabbar-labels ~ .page-content {
+  padding-bottom: calc(50px + constant(safe-area-inset-bottom));
+  padding-bottom: calc(50px + env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  .ios.device-iphone-x .tabbar-labels ~ * .page-content,
+  .ios.device-iphone-x .tabbar-labels ~ .page-content {
+    padding-bottom: calc(56px + constant(safe-area-inset-bottom));
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
+  }
+}
+.ios.device-iphone-x .ios-left-edge .toolbar-inner,
+.ios.device-iphone-x .ios-edges .toolbar-inner,
+.ios.device-iphone-x .popup .toolbar-inner,
+.ios.device-iphone-x .sheet-modal .toolbar-inner,
+.ios.device-iphone-x .panel-left .toolbar-inner {
+  padding-left: calc(8px + constant(safe-area-inset-left));
+  padding-left: calc(8px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .toolbar-inner,
+.ios.device-iphone-x .ios-edges .toolbar-inner,
+.ios.device-iphone-x .popup .toolbar-inner,
+.ios.device-iphone-x .sheet-modal .toolbar-inner,
+.ios.device-iphone-x .panel-right .toolbar-inner {
+  padding-right: calc(8px + constant(safe-area-inset-right));
+  padding-right: calc(8px + env(safe-area-inset-right));
 }
 /* === Subnavbar === */
 .subnavbar {
@@ -1488,6 +1625,30 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
 .ios .navbar ~ *:not(.no-navbar) .subnavbar ~ .page-content,
 .ios .navbar ~ *:not(.no-navbar) .subnavbar ~ * .page-content {
   padding-top: 88px;
+}
+.ios .theme-dark .subnavbar,
+.subnavbar.ios .theme-dark {
+  background: #1b1b1b;
+}
+.ios .theme-dark .subnavbar:after,
+.subnavbar.ios .theme-dark:after {
+  background-color: #282829;
+}
+.ios.device-iphone-x .ios-left-edge .subnavbar-inner,
+.ios.device-iphone-x .ios-edges .subnavbar-inner,
+.ios.device-iphone-x .popup .subnavbar-inner,
+.ios.device-iphone-x .sheet-modal .subnavbar-inner,
+.ios.device-iphone-x .panel-left .subnavbar-inner {
+  padding-left: calc(8px + constant(safe-area-inset-left));
+  padding-left: calc(8px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .subnavbar-inner,
+.ios.device-iphone-x .ios-edges .subnavbar-inner,
+.ios.device-iphone-x .popup .subnavbar-inner,
+.ios.device-iphone-x .sheet-modal .subnavbar-inner,
+.ios.device-iphone-x .panel-right .subnavbar-inner {
+  padding-right: calc(8px + constant(safe-area-inset-right));
+  padding-right: calc(8px + env(safe-area-inset-right));
 }
 /* === Content Block === */
 .block {
@@ -1704,7 +1865,7 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
 }
 .ios .block .block-header,
 .ios .block .block-footer {
-  padding: 0;
+  padding: 0 !important;
 }
 .ios .block-header {
   margin-top: 35px;
@@ -1748,6 +1909,127 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
   }
   .ios .block-strong.tablet-inset {
     border-radius: 7px;
+  }
+}
+.ios .theme-dark .block-title,
+.ios .theme-dark .block-header,
+.ios .theme-dark .block-footer {
+  color: #8E8E93;
+}
+.ios .theme-dark .block {
+  color: #8E8E93;
+}
+.ios .theme-dark .block-strong,
+.ios .theme-dark.block-strong {
+  background-color: #1c1c1d;
+  color: #fff;
+}
+.ios .theme-dark .block-strong:before,
+.ios .theme-dark.block-strong:before {
+  background-color: #282829;
+}
+.ios .theme-dark .block-strong:after,
+.ios .theme-dark.block-strong:after {
+  background-color: #282829;
+}
+.ios.device-iphone-x .ios-left-edge .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-edges .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .popup .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .sheet-modal .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .panel-left .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-left-edge .block-header,
+.ios.device-iphone-x .ios-edges .block-header,
+.ios.device-iphone-x .popup .block-header,
+.ios.device-iphone-x .sheet-modal .block-header,
+.ios.device-iphone-x .panel-left .block-header,
+.ios.device-iphone-x .ios-left-edge .block-footer,
+.ios.device-iphone-x .ios-edges .block-footer,
+.ios.device-iphone-x .popup .block-footer,
+.ios.device-iphone-x .sheet-modal .block-footer,
+.ios.device-iphone-x .panel-left .block-footer {
+  padding-left: calc(15px + constant(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .panel-left .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .ios-left-edge .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .panel-left .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer {
+  padding-left: 0;
+}
+.ios.device-iphone-x .ios-left-edge .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-edges .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .popup .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .sheet-modal .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .panel-left .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-left-edge .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-edges .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .popup .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .panel-left .block-title:not(.no-ios-edges):not(.no-ios-left-edge) {
+  margin-left: calc(15px + constant(safe-area-inset-left));
+}
+@media all and (min-width: 768px) {
+  .ios.device-iphone-x .ios-left-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+  }
+}
+.ios.device-iphone-x .ios-right-edge .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .ios-edges .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .popup .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .sheet-modal .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .panel-right .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .ios-right-edge .block-header,
+.ios.device-iphone-x .ios-edges .block-header,
+.ios.device-iphone-x .popup .block-header,
+.ios.device-iphone-x .sheet-modal .block-header,
+.ios.device-iphone-x .panel-right .block-header,
+.ios.device-iphone-x .ios-right-edge .block-footer,
+.ios.device-iphone-x .ios-edges .block-footer,
+.ios.device-iphone-x .popup .block-footer,
+.ios.device-iphone-x .sheet-modal .block-footer,
+.ios.device-iphone-x .panel-right .block-footer {
+  padding-right: calc(15px + constant(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .panel-right .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .ios-right-edge .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .panel-right .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
+  padding-right: 0;
+}
+.ios.device-iphone-x .ios-right-edge .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .ios-edges .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .popup .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .sheet-modal .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .panel-right .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .ios-right-edge .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .ios-edges .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .popup .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .panel-right .block-title:not(.no-ios-edges):not(.no-ios-right-edge) {
+  margin-right: calc(15px + constant(safe-area-inset-right));
+}
+@media all and (min-width: 768px) {
+  .ios.device-iphone-x .ios-right-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-edges .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .popup .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .sheet-modal .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .panel-right .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
   }
 }
 /* === List View === */
@@ -1848,11 +2130,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
   position: relative;
   overflow: hidden;
   z-index: 0;
-}
-.list .item-link.disabled,
-.list .list-button.disabled {
-  opacity: 0.55;
-  pointer-events: none;
 }
 .list .item-content {
   display: -webkit-box;
@@ -2071,7 +2348,7 @@ li.media-item .item-link .item-title-row {
 }
 .media-list .item-link .item-inner,
 li.media-item .item-link .item-inner {
-  background: none;
+  background-image: none;
 }
 .media-list .item-link .item-title-row,
 li.media-item .item-link .item-title-row {
@@ -2126,6 +2403,20 @@ li.list-group-title:before {
   .list.tablet-inset ul:after {
     display: none !important;
   }
+}
+.theme-dark .list .item-link .item-inner,
+.list.theme-dark .item-link .item-inner,
+.theme-dark .links-list a,
+.links-list.theme-dark a,
+.theme-dark .media-list .item-link .item-title-row,
+.media-list.theme-dark .item-link .item-title-row,
+.theme-dark li.media-item .item-link .item-title-row {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'8px'%20height%3D'13px'%20viewBox%3D'0%200%208%2013'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpolygon%20fill%3D'%23434345'%20transform%3D'translate(1.500000%2C%206.500000)%20rotate(-45.000000)%20translate(-1.500000%2C%20-6.500000)%20'%20points%3D'6%2011%206%202%204%202%204%209%20-3%209%20-3%2011%205%2011'%3E%3C%2Fpolygon%3E%3C%2Fsvg%3E");
+}
+.theme-dark .media-list .item-link .item-inner,
+.media-list.theme-dark .item-link .item-inner,
+.theme-dark li.media-item .item-link .item-inner {
+  background-image: none;
 }
 .ios .list {
   margin: 35px 0;
@@ -2484,6 +2775,9 @@ li.list-group-title:before {
     margin-right: 15px;
     border-radius: 7px;
   }
+  .ios .list.tablet-inset ul {
+    border-radius: 7px;
+  }
   .ios .list.tablet-inset li:first-child > a {
     border-radius: 7px 7px 0 0;
   }
@@ -2519,6 +2813,262 @@ html.device-pixel-ratio-3 .ios li li:last-child .item-inner:after,
 html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
+}
+.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li {
+  padding-left: calc(15px + constant(safe-area-inset-left));
+  padding-left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title {
+  padding-left: calc(15px + constant(safe-area-inset-left));
+  padding-left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+  margin-left: calc(15px + constant(safe-area-inset-left));
+  margin-left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+.ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+.ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer {
+  padding-left: 15px;
+}
+@media (min-width: 768px) {
+  .ios.device-iphone-x .ios-left-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .panel-left .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .ios-left-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .panel-left .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer {
+    padding-left: 15px;
+  }
+}
+.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content {
+  padding-left: calc(15px + constant(safe-area-inset-left));
+  padding-left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li:after,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li:after,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li:after,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li:after,
+.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li:after {
+  left: calc(15px + constant(safe-area-inset-left));
+  left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a {
+  padding-left: calc(15px + constant(safe-area-inset-left));
+  padding-left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a:after,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a:after,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a:after,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a:after,
+.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a:after {
+  left: calc(15px + constant(safe-area-inset-left));
+  left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+  margin-right: calc(15px + constant(safe-area-inset-right));
+  margin-right: calc(15px + env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .panel-right .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
+  }
+}
+.ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .panel-right .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+.ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+.ios.device-iphone-x .panel-right .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
+  padding-right: 15px;
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title {
+  padding-right: calc(15px + constant(safe-area-inset-right));
+  padding-right: calc(15px + env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li {
+  padding-right: calc(15px + constant(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a {
+  background-position: calc(100% - 15px - constant(safe-area-inset-right)) center;
+  background-position: calc(100% - 15px - env(safe-area-inset-right)) center;
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner {
+  padding-right: calc(15px + constant(safe-area-inset-right));
+  padding-right: calc(15px + env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner {
+  padding-right: calc(35px + constant(safe-area-inset-right));
+  padding-right: calc(35px + env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner {
+  padding-right: calc(15px + constant(safe-area-inset-right));
+  padding-right: calc(15px + env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a {
+  padding-right: calc(35px + constant(safe-area-inset-right));
+  padding-right: calc(35px + env(safe-area-inset-right));
+}
+.ios .theme-dark .list ul,
+.list.ios .theme-dark ul {
+  background: #1c1c1d;
+}
+.ios .theme-dark .list ul:before,
+.list.ios .theme-dark ul:before {
+  background-color: #282829;
+}
+.ios .theme-dark .list ul:after,
+.list.ios .theme-dark ul:after {
+  background-color: #282829;
+}
+.ios .theme-dark .list li li:last-child .item-inner:after,
+.list.ios .theme-dark li li:last-child .item-inner:after,
+.ios .theme-dark .list li:last-child li .item-inner:after,
+.list.ios .theme-dark li:last-child li .item-inner:after {
+  background-color: #282829;
+}
+.ios .theme-dark .item-divider:before {
+  background-color: #282829;
+}
+.ios .theme-dark .list-group-title:before {
+  background-color: #282829;
+}
+.ios .theme-dark .list-button:after {
+  background-color: #282829;
+}
+.ios .theme-dark .item-inner:after {
+  background-color: #282829;
+}
+.ios .theme-dark .item-divider,
+.ios .theme-dark .list-group-title {
+  background-color: #111;
+}
+.ios .theme-dark .links-list a:after,
+.ios .theme-dark .simple-list li:after,
+.ios .theme-dark .links-list a:after,
+.links-list.ios .theme-dark a .simple-list li:after,
+.simple-list.ios .theme-dark li:after {
+  background-color: #282829;
+}
+.ios .theme-dark .list .item-link.active-state,
+.list.ios .theme-dark .item-link.active-state,
+.ios .theme-dark .list .list-button.active-state,
+.list.ios .theme-dark .list-button.active-state,
+.ios .theme-dark .links-list a.active-state,
+.links-list.ios .theme-dark a.active-state {
+  background-color: #363636;
 }
 .ios .color-theme-red .list-button {
   color: #ff3b30;
@@ -3392,30 +3942,27 @@ i.icon {
   font-style: normal;
   position: relative;
 }
-.ios .icon-back {
+.ios .icon-back,
+.ios .icon-prev {
   width: 12px;
   height: 20px;
 }
-.ios .icon-forward {
+.ios .icon-forward,
+.ios .icon-next {
   width: 12px;
   height: 20px;
 }
 .ios .icon-next,
 .ios .icon-prev {
-  width: 15px;
-  height: 15px;
+  width: 10px;
 }
-.ios .icon-back {
+.ios .icon-back,
+.ios .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23007aff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
-.ios .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23007aff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios .icon-forward,
 .ios .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23007aff'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23007aff'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23007aff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .navbar .f7-icons,
 .ios .toolbar .f7-icons {
@@ -3438,183 +3985,147 @@ i.icon {
 }
 .ios .color-theme-red .icon-back,
 .ios .icon-back.color-red,
-.ios a.link.color-red .icon-back {
+.ios a.link.color-red .icon-back,
+.ios .color-theme-red .icon-prev,
+.ios .icon-prev.color-red,
+.ios a.link.color-red .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23ff3b30'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-red .icon-forward,
 .ios .icon-forward.color-red,
-.ios a.link.color-red .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ff3b30'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-red .icon-forward,
 .ios .color-theme-red .icon-next,
 .ios .icon-next.color-red,
 .ios a.link.color-red .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ff3b30'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-red .icon-prev,
-.ios .icon-prev.color-red,
-.ios a.link.color-red .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ff3b30'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ff3b30'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-green .icon-back,
 .ios .icon-back.color-green,
-.ios a.link.color-green .icon-back {
+.ios a.link.color-green .icon-back,
+.ios .color-theme-green .icon-prev,
+.ios .icon-prev.color-green,
+.ios a.link.color-green .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%234cd964'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-green .icon-forward,
 .ios .icon-forward.color-green,
-.ios a.link.color-green .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%234cd964'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-green .icon-forward,
 .ios .color-theme-green .icon-next,
 .ios .icon-next.color-green,
 .ios a.link.color-green .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%234cd964'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-green .icon-prev,
-.ios .icon-prev.color-green,
-.ios a.link.color-green .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%234cd964'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%234cd964'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-blue .icon-back,
 .ios .icon-back.color-blue,
-.ios a.link.color-blue .icon-back {
+.ios a.link.color-blue .icon-back,
+.ios .color-theme-blue .icon-prev,
+.ios .icon-prev.color-blue,
+.ios a.link.color-blue .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23007aff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-blue .icon-forward,
 .ios .icon-forward.color-blue,
-.ios a.link.color-blue .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23007aff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-blue .icon-forward,
 .ios .color-theme-blue .icon-next,
 .ios .icon-next.color-blue,
 .ios a.link.color-blue .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23007aff'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-blue .icon-prev,
-.ios .icon-prev.color-blue,
-.ios a.link.color-blue .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23007aff'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23007aff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-pink .icon-back,
 .ios .icon-back.color-pink,
-.ios a.link.color-pink .icon-back {
+.ios a.link.color-pink .icon-back,
+.ios .color-theme-pink .icon-prev,
+.ios .icon-prev.color-pink,
+.ios a.link.color-pink .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23ff2d55'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-pink .icon-forward,
 .ios .icon-forward.color-pink,
-.ios a.link.color-pink .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ff2d55'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-pink .icon-forward,
 .ios .color-theme-pink .icon-next,
 .ios .icon-next.color-pink,
 .ios a.link.color-pink .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ff2d55'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-pink .icon-prev,
-.ios .icon-prev.color-pink,
-.ios a.link.color-pink .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ff2d55'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ff2d55'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-yellow .icon-back,
 .ios .icon-back.color-yellow,
-.ios a.link.color-yellow .icon-back {
+.ios a.link.color-yellow .icon-back,
+.ios .color-theme-yellow .icon-prev,
+.ios .icon-prev.color-yellow,
+.ios a.link.color-yellow .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23ffcc00'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-yellow .icon-forward,
 .ios .icon-forward.color-yellow,
-.ios a.link.color-yellow .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ffcc00'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-yellow .icon-forward,
 .ios .color-theme-yellow .icon-next,
 .ios .icon-next.color-yellow,
 .ios a.link.color-yellow .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ffcc00'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-yellow .icon-prev,
-.ios .icon-prev.color-yellow,
-.ios a.link.color-yellow .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ffcc00'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ffcc00'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-orange .icon-back,
 .ios .icon-back.color-orange,
-.ios a.link.color-orange .icon-back {
+.ios a.link.color-orange .icon-back,
+.ios .color-theme-orange .icon-prev,
+.ios .icon-prev.color-orange,
+.ios a.link.color-orange .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23ff9500'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-orange .icon-forward,
 .ios .icon-forward.color-orange,
-.ios a.link.color-orange .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ff9500'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-orange .icon-forward,
 .ios .color-theme-orange .icon-next,
 .ios .icon-next.color-orange,
 .ios a.link.color-orange .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ff9500'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-orange .icon-prev,
-.ios .icon-prev.color-orange,
-.ios a.link.color-orange .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ff9500'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ff9500'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-gray .icon-back,
 .ios .icon-back.color-gray,
-.ios a.link.color-gray .icon-back {
+.ios a.link.color-gray .icon-back,
+.ios .color-theme-gray .icon-prev,
+.ios .icon-prev.color-gray,
+.ios a.link.color-gray .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%238e8e93'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-gray .icon-forward,
 .ios .icon-forward.color-gray,
-.ios a.link.color-gray .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%238e8e93'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-gray .icon-forward,
 .ios .color-theme-gray .icon-next,
 .ios .icon-next.color-gray,
 .ios a.link.color-gray .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%238e8e93'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-gray .icon-prev,
-.ios .icon-prev.color-gray,
-.ios a.link.color-gray .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%238e8e93'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%238e8e93'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-white .icon-back,
 .ios .icon-back.color-white,
-.ios a.link.color-white .icon-back {
+.ios a.link.color-white .icon-back,
+.ios .color-theme-white .icon-prev,
+.ios .icon-prev.color-white,
+.ios a.link.color-white .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23ffffff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-white .icon-forward,
 .ios .icon-forward.color-white,
-.ios a.link.color-white .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ffffff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-white .icon-forward,
 .ios .color-theme-white .icon-next,
 .ios .icon-next.color-white,
 .ios a.link.color-white .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ffffff'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-white .icon-prev,
-.ios .icon-prev.color-white,
-.ios a.link.color-white .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23ffffff'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23ffffff'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-black .icon-back,
 .ios .icon-back.color-black,
-.ios a.link.color-black .icon-back {
+.ios a.link.color-black .icon-back,
+.ios .color-theme-black .icon-prev,
+.ios .icon-prev.color-black,
+.ios a.link.color-black .icon-prev {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M.18261596%209.4221638c.0352203-.05148305.07573462-.10050698.1215468-.14631917L9.1425872.4374202c.5830904-.58309038%201.52656832-.5849888%202.11643872.00488163.5857864.58578644.591222%201.53009836.0048816%202.11643873L3.82594417%209.9967039l7.43188553%207.4318855c.5830904.5830904.5849888%201.5265683-.0048817%202.1164387-.5857864.5857865-1.5300983.591222-2.11643868.0048816L.2980849%2010.7114853c-.3526746-.3526746-.3939974-.89699-.11546894-1.2893215z'%20fill%3D'%23000000'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .color-theme-black .icon-forward,
 .ios .icon-forward.color-black,
-.ios a.link.color-black .icon-forward {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23000000'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
-}
+.ios a.link.color-black .icon-forward,
 .ios .color-theme-black .icon-next,
 .ios .icon-next.color-black,
 .ios a.link.color-black .icon-next {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23000000'%20d%3D'M1%2C1.6l11.8%2C5.8L1%2C13.4V1.6%20M0%2C0v15l15-7.6L0%2C0L0%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-}
-.ios .color-theme-black .icon-prev,
-.ios .icon-prev.color-black,
-.ios a.link.color-black .icon-prev {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2015%2015'%3E%3Cg%3E%3Cpath%20fill%3D'%23000000'%20d%3D'M14%2C1.6v11.8L2.2%2C7.6L14%2C1.6%20M15%2C0L0%2C7.6L15%2C15V0L15%2C0z'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'12'%20height%3D'20'%20viewBox%3D'0%200%2012%2020'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M11.51840604%2010.5648622c-.0352203.05148305-.07573462.10050698-.1215468.14631917L2.5584348%2019.5496058c-.5830904.58309038-1.52656832.5849888-2.11643872-.00488163-.5857864-.58578644-.591222-1.53009836-.0048816-2.11643873L7.87507783%209.9903221.4431923%202.5584366C-.1398981%201.9753462-.1417965%201.0318683.448074.4419979c.5857864-.5857865%201.5300983-.591222%202.11643868-.0048816l8.83842442%208.8384244c.3526746.3526746.3939974.89699.11546894%201.2893215z'%20fill%3D'%23000000'%20fill-rule%3D'evenodd'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .icon.color-red {
   color: #ff3b30;
@@ -4082,6 +4593,12 @@ html.with-modal-dialog .page-content {
     height: calc(100% - 20px);
     top: 20px;
   }
+  html.with-statusbar.device-iphone-x .popup {
+    height: calc(100% - constant(safe-area-inset-top));
+    height: calc(100% - env(safe-area-inset-top));
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
+  }
   html.with-statusbar.device-android .popup,
   html.with-statusbar.md:not(.device-ios):not(.device-android) .popup {
     height: calc(100% - 24px);
@@ -4093,6 +4610,12 @@ html.with-modal-dialog .page-content {
   html.with-statusbar.ios:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
     height: calc(100% - 20px);
     top: 20px;
+  }
+  html.with-statusbar.device-iphone-x .popup-tablet-fullscreen {
+    height: calc(100% - constant(safe-area-inset-top));
+    height: calc(100% - env(safe-area-inset-top));
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
   }
   html.with-statusbar.device-android .popup-tablet-fullscreen,
   html.with-statusbar.md:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
@@ -4150,6 +4673,12 @@ html.with-statusbar.ios:not(.device-ios):not(.device-android) .login-screen {
   height: calc(100% - 20px);
   top: 20px;
 }
+html.with-statusbar.device-iphone-x .login-screen {
+  height: calc(100% - constant(safe-area-inset-top));
+  height: calc(100% - env(safe-area-inset-top));
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
+}
 html.with-statusbar.device-android .login-screen,
 html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   height: calc(100% - 24px);
@@ -4190,6 +4719,10 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
 }
 .ios .login-screen-title {
   font-size: 30px;
+}
+.ios .theme-dark .login-screen-content,
+.ios .theme-dark .login-screen-content .list ul {
+  background-color: transparent;
 }
 /* === Popover === */
 .popover-backdrop {
@@ -4385,6 +4918,18 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
 }
+.ios .theme-dark .popover,
+.popover.ios .theme-dark {
+  background: rgba(30, 30, 30, 0.95);
+}
+.ios .theme-dark .popover .popover-angle:after,
+.popover.ios .theme-dark .popover-angle:after {
+  background: rgba(30, 30, 30, 0.95);
+}
+.ios .theme-dark .popover .list ul,
+.popover.ios .theme-dark .list ul {
+  background-color: transparent;
+}
 /* === Actions === */
 .actions-backdrop {
   position: absolute;
@@ -4551,11 +5096,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   text-align: center;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.95);
-}
-.ios .actions-button.disabled,
-.ios .actions-label.disabled {
-  pointer-events: none;
-  color: #8e8e93;
 }
 .ios .actions-button b,
 .ios .actions-label b,
@@ -4761,6 +5301,12 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
 .ios .actions-label.color-black {
   color: #000000;
 }
+.ios.device-iphone-x .actions-moda.modal-in {
+  -webkit-transform: translate3d(0, calc(0px - constant(safe-area-inset-bottom)), 0);
+  transform: translate3d(0, calc(0px - constant(safe-area-inset-bottom)), 0);
+  -webkit-transform: translate3d(0, calc(0px - env(safe-area-inset-bottom)), 0);
+  transform: translate3d(0, calc(0px - env(safe-area-inset-bottom)), 0);
+}
 /* === Sheet Modal === */
 .sheet-backdrop {
   position: absolute;
@@ -4867,6 +5413,22 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
 .ios.device-pixel-ratio-3 .sheet-modal .toolbar:before {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
+}
+.ios.device-iphone-x .sheet-modal .toolbar ~ .sheet-modal-inner .page-content {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.ios .theme-dark .sheet-modal,
+.sheet-modal.ios .theme-dark {
+  background-color: #171717;
+}
+.ios .theme-dark .sheet-modal .toolbar,
+.sheet-modal.ios .theme-dark .toolbar {
+  background-color: #1b1b1b;
+}
+.ios .theme-dark .sheet-modal .toolbar:before,
+.sheet-modal.ios .theme-dark .toolbar:before {
+  background-color: #282829;
 }
 /* === Toast === */
 .toast {
@@ -4986,6 +5548,10 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
 html.with-statusbar.device-ios .toast-top,
 html.with-statusbar.ios:not(.device-ios):not(.device-android) .toast-top {
   margin-top: 20px;
+}
+html.with-statusbar.device-iphone-x .toast-top {
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
 }
 html.with-statusbar.device-android .toast-top,
 html.with-statusbar.md:not(.device-ios):not(.device-android) .toast-top {
@@ -5170,9 +5736,9 @@ body > .progressbar-infinite,
   left: 0;
   top: 0;
   z-index: 15000;
-  border-radius: 0;
-  -webkit-transform-origin: center top;
-  transform-origin: center top;
+  border-radius: 0 !important;
+  -webkit-transform-origin: center top !important;
+  transform-origin: center top !important;
 }
 html.with-statusbar.device-ios body > .progressbar,
 html.with-statusbar.device-ios .view > .progressbar,
@@ -5233,6 +5799,23 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .panel > .progressb
 html.with-statusbar.md:not(.device-ios):not(.device-android) .popup > .progressbar-infinite,
 html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > .progressbar-infinite {
   top: 24px;
+}
+.with-statusbar.device-iphone-x body > .progressbar,
+.with-statusbar.device-iphone-x .view > .progressbar,
+.with-statusbar.device-iphone-x .views > .progressbar,
+.with-statusbar.device-iphone-x .page > .progressbar,
+.with-statusbar.device-iphone-x .panel > .progressbar,
+.with-statusbar.device-iphone-x .popup > .progressbar,
+.with-statusbar.device-iphone-x .framework7-root > .progressbar,
+.with-statusbar.device-iphone-x body > .progressbar-infinite,
+.with-statusbar.device-iphone-x .view > .progressbar-infinite,
+.with-statusbar.device-iphone-x .views > .progressbar-infinite,
+.with-statusbar.device-iphone-x .page > .progressbar-infinite,
+.with-statusbar.device-iphone-x .panel > .progressbar-infinite,
+.with-statusbar.device-iphone-x .popup > .progressbar-infinite,
+.with-statusbar.device-iphone-x .framework7-root > .progressbar-infinite {
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
 }
 .progressbar {
   vertical-align: middle;
@@ -5540,6 +6123,10 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
 .sortable-enabled .item-link .item-title-row {
   background-image: none;
 }
+.theme-dark .sortable li.sorting,
+.sortable.theme-dark li.sorting {
+  background-color: rgba(50, 50, 50, 0.8);
+}
 .ios .sortable-handler {
   width: 35px;
 }
@@ -5550,6 +6137,27 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
 .ios .sortable-enabled .item-inner,
 .ios .sortable-enabled .item-link .item-inner {
   padding-right: 35px;
+}
+.ios.device-iphone-x .ios-right-edge .sortable-handler,
+.ios.device-iphone-x .ios-edges .sortable-handler,
+.ios.device-iphone-x .popup .sortable-handler,
+.ios.device-iphone-x .sheet-modal .sortable-handler,
+.ios.device-iphone-x .panel-right .sortable-handler {
+  right: constant(safe-area-inset-right);
+  right: env(safe-area-inset-right);
+}
+.ios.device-iphone-x .ios-right-edge .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .ios-edges .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .popup .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .sheet-modal .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .panel-right .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+.ios.device-iphone-x .ios-right-edge .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .ios-edges .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .popup .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .sheet-modal .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+.ios.device-iphone-x .panel-right .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner {
+  padding-right: calc(35px + constant(safe-area-inset-right));
+  padding-right: calc(35px + env(safe-area-inset-right));
 }
 /* === Swipeout === */
 .swipeout {
@@ -5852,6 +6460,21 @@ html.device-android-4 .accordion-item-content {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'13px'%20height%3D'8px'%20viewBox%3D'0%200%208%2013'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpolygon%20fill%3D'%23c7c7cc'%20transform%3D'translate(6.5%2C%206.5)%20rotate(-315)%20translate(-10%2C%20-6.5)'%20points%3D'11%2011%2011%202%209%202%209%209%202%209%202%2011%2010%2011'%3E%3C%2Fpolygon%3E%3C%2Fsvg%3E");
   background-size: 13px 13px;
 }
+.ios .theme-dark .list .accordion-item-toggle .item-inner {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'8px'%20height%3D'13px'%20viewBox%3D'0%200%208%2013'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpolygon%20fill%3D'%23434345'%20transform%3D'translate(1.500000%2C%206.500000)%20rotate(-45.000000)%20translate(-1.500000%2C%20-6.500000)%20'%20points%3D'6%2011%206%202%204%202%204%209%20-3%209%20-3%2011%205%2011'%3E%3C%2Fpolygon%3E%3C%2Fsvg%3E");
+}
+.ios .theme-dark .list .accordion-item-toggle.active-state {
+  background-color: #363636;
+}
+.ios .theme-dark .list:not(.media-list) .accordion-item-opened:not(.media-item) .accordion-item-toggle .item-inner,
+.ios .theme-dark .list:not(.media-list) .accordion-item-opened:not(.media-item) > .item-link .item-inner,
+.ios .theme-dark .media-list .accordion-item-opened .accordion-item-toggle .item-title-row,
+.ios .theme-dark .media-list .accordion-item-opened > .item-link .item-title-row,
+.ios .theme-dark .accordion-item-opened.media-item .accordion-item-toggle .item-title-row,
+.ios .theme-dark .accordion-item-opened.media-item > .item-link .item-title-row,
+.ios .theme-dark .links-list .accordion-item-opened > a {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'13px'%20height%3D'8px'%20viewBox%3D'0%200%208%2013'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpolygon%20fill%3D'%23434345'%20transform%3D'translate(6.5%2C%206.5)%20rotate(-315)%20translate(-10%2C%20-6.5)'%20points%3D'11%2011%2011%202%209%202%209%209%202%209%202%2011%2010%2011'%3E%3C%2Fpolygon%3E%3C%2Fsvg%3E");
+}
 /* === Contacts === */
 .contacts-list .list-group:first-child ul:before {
   display: none !important;
@@ -5869,6 +6492,11 @@ html.device-android-4 .accordion-item-content {
   font-weight: 600;
   line-height: 22px;
   height: 22px;
+}
+.ios .theme-dark .contacts-list .list-group-title,
+.contacts-list.ios .theme-dark .list-group-title {
+  background-color: #111;
+  color: #fff;
 }
 /* === Virtual List === */
 /* === Timeline === */
@@ -6243,7 +6871,7 @@ html.device-android-4 .accordion-item-content {
 .ios .timeline-item-content.list,
 .ios .timeline-item-content .block,
 .ios .timeline-item-content.block {
-  margin: 0;
+  margin: 0 !important;
   width: 100%;
 }
 .ios .timeline-item-inner {
@@ -6362,6 +6990,7 @@ html.device-android-4 .accordion-item-content {
   padding-top: 34px !important;
   padding-bottom: 10px;
 }
+.ios .timeline-horizontal > .timeline-item:last-child:after,
 .ios .timeline-horizontal .timeline-month:last-child .timeline-item:last-child:after {
   display: none !important;
 }
@@ -6479,6 +7108,181 @@ html.device-android-4 .accordion-item-content {
 }
 .ios .timeline-year-title span {
   margin-top: 3px;
+}
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) {
+  padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
+}
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span {
+  left: calc(10px + constant(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title {
+  left: -44px;
+  right: 0;
+  width: auto;
+}
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item {
+  overflow: visible;
+}
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date {
+  width: auto;
+  padding-left: calc(10px + constant(safe-area-inset-left));
+  padding-left: calc(10px + env(safe-area-inset-left));
+  left: calc(0px - constant(safe-area-inset-left));
+  left: calc(0px - env(safe-area-inset-left));
+  right: 0;
+}
+.ios.device-iphone-x .ios-left-edge .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .sheet-modal .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .panel-left .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal) {
+  padding-left: calc(15px + constant(safe-area-inset-left));
+  padding-left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title {
+  width: auto;
+  right: calc(0px - constant(safe-area-inset-right));
+  right: calc(0px - env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child {
+  overflow: visible;
+}
+.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date {
+  width: auto;
+  right: calc(0px - constant(safe-area-inset-right));
+  right: calc(0px - env(safe-area-inset-right));
+  left: 0;
+}
+.ios.device-iphone-x .ios-right-edge .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .sheet-modal .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+.ios.device-iphone-x .panel-right .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal) {
+  padding-right: calc(15px + constant(safe-area-inset-right));
+  padding-right: calc(15px + env(safe-area-inset-right));
+}
+.ios .theme-dark .timeline-year-title,
+.ios .theme-dark .timeline-month-title {
+  background: #1b1b1b;
+}
+.ios .theme-dark .timeline-item-inner {
+  background-color: #1c1c1d;
+}
+.ios .theme-dark .timeline-item-time {
+  color: #8E8E93;
+}
+.ios .theme-dark .timeline-horizontal .timeline-item-date,
+.timeline-horizontal.ios .theme-dark .timeline-item-date {
+  background: #1b1b1b;
+}
+.ios .theme-dark .timeline-horizontal .timeline-item-date:after,
+.timeline-horizontal.ios .theme-dark .timeline-item-date:after {
+  background-color: #282829;
+}
+.ios .theme-dark .timeline-horizontal .timeline-month .timeline-item:before,
+.timeline-horizontal.ios .theme-dark .timeline-month .timeline-item:before {
+  background-color: #282829;
+}
+.ios .theme-dark .timeline-horizontal .timeline-item:after,
+.timeline-horizontal.ios .theme-dark .timeline-item:after {
+  background-color: #282829;
+}
+.ios .theme-dark .timeline-horizontal .timeline-year:after,
+.timeline-horizontal.ios .theme-dark .timeline-year:after {
+  background-color: #282829;
 }
 /* === Tabs === */
 .tabs .tab {
@@ -6847,6 +7651,34 @@ html.device-pixel-ratio-3 .card-footer:before {
 .ios .card-footer {
   color: #6d6d72;
 }
+.ios.device-iphone-x .ios-left-edge .card:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .sheet-modal .card:not(.no-ios-edges):not(.no-ios-left-edge),
+.ios.device-iphone-x .panel-left .card:not(.no-ios-edges):not(.no-ios-left-edge) {
+  margin-left: calc(10px + constant(safe-area-inset-left));
+  margin-left: calc(10px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .card:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .sheet-modal .card:not(.no-ios-edges):not(.no-ios-right-edge),
+.ios.device-iphone-x .panel-right .card:not(.no-ios-edges):not(.no-ios-right-edge) {
+  margin-right: calc(10px + constant(safe-area-inset-right));
+  margin-right: calc(10px + env(safe-area-inset-right));
+}
+.ios .theme-dark .card {
+  background-color: #1c1c1d;
+}
+.ios .theme-dark .card-header:after {
+  background-color: #282829;
+}
+.ios .theme-dark .card-footer {
+  color: #8E8E93;
+}
+.ios .theme-dark .card-footer:before {
+  background-color: #282829;
+}
 /* === Chips === */
 .chip {
   font-weight: normal;
@@ -6950,6 +7782,9 @@ html.device-pixel-ratio-3 .card-footer:before {
   background-size: 13px 13px;
   opacity: 0.7;
   margin-right: -6px;
+}
+.ios .theme-dark .chip {
+  background-color: #333;
 }
 .ios .chip.color-red {
   background: #ff3b30;
@@ -7218,6 +8053,34 @@ textarea {
 .ios .item-input-wrap .input-clear-button {
   top: 22px;
 }
+.ios .theme-dark .list input[type="text"],
+.list.ios .theme-dark input[type="text"],
+.ios .theme-dark .list input[type="password"],
+.list.ios .theme-dark input[type="password"],
+.ios .theme-dark .list input[type="search"],
+.list.ios .theme-dark input[type="search"],
+.ios .theme-dark .list input[type="email"],
+.list.ios .theme-dark input[type="email"],
+.ios .theme-dark .list input[type="tel"],
+.list.ios .theme-dark input[type="tel"],
+.ios .theme-dark .list input[type="url"],
+.list.ios .theme-dark input[type="url"],
+.ios .theme-dark .list input[type="date"],
+.list.ios .theme-dark input[type="date"],
+.ios .theme-dark .list input[type="datetime-local"],
+.list.ios .theme-dark input[type="datetime-local"],
+.ios .theme-dark .list input[type="time"],
+.list.ios .theme-dark input[type="time"],
+.ios .theme-dark .list input[type="number"],
+.list.ios .theme-dark input[type="number"],
+.ios .theme-dark .list select,
+.list.ios .theme-dark select {
+  color: #fff;
+}
+.ios .theme-dark .list textarea,
+.list.ios .theme-dark textarea {
+  color: #fff;
+}
 /* === Checkbox === */
 .icon-checkbox,
 .checkbox i {
@@ -7230,10 +8093,6 @@ textarea {
   display: inline-block;
   vertical-align: middle;
   z-index: 1;
-}
-.checkbox.disabled {
-  opacity: 0.55;
-  pointer-events: none;
 }
 label.item-checkbox,
 .checkbox {
@@ -7268,6 +8127,8 @@ label.item-checkbox.disabled,
 .disabled label.item-checkbox {
   opacity: 0.55;
   pointer-events: none;
+  opacity: 0.55 !important;
+  pointer-events: none !important;
 }
 .ios .icon-checkbox,
 .ios .checkbox i {
@@ -7309,6 +8170,9 @@ label.item-checkbox.disabled,
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
   background-color: #d9d9d9;
+}
+.ios .theme-dark label.item-checkbox.active-state {
+  background-color: #363636;
 }
 .ios .color-theme-red label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,
 .ios .color-theme-red .checkbox input[type="checkbox"]:checked ~ i {
@@ -7394,10 +8258,6 @@ label.item-checkbox.disabled,
   vertical-align: middle;
   z-index: 1;
 }
-.radio.disabled {
-  opacity: 0.55;
-  pointer-events: none;
-}
 label.item-radio,
 .radio {
   cursor: pointer;
@@ -7431,6 +8291,8 @@ label.item-radio.disabled,
 .disabled label.item-radio {
   opacity: 0.55;
   pointer-events: none;
+  opacity: 0.55 !important;
+  pointer-events: none !important;
 }
 .ios .icon-radio {
   width: 22px;
@@ -7473,6 +8335,25 @@ label.item-radio.disabled,
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
   background-color: #d9d9d9;
+}
+.ios.device-iphone-x .ios-right-edge label.item-radio input[type="radio"] ~ .icon-radio,
+.ios.device-iphone-x .ios-edges label.item-radio input[type="radio"] ~ .icon-radio,
+.ios.device-iphone-x .popup label.item-radio input[type="radio"] ~ .icon-radio,
+.ios.device-iphone-x .sheet-modal label.item-radio input[type="radio"] ~ .icon-radio,
+.ios.device-iphone-x .panel-right label.item-radio input[type="radio"] ~ .icon-radio {
+  right: calc(10px + constant(safe-area-inset-right));
+  right: calc(10px + env(safe-area-inset-right));
+}
+.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset) label.item-radio .item-inner,
+.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset) label.item-radio .item-inner,
+.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset) label.item-radio .item-inner,
+.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset) label.item-radio .item-inner,
+.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset) label.item-radio .item-inner {
+  padding-right: calc(35px + constant(safe-area-inset-right)) !important;
+  padding-right: calc(35px + env(safe-area-inset-right));
+}
+.ios .theme-dark label.item-radio.active-state {
+  background-color: #363636;
 }
 .ios .color-theme-red label.item-radio input[type="radio"]:checked ~ .icon-radio,
 .ios .color-theme-red label.item-radio input[type="radio"]:checked ~ * .icon-radio,
@@ -7633,17 +8514,8 @@ label.item-radio.disabled,
   -ms-user-select: none;
   user-select: none;
 }
-.toggle.disabled,
-.disabled .toggle {
-  opacity: 0.55;
-  pointer-events: none;
-}
 .toggle input[type="checkbox"] {
   display: none;
-}
-.toggle input[type="checkbox"][disabled] + .toggle-icon {
-  opacity: 0.55;
-  pointer-events: none;
 }
 .toggle-icon {
   z-index: 0;
@@ -7733,6 +8605,12 @@ label.item-radio.disabled,
   -webkit-transform: translateX(13px);
   transform: translateX(13px);
 }
+.ios .theme-dark .toggle-icon {
+  background-color: #fff;
+}
+.ios .theme-dark .toggle-icon:before {
+  background-color: #1c1c1d;
+}
 .ios .toggle.color-red input[type="checkbox"]:checked + .toggle-icon {
   background-color: #ff3b30;
 }
@@ -7773,10 +8651,6 @@ label.item-radio.disabled,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-.range-slider.disabled {
-  opacity: 0.55;
-  pointer-events: none;
 }
 .range-slider input[type="range"] {
   display: none;
@@ -7972,6 +8846,13 @@ label.item-radio.disabled,
 .ios.device-pixel-ratio-3 .smart-select-sheet .toolbar:after {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
+}
+.ios .theme-dark .smart-select-sheet .page,
+.ios .theme-dark .smart-select-sheet .sheet-modal-inner {
+  background-color: #1c1c1d;
+}
+.ios .theme-dark .smart-select-sheet .toolbar:after {
+  background-color: #282829;
 }
 /* === Grid === */
 .row {
@@ -9055,8 +9936,11 @@ label.item-radio.disabled,
   display: flex;
 }
 @media (orientation: landscape) and (max-height: 415px) {
-  .calendar:not(.calendar-inline) {
+  .calendar.calendar-sheet {
     height: 220px;
+  }
+  .calendar.calendar-modal {
+    height: calc(100vh - 44px);
   }
 }
 .calendar.calendar-inline,
@@ -9167,6 +10051,8 @@ label.item-radio.disabled,
   flex-shink: 1;
   width: 100%;
   position: relative;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .calendar-day {
   flex-shink: 1;
@@ -9364,7 +10250,7 @@ label.item-radio.disabled,
   background: #e3e3e3;
 }
 .ios .calendar-day.calendar-day-has-events span:after {
-  background: #ccc;
+  background: #007aff;
 }
 .ios .calendar-day.calendar-day-has-events.calendar-day-selected span:after {
   background-color: #fff;
@@ -9428,6 +10314,88 @@ label.item-radio.disabled,
 .ios .calendar-popover .calendar-header,
 .ios .calendar-popover .calendar-footer {
   background: none;
+}
+.ios.device-iphone-x .calendar-sheet .sheet-modal-inner {
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
+}
+.ios.device-iphone-x .ios-left-edge.calendar .calendar-row,
+.ios.device-iphone-x .ios-edges.calendar .calendar-row,
+.ios.device-iphone-x .popup.calendar .calendar-row,
+.ios.device-iphone-x .sheet-modal.calendar .calendar-row,
+.ios.device-iphone-x .panel-left.calendar .calendar-row,
+.ios.device-iphone-x .ios-left-edge .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+.ios.device-iphone-x .panel-left .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+.ios.device-iphone-x .ios-left-edge.calendar .calendar-week-header,
+.ios.device-iphone-x .ios-edges.calendar .calendar-week-header,
+.ios.device-iphone-x .popup.calendar .calendar-week-header,
+.ios.device-iphone-x .sheet-modal.calendar .calendar-week-header,
+.ios.device-iphone-x .panel-left.calendar .calendar-week-header,
+.ios.device-iphone-x .ios-left-edge .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+.ios.device-iphone-x .panel-left .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header {
+  padding-left: constant(safe-area-inset-left);
+}
+.ios.device-iphone-x .ios-right-edge.calendar .calendar-row,
+.ios.device-iphone-x .ios-edges.calendar .calendar-row,
+.ios.device-iphone-x .popup.calendar .calendar-row,
+.ios.device-iphone-x .sheet-modal.calendar .calendar-row,
+.ios.device-iphone-x .panel-right.calendar .calendar-row,
+.ios.device-iphone-x .ios-right-edge .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+.ios.device-iphone-x .panel-right .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+.ios.device-iphone-x .ios-right-edge.calendar .calendar-week-header,
+.ios.device-iphone-x .ios-edges.calendar .calendar-week-header,
+.ios.device-iphone-x .popup.calendar .calendar-week-header,
+.ios.device-iphone-x .sheet-modal.calendar .calendar-week-header,
+.ios.device-iphone-x .panel-right.calendar .calendar-week-header,
+.ios.device-iphone-x .ios-right-edge .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+.ios.device-iphone-x .panel-right .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header {
+  padding-right: constant(safe-area-inset-right);
+}
+.ios .theme-dark .calendar .calendar-header,
+.calendar.ios .theme-dark .calendar-header,
+.ios .theme-dark .calendar .calendar-week-header,
+.calendar.ios .theme-dark .calendar-week-header,
+.ios .theme-dark .calendar .calendar-footer,
+.calendar.ios .theme-dark .calendar-footer {
+  background-color: #1b1b1b;
+}
+.ios .theme-dark .calendar-popover .calendar-week-header {
+  background-color: transparent;
+}
+.ios .theme-dark .calendar-footer:before,
+.ios .theme-dark .calendar-row:before,
+.ios .theme-dark .calendar-sheet:before {
+  background-color: #282829;
+}
+.ios .theme-dark .calendar-day {
+  color: #fff;
+}
+.ios .theme-dark .calendar-day.calendar-day-today:not(.calendar-day-selected) span {
+  background: #333;
+}
+.ios .theme-dark .calendar-day.calendar-day-disabled {
+  color: #8E8E93;
+}
+.ios .theme-dark .calendar-day.calendar-day-prev,
+.ios .theme-dark .calendar-day.calendar-day-next {
+  color: #555;
+}
+.ios .theme-dark .calendar-modal,
+.calendar-modal.ios .theme-dark,
+.ios .theme-dark .calendar-sheet {
+  background: #171717;
 }
 .ios .color-theme-red .calendar-day.calendar-day-selected span,
 .ios .color-red .calendar-day.calendar-day-selected span {
@@ -9691,6 +10659,19 @@ label.item-radio.disabled,
 .ios.device-pixel-ratio-3 .picker-center-highlight:after {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
+}
+.ios .theme-dark .picker-item.picker-item-selected {
+  color: #fff;
+}
+.ios .theme-dark .picker-popover .toolbar:after,
+.picker-popover.ios .theme-dark .toolbar:after {
+  background-color: #282829;
+}
+.ios .theme-dark .picker-center-highlight:before {
+  background-color: #282829;
+}
+.ios .theme-dark .picker-center-highlight:after {
+  background-color: #282829;
 }
 /* === Infinite === */
 .infinite-scroll-preloader {
@@ -10019,7 +11000,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
     content: attr(data-collapsible-title);
     position: relative;
     height: auto;
-    background: none;
+    background: none !important;
     -webkit-transform: none !important;
     transform: none !important;
     font-size: 12px;
@@ -10053,6 +11034,10 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   .data-table .tablet-landscape-only {
     display: table-cell;
   }
+}
+.theme-dark .data-table .sortable-cell:not(.numeric-cell):after,
+.theme-dark .data-table .sortable-cell.numeric-cell:before {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23fff'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M0%200h24v24H0V0z'%20fill%3D'none'%2F%3E%3Cpath%20d%3D'M20%2012l-1.41-1.41L13%2016.17V4h-2v12.17l-5.58-5.59L4%2012l8%208%208-8z'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .data-table thead th,
 .ios .data-table thead td {
@@ -10201,6 +11186,22 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
     -webkit-transform: scaleY(0.33);
     transform: scaleY(0.33);
   }
+}
+.ios .theme-dark .data-table tbody td:before,
+.data-table.ios .theme-dark tbody td:before {
+  background-color: #282829;
+}
+.ios .theme-dark .data-table.data-table-collapsible tr:before,
+.data-table.ios .theme-dark.data-table-collapsible tr:before {
+  background-color: #282829;
+}
+.ios .theme-dark .data-table tbody tr.data-table-row-selected,
+.data-table.ios .theme-dark tbody tr.data-table-row-selected {
+  background-color: #363636;
+}
+.ios.device-desktop .theme-dark .data-table tbody tr:hover,
+.ios.device-desktop .theme-dark.data-table tbody tr:hover {
+  background: #363636;
 }
 .ios .color-theme-red .data-table-header-selected,
 .ios .data-table-header-selected.color-red {
@@ -10883,6 +11884,26 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 .ios .fab-morph.color-black {
   background: #000000;
 }
+.ios.device-iphone-x .fab[class*="-bottom"] {
+  bottom: calc(15px + constant(safe-area-inset-bottom));
+  bottom: calc(15px + env(safe-area-inset-bottom));
+}
+.ios.device-iphone-x .ios-left-edge .fab[class*="fab-left"],
+.ios.device-iphone-x .ios-edges .fab[class*="fab-left"],
+.ios.device-iphone-x .popup .fab[class*="fab-left"],
+.ios.device-iphone-x .sheet-modal .fab[class*="fab-left"],
+.ios.device-iphone-x .panel-left .fab[class*="fab-left"] {
+  left: calc(15px + constant(safe-area-inset-left));
+  left: calc(15px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .fab[class*="fab-right"],
+.ios.device-iphone-x .ios-edges .fab[class*="fab-right"],
+.ios.device-iphone-x .popup .fab[class*="fab-right"],
+.ios.device-iphone-x .sheet-modal .fab[class*="fab-right"],
+.ios.device-iphone-x .panel-right .fab[class*="fab-right"] {
+  right: calc(15px + constant(safe-area-inset-right));
+  right: calc(15px + env(safe-area-inset-right));
+}
 /* === Searchbar === */
 .searchbar {
   width: 100%;
@@ -11129,6 +12150,21 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 .ios .page > .navbar ~ .searchbar ~ * .page-content {
   padding-top: 88px;
 }
+.ios .theme-dark .searchbar,
+.searchbar.ios .theme-dark {
+  background-color: #303030;
+}
+.ios .theme-dark .searchbar:after,
+.searchbar.ios .theme-dark:after {
+  background-color: #282829;
+}
+.ios .theme-dark .searchbar input[type="search"],
+.searchbar.ios .theme-dark input[type="search"],
+.ios .theme-dark .searchbar input[type="text"],
+.searchbar.ios .theme-dark input[type="text"] {
+  background-color: #171717;
+  color: #fff;
+}
 .ios .color-theme-red .searchbar-disable-button {
   color: #ff3b30;
 }
@@ -11155,6 +12191,22 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 .ios .color-theme-black .searchbar-disable-button {
   color: #000000;
+}
+.ios.device-iphone-x .ios-left-edge .searchbar-inner,
+.ios.device-iphone-x .ios-edges .searchbar-inner,
+.ios.device-iphone-x .popup .searchbar-inner,
+.ios.device-iphone-x .sheet-modal .searchbar-inner,
+.ios.device-iphone-x .panel-left .searchbar-inner {
+  padding-left: calc(8px + constant(safe-area-inset-left));
+  padding-left: calc(8px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .searchbar-inner,
+.ios.device-iphone-x .ios-edges .searchbar-inner,
+.ios.device-iphone-x .popup .searchbar-inner,
+.ios.device-iphone-x .sheet-modal .searchbar-inner,
+.ios.device-iphone-x .panel-right .searchbar-inner {
+  padding-right: calc(8px + constant(safe-area-inset-right));
+  padding-right: calc(8px + env(safe-area-inset-right));
 }
 /* === Messages === */
 .messages {
@@ -11532,6 +12584,39 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   -webkit-animation: ios-message-typing-indicator 900ms 300ms infinite;
   animation: ios-message-typing-indicator 900ms 300ms infinite;
 }
+.ios .theme-dark .messages-content,
+.messages-content.ios .theme-dark,
+.ios .theme-dark .messages,
+.messages.ios .theme-dark {
+  background-color: transparent;
+}
+.ios .theme-dark .message-received.message-typing .message-content:after,
+.ios .theme-dark .message-received.message-typing .message-content:before {
+  background: #333;
+}
+.ios .theme-dark .message-typing-indicator > div {
+  background-color: #fff;
+}
+.ios .theme-dark .message-received .message-bubble {
+  background-color: #333;
+  color: #fff;
+}
+.ios.device-iphone-x .ios-left-edge .message-received,
+.ios.device-iphone-x .ios-edges .message-received,
+.ios.device-iphone-x .popup .message-received,
+.ios.device-iphone-x .sheet-modal .message-received,
+.ios.device-iphone-x .panel-left .message-received {
+  margin-left: calc(10px + constant(safe-area-inset-left));
+  margin-left: calc(10px + env(safe-area-inset-left));
+}
+.ios.device-iphone-x .ios-right-edge .message-sent,
+.ios.device-iphone-x .ios-edges .message-sent,
+.ios.device-iphone-x .popup .message-sent,
+.ios.device-iphone-x .sheet-modal .message-sent,
+.ios.device-iphone-x .panel-right .message-sent {
+  margin-right: calc(10px + constant(safe-area-inset-right));
+  margin-right: calc(10px + env(safe-area-inset-right));
+}
 @-webkit-keyframes ios-message-typing-indicator {
   0% {
     opacity: 0.35;
@@ -11776,6 +12861,29 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   background: #fff;
   margin-left: -5px;
   margin-top: -1px;
+}
+.ios .theme-dark .messagebar textarea,
+.messagebar.ios .theme-dark textarea {
+  background-color: #000;
+  border-color: #282829;
+  color: #fff;
+}
+.ios .theme-dark .messagebar-attachments {
+  border-color: #282829;
+  background-color: #000;
+}
+.ios.device-iphone-x .messagebar:not(.messagebar-top) {
+  height: auto;
+}
+.ios.device-iphone-x .messagebar:not(.messagebar-top):not(.messagebar-sheet-visible) {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.ios.device-iphone-x .messagebar-sheet {
+  padding-left: constant(safe-area-inset-left);
+  padding-right: constant(safe-area-inset-right);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 /* === Swiper === */
 .swiper-container {
@@ -12858,6 +13966,14 @@ button.swiper-pagination-bullet {
 .ios .view.with-photo-browser-page-dark .toolbar a {
   color: #fff;
 }
+.ios.device-iphone-x .photo-browser-captions {
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
+}
+.ios.device-iphone-x .toolbar ~ .photo-browser-captions {
+  bottom: calc(44px + constant(safe-area-inset-bottom));
+  bottom: calc(44px + env(safe-area-inset-bottom));
+}
 /* === Notifications === */
 .notification {
   position: absolute;
@@ -12906,6 +14022,10 @@ html.with-statusbar.device-android .notification,
 html.with-statusbar.md:not(.device-ios):not(.device-android) .notification {
   margin-top: 24px;
 }
+html.with-statusbar.device-iphone-x .notification {
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
+}
 .ios .notification {
   left: 8px;
   top: 8px;
@@ -12919,8 +14039,8 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .notification {
   max-width: 568px;
   -webkit-transition-duration: 450ms;
   transition-duration: 450ms;
-  -webkit-transform: translate3d(0%, -150%, 0);
-  transform: translate3d(0%, -150%, 0);
+  -webkit-transform: translate3d(0%, -200%, 0);
+  transform: translate3d(0%, -200%, 0);
 }
 @supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
   .ios .notification {
@@ -12942,8 +14062,8 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .notification {
   opacity: 1;
 }
 .ios .notification.modal-out {
-  -webkit-transform: translate3d(0%, -150%, 0);
-  transform: translate3d(0%, -150%, 0);
+  -webkit-transform: translate3d(0%, -200%, 0);
+  transform: translate3d(0%, -200%, 0);
 }
 .ios .notification-icon {
   width: 20px;
@@ -13115,6 +14235,90 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .notification {
 }
 .ios .searchbar-input-wrap .autocomplete-dropdown .autocomplete-dropdown-placeholder {
   color: #939398;
+}
+.ios .theme-dark .autocomplete-dropdown {
+  background-color: #1c1c1d;
+}
+.ios .theme-dark .searchbar-input-wrap .autocomplete-dropdown {
+  background-color: #171717;
+}
+iframe#viAd {
+  z-index: 12900 !important;
+  background: #000 !important;
+}
+.vi-overlay {
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 13100;
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  .vi-overlay {
+    background: rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+.vi-overlay .vi-overlay-text {
+  text-align: center;
+  color: #fff;
+  max-width: 80%;
+}
+.vi-overlay .vi-overlay-text + .vi-overlay-play-button {
+  margin-top: 15px;
+}
+.vi-overlay .vi-overlay-play-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  position: relative;
+}
+.vi-overlay .vi-overlay-play-button.active-state {
+  opacity: 0.55;
+}
+.vi-overlay .vi-overlay-play-button:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 14px solid #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: 2px;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 /* === Typography === */
 .display-flex {
@@ -13359,14 +14563,41 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .notification {
 .vertical-align-top {
   vertical-align: top !important;
 }
+.no-padding {
+  padding: 0 !important;
+}
+.no-padding-left {
+  padding-left: 0 !important;
+}
+.no-padding-right {
+  padding-right: 0 !important;
+}
+.no-padding-top {
+  padding-top: 0 !important;
+}
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+.no-margin {
+  margin: 0 !important;
+}
+.no-margin-left {
+  margin-left: 0 !important;
+}
+.no-margin-right {
+  margin-right: 0 !important;
+}
+.no-margin-top {
+  margin-top: 0 !important;
+}
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
 .width-auto {
   width: auto !important;
 }
 .width-100 {
   width: 100% !important;
-}
-.ios .no-padding {
-  padding: 0 !important;
 }
 .ios .padding {
   padding: 15px !important;
@@ -13380,6 +14611,22 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .notification {
 .ios .padding-left {
   padding-left: 15px !important;
 }
+.ios .padding-left-ios-edge {
+  padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
+}
+.ios .padding-right-ios-edge {
+  padding-right: constant(safe-area-inset-right);
+  padding-right: env(safe-area-inset-right);
+}
+.ios .padding-top-ios-edge {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+.ios .padding-bottom-ios-edge {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
 .ios .padding-right {
   padding-right: 15px !important;
 }
@@ -13390,9 +14637,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .notification {
 .ios .padding-horizontal {
   padding-left: 15px !important;
   padding-right: 15px !important;
-}
-.ios .no-margin {
-  margin: 0 !important;
 }
 .ios .margin {
   margin: 15px !important;

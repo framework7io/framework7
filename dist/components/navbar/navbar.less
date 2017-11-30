@@ -1,0 +1,70 @@
+/* === Navbar === */
+.navbar {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 500;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  margin: 0;
+  transform: translate3d(0,0,0);
+  b {
+    font-weight: 500;
+  }
+  a.link {
+    display: flex;
+  }
+  .title, .left, .right {
+    position: relative;
+    z-index: 1;
+  }
+  .title {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 10;
+    font-weight: 500;
+    display: inline-block;
+  }
+  .subtitle {
+    display: block;
+  }
+  .left, .right {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translate3d(0,0,0);
+  }
+  .right:first-child {
+    position: absolute;
+    height: 100%;
+  }
+}
+.navbar-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  &.stacked {
+    display: none;
+  }
+}
+.views, .view, .page {
+  > .navbar {
+    position: absolute;
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./navbar-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./navbar-md.less');
+}

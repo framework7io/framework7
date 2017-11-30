@@ -1,0 +1,22 @@
+/* === Badge === */
+.badge {
+  display: inline-block;
+  color: #fff;
+  background: #8e8e93;
+  position: relative;
+  box-sizing: border-box;
+  text-align: center;
+  .icon &, .f7-icons &, .framework7-icons &, .material-icons & {
+    position: absolute;
+    left: 100%;
+    margin-left: -10px;
+    top: -2px;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./badge-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./badge-md.less');
+}
