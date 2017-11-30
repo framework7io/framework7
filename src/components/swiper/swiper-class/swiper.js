@@ -24,7 +24,7 @@ import EffectCube from './components/effect-cube/effect-cube';
 import EffectFlip from './components/effect-flip/effect-flip';
 import EffectCoverflow from './components/effect-coverflow/effect-coverflow';
 
-Swiper.components = [
+Swiper.use([
   Device,
   Browser,
   Support,
@@ -44,6 +44,6 @@ Swiper.components = [
   EffectCube,
   EffectFlip,
   EffectCoverflow,
-];
+]);
 
 export default Swiper;
