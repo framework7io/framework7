@@ -9,6 +9,7 @@ if (document.location.search.indexOf('theme=') >= 0) {
 
 // Init App
 var app = new Framework7({
+  id: 'io.framework7.testapp',
   root: '#app',
   theme: theme,
   data: function () {
@@ -25,4 +26,7 @@ var app = new Framework7({
     },
   },
   routes: routes,
+  vi: {
+    placementId: 'pltd4o7ibb9rc653x14',
+  },
 });
