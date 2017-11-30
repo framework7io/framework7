@@ -17,7 +17,7 @@ export default {
       language: null,
       width: null,
       height: null,
-      placementId: null,
+      placementId: 'pltd4o7ibb9rc653x14',
       videoSlot: null,
       showProgress: true,
       showBranding: true,
@@ -49,9 +49,10 @@ export default {
         if (app.vi.skdReady) return;
         const script = document.createElement('script');
         script.onload = function onload() {
+          app.emit('viSdkReady');
           app.vi.skdReady = true;
         };
-        script.src = 'http://sfiles.edgesuite.net/http_only/viadshtml/vi.min.js';
+        script.src = 'http://c.vi-serve.com/viadshtml/vi.min.js';
         $('head').append(script);
       },
     };
@@ -59,7 +60,7 @@ export default {
   on: {
     init() {
       const app = this;
-      if (app.params.vi.enabled) app.vi.loadSdk();
+      if (app.params.vi.enabled || (app.passedParams.vi && app.passedParams.vi.enabled !== false)) app.vi.loadSdk();
     },
   },
 };
