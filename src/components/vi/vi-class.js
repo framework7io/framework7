@@ -11,6 +11,10 @@ class ViAd extends Framework7Class {
       throw new Error('f7:vi SDK not found.');
     }
 
+    let orientation;
+    if (typeof window.orientation !== 'undefined') {
+      orientation = window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical';
+    }
     const defaults = Utils.extend(
       {},
       app.params.vi,
@@ -22,7 +26,7 @@ class ViAd extends Framework7Class {
         height: app.height,
         os: Device.os,
         osVersion: Device.osVersion,
-        orientation: window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical',
+        orientation,
       }
     );
 
