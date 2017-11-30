@@ -7,4 +7,6 @@ kitchen-sink-ios
 kitchen-sink-material
 node_modules
 npm-debug.log
-scripts/build-config-custom.js
+scripts
+src
+gulpfile.js

@@ -6,4 +6,4 @@ npm-debug.log
 .idea
 .vscode
 scripts/build-config-custom.js
-scripts/build-config-custom*.js
+scripts/build-config-*.js
