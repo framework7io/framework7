@@ -11,11 +11,6 @@ var routes = [
     url: './pages/about.html',
     name: 'about',
   },
-  // Index page
-  {
-    path: '/vi/',
-    componentUrl: './pages/vi.html',
-  },
   // Right Panel pages
   {
     path: '/panel-right-1/',
@@ -444,6 +439,10 @@ var routes = [
   {
     path: '/virtual-list/',
     componentUrl: './pages/virtual-list.html',
+  },
+  {
+    path: '/vi/',
+    componentUrl: './pages/vi.html',
   },
 
   // Color Themes
