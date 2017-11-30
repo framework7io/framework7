@@ -36,7 +36,7 @@ if (process.env.FORMAT !== 'es') {
 }
 
 // Install Core Modules & Components
-Framework7.components = [
+Framework7.use([
   Device,
   Support,
   Utils,
@@ -55,6 +55,6 @@ Framework7.components = [
   TouchRipple,
   Modal,
   //INSTALL_COMPONENTS
-];
+]);
 
 export default Framework7;
