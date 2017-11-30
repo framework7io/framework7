@@ -6,7 +6,7 @@ export default {
   name: 'dialog',
   params: {
     dialog: {
-      title: 'Framework7',
+      title: undefined,
       buttonOk: 'OK',
       buttonCancel: 'Cancel',
       usernamePlaceholder: 'Username',
@@ -21,6 +21,7 @@ export default {
   },
   create() {
     const app = this;
+    const defaultDialogTitle = app.params.dialog.title || app.name;
     app.dialog = Utils.extend(
       ModalMethods({
         app,
@@ -35,7 +36,7 @@ export default {
             [text, callbackOk, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             buttons: [{
               text: app.params.dialog.buttonOk,
@@ -50,7 +51,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
             buttons: [
@@ -75,7 +76,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             buttons: [
               {
@@ -96,7 +97,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             content: `
               <div class="dialog-input-field dialog-input-double item-input">
@@ -132,7 +133,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? app.params.dialog.title : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle : title,
             text,
             content: `
               <div class="dialog-input-field item-input">
