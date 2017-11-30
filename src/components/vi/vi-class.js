@@ -15,7 +15,7 @@ class ViAd extends Framework7Class {
       {},
       app.params.vi,
       {
-        appId: app.bundleId,
+        appId: app.id,
         appVer: app.version,
         language: app.language,
         width: app.width,
@@ -23,7 +23,6 @@ class ViAd extends Framework7Class {
         os: Device.os,
         osVersion: Device.osVersion,
         orientation: window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical',
-        placementId: 'pltrmsvvgw9fax8k6az',
       }
     );
 
@@ -42,10 +41,10 @@ class ViAd extends Framework7Class {
     });
 
     if (!vi.params.appId) {
-      throw new Error('f7:"app.id" is required to display an ad. Make sure you have specified it on app initialization.');
+      throw new Error('Framework7:"app.id" is required to display an ad. Make sure you have specified it on app initialization.');
     }
     if (!vi.params.placementId) {
-      throw new Error('f7:"placementId" is required to display an ad.');
+      throw new Error('Framework7:"placementId" is required to display an ad.');
     }
 
     function onResize() {
