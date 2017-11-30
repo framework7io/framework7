@@ -18,4 +18,34 @@
       });
     }
   }
+  .safe-areas({
+    .safe-area-right({
+      .ltr({
+        .sortable-handler {
+          right: constant(safe-area-inset-right);
+          right: env(safe-area-inset-right);
+        }
+        .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+          .item-inner, .item-link .item-inner {
+            padding-right: ~"calc(35px + constant(safe-area-inset-right))";
+            padding-right: ~"calc(35px + env(safe-area-inset-right))";
+          }
+        }
+      });
+    });
+    .safe-area-left({
+      .rtl({
+        .sortable-handler {
+          left: constant(safe-area-inset-left);
+          left: env(safe-area-inset-left);
+        }
+        .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+          .item-inner, .item-link .item-inner {
+            padding-left: ~"calc(35px + constant(safe-area-inset-right))";
+            padding-left: ~"calc(35px + env(safe-area-inset-right))";
+          }
+        }
+      });
+    });
+  });
 }
