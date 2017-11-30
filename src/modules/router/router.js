@@ -16,7 +16,9 @@ export default {
     const instance = this;
     if (instance.app) {
       // View Router
-      instance.router = new Router(instance.app, instance);
+      if (instance.params.router) {
+        instance.router = new Router(instance.app, instance);
+      }
     } else {
       // App Router
       instance.router = new Router(instance);

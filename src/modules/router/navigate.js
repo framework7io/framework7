@@ -331,13 +331,14 @@ function forward(el, forwardOptions = {}) {
     }
   }
   if (options.animate) {
-    if (router.app.theme === 'md' && router.params.materialPageLoadDelay) {
+    const delay = router.app.theme === 'md' ? router.params.materialPageLoadDelay : router.params.iosPageLoadDelay;
+    if (delay) {
       setTimeout(() => {
         setPositionClasses();
         router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {
           afterAnimation();
         });
-      }, router.params.materialPageLoadDelay);
+      }, delay);
     } else {
       setPositionClasses();
       router.animate($oldPage, $newPage, $oldNavbarInner, $newNavbarInner, 'forward', () => {

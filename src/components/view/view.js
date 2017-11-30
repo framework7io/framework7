@@ -37,6 +37,7 @@ export default {
     view: {
       name: undefined,
       main: false,
+      router: true,
       linksView: null,
       stackPages: false,
       xhrCache: true,
@@ -74,7 +75,8 @@ export default {
       iosSeparateDynamicNavbar: true,
       // Animate iOS Navbar Back Icon
       iosAnimateNavbarBackIcon: true,
-      // MD Theme delay
+      // Delays
+      iosPageLoadDelay: 0,
       materialPageLoadDelay: 0,
     },
   },

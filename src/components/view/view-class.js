@@ -115,7 +115,9 @@ class View extends Framework7Class {
     app.views.splice(app.views.indexOf(view), 1);
 
     // Destroy Router
-    view.router.destroy();
+    if (view.params.router && view.router) {
+      view.router.destroy();
+    }
 
     view.emit('local::destroy viewDestroy', view);
 
@@ -129,12 +131,14 @@ class View extends Framework7Class {
   }
   init() {
     const view = this;
-    view.router.init();
+    if (view.params.router) {
+      view.router.init();
+    }
   }
 }
 
 // Use Router
-View.components = [Router];
+View.use(Router);
 
 
 export default View;

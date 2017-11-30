@@ -62,7 +62,7 @@ function initClicks(app) {
       if (!view) {
         if (app.views.main) view = app.views.main;
       }
-      if (!view) return;
+      if (!view || !view.router) return;
       if (clickedLink.hasClass('back')) view.router.back(url, clickedLinkData);
       else view.router.navigate(url, clickedLinkData);
     }
