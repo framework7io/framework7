@@ -90,11 +90,11 @@ const config = {
     // Autocomplete
     'autocomplete',
 
+    // VI Video Ads
+    'vi',
+
     // Typography
     'typography',
-
-    // VI
-    'vi',
   ],
   darkTheme: true,
   themes: [
