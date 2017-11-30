@@ -47,6 +47,7 @@ function es(components, cb) {
     input: './src/framework7.js',
     plugins: [
       replace({
+        delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
         'process.env.FORMAT': JSON.stringify(format),
@@ -88,6 +89,7 @@ function umd(components, cb) {
     input: './src/framework7.js',
     plugins: [
       replace({
+        delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
         'process.env.TARGET': JSON.stringify(target),
         'process.env.FORMAT': JSON.stringify(format),
