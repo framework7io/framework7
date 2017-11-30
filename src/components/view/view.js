@@ -104,6 +104,8 @@ export default {
         return getCurrentView(app);
       },
     });
+    // Alias
+    app.view = app.views;
   },
   on: {
     init() {
