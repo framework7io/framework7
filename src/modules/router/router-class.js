@@ -253,7 +253,6 @@ class Router extends Framework7Class {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
     const separateNavbar = router.separateNavbar;
-    const animateIcon = router.params.iosAnimateNavbarBackIcon;
     const ios = router.app.theme === 'ios';
     const duration = ios ? 400 : 250;
     const routerTransitionClass = `router-transition-${direction} router-transition-js-${direction}`;
