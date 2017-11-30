@@ -79,14 +79,18 @@
   background: url(../img/f7-icon.png) no-repeat center;
   background-size: cover;
 }
+.icon-vi {
+  background: url(../img/vi-icon.png) no-repeat center;
+  background-size: cover;
+}
 
-.ios .demo-list-icon, .ios .icon-f7 {
+.ios .demo-list-icon, .ios .icon-f7, .ios .icon-vi {
   width: 29px;
   height: 29px;
   border-radius: 6px;
   box-sizing: border-box;
 }
-.md .demo-list-icon, .md .icon-f7 {
+.md .demo-list-icon, .md .icon-f7, .md .icon-vi {
   width: 24px;
   height: 24px;
   border-radius: 4px;
