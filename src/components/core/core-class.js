@@ -20,9 +20,10 @@ class Framework7 extends Framework7Class {
       root: 'body',
       theme: 'auto',
       language: window.navigator.language,
-      init: true,
       routes: [],
       name: 'Framework7',
+      initOnDeviceReady: true,
+      init: true,
     };
 
     // Extend defaults with modules params
@@ -70,7 +71,7 @@ class Framework7 extends Framework7Class {
 
     // Init
     if (app.params.init) {
-      if (Device.cordova) {
+      if (Device.cordova && app.params.initOnDeviceReady) {
         $(document).on('deviceready', () => {
           app.init();
         });
