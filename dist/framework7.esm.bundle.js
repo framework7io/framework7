@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.18
+ * Framework7 2.0.0-beta.19
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 30, 2017
+ * Released on: December 1, 2017
  */
 
 import Template7 from 'template7';
@@ -5816,7 +5816,9 @@ class View extends Framework7Class {
     if (app.initialized) {
       view.init();
     } else {
-      app.on('init', view.init);
+      app.on('init', () => {
+        view.init();
+      });
     }
 
     return view;

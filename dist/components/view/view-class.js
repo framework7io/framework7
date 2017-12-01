@@ -90,7 +90,9 @@ class View extends Framework7Class {
     if (app.initialized) {
       view.init();
     } else {
-      app.on('init', view.init);
+      app.on('init', () => {
+        view.init();
+      });
     }
 
     return view;

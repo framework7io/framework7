@@ -1,3 +1,6 @@
+# [v2.0.0-beta.19](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.18...v2.0.0-beta.19) - December 1, 2017
+  * Fixed issue with View router initialization when it was created after app init. Fixes also issue in cordova when app initialized later within `deviceready` event
+
 # [v2.0.0-beta.18](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.17...v2.0.0-beta.18) - November 30, 2017
   * New *vi* (video intelligence) component. *vi* is a mobile video SSP (Supply / Sell Side Platform). It provides self-serve tools for publishers to captivate and monetize audiences
   * Popover
