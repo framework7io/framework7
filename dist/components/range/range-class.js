@@ -230,6 +230,7 @@ class Range extends Framework7Class {
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
+      app.on('tabShow', handleResize);
       app.on('resize', handleResize);
     };
     range.detachEvents = function detachEvents() {
@@ -237,6 +238,7 @@ class Range extends Framework7Class {
       range.$el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
+      app.off('tabShow', handleResize);
       app.off('resize', handleResize);
     };
 
@@ -250,7 +252,9 @@ class Range extends Framework7Class {
   }
   calcSize() {
     const range = this;
-    range.rangeWidth = range.$el.outerWidth();
+    const width = range.$el.outerWidth();
+    if (width === 0) return;
+    range.rangeWidth = width;
     range.knobWidth = range.knobs[0].outerWidth();
   }
   layout() {

@@ -16,7 +16,7 @@ class Framework7 extends Framework7Class {
     // Default
     const defaults = {
       version: '1.0.0',
-      id: 'io.framework7.test',
+      id: 'io.framework7.testapp',
       root: 'body',
       theme: 'auto',
       language: window.navigator.language,

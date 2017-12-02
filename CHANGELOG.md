@@ -1,3 +1,9 @@
+# [v2.0.0-beta.20](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.19...v2.0.0-beta.20) - December 2, 2017
+  * Range Slider
+    * Recalculate range slider size when parent tab becomes visible
+  * CSS
+    * `!important` rule for hiding `ios-only` and `md-only` elements
+
 # [v2.0.0-beta.19](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.18...v2.0.0-beta.19) - December 1, 2017
   * Fixed issue with View router initialization when it was created after app init. Fixes also issue in cordova when app initialized later within `deviceready` event
 

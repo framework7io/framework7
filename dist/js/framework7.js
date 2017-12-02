@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.19
+ * Framework7 2.0.0-beta.20
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 1, 2017
+ * Released on: December 2, 2017
  */
 
 (function (global, factory) {
@@ -3015,7 +3015,7 @@ var Framework7$1 = (function (Framework7Class$$1) {
     // Default
     var defaults = {
       version: '1.0.0',
-      id: 'io.framework7.test',
+      id: 'io.framework7.testapp',
       root: 'body',
       theme: 'auto',
       language: window.navigator.language,
@@ -14875,6 +14875,7 @@ var Range$1 = (function (Framework7Class$$1) {
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
+      app.on('tabShow', handleResize);
       app.on('resize', handleResize);
     };
     range.detachEvents = function detachEvents() {
@@ -14882,6 +14883,7 @@ var Range$1 = (function (Framework7Class$$1) {
       range.$el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
+      app.off('tabShow', handleResize);
       app.off('resize', handleResize);
     };
 
@@ -14899,7 +14901,9 @@ var Range$1 = (function (Framework7Class$$1) {
   Range.prototype.constructor = Range;
   Range.prototype.calcSize = function calcSize () {
     var range = this;
-    range.rangeWidth = range.$el.outerWidth();
+    var width = range.$el.outerWidth();
+    if (width === 0) { return; }
+    range.rangeWidth = width;
     range.knobWidth = range.knobs[0].outerWidth();
   };
   Range.prototype.layout = function layout () {
