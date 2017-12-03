@@ -1,3 +1,5 @@
+# Change Log
+
 # [v2.0.0-beta.21](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.20...v2.0.0-beta.21) - December 3, 2017
   * Router
     * Fixed issue with multiple "destroy" hooks called when using modals/tabs as router components
