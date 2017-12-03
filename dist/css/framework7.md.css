@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.21
+ * Framework7 2.0.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -538,7 +538,7 @@ html.with-statusbar.device-iphone-x .panel {
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -859,7 +859,7 @@ html.with-statusbar.device-iphone-x .panel {
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -1271,7 +1271,7 @@ html.with-statusbar.device-iphone-x .panel {
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -3735,6 +3735,9 @@ input[type="button"].md .dialog-button {
   color: rgba(0, 0, 0, 0.35);
 }
 .md .dialog-input:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+.md .dialog-input::-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.35);
 }
 .md .dialog-input::placeholder {
@@ -7783,6 +7786,19 @@ textarea {
 .md .list select:-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.35);
 }
+.md .list input[type="text"]::-ms-input-placeholder,
+.md .list input[type="password"]::-ms-input-placeholder,
+.md .list input[type="search"]::-ms-input-placeholder,
+.md .list input[type="email"]::-ms-input-placeholder,
+.md .list input[type="tel"]::-ms-input-placeholder,
+.md .list input[type="url"]::-ms-input-placeholder,
+.md .list input[type="date"]::-ms-input-placeholder,
+.md .list input[type="datetime-local"]::-ms-input-placeholder,
+.md .list input[type="time"]::-ms-input-placeholder,
+.md .list input[type="number"]::-ms-input-placeholder,
+.md .list select::-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
 .md .list input[type="text"]::placeholder,
 .md .list input[type="password"]::placeholder,
 .md .list input[type="search"]::placeholder,
@@ -7809,6 +7825,9 @@ textarea {
   color: rgba(0, 0, 0, 0.35);
 }
 .md .list textarea:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+.md .list textarea::-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.35);
 }
 .md .list textarea::placeholder {
@@ -7873,6 +7892,10 @@ textarea {
 }
 .md .item-floating-label ~ .item-input-wrap input:-ms-input-placeholder,
 .md .item-floating-label ~ .item-input-wrap textarea:-ms-input-placeholder {
+  color: transparent !important;
+}
+.md .item-floating-label ~ .item-input-wrap input::-ms-input-placeholder,
+.md .item-floating-label ~ .item-input-wrap textarea::-ms-input-placeholder {
   color: transparent !important;
 }
 .md .item-floating-label ~ .item-input-wrap input::placeholder,
@@ -8042,6 +8065,20 @@ textarea {
 .md .theme-dark input[type="number"]:-ms-input-placeholder,
 .md .theme-dark select:-ms-input-placeholder,
 .md .theme-dark textarea:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+.md .theme-dark input[type="text"]::-ms-input-placeholder,
+.md .theme-dark input[type="password"]::-ms-input-placeholder,
+.md .theme-dark input[type="search"]::-ms-input-placeholder,
+.md .theme-dark input[type="email"]::-ms-input-placeholder,
+.md .theme-dark input[type="tel"]::-ms-input-placeholder,
+.md .theme-dark input[type="url"]::-ms-input-placeholder,
+.md .theme-dark input[type="date"]::-ms-input-placeholder,
+.md .theme-dark input[type="datetime-local"]::-ms-input-placeholder,
+.md .theme-dark input[type="time"]::-ms-input-placeholder,
+.md .theme-dark input[type="number"]::-ms-input-placeholder,
+.md .theme-dark select::-ms-input-placeholder,
+.md .theme-dark textarea::-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.35);
 }
 .md .theme-dark input[type="text"]::placeholder,
@@ -10666,7 +10703,7 @@ label.item-radio.disabled,
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.15) 66%, rgba(0, 0, 0, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(0, 0, 0, 0.15) 66%, rgba(0, 0, 0, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.15) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -10782,7 +10819,7 @@ label.item-radio.disabled,
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -11792,7 +11829,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -12656,6 +12693,11 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   color: #939398;
   opacity: 1;
 }
+.md .searchbar input[type="search"]::-ms-input-placeholder,
+.md .searchbar input[type="text"]::-ms-input-placeholder {
+  color: #939398;
+  opacity: 1;
+}
 .md .searchbar input[type="search"]::placeholder,
 .md .searchbar input[type="text"]::placeholder {
   color: #939398;
@@ -12699,7 +12741,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -12745,7 +12787,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -13487,7 +13529,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -13581,7 +13623,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
@@ -14812,7 +14854,7 @@ html.with-statusbar.device-iphone-x .notification {
   left: -26%;
   top: -26%;
   background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
-  background-image: -webkit-radial-gradient(center circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
+  background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
   background-position: center;
