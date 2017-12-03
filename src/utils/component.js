@@ -7,7 +7,7 @@ const tempDom = document.createElement('div');
 class Framework7Component {
   constructor(c, extendContext = {}) {
     const context = Utils.extend({}, extendContext);
-    const component = Utils.extend(this, c, { context });
+    let component = Utils.extend(this, c, { context });
 
     // Apply context
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
@@ -237,6 +237,12 @@ class Framework7Component {
       if (styleEl) $(styleEl).remove();
       detachEvents();
       if (component.destroyed) component.destroyed();
+      // Store component instance
+      if (el && el.f7Component) {
+        el.f7Component = null;
+        delete el.f7Component;
+      }
+      component = null;
     };
 
     // Store component instance
