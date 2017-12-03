@@ -85,3 +85,7 @@ Tutorials available at http://framework7.io/tutorials/
 ## Showcase
 
 Appstore apps made with Framework7: http://framework7.io/showcase/
+
+## v1
+
+Old v1 version of Framework7 is still available at [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
