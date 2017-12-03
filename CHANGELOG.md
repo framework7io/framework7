@@ -1,3 +1,9 @@
+# [v2.0.0-beta.21](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.20...v2.0.0-beta.21) - December 3, 2017
+  * Router
+    * Fixed issue with multiple "destroy" hooks called when using modals/tabs as router components
+  * vi
+    * Added `placementType` ad parameter
+
 # [v2.0.0-beta.20](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.19...v2.0.0-beta.20) - December 2, 2017
   * Range Slider
     * Recalculate range slider size when parent tab becomes visible

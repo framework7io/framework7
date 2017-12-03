@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.20
+ * Framework7 2.0.0-beta.21
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 2, 2017
+ * Released on: December 3, 2017
  */
 
 import Template7 from 'template7';
@@ -2374,7 +2374,7 @@ const tempDom = document.createElement('div');
 class Framework7Component {
   constructor(c, extendContext = {}) {
     const context = Utils.extend({}, extendContext);
-    const component = Utils.extend(this, c, { context });
+    let component = Utils.extend(this, c, { context });
 
     // Apply context
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
@@ -2604,6 +2604,12 @@ class Framework7Component {
       if (styleEl) $(styleEl).remove();
       detachEvents();
       if (component.destroyed) component.destroyed();
+      // Store component instance
+      if (el && el.f7Component) {
+        el.f7Component = null;
+        delete el.f7Component;
+      }
+      component = null;
     };
 
     // Store component instance
@@ -25269,6 +25275,7 @@ var Vi = {
       width: null,
       height: null,
       placementId: 'pltd4o7ibb9rc653x14',
+      placementType: 'interstitial',
       videoSlot: null,
       showProgress: true,
       showBranding: true,

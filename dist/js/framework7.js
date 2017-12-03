@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0-beta.20
+ * Framework7 2.0.0-beta.21
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 2, 2017
+ * Released on: December 3, 2017
  */
 
 (function (global, factory) {
@@ -4909,6 +4909,12 @@ var Framework7Component = function Framework7Component(c, extendContext) {
     if (styleEl) { $$1$1(styleEl).remove(); }
     detachEvents();
     if (component.destroyed) { component.destroyed(); }
+    // Store component instance
+    if (el && el.f7Component) {
+      el.f7Component = null;
+      delete el.f7Component;
+    }
+    component = null;
   };
 
   // Store component instance
@@ -27898,6 +27904,7 @@ var Vi = {
       width: null,
       height: null,
       placementId: 'pltd4o7ibb9rc653x14',
+      placementType: 'interstitial',
       videoSlot: null,
       showProgress: true,
       showBranding: true,
