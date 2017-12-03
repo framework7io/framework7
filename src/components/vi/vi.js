@@ -18,6 +18,7 @@ export default {
       width: null,
       height: null,
       placementId: 'pltd4o7ibb9rc653x14',
+      placementType: 'interstitial',
       videoSlot: null,
       showProgress: true,
       showBranding: true,
