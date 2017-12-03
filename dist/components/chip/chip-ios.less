@@ -1,0 +1,69 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+
+  .chip {
+    font-size: 14px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.37);
+    height: 23px;
+    line-height: 23px;
+    border-radius: 12px;
+    padding: 0 6px;
+  }
+  .chip-media {
+    width: 23px;
+    height: 23px;
+    vertical-align: middle;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    color: #fff;
+    font-size: 12px;
+    box-sizing: border-box;
+    .ltr({
+      margin-left: -6px;
+      + .chip-label {
+        margin-left: 4px;
+      }
+    });
+    .rtl({
+      margin-right: -6px;
+      + .chip-label {
+        margin-right: 4px;
+      }
+    });
+
+    i.icon {
+      font-size: 16px;
+      height: 16px;
+    }
+  }
+  .chip-delete {
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#fff'/><line stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
+    background-position: center;
+    background-size: 13px 13px;
+    opacity: 0.7;
+    .ltr({
+      margin-right: -6px;
+    });
+    .rtl({
+      margin-left: -6px;
+    });
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .chip {
+        background-color: #333;
+      }
+    }
+  }
+  .color-loop({
+    .chip.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
+}

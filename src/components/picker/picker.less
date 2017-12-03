@@ -1,0 +1,120 @@
+/* === Picker === */
+.picker {
+  width: 100%;
+  height: 260px;
+  &.picker-inline, .popover & {
+    height: 200px;
+  }
+  @media (orientation: landscape) and (max-height: 415px) {
+    &:not(.picker-inline) {
+      height: 200px;
+    }
+  }
+}
+.picker-popover {
+  width: 280px;
+}
+.picker-columns {
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  padding: 0;
+  text-align: right;
+  height: 100%;
+  position: relative;
+  -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
+}
+.picker-column {
+  position: relative;
+  max-height: 100%;
+  &.picker-column-first:before, &.picker-column-last:after {
+    height: 100%;
+    width: 100vw;
+    position: absolute;
+    content: '';
+    top: 0;
+  }
+  &.picker-column-first:before {
+    right: 100%;
+  }
+  &.picker-column-last:after {
+    left: 100%;
+  }
+  &.picker-column-left {
+    text-align: left;
+  }
+  &.picker-column-center {
+    text-align: center;
+  }
+  &.picker-column-right {
+    text-align: right;
+  }
+  &.picker-column-divider {
+    display: flex;
+    align-items: center;
+  }
+}
+.picker-items {
+  transition: 300ms;
+  transition-timing-function: ease-out;
+}
+.picker-item {
+  height: 36px;
+  line-height: 36px;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: 300ms;
+  span {
+    padding: 0 10px;
+  }
+  .picker-column-absolute &{
+    position: absolute;
+  }
+  &.picker-item-far {
+    pointer-events: none;
+  }
+  &.picker-item-selected {
+    transform: translate3d(0,0,0) rotateX(0deg);
+  }
+
+}
+.picker-center-highlight {
+  height: 36px;
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 50%;
+  margin-top: -18px;
+  pointer-events: none;
+}
+.picker-3d {
+  .picker-columns {
+    overflow: hidden;
+    perspective: 1200px;
+  }
+  .picker-column, .picker-items, .picker-item {
+    transform-style: preserve-3d;
+  }
+  .picker-column {
+    overflow: visible;
+  }
+  .picker-item {
+    transform-origin: center center -110px;
+    backface-visibility: hidden;
+    transition-timing-function: ease-out;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./picker-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./picker-md.less');
+}

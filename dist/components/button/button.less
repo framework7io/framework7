@@ -1,0 +1,49 @@
+button {
+  appearance: none;
+}
+.button {
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  appearance: none;
+  background: none;
+  padding: 0 10px;
+  margin: 0;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+  cursor: pointer;
+  outline: 0;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.button {
+  input[type="submit"]&, input[type="button"]&{
+    width: 100%;
+  }
+}
+button {
+  width: 100%;
+}
+.segmented {
+  align-self: center;
+  display: flex;
+  flex-wrap: nowrap;
+  .button, button {
+    width: 100%;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+}
+.subnavbar .segmented {
+  width: 100%;
+}
+& when (@includeIosTheme) {
+  @import url('./button-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./button-md.less');
+}

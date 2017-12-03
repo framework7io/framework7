@@ -1,0 +1,25 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .contacts-list {
+    margin: 0;
+    .list-group-title {
+      padding: 0 15px;
+      background: #f7f7f7;
+      color: #000;
+      font-weight: 600;
+      line-height: 22px;
+      height: 22px;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .contacts-list, .contacts-list& {
+        .list-group-title {
+          background-color: #111;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

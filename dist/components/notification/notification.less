@@ -1,0 +1,47 @@
+/* === Notifications === */
+.notification {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 20000;
+  font-size: 14px;
+  margin: 0;
+  border: none;
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  direction: ltr;
+}
+.notification-icon {
+  font-size: 0;
+}
+.notification-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.notification-close-button {
+  margin-left: auto;
+  cursor: pointer;
+}
+html.with-statusbar {
+  &.device-ios .notification, &.ios:not(.device-ios):not(.device-android) .notification {
+    margin-top: 20px;
+  }
+  &.device-android .notification, &.md:not(.device-ios):not(.device-android) .notification {
+    margin-top: 24px;
+  }
+  .safe-areas({
+    .notification {
+      margin-top: constant(safe-area-inset-top);
+      margin-top: env(safe-area-inset-top);
+    }
+  });
+}
+& when (@includeIosTheme) {
+  @import url('./notification-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./notification-md.less');
+}

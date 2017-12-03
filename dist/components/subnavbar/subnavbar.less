@@ -1,0 +1,55 @@
+/* === Subnavbar === */
+.subnavbar {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 500;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .title {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellpsis;
+    white-space: nowrap;
+  }
+  .left, .right {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .right:first-child {
+    position: absolute;
+    height: 100%;
+  }
+}
+.subnavbar-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-between;
+  overflow: hidden;
+  &.stacked {
+    display: none;
+  }
+}
+.navbar .subnavbar {
+  top: 100%;
+}
+
+.views, .view, .page {
+  > .navbar {
+    position: absolute;
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./subnavbar-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./subnavbar-md.less');
+}

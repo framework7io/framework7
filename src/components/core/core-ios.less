@@ -1,0 +1,45 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  body {
+    font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
+    color: #000;
+    line-height: 1.4;
+  }
+  .md-only, .if-md {
+    display: none !important;
+  }
+  a {
+    color: @themeColor;
+  }
+  // Fix for iPad in Safari in Lanscape mode
+  @media all and (width:1024px) and (height:691px) and (orientation:landscape) {
+    &, & body, & .framework7-root {
+      height: 671px;
+    }
+  }
+  @media all and (width:1024px) and (height:692px) and (orientation:landscape) {
+    &, & body, & .framework7-root {
+      height: 672px;
+    }
+  }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      color: #fff;
+    }
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      a {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    a.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
+}

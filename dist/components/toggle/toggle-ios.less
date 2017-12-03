@@ -1,0 +1,86 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .toggle {
+    width: 52px;
+    border-radius: 16px;
+    height: 32px;
+
+    input[type="checkbox"]:checked + .toggle-icon {
+      background: #4cd964;
+      &:before {
+        transform: scale(0);
+      }
+      &:after {
+        .ltr({ transform: translateX(20px); });
+        .rtl({ transform: translateX(-20px); });
+      }
+    }
+  }
+  .toggle-icon {
+    width: 52px;
+    border-radius: 16px;
+    height: 32px;
+    background: #e5e5e5;
+    &:before {
+      position: absolute;
+      .ltr({ left: 2px; });
+      .rtl({ right: 2px; });
+      top: 2px;
+      width: 48px;
+      height: 28px;
+      border-radius: 16px;
+      box-sizing: border-box;
+      background: #fff;
+      z-index: 1;
+      transition-duration: 300ms;
+      transform: scale(1);
+    }
+    &:after {
+      height: 28px;
+      width: 28px;
+      top: 2px;
+      .ltr({ left: 2px; });
+      .rtl({ right: 2px; });
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      border-radius: 14px;
+    }
+  }
+  .toggle-active-state {
+    input[type="checkbox"]:not(:checked) + .toggle-icon {
+      &:before {
+        transform: scale(0);
+      }
+    }
+    input[type="checkbox"] + .toggle-icon {
+      &:after {
+        width: 35px;
+      }
+    }
+    input[type="checkbox"]:checked + .toggle-icon {
+      &:after {
+        width: 35px;
+        .ltr({ transform: translateX(13px); });
+        .rtl({ transform: translateX(-13px); });
+      }
+    }
+  }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .toggle-icon {
+        background-color: #fff;
+      }
+      .toggle-icon:before {
+        background-color: @blockBgDark;
+      }
+    }
+  }
+  // Colors
+  .color-loop({
+    .toggle.color-@{colorName} input[type="checkbox"]:checked + .toggle-icon {
+      background-color: @colorValue;
+    }
+  });
+}

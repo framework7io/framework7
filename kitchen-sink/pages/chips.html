@@ -1,0 +1,143 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Chips</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Chips With Text</div>
+      <div class="block block-strong">
+        <div class="chip">
+          <div class="chip-label">Example Chip</div>
+        </div>
+        <div class="chip">
+          <div class="chip-label">Another Chip</div>
+        </div>
+        <div class="chip">
+          <div class="chip-label">One More Chip</div>
+        </div>
+        <div class="chip">
+          <div class="chip-label">Fourth Chip</div>
+        </div>
+        <div class="chip">
+          <div class="chip-label">Last One</div>
+        </div>
+      </div>
+      <div class="block-title">Icon Chips</div>
+      <div class="block block-strong">
+        <div class="chip">
+          <div class="chip-media {{#if $theme.md}}bg-color-blue{{/if}}">
+            <i class="icon f7-icons ios-only">add_round</i>
+            <i class="icon material-icons md-only">add_circle</i>
+          </div>
+          <div class="chip-label">Add Contact</div>
+        </div>
+        <div class="chip">
+          <div class="chip-media {{#if $theme.md}}bg-color-green{{/if}}">
+            <i class="icon f7-icons ios-only">compass</i>
+            <i class="icon material-icons md-only">location_on</i>
+          </div>
+          <div class="chip-label">London</div>
+        </div>
+        <div class="chip">
+          <div class="chip-media {{#if $theme.md}}bg-color-red{{/if}}">
+            <i class="icon f7-icons ios-only">person</i>
+            <i class="icon material-icons md-only">person</i>
+          </div>
+          <div class="chip-label">John Doe</div>
+        </div>
+      </div>
+      <div class="block-title">Contact Chips</div>
+      <div class="block block-strong">
+        <div class="chip">
+          <div class="chip-media"><img src="http://lorempixel.com/100/100/people/9/"/></div>
+          <div class="chip-label">Jane Doe</div>
+        </div>
+        <div class="chip">
+          <div class="chip-media"><img src="http://lorempixel.com/100/100/people/3/"/></div>
+          <div class="chip-label">John Doe</div>
+        </div>
+        <div class="chip">
+          <div class="chip-media"><img src="http://lorempixel.com/100/100/people/7/"/></div>
+          <div class="chip-label">Adam Smith</div>
+        </div>
+        <div class="chip">
+          <div class="chip-media bg-color-pink">J</div>
+          <div class="chip-label">Jennifer</div>
+        </div>
+        <div class="chip">
+          <div class="chip-media bg-color-yellow text-color-black">C</div>
+          <div class="chip-label">Chris</div>
+        </div>
+        <div class="chip">
+          <div class="chip-media bg-color-red">K</div>
+          <div class="chip-label">Kate</div>
+        </div>
+      </div>
+      <div class="block-title">Deletable Chips / Tags</div>
+      <div class="block block-strong">
+        <div class="chip">
+          <div class="chip-label">Example Chip</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+        </div>
+        <div class="chip">
+          <div class="chip-media bg-color-orange text-color-black">C</div>
+          <div class="chip-label">Chris</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+        </div>
+        <div class="chip">
+          <div class="chip-media"><img src="http://lorempixel.com/100/100/people/9/"/></div>
+          <div class="chip-label">Jane Doe</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+        </div>
+        <div class="chip">
+          <div class="chip-label">One More Chip</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+        </div>
+        <div class="chip">
+          <div class="chip-media bg-color-pink">J</div>
+          <div class="chip-label">Jennifer</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+        </div>
+        <div class="chip">
+          <div class="chip-media"><img src="http://lorempixel.com/100/100/people/7/"/></div>
+          <div class="chip-label">Adam Smith</div><a href="#" class="chip-delete" @click="deleteChip"></a>
+        </div>
+      </div>
+      <div class="block-title">Color Chips</div>
+      <div class="block block-strong">
+        <div class="chip color-red">
+          <div class="chip-label">Red Chip</div>
+        </div>
+        <div class="chip color-green">
+          <div class="chip-label">Green Chip</div>
+        </div>
+        <div class="chip color-blue">
+          <div class="chip-label">Blue Chip</div>
+        </div>
+        <div class="chip color-orange">
+          <div class="chip-label">Orange Chip</div>
+        </div>
+        <div class="chip color-pink">
+          <div class="chip-label">Pink Chip</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      deleteChip(e) {
+        var $ = this.$;
+        var app = this.$app;
+        app.dialog.confirm('Do you want to delete this tiny demo Chip?', function () {
+          $(e.target).parents('.chip').remove();
+        });
+      }
+    }
+  }
+</script>
+

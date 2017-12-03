@@ -1,3 +1,9 @@
+<!--
+
+Do you want to ask a question? Are you looking for support? The Framework7 forum (http://forum.framework7.io) and Stack Overflow (http://stackoverflow.com/questions/tagged/framework7) are the best places for getting support
+
+-->
+
 This is a (multiple allowed):
 * [x] bug
 * [ ] enhancement

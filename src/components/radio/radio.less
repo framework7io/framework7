@@ -1,0 +1,40 @@
+/* === Radio === */
+.icon-radio {
+  flex-shrink: 0;
+}
+.radio {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  z-index: 1;
+}
+label.item-radio, .radio {
+  cursor: pointer;
+  input[type="checkbox"], input[type="radio"] {
+    display: none;
+  }
+}
+label.item-radio .icon-radio, .radio .icon-radio {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  &:after {
+    content: '';
+    position: absolute;
+  }
+}
+label.item-radio {
+  transition-duration: 300ms;
+  &.active-state {
+    .hairline-color(bottom, transparent);
+  }
+  &.disabled, .disabled & {
+    .disabled();
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./radio-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./radio-md.less');
+}

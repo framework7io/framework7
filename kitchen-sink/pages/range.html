@@ -1,0 +1,92 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Range Slider</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Volume</div>
+      <div class="list simple-list">
+        <ul>
+          <li>
+            <div class="item-cell width-auto flex-shrink-0">
+              <i class="icon f7-icons ios-only">volume_mute_fill</i>
+              <i class="icon material-icons md-only">volume_mute</i>
+            </div>
+            <div class="item-cell flex-shrink-3">
+              <div class="range-slider range-slider-init">
+                <input type="range" min="0" max="100" step="1" value="10">
+              </div>
+            </div>
+            <div class="item-cell width-auto flex-shrink-0">
+              <i class="icon f7-icons ios-only">volume_fill</i>
+              <i class="icon material-icons md-only">volume_up</i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title">Brightness</div>
+      <div class="list simple-list">
+        <ul>
+          <li>
+            <div class="item-cell width-auto flex-shrink-0">
+              <i class="icon f7-icons ios-only">circle</i>
+              <i class="icon material-icons md-only">brightness_low</i>
+            </div>
+            <div class="item-cell flex-shrink-3">
+              <div class="range-slider range-slider-init color-orange" data-label="true">
+                <input type="range" min="0" max="100" step="1" value="50">
+              </div>
+            </div>
+            <div class="item-cell width-auto flex-shrink-0">
+              <i class="icon f7-icons ios-only">circle_half</i>
+              <i class="icon material-icons md-only">brightness_high</i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="block-title display-flex justify-content-space-between">Price Filter <span class="price-value">$200 - $400</span></div>
+      <div class="list simple-list">
+        <ul>
+          <li class="item-row">
+            <div class="item-cell width-auto flex-shrink-0">
+              <i class="icon f7-icons ios-only">money_dollar</i>
+              <i class="icon material-icons md-only">attach_money</i>
+            </div>
+            <div class="item-cell item-cell-shrink-3">
+              <div class="range-slider range-slider-init color-green" @range:change="onPriceChange"
+                data-label="true"
+                data-dual="true"
+                data-min="0"
+                data-max="500"
+                data-step="1"
+                data-value-left="200"
+                data-value-right="400"
+              ></div>
+            </div>
+            <div class="item-cell width-auto flex-shrink-0">
+              <i class="icon f7-icons ios-only">money_dollar_fill</i>
+              <i class="icon material-icons md-only">monetization_on</i>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      onPriceChange: function (e, range) {
+        this.$el.find('.price-value').text('$'+(range.value[0])+' - $'+(range.value[1]));
+      }
+    }
+  }
+</script>

@@ -1,0 +1,10 @@
+build
+.git
+.github
+custom
+dist
+kitchen-sink
+node_modules
+src/framework7.js
+src/modules/demo-module.js
+src/components/swiper/swiper-class

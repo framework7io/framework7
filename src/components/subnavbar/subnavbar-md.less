@@ -1,0 +1,119 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @navbarSize: 56px;
+  @navbarSizeTablet: 64px;
+  .subnavbar {
+    height: 48px;
+    background: @themeColor;
+    color: #fff;
+    .md-bar-shadow-to-bottom();
+    &.no-shadow {
+      .md-bar-shadow-remove();
+    }
+    .title {
+      margin: 0 16px;
+      font-size: 20px;
+      line-height: 48px;
+      display: inline-block;
+      text-align: left;
+      font-weight: 500;
+    }
+    .ltr ({
+      .title:first-child {
+        margin-left: 56px;
+      }
+      .right {
+        margin-left: auto;
+      }
+      .right:first-child {
+        right: 16px;
+      }
+    });
+    .rtl ({
+      .title:first-child {
+        margin-right: 56px;
+      }
+      .right {
+        margin-right: auto;
+      }
+      .right:first-child {
+        left: 16px;
+      }
+    });
+    a {
+      color: inherit;
+    }
+    a.link {
+      line-height: 48px;
+      height: 48px;
+      min-width: 48px;
+      .md-link-highlight();
+      justify-content: center;
+      padding: 0 16px;
+    }
+    a.icon-only {
+      flex-shrink: 0;
+      min-width: 0;
+    }
+  }
+  .subnavbar-inner {
+    padding: 0 16px;
+    .ltr({
+      > a.link:first-child {
+        margin-left: -16px;
+      }
+      > a.link:last-child {
+        margin-right: -16px;
+      }
+    });
+    .rtl({
+      > a.link:first-child {
+        margin-right: -16px;
+      }
+      > a.link:last-child {
+        margin-left: -16px;
+      }
+    });
+  }
+
+  // Relation with page and navbar
+  .subnavbar ~ * .page-content,
+  .subnavbar ~ .page-content,
+  .page-with-subnavbar .page-content
+  {
+    padding-top: 48px;
+  }
+  .navbar ~ .subnavbar ~ .page-content,
+  .navbar ~ .subnavbar ~ * .page-content,
+  .page-with-subnavbar .navbar ~ * .page-content,
+  .page-with-subnavbar .navbar ~ .page-content
+  {
+    padding-top: @navbarSize + 48px;
+    @media (min-width: 768px) {
+      padding-top: @navbarSizeTablet + 48px;
+    }
+  }
+  .navbar ~ .subnavbar,
+  .navbar ~ * .subnavbar,
+  .page-with-subnavbar .navbar ~ .subnavbar,
+  .page-with-subnavbar .navbar ~ * .subnavbar
+  {
+    top: @navbarSize;
+    @media (min-width: 768px) {
+      top: @navbarSizeTablet;
+    }
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .subnavbar, &.subnavbar {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .subnavbar.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
+}

@@ -1,0 +1,13 @@
+/* === PTR === */
+.ptr-preloader {
+  .preloader {
+    position: absolute;
+    left: 50%;
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./pull-to-refresh-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./pull-to-refresh-md.less');
+}

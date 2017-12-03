@@ -1,0 +1,101 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">
+          <i class="icon icon-vi"></i>
+        </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block block-strong">
+        <p><a href="https://vi.ai" class="external" target="_blank"><b>vi</b></a> (video intelligence) - is a mobile video SSP (Supply / Sell Side Platform). It provides self-serve tools for publishers to captivate and monetize audiences.</p>
+        <p>Framework7 comes with integrated API for vi SDK and gives F7 developers app monetization opportunities right from the box.</p>
+      </div>
+      <div class="block-title">vi API examples</div>
+      <div class="block block-strong">
+        <p><b>Prepaired ad</b>. Ad already prepaired (loaded) and waiting to start playing when required.</p>
+        <p><a class="button button-raised" @click="showPrepared">Prepaired Ad</a></p>
+      </div>
+      <div class="block block-strong">
+        <p><b>Create ad and show</b> it at a time.</p>
+        <p><a class="button button-raised" @click="createAndShow">Create & Show</a></p>
+      </div>
+      <div class="block block-strong">
+        <p><b>Autoplay Fallback</b>. In some cases (like old iOS Safari) video can't be played automatically without user interaction. In this case you may use custom fallback (e.g. to show a Dialog) which will require user interaction to play a video ad.</p>
+        <p><a class="button button-raised" @click="createAndShowCustom">Create & Show With Custom Fallback</a></p>
+      </div>
+      <div class="block block-strong">
+        <p><b>Rewarded Ad</b>. vi API also comes with handy events to check whether the video was fully completed or not. Useful, for example, in case when you need to reward user for watching an ad.</p>
+        <p><a class="button button-raised" @click="createAndShowRewarded">Create & Show Rewarded Ad</a></p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    beforeDestroy() {
+      if (this.prepairedAd) this.prepairedAd.destroy();
+    },
+    mounted: function () {
+      var app = this.$app;
+      // Prepare Ad
+      this.prepairedAd = app.vi.createAd({
+        autoplay: false,
+      });
+    },
+    methods: {
+      // Play Prepared Ad
+      showPrepared: function () {
+        this.prepairedAd.start();
+      },
+      // Create and play in place
+      createAndShow: function() {
+        var app = this.$app;
+        app.vi.createAd();
+      },
+      // Create and play in place with custom fallback
+      createAndShowCustom: function() {
+        var app = this.$app;
+        app.vi.createAd({
+          fallbackOverlay: false,
+          on: {
+            autoplayFailed() {
+              const ad = this;
+              app.dialog.alert('Check out this awesome ad', () => {
+                ad.start();
+              })
+            }
+          }
+        });
+      },
+      // Create and play in place
+      createAndShowRewarded: function() {
+        var app = this.$app;
+        app.vi.createAd({
+          autoplay: false,
+          on: {
+            ready() {
+              const ad = this;
+              app.dialog.alert('Check out this awesome ad to get the reward', () => {
+                ad.start();
+              })
+            },
+            complete() {
+              app.dialog.alert('Congrats! You got the reward!')
+            },
+            userexit() {
+              app.dialog.alert('Sorry, no reward for you!')
+            },
+          }
+        });
+      },
+    }
+  }
+</script>

@@ -1,0 +1,67 @@
+/* === Statusbar === */
+.statusbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  box-sizing: border-box;
+  display: none;
+
+  html.device-ios &, html.ios:not(.device-ios):not(.device-android) & {
+    height: 20px;
+  }
+  html.device-android &, html.md:not(.device-ios):not(.device-android) & {
+    height: 24px;
+  }
+}
+html.device-ios {
+  .safe-areas({
+    .statusbar {
+      height: constant(safe-area-inset-top);
+      height: env(safe-area-inset-top);
+    }
+  });
+}
+html.with-statusbar {
+  .statusbar {
+    display: block;
+  }
+  &.device-ios, &.ios:not(.device-ios):not(.device-android) {
+    .framework7-root {
+      padding-top: 20px;
+    }
+    .panel {
+      top: 20px;
+      height: ~"calc(100% - 20px)";
+    }
+  }
+  &.device-android, &.md:not(.device-ios):not(.device-android) {
+    .framework7-root {
+      padding-top: 24px;
+    }
+    .panel {
+      top: 24px;
+      height: ~"calc(100% - 24px)";
+    }
+  }
+  .safe-areas({
+    .framework7-root {
+      padding-top: constant(safe-area-inset-top);
+      padding-top: env(safe-area-inset-top);
+    }
+    .panel {
+      top: constant(safe-area-inset-top);
+      top: env(safe-area-inset-top);
+      height: ~"calc(100% - constant(safe-area-inset-top))";
+      height: ~"calc(100% - env(safe-area-inset-top))";
+    }
+  })
+}
+
+& when (@includeIosTheme) {
+  @import url('./statusbar-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./statusbar-md.less');
+}

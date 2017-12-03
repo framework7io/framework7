@@ -1,0 +1,35 @@
+/* === Smart Select === */
+.smart-select {
+  select {
+    display: none;
+  }
+  .item-after {
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    display: block;
+  }
+
+}
+.sheet-modal.smart-select-sheet {
+  .sheet-modal-inner {
+    background: #fff;
+  }
+  .list {
+    margin: 0;
+    ul {
+      .hairline-remove(top);
+      .hairline-remove(bottom);
+    }
+  }
+}
+.smart-select-popover .popover-inner {
+  max-height: 40vh;
+}
+& when (@includeIosTheme) {
+  @import url('./smart-select-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./smart-select-md.less');
+}

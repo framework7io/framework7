@@ -1,0 +1,98 @@
+/* === Toolbar === */
+.toolbar {
+  width: 100%;
+  position: relative;
+  margin: 0;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  z-index: 500;
+  box-sizing: border-box;
+  left: 0;
+  b {
+    font-weight: 500;
+  }
+  a {
+    box-sizing: border-box;
+    flex-shrink: 1;
+    position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  a.link {
+    display: flex;
+  }
+  i.icon {
+    display: block;
+  }
+}
+.toolbar-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+  align-content: center;
+}
+.tabbar, .tabbar-labels {
+  .views > & {
+    z-index: 5001;
+  }
+  a.link {
+    line-height: 1.4;
+  }
+  a.tab-link, a.link {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+.tabbar-labels {
+  a.tab-link, a.link {
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    .tabbar-label {
+      display: block;
+      line-height: 1;
+      margin: 0;
+      position: relative;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+.tabbar-scrollable {
+  .toolbar-inner {
+    .scrollable();
+    &::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      -webkit-appearance: none;
+      opacity: 0 !important;
+    }
+  }
+  a.tab-link, a.link {
+    width: auto;
+    flex-shrink: 0;
+  }
+}
+.views, .view, .page {
+  > .toolbar {
+    position: absolute;
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./toolbar-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./toolbar-md.less');
+}

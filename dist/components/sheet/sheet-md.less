@@ -1,0 +1,27 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .sheet-modal {
+    background: #fff;
+    .toolbar {
+      top: 0;
+      .md-bar-shadow-remove();
+      + .sheet-modal-inner {
+        height: ~"calc(100% - 48px)";
+      }
+      a.link {
+        flex-shrink: 0;
+      }
+    }
+    .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .sheet-modal-inner .page-content {
+      padding-top: 0;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .sheet-modal {
+        background-color: #202020;
+      }
+    }
+  }
+}

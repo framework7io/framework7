@@ -1,0 +1,71 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .list {
+    .accordion-item-toggle {
+      .item-inner {
+        .ltr({
+          padding-right: 42px;
+          background: no-repeat calc(~"100% - 16px") center;
+        });
+        .rtl({
+          padding-left: 42px;
+          background-repeat: no-repeat;
+          background-position: 16px center;
+        });
+      }
+      &.active-state {
+        background-color: rgba(0,0,0,0.1);
+      }
+    }
+  }
+  .list .accordion-item-toggle .item-inner,
+  .list:not(.media-list) .accordion-item:not(.media-item) .accordion-item-toggle .item-inner,
+  .list:not(.media-list) .accordion-item:not(.media-item) > .item-link .item-inner,
+  .media-list .accordion-item .accordion-item-toggle .item-title-row,
+  .media-list .accordion-item > .item-link .item-title-row,
+  .accordion-item.media-item .accordion-item-toggle .item-title-row,
+  .accordion-item.media-item > .item-link .item-title-row,
+  .links-list .accordion-item > a
+  {
+    .svg-background("<svg width='13px' height='8px' viewBox='0 0 8 13' xmlns='http://www.w3.org/2000/svg'><polygon fill='#c7c7cc' transform='translate(6.5, 6.5) rotate(-315) translate(-10, -6.5)' points='11 11 11 2 9 2 9 9 2 9 2 11 10 11'></polygon></svg>");
+    background-size: 13px 13px;
+  }
+  .list .accordion-item-toggle.accordion-item-opened .item-inner,
+  .list:not(.media-list) .accordion-item-opened:not(.media-item) .accordion-item-toggle .item-inner,
+  .list:not(.media-list) .accordion-item-opened:not(.media-item) > .item-link .item-inner,
+  .media-list .accordion-item-opened .accordion-item-toggle .item-title-row,
+  .media-list .accordion-item-opened > .item-link .item-title-row,
+  .accordion-item-opened.media-item .accordion-item-toggle .item-title-row,
+  .accordion-item-opened.media-item > .item-link .item-title-row,
+  .links-list .accordion-item-opened > a
+  {
+    .svg-background("<svg width='13px' height='8px' viewBox='0 0 8 13' xmlns='http://www.w3.org/2000/svg'><polygon fill='#c7c7cc' transform='translate(1.5, 6.5) rotate(-135) translate(-10, -6.5)' points='11 11 11 2 9 2 9 9 2 9 2 11 10 11'></polygon></svg>");
+  }
+
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .list .accordion-item-toggle .item-inner,
+      .list:not(.media-list) .accordion-item:not(.media-item) .accordion-item-toggle .item-inner,
+      .list:not(.media-list) .accordion-item:not(.media-item) > .item-link .item-inner,
+      .media-list .accordion-item .accordion-item-toggle .item-title-row,
+      .media-list .accordion-item > .item-link .item-title-row,
+      .accordion-item.media-item .accordion-item-toggle .item-title-row,
+      .accordion-item.media-item > .item-link .item-title-row,
+      .links-list .accordion-item > a
+      {
+        .svg-background("<svg width='13px' height='8px' viewBox='0 0 8 13' xmlns='http://www.w3.org/2000/svg'><polygon fill='#434345' transform='translate(6.5, 6.5) rotate(-315) translate(-10, -6.5)' points='11 11 11 2 9 2 9 9 2 9 2 11 10 11'></polygon></svg>");
+      }
+      .list .accordion-item-toggle.accordion-item-opened .item-inner,
+      .list:not(.media-list) .accordion-item-opened:not(.media-item) .accordion-item-toggle .item-inner,
+      .list:not(.media-list) .accordion-item-opened:not(.media-item) > .item-link .item-inner,
+      .media-list .accordion-item-opened .accordion-item-toggle .item-title-row,
+      .media-list .accordion-item-opened > .item-link .item-title-row,
+      .accordion-item-opened.media-item .accordion-item-toggle .item-title-row,
+      .accordion-item-opened.media-item > .item-link .item-title-row,
+      .links-list .accordion-item-opened > a
+      {
+        .svg-background("<svg width='13px' height='8px' viewBox='0 0 8 13' xmlns='http://www.w3.org/2000/svg'><polygon fill='#434345' transform='translate(1.5, 6.5) rotate(-135) translate(-10, -6.5)' points='11 11 11 2 9 2 9 9 2 9 2 11 10 11'></polygon></svg>");
+      }
+    }
+  }
+}

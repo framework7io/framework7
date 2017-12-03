@@ -1,0 +1,130 @@
+/* === Input === */
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+input[type="number"],
+select,
+textarea {
+  box-sizing: border-box;
+  appearance: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  outline: 0;
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  background: none;
+  resize: none;
+}
+.textarea-resizable-shadow {
+  opacity: 0;
+  position: absolute;
+  z-index: -1000;
+  pointer-events: none;
+  left: -1000px;
+  top: -1000px;
+  visibility: hidden;
+}
+.list {
+  input[type="text"],
+  input[type="password"],
+  input[type="search"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+  }
+  input[type="datetime-local"] {
+    max-width: 50vw;
+  }
+  input[type="date"], input[type="datetime-local"] {
+    line-height: 44px;
+  }
+  .rtl({
+    input[type="date"], input[type="datetime-local"] {
+      text-align: right;
+      flex-direction: row-reverse;
+      width: auto;
+    }
+  });
+  textarea {
+    resize: none;
+    line-height: 1.4;
+    height: 100px;
+  }
+  .item-label, .item-floating-label {
+    vertical-align: top;
+    flex-shrink: 0;
+  }
+  .item-input-wrap {
+    width: 100%;
+    flex-shrink: 1;
+    position: relative;
+  }
+}
+
+.input-clear-button {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition-duration: 100ms;
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  z-index: 1;
+  cursor: pointer;
+  background: none;
+  .ltr({
+    right: 0;
+  });
+  .rtl({
+    left: 0;
+  });
+  &:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  &:before {
+    position: absolute;
+    content: '';
+    left: 50%;
+    top: 50%;
+  }
+}
+.input-with-value ~ .input-clear-button,
+.item-input-with-value .input-clear-button {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+& when (@includeIosTheme) {
+  @import url('./input-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./input-md.less');
+}

@@ -1,0 +1,120 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .popover {
+    background: rgba(255,255,255,0.95);
+    border-radius: 13px;
+    transform: none;
+    transition-property: opacity;
+    .list {
+      &:first-child {
+        ul {
+          border-radius: 13px 13px 0 0;
+        }
+        li:first-child, li:first-child a, li:first-child > label {
+          border-radius: 13px 13px 0 0;
+        }
+      }
+      &:last-child {
+        ul {
+          border-radius: 0 0 13px 13px;
+        }
+        li:last-child, li:last-child a, li:last-child > label {
+          border-radius: 0 0 13px 13px;
+        }
+      }
+      &:first-child:last-child {
+        li:first-child:last-child, li:first-child:last-child a, li:first-child:last-child > label, ul {
+          border-radius: 13px;
+        }
+      }
+      + .list {
+        margin-top: 35px;
+      }
+    }
+  }
+  .popover-angle {
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    left: -26px;
+    top: 0;
+    z-index: 100;
+    overflow: hidden;
+    &:after {
+      content: '';
+      background: rgba(255,255,255,0.95);
+      width: 26px;
+      height: 26px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 3px;
+      transform: rotate(45deg);
+    }
+    &.on-left {
+      left: -26px;
+      &:after {
+        left: 19px;
+        top: 0;
+      }
+    }
+    &.on-right {
+      left: 100%;
+      &:after {
+        left: -19px;
+        top: 0;
+      }
+    }
+    &.on-top {
+      left: 0;
+      top: -26px;
+      &:after {
+        left: 0;
+        top: 19px;
+      }
+    }
+    &.on-bottom {
+      left: 0;
+      top: 100%;
+      &:after {
+        left: 0;
+        top: -19px;
+      }
+    }
+  }
+  .popover-from-actions {
+    .list + .list {
+      margin-top: 20px;
+    }
+    .list ul {
+      background: #fff;
+    }
+    .item-link i.icon {
+      width: 29px;
+      height: 29px;
+      font-size: 29px;
+    }
+  }
+  .popover-from-actions-label {
+    padding: 8px 10px;
+    color: #8a8a8a;
+    font-size: 13px;
+    text-align: center;
+  }
+  .hairline-root('.popover-from-actions-label', bottom, rgba(0,0,0,0.2));
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .popover, .popover& {
+        background: rgba(30,30,30,0.95);
+        .popover-angle:after {
+          background: rgba(30,30,30,0.95);
+        }
+        .list ul {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

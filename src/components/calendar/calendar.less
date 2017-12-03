@@ -1,0 +1,176 @@
+/* === Calendar/Datepicker === */
+.calendar {
+  overflow: hidden;
+  height: 320px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  &.modal-in {
+    display: flex;
+  }
+  @media (orientation: landscape) and (max-height: 415px) {
+    &.calendar-sheet {
+      height: 220px;
+    }
+    &.calendar-modal {
+      height: ~"calc(100vh - 44px)";
+    }
+  }
+  &.calendar-inline, &.calendar-popover .calendar {
+    position: relative;
+  }
+}
+.calendar-modal {
+  position: absolute;
+  height: 420px;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  min-width: 300px;
+  max-width: 380px;
+  transform: translate3d(-50%, 100%, 0);
+  transition-property: transform;
+  display: flex;
+  z-index: 12000;
+  background: #fff;
+  width: 90%;
+  border-radius: 4px;
+  .md-depth(5);
+  &.modal-in, &.modal-out {
+    transition-duration: 400ms;
+  }
+  &.modal-in {
+    transform: translate3d(-50%, -50%, 0);
+  }
+  &.modal-out {
+    transform: translate3d(-50%, 100%, 0);
+  }
+}
+.calendar-popover {
+  width: 320px;
+  .calendar {
+    height: 320px;
+  }
+}
+.calendar-week-header {
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  font-size: 11px;
+  .calendar-week-day {
+    flex-shrink: 1;
+    width: 100% / 7;
+    width: ~"calc(100% / 7)";
+    text-align: center;
+  }
+}
+.calendar-months {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 10;
+}
+.calendar-months-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
+}
+.calendar-month {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.calendar-row {
+  height: 100% / 6;
+  height: ~"calc(100% / 6)";
+  display: flex;
+  flex-shink: 1;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+.calendar-day {
+  flex-shink: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100% / 7;
+  width: ~"calc(100% / 7)";
+  text-align: center;
+  cursor: pointer;
+  z-index: 20;
+  color:#000;
+  height: 100%;
+  &.calendar-day-prev, &.calendar-day-next {
+    color: #b8b8b8;
+  }
+  &.calendar-day-weekend {
+  }
+  &.calendar-day-prev, &.calendar-day-next {}
+  .calendar-month-prev &, .calendar-month-next & {}
+  &.calendar-day-disabled {
+    color: #d4d4d4;
+    cursor: auto;
+  }
+  &.calendar-day-selected span {
+    color:#fff;
+  }
+  &.calendar-day-has-events span {
+    &:after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      position: absolute;
+      margin-left: -2px;
+      left: 50%;
+      bottom: 1px;
+    }
+  }
+  span {
+    display: inline-block;
+    border-radius: 100%;
+    position: relative;
+  }
+}
+.calendar-range .calendar-day.calendar-day-selected {
+  align-items: stretch;
+  align-content: stretch;
+  span {
+    width: 100%;
+    border-radius: 0;
+    height: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.calendar-month-selector, .calendar-year-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  max-width: 200px;
+  flex-shink: 10;
+  span {
+    flex-shrink: 1;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./calendar-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./calendar-md.less');
+}

@@ -1,0 +1,142 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @dialogBg: rgba(255,255,255,0.95);
+  @dialogButtonColor: @themeColor;
+  @dialogButonActiveBg: rgba(230,230,230,0.95);
+  @dialogHairlineColor: rgba(0,0,0,0.2);
+  .dialog {
+    width: 270px;
+    margin-left: -135px;
+    text-align: center;
+    border-radius: 13px;
+    color: #000;
+    &.modal-out {
+      transform: translate3d(0,0,0) scale(1);
+    }
+  }
+  .dialog-inner {
+    padding: 15px;
+    border-radius: 13px 13px 0 0;
+    background: @dialogBg;
+  }
+  .hairline-root('.dialog-inner', bottom, @dialogHairlineColor);
+
+  .dialog-title {
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+    + .dialog-text {
+      margin-top: 5px;
+    }
+  }
+  .dialog-buttons {
+    height: 44px;
+    justify-content: center;
+  }
+  .dialog-button {
+    width: 100%;
+    padding: 0 5px;
+    height: 44px;
+    font-size: 17px;
+    line-height: 44px;
+    text-align: center;
+    color: @dialogButtonColor;
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+    box-sizing: border-box;
+    -webkit-box-flex:1;
+    -ms-flex:1;
+    background: @dialogBg;
+    &:first-child {
+      border-radius: 0 0 0 13px;
+    }
+    &:last-child {
+      .hairline-remove(right);
+      border-radius: 0 0 13px 0;
+    }
+    &:first-child:last-child {
+      border-radius: 0 0 13px 13px;
+    }
+    &.dialog-button-bold {
+      font-weight: 500;
+    }
+    &.active-state {
+      background: @dialogButonActiveBg;
+    }
+  }
+  .dialog-buttons-vertical {
+    .dialog-buttons {
+      height: auto;
+    }
+    .dialog-button {
+      border-radius: 0;
+      &:last-child {
+        border-radius: 0 0 13px 13px;
+        .hairline-remove(bottom);
+      }
+    }
+  }
+  .hairline-root('.dialog-button', right, @dialogHairlineColor);
+  .hairline-root('.dialog-buttons-vertical .dialog-button', bottom, @dialogHairlineColor);
+
+  .dialog-no-buttons {
+    .dialog-inner {
+      border-radius: 13px;
+      .hairline-remove(bottom);
+    }
+  }
+
+  .dialog-input-field {
+    margin-top: 15px;
+    .item-input-wrap {
+      margin: 0;
+    }
+  }
+
+  .dialog-input {
+    height: 26px;
+    background: #fff;
+    padding: 0 5px;
+    border: 1px solid rgba(0,0,0,0.3);
+    font-size: 14px;
+    + .dialog-input {
+      margin-top: 5px;
+    }
+
+  }
+  .dialog-input-double {
+    + .dialog-input-double {
+      margin-top: 0;
+      .dialog-input {
+        border-top: 0;
+        margin-top: 0;
+      }
+    }
+  }
+
+  // Preloader
+  .dialog-preloader {
+    .dialog-title ~ .preloader, .dialog-text ~ .preloader {
+      margin-top: 5px;
+    }
+    .preloader {
+      width: 34px;
+      height: 34px;
+    }
+  }
+  .dialog-progress {
+    .dialog-title ~ .progressbar, .dialog-text ~ .progressbar, .dialog-title ~ .progressbar-infinite, .dialog-text ~ .progressbar-infinite {
+      margin-top: 15px;
+    }
+  }
+
+  .color-loop({
+    .dialog-button.color-@{colorName} {
+      color: @colorValue;
+    }
+  });
+}

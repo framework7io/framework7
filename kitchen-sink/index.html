@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#2196f3">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+  <title>Framework7</title>
+  <link rel="stylesheet" href="../dist/css/framework7.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="apple-touch-icon" href="img/f7-icon-square.png">
+  <link rel="icon" href="img/f7-icon.png">
+</head>
+<body>
+  <div id="app">
+    <div class="statusbar"></div>
+    <div class="panel panel-left panel-cover">
+      <div class="page">
+        <div class="page-content">
+          <div class="block-title">Left Panel</div>
+          <div class="block">
+            <p>This is a left side panel. You can close it by clicking outsite or on this link: <a href="#" class="panel-close">close me</a>. You can put here anything, even another isolated view like in <a href="#" data-panel="right" class="panel-open">Right Panel</a></p>
+          </div>
+          <div class="block-title">Main View Navigation</div>
+          <div class="list links-list">
+            <ul>
+              <li>
+                <a href="/accordion/" class="panel-close">Accordion</a>
+              </li>
+              <li>
+                <a href="/action-sheet/" class="panel-close">Action Sheet</a>
+              </li>
+              <li>
+                <a href="/badge/" class="panel-close">Badge</a>
+              </li>
+              <li>
+                <a href="/buttons/" class="panel-close">Buttons</a>
+              </li>
+              <li>
+                <a href="/cards/" class="panel-close">Cards</a>
+              </li>
+              <li>
+                <a href="/checkbox/" class="panel-close">Checkbox</a>
+              </li>
+              <li>
+                <a href="/chips/" class="panel-close">Chips/Tags</a>
+              </li>
+              <li>
+                <a href="/contacts-list/" class="panel-close">Contacts List</a>
+              </li>
+              <li>
+                <a href="/data-table/" class="panel-close">Data Table</a>
+              </li>
+            </ul>
+          </div>
+          <div class="block">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac urna. Maecenas in lacus faucibus, viverra ipsum pulvinar, molestie arcu. Etiam lacinia venenatis dignissim. Suspendisse non nisl semper tellus malesuada suscipit eu et eros. Nulla eu enim quis quam elementum vulputate. Mauris ornare consequat nunc viverra pellentesque. Aenean semper eu massa sit amet aliquam. Integer et neque sed libero mollis elementum at vitae ligula. Vestibulum pharetra sed libero sed porttitor. Suspendisse a faucibus lectus.</p>
+            <p>Duis ut mauris sollicitudin, venenatis nisi sed, luctus ligula. Phasellus blandit nisl ut lorem semper pharetra. Nullam tortor nibh, suscipit in consequat vel, feugiat sed quam. Nam risus libero, auctor vel tristique ac, malesuada ut ante. Sed molestie, est in eleifend sagittis, leo tortor ullamcorper erat, at vulputate eros sapien nec libero. Mauris dapibus laoreet nibh quis bibendum. Fusce dolor sem, suscipit in iaculis id, pharetra at urna. Pellentesque tempor congue massa quis faucibus. Vestibulum nunc eros, convallis blandit dui sit amet, gravida adipiscing libero.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-right panel-reveal">
+      <div class="view view-init view-right" name="right" data-url="/">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner sliding">
+              <div class="title">Right Panel</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block">
+              <p>This is a right side panel. You can close it by clicking outsite or on this link: <a href="#" class="panel-close">close me</a>. You can put here anything, even another isolated view.</p>
+            </div>
+            <div class="block-title">Panel Navigation</div>
+            <div class="list links-list">
+              <ul>
+                <li><a href="/panel-right-1/">Right panel page 1</a></li>
+                <li><a href="/panel-right-2/">Right panel page 2</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view view-main view-init ios-edges" data-url="/">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left">
+              <a href="#" class="link icon-only panel-open" data-panel="left">
+                <i class="icon f7-icons ios-only">menu</i>
+                <i class="icon material-icons md-only">menu</i>
+              </a>
+            </div>
+            <div class="title sliding">Framework7</div>
+            <div class="right">
+              <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-components">
+                <i class="icon f7-icons ios-only">search_strong</i>
+                <i class="icon material-icons md-only">search</i>
+              </a>
+            </div>
+            <form data-search-container=".components-list" data-search-in="a" class="searchbar searchbar-expandable searchbar-components searchbar-init">
+              <div class="searchbar-inner">
+                <div class="searchbar-input-wrap">
+                  <input type="search" placeholder="Search components"/>
+                  <i class="searchbar-icon"></i>
+                  <span class="input-clear-button"></span>
+                </div>
+                <span class="searchbar-disable-button">Cancel</span>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="list searchbar-hide-on-search">
+            <ul>
+              <li>
+                <a class="item-content item-link" href="/about/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">About Framework7</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="block-title searchbar-found">Components</div>
+          <div class="list components-list searchbar-found">
+            <ul>
+              <li>
+                <a class="item-content item-link" href="/accordion/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Accordion</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/action-sheet/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Action Sheet</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/autocomplete/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Autocomplete</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/badge/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Badge</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/buttons/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Buttons</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/calendar/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Calendar / Date Picker</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/cards/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Cards</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/checkbox/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Checkbox</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/chips/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Chips / Tags</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/contacts-list/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Contacts List</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/content-block/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Content Block</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/data-table/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Data Table</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/dialog/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Dialog</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/fab/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">FAB</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/fab-morph/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">FAB Morph</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/form-storage/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Form Storage</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/icons/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Icons</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/infinite-scroll/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Infinite Scroll</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/inputs/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Inputs</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/grid/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Grid / Layout Grid</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/lazy-load/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Lazy Load</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/list/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">List View</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/login-screen/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Login Screen</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/messages/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Messages</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/navbar/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Navbar</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/notifications/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Notifications</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/panel/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Panel / Side Panels</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/picker/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Picker</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/photo-browser/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Photo Browser</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/popup/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Popup</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/popover/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Popover</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/preloader/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Preloader</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/progressbar/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Progress Bar</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/pull-to-refresh/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Pull To Refresh</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/radio/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Radio</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/range/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Range Slider</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/searchbar/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Searchbar</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/searchbar-expandable/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Searchbar Expandable</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/sheet-modal/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Sheet Modal</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/smart-select/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Smart Select</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/sortable/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Sortable List</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/statusbar/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Statusbar</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/subnavbar/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Subnavbar</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/swipeout/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Swipeout (Swipe To Delete)</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/swiper/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Swiper Slider</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/tabs/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Tabs</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/timeline/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Timeline</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/toast/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Toast</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/toggle/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Toggle</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/toolbar-tabbar/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Toolbar & Tabbar</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/virtual-list/">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Virtual List</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="item-content item-link" href="/vi/">
+                  <div class="item-media"><i class="icon icon-vi"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">vi - Mobile Video SSP</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="list simple-list searchbar-not-found">
+            <ul>
+              <li>Nothing found</li>
+            </ul>
+          </div>
+          <div class="block-title searchbar-hide-on-search">Themes</div>
+          <div class="list links-list searchbar-hide-on-search">
+            <ul>
+              <li>
+                <a href="./?theme=ios" class="external">iOS Theme</a>
+              </li>
+              <li>
+                <a href="./?theme=md" class="external">Material (MD) Theme</a>
+              </li>
+              <li>
+                <a href="/color-themes/">Color Themes</a>
+              </li>
+            </ul>
+          </div>
+          <div class="block-title searchbar-hide-on-search">Page Loaders & Router</div>
+          <div class="list links-list searchbar-hide-on-search">
+            <ul>
+              <li>
+                <a href="/page-loader-template7/vladimir/123/about-me/1/?start=0&end=30#top">Template7 Page</a>
+              </li>
+              <li>
+                <a href="/page-loader-component/vladimir/123/about-me/1/?start=0&end=30#top">Component Page</a>
+              </li>
+              <li>
+                <a href="/load-something-that-doesnt-exist/">Default Route (404)</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../dist/js/framework7.min.js"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
