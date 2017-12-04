@@ -385,6 +385,7 @@
         }
         &.simple-list li {
           padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+          padding-right: ~"calc(15px + env(safe-area-inset-right))";
         }
       }
       .ltr({
@@ -425,6 +426,7 @@
           &.simple-list {
             li:after {
               right: ~"calc(15px + constant(safe-area-inset-right))";
+              right: ~"calc(15px + env(safe-area-inset-right))";
             }
           }
           &.links-list {
@@ -433,6 +435,7 @@
               padding-right: ~"calc(15px + env(safe-area-inset-right))";
             }
             a:after {
+              right: ~"calc(15px + const(safe-area-inset-right))";
               right: ~"calc(15px + env(safe-area-inset-right))";
             }
           }

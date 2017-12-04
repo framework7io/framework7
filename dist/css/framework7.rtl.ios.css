@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.0
+ * Framework7 2.0.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 3, 2017
+ * Released on: December 4, 2017
  */
 html {
   direction: rtl;
@@ -1951,6 +1951,7 @@ html.with-statusbar.device-iphone-x .panel {
 .ios.device-iphone-x .sheet-modal .block-footer,
 .ios.device-iphone-x .panel-left .block-footer {
   padding-left: calc(15px + constant(safe-area-inset-left));
+  padding-left: calc(15px + env(safe-area-inset-left));
 }
 .ios.device-iphone-x .ios-left-edge .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
 .ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
@@ -1975,6 +1976,7 @@ html.with-statusbar.device-iphone-x .panel {
 .ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
 .ios.device-iphone-x .panel-left .block-title:not(.no-ios-edges):not(.no-ios-left-edge) {
   margin-left: calc(15px + constant(safe-area-inset-left));
+  margin-left: calc(15px + env(safe-area-inset-left));
 }
 @media all and (min-width: 768px) {
   .ios.device-iphone-x .ios-left-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
@@ -1983,6 +1985,7 @@ html.with-statusbar.device-iphone-x .panel {
   .ios.device-iphone-x .sheet-modal .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
   .ios.device-iphone-x .panel-left .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
     margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
   }
 }
 .ios.device-iphone-x .ios-right-edge .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
@@ -2001,6 +2004,7 @@ html.with-statusbar.device-iphone-x .panel {
 .ios.device-iphone-x .sheet-modal .block-footer,
 .ios.device-iphone-x .panel-right .block-footer {
   padding-right: calc(15px + constant(safe-area-inset-right));
+  padding-right: calc(15px + env(safe-area-inset-right));
 }
 .ios.device-iphone-x .ios-right-edge .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
 .ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
@@ -2025,6 +2029,7 @@ html.with-statusbar.device-iphone-x .panel {
 .ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
 .ios.device-iphone-x .panel-right .block-title:not(.no-ios-edges):not(.no-ios-right-edge) {
   margin-right: calc(15px + constant(safe-area-inset-right));
+  margin-right: calc(15px + env(safe-area-inset-right));
 }
 @media all and (min-width: 768px) {
   .ios.device-iphone-x .ios-right-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
@@ -2033,6 +2038,7 @@ html.with-statusbar.device-iphone-x .panel {
   .ios.device-iphone-x .sheet-modal .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
   .ios.device-iphone-x .panel-right .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
     margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
   }
 }
 /* === List View === */
@@ -2993,6 +2999,7 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
 .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
 .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li {
   padding-right: calc(15px + constant(safe-area-inset-right));
+  padding-right: calc(15px + env(safe-area-inset-right));
 }
 .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
 .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
@@ -3008,6 +3015,7 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
 .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
 .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after {
   right: calc(15px + constant(safe-area-inset-right));
+  right: calc(15px + env(safe-area-inset-right));
 }
 .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
 .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
@@ -3022,6 +3030,7 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
 .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
 .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
 .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after {
+  right: calc(15px + const(safe-area-inset-right));
   right: calc(15px + env(safe-area-inset-right));
 }
 .ios .theme-dark .list ul,
@@ -7139,6 +7148,7 @@ html.device-android-4 .accordion-item-content {
 .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
 .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span {
   left: calc(10px + constant(safe-area-inset-left));
+  left: calc(10px + env(safe-area-inset-left));
 }
 .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
 .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
@@ -10361,6 +10371,7 @@ label.item-radio.disabled,
 .ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
 .ios.device-iphone-x .panel-left .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header {
   padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
 }
 .ios.device-iphone-x .ios-right-edge.calendar .calendar-row,
 .ios.device-iphone-x .ios-edges.calendar .calendar-row,
@@ -10383,6 +10394,7 @@ label.item-radio.disabled,
 .ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
 .ios.device-iphone-x .panel-right .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header {
   padding-right: constant(safe-area-inset-right);
+  padding-right: env(safe-area-inset-right);
 }
 .ios .theme-dark .calendar .calendar-header,
 .calendar.ios .theme-dark .calendar-header,
@@ -12915,7 +12927,9 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 .ios.device-iphone-x .messagebar-sheet {
   padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
   padding-right: constant(safe-area-inset-right);
+  padding-right: env(safe-area-inset-right);
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }
