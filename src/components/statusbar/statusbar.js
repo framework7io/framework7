@@ -101,11 +101,12 @@ const Statusbar = {
             Statusbar.checkOverlay();
           });
         }
+
         $(document).on('resume', () => {
           Statusbar.checkOverlay();
         }, false);
 
-        app.on('orientationchange', () => {
+        app.on('orientationchange resize', () => {
           Statusbar.checkOverlay();
         });
       }
