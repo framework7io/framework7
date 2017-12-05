@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.1
+ * Framework7 2.0.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 4, 2017
+ * Released on: December 5, 2017
  */
 html {
   direction: rtl;
@@ -934,21 +934,23 @@ html.with-statusbar.device-iphone-x .panel {
 .navbar.ios .theme-dark .subtitle {
   color: #8e8e93;
 }
-.ios.device-iphone-x .ios-left-edge .navbar-inner,
-.ios.device-iphone-x .ios-edges .navbar-inner,
-.ios.device-iphone-x .popup .navbar-inner,
-.ios.device-iphone-x .sheet-modal .navbar-inner,
-.ios.device-iphone-x .panel-left .navbar-inner {
-  padding-left: calc(8px + constant(safe-area-inset-right));
-  padding-left: calc(8px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .navbar-inner,
-.ios.device-iphone-x .ios-edges .navbar-inner,
-.ios.device-iphone-x .popup .navbar-inner,
-.ios.device-iphone-x .sheet-modal .navbar-inner,
-.ios.device-iphone-x .panel-right .navbar-inner {
-  padding-right: calc(8px + constant(safe-area-inset-right));
-  padding-right: calc(8px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .navbar-inner,
+  .ios.device-iphone-x .ios-edges .navbar-inner,
+  .ios.device-iphone-x .popup .navbar-inner,
+  .ios.device-iphone-x .sheet-modal .navbar-inner,
+  .ios.device-iphone-x .panel-left .navbar-inner {
+    padding-left: calc(8px + constant(safe-area-inset-right));
+    padding-left: calc(8px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .navbar-inner,
+  .ios.device-iphone-x .ios-edges .navbar-inner,
+  .ios.device-iphone-x .popup .navbar-inner,
+  .ios.device-iphone-x .sheet-modal .navbar-inner,
+  .ios.device-iphone-x .panel-right .navbar-inner {
+    padding-right: calc(8px + constant(safe-area-inset-right));
+    padding-right: calc(8px + env(safe-area-inset-right));
+  }
 }
 @-webkit-keyframes ios-navbar-element-fade-in {
   from {
@@ -1429,21 +1431,23 @@ html.with-statusbar.device-iphone-x .panel {
     padding-bottom: calc(56px + env(safe-area-inset-bottom));
   }
 }
-.ios.device-iphone-x .ios-left-edge .toolbar-inner,
-.ios.device-iphone-x .ios-edges .toolbar-inner,
-.ios.device-iphone-x .popup .toolbar-inner,
-.ios.device-iphone-x .sheet-modal .toolbar-inner,
-.ios.device-iphone-x .panel-left .toolbar-inner {
-  padding-left: calc(8px + constant(safe-area-inset-left));
-  padding-left: calc(8px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .toolbar-inner,
-.ios.device-iphone-x .ios-edges .toolbar-inner,
-.ios.device-iphone-x .popup .toolbar-inner,
-.ios.device-iphone-x .sheet-modal .toolbar-inner,
-.ios.device-iphone-x .panel-right .toolbar-inner {
-  padding-right: calc(8px + constant(safe-area-inset-right));
-  padding-right: calc(8px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .toolbar-inner,
+  .ios.device-iphone-x .ios-edges .toolbar-inner,
+  .ios.device-iphone-x .popup .toolbar-inner,
+  .ios.device-iphone-x .sheet-modal .toolbar-inner,
+  .ios.device-iphone-x .panel-left .toolbar-inner {
+    padding-left: calc(8px + constant(safe-area-inset-left));
+    padding-left: calc(8px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .toolbar-inner,
+  .ios.device-iphone-x .ios-edges .toolbar-inner,
+  .ios.device-iphone-x .popup .toolbar-inner,
+  .ios.device-iphone-x .sheet-modal .toolbar-inner,
+  .ios.device-iphone-x .panel-right .toolbar-inner {
+    padding-right: calc(8px + constant(safe-area-inset-right));
+    padding-right: calc(8px + env(safe-area-inset-right));
+  }
 }
 /* === Subnavbar === */
 .subnavbar {
@@ -1637,21 +1641,23 @@ html.with-statusbar.device-iphone-x .panel {
 .subnavbar.ios .theme-dark:after {
   background-color: #282829;
 }
-.ios.device-iphone-x .ios-left-edge .subnavbar-inner,
-.ios.device-iphone-x .ios-edges .subnavbar-inner,
-.ios.device-iphone-x .popup .subnavbar-inner,
-.ios.device-iphone-x .sheet-modal .subnavbar-inner,
-.ios.device-iphone-x .panel-left .subnavbar-inner {
-  padding-left: calc(8px + constant(safe-area-inset-left));
-  padding-left: calc(8px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .subnavbar-inner,
-.ios.device-iphone-x .ios-edges .subnavbar-inner,
-.ios.device-iphone-x .popup .subnavbar-inner,
-.ios.device-iphone-x .sheet-modal .subnavbar-inner,
-.ios.device-iphone-x .panel-right .subnavbar-inner {
-  padding-right: calc(8px + constant(safe-area-inset-right));
-  padding-right: calc(8px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .subnavbar-inner,
+  .ios.device-iphone-x .ios-edges .subnavbar-inner,
+  .ios.device-iphone-x .popup .subnavbar-inner,
+  .ios.device-iphone-x .sheet-modal .subnavbar-inner,
+  .ios.device-iphone-x .panel-left .subnavbar-inner {
+    padding-left: calc(8px + constant(safe-area-inset-left));
+    padding-left: calc(8px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .subnavbar-inner,
+  .ios.device-iphone-x .ios-edges .subnavbar-inner,
+  .ios.device-iphone-x .popup .subnavbar-inner,
+  .ios.device-iphone-x .sheet-modal .subnavbar-inner,
+  .ios.device-iphone-x .panel-right .subnavbar-inner {
+    padding-right: calc(8px + constant(safe-area-inset-right));
+    padding-right: calc(8px + env(safe-area-inset-right));
+  }
 }
 /* === Content Block === */
 .block {
@@ -1935,50 +1941,95 @@ html.with-statusbar.device-iphone-x .panel {
 .ios .theme-dark.block-strong:after {
   background-color: #282829;
 }
-.ios.device-iphone-x .ios-left-edge .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-edges .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .popup .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .sheet-modal .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .panel-left .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-left-edge .block-header,
-.ios.device-iphone-x .ios-edges .block-header,
-.ios.device-iphone-x .popup .block-header,
-.ios.device-iphone-x .sheet-modal .block-header,
-.ios.device-iphone-x .panel-left .block-header,
-.ios.device-iphone-x .ios-left-edge .block-footer,
-.ios.device-iphone-x .ios-edges .block-footer,
-.ios.device-iphone-x .popup .block-footer,
-.ios.device-iphone-x .sheet-modal .block-footer,
-.ios.device-iphone-x .panel-left .block-footer {
-  padding-left: calc(15px + constant(safe-area-inset-left));
-  padding-left: calc(15px + env(safe-area-inset-left));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-left-edge .block-header,
+  .ios.device-iphone-x .ios-edges .block-header,
+  .ios.device-iphone-x .popup .block-header,
+  .ios.device-iphone-x .sheet-modal .block-header,
+  .ios.device-iphone-x .panel-left .block-header,
+  .ios.device-iphone-x .ios-left-edge .block-footer,
+  .ios.device-iphone-x .ios-edges .block-footer,
+  .ios.device-iphone-x .popup .block-footer,
+  .ios.device-iphone-x .sheet-modal .block-footer,
+  .ios.device-iphone-x .panel-left .block-footer {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .panel-left .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .ios-left-edge .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .panel-left .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer {
+    padding-left: 0;
+  }
+  .ios.device-iphone-x .ios-left-edge .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-left-edge .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .block-title:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-edges .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .popup .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .sheet-modal .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .panel-right .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-right-edge .block-header,
+  .ios.device-iphone-x .ios-edges .block-header,
+  .ios.device-iphone-x .popup .block-header,
+  .ios.device-iphone-x .sheet-modal .block-header,
+  .ios.device-iphone-x .panel-right .block-header,
+  .ios.device-iphone-x .ios-right-edge .block-footer,
+  .ios.device-iphone-x .ios-edges .block-footer,
+  .ios.device-iphone-x .popup .block-footer,
+  .ios.device-iphone-x .sheet-modal .block-footer,
+  .ios.device-iphone-x .panel-right .block-footer {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .panel-right .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .ios-right-edge .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .panel-right .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
+    padding-right: 0;
+  }
+  .ios.device-iphone-x .ios-right-edge .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-edges .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .popup .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .sheet-modal .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .panel-right .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-right-edge .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-edges .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .popup .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .panel-right .block-title:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
+  }
 }
-.ios.device-iphone-x .ios-left-edge .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .panel-left .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .ios-left-edge .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .panel-left .block:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer {
-  padding-left: 0;
-}
-.ios.device-iphone-x .ios-left-edge .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-edges .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .popup .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .sheet-modal .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .panel-left .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-left-edge .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-edges .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .popup .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .panel-left .block-title:not(.no-ios-edges):not(.no-ios-left-edge) {
-  margin-left: calc(15px + constant(safe-area-inset-left));
-  margin-left: calc(15px + env(safe-area-inset-left));
-}
-@media all and (min-width: 768px) {
+@media (orientation: landscape) and all and (min-width: 768px) {
   .ios.device-iphone-x .ios-left-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
   .ios.device-iphone-x .ios-edges .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
   .ios.device-iphone-x .popup .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
@@ -1988,50 +2039,7 @@ html.with-statusbar.device-iphone-x .panel {
     margin-left: calc(15px + env(safe-area-inset-left));
   }
 }
-.ios.device-iphone-x .ios-right-edge .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .ios-edges .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .popup .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .sheet-modal .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .panel-right .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .ios-right-edge .block-header,
-.ios.device-iphone-x .ios-edges .block-header,
-.ios.device-iphone-x .popup .block-header,
-.ios.device-iphone-x .sheet-modal .block-header,
-.ios.device-iphone-x .panel-right .block-header,
-.ios.device-iphone-x .ios-right-edge .block-footer,
-.ios.device-iphone-x .ios-edges .block-footer,
-.ios.device-iphone-x .popup .block-footer,
-.ios.device-iphone-x .sheet-modal .block-footer,
-.ios.device-iphone-x .panel-right .block-footer {
-  padding-right: calc(15px + constant(safe-area-inset-right));
-  padding-right: calc(15px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .panel-right .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .ios-right-edge .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .ios-edges .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .popup .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .sheet-modal .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .panel-right .block:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
-  padding-right: 0;
-}
-.ios.device-iphone-x .ios-right-edge .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .ios-edges .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .popup .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .sheet-modal .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .panel-right .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .ios-right-edge .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .ios-edges .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .popup .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .sheet-modal .block-title:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .panel-right .block-title:not(.no-ios-edges):not(.no-ios-right-edge) {
-  margin-right: calc(15px + constant(safe-area-inset-right));
-  margin-right: calc(15px + env(safe-area-inset-right));
-}
-@media all and (min-width: 768px) {
+@media (orientation: landscape) and all and (min-width: 768px) {
   .ios.device-iphone-x .ios-right-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
   .ios.device-iphone-x .ios-edges .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
   .ios.device-iphone-x .popup .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
@@ -2825,48 +2833,185 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
 }
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li {
-  padding-left: calc(15px + constant(safe-area-inset-left));
-  padding-left: calc(15px + env(safe-area-inset-left));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).simple-list li {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
+  .ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
+  .ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer {
+    padding-left: 15px;
+  }
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a {
+    background-position: calc(15px + constant(safe-area-inset-left)) center;
+    background-position: calc(15px + env(safe-area-inset-left)) center;
+  }
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner {
+    padding-left: calc(35px + constant(safe-area-inset-left));
+    padding-left: calc(35px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
+  .ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a {
+    padding-left: calc(35px + constant(safe-area-inset-left));
+    padding-left: calc(35px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
+    padding-right: 15px;
+  }
+  .ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .panel-right .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
+  .ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
+  .ios.device-iphone-x .panel-right .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
+    padding-right: 15px;
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after {
+    right: calc(15px + constant(safe-area-inset-right));
+    right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after {
+    right: calc(15px + const(safe-area-inset-right));
+    right: calc(15px + env(safe-area-inset-right));
+  }
 }
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title {
-  padding-left: calc(15px + constant(safe-area-inset-left));
-  padding-left: calc(15px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) {
-  margin-left: calc(15px + constant(safe-area-inset-left));
-  margin-left: calc(15px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-header,
-.ios.device-iphone-x .ios-left-edge .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer,
-.ios.device-iphone-x .panel-left .list.inset:not(.no-ios-edges):not(.no-ios-left-edge) .block-footer {
-  padding-left: 15px;
-}
-@media (min-width: 768px) {
+@media (orientation: landscape) and (min-width: 768px) {
   .ios.device-iphone-x .ios-left-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
   .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
   .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
@@ -2888,77 +3033,7 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
     padding-left: 15px;
   }
 }
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a {
-  background-position: calc(15px + constant(safe-area-inset-left)) center;
-  background-position: calc(15px + env(safe-area-inset-left)) center;
-}
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner {
-  padding-left: calc(15px + constant(safe-area-inset-left));
-  padding-left: calc(15px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner {
-  padding-left: calc(35px + constant(safe-area-inset-left));
-  padding-left: calc(35px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner {
-  padding-left: calc(15px + constant(safe-area-inset-left));
-  padding-left: calc(15px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-left-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a,
-.ios.device-iphone-x .panel-left .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).links-list a {
-  padding-left: calc(35px + constant(safe-area-inset-left));
-  padding-left: calc(35px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) {
-  margin-right: calc(15px + constant(safe-area-inset-right));
-  margin-right: calc(15px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .ios-right-edge .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .ios-edges .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .popup .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .sheet-modal .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .panel-right .list.inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
-  padding-right: 15px;
-}
-@media (min-width: 768px) {
+@media (orientation: landscape) and (min-width: 768px) {
   .ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
   .ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
   .ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
@@ -2967,71 +3042,6 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
     margin-right: calc(15px + constant(safe-area-inset-right));
     margin-right: calc(15px + env(safe-area-inset-right));
   }
-}
-.ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .panel-right .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-header,
-.ios.device-iphone-x .ios-right-edge .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .ios-edges .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .popup .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .sheet-modal .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer,
-.ios.device-iphone-x .panel-right .list.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) .block-footer {
-  padding-right: 15px;
-}
-.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
-.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
-.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
-.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title {
-  padding-right: calc(15px + constant(safe-area-inset-right));
-  padding-right: calc(15px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li,
-.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li {
-  padding-right: calc(15px + constant(safe-area-inset-right));
-  padding-right: calc(15px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
-.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content {
-  padding-right: calc(15px + constant(safe-area-inset-right));
-  padding-right: calc(15px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after,
-.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).simple-list li:after {
-  right: calc(15px + constant(safe-area-inset-right));
-  right: calc(15px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a,
-.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a {
-  padding-right: calc(15px + constant(safe-area-inset-right));
-  padding-right: calc(15px + env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
-.ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
-.ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
-.ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after,
-.ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a:after {
-  right: calc(15px + const(safe-area-inset-right));
-  right: calc(15px + env(safe-area-inset-right));
 }
 .ios .theme-dark .list ul,
 .list.ios .theme-dark ul {
@@ -6156,26 +6166,28 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
 .ios .sortable-enabled .item-link .item-inner {
   padding-left: 35px;
 }
-.ios.device-iphone-x .ios-left-edge .sortable-handler,
-.ios.device-iphone-x .ios-edges .sortable-handler,
-.ios.device-iphone-x .popup .sortable-handler,
-.ios.device-iphone-x .sheet-modal .sortable-handler,
-.ios.device-iphone-x .panel-left .sortable-handler {
-  left: constant(safe-area-inset-left);
-  left: env(safe-area-inset-left);
-}
-.ios.device-iphone-x .ios-left-edge .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
-.ios.device-iphone-x .ios-edges .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
-.ios.device-iphone-x .popup .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
-.ios.device-iphone-x .sheet-modal .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
-.ios.device-iphone-x .panel-left .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
-.ios.device-iphone-x .ios-left-edge .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
-.ios.device-iphone-x .ios-edges .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
-.ios.device-iphone-x .popup .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
-.ios.device-iphone-x .sheet-modal .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
-.ios.device-iphone-x .panel-left .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner {
-  padding-left: calc(35px + constant(safe-area-inset-right));
-  padding-left: calc(35px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .sortable-handler,
+  .ios.device-iphone-x .ios-edges .sortable-handler,
+  .ios.device-iphone-x .popup .sortable-handler,
+  .ios.device-iphone-x .sheet-modal .sortable-handler,
+  .ios.device-iphone-x .panel-left .sortable-handler {
+    left: constant(safe-area-inset-left);
+    left: env(safe-area-inset-left);
+  }
+  .ios.device-iphone-x .ios-left-edge .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .ios.device-iphone-x .ios-edges .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .ios.device-iphone-x .popup .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .ios.device-iphone-x .sheet-modal .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .ios.device-iphone-x .panel-left .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .ios.device-iphone-x .ios-left-edge .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .ios.device-iphone-x .popup .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .ios.device-iphone-x .panel-left .sortable-enabled:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner {
+    padding-left: calc(35px + constant(safe-area-inset-right));
+    padding-left: calc(35px + env(safe-area-inset-right));
+  }
 }
 /* === Swipeout === */
 .swipeout {
@@ -7129,151 +7141,153 @@ html.device-android-4 .accordion-item-content {
 .ios .timeline-year-title span {
   margin-top: 3px;
 }
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) {
-  padding-left: constant(safe-area-inset-left);
-  padding-left: env(safe-area-inset-left);
-}
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span {
-  left: calc(10px + constant(safe-area-inset-left));
-  left: calc(10px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title {
-  left: -44px;
-  right: 0;
-  width: auto;
-}
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item {
-  overflow: visible;
-}
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
-.ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
-.ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date {
-  width: auto;
-  padding-left: calc(10px + constant(safe-area-inset-left));
-  padding-left: calc(10px + env(safe-area-inset-left));
-  left: calc(0px - constant(safe-area-inset-left));
-  left: calc(0px - env(safe-area-inset-left));
-  right: 0;
-}
-.ios.device-iphone-x .ios-left-edge .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .sheet-modal .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .panel-left .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal) {
-  padding-left: calc(15px + constant(safe-area-inset-left));
-  padding-left: calc(15px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
-.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
-.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
-.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title {
-  width: auto;
-  right: calc(0px - constant(safe-area-inset-right));
-  right: calc(0px - env(safe-area-inset-right));
-}
-.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
-.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
-.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
-.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child {
-  overflow: visible;
-}
-.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
-.ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date {
-  width: auto;
-  right: calc(0px - constant(safe-area-inset-right));
-  right: calc(0px - env(safe-area-inset-right));
-  left: 0;
-}
-.ios.device-iphone-x .ios-right-edge .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .sheet-modal .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
-.ios.device-iphone-x .panel-right .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal) {
-  padding-right: calc(15px + constant(safe-area-inset-right));
-  padding-right: calc(15px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) {
+    padding-left: constant(safe-area-inset-left);
+    padding-left: env(safe-area-inset-left);
+  }
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span {
+    left: calc(10px + constant(safe-area-inset-left));
+    left: calc(10px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title {
+    left: -44px;
+    right: 0;
+    width: auto;
+  }
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item {
+    overflow: visible;
+  }
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .ios.device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .ios.device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date {
+    width: auto;
+    padding-left: calc(10px + constant(safe-area-inset-left));
+    padding-left: calc(10px + env(safe-area-inset-left));
+    left: calc(0px - constant(safe-area-inset-left));
+    left: calc(0px - env(safe-area-inset-left));
+    right: 0;
+  }
+  .ios.device-iphone-x .ios-left-edge .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .sheet-modal .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .panel-left .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal) {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title {
+    width: auto;
+    right: calc(0px - constant(safe-area-inset-right));
+    right: calc(0px - env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child {
+    overflow: visible;
+  }
+  .ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .sheet-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .ios.device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date {
+    width: auto;
+    right: calc(0px - constant(safe-area-inset-right));
+    right: calc(0px - env(safe-area-inset-right));
+    left: 0;
+  }
+  .ios.device-iphone-x .ios-right-edge .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .sheet-modal .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .ios.device-iphone-x .panel-right .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal) {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
 }
 .ios .theme-dark .timeline-year-title,
 .ios .theme-dark .timeline-month-title {
@@ -7672,21 +7686,23 @@ html.device-pixel-ratio-3 .card-footer:before {
 .ios .card-footer {
   color: #6d6d72;
 }
-.ios.device-iphone-x .ios-left-edge .card:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .sheet-modal .card:not(.no-ios-edges):not(.no-ios-left-edge),
-.ios.device-iphone-x .panel-left .card:not(.no-ios-edges):not(.no-ios-left-edge) {
-  margin-left: calc(10px + constant(safe-area-inset-left));
-  margin-left: calc(10px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .card:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .sheet-modal .card:not(.no-ios-edges):not(.no-ios-right-edge),
-.ios.device-iphone-x .panel-right .card:not(.no-ios-edges):not(.no-ios-right-edge) {
-  margin-right: calc(10px + constant(safe-area-inset-right));
-  margin-right: calc(10px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .sheet-modal .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .ios.device-iphone-x .panel-left .card:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(10px + constant(safe-area-inset-left));
+    margin-left: calc(10px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .sheet-modal .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .ios.device-iphone-x .panel-right .card:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(10px + constant(safe-area-inset-right));
+    margin-right: calc(10px + env(safe-area-inset-right));
+  }
 }
 .ios .theme-dark .card {
   background-color: #1c1c1d;
@@ -8367,21 +8383,23 @@ label.item-radio.disabled,
   transition-duration: 0ms;
   background-color: #d9d9d9;
 }
-.ios.device-iphone-x .ios-left-edge label.item-radio input[type="radio"] ~ .icon-radio,
-.ios.device-iphone-x .ios-edges label.item-radio input[type="radio"] ~ .icon-radio,
-.ios.device-iphone-x .popup label.item-radio input[type="radio"] ~ .icon-radio,
-.ios.device-iphone-x .sheet-modal label.item-radio input[type="radio"] ~ .icon-radio,
-.ios.device-iphone-x .panel-left label.item-radio input[type="radio"] ~ .icon-radio {
-  left: calc(10px + constant(safe-area-inset-left));
-  left: calc(10px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-left-edge label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
-.ios.device-iphone-x .ios-edges label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
-.ios.device-iphone-x .popup label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
-.ios.device-iphone-x .sheet-modal label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
-.ios.device-iphone-x .panel-left label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner {
-  padding-left: calc(35px + constant(safe-area-inset-left));
-  padding-left: calc(35px + env(safe-area-inset-left));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge label.item-radio input[type="radio"] ~ .icon-radio,
+  .ios.device-iphone-x .ios-edges label.item-radio input[type="radio"] ~ .icon-radio,
+  .ios.device-iphone-x .popup label.item-radio input[type="radio"] ~ .icon-radio,
+  .ios.device-iphone-x .sheet-modal label.item-radio input[type="radio"] ~ .icon-radio,
+  .ios.device-iphone-x .panel-left label.item-radio input[type="radio"] ~ .icon-radio {
+    left: calc(10px + constant(safe-area-inset-left));
+    left: calc(10px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-left-edge label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
+  .ios.device-iphone-x .ios-edges label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
+  .ios.device-iphone-x .popup label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
+  .ios.device-iphone-x .sheet-modal label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner,
+  .ios.device-iphone-x .panel-left label.item-radio .list:not(.inset):not(.tablet-inset) .item-inner {
+    padding-left: calc(35px + constant(safe-area-inset-left));
+    padding-left: calc(35px + env(safe-area-inset-left));
+  }
 }
 .ios .theme-dark label.item-radio.active-state {
   background-color: #363636;
@@ -10350,51 +10368,53 @@ label.item-radio.disabled,
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
 }
-.ios.device-iphone-x .ios-left-edge.calendar .calendar-row,
-.ios.device-iphone-x .ios-edges.calendar .calendar-row,
-.ios.device-iphone-x .popup.calendar .calendar-row,
-.ios.device-iphone-x .sheet-modal.calendar .calendar-row,
-.ios.device-iphone-x .panel-left.calendar .calendar-row,
-.ios.device-iphone-x .ios-left-edge .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
-.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
-.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
-.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
-.ios.device-iphone-x .panel-left .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
-.ios.device-iphone-x .ios-left-edge.calendar .calendar-week-header,
-.ios.device-iphone-x .ios-edges.calendar .calendar-week-header,
-.ios.device-iphone-x .popup.calendar .calendar-week-header,
-.ios.device-iphone-x .sheet-modal.calendar .calendar-week-header,
-.ios.device-iphone-x .panel-left.calendar .calendar-week-header,
-.ios.device-iphone-x .ios-left-edge .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
-.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
-.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
-.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
-.ios.device-iphone-x .panel-left .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header {
-  padding-left: constant(safe-area-inset-left);
-  padding-left: env(safe-area-inset-left);
-}
-.ios.device-iphone-x .ios-right-edge.calendar .calendar-row,
-.ios.device-iphone-x .ios-edges.calendar .calendar-row,
-.ios.device-iphone-x .popup.calendar .calendar-row,
-.ios.device-iphone-x .sheet-modal.calendar .calendar-row,
-.ios.device-iphone-x .panel-right.calendar .calendar-row,
-.ios.device-iphone-x .ios-right-edge .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
-.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
-.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
-.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
-.ios.device-iphone-x .panel-right .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
-.ios.device-iphone-x .ios-right-edge.calendar .calendar-week-header,
-.ios.device-iphone-x .ios-edges.calendar .calendar-week-header,
-.ios.device-iphone-x .popup.calendar .calendar-week-header,
-.ios.device-iphone-x .sheet-modal.calendar .calendar-week-header,
-.ios.device-iphone-x .panel-right.calendar .calendar-week-header,
-.ios.device-iphone-x .ios-right-edge .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
-.ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
-.ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
-.ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
-.ios.device-iphone-x .panel-right .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header {
-  padding-right: constant(safe-area-inset-right);
-  padding-right: env(safe-area-inset-right);
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge.calendar .calendar-row,
+  .ios.device-iphone-x .ios-edges.calendar .calendar-row,
+  .ios.device-iphone-x .popup.calendar .calendar-row,
+  .ios.device-iphone-x .sheet-modal.calendar .calendar-row,
+  .ios.device-iphone-x .panel-left.calendar .calendar-row,
+  .ios.device-iphone-x .ios-left-edge .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+  .ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+  .ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+  .ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+  .ios.device-iphone-x .panel-left .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-row,
+  .ios.device-iphone-x .ios-left-edge.calendar .calendar-week-header,
+  .ios.device-iphone-x .ios-edges.calendar .calendar-week-header,
+  .ios.device-iphone-x .popup.calendar .calendar-week-header,
+  .ios.device-iphone-x .sheet-modal.calendar .calendar-week-header,
+  .ios.device-iphone-x .panel-left.calendar .calendar-week-header,
+  .ios.device-iphone-x .ios-left-edge .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+  .ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+  .ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+  .ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header,
+  .ios.device-iphone-x .panel-left .calendar:not(.no-ios-edges):not(.no-ios-left-edge) .calendar-week-header {
+    padding-left: constant(safe-area-inset-left);
+    padding-left: env(safe-area-inset-left);
+  }
+  .ios.device-iphone-x .ios-right-edge.calendar .calendar-row,
+  .ios.device-iphone-x .ios-edges.calendar .calendar-row,
+  .ios.device-iphone-x .popup.calendar .calendar-row,
+  .ios.device-iphone-x .sheet-modal.calendar .calendar-row,
+  .ios.device-iphone-x .panel-right.calendar .calendar-row,
+  .ios.device-iphone-x .ios-right-edge .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+  .ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+  .ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+  .ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+  .ios.device-iphone-x .panel-right .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-row,
+  .ios.device-iphone-x .ios-right-edge.calendar .calendar-week-header,
+  .ios.device-iphone-x .ios-edges.calendar .calendar-week-header,
+  .ios.device-iphone-x .popup.calendar .calendar-week-header,
+  .ios.device-iphone-x .sheet-modal.calendar .calendar-week-header,
+  .ios.device-iphone-x .panel-right.calendar .calendar-week-header,
+  .ios.device-iphone-x .ios-right-edge .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+  .ios.device-iphone-x .ios-edges .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+  .ios.device-iphone-x .popup .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+  .ios.device-iphone-x .sheet-modal .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header,
+  .ios.device-iphone-x .panel-right .calendar:not(.no-ios-edges):not(.no-ios-right-edge) .calendar-week-header {
+    padding-right: constant(safe-area-inset-right);
+    padding-right: env(safe-area-inset-right);
+  }
 }
 .ios .theme-dark .calendar .calendar-header,
 .calendar.ios .theme-dark .calendar-header,
@@ -11921,21 +11941,23 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   bottom: calc(15px + constant(safe-area-inset-bottom));
   bottom: calc(15px + env(safe-area-inset-bottom));
 }
-.ios.device-iphone-x .ios-left-edge .fab[class*="fab-left"],
-.ios.device-iphone-x .ios-edges .fab[class*="fab-left"],
-.ios.device-iphone-x .popup .fab[class*="fab-left"],
-.ios.device-iphone-x .sheet-modal .fab[class*="fab-left"],
-.ios.device-iphone-x .panel-left .fab[class*="fab-left"] {
-  left: calc(15px + constant(safe-area-inset-left));
-  left: calc(15px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .fab[class*="fab-right"],
-.ios.device-iphone-x .ios-edges .fab[class*="fab-right"],
-.ios.device-iphone-x .popup .fab[class*="fab-right"],
-.ios.device-iphone-x .sheet-modal .fab[class*="fab-right"],
-.ios.device-iphone-x .panel-right .fab[class*="fab-right"] {
-  right: calc(15px + constant(safe-area-inset-right));
-  right: calc(15px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .fab[class*="fab-left"],
+  .ios.device-iphone-x .ios-edges .fab[class*="fab-left"],
+  .ios.device-iphone-x .popup .fab[class*="fab-left"],
+  .ios.device-iphone-x .sheet-modal .fab[class*="fab-left"],
+  .ios.device-iphone-x .panel-left .fab[class*="fab-left"] {
+    left: calc(15px + constant(safe-area-inset-left));
+    left: calc(15px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .fab[class*="fab-right"],
+  .ios.device-iphone-x .ios-edges .fab[class*="fab-right"],
+  .ios.device-iphone-x .popup .fab[class*="fab-right"],
+  .ios.device-iphone-x .sheet-modal .fab[class*="fab-right"],
+  .ios.device-iphone-x .panel-right .fab[class*="fab-right"] {
+    right: calc(15px + constant(safe-area-inset-right));
+    right: calc(15px + env(safe-area-inset-right));
+  }
 }
 /* === Searchbar === */
 .searchbar {
@@ -12230,21 +12252,23 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 .ios .color-theme-black .searchbar-disable-button {
   color: #000000;
 }
-.ios.device-iphone-x .ios-left-edge .searchbar-inner,
-.ios.device-iphone-x .ios-edges .searchbar-inner,
-.ios.device-iphone-x .popup .searchbar-inner,
-.ios.device-iphone-x .sheet-modal .searchbar-inner,
-.ios.device-iphone-x .panel-left .searchbar-inner {
-  padding-left: calc(8px + constant(safe-area-inset-left));
-  padding-left: calc(8px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .searchbar-inner,
-.ios.device-iphone-x .ios-edges .searchbar-inner,
-.ios.device-iphone-x .popup .searchbar-inner,
-.ios.device-iphone-x .sheet-modal .searchbar-inner,
-.ios.device-iphone-x .panel-right .searchbar-inner {
-  padding-right: calc(8px + constant(safe-area-inset-right));
-  padding-right: calc(8px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .searchbar-inner,
+  .ios.device-iphone-x .ios-edges .searchbar-inner,
+  .ios.device-iphone-x .popup .searchbar-inner,
+  .ios.device-iphone-x .sheet-modal .searchbar-inner,
+  .ios.device-iphone-x .panel-left .searchbar-inner {
+    padding-left: calc(8px + constant(safe-area-inset-left));
+    padding-left: calc(8px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .searchbar-inner,
+  .ios.device-iphone-x .ios-edges .searchbar-inner,
+  .ios.device-iphone-x .popup .searchbar-inner,
+  .ios.device-iphone-x .sheet-modal .searchbar-inner,
+  .ios.device-iphone-x .panel-right .searchbar-inner {
+    padding-right: calc(8px + constant(safe-area-inset-right));
+    padding-right: calc(8px + env(safe-area-inset-right));
+  }
 }
 /* === Messages === */
 .messages {
@@ -12642,21 +12666,23 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   background-color: #333;
   color: #fff;
 }
-.ios.device-iphone-x .ios-left-edge .message-received,
-.ios.device-iphone-x .ios-edges .message-received,
-.ios.device-iphone-x .popup .message-received,
-.ios.device-iphone-x .sheet-modal .message-received,
-.ios.device-iphone-x .panel-left .message-received {
-  margin-left: calc(10px + constant(safe-area-inset-left));
-  margin-left: calc(10px + env(safe-area-inset-left));
-}
-.ios.device-iphone-x .ios-right-edge .message-sent,
-.ios.device-iphone-x .ios-edges .message-sent,
-.ios.device-iphone-x .popup .message-sent,
-.ios.device-iphone-x .sheet-modal .message-sent,
-.ios.device-iphone-x .panel-right .message-sent {
-  margin-right: calc(10px + constant(safe-area-inset-right));
-  margin-right: calc(10px + env(safe-area-inset-right));
+@media (orientation: landscape) {
+  .ios.device-iphone-x .ios-left-edge .message-received,
+  .ios.device-iphone-x .ios-edges .message-received,
+  .ios.device-iphone-x .popup .message-received,
+  .ios.device-iphone-x .sheet-modal .message-received,
+  .ios.device-iphone-x .panel-left .message-received {
+    margin-left: calc(10px + constant(safe-area-inset-left));
+    margin-left: calc(10px + env(safe-area-inset-left));
+  }
+  .ios.device-iphone-x .ios-right-edge .message-sent,
+  .ios.device-iphone-x .ios-edges .message-sent,
+  .ios.device-iphone-x .popup .message-sent,
+  .ios.device-iphone-x .sheet-modal .message-sent,
+  .ios.device-iphone-x .panel-right .message-sent {
+    margin-right: calc(10px + constant(safe-area-inset-right));
+    margin-right: calc(10px + env(safe-area-inset-right));
+  }
 }
 @-webkit-keyframes ios-message-typing-indicator {
   0% {

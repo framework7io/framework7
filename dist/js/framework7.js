@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.1
+ * Framework7 2.0.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 4, 2017
+ * Released on: December 5, 2017
  */
 
 (function (global, factory) {
@@ -8058,6 +8058,9 @@ var Router$1 = (function (Framework7Class$$1) {
         if (router.dynamicNavbar && $navbarInnerEl.length) {
           router.removeThemeElements($navbarInnerEl);
         }
+        if (initOptions.route.route.tab) {
+          router.tabLoad(initOptions.route.route.tab, Utils.extend({}, initOptions));
+        }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {
@@ -8545,15 +8548,21 @@ var Statusbar = {
       if (Device.needsStatusbarOverlay()) {
         $$1$1('html').addClass('with-statusbar');
       }
-      if (Device.cordova) {
-        $$1$1(document).on('resume', function () {
-          Statusbar.checkOverlay();
-        }, false);
-        if (Device.iphoneX) {
-          app.on('orientationchange', function () {
+
+      if (Device.ios && (Device.cordova || Device.webView)) {
+        if (window.orientation === 0) {
+          app.once('resize', function () {
             Statusbar.checkOverlay();
           });
         }
+
+        $$1$1(document).on('resume', function () {
+          Statusbar.checkOverlay();
+        }, false);
+
+        app.on('orientationchange resize', function () {
+          Statusbar.checkOverlay();
+        });
       }
     } else if (params.overlay === true) {
       $$1$1('html').addClass('with-statusbar');
@@ -8602,7 +8611,7 @@ var Statusbar$1 = {
     var app = this;
     Utils.extend(app, {
       statusbar: {
-        check: Statusbar.check,
+        checkOverlay: Statusbar.checkOverlay,
         hide: Statusbar.hide,
         show: Statusbar.show,
         iosOverlaysWebView: Statusbar.iosOverlaysWebView,

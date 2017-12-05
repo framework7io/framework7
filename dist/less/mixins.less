@@ -40,6 +40,20 @@
     @ruleset();
   }
 }
+.safe-areas-portrait(@ruleset) {
+  @media(orientation: portrait) {
+    &.device-iphone-x {
+      @ruleset();
+    }
+  }
+}
+.safe-areas-landscape(@ruleset) {
+  @media(orientation: landscape) {
+    &.device-iphone-x {
+      @ruleset();
+    }
+  }
+}
 .safe-area-left(@ruleset) {
   .ios-left-edge,
   .ios-edges,

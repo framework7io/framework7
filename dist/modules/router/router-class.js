@@ -1102,6 +1102,9 @@ class Router extends Framework7Class {
         if (router.dynamicNavbar && $navbarInnerEl.length) {
           router.removeThemeElements($navbarInnerEl);
         }
+        if (initOptions.route.route.tab) {
+          router.tabLoad(initOptions.route.route.tab, Utils.extend({}, initOptions));
+        }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
       });
       if (historyRestored) {

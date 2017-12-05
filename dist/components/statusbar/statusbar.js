@@ -94,15 +94,21 @@ const Statusbar = {
       if (Device.needsStatusbarOverlay()) {
         $('html').addClass('with-statusbar');
       }
-      if (Device.cordova) {
-        $(document).on('resume', () => {
-          Statusbar.checkOverlay();
-        }, false);
-        if (Device.iphoneX) {
-          app.on('orientationchange', () => {
+
+      if (Device.ios && (Device.cordova || Device.webView)) {
+        if (window.orientation === 0) {
+          app.once('resize', () => {
             Statusbar.checkOverlay();
           });
         }
+
+        $(document).on('resume', () => {
+          Statusbar.checkOverlay();
+        }, false);
+
+        app.on('orientationchange resize', () => {
+          Statusbar.checkOverlay();
+        });
       }
     } else if (params.overlay === true) {
       $('html').addClass('with-statusbar');
@@ -151,7 +157,7 @@ export default {
     const app = this;
     Utils.extend(app, {
       statusbar: {
-        check: Statusbar.check,
+        checkOverlay: Statusbar.checkOverlay,
         hide: Statusbar.hide,
         show: Statusbar.show,
         iosOverlaysWebView: Statusbar.iosOverlaysWebView,

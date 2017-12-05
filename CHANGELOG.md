@@ -1,6 +1,11 @@
 # Change Log
 
-# [v2.0.1](https://github.com/nolimits4web/framework7/compare/v2.0.0...v2.0.1) - December 4, 2017 🎉
+# [v2.0.2](https://github.com/nolimits4web/framework7/compare/v2.0.1...v2.0.2) - December 5, 2017
+  * Router
+    * Fix to make Routable tabs work on home page
+  * Few CSS tweaks for iPhone X safe areas
+
+# [v2.0.1](https://github.com/nolimits4web/framework7/compare/v2.0.0...v2.0.1) - December 4, 2017
   * Fixed iOS 11.2 iPhone X support with new CSS `env` safe areas
 
 # [v2.0.0](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.21...v2.0.0) - December 3, 2017 🎉
