@@ -27,6 +27,7 @@ let cache;
 const external = [
   'dom7',
   'template7',
+  'path-to-regexp',
 ];
 
 const globals = {
