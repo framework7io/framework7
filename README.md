@@ -6,6 +6,8 @@
 Framework7
 ==========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/framework7io/Framework7.svg)](https://greenkeeper.io/)
+
 Full Featured Mobile HTML Framework For Building iOS & Android Apps
 
 ## Getting Started
