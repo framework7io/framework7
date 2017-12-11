@@ -173,7 +173,7 @@ function Request(requestOptions) {
   // Additional headers
   if (options.headers) {
     Object.keys(options.headers).forEach((headerName) => {
-      xhr.setRequestHeader(headerName, options[headerName]);
+      xhr.setRequestHeader(headerName, options.headers[headerName]);
     });
   }
 
