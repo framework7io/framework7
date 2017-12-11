@@ -64,11 +64,14 @@ function tabLoad(tabRoute, loadOptions = {}) {
   // Load Tab Content
   const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
 
-  function onTabLoaded() {
+  function onTabLoaded(contentEl) {
     // Remove theme elements
     router.removeThemeElements($newTabEl);
 
-    $newTabEl.trigger('tab:init tab:mounted', tabRoute);
+    let tabEventTarget = $newTabEl;
+    if (typeof contentEl !== 'string') tabEventTarget = $(contentEl);
+
+    tabEventTarget.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
     if ($oldTabEl && router.params.unloadTabContent) {
@@ -111,7 +114,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     if (!router.params.unloadTabContent) {
       $newTabEl[0].f7RouterTabLoaded = true;
     }
-    onTabLoaded();
+    onTabLoaded(contentEl);
   }
   function reject() {
     router.allowPageChange = true;
