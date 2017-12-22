@@ -47,11 +47,7 @@ export default {
       view: null,
       url: 'select/',
       // Render functions
-      renderColumn: null,
       renderToolbar: null,
-      renderInline: null,
-      renderPopover: null,
-      renderSheet: null,
       render: null,
     },
   },
