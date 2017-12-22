@@ -31,7 +31,7 @@ function Request(requestOptions) {
   function fireCallback(callbackName, ...data) {
     /*
       Callbacks:
-      beforeCreate (xhr, options),
+      beforeCreate (options),
       beforeOpen (xhr, options),
       beforeSend (xhr, options),
       error (xhr, status),
