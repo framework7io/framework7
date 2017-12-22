@@ -12,7 +12,7 @@ class Autocomplete extends Framework7Class {
 
     const defaults = Utils.extend({
       on: {},
-    }, app.modules.autocomplete.params.autocomplete);
+    }, app.params.autocomplete);
 
 
     // Extend defaults with modules params
@@ -270,9 +270,9 @@ class Autocomplete extends Framework7Class {
     };
 
     ac.attachPageEvents = function attachPageEvents() {
-      ac.$containerEl.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
+      ac.$el.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
       if (ac.params.closeOnSelect && !ac.params.multiple) {
-        ac.$containerEl.once('click', '.list label', () => {
+        ac.$el.once('click', '.list label', () => {
           Utils.nextTick(() => {
             ac.close();
           });
@@ -280,7 +280,7 @@ class Autocomplete extends Framework7Class {
       }
     };
     ac.detachPageEvents = function detachPageEvents() {
-      ac.$containerEl.off('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
+      ac.$el.off('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
     };
 
     // Install Modules
@@ -327,13 +327,13 @@ class Autocomplete extends Framework7Class {
   }
   focus() {
     const ac = this;
-    ac.$containerEl.find('input[type=search]').focus();
+    ac.$el.find('input[type=search]').focus();
   }
   source(query) {
     const ac = this;
     if (!ac.params.source) return;
 
-    const { $containerEl } = ac;
+    const { $el } = ac;
 
     ac.params.source.call(ac, query, (items) => {
       let itemsHTML = '';
@@ -355,18 +355,18 @@ class Autocomplete extends Framework7Class {
           selected,
         }, i);
       }
-      $containerEl.find('.autocomplete-found ul').html(itemsHTML);
+      $el.find('.autocomplete-found ul').html(itemsHTML);
       if (items.length === 0) {
         if (query.length !== 0) {
-          $containerEl.find('.autocomplete-not-found').show();
-          $containerEl.find('.autocomplete-found, .autocomplete-values').hide();
+          $el.find('.autocomplete-not-found').show();
+          $el.find('.autocomplete-found, .autocomplete-values').hide();
         } else {
-          $containerEl.find('.autocomplete-values').show();
-          $containerEl.find('.autocomplete-found, .autocomplete-not-found').hide();
+          $el.find('.autocomplete-values').show();
+          $el.find('.autocomplete-found, .autocomplete-not-found').hide();
         }
       } else {
-        $containerEl.find('.autocomplete-found').show();
-        $containerEl.find('.autocomplete-not-found, .autocomplete-values').hide();
+        $el.find('.autocomplete-found').show();
+        $el.find('.autocomplete-not-found, .autocomplete-values').hide();
       }
     });
   }
@@ -383,7 +383,7 @@ class Autocomplete extends Framework7Class {
         selected: true,
       }, i);
     }
-    ac.$containerEl.find('.autocomplete-values ul').html(valuesHTML);
+    ac.$el.find('.autocomplete-values ul').html(valuesHTML);
   }
   preloaderHide() {
     const ac = this;
@@ -546,11 +546,12 @@ class Autocomplete extends Framework7Class {
     `.trim();
     return popupHtml;
   }
-  onOpen(type, containerEl) {
+  onOpen(type, el) {
     const ac = this;
     const app = ac.app;
-    const $containerEl = $(containerEl);
-    ac.$containerEl = $containerEl;
+    const $el = $(el);
+    ac.$el = $el;
+    ac.el = $el[0];
     ac.openedIn = type;
     ac.opened = true;
 
@@ -561,13 +562,13 @@ class Autocomplete extends Framework7Class {
       ac.$inputEl.trigger('input');
     } else {
       // Init SB
-      let $searchbarEl = $containerEl.find('.searchbar');
+      let $searchbarEl = $el.find('.searchbar');
       if (ac.params.openIn === 'page' && app.theme === 'ios' && $searchbarEl.length === 0) {
-        $searchbarEl = $(app.navbar.getElByPage($containerEl)).find('.searchbar');
+        $searchbarEl = $(app.navbar.getElByPage($el)).find('.searchbar');
       }
       ac.searchbar = app.searchbar.create({
         el: $searchbarEl,
-        backdropEl: $containerEl.find('.searchbar-backdrop'),
+        backdropEl: $el.find('.searchbar-backdrop'),
         customSearch: true,
         on: {
           searchbarSearch(query) {
@@ -625,8 +626,10 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.destroyed) return;
     ac.opened = false;
-    ac.$containerEl = null;
-    delete ac.$containerEl;
+    ac.$el = null;
+    ac.el = null;
+    delete ac.$el;
+    delete ac.el;
 
     ac.emit('local::closed autocompleteClosed', ac);
   }
@@ -709,8 +712,8 @@ class Autocomplete extends Framework7Class {
     }
     ac.positionDropDown();
     const $pageContentEl = ac.$inputEl.parents('.page-content');
-    if (ac.params.dropdownContainerEl) {
-      $(ac.params.dropdownContainerEl).append(ac.$dropdownEl);
+    if (ac.params.dropdownel) {
+      $(ac.params.dropdownel).append(ac.$dropdownEl);
     } else if ($pageContentEl.length === 0) {
       ac.$dropdownEl.insertAfter(ac.$inputEl);
     } else {
