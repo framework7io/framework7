@@ -48,7 +48,7 @@ export default {
     photoBrowserOpen(pb) {
       const app = this;
       if (app.theme !== 'md') return;
-      pb.$containerEl.find('.preloader').each((index, preloaderEl) => {
+      pb.$el.find('.preloader').each((index, preloaderEl) => {
         app.preloader.init(preloaderEl);
       });
     },
