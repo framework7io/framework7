@@ -27,7 +27,7 @@
     methods: {
       showNotificationFull: function () {
         var self = this;
-        // Create toast
+        // Create notification
         if (!self.notificationFull) {
           self.notificationFull = self.$app.notification.create({
             icon: '<i class="icon icon-f7"></i>',
@@ -43,7 +43,7 @@
       },
       showNotificationWithButton: function () {
         var self = this;
-        // Create toast
+        // Create notification
         if (!self.notificationWithButton) {
           self.notificationWithButton = self.$app.notification.create({
             icon: '<i class="icon icon-f7"></i>',
@@ -58,7 +58,7 @@
       },
       showNotificationCloseOnClick: function () {
         var self = this;
-        // Create toast
+        // Create notification
         if (!self.notificationCloseOnClick) {
           self.notificationCloseOnClick = self.$app.notification.create({
             icon: '<i class="icon icon-f7"></i>',
@@ -74,7 +74,7 @@
       },
       showNotificationCallbackOnClose: function () {
         var self = this;
-        // Create toast
+        // Create notification
         if (!self.notificationCallbackOnClose) {
           self.notificationCallbackOnClose = self.$app.notification.create({
             icon: '<i class="icon icon-f7"></i>',
