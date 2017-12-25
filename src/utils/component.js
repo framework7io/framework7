@@ -94,85 +94,91 @@ class Framework7Component {
     // Find Events
     const events = [];
     $(tempDom).find('*').each((index, element) => {
+      const attrs = [];
       for (let i = 0; i < element.attributes.length; i += 1) {
         const attr = element.attributes[i];
         if (attr.name.indexOf('@') === 0) {
-          const event = attr.name.replace('@', '');
-          let name = event;
-          let stop = false;
-          let prevent = false;
-          let once = false;
-          if (event.indexOf('.') >= 0) {
-            event.split('.').forEach((eventNamePart, eventNameIndex) => {
-              if (eventNameIndex === 0) name = eventNamePart;
-              else {
-                if (eventNamePart === 'stop') stop = true;
-                if (eventNamePart === 'prevent') prevent = true;
-                if (eventNamePart === 'once') once = true;
-              }
-            });
-          }
-
-          const value = attr.value;
-          element.removeAttribute(attr.name);
-          events.push({
-            el: element,
-            name,
-            once,
-            handler: (...args) => {
-              const e = args[0];
-              if (stop) e.stopPropagation();
-              if (prevent) e.preventDefault();
-              let methodName;
-              let method;
-              let customArgs = [];
-              if (value.indexOf('(') < 0) {
-                customArgs = args;
-                methodName = value;
-              } else {
-                methodName = value.split('(')[0];
-                value.split('(')[1].split(')')[0].split(',').forEach((argument) => {
-                  let arg = argument.trim();
-                  // eslint-disable-next-line
-                  if (!isNaN(arg)) arg = parseFloat(arg);
-                  else if (arg === 'true') arg = true;
-                  else if (arg === 'false') arg = false;
-                  else if (arg === 'null') arg = null;
-                  else if (arg === 'undefined') arg = undefined;
-                  else if (arg[0] === '"') arg = arg.replace(/"/g, '');
-                  else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
-                  else if (arg.indexOf('.') > 0) {
-                    let deepArg;
-                    arg.split('.').forEach((path) => {
-                      if (!deepArg) deepArg = context;
-                      deepArg = deepArg[path];
-                    });
-                    arg = deepArg;
-                  } else {
-                    arg = context[arg];
-                  }
-                  customArgs.push(arg);
-                });
-              }
-              if (methodName.indexOf('.') >= 0) {
-                methodName.split('.').forEach((path, pathIndex) => {
-                  if (!method) method = context;
-                  if (method[path]) method = method[path];
-                  else {
-                    throw new Error(`Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
-                  }
-                });
-              } else {
-                if (!context[methodName]) {
-                  throw new Error(`Component doesn't have method "${methodName}"`);
-                }
-                method = context[methodName];
-              }
-              method(...customArgs);
-            },
+          attrs.push({
+            name: attr.name,
+            value: attr.value,
           });
         }
       }
+      attrs.forEach((attr) => {
+        element.removeAttribute(attr.name);
+        const event = attr.name.replace('@', '');
+        let name = event;
+        let stop = false;
+        let prevent = false;
+        let once = false;
+        if (event.indexOf('.') >= 0) {
+          event.split('.').forEach((eventNamePart, eventNameIndex) => {
+            if (eventNameIndex === 0) name = eventNamePart;
+            else {
+              if (eventNamePart === 'stop') stop = true;
+              if (eventNamePart === 'prevent') prevent = true;
+              if (eventNamePart === 'once') once = true;
+            }
+          });
+        }
+        const value = attr.value.toString();
+        events.push({
+          el: element,
+          name,
+          once,
+          handler(...args) {
+            const e = args[0];
+            if (stop) e.stopPropagation();
+            if (prevent) e.preventDefault();
+            let methodName;
+            let method;
+            let customArgs = [];
+            if (value.indexOf('(') < 0) {
+              customArgs = args;
+              methodName = value;
+            } else {
+              methodName = value.split('(')[0];
+              value.split('(')[1].split(')')[0].split(',').forEach((argument) => {
+                let arg = argument.trim();
+                // eslint-disable-next-line
+                if (!isNaN(arg)) arg = parseFloat(arg);
+                else if (arg === 'true') arg = true;
+                else if (arg === 'false') arg = false;
+                else if (arg === 'null') arg = null;
+                else if (arg === 'undefined') arg = undefined;
+                else if (arg[0] === '"') arg = arg.replace(/"/g, '');
+                else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
+                else if (arg.indexOf('.') > 0) {
+                  let deepArg;
+                  arg.split('.').forEach((path) => {
+                    if (!deepArg) deepArg = context;
+                    deepArg = deepArg[path];
+                  });
+                  arg = deepArg;
+                } else {
+                  arg = context[arg];
+                }
+                customArgs.push(arg);
+              });
+            }
+            if (methodName.indexOf('.') >= 0) {
+              methodName.split('.').forEach((path, pathIndex) => {
+                if (!method) method = context;
+                if (method[path]) method = method[path];
+                else {
+                  throw new Error(`Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
+                }
+              });
+            } else {
+              if (!context[methodName]) {
+                throw new Error(`Component doesn't have method "${methodName}"`);
+              }
+              method = context[methodName];
+            }
+            method(...customArgs);
+          },
+        });
+      });
     });
 
     // Set styles scope ID
