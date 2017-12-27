@@ -181,7 +181,7 @@ class Searchbar extends FrameworkClass {
       if (
         (
           (sb.$searchContainer && sb.$searchContainer.length > 0) &&
-          (sb.params.searchIn || sb.isVirtualList)
+          (sb.params.searchIn || sb.isVirtualList || sb.params.searchIn === sb.params.searchItem)
         ) ||
         sb.params.customSearch
       ) {
@@ -190,7 +190,7 @@ class Searchbar extends FrameworkClass {
     }
     function onInputClear(e, previousValue) {
       sb.$el.trigger('searchbar:clear', previousValue);
-      sb.emit('local::clear searchbarClear', previousValue);
+      sb.emit('local::clear searchbarClear', sb, previousValue);
     }
     function disableOnClick(e) {
       sb.disable(e);
@@ -259,7 +259,7 @@ class Searchbar extends FrameworkClass {
     const previousQuery = sb.value;
     sb.$inputEl.val('').trigger('change').focus();
     sb.$el.trigger('searchbar:clear', previousQuery);
-    sb.emit('local::clear searchbarClear', previousQuery);
+    sb.emit('local::clear searchbarClear', sb, previousQuery);
     return sb;
   }
   setDisableButtonMargin() {
@@ -291,7 +291,7 @@ class Searchbar extends FrameworkClass {
       }
       if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.hide();
       sb.$el.trigger('searchbar:enable');
-      sb.emit('local::enable searchbarEnable');
+      sb.emit('local::enable searchbarEnable', sb);
     }
     let needsFocus = false;
     if (setFocus === true) {
@@ -345,7 +345,7 @@ class Searchbar extends FrameworkClass {
     if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.show();
 
     sb.$el.trigger('searchbar:disable');
-    sb.emit('local::disable searchbarDisable');
+    sb.emit('local::disable searchbarDisable', sb);
     return sb;
   }
   toggle() {
@@ -400,7 +400,7 @@ class Searchbar extends FrameworkClass {
 
     if (sb.params.customSearch) {
       $el.trigger('searchbar:search', query, sb.previousQuery);
-      sb.emit('local::search searchbarSearch', query, sb.previousQuery);
+      sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
       return sb;
     }
 
@@ -433,7 +433,11 @@ class Searchbar extends FrameworkClass {
       $searchContainer.find(sb.params.searchItem).removeClass('hidden-by-searchbar').each((itemIndex, itemEl) => {
         const $itemEl = $(itemEl);
         let compareWithText = [];
-        $itemEl.find(sb.params.searchIn).each((searchInIndex, searchInEl) => {
+        let $searchIn = sb.params.searchIn ? $itemEl.find(sb.params.searchIn) : $itemEl;
+        if (sb.params.searchIn === sb.params.searchItem) {
+          $searchIn = $itemEl;
+        }
+        $searchIn.each((searchInIndex, searchInEl) => {
           let itemText = $(searchInEl).text().trim().toLowerCase();
           if (sb.params.removeDiacritics) itemText = Utils.removeDiacritics(itemText);
           compareWithText.push(itemText);
@@ -493,7 +497,7 @@ class Searchbar extends FrameworkClass {
     }
 
     $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
-    sb.emit('local::search searchbarSearch', query, sb.previousQuery, foundItems);
+    sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery, foundItems);
 
     return sb;
   }
