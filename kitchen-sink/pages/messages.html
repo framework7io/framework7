@@ -268,7 +268,7 @@
         self.messagebar = app.messagebar.create({
           el: page.$el.find('.messagebar'),
           attachments: []
-        })
+        });
         self.messages = app.messages.create({
           el: page.$el.find('.messages'),
           firstMessageRule: function (message, previousMessage, nextMessage) {
@@ -286,7 +286,7 @@
             if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
             return false;
           }
-        })
+        });
       }
     }
   }
