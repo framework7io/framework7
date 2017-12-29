@@ -10,8 +10,8 @@
   .loop(@values);
 }
 
-// Flex
-@display: flex, block, inline-flex, inline-block, inline;
+// Display
+@display: flex, block, inline-flex, inline-block, inline, none;
 .rules-loop(@display, display);
 
 // Flex Shrink
@@ -35,7 +35,7 @@
 .rules-loop(@alignSelf, align-self);
 
 // Text Align
-@textAlign: left, center, right;
+@textAlign: left, center, right, justify;
 .rules-loop(@textAlign, text-align);
 
 // Float
