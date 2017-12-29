@@ -103,7 +103,7 @@ class Messages extends Framework7Class {
       type: 'sent',
     }, messageToRender);
     if (m.params.renderMessage) {
-      return m.params.renderMessage(message);
+      return m.params.renderMessage.call(m, message);
     }
     if (message.isTitle) {
       return `<div class="messages-title">${message.text}</div>`;
@@ -233,6 +233,9 @@ class Messages extends Framework7Class {
     if (typeof messageToRemove === 'number') {
       index = messageToRemove;
       $el = m.$el.find('.message, .messages-title').eq(index);
+    } else if (m.messages && m.messages.indexOf(messageToRemove) >= 0) {
+      index = m.messages.indexOf(messageToRemove);
+      $el = m.$el.children().eq(index);
     } else {
       $el = $(messageToRemove);
       index = $el.index();
