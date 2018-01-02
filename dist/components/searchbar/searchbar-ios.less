@@ -4,6 +4,9 @@
   .searchbar {
     height: @searchbarSize;
     background: @searchbarBg;
+    &.no-hairline {
+      .hairline-remove(bottom);
+    }
     input[type="search"], input[type="text"] {
       padding: 0 28px;
       box-sizing: border-box;

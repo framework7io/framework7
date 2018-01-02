@@ -89,6 +89,7 @@ const Statusbar = {
   init() {
     const app = this;
     const params = app.params.statusbar;
+    if (!params.enabled) return;
 
     if (params.overlay === 'auto') {
       if (Device.needsStatusbarOverlay()) {
@@ -145,6 +146,7 @@ export default {
   name: 'statusbar',
   params: {
     statusbar: {
+      enabled: true,
       overlay: 'auto',
       scrollTopOnClick: true,
       iosOverlaysWebView: true,
@@ -177,6 +179,7 @@ export default {
   clicks: {
     '.statusbar': function onStatusbarClick() {
       const app = this;
+      if (!app.params.statusbar.enabled) return;
       if (!app.params.statusbar.scrollTopOnClick) return;
       Statusbar.onClick.call(app);
     },

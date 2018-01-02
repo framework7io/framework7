@@ -62,4 +62,12 @@
       }
     }
   }
+
+  // Color Themes
+  .color-loop({
+    .ripple-color-@{colorName} .ripple-wave,
+    .ripple-@{colorName} .ripple-wave {
+      background-color: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), 0.3);
+    }
+  });
 }

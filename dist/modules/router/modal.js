@@ -39,7 +39,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
     modal.on('modalClosed', () => {
       modal.$el.trigger(`${modalType.toLowerCase()}:beforeremove`, route, modal);
-      modal.emit(`${modalType}BeforeRemove`, modal.el, route, modal);
+      modal.emit(`modalBeforeRemove ${modalType}BeforeRemove`, modal.el, route, modal);
       const modalComponent = modal.el.f7Component;
       if (modalComponent) {
         modalComponent.destroy();
@@ -83,7 +83,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
     // Emit events
     modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-    router.emit(`${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+    router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
     // Open
     modal.open();
   }

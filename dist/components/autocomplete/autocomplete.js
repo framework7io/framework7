@@ -29,6 +29,7 @@ export default {
       openIn: 'page', // or 'popup' or 'dropdown'
       pageBackLinkText: 'Back',
       popupCloseLinkText: 'Close',
+      pageTitle: undefined,
       searchbarPlaceholder: 'Search...',
       searchbarDisableText: 'Cancel',
 
@@ -49,13 +50,12 @@ export default {
 
       // Routing
       routableModals: true,
-      url: 'select',
+      url: 'select/',
 
       // Custom render functions
       renderDropdown: undefined,
       renderPage: undefined,
       renderPopup: undefined,
-      renderItems: undefined,
       renderItem: undefined,
       renderSearchbar: undefined,
       renderNavbar: undefined,

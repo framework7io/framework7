@@ -13,6 +13,7 @@ class PullToRefresh extends Framework7Class {
 
     ptr.$el = $el;
     ptr.el = $el[0];
+    ptr.app = app;
 
     // Extend defaults with modules params
     ptr.useModulesParams({});

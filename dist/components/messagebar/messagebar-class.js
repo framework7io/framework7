@@ -87,17 +87,25 @@ class Messagebar extends Framework7Class {
       const index = $(this).index();
       if ($(e.target).closest('.messagebar-attachment-delete').length) {
         $(this).trigger('messagebar:attachmentdelete', index);
-        messagebar.emit('local::attachmentDelete messagebarAttachmentDelete', this, index);
+        messagebar.emit('local::attachmentDelete messagebarAttachmentDelete', messagebar, this, index);
       } else {
         $(this).trigger('messagebar:attachmentclick', index);
-        messagebar.emit('local::attachmentClick messagebarAttachmentClick', this, index);
+        messagebar.emit('local::attachmentClick messagebarAttachmentClick', messagebar, this, index);
       }
     }
     function onTextareaChange() {
       messagebar.checkEmptyState();
+      messagebar.$el.trigger('messagebar:change');
+      messagebar.emit('local::change messagebarChange', messagebar);
     }
     function onTextareaFocus() {
       messagebar.sheetHide();
+      messagebar.$el.trigger('messagebar:focus');
+      messagebar.emit('local::focus messagebarFocus', messagebar);
+    }
+    function onTextareaBlur() {
+      messagebar.$el.trigger('messagebar:blur');
+      messagebar.emit('local::blur messagebarBlur', messagebar);
     }
 
     messagebar.attachEvents = function attachEvents() {
@@ -106,6 +114,7 @@ class Messagebar extends Framework7Class {
       $el.on('click', '.messagebar-attachment', onAttachmentClick);
       $textareaEl.on('change input', onTextareaChange);
       $textareaEl.on('focus', onTextareaFocus);
+      $textareaEl.on('blur', onTextareaBlur);
       app.on('resize', onAppResize);
     };
     messagebar.detachEvents = function detachEvents() {
@@ -113,7 +122,8 @@ class Messagebar extends Framework7Class {
       $el.off('submit', onSubmit);
       $el.off('click', '.messagebar-attachment', onAttachmentClick);
       $textareaEl.off('change input', onTextareaChange);
-      $textareaEl.on('focus', onTextareaFocus);
+      $textareaEl.off('focus', onTextareaFocus);
+      $textareaEl.off('blur', onTextareaBlur);
       app.off('resize', onAppResize);
     };
 
@@ -203,7 +213,7 @@ class Messagebar extends Framework7Class {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
         $el.trigger('messagebar:resizepage');
-        messagebar.emit('local::resizePage messagebarResizePage');
+        messagebar.emit('local::resizePage messagebarResizePage', messagebar);
       }
     }
   }
@@ -261,7 +271,7 @@ class Messagebar extends Framework7Class {
   renderAttachment(attachment) {
     const messagebar = this;
     if (messagebar.params.renderAttachment) {
-      return messagebar.params.renderAttachment(attachment);
+      return messagebar.params.renderAttachment.call(messagebar, attachment);
     }
     return `
       <div class="messagebar-attachment">
@@ -274,7 +284,7 @@ class Messagebar extends Framework7Class {
     const messagebar = this;
     let html;
     if (messagebar.params.renderAttachments) {
-      html = messagebar.params.renderAttachments(messagebar.attachments);
+      html = messagebar.params.renderAttachments.call(messagebar, messagebar.attachments);
     } else {
       html = `${messagebar.attachments.map(attachment => messagebar.renderAttachment(attachment)).join('')}`;
     }

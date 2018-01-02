@@ -10,6 +10,9 @@
   input[type="checkbox"] {
     display: none;
   }
+  input[disabled] ~ .toggle-icon {
+    pointer-events: none;
+  }
 }
 .toggle-icon {
   z-index: 0;

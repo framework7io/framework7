@@ -5,11 +5,11 @@ const Lazy = {
   destroy(pageEl) {
     const $pageEl = $(pageEl).closest('.page');
     if (!$pageEl.length) return;
-    if ($pageEl[0].f7DestroyLazy) {
-      $pageEl[0].f7DestroyLazy();
+    if ($pageEl[0].f7LazyDestroy) {
+      $pageEl[0].f7LazyDestroy();
     }
   },
-  init(pageEl) {
+  create(pageEl) {
     const app = this;
     const $pageEl = $(pageEl).closest('.page').eq(0);
 
@@ -53,12 +53,15 @@ const Lazy = {
     }
 
     function attachEvents() {
+      $pageEl[0].f7LazyAttached = true;
       $pageEl.on('lazy', lazyHandler);
       $pageEl.on('scroll', lazyHandler, true);
       $pageEl.find('.tab').on('tab:mounted tab:show', lazyHandler);
       app.on('resize', lazyHandler);
     }
     function detachEvents() {
+      $pageEl[0].f7LazyAttached = false;
+      delete $pageEl[0].f7LazyAttached;
       $pageEl.off('lazy', lazyHandler);
       $pageEl.off('scroll', lazyHandler, true);
       $pageEl.find('.tab').off('tab:mounted tab:show', lazyHandler);
@@ -66,10 +69,14 @@ const Lazy = {
     }
 
     // Store detach function
-    $pageEl[0].f7DestroyLazy = detachEvents;
+    if (!$pageEl[0].f7LazyDestroy) {
+      $pageEl[0].f7LazyDestroy = detachEvents;
+    }
 
     // Attach events
-    attachEvents();
+    if (!$pageEl[0].f7LazyAttached) {
+      attachEvents();
+    }
 
     // Run loader on page load/init
     lazyHandler();
@@ -160,7 +167,7 @@ export default {
     const app = this;
     Utils.extend(app, {
       lazy: {
-        init: Lazy.init.bind(app),
+        create: Lazy.create.bind(app),
         destroy: Lazy.destroy.bind(app),
         loadImage: Lazy.loadImage.bind(app),
         load: Lazy.load.bind(app),
@@ -172,13 +179,13 @@ export default {
     pageInit(page) {
       const app = this;
       if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
-        app.lazy.init(page.$el);
+        app.lazy.create(page.$el);
       }
     },
     pageAfterIn(page) {
       const app = this;
       if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
-        app.lazy.init(page.$el);
+        app.lazy.create(page.$el);
       }
     },
     pageBeforeRemove(page) {
@@ -191,7 +198,7 @@ export default {
       const app = this;
       const $tabEl = $(tabEl);
       if ($tabEl.find('.lazy').length > 0 || $tabEl.hasClass('lazy')) {
-        app.lazy.init($tabEl);
+        app.lazy.create($tabEl);
       }
     },
     tabBeforeRemove(tabEl) {

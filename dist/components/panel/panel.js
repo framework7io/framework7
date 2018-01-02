@@ -80,7 +80,6 @@ export default {
       create(params) {
         return new Panel(app, params);
       },
-
       open(side, animate) {
         let panelSide = side;
         if (!panelSide) {
@@ -165,8 +164,13 @@ export default {
     },
     '.panel-backdrop': function close() {
       const app = this;
-      $('.panel-active').trigger('panel:backdrop-click');
-      app.emit('panelBackdropClick', $('.panel-active')[0]);
+      const $panelEl = $('.panel-active');
+      const instance = $panelEl[0] && $panelEl[0].f7Panel;
+      $panelEl.trigger('panel:backdrop-click');
+      if (instance) {
+        instance.emit('backdropClick', instance);
+      }
+      app.emit('panelBackdropClick', instance || $panelEl[0]);
       if (app.params.panel.closeByBackdropClick) app.panel.close();
     },
   },

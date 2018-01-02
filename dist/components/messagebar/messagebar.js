@@ -44,7 +44,4 @@ export default {
       });
     },
   },
-  clicks: {
-
-  },
 };

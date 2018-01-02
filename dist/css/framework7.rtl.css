@@ -1,13 +1,13 @@
 /**
- * Framework7 2.0.2
+ * Framework7 2.0.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2017 Vladimir Kharlampidi
+ * Copyright 2014-2018 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 5, 2017
+ * Released on: January 2, 2018
  */
 html {
   direction: rtl;
@@ -6121,6 +6121,42 @@ button {
 .calendar.md .theme-dark .ripple-wave {
   background-color: rgba(255, 255, 255, 0.3);
 }
+.md .ripple-color-red .ripple-wave,
+.md .ripple-red .ripple-wave {
+  background-color: rgba(244, 67, 54, 0.3);
+}
+.md .ripple-color-green .ripple-wave,
+.md .ripple-green .ripple-wave {
+  background-color: rgba(76, 175, 80, 0.3);
+}
+.md .ripple-color-blue .ripple-wave,
+.md .ripple-blue .ripple-wave {
+  background-color: rgba(33, 150, 243, 0.3);
+}
+.md .ripple-color-pink .ripple-wave,
+.md .ripple-pink .ripple-wave {
+  background-color: rgba(233, 30, 99, 0.3);
+}
+.md .ripple-color-yellow .ripple-wave,
+.md .ripple-yellow .ripple-wave {
+  background-color: rgba(255, 235, 59, 0.3);
+}
+.md .ripple-color-orange .ripple-wave,
+.md .ripple-orange .ripple-wave {
+  background-color: rgba(255, 152, 0, 0.3);
+}
+.md .ripple-color-gray .ripple-wave,
+.md .ripple-gray .ripple-wave {
+  background-color: rgba(158, 158, 158, 0.3);
+}
+.md .ripple-color-white .ripple-wave,
+.md .ripple-white .ripple-wave {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.md .ripple-color-black .ripple-wave,
+.md .ripple-black .ripple-wave {
+  background-color: rgba(0, 0, 0, 0.3);
+}
 /* === Icon === */
 i.icon {
   display: inline-block;
@@ -10825,6 +10861,15 @@ html.device-android-4 .accordion-item-content {
 .ios .timeline-item:last-child {
   padding-bottom: 2px;
 }
+.ios .timeline-item-content .card,
+.ios .timeline-item-content.card,
+.ios .timeline-item-content .list,
+.ios .timeline-item-content.list,
+.ios .timeline-item-content .block,
+.ios .timeline-item-content.block {
+  margin: 0;
+  width: 100%;
+}
 .ios .timeline-item-content .card + .card,
 .ios .timeline-item-content .list + .card,
 .ios .timeline-item-content .block + .card,
@@ -10835,15 +10880,6 @@ html.device-android-4 .accordion-item-content {
 .ios .timeline-item-content .list + .block,
 .ios .timeline-item-content .block + .block {
   margin: 15px 0 0;
-}
-.ios .timeline-item-content .card,
-.ios .timeline-item-content.card,
-.ios .timeline-item-content .list,
-.ios .timeline-item-content.list,
-.ios .timeline-item-content .block,
-.ios .timeline-item-content.block {
-  margin: 0 !important;
-  width: 100%;
 }
 .ios .timeline-item-inner {
   border-radius: 7px;
@@ -11273,6 +11309,15 @@ html.device-android-4 .accordion-item-content {
 .md .timeline-item:last-child {
   padding-bottom: 2px;
 }
+.md .timeline-item-content .card,
+.md .timeline-item-content.card,
+.md .timeline-item-content .list,
+.md .timeline-item-content.list,
+.md .timeline-item-content .block,
+.md .timeline-item-content.block {
+  margin: 0;
+  width: 100%;
+}
 .md .timeline-item-content .card + .card,
 .md .timeline-item-content .list + .card,
 .md .timeline-item-content .block + .card,
@@ -11283,15 +11328,6 @@ html.device-android-4 .accordion-item-content {
 .md .timeline-item-content .list + .block,
 .md .timeline-item-content .block + .block {
   margin: 16px 0 0;
-}
-.md .timeline-item-content .card,
-.md .timeline-item-content.card,
-.md .timeline-item-content .list,
-.md .timeline-item-content.list,
-.md .timeline-item-content .block,
-.md .timeline-item-content.block {
-  margin: 0;
-  width: 100%;
 }
 .md .timeline-item-inner {
   border-radius: 2px;
@@ -11659,6 +11695,7 @@ html.device-android-4 .accordion-item-content {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   width: 260px;
+  background-color: #fff;
 }
 .panel.not-animated {
   -webkit-transition-duration: 0ms !important;
@@ -11739,7 +11776,6 @@ html.with-panel-right-cover .panel-right {
 .ios .panel {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  background: #111;
 }
 .ios.with-panel-left-reveal .views,
 .ios.with-panel-right-reveal .views,
@@ -11762,7 +11798,6 @@ html.with-panel-right-cover .panel-right {
 .md .panel {
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
-  background: #fff;
 }
 .md .panel-visible {
   display: block;
@@ -14191,6 +14226,9 @@ label.item-radio.disabled,
 }
 .toggle input[type="checkbox"] {
   display: none;
+}
+.toggle input[disabled] ~ .toggle-icon {
+  pointer-events: none;
 }
 .toggle-icon {
   z-index: 0;
@@ -18339,7 +18377,7 @@ label.item-radio.disabled,
   margin-bottom: 7px;
 }
 /* === Images Lazy Loading === */
-.lazy-loaded.lazy-fadeIn {
+.lazy-loaded.lazy-fade-in {
   -webkit-animation: lazyFadeIn 600ms;
   animation: lazyFadeIn 600ms;
 }
@@ -20257,12 +20295,16 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 .hidden-by-searchbar,
 .list .hidden-by-searchbar,
-.list.li.hidden-by-searchbar {
+.list.li.hidden-by-searchbar,
+.list li.hidden-by-searchbar {
   display: none;
 }
 .ios .searchbar {
   height: 44px;
   background: #f7f7f8;
+}
+.ios .searchbar.no-hairline:after {
+  display: none !important;
 }
 .ios .searchbar input[type="search"],
 .ios .searchbar input[type="text"] {
@@ -23747,6 +23789,9 @@ iframe#viAd {
 .display-inline {
   display: inline !important;
 }
+.display-none {
+  display: none !important;
+}
 .flex-shrink-0 {
   -webkit-flex-shrink: 0 !important;
   -ms-flex-negative: 0 !important;
@@ -23949,6 +23994,9 @@ iframe#viAd {
 }
 .text-align-right {
   text-align: right !important;
+}
+.text-align-justify {
+  text-align: justify !important;
 }
 .float-left {
   float: left !important;

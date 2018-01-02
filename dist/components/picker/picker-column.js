@@ -10,6 +10,7 @@ export default function (colEl, updateItems) {
   if (col.divider) return;
 
   col.$el = $colEl;
+  col.el = $colEl[0];
   col.$itemsEl = col.$el.find('.picker-items');
   col.items = col.$itemsEl.find('.picker-item');
 

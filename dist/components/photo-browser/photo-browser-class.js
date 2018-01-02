@@ -63,10 +63,10 @@ class PhotoBrowser extends Framework7Class {
       ? swiper.$wrapperEl.find(`.swiper-slide[data-swiper-slide-index="${swiper.previousIndex}"]`)
       : swiper.slides.eq(swiper.previousIndex);
 
-    let $currentEl = pb.$containerEl.find('.photo-browser-current');
-    let $totalEl = pb.$containerEl.find('.photo-browser-total');
+    let $currentEl = pb.$el.find('.photo-browser-current');
+    let $totalEl = pb.$el.find('.photo-browser-total');
     if (pb.params.type === 'page' && pb.params.navbar && $currentEl.length === 0 && pb.app.theme === 'ios') {
-      const navbarEl = pb.app.navbar.getElByPage(pb.$containerEl);
+      const navbarEl = pb.app.navbar.getElByPage(pb.$el);
       if (navbarEl) {
         $currentEl = $(navbarEl).find('.photo-browser-current');
         $totalEl = $(navbarEl).find('.photo-browser-total');
@@ -131,9 +131,9 @@ class PhotoBrowser extends Framework7Class {
     const timeDiff = (new Date()).getTime() - swipeToClose.timeStart;
     if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
       Utils.nextTick(() => {
-        if (pb.$containerEl) {
-          if (swipeToClose.diff < 0) pb.$containerEl.addClass('swipe-close-to-bottom');
-          else pb.$containerEl.addClass('swipe-close-to-top');
+        if (pb.$el) {
+          if (swipeToClose.diff < 0) pb.$el.addClass('swipe-close-to-bottom');
+          else pb.$el.addClass('swipe-close-to-top');
         }
         pb.emit('local::swipeToClose', pb);
         pb.close();
@@ -303,22 +303,23 @@ class PhotoBrowser extends Framework7Class {
   }
 
   // Callbacks
-  onOpen(type, containerEl) {
+  onOpen(type, el) {
     const pb = this;
     const app = pb.app;
-    const $containerEl = $(containerEl);
+    const $el = $(el);
 
-    $containerEl[0].f7PhotoBrowser = pb;
+    $el[0].f7PhotoBrowser = pb;
 
-    pb.$containerEl = $containerEl;
+    pb.$el = $el;
+    pb.el = $el[0];
     pb.openedIn = type;
     pb.opened = true;
 
-    pb.$swiperContainerEl = pb.$containerEl.find('.photo-browser-swiper-container');
-    pb.$swiperWrapperEl = pb.$containerEl.find('.photo-browser-swiper-wrapper');
-    pb.slides = pb.$containerEl.find('.photo-browser-slide');
-    pb.$captionsContainerEl = pb.$containerEl.find('.photo-browser-captions');
-    pb.captions = pb.$containerEl.find('.photo-browser-caption');
+    pb.$swiperContainerEl = pb.$el.find('.photo-browser-swiper-container');
+    pb.$swiperWrapperEl = pb.$el.find('.photo-browser-swiper-wrapper');
+    pb.slides = pb.$el.find('.photo-browser-slide');
+    pb.$captionsContainerEl = pb.$el.find('.photo-browser-captions');
+    pb.captions = pb.$el.find('.photo-browser-caption');
 
     // Init Swiper
     const swiperParams = Utils.extend({}, pb.params.swiper, {
@@ -400,12 +401,17 @@ class PhotoBrowser extends Framework7Class {
     if (pb.activeIndex === 0) {
       pb.onSlideChange(pb.swiper);
     }
-
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:open');
+    }
     pb.emit('local::open photoBrowserOpen', pb);
   }
   onOpened() {
     const pb = this;
 
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:opened');
+    }
     pb.emit('local::opened photoBrowserOpened', pb);
   }
   onClose() {
@@ -418,16 +424,22 @@ class PhotoBrowser extends Framework7Class {
       pb.swiper = null;
       delete pb.swiper;
     }
-
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:close');
+    }
     pb.emit('local::close photoBrowserClose', pb);
   }
   onClosed() {
     const pb = this;
     if (pb.destroyed) return;
     pb.opened = false;
-    pb.$containerEl = null;
-    delete pb.$containerEl;
-
+    pb.$el = null;
+    pb.el = null;
+    delete pb.$el;
+    delete pb.el;
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:closed');
+    }
     pb.emit('local::closed photoBrowserClosed', pb);
   }
 
@@ -547,7 +559,7 @@ class PhotoBrowser extends Framework7Class {
     if (pb.params.type === 'page') {
       pb.view.$el.addClass('with-photo-browser-page-exposed');
     }
-    if (pb.$containerEl) pb.$containerEl.addClass('photo-browser-exposed');
+    if (pb.$el) pb.$el.addClass('photo-browser-exposed');
     if (pb.params.expositionHideCaptions) pb.$captionsContainerEl.addClass('photo-browser-captions-exposed');
     pb.exposed = true;
     return pb;
@@ -557,7 +569,7 @@ class PhotoBrowser extends Framework7Class {
     if (pb.params.type === 'page') {
       pb.view.$el.removeClass('with-photo-browser-page-exposed');
     }
-    if (pb.$containerEl) pb.$containerEl.removeClass('photo-browser-exposed');
+    if (pb.$el) pb.$el.removeClass('photo-browser-exposed');
     if (pb.params.expositionHideCaptions) pb.$captionsContainerEl.removeClass('photo-browser-captions-exposed');
     pb.exposed = false;
     return pb;
@@ -567,7 +579,7 @@ class PhotoBrowser extends Framework7Class {
     if (pb.params.type === 'page') {
       pb.view.$el.toggleClass('with-photo-browser-page-exposed');
     }
-    if (pb.$containerEl) pb.$containerEl.toggleClass('photo-browser-exposed');
+    if (pb.$el) pb.$el.toggleClass('photo-browser-exposed');
     if (pb.params.expositionHideCaptions) pb.$captionsContainerEl.toggleClass('photo-browser-captions-exposed');
     pb.exposed = !pb.exposed;
     return pb;
@@ -615,9 +627,9 @@ class PhotoBrowser extends Framework7Class {
   destroy() {
     let pb = this;
     pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
-    if (pb.$containerEl) {
-      pb.$containerEl.trigger('photobrowser:beforedestroy');
-      delete pb.$containerEl[0].f7PhotoBrowser;
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:beforedestroy');
+      delete pb.$el[0].f7PhotoBrowser;
     }
     Utils.deleteProps(pb);
     pb = null;

@@ -66,7 +66,7 @@ function SwipeBack(r) {
       }
 
       currentPage = target.closest('.page');
-      if (currentPage.hasClass('no-swipeback')) cancel = true;
+      if (currentPage.hasClass('no-swipeback') || target.closest('.no-swipeback').length > 0) cancel = true;
       previousPage = $el.find('.page-previous:not(.stacked)');
 
       let notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;

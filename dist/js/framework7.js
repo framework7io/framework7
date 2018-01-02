@@ -1,13 +1,13 @@
 /**
- * Framework7 2.0.2
+ * Framework7 2.0.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2017 Vladimir Kharlampidi
+ * Copyright 2014-2018 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 5, 2017
+ * Released on: January 2, 2018
  */
 
 (function (global, factory) {
@@ -2782,6 +2782,8 @@ var Device = (function Device() {
 
   // Webview
   device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone);
+  device.webview = device.webView;
+
 
   // Desktop
   device.desktop = !(device.os || device.android || device.webView);
@@ -3388,7 +3390,7 @@ function Request$1(requestOptions) {
 
     /*
       Callbacks:
-      beforeCreate (xhr, options),
+      beforeCreate (options),
       beforeOpen (xhr, options),
       beforeSend (xhr, options),
       error (xhr, status),
@@ -3530,7 +3532,7 @@ function Request$1(requestOptions) {
   // Additional headers
   if (options.headers) {
     Object.keys(options.headers).forEach(function (headerName) {
-      xhr.setRequestHeader(headerName, options[headerName]);
+      xhr.setRequestHeader(headerName, options.headers[headerName]);
     });
   }
 
@@ -3665,9 +3667,8 @@ Request$1.setup = function setup(options) {
 /* eslint no-param-reassign: "off" */
 var Request = {
   name: 'request',
-  create: function create() {
-    var app = this;
-    app.request = Request$1;
+  proto: {
+    request: Request$1,
   },
   static: {
     request: Request$1,
@@ -4763,88 +4764,94 @@ var Framework7Component = function Framework7Component(c, extendContext) {
   // Find Events
   var events = [];
   $$1$1(tempDom).find('*').each(function (index, element) {
+    var attrs = [];
     for (var i = 0; i < element.attributes.length; i += 1) {
       var attr = element.attributes[i];
       if (attr.name.indexOf('@') === 0) {
-        var event = attr.name.replace('@', '');
-        var name = event;
-        var stop = false;
-        var prevent = false;
-        var once = false;
-        if (event.indexOf('.') >= 0) {
-          event.split('.').forEach(function (eventNamePart, eventNameIndex) {
-            if (eventNameIndex === 0) { name = eventNamePart; }
-            else {
-              if (eventNamePart === 'stop') { stop = true; }
-              if (eventNamePart === 'prevent') { prevent = true; }
-              if (eventNamePart === 'once') { once = true; }
-            }
-          });
-        }
-
-        var value = attr.value;
-        element.removeAttribute(attr.name);
-        events.push({
-          el: element,
-          name: name,
-          once: once,
-          handler: function () {
-            var args = [], len = arguments.length;
-            while ( len-- ) args[ len ] = arguments[ len ];
-
-            var e = args[0];
-            if (stop) { e.stopPropagation(); }
-            if (prevent) { e.preventDefault(); }
-            var methodName;
-            var method;
-            var customArgs = [];
-            if (value.indexOf('(') < 0) {
-              customArgs = args;
-              methodName = value;
-            } else {
-              methodName = value.split('(')[0];
-              value.split('(')[1].split(')')[0].split(',').forEach(function (argument) {
-                var arg = argument.trim();
-                // eslint-disable-next-line
-                if (!isNaN(arg)) { arg = parseFloat(arg); }
-                else if (arg === 'true') { arg = true; }
-                else if (arg === 'false') { arg = false; }
-                else if (arg === 'null') { arg = null; }
-                else if (arg === 'undefined') { arg = undefined; }
-                else if (arg[0] === '"') { arg = arg.replace(/"/g, ''); }
-                else if (arg[0] === '\'') { arg = arg.replace(/'/g, ''); }
-                else if (arg.indexOf('.') > 0) {
-                  var deepArg;
-                  arg.split('.').forEach(function (path) {
-                    if (!deepArg) { deepArg = context; }
-                    deepArg = deepArg[path];
-                  });
-                  arg = deepArg;
-                } else {
-                  arg = context[arg];
-                }
-                customArgs.push(arg);
-              });
-            }
-            if (methodName.indexOf('.') >= 0) {
-              methodName.split('.').forEach(function (path, pathIndex) {
-                if (!method) { method = context; }
-                if (method[path]) { method = method[path]; }
-                else {
-                  throw new Error(("Component doesn't have method \"" + (methodName.split('.').slice(0, pathIndex + 1).join('.')) + "\""));
-                }
-              });
-            } else {
-              if (!context[methodName]) {
-                throw new Error(("Component doesn't have method \"" + methodName + "\""));
-              }
-              method = context[methodName];
-            }
-            method.apply(void 0, customArgs);
-          },
+        attrs.push({
+          name: attr.name,
+          value: attr.value,
         });
       }
     }
+    attrs.forEach(function (attr) {
+      element.removeAttribute(attr.name);
+      var event = attr.name.replace('@', '');
+      var name = event;
+      var stop = false;
+      var prevent = false;
+      var once = false;
+      if (event.indexOf('.') >= 0) {
+        event.split('.').forEach(function (eventNamePart, eventNameIndex) {
+          if (eventNameIndex === 0) { name = eventNamePart; }
+          else {
+            if (eventNamePart === 'stop') { stop = true; }
+            if (eventNamePart === 'prevent') { prevent = true; }
+            if (eventNamePart === 'once') { once = true; }
+          }
+        });
+      }
+      var value = attr.value.toString();
+      events.push({
+        el: element,
+        name: name,
+        once: once,
+        handler: function handler() {
+          var args = [], len = arguments.length;
+          while ( len-- ) args[ len ] = arguments[ len ];
+
+          var e = args[0];
+          if (stop) { e.stopPropagation(); }
+          if (prevent) { e.preventDefault(); }
+          var methodName;
+          var method;
+          var customArgs = [];
+          if (value.indexOf('(') < 0) {
+            customArgs = args;
+            methodName = value;
+          } else {
+            methodName = value.split('(')[0];
+            value.split('(')[1].split(')')[0].split(',').forEach(function (argument) {
+              var arg = argument.trim();
+              // eslint-disable-next-line
+              if (!isNaN(arg)) { arg = parseFloat(arg); }
+              else if (arg === 'true') { arg = true; }
+              else if (arg === 'false') { arg = false; }
+              else if (arg === 'null') { arg = null; }
+              else if (arg === 'undefined') { arg = undefined; }
+              else if (arg[0] === '"') { arg = arg.replace(/"/g, ''); }
+              else if (arg[0] === '\'') { arg = arg.replace(/'/g, ''); }
+              else if (arg.indexOf('.') > 0) {
+                var deepArg;
+                arg.split('.').forEach(function (path) {
+                  if (!deepArg) { deepArg = context; }
+                  deepArg = deepArg[path];
+                });
+                arg = deepArg;
+              } else {
+                arg = context[arg];
+              }
+              customArgs.push(arg);
+            });
+          }
+          if (methodName.indexOf('.') >= 0) {
+            methodName.split('.').forEach(function (path, pathIndex) {
+              if (!method) { method = context; }
+              if (method[path]) { method = method[path]; }
+              else {
+                throw new Error(("Component doesn't have method \"" + (methodName.split('.').slice(0, pathIndex + 1).join('.')) + "\""));
+              }
+            });
+          } else {
+            if (!context[methodName]) {
+              throw new Error(("Component doesn't have method \"" + methodName + "\""));
+            }
+            method = context[methodName];
+          }
+          method.apply(void 0, customArgs);
+        },
+      });
+    });
   });
 
   // Set styles scope ID
@@ -5195,7 +5202,7 @@ function SwipeBack(r) {
       }
 
       currentPage = target.closest('.page');
-      if (currentPage.hasClass('no-swipeback')) { cancel = true; }
+      if (currentPage.hasClass('no-swipeback') || target.closest('.no-swipeback').length > 0) { cancel = true; }
       previousPage = $el.find('.page-previous:not(.stacked)');
 
       var notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
@@ -6168,11 +6175,14 @@ function tabLoad(tabRoute, loadOptions) {
   var component = tabRoute.component;
   var componentUrl = tabRoute.componentUrl;
 
-  function onTabLoaded() {
+  function onTabLoaded(contentEl) {
     // Remove theme elements
     router.removeThemeElements($newTabEl);
 
-    $newTabEl.trigger('tab:init tab:mounted', tabRoute);
+    var tabEventTarget = $newTabEl;
+    if (typeof contentEl !== 'string') { tabEventTarget = $$1$1(contentEl); }
+
+    tabEventTarget.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
     if ($oldTabEl && router.params.unloadTabContent) {
@@ -6216,7 +6226,7 @@ function tabLoad(tabRoute, loadOptions) {
     if (!router.params.unloadTabContent) {
       $newTabEl[0].f7RouterTabLoaded = true;
     }
-    onTabLoaded();
+    onTabLoaded(contentEl);
   }
   function reject() {
     router.allowPageChange = true;
@@ -6313,7 +6323,7 @@ function modalLoad(modalType, route, loadOptions) {
 
     modal.on('modalClosed', function () {
       modal.$el.trigger(((modalType.toLowerCase()) + ":beforeremove"), route, modal);
-      modal.emit((modalType + "BeforeRemove"), modal.el, route, modal);
+      modal.emit(("modalBeforeRemove " + modalType + "BeforeRemove"), modal.el, route, modal);
       var modalComponent = modal.el.f7Component;
       if (modalComponent) {
         modalComponent.destroy();
@@ -6357,7 +6367,7 @@ function modalLoad(modalType, route, loadOptions) {
 
     // Emit events
     modal.$el.trigger(((modalType.toLowerCase()) + ":init " + (modalType.toLowerCase()) + ":mounted"), route, modal);
-    router.emit((modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
+    router.emit(("modalInit " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
     // Open
     modal.open();
   }
@@ -7591,8 +7601,8 @@ var Router$1 = (function (Framework7Class$$1) {
       router.xhr = router.app.request({
         url: url,
         method: 'GET',
-        beforeSend: function beforeSend() {
-          router.emit('routerAjaxStart', router.xhr);
+        beforeSend: function beforeSend(xhr) {
+          router.emit('routerAjaxStart', xhr);
         },
         complete: function complete(xhr, status) {
           router.emit('routerAjaxComplete', xhr);
@@ -8543,6 +8553,7 @@ var Statusbar = {
   init: function init() {
     var app = this;
     var params = app.params.statusbar;
+    if (!params.enabled) { return; }
 
     if (params.overlay === 'auto') {
       if (Device.needsStatusbarOverlay()) {
@@ -8599,6 +8610,7 @@ var Statusbar$1 = {
   name: 'statusbar',
   params: {
     statusbar: {
+      enabled: true,
       overlay: 'auto',
       scrollTopOnClick: true,
       iosOverlaysWebView: true,
@@ -8631,6 +8643,7 @@ var Statusbar$1 = {
   clicks: {
     '.statusbar': function onStatusbarClick() {
       var app = this;
+      if (!app.params.statusbar.enabled) { return; }
       if (!app.params.statusbar.scrollTopOnClick) { return; }
       Statusbar.onClick.call(app);
     },
@@ -11276,7 +11289,7 @@ var Preloader$1 = {
     photoBrowserOpen: function photoBrowserOpen(pb) {
       var app = this;
       if (app.theme !== 'md') { return; }
-      pb.$containerEl.find('.preloader').each(function (index, preloaderEl) {
+      pb.$el.find('.preloader').each(function (index, preloaderEl) {
         app.preloader.init(preloaderEl);
       });
     },
@@ -12363,6 +12376,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
       vl.renderItem = vl.params.renderItem;
     }
     vl.$pageContentEl = vl.$el.parents('.page-content');
+    vl.pageContentEl = vl.$pageContentEl[0];
 
     // Bad scroll
     if (typeof vl.params.updatableScroll !== 'undefined') {
@@ -12557,12 +12571,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
         itemEl.style.top = topPosition + "px";
 
         // Before item insert
-        vl.emit({
-          events: 'itemBeforeInsert',
-          data: [itemEl, items[i]],
-          parents: [],
-        });
-        vl.emit('vlItemBeforeInsert', vl, itemEl, items[i]);
+        vl.emit('local::itemBeforeInsert vlItemBeforeInsert', vl, itemEl, items[i]);
 
         // Append item to fragment
         vl.fragment.appendChild(itemEl);
@@ -12584,20 +12593,10 @@ var VirtualList$1 = (function (Framework7Class$$1) {
         vl.reachEnd = true;
       }
     } else {
-      vl.emit({
-        events: 'beforeClear',
-        data: [vl.fragment],
-        parents: [],
-      });
-      vl.emit('vlBeforeClear', vl, vl.fragment);
+      vl.emit('local::beforeClear vlBeforeClear', vl, vl.fragment);
       vl.ul.innerHTML = '';
 
-      vl.emit({
-        events: 'itemsBeforeInsert',
-        data: [vl.fragment],
-        parents: [],
-      });
-      vl.emit('vlItemsBeforeInsert', vl, vl.fragment);
+      vl.emit('local::itemsBeforeInsert vlItemsBeforeInsert', vl, vl.fragment);
 
       if (items && items.length === 0) {
         vl.reachEnd = true;
@@ -12606,12 +12605,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
         vl.ul.appendChild(vl.fragment);
       }
 
-      vl.emit({
-        events: 'itemsAfterInsert',
-        data: [vl.fragment],
-        parents: [],
-      });
-      vl.emit('vlItemsAfterInsert', vl, vl.fragment);
+      vl.emit('local::itemsAfterInsert vlItemsAfterInsert', vl, vl.fragment);
     }
 
     if (typeof forceScrollTop !== 'undefined' && force) {
@@ -13129,7 +13123,7 @@ function swipePanel$1(panel) {
       if (otherPanel.opened) { return; }
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') { return; }
-    if ($$1$1(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months').length > 0) { return; }
+    if ($$1$1(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel').length > 0) { return; }
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     if (params.swipeOnlyClose && !panel.opened) {
@@ -13754,7 +13748,6 @@ var Panel = {
       create: function create(params) {
         return new Panel$1(app, params);
       },
-
       open: function open(side, animate) {
         var panelSide = side;
         if (!panelSide) {
@@ -13843,8 +13836,13 @@ var Panel = {
     },
     '.panel-backdrop': function close() {
       var app = this;
-      $$1$1('.panel-active').trigger('panel:backdrop-click');
-      app.emit('panelBackdropClick', $$1$1('.panel-active')[0]);
+      var $panelEl = $$1$1('.panel-active');
+      var instance = $panelEl[0] && $panelEl[0].f7Panel;
+      $panelEl.trigger('panel:backdrop-click');
+      if (instance) {
+        instance.emit('backdropClick', instance);
+      }
+      app.emit('panelBackdropClick', instance || $panelEl[0]);
       if (app.params.panel.closeByBackdropClick) { app.panel.close(); }
     },
   },
@@ -14209,10 +14207,10 @@ var Input = {
     if (currentHeight !== scrollHeight) {
       if (scrollHeight > initialHeight) {
         $textareaEl.css('height', (scrollHeight + "px"));
-        $textareaEl.trigger('textarea:resize', initialHeight, currentHeight, scrollHeight);
+        $textareaEl.trigger('textarea:resize', { initialHeight: initialHeight, currentHeight: currentHeight, scrollHeight: scrollHeight });
       } else if (scrollHeight < currentHeight) {
         $textareaEl.css('height', '');
-        $textareaEl.trigger('textarea:resize', initialHeight, currentHeight, initialHeight);
+        $textareaEl.trigger('textarea:resize', { initialHeight: initialHeight, currentHeight: currentHeight, scrollHeight: scrollHeight });
       }
     }
   },
@@ -15733,6 +15731,10 @@ var SmartSelect = {
   },
 };
 
+var Grid = {
+  name: 'grid',
+};
+
 var Calendar$1 = (function (Framework7Class$$1) {
   function Calendar(app, params) {
     if ( params === void 0 ) params = {};
@@ -17138,6 +17140,7 @@ var pickerColumn = function (colEl, updateItems) {
   if (col.divider) { return; }
 
   col.$el = $colEl;
+  col.el = $colEl[0];
   col.$itemsEl = col.$el.find('.picker-items');
   col.items = col.$itemsEl.find('.picker-item');
 
@@ -17965,11 +17968,7 @@ var Picker = {
       view: null,
       url: 'select/',
       // Render functions
-      renderColumn: null,
       renderToolbar: null,
-      renderInline: null,
-      renderPopover: null,
-      renderSheet: null,
       render: null,
     },
   },
@@ -18072,6 +18071,7 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
 
     ptr.$el = $el;
     ptr.el = $el[0];
+    ptr.app = app;
 
     // Extend defaults with modules params
     ptr.useModulesParams({});
@@ -18398,11 +18398,11 @@ var Lazy = {
   destroy: function destroy(pageEl) {
     var $pageEl = $$1$1(pageEl).closest('.page');
     if (!$pageEl.length) { return; }
-    if ($pageEl[0].f7DestroyLazy) {
-      $pageEl[0].f7DestroyLazy();
+    if ($pageEl[0].f7LazyDestroy) {
+      $pageEl[0].f7LazyDestroy();
     }
   },
-  init: function init(pageEl) {
+  create: function create(pageEl) {
     var app = this;
     var $pageEl = $$1$1(pageEl).closest('.page').eq(0);
 
@@ -18446,12 +18446,15 @@ var Lazy = {
     }
 
     function attachEvents() {
+      $pageEl[0].f7LazyAttached = true;
       $pageEl.on('lazy', lazyHandler);
       $pageEl.on('scroll', lazyHandler, true);
       $pageEl.find('.tab').on('tab:mounted tab:show', lazyHandler);
       app.on('resize', lazyHandler);
     }
     function detachEvents() {
+      $pageEl[0].f7LazyAttached = false;
+      delete $pageEl[0].f7LazyAttached;
       $pageEl.off('lazy', lazyHandler);
       $pageEl.off('scroll', lazyHandler, true);
       $pageEl.find('.tab').off('tab:mounted tab:show', lazyHandler);
@@ -18459,10 +18462,14 @@ var Lazy = {
     }
 
     // Store detach function
-    $pageEl[0].f7DestroyLazy = detachEvents;
+    if (!$pageEl[0].f7LazyDestroy) {
+      $pageEl[0].f7LazyDestroy = detachEvents;
+    }
 
     // Attach events
-    attachEvents();
+    if (!$pageEl[0].f7LazyAttached) {
+      attachEvents();
+    }
 
     // Run loader on page load/init
     lazyHandler();
@@ -18553,7 +18560,7 @@ var Lazy$1 = {
     var app = this;
     Utils.extend(app, {
       lazy: {
-        init: Lazy.init.bind(app),
+        create: Lazy.create.bind(app),
         destroy: Lazy.destroy.bind(app),
         loadImage: Lazy.loadImage.bind(app),
         load: Lazy.load.bind(app),
@@ -18565,13 +18572,13 @@ var Lazy$1 = {
     pageInit: function pageInit(page) {
       var app = this;
       if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
-        app.lazy.init(page.$el);
+        app.lazy.create(page.$el);
       }
     },
     pageAfterIn: function pageAfterIn(page) {
       var app = this;
       if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
-        app.lazy.init(page.$el);
+        app.lazy.create(page.$el);
       }
     },
     pageBeforeRemove: function pageBeforeRemove(page) {
@@ -18584,7 +18591,7 @@ var Lazy$1 = {
       var app = this;
       var $tabEl = $$1$1(tabEl);
       if ($tabEl.find('.lazy').length > 0 || $tabEl.hasClass('lazy')) {
-        app.lazy.init($tabEl);
+        app.lazy.create($tabEl);
       }
     },
     tabBeforeRemove: function tabBeforeRemove(tabEl) {
@@ -19179,7 +19186,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       if (
         (
           (sb.$searchContainer && sb.$searchContainer.length > 0) &&
-          (sb.params.searchIn || sb.isVirtualList)
+          (sb.params.searchIn || sb.isVirtualList || sb.params.searchIn === sb.params.searchItem)
         ) ||
         sb.params.customSearch
       ) {
@@ -19188,7 +19195,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     }
     function onInputClear(e, previousValue) {
       sb.$el.trigger('searchbar:clear', previousValue);
-      sb.emit('local::clear searchbarClear', previousValue);
+      sb.emit('local::clear searchbarClear', sb, previousValue);
     }
     function disableOnClick(e) {
       sb.disable(e);
@@ -19261,7 +19268,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     var previousQuery = sb.value;
     sb.$inputEl.val('').trigger('change').focus();
     sb.$el.trigger('searchbar:clear', previousQuery);
-    sb.emit('local::clear searchbarClear', previousQuery);
+    sb.emit('local::clear searchbarClear', sb, previousQuery);
     return sb;
   };
   Searchbar.prototype.setDisableButtonMargin = function setDisableButtonMargin () {
@@ -19293,7 +19300,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       }
       if (sb.$hideOnEnableEl) { sb.$hideOnEnableEl.hide(); }
       sb.$el.trigger('searchbar:enable');
-      sb.emit('local::enable searchbarEnable');
+      sb.emit('local::enable searchbarEnable', sb);
     }
     var needsFocus = false;
     if (setFocus === true) {
@@ -19347,7 +19354,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     if (sb.$hideOnEnableEl) { sb.$hideOnEnableEl.show(); }
 
     sb.$el.trigger('searchbar:disable');
-    sb.emit('local::disable searchbarDisable');
+    sb.emit('local::disable searchbarDisable', sb);
     return sb;
   };
   Searchbar.prototype.toggle = function toggle () {
@@ -19408,7 +19415,7 @@ var Searchbar$1 = (function (FrameworkClass) {
 
     if (sb.params.customSearch) {
       $el.trigger('searchbar:search', query, sb.previousQuery);
-      sb.emit('local::search searchbarSearch', query, sb.previousQuery);
+      sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
       return sb;
     }
 
@@ -19441,7 +19448,11 @@ var Searchbar$1 = (function (FrameworkClass) {
       $searchContainer.find(sb.params.searchItem).removeClass('hidden-by-searchbar').each(function (itemIndex, itemEl) {
         var $itemEl = $$1$1(itemEl);
         var compareWithText = [];
-        $itemEl.find(sb.params.searchIn).each(function (searchInIndex, searchInEl) {
+        var $searchIn = sb.params.searchIn ? $itemEl.find(sb.params.searchIn) : $itemEl;
+        if (sb.params.searchIn === sb.params.searchItem) {
+          $searchIn = $itemEl;
+        }
+        $searchIn.each(function (searchInIndex, searchInEl) {
           var itemText = $$1$1(searchInEl).text().trim().toLowerCase();
           if (sb.params.removeDiacritics) { itemText = Utils.removeDiacritics(itemText); }
           compareWithText.push(itemText);
@@ -19501,7 +19512,7 @@ var Searchbar$1 = (function (FrameworkClass) {
     }
 
     $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
-    sb.emit('local::search searchbarSearch', query, sb.previousQuery, foundItems);
+    sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery, foundItems);
 
     return sb;
   };
@@ -19719,7 +19730,7 @@ var Messages$1 = (function (Framework7Class$$1) {
       type: 'sent',
     }, messageToRender);
     if (m.params.renderMessage) {
-      return m.params.renderMessage(message);
+      return m.params.renderMessage.call(m, message);
     }
     if (message.isTitle) {
       return ("<div class=\"messages-title\">" + (message.text) + "</div>");
@@ -19868,6 +19879,9 @@ var Messages$1 = (function (Framework7Class$$1) {
     if (typeof messageToRemove === 'number') {
       index = messageToRemove;
       $el = m.$el.find('.message, .messages-title').eq(index);
+    } else if (m.messages && m.messages.indexOf(messageToRemove) >= 0) {
+      index = m.messages.indexOf(messageToRemove);
+      $el = m.$el.children().eq(index);
     } else {
       $el = $$1$1(messageToRemove);
       index = $el.index();
@@ -20215,17 +20229,25 @@ var Messagebar$1 = (function (Framework7Class$$1) {
       var index = $$1$1(this).index();
       if ($$1$1(e.target).closest('.messagebar-attachment-delete').length) {
         $$1$1(this).trigger('messagebar:attachmentdelete', index);
-        messagebar.emit('local::attachmentDelete messagebarAttachmentDelete', this, index);
+        messagebar.emit('local::attachmentDelete messagebarAttachmentDelete', messagebar, this, index);
       } else {
         $$1$1(this).trigger('messagebar:attachmentclick', index);
-        messagebar.emit('local::attachmentClick messagebarAttachmentClick', this, index);
+        messagebar.emit('local::attachmentClick messagebarAttachmentClick', messagebar, this, index);
       }
     }
     function onTextareaChange() {
       messagebar.checkEmptyState();
+      messagebar.$el.trigger('messagebar:change');
+      messagebar.emit('local::change messagebarChange', messagebar);
     }
     function onTextareaFocus() {
       messagebar.sheetHide();
+      messagebar.$el.trigger('messagebar:focus');
+      messagebar.emit('local::focus messagebarFocus', messagebar);
+    }
+    function onTextareaBlur() {
+      messagebar.$el.trigger('messagebar:blur');
+      messagebar.emit('local::blur messagebarBlur', messagebar);
     }
 
     messagebar.attachEvents = function attachEvents() {
@@ -20234,6 +20256,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
       $el.on('click', '.messagebar-attachment', onAttachmentClick);
       $textareaEl.on('change input', onTextareaChange);
       $textareaEl.on('focus', onTextareaFocus);
+      $textareaEl.on('blur', onTextareaBlur);
       app.on('resize', onAppResize);
     };
     messagebar.detachEvents = function detachEvents() {
@@ -20241,7 +20264,8 @@ var Messagebar$1 = (function (Framework7Class$$1) {
       $el.off('submit', onSubmit);
       $el.off('click', '.messagebar-attachment', onAttachmentClick);
       $textareaEl.off('change input', onTextareaChange);
-      $textareaEl.on('focus', onTextareaFocus);
+      $textareaEl.off('focus', onTextareaFocus);
+      $textareaEl.off('blur', onTextareaBlur);
       app.off('resize', onAppResize);
     };
 
@@ -20333,7 +20357,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
           $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
         }
         $el.trigger('messagebar:resizepage');
-        messagebar.emit('local::resizePage messagebarResizePage');
+        messagebar.emit('local::resizePage messagebarResizePage', messagebar);
       }
     }
   };
@@ -20396,7 +20420,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
   Messagebar.prototype.renderAttachment = function renderAttachment (attachment) {
     var messagebar = this;
     if (messagebar.params.renderAttachment) {
-      return messagebar.params.renderAttachment(attachment);
+      return messagebar.params.renderAttachment.call(messagebar, attachment);
     }
     return ("\n      <div class=\"messagebar-attachment\">\n        <img src=\"" + attachment + "\">\n        <span class=\"messagebar-attachment-delete\"></span>\n      </div>\n    ");
   };
@@ -20404,7 +20428,7 @@ var Messagebar$1 = (function (Framework7Class$$1) {
     var messagebar = this;
     var html;
     if (messagebar.params.renderAttachments) {
-      html = messagebar.params.renderAttachments(messagebar.attachments);
+      html = messagebar.params.renderAttachments.call(messagebar, messagebar.attachments);
     } else {
       html = "" + (messagebar.attachments.map(function (attachment) { return messagebar.renderAttachment(attachment); }).join(''));
     }
@@ -20518,9 +20542,6 @@ var Messagebar = {
         app.messagebar.create(Utils.extend({ el: messagebarEl }, $$1$1(messagebarEl).dataset()));
       });
     },
-  },
-  clicks: {
-
   },
 };
 
@@ -26112,10 +26133,10 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       ? swiper.$wrapperEl.find((".swiper-slide[data-swiper-slide-index=\"" + (swiper.previousIndex) + "\"]"))
       : swiper.slides.eq(swiper.previousIndex);
 
-    var $currentEl = pb.$containerEl.find('.photo-browser-current');
-    var $totalEl = pb.$containerEl.find('.photo-browser-total');
+    var $currentEl = pb.$el.find('.photo-browser-current');
+    var $totalEl = pb.$el.find('.photo-browser-total');
     if (pb.params.type === 'page' && pb.params.navbar && $currentEl.length === 0 && pb.app.theme === 'ios') {
-      var navbarEl = pb.app.navbar.getElByPage(pb.$containerEl);
+      var navbarEl = pb.app.navbar.getElByPage(pb.$el);
       if (navbarEl) {
         $currentEl = $$1$1(navbarEl).find('.photo-browser-current');
         $totalEl = $$1$1(navbarEl).find('.photo-browser-total');
@@ -26180,9 +26201,9 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     var timeDiff = (new Date()).getTime() - swipeToClose.timeStart;
     if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
       Utils.nextTick(function () {
-        if (pb.$containerEl) {
-          if (swipeToClose.diff < 0) { pb.$containerEl.addClass('swipe-close-to-bottom'); }
-          else { pb.$containerEl.addClass('swipe-close-to-top'); }
+        if (pb.$el) {
+          if (swipeToClose.diff < 0) { pb.$el.addClass('swipe-close-to-bottom'); }
+          else { pb.$el.addClass('swipe-close-to-top'); }
         }
         pb.emit('local::swipeToClose', pb);
         pb.close();
@@ -26288,22 +26309,23 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
   };
 
   // Callbacks
-  PhotoBrowser.prototype.onOpen = function onOpen (type, containerEl) {
+  PhotoBrowser.prototype.onOpen = function onOpen (type, el) {
     var pb = this;
     var app = pb.app;
-    var $containerEl = $$1$1(containerEl);
+    var $el = $$1$1(el);
 
-    $containerEl[0].f7PhotoBrowser = pb;
+    $el[0].f7PhotoBrowser = pb;
 
-    pb.$containerEl = $containerEl;
+    pb.$el = $el;
+    pb.el = $el[0];
     pb.openedIn = type;
     pb.opened = true;
 
-    pb.$swiperContainerEl = pb.$containerEl.find('.photo-browser-swiper-container');
-    pb.$swiperWrapperEl = pb.$containerEl.find('.photo-browser-swiper-wrapper');
-    pb.slides = pb.$containerEl.find('.photo-browser-slide');
-    pb.$captionsContainerEl = pb.$containerEl.find('.photo-browser-captions');
-    pb.captions = pb.$containerEl.find('.photo-browser-caption');
+    pb.$swiperContainerEl = pb.$el.find('.photo-browser-swiper-container');
+    pb.$swiperWrapperEl = pb.$el.find('.photo-browser-swiper-wrapper');
+    pb.slides = pb.$el.find('.photo-browser-slide');
+    pb.$captionsContainerEl = pb.$el.find('.photo-browser-captions');
+    pb.captions = pb.$el.find('.photo-browser-caption');
 
     // Init Swiper
     var swiperParams = Utils.extend({}, pb.params.swiper, {
@@ -26406,12 +26428,17 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     if (pb.activeIndex === 0) {
       pb.onSlideChange(pb.swiper);
     }
-
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:open');
+    }
     pb.emit('local::open photoBrowserOpen', pb);
   };
   PhotoBrowser.prototype.onOpened = function onOpened () {
     var pb = this;
 
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:opened');
+    }
     pb.emit('local::opened photoBrowserOpened', pb);
   };
   PhotoBrowser.prototype.onClose = function onClose () {
@@ -26424,16 +26451,22 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
       pb.swiper = null;
       delete pb.swiper;
     }
-
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:close');
+    }
     pb.emit('local::close photoBrowserClose', pb);
   };
   PhotoBrowser.prototype.onClosed = function onClosed () {
     var pb = this;
     if (pb.destroyed) { return; }
     pb.opened = false;
-    pb.$containerEl = null;
-    delete pb.$containerEl;
-
+    pb.$el = null;
+    pb.el = null;
+    delete pb.$el;
+    delete pb.el;
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:closed');
+    }
     pb.emit('local::closed photoBrowserClosed', pb);
   };
 
@@ -26553,7 +26586,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     if (pb.params.type === 'page') {
       pb.view.$el.addClass('with-photo-browser-page-exposed');
     }
-    if (pb.$containerEl) { pb.$containerEl.addClass('photo-browser-exposed'); }
+    if (pb.$el) { pb.$el.addClass('photo-browser-exposed'); }
     if (pb.params.expositionHideCaptions) { pb.$captionsContainerEl.addClass('photo-browser-captions-exposed'); }
     pb.exposed = true;
     return pb;
@@ -26563,7 +26596,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     if (pb.params.type === 'page') {
       pb.view.$el.removeClass('with-photo-browser-page-exposed');
     }
-    if (pb.$containerEl) { pb.$containerEl.removeClass('photo-browser-exposed'); }
+    if (pb.$el) { pb.$el.removeClass('photo-browser-exposed'); }
     if (pb.params.expositionHideCaptions) { pb.$captionsContainerEl.removeClass('photo-browser-captions-exposed'); }
     pb.exposed = false;
     return pb;
@@ -26573,7 +26606,7 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
     if (pb.params.type === 'page') {
       pb.view.$el.toggleClass('with-photo-browser-page-exposed');
     }
-    if (pb.$containerEl) { pb.$containerEl.toggleClass('photo-browser-exposed'); }
+    if (pb.$el) { pb.$el.toggleClass('photo-browser-exposed'); }
     if (pb.params.expositionHideCaptions) { pb.$captionsContainerEl.toggleClass('photo-browser-captions-exposed'); }
     pb.exposed = !pb.exposed;
     return pb;
@@ -26621,9 +26654,9 @@ var PhotoBrowser$1 = (function (Framework7Class$$1) {
   PhotoBrowser.prototype.destroy = function destroy () {
     var pb = this;
     pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
-    if (pb.$containerEl) {
-      pb.$containerEl.trigger('photobrowser:beforedestroy');
-      delete pb.$containerEl[0].f7PhotoBrowser;
+    if (pb.$el) {
+      pb.$el.trigger('photobrowser:beforedestroy');
+      delete pb.$el[0].f7PhotoBrowser;
     }
     Utils.deleteProps(pb);
     pb = null;
@@ -26956,7 +26989,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
 
     var defaults = Utils.extend({
       on: {},
-    }, app.modules.autocomplete.params.autocomplete);
+    }, app.params.autocomplete);
 
 
     // Extend defaults with modules params
@@ -27214,9 +27247,9 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     };
 
     ac.attachPageEvents = function attachPageEvents() {
-      ac.$containerEl.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
+      ac.$el.on('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
       if (ac.params.closeOnSelect && !ac.params.multiple) {
-        ac.$containerEl.once('click', '.list label', function () {
+        ac.$el.once('click', '.list label', function () {
           Utils.nextTick(function () {
             ac.close();
           });
@@ -27224,7 +27257,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
       }
     };
     ac.detachPageEvents = function detachPageEvents() {
-      ac.$containerEl.off('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
+      ac.$el.off('change', 'input[type="radio"], input[type="checkbox"]', onPageInputChange);
     };
 
     // Install Modules
@@ -27278,13 +27311,13 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
   };
   Autocomplete.prototype.focus = function focus () {
     var ac = this;
-    ac.$containerEl.find('input[type=search]').focus();
+    ac.$el.find('input[type=search]').focus();
   };
   Autocomplete.prototype.source = function source (query) {
     var ac = this;
     if (!ac.params.source) { return; }
 
-    var $containerEl = ac.$containerEl;
+    var $el = ac.$el;
 
     ac.params.source.call(ac, query, function (items) {
       var itemsHTML = '';
@@ -27306,18 +27339,18 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
           selected: selected,
         }, i);
       }
-      $containerEl.find('.autocomplete-found ul').html(itemsHTML);
+      $el.find('.autocomplete-found ul').html(itemsHTML);
       if (items.length === 0) {
         if (query.length !== 0) {
-          $containerEl.find('.autocomplete-not-found').show();
-          $containerEl.find('.autocomplete-found, .autocomplete-values').hide();
+          $el.find('.autocomplete-not-found').show();
+          $el.find('.autocomplete-found, .autocomplete-values').hide();
         } else {
-          $containerEl.find('.autocomplete-values').show();
-          $containerEl.find('.autocomplete-found, .autocomplete-not-found').hide();
+          $el.find('.autocomplete-values').show();
+          $el.find('.autocomplete-found, .autocomplete-not-found').hide();
         }
       } else {
-        $containerEl.find('.autocomplete-found').show();
-        $containerEl.find('.autocomplete-not-found, .autocomplete-values').hide();
+        $el.find('.autocomplete-found').show();
+        $el.find('.autocomplete-not-found, .autocomplete-values').hide();
       }
     });
   };
@@ -27334,7 +27367,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
         selected: true,
       }, i);
     }
-    ac.$containerEl.find('.autocomplete-values ul').html(valuesHTML);
+    ac.$el.find('.autocomplete-values ul').html(valuesHTML);
   };
   Autocomplete.prototype.preloaderHide = function preloaderHide () {
     var ac = this;
@@ -27407,11 +27440,12 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     var popupHtml = ("\n      <div class=\"popup autocomplete-popup\">\n        <div class=\"view\">\n          " + (ac.renderPage()) + ";\n        </div>\n      </div>\n    ").trim();
     return popupHtml;
   };
-  Autocomplete.prototype.onOpen = function onOpen (type, containerEl) {
+  Autocomplete.prototype.onOpen = function onOpen (type, el) {
     var ac = this;
     var app = ac.app;
-    var $containerEl = $$1$1(containerEl);
-    ac.$containerEl = $containerEl;
+    var $el = $$1$1(el);
+    ac.$el = $el;
+    ac.el = $el[0];
     ac.openedIn = type;
     ac.opened = true;
 
@@ -27422,13 +27456,13 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
       ac.$inputEl.trigger('input');
     } else {
       // Init SB
-      var $searchbarEl = $containerEl.find('.searchbar');
+      var $searchbarEl = $el.find('.searchbar');
       if (ac.params.openIn === 'page' && app.theme === 'ios' && $searchbarEl.length === 0) {
-        $searchbarEl = $$1$1(app.navbar.getElByPage($containerEl)).find('.searchbar');
+        $searchbarEl = $$1$1(app.navbar.getElByPage($el)).find('.searchbar');
       }
       ac.searchbar = app.searchbar.create({
         el: $searchbarEl,
-        backdropEl: $containerEl.find('.searchbar-backdrop'),
+        backdropEl: $el.find('.searchbar-backdrop'),
         customSearch: true,
         on: {
           searchbarSearch: function searchbarSearch(query) {
@@ -27486,8 +27520,10 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     var ac = this;
     if (ac.destroyed) { return; }
     ac.opened = false;
-    ac.$containerEl = null;
-    delete ac.$containerEl;
+    ac.$el = null;
+    ac.el = null;
+    delete ac.$el;
+    delete ac.el;
 
     ac.emit('local::closed autocompleteClosed', ac);
   };
@@ -27570,8 +27606,8 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     }
     ac.positionDropDown();
     var $pageContentEl = ac.$inputEl.parents('.page-content');
-    if (ac.params.dropdownContainerEl) {
-      $$1$1(ac.params.dropdownContainerEl).append(ac.$dropdownEl);
+    if (ac.params.dropdownel) {
+      $$1$1(ac.params.dropdownel).append(ac.$dropdownEl);
     } else if ($pageContentEl.length === 0) {
       ac.$dropdownEl.insertAfter(ac.$inputEl);
     } else {
@@ -27657,6 +27693,7 @@ var Autocomplete = {
       openIn: 'page', // or 'popup' or 'dropdown'
       pageBackLinkText: 'Back',
       popupCloseLinkText: 'Close',
+      pageTitle: undefined,
       searchbarPlaceholder: 'Search...',
       searchbarDisableText: 'Cancel',
 
@@ -27677,13 +27714,12 @@ var Autocomplete = {
 
       // Routing
       routableModals: true,
-      url: 'select',
+      url: 'select/',
 
       // Custom render functions
       renderDropdown: undefined,
       renderPage: undefined,
       renderPopup: undefined,
-      renderItems: undefined,
       renderItem: undefined,
       renderSearchbar: undefined,
       renderNavbar: undefined,
@@ -27832,6 +27868,7 @@ var ViAd = (function (Framework7Class$$1) {
         vi.emit('local::stopped', reason);
         if (reason === 'complete') {
           vi.emit('local::complete');
+          vi.emit('local::completed');
         }
         if (reason === 'userexit') {
           vi.emit('local::userexit');
@@ -27961,6 +27998,10 @@ var Vi = {
   },
 };
 
+var Typography = {
+  name: 'typography',
+};
+
 // F7 Class
 // Core Modules
 // Core Components
@@ -28016,6 +28057,7 @@ Framework7$1.use([
   Toggle,
   Range,
   SmartSelect,
+  Grid,
   Calendar,
   Picker,
   InfiniteScroll$1,
@@ -28030,7 +28072,8 @@ Framework7$1.use([
   PhotoBrowser,
   Notification,
   Autocomplete,
-  Vi
+  Vi,
+  Typography
 ]);
 
 return Framework7$1;

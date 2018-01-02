@@ -1,13 +1,13 @@
 /**
- * Framework7 2.0.2
+ * Framework7 2.0.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2017 Vladimir Kharlampidi
+ * Copyright 2014-2018 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 5, 2017
+ * Released on: January 2, 2018
  */
 html,
 body,
@@ -6873,6 +6873,15 @@ html.device-android-4 .accordion-item-content {
 .ios .timeline-item:last-child {
   padding-bottom: 2px;
 }
+.ios .timeline-item-content .card,
+.ios .timeline-item-content.card,
+.ios .timeline-item-content .list,
+.ios .timeline-item-content.list,
+.ios .timeline-item-content .block,
+.ios .timeline-item-content.block {
+  margin: 0;
+  width: 100%;
+}
 .ios .timeline-item-content .card + .card,
 .ios .timeline-item-content .list + .card,
 .ios .timeline-item-content .block + .card,
@@ -6883,15 +6892,6 @@ html.device-android-4 .accordion-item-content {
 .ios .timeline-item-content .list + .block,
 .ios .timeline-item-content .block + .block {
   margin: 15px 0 0;
-}
-.ios .timeline-item-content .card,
-.ios .timeline-item-content.card,
-.ios .timeline-item-content .list,
-.ios .timeline-item-content.list,
-.ios .timeline-item-content .block,
-.ios .timeline-item-content.block {
-  margin: 0 !important;
-  width: 100%;
 }
 .ios .timeline-item-inner {
   border-radius: 7px;
@@ -7382,6 +7382,7 @@ html.device-android-4 .accordion-item-content {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   width: 260px;
+  background-color: #fff;
 }
 .panel.not-animated {
   -webkit-transition-duration: 0ms !important;
@@ -7462,7 +7463,6 @@ html.with-panel-right-cover .panel-right {
 .ios .panel {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  background: #111;
 }
 .ios.with-panel-left-reveal .views,
 .ios.with-panel-right-reveal .views,
@@ -8542,6 +8542,9 @@ label.item-radio.disabled,
 }
 .toggle input[type="checkbox"] {
   display: none;
+}
+.toggle input[disabled] ~ .toggle-icon {
+  pointer-events: none;
 }
 .toggle-icon {
   z-index: 0;
@@ -10799,7 +10802,7 @@ label.item-radio.disabled,
   margin-top: 0;
 }
 /* === Images Lazy Loading === */
-.lazy-loaded.lazy-fadeIn {
+.lazy-loaded.lazy-fade-in {
   -webkit-animation: lazyFadeIn 600ms;
   animation: lazyFadeIn 600ms;
 }
@@ -12030,12 +12033,16 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 .hidden-by-searchbar,
 .list .hidden-by-searchbar,
-.list.li.hidden-by-searchbar {
+.list.li.hidden-by-searchbar,
+.list li.hidden-by-searchbar {
   display: none;
 }
 .ios .searchbar {
   height: 44px;
   background: #f7f7f8;
+}
+.ios .searchbar.no-hairline:after {
+  display: none !important;
 }
 .ios .searchbar input[type="search"],
 .ios .searchbar input[type="text"] {
@@ -14385,6 +14392,9 @@ iframe#viAd {
 .display-inline {
   display: inline !important;
 }
+.display-none {
+  display: none !important;
+}
 .flex-shrink-0 {
   -webkit-flex-shrink: 0 !important;
   -ms-flex-negative: 0 !important;
@@ -14587,6 +14597,9 @@ iframe#viAd {
 }
 .text-align-right {
   text-align: right !important;
+}
+.text-align-justify {
+  text-align: justify !important;
 }
 .float-left {
   float: left !important;

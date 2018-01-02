@@ -648,8 +648,8 @@ class Router extends Framework7Class {
       router.xhr = router.app.request({
         url,
         method: 'GET',
-        beforeSend() {
-          router.emit('routerAjaxStart', router.xhr);
+        beforeSend(xhr) {
+          router.emit('routerAjaxStart', xhr);
         },
         complete(xhr, status) {
           router.emit('routerAjaxComplete', xhr);

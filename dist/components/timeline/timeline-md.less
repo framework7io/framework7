@@ -17,14 +17,14 @@
     }
   }
   .timeline-item-content {
+    .card, &.card, .list, &.list, .block, &.block {
+      margin: 0;
+      width: 100%;
+    }
     .card, .list, .block {
       + .card, + .list, + .block {
         margin: 16px 0 0;
       }
-    }
-    .card, &.card, .list, &.list, .block, &.block {
-      margin: 0;
-      width: 100%;
     }
   }
   .timeline-item-inner {

@@ -1,5 +1,8 @@
 # Change Log
 
+# [v2.0.5](https://github.com/nolimits4web/framework7/compare/v2.0.2...v2.0.5) - January 2, 2017
+  * Lots of minor fixes
+
 # [v2.0.2](https://github.com/nolimits4web/framework7/compare/v2.0.1...v2.0.2) - December 5, 2017
   * Router
     * Fix to make Routable tabs work on home page
