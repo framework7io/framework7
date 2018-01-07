@@ -124,12 +124,12 @@ function swipePanel(panel) {
       const timeDiff = (new Date()).getTime() - touchStartTime;
       if (timeDiff < 300) {
         if (direction === 'to-left') {
-          if (side === 'right') app.openPanel(side);
-          if (side === 'left' && $el.hasClass('panel-active')) app.closePanel();
+          if (side === 'right') app.panel.open(side);
+          if (side === 'left' && $el.hasClass('panel-active')) app.panel.close();
         }
         if (direction === 'to-right') {
-          if (side === 'left') app.openPanel(side);
-          if (side === 'right' && $el.hasClass('panel-active')) app.closePanel();
+          if (side === 'left') app.panel.open(side);
+          if (side === 'right' && $el.hasClass('panel-active')) app.panel.close();
         }
       }
       isTouched = false;
