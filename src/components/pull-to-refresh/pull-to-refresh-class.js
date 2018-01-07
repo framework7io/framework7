@@ -152,7 +152,7 @@ class PullToRefresh extends Framework7Class {
 
         if (useTranslate) {
           e.preventDefault();
-          translate = (touchesDiff ** 0.85) + startTranslate;
+          translate = (touchesDiff * 0.85) + startTranslate;
           if (isMaterial) {
             $preloaderEl.transform(`translate3d(0,${translate}px,0)`)
               .find('.ptr-arrow').transform(`rotate(${(180 * (touchesDiff / 66)) + 100}deg)`);
@@ -160,7 +160,7 @@ class PullToRefresh extends Framework7Class {
             $el.transform(`translate3d(0,${translate}px,0)`);
           }
         }
-        if ((useTranslate && (touchesDiff ** 0.85) > triggerDistance) || (!useTranslate && touchesDiff >= triggerDistance * 2)) {
+        if ((useTranslate && (touchesDiff * 0.85) > triggerDistance) || (!useTranslate && touchesDiff >= triggerDistance * 2)) {
           refresh = true;
           $el.addClass('ptr-pull-up').removeClass('ptr-pull-down');
         } else {
