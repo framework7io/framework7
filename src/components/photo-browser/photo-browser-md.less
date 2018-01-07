@@ -22,11 +22,20 @@
   }
   .photo-browser-dark, .photo-browser-page-dark {
     .navbar, .toolbar {
-      background: rgba(30,30,30,0.8);
+      background: rgba(30,30,30,0.8) !important;
       color: #fff;
       a {
         color: #fff;
       }
     }
   }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
+      .photo-browser-page:not(.photo-browser-page-dark) {
+        .navbar, .toolbar {
+          background-color: rgba(red(@colorThemeValue), green(@colorThemeValue) , blue(@colorThemeValue),0.95);
+        }
+      }
+    }
+  });
 }
