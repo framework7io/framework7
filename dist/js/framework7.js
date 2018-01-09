@@ -3526,6 +3526,7 @@ function Request$1(requestOptions) {
       }
     } else {
       postData = options.data;
+      xhr.setRequestHeader('Content-Type', options.contentType);
     }
   }
 
@@ -3629,15 +3630,24 @@ function RequestShortcut(method) {
       else { error = undefined; }
     }
   });
-  dataType = dataType || (method === 'json' ? 'json' : undefined);
-  return Request$1({
+  dataType = dataType || (method === 'json' || method === 'postJSON' ? 'json' : undefined);
+  var requestOptions = {
     url: url,
-    method: method === 'post' ? 'POST' : 'GET',
+    method: method === 'post' || method === 'postJSON' ? 'POST' : 'GET',
     data: data,
     success: success,
     error: error,
     dataType: dataType,
-  });
+  };
+  if (method === 'postJSON') {
+    Utils.extend(requestOptions, {
+      contentType: 'application/json',
+      processData: false,
+      crossDomain: true,
+      data: typeof data === 'string' ? data : JSON.stringify(data),
+    });
+  }
+  return Request$1(requestOptions);
 }
 Request$1.get = function get() {
   var args = [], len = arguments.length;
@@ -3656,6 +3666,13 @@ Request$1.json = function json() {
   while ( len-- ) args[ len ] = arguments[ len ];
 
   return RequestShortcut.apply(void 0, [ 'json' ].concat( args ));
+};
+Request$1.getJSON = Request$1.json;
+Request$1.postJSON = function postJSON() {
+  var args = [], len = arguments.length;
+  while ( len-- ) args[ len ] = arguments[ len ];
+
+  return RequestShortcut.apply(void 0, [ 'postJSON' ].concat( args ));
 };
 Request$1.setup = function setup(options) {
   if (options.type && !options.method) {

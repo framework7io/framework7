@@ -1247,6 +1247,7 @@ function Request$1(requestOptions) {
       }
     } else {
       postData = options.data;
+      xhr.setRequestHeader('Content-Type', options.contentType);
     }
   }
 
@@ -1340,15 +1341,24 @@ function RequestShortcut(method, ...args) {
       else error = undefined;
     }
   });
-  dataType = dataType || (method === 'json' ? 'json' : undefined);
-  return Request$1({
+  dataType = dataType || (method === 'json' || method === 'postJSON' ? 'json' : undefined);
+  const requestOptions = {
     url,
-    method: method === 'post' ? 'POST' : 'GET',
+    method: method === 'post' || method === 'postJSON' ? 'POST' : 'GET',
     data,
     success,
     error,
     dataType,
-  });
+  };
+  if (method === 'postJSON') {
+    Utils.extend(requestOptions, {
+      contentType: 'application/json',
+      processData: false,
+      crossDomain: true,
+      data: typeof data === 'string' ? data : JSON.stringify(data),
+    });
+  }
+  return Request$1(requestOptions);
 }
 Request$1.get = function get(...args) {
   return RequestShortcut('get', ...args);
@@ -1358,6 +1368,10 @@ Request$1.post = function post(...args) {
 };
 Request$1.json = function json(...args) {
   return RequestShortcut('json', ...args);
+};
+Request$1.getJSON = Request$1.json;
+Request$1.postJSON = function postJSON(...args) {
+  return RequestShortcut('postJSON', ...args);
 };
 Request$1.setup = function setup(options) {
   if (options.type && !options.method) {

@@ -7,6 +7,8 @@
     * Fixed wrong knob position in RTL layout
   * Tabs
     * Fixed issue with routable tabs links in navbar not switching correctly active class
+  * Request
+    * New `request.postJSON(url, data, success, error, dataType)` method to send pure JSON data with POST
   * Router
     * Router ajax events now receives second argument with navigating options
     * New `router.refreshPage()` method to reload current page
