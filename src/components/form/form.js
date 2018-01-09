@@ -227,7 +227,7 @@ function initAjaxForm() {
     if (!url) return;
 
     let data;
-    if (method === 'POST') data = new FormData($formEl[0]);
+    if (method === 'POST') data = new window.FormData($formEl[0]);
     else data = Utils.serializeObject(app.form.convertToData($formEl[0]));
 
     const xhr = app.request({
