@@ -65,6 +65,9 @@ const Toolbar = {
       $toolbarEl = $pageEl.find('.toolbar');
     }
     if ($toolbarEl.length === 0) {
+      $toolbarEl = $pageEl.parents('.views').children('.tabbar, .tabbar-labels');
+    }
+    if ($toolbarEl.length === 0) {
       return;
     }
 
@@ -150,6 +153,9 @@ export default {
         $toolbarEl = page.$el.find('.toolbar');
       }
       if ($toolbarEl.length === 0) {
+        $toolbarEl = page.$el.parents('.views').children('.tabbar, .tabbar-labels');
+      }
+      if ($toolbarEl.length === 0) {
         return;
       }
       if (page.$el.hasClass('no-toolbar')) {
@@ -163,8 +169,19 @@ export default {
       page.$el.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
-      if (app.params.toolbar.hideOnPageScroll || page.$el.find('.hide-toolbar-on-scroll').length || page.$el.hasClass('hide-toolbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
-        if (page.$el.find('.keep-toolbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) return;
+      if (
+        app.params.toolbar.hideOnPageScroll ||
+        page.$el.find('.hide-toolbar-on-scroll').length ||
+        page.$el.hasClass('hide-toolbar-on-scroll') ||
+        page.$el.find('.hide-bars-on-scroll').length ||
+        page.$el.hasClass('hide-bars-on-scroll')
+      ) {
+        if (
+          page.$el.find('.keep-toolbar-on-scroll').length ||
+          page.$el.find('.keep-bars-on-scroll').length
+        ) {
+          return;
+        }
         app.toolbar.initHideToolbarOnScroll(page.el);
       }
     },

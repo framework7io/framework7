@@ -1,34 +1,53 @@
 # Change Log
 
-# [v2.0.5](https://github.com/nolimits4web/framework7/compare/v2.0.2...v2.0.5) - January 2, 2018
+# [v2.0.6](https://github.com/framework7io/framework7/compare/v2.0.5...v2.0.6) - January 9, 2018
+  * Photo Browser
+    * Fixed isse with wrong navbar color when color theme applied
+  * Range Slider
+    * Fixed wrong knob position in RTL layout
+  * Tabs
+    * Fixed issue with routable tabs links in navbar not switching correctly active class
+  * Router
+    * Router ajax events now receives second argument with navigating options
+    * New `router.refreshPage()` method to reload current page
+    * New `passRouteQueryToRequest` parameter (`true` by default) will pass route url query to request url query (for route `url`, `templateUrl` and `componentUrl` options).
+      If you have the following route `{ path: '/somepage/', url: 'http://myserver/page/' }` and you will click link with `/somepage/?foo=bar` url then it will load page from `http://myserver/page/?foo=bar` url.
+    * New `passRouteParamsToRequest` parameter (`false` by default) will pass current route parameters to request url query (for route `url`, `templateUrl` and `componentUrl` options).
+      If you have the following route `{ path: '/user/:userId/posts/:postId/', url: 'http://myserver/userpost/' }` and you will click link with `/user/11/posts/12/` url then it will load page from `http://myserver/userpost/?userId=11&postId=12` url.
+    * It is now also possible to use router parameters delimiters in route `url`, `templateUrl` and `componentUrl` options that will be replaced on request. E.g. `{ path: '/user/:userId/posts/:postId/', url: 'http://myserver/{{userId}}/{{postId}}' }`
+  * Toolbar / Tabbar
+    * Common app tabbar in multiple views app structure can be also hidden with "toolbar-hide-on-scroll"
+  * Minor fixes
+
+# [v2.0.5](https://github.com/framework7io/framework7/compare/v2.0.2...v2.0.5) - January 2, 2018
   * Lots of minor fixes
 
-# [v2.0.2](https://github.com/nolimits4web/framework7/compare/v2.0.1...v2.0.2) - December 5, 2017
+# [v2.0.2](https://github.com/framework7io/framework7/compare/v2.0.1...v2.0.2) - December 5, 2017
   * Router
     * Fix to make Routable tabs work on home page
   * Few CSS tweaks for iPhone X safe areas
 
-# [v2.0.1](https://github.com/nolimits4web/framework7/compare/v2.0.0...v2.0.1) - December 4, 2017
+# [v2.0.1](https://github.com/framework7io/framework7/compare/v2.0.0...v2.0.1) - December 4, 2017
   * Fixed iOS 11.2 iPhone X support with new CSS `env` safe areas
 
-# [v2.0.0](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.21...v2.0.0) - December 3, 2017 🎉
+# [v2.0.0](https://github.com/framework7io/framework7/compare/v2.0.0-beta.21...v2.0.0) - December 3, 2017 🎉
 
-# [v2.0.0-beta.21](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.20...v2.0.0-beta.21) - December 3, 2017
+# [v2.0.0-beta.21](https://github.com/framework7io/framework7/compare/v2.0.0-beta.20...v2.0.0-beta.21) - December 3, 2017
   * Router
     * Fixed issue with multiple "destroy" hooks called when using modals/tabs as router components
   * vi
     * Added `placementType` ad parameter
 
-# [v2.0.0-beta.20](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.19...v2.0.0-beta.20) - December 2, 2017
+# [v2.0.0-beta.20](https://github.com/framework7io/framework7/compare/v2.0.0-beta.19...v2.0.0-beta.20) - December 2, 2017
   * Range Slider
     * Recalculate range slider size when parent tab becomes visible
   * CSS
     * `!important` rule for hiding `ios-only` and `md-only` elements
 
-# [v2.0.0-beta.19](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.18...v2.0.0-beta.19) - December 1, 2017
+# [v2.0.0-beta.19](https://github.com/framework7io/framework7/compare/v2.0.0-beta.18...v2.0.0-beta.19) - December 1, 2017
   * Fixed issue with View router initialization when it was created after app init. Fixes also issue in cordova when app initialized later within `deviceready` event
 
-# [v2.0.0-beta.18](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.17...v2.0.0-beta.18) - November 30, 2017
+# [v2.0.0-beta.18](https://github.com/framework7io/framework7/compare/v2.0.0-beta.17...v2.0.0-beta.18) - November 30, 2017
   * New *vi* (video intelligence) component. *vi* is a mobile video SSP (Supply / Sell Side Platform). It provides self-serve tools for publishers to captivate and monetize audiences
   * Popover
     * Now may accept target elements coordinates with `targetX`, `targetY` parameters instead of `targetEl` target element itself
@@ -65,7 +84,7 @@
     * Custom CSS build is now also possible with LESS. `framework7.less` is now in the root of `/dist/` and contains only Framework7 core library styles. Additional components must be included from separate `/dist/components/` folder. For example `import "framework7/dist/components/searchbar/searchbar.less";`
   * Lost of minor fixes
 
-# [v2.0.0-beta.17](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.16...v2.0.0-beta.17) - November 14, 2017
+# [v2.0.0-beta.17](https://github.com/framework7io/framework7/compare/v2.0.0-beta.16...v2.0.0-beta.17) - November 14, 2017
   * Preloader
     * Fixed preloader backdrop styles to cover the screen behind it
   * Router
@@ -75,7 +94,7 @@
     * Added `scrollIntoViewCentered` paramter to scroll input into center of view
   * Minor fixes
 
-# [v2.0.0-beta.16](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.15...v2.0.0-beta.16) - November 8, 2017
+# [v2.0.0-beta.16](https://github.com/framework7io/framework7/compare/v2.0.0-beta.15...v2.0.0-beta.16) - November 8, 2017
   * Swiper updated to latest version
     * Fixed issue with not working `noSwiping` parameter
     * Parallax now considers `slidesPerGroup` parameter
@@ -114,13 +133,13 @@
     * Along with config file path now it is also possible to specify build output path like `npm run build:prod -- --config path/to/config.js --output path/to/build`
   * Minor fixes
 
-# [v2.0.0-beta.15](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.14...v2.0.0-beta.15) - October 27, 2017
+# [v2.0.0-beta.15](https://github.com/framework7io/framework7/compare/v2.0.0-beta.14...v2.0.0-beta.15) - October 27, 2017
   * Fixed issue with extented context in router components
 
-# [v2.0.0-beta.14](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.12...v2.0.0-beta.14) - October 26, 2017
+# [v2.0.0-beta.14](https://github.com/framework7io/framework7/compare/v2.0.0-beta.12...v2.0.0-beta.14) - October 26, 2017
   * Fix router page events issue when no `route` passed to page callback
 
-# [v2.0.0-beta.12](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.11...v2.0.0-beta.12) - October 26, 2017
+# [v2.0.0-beta.12](https://github.com/framework7io/framework7/compare/v2.0.0-beta.11...v2.0.0-beta.12) - October 26, 2017
   * Router
     * Added [path-to-regexp](https://github.com/pillarjs/path-to-regexp) for better route matching with support of RegExp in route path
     * Route `name` renamed to `pageName` parameter to specify page's name to load. Route `name` now means name of the route
@@ -140,14 +159,14 @@
     * Now it is possible to specify path to config file like `npm run build:dev -- --config path/to/config.js`
   * Lost of minor fixes
 
-# [v2.0.0-beta.11](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.10...v2.0.0-beta.11) - October 13, 2017
+# [v2.0.0-beta.11](https://github.com/framework7io/framework7/compare/v2.0.0-beta.10...v2.0.0-beta.11) - October 13, 2017
   * Messagebar
     * Added `top` parameter to consider it as top messagebar
     * Added `resizePage` parameter to define whether it should resize the page
     * Added `maxHeight` parameter to specify messagebar max-height on resize
   * Minor fixes
 
-# [v2.0.0-beta.10](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.9...v2.0.0-beta.10) - October 11, 2017
+# [v2.0.0-beta.10](https://github.com/framework7io/framework7/compare/v2.0.0-beta.9...v2.0.0-beta.10) - October 11, 2017
   * Swiper update to latest 4.0.1:
     * Fixed issue with pagination being broken with loop mode
     * Reworked `realIndex` calculation ordering
@@ -158,7 +177,7 @@
   * Package
     * Now it exports by default modular `framework7.esm.js` version instead of bundle
 
-# [v2.0.0-beta.9](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.8...v2.0.0-beta.9) - October 8, 2017
+# [v2.0.0-beta.9](https://github.com/framework7io/framework7/compare/v2.0.0-beta.8...v2.0.0-beta.9) - October 8, 2017
   * New Picker component
   * New Calendar component
   * New Custom Modal component
@@ -171,7 +190,7 @@
     * `framework7.modular.js` -> `framework7.esm.js`
   * Numerous fixes and improvements
 
-# [v2.0.0-beta.8](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.7...v2.0.0-beta.8) - September 21, 2017
+# [v2.0.0-beta.8](https://github.com/framework7io/framework7/compare/v2.0.0-beta.7...v2.0.0-beta.8) - September 21, 2017
   * Toolbar
     * Class `toolbar-bottom` to display it on the bottom for MD theme has been renamed to `toolbar-bottom-md`.
   * Sortable
@@ -192,35 +211,35 @@
     * `small` buttons now can be round and not round.
   * Lots of minor fixes.
 
-# [v2.0.0-beta.7](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.6...v2.0.0-beta.7) - September 13, 2017
+# [v2.0.0-beta.7](https://github.com/framework7io/framework7/compare/v2.0.0-beta.6...v2.0.0-beta.7) - September 13, 2017
   * Fixed issue with Routable Tabs not working correctly on home page
   * Fixed issue with touch ripple effect being broken after bundler optimization
 
-# [v2.0.0-beta.6](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.5...v2.0.0-beta.6) - September 13, 2017
+# [v2.0.0-beta.6](https://github.com/framework7io/framework7/compare/v2.0.0-beta.5...v2.0.0-beta.6) - September 13, 2017
   * Template7 updated to latest v1.3.0
 
-# [v2.0.0-beta.5](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.4...v2.0.0-beta.5) - September 13, 2017
+# [v2.0.0-beta.5](https://github.com/framework7io/framework7/compare/v2.0.0-beta.4...v2.0.0-beta.5) - September 13, 2017
   * Small core refactorings to work better in tree-shaking bundlers
 
-# [v2.0.0-beta.4](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.3...v2.0.0-beta.4) - September 11, 2017
+# [v2.0.0-beta.4](https://github.com/framework7io/framework7/compare/v2.0.0-beta.3...v2.0.0-beta.4) - September 11, 2017
   * Added full RTL layout support (with new `.rtl` stylesheets).
   * Removed XHR (Ajax) functionality from Dom7, including `$.ajax`, `$.get`, `$.post`, `$.getJSON`. These are replaced with new Framework7 `request` module.
   * Removed `$.` utilities from Dom7, including `$.parseUrlQuery`, `$.isArray`, `$.each`, `$.unique`, `$.serializeObject`, `$.dataset`, `$.extend`, they are available via `Framework7.utils` or `app.utils`.
   * Utils' `.promise` now returns native Promise if it is supported by browser and fallback to Promise-like polifyl if it is not supported.
 
-# [v2.0.0-beta.3](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.2...v2.0.0-beta.3) - September 7, 2017
+# [v2.0.0-beta.3](https://github.com/framework7io/framework7/compare/v2.0.0-beta.2...v2.0.0-beta.3) - September 7, 2017
   * Add new Autocomplete component
   * Add new Toast component
   * New modular package `framework7.modular.js`
   * New view `restoreScrollTopOnBack` parameter to restor previous page scroll position when navigating back
   * Lots of minor fixes and improvements
 
-# [v2.0.0-beta.2](https://github.com/nolimits4web/framework7/compare/v2.0.0-beta.1...v2.0.0-beta.2) - September 2, 2017
+# [v2.0.0-beta.2](https://github.com/framework7io/framework7/compare/v2.0.0-beta.1...v2.0.0-beta.2) - September 2, 2017
   * Add new Swiper component
   * Add new Photo Browser component
   * Ported Notifications component
   * Improved custom build
   * Lots of minor fixes
 
-# [v2.0.0-beta.1](https://github.com/nolimits4web/framework7/compare/v1.6.4...v2) - August 21, 2017
+# [v2.0.0-beta.1](https://github.com/framework7io/framework7/compare/v1.6.4...v2) - August 21, 2017
   * Initial v2 release

@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.5
+ * Framework7 2.0.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 2, 2018
+ * Released on: January 9, 2018
  */
 html {
   direction: rtl;
@@ -11832,16 +11832,12 @@ html.with-panel-right-cover .panel-right {
   transition-property: transform, box-shadow, -webkit-transform, -webkit-box-shadow;
 }
 /* === Card === */
-.cards-list ul,
-.card .list-block ul {
-  background: none;
-}
 .cards-list > ul:before,
-.card .list-block > ul:before {
+.card .list > ul:before {
   display: none !important;
 }
 .cards-list > ul:after,
-.card .list-block > ul:after {
+.card .list > ul:after {
   display: none !important;
 }
 .card {
@@ -11985,6 +11981,10 @@ html.device-pixel-ratio-3 .card-footer:before {
 .card-footer.no-hairline:before {
   display: none !important;
 }
+.ios .cards-list ul,
+.ios .card .list ul {
+  background: none;
+}
 .ios .card {
   -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
@@ -12056,6 +12056,10 @@ html.device-pixel-ratio-3 .card-footer:before {
 }
 .ios .theme-dark .card-footer:before {
   background-color: #282829;
+}
+.md .cards-list ul,
+.md .card .list ul {
+  background: none;
 }
 .md .card {
   margin: 8px;
@@ -14657,8 +14661,8 @@ label.item-radio.disabled,
 .md .range-knob-wrap {
   height: 12px;
   width: 12px;
-  margin-left: -6px;
   margin-top: -6px;
+  margin-right: -6px;
 }
 .md .range-knob {
   background: #2196f3;
@@ -23214,7 +23218,7 @@ button.swiper-pagination-bullet {
 .md .photo-browser-page-dark .navbar,
 .md .photo-browser-dark .toolbar,
 .md .photo-browser-page-dark .toolbar {
-  background: rgba(30, 30, 30, 0.8);
+  background: rgba(30, 30, 30, 0.8) !important;
   color: #fff;
 }
 .md .photo-browser-dark .navbar a,
@@ -23222,6 +23226,60 @@ button.swiper-pagination-bullet {
 .md .photo-browser-dark .toolbar a,
 .md .photo-browser-page-dark .toolbar a {
   color: #fff;
+}
+.md .color-theme-red .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-red .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-red .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-red .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(244, 67, 54, 0.95);
+}
+.md .color-theme-green .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-green .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-green .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-green .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(76, 175, 80, 0.95);
+}
+.md .color-theme-blue .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-blue .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-blue .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-blue .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(33, 150, 243, 0.95);
+}
+.md .color-theme-pink .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-pink .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-pink .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-pink .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(233, 30, 99, 0.95);
+}
+.md .color-theme-yellow .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-yellow .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-yellow .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-yellow .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(255, 235, 59, 0.95);
+}
+.md .color-theme-orange .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-orange .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-orange .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-orange .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(255, 152, 0, 0.95);
+}
+.md .color-theme-gray .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-gray .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-gray .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-gray .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(158, 158, 158, 0.95);
+}
+.md .color-theme-white .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-white .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-white .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-white .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.md .color-theme-black .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-black .photo-browser-page:not(.photo-browser-page-dark) .navbar,
+.md .color-theme-black .photo-browser-page:not(.photo-browser-page-dark) .toolbar,
+.md .color-black .photo-browser-page:not(.photo-browser-page-dark) .toolbar {
+  background-color: rgba(0, 0, 0, 0.95);
 }
 /* === Notifications === */
 .notification {

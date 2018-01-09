@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.5
+ * Framework7 2.0.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 2, 2018
+ * Released on: January 9, 2018
  */
 
 import Template7 from 'template7';
@@ -2857,6 +2857,14 @@ var redirect = function (direction, route, options) {
   return router[direction](redirect, options);
 };
 
+function refreshPage() {
+  const router = this;
+  return router.navigate(router.currentRoute.url, {
+    ignoreCache: true,
+    reloadCurrent: true,
+  });
+}
+
 function forward(el, forwardOptions = {}) {
   const router = this;
   const app = router.app;
@@ -3210,9 +3218,9 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const params = loadParams;
   const options = loadOptions;
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
-  const { ignoreCache } = options;
 
-  if (options.route &&
+  if (!options.reloadCurrent &&
+    options.route &&
     options.route.route &&
     options.route.route.parentPath &&
     router.currentRoute.route &&
@@ -3301,7 +3309,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((pageContent) => {
         router.forward(router.getPageEl(pageContent), options);
       })
@@ -3408,7 +3416,6 @@ function tabLoad(tabRoute, loadOptions = {}) {
     on: {},
   }, loadOptions);
 
-  const { ignoreCache } = options;
   if (options.route) {
     // Set Route
     if (options.route !== router.currentRoute) {
@@ -3543,7 +3550,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((tabContent) => {
         resolve(tabContent);
       })
@@ -3576,8 +3583,6 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
   const modalParams = route.route[modalType];
   const modalRoute = route.route;
-
-  const { ignoreCache } = options;
 
   // Load Modal Props
   const { url, template, templateUrl, component, componentUrl } = modalParams;
@@ -3693,7 +3698,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((modalContent) => {
         modalParams.content = modalContent;
         onModalLoaded();
@@ -4008,7 +4013,6 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   const params = backParams;
   const options = backOptions;
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
-  const { ignoreCache } = options;
 
   if (
     options.route.url &&
@@ -4067,7 +4071,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((pageContent) => {
         router.backward(router.getPageEl(pageContent), options);
       })
@@ -4296,6 +4300,7 @@ class Router$1 extends Framework7Class {
       forward,
       load,
       navigate,
+      refreshPage,
       // Tab
       tabLoad,
       tabRemove,
@@ -4826,15 +4831,48 @@ class Router$1 extends Framework7Class {
     }
     if (index !== false) xhrCache.splice(index, 1);
   }
-  xhrRequest(requestUrl, ignoreCache) {
+  xhrRequest(requestUrl, options) {
     const router = this;
     const params = router.params;
+    const { ignoreCache } = options;
     let url = requestUrl;
+
+    let hasQuery = url.indexOf('?') >= 0;
+    if (params.passRouteQueryToRequest &&
+      options &&
+      options.route &&
+      options.route.query &&
+      Object.keys(options.route.query).length
+    ) {
+      url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.query)}`;
+      hasQuery = true;
+    }
+
+    if (params.passRouteParamsToRequest &&
+      options &&
+      options.route &&
+      options.route.params &&
+      Object.keys(options.route.params).length
+    ) {
+      url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.params)}`;
+      hasQuery = true;
+    }
+
+    if (url.indexOf('{{') >= 0 &&
+      options &&
+      options.route &&
+      options.route.params &&
+      Object.keys(options.route.params).length
+    ) {
+      Object.keys(options.route.params).forEach((paramName) => {
+        const regExp = new RegExp(`{{${paramName}}}`, 'g');
+        url = url.replace(regExp, options.route.params[paramName] || '');
+      });
+    }
     // should we ignore get params or not
     if (params.xhrCacheIgnoreGetParameters && url.indexOf('?') >= 0) {
       url = url.split('?')[0];
     }
-
     return Utils.promise((resolve, reject) => {
       if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
         for (let i = 0; i < router.cache.xhr.length; i += 1) {
@@ -4853,7 +4891,7 @@ class Router$1 extends Framework7Class {
         url,
         method: 'GET',
         beforeSend(xhr) {
-          router.emit('routerAjaxStart', xhr);
+          router.emit('routerAjaxStart', xhr, options);
         },
         complete(xhr, status) {
           router.emit('routerAjaxComplete', xhr);
@@ -4866,15 +4904,15 @@ class Router$1 extends Framework7Class {
                 content: xhr.responseText,
               });
             }
-            router.emit('routerAjaxSuccess', xhr);
+            router.emit('routerAjaxSuccess', xhr, options);
             resolve(xhr.responseText);
           } else {
-            router.emit('routerAjaxError', xhr);
+            router.emit('routerAjaxError', xhr, options);
             reject(xhr);
           }
         },
         error(xhr) {
-          router.emit('routerAjaxError', xhr);
+          router.emit('routerAjaxError', xhr, options);
           reject(xhr);
         },
       });
@@ -4929,7 +4967,7 @@ class Router$1 extends Framework7Class {
         router.xhr = false;
       }
       router
-        .xhrRequest(templateUrl)
+        .xhrRequest(templateUrl, options)
         .then((templateContent) => {
           compile(templateContent);
         })
@@ -4989,7 +5027,7 @@ class Router$1 extends Framework7Class {
         router.xhr = false;
       }
       router
-        .xhrRequest(url)
+        .xhrRequest(url, options)
         .then((loadedComponent) => {
           compile(Component.parse(loadedComponent));
         })
@@ -5928,6 +5966,8 @@ var View$2 = {
       removeElementsTimeout: 0,
       restoreScrollTopOnBack: true,
       unloadTabContent: true,
+      passRouteQueryToRequest: true,
+      passRouteParamsToRequest: false,
       // Swipe Back
       iosSwipeBack: true,
       iosSwipeBackAnimateShadow: true,
@@ -6308,8 +6348,19 @@ var Navbar$1 = {
       if (app.theme === 'ios') {
         app.navbar.size($navbarEl);
       }
-      if (app.params.navbar.hideOnPageScroll || page.$el.find('.hide-navbar-on-scroll').length || page.$el.hasClass('hide-navbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
-        if (page.$el.find('.keep-navbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) return;
+      if (
+        app.params.navbar.hideOnPageScroll ||
+        page.$el.find('.hide-navbar-on-scroll').length ||
+        page.$el.hasClass('hide-navbar-on-scroll') ||
+        page.$el.find('.hide-bars-on-scroll').length ||
+        page.$el.hasClass('hide-bars-on-scroll')
+      ) {
+        if (
+          page.$el.find('.keep-navbar-on-scroll').length ||
+          page.$el.find('.keep-bars-on-scroll').length
+        ) {
+          return;
+        }
         app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
       }
     },
@@ -6442,6 +6493,9 @@ const Toolbar = {
       $toolbarEl = $pageEl.find('.toolbar');
     }
     if ($toolbarEl.length === 0) {
+      $toolbarEl = $pageEl.parents('.views').children('.tabbar, .tabbar-labels');
+    }
+    if ($toolbarEl.length === 0) {
       return;
     }
 
@@ -6527,6 +6581,9 @@ var Toolbar$1 = {
         $toolbarEl = page.$el.find('.toolbar');
       }
       if ($toolbarEl.length === 0) {
+        $toolbarEl = page.$el.parents('.views').children('.tabbar, .tabbar-labels');
+      }
+      if ($toolbarEl.length === 0) {
         return;
       }
       if (page.$el.hasClass('no-toolbar')) {
@@ -6540,8 +6597,19 @@ var Toolbar$1 = {
       page.$el.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
         app.toolbar.init(tabbarEl);
       });
-      if (app.params.toolbar.hideOnPageScroll || page.$el.find('.hide-toolbar-on-scroll').length || page.$el.hasClass('hide-toolbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
-        if (page.$el.find('.keep-toolbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) return;
+      if (
+        app.params.toolbar.hideOnPageScroll ||
+        page.$el.find('.hide-toolbar-on-scroll').length ||
+        page.$el.hasClass('hide-toolbar-on-scroll') ||
+        page.$el.find('.hide-bars-on-scroll').length ||
+        page.$el.hasClass('hide-bars-on-scroll')
+      ) {
+        if (
+          page.$el.find('.keep-toolbar-on-scroll').length ||
+          page.$el.find('.keep-bars-on-scroll').length
+        ) {
+          return;
+        }
         app.toolbar.initHideToolbarOnScroll(page.el);
       }
     },
@@ -7900,7 +7968,7 @@ class Actions$1 extends Modal$1 {
           convertToPopover = true;
         }
       }
-      if (convertToPopover) {
+      if (convertToPopover && actions.popoverHtml) {
         popover = app.popover.create({
           content: actions.popoverHtml,
           backdrop: actions.params.backdrop,
@@ -7926,7 +7994,7 @@ class Actions$1 extends Modal$1 {
           });
         });
       } else {
-        actions.$el = $(actions.actionsHtml);
+        actions.$el = actions.actionsHtml ? $(actions.actionsHtml) : actions.$el;
         actions.$el[0].f7Modal = actions;
         actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
           $(buttonEl).on('click', buttonOnClick);
@@ -10092,6 +10160,14 @@ const Tab = {
         $tabLinkEl = $tabLinkEl.filter((index, tabLinkElement) => {
           return $(tabLinkElement).parents('.page')[0] === $newTabEl.parents('.page')[0];
         });
+        if (app.theme === 'ios' && $tabLinkEl.length === 0 && tabRoute) {
+          const $pageEl = $newTabEl.parents('.page');
+          const $navbarEl = $(app.navbar.getElByPage($pageEl));
+          $tabLinkEl = $navbarEl.find(`[data-route-tab-id="${tabRoute.route.tab.id}"]`);
+          if ($tabLinkEl.length === 0) {
+            $tabLinkEl = $navbarEl.find(`.tab-link[href="${tabRoute.url}"]`);
+          }
+        }
       }
     }
     if ($tabLinkEl.length > 0) {
@@ -10292,12 +10368,12 @@ function swipePanel$1(panel) {
       const timeDiff = (new Date()).getTime() - touchStartTime;
       if (timeDiff < 300) {
         if (direction === 'to-left') {
-          if (side === 'right') app.openPanel(side);
-          if (side === 'left' && $el.hasClass('panel-active')) app.closePanel();
+          if (side === 'right') app.panel.open(side);
+          if (side === 'left' && $el.hasClass('panel-active')) app.panel.close();
         }
         if (direction === 'to-right') {
-          if (side === 'left') app.openPanel(side);
-          if (side === 'right' && $el.hasClass('panel-active')) app.closePanel();
+          if (side === 'left') app.panel.open(side);
+          if (side === 'right' && $el.hasClass('panel-active')) app.panel.close();
         }
       }
       isTouched = false;
@@ -11134,7 +11210,7 @@ function initAjaxForm() {
     if (!url) return;
 
     let data;
-    if (method === 'POST') data = new FormData$1($formEl[0]);
+    if (method === 'POST') data = new window.FormData($formEl[0]);
     else data = Utils.serializeObject(app.form.convertToData($formEl[0]));
 
     const xhr = app.request({

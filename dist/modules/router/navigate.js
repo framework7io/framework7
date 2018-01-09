@@ -3,6 +3,14 @@ import Utils from '../../utils/utils';
 import History from '../../utils/history';
 import redirect from './redirect';
 
+function refreshPage() {
+  const router = this;
+  return router.navigate(router.currentRoute.url, {
+    ignoreCache: true,
+    reloadCurrent: true,
+  });
+}
+
 function forward(el, forwardOptions = {}) {
   const router = this;
   const app = router.app;
@@ -356,9 +364,9 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const params = loadParams;
   const options = loadOptions;
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
-  const { ignoreCache } = options;
 
-  if (options.route &&
+  if (!options.reloadCurrent &&
+    options.route &&
     options.route.route &&
     options.route.route.parentPath &&
     router.currentRoute.route &&
@@ -447,7 +455,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((pageContent) => {
         router.forward(router.getPageEl(pageContent), options);
       })
@@ -544,4 +552,4 @@ function navigate(navigateParams, navigateOptions = {}) {
   // Retur Router
   return router;
 }
-export { forward, load, navigate };
+export { refreshPage, forward, load, navigate };

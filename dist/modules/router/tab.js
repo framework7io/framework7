@@ -11,7 +11,6 @@ function tabLoad(tabRoute, loadOptions = {}) {
     on: {},
   }, loadOptions);
 
-  const { ignoreCache } = options;
   if (options.route) {
     // Set Route
     if (options.route !== router.currentRoute) {
@@ -146,7 +145,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((tabContent) => {
         resolve(tabContent);
       })

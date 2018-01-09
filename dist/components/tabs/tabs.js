@@ -122,6 +122,14 @@ const Tab = {
         $tabLinkEl = $tabLinkEl.filter((index, tabLinkElement) => {
           return $(tabLinkElement).parents('.page')[0] === $newTabEl.parents('.page')[0];
         });
+        if (app.theme === 'ios' && $tabLinkEl.length === 0 && tabRoute) {
+          const $pageEl = $newTabEl.parents('.page');
+          const $navbarEl = $(app.navbar.getElByPage($pageEl));
+          $tabLinkEl = $navbarEl.find(`[data-route-tab-id="${tabRoute.route.tab.id}"]`);
+          if ($tabLinkEl.length === 0) {
+            $tabLinkEl = $navbarEl.find(`.tab-link[href="${tabRoute.url}"]`);
+          }
+        }
       }
     }
     if ($tabLinkEl.length > 0) {

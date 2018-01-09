@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.5
+ * Framework7 2.0.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 2, 2018
+ * Released on: January 9, 2018
  */
 
 (function (global, factory) {
@@ -5545,6 +5545,14 @@ var redirect = function (direction, route, options) {
   return router[direction](redirect, options);
 };
 
+function refreshPage() {
+  var router = this;
+  return router.navigate(router.currentRoute.url, {
+    ignoreCache: true,
+    reloadCurrent: true,
+  });
+}
+
 function forward(el, forwardOptions) {
   if ( forwardOptions === void 0 ) forwardOptions = {};
 
@@ -5910,9 +5918,9 @@ function load(loadParams, loadOptions, ignorePageChange) {
   var templateUrl = params.templateUrl;
   var component = params.component;
   var componentUrl = params.componentUrl;
-  var ignoreCache = options.ignoreCache;
 
-  if (options.route &&
+  if (!options.reloadCurrent &&
+    options.route &&
     options.route.route &&
     options.route.route.parentPath &&
     router.currentRoute.route &&
@@ -6001,7 +6009,7 @@ function load(loadParams, loadOptions, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then(function (pageContent) {
         router.forward(router.getPageEl(pageContent), options);
       })
@@ -6113,7 +6121,6 @@ function tabLoad(tabRoute, loadOptions) {
     on: {},
   }, loadOptions);
 
-  var ignoreCache = options.ignoreCache;
   if (options.route) {
     // Set Route
     if (options.route !== router.currentRoute) {
@@ -6258,7 +6265,7 @@ function tabLoad(tabRoute, loadOptions) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then(function (tabContent) {
         resolve(tabContent);
       })
@@ -6293,8 +6300,6 @@ function modalLoad(modalType, route, loadOptions) {
 
   var modalParams = route.route[modalType];
   var modalRoute = route.route;
-
-  var ignoreCache = options.ignoreCache;
 
   // Load Modal Props
   var url = modalParams.url;
@@ -6414,7 +6419,7 @@ function modalLoad(modalType, route, loadOptions) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then(function (modalContent) {
         modalParams.content = modalContent;
         onModalLoaded();
@@ -6736,7 +6741,6 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   var templateUrl = params.templateUrl;
   var component = params.component;
   var componentUrl = params.componentUrl;
-  var ignoreCache = options.ignoreCache;
 
   if (
     options.route.url &&
@@ -6795,7 +6799,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then(function (pageContent) {
         router.backward(router.getPageEl(pageContent), options);
       })
@@ -7030,6 +7034,7 @@ var Router$1 = (function (Framework7Class$$1) {
       forward: forward,
       load: load,
       navigate: navigate,
+      refreshPage: refreshPage,
       // Tab
       tabLoad: tabLoad,
       tabRemove: tabRemove,
@@ -7575,15 +7580,48 @@ var Router$1 = (function (Framework7Class$$1) {
     }
     if (index !== false) { xhrCache.splice(index, 1); }
   };
-  Router.prototype.xhrRequest = function xhrRequest (requestUrl, ignoreCache) {
+  Router.prototype.xhrRequest = function xhrRequest (requestUrl, options) {
     var router = this;
     var params = router.params;
+    var ignoreCache = options.ignoreCache;
     var url = requestUrl;
+
+    var hasQuery = url.indexOf('?') >= 0;
+    if (params.passRouteQueryToRequest &&
+      options &&
+      options.route &&
+      options.route.query &&
+      Object.keys(options.route.query).length
+    ) {
+      url += "" + (hasQuery ? '&' : '?') + (Utils.serializeObject(options.route.query));
+      hasQuery = true;
+    }
+
+    if (params.passRouteParamsToRequest &&
+      options &&
+      options.route &&
+      options.route.params &&
+      Object.keys(options.route.params).length
+    ) {
+      url += "" + (hasQuery ? '&' : '?') + (Utils.serializeObject(options.route.params));
+      hasQuery = true;
+    }
+
+    if (url.indexOf('{{') >= 0 &&
+      options &&
+      options.route &&
+      options.route.params &&
+      Object.keys(options.route.params).length
+    ) {
+      Object.keys(options.route.params).forEach(function (paramName) {
+        var regExp = new RegExp(("{{" + paramName + "}}"), 'g');
+        url = url.replace(regExp, options.route.params[paramName] || '');
+      });
+    }
     // should we ignore get params or not
     if (params.xhrCacheIgnoreGetParameters && url.indexOf('?') >= 0) {
       url = url.split('?')[0];
     }
-
     return Utils.promise(function (resolve, reject) {
       if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
         for (var i = 0; i < router.cache.xhr.length; i += 1) {
@@ -7602,7 +7640,7 @@ var Router$1 = (function (Framework7Class$$1) {
         url: url,
         method: 'GET',
         beforeSend: function beforeSend(xhr) {
-          router.emit('routerAjaxStart', xhr);
+          router.emit('routerAjaxStart', xhr, options);
         },
         complete: function complete(xhr, status) {
           router.emit('routerAjaxComplete', xhr);
@@ -7615,15 +7653,15 @@ var Router$1 = (function (Framework7Class$$1) {
                 content: xhr.responseText,
               });
             }
-            router.emit('routerAjaxSuccess', xhr);
+            router.emit('routerAjaxSuccess', xhr, options);
             resolve(xhr.responseText);
           } else {
-            router.emit('routerAjaxError', xhr);
+            router.emit('routerAjaxError', xhr, options);
             reject(xhr);
           }
         },
         error: function error(xhr) {
-          router.emit('routerAjaxError', xhr);
+          router.emit('routerAjaxError', xhr, options);
           reject(xhr);
         },
       });
@@ -7678,7 +7716,7 @@ var Router$1 = (function (Framework7Class$$1) {
         router.xhr = false;
       }
       router
-        .xhrRequest(templateUrl)
+        .xhrRequest(templateUrl, options)
         .then(function (templateContent) {
           compile(templateContent);
         })
@@ -7742,7 +7780,7 @@ var Router$1 = (function (Framework7Class$$1) {
         router.xhr = false;
       }
       router
-        .xhrRequest(url)
+        .xhrRequest(url, options)
         .then(function (loadedComponent) {
           compile(Component.parse(loadedComponent));
         })
@@ -8702,6 +8740,8 @@ var View$2 = {
       removeElementsTimeout: 0,
       restoreScrollTopOnBack: true,
       unloadTabContent: true,
+      passRouteQueryToRequest: true,
+      passRouteParamsToRequest: false,
       // Swipe Back
       iosSwipeBack: true,
       iosSwipeBackAnimateShadow: true,
@@ -9087,8 +9127,19 @@ var Navbar$1 = {
       if (app.theme === 'ios') {
         app.navbar.size($navbarEl);
       }
-      if (app.params.navbar.hideOnPageScroll || page.$el.find('.hide-navbar-on-scroll').length || page.$el.hasClass('hide-navbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
-        if (page.$el.find('.keep-navbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) { return; }
+      if (
+        app.params.navbar.hideOnPageScroll ||
+        page.$el.find('.hide-navbar-on-scroll').length ||
+        page.$el.hasClass('hide-navbar-on-scroll') ||
+        page.$el.find('.hide-bars-on-scroll').length ||
+        page.$el.hasClass('hide-bars-on-scroll')
+      ) {
+        if (
+          page.$el.find('.keep-navbar-on-scroll').length ||
+          page.$el.find('.keep-bars-on-scroll').length
+        ) {
+          return;
+        }
         app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
       }
     },
@@ -9225,6 +9276,9 @@ var Toolbar = {
       $toolbarEl = $pageEl.find('.toolbar');
     }
     if ($toolbarEl.length === 0) {
+      $toolbarEl = $pageEl.parents('.views').children('.tabbar, .tabbar-labels');
+    }
+    if ($toolbarEl.length === 0) {
       return;
     }
 
@@ -9310,6 +9364,9 @@ var Toolbar$1 = {
         $toolbarEl = page.$el.find('.toolbar');
       }
       if ($toolbarEl.length === 0) {
+        $toolbarEl = page.$el.parents('.views').children('.tabbar, .tabbar-labels');
+      }
+      if ($toolbarEl.length === 0) {
         return;
       }
       if (page.$el.hasClass('no-toolbar')) {
@@ -9323,8 +9380,19 @@ var Toolbar$1 = {
       page.$el.find('.tabbar, .tabbar-labels').each(function (index, tabbarEl) {
         app.toolbar.init(tabbarEl);
       });
-      if (app.params.toolbar.hideOnPageScroll || page.$el.find('.hide-toolbar-on-scroll').length || page.$el.hasClass('hide-toolbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
-        if (page.$el.find('.keep-toolbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) { return; }
+      if (
+        app.params.toolbar.hideOnPageScroll ||
+        page.$el.find('.hide-toolbar-on-scroll').length ||
+        page.$el.hasClass('hide-toolbar-on-scroll') ||
+        page.$el.find('.hide-bars-on-scroll').length ||
+        page.$el.hasClass('hide-bars-on-scroll')
+      ) {
+        if (
+          page.$el.find('.keep-toolbar-on-scroll').length ||
+          page.$el.find('.keep-bars-on-scroll').length
+        ) {
+          return;
+        }
         app.toolbar.initHideToolbarOnScroll(page.el);
       }
     },
@@ -10776,7 +10844,7 @@ var Actions$1 = (function (Modal) {
           convertToPopover = true;
         }
       }
-      if (convertToPopover) {
+      if (convertToPopover && actions.popoverHtml) {
         popover = app.popover.create({
           content: actions.popoverHtml,
           backdrop: actions.params.backdrop,
@@ -10802,7 +10870,7 @@ var Actions$1 = (function (Modal) {
           });
         });
       } else {
-        actions.$el = $$1$1(actions.actionsHtml);
+        actions.$el = actions.actionsHtml ? $$1$1(actions.actionsHtml) : actions.$el;
         actions.$el[0].f7Modal = actions;
         actions.$el.find('.actions-button').each(function (groupIndex, buttonEl) {
           $$1$1(buttonEl).on('click', buttonOnClick);
@@ -13007,6 +13075,14 @@ var Tab = {
         $tabLinkEl = $tabLinkEl.filter(function (index, tabLinkElement) {
           return $$1$1(tabLinkElement).parents('.page')[0] === $newTabEl.parents('.page')[0];
         });
+        if (app.theme === 'ios' && $tabLinkEl.length === 0 && tabRoute) {
+          var $pageEl = $newTabEl.parents('.page');
+          var $navbarEl = $$1$1(app.navbar.getElByPage($pageEl));
+          $tabLinkEl = $navbarEl.find(("[data-route-tab-id=\"" + (tabRoute.route.tab.id) + "\"]"));
+          if ($tabLinkEl.length === 0) {
+            $tabLinkEl = $navbarEl.find((".tab-link[href=\"" + (tabRoute.url) + "\"]"));
+          }
+        }
       }
     }
     if ($tabLinkEl.length > 0) {
@@ -13212,12 +13288,12 @@ function swipePanel$1(panel) {
       var timeDiff = (new Date()).getTime() - touchStartTime;
       if (timeDiff < 300) {
         if (direction === 'to-left') {
-          if (side === 'right') { app.openPanel(side); }
-          if (side === 'left' && $el.hasClass('panel-active')) { app.closePanel(); }
+          if (side === 'right') { app.panel.open(side); }
+          if (side === 'left' && $el.hasClass('panel-active')) { app.panel.close(); }
         }
         if (direction === 'to-right') {
-          if (side === 'left') { app.openPanel(side); }
-          if (side === 'right' && $el.hasClass('panel-active')) { app.closePanel(); }
+          if (side === 'left') { app.panel.open(side); }
+          if (side === 'right' && $el.hasClass('panel-active')) { app.panel.close(); }
         }
       }
       isTouched = false;
@@ -14082,7 +14158,7 @@ function initAjaxForm() {
     if (!url) { return; }
 
     var data;
-    if (method === 'POST') { data = new FormData$1($formEl[0]); }
+    if (method === 'POST') { data = new window.FormData($formEl[0]); }
     else { data = Utils.serializeObject(app.form.convertToData($formEl[0])); }
 
     var xhr = app.request({

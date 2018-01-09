@@ -301,7 +301,6 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   const params = backParams;
   const options = backOptions;
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
-  const { ignoreCache } = options;
 
   if (
     options.route.url &&
@@ -360,7 +359,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((pageContent) => {
         router.backward(router.getPageEl(pageContent), options);
       })
