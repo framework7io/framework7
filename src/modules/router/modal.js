@@ -14,8 +14,6 @@ function modalLoad(modalType, route, loadOptions = {}) {
   const modalParams = route.route[modalType];
   const modalRoute = route.route;
 
-  const { ignoreCache } = options;
-
   // Load Modal Props
   const { url, template, templateUrl, component, componentUrl } = modalParams;
 
@@ -130,7 +128,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((modalContent) => {
         modalParams.content = modalContent;
         onModalLoaded();

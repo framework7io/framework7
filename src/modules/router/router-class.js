@@ -622,15 +622,15 @@ class Router extends Framework7Class {
     }
     if (index !== false) xhrCache.splice(index, 1);
   }
-  xhrRequest(requestUrl, ignoreCache) {
+  xhrRequest(requestUrl, options) {
     const router = this;
     const params = router.params;
+    const { ignoreCache } = options;
     let url = requestUrl;
     // should we ignore get params or not
     if (params.xhrCacheIgnoreGetParameters && url.indexOf('?') >= 0) {
       url = url.split('?')[0];
     }
-
     return Utils.promise((resolve, reject) => {
       if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
         for (let i = 0; i < router.cache.xhr.length; i += 1) {
@@ -649,7 +649,7 @@ class Router extends Framework7Class {
         url,
         method: 'GET',
         beforeSend(xhr) {
-          router.emit('routerAjaxStart', xhr);
+          router.emit('routerAjaxStart', xhr, options);
         },
         complete(xhr, status) {
           router.emit('routerAjaxComplete', xhr);
@@ -662,15 +662,15 @@ class Router extends Framework7Class {
                 content: xhr.responseText,
               });
             }
-            router.emit('routerAjaxSuccess', xhr);
+            router.emit('routerAjaxSuccess', xhr, options);
             resolve(xhr.responseText);
           } else {
-            router.emit('routerAjaxError', xhr);
+            router.emit('routerAjaxError', xhr, options);
             reject(xhr);
           }
         },
         error(xhr) {
-          router.emit('routerAjaxError', xhr);
+          router.emit('routerAjaxError', xhr, options);
           reject(xhr);
         },
       });
@@ -725,7 +725,7 @@ class Router extends Framework7Class {
         router.xhr = false;
       }
       router
-        .xhrRequest(templateUrl)
+        .xhrRequest(templateUrl, options)
         .then((templateContent) => {
           compile(templateContent);
         })
@@ -785,7 +785,7 @@ class Router extends Framework7Class {
         router.xhr = false;
       }
       router
-        .xhrRequest(url)
+        .xhrRequest(url, options)
         .then((loadedComponent) => {
           compile(Component.parse(loadedComponent));
         })

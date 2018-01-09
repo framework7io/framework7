@@ -356,7 +356,6 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const params = loadParams;
   const options = loadOptions;
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
-  const { ignoreCache } = options;
 
   if (options.route &&
     options.route.route &&
@@ -447,7 +446,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
       router.xhr.abort();
       router.xhr = false;
     }
-    router.xhrRequest(url, ignoreCache)
+    router.xhrRequest(url, options)
       .then((pageContent) => {
         router.forward(router.getPageEl(pageContent), options);
       })
