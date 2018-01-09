@@ -14,8 +14,9 @@
   .range-knob-wrap {
     height: 12px;
     width: 12px;
-    margin-left: -6px;
     margin-top: -6px;
+    .ltr({ margin-left: -6px; });
+    .rtl({ margin-right: -6px; });
   }
   .range-knob {
     background: @themeColor;
