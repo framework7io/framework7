@@ -7,7 +7,7 @@ import Component from '../../utils/component';
 import History from '../../utils/history';
 import SwipeBack from './swipe-back';
 
-import { forward, load, navigate } from './navigate';
+import { refreshPage, forward, load, navigate } from './navigate';
 import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
 import { backward, loadBack, back } from './back';
@@ -92,6 +92,7 @@ class Router extends Framework7Class {
       forward,
       load,
       navigate,
+      refreshPage,
       // Tab
       tabLoad,
       tabRemove,
