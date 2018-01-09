@@ -300,8 +300,19 @@ export default {
       if (app.theme === 'ios') {
         app.navbar.size($navbarEl);
       }
-      if (app.params.navbar.hideOnPageScroll || page.$el.find('.hide-navbar-on-scroll').length || page.$el.hasClass('hide-navbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length) {
-        if (page.$el.find('.keep-navbar-on-scroll').length || page.$el.find('.keep-bars-on-scroll').length) return;
+      if (
+        app.params.navbar.hideOnPageScroll ||
+        page.$el.find('.hide-navbar-on-scroll').length ||
+        page.$el.hasClass('hide-navbar-on-scroll') ||
+        page.$el.find('.hide-bars-on-scroll').length ||
+        page.$el.hasClass('hide-bars-on-scroll')
+      ) {
+        if (
+          page.$el.find('.keep-navbar-on-scroll').length ||
+          page.$el.find('.keep-bars-on-scroll').length
+        ) {
+          return;
+        }
         app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
       }
     },
