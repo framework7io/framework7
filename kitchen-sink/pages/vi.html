@@ -20,8 +20,8 @@
       </div>
       <div class="block-title">vi API examples</div>
       <div class="block block-strong">
-        <p><b>Prepaired ad</b>. Ad already prepaired (loaded) and waiting to start playing when required.</p>
-        <p><a class="button button-raised" @click="showPrepared">Prepaired Ad</a></p>
+        <p><b>Preloaded ad</b>. Ad already preloaded and waiting to start playing when required.</p>
+        <p><a class="button button-raised" @click="showPreloaded">Preloaded Ad</a></p>
       </div>
       <div class="block block-strong">
         <p><b>Create ad and show</b> it at a time.</p>
@@ -41,19 +41,19 @@
 <script>
   return {
     beforeDestroy() {
-      if (this.prepairedAd) this.prepairedAd.destroy();
+      if (this.preloadedAd) this.preloadedAd.destroy();
     },
     mounted: function () {
       var app = this.$app;
-      // Prepare Ad
-      this.prepairedAd = app.vi.createAd({
+      // Preload Ad
+      this.preloadedAd = app.vi.createAd({
         autoplay: false,
       });
     },
     methods: {
-      // Play Prepared Ad
-      showPrepared: function () {
-        this.prepairedAd.start();
+      // Play Preloaded Ad
+      showPreloaded: function () {
+        this.preloadedAd.start();
       },
       // Create and play in place
       createAndShow: function() {
