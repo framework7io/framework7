@@ -1,6 +1,13 @@
 <!--
+READ THIS BEFORE POSTING ISSUE:
 
-Do you want to ask a question? Are you looking for support? The Framework7 forum (http://forum.framework7.io) and Stack Overflow (http://stackoverflow.com/questions/tagged/framework7) are the best places for getting support
+Please, don't ask questions on GitHub! Do you want to ask a question? Are you looking for support? The Framework7 forum (http://forum.framework7.io) and Stack Overflow (http://stackoverflow.com/questions/tagged/framework7) are the best places for getting support
+
+- If the issue is about Framework7 v1 then it is more likely it will be closed because v1 is not maintained anymore
+- If the issue is related to Swiper, then please open it in Swiper repository at https://github.com/nolimits4web/Swiper
+- If the issue is related to Dom7, then please open it in Dom7 repository at https://github.com/nolimits4web/Dom7
+- If the issue is related to Template7, then please open it in Dom7 repository at https://github.com/nolimits4web/Template7
+- If the issue is related to Framework7-Vue, then please open it in Framework7-Vue repository at https://github.com/framework7io/framework7-vue
 
 -->
 
@@ -11,7 +18,7 @@ This is a (multiple allowed):
 
 * Framework7 Version: EXACT RELEASE VERSION OR COMMIT HASH, HERE.
 * Platform and Target: PLATFORM CLIENT YOU ARE TARGETING SUCH AS CORDOVA, IOS, ANDROID, ETC.
-* Live Link or JSFiddle/Codepen: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking one of the templates: iOS [JSFiddle](https://jsfiddle.net/s2n1p730/)/[Codepen](https://codepen.io/nolimits4web/pen/WRRWwN), Material [JSFiddle](https://jsfiddle.net/0ogxxcvt/)/[Codepen](https://codepen.io/nolimits4web/pen/pEPPPK)
+* Live Link or JSFiddle: PREFERABLY _(IF YOU WANT YOUR ISSUE TO BE RESOLVED ASAP)_. You can start from forking the following JSFiddle template: [JSFiddle](https://jsfiddle.net/nolimits4web/o2ejupu1/)
 
 ### What you did
 EXPLAIN WHAT YOU DID, PREFERABLY WITH CODE EXAMPLES, HERE.
