@@ -60,7 +60,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     }
   }
 
-  // Load Tab Content
+  // Tab Content Loaded
   function onTabLoaded(contentEl) {
     // Remove theme elements
     router.removeThemeElements($newTabEl);
@@ -87,6 +87,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
   // Load Tab Content
   function loadTab(loadTabParams, loadTabOptions) {
+    // Load Tab Props
     const { url, content, el, template, templateUrl, component, componentUrl } = loadTabParams;
     // Component/Template Callbacks
     function resolve(contentEl) {
@@ -162,7 +163,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     router.allowPageChange = true;
   }
   if (tabRoute.async) {
-    tabRoute.async.call(router, tabRoute, router.currentRoute, router.previousRoute, asyncResolve, asyncReject);
+    tabRoute.async.call(router, router.currentRoute, router.previousRoute, asyncResolve, asyncReject);
   }
   return router;
 }
