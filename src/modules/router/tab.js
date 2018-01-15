@@ -91,6 +91,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     const { url, content, el, template, templateUrl, component, componentUrl } = loadTabParams;
     // Component/Template Callbacks
     function resolve(contentEl) {
+      router.allowPageChange = true;
       if (!contentEl) return;
       if (typeof contentEl === 'string') {
         $newTabEl.html(contentEl);
