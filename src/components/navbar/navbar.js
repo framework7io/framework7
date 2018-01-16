@@ -309,7 +309,9 @@ export default {
       ) {
         if (
           page.$el.find('.keep-navbar-on-scroll').length ||
-          page.$el.find('.keep-bars-on-scroll').length
+          page.$el.hasClass('keep-navbar-on-scroll') ||
+          page.$el.find('.keep-bars-on-scroll').length ||
+          page.$el.hasClass('keep-bars-on-scroll')
         ) {
           return;
         }
