@@ -44,6 +44,8 @@ export default {
     },
     '.popover-backdrop': function closePopover() {
       const app = this;
+      const current = app.popover.get($('.popover.modal-in'));
+      if(current && !current.params.closeByBackdropClick) return;
       if (!app.params.popover.closeByBackdropClick) return;
       app.popover.close();
     },
