@@ -29,10 +29,5 @@ export default {
       const app = this;
       app.popup.close(data.popup, data.animate);
     },
-    '.popup-backdrop': function closePopup() {
-      const app = this;
-      if (!app.params.popup.closeByBackdropClick) return;
-      app.popup.close();
-    },
   },
 };

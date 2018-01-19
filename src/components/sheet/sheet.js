@@ -16,6 +16,9 @@ export default {
   },
   create() {
     const app = this;
+    if (!app.passedParams.sheet || !app.passedParams.sheet.backdrop) {
+      app.params.sheet.backdrop = app.theme === 'md';
+    }
     app.sheet = Utils.extend(
       {},
       ModalMethods({
@@ -36,11 +39,6 @@ export default {
     '.sheet-close': function closeSheet($clickedEl, data = {}) {
       const app = this;
       app.sheet.close(data.sheet, data.animate);
-    },
-    '.sheet-backdrop': function closeSheet() {
-      const app = this;
-      if (!app.params.sheet.closeByBackdropClick) return;
-      app.sheet.close();
     },
   },
 };

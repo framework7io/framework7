@@ -4,11 +4,11 @@ import Modal from '../modal/modal-class';
 
 class Sheet extends Modal {
   constructor(app, params) {
-    const extendedParams = Utils.extend({
-      backdrop: app.theme === 'md',
-      closeByOutsideClick: app.params.sheet.closeByOutsideClick,
-      on: {},
-    }, params);
+    const extendedParams = Utils.extend(
+      { on: {} },
+      app.params.sheet,
+      params
+    );
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -81,8 +81,18 @@ class Sheet extends Modal {
     }
     function handleClick(e) {
       const target = e.target;
-      if ($(target).closest(sheet.el).length === 0) {
-        sheet.close();
+      const $target = $(target);
+      if ($target.closest(sheet.el).length === 0) {
+        if (
+          sheet.params.closeByBackdropClick &&
+          sheet.params.backdrop &&
+          sheet.backdropEl &&
+          sheet.backdropEl === target
+        ) {
+          sheet.close();
+        } else if (sheet.params.closeByOutsideClick) {
+          sheet.close();
+        }
       }
     }
 
@@ -92,7 +102,7 @@ class Sheet extends Modal {
       }
     });
     sheet.on('sheetOpened', () => {
-      if (sheet.params.closeByOutsideClick && !sheet.params.backdrop) {
+      if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
         app.on('click', handleClick);
       }
     });
@@ -100,7 +110,7 @@ class Sheet extends Modal {
       if (sheet.params.scrollToEl) {
         scrollToClose();
       }
-      if (sheet.params.closeByOutsideClick && !sheet.params.backdrop) {
+      if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
     });
