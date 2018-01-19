@@ -143,7 +143,7 @@ class Searchbar extends FrameworkClass {
       $inputEl,
       inputEl: $inputEl[0],
       $disableButtonEl,
-      disableButtonEl: $disableButtonEl[0],
+      disableButtonEl: $disableButtonEl && $disableButtonEl[0],
       disableButtonHasMargin: false,
       $pageEl,
       pageEl: $pageEl && $pageEl[0],
