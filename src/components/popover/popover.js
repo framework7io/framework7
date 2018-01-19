@@ -8,7 +8,7 @@ export default {
   params: {
     popover: {
       closeByBackdropClick: true,
-      closeByOutsideClick: true,
+      closeByOutsideClick: false,
       backdrop: true,
     },
   },
@@ -41,11 +41,6 @@ export default {
     '.popover-close': function closePopover($clickedEl, data = {}) {
       const app = this;
       app.popover.close(data.popover, data.animate);
-    },
-    '.popover-backdrop': function closePopover() {
-      const app = this;
-      if (!app.params.popover.closeByBackdropClick) return;
-      app.popover.close();
     },
   },
 };
