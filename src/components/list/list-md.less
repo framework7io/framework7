@@ -16,10 +16,15 @@
       .rtl({
         margin-right: 16px;
         &:first-child {
-          margin-left: 0;
+          margin-right: 0;
         }
       });
     }
+    .ltr({
+      .ripple-wave + .item-cell {
+        margin-left: 0;
+      }
+    });
     ul {
       ul {
         .ltr({
