@@ -72,7 +72,7 @@ class Framework7Class {
     const parentEvents = eventsArray.filter(eventName => eventName.indexOf('local::') < 0);
 
     localEvents.forEach((event) => {
-      if (self.eventsListeners[event]) {
+      if (self.eventsListeners && self.eventsListeners[event]) {
         const handlers = [];
         self.eventsListeners[event].forEach((eventHandler) => {
           handlers.push(eventHandler);
