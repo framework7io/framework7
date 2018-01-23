@@ -30,6 +30,7 @@ Juergen Schimmoeller
 
 ### $50+
 
+Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
 Kris Reddy<br>
 Bart DJ
