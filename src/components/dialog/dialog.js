@@ -14,6 +14,7 @@ export default {
       preloaderTitle: 'Loading... ',
       progressTitle: 'Loading... ',
       closeByBackdropClick: false,
+      destroyPredefinedDialogs: true,
     },
   },
   static: {
@@ -22,6 +23,7 @@ export default {
   create() {
     const app = this;
     const defaultDialogTitle = app.params.dialog.title || app.name;
+    const destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
     app.dialog = Utils.extend(
       ModalMethods({
         app,
@@ -43,6 +45,7 @@ export default {
               bold: true,
               onClick: callbackOk,
             }],
+            destroyOnClose,
           }).open();
         },
         prompt(...args) {
@@ -68,6 +71,7 @@ export default {
               if (index === 0 && callbackCancel) callbackCancel(inputValue);
               if (index === 1 && callbackOk) callbackOk(inputValue);
             },
+            destroyOnClose,
           }).open();
         },
         confirm(...args) {
@@ -89,6 +93,7 @@ export default {
                 onClick: callbackOk,
               },
             ],
+            destroyOnClose,
           }).open();
         },
         login(...args) {
@@ -125,6 +130,7 @@ export default {
               if (index === 0 && callbackCancel) callbackCancel(username, password);
               if (index === 1 && callbackOk) callbackOk(username, password);
             },
+            destroyOnClose,
           }).open();
         },
         password(...args) {
@@ -155,6 +161,7 @@ export default {
               if (index === 0 && callbackCancel) callbackCancel(password);
               if (index === 1 && callbackOk) callbackOk(password);
             },
+            destroyOnClose,
           }).open();
         },
         preloader(title) {
@@ -163,6 +170,7 @@ export default {
             title: typeof title === 'undefined' ? app.params.dialog.preloaderTitle : title,
             content: `<div class="preloader">${preloaderInner}</div>`,
             cssClass: 'dialog-preloader',
+            destroyOnClose,
           }).open();
         },
         progress(...args) {
@@ -187,6 +195,7 @@ export default {
                 ${!infinite ? '<span></span>' : ''}
               </div>
             `,
+            destroyOnClose,
           });
           if (!infinite) dialog.setProgress(progress);
           return dialog.open();

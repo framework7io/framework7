@@ -83,8 +83,10 @@ class Dialog extends Modal {
       if (button.close !== false) dialog.close();
     }
     if (buttons && buttons.length > 0) {
-      $el.find('.dialog-button').each((index, buttonEl) => {
-        $(buttonEl).on('click', buttonOnClick);
+      dialog.on('open', () => {
+        $el.find('.dialog-button').each((index, buttonEl) => {
+          $(buttonEl).on('click', buttonOnClick);
+        });
       });
       dialog.on('close', () => {
         $el.find('.dialog-button').each((index, buttonEl) => {
@@ -130,6 +132,14 @@ class Dialog extends Modal {
     });
 
     $el[0].f7Modal = dialog;
+
+    if (dialog.params.destroyOnClose) {
+      dialog.once('closed', () => {
+        setTimeout(() => {
+          dialog.destroy();
+        }, 0);
+      });
+    }
 
     return dialog;
   }
