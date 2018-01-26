@@ -426,8 +426,8 @@ class Router extends Framework7Class {
     const router = this;
     const $el = $(el);
     if ($el.length === 0) return;
-    if ($el[0].f7Component && $el[0].f7Component.destroy) {
-      $el[0].f7Component.destroy();
+    if ($el[0].f7Component && $el[0].f7Component.$destroy) {
+      $el[0].f7Component.$destroy();
     }
     if (!router.params.removeElements) {
       return;
