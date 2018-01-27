@@ -34,7 +34,9 @@ function build(cb) {
         .replace('process.env.TARGET', JSON.stringify(target))
         .replace('process.env.FORMAT', JSON.stringify(format))
         .replace('//IMPORT_COMPONENTS\n', '')
-        .replace('//INSTALL_COMPONENTS\n', '');
+        .replace('//INSTALL_COMPONENTS\n', '')
+        .replace('//ES_IMPORT_HELPERS', "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';")
+        .replace('//NAMED_ES_EXPORT', 'export { Template7, $ as Dom7, Request, Utils, Device, Support };');
       if (file.indexOf('src/framework7.js') >= 0 || file.indexOf('src/framework7.less') >= 0) {
         newContent = `${banner}\n${newContent}`;
       }

@@ -4,17 +4,20 @@ import $ from 'dom7';
 // F7 Class
 import Framework7 from './components/core/core-class';
 
+// Import Helpers
+//ES_IMPORT_HELPERS
+
 // Core Modules
-import Device from './modules/device/device';
-import Support from './modules/support/support';
-import Utils from './modules/utils/utils';
-import Resize from './modules/resize/resize';
-import Request from './modules/request/request';
-import Touch from './modules/touch/touch';
-import Clicks from './modules/clicks/clicks';
-import Router from './modules/router/router';
-import History from './modules/history/history';
-import Storage from './modules/storage/storage';
+import DeviceModule from './modules/device/device';
+import SupportModule from './modules/support/support';
+import UtilsModule from './modules/utils/utils';
+import ResizeModule from './modules/resize/resize';
+import RequestModule from './modules/request/request';
+import TouchModule from './modules/touch/touch';
+import ClicksModule from './modules/clicks/clicks';
+import RouterModule from './modules/router/router';
+import HistoryModule from './modules/history/history';
+import StorageModule from './modules/storage/storage';
 
 // Core Components
 import Statusbar from './components/statusbar/statusbar';
@@ -37,16 +40,16 @@ if (process.env.FORMAT !== 'es') {
 
 // Install Core Modules & Components
 Framework7.use([
-  Device,
-  Support,
-  Utils,
-  Resize,
-  Request,
-  Touch,
-  Clicks,
-  Router,
-  History,
-  Storage,
+  DeviceModule,
+  SupportModule,
+  UtilsModule,
+  ResizeModule,
+  RequestModule,
+  TouchModule,
+  ClicksModule,
+  RouterModule,
+  HistoryModule,
+  StorageModule,
   Statusbar,
   View,
   Navbar,
@@ -57,4 +60,5 @@ Framework7.use([
   //INSTALL_COMPONENTS
 ]);
 
+//NAMED_ES_EXPORT
 export default Framework7;
