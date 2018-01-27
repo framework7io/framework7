@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.6
+ * Framework7 2.0.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 9, 2018
+ * Released on: January 27, 2018
  */
 
 (function (global, factory) {
@@ -17,18 +17,18 @@
 }(this, (function () { 'use strict';
 
 /**
- * Template7 1.3.1
+ * Template7 1.3.5
  * Mobile-first HTML template engine
  * 
  * http://www.idangero.us/template7/
  * 
- * Copyright 2017, Vladimir Kharlampidi
+ * Copyright 2018, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: October 25, 2017
+ * Released on: January 22, 2018
  */
 var t7ctx;
 if (typeof window !== 'undefined') {
@@ -221,7 +221,10 @@ var Template7Utils = {
         } else if (block.indexOf(' ') > 0) {
           if (isPartial) {
             helperName = '_partial';
-            if (helperContext[0]) { helperContext[0] = "\"" + (helperContext[0].replace(/"|'/g, '')) + "\""; }
+            if (helperContext[0]) {
+              if (helperContext[0].indexOf('[') === 0) { helperContext[0] = helperContext[0].replace(/[[\]]/g, ''); }
+              else { helperContext[0] = "\"" + (helperContext[0].replace(/"|'/g, '')) + "\""; }
+            }
           }
           blocks.push({
             type: 'helper',
@@ -297,7 +300,7 @@ var Template7Utils = {
         } else {
           variable = "(data_" + dataLevel + " && data_" + dataLevel + "." + (part.replace('@', '')) + ")";
         }
-      } else if (isFinite(part)) {
+      } else if (Number.isFinite ? Number.isFinite(part) : Template7Context.isFinite(part)) {
         variable += "[" + part + "]";
       } else if (part === 'this' || part.indexOf('this.') >= 0 || part.indexOf('this[') >= 0 || part.indexOf('this(') >= 0) {
         variable = part.replace('this', ctx);
@@ -321,17 +324,18 @@ var Template7Utils = {
   },
 };
 
+/* eslint no-eval: "off" */
 var Template7Helpers = {
   _partial: function _partial(partialName, options) {
+    var ctx = this;
     var p = Template7Class.partials[partialName];
     if (!p || (p && !p.template)) { return ''; }
     if (!p.compiled) {
       p.compiled = new Template7Class(p.template).compile();
     }
-    var ctx = this;
-    for (var hashName in options.hash) {
+    Object.keys(options.hash).forEach(function (hashName) {
       ctx[hashName] = options.hash[hashName];
-    }
+    });
     return p.compiled(ctx, options.data, options.root);
   },
   escape: function escape(context) {
@@ -374,6 +378,7 @@ var Template7Helpers = {
         ctx = ctx.reverse();
       }
     } else {
+      // eslint-disable-next-line
       for (var key in ctx) {
         i += 1;
         ret += options.fn(ctx[key], { key: key });
@@ -419,7 +424,7 @@ var Template7Helpers = {
     } else {
       func = "(function(){return (" + execute + ")})";
     }
-    return eval.call(this, func).call(this);
+    return eval(func).call(this);
   },
   js_if: function js_if(expression, options) {
     var data = options.data;
@@ -448,7 +453,7 @@ var Template7Helpers = {
     } else {
       func = "(function(){return (" + execute + ")})";
     }
-    var condition = eval.call(this, func).call(this);
+    var condition = eval(func).call(this);
     if (condition) {
       return options.fn(this, options.data);
     }
@@ -517,6 +522,7 @@ Template7Class.prototype.compile = function compile (template, depth) {
     var block = blocks[i];
     // Plain block
     if (block.type === 'plain') {
+      // eslint-disable-next-line
       resultString += "r +='" + ((block.content).replace(/\r/g, '\\r').replace(/\n/g, '\\n').replace(/'/g, '\\' + '\'')) + "';";
       continue;
     }
@@ -540,18 +546,23 @@ Template7Class.prototype.compile = function compile (template, depth) {
       } else {
         parents = "[" + ctx + "]";
       }
-      if (block.helperName in Template7Helpers) {
+      var dynamicHelper = (void 0);
+      if (block.helperName.indexOf('[') === 0) {
+        block.helperName = getCompileVar(block.helperName.replace(/[[\]]/g, ''), ctx, data);
+        dynamicHelper = true;
+      }
+      if (dynamicHelper || block.helperName in Template7Helpers) {
         compiledArguments = getCompiledArguments(block.contextName, ctx, data);
-        resultString += "r += (Template7.helpers." + (block.helperName) + ").call(" + ctx + ", " + (compiledArguments && ((compiledArguments + ", "))) + "{hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
+        resultString += "r += (Template7Helpers" + (dynamicHelper ? ("[" + (block.helperName) + "]") : ("." + (block.helperName))) + ").call(" + ctx + ", " + (compiledArguments && ((compiledArguments + ", "))) + "{hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
       } else if (block.contextName.length > 0) {
         throw new Error(("Template7: Missing helper: \"" + (block.helperName) + "\""));
       } else {
         variable = getCompileVar(block.helperName, ctx, data);
         resultString += "if (" + variable + ") {";
         resultString += "if (isArray(" + variable + ")) {";
-        resultString += "r += (Template7.helpers.each).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
+        resultString += "r += (Template7Helpers.each).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
         resultString += '}else {';
-        resultString += "r += (Template7.helpers.with).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
+        resultString += "r += (Template7Helpers.with).call(" + ctx + ", " + variable + ", {hash:" + (JSON.stringify(block.hash)) + ", data: " + data + " || {}, fn: " + (getCompileFn(block, depth + 1)) + ", inverse: " + (getCompileInverse(block, depth + 1)) + ", root: root, parents: " + parents + "});";
         resultString += '}}';
       }
     }
@@ -559,7 +570,8 @@ Template7Class.prototype.compile = function compile (template, depth) {
   resultString += '\nreturn r;})';
 
   if (depth === 1) {
-    t.compiled = eval.call(Template7Context, resultString);
+    // eslint-disable-next-line
+    t.compiled = eval(resultString);
     return t.compiled;
   }
   return resultString;
@@ -2900,7 +2912,7 @@ Framework7Class.prototype.emit = function emit () {
   var parentEvents = eventsArray.filter(function (eventName) { return eventName.indexOf('local::') < 0; });
 
   localEvents.forEach(function (event) {
-    if (self.eventsListeners[event]) {
+    if (self.eventsListeners && self.eventsListeners[event]) {
       var handlers = [];
       self.eventsListeners[event].forEach(function (eventHandler) {
         handlers.push(eventHandler);
@@ -3155,7 +3167,7 @@ var Framework7$1 = (function (Framework7Class$$1) {
   return Framework7;
 }(Framework7Class));
 
-var Device$2 = {
+var DeviceModule = {
   name: 'device',
   proto: {
     device: Device,
@@ -3206,7 +3218,7 @@ var Device$2 = {
   },
 };
 
-var Support$1 = (function Support() {
+var Support = (function Support() {
   var positionSticky = (function supportPositionSticky() {
     var support = false;
     var div = document.createElement('div');
@@ -3266,19 +3278,19 @@ var Support$1 = (function Support() {
   };
 }());
 
-var Support = {
+var SupportModule = {
   name: 'support',
   proto: {
-    support: Support$1,
+    support: Support,
   },
   static: {
-    support: Support$1,
+    support: Support,
   },
   on: {
     init: function init() {
       var html = document.querySelector('html');
       var classNames = [];
-      if (Support$1.positionSticky) {
+      if (Support.positionSticky) {
         classNames.push('support-position-sticky');
       }
       // Add html classes
@@ -3289,7 +3301,7 @@ var Support = {
   },
 };
 
-var Utils$2 = {
+var UtilsModule = {
   name: 'utils',
   proto: {
     utils: Utils,
@@ -3299,7 +3311,7 @@ var Utils$2 = {
   },
 };
 
-var Resize = {
+var ResizeModule = {
   name: 'resize',
   instance: {
     getSize: function getSize() {
@@ -3359,7 +3371,7 @@ var Resize = {
 var globals = {};
 var jsonpRequests = 0;
 
-function Request$1(requestOptions) {
+function Request(requestOptions) {
   var globalsNoCallbacks = Utils.extend({}, globals);
   ('beforeCreate beforeOpen beforeSend error complete success statusCode').split(' ').forEach(function (callbackName) {
     delete globalsNoCallbacks[callbackName];
@@ -3647,34 +3659,34 @@ function RequestShortcut(method) {
       data: typeof data === 'string' ? data : JSON.stringify(data),
     });
   }
-  return Request$1(requestOptions);
+  return Request(requestOptions);
 }
-Request$1.get = function get() {
+Request.get = function get() {
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
 
   return RequestShortcut.apply(void 0, [ 'get' ].concat( args ));
 };
-Request$1.post = function post() {
+Request.post = function post() {
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
 
   return RequestShortcut.apply(void 0, [ 'post' ].concat( args ));
 };
-Request$1.json = function json() {
+Request.json = function json() {
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
 
   return RequestShortcut.apply(void 0, [ 'json' ].concat( args ));
 };
-Request$1.getJSON = Request$1.json;
-Request$1.postJSON = function postJSON() {
+Request.getJSON = Request.json;
+Request.postJSON = function postJSON() {
   var args = [], len = arguments.length;
   while ( len-- ) args[ len ] = arguments[ len ];
 
   return RequestShortcut.apply(void 0, [ 'postJSON' ].concat( args ));
 };
-Request$1.setup = function setup(options) {
+Request.setup = function setup(options) {
   if (options.type && !options.method) {
     Utils.extend(options, { method: options.type });
   }
@@ -3682,13 +3694,13 @@ Request$1.setup = function setup(options) {
 };
 
 /* eslint no-param-reassign: "off" */
-var Request = {
+var RequestModule = {
   name: 'request',
   proto: {
-    request: Request$1,
+    request: Request,
   },
   static: {
-    request: Request$1,
+    request: Request,
   },
 };
 
@@ -4227,12 +4239,12 @@ function initTouch() {
     emitAppTouchEvent('touchend:passive', e);
   }
 
-  var passiveListener = Support$1.passiveListener ? { passive: true } : false;
-  var activeListener = Support$1.passiveListener ? { passive: false } : false;
+  var passiveListener = Support.passiveListener ? { passive: true } : false;
+  var activeListener = Support.passiveListener ? { passive: false } : false;
 
   document.addEventListener('click', appClick, true);
 
-  if (Support$1.passiveListener) {
+  if (Support.passiveListener) {
     document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
     document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
     document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
@@ -4255,7 +4267,7 @@ function initTouch() {
     }, false);
   }
 
-  if (Support$1.touch) {
+  if (Support.touch) {
     app.on('click', handleClick);
     app.on('touchstart', handleTouchStart);
     app.on('touchmove', handleTouchMove);
@@ -4277,7 +4289,7 @@ function initTouch() {
   });
 }
 
-var Touch = {
+var TouchModule = {
   name: 'touch',
   params: {
     touch: {
@@ -4301,9 +4313,9 @@ var Touch = {
   },
   instance: {
     touchEvents: {
-      start: Support$1.touch ? 'touchstart' : 'mousedown',
-      move: Support$1.touch ? 'touchmove' : 'mousemove',
-      end: Support$1.touch ? 'touchend' : 'mouseup',
+      start: Support.touch ? 'touchstart' : 'mousedown',
+      move: Support.touch ? 'touchmove' : 'mousemove',
+      end: Support.touch ? 'touchend' : 'mouseup',
     },
   },
   on: {
@@ -4690,53 +4702,56 @@ pathToRegexp_1.tokensToRegExp = tokensToRegExp_1;
 
 var tempDom = document.createElement('div');
 
-var Framework7Component = function Framework7Component(c, extendContext) {
+var Framework7Component = function Framework7Component(opts, extendContext) {
   if ( extendContext === void 0 ) extendContext = {};
 
   var context = Utils.extend({}, extendContext);
-  var component = Utils.extend(this, c, { context: context });
+  var component = Utils.extend(this, context, { $options: opts });
+  var options = component.$options;
 
   // Apply context
   ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach(function (cycleKey) {
-    if (component[cycleKey]) { component[cycleKey] = component[cycleKey].bind(context); }
+    if (options[cycleKey]) { options[cycleKey] = options[cycleKey].bind(component); }
   });
 
-  if (component.data) {
-    component.data = component.data.bind(context);
+  if (options.data) {
+    options.data = options.data.bind(component);
     // Data
-    Utils.extend(context, component.data());
+    Utils.extend(component, options.data());
   }
-  if (component.render) { component.render = component.render.bind(context); }
-  if (component.methods) {
-    Object.keys(component.methods).forEach(function (methodName) {
-      context[methodName] = component.methods[methodName].bind(context);
+  if (options.render) { options.render = options.render.bind(component); }
+  if (options.methods) {
+    Object.keys(options.methods).forEach(function (methodName) {
+      component[methodName] = options.methods[methodName].bind(component);
     });
   }
 
   // Bind Events
-  if (component.on) {
-    Object.keys(component.on).forEach(function (eventName) {
-      component.on[eventName] = component.on[eventName].bind(context);
+  if (options.on) {
+    Object.keys(options.on).forEach(function (eventName) {
+      options.on[eventName] = options.on[eventName].bind(component);
     });
   }
-  if (component.once) {
-    Object.keys(component.once).forEach(function (eventName) {
-      component.once[eventName] = component.once[eventName].bind(context);
+  if (options.once) {
+    Object.keys(options.once).forEach(function (eventName) {
+      options.once[eventName] = options.once[eventName].bind(component);
     });
   }
 
-  if (component.beforeCreate) { component.beforeCreate(); }
+  if (options.beforeCreate) { options.beforeCreate(); }
 
   // Watchers
-  if (component.watch) {
-    Object.keys(component.watch).forEach(function (watchKey) {
-      var dataKeyValue = component.context[watchKey];
-      Object.defineProperty(component.context, watchKey, {
+  if (options.watch) {
+    Object.keys(options.watch).forEach(function (watchKey) {
+      var dataKeyValue = component[watchKey];
+      Object.defineProperty(component, watchKey, {
         enumerable: true,
         configurable: true,
         set: function set(newValue) {
+          var previousValue = dataKeyValue;
           dataKeyValue = newValue;
-          component.watch[watchKey].call(context, dataKeyValue);
+          if (previousValue === newValue) { return; }
+          options.watch[watchKey].call(component, newValue, previousValue);
         },
         get: function get() {
           return dataKeyValue;
@@ -4746,21 +4761,27 @@ var Framework7Component = function Framework7Component(c, extendContext) {
   }
 
   // Render template
-  var html = '';
-  if (component.render) {
-    html = component.render();
-  } else if (component.template) {
-    if (typeof component.template === 'string') {
-      try {
-        html = Template7.compile(component.template)(context);
-      } catch (err) {
-        throw err;
+
+  function render() {
+    var html = '';
+    if (options.render) {
+      html = options.render();
+    } else if (options.template) {
+      if (typeof options.template === 'string') {
+        try {
+          html = Template7.compile(options.template)(component);
+        } catch (err) {
+          throw err;
+        }
+      } else {
+        // Supposed to be function
+        html = options.template(component);
       }
-    } else {
-      // Supposed to be function
-      html = component.template(context);
     }
+    return html;
   }
+
+  var html = render();
 
   // Make Dom
   if (html && typeof html === 'string') {
@@ -4771,11 +4792,11 @@ var Framework7Component = function Framework7Component(c, extendContext) {
     tempDom.appendChild(html);
   }
 
-  // Extend context with $el
+  // Extend component with $el
   var el = tempDom.children[0];
   var $el = $$1$1(el);
-  context.$el = $el;
-  context.el = el;
+  component.$el = $el;
+  component.el = el;
   component.el = el;
 
   // Find Events
@@ -4841,29 +4862,29 @@ var Framework7Component = function Framework7Component(c, extendContext) {
               else if (arg.indexOf('.') > 0) {
                 var deepArg;
                 arg.split('.').forEach(function (path) {
-                  if (!deepArg) { deepArg = context; }
+                  if (!deepArg) { deepArg = component; }
                   deepArg = deepArg[path];
                 });
                 arg = deepArg;
               } else {
-                arg = context[arg];
+                arg = component[arg];
               }
               customArgs.push(arg);
             });
           }
           if (methodName.indexOf('.') >= 0) {
             methodName.split('.').forEach(function (path, pathIndex) {
-              if (!method) { method = context; }
+              if (!method) { method = component; }
               if (method[path]) { method = method[path]; }
               else {
                 throw new Error(("Component doesn't have method \"" + (methodName.split('.').slice(0, pathIndex + 1).join('.')) + "\""));
               }
             });
           } else {
-            if (!context[methodName]) {
+            if (!component[methodName]) {
               throw new Error(("Component doesn't have method \"" + methodName + "\""));
             }
-            method = context[methodName];
+            method = component[methodName];
           }
           method.apply(void 0, customArgs);
         },
@@ -4873,24 +4894,24 @@ var Framework7Component = function Framework7Component(c, extendContext) {
 
   // Set styles scope ID
   var styleEl;
-  if (component.style) {
+  if (options.style) {
     styleEl = document.createElement('style');
-    styleEl.innerHTML = component.style;
+    styleEl.innerHTML = options.style;
   }
-  if (component.styleScopeId) {
-    el.setAttribute('data-scope', component.styleScopeId);
+  if (options.styleScopeId) {
+    el.setAttribute('data-scope', options.styleScopeId);
   }
 
   // Attach events
   function attachEvents() {
-    if (component.on) {
-      Object.keys(component.on).forEach(function (eventName) {
-        $el.on(Utils.eventNameToColonCase(eventName), component.on[eventName]);
+    if (options.on) {
+      Object.keys(options.on).forEach(function (eventName) {
+        $el.on(Utils.eventNameToColonCase(eventName), options.on[eventName]);
       });
     }
-    if (component.once) {
-      Object.keys(component.once).forEach(function (eventName) {
-        $el.once(Utils.eventNameToColonCase(eventName), component.once[eventName]);
+    if (options.once) {
+      Object.keys(options.once).forEach(function (eventName) {
+        $el.once(Utils.eventNameToColonCase(eventName), options.once[eventName]);
       });
     }
     events.forEach(function (event) {
@@ -4899,14 +4920,14 @@ var Framework7Component = function Framework7Component(c, extendContext) {
   }
 
   function detachEvents() {
-    if (component.on) {
-      Object.keys(component.on).forEach(function (eventName) {
-        $el.off(Utils.eventNameToColonCase(eventName), component.on[eventName]);
+    if (options.on) {
+      Object.keys(options.on).forEach(function (eventName) {
+        $el.off(Utils.eventNameToColonCase(eventName), options.on[eventName]);
       });
     }
-    if (component.once) {
-      Object.keys(component.once).forEach(function (eventName) {
-        $el.off(Utils.eventNameToColonCase(eventName), component.once[eventName]);
+    if (options.once) {
+      Object.keys(options.once).forEach(function (eventName) {
+        $el.off(Utils.eventNameToColonCase(eventName), options.once[eventName]);
       });
     }
     events.forEach(function (event) {
@@ -4917,27 +4938,28 @@ var Framework7Component = function Framework7Component(c, extendContext) {
   attachEvents();
 
   // Created callback
-  if (component.created) { component.created(); }
+  if (options.created) { options.created(); }
 
   // Mount
-  component.mount = function mount(mountMethod) {
-    if (component.beforeMount) { component.beforeMount(); }
+  component.$mount = function mount(mountMethod) {
+    if (options.beforeMount) { options.beforeMount(); }
     if (styleEl) { $$1$1('head').append(styleEl); }
     if (mountMethod) { mountMethod(el); }
-    if (component.mounted) { component.mounted(); }
+    if (options.mounted) { options.mounted(); }
   };
 
   // Destroy
-  component.destroy = function destroy() {
-    if (component.beforeDestroy) { component.beforeDestroy(); }
+  component.$destroy = function destroy() {
+    if (options.beforeDestroy) { options.beforeDestroy(); }
     if (styleEl) { $$1$1(styleEl).remove(); }
     detachEvents();
-    if (component.destroyed) { component.destroyed(); }
-    // Store component instance
+    if (options.destroyed) { options.destroyed(); }
+    // Delete component instance
     if (el && el.f7Component) {
       el.f7Component = null;
       delete el.f7Component;
     }
+    Utils.deleteProps(component);
     component = null;
   };
 
@@ -5521,13 +5543,13 @@ function SwipeBack(r) {
   }
 
   function attachEvents() {
-    var passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
+    var passiveListener = (app.touchEvents.start === 'touchstart' && Support.passiveListener) ? { passive: true, capture: false } : false;
     $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
     app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
   }
   function detachEvents() {
-    var passiveListener = (app.touchEvents.start === 'touchstart' && Support$1.passiveListener) ? { passive: true, capture: false } : false;
+    var passiveListener = (app.touchEvents.start === 'touchstart' && Support.passiveListener) ? { passive: true, capture: false } : false;
     $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
     app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
@@ -5753,7 +5775,7 @@ function forward(el, forwardOptions) {
   var f7Component = $newPage[0].f7Component;
   if (options.reloadPrevious) {
     if (f7Component && !newPageInDom) {
-      f7Component.mount(function (componentEl) {
+      f7Component.$mount(function (componentEl) {
         $$1$1(componentEl).insertBefore($oldPage);
       });
     } else {
@@ -5772,7 +5794,7 @@ function forward(el, forwardOptions) {
   } else {
     if ($oldPage.next('.page')[0] !== $newPage[0]) {
       if (f7Component && !newPageInDom) {
-        f7Component.mount(function (componentEl) {
+        f7Component.$mount(function (componentEl) {
           $viewEl.append(componentEl);
         });
       } else {
@@ -6128,8 +6150,9 @@ function navigate(navigateParams, navigateOptions) {
 }
 
 function tabLoad(tabRoute, loadOptions) {
-  if ( loadOptions === void 0 ) loadOptions = {};
+  var obj;
 
+  if ( loadOptions === void 0 ) loadOptions = {};
   var router = this;
   var options = Utils.extend({
     animate: router.params.animate,
@@ -6190,15 +6213,7 @@ function tabLoad(tabRoute, loadOptions) {
     }
   }
 
-  // Load Tab Content
-  var url = tabRoute.url;
-  var content = tabRoute.content;
-  var el = tabRoute.el;
-  var template = tabRoute.template;
-  var templateUrl = tabRoute.templateUrl;
-  var component = tabRoute.component;
-  var componentUrl = tabRoute.componentUrl;
-
+  // Tab Content Loaded
   function onTabLoaded(contentEl) {
     // Remove theme elements
     router.removeThemeElements($newTabEl);
@@ -6220,76 +6235,97 @@ function tabLoad(tabRoute, loadOptions) {
     }
   }
   if (!router.params.unloadTabContent) {
-    if ($newTabEl[0].f7RouterTabLoaded) { return; }
+    if ($newTabEl[0].f7RouterTabLoaded) { return router; }
   }
 
-  var on = tabRoute.on; if ( on === void 0 ) on = {};
-  var once = tabRoute.once; if ( once === void 0 ) once = {};
-  if (options.on) {
-    Utils.extend(on, options.on);
-  }
-  if (options.once) {
-    Utils.extend(once, options.once);
-  }
-
-  // Component/Template Callbacks
-  function resolve(contentEl) {
-    if (!contentEl) { return; }
-    if (typeof contentEl === 'string') {
-      $newTabEl.html(contentEl);
-    } else {
-      $newTabEl.html('');
-      if (contentEl.f7Component) {
-        contentEl.f7Component.mount(function (componentEl) {
-          $newTabEl.append(componentEl);
-        });
+  // Load Tab Content
+  function loadTab(loadTabParams, loadTabOptions) {
+    // Load Tab Props
+    var url = loadTabParams.url;
+    var content = loadTabParams.content;
+    var el = loadTabParams.el;
+    var template = loadTabParams.template;
+    var templateUrl = loadTabParams.templateUrl;
+    var component = loadTabParams.component;
+    var componentUrl = loadTabParams.componentUrl;
+    // Component/Template Callbacks
+    function resolve(contentEl) {
+      router.allowPageChange = true;
+      if (!contentEl) { return; }
+      if (typeof contentEl === 'string') {
+        $newTabEl.html(contentEl);
       } else {
-        $newTabEl.append(contentEl);
+        $newTabEl.html('');
+        if (contentEl.f7Component) {
+          contentEl.f7Component.$mount(function (componentEl) {
+            $newTabEl.append(componentEl);
+          });
+        } else {
+          $newTabEl.append(contentEl);
+        }
       }
+      if (!router.params.unloadTabContent) {
+        $newTabEl[0].f7RouterTabLoaded = true;
+      }
+      onTabLoaded(contentEl);
     }
-    if (!router.params.unloadTabContent) {
-      $newTabEl[0].f7RouterTabLoaded = true;
+    function reject() {
+      router.allowPageChange = true;
+      return router;
     }
-    onTabLoaded(contentEl);
-  }
-  function reject() {
-    router.allowPageChange = true;
-    return router;
+
+    if (content) {
+      resolve(content);
+    } else if (template || templateUrl) {
+      try {
+        router.tabTemplateLoader(template, templateUrl, loadTabOptions, resolve, reject);
+      } catch (err) {
+        router.allowPageChange = true;
+        throw err;
+      }
+    } else if (el) {
+      resolve(el);
+    } else if (component || componentUrl) {
+      // Load from component (F7/Vue/React/...)
+      try {
+        router.tabComponentLoader($newTabEl[0], component, componentUrl, loadTabOptions, resolve, reject);
+      } catch (err) {
+        router.allowPageChange = true;
+        throw err;
+      }
+    } else if (url) {
+      // Load using XHR
+      if (router.xhr) {
+        router.xhr.abort();
+        router.xhr = false;
+      }
+      router.xhrRequest(url, loadTabOptions)
+        .then(function (tabContent) {
+          resolve(tabContent);
+        })
+        .catch(function () {
+          router.allowPageChange = true;
+        });
+    }
   }
 
-  if (content) {
-    resolve(content);
-  } else if (template || templateUrl) {
-    try {
-      router.tabTemplateLoader(template, templateUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
+  ('url content component el componentUrl template templateUrl').split(' ').forEach(function (tabLoadProp) {
+    if (tabRoute[tabLoadProp]) {
+      loadTab(( obj = {}, obj[tabLoadProp] = tabRoute[tabLoadProp], obj ), options);
     }
-  } else if (el) {
-    resolve(el);
-  } else if (component || componentUrl) {
-    // Load from component (F7/Vue/React/...)
-    try {
-      router.tabComponentLoader($newTabEl[0], component, componentUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
-    }
-  } else if (url) {
-    // Load using XHR
-    if (router.xhr) {
-      router.xhr.abort();
-      router.xhr = false;
-    }
-    router.xhrRequest(url, options)
-      .then(function (tabContent) {
-        resolve(tabContent);
-      })
-      .catch(function () {
-        router.allowPageChange = true;
-      });
+  });
+
+  // Async
+  function asyncResolve(resolveParams, resolveOptions) {
+    loadTab(resolveParams, Utils.extend(options, resolveOptions));
   }
+  function asyncReject() {
+    router.allowPageChange = true;
+  }
+  if (tabRoute.async) {
+    tabRoute.async.call(router, router.currentRoute, router.previousRoute, asyncResolve, asyncReject);
+  }
+  return router;
 }
 function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   var router = this;
@@ -6297,15 +6333,16 @@ function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   router.emit('tabBeforeRemove', $oldTabEl[0], $newTabEl[0], tabRoute);
   $oldTabEl.children().each(function (index, tabChild) {
     if (tabChild.f7Component) {
-      tabChild.f7Component.destroy();
+      tabChild.f7Component.$destroy();
     }
   });
   router.removeTabContent($oldTabEl[0], tabRoute);
 }
 
 function modalLoad(modalType, route, loadOptions) {
-  if ( loadOptions === void 0 ) loadOptions = {};
+  var obj;
 
+  if ( loadOptions === void 0 ) loadOptions = {};
   var router = this;
   var app = router.app;
   var options = Utils.extend({
@@ -6317,13 +6354,6 @@ function modalLoad(modalType, route, loadOptions) {
 
   var modalParams = route.route[modalType];
   var modalRoute = route.route;
-
-  // Load Modal Props
-  var url = modalParams.url;
-  var template = modalParams.template;
-  var templateUrl = modalParams.templateUrl;
-  var component = modalParams.component;
-  var componentUrl = modalParams.componentUrl;
 
   function onModalLoaded() {
     // Create Modal
@@ -6348,7 +6378,7 @@ function modalLoad(modalType, route, loadOptions) {
       modal.emit(("modalBeforeRemove " + modalType + "BeforeRemove"), modal.el, route, modal);
       var modalComponent = modal.el.f7Component;
       if (modalComponent) {
-        modalComponent.destroy();
+        modalComponent.$destroy();
       }
       Utils.nextTick(function () {
         if (modalComponent) {
@@ -6394,59 +6424,90 @@ function modalLoad(modalType, route, loadOptions) {
     modal.open();
   }
 
-  // Component/Template Callbacks
-  function resolve(contentEl) {
-    if (contentEl) {
-      if (typeof contentEl === 'string') {
-        modalParams.content = contentEl;
-      } else if (contentEl.f7Component) {
-        contentEl.f7Component.mount(function (componentEl) {
-          modalParams.el = componentEl;
-          app.root.append(componentEl);
-        });
-      } else {
-        modalParams.el = contentEl;
+  // Load Modal Content
+  function loadModal(loadModalParams, loadModalOptions) {
+    // Load Modal Props
+    var url = loadModalParams.url;
+    var content = loadModalParams.content;
+    var template = loadModalParams.template;
+    var templateUrl = loadModalParams.templateUrl;
+    var component = loadModalParams.component;
+    var componentUrl = loadModalParams.componentUrl;
+
+    // Component/Template Callbacks
+    function resolve(contentEl) {
+      if (contentEl) {
+        if (typeof contentEl === 'string') {
+          modalParams.content = contentEl;
+        } else if (contentEl.f7Component) {
+          contentEl.f7Component.$mount(function (componentEl) {
+            modalParams.el = componentEl;
+            app.root.append(componentEl);
+          });
+        } else {
+          modalParams.el = contentEl;
+        }
+        onModalLoaded();
       }
+    }
+    function reject() {
+      router.allowPageChange = true;
+      return router;
+    }
+
+    if (content) {
+      resolve(content);
+    } else if (template || templateUrl) {
+      try {
+        router.modalTemplateLoader(template, templateUrl, loadModalOptions, resolve, reject);
+      } catch (err) {
+        router.allowPageChange = true;
+        throw err;
+      }
+    } else if (component || componentUrl) {
+      // Load from component (F7/Vue/React/...)
+      try {
+        router.modalComponentLoader(app.root[0], component, componentUrl, loadModalOptions, resolve, reject);
+      } catch (err) {
+        router.allowPageChange = true;
+        throw err;
+      }
+    } else if (url) {
+      // Load using XHR
+      if (router.xhr) {
+        router.xhr.abort();
+        router.xhr = false;
+      }
+      router.xhrRequest(url, loadModalOptions)
+        .then(function (modalContent) {
+          modalParams.content = modalContent;
+          onModalLoaded();
+        })
+        .catch(function () {
+          router.allowPageChange = true;
+        });
+    } else {
       onModalLoaded();
     }
   }
-  function reject() {
-    router.allowPageChange = true;
-    return router;
-  }
 
-  if (template || templateUrl) {
-    try {
-      router.modalTemplateLoader(template, templateUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
+  ('url content component el componentUrl template templateUrl').split(' ').forEach(function (modalLoadProp) {
+    if (modalParams[modalLoadProp]) {
+      loadModal(( obj = {}, obj[modalLoadProp] = modalParams[modalLoadProp], obj ), options);
     }
-  } else if (component || componentUrl) {
-    // Load from component (F7/Vue/React/...)
-    try {
-      router.modalComponentLoader(app.root[0], component, componentUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
-    }
-  } else if (url) {
-    // Load using XHR
-    if (router.xhr) {
-      router.xhr.abort();
-      router.xhr = false;
-    }
-    router.xhrRequest(url, options)
-      .then(function (modalContent) {
-        modalParams.content = modalContent;
-        onModalLoaded();
-      })
-      .catch(function () {
-        router.allowPageChange = true;
-      });
-  } else {
-    onModalLoaded();
+  });
+
+  // Async
+  function asyncResolve(resolveParams, resolveOptions) {
+    loadModal(resolveParams, Utils.extend(options, resolveOptions));
   }
+  function asyncReject() {
+    router.allowPageChange = true;
+  }
+  if (modalParams.async) {
+    modalParams.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
+  }
+  return router;
 }
 function modalRemove(modal) {
   Utils.extend(modal, { closeByRouter: true });
@@ -6583,7 +6644,7 @@ function backward(el, backwardOptions) {
   function insertPage() {
     if ($newPage.next($oldPage).length === 0) {
       if (!newPageInDom && f7Component) {
-        f7Component.mount(function (componentEl) {
+        f7Component.$mount(function (componentEl) {
           $$1$1(componentEl).insertBefore($oldPage);
         });
       } else {
@@ -7393,8 +7454,8 @@ var Router$1 = (function (Framework7Class$$1) {
     var router = this;
     var $el = $$1$1(el);
     if ($el.length === 0) { return; }
-    if ($el[0].f7Component && $el[0].f7Component.destroy) {
-      $el[0].f7Component.destroy();
+    if ($el[0].f7Component && $el[0].f7Component.$destroy) {
+      $el[0].f7Component.$destroy();
     }
     if (!router.params.removeElements) {
       return;
@@ -8351,9 +8412,9 @@ function initClicks(app) {
       // eslint-disable-next-line
       if (clickedLink.is(app.params.clicks.externalLinks) || (url && url.indexOf('javascript:') >= 0)) {
         var target = clickedLink.attr('target');
-        if (url && (target === '_system' || target === '_blank')) {
+        if (url && (target === '_system' || target === '_blank' || target === '_browser')) {
           e.preventDefault();
-          if (window.cordova && window.cordova.InAppBrowser) {
+          if (target !== '_browser' && window.cordova && window.cordova.InAppBrowser) {
             window.cordova.InAppBrowser.open(url, target);
           } else {
             window.open(url, target);
@@ -8409,12 +8470,12 @@ function initClicks(app) {
   function preventScrolling(e) {
     e.preventDefault();
   }
-  if (Support$1.touch && !Device.android) {
-    var activeListener = Support$1.passiveListener ? { passive: false, capture: false } : false;
+  if (Support.touch && !Device.android) {
+    var activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
     $$1$1(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
-var Clicks = {
+var ClicksModule = {
   name: 'clicks',
   params: {
     clicks: {
@@ -8430,7 +8491,7 @@ var Clicks = {
   },
 };
 
-var History$2 = {
+var HistoryModule = {
   name: 'history',
   static: {
     history: History,
@@ -8511,7 +8572,7 @@ var Storage = {
   },
 };
 
-var Storage$1 = {
+var StorageModule = {
   name: 'storage',
   static: {
     Storage: Storage,
@@ -9153,7 +9214,9 @@ var Navbar$1 = {
       ) {
         if (
           page.$el.find('.keep-navbar-on-scroll').length ||
-          page.$el.find('.keep-bars-on-scroll').length
+          page.$el.hasClass('keep-navbar-on-scroll') ||
+          page.$el.find('.keep-bars-on-scroll').length ||
+          page.$el.hasClass('keep-bars-on-scroll')
         ) {
           return;
         }
@@ -9406,7 +9469,9 @@ var Toolbar$1 = {
       ) {
         if (
           page.$el.find('.keep-toolbar-on-scroll').length ||
-          page.$el.find('.keep-bars-on-scroll').length
+          page.$el.hasClass('keep-toolbar-on-scroll') ||
+          page.$el.find('.keep-bars-on-scroll').length ||
+          page.$el.hasClass('keep-bars-on-scroll')
         ) {
           return;
         }
@@ -9915,8 +9980,10 @@ var Dialog$1 = (function (Modal) {
       if (button.close !== false) { dialog.close(); }
     }
     if (buttons && buttons.length > 0) {
-      $el.find('.dialog-button').each(function (index, buttonEl) {
-        $$1$1(buttonEl).on('click', buttonOnClick);
+      dialog.on('open', function () {
+        $el.find('.dialog-button').each(function (index, buttonEl) {
+          $$1$1(buttonEl).on('click', buttonOnClick);
+        });
       });
       dialog.on('close', function () {
         $el.find('.dialog-button').each(function (index, buttonEl) {
@@ -9962,6 +10029,14 @@ var Dialog$1 = (function (Modal) {
     });
 
     $el[0].f7Modal = dialog;
+
+    if (dialog.params.destroyOnClose) {
+      dialog.once('closed', function () {
+        setTimeout(function () {
+          dialog.destroy();
+        }, 0);
+      });
+    }
 
     return dialog;
   }
@@ -10065,6 +10140,7 @@ var Dialog = {
       preloaderTitle: 'Loading... ',
       progressTitle: 'Loading... ',
       closeByBackdropClick: false,
+      destroyPredefinedDialogs: true,
     },
   },
   static: {
@@ -10073,6 +10149,7 @@ var Dialog = {
   create: function create() {
     var app = this;
     var defaultDialogTitle = app.params.dialog.title || app.name;
+    var destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
     app.dialog = Utils.extend(
       ModalMethods({
         app: app,
@@ -10100,6 +10177,7 @@ var Dialog = {
               bold: true,
               onClick: callbackOk,
             }],
+            destroyOnClose: destroyOnClose,
           }).open();
         },
         prompt: function prompt() {
@@ -10131,6 +10209,7 @@ var Dialog = {
               if (index === 0 && callbackCancel) { callbackCancel(inputValue); }
               if (index === 1 && callbackOk) { callbackOk(inputValue); }
             },
+            destroyOnClose: destroyOnClose,
           }).open();
         },
         confirm: function confirm() {
@@ -10158,6 +10237,7 @@ var Dialog = {
                 bold: true,
                 onClick: callbackOk,
               } ],
+            destroyOnClose: destroyOnClose,
           }).open();
         },
         login: function login() {
@@ -10190,6 +10270,7 @@ var Dialog = {
               if (index === 0 && callbackCancel) { callbackCancel(username, password); }
               if (index === 1 && callbackOk) { callbackOk(username, password); }
             },
+            destroyOnClose: destroyOnClose,
           }).open();
         },
         password: function password() {
@@ -10221,6 +10302,7 @@ var Dialog = {
               if (index === 0 && callbackCancel) { callbackCancel(password); }
               if (index === 1 && callbackOk) { callbackOk(password); }
             },
+            destroyOnClose: destroyOnClose,
           }).open();
         },
         preloader: function preloader(title) {
@@ -10229,6 +10311,7 @@ var Dialog = {
             title: typeof title === 'undefined' ? app.params.dialog.preloaderTitle : title,
             content: ("<div class=\"preloader\">" + preloaderInner + "</div>"),
             cssClass: 'dialog-preloader',
+            destroyOnClose: destroyOnClose,
           }).open();
         },
         progress: function progress() {
@@ -10257,6 +10340,7 @@ var Dialog = {
             title: typeof title === 'undefined' ? app.params.dialog.progressTitle : title,
             cssClass: 'dialog-progress',
             content: ("\n              <div class=\"progressbar" + (infinite ? '-infinite' : '') + (color ? (" color-" + color) : '') + "\">\n                " + (!infinite ? '<span></span>' : '') + "\n              </div>\n            "),
+            destroyOnClose: destroyOnClose,
           });
           if (!infinite) { dialog.setProgress(progress); }
           return dialog.open();
@@ -10322,6 +10406,32 @@ var Popup$1 = (function (Modal) {
       type: 'popup',
     });
 
+    function handleClick(e) {
+      var target = e.target;
+      var $target = $$1$1(target);
+      if ($target.closest(popup.el).length === 0) {
+        if (
+          popup.params.closeByBackdropClick &&
+          popup.params.backdrop &&
+          popup.backdropEl &&
+          popup.backdropEl === target
+        ) {
+          popup.close();
+        }
+      }
+    }
+
+    popup.on('popupOpened', function () {
+      if (popup.params.closeByBackdropClick) {
+        app.on('click', handleClick);
+      }
+    });
+    popup.on('popupClose', function () {
+      if (popup.params.closeByBackdropClick) {
+        app.off('click', handleClick);
+      }
+    });
+
     $el[0].f7Modal = popup;
 
     return popup;
@@ -10365,11 +10475,6 @@ var Popup = {
 
       var app = this;
       app.popup.close(data.popup, data.animate);
-    },
-    '.popup-backdrop': function closePopup() {
-      var app = this;
-      if (!app.params.popup.closeByBackdropClick) { return; }
-      app.popup.close();
     },
   },
 };
@@ -10547,18 +10652,28 @@ var Popover$1 = (function (Modal) {
 
     function handleClick(e) {
       var target = e.target;
-      if ($$1$1(target).closest(popover.el).length === 0) {
-        popover.close();
+      var $target = $$1$1(target);
+      if ($target.closest(popover.el).length === 0) {
+        if (
+          popover.params.closeByBackdropClick &&
+          popover.params.backdrop &&
+          popover.backdropEl &&
+          popover.backdropEl === target
+        ) {
+          popover.close();
+        } else if (popover.params.closeByOutsideClick) {
+          popover.close();
+        }
       }
     }
 
     popover.on('popoverOpened', function () {
-      if (popover.params.closeByOutsideClick && !popover.params.backdrop) {
+      if (popover.params.closeByOutsideClick || popover.params.closeByBackdropClick) {
         app.on('click', handleClick);
       }
     });
     popover.on('popoverClose', function () {
-      if (popover.params.closeByOutsideClick && !popover.params.backdrop) {
+      if (popover.params.closeByOutsideClick || popover.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
     });
@@ -10722,7 +10837,7 @@ var Popover = {
   params: {
     popover: {
       closeByBackdropClick: true,
-      closeByOutsideClick: true,
+      closeByOutsideClick: false,
       backdrop: true,
     },
   },
@@ -10759,11 +10874,6 @@ var Popover = {
 
       var app = this;
       app.popover.close(data.popover, data.animate);
-    },
-    '.popover-backdrop': function closePopover() {
-      var app = this;
-      if (!app.params.popover.closeByBackdropClick) { return; }
-      app.popover.close();
     },
   },
 };
@@ -10920,6 +11030,32 @@ var Actions$1 = (function (Modal) {
       type: 'actions',
     });
 
+    function handleClick(e) {
+      var target = e.target;
+      var $target = $$1$1(target);
+      if ($target.closest(actions.el).length === 0) {
+        if (
+          actions.params.closeByBackdropClick &&
+          actions.params.backdrop &&
+          actions.backdropEl &&
+          actions.backdropEl === target
+        ) {
+          actions.close();
+        }
+      }
+    }
+
+    actions.on('opened', function () {
+      if (actions.params.closeByBackdropClick) {
+        app.on('click', handleClick);
+      }
+    });
+    actions.on('close', function () {
+      if (actions.params.closeByBackdropClick) {
+        app.off('click', handleClick);
+      }
+    });
+
     if ($el) {
       $el[0].f7Modal = actions;
     }
@@ -11023,21 +11159,16 @@ var Actions = {
       var app = this;
       app.actions.close(data.actions, data.animate);
     },
-    '.actions-backdrop': function closeActions() {
-      var app = this;
-      if (!app.params.actions.closeByBackdropClick) { return; }
-      app.actions.close();
-    },
   },
 };
 
 var Sheet$1 = (function (Modal) {
   function Sheet(app, params) {
-    var extendedParams = Utils.extend({
-      backdrop: app.theme === 'md',
-      closeByOutsideClick: app.params.sheet.closeByOutsideClick,
-      on: {},
-    }, params);
+    var extendedParams = Utils.extend(
+      { on: {} },
+      app.params.sheet,
+      params
+    );
 
     // Extends with open/close Modal methods;
     Modal.call(this, app, extendedParams);
@@ -11110,8 +11241,18 @@ var Sheet$1 = (function (Modal) {
     }
     function handleClick(e) {
       var target = e.target;
-      if ($$1$1(target).closest(sheet.el).length === 0) {
-        sheet.close();
+      var $target = $$1$1(target);
+      if ($target.closest(sheet.el).length === 0) {
+        if (
+          sheet.params.closeByBackdropClick &&
+          sheet.params.backdrop &&
+          sheet.backdropEl &&
+          sheet.backdropEl === target
+        ) {
+          sheet.close();
+        } else if (sheet.params.closeByOutsideClick) {
+          sheet.close();
+        }
       }
     }
 
@@ -11121,7 +11262,7 @@ var Sheet$1 = (function (Modal) {
       }
     });
     sheet.on('sheetOpened', function () {
-      if (sheet.params.closeByOutsideClick && !sheet.params.backdrop) {
+      if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
         app.on('click', handleClick);
       }
     });
@@ -11129,7 +11270,7 @@ var Sheet$1 = (function (Modal) {
       if (sheet.params.scrollToEl) {
         scrollToClose();
       }
-      if (sheet.params.closeByOutsideClick && !sheet.params.backdrop) {
+      if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
     });
@@ -11168,6 +11309,9 @@ var Sheet = {
   },
   create: function create() {
     var app = this;
+    if (!app.passedParams.sheet || !app.passedParams.sheet.backdrop) {
+      app.params.sheet.backdrop = app.theme === 'md';
+    }
     app.sheet = Utils.extend(
       {},
       ModalMethods({
@@ -11192,11 +11336,6 @@ var Sheet = {
 
       var app = this;
       app.sheet.close(data.sheet, data.animate);
-    },
-    '.sheet-backdrop': function closeSheet() {
-      var app = this;
-      if (!app.params.sheet.closeByBackdropClick) { return; }
-      app.sheet.close();
     },
   },
 };
@@ -12430,6 +12569,8 @@ var VirtualList$1 = (function (Framework7Class$$1) {
       searchByItem: undefined,
       searchAll: undefined,
       itemTemplate: undefined,
+      ul: null,
+      createUl: true,
       renderItem: function renderItem(item) {
         return ("\n          <li>\n            <div class=\"item-content\">\n              <div class=\"item-inner\">\n                <div class=\"item-title\">" + item + "</div>\n              </div>\n            </div>\n          </li>\n        ").trim();
       },
@@ -12474,14 +12615,21 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     }
 
     // Append <ul>
-    vl.$ul = vl.params.ul ? $$1$1(vl.params.ul) : vl.$el.children('ul');
-    if (vl.$ul.length === 0) {
+    var ul = vl.params.ul;
+    vl.$ul = ul ? $$1$1(vl.params.ul) : vl.$el.children('ul');
+    if (vl.$ul.length === 0 && vl.params.createUl) {
       vl.$el.append('<ul></ul>');
       vl.$ul = vl.$el.children('ul');
     }
     vl.ul = vl.$ul[0];
 
+    var $itemsWrapEl;
+    if (!vl.ul && !vl.params.createUl) { $itemsWrapEl = vl.$el; }
+    else { $itemsWrapEl = vl.$ul; }
+
     Utils.extend(vl, {
+      $itemsWrapEl: $itemsWrapEl,
+      itemsWrapEl: $itemsWrapEl[0],
       // DOM cached items
       domCache: {},
       displayDomCache: {},
@@ -12564,7 +12712,7 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     }
 
     if (vl.updatableScroll || vl.params.setListHeight) {
-      vl.$ul.css({ height: ((vl.listHeight) + "px") });
+      vl.$itemsWrapEl.css({ height: ((vl.listHeight) + "px") });
     }
   };
   VirtualList.prototype.render = function render (force, forceScrollTop) {
@@ -12666,9 +12814,9 @@ var VirtualList$1 = (function (Framework7Class$$1) {
     // Update list height with not updatable scroll
     if (!vl.updatableScroll) {
       if (vl.dynamicHeight) {
-        vl.ul.style.height = heightBeforeLastItem + "px";
+        vl.itemsWrapEl.style.height = heightBeforeLastItem + "px";
       } else {
-        vl.ul.style.height = ((i * vl.params.height) / vl.params.cols) + "px";
+        vl.itemsWrapEl.style.height = ((i * vl.params.height) / vl.params.cols) + "px";
       }
     }
 
@@ -12679,15 +12827,15 @@ var VirtualList$1 = (function (Framework7Class$$1) {
       }
     } else {
       vl.emit('local::beforeClear vlBeforeClear', vl, vl.fragment);
-      vl.ul.innerHTML = '';
+      vl.itemsWrapEl.innerHTML = '';
 
       vl.emit('local::itemsBeforeInsert vlItemsBeforeInsert', vl, vl.fragment);
 
       if (items && items.length === 0) {
         vl.reachEnd = true;
-        if (vl.params.emptyTemplate) { vl.ul.innerHTML = vl.params.emptyTemplate; }
+        if (vl.params.emptyTemplate) { vl.itemsWrapEl.innerHTML = vl.params.emptyTemplate; }
       } else {
-        vl.ul.appendChild(vl.fragment);
+        vl.itemsWrapEl.appendChild(vl.fragment);
       }
 
       vl.emit('local::itemsAfterInsert vlItemsAfterInsert', vl, vl.fragment);
@@ -13267,7 +13415,7 @@ function swipePanel$1(panel) {
       }
 
       if (params.swipe === 'both') {
-        if (params.swipeActiveArea > 0) {
+        if (params.swipeActiveArea > 0 && !panel.opened) {
           if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
             isTouched = false;
             return;
@@ -14485,7 +14633,7 @@ var Input$1 = {
         focus: Input.focus.bind(app),
         blur: Input.blur.bind(app),
         validate: Input.validate.bind(app),
-        validateInputs: Input.validate.bind(app),
+        validateInputs: Input.validateInputs.bind(app),
         checkEmptyState: Input.checkEmptyState.bind(app),
         resizeTextarea: Input.resizeTextarea.bind(app),
         init: Input.init.bind(app),
@@ -14672,8 +14820,8 @@ var Toggle$1 = (function (Framework7Class$$1) {
     }
     toggle.attachEvents = function attachEvents() {
       {
-        if (!Support$1.touch) { return; }
-        var passive = Support$1.passiveListener ? { passive: true } : false;
+        if (!Support.touch) { return; }
+        var passive = Support.passiveListener ? { passive: true } : false;
         $el.on(app.touchEvents.start, handleTouchStart, passive);
         app.on('touchmove', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
@@ -14682,8 +14830,8 @@ var Toggle$1 = (function (Framework7Class$$1) {
     };
     toggle.detachEvents = function detachEvents() {
       {
-        if (!Support$1.touch) { return; }
-        var passive = Support$1.passiveListener ? { passive: true } : false;
+        if (!Support.touch) { return; }
+        var passive = Support.passiveListener ? { passive: true } : false;
         $el.off(app.touchEvents.start, handleTouchStart, passive);
         app.off('touchmove', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
@@ -14977,7 +15125,7 @@ var Range$1 = (function (Framework7Class$$1) {
       range.layout();
     }
     range.attachEvents = function attachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support.passiveListener ? { passive: true } : false;
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
@@ -14985,7 +15133,7 @@ var Range$1 = (function (Framework7Class$$1) {
       app.on('resize', handleResize);
     };
     range.detachEvents = function detachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support.passiveListener ? { passive: true } : false;
       range.$el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
@@ -15244,11 +15392,11 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     }
     ss.attachEvents = function attachEvents() {
       $el.on('click', onClick);
-      $el.on('change', 'input[type="checkbox"], input[type="radio"]', onChange);
+      $el.on('change', 'select', onChange);
     };
     ss.detachEvents = function detachEvents() {
       $el.off('click', onClick);
-      $el.off('change', 'input[type="checkbox"], input[type="radio"]', onChange);
+      $el.off('change', 'select', onChange);
     };
 
     function handleInputChange() {
@@ -17707,9 +17855,7 @@ var Picker$1 = (function (Framework7Class$$1) {
     }
     picker.value = newValue;
     picker.displayValue = newDisplayValue;
-    if (picker.params.onChange) {
-      picker.emit('local::change pickerChange', picker, picker.value, picker.displayValue);
-    }
+    picker.emit('local::change pickerChange', picker, picker.value, picker.displayValue);
     if (picker.inputEl) {
       picker.$inputEl.val(picker.formatValue());
       picker.$inputEl.trigger('change');
@@ -18388,13 +18534,13 @@ var PullToRefresh$1 = (function (Framework7Class$$1) {
 
     // Events
     ptr.attachEvents = function attachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support.passiveListener ? { passive: true } : false;
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
     };
     ptr.detachEvents = function detachEvents() {
-      var passive = Support$1.passiveListener ? { passive: true } : false;
+      var passive = Support.passiveListener ? { passive: true } : false;
       $el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
@@ -19241,7 +19387,7 @@ var Searchbar$1 = (function (FrameworkClass) {
       $inputEl: $inputEl,
       inputEl: $inputEl[0],
       $disableButtonEl: $disableButtonEl,
-      disableButtonEl: $disableButtonEl[0],
+      disableButtonEl: $disableButtonEl && $disableButtonEl[0],
       disableButtonHasMargin: false,
       $pageEl: $pageEl,
       pageEl: $pageEl && $pageEl[0],
@@ -20818,7 +20964,7 @@ var updateSlides = function () {
     rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
     $wrapperEl.css({ width: ((swiper.virtualSize + params.spaceBetween) + "px") });
   }
-  if (!Support$1.flexbox || params.setWrapperSize) {
+  if (!Support.flexbox || params.setWrapperSize) {
     if (swiper.isHorizontal()) { $wrapperEl.css({ width: ((swiper.virtualSize + params.spaceBetween) + "px") }); }
     else { $wrapperEl.css({ height: ((swiper.virtualSize + params.spaceBetween) + "px") }); }
   }
@@ -21209,7 +21355,7 @@ var setTranslate = function (translate, byController) {
   }
 
   if (!params.virtualTranslate) {
-    if (Support$1.transforms3d) { $wrapperEl.transform(("translate3d(" + x + "px, " + y + "px, " + z + "px)")); }
+    if (Support.transforms3d) { $wrapperEl.transform(("translate3d(" + x + "px, " + y + "px, " + z + "px)")); }
     else { $wrapperEl.transform(("translate(" + x + "px, " + y + "px)")); }
   }
 
@@ -21601,7 +21747,7 @@ var loop = {
 
 var setGrabCursor = function (moving) {
   var swiper = this;
-  if (Support$1.touch || !swiper.params.simulateTouch) { return; }
+  if (Support.touch || !swiper.params.simulateTouch) { return; }
   var el = swiper.el;
   el.style.cursor = 'move';
   el.style.cursor = moving ? '-webkit-grabbing' : '-webkit-grab';
@@ -21611,7 +21757,7 @@ var setGrabCursor = function (moving) {
 
 var unsetGrabCursor = function () {
   var swiper = this;
-  if (Support$1.touch) { return; }
+  if (Support.touch) { return; }
   swiper.el.style.cursor = '';
 };
 
@@ -21637,7 +21783,7 @@ var appendSlide = function (slides) {
   if (params.loop) {
     swiper.loopCreate();
   }
-  if (!(params.observer && Support$1.observer)) {
+  if (!(params.observer && Support.observer)) {
     swiper.update();
   }
 };
@@ -21663,7 +21809,7 @@ var prependSlide = function (slides) {
   if (params.loop) {
     swiper.loopCreate();
   }
-  if (!(params.observer && Support$1.observer)) {
+  if (!(params.observer && Support.observer)) {
     swiper.update();
   }
   swiper.slideTo(newActiveIndex, 0, false);
@@ -21700,7 +21846,7 @@ var removeSlide = function (slidesIndexes) {
     swiper.loopCreate();
   }
 
-  if (!(params.observer && Support$1.observer)) {
+  if (!(params.observer && Support.observer)) {
     swiper.update();
   }
   if (params.loop) {
@@ -22313,16 +22459,16 @@ function attachEvents() {
   {
     if (Browser.ie) {
       target.addEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support$1.touch ? target : document).addEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support$1.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      (Support.touch ? target : document).addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      (Support.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
-      if (Support$1.touch) {
-        var passiveListener = touchEvents.start === 'touchstart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      if (Support.touch) {
+        var passiveListener = touchEvents.start === 'touchstart' && Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.addEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
-        target.addEventListener(touchEvents.move, swiper.onTouchMove, Support$1.passiveListener ? { passive: false, capture: capture } : capture);
+        target.addEventListener(touchEvents.move, swiper.onTouchMove, Support.passiveListener ? { passive: false, capture: capture } : capture);
         target.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
-      if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support$1.touch && Device.ios)) {
+      if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support.touch && Device.ios)) {
         target.addEventListener('mousedown', swiper.onTouchStart, false);
         document.addEventListener('mousemove', swiper.onTouchMove, capture);
         document.addEventListener('mouseup', swiper.onTouchEnd, false);
@@ -22353,16 +22499,16 @@ function detachEvents() {
   {
     if (Browser.ie) {
       target.removeEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support$1.touch ? target : document).removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support$1.touch ? target : document).removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      (Support.touch ? target : document).removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      (Support.touch ? target : document).removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
-      if (Support$1.touch) {
-        var passiveListener = touchEvents.start === 'onTouchStart' && Support$1.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      if (Support.touch) {
+        var passiveListener = touchEvents.start === 'onTouchStart' && Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
         target.removeEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
         target.removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
         target.removeEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
       }
-      if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support$1.touch && Device.ios)) {
+      if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support.touch && Device.ios)) {
         target.removeEventListener('mousedown', swiper.onTouchStart, false);
         document.removeEventListener('mousemove', swiper.onTouchMove, capture);
         document.removeEventListener('mouseup', swiper.onTouchEnd, false);
@@ -22449,7 +22595,7 @@ var addClasses = function () {
   if (params.freeMode) {
     suffixes.push('free-mode');
   }
-  if (!Support$1.flexbox) {
+  if (!Support.flexbox) {
     suffixes.push('no-flexbox');
   }
   if (params.autoHeight) {
@@ -22824,9 +22970,9 @@ var Swiper$2 = (function (SwiperClass$$1) {
         }
 
         return {
-          start: Support$1.touch || !swiper.params.simulateTouch ? touch[0] : desktop[0],
-          move: Support$1.touch || !swiper.params.simulateTouch ? touch[1] : desktop[1],
-          end: Support$1.touch || !swiper.params.simulateTouch ? touch[2] : desktop[2],
+          start: Support.touch || !swiper.params.simulateTouch ? touch[0] : desktop[0],
+          move: Support.touch || !swiper.params.simulateTouch ? touch[1] : desktop[1],
+          end: Support.touch || !swiper.params.simulateTouch ? touch[2] : desktop[2],
         };
       }()),
       touchEventsData: {
@@ -23080,7 +23226,7 @@ var Swiper$2 = (function (SwiperClass$$1) {
   return Swiper;
 }(Framework7Class));
 
-var Device$4 = {
+var Device$3 = {
   name: 'device',
   proto: {
     device: Device,
@@ -23090,13 +23236,13 @@ var Device$4 = {
   },
 };
 
-var Support$4 = {
+var Support$3 = {
   name: 'support',
   proto: {
-    support: Support$1,
+    support: Support,
   },
   static: {
-    support: Support$1,
+    support: Support,
   },
 };
 
@@ -23110,7 +23256,7 @@ var Browser$2 = {
   },
 };
 
-var Resize$1 = {
+var Resize = {
   name: 'resize',
   create: function create() {
     var swiper = this;
@@ -23168,7 +23314,7 @@ var Observer = {
   },
   init: function init() {
     var swiper = this;
-    if (!Support$1.observer || !swiper.params.observer) { return; }
+    if (!Support.observer || !swiper.params.observer) { return; }
     if (swiper.params.observeParents) {
       var containerParents = swiper.$el.parents();
       for (var i = 0; i < containerParents.length; i += 1) {
@@ -23866,14 +24012,14 @@ var Scrollbar = {
       newSize = trackSize - newPos;
     }
     if (swiper.isHorizontal()) {
-      if (Support$1.transforms3d) {
+      if (Support.transforms3d) {
         $dragEl.transform(("translate3d(" + newPos + "px, 0, 0)"));
       } else {
         $dragEl.transform(("translateX(" + newPos + "px)"));
       }
       $dragEl[0].style.width = newSize + "px";
     } else {
-      if (Support$1.transforms3d) {
+      if (Support.transforms3d) {
         $dragEl.transform(("translate3d(0px, " + newPos + "px, 0)"));
       } else {
         $dragEl.transform(("translateY(" + newPos + "px)"));
@@ -24028,7 +24174,7 @@ var Scrollbar = {
     if (!swiper.params.scrollbar.el) { return; }
     var scrollbar = swiper.scrollbar;
     var $el = scrollbar.$el;
-    var target = Support$1.touch ? $el[0] : document;
+    var target = Support.touch ? $el[0] : document;
     $el.on(swiper.scrollbar.dragEvents.start, swiper.scrollbar.onDragStart);
     $$1$1(target).on(swiper.scrollbar.dragEvents.move, swiper.scrollbar.onDragMove);
     $$1$1(target).on(swiper.scrollbar.dragEvents.end, swiper.scrollbar.onDragEnd);
@@ -24038,7 +24184,7 @@ var Scrollbar = {
     if (!swiper.params.scrollbar.el) { return; }
     var scrollbar = swiper.scrollbar;
     var $el = scrollbar.$el;
-    var target = Support$1.touch ? $el[0] : document;
+    var target = Support.touch ? $el[0] : document;
     $el.off(swiper.scrollbar.dragEvents.start);
     $$1$1(target).off(swiper.scrollbar.dragEvents.move);
     $$1$1(target).off(swiper.scrollbar.dragEvents.end);
@@ -24063,7 +24209,7 @@ var Scrollbar = {
     }
 
     swiper.scrollbar.dragEvents = (function dragEvents() {
-      if ((swiper.params.simulateTouch === false && !Support$1.touch)) {
+      if ((swiper.params.simulateTouch === false && !Support.touch)) {
         return {
           start: 'mousedown',
           move: 'mousemove',
@@ -24299,7 +24445,7 @@ var Zoom = {
     var gesture = zoom.gesture;
     zoom.fakeGestureTouched = false;
     zoom.fakeGestureMoved = false;
-    if (!Support$1.gestures) {
+    if (!Support.gestures) {
       if (e.type !== 'touchstart' || (e.type === 'touchstart' && e.targetTouches.length < 2)) {
         return;
       }
@@ -24325,7 +24471,7 @@ var Zoom = {
     var params = swiper.params.zoom;
     var zoom = swiper.zoom;
     var gesture = zoom.gesture;
-    if (!Support$1.gestures) {
+    if (!Support.gestures) {
       if (e.type !== 'touchmove' || (e.type === 'touchmove' && e.targetTouches.length < 2)) {
         return;
       }
@@ -24333,7 +24479,7 @@ var Zoom = {
       gesture.scaleMove = Zoom.getDistanceBetweenTouches(e);
     }
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
-    if (Support$1.gestures) {
+    if (Support.gestures) {
       swiper.zoom.scale = e.scale * zoom.currentScale;
     } else {
       zoom.scale = (gesture.scaleMove / gesture.scaleStart) * zoom.currentScale;
@@ -24351,7 +24497,7 @@ var Zoom = {
     var params = swiper.params.zoom;
     var zoom = swiper.zoom;
     var gesture = zoom.gesture;
-    if (!Support$1.gestures) {
+    if (!Support.gestures) {
       if (!zoom.fakeGestureTouched || !zoom.fakeGestureMoved) {
         return;
       }
@@ -24657,10 +24803,10 @@ var Zoom = {
 
     var slides = swiper.slides;
 
-    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support$1.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
 
     // Scale image
-    if (Support$1.gestures) {
+    if (Support.gestures) {
       slides.on('gesturestart', zoom.onGestureStart, passiveListener);
       slides.on('gesturechange', zoom.onGestureChange, passiveListener);
       slides.on('gestureend', zoom.onGestureEnd, passiveListener);
@@ -24687,10 +24833,10 @@ var Zoom = {
 
     var slides = swiper.slides;
 
-    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support$1.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    var passiveListener = swiper.touchEvents.start === 'touchstart' && Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
 
     // Scale image
-    if (Support$1.gestures) {
+    if (Support.gestures) {
       slides.off('gesturestart', zoom.onGestureStart, passiveListener);
       slides.off('gesturechange', zoom.onGestureChange, passiveListener);
       slides.off('gestureend', zoom.onGestureEnd, passiveListener);
@@ -26034,10 +26180,10 @@ var EffectCoverflow = {
 // Core Modules
 // Components
 Swiper$2.use([
-  Device$4,
+  Device$3,
   Browser$2,
-  Support$4,
-  Resize$1,
+  Support$3,
+  Resize,
   Observer$1,
   Virtual$1,
   Navigation$1,
@@ -27558,7 +27704,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
         backdropEl: $el.find('.searchbar-backdrop'),
         customSearch: true,
         on: {
-          searchbarSearch: function searchbarSearch(query) {
+          searchbarSearch: function searchbarSearch(sb, query) {
             if (query.length === 0 && ac.searchbar.enabled) {
               ac.searchbar.backdropShow();
             } else {
@@ -28096,6 +28242,9 @@ var Typography = {
 };
 
 // F7 Class
+// Import Helpers
+
+
 // Core Modules
 // Core Components
 {
@@ -28108,16 +28257,16 @@ var Typography = {
 
 // Install Core Modules & Components
 Framework7$1.use([
-  Device$2,
-  Support,
-  Utils$2,
-  Resize,
-  Request,
-  Touch,
-  Clicks,
+  DeviceModule,
+  SupportModule,
+  UtilsModule,
+  ResizeModule,
+  RequestModule,
+  TouchModule,
+  ClicksModule,
   Router,
-  History$2,
-  Storage$1,
+  HistoryModule,
+  StorageModule,
   Statusbar$1,
   View$2,
   Navbar$1,

@@ -230,7 +230,7 @@ export default {
         focus: Input.focus.bind(app),
         blur: Input.blur.bind(app),
         validate: Input.validate.bind(app),
-        validateInputs: Input.validate.bind(app),
+        validateInputs: Input.validateInputs.bind(app),
         checkEmptyState: Input.checkEmptyState.bind(app),
         resizeTextarea: Input.resizeTextarea.bind(app),
         init: Input.init.bind(app),

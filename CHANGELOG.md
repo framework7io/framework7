@@ -1,5 +1,21 @@
 # Change Log
 
+# [v2.0.7](https://github.com/framework7io/framework7/compare/v2.0.6...v2.0.7) - January 27, 2018
+  * Picker
+    * Fixed issue with `change` event not being fired
+  * Panel
+    * Fixed issue with closing swipe panel with `swipeActiveArea` parameter
+  * Router
+    * `async` route support for routable tabs
+    * `async` route support for routable modals
+  * Virutal List
+    * New `ul` and `createUl` parameters. When disabled then VL can be used with any elements not expecting the list only
+  * Dialog
+    * New `app.destroyPredefinedDialogs` parameter to automatically destroy predefined dialogs like Alert, Confirm, Prompt, etc.
+  * Package
+    * Now ES-next modules have named export in addition to default, it exports `{ Template7, Dom7, Utils, Request, Device, Support }`
+  * Minor fixes
+
 # [v2.0.6](https://github.com/framework7io/framework7/compare/v2.0.5...v2.0.6) - January 9, 2018
   * Photo Browser
     * Fixed isse with wrong navbar color when color theme applied

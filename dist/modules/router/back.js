@@ -133,7 +133,7 @@ function backward(el, backwardOptions) {
   function insertPage() {
     if ($newPage.next($oldPage).length === 0) {
       if (!newPageInDom && f7Component) {
-        f7Component.mount((componentEl) => {
+        f7Component.$mount((componentEl) => {
           $(componentEl).insertBefore($oldPage);
         });
       } else {

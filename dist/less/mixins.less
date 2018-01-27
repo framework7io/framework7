@@ -128,6 +128,12 @@
     .item-inner, .list-button, .item-divider, .list-group-title, .list-group-title {
       .hairline-remove(bottom);
     }
+    &.simple-list li {
+      .hairline-remove(bottom);
+    }
+    &.links-list a {
+      .hairline-remove(bottom);
+    }
   }
 }
 // Hairlines
@@ -296,7 +302,6 @@
     position: absolute;
     left: -26%;
     top: -26%;
-    background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
     background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
     background-repeat: no-repeat;
     background-position: center;
@@ -312,7 +317,6 @@
 }
 .md-link-highlight-color(@color) {
   &:before {
-    background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
     background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
   }
 }

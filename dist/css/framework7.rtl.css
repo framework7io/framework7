@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.6
+ * Framework7 2.0.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 9, 2018
+ * Released on: January 27, 2018
  */
 html {
   direction: rtl;
@@ -1223,7 +1223,6 @@ html.with-statusbar.device-iphone-x .panel {
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
@@ -1871,7 +1870,6 @@ html.with-statusbar.device-iphone-x .panel {
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
@@ -2039,7 +2037,7 @@ html.with-statusbar.device-iphone-x .panel {
   -webkit-transform: translate3d(0, -128px, 0);
   transform: translate3d(0, -128px, 0);
 }
-.md .navbar.navbar-hidden + .toolbar:not(.toolbar-bottom-md):not(.messagebar) {
+.md .navbar.navbar-hidden + .toolbar:not(.toolbar-bottom-md):not(.messagebar):not(.toolbar-hidden) {
   -webkit-transform: translate3d(0, -56px, 0);
   transform: translate3d(0, -56px, 0);
 }
@@ -2055,7 +2053,7 @@ html.with-statusbar.device-iphone-x .panel {
   .md .navbar + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
     padding-top: 136px;
   }
-  .md .navbar.navbar-hidden + .toolbar:not(.toolbar-bottom-md) {
+  .md .navbar.navbar-hidden + .toolbar:not(.toolbar-bottom-md):not(.messagebar):not(.toolbar-hidden) {
     -webkit-transform: translate3d(0, -64px, 0);
     transform: translate3d(0, -64px, 0);
   }
@@ -2063,7 +2061,7 @@ html.with-statusbar.device-iphone-x .panel {
     -webkit-transform: translate3d(0, -112px, 0);
     transform: translate3d(0, -112px, 0);
   }
-  .md .navbar + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom-md) {
+  .md .navbar + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom-md):not(.messagebar) {
     -webkit-transform: translate3d(0, -136px, 0);
     transform: translate3d(0, -136px, 0);
   }
@@ -2414,7 +2412,6 @@ html.with-statusbar.device-iphone-x .panel {
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
@@ -2683,6 +2680,7 @@ html.with-statusbar.device-iphone-x .panel {
   text-transform: uppercase;
   color: #6d6d72;
   margin: 35px 15px 10px;
+  line-height: 17px;
 }
 .ios .block-title + .list,
 .ios .block-title + .block,
@@ -3237,8 +3235,12 @@ html.with-statusbar.device-iphone-x .panel {
 .list li:last-child .list-button:after {
   display: none !important;
 }
-.list li:last-child .item-inner:after,
-.list li:last-child li:last-child .item-inner:after {
+.list li:last-child > .item-inner:after,
+.list li:last-child li:last-child > .item-inner:after,
+.list li:last-child > .item-content > .item-inner:after,
+.list li:last-child li:last-child > .item-content > .item-inner:after,
+.list li:last-child > .item-link > .item-content > .item-inner:after,
+.list li:last-child li:last-child > .item-link > .item-content > .item-inner:after {
   display: none !important;
 }
 .list.no-hairlines:before,
@@ -3288,6 +3290,16 @@ html.with-statusbar.device-iphone-x .panel {
 .list.no-hairlines-between .list-group-title:after,
 .md .list.no-hairlines-between-md .list-group-title:after,
 .ios .list.no-hairlines-between-ios .list-group-title:after {
+  display: none !important;
+}
+.list.no-hairlines-between.simple-list li:after,
+.md .list.no-hairlines-between-md.simple-list li:after,
+.ios .list.no-hairlines-between-ios.simple-list li:after {
+  display: none !important;
+}
+.list.no-hairlines-between.links-list a:after,
+.md .list.no-hairlines-between-md.links-list a:after,
+.ios .list.no-hairlines-between-ios.links-list a:after {
   display: none !important;
 }
 .list.simple-list li {
@@ -4225,7 +4237,7 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
   margin-right: 16px;
 }
 .md .list .item-cell:first-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .md .list ul ul {
   padding-right: 56px;
@@ -17543,7 +17555,6 @@ label.item-radio.disabled,
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.15) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.15) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.15) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
@@ -17659,7 +17670,6 @@ label.item-radio.disabled,
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
@@ -19089,7 +19099,6 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
@@ -20599,7 +20608,6 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
@@ -20645,7 +20653,6 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
@@ -21716,7 +21723,6 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;
@@ -21810,7 +21816,6 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 66%, rgba(255, 255, 255, 0) 66%);
   background-repeat: no-repeat;
@@ -23539,7 +23544,6 @@ html.with-statusbar.device-iphone-x .notification {
   position: absolute;
   left: -26%;
   top: -26%;
-  background-image: -webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
   background-repeat: no-repeat;

@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.6
+ * Framework7 2.0.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 9, 2018
+ * Released on: January 27, 2018
  */
 html {
   direction: rtl;
@@ -1801,6 +1801,7 @@ html.with-statusbar.device-iphone-x .panel {
   text-transform: uppercase;
   color: #6d6d72;
   margin: 35px 15px 10px;
+  line-height: 17px;
 }
 .ios .block-title + .list,
 .ios .block-title + .block,
@@ -2222,8 +2223,12 @@ html.with-statusbar.device-iphone-x .panel {
 .list li:last-child .list-button:after {
   display: none !important;
 }
-.list li:last-child .item-inner:after,
-.list li:last-child li:last-child .item-inner:after {
+.list li:last-child > .item-inner:after,
+.list li:last-child li:last-child > .item-inner:after,
+.list li:last-child > .item-content > .item-inner:after,
+.list li:last-child li:last-child > .item-content > .item-inner:after,
+.list li:last-child > .item-link > .item-content > .item-inner:after,
+.list li:last-child li:last-child > .item-link > .item-content > .item-inner:after {
   display: none !important;
 }
 .list.no-hairlines:before,
@@ -2273,6 +2278,16 @@ html.with-statusbar.device-iphone-x .panel {
 .list.no-hairlines-between .list-group-title:after,
 .md .list.no-hairlines-between-md .list-group-title:after,
 .ios .list.no-hairlines-between-ios .list-group-title:after {
+  display: none !important;
+}
+.list.no-hairlines-between.simple-list li:after,
+.md .list.no-hairlines-between-md.simple-list li:after,
+.ios .list.no-hairlines-between-ios.simple-list li:after {
+  display: none !important;
+}
+.list.no-hairlines-between.links-list a:after,
+.md .list.no-hairlines-between-md.links-list a:after,
+.ios .list.no-hairlines-between-ios.links-list a:after {
   display: none !important;
 }
 .list.simple-list li {

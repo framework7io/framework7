@@ -93,18 +93,28 @@ class Popover extends Modal {
 
     function handleClick(e) {
       const target = e.target;
-      if ($(target).closest(popover.el).length === 0) {
-        popover.close();
+      const $target = $(target);
+      if ($target.closest(popover.el).length === 0) {
+        if (
+          popover.params.closeByBackdropClick &&
+          popover.params.backdrop &&
+          popover.backdropEl &&
+          popover.backdropEl === target
+        ) {
+          popover.close();
+        } else if (popover.params.closeByOutsideClick) {
+          popover.close();
+        }
       }
     }
 
     popover.on('popoverOpened', () => {
-      if (popover.params.closeByOutsideClick && !popover.params.backdrop) {
+      if (popover.params.closeByOutsideClick || popover.params.closeByBackdropClick) {
         app.on('click', handleClick);
       }
     });
     popover.on('popoverClose', () => {
-      if (popover.params.closeByOutsideClick && !popover.params.backdrop) {
+      if (popover.params.closeByOutsideClick || popover.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
     });

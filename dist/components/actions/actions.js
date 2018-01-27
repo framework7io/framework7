@@ -33,10 +33,5 @@ export default {
       const app = this;
       app.actions.close(data.actions, data.animate);
     },
-    '.actions-backdrop': function closeActions() {
-      const app = this;
-      if (!app.params.actions.closeByBackdropClick) return;
-      app.actions.close();
-    },
   },
 };

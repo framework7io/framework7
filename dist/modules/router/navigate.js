@@ -192,7 +192,7 @@ function forward(el, forwardOptions = {}) {
   const f7Component = $newPage[0].f7Component;
   if (options.reloadPrevious) {
     if (f7Component && !newPageInDom) {
-      f7Component.mount((componentEl) => {
+      f7Component.$mount((componentEl) => {
         $(componentEl).insertBefore($oldPage);
       });
     } else {
@@ -211,7 +211,7 @@ function forward(el, forwardOptions = {}) {
   } else {
     if ($oldPage.next('.page')[0] !== $newPage[0]) {
       if (f7Component && !newPageInDom) {
-        f7Component.mount((componentEl) => {
+        f7Component.$mount((componentEl) => {
           $viewEl.append(componentEl);
         });
       } else {

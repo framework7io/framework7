@@ -86,7 +86,7 @@ function swipePanel(panel) {
       }
 
       if (params.swipe === 'both') {
-        if (params.swipeActiveArea > 0) {
+        if (params.swipeActiveArea > 0 && !panel.opened) {
           if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
             isTouched = false;
             return;

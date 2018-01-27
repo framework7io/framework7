@@ -571,7 +571,7 @@ class Autocomplete extends Framework7Class {
         backdropEl: $el.find('.searchbar-backdrop'),
         customSearch: true,
         on: {
-          searchbarSearch(query) {
+          searchbarSearch(sb, query) {
             if (query.length === 0 && ac.searchbar.enabled) {
               ac.searchbar.backdropShow();
             } else {

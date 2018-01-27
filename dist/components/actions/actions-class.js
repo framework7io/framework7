@@ -149,6 +149,32 @@ class Actions extends Modal {
       type: 'actions',
     });
 
+    function handleClick(e) {
+      const target = e.target;
+      const $target = $(target);
+      if ($target.closest(actions.el).length === 0) {
+        if (
+          actions.params.closeByBackdropClick &&
+          actions.params.backdrop &&
+          actions.backdropEl &&
+          actions.backdropEl === target
+        ) {
+          actions.close();
+        }
+      }
+    }
+
+    actions.on('opened', () => {
+      if (actions.params.closeByBackdropClick) {
+        app.on('click', handleClick);
+      }
+    });
+    actions.on('close', () => {
+      if (actions.params.closeByBackdropClick) {
+        app.off('click', handleClick);
+      }
+    });
+
     if ($el) {
       $el[0].f7Modal = actions;
     }

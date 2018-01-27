@@ -60,9 +60,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     }
   }
 
-  // Load Tab Content
-  const { url, content, el, template, templateUrl, component, componentUrl } = tabRoute;
-
+  // Tab Content Loaded
   function onTabLoaded(contentEl) {
     // Remove theme elements
     router.removeThemeElements($newTabEl);
@@ -84,75 +82,91 @@ function tabLoad(tabRoute, loadOptions = {}) {
     }
   }
   if (!router.params.unloadTabContent) {
-    if ($newTabEl[0].f7RouterTabLoaded) return;
+    if ($newTabEl[0].f7RouterTabLoaded) return router;
   }
 
-  const { on = {}, once = {} } = tabRoute;
-  if (options.on) {
-    Utils.extend(on, options.on);
-  }
-  if (options.once) {
-    Utils.extend(once, options.once);
-  }
-
-  // Component/Template Callbacks
-  function resolve(contentEl) {
-    if (!contentEl) return;
-    if (typeof contentEl === 'string') {
-      $newTabEl.html(contentEl);
-    } else {
-      $newTabEl.html('');
-      if (contentEl.f7Component) {
-        contentEl.f7Component.mount((componentEl) => {
-          $newTabEl.append(componentEl);
-        });
+  // Load Tab Content
+  function loadTab(loadTabParams, loadTabOptions) {
+    // Load Tab Props
+    const { url, content, el, template, templateUrl, component, componentUrl } = loadTabParams;
+    // Component/Template Callbacks
+    function resolve(contentEl) {
+      router.allowPageChange = true;
+      if (!contentEl) return;
+      if (typeof contentEl === 'string') {
+        $newTabEl.html(contentEl);
       } else {
-        $newTabEl.append(contentEl);
+        $newTabEl.html('');
+        if (contentEl.f7Component) {
+          contentEl.f7Component.$mount((componentEl) => {
+            $newTabEl.append(componentEl);
+          });
+        } else {
+          $newTabEl.append(contentEl);
+        }
       }
+      if (!router.params.unloadTabContent) {
+        $newTabEl[0].f7RouterTabLoaded = true;
+      }
+      onTabLoaded(contentEl);
     }
-    if (!router.params.unloadTabContent) {
-      $newTabEl[0].f7RouterTabLoaded = true;
+    function reject() {
+      router.allowPageChange = true;
+      return router;
     }
-    onTabLoaded(contentEl);
-  }
-  function reject() {
-    router.allowPageChange = true;
-    return router;
+
+    if (content) {
+      resolve(content);
+    } else if (template || templateUrl) {
+      try {
+        router.tabTemplateLoader(template, templateUrl, loadTabOptions, resolve, reject);
+      } catch (err) {
+        router.allowPageChange = true;
+        throw err;
+      }
+    } else if (el) {
+      resolve(el);
+    } else if (component || componentUrl) {
+      // Load from component (F7/Vue/React/...)
+      try {
+        router.tabComponentLoader($newTabEl[0], component, componentUrl, loadTabOptions, resolve, reject);
+      } catch (err) {
+        router.allowPageChange = true;
+        throw err;
+      }
+    } else if (url) {
+      // Load using XHR
+      if (router.xhr) {
+        router.xhr.abort();
+        router.xhr = false;
+      }
+      router.xhrRequest(url, loadTabOptions)
+        .then((tabContent) => {
+          resolve(tabContent);
+        })
+        .catch(() => {
+          router.allowPageChange = true;
+        });
+    }
   }
 
-  if (content) {
-    resolve(content);
-  } else if (template || templateUrl) {
-    try {
-      router.tabTemplateLoader(template, templateUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
+  ('url content component el componentUrl template templateUrl').split(' ').forEach((tabLoadProp) => {
+    if (tabRoute[tabLoadProp]) {
+      loadTab({ [tabLoadProp]: tabRoute[tabLoadProp] }, options);
     }
-  } else if (el) {
-    resolve(el);
-  } else if (component || componentUrl) {
-    // Load from component (F7/Vue/React/...)
-    try {
-      router.tabComponentLoader($newTabEl[0], component, componentUrl, options, resolve, reject);
-    } catch (err) {
-      router.allowPageChange = true;
-      throw err;
-    }
-  } else if (url) {
-    // Load using XHR
-    if (router.xhr) {
-      router.xhr.abort();
-      router.xhr = false;
-    }
-    router.xhrRequest(url, options)
-      .then((tabContent) => {
-        resolve(tabContent);
-      })
-      .catch(() => {
-        router.allowPageChange = true;
-      });
+  });
+
+  // Async
+  function asyncResolve(resolveParams, resolveOptions) {
+    loadTab(resolveParams, Utils.extend(options, resolveOptions));
   }
+  function asyncReject() {
+    router.allowPageChange = true;
+  }
+  if (tabRoute.async) {
+    tabRoute.async.call(router, router.currentRoute, router.previousRoute, asyncResolve, asyncReject);
+  }
+  return router;
 }
 function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   const router = this;
@@ -160,7 +174,7 @@ function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   router.emit('tabBeforeRemove', $oldTabEl[0], $newTabEl[0], tabRoute);
   $oldTabEl.children().each((index, tabChild) => {
     if (tabChild.f7Component) {
-      tabChild.f7Component.destroy();
+      tabChild.f7Component.$destroy();
     }
   });
   router.removeTabContent($oldTabEl[0], tabRoute);
