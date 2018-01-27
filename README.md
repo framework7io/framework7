@@ -66,6 +66,8 @@ $ npm run prod
 
 ## Contributing
 
+Before you open an issue please review the [contributing](https://github.com/framework7io/framework7/blob/master/CONTRIBUTING.md) guideline.
+
 All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and ES modules JS files.
 
 The project uses [.editorconfig](http://editorconfig.org/) to define the coding style of each file. We recommend that you install the Editor Config extension for your preferred IDE.
