@@ -792,9 +792,19 @@ class Router extends Framework7Class {
     const router = this;
     const url = typeof component === 'string' ? component : componentUrl;
     function compile(c) {
+      let context = options.context || {};
+      if (typeof context === 'function') context = context.call(router);
+      else if (typeof context === 'string') {
+        try {
+          context = JSON.parse(context);
+        } catch (err) {
+          reject();
+          throw (err);
+        }
+      }
       const extendContext = Utils.extend(
         {},
-        options.context || {},
+        context,
         {
           $,
           $$: $,
