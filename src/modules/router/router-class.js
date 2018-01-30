@@ -486,7 +486,6 @@ class Router extends Framework7Class {
     if (!notStacked) found = router.findElement(selector, $container, true);
     if (found && found.length === 1) return found;
     if (found && found.length > 1) return $(found[0]);
-    return undefined;
   }
   flattenRoutes(routes = this.routes) {
     let flattenedRoutes = [];
@@ -563,7 +562,7 @@ class Router extends Framework7Class {
     return matchingRoute;
   }
   findMatchingRoute(url) {
-    if (!url) return undefined;
+    if (!url) return;
     const router = this;
     const routes = router.routes;
     const flattenedRoutes = router.flattenRoutes(routes);
@@ -957,9 +956,6 @@ class Router extends Framework7Class {
           $pageEl.off(Utils.eventNameToColonCase(eventName), $pageEl[0].f7RouteEventsOnce[eventName]);
         });
       }
-      $pageEl[0].f7RouteEventsAttached = null;
-      $pageEl[0].f7RouteEventsOn = null;
-      $pageEl[0].f7RouteEventsOnce = null;
       delete $pageEl[0].f7RouteEventsAttached;
       delete $pageEl[0].f7RouteEventsOn;
       delete $pageEl[0].f7RouteEventsOnce;
@@ -1181,8 +1177,6 @@ class Router extends Framework7Class {
       router[routerProp] = null;
       delete router[routerProp];
     });
-
-    router = null;
   }
 }
 
