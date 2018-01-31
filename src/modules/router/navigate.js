@@ -549,7 +549,7 @@ function navigate(navigateParams, navigateOptions = {}) {
 
     route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
   }
-  // Retur Router
+  // Return Router
   return router;
 }
 export { refreshPage, forward, load, navigate };
