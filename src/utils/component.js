@@ -1,14 +1,23 @@
 import $ from 'dom7';
 import Template7 from 'template7';
 import Utils from '../utils/utils';
+import morphdom from 'morphdom';
 
-const tempDom = document.createElement('div');
 
 class Framework7Component {
+
   constructor(opts, extendContext = {}) {
+
+    const eventAttrNamePrefix = 'data-f7event-';
+
     const context = Utils.extend({}, extendContext);
     let component = Utils.extend(this, context, { $options: opts });
+    let isComponentMounted = false;
+
     const options = component.$options;
+
+    let tempDom = document.createElement('div');
+
 
     // Apply context
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
@@ -18,7 +27,7 @@ class Framework7Component {
     if (options.data) {
       options.data = options.data.bind(component);
       // Data
-      Utils.extend(component, options.data());
+      component.$data = wrapComponentDataWithProxy(options.data());
     }
     if (options.render) options.render = options.render.bind(component);
     if (options.methods) {
@@ -68,15 +77,25 @@ class Framework7Component {
       if (options.render) {
         html = options.render();
       } else if (options.template) {
+        let t7context = {
+            $root: component.$root,
+            $route: component.$route,
+            $theme: component.$theme
+        }
+
+        if (component.$data) {
+            Utils.extend(t7context, component.$data);
+        }
+
         if (typeof options.template === 'string') {
           try {
-            html = Template7.compile(options.template)(component);
+            html = Template7.compile(options.template)(t7context);
           } catch (err) {
             throw err;
           }
         } else {
           // Supposed to be function
-          html = options.template(component);
+          html = options.template(t7context);
         }
       }
       return html;
@@ -87,6 +106,8 @@ class Framework7Component {
     // Make Dom
     if (html && typeof html === 'string') {
       html = html.trim();
+      // Replace '@click'-style attributes with 'data-f7event-click'-style to receive DOM api compatible "morphable" nodes
+      html = html.replace(/@/g, eventAttrNamePrefix);
       tempDom.innerHTML = html;
     } else if (html) {
       tempDom.innerHTML = '';
@@ -98,97 +119,100 @@ class Framework7Component {
     const $el = $(el);
     component.$el = $el;
     component.el = el;
-    component.el = el;
 
     // Find Events
     const events = [];
-    $(tempDom).find('*').each((index, element) => {
-      const attrs = [];
-      for (let i = 0; i < element.attributes.length; i += 1) {
-        const attr = element.attributes[i];
-        if (attr.name.indexOf('@') === 0) {
-          attrs.push({
-            name: attr.name,
-            value: attr.value,
-          });
-        }
-      }
-      attrs.forEach((attr) => {
-        element.removeAttribute(attr.name);
-        const event = attr.name.replace('@', '');
-        let name = event;
-        let stop = false;
-        let prevent = false;
-        let once = false;
-        if (event.indexOf('.') >= 0) {
-          event.split('.').forEach((eventNamePart, eventNameIndex) => {
-            if (eventNameIndex === 0) name = eventNamePart;
-            else {
-              if (eventNamePart === 'stop') stop = true;
-              if (eventNamePart === 'prevent') prevent = true;
-              if (eventNamePart === 'once') once = true;
-            }
-          });
-        }
-        const value = attr.value.toString();
-        events.push({
-          el: element,
-          name,
-          once,
-          handler(...args) {
-            const e = args[0];
-            if (stop) e.stopPropagation();
-            if (prevent) e.preventDefault();
-            let methodName;
-            let method;
-            let customArgs = [];
-            if (value.indexOf('(') < 0) {
-              customArgs = args;
-              methodName = value;
-            } else {
-              methodName = value.split('(')[0];
-              value.split('(')[1].split(')')[0].split(',').forEach((argument) => {
-                let arg = argument.trim();
-                // eslint-disable-next-line
-                if (!isNaN(arg)) arg = parseFloat(arg);
-                else if (arg === 'true') arg = true;
-                else if (arg === 'false') arg = false;
-                else if (arg === 'null') arg = null;
-                else if (arg === 'undefined') arg = undefined;
-                else if (arg[0] === '"') arg = arg.replace(/"/g, '');
-                else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
-                else if (arg.indexOf('.') > 0) {
-                  let deepArg;
-                  arg.split('.').forEach((path) => {
-                    if (!deepArg) deepArg = component;
-                    deepArg = deepArg[path];
-                  });
-                  arg = deepArg;
-                } else {
-                  arg = component[arg];
-                }
-                customArgs.push(arg);
+    findEvents();
+
+    function findEvents() {
+        $(tempDom).find('*').each((index, element) => {
+          const attrs = [];
+          for (let i = 0; i < element.attributes.length; i += 1) {
+            const attr = element.attributes[i];
+            if (attr.name.indexOf(eventAttrNamePrefix) === 0) {
+              attrs.push({
+                name: attr.name,
+                value: attr.value,
               });
             }
-            if (methodName.indexOf('.') >= 0) {
-              methodName.split('.').forEach((path, pathIndex) => {
-                if (!method) method = component;
-                if (method[path]) method = method[path];
+          }
+          attrs.forEach((attr) => {
+            element.removeAttribute(attr.name);
+            const event = attr.name.replace(eventAttrNamePrefix, '');
+            let name = event;
+            let stop = false;
+            let prevent = false;
+            let once = false;
+            if (event.indexOf('.') >= 0) {
+              event.split('.').forEach((eventNamePart, eventNameIndex) => {
+                if (eventNameIndex === 0) name = eventNamePart;
                 else {
-                  throw new Error(`Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
+                  if (eventNamePart === 'stop') stop = true;
+                  if (eventNamePart === 'prevent') prevent = true;
+                  if (eventNamePart === 'once') once = true;
                 }
               });
-            } else {
-              if (!component[methodName]) {
-                throw new Error(`Component doesn't have method "${methodName}"`);
-              }
-              method = component[methodName];
             }
-            method(...customArgs);
-          },
+            const value = attr.value.toString();
+            events.push({
+              el: element,
+              name,
+              once,
+              handler(...args) {
+                const e = args[0];
+                if (stop) e.stopPropagation();
+                if (prevent) e.preventDefault();
+                let methodName;
+                let method;
+                let customArgs = [];
+                if (value.indexOf('(') < 0) {
+                  customArgs = args;
+                  methodName = value;
+                } else {
+                  methodName = value.split('(')[0];
+                  value.split('(')[1].split(')')[0].split(',').forEach((argument) => {
+                    let arg = argument.trim();
+                    // eslint-disable-next-line
+                    if (!isNaN(arg)) arg = parseFloat(arg);
+                    else if (arg === 'true') arg = true;
+                    else if (arg === 'false') arg = false;
+                    else if (arg === 'null') arg = null;
+                    else if (arg === 'undefined') arg = undefined;
+                    else if (arg[0] === '"') arg = arg.replace(/"/g, '');
+                    else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
+                    else if (arg.indexOf('.') > 0) {
+                      let deepArg;
+                      arg.split('.').forEach((path) => {
+                        if (!deepArg) deepArg = component;
+                        deepArg = deepArg[path];
+                      });
+                      arg = deepArg;
+                    } else {
+                      arg = component[arg];
+                    }
+                    customArgs.push(arg);
+                  });
+                }
+                if (methodName.indexOf('.') >= 0) {
+                  methodName.split('.').forEach((path, pathIndex) => {
+                    if (!method) method = component;
+                    if (method[path]) method = method[path];
+                    else {
+                      throw new Error(`Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
+                    }
+                  });
+                } else {
+                  if (!component[methodName]) {
+                    throw new Error(`Component doesn't have method "${methodName}"`);
+                  }
+                  method = component[methodName];
+                }
+                method(...customArgs);
+              },
+            });
+          });
         });
-      });
-    });
+    }
 
     // Set styles scope ID
     let styleEl;
@@ -244,6 +268,7 @@ class Framework7Component {
       if (styleEl) $('head').append(styleEl);
       if (mountMethod) mountMethod(el);
       if (options.mounted) options.mounted();
+      isComponentMounted = true;
     };
 
     // Destroy
@@ -262,9 +287,108 @@ class Framework7Component {
     };
 
     // Store component instance
-    for (let i = 0; i < tempDom.children.length; i += 1) {
-      tempDom.children[i].f7Component = component;
+    function storeComponentInstance() {
+      for (let i = 0; i < tempDom.children.length; i += 1) {
+        tempDom.children[i].f7Component = component;
+      }
     }
+    storeComponentInstance();
+
+    // Wrap component data elements with proxy objects to catch viewmodel changes
+    function wrapComponentDataWithProxy(obj) {
+      var result = new Proxy({}, {
+        set: onViewModelChange
+      });
+
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          var t = "";
+          if (typeof obj[p] === "object") {
+            t = "object"
+          }
+          if (Array.isArray(obj[p])) {
+            t = "array"
+          }
+          if (typeof obj[p] === "string") {
+            t = "string"
+          }
+          if (Number.isFinite(obj[p])) {
+            t = "number"
+          }
+          if (Number.isInteger(obj[p])) {
+            t = "integer"
+          }
+          if (Object.prototype.toString.call(obj[p]) === "[object Date]") {
+            t = "date"
+          }
+
+          if (t === "object") {
+            result[p] = wrapComponentDataWithProxy(obj[p]);
+          } else if (t === "array") {
+            result[p] = new Proxy(obj[p], {
+              set: onViewModelChange
+            });
+          } else {
+            result[p] = obj[p];
+          }
+        }
+      }
+
+      return result;
+    }
+
+    // Proxy's set interceptor to transform the dom on a viewmodel (component.$data) change
+    function onViewModelChange(obj, prop, newval, receiver) {
+
+      let oldval = obj[prop];
+      obj[prop] = newval;
+
+      if (isComponentMounted && oldval !== newval) {
+
+        // "Run to completion"
+        setTimeout(function() {
+
+          let t7context = {
+            $root: component.$root,
+            $route: component.$route,
+            $theme: component.$theme
+          }
+
+          if (component.$data) {
+            Utils.extend(t7context, component.$data);
+          }
+
+          let newHtml = '';
+          if (typeof options.template === 'string') {
+            newHtml = Template7.compile(options.template)(t7context);
+          } else {
+            // Supposed to be function
+            newHtml = options.template(t7context);
+          }
+          if (newHtml && typeof newHtml === 'string') {
+            newHtml = newHtml.trim();
+          }
+          newHtml = newHtml.replace(/@/g, eventAttrNamePrefix);
+          let newDom = $(newHtml)[0];
+          context.$router.removeThemeElements(newDom);
+
+          tempDom = component.el;
+
+          detachEvents();
+          events.length = 0;
+
+          morphdom(tempDom, newDom, { childrenOnly: true });
+
+          findEvents();
+          attachEvents();
+
+          storeComponentInstance();
+        }, 0);
+      }
+
+      return true;
+    }
+
 
     return component;
   }

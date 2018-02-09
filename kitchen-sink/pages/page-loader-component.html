@@ -22,13 +22,14 @@
       </div>
       <div class="block-title">Page Component Data</div>
       <div class="block block-strong">
-        <p>Hello! My name is {{name}}. I am {{age}} years old.</p>
+        <p>Hello! My name is {{name}}. I am {{age}} years old. My hair's color is <span style="color: {{hair.color}};">{{hair.color}}</span>.</p>
         <p>I like to play:</p>
         <ul>
           {{#each like}}
           <li>{{this}}</li>
           {{/each}}
         </ul>
+        <p>The current time is: {{currentTime}}</p>
       </div>
       <div class="block-title">Extended Context</div>
       <div class="block block-strong">
@@ -48,7 +49,7 @@
         <ul style="padding-left:25px">
           <li><b>$root.user.firstName</b>: {{$root.user.firstName}}</li>
           <li><b>$root.user.lastName</b>: {{$root.user.lastName}}</li>
-          <li><a @click="$root.helloWorld()">$root.helloWorld()</a></li>
+          <li><a @click="linkClick">helloWorld()</a></li>
         </ul>
 
         <h4>$theme</h4>
@@ -67,6 +68,9 @@
   }
 </style>
 <script>
+
+  let timer = null;
+
   return {
     // Lifecycle Hooks
     beforeCreate() {
@@ -94,6 +98,11 @@
         name: 'Jimmy',
         age: 25,
         like: ['Tennis', 'Chess', 'Football'],
+        hair: {
+            color: 'brown',
+            length: 'long'
+        },
+        currentTime: new Date().toLocaleTimeString()
       }
     },
     // Component Methods
@@ -101,12 +110,28 @@
       openAlert: function () {
         var self = this;
         self.$app.dialog.alert('Hello World');
+        this.$data.name = "Béka";
+        this.$data.age = 9;
+        this.$data.like[0] = 'Karate';
+        this.$data.like.push('Kung-fu');
+        this.$data.hair.color = 'blond';
       },
+      linkClick: function () {
+        var self = this;
+        self.$app.dialog.alert('Hello World (2nd)');
+        this.$data.name = "Jimmy";
+        this.$data.age = 25;
+        this.$data.like[0] = 'Biking';
+        this.$data.like.pop();
+        this.$data.hair.color = 'brown';
+      }
     },
     // Page Events
     on: {
       pageMounted: function(e, page) {
         console.log('pageMounted', page);
+        var self = this;
+        timer = setInterval(function(){ self.$data.currentTime = new Date().toLocaleTimeString(); }, 1000);
       },
       pageInit: function(e, page) {
         console.log('pageInit', page);
@@ -125,6 +150,7 @@
       },
       pageBeforeRemove: function(e, page) {
         console.log('pageBeforeRemove', page);
+        clearInterval(timer);
       },
     }
   }
