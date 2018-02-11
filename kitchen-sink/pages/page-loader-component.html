@@ -30,6 +30,13 @@
           {{/each}}
         </ul>
       </div>
+      <div class="block-title">Route Context</div>
+      <div class="block block-strong">
+        <p>Context can be passed in route options</p>
+        <ul>
+          <li>foo: {{foo}}</li>
+        </ul>
+      </div>
       <div class="block-title">Extended Context</div>
       <div class="block block-strong">
         <p>Component page context as Template7 page context is also extended with some additional variables.</p>
@@ -41,6 +48,7 @@
           <li><b>$route.params</b>: {{js 'return JSON.stringify(this.$route.params)'}}</li>
           <li><b>$route.hash</b>: {{$route.hash}}</li>
           <li><b>$route.query</b>: {{js 'return JSON.stringify(this.$route.query)'}}</li>
+          <li><b>$route.context</b>: {{js 'return JSON.stringify(this.$route.context)'}}</li>
         </ul>
 
         <h4>$root</h4>
