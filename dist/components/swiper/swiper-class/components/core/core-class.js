@@ -1,4 +1,3 @@
-import window from '../../utils/window';
 import $ from '../../utils/dom';
 import Utils from '../../utils/utils';
 import Support from '../../utils/support';
@@ -16,6 +15,7 @@ import events from './events/index';
 import breakpoints from './breakpoints/index';
 import classes from './classes/index';
 import images from './images/index';
+import checkOverflow from './check-overflow/index';
 
 import defaults from './defaults';
 
@@ -29,6 +29,7 @@ const prototypes = {
   manipulation,
   events,
   breakpoints,
+  checkOverflow,
   classes,
   images,
 };
@@ -92,6 +93,9 @@ class Swiper extends SwiperClass {
     swiper.params = Utils.extend({}, swiperParams, extendedDefaults, params);
     swiper.originalParams = Utils.extend({}, swiper.params);
     swiper.passedParams = Utils.extend({}, params);
+
+    // Save Dom lib
+    swiper.$ = $;
 
     // Find el
     const $el = $(swiper.params.el);
@@ -165,17 +169,22 @@ class Swiper extends SwiperClass {
       touchEvents: (function touchEvents() {
         const touch = ['touchstart', 'touchmove', 'touchend'];
         let desktop = ['mousedown', 'mousemove', 'mouseup'];
-        if (window.navigator.pointerEnabled) {
+        if (Support.pointerEvents) {
           desktop = ['pointerdown', 'pointermove', 'pointerup'];
-        } else if (window.navigator.msPointerEnabled) {
-          desktop = ['MSPointerDown', 'MsPointerMove', 'MsPointerUp'];
+        } else if (Support.prefixedPointerEvents) {
+          desktop = ['MSPointerDown', 'MSPointerMove', 'MSPointerUp'];
         }
-
-        return {
-          start: Support.touch || !swiper.params.simulateTouch ? touch[0] : desktop[0],
-          move: Support.touch || !swiper.params.simulateTouch ? touch[1] : desktop[1],
-          end: Support.touch || !swiper.params.simulateTouch ? touch[2] : desktop[2],
+        swiper.touchEventsTouch = {
+          start: touch[0],
+          move: touch[1],
+          end: touch[2],
         };
+        swiper.touchEventsDesktop = {
+          start: desktop[0],
+          move: desktop[1],
+          end: desktop[2],
+        };
+        return Support.touch || !swiper.params.simulateTouch ? swiper.touchEventsTouch : swiper.touchEventsDesktop;
       }()),
       touchEventsData: {
         isTouched: undefined,
@@ -231,7 +240,9 @@ class Swiper extends SwiperClass {
   }
   slidesPerViewDynamic() {
     const swiper = this;
-    const { params, slides, slidesGrid, size: swiperSize, activeIndex } = swiper;
+    const {
+      params, slides, slidesGrid, size: swiperSize, activeIndex,
+    } = swiper;
     let spv = 1;
     if (params.centeredSlides) {
       let slideSize = slides[activeIndex].swiperSlideSize;
@@ -267,9 +278,9 @@ class Swiper extends SwiperClass {
     swiper.updateProgress();
     swiper.updateSlidesClasses();
 
-    let newTranslate;
     function setTranslate() {
-      newTranslate = Math.min(Math.max(swiper.translate, swiper.maxTranslate()), swiper.minTranslate());
+      const translateValue = swiper.rtl ? swiper.translate * -1 : swiper.translate;
+      const newTranslate = Math.min(Math.max(translateValue, swiper.maxTranslate()), swiper.minTranslate());
       swiper.setTranslate(newTranslate);
       swiper.updateActiveIndex();
       swiper.updateSlidesClasses();
@@ -317,6 +328,10 @@ class Swiper extends SwiperClass {
     // Update slides
     swiper.updateSlides();
 
+    if (swiper.params.watchOverflow) {
+      swiper.checkOverflow();
+    }
+
     // Set Grab Cursor
     if (swiper.params.grabCursor) {
       swiper.setGrabCursor();
@@ -344,7 +359,9 @@ class Swiper extends SwiperClass {
   }
   destroy(deleteInstance = true, cleanStyles = true) {
     const swiper = this;
-    const { params, $el, $wrapperEl, slides } = swiper;
+    const {
+      params, $el, $wrapperEl, slides,
+    } = swiper;
     swiper.emit('beforeDestroy');
 
     // Init Flag

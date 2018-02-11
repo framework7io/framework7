@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.7
+ * Framework7 2.0.8
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 27, 2018
+ * Released on: February 11, 2018
  */
 html,
 body,
@@ -5333,7 +5333,7 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
 .ios .actions-label.color-black {
   color: #000000;
 }
-.ios.device-iphone-x .actions-moda.modal-in {
+.ios.device-iphone-x .actions-modal.modal-in {
   -webkit-transform: translate3d(0, calc(0px - constant(safe-area-inset-bottom)), 0);
   transform: translate3d(0, calc(0px - constant(safe-area-inset-bottom)), 0);
   -webkit-transform: translate3d(0, calc(0px - env(safe-area-inset-bottom)), 0);
@@ -6275,6 +6275,8 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
   height: 100%;
   background: inherit;
   z-index: -1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .swipeout-actions-right {
   right: 0%;
@@ -13228,6 +13230,9 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 .swiper-scrollbar-cursor-drag {
   cursor: move;
+}
+.swiper-scrollbar-lock {
+  display: none;
 }
 .swiper-zoom-container {
   width: 100%;

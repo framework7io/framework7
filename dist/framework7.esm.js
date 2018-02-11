@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.7
+ * Framework7 2.0.8
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 27, 2018
+ * Released on: February 11, 2018
  */
 
 import Template7 from 'template7';

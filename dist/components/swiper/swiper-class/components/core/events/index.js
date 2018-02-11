@@ -1,7 +1,6 @@
-import document from '../../../utils/document';
+import { document } from 'ssr-window';
 import Device from '../../../utils/device';
 import Support from '../../../utils/support';
-import Browser from '../../../utils/browser';
 
 import onTouchStart from './onTouchStart';
 import onTouchMove from './onTouchMove';
@@ -11,8 +10,9 @@ import onClick from './onClick';
 
 function attachEvents() {
   const swiper = this;
-
-  const { params, touchEvents, el, wrapperEl } = swiper;
+  const {
+    params, touchEvents, el, wrapperEl,
+  } = swiper;
 
   if ("universal" !== 'desktop') {
     swiper.onTouchStart = onTouchStart.bind(swiper);
@@ -27,10 +27,10 @@ function attachEvents() {
 
   // Touch Events
   if (process.env.TARGET !== 'desktop') {
-    if (Browser.ie) {
+    if (!Support.touch && (Support.pointerEvents || Support.prefixedPointerEvents)) {
       target.addEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support.touch ? target : document).addEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support.touch ? target : document).addEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      document.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      document.addEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
       if (Support.touch) {
         const passiveListener = touchEvents.start === 'touchstart' && Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
@@ -59,17 +59,19 @@ function attachEvents() {
 function detachEvents() {
   const swiper = this;
 
-  const { params, touchEvents, el, wrapperEl } = swiper;
+  const {
+    params, touchEvents, el, wrapperEl,
+  } = swiper;
 
   const target = params.touchEventsTarget === 'container' ? el : wrapperEl;
   const capture = !!params.nested;
 
   // Touch Events
   if (process.env.TARGET !== 'desktop') {
-    if (Browser.ie) {
+    if (!Support.touch && (Support.pointerEvents || Support.prefixedPointerEvents)) {
       target.removeEventListener(touchEvents.start, swiper.onTouchStart, false);
-      (Support.touch ? target : document).removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
-      (Support.touch ? target : document).removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
+      document.removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      document.removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
     } else {
       if (Support.touch) {
         const passiveListener = touchEvents.start === 'onTouchStart' && Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;

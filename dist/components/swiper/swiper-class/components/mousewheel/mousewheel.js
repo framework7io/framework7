@@ -1,5 +1,4 @@
-import window from '../../utils/window';
-import document from '../../utils/document';
+import { window, document } from 'ssr-window';
 import $ from '../../utils/dom';
 import Utils from '../../utils/utils';
 
@@ -165,9 +164,8 @@ const Mousewheel = {
 
       // Stop autoplay
       if (swiper.params.autoplay && swiper.params.autoplayDisableOnInteraction) swiper.stopAutoplay();
-
       // Return page scroll on edge positions
-      if (position === 0 || position === swiper.maxTranslate()) return true;
+      if (position === swiper.minTranslate() || position === swiper.maxTranslate()) return true;
     }
 
     if (e.preventDefault) e.preventDefault();

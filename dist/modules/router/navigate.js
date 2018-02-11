@@ -516,6 +516,10 @@ function navigate(navigateParams, navigateOptions = {}) {
   } else {
     Utils.extend(options, navigateOptions, { route });
   }
+  if (options && options.context) {
+    route.context = options.context;
+    options.route.context = options.context;
+  }
   ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
     if (route.route[modalLoadProp]) {
       router.modalLoad(modalLoadProp, route, options);
@@ -549,7 +553,7 @@ function navigate(navigateParams, navigateOptions = {}) {
 
     route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
   }
-  // Retur Router
+  // Return Router
   return router;
 }
 export { refreshPage, forward, load, navigate };

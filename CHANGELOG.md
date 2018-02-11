@@ -1,5 +1,35 @@
 # Change Log
 
+# [v2.0.8](https://github.com/framework7io/framework7/compare/v2.0.7...v2.0.8) - February 11, 2018
+  * Swipeout
+    * Fixed issue in Safari when it flashes on open
+  * Router
+    * Now `route` (currentRoute) object has additional `context` property if it was passed in route options
+  * Range Slider
+    * Now it triggers input's `change` event on when user releases slider
+  * Sortable
+    * Fixed issue when sortable list used with list groups
+  * Swiper updated to latest 4.1.6:
+    * Improved touch events support on desktop Windows devices with touch screen
+    * Improved "loop fix" when slider is in the free mode
+    * New `noSwipingSelector` parameter that can be used instead of `noSwipingClass`
+    * New `preventIntercationOnTransition` parameter to prevent interaction during slice change transition
+    * New `.slideToLoop` method to be used in loop mode
+    * Improved IE 10 support. But it is recommended to use [__proto__ polyfill](https://www.npmjs.com/package/proto-polyfill)
+    * Improved touch support for Edge
+    * Fixed issue with `slideChange` events being fired when slide wasn't actually changed
+    * Scrollbar
+      * Now doesn't require to enable `simulateTouch` for desktops when it is `draggable`
+    * Pagination
+      * Added new multiple main bullets support for dynamic bullets pagination
+    * Zoom
+      * Now supports Virtual Slides
+    * New `watchOverflow` (disabled by default). When enabled Swiper will be disabled and hide navigation buttons on case there are not enough slides for sliding
+    * Autoplay
+      * New `reverseDirection` to enable autoplay in reverse direction
+      * New `waitForTransition` parameter when autoplay will wait for wrapper transition to continue (enabled by default). Can be disabled in case of using Virtual Translate when your slider may not have transition
+  * Minor fixes
+
 # [v2.0.7](https://github.com/framework7io/framework7/compare/v2.0.6...v2.0.7) - January 27, 2018
   * Picker
     * Fixed issue with `change` event not being fired

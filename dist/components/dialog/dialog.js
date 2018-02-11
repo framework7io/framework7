@@ -203,11 +203,4 @@ export default {
       }
     );
   },
-  clicks: {
-    '.dialog-backdrop': function closeDialog() {
-      const app = this;
-      if (!app.params.dialog.closeByBackdropClick) return;
-      app.dialog.close();
-    },
-  },
 };
