@@ -14,6 +14,9 @@ class Dialog extends Modal {
       cssClass: undefined,
       on: {},
     }, params);
+    if (typeof extendedParams.closeByBackdropClick === 'undefined') {
+      extendedParams.closeByBackdropClick = app.params.dialog.closeByBackdropClick;
+    }
 
     // Extends with open/close Modal methods;
     super(app, extendedParams);
@@ -129,6 +132,31 @@ class Dialog extends Modal {
         dialog.params.title = newTitle;
         return dialog;
       },
+    });
+
+    function handleClick(e) {
+      const target = e.target;
+      const $target = $(target);
+      if ($target.closest(dialog.el).length === 0) {
+        if (
+          dialog.params.closeByBackdropClick &&
+          dialog.backdropEl &&
+          dialog.backdropEl === target
+        ) {
+          dialog.close();
+        }
+      }
+    }
+
+    dialog.on('opened', () => {
+      if (dialog.params.closeByBackdropClick) {
+        app.on('click', handleClick);
+      }
+    });
+    dialog.on('close', () => {
+      if (dialog.params.closeByBackdropClick) {
+        app.off('click', handleClick);
+      }
     });
 
     $el[0].f7Modal = dialog;
