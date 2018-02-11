@@ -147,7 +147,6 @@ export default {
     },
     pageBeforeIn(page) {
       const app = this;
-      if (app.theme !== 'ios') return;
       let $toolbarEl = page.$el.parents('.view').children('.toolbar');
       if ($toolbarEl.length === 0) {
         $toolbarEl = page.$el.find('.toolbar');
