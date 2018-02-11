@@ -1,5 +1,4 @@
-import window from '../../utils/window';
-import document from '../../utils/document';
+import { window, document } from 'ssr-window';
 import $ from '../../utils/dom';
 import Utils from '../../utils/utils';
 
@@ -22,16 +21,12 @@ const Keyboard = {
     if (document.activeElement && document.activeElement.nodeName && (document.activeElement.nodeName.toLowerCase() === 'input' || document.activeElement.nodeName.toLowerCase() === 'textarea')) {
       return undefined;
     }
-    if (kc === 37 || kc === 39 || kc === 38 || kc === 40) {
+    if (swiper.params.keyboard.onlyInViewport && (kc === 37 || kc === 39 || kc === 38 || kc === 40)) {
       let inView = false;
       // Check that swiper should be inside of visible area of window
       if (swiper.$el.parents(`.${swiper.params.slideClass}`).length > 0 && swiper.$el.parents(`.${swiper.params.slideActiveClass}`).length === 0) {
         return undefined;
       }
-      const windowScroll = {
-        left: window.pageXOffset,
-        top: window.pageYOffset,
-      };
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
       const swiperOffset = swiper.$el.offset();
@@ -45,8 +40,8 @@ const Keyboard = {
       for (let i = 0; i < swiperCoord.length; i += 1) {
         const point = swiperCoord[i];
         if (
-          point[0] >= windowScroll.left && point[0] <= windowScroll.left + windowWidth &&
-            point[1] >= windowScroll.top && point[1] <= windowScroll.top + windowHeight
+          point[0] >= 0 && point[0] <= windowWidth &&
+          point[1] >= 0 && point[1] <= windowHeight
         ) {
           inView = true;
         }
@@ -90,6 +85,7 @@ export default {
   params: {
     keyboard: {
       enabled: false,
+      onlyInViewport: true,
     },
   },
   create() {
