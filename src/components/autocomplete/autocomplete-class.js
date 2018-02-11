@@ -183,7 +183,7 @@ class Autocomplete extends Framework7Class {
     }
     function onHtmlClick(e) {
       const $targetEl = $(e.target);
-      if ($targetEl.is(ac.$inputEl[0]) || ($targetEl.closest(ac.$dropdownEl[0]).length)) return;
+      if ($targetEl.is(ac.$inputEl[0]) || (ac.$dropdownEl && $targetEl.closest(ac.$dropdownEl[0]).length)) return;
       ac.close();
     }
     function onOpenerClick() {
