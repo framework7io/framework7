@@ -27,6 +27,7 @@ let cache;
 const external = [
   'dom7',
   'template7',
+  'ssr-window',
   'path-to-regexp',
 ];
 
