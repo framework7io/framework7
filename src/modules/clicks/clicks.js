@@ -63,6 +63,13 @@ function initClicks(app) {
         if (app.views.main) view = app.views.main;
       }
       if (!view || !view.router) return;
+      if (clickedLinkData.context && typeof clickedLinkData.context === 'string') {
+        try {
+          clickedLinkData.context = JSON.parse(clickedLinkData.context);
+        } catch (err) {
+          // something wrong there
+        }
+      }
       if (clickedLink.hasClass('back')) view.router.back(url, clickedLinkData);
       else view.router.navigate(url, clickedLinkData);
     }
