@@ -270,7 +270,6 @@ export default {
     },
     pageBeforeIn(page) {
       const app = this;
-      if (app.theme !== 'ios') return;
       let $navbarEl;
       const view = page.$el.parents('.view')[0].f7View;
       const navbarInnerEl = app.navbar.getElByPage(page);
