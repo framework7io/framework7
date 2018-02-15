@@ -2,10 +2,10 @@
 
 Framework7 loves to welcome your contributions. There are several ways to help out:
 
-* Create an [issue](https://github.com/framework7io/Framework7/issues) on GitHub, if you have found a bug
+* Create an [issue](https://github.com/framework7io/framework7/issues) on GitHub, if you have found a bug
 * Write test cases or provide examples for open bug issues
 * Write patches for open bug/feature issues, preferably with test cases included
-* Contribute to the [documentation](https://github.com/framework7io/Framework7-Website)
+* Contribute to the [documentation](https://github.com/framework7io/framework7-website)
 
 There are a few guidelines that we need contributors to follow so that we have a
 chance of keeping on top of things.
@@ -14,10 +14,10 @@ chance of keeping on top of things.
 ## Getting Started
 
 * Make sure you have a [GitHub account](https://github.com/signup/free).
-* Submit an [issue](https://github.com/framework7io/Framework7/issues), assuming one does not already exist.
+* Submit an [issue](https://github.com/framework7io/framework7/issues), assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce when it is a bug.
   * Make sure you fill in the earliest version that you know has the issue.
-  * Include live link or JSFiddle/Codepen link with the issue if you want it to be discovered and resolved asap. We have few ready templates for you: iOS [JSFiddle](https://jsfiddle.net/s2n1p730/)/[Codepen](https://codepen.io/nolimits4web/pen/WRRWwN), Material [JSFiddle](https://jsfiddle.net/0ogxxcvt/)/[Codepen](https://codepen.io/nolimits4web/pen/pEPPPK)
+  * Include live link or JSFiddle/Codepen link with the issue if you want it to be discovered and resolved asap. We have one ready template for you: [JSFiddle](https://jsfiddle.net/nolimits4web/o2ejupu1/)
 * Fork the repository on GitHub.
 
 ## Making Changes
