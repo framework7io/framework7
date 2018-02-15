@@ -74,7 +74,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
-    "rollup": "^0.55.0",
+    "rollup": "^0.56.0",
     "rollup-plugin-buble": "^0.19.0",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
