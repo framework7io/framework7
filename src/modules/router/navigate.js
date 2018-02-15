@@ -403,6 +403,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
   ) {
+    router.allowPageChange = true;
     return false;
   }
 
