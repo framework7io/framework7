@@ -802,14 +802,14 @@ class Router extends Framework7Class {
           throw (err);
         }
       }
-      const extendContext = Utils.extend(
+      const extendContext = Utils.merge(
         {},
         context,
         {
           $,
           $$: $,
           $app: router.app,
-          $root: Utils.extend({}, router.app.data, router.app.methods),
+          $root: Utils.merge({}, router.app.data, router.app.methods),
           $route: options.route,
           $router: router,
           $dom7: $,

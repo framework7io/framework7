@@ -6,8 +6,7 @@ const tempDom = document.createElement('div');
 
 class Framework7Component {
   constructor(opts, extendContext = {}) {
-    const context = Utils.extend({}, extendContext);
-    let component = Utils.extend(this, context, { $options: opts });
+    let component = Utils.merge(this, extendContext, { $options: opts });
     const options = component.$options;
 
     // Apply context
