@@ -54,12 +54,18 @@ class Range extends Framework7Class {
       }
     }
 
-
-    Utils.extend(range, range.params, {
+    const { dual, step, label, min, max, value } = range;
+    Utils.extend(range, {
       $el,
       el: $el[0],
       $inputEl,
       inputEl: $inputEl ? $inputEl[0] : undefined,
+      dual,
+      step,
+      label,
+      min,
+      max,
+      value,
     });
 
     if ($inputEl) {
