@@ -298,6 +298,7 @@ function forward(el, forwardOptions = {}) {
     router.allowPageChange = true;
     router.pageCallback('beforeIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
     router.pageCallback('afterIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
+    if (options.reloadCurrent && options.clearHistory) router.clearHistory();
     return router;
   }
   if (options.reloadPrevious) {
@@ -345,6 +346,7 @@ function forward(el, forwardOptions = {}) {
         }
       }
     }
+    if (options.clearHistory) router.clearHistory();
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     if (router.params.pushState) {

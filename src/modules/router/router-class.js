@@ -11,6 +11,7 @@ import { refreshPage, forward, load, navigate } from './navigate';
 import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
 import { backward, loadBack, back } from './back';
+import { clearHistory } from './clear-history';
 
 class Router extends Framework7Class {
   constructor(app, view) {
@@ -103,6 +104,8 @@ class Router extends Framework7Class {
       backward,
       loadBack,
       back,
+      // Clear history
+      clearHistory,
     });
 
     return router;
