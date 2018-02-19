@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.8
+ * Framework7 2.0.9
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 11, 2018
+ * Released on: February 19, 2018
  */
 
 (function (global, factory) {
@@ -2775,6 +2775,29 @@ var Utils = {
   isObject: function isObject(o) {
     return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
   },
+  merge: function merge() {
+    var args = [], len$1 = arguments.length;
+    while ( len$1-- ) args[ len$1 ] = arguments[ len$1 ];
+
+    var to = args[0];
+    args.splice(0, 1);
+    var from = args;
+
+    for (var i = 0; i < from.length; i += 1) {
+      var nextSource = args[i];
+      if (nextSource !== undefined && nextSource !== null) {
+        var keysArray = Object.keys(Object(nextSource));
+        for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
+          var nextKey = keysArray[nextIndex];
+          var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+          if (desc !== undefined && desc.enumerable) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  },
   extend: function extend() {
     var args = [], len$1 = arguments.length;
     while ( len$1-- ) args[ len$1 ] = arguments[ len$1 ];
@@ -3150,8 +3173,6 @@ var Framework7$1 = (function (Framework7Class$$1) {
       language: app.params.language,
       // Root
       root: $rootEl,
-      // Local Storage
-      ls: window.localStorage,
       // RTL
       rtl: $rootEl.css('direction') === 'rtl',
       // Theme
@@ -4802,8 +4823,7 @@ var tempDom = document.createElement('div');
 var Framework7Component = function Framework7Component(opts, extendContext) {
   if ( extendContext === void 0 ) extendContext = {};
 
-  var context = Utils.extend({}, extendContext);
-  var component = Utils.extend(this, context, { $options: opts });
+  var component = Utils.merge(this, extendContext, { $options: opts });
   var options = component.$options;
 
   // Apply context
@@ -5703,6 +5723,7 @@ function forward(el, forwardOptions) {
     reloadCurrent: router.params.reloadPages,
     reloadPrevious: false,
     reloadAll: false,
+    clearPreviousHistory: false,
     on: {},
   }, forwardOptions);
 
@@ -5843,22 +5864,26 @@ function forward(el, forwardOptions) {
     );
   }
 
-  // Current Page & Navbar
-  router.currentPageEl = $newPage[0];
-  if (dynamicNavbar && $newNavbarInner.length) {
-    router.currentNavbarEl = $newNavbarInner[0];
-  } else {
-    delete router.currentNavbarEl;
-  }
+  if (!options.reloadPrevious) {
+    // Current Page & Navbar
+    router.currentPageEl = $newPage[0];
+    if (dynamicNavbar && $newNavbarInner.length) {
+      router.currentNavbarEl = $newNavbarInner[0];
+    } else {
+      delete router.currentNavbarEl;
+    }
 
-  // Current Route
-  router.currentRoute = options.route;
+    // Current Route
+    router.currentRoute = options.route;
+  }
 
   // Update router history
   var url = options.route.url;
   if (options.history) {
     if (options.reloadCurrent && router.history.length > 0) {
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
+    } else if (options.reloadPrevious) {
+      router.history[router.history.length - 2] = url;
     } else if (options.reloadAll) {
       router.history = [url];
     } else {
@@ -5942,6 +5967,20 @@ function forward(el, forwardOptions) {
         }
       }
     });
+  } else if (options.reloadPrevious) {
+    if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
+      $oldPage.addClass('stacked');
+      if (separateNavbar) {
+        $oldNavbarInner.addClass('stacked');
+      }
+    } else {
+      // Page remove event
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
+      router.removePage($oldPage);
+      if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
+        router.removeNavbar($oldNavbarInner);
+      }
+    }
   }
 
   // Load Tab
@@ -5959,6 +5998,11 @@ function forward(el, forwardOptions) {
     router.allowPageChange = true;
     router.pageCallback('beforeIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
     router.pageCallback('afterIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
+    if (options.reloadCurrent && options.clearPreviousHistory) { router.clearPreviousHistory(); }
+    return router;
+  }
+  if (options.reloadPrevious) {
+    router.allowPageChange = true;
     return router;
   }
 
@@ -6002,6 +6046,7 @@ function forward(el, forwardOptions) {
         }
       }
     }
+    if (options.clearPreviousHistory) { router.clearPreviousHistory(); }
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     if (router.params.pushState) {
@@ -6093,6 +6138,7 @@ function load(loadParams, loadOptions, ignorePageChange) {
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
   ) {
+    router.allowPageChange = true;
     return false;
   }
 
@@ -7140,6 +7186,43 @@ function back() {
   return router;
 }
 
+function clearPreviousHistory() {
+  var router = this;
+  var app = router.app;
+  var separateNavbar = router.separateNavbar;
+  var url = router.history[router.history.length - 1];
+
+  var $currentPageEl = $$1$1(router.currentPageEl);
+
+  var $pagesToRemove = router.$el
+    .children('.page:not(.stacked)')
+    .filter(function (index, pageInView) { return pageInView !== $currentPageEl[0]; });
+
+  $pagesToRemove.each(function (index, pageEl) {
+    var $oldPageEl = $$1$1(pageEl);
+    var $oldNavbarInnerEl = $$1$1(app.navbar.getElByPage($oldPageEl));
+    if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
+      $oldPageEl.addClass('stacked');
+      if (separateNavbar) {
+        $oldNavbarInnerEl.addClass('stacked');
+      }
+    } else {
+      // Page remove event
+      router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInnerEl, 'previous', undefined, {});
+      router.removePage($oldPageEl);
+      if (separateNavbar && $oldNavbarInnerEl.length) {
+        router.removeNavbar($oldNavbarInnerEl);
+      }
+    }
+  });
+
+  router.history = [url];
+  router.view.history = [url];
+  router.saveHistory();
+}
+
+ // eslint-disable-line
+
 var Router$1 = (function (Framework7Class$$1) {
   function Router(app, view) {
     Framework7Class$$1.call(this, {}, [typeof view === 'undefined' ? app : view]);
@@ -7233,6 +7316,8 @@ var Router$1 = (function (Framework7Class$$1) {
       backward: backward,
       loadBack: loadBack,
       back: back,
+      // Clear history
+      clearPreviousHistory: clearPreviousHistory,
     });
 
     return router;
@@ -7951,14 +8036,14 @@ var Router$1 = (function (Framework7Class$$1) {
           throw (err);
         }
       }
-      var extendContext = Utils.extend(
+      var extendContext = Utils.merge(
         {},
         context,
         {
           $: $$1$1,
           $$: $$1$1,
           $app: router.app,
-          $root: Utils.extend({}, router.app.data, router.app.methods),
+          $root: Utils.merge({}, router.app.data, router.app.methods),
           $route: options.route,
           $router: router,
           $dom7: $$1$1,
@@ -8171,6 +8256,7 @@ var Router$1 = (function (Framework7Class$$1) {
   Router.prototype.clearHistory = function clearHistory () {
     var router = this;
     router.history = [];
+    if (router.view) { router.view.history = []; }
     router.saveHistory();
   };
   Router.prototype.init = function init () {
@@ -13683,8 +13769,12 @@ function swipePanel$1(panel) {
     var action;
     var edge = (translate === 0 || Math.abs(translate) === panelWidth);
 
+    var threshold = params.swipeThreshold || 0;
+
     if (!panel.opened) {
-      if (effect === 'cover') {
+      if (Math.abs(touchesDiff) < threshold) {
+        action = 'reset';
+      } else if (effect === 'cover') {
         if (translate === 0) {
           action = 'swap'; // open
         } else if (timeDiff < 300 && Math.abs(translate) > 0) {
@@ -15105,12 +15195,23 @@ var Range$1 = (function (Framework7Class$$1) {
       }
     }
 
-
-    Utils.extend(range, range.params, {
+    var dual = range.dual;
+    var step = range.step;
+    var label = range.label;
+    var min = range.min;
+    var max = range.max;
+    var value = range.value;
+    Utils.extend(range, {
       $el: $el,
       el: $el[0],
       $inputEl: $inputEl,
       inputEl: $inputEl ? $inputEl[0] : undefined,
+      dual: dual,
+      step: step,
+      label: label,
+      min: min,
+      max: max,
+      value: value,
     });
 
     if ($inputEl) {
@@ -15516,7 +15617,10 @@ var SmartSelect$1 = (function (Framework7Class$$1) {
     ss.useModulesParams(defaults);
 
     // View
-    var view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
+    var view = params.view;
+    if (!view) {
+      view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
+    }
     if (!view) {
       throw Error('Smart Select requires initialized View');
     }
@@ -27997,7 +28101,7 @@ var Autocomplete$1 = (function (Framework7Class$$1) {
     if (typeof pageTitle === 'undefined' && ac.$openerEl && ac.$openerEl.length) {
       pageTitle = ac.$openerEl.find('.item-title').text().trim();
     }
-    var navbarHtml = ("\n      <div class=\"navbar " + (ac.params.navbarColorTheme ? ("color-theme-" + (ac.params.navbarColorTheme)) : '') + "\">\n        <div class=\"navbar-inner " + (ac.params.navbarColorTheme ? ("color-theme-" + (ac.params.navbarColorTheme)) : '') + "\">\n          <div class=\"left sliding\">\n            <a href=\"#\" class=\"link " + (ac.params.openIn === 'page' ? 'back' : 'popup-close') + "\">\n              <i class=\"icon icon-back\"></i>\n              <span class=\"ios-only\">" + (ac.params.openIn === 'page' ? ac.params.pageBackLinkText : ac.params.popupCloseLinkText) + "</span>\n            </a>\n          </div>\n          " + (pageTitle ? ("<div class=\"title sliding\">" + pageTitle + "</div>") : '') + "\n          " + (ac.params.preloader ? ("\n          <div class=\"right\">\n            " + (ac.renderPreloader()) + "\n          </div>\n          ") : '') + "\n          <div class=\"subnavbar sliding\">" + (ac.renderSearchbar()) + "</div>\n        </div>\n      </div>\n    ").trim();
+    var navbarHtml = ("\n      <div class=\"navbar " + (ac.params.navbarColorTheme ? ("color-theme-" + (ac.params.navbarColorTheme)) : '') + "\">\n        <div class=\"navbar-inner " + (ac.params.navbarColorTheme ? ("color-theme-" + (ac.params.navbarColorTheme)) : '') + "\">\n          <div class=\"left sliding\">\n            <a href=\"#\" class=\"link " + (ac.params.openIn === 'page' ? 'back' : 'popup-close') + "\" " + (ac.params.openIn === 'popup' ? 'data-popup=".autocomplete-popup"' : '') + ">\n              <i class=\"icon icon-back\"></i>\n              <span class=\"ios-only\">" + (ac.params.openIn === 'page' ? ac.params.pageBackLinkText : ac.params.popupCloseLinkText) + "</span>\n            </a>\n          </div>\n          " + (pageTitle ? ("<div class=\"title sliding\">" + pageTitle + "</div>") : '') + "\n          " + (ac.params.preloader ? ("\n          <div class=\"right\">\n            " + (ac.renderPreloader()) + "\n          </div>\n          ") : '') + "\n          <div class=\"subnavbar sliding\">" + (ac.renderSearchbar()) + "</div>\n        </div>\n      </div>\n    ").trim();
     return navbarHtml;
   };
   Autocomplete.prototype.renderDropdown = function renderDropdown () {

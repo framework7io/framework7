@@ -1,5 +1,20 @@
 # Change Log
 
+# [v2.0.9](https://github.com/framework7io/framework7/compare/v2.0.8...v2.0.9) - February 19, 2018
+  * Router
+    * New `router.clearPreviousHistory()` method to clear all previous pages history and remove all previous pages from DOM
+    * New `clearPreviousHistory` option for `router.navigate` that will clear history after reloading/navigating to specified page
+    * Fixed issue with not correctly working `reloadPrevious` parameter
+  * Smart Select
+    * Now accepts `view` as a parameter on initialization
+  * Accordion
+    * Fixed iOS rendering issue when opening accordiong enables page scroll
+  * Panel
+    * Swipe panel won't be opened on quick swipe if the swipe distance doesn't exceed `swipeThreshold` parameter
+  * Range Slider
+    * Fixed issue with broken events when passing event listeners in `on` parameter on init
+  * Minor fixes
+
 # [v2.0.8](https://github.com/framework7io/framework7/compare/v2.0.7...v2.0.8) - February 11, 2018
   * Swipeout
     * Fixed issue in Safari when it flashes on open

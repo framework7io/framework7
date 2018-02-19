@@ -11,6 +11,7 @@ import { refreshPage, forward, load, navigate } from './navigate';
 import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
 import { backward, loadBack, back } from './back';
+import { clearPreviousHistory } from './clear-previous-history';
 
 class Router extends Framework7Class {
   constructor(app, view) {
@@ -103,6 +104,8 @@ class Router extends Framework7Class {
       backward,
       loadBack,
       back,
+      // Clear history
+      clearPreviousHistory,
     });
 
     return router;
@@ -802,14 +805,14 @@ class Router extends Framework7Class {
           throw (err);
         }
       }
-      const extendContext = Utils.extend(
+      const extendContext = Utils.merge(
         {},
         context,
         {
           $,
           $$: $,
           $app: router.app,
-          $root: Utils.extend({}, router.app.data, router.app.methods),
+          $root: Utils.merge({}, router.app.data, router.app.methods),
           $route: options.route,
           $router: router,
           $dom7: $,
@@ -1014,6 +1017,7 @@ class Router extends Framework7Class {
   clearHistory() {
     const router = this;
     router.history = [];
+    if (router.view) router.view.history = [];
     router.saveHistory();
   }
   init() {

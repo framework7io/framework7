@@ -27,7 +27,10 @@ class SmartSelect extends Framework7Class {
     ss.useModulesParams(defaults);
 
     // View
-    const view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
+    let view = params.view;
+    if (!view) {
+      view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
+    }
     if (!view) {
       throw Error('Smart Select requires initialized View');
     }

@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.8
+ * Framework7 2.0.9
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 11, 2018
+ * Released on: February 19, 2018
  */
 
 import Template7 from 'template7';
@@ -437,6 +437,26 @@ const Utils = {
   isObject(o) {
     return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
   },
+  merge(...args) {
+    const to = args[0];
+    args.splice(0, 1);
+    const from = args;
+
+    for (let i = 0; i < from.length; i += 1) {
+      const nextSource = args[i];
+      if (nextSource !== undefined && nextSource !== null) {
+        const keysArray = Object.keys(Object(nextSource));
+        for (let nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
+          const nextKey = keysArray[nextIndex];
+          const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+          if (desc !== undefined && desc.enumerable) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  },
   extend(...args) {
     let deep = true;
     let to;
@@ -790,8 +810,6 @@ class Framework7$1 extends Framework7Class {
       language: app.params.language,
       // Root
       root: $rootEl,
-      // Local Storage
-      ls: window.localStorage,
       // RTL
       rtl: $rootEl.css('direction') === 'rtl',
       // Theme
@@ -2022,8 +2040,7 @@ const tempDom = document.createElement('div');
 
 class Framework7Component {
   constructor(opts, extendContext = {}) {
-    const context = Utils.extend({}, extendContext);
-    let component = Utils.extend(this, context, { $options: opts });
+    let component = Utils.merge(this, extendContext, { $options: opts });
     const options = component.$options;
 
     // Apply context
@@ -2911,6 +2928,7 @@ function forward(el, forwardOptions = {}) {
     reloadCurrent: router.params.reloadPages,
     reloadPrevious: false,
     reloadAll: false,
+    clearPreviousHistory: false,
     on: {},
   }, forwardOptions);
 
@@ -3051,22 +3069,26 @@ function forward(el, forwardOptions = {}) {
     );
   }
 
-  // Current Page & Navbar
-  router.currentPageEl = $newPage[0];
-  if (dynamicNavbar && $newNavbarInner.length) {
-    router.currentNavbarEl = $newNavbarInner[0];
-  } else {
-    delete router.currentNavbarEl;
-  }
+  if (!options.reloadPrevious) {
+    // Current Page & Navbar
+    router.currentPageEl = $newPage[0];
+    if (dynamicNavbar && $newNavbarInner.length) {
+      router.currentNavbarEl = $newNavbarInner[0];
+    } else {
+      delete router.currentNavbarEl;
+    }
 
-  // Current Route
-  router.currentRoute = options.route;
+    // Current Route
+    router.currentRoute = options.route;
+  }
 
   // Update router history
   const url = options.route.url;
   if (options.history) {
     if (options.reloadCurrent && router.history.length > 0) {
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
+    } else if (options.reloadPrevious) {
+      router.history[router.history.length - 2] = url;
     } else if (options.reloadAll) {
       router.history = [url];
     } else {
@@ -3150,6 +3172,20 @@ function forward(el, forwardOptions = {}) {
         }
       }
     });
+  } else if (options.reloadPrevious) {
+    if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
+      $oldPage.addClass('stacked');
+      if (separateNavbar) {
+        $oldNavbarInner.addClass('stacked');
+      }
+    } else {
+      // Page remove event
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
+      router.removePage($oldPage);
+      if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
+        router.removeNavbar($oldNavbarInner);
+      }
+    }
   }
 
   // Load Tab
@@ -3167,6 +3203,11 @@ function forward(el, forwardOptions = {}) {
     router.allowPageChange = true;
     router.pageCallback('beforeIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
     router.pageCallback('afterIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
+    if (options.reloadCurrent && options.clearPreviousHistory) router.clearPreviousHistory();
+    return router;
+  }
+  if (options.reloadPrevious) {
+    router.allowPageChange = true;
     return router;
   }
 
@@ -3210,6 +3251,7 @@ function forward(el, forwardOptions = {}) {
         }
       }
     }
+    if (options.clearPreviousHistory) router.clearPreviousHistory();
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     if (router.params.pushState) {
@@ -3291,6 +3333,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     !(options.reloadCurrent || options.reloadPrevious) &&
     !router.params.allowDuplicateUrls
   ) {
+    router.allowPageChange = true;
     return false;
   }
 
@@ -4300,6 +4343,43 @@ function back(...args) {
   return router;
 }
 
+function clearPreviousHistory() {
+  const router = this;
+  const app = router.app;
+  const separateNavbar = router.separateNavbar;
+  const url = router.history[router.history.length - 1];
+
+  const $currentPageEl = $(router.currentPageEl);
+
+  const $pagesToRemove = router.$el
+    .children('.page:not(.stacked)')
+    .filter((index, pageInView) => pageInView !== $currentPageEl[0]);
+
+  $pagesToRemove.each((index, pageEl) => {
+    const $oldPageEl = $(pageEl);
+    const $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
+    if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
+      $oldPageEl.addClass('stacked');
+      if (separateNavbar) {
+        $oldNavbarInnerEl.addClass('stacked');
+      }
+    } else {
+      // Page remove event
+      router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInnerEl, 'previous', undefined, {});
+      router.removePage($oldPageEl);
+      if (separateNavbar && $oldNavbarInnerEl.length) {
+        router.removeNavbar($oldNavbarInnerEl);
+      }
+    }
+  });
+
+  router.history = [url];
+  router.view.history = [url];
+  router.saveHistory();
+}
+
+ // eslint-disable-line
+
 class Router$1 extends Framework7Class {
   constructor(app, view) {
     super({}, [typeof view === 'undefined' ? app : view]);
@@ -4391,6 +4471,8 @@ class Router$1 extends Framework7Class {
       backward,
       loadBack,
       back,
+      // Clear history
+      clearPreviousHistory,
     });
 
     return router;
@@ -5090,14 +5172,14 @@ class Router$1 extends Framework7Class {
           throw (err);
         }
       }
-      const extendContext = Utils.extend(
+      const extendContext = Utils.merge(
         {},
         context,
         {
           $,
           $$: $,
           $app: router.app,
-          $root: Utils.extend({}, router.app.data, router.app.methods),
+          $root: Utils.merge({}, router.app.data, router.app.methods),
           $route: options.route,
           $router: router,
           $dom7: $,
@@ -5302,6 +5384,7 @@ class Router$1 extends Framework7Class {
   clearHistory() {
     const router = this;
     router.history = [];
+    if (router.view) router.view.history = [];
     router.saveHistory();
   }
   init() {
@@ -10660,8 +10743,12 @@ function swipePanel$1(panel) {
     let action;
     const edge = (translate === 0 || Math.abs(translate) === panelWidth);
 
+    const threshold = params.swipeThreshold || 0;
+
     if (!panel.opened) {
-      if (effect === 'cover') {
+      if (Math.abs(touchesDiff) < threshold) {
+        action = 'reset';
+      } else if (effect === 'cover') {
         if (translate === 0) {
           action = 'swap'; // open
         } else if (timeDiff < 300 && Math.abs(translate) > 0) {
@@ -12044,12 +12131,18 @@ class Range$1 extends Framework7Class {
       }
     }
 
-
-    Utils.extend(range, range.params, {
+    const { dual, step, label, min, max, value } = range;
+    Utils.extend(range, {
       $el,
       el: $el[0],
       $inputEl,
       inputEl: $inputEl ? $inputEl[0] : undefined,
+      dual,
+      step,
+      label,
+      min,
+      max,
+      value,
     });
 
     if ($inputEl) {
@@ -12449,7 +12542,10 @@ class SmartSelect$1 extends Framework7Class {
     ss.useModulesParams(defaults);
 
     // View
-    const view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
+    let view = params.view;
+    if (!view) {
+      view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
+    }
     if (!view) {
       throw Error('Smart Select requires initialized View');
     }
@@ -24878,7 +24974,7 @@ class Autocomplete$1 extends Framework7Class {
       <div class="navbar ${ac.params.navbarColorTheme ? `color-theme-${ac.params.navbarColorTheme}` : ''}">
         <div class="navbar-inner ${ac.params.navbarColorTheme ? `color-theme-${ac.params.navbarColorTheme}` : ''}">
           <div class="left sliding">
-            <a href="#" class="link ${ac.params.openIn === 'page' ? 'back' : 'popup-close'}">
+            <a href="#" class="link ${ac.params.openIn === 'page' ? 'back' : 'popup-close'}" ${ac.params.openIn === 'popup' ? 'data-popup=".autocomplete-popup"' : ''}>
               <i class="icon icon-back"></i>
               <span class="ios-only">${ac.params.openIn === 'page' ? ac.params.pageBackLinkText : ac.params.popupCloseLinkText}</span>
             </a>
