@@ -12131,7 +12131,7 @@ class Range$1 extends Framework7Class {
       }
     }
 
-    const { dual, step, label, min, max, value } = range;
+    const { dual, step, label, min, max, value } = range.params;
     Utils.extend(range, {
       $el,
       el: $el[0],

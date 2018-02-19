@@ -15195,12 +15195,13 @@ var Range$1 = (function (Framework7Class$$1) {
       }
     }
 
-    var dual = range.dual;
-    var step = range.step;
-    var label = range.label;
-    var min = range.min;
-    var max = range.max;
-    var value = range.value;
+    var ref = range.params;
+    var dual = ref.dual;
+    var step = ref.step;
+    var label = ref.label;
+    var min = ref.min;
+    var max = ref.max;
+    var value = ref.value;
     Utils.extend(range, {
       $el: $el,
       el: $el[0],
