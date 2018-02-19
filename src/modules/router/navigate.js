@@ -23,7 +23,7 @@ function forward(el, forwardOptions = {}) {
     reloadCurrent: router.params.reloadPages,
     reloadPrevious: false,
     reloadAll: false,
-    clearHistory: false,
+    clearPreviousHistory: false,
     on: {},
   }, forwardOptions);
 
@@ -298,7 +298,7 @@ function forward(el, forwardOptions = {}) {
     router.allowPageChange = true;
     router.pageCallback('beforeIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
     router.pageCallback('afterIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
-    if (options.reloadCurrent && options.clearHistory) router.clearHistory();
+    if (options.reloadCurrent && options.clearPreviousHistory) router.clearPreviousHistory();
     return router;
   }
   if (options.reloadPrevious) {
@@ -346,7 +346,7 @@ function forward(el, forwardOptions = {}) {
         }
       }
     }
-    if (options.clearHistory) router.clearHistory();
+    if (options.clearPreviousHistory) router.clearPreviousHistory();
     router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
     if (router.params.pushState) {
