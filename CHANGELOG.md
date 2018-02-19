@@ -1,6 +1,6 @@
 # Change Log
 
-# [v2.0.9](https://github.com/framework7io/framework7/compare/v2.0.8...v2.0.9) - February 19, 2018
+# [v2.0.10](https://github.com/framework7io/framework7/compare/v2.0.8...v2.0.10) - February 19, 2018
   * Router
     * New `router.clearPreviousHistory()` method to clear all previous pages history and remove all previous pages from DOM
     * New `clearPreviousHistory` option for `router.navigate` that will clear history after reloading/navigating to specified page
