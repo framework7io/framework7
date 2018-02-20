@@ -54,7 +54,7 @@ function swipePanel(panel) {
     }
     if (params.swipeActiveAreaSide && panel.opened) {
       if (side === 'right') {
-        if (touchesStart.x > (app.width - ($el.outerWidth() + params.swipeActiveAreaSide))) return;
+        if (touchesStart.x > (app.width - $el.outerWidth() + params.swipeActiveAreaSide)) return;
       }
     }    
     touchMoves = 0;
