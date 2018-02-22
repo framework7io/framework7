@@ -7,7 +7,6 @@
     bottom: 0;
     z-index: -1;
     content: '';
-    will-change: opacity;
     opacity: 0;
     .rtl({
       left: 100%;
@@ -28,7 +27,6 @@
     content: '';
     opacity: 0;
     z-index: 10000;
-    will-change: opacity;
   }
   .page-shadow-effect {
     .fake-shadow();
@@ -81,7 +79,6 @@
   }
   .router-transition-forward, .router-transition-backward {
     .page-next, .page-current, .page-previous:not(.stacked) {
-      will-change: transform;
       pointer-events: none;
     }
   }
@@ -111,7 +108,6 @@
   }
   .router-transition-css-backward {
     .page-previous, .page-current {
-      will-change: transform;
       pointer-events: none;
     }
     .page-previous {
