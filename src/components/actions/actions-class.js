@@ -72,7 +72,7 @@ class Actions extends Modal {
         buttonIndex = $(buttonEl).index();
         groupIndex = $(buttonEl).parents('.actions-group').index();
       }
-      if (typeof groups != 'undefined') {
+      if (typeof groups !== 'undefined') {
         const button = groups[groupIndex][buttonIndex];
         if (button.onClick) button.onClick(actions, e);
         if (actions.params.onClick) actions.params.onClick(actions, e);
