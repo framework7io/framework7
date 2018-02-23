@@ -72,10 +72,12 @@ class Actions extends Modal {
         buttonIndex = $(buttonEl).index();
         groupIndex = $(buttonEl).parents('.actions-group').index();
       }
-      const button = groups[groupIndex][buttonIndex];
-      if (button.onClick) button.onClick(actions, e);
-      if (actions.params.onClick) actions.params.onClick(actions, e);
-      if (button.close !== false) actions.close();
+      if (typeof groups !== 'undefined') {
+        const button = groups[groupIndex][buttonIndex];
+        if (button.onClick) button.onClick(actions, e);
+        if (actions.params.onClick) actions.params.onClick(actions, e);
+        if (button.close !== false) actions.close();
+      }
     }
     actions.open = function open(animate) {
       let convertToPopover = false;
