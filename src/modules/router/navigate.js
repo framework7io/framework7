@@ -560,6 +560,11 @@ function navigate(navigateParams, navigateOptions = {}) {
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
     let resolvedAsModal = false;
+    if (resolveOptions && resolveOptions.context) {
+      if (!route.context) route.context = resolveOptions.context;
+      else route.context = Utils.extend({}, route.context, resolveOptions.context);
+      options.route.context = route.context;
+    }
     ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
       if (resolveParams[modalLoadProp]) {
         resolvedAsModal = true;
