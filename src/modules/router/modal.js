@@ -1,5 +1,5 @@
 import Utils from '../../utils/utils';
-import History from '../../utils/history.js';
+import History from '../../utils/history';
 
 function modalLoad(modalType, route, loadOptions = {}) {
   const router = this;
