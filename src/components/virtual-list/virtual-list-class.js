@@ -238,7 +238,7 @@ class VirtualList extends Framework7Class {
         itemEl.f7VirtualListIndex = index;
       } else {
         if (vl.renderItem) {
-          vl.tempDomElement.innerHTML = vl.renderItem(items[i], index).trim();
+          vl.tempDomElement.innerHTML = vl.renderItem(items[i], {index: index}).trim();
         } else {
           vl.tempDomElement.innerHTML = items[i].toString().trim();
         }
