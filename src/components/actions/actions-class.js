@@ -102,18 +102,14 @@ class Actions extends Modal {
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
-          if (actions.groups) {
-            popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
-              $(buttonEl).on('click', buttonOnClick);
-            });
-          }
+          popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
+            $(buttonEl).on('click', buttonOnClick);
+          });
         });
         popover.once('popoverClosed', () => {
-          if (actions.groups) {
-            popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
-              $(buttonEl).off('click', buttonOnClick);
-            });
-          }
+          popover.$el.find('.item-link').each((groupIndex, buttonEl) => {
+            $(buttonEl).off('click', buttonOnClick);
+          });
           Utils.nextTick(() => {
             popover.destroy();
             popover = undefined;
