@@ -227,7 +227,13 @@ function initAjaxForm() {
     if (!url) return;
 
     let data;
-    if (method === 'POST') data = new window.FormData($formEl[0]);
+    if (method === 'POST') {
+      if (contentType === 'application/x-www-form-urlencoded') {
+        data = app.form.convertToData($formEl[0]);
+      } else {
+        data = new window.FormData($formEl[0]);
+      }
+    }
     else data = Utils.serializeObject(app.form.convertToData($formEl[0]));
 
     const xhr = app.request({
