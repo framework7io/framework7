@@ -125,7 +125,7 @@ class Actions extends Modal {
             $(buttonEl).on('click', buttonOnClick);
           });
           actions.once('actionsClosed', () => {
-            actions.$el.find('.list-button').each((groupIndex, buttonEl) => {
+            actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
               $(buttonEl).off('click', buttonOnClick);
             });
           });
