@@ -233,8 +233,9 @@ function initAjaxForm() {
       } else {
         data = new window.FormData($formEl[0]);
       }
+    } else {
+      data = Utils.serializeObject(app.form.convertToData($formEl[0]));
     }
-    else data = Utils.serializeObject(app.form.convertToData($formEl[0]));
 
     const xhr = app.request({
       method,
