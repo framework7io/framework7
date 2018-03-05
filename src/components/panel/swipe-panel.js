@@ -53,8 +53,11 @@ function swipePanel(panel) {
       }
     }
     if (params.swipeActiveAreaSide && panel.opened) {
+      if (side === 'left') {
+        if (touchesStart.x < ($el[0].offsetWidth - params.swipeActiveAreaSide)) return;
+      }
       if (side === 'right') {
-        if (touchesStart.x > ((app.width - $el.outerWidth()) + params.swipeActiveAreaSide)) return;
+        if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeActiveAreaSide)) return;
       }
     }
     touchMoves = 0;
