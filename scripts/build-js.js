@@ -6,7 +6,8 @@
 
 const gulp = require('gulp');
 const fs = require('fs');
-const rollup = require('rollup-stream');
+const rollupStream = require('rollup-stream');
+const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
@@ -45,7 +46,8 @@ function es(components, cb) {
   let cbs = 0;
 
   // Bundle
-  rollup({
+  rollupStream({
+    rollup,
     input: './src/framework7.js',
     plugins: [
       replace({
@@ -61,13 +63,15 @@ function es(components, cb) {
       resolve({ jsnext: true }),
       commonjs(),
     ],
-    format: 'es',
-    name: 'Framework7',
-    strict: true,
-    sourcemap: false,
     external,
     globals,
-    banner,
+    output: {
+      name: 'Framework7',
+      format: 'es',
+      sourcemap: false,
+      strict: true,
+      banner,
+    },
   })
     .on('error', (err) => {
       if (cb) cb();
@@ -89,7 +93,8 @@ function umd(components, cb) {
   const format = process.env.FORMAT || config.format || 'umd';
   const output = getOutput();
 
-  rollup({
+  rollupStream({
+    rollup,
     input: './src/framework7.js',
     plugins: [
       replace({
@@ -106,12 +111,14 @@ function umd(components, cb) {
       commonjs(),
       buble(),
     ],
-    format: 'umd',
-    name: 'Framework7',
-    strict: true,
-    sourcemap: env === 'development',
-    banner,
     cache,
+    output: {
+      format: 'umd',
+      name: 'Framework7',
+      sourcemap: env === 'development',
+      strict: true,
+      banner,
+    },
   })
     .on('error', (err) => {
       if (cb) cb();
