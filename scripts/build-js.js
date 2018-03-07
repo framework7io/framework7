@@ -64,13 +64,13 @@ function es(components, cb) {
       commonjs(),
     ],
     external,
-    globals,
     output: {
       name: 'Framework7',
       format: 'es',
       sourcemap: false,
       strict: true,
       banner,
+      globals,
     },
   })
     .on('error', (err) => {
