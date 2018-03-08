@@ -15,7 +15,16 @@ export default {
         app,
         constructor: Toast,
         defaultSelector: '.toast.modal-in',
-      })
+      }),
+      {
+        // Shortcuts
+        show(params) {
+          Utils.extend(params, {
+            destroyOnClose: true,
+          });
+          return new Toast(app, params).open();
+        },
+      }
     );
   },
   params: {

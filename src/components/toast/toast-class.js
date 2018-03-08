@@ -74,6 +74,14 @@ class Toast extends Modal {
       window.clearTimeout(timeoutId);
     });
 
+    if (toast.params.destroyOnClose) {
+      toast.once('closed', () => {
+        setTimeout(() => {
+          toast.destroy();
+        }, 0);
+      });
+    }
+
     return toast;
   }
   render() {
