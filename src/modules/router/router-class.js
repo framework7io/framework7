@@ -822,7 +822,8 @@ class Router extends Framework7Class {
           },
         }
       );
-      c.methods = Utils.merge({}, c.methods, options.methods); //defining componentUrl methods in routes
+      // defining componentUrl methods in routes
+      c.methods = Utils.merge({}, c.methods, options.methods);  // eslint-disable-line no-param-reassign
       const createdComponent = Component.create(c, extendContext);
       resolve(createdComponent.el);
     }
