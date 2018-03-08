@@ -822,6 +822,7 @@ class Router extends Framework7Class {
           },
         }
       );
+      c.methods = Utils.merge({}, c.methods, options.methods); //defining componentUrl methods in routes
       const createdComponent = Component.create(c, extendContext);
       resolve(createdComponent.el);
     }
