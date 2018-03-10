@@ -22,6 +22,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $100
 
+Mason Fok
 Juergen Schimmoeller
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
