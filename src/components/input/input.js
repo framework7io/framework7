@@ -149,11 +149,11 @@ const Input = {
         if (Device.android) {
           $(window).once('resize', () => {
             if (document && document.activeElement === inputEl) {
-              app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+              app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
             }
           });
         } else {
-          app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewCentered);
+          app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
         }
       }
       app.input.focus(inputEl);
