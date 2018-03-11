@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { window } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import pickerColumn from './picker-column';

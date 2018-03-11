@@ -1,3 +1,4 @@
+import { document } from 'ssr-window';
 import Device from '../../utils/device';
 
 export default {

@@ -1,3 +1,4 @@
+import { document } from 'ssr-window';
 import $ from 'dom7';
 import Device from '../../utils/device';
 import ViAd from './vi-class';

@@ -1,3 +1,5 @@
+import { window, document } from 'ssr-window';
+
 export default {
   name: 'resize',
   instance: {

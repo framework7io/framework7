@@ -1,5 +1,6 @@
 import Template7 from 'template7';
 import $ from 'dom7';
+import { window } from 'ssr-window';
 
 // F7 Class
 import Framework7 from './components/core/core-class';

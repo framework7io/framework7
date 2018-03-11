@@ -1,3 +1,4 @@
+import { document } from 'ssr-window';
 import Support from '../../utils/support';
 
 export default {

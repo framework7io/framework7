@@ -1,3 +1,4 @@
+import { document } from 'ssr-window';
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import FrameworkClass from '../../utils/class';
