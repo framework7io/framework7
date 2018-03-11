@@ -63,7 +63,9 @@ class Framework7 extends Framework7Class {
     });
 
     // Save Root
-    app.root[0].f7 = app;
+    if (app.root && app.root[0]) {
+      app.root[0].f7 = app;
+    }
 
     // Install Modules
     app.useModules();

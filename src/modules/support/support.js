@@ -12,6 +12,7 @@ export default {
   on: {
     init() {
       const html = document.querySelector('html');
+      if (!html) return;
       const classNames = [];
       if (Support.positionSticky) {
         classNames.push('support-position-sticky');
