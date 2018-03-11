@@ -1,6 +1,5 @@
 import Template7 from 'template7';
 import $ from 'dom7';
-import { window } from 'ssr-window';
 
 // F7 Class
 import Framework7 from './components/core/core-class';
@@ -32,11 +31,13 @@ import Modal from './components/modal/modal';
 //IMPORT_COMPONENTS
 
 if (process.env.FORMAT !== 'es') {
-  // Template7
-  if (!window.Template7) window.Template7 = Template7;
+  if (typeof window !== 'undefined') {
+    // Template7
+    if (!window.Template7) window.Template7 = Template7;
 
-  // Dom7
-  if (!window.Dom7) window.Dom7 = $;
+    // Dom7
+    if (!window.Dom7) window.Dom7 = $;
+  }
 }
 
 // Install Core Modules & Components
