@@ -243,6 +243,10 @@ var routes = [
     componentUrl: './pages/statusbar.html',
   },
   {
+    path: '/stepper/',
+    componentUrl: './pages/stepper.html',
+  },
+  {
     path: '/subnavbar/',
     url: './pages/subnavbar.html',
   },
