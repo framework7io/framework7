@@ -49,7 +49,7 @@ return {
     },
   },
   on: {
-    pageBeforeRemove() {
+    pageBeforeRemove: function() {
       var self = this;
       self.actions1.destroy();
       self.actions2.destroy();
