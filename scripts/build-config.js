@@ -51,6 +51,7 @@ const config = {
     'radio',
     'toggle',
     'range',
+    'stepper',
     'smart-select',
 
     // Grid
