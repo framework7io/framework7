@@ -52,7 +52,7 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "dom7": "^2.0.2",
+    "dom7": "^2.0.3",
     "path-to-regexp": "^2.1.0",
     "ssr-window": "^1.0.0",
     "template7": "^1.3.5"
