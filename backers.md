@@ -1,5 +1,15 @@
 # Backers
 
+<table>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="http://mytommy.com" target="_blank">
+        <img width="200" src="https://framework7.io/i/sponsors/tommy.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
 Support Framework7 development by [pledging on Patreon](https://www.patreon.com/vladimirkharlampidi)!
 
 ### $1000
@@ -22,7 +32,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 
 ### $100
 
-Mason Fok<br>
+Mason Fok ([tommy](http://mytommy.com))<br>
 Juergen Schimmoeller
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
