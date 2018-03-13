@@ -52,6 +52,14 @@ function swipePanel(panel) {
         if (touchesStart.x < app.width - params.swipeActiveArea) return;
       }
     }
+    if (params.swipeActiveAreaSide && panel.opened) {
+      if (side === 'left') {
+        if (touchesStart.x < ($el[0].offsetWidth - params.swipeActiveAreaSide)) return;
+      }
+      if (side === 'right') {
+        if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeActiveAreaSide)) return;
+      }
+    }
     touchMoves = 0;
     $viewEl = $(panel.getViewEl());
     isMoved = false;
