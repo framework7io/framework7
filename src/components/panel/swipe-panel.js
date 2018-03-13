@@ -52,12 +52,12 @@ function swipePanel(panel) {
         if (touchesStart.x < app.width - params.swipeActiveArea) return;
       }
     }
-    if (params.swipeActiveAreaSide && panel.opened) {
+    if (params.swipeCloseActiveAreaSide && panel.opened) {
       if (side === 'left') {
-        if (touchesStart.x < ($el[0].offsetWidth - params.swipeActiveAreaSide)) return;
+        if (touchesStart.x < ($el[0].offsetWidth - params.swipeCloseActiveAreaSide)) return;
       }
       if (side === 'right') {
-        if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeActiveAreaSide)) return;
+        if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeCloseActiveAreaSide)) return;
       }
     }
     touchMoves = 0;
