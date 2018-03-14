@@ -13,19 +13,34 @@
     .f7-icons {
       font-size: 22px;
     }
-    &:first-child {
-      border-radius: 5px 0 0 5px;
-    }
-    &:last-child {
-      border-radius: 0 5px 5px 0;
-    }
+    .ltr({
+      &:first-child {
+        border-radius: 5px 0 0 5px;
+      }
+      &:last-child {
+        border-radius: 0 5px 5px 0;
+      }
+    });
+    .rtl({
+      &:first-child {
+        border-radius: 0 5px 5px 0;
+      }
+      &:last-child {
+        border-radius: 5px 0 0 5px;
+      }
+    });
     &.active-state {
       background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), .15);
     }
     + .stepper-button,
     + .stepper-button-minus,
     + .stepper-button-plus {
-      border-left: none;
+      .ltr({
+        border-left: none;
+      });
+      .rtl({
+        border-right: none;
+      });
     }
   }
   .stepper-button-plus, .stepper-button-minus {
@@ -66,17 +81,32 @@
     }
     .stepper-button + .stepper-button,
     .stepper-button-minus + .stepper-button-plus {
-      border-left: 1px solid rgba(0,0,0,0.1);
+      .ltr({
+        border-left: 1px solid rgba(0,0,0,0.1);
+      });
+      .rtl({
+        border-right: 1px solid rgba(0,0,0,0.1);
+      });
     }
   }
   .stepper-round, .stepper-round-ios {
     .stepper-button, .stepper-button-minus, .stepper-button-plus {
-      &:first-child {
-        border-radius: 29px 0 0 29px;
-      }
-      &:last-child {
-        border-radius: 0 29px 29px 0;
-      }
+      .ltr({
+        &:first-child {
+          border-radius: 29px 0 0 29px;
+        }
+        &:last-child {
+          border-radius: 0 29px 29px 0;
+        }
+      });
+      .rtl({
+        &:first-child {
+          border-radius: 0 29px 29px 0;
+        }
+        &:last-child {
+          border-radius: 29px 0 0 29px;
+        }
+      });
     }
   }
   .stepper-small, .stepper-small-ios {
@@ -119,7 +149,6 @@
       line-height: 42px;
     }
   }
-
 
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
