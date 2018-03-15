@@ -23,6 +23,7 @@ const Accordion = {
       if ($el.hasClass('accordion-item-opened')) {
         $contentEl.transition(0);
         $contentEl.css('height', 'auto');
+        /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
         app._clientLeft = $contentEl[0].clientLeft;
         $contentEl.transition('');
         $el.trigger('accordion:opened');
@@ -46,6 +47,7 @@ const Accordion = {
     $el.removeClass('accordion-item-opened');
     $contentEl.transition(0);
     $contentEl.css('height', `${$contentEl[0].scrollHeight}px`);
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
     app._clientLeft = $contentEl[0].clientLeft;
     $contentEl.transition('');
     // Close
@@ -53,6 +55,7 @@ const Accordion = {
       if ($el.hasClass('accordion-item-opened')) {
         $contentEl.transition(0);
         $contentEl.css('height', 'auto');
+        /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
         app._clientLeft = $contentEl[0].clientLeft;
         $contentEl.transition('');
         $el.trigger('accordion:opened');
