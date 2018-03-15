@@ -121,6 +121,28 @@ textarea {
   pointer-events: auto;
   visibility: visible;
 }
+.input-dropdown-wrap {
+  &:not(.no-icon-before):before, .icon-dropwdown {
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #727272;
+    .ltr({
+      right: 0;
+    });
+    .rtl({
+      left: 0;
+    });
+  }
+  select, input, textarea {
+    padding-right: 10px;
+  }
+}
 
 & when (@includeIosTheme) {
   @import url('./input-ios.less');
