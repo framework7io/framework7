@@ -21,7 +21,9 @@ const Accordion = {
     }
     $contentEl.transitionEnd(() => {
       if ($el.hasClass('accordion-item-opened')) {
-        $contentEl.css('height', '');
+        $contentEl.transition(0);
+        $contentEl.css('height', 'auto');
+        let clientLeft = $contentEl[0].clientLeft;
         $contentEl.transition('');
         $el.trigger('accordion:opened');
         app.emit('accordionOpened', $el[0]);
@@ -44,10 +46,14 @@ const Accordion = {
     $el.removeClass('accordion-item-opened');
     $contentEl.transition(0);
     $contentEl.css('height', `${$contentEl[0].scrollHeight}px`);
+    let clientLeft = $contentEl[0].clientLeft;
+    $contentEl.transition('');
     // Close
     $contentEl.transitionEnd(() => {
       if ($el.hasClass('accordion-item-opened')) {
-        $contentEl.css('height', '');
+        $contentEl.transition(0);
+        $contentEl.css('height', 'auto');
+        let clientLeft = $contentEl[0].clientLeft;
         $contentEl.transition('');
         $el.trigger('accordion:opened');
         app.emit('accordionOpened', $el[0]);
