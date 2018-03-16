@@ -1,6 +1,6 @@
 import $ from 'dom7';
 import Template7 from 'template7';
-import { window } from 'ssr-window';
+import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
