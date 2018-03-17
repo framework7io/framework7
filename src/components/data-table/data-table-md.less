@@ -150,6 +150,48 @@
     }
   }
 
+  // Footer
+  .data-table-footer {
+    height: 56px;
+    color: rgba(0,0,0,0.54);
+
+  }
+  .data-table-rows-select,
+  .data-table-pagination {
+    a.link {
+      width: 48px;
+      height: 48px;
+      .md-link-highlight(rgba(0,0,0,0.1));
+    }
+  }
+  .data-table-rows-select {
+    + .data-table-pagination {
+      .ltr({
+        margin-left: 32px;
+      });
+      .rtl({
+        margin-right: 32px;
+      });
+    }
+    .input {
+      .ltr({
+        margin-left: 24px;
+      });
+      .rtl({
+        margin-right: 24px;
+      });
+    }
+  }
+  .data-table-pagination-label {
+    .ltr({
+      margin-right: 20px;
+    });
+    .rtl({
+      margin-left: 20px;
+    });
+  }
+  .hairline-root('.data-table-footer', top, rgba(0,0,0,0.12));
+
   // Collapsible
   @media (max-width:480px) and (orientation:portrait) {
     .data-table.data-table-collapsible {

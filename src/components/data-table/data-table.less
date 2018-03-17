@@ -138,6 +138,28 @@
     font-size: 14px;
   }
 
+  // Footer
+  .data-table-footer {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    font-size: 12px;
+    overflow: hidden;
+    .ltr({
+      justify-content: flex-end;
+    });
+    .rtl({
+      justify-content: flex-start;
+    });
+
+  }
+  .data-table-rows-select,
+  .data-table-pagination {
+    display: flex;
+    align-items: center;
+  }
+
   // Collapsible
   @media (max-width:480px) and (orientation:portrait) {
     &.data-table-collapsible {
