@@ -13,7 +13,6 @@
   * Router
     * Fixed issue when route context wasn't available in `async` route
     * Fixed issue when modal HTML element was duplicated in modal routes
-    *
   * Form
     * Fixed issue when `enctype` attribute was ignored on ajax form
   * VI (video intelligence)
