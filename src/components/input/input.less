@@ -78,7 +78,12 @@ textarea {
     position: relative;
   }
 }
-
+.input {
+  position: relative;
+  input, select, textarea {
+    width: 100%;
+  }
+}
 .input-clear-button {
   opacity: 0;
   pointer-events: none;
@@ -118,7 +123,8 @@ textarea {
   }
 }
 .input-with-value ~ .input-clear-button,
-.item-input-with-value .input-clear-button {
+.item-input-with-value .input-clear-button,
+.input-with-value .input-clear-button {
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
@@ -137,10 +143,10 @@ textarea {
     border-right: 5px solid transparent;
     border-top: 5px solid #727272;
     .ltr({
-      right: 0;
+      right: 2px;
     });
     .rtl({
-      left: 0;
+      left: 2px;
     });
   }
   select, input, textarea {

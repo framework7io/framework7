@@ -67,7 +67,7 @@ const Input = {
       let $errorEl = $inputEl.nextAll('.item-input-error-message, .input-error-message');
       if (validationMessage) {
         if ($errorEl.length === 0) {
-          $errorEl = $(`<div class="${$inputWrapEl.length ? 'input-with-error-message' : 'item-input-with-error-message'}"></div>`);
+          $errorEl = $(`<div class="${$inputWrapEl.length ? 'input-error-message' : 'item-input-error-message'}"></div>`);
           $errorEl.insertAfter($inputEl);
         }
         $errorEl.text(validationMessage);

@@ -71,24 +71,29 @@
       margin-top: -8px;
     }
   }
-  .item-input-with-error-message {
-    .item-input-wrap {
-      input, select, textarea {
-        color: @red;
-      }
+  .item-input-with-error-message .item-input-wrap,
+  div.input-with-error-message,
+  span.input-with-error-message {
+    input, select, textarea {
+      color: @red;
     }
   }
-  .item-input-error-message, .item-input-info {
+  .item-input-error-message,
+  .item-input-info,
+  .input-error-message,
+  .input-info {
     font-size: 12px;
     line-height: 1.4;
     position: relative;
     margin-bottom: 6px;
     margin-top: -8px;
   }
-  .item-input-info {
+  .item-input-info,
+  .input-info {
     color: #8e8e93;
   }
-  .item-input-error-message {
+  .item-input-error-message,
+  .input-error-message {
     color: @red;
     display: none;
   }
@@ -100,11 +105,19 @@
       display: none;
     }
   }
+  .input-invalid {
+    .input-error-message {
+      display: block;
+    }
+    .input-info {
+      display: none;
+    }
+  }
 
   .input-clear-button {
-    width: 28px;
-    height: 28px;
-    margin-top: -14px;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
     &:after {
       .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#8e8e93'/><line stroke='#ffffff' stroke-width='2' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#ffffff' stroke-width='2' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
       background-size: 14px 14px;
