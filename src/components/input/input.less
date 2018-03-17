@@ -23,6 +23,8 @@ textarea {
   font-family: inherit;
   background: none;
   resize: none;
+  font-size: inherit;
+  color: inherit;
 }
 .textarea-resizable-shadow {
   opacity: 0;
@@ -121,9 +123,11 @@ textarea {
   pointer-events: auto;
   visibility: visible;
 }
-.input-dropdown-wrap {
-  &:not(.no-icon-before):before, .icon-dropwdown {
+.input-dropdown-wrap, .input-dropdown {
+  position: relative;
+  &:before {
     content: '';
+    pointer-events: none;
     position: absolute;
     top: 50%;
     margin-top: -2px;
@@ -140,7 +144,7 @@ textarea {
     });
   }
   select, input, textarea {
-    padding-right: 10px;
+    padding-right: 14px;
   }
 }
 
