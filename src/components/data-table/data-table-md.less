@@ -6,6 +6,7 @@
       th, td {
         font-weight: 500;
         height: 56px;
+        box-sizing: border-box;
         &:not(.sortable-cell-active) {
           color: rgba(0,0,0,0.54);
         }
@@ -192,6 +193,28 @@
   }
   .hairline-root('.data-table-footer', top, rgba(0,0,0,0.12));
 
+  // Inputs
+  .input-cell {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: auto;
+    vertical-align: top;
+    .table-head-label + .input {
+      margin-top: 4px;
+    }
+    .input {
+      height: 24px;
+      input, textarea, select {
+        height: 24px;
+        color: #212121;
+        font-size: 14px;
+      }
+      .input-clear-button {
+        transform: scale(0.8);
+      }
+    }
+  }
+
   // Collapsible
   @media (max-width:480px) and (orientation:portrait) {
     .data-table.data-table-collapsible {
@@ -200,7 +223,6 @@
         padding-right: 16px;
       }
       td:not(.checkbox-cell) {
-        font-size: 16px;
         &:before {
           color: rgba(0,0,0,0.54);
           font-weight: 500;
