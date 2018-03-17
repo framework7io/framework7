@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { window } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
@@ -73,6 +74,14 @@ class Toast extends Modal {
     toast.on('close', () => {
       window.clearTimeout(timeoutId);
     });
+
+    if (toast.params.destroyOnClose) {
+      toast.once('closed', () => {
+        setTimeout(() => {
+          toast.destroy();
+        }, 0);
+      });
+    }
 
     return toast;
   }

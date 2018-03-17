@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.10
+ * Framework7 2.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 19, 2018
+ * Released on: March 17, 2018
  */
 
 import Template7 from 'template7';
@@ -45,11 +45,13 @@ import Modal from './components/modal/modal';
 
 
 if ("es" !== 'es') {
-  // Template7
-  if (!window.Template7) window.Template7 = Template7;
+  if (typeof window !== 'undefined') {
+    // Template7
+    if (!window.Template7) window.Template7 = Template7;
 
-  // Dom7
-  if (!window.Dom7) window.Dom7 = $;
+    // Dom7
+    if (!window.Dom7) window.Dom7 = $;
+  }
 }
 
 // Install Core Modules & Components

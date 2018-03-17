@@ -1,4 +1,46 @@
+<a href="https://www.patreon.com/vladimirkharlampidi"><img src="https://cdn.framework7.io/i/support-badge.png" height="20"></a>
+
 # Change Log
+
+# [v2.1.1](https://github.com/framework7io/framework7/compare/v2.0.10...v2.1.1) - March 17, 2018
+  * Stepper
+    * Meet all new Stepper component 🎉
+  * Data Table
+    * Added data table footer UI for pagination
+    * Added UI support for having inputs in table head
+  * Input
+    * Now it is possible to use fancy input elements outside of List View, by just wrapping it with `<div class="input">`
+  * Router
+    * Fixed issue when route context wasn't available in `async` route
+    * Fixed issue when modal HTML element was duplicated in modal routes
+    *
+  * Form
+    * Fixed issue when `enctype` attribute was ignored on ajax form
+  * VI (video intelligence)
+    * Now serves vi api over `https`
+  * Actions
+    * Fixed issue with error when pass already rendered HTML element to the `actions.create` constructor
+    * Fixed issue with not setting actions button bg color
+    * Addedd support for `closeByOutsideClick` logic
+  * Searchbar
+    * Now hides elements (when required) by setting/unsetting classes instead of directly modifying element `display` property
+  * Toast
+    * Added `destroyOnClose` parameter to automatically destroy toast instance on close
+    * New `app.toast.show` method to automatically create and open Toast
+    * Improved iPhoneX support for bottom toast
+  * Swiper updated to latest 4.2.0 version
+    * Core
+      * `swiper.updateAutoHeight(speed)` now supports `speed` parameter to resize swiper wrapper with duration
+      * Fixed issues in free mode with `freeModeSticky` not being able to snap to closest snap point
+      * New `swiper.slideToClosest()` method to slide to closest snap point when it is somewhere in between
+    * A11y (Accessibility)
+      * It is now enabled by default (if installed)
+    * Controller
+      * Fixed RTL issue when vertical swiper controls horizontal one
+    * Lazy
+      * Fixed issue when lazy loading not always triggered on window resize
+  * Improved server-side rendering by using `ssr-window` package
+  * Lots of minor fixes
 
 # [v2.0.10](https://github.com/framework7io/framework7/compare/v2.0.8...v2.0.10) - February 19, 2018
   * Router

@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.10
+ * Framework7 2.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 19, 2018
+ * Released on: March 17, 2018
  */
 html,
 body,
@@ -249,7 +249,6 @@ html.with-statusbar.device-iphone-x .panel {
   height: 100%;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  contain: layout size style;
 }
 .page.stacked {
   display: none;
@@ -265,8 +264,6 @@ html.with-statusbar.device-iphone-x .panel {
   height: 100%;
   position: relative;
   z-index: 1;
-  contain: layout size style;
-  will-change: scroll-position;
 }
 .ios .page-shadow-effect {
   position: absolute;
@@ -275,7 +272,6 @@ html.with-statusbar.device-iphone-x .panel {
   bottom: 0;
   z-index: -1;
   content: '';
-  will-change: opacity;
   opacity: 0;
   right: 100%;
   background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(10%, rgba(0, 0, 0, 0)), color-stop(50%, rgba(0, 0, 0, 0.01)), to(rgba(0, 0, 0, 0.2)));
@@ -292,7 +288,6 @@ html.with-statusbar.device-iphone-x .panel {
   content: '';
   opacity: 0;
   z-index: 10000;
-  will-change: opacity;
 }
 .ios .router-dynamic-navbar-inside .page-shadow-effect,
 .ios .router-dynamic-navbar-inside .page-opacity-effect {
@@ -330,7 +325,6 @@ html.with-statusbar.device-iphone-x .panel {
 .ios .router-transition-backward .page-current,
 .ios .router-transition-forward .page-previous:not(.stacked),
 .ios .router-transition-backward .page-previous:not(.stacked) {
-  will-change: transform;
   pointer-events: none;
 }
 .ios .router-transition-css-forward .page-next {
@@ -344,7 +338,6 @@ html.with-statusbar.device-iphone-x .panel {
   bottom: 0;
   z-index: -1;
   content: '';
-  will-change: opacity;
   opacity: 0;
   right: 100%;
   background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(10%, rgba(0, 0, 0, 0)), color-stop(50%, rgba(0, 0, 0, 0.01)), to(rgba(0, 0, 0, 0.2)));
@@ -367,7 +360,6 @@ html.with-statusbar.device-iphone-x .panel {
   content: '';
   opacity: 0;
   z-index: 10000;
-  will-change: opacity;
   -webkit-animation: ios-page-current-to-previous-opacity 400ms forwards;
   animation: ios-page-current-to-previous-opacity 400ms forwards;
 }
@@ -377,7 +369,6 @@ html.with-statusbar.device-iphone-x .panel {
 }
 .ios .router-transition-css-backward .page-previous,
 .ios .router-transition-css-backward .page-current {
-  will-change: transform;
   pointer-events: none;
 }
 .ios .router-transition-css-backward .page-previous {
@@ -394,7 +385,6 @@ html.with-statusbar.device-iphone-x .panel {
   content: '';
   opacity: 0;
   z-index: 10000;
-  will-change: opacity;
   -webkit-animation: ios-page-previous-to-current-opacity 400ms forwards;
   animation: ios-page-previous-to-current-opacity 400ms forwards;
 }
@@ -409,7 +399,6 @@ html.with-statusbar.device-iphone-x .panel {
   bottom: 0;
   z-index: -1;
   content: '';
-  will-change: opacity;
   opacity: 0;
   right: 100%;
   background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0)), color-stop(10%, rgba(0, 0, 0, 0)), color-stop(50%, rgba(0, 0, 0, 0.01)), to(rgba(0, 0, 0, 0.2)));
@@ -2132,7 +2121,6 @@ html.with-statusbar.device-iphone-x .panel {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  max-height: 28px;
   margin-left: auto;
 }
 .list .item-link,
@@ -2369,11 +2357,32 @@ li.media-item .item-media img {
 .list .item-link .item-inner,
 .links-list a,
 .media-list .item-link .item-title-row,
-li.media-item .item-link .item-title-row {
+li.media-item .item-link .item-title-row,
+.media-list.chevron-center .item-link .item-inner,
+.media-list .chevron-center .item-link .item-inner,
+.media-list .item-link.chevron-center .item-inner,
+li.media-item.chevron-center .item-link .item-inner,
+li.media-item .chevron-center .item-link .item-inner,
+li.media-item .item-link.chevron-center .item-inner {
   background-size: 8px 13px;
   background-repeat: no-repeat;
   background-position: 95% center;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'8px'%20height%3D'13px'%20viewBox%3D'0%200%208%2013'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpolygon%20fill%3D'%23c7c7cc'%20transform%3D'translate(1.500000%2C%206.500000)%20rotate(-45.000000)%20translate(-1.500000%2C%20-6.500000)%20'%20points%3D'6%2011%206%202%204%202%204%209%20-3%209%20-3%2011%205%2011'%3E%3C%2Fpolygon%3E%3C%2Fsvg%3E");
+}
+.links-list.no-chevron a,
+.no-chevron .links-list a,
+.links-list .no-chevron a,
+.item-link.no-chevron .item-inner,
+.no-chevron .item-link .item-inner,
+.media-list.no-chevron .item-link .item-title-row,
+.no-chevron .media-list .item-link .item-title-row,
+li.media-item .no-chevron .item-title-row,
+li.media-item.no-chevron .item-title-row,
+.media-list.chevron-center .item-title-row,
+.media-list .chevron-center .item-title-row,
+li.media-item.chevron-center .item-title-row,
+li.media-item .chevron-center .item-title-row {
+  background-image: none !important;
 }
 .media-list .item-link .item-inner,
 li.media-item .item-link .item-inner {
@@ -2530,6 +2539,12 @@ li.list-group-title:before {
 .ios .list .item-footer {
   color: #8e8e93;
 }
+.ios .list .item-link.no-chevron .item-inner,
+.ios .list.no-chevron .item-link .item-inner,
+.ios .list .no-chevron .item-link .item-inner,
+.ios .no-chevron .list .item-link .item-inner {
+  padding-right: 15px;
+}
 .ios .simple-list li:after {
   content: '';
   position: absolute;
@@ -2607,6 +2622,12 @@ li.list-group-title:before {
   left: 15px;
   right: 0;
 }
+.ios .links-list.no-chevron a,
+.ios .no-chevron .links-list a,
+.ios .links-list a.no-chevron,
+.ios .links-list .no-chevron a {
+  padding-right: 15px;
+}
 .ios .media-list .item-title,
 .ios li.media-item .item-title {
   font-weight: 600;
@@ -2628,6 +2649,25 @@ li.list-group-title:before {
 .ios .media-list .item-link .item-title-row,
 .ios li.media-item .item-link .item-title-row {
   padding-right: 20px;
+}
+.ios .media-list.chevron-center .item-link .item-inner,
+.ios .media-list .chevron-center .item-link .item-inner,
+.ios .media-list .item-link.chevron-center .item-inner,
+.ios li.media-item.chevron-center .item-link .item-inner,
+.ios li.media-item .item-link.chevron-center .item-inner,
+.ios li.media-item .chevron-center .item-link .item-inner {
+  padding-right: 35px;
+}
+.ios .media-list.no-chevron .item-link .item-title-row,
+.ios .no-chevron .media-list .item-link .item-title-row,
+.ios .media-list .no-chevron .item-link .item-title-row,
+.ios li.media-item.no-chevron .item-link .item-title-row,
+.ios .no-chevron li.media-item .item-link .item-title-row,
+.ios .media-list.chevron-center .item-title-row,
+.ios .media-list .chevron-center .item-title-row,
+.ios li.media-item.chevron-center .item-title-row,
+.ios li.media-item .chevron-center .item-title-row {
+  padding-right: 0 !important;
 }
 .ios .list .item-link .item-inner,
 .ios .links-list a {
@@ -3019,6 +3059,94 @@ html.device-pixel-ratio-3 .ios li:last-child li .item-inner:after {
   .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a {
     padding-right: calc(35px + constant(safe-area-inset-right));
     padding-right: calc(35px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link.chevron-center .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .chevron-center .item-link .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .chevron-center .item-link .item-inner {
+    padding-right: calc(35px + constant(safe-area-inset-right));
+    padding-right: calc(35px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link.no-chevron .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link.no-chevron .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link.no-chevron .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link.no-chevron .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link.no-chevron .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .no-chevron .item-link .item-inner,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list.no-chevron a,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list.no-chevron a,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list.no-chevron a,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list.no-chevron a,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list.no-chevron a,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a.no-chevron,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a.no-chevron,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a.no-chevron,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a.no-chevron,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list a.no-chevron,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list .no-chevron a,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list .no-chevron a,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list .no-chevron a,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list .no-chevron a,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).links-list .no-chevron a {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item.no-chevron .item-link .item-title-row,
+  .ios.device-iphone-x .ios-right-edge .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron li.media-item .item-link .item-title-row,
+  .ios.device-iphone-x .ios-edges .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron li.media-item .item-link .item-title-row,
+  .ios.device-iphone-x .popup .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron li.media-item .item-link .item-title-row,
+  .ios.device-iphone-x .sheet-modal .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron li.media-item .item-link .item-title-row,
+  .ios.device-iphone-x .panel-right .list:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).no-chevron li.media-item .item-link .item-title-row {
+    padding-right: 0;
   }
 }
 @media (orientation: landscape) and (min-width: 768px) {
@@ -4004,7 +4132,7 @@ i.icon {
 .ios .tabbar-labels .f7-icons {
   font-size: 25px;
 }
-.ios .list .f7-icons {
+.ios .item-media .f7-icons {
   font-size: 25px;
   width: 29px;
   height: 29px;
@@ -4012,7 +4140,7 @@ i.icon {
 .ios .button .f7-icons {
   font-size: 22px;
 }
-.ios .list .icon {
+.ios .item-media .icon {
   color: #808080;
 }
 .ios .color-theme-red .icon-back,
@@ -4198,8 +4326,6 @@ i.icon {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   z-index: 10500;
 }
 .custom-modal-backdrop.not-animated {
@@ -4223,8 +4349,6 @@ i.icon {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
 }
 .dialog-backdrop.not-animated {
   -webkit-transition-duration: 0ms;
@@ -4249,8 +4373,6 @@ i.icon {
   transition-property: transform, opacity;
   transition-property: transform, opacity, -webkit-transform;
   display: none;
-  contain: content;
-  will-change: transform, opacity;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
@@ -4546,8 +4668,6 @@ html.with-modal-dialog .page-content {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   z-index: 10500;
 }
 .popup-backdrop.not-animated {
@@ -4564,8 +4684,6 @@ html.with-modal-dialog .page-content {
   top: 0;
   width: 100%;
   height: 100%;
-  contain: strict;
-  will-change: transform;
   display: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4668,8 +4786,6 @@ html.with-modal-popup .framework7-root > .panel .page-content {
   top: 0;
   width: 100%;
   height: 100%;
-  contain: strict;
-  will-change: transform;
   display: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4769,8 +4885,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
 }
 .popover-backdrop.not-animated {
   -webkit-transition-duration: 0ms;
@@ -4791,7 +4905,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   display: none;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
-  contain: layout style;
 }
 .popover .list {
   margin: 0;
@@ -4975,8 +5088,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
 }
 .actions-backdrop.not-animated {
   -webkit-transition-duration: 0ms;
@@ -4996,7 +5107,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   transform: translate3d(0, 100%, 0);
   display: none;
   max-height: 100%;
-  contain: content;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   -webkit-transition-property: -webkit-transform;
@@ -5352,8 +5462,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   z-index: 10500;
 }
 .sheet-backdrop.not-animated {
@@ -5370,7 +5478,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   bottom: 0;
   width: 100%;
   height: 260px;
-  will-change: transform;
   display: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -5382,7 +5489,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   transform: translate3d(0, 100%, 0);
   background: #fff;
   z-index: 12500;
-  contain: strict;
 }
 .sheet-modal.modal-in,
 .sheet-modal.modal-out {
@@ -5627,6 +5733,18 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .toast-top {
   color: #fff;
   margin-left: 15px;
 }
+@media (max-width: 568px) {
+  .ios.device-iphone-x .toast-bottom .toast-content {
+    padding-bottom: calc(12px + constant(safe-area-inset-bottom));
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+}
+@media (min-width: 569px) {
+  .ios.device-iphone-x .toast-bottom {
+    bottom: calc(15px + constant(safe-area-inset-bottom));
+    bottom: calc(15px + env(safe-area-inset-bottom));
+  }
+}
 /* === Preloader === */
 .preloader {
   display: inline-block;
@@ -5644,8 +5762,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .toast-top {
   visibility: hidden;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   visibility: visible;
   opacity: 0;
   background: none;
@@ -5875,8 +5991,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   display: block;
-  will-change: transform;
-  contain: strict;
 }
 .progressbar-infinite.color-multi {
   background: none !important;
@@ -7342,7 +7456,6 @@ html.device-android-4 .accordion-item-content {
   height: 100%;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
-  will-change: transform;
 }
 .tabs-animated-wrap > .tabs > .tab {
   width: 100%;
@@ -7881,6 +7994,8 @@ textarea {
   font-family: inherit;
   background: none;
   resize: none;
+  font-size: inherit;
+  color: inherit;
 }
 .textarea-resizable-shadow {
   opacity: 0;
@@ -7931,6 +8046,14 @@ textarea {
   flex-shrink: 1;
   position: relative;
 }
+.input {
+  position: relative;
+}
+.input input,
+.input select,
+.input textarea {
+  width: 100%;
+}
 .input-clear-button {
   opacity: 0;
   pointer-events: none;
@@ -7966,10 +8089,37 @@ textarea {
   top: 50%;
 }
 .input-with-value ~ .input-clear-button,
-.item-input-with-value .input-clear-button {
+.item-input-with-value .input-clear-button,
+.input-with-value .input-clear-button {
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+}
+.input-dropdown-wrap,
+.input-dropdown {
+  position: relative;
+}
+.input-dropdown-wrap:before,
+.input-dropdown:before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  margin-top: -2px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #727272;
+  right: 2px;
+}
+.input-dropdown-wrap select,
+.input-dropdown select,
+.input-dropdown-wrap input,
+.input-dropdown input,
+.input-dropdown-wrap textarea,
+.input-dropdown textarea {
+  padding-right: 14px;
 }
 .ios .list input[type="text"],
 .ios .list input[type="password"],
@@ -8049,22 +8199,32 @@ textarea {
   margin-top: -8px;
 }
 .ios .item-input-with-error-message .item-input-wrap input,
+.ios div.input-with-error-message input,
+.ios span.input-with-error-message input,
 .ios .item-input-with-error-message .item-input-wrap select,
-.ios .item-input-with-error-message .item-input-wrap textarea {
+.ios div.input-with-error-message select,
+.ios span.input-with-error-message select,
+.ios .item-input-with-error-message .item-input-wrap textarea,
+.ios div.input-with-error-message textarea,
+.ios span.input-with-error-message textarea {
   color: #ff3b30;
 }
 .ios .item-input-error-message,
-.ios .item-input-info {
+.ios .item-input-info,
+.ios .input-error-message,
+.ios .input-info {
   font-size: 12px;
   line-height: 1.4;
   position: relative;
   margin-bottom: 6px;
   margin-top: -8px;
 }
-.ios .item-input-info {
+.ios .item-input-info,
+.ios .input-info {
   color: #8e8e93;
 }
-.ios .item-input-error-message {
+.ios .item-input-error-message,
+.ios .input-error-message {
   color: #ff3b30;
   display: none;
 }
@@ -8074,10 +8234,16 @@ textarea {
 .ios .item-input-invalid .item-input-info {
   display: none;
 }
+.ios .input-invalid .input-error-message {
+  display: block;
+}
+.ios .input-invalid .input-info {
+  display: none;
+}
 .ios .input-clear-button {
-  width: 28px;
-  height: 28px;
-  margin-top: -14px;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
 }
 .ios .input-clear-button:after {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2028%2028'%3E%3Ccircle%20cx%3D'14'%20cy%3D'14'%20r%3D'14'%20fill%3D'%238e8e93'%2F%3E%3Cline%20stroke%3D'%23ffffff'%20stroke-width%3D'2'%20stroke-miterlimit%3D'10'%20x1%3D'8'%20y1%3D'8'%20x2%3D'20'%20y2%3D'20'%2F%3E%3Cline%20fill%3D'none'%20stroke%3D'%23ffffff'%20stroke-width%3D'2'%20stroke-miterlimit%3D'10'%20x1%3D'20'%20y1%3D'8'%20x2%3D'8'%20y2%3D'20'%2F%3E%3C%2Fsvg%3E");
@@ -8729,6 +8895,16 @@ label.item-radio.disabled,
   height: 100%;
   z-index: 1;
 }
+.range-knob:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+}
 .range-knob-label {
   position: absolute;
   left: 50%;
@@ -8837,6 +9013,1464 @@ label.item-radio.disabled,
   background-color: #ffffff;
 }
 .ios .range-slider.color-black .range-bar-active {
+  background-color: #000000;
+}
+/* === Stepper === */
+.stepper {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+.stepper-button,
+.stepper-button-minus,
+.stepper-button-plus {
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}
+.stepper-button .icon,
+.stepper-button-minus .icon,
+.stepper-button-plus .icon {
+  pointer-events: none;
+}
+.stepper-value {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.stepper-input-wrap,
+.stepper-value {
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  text-align: center;
+}
+.stepper-button-plus:after,
+.stepper-button-minus:after,
+.stepper-button-plus:before,
+.stepper-button-minus:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.stepper-button-plus:after,
+.stepper-button-minus:after {
+  width: 15px;
+  height: 2px;
+}
+.stepper-button-plus:before {
+  height: 15px;
+  width: 2px;
+}
+.stepper .stepper-input-wrap input,
+.stepper .stepper-value {
+  width: 45px;
+}
+.ios .stepper {
+  height: 29px;
+}
+.ios .stepper-button,
+.ios .stepper-button-minus,
+.ios .stepper-button-plus {
+  border: 1px solid #007aff;
+  color: #007aff;
+  border-radius: 5px;
+  line-height: 27px;
+  height: 29px;
+  width: 40px;
+}
+.ios .stepper-button .f7-icons,
+.ios .stepper-button-minus .f7-icons,
+.ios .stepper-button-plus .f7-icons {
+  font-size: 22px;
+}
+.ios .stepper-button:first-child,
+.ios .stepper-button-minus:first-child,
+.ios .stepper-button-plus:first-child {
+  border-radius: 5px 0 0 5px;
+}
+.ios .stepper-button:last-child,
+.ios .stepper-button-minus:last-child,
+.ios .stepper-button-plus:last-child {
+  border-radius: 0 5px 5px 0;
+}
+.ios .stepper-button.active-state,
+.ios .stepper-button-minus.active-state,
+.ios .stepper-button-plus.active-state {
+  background: rgba(0, 122, 255, 0.15);
+}
+.ios .stepper-button + .stepper-button,
+.ios .stepper-button-minus + .stepper-button,
+.ios .stepper-button-plus + .stepper-button,
+.ios .stepper-button + .stepper-button-minus,
+.ios .stepper-button-minus + .stepper-button-minus,
+.ios .stepper-button-plus + .stepper-button-minus,
+.ios .stepper-button + .stepper-button-plus,
+.ios .stepper-button-minus + .stepper-button-plus,
+.ios .stepper-button-plus + .stepper-button-plus {
+  border-left: none;
+}
+.ios .stepper-button-plus:after,
+.ios .stepper-button-minus:after,
+.ios .stepper-button-plus:before,
+.ios .stepper-button-minus:before {
+  background: #007aff;
+}
+.ios .stepper-input-wrap,
+.ios .stepper-value {
+  border-top: 1px solid #007aff;
+  border-bottom: 1px solid #007aff;
+}
+.ios .stepper .stepper-value {
+  color: #007aff;
+  font-size: 17px;
+}
+.ios .stepper .stepper-input-wrap input {
+  height: 100%;
+  text-align: center;
+  color: #007aff;
+  font-size: 17px;
+}
+.ios .stepper-fill .stepper-button,
+.ios .stepper-fill-ios .stepper-button,
+.ios .stepper-fill .stepper-button-minus,
+.ios .stepper-fill-ios .stepper-button-minus,
+.ios .stepper-fill .stepper-button-plus,
+.ios .stepper-fill-ios .stepper-button-plus {
+  color: #fff;
+  background: #007aff;
+}
+.ios .stepper-fill .stepper-button.active-state,
+.ios .stepper-fill-ios .stepper-button.active-state,
+.ios .stepper-fill .stepper-button-minus.active-state,
+.ios .stepper-fill-ios .stepper-button-minus.active-state,
+.ios .stepper-fill .stepper-button-plus.active-state,
+.ios .stepper-fill-ios .stepper-button-plus.active-state {
+  opacity: 0.8;
+}
+.ios .stepper-fill .stepper-button-plus:before,
+.ios .stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper-fill .stepper-button-minus:before,
+.ios .stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper-fill .stepper-button-plus:after,
+.ios .stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper-fill .stepper-button-minus:after,
+.ios .stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper-fill .stepper-button + .stepper-button,
+.ios .stepper-fill-ios .stepper-button + .stepper-button,
+.ios .stepper-fill .stepper-button-minus + .stepper-button-plus,
+.ios .stepper-fill-ios .stepper-button-minus + .stepper-button-plus {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+.ios .stepper-round .stepper-button:first-child,
+.ios .stepper-round-ios .stepper-button:first-child,
+.ios .stepper-round .stepper-button-minus:first-child,
+.ios .stepper-round-ios .stepper-button-minus:first-child,
+.ios .stepper-round .stepper-button-plus:first-child,
+.ios .stepper-round-ios .stepper-button-plus:first-child {
+  border-radius: 29px 0 0 29px;
+}
+.ios .stepper-round .stepper-button:last-child,
+.ios .stepper-round-ios .stepper-button:last-child,
+.ios .stepper-round .stepper-button-minus:last-child,
+.ios .stepper-round-ios .stepper-button-minus:last-child,
+.ios .stepper-round .stepper-button-plus:last-child,
+.ios .stepper-round-ios .stepper-button-plus:last-child {
+  border-radius: 0 29px 29px 0;
+}
+.ios .stepper-small,
+.ios .stepper-small-ios {
+  height: 26px;
+}
+.ios .stepper-small .stepper-input-wrap,
+.ios .stepper-small-ios .stepper-input-wrap,
+.ios .stepper-small .stepper-value,
+.ios .stepper-small-ios .stepper-value {
+  border-top-width: 2px;
+  border-bottom-width: 2px;
+}
+.ios .stepper-small .stepper-button,
+.ios .stepper-small-ios .stepper-button,
+.ios .stepper-small .stepper-button-minus,
+.ios .stepper-small-ios .stepper-button-minus,
+.ios .stepper-small .stepper-button-plus,
+.ios .stepper-small-ios .stepper-button-plus {
+  height: 26px;
+  -webkit-transition-duration: 200ms;
+  transition-duration: 200ms;
+  line-height: 22px;
+  border-width: 2px;
+}
+.ios .stepper-small .stepper-button .f7-icons,
+.ios .stepper-small-ios .stepper-button .f7-icons,
+.ios .stepper-small .stepper-button-minus .f7-icons,
+.ios .stepper-small-ios .stepper-button-minus .f7-icons,
+.ios .stepper-small .stepper-button-plus .f7-icons,
+.ios .stepper-small-ios .stepper-button-plus .f7-icons {
+  font-size: 18px;
+}
+.ios .stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #007aff;
+  border-color: #007aff;
+  background-color: transparent;
+  opacity: 1;
+}
+.ios .stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #007aff;
+}
+.ios .stepper-big,
+.ios .stepper-big-ios {
+  height: 44px;
+}
+.ios .stepper-big .stepper-button,
+.ios .stepper-big-ios .stepper-button,
+.ios .stepper-big .stepper-button-minus,
+.ios .stepper-big-ios .stepper-button-minus,
+.ios .stepper-big .stepper-button-plus,
+.ios .stepper-big-ios .stepper-button-plus {
+  height: 44px;
+  line-height: 42px;
+}
+.ios .color-theme-red .stepper .stepper-button,
+.ios .color-theme-red .stepper .stepper-button-minus,
+.ios .color-theme-red .stepper .stepper-button-plus {
+  border-color: #ff3b30;
+  color: #ff3b30;
+}
+.ios .color-theme-red .stepper .stepper-button.active-state,
+.ios .color-theme-red .stepper .stepper-button-minus.active-state,
+.ios .color-theme-red .stepper .stepper-button-plus.active-state {
+  background-color: rgba(255, 59, 48, 0.15);
+}
+.ios .color-theme-red .stepper .stepper-button-plus:after,
+.ios .color-theme-red .stepper .stepper-button-minus:after,
+.ios .color-theme-red .stepper .stepper-button-plus:before,
+.ios .color-theme-red .stepper .stepper-button-minus:before {
+  background-color: #ff3b30;
+}
+.ios .color-theme-red .stepper .stepper-value,
+.ios .color-theme-red .stepper .stepper-input-wrap {
+  border-top-color: #ff3b30;
+  border-bottom-color: #ff3b30;
+}
+.ios .color-theme-red .stepper .stepper-value {
+  color: #ff3b30;
+}
+.ios .color-theme-red .stepper .stepper-input-wrap input {
+  color: #ff3b30;
+}
+.ios .color-theme-red .stepper.stepper-fill .stepper-button,
+.ios .color-theme-red .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-red .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-red .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-red .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-red .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #ff3b30;
+}
+.ios .color-theme-red .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-red .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-red .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-red .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-red .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-red .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-red .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-red .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-red .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-red .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-red .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-red .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-red .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-red .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ff3b30;
+  border-color: #ff3b30;
+  background-color: transparent;
+}
+.ios .color-theme-red .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-red .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-red .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-red .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-red .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-red .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-red .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-red .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ff3b30;
+}
+.ios .color-theme-green .stepper .stepper-button,
+.ios .color-theme-green .stepper .stepper-button-minus,
+.ios .color-theme-green .stepper .stepper-button-plus {
+  border-color: #4cd964;
+  color: #4cd964;
+}
+.ios .color-theme-green .stepper .stepper-button.active-state,
+.ios .color-theme-green .stepper .stepper-button-minus.active-state,
+.ios .color-theme-green .stepper .stepper-button-plus.active-state {
+  background-color: rgba(76, 217, 100, 0.15);
+}
+.ios .color-theme-green .stepper .stepper-button-plus:after,
+.ios .color-theme-green .stepper .stepper-button-minus:after,
+.ios .color-theme-green .stepper .stepper-button-plus:before,
+.ios .color-theme-green .stepper .stepper-button-minus:before {
+  background-color: #4cd964;
+}
+.ios .color-theme-green .stepper .stepper-value,
+.ios .color-theme-green .stepper .stepper-input-wrap {
+  border-top-color: #4cd964;
+  border-bottom-color: #4cd964;
+}
+.ios .color-theme-green .stepper .stepper-value {
+  color: #4cd964;
+}
+.ios .color-theme-green .stepper .stepper-input-wrap input {
+  color: #4cd964;
+}
+.ios .color-theme-green .stepper.stepper-fill .stepper-button,
+.ios .color-theme-green .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-green .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-green .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-green .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-green .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #4cd964;
+}
+.ios .color-theme-green .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-green .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-green .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-green .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-green .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-green .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-green .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-green .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-green .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-green .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-green .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-green .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-green .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-green .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #4cd964;
+  border-color: #4cd964;
+  background-color: transparent;
+}
+.ios .color-theme-green .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-green .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-green .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-green .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-green .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-green .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-green .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-green .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #4cd964;
+}
+.ios .color-theme-blue .stepper .stepper-button,
+.ios .color-theme-blue .stepper .stepper-button-minus,
+.ios .color-theme-blue .stepper .stepper-button-plus {
+  border-color: #007aff;
+  color: #007aff;
+}
+.ios .color-theme-blue .stepper .stepper-button.active-state,
+.ios .color-theme-blue .stepper .stepper-button-minus.active-state,
+.ios .color-theme-blue .stepper .stepper-button-plus.active-state {
+  background-color: rgba(0, 122, 255, 0.15);
+}
+.ios .color-theme-blue .stepper .stepper-button-plus:after,
+.ios .color-theme-blue .stepper .stepper-button-minus:after,
+.ios .color-theme-blue .stepper .stepper-button-plus:before,
+.ios .color-theme-blue .stepper .stepper-button-minus:before {
+  background-color: #007aff;
+}
+.ios .color-theme-blue .stepper .stepper-value,
+.ios .color-theme-blue .stepper .stepper-input-wrap {
+  border-top-color: #007aff;
+  border-bottom-color: #007aff;
+}
+.ios .color-theme-blue .stepper .stepper-value {
+  color: #007aff;
+}
+.ios .color-theme-blue .stepper .stepper-input-wrap input {
+  color: #007aff;
+}
+.ios .color-theme-blue .stepper.stepper-fill .stepper-button,
+.ios .color-theme-blue .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-blue .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-blue .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-blue .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-blue .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #007aff;
+}
+.ios .color-theme-blue .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-blue .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-blue .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-blue .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-blue .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-blue .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-blue .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-blue .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-blue .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-blue .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-blue .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-blue .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-blue .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-blue .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #007aff;
+  border-color: #007aff;
+  background-color: transparent;
+}
+.ios .color-theme-blue .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-blue .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-blue .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-blue .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-blue .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-blue .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-blue .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-blue .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #007aff;
+}
+.ios .color-theme-pink .stepper .stepper-button,
+.ios .color-theme-pink .stepper .stepper-button-minus,
+.ios .color-theme-pink .stepper .stepper-button-plus {
+  border-color: #ff2d55;
+  color: #ff2d55;
+}
+.ios .color-theme-pink .stepper .stepper-button.active-state,
+.ios .color-theme-pink .stepper .stepper-button-minus.active-state,
+.ios .color-theme-pink .stepper .stepper-button-plus.active-state {
+  background-color: rgba(255, 45, 85, 0.15);
+}
+.ios .color-theme-pink .stepper .stepper-button-plus:after,
+.ios .color-theme-pink .stepper .stepper-button-minus:after,
+.ios .color-theme-pink .stepper .stepper-button-plus:before,
+.ios .color-theme-pink .stepper .stepper-button-minus:before {
+  background-color: #ff2d55;
+}
+.ios .color-theme-pink .stepper .stepper-value,
+.ios .color-theme-pink .stepper .stepper-input-wrap {
+  border-top-color: #ff2d55;
+  border-bottom-color: #ff2d55;
+}
+.ios .color-theme-pink .stepper .stepper-value {
+  color: #ff2d55;
+}
+.ios .color-theme-pink .stepper .stepper-input-wrap input {
+  color: #ff2d55;
+}
+.ios .color-theme-pink .stepper.stepper-fill .stepper-button,
+.ios .color-theme-pink .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-pink .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-pink .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-pink .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-pink .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #ff2d55;
+}
+.ios .color-theme-pink .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-pink .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-pink .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-pink .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-pink .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-pink .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-pink .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-pink .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-pink .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-pink .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-pink .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-pink .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-pink .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-pink .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ff2d55;
+  border-color: #ff2d55;
+  background-color: transparent;
+}
+.ios .color-theme-pink .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-pink .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-pink .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-pink .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-pink .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-pink .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-pink .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-pink .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ff2d55;
+}
+.ios .color-theme-yellow .stepper .stepper-button,
+.ios .color-theme-yellow .stepper .stepper-button-minus,
+.ios .color-theme-yellow .stepper .stepper-button-plus {
+  border-color: #ffcc00;
+  color: #ffcc00;
+}
+.ios .color-theme-yellow .stepper .stepper-button.active-state,
+.ios .color-theme-yellow .stepper .stepper-button-minus.active-state,
+.ios .color-theme-yellow .stepper .stepper-button-plus.active-state {
+  background-color: rgba(255, 204, 0, 0.15);
+}
+.ios .color-theme-yellow .stepper .stepper-button-plus:after,
+.ios .color-theme-yellow .stepper .stepper-button-minus:after,
+.ios .color-theme-yellow .stepper .stepper-button-plus:before,
+.ios .color-theme-yellow .stepper .stepper-button-minus:before {
+  background-color: #ffcc00;
+}
+.ios .color-theme-yellow .stepper .stepper-value,
+.ios .color-theme-yellow .stepper .stepper-input-wrap {
+  border-top-color: #ffcc00;
+  border-bottom-color: #ffcc00;
+}
+.ios .color-theme-yellow .stepper .stepper-value {
+  color: #ffcc00;
+}
+.ios .color-theme-yellow .stepper .stepper-input-wrap input {
+  color: #ffcc00;
+}
+.ios .color-theme-yellow .stepper.stepper-fill .stepper-button,
+.ios .color-theme-yellow .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-yellow .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-yellow .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-yellow .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-yellow .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #ffcc00;
+}
+.ios .color-theme-yellow .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-yellow .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-yellow .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-yellow .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-yellow .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-yellow .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-yellow .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-yellow .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-yellow .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-yellow .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-yellow .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-yellow .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-yellow .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-yellow .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ffcc00;
+  border-color: #ffcc00;
+  background-color: transparent;
+}
+.ios .color-theme-yellow .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-yellow .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-yellow .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-yellow .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-yellow .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-yellow .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-yellow .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-yellow .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ffcc00;
+}
+.ios .color-theme-orange .stepper .stepper-button,
+.ios .color-theme-orange .stepper .stepper-button-minus,
+.ios .color-theme-orange .stepper .stepper-button-plus {
+  border-color: #ff9500;
+  color: #ff9500;
+}
+.ios .color-theme-orange .stepper .stepper-button.active-state,
+.ios .color-theme-orange .stepper .stepper-button-minus.active-state,
+.ios .color-theme-orange .stepper .stepper-button-plus.active-state {
+  background-color: rgba(255, 149, 0, 0.15);
+}
+.ios .color-theme-orange .stepper .stepper-button-plus:after,
+.ios .color-theme-orange .stepper .stepper-button-minus:after,
+.ios .color-theme-orange .stepper .stepper-button-plus:before,
+.ios .color-theme-orange .stepper .stepper-button-minus:before {
+  background-color: #ff9500;
+}
+.ios .color-theme-orange .stepper .stepper-value,
+.ios .color-theme-orange .stepper .stepper-input-wrap {
+  border-top-color: #ff9500;
+  border-bottom-color: #ff9500;
+}
+.ios .color-theme-orange .stepper .stepper-value {
+  color: #ff9500;
+}
+.ios .color-theme-orange .stepper .stepper-input-wrap input {
+  color: #ff9500;
+}
+.ios .color-theme-orange .stepper.stepper-fill .stepper-button,
+.ios .color-theme-orange .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-orange .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-orange .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-orange .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-orange .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #ff9500;
+}
+.ios .color-theme-orange .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-orange .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-orange .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-orange .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-orange .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-orange .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-orange .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-orange .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-orange .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-orange .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-orange .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-orange .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-orange .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-orange .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ff9500;
+  border-color: #ff9500;
+  background-color: transparent;
+}
+.ios .color-theme-orange .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-orange .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-orange .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-orange .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-orange .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-orange .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-orange .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-orange .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ff9500;
+}
+.ios .color-theme-gray .stepper .stepper-button,
+.ios .color-theme-gray .stepper .stepper-button-minus,
+.ios .color-theme-gray .stepper .stepper-button-plus {
+  border-color: #8e8e93;
+  color: #8e8e93;
+}
+.ios .color-theme-gray .stepper .stepper-button.active-state,
+.ios .color-theme-gray .stepper .stepper-button-minus.active-state,
+.ios .color-theme-gray .stepper .stepper-button-plus.active-state {
+  background-color: rgba(142, 142, 147, 0.15);
+}
+.ios .color-theme-gray .stepper .stepper-button-plus:after,
+.ios .color-theme-gray .stepper .stepper-button-minus:after,
+.ios .color-theme-gray .stepper .stepper-button-plus:before,
+.ios .color-theme-gray .stepper .stepper-button-minus:before {
+  background-color: #8e8e93;
+}
+.ios .color-theme-gray .stepper .stepper-value,
+.ios .color-theme-gray .stepper .stepper-input-wrap {
+  border-top-color: #8e8e93;
+  border-bottom-color: #8e8e93;
+}
+.ios .color-theme-gray .stepper .stepper-value {
+  color: #8e8e93;
+}
+.ios .color-theme-gray .stepper .stepper-input-wrap input {
+  color: #8e8e93;
+}
+.ios .color-theme-gray .stepper.stepper-fill .stepper-button,
+.ios .color-theme-gray .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-gray .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-gray .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-gray .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-gray .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #8e8e93;
+}
+.ios .color-theme-gray .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-gray .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-gray .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-gray .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-gray .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-gray .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-gray .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-gray .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-gray .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-gray .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-gray .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-gray .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-gray .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-gray .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #8e8e93;
+  border-color: #8e8e93;
+  background-color: transparent;
+}
+.ios .color-theme-gray .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-gray .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-gray .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-gray .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-gray .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-gray .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-gray .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-gray .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #8e8e93;
+}
+.ios .color-theme-white .stepper .stepper-button,
+.ios .color-theme-white .stepper .stepper-button-minus,
+.ios .color-theme-white .stepper .stepper-button-plus {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.ios .color-theme-white .stepper .stepper-button.active-state,
+.ios .color-theme-white .stepper .stepper-button-minus.active-state,
+.ios .color-theme-white .stepper .stepper-button-plus.active-state {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.ios .color-theme-white .stepper .stepper-button-plus:after,
+.ios .color-theme-white .stepper .stepper-button-minus:after,
+.ios .color-theme-white .stepper .stepper-button-plus:before,
+.ios .color-theme-white .stepper .stepper-button-minus:before {
+  background-color: #ffffff;
+}
+.ios .color-theme-white .stepper .stepper-value,
+.ios .color-theme-white .stepper .stepper-input-wrap {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+.ios .color-theme-white .stepper .stepper-value {
+  color: #ffffff;
+}
+.ios .color-theme-white .stepper .stepper-input-wrap input {
+  color: #ffffff;
+}
+.ios .color-theme-white .stepper.stepper-fill .stepper-button,
+.ios .color-theme-white .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-white .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-white .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-white .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-white .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #ffffff;
+}
+.ios .color-theme-white .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-white .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-white .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-white .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-white .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-white .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-white .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-white .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-white .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-white .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-white .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-white .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-white .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-white .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ffffff;
+  border-color: #ffffff;
+  background-color: transparent;
+}
+.ios .color-theme-white .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-white .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-white .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-white .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-white .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-white .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-white .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-white .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ffffff;
+}
+.ios .color-theme-black .stepper .stepper-button,
+.ios .color-theme-black .stepper .stepper-button-minus,
+.ios .color-theme-black .stepper .stepper-button-plus {
+  border-color: #000000;
+  color: #000000;
+}
+.ios .color-theme-black .stepper .stepper-button.active-state,
+.ios .color-theme-black .stepper .stepper-button-minus.active-state,
+.ios .color-theme-black .stepper .stepper-button-plus.active-state {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+.ios .color-theme-black .stepper .stepper-button-plus:after,
+.ios .color-theme-black .stepper .stepper-button-minus:after,
+.ios .color-theme-black .stepper .stepper-button-plus:before,
+.ios .color-theme-black .stepper .stepper-button-minus:before {
+  background-color: #000000;
+}
+.ios .color-theme-black .stepper .stepper-value,
+.ios .color-theme-black .stepper .stepper-input-wrap {
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+}
+.ios .color-theme-black .stepper .stepper-value {
+  color: #000000;
+}
+.ios .color-theme-black .stepper .stepper-input-wrap input {
+  color: #000000;
+}
+.ios .color-theme-black .stepper.stepper-fill .stepper-button,
+.ios .color-theme-black .stepper.stepper-fill-ios .stepper-button,
+.ios .color-theme-black .stepper.stepper-fill .stepper-button-minus,
+.ios .color-theme-black .stepper.stepper-fill-ios .stepper-button-minus,
+.ios .color-theme-black .stepper.stepper-fill .stepper-button-plus,
+.ios .color-theme-black .stepper.stepper-fill-ios .stepper-button-plus {
+  background-color: #000000;
+}
+.ios .color-theme-black .stepper.stepper-fill .stepper-button-plus:before,
+.ios .color-theme-black .stepper.stepper-fill-ios .stepper-button-plus:before,
+.ios .color-theme-black .stepper.stepper-fill .stepper-button-minus:before,
+.ios .color-theme-black .stepper.stepper-fill-ios .stepper-button-minus:before,
+.ios .color-theme-black .stepper.stepper-fill .stepper-button-plus:after,
+.ios .color-theme-black .stepper.stepper-fill-ios .stepper-button-plus:after,
+.ios .color-theme-black .stepper.stepper-fill .stepper-button-minus:after,
+.ios .color-theme-black .stepper.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .color-theme-black .stepper.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .color-theme-black .stepper.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .color-theme-black .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-black .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .color-theme-black .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .color-theme-black .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #000000;
+  border-color: #000000;
+  background-color: transparent;
+}
+.ios .color-theme-black .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-black .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .color-theme-black .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-black .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .color-theme-black .stepper.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-black .stepper.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .color-theme-black .stepper.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .color-theme-black .stepper.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #000000;
+}
+.ios .stepper.color-red .stepper-button,
+.ios .stepper.color-red .stepper-button-minus,
+.ios .stepper.color-red .stepper-button-plus {
+  border-color: #ff3b30;
+  color: #ff3b30;
+}
+.ios .stepper.color-red .stepper-button.active-state,
+.ios .stepper.color-red .stepper-button-minus.active-state,
+.ios .stepper.color-red .stepper-button-plus.active-state {
+  background-color: rgba(255, 59, 48, 0.15);
+}
+.ios .stepper.color-red .stepper-button-plus:after,
+.ios .stepper.color-red .stepper-button-minus:after,
+.ios .stepper.color-red .stepper-button-plus:before,
+.ios .stepper.color-red .stepper-button-minus:before {
+  background-color: #ff3b30;
+}
+.ios .stepper.color-red .stepper-value,
+.ios .stepper.color-red .stepper-input-wrap {
+  border-top-color: #ff3b30;
+  border-bottom-color: #ff3b30;
+}
+.ios .stepper.color-red .stepper-value {
+  color: #ff3b30;
+}
+.ios .stepper.color-red .stepper-input-wrap input {
+  color: #ff3b30;
+}
+.ios .stepper.color-red.stepper-fill .stepper-button,
+.ios .stepper.color-red.stepper-fill-ios .stepper-button,
+.ios .stepper.color-red.stepper-fill .stepper-button-minus,
+.ios .stepper.color-red.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-red.stepper-fill .stepper-button-plus,
+.ios .stepper.color-red.stepper-fill-ios .stepper-button-plus {
+  background-color: #ff3b30;
+}
+.ios .stepper.color-red.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-red.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-red.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-red.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-red.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-red.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-red.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-red.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-red.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-red.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-red.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-red.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-red.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-red.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ff3b30;
+  border-color: #ff3b30;
+  background-color: transparent;
+}
+.ios .stepper.color-red.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-red.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-red.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-red.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-red.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-red.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-red.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-red.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ff3b30;
+}
+.ios .stepper.color-green .stepper-button,
+.ios .stepper.color-green .stepper-button-minus,
+.ios .stepper.color-green .stepper-button-plus {
+  border-color: #4cd964;
+  color: #4cd964;
+}
+.ios .stepper.color-green .stepper-button.active-state,
+.ios .stepper.color-green .stepper-button-minus.active-state,
+.ios .stepper.color-green .stepper-button-plus.active-state {
+  background-color: rgba(76, 217, 100, 0.15);
+}
+.ios .stepper.color-green .stepper-button-plus:after,
+.ios .stepper.color-green .stepper-button-minus:after,
+.ios .stepper.color-green .stepper-button-plus:before,
+.ios .stepper.color-green .stepper-button-minus:before {
+  background-color: #4cd964;
+}
+.ios .stepper.color-green .stepper-value,
+.ios .stepper.color-green .stepper-input-wrap {
+  border-top-color: #4cd964;
+  border-bottom-color: #4cd964;
+}
+.ios .stepper.color-green .stepper-value {
+  color: #4cd964;
+}
+.ios .stepper.color-green .stepper-input-wrap input {
+  color: #4cd964;
+}
+.ios .stepper.color-green.stepper-fill .stepper-button,
+.ios .stepper.color-green.stepper-fill-ios .stepper-button,
+.ios .stepper.color-green.stepper-fill .stepper-button-minus,
+.ios .stepper.color-green.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-green.stepper-fill .stepper-button-plus,
+.ios .stepper.color-green.stepper-fill-ios .stepper-button-plus {
+  background-color: #4cd964;
+}
+.ios .stepper.color-green.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-green.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-green.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-green.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-green.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-green.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-green.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-green.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-green.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-green.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-green.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-green.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-green.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-green.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #4cd964;
+  border-color: #4cd964;
+  background-color: transparent;
+}
+.ios .stepper.color-green.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-green.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-green.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-green.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-green.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-green.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-green.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-green.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #4cd964;
+}
+.ios .stepper.color-blue .stepper-button,
+.ios .stepper.color-blue .stepper-button-minus,
+.ios .stepper.color-blue .stepper-button-plus {
+  border-color: #007aff;
+  color: #007aff;
+}
+.ios .stepper.color-blue .stepper-button.active-state,
+.ios .stepper.color-blue .stepper-button-minus.active-state,
+.ios .stepper.color-blue .stepper-button-plus.active-state {
+  background-color: rgba(0, 122, 255, 0.15);
+}
+.ios .stepper.color-blue .stepper-button-plus:after,
+.ios .stepper.color-blue .stepper-button-minus:after,
+.ios .stepper.color-blue .stepper-button-plus:before,
+.ios .stepper.color-blue .stepper-button-minus:before {
+  background-color: #007aff;
+}
+.ios .stepper.color-blue .stepper-value,
+.ios .stepper.color-blue .stepper-input-wrap {
+  border-top-color: #007aff;
+  border-bottom-color: #007aff;
+}
+.ios .stepper.color-blue .stepper-value {
+  color: #007aff;
+}
+.ios .stepper.color-blue .stepper-input-wrap input {
+  color: #007aff;
+}
+.ios .stepper.color-blue.stepper-fill .stepper-button,
+.ios .stepper.color-blue.stepper-fill-ios .stepper-button,
+.ios .stepper.color-blue.stepper-fill .stepper-button-minus,
+.ios .stepper.color-blue.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-blue.stepper-fill .stepper-button-plus,
+.ios .stepper.color-blue.stepper-fill-ios .stepper-button-plus {
+  background-color: #007aff;
+}
+.ios .stepper.color-blue.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-blue.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-blue.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-blue.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-blue.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-blue.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-blue.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-blue.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-blue.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-blue.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-blue.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-blue.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-blue.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-blue.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #007aff;
+  border-color: #007aff;
+  background-color: transparent;
+}
+.ios .stepper.color-blue.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-blue.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-blue.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-blue.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-blue.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-blue.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-blue.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-blue.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #007aff;
+}
+.ios .stepper.color-pink .stepper-button,
+.ios .stepper.color-pink .stepper-button-minus,
+.ios .stepper.color-pink .stepper-button-plus {
+  border-color: #ff2d55;
+  color: #ff2d55;
+}
+.ios .stepper.color-pink .stepper-button.active-state,
+.ios .stepper.color-pink .stepper-button-minus.active-state,
+.ios .stepper.color-pink .stepper-button-plus.active-state {
+  background-color: rgba(255, 45, 85, 0.15);
+}
+.ios .stepper.color-pink .stepper-button-plus:after,
+.ios .stepper.color-pink .stepper-button-minus:after,
+.ios .stepper.color-pink .stepper-button-plus:before,
+.ios .stepper.color-pink .stepper-button-minus:before {
+  background-color: #ff2d55;
+}
+.ios .stepper.color-pink .stepper-value,
+.ios .stepper.color-pink .stepper-input-wrap {
+  border-top-color: #ff2d55;
+  border-bottom-color: #ff2d55;
+}
+.ios .stepper.color-pink .stepper-value {
+  color: #ff2d55;
+}
+.ios .stepper.color-pink .stepper-input-wrap input {
+  color: #ff2d55;
+}
+.ios .stepper.color-pink.stepper-fill .stepper-button,
+.ios .stepper.color-pink.stepper-fill-ios .stepper-button,
+.ios .stepper.color-pink.stepper-fill .stepper-button-minus,
+.ios .stepper.color-pink.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-pink.stepper-fill .stepper-button-plus,
+.ios .stepper.color-pink.stepper-fill-ios .stepper-button-plus {
+  background-color: #ff2d55;
+}
+.ios .stepper.color-pink.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-pink.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-pink.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-pink.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-pink.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-pink.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-pink.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-pink.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-pink.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-pink.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-pink.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-pink.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-pink.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-pink.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ff2d55;
+  border-color: #ff2d55;
+  background-color: transparent;
+}
+.ios .stepper.color-pink.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-pink.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-pink.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-pink.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-pink.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-pink.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-pink.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-pink.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ff2d55;
+}
+.ios .stepper.color-yellow .stepper-button,
+.ios .stepper.color-yellow .stepper-button-minus,
+.ios .stepper.color-yellow .stepper-button-plus {
+  border-color: #ffcc00;
+  color: #ffcc00;
+}
+.ios .stepper.color-yellow .stepper-button.active-state,
+.ios .stepper.color-yellow .stepper-button-minus.active-state,
+.ios .stepper.color-yellow .stepper-button-plus.active-state {
+  background-color: rgba(255, 204, 0, 0.15);
+}
+.ios .stepper.color-yellow .stepper-button-plus:after,
+.ios .stepper.color-yellow .stepper-button-minus:after,
+.ios .stepper.color-yellow .stepper-button-plus:before,
+.ios .stepper.color-yellow .stepper-button-minus:before {
+  background-color: #ffcc00;
+}
+.ios .stepper.color-yellow .stepper-value,
+.ios .stepper.color-yellow .stepper-input-wrap {
+  border-top-color: #ffcc00;
+  border-bottom-color: #ffcc00;
+}
+.ios .stepper.color-yellow .stepper-value {
+  color: #ffcc00;
+}
+.ios .stepper.color-yellow .stepper-input-wrap input {
+  color: #ffcc00;
+}
+.ios .stepper.color-yellow.stepper-fill .stepper-button,
+.ios .stepper.color-yellow.stepper-fill-ios .stepper-button,
+.ios .stepper.color-yellow.stepper-fill .stepper-button-minus,
+.ios .stepper.color-yellow.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-yellow.stepper-fill .stepper-button-plus,
+.ios .stepper.color-yellow.stepper-fill-ios .stepper-button-plus {
+  background-color: #ffcc00;
+}
+.ios .stepper.color-yellow.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-yellow.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-yellow.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-yellow.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-yellow.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-yellow.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-yellow.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-yellow.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-yellow.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-yellow.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-yellow.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-yellow.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-yellow.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-yellow.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ffcc00;
+  border-color: #ffcc00;
+  background-color: transparent;
+}
+.ios .stepper.color-yellow.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-yellow.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-yellow.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-yellow.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-yellow.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-yellow.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-yellow.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-yellow.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ffcc00;
+}
+.ios .stepper.color-orange .stepper-button,
+.ios .stepper.color-orange .stepper-button-minus,
+.ios .stepper.color-orange .stepper-button-plus {
+  border-color: #ff9500;
+  color: #ff9500;
+}
+.ios .stepper.color-orange .stepper-button.active-state,
+.ios .stepper.color-orange .stepper-button-minus.active-state,
+.ios .stepper.color-orange .stepper-button-plus.active-state {
+  background-color: rgba(255, 149, 0, 0.15);
+}
+.ios .stepper.color-orange .stepper-button-plus:after,
+.ios .stepper.color-orange .stepper-button-minus:after,
+.ios .stepper.color-orange .stepper-button-plus:before,
+.ios .stepper.color-orange .stepper-button-minus:before {
+  background-color: #ff9500;
+}
+.ios .stepper.color-orange .stepper-value,
+.ios .stepper.color-orange .stepper-input-wrap {
+  border-top-color: #ff9500;
+  border-bottom-color: #ff9500;
+}
+.ios .stepper.color-orange .stepper-value {
+  color: #ff9500;
+}
+.ios .stepper.color-orange .stepper-input-wrap input {
+  color: #ff9500;
+}
+.ios .stepper.color-orange.stepper-fill .stepper-button,
+.ios .stepper.color-orange.stepper-fill-ios .stepper-button,
+.ios .stepper.color-orange.stepper-fill .stepper-button-minus,
+.ios .stepper.color-orange.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-orange.stepper-fill .stepper-button-plus,
+.ios .stepper.color-orange.stepper-fill-ios .stepper-button-plus {
+  background-color: #ff9500;
+}
+.ios .stepper.color-orange.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-orange.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-orange.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-orange.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-orange.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-orange.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-orange.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-orange.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-orange.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-orange.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-orange.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-orange.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-orange.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-orange.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ff9500;
+  border-color: #ff9500;
+  background-color: transparent;
+}
+.ios .stepper.color-orange.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-orange.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-orange.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-orange.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-orange.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-orange.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-orange.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-orange.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ff9500;
+}
+.ios .stepper.color-gray .stepper-button,
+.ios .stepper.color-gray .stepper-button-minus,
+.ios .stepper.color-gray .stepper-button-plus {
+  border-color: #8e8e93;
+  color: #8e8e93;
+}
+.ios .stepper.color-gray .stepper-button.active-state,
+.ios .stepper.color-gray .stepper-button-minus.active-state,
+.ios .stepper.color-gray .stepper-button-plus.active-state {
+  background-color: rgba(142, 142, 147, 0.15);
+}
+.ios .stepper.color-gray .stepper-button-plus:after,
+.ios .stepper.color-gray .stepper-button-minus:after,
+.ios .stepper.color-gray .stepper-button-plus:before,
+.ios .stepper.color-gray .stepper-button-minus:before {
+  background-color: #8e8e93;
+}
+.ios .stepper.color-gray .stepper-value,
+.ios .stepper.color-gray .stepper-input-wrap {
+  border-top-color: #8e8e93;
+  border-bottom-color: #8e8e93;
+}
+.ios .stepper.color-gray .stepper-value {
+  color: #8e8e93;
+}
+.ios .stepper.color-gray .stepper-input-wrap input {
+  color: #8e8e93;
+}
+.ios .stepper.color-gray.stepper-fill .stepper-button,
+.ios .stepper.color-gray.stepper-fill-ios .stepper-button,
+.ios .stepper.color-gray.stepper-fill .stepper-button-minus,
+.ios .stepper.color-gray.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-gray.stepper-fill .stepper-button-plus,
+.ios .stepper.color-gray.stepper-fill-ios .stepper-button-plus {
+  background-color: #8e8e93;
+}
+.ios .stepper.color-gray.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-gray.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-gray.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-gray.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-gray.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-gray.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-gray.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-gray.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-gray.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-gray.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-gray.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-gray.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-gray.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-gray.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #8e8e93;
+  border-color: #8e8e93;
+  background-color: transparent;
+}
+.ios .stepper.color-gray.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-gray.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-gray.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-gray.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-gray.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-gray.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-gray.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-gray.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #8e8e93;
+}
+.ios .stepper.color-white .stepper-button,
+.ios .stepper.color-white .stepper-button-minus,
+.ios .stepper.color-white .stepper-button-plus {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.ios .stepper.color-white .stepper-button.active-state,
+.ios .stepper.color-white .stepper-button-minus.active-state,
+.ios .stepper.color-white .stepper-button-plus.active-state {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.ios .stepper.color-white .stepper-button-plus:after,
+.ios .stepper.color-white .stepper-button-minus:after,
+.ios .stepper.color-white .stepper-button-plus:before,
+.ios .stepper.color-white .stepper-button-minus:before {
+  background-color: #ffffff;
+}
+.ios .stepper.color-white .stepper-value,
+.ios .stepper.color-white .stepper-input-wrap {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+.ios .stepper.color-white .stepper-value {
+  color: #ffffff;
+}
+.ios .stepper.color-white .stepper-input-wrap input {
+  color: #ffffff;
+}
+.ios .stepper.color-white.stepper-fill .stepper-button,
+.ios .stepper.color-white.stepper-fill-ios .stepper-button,
+.ios .stepper.color-white.stepper-fill .stepper-button-minus,
+.ios .stepper.color-white.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-white.stepper-fill .stepper-button-plus,
+.ios .stepper.color-white.stepper-fill-ios .stepper-button-plus {
+  background-color: #ffffff;
+}
+.ios .stepper.color-white.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-white.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-white.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-white.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-white.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-white.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-white.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-white.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-white.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-white.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-white.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-white.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-white.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-white.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #ffffff;
+  border-color: #ffffff;
+  background-color: transparent;
+}
+.ios .stepper.color-white.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-white.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-white.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-white.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-white.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-white.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-white.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-white.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+  background-color: #ffffff;
+}
+.ios .stepper.color-black .stepper-button,
+.ios .stepper.color-black .stepper-button-minus,
+.ios .stepper.color-black .stepper-button-plus {
+  border-color: #000000;
+  color: #000000;
+}
+.ios .stepper.color-black .stepper-button.active-state,
+.ios .stepper.color-black .stepper-button-minus.active-state,
+.ios .stepper.color-black .stepper-button-plus.active-state {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+.ios .stepper.color-black .stepper-button-plus:after,
+.ios .stepper.color-black .stepper-button-minus:after,
+.ios .stepper.color-black .stepper-button-plus:before,
+.ios .stepper.color-black .stepper-button-minus:before {
+  background-color: #000000;
+}
+.ios .stepper.color-black .stepper-value,
+.ios .stepper.color-black .stepper-input-wrap {
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+}
+.ios .stepper.color-black .stepper-value {
+  color: #000000;
+}
+.ios .stepper.color-black .stepper-input-wrap input {
+  color: #000000;
+}
+.ios .stepper.color-black.stepper-fill .stepper-button,
+.ios .stepper.color-black.stepper-fill-ios .stepper-button,
+.ios .stepper.color-black.stepper-fill .stepper-button-minus,
+.ios .stepper.color-black.stepper-fill-ios .stepper-button-minus,
+.ios .stepper.color-black.stepper-fill .stepper-button-plus,
+.ios .stepper.color-black.stepper-fill-ios .stepper-button-plus {
+  background-color: #000000;
+}
+.ios .stepper.color-black.stepper-fill .stepper-button-plus:before,
+.ios .stepper.color-black.stepper-fill-ios .stepper-button-plus:before,
+.ios .stepper.color-black.stepper-fill .stepper-button-minus:before,
+.ios .stepper.color-black.stepper-fill-ios .stepper-button-minus:before,
+.ios .stepper.color-black.stepper-fill .stepper-button-plus:after,
+.ios .stepper.color-black.stepper-fill-ios .stepper-button-plus:after,
+.ios .stepper.color-black.stepper-fill .stepper-button-minus:after,
+.ios .stepper.color-black.stepper-fill-ios .stepper-button-minus:after {
+  background-color: #fff;
+}
+.ios .stepper.color-black.stepper-small.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-black.stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper.color-black.stepper-small.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-black.stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper.color-black.stepper-small.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper.color-black.stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+  color: #000000;
+  border-color: #000000;
+  background-color: transparent;
+}
+.ios .stepper.color-black.stepper-small.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-black.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper.color-black.stepper-small.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-black.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper.color-black.stepper-small.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-black.stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper.color-black.stepper-small.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper.color-black.stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
   background-color: #000000;
 }
 /* === Smart Select === */
@@ -10907,12 +12541,18 @@ label.item-radio.disabled,
   font-size: 18px;
   vertical-align: middle;
 }
-.data-table .sortable-cell {
+.data-table .sortable-cell:not(.input-cell) {
   cursor: pointer;
   position: relative;
 }
-.data-table .sortable-cell:not(.numeric-cell):after,
-.data-table .sortable-cell.numeric-cell:before {
+.data-table .sortable-cell.input-cell .table-head-label {
+  cursor: pointer;
+  position: relative;
+}
+.data-table .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+.data-table .sortable-cell.numeric-cell:not(.input-cell):before,
+.data-table .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+.data-table .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
   content: '';
   display: inline-block;
   vertical-align: top;
@@ -10930,17 +12570,25 @@ label.item-radio.disabled,
   opacity: 0;
 }
 html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:after,
-html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:before {
+html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table-head-label:hover:after,
+html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:before,
+html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table-head-label:hover:before {
   opacity: 0.54;
 }
 .data-table .sortable-cell.sortable-cell-active:after,
-.data-table .sortable-cell.sortable-cell-active:before {
-  opacity: 0.87;
+.data-table .sortable-cell.sortable-cell-active .table-head-label:after,
+.data-table .sortable-cell.sortable-cell-active:before,
+.data-table .sortable-cell.sortable-cell-active .table-head-label:before {
+  opacity: 0.87 !important;
 }
 .data-table .sortable-cell.sortable-desc:after,
-.data-table .sortable-cell.sortable-desc:before {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+.data-table .sortable-cell.sortable-desc:after,
+.data-table .table-head-label:after,
+.data-table .sortable-cell.sortable-desc:before,
+.data-table .sortable-cell.sortable-desc:before,
+.data-table .table-head-label:before {
+  -webkit-transform: rotate(180deg) !important;
+  transform: rotate(180deg) !important;
 }
 .data-table.card .card-header,
 .card .data-table .card-header {
@@ -11005,6 +12653,36 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 .data-table .data-table-title-selected {
   font-size: 14px;
+}
+.data-table .data-table-footer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  font-size: 12px;
+  overflow: hidden;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.data-table .data-table-rows-select,
+.data-table .data-table-pagination {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 @media (max-width: 480px) and (orientation: portrait) {
   .data-table.data-table-collapsible thead {
@@ -11083,8 +12761,10 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
     display: table-cell;
   }
 }
-.theme-dark .data-table .sortable-cell:not(.numeric-cell):after,
-.theme-dark .data-table .sortable-cell.numeric-cell:before {
+.theme-dark .data-table .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+.theme-dark .data-table .sortable-cell.numeric-cell:not(.input-cell):before,
+.theme-dark .data-table .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+.theme-dark .data-table .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23fff'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M0%200h24v24H0V0z'%20fill%3D'none'%2F%3E%3Cpath%20d%3D'M20%2012l-1.41-1.41L13%2016.17V4h-2v12.17l-5.58-5.59L4%2012l8%208%208-8z'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E");
 }
 .ios .data-table thead th,
@@ -11202,11 +12882,67 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 .ios.device-desktop .data-table tbody tr:hover {
   background: #f7f7f8;
 }
+.ios .data-table-footer {
+  height: 44px;
+  color: #8e8e93;
+}
+.ios .data-table-rows-select a.link,
+.ios .data-table-pagination a.link {
+  width: 44px;
+  height: 44px;
+}
+.ios .data-table-rows-select + .data-table-pagination {
+  margin-left: 30px;
+}
+.ios .data-table-rows-select .input {
+  margin-left: 20px;
+}
+.ios .data-table-pagination-label {
+  margin-right: 15px;
+}
+.ios .data-table-footer:before {
+  content: '';
+  position: absolute;
+  background-color: #c8c7cc;
+  display: block;
+  z-index: 15;
+  top: 0;
+  right: auto;
+  bottom: auto;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+}
+.ios.device-pixel-ratio-2 .data-table-footer:before {
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.ios.device-pixel-ratio-3 .data-table-footer:before {
+  -webkit-transform: scaleY(0.33);
+  transform: scaleY(0.33);
+}
+.ios .input-cell {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  height: auto;
+  vertical-align: top;
+}
+.ios .input-cell .table-head-label + .input {
+  margin-top: 4px;
+}
+.ios .input-cell .input {
+  height: 24px;
+}
+.ios .input-cell .input input,
+.ios .input-cell .input textarea,
+.ios .input-cell .input select {
+  height: 24px;
+  color: #000;
+  font-size: 14px;
+}
 @media (max-width: 480px) and (orientation: portrait) {
-  .ios .data-table.data-table-collapsible td:not(.checkbox-cell) {
-    font-size: 17px;
-    line-height: 17px;
-  }
   .ios .data-table.data-table-collapsible td:not(.checkbox-cell):before {
     color: #8e8e93;
     font-weight: 600;
@@ -12050,7 +13786,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 .list .hidden-by-searchbar,
 .list.li.hidden-by-searchbar,
 .list li.hidden-by-searchbar {
-  display: none;
+  display: none !important;
 }
 .ios .searchbar {
   height: 44px;

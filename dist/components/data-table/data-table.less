@@ -54,11 +54,18 @@
     }
   }
   // Sortable
-  .sortable-cell {
+  .sortable-cell:not(.input-cell) {
     cursor: pointer;
     position: relative;
   }
-  .sortable-cell:not(.numeric-cell):after, .sortable-cell.numeric-cell:before {
+  .sortable-cell.input-cell .table-head-label {
+    cursor: pointer;
+    position: relative;
+  }
+  .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+  .sortable-cell.numeric-cell:not(.input-cell):before,
+  .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+  .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
     content: '';
     display: inline-block;
     vertical-align: top;
@@ -74,23 +81,27 @@
     opacity: 0;
   }
   html.device-desktop & {
-    .sortable-cell:not(.sortable-cell-active):hover {
+    .sortable-cell:not(.sortable-cell-active):hover,
+    .sortable-cell:not(.sortable-cell-active) .table-head-label:hover {
       &:after, &:before {
         opacity: 0.54;
       }
     }
   }
-  .sortable-cell.sortable-cell-active {
+  .sortable-cell.sortable-cell-active,
+  .sortable-cell.sortable-cell-active .table-head-label {
     &:after, &:before {
-      opacity: 0.87;
+      opacity: 0.87 !important;
     }
   }
   .sortable-cell.sortable-asc {
 
   }
-  .sortable-cell.sortable-desc {
+  .sortable-cell.sortable-desc,
+  .sortable-cell.sortable-desc,
+  .table-head-label {
     &:after, &:before {
-      transform: rotate(180deg);
+      transform: rotate(180deg) !important;
     }
   }
   &.card, .card & {
@@ -136,6 +147,28 @@
   }
   .data-table-title-selected {
     font-size: 14px;
+  }
+
+  // Footer
+  .data-table-footer {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    font-size: 12px;
+    overflow: hidden;
+    .ltr({
+      justify-content: flex-end;
+    });
+    .rtl({
+      justify-content: flex-start;
+    });
+
+  }
+  .data-table-rows-select,
+  .data-table-pagination {
+    display: flex;
+    align-items: center;
   }
 
   // Collapsible
@@ -224,7 +257,10 @@
 & when (@includeDarkTheme) {
   .theme-dark {
     .data-table {
-      .sortable-cell:not(.numeric-cell):after, .sortable-cell.numeric-cell:before {
+      .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+      .sortable-cell.numeric-cell:not(.input-cell):before,
+      .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+      .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
         .svg-background("<svg fill='#fff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z' fill='#fff'/></svg>");
       }
     }

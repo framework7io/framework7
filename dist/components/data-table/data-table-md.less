@@ -6,6 +6,7 @@
       th, td {
         font-weight: 500;
         height: 56px;
+        box-sizing: border-box;
         &:not(.sortable-cell-active) {
           color: rgba(0,0,0,0.54);
         }
@@ -150,6 +151,70 @@
     }
   }
 
+  // Footer
+  .data-table-footer {
+    height: 56px;
+    color: rgba(0,0,0,0.54);
+
+  }
+  .data-table-rows-select,
+  .data-table-pagination {
+    a.link {
+      width: 48px;
+      height: 48px;
+      .md-link-highlight(rgba(0,0,0,0.1));
+    }
+  }
+  .data-table-rows-select {
+    + .data-table-pagination {
+      .ltr({
+        margin-left: 32px;
+      });
+      .rtl({
+        margin-right: 32px;
+      });
+    }
+    .input {
+      .ltr({
+        margin-left: 24px;
+      });
+      .rtl({
+        margin-right: 24px;
+      });
+    }
+  }
+  .data-table-pagination-label {
+    .ltr({
+      margin-right: 20px;
+    });
+    .rtl({
+      margin-left: 20px;
+    });
+  }
+  .hairline-root('.data-table-footer', top, rgba(0,0,0,0.12));
+
+  // Inputs
+  .input-cell {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: auto;
+    vertical-align: top;
+    .table-head-label + .input {
+      margin-top: 4px;
+    }
+    .input {
+      height: 24px;
+      input, textarea, select {
+        height: 24px;
+        color: #212121;
+        font-size: 14px;
+      }
+      .input-clear-button {
+        transform: scale(0.8);
+      }
+    }
+  }
+
   // Collapsible
   @media (max-width:480px) and (orientation:portrait) {
     .data-table.data-table-collapsible {
@@ -158,7 +223,6 @@
         padding-right: 16px;
       }
       td:not(.checkbox-cell) {
-        font-size: 16px;
         &:before {
           color: rgba(0,0,0,0.54);
           font-weight: 500;

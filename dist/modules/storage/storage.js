@@ -1,3 +1,4 @@
+import { window } from 'ssr-window';
 import Utils from '../../utils/utils';
 
 const keyPrefix = 'f7storage-';

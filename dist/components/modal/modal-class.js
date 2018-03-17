@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
@@ -121,7 +122,7 @@ class Modal extends Framework7Class {
     function transitionEnd() {
       if ($el.hasClass('modal-out')) {
         modal.onClosed();
-      } else {
+      } else if ($el.hasClass('modal-in')) {
         modal.onOpened();
       }
     }
@@ -172,7 +173,7 @@ class Modal extends Framework7Class {
     function transitionEnd() {
       if ($el.hasClass('modal-out')) {
         modal.onClosed();
-      } else {
+      } else if ($el.hasClass('modal-in')) {
         modal.onOpened();
       }
     }

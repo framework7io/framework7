@@ -1,5 +1,6 @@
 import $ from 'dom7';
 import Template7 from 'template7';
+import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
@@ -62,7 +63,9 @@ class Framework7 extends Framework7Class {
     });
 
     // Save Root
-    app.root[0].f7 = app;
+    if (app.root && app.root[0]) {
+      app.root[0].f7 = app;
+    }
 
     // Install Modules
     app.useModules();

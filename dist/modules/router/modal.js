@@ -4,6 +4,7 @@ import History from '../../utils/history';
 function modalLoad(modalType, route, loadOptions = {}) {
   const router = this;
   const app = router.app;
+
   const options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
@@ -11,7 +12,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
     on: {},
   }, loadOptions);
 
-  const modalParams = route.route[modalType];
+  const modalParams = Utils.extend({}, route.route[modalType]);
   const modalRoute = route.route;
 
   function onModalLoaded() {

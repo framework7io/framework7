@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { window, document } from 'ssr-window';
 import Device from '../../utils/device';
 import Support from '../../utils/support';
 import ViewClass from '../../components/view/view-class';

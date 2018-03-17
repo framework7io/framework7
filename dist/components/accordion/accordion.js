@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 
@@ -6,6 +7,7 @@ const Accordion = {
     const app = this;
     let $accordionItemEl = $clickedEl.closest('.accordion-item').eq(0);
     if (!$accordionItemEl.length) $accordionItemEl = $clickedEl.parents('li').eq(0);
+    if ($clickedEl.parents('li').length > 1 && $clickedEl.parents('li')[0] !== $accordionItemEl[0]) return;
     app.accordion.toggle($accordionItemEl);
   },
   open(el) {
@@ -21,7 +23,9 @@ const Accordion = {
     }
     $contentEl.transitionEnd(() => {
       if ($el.hasClass('accordion-item-opened')) {
-        $contentEl.css('height', '');
+        $contentEl.transition(0);
+        $contentEl.css('height', 'auto');
+        $contentEl._clientLeft = $contentEl[0].clientLeft;
         $contentEl.transition('');
         $el.trigger('accordion:opened');
         app.emit('accordionOpened', $el[0]);
@@ -44,10 +48,14 @@ const Accordion = {
     $el.removeClass('accordion-item-opened');
     $contentEl.transition(0);
     $contentEl.css('height', `${$contentEl[0].scrollHeight}px`);
+    $contentEl._clientLeft = $contentEl[0].clientLeft;
+    $contentEl.transition('');
     // Close
     $contentEl.transitionEnd(() => {
       if ($el.hasClass('accordion-item-opened')) {
-        $contentEl.css('height', '');
+        $contentEl.transition(0);
+        $contentEl.css('height', 'auto');
+        $contentEl._clientLeft = $contentEl[0].clientLeft;
         $contentEl.transition('');
         $el.trigger('accordion:opened');
         app.emit('accordionOpened', $el[0]);

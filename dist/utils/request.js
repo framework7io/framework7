@@ -1,3 +1,4 @@
+import { window, document } from 'ssr-window';
 import Utils from './utils';
 
 const globals = {};

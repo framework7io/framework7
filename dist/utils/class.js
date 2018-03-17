@@ -15,23 +15,24 @@ class Framework7Class {
       });
     }
   }
-  on(events, handler) {
+  on(events, handler, priority) {
     const self = this;
     if (typeof handler !== 'function') return self;
+    const method = priority ? 'unshift' : 'push';
     events.split(' ').forEach((event) => {
       if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
-      self.eventsListeners[event].push(handler);
+      self.eventsListeners[event][method](handler);
     });
     return self;
   }
-  once(events, handler) {
+  once(events, handler, priority) {
     const self = this;
     if (typeof handler !== 'function') return self;
     function onceHandler(...args) {
       handler.apply(self, args);
       self.off(events, onceHandler);
     }
-    return self.on(events, onceHandler);
+    return self.on(events, onceHandler, priority);
   }
   off(events, handler) {
     const self = this;

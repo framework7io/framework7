@@ -1,8 +1,11 @@
+import { window, document } from 'ssr-window';
+
 export default {
   name: 'resize',
   instance: {
     getSize() {
       const app = this;
+      if (!app.root[0]) return { width: 0, height: 0, left: 0, top: 0 };
       const offset = app.root.offset();
       const [width, height, left, top] = [app.root[0].offsetWidth, app.root[0].offsetHeight, offset.left, offset.top];
       app.width = width;

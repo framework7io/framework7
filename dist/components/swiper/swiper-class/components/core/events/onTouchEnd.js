@@ -5,7 +5,7 @@ export default function (event) {
   const data = swiper.touchEventsData;
 
   const {
-    params, touches, rtl, $wrapperEl, slidesGrid, snapGrid,
+    params, touches, rtlTranslate: rtl, $wrapperEl, slidesGrid, snapGrid,
   } = swiper;
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
@@ -68,6 +68,7 @@ export default function (event) {
   } else {
     currentPos = -data.currentTranslate;
   }
+
   if (params.freeMode) {
     if (currentPos < -swiper.minTranslate()) {
       swiper.slideTo(swiper.activeIndex);
@@ -109,6 +110,7 @@ export default function (event) {
 
       let newPosition = swiper.translate + momentumDistance;
       if (rtl) newPosition = -newPosition;
+
       let doBounce = false;
       let afterBouncePosition;
       const bounceAmount = Math.abs(swiper.velocity) * 20 * params.freeModeMomentumBounceRatio;
@@ -142,6 +144,7 @@ export default function (event) {
             break;
           }
         }
+
         if (Math.abs(snapGrid[nextSlide] - newPosition) < Math.abs(snapGrid[nextSlide - 1] - newPosition) || swiper.swipeDirection === 'next') {
           newPosition = snapGrid[nextSlide];
         } else {
@@ -157,7 +160,7 @@ export default function (event) {
           momentumDuration = Math.abs((newPosition - swiper.translate) / swiper.velocity);
         }
       } else if (params.freeModeSticky) {
-        swiper.slideReset();
+        swiper.slideToClosest();
         return;
       }
 
@@ -196,7 +199,11 @@ export default function (event) {
 
       swiper.updateActiveIndex();
       swiper.updateSlidesClasses();
+    } else if (params.freeModeSticky) {
+      swiper.slideToClosest();
+      return;
     }
+
     if (!params.freeModeMomentum || timeDiff >= params.longSwipesMs) {
       swiper.updateProgress();
       swiper.updateActiveIndex();

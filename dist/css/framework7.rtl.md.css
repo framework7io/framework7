@@ -1,5 +1,5 @@
 /**
- * Framework7 2.0.10
+ * Framework7 2.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 19, 2018
+ * Released on: March 17, 2018
  */
 html {
   direction: rtl;
@@ -262,7 +262,6 @@ html.with-statusbar.device-iphone-x .panel {
   height: 100%;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  contain: layout size style;
 }
 .page.stacked {
   display: none;
@@ -278,12 +277,9 @@ html.with-statusbar.device-iphone-x .panel {
   height: 100%;
   position: relative;
   z-index: 1;
-  contain: layout size style;
-  will-change: scroll-position;
 }
 .md .page {
   background: #fff;
-  contain: strict;
 }
 .md .page-next {
   -webkit-transform: translate3d(0, 56px, 0);
@@ -298,12 +294,6 @@ html.with-statusbar.device-iphone-x .panel {
 .md .router-transition-forward .page,
 .md .router-transition-backward .page {
   pointer-events: none;
-}
-.md .router-transition-forward .page-next,
-.md .router-transition-backward .page-next,
-.md .router-transition-forward .page-current,
-.md .router-transition-backward .page-current {
-  will-change: transform, opacity;
 }
 .md .router-transition-css-forward .page-next {
   -webkit-animation: md-page-next-to-current 250ms forwards;
@@ -1748,7 +1738,6 @@ html.with-statusbar.device-iphone-x .panel {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  max-height: 28px;
   margin-right: auto;
 }
 .list .item-link,
@@ -1985,11 +1974,32 @@ li.media-item .item-media img {
 .list .item-link .item-inner,
 .links-list a,
 .media-list .item-link .item-title-row,
-li.media-item .item-link .item-title-row {
+li.media-item .item-link .item-title-row,
+.media-list.chevron-center .item-link .item-inner,
+.media-list .chevron-center .item-link .item-inner,
+.media-list .item-link.chevron-center .item-inner,
+li.media-item.chevron-center .item-link .item-inner,
+li.media-item .chevron-center .item-link .item-inner,
+li.media-item .item-link.chevron-center .item-inner {
   background-size: 8px 13px;
   background-repeat: no-repeat;
   background-position: 15px center;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D'8px'%20height%3D'13px'%20viewBox%3D'0%200%208%2013'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpolygon%20fill%3D'%23c7c7cc'%20transform%3D'translate(6.500000%2C%206.500000)%20rotate(-225.000000)%20translate(-6.500000%2C%20-6.500000)%20'%20points%3D'11%2011%2011%202%209%202%209%209%202%209%202%2011%2010%2011'%3E%3C%2Fpolygon%3E%3C%2Fsvg%3E");
+}
+.links-list.no-chevron a,
+.no-chevron .links-list a,
+.links-list .no-chevron a,
+.item-link.no-chevron .item-inner,
+.no-chevron .item-link .item-inner,
+.media-list.no-chevron .item-link .item-title-row,
+.no-chevron .media-list .item-link .item-title-row,
+li.media-item .no-chevron .item-title-row,
+li.media-item.no-chevron .item-title-row,
+.media-list.chevron-center .item-title-row,
+.media-list .chevron-center .item-title-row,
+li.media-item.chevron-center .item-title-row,
+li.media-item .chevron-center .item-title-row {
+  background-image: none !important;
 }
 .media-list .item-link .item-inner,
 li.media-item .item-link .item-inner {
@@ -2138,6 +2148,12 @@ li.list-group-title:before {
 .md .list .item-footer {
   color: rgba(0, 0, 0, 0.5);
 }
+.md .list .item-link.no-chevron .item-inner,
+.md .list.no-chevron .item-link .item-inner,
+.md .list .no-chevron .item-link .item-inner,
+.md .no-chevron .list .item-link .item-inner {
+  padding-left: 16px;
+}
 .md .simple-list li:after {
   content: '';
   position: absolute;
@@ -2213,6 +2229,12 @@ li.list-group-title:before {
   right: 16px;
   left: 0;
 }
+.md .links-list.no-chevron a,
+.md .no-chevron .links-list a,
+.md .links-list a.no-chevron,
+.md .links-list .no-chevron a {
+  padding-left: 16px;
+}
 .md .media-list .item-inner,
 .md li.media-item .item-inner {
   padding-top: 14px;
@@ -2230,6 +2252,25 @@ li.list-group-title:before {
 .md li.media-item .item-media {
   padding-top: 14px;
   padding-bottom: 14px;
+}
+.md .media-list.chevron-center .item-link .item-inner,
+.md .media-list .chevron-center .item-link .item-inner,
+.md .media-list .item-link.chevron-center .item-inner,
+.md li.media-item.chevron-center .item-link .item-inner,
+.md li.media-item .item-link.chevron-center .item-inner,
+.md li.media-item .chevron-center .item-link .item-inner {
+  padding-left: 42px;
+}
+.md .media-list.no-chevron .item-link .item-title-row,
+.md .no-chevron .media-list .item-link .item-title-row,
+.md .media-list .no-chevron .item-link .item-title-row,
+.md li.media-item.no-chevron .item-link .item-title-row,
+.md .no-chevron li.media-item .item-link .item-title-row,
+.md .media-list.chevron-center .item-title-row,
+.md .media-list .chevron-center .item-title-row,
+.md li.media-item.chevron-center .item-title-row,
+.md li.media-item .chevron-center .item-title-row {
+  padding-left: 0 !important;
 }
 .md .list .item-link .item-inner,
 .md .links-list a {
@@ -2718,10 +2759,10 @@ button {
   border-width: 2px;
   line-height: 25px;
 }
-.md .button i.icon + span,
-.md .button span:not(.ripple-wave) + span,
-.md .button span:not(.ripple-wave) + i.icon,
-.md .button i.icon + i.icon {
+.md .button > i.icon + span,
+.md .button > span:not(.ripple-wave) + span,
+.md .button > span:not(.ripple-wave) + i.icon,
+.md .button > i.icon + i.icon {
   margin-right: 8px;
 }
 .md .button.button-raised {
@@ -3269,7 +3310,8 @@ button {
 .md .toolbar .ripple-wave,
 .md .subnavbar .ripple-wave,
 .md .toast .ripple-wave,
-.md .fab a .ripple-wave {
+.md .fab a .ripple-wave,
+.md .stepper-fill .ripple-wave {
   background: rgba(255, 255, 255, 0.3);
 }
 .md .messagebar .ripple-wave,
@@ -3350,10 +3392,10 @@ i.icon {
   width: 24px;
   height: 24px;
 }
-.md .list .icon {
+.md .item-media .icon {
   color: #737373;
 }
-.md .list .material-icons {
+.md .item-media .material-icons {
   font-size: 24px;
   width: 24px;
   height: 24px;
@@ -3553,8 +3595,6 @@ i.icon {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   z-index: 10500;
 }
 .custom-modal-backdrop.not-animated {
@@ -3578,8 +3618,6 @@ i.icon {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
 }
 .dialog-backdrop.not-animated {
   -webkit-transition-duration: 0ms;
@@ -3604,8 +3642,6 @@ i.icon {
   transition-property: transform, opacity;
   transition-property: transform, opacity, -webkit-transform;
   display: none;
-  contain: content;
-  will-change: transform, opacity;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
@@ -3858,8 +3894,6 @@ input[type="button"].md .dialog-button {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   z-index: 10500;
 }
 .popup-backdrop.not-animated {
@@ -3876,8 +3910,6 @@ input[type="button"].md .dialog-button {
   top: 0;
   width: 100%;
   height: 100%;
-  contain: strict;
-  will-change: transform;
   display: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -3986,8 +4018,6 @@ html.with-modal-popup .framework7-root > .panel .page-content {
   top: 0;
   width: 100%;
   height: 100%;
-  contain: strict;
-  will-change: transform;
   display: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4145,8 +4175,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
 }
 .popover-backdrop.not-animated {
   -webkit-transition-duration: 0ms;
@@ -4167,7 +4195,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   display: none;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
-  contain: layout style;
 }
 .popover .list {
   margin: 0;
@@ -4364,8 +4391,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
 }
 .actions-backdrop.not-animated {
   -webkit-transition-duration: 0ms;
@@ -4385,7 +4410,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   transform: translate3d(0, 100%, 0);
   display: none;
   max-height: 100%;
-  contain: content;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   -webkit-transition-property: -webkit-transform;
@@ -4662,8 +4686,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   opacity: 0;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   z-index: 10500;
 }
 .sheet-backdrop.not-animated {
@@ -4680,7 +4702,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   bottom: 0;
   width: 100%;
   height: 260px;
-  will-change: transform;
   display: none;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4692,7 +4713,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   transform: translate3d(0, 100%, 0);
   background: #fff;
   z-index: 12500;
-  contain: strict;
 }
 .sheet-modal.modal-in,
 .sheet-modal.modal-out {
@@ -4921,8 +4941,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .toast-top {
   visibility: hidden;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
-  will-change: opacity;
-  contain: strict;
   visibility: visible;
   opacity: 0;
   background: none;
@@ -5442,8 +5460,6 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   display: block;
-  will-change: transform;
-  contain: strict;
 }
 .progressbar-infinite.color-multi {
   background: none !important;
@@ -7040,7 +7056,6 @@ html.device-android-4 .accordion-item-content {
   height: 100%;
   -webkit-transition-duration: 300ms;
   transition-duration: 300ms;
-  will-change: transform;
 }
 .tabs-animated-wrap > .tabs > .tab {
   width: 100%;
@@ -7714,6 +7729,8 @@ textarea {
   font-family: inherit;
   background: none;
   resize: none;
+  font-size: inherit;
+  color: inherit;
 }
 .textarea-resizable-shadow {
   opacity: 0;
@@ -7774,6 +7791,14 @@ textarea {
   flex-shrink: 1;
   position: relative;
 }
+.input {
+  position: relative;
+}
+.input input,
+.input select,
+.input textarea {
+  width: 100%;
+}
 .input-clear-button {
   opacity: 0;
   pointer-events: none;
@@ -7809,10 +7834,37 @@ textarea {
   top: 50%;
 }
 .input-with-value ~ .input-clear-button,
-.item-input-with-value .input-clear-button {
+.item-input-with-value .input-clear-button,
+.input-with-value .input-clear-button {
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+}
+.input-dropdown-wrap,
+.input-dropdown {
+  position: relative;
+}
+.input-dropdown-wrap:before,
+.input-dropdown:before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  margin-top: -2px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #727272;
+  left: 2px;
+}
+.input-dropdown-wrap select,
+.input-dropdown select,
+.input-dropdown-wrap input,
+.input-dropdown input,
+.input-dropdown-wrap textarea,
+.input-dropdown textarea {
+  padding-right: 14px;
 }
 .md .list input[type="text"],
 .md .list input[type="password"],
@@ -7902,12 +7954,13 @@ textarea {
 .md .list textarea::placeholder {
   color: rgba(0, 0, 0, 0.35);
 }
-.md .item-input-wrap {
-  min-height: 36px;
-}
-.md .item-input-wrap:after {
+.md .item-input-wrap:after,
+.md .input:after {
   -webkit-transition-duration: 200ms;
   transition-duration: 200ms;
+}
+.md .item-input-wrap {
+  min-height: 36px;
 }
 .md .item-input-wrap:after {
   content: '';
@@ -7929,6 +7982,29 @@ textarea {
   transform: scaleY(0.5);
 }
 .md.device-pixel-ratio-3 .item-input-wrap:after {
+  -webkit-transform: scaleY(0.33);
+  transform: scaleY(0.33);
+}
+.md .input:after {
+  content: '';
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.12);
+  display: block;
+  z-index: 15;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  -webkit-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+}
+.md.device-pixel-ratio-2 .input:after {
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.md.device-pixel-ratio-3 .input:after {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
 }
@@ -8023,11 +8099,17 @@ textarea {
   margin-right: 8px;
 }
 .md .item-input-with-error-message,
-.md .item-input-with-info {
+.md .item-input-with-info,
+.md div.input-with-error-message,
+.md div.input-with-info,
+.md span.input-with-error-message,
+.md span.input-with-info {
   padding-bottom: 20px;
 }
 .md .item-input-error-message,
-.md .item-input-info {
+.md .item-input-info,
+.md .input-error-message,
+.md .input-info {
   font-size: 12px;
   line-height: 1.4;
   position: absolute;
@@ -8040,10 +8122,12 @@ textarea {
   right: 0;
   left: 16px;
 }
-.md .item-input-info {
+.md .item-input-info,
+.md .input-info {
   color: rgba(0, 0, 0, 0.45);
 }
-.md .item-input-error-message {
+.md .item-input-error-message,
+.md .input-error-message {
   color: #f44336;
   display: none;
 }
@@ -8051,26 +8135,41 @@ textarea {
 .md .item-input-focused .item-floating-label {
   color: #2196f3;
 }
-.md .item-input-focused .item-input-wrap:after {
+.md .item-input-focused .item-input-wrap:after,
+.md .input-focused:after {
   background: #2196f3;
 }
 .md .item-input-invalid .item-label,
-.md .item-input-invalid .item-floating-label {
+.md .item-invalid .item-label,
+.md .item-input-invalid .item-floating-label,
+.md .item-invalid .item-floating-label {
   color: #f44336;
 }
-.md .item-input-invalid .item-input-wrap:after {
-  background: #f44336;
-}
-.md .item-input-invalid .item-input-error-message {
+.md .item-input-invalid .item-input-error-message,
+.md .item-invalid .item-input-error-message,
+.md .item-input-invalid .input-error-message,
+.md .item-invalid .input-error-message {
   display: block;
 }
-.md .item-input-invalid .item-input-info {
+.md .item-input-invalid .item-input-info,
+.md .item-invalid .item-input-info,
+.md .item-input-invalid .input-info,
+.md .item-invalid .input-info {
   display: none;
+}
+.md .item-input-invalid .item-input-wrap:after,
+.md .input-invalid:after {
+  background: #f44336;
 }
 .md .item-input-invalid .item-input-wrap:after,
 .md .item-input-focused .item-input-wrap:after {
   -webkit-transform: scaleY(2);
   transform: scaleY(2);
+}
+.md .input-invalid:after,
+.md .input-focused:after {
+  -webkit-transform: scaleY(2) !important;
+  transform: scaleY(2) !important;
 }
 .md .input-clear-button {
   width: 24px;
@@ -8164,7 +8263,8 @@ textarea {
 .md .theme-dark textarea::placeholder {
   color: rgba(255, 255, 255, 0.35);
 }
-.md .theme-dark .item-input:not(.item-input-focused) .item-input-wrap:after {
+.md .theme-dark .item-input:not(.item-input-focused) .item-input-wrap:after,
+.md .theme-dark .input:after {
   background-color: rgba(255, 255, 255, 0.08);
 }
 .md .theme-dark .item-label,
@@ -8184,127 +8284,145 @@ textarea {
 .md .color-theme-red .item-input-focused .item-floating-label {
   color: #f44336;
 }
-.md .color-theme-red .item-input-focused .item-input-wrap:after {
+.md .color-theme-red .item-input-focused .item-input-wrap:after,
+.md .color-theme-red .input-after:after {
   background: #f44336;
 }
 .md .color-theme-green .item-input-focused .item-label,
 .md .color-theme-green .item-input-focused .item-floating-label {
   color: #4caf50;
 }
-.md .color-theme-green .item-input-focused .item-input-wrap:after {
+.md .color-theme-green .item-input-focused .item-input-wrap:after,
+.md .color-theme-green .input-after:after {
   background: #4caf50;
 }
 .md .color-theme-blue .item-input-focused .item-label,
 .md .color-theme-blue .item-input-focused .item-floating-label {
   color: #2196f3;
 }
-.md .color-theme-blue .item-input-focused .item-input-wrap:after {
+.md .color-theme-blue .item-input-focused .item-input-wrap:after,
+.md .color-theme-blue .input-after:after {
   background: #2196f3;
 }
 .md .color-theme-pink .item-input-focused .item-label,
 .md .color-theme-pink .item-input-focused .item-floating-label {
   color: #e91e63;
 }
-.md .color-theme-pink .item-input-focused .item-input-wrap:after {
+.md .color-theme-pink .item-input-focused .item-input-wrap:after,
+.md .color-theme-pink .input-after:after {
   background: #e91e63;
 }
 .md .color-theme-yellow .item-input-focused .item-label,
 .md .color-theme-yellow .item-input-focused .item-floating-label {
   color: #ffeb3b;
 }
-.md .color-theme-yellow .item-input-focused .item-input-wrap:after {
+.md .color-theme-yellow .item-input-focused .item-input-wrap:after,
+.md .color-theme-yellow .input-after:after {
   background: #ffeb3b;
 }
 .md .color-theme-orange .item-input-focused .item-label,
 .md .color-theme-orange .item-input-focused .item-floating-label {
   color: #ff9800;
 }
-.md .color-theme-orange .item-input-focused .item-input-wrap:after {
+.md .color-theme-orange .item-input-focused .item-input-wrap:after,
+.md .color-theme-orange .input-after:after {
   background: #ff9800;
 }
 .md .color-theme-gray .item-input-focused .item-label,
 .md .color-theme-gray .item-input-focused .item-floating-label {
   color: #9e9e9e;
 }
-.md .color-theme-gray .item-input-focused .item-input-wrap:after {
+.md .color-theme-gray .item-input-focused .item-input-wrap:after,
+.md .color-theme-gray .input-after:after {
   background: #9e9e9e;
 }
 .md .color-theme-white .item-input-focused .item-label,
 .md .color-theme-white .item-input-focused .item-floating-label {
   color: #ffffff;
 }
-.md .color-theme-white .item-input-focused .item-input-wrap:after {
+.md .color-theme-white .item-input-focused .item-input-wrap:after,
+.md .color-theme-white .input-after:after {
   background: #ffffff;
 }
 .md .color-theme-black .item-input-focused .item-label,
 .md .color-theme-black .item-input-focused .item-floating-label {
   color: #000000;
 }
-.md .color-theme-black .item-input-focused .item-input-wrap:after {
+.md .color-theme-black .item-input-focused .item-input-wrap:after,
+.md .color-theme-black .input-after:after {
   background: #000000;
 }
 .md .item-input-focused.color-red .item-label,
 .md .item-input-focused.color-red .item-floating-label {
   color: #f44336;
 }
-.md .item-input-focused.color-red .item-input-wrap:after {
+.md .item-input-focused.color-red .item-input-wrap:after,
+.md .input-after.color-red:after {
   background: #f44336;
 }
 .md .item-input-focused.color-green .item-label,
 .md .item-input-focused.color-green .item-floating-label {
   color: #4caf50;
 }
-.md .item-input-focused.color-green .item-input-wrap:after {
-  background: #4caf50;
+.md .item-input-focused.color-green .item-input-wrap:after,
+.md .input-after.color-green:after {
+  background: #f44336;
 }
 .md .item-input-focused.color-blue .item-label,
 .md .item-input-focused.color-blue .item-floating-label {
   color: #2196f3;
 }
-.md .item-input-focused.color-blue .item-input-wrap:after {
-  background: #2196f3;
+.md .item-input-focused.color-blue .item-input-wrap:after,
+.md .input-after.color-blue:after {
+  background: #f44336;
 }
 .md .item-input-focused.color-pink .item-label,
 .md .item-input-focused.color-pink .item-floating-label {
   color: #e91e63;
 }
-.md .item-input-focused.color-pink .item-input-wrap:after {
-  background: #e91e63;
+.md .item-input-focused.color-pink .item-input-wrap:after,
+.md .input-after.color-pink:after {
+  background: #f44336;
 }
 .md .item-input-focused.color-yellow .item-label,
 .md .item-input-focused.color-yellow .item-floating-label {
   color: #ffeb3b;
 }
-.md .item-input-focused.color-yellow .item-input-wrap:after {
-  background: #ffeb3b;
+.md .item-input-focused.color-yellow .item-input-wrap:after,
+.md .input-after.color-yellow:after {
+  background: #f44336;
 }
 .md .item-input-focused.color-orange .item-label,
 .md .item-input-focused.color-orange .item-floating-label {
   color: #ff9800;
 }
-.md .item-input-focused.color-orange .item-input-wrap:after {
-  background: #ff9800;
+.md .item-input-focused.color-orange .item-input-wrap:after,
+.md .input-after.color-orange:after {
+  background: #f44336;
 }
 .md .item-input-focused.color-gray .item-label,
 .md .item-input-focused.color-gray .item-floating-label {
   color: #9e9e9e;
 }
-.md .item-input-focused.color-gray .item-input-wrap:after {
-  background: #9e9e9e;
+.md .item-input-focused.color-gray .item-input-wrap:after,
+.md .input-after.color-gray:after {
+  background: #f44336;
 }
 .md .item-input-focused.color-white .item-label,
 .md .item-input-focused.color-white .item-floating-label {
   color: #ffffff;
 }
-.md .item-input-focused.color-white .item-input-wrap:after {
-  background: #ffffff;
+.md .item-input-focused.color-white .item-input-wrap:after,
+.md .input-after.color-white:after {
+  background: #f44336;
 }
 .md .item-input-focused.color-black .item-label,
 .md .item-input-focused.color-black .item-floating-label {
   color: #000000;
 }
-.md .item-input-focused.color-black .item-input-wrap:after {
-  background: #000000;
+.md .item-input-focused.color-black .item-input-wrap:after,
+.md .input-after.color-black:after {
+  background: #f44336;
 }
 /* === Checkbox === */
 .icon-checkbox,
@@ -9206,6 +9324,16 @@ label.item-radio.disabled,
   height: 100%;
   z-index: 1;
 }
+.range-knob:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+}
 .range-knob-label {
   position: absolute;
   left: 50%;
@@ -9398,6 +9526,1299 @@ label.item-radio.disabled,
 .md .range-slider.color-black .range-knob-label,
 .md .range-slider.color-black .range-knob-label:before {
   background-color: #000000;
+}
+/* === Stepper === */
+.stepper {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+.stepper-button,
+.stepper-button-minus,
+.stepper-button-plus {
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}
+.stepper-button .icon,
+.stepper-button-minus .icon,
+.stepper-button-plus .icon {
+  pointer-events: none;
+}
+.stepper-value {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.stepper-input-wrap,
+.stepper-value {
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  text-align: center;
+}
+.stepper-button-plus:after,
+.stepper-button-minus:after,
+.stepper-button-plus:before,
+.stepper-button-minus:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.stepper-button-plus:after,
+.stepper-button-minus:after {
+  width: 15px;
+  height: 2px;
+}
+.stepper-button-plus:before {
+  height: 15px;
+  width: 2px;
+}
+.stepper .stepper-input-wrap input,
+.stepper .stepper-value {
+  width: 45px;
+}
+.md .stepper {
+  height: 36px;
+}
+.md .stepper-button,
+.md .stepper-button-minus,
+.md .stepper-button-plus {
+  border: 1px solid #2196f3;
+  color: #2196f3;
+  line-height: 34px;
+  height: 36px;
+  width: 40px;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  overflow: hidden;
+}
+.md .stepper-button + .stepper-button,
+.md .stepper-button-minus + .stepper-button,
+.md .stepper-button-plus + .stepper-button,
+.md .stepper-button + .stepper-button-minus,
+.md .stepper-button-minus + .stepper-button-minus,
+.md .stepper-button-plus + .stepper-button-minus,
+.md .stepper-button + .stepper-button-plus,
+.md .stepper-button-minus + .stepper-button-plus,
+.md .stepper-button-plus + .stepper-button-plus {
+  border-right: none;
+}
+.md .stepper-button.active-state,
+.md .stepper-button-minus.active-state,
+.md .stepper-button-plus.active-state {
+  background: rgba(0, 0, 0, 0.1);
+}
+.md .stepper-button:first-child,
+.md .stepper-button-minus:first-child,
+.md .stepper-button-plus:first-child {
+  border-radius: 0 2px 2px 0;
+}
+.md .stepper-button:last-child,
+.md .stepper-button-minus:last-child,
+.md .stepper-button-plus:last-child {
+  border-radius: 2px 0 0 2px;
+}
+.md .stepper-button-plus:after,
+.md .stepper-button-minus:after,
+.md .stepper-button-plus:before,
+.md .stepper-button-minus:before {
+  background: #2196f3;
+}
+.md .stepper-value,
+.md .stepper-input-wrap {
+  border-top: 1px solid #2196f3;
+  border-bottom: 1px solid #2196f3;
+}
+.md .stepper .stepper-value {
+  color: #2196f3;
+  font-size: 16px;
+}
+.md .stepper .stepper-input-wrap input {
+  height: 100%;
+  text-align: center;
+  color: #2196f3;
+  font-size: 16px;
+}
+.md .stepper-fill .stepper-button,
+.md .stepper-fill-md .stepper-button,
+.md .stepper-fill .stepper-button-minus,
+.md .stepper-fill-md .stepper-button-minus,
+.md .stepper-fill .stepper-button-plus,
+.md .stepper-fill-md .stepper-button-plus {
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  line-height: 36px;
+}
+.md .stepper-fill .stepper-button.active-state,
+.md .stepper-fill-md .stepper-button.active-state,
+.md .stepper-fill .stepper-button-minus.active-state,
+.md .stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper-fill .stepper-button-plus.active-state,
+.md .stepper-fill-md .stepper-button-plus.active-state {
+  background: #0c82df;
+}
+.md .stepper-fill .stepper-button:after,
+.md .stepper-fill-md .stepper-button:after,
+.md .stepper-fill .stepper-button-minus:after,
+.md .stepper-fill-md .stepper-button-minus:after,
+.md .stepper-fill .stepper-button-plus:after,
+.md .stepper-fill-md .stepper-button-plus:after,
+.md .stepper-fill .stepper-button:before,
+.md .stepper-fill-md .stepper-button:before,
+.md .stepper-fill .stepper-button-minus:before,
+.md .stepper-fill-md .stepper-button-minus:before,
+.md .stepper-fill .stepper-button-plus:before,
+.md .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper-fill .stepper-button + .stepper-button,
+.md .stepper-fill-md .stepper-button + .stepper-button,
+.md .stepper-fill .stepper-button-minus + .stepper-button-plus,
+.md .stepper-fill-md .stepper-button-minus + .stepper-button-plus {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.md .stepper-fill.stepper-big .stepper-button,
+.md .stepper-fill-md.stepper-big .stepper-button,
+.md .stepper-fill.stepper-big-md .stepper-button,
+.md .stepper-fill-md.stepper-big-md .stepper-button,
+.md .stepper-fill.stepper-big .stepper-button-minus,
+.md .stepper-fill-md.stepper-big .stepper-button-minus,
+.md .stepper-fill.stepper-big-md .stepper-button-minus,
+.md .stepper-fill-md.stepper-big-md .stepper-button-minus,
+.md .stepper-fill.stepper-big .stepper-button-plus,
+.md .stepper-fill-md.stepper-big .stepper-button-plus,
+.md .stepper-fill.stepper-big-md .stepper-button-plus,
+.md .stepper-fill-md.stepper-big-md .stepper-button-plus {
+  line-height: 48px;
+}
+.md .stepper-fill.stepper-small .stepper-button,
+.md .stepper-fill-md.stepper-small .stepper-button,
+.md .stepper-fill.stepper-small-md .stepper-button,
+.md .stepper-fill-md.stepper-small-md .stepper-button,
+.md .stepper-fill.stepper-small .stepper-button-minus,
+.md .stepper-fill-md.stepper-small .stepper-button-minus,
+.md .stepper-fill.stepper-small-md .stepper-button-minus,
+.md .stepper-fill-md.stepper-small-md .stepper-button-minus,
+.md .stepper-fill.stepper-small .stepper-button-plus,
+.md .stepper-fill-md.stepper-small .stepper-button-plus,
+.md .stepper-fill.stepper-small-md .stepper-button-plus,
+.md .stepper-fill-md.stepper-small-md .stepper-button-plus {
+  line-height: 28px;
+}
+.md .stepper-small,
+.md .stepper-small-md {
+  height: 28px;
+}
+.md .stepper-small .stepper-button,
+.md .stepper-small-md .stepper-button,
+.md .stepper-small .stepper-button-minus,
+.md .stepper-small-md .stepper-button-minus,
+.md .stepper-small .stepper-button-plus,
+.md .stepper-small-md .stepper-button-plus {
+  height: 28px;
+  line-height: 24px;
+}
+.md .stepper-small .stepper-button,
+.md .stepper-small-md .stepper-button,
+.md .stepper-small .stepper-button-minus,
+.md .stepper-small-md .stepper-button-minus,
+.md .stepper-small .stepper-button-plus,
+.md .stepper-small-md .stepper-button-plus,
+.md .stepper-small .stepper-input-wrap,
+.md .stepper-small-md .stepper-input-wrap,
+.md .stepper-small .stepper-value,
+.md .stepper-small-md .stepper-value {
+  border-width: 2px;
+}
+.md .stepper-big,
+.md .stepper-big-md {
+  height: 48px;
+}
+.md .stepper-big .stepper-button,
+.md .stepper-big-md .stepper-button,
+.md .stepper-big .stepper-button-minus,
+.md .stepper-big-md .stepper-button-minus,
+.md .stepper-big .stepper-button-plus,
+.md .stepper-big-md .stepper-button-plus {
+  height: 48px;
+  line-height: 46px;
+}
+.md .stepper-big .stepper-button:first-child,
+.md .stepper-big-md .stepper-button:first-child,
+.md .stepper-big .stepper-button-minus:first-child,
+.md .stepper-big-md .stepper-button-minus:first-child,
+.md .stepper-big .stepper-button-plus:first-child,
+.md .stepper-big-md .stepper-button-plus:first-child {
+  border-radius: 0 3px 3px 0;
+}
+.md .stepper-big .stepper-button:last-child,
+.md .stepper-big-md .stepper-button:last-child,
+.md .stepper-big .stepper-button-minus:last-child,
+.md .stepper-big-md .stepper-button-minus:last-child,
+.md .stepper-big .stepper-button-plus:last-child,
+.md .stepper-big-md .stepper-button-plus:last-child {
+  border-radius: 3px 0 0 3px;
+}
+.md .stepper-round .stepper-button:first-child,
+.md .stepper-round-md .stepper-button:first-child,
+.md .stepper-round .stepper-button-minus:first-child,
+.md .stepper-round-md .stepper-button-minus:first-child,
+.md .stepper-round .stepper-button-plus:first-child,
+.md .stepper-round-md .stepper-button-plus:first-child {
+  border-radius: 0 36px 36px 0;
+}
+.md .stepper-round .stepper-button:last-child,
+.md .stepper-round-md .stepper-button:last-child,
+.md .stepper-round .stepper-button-minus:last-child,
+.md .stepper-round-md .stepper-button-minus:last-child,
+.md .stepper-round .stepper-button-plus:last-child,
+.md .stepper-round-md .stepper-button-plus:last-child {
+  border-radius: 36px 0 0 36px;
+}
+.md .stepper-raised {
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+}
+.md .stepper-raised.stepper-big {
+  border-radius: 3px;
+}
+.md .stepper-raised.stepper-round {
+  border-radius: 36px;
+}
+.md .stepper-raised .stepper-value,
+.md .stepper-raised .stepper-input-wrap {
+  border: none;
+}
+.md .stepper-raised:not(.stepper-fill):not(.stepper-fill-md) .stepper-input-wrap,
+.md .stepper-raised:not(.stepper-fill):not(.stepper-fill-md) .stepper-value {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.md .stepper-raised .stepper-button,
+.md .stepper-raised .stepper-button-minus,
+.md .stepper-raised .stepper-button-plus {
+  border: none;
+}
+.md .stepper-raised .stepper-button + .stepper-button,
+.md .stepper-raised .stepper-button-minus + .stepper-button-plus {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.md .color-theme-red .stepper-button,
+.md .color-theme-red .stepper-button-minus,
+.md .color-theme-red .stepper-button-plus {
+  border-color: #f44336;
+  color: #f44336;
+}
+.md .color-theme-red .stepper-button-plus:after,
+.md .color-theme-red .stepper-button-minus:after,
+.md .color-theme-red .stepper-button-plus:before,
+.md .color-theme-red .stepper-button-minus:before {
+  background: #f44336;
+}
+.md .color-theme-red .stepper-value,
+.md .color-theme-red .stepper-input-wrap {
+  border-top-color: #f44336;
+  border-bottom-color: #f44336;
+}
+.md .color-theme-red .stepper-value {
+  color: #f44336;
+}
+.md .color-theme-red .stepper .stepper-input-wrap input {
+  color: #f44336;
+}
+.md .color-theme-red .stepper-fill .stepper-button,
+.md .color-theme-red .stepper-fill-md .stepper-button,
+.md .color-theme-red .stepper-fill .stepper-button-minus,
+.md .color-theme-red .stepper-fill-md .stepper-button-minus,
+.md .color-theme-red .stepper-fill .stepper-button-plus,
+.md .color-theme-red .stepper-fill-md .stepper-button-plus {
+  background-color: #f44336;
+  color: #fff;
+}
+.md .color-theme-red .stepper-fill .stepper-button.active-state,
+.md .color-theme-red .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-red .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-red .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-red .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-red .stepper-fill-md .stepper-button-plus.active-state {
+  background: #f21f0f;
+}
+.md .color-theme-red .stepper-fill .stepper-button:after,
+.md .color-theme-red .stepper-fill-md .stepper-button:after,
+.md .color-theme-red .stepper-fill .stepper-button-minus:after,
+.md .color-theme-red .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-red .stepper-fill .stepper-button-plus:after,
+.md .color-theme-red .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-red .stepper-fill .stepper-button:before,
+.md .color-theme-red .stepper-fill-md .stepper-button:before,
+.md .color-theme-red .stepper-fill .stepper-button-minus:before,
+.md .color-theme-red .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-red .stepper-fill .stepper-button-plus:before,
+.md .color-theme-red .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-green .stepper-button,
+.md .color-theme-green .stepper-button-minus,
+.md .color-theme-green .stepper-button-plus {
+  border-color: #4caf50;
+  color: #4caf50;
+}
+.md .color-theme-green .stepper-button-plus:after,
+.md .color-theme-green .stepper-button-minus:after,
+.md .color-theme-green .stepper-button-plus:before,
+.md .color-theme-green .stepper-button-minus:before {
+  background: #4caf50;
+}
+.md .color-theme-green .stepper-value,
+.md .color-theme-green .stepper-input-wrap {
+  border-top-color: #4caf50;
+  border-bottom-color: #4caf50;
+}
+.md .color-theme-green .stepper-value {
+  color: #4caf50;
+}
+.md .color-theme-green .stepper .stepper-input-wrap input {
+  color: #4caf50;
+}
+.md .color-theme-green .stepper-fill .stepper-button,
+.md .color-theme-green .stepper-fill-md .stepper-button,
+.md .color-theme-green .stepper-fill .stepper-button-minus,
+.md .color-theme-green .stepper-fill-md .stepper-button-minus,
+.md .color-theme-green .stepper-fill .stepper-button-plus,
+.md .color-theme-green .stepper-fill-md .stepper-button-plus {
+  background-color: #4caf50;
+  color: #fff;
+}
+.md .color-theme-green .stepper-fill .stepper-button.active-state,
+.md .color-theme-green .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-green .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-green .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-green .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-green .stepper-fill-md .stepper-button-plus.active-state {
+  background: #409343;
+}
+.md .color-theme-green .stepper-fill .stepper-button:after,
+.md .color-theme-green .stepper-fill-md .stepper-button:after,
+.md .color-theme-green .stepper-fill .stepper-button-minus:after,
+.md .color-theme-green .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-green .stepper-fill .stepper-button-plus:after,
+.md .color-theme-green .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-green .stepper-fill .stepper-button:before,
+.md .color-theme-green .stepper-fill-md .stepper-button:before,
+.md .color-theme-green .stepper-fill .stepper-button-minus:before,
+.md .color-theme-green .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-green .stepper-fill .stepper-button-plus:before,
+.md .color-theme-green .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-blue .stepper-button,
+.md .color-theme-blue .stepper-button-minus,
+.md .color-theme-blue .stepper-button-plus {
+  border-color: #2196f3;
+  color: #2196f3;
+}
+.md .color-theme-blue .stepper-button-plus:after,
+.md .color-theme-blue .stepper-button-minus:after,
+.md .color-theme-blue .stepper-button-plus:before,
+.md .color-theme-blue .stepper-button-minus:before {
+  background: #2196f3;
+}
+.md .color-theme-blue .stepper-value,
+.md .color-theme-blue .stepper-input-wrap {
+  border-top-color: #2196f3;
+  border-bottom-color: #2196f3;
+}
+.md .color-theme-blue .stepper-value {
+  color: #2196f3;
+}
+.md .color-theme-blue .stepper .stepper-input-wrap input {
+  color: #2196f3;
+}
+.md .color-theme-blue .stepper-fill .stepper-button,
+.md .color-theme-blue .stepper-fill-md .stepper-button,
+.md .color-theme-blue .stepper-fill .stepper-button-minus,
+.md .color-theme-blue .stepper-fill-md .stepper-button-minus,
+.md .color-theme-blue .stepper-fill .stepper-button-plus,
+.md .color-theme-blue .stepper-fill-md .stepper-button-plus {
+  background-color: #2196f3;
+  color: #fff;
+}
+.md .color-theme-blue .stepper-fill .stepper-button.active-state,
+.md .color-theme-blue .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-blue .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-blue .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-blue .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-blue .stepper-fill-md .stepper-button-plus.active-state {
+  background: #0c82df;
+}
+.md .color-theme-blue .stepper-fill .stepper-button:after,
+.md .color-theme-blue .stepper-fill-md .stepper-button:after,
+.md .color-theme-blue .stepper-fill .stepper-button-minus:after,
+.md .color-theme-blue .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-blue .stepper-fill .stepper-button-plus:after,
+.md .color-theme-blue .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-blue .stepper-fill .stepper-button:before,
+.md .color-theme-blue .stepper-fill-md .stepper-button:before,
+.md .color-theme-blue .stepper-fill .stepper-button-minus:before,
+.md .color-theme-blue .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-blue .stepper-fill .stepper-button-plus:before,
+.md .color-theme-blue .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-pink .stepper-button,
+.md .color-theme-pink .stepper-button-minus,
+.md .color-theme-pink .stepper-button-plus {
+  border-color: #e91e63;
+  color: #e91e63;
+}
+.md .color-theme-pink .stepper-button-plus:after,
+.md .color-theme-pink .stepper-button-minus:after,
+.md .color-theme-pink .stepper-button-plus:before,
+.md .color-theme-pink .stepper-button-minus:before {
+  background: #e91e63;
+}
+.md .color-theme-pink .stepper-value,
+.md .color-theme-pink .stepper-input-wrap {
+  border-top-color: #e91e63;
+  border-bottom-color: #e91e63;
+}
+.md .color-theme-pink .stepper-value {
+  color: #e91e63;
+}
+.md .color-theme-pink .stepper .stepper-input-wrap input {
+  color: #e91e63;
+}
+.md .color-theme-pink .stepper-fill .stepper-button,
+.md .color-theme-pink .stepper-fill-md .stepper-button,
+.md .color-theme-pink .stepper-fill .stepper-button-minus,
+.md .color-theme-pink .stepper-fill-md .stepper-button-minus,
+.md .color-theme-pink .stepper-fill .stepper-button-plus,
+.md .color-theme-pink .stepper-fill-md .stepper-button-plus {
+  background-color: #e91e63;
+  color: #fff;
+}
+.md .color-theme-pink .stepper-fill .stepper-button.active-state,
+.md .color-theme-pink .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-pink .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-pink .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-pink .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-pink .stepper-fill-md .stepper-button-plus.active-state {
+  background: #ca1452;
+}
+.md .color-theme-pink .stepper-fill .stepper-button:after,
+.md .color-theme-pink .stepper-fill-md .stepper-button:after,
+.md .color-theme-pink .stepper-fill .stepper-button-minus:after,
+.md .color-theme-pink .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-pink .stepper-fill .stepper-button-plus:after,
+.md .color-theme-pink .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-pink .stepper-fill .stepper-button:before,
+.md .color-theme-pink .stepper-fill-md .stepper-button:before,
+.md .color-theme-pink .stepper-fill .stepper-button-minus:before,
+.md .color-theme-pink .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-pink .stepper-fill .stepper-button-plus:before,
+.md .color-theme-pink .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-yellow .stepper-button,
+.md .color-theme-yellow .stepper-button-minus,
+.md .color-theme-yellow .stepper-button-plus {
+  border-color: #ffeb3b;
+  color: #ffeb3b;
+}
+.md .color-theme-yellow .stepper-button-plus:after,
+.md .color-theme-yellow .stepper-button-minus:after,
+.md .color-theme-yellow .stepper-button-plus:before,
+.md .color-theme-yellow .stepper-button-minus:before {
+  background: #ffeb3b;
+}
+.md .color-theme-yellow .stepper-value,
+.md .color-theme-yellow .stepper-input-wrap {
+  border-top-color: #ffeb3b;
+  border-bottom-color: #ffeb3b;
+}
+.md .color-theme-yellow .stepper-value {
+  color: #ffeb3b;
+}
+.md .color-theme-yellow .stepper .stepper-input-wrap input {
+  color: #ffeb3b;
+}
+.md .color-theme-yellow .stepper-fill .stepper-button,
+.md .color-theme-yellow .stepper-fill-md .stepper-button,
+.md .color-theme-yellow .stepper-fill .stepper-button-minus,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-minus,
+.md .color-theme-yellow .stepper-fill .stepper-button-plus,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-plus {
+  background-color: #ffeb3b;
+  color: #fff;
+}
+.md .color-theme-yellow .stepper-fill .stepper-button.active-state,
+.md .color-theme-yellow .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-yellow .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-yellow .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-plus.active-state {
+  background: #ffe712;
+}
+.md .color-theme-yellow .stepper-fill .stepper-button:after,
+.md .color-theme-yellow .stepper-fill-md .stepper-button:after,
+.md .color-theme-yellow .stepper-fill .stepper-button-minus:after,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-yellow .stepper-fill .stepper-button-plus:after,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-yellow .stepper-fill .stepper-button:before,
+.md .color-theme-yellow .stepper-fill-md .stepper-button:before,
+.md .color-theme-yellow .stepper-fill .stepper-button-minus:before,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-yellow .stepper-fill .stepper-button-plus:before,
+.md .color-theme-yellow .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-orange .stepper-button,
+.md .color-theme-orange .stepper-button-minus,
+.md .color-theme-orange .stepper-button-plus {
+  border-color: #ff9800;
+  color: #ff9800;
+}
+.md .color-theme-orange .stepper-button-plus:after,
+.md .color-theme-orange .stepper-button-minus:after,
+.md .color-theme-orange .stepper-button-plus:before,
+.md .color-theme-orange .stepper-button-minus:before {
+  background: #ff9800;
+}
+.md .color-theme-orange .stepper-value,
+.md .color-theme-orange .stepper-input-wrap {
+  border-top-color: #ff9800;
+  border-bottom-color: #ff9800;
+}
+.md .color-theme-orange .stepper-value {
+  color: #ff9800;
+}
+.md .color-theme-orange .stepper .stepper-input-wrap input {
+  color: #ff9800;
+}
+.md .color-theme-orange .stepper-fill .stepper-button,
+.md .color-theme-orange .stepper-fill-md .stepper-button,
+.md .color-theme-orange .stepper-fill .stepper-button-minus,
+.md .color-theme-orange .stepper-fill-md .stepper-button-minus,
+.md .color-theme-orange .stepper-fill .stepper-button-plus,
+.md .color-theme-orange .stepper-fill-md .stepper-button-plus {
+  background-color: #ff9800;
+  color: #fff;
+}
+.md .color-theme-orange .stepper-fill .stepper-button.active-state,
+.md .color-theme-orange .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-orange .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-orange .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-orange .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-orange .stepper-fill-md .stepper-button-plus.active-state {
+  background: #d68000;
+}
+.md .color-theme-orange .stepper-fill .stepper-button:after,
+.md .color-theme-orange .stepper-fill-md .stepper-button:after,
+.md .color-theme-orange .stepper-fill .stepper-button-minus:after,
+.md .color-theme-orange .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-orange .stepper-fill .stepper-button-plus:after,
+.md .color-theme-orange .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-orange .stepper-fill .stepper-button:before,
+.md .color-theme-orange .stepper-fill-md .stepper-button:before,
+.md .color-theme-orange .stepper-fill .stepper-button-minus:before,
+.md .color-theme-orange .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-orange .stepper-fill .stepper-button-plus:before,
+.md .color-theme-orange .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-gray .stepper-button,
+.md .color-theme-gray .stepper-button-minus,
+.md .color-theme-gray .stepper-button-plus {
+  border-color: #9e9e9e;
+  color: #9e9e9e;
+}
+.md .color-theme-gray .stepper-button-plus:after,
+.md .color-theme-gray .stepper-button-minus:after,
+.md .color-theme-gray .stepper-button-plus:before,
+.md .color-theme-gray .stepper-button-minus:before {
+  background: #9e9e9e;
+}
+.md .color-theme-gray .stepper-value,
+.md .color-theme-gray .stepper-input-wrap {
+  border-top-color: #9e9e9e;
+  border-bottom-color: #9e9e9e;
+}
+.md .color-theme-gray .stepper-value {
+  color: #9e9e9e;
+}
+.md .color-theme-gray .stepper .stepper-input-wrap input {
+  color: #9e9e9e;
+}
+.md .color-theme-gray .stepper-fill .stepper-button,
+.md .color-theme-gray .stepper-fill-md .stepper-button,
+.md .color-theme-gray .stepper-fill .stepper-button-minus,
+.md .color-theme-gray .stepper-fill-md .stepper-button-minus,
+.md .color-theme-gray .stepper-fill .stepper-button-plus,
+.md .color-theme-gray .stepper-fill-md .stepper-button-plus {
+  background-color: #9e9e9e;
+  color: #fff;
+}
+.md .color-theme-gray .stepper-fill .stepper-button.active-state,
+.md .color-theme-gray .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-gray .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-gray .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-gray .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-gray .stepper-fill-md .stepper-button-plus.active-state {
+  background: #8a8a8a;
+}
+.md .color-theme-gray .stepper-fill .stepper-button:after,
+.md .color-theme-gray .stepper-fill-md .stepper-button:after,
+.md .color-theme-gray .stepper-fill .stepper-button-minus:after,
+.md .color-theme-gray .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-gray .stepper-fill .stepper-button-plus:after,
+.md .color-theme-gray .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-gray .stepper-fill .stepper-button:before,
+.md .color-theme-gray .stepper-fill-md .stepper-button:before,
+.md .color-theme-gray .stepper-fill .stepper-button-minus:before,
+.md .color-theme-gray .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-gray .stepper-fill .stepper-button-plus:before,
+.md .color-theme-gray .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-white .stepper-button,
+.md .color-theme-white .stepper-button-minus,
+.md .color-theme-white .stepper-button-plus {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.md .color-theme-white .stepper-button-plus:after,
+.md .color-theme-white .stepper-button-minus:after,
+.md .color-theme-white .stepper-button-plus:before,
+.md .color-theme-white .stepper-button-minus:before {
+  background: #ffffff;
+}
+.md .color-theme-white .stepper-value,
+.md .color-theme-white .stepper-input-wrap {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+.md .color-theme-white .stepper-value {
+  color: #ffffff;
+}
+.md .color-theme-white .stepper .stepper-input-wrap input {
+  color: #ffffff;
+}
+.md .color-theme-white .stepper-fill .stepper-button,
+.md .color-theme-white .stepper-fill-md .stepper-button,
+.md .color-theme-white .stepper-fill .stepper-button-minus,
+.md .color-theme-white .stepper-fill-md .stepper-button-minus,
+.md .color-theme-white .stepper-fill .stepper-button-plus,
+.md .color-theme-white .stepper-fill-md .stepper-button-plus {
+  background-color: #ffffff;
+  color: #fff;
+}
+.md .color-theme-white .stepper-fill .stepper-button.active-state,
+.md .color-theme-white .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-white .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-white .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-white .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-white .stepper-fill-md .stepper-button-plus.active-state {
+  background: #ebebeb;
+}
+.md .color-theme-white .stepper-fill .stepper-button:after,
+.md .color-theme-white .stepper-fill-md .stepper-button:after,
+.md .color-theme-white .stepper-fill .stepper-button-minus:after,
+.md .color-theme-white .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-white .stepper-fill .stepper-button-plus:after,
+.md .color-theme-white .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-white .stepper-fill .stepper-button:before,
+.md .color-theme-white .stepper-fill-md .stepper-button:before,
+.md .color-theme-white .stepper-fill .stepper-button-minus:before,
+.md .color-theme-white .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-white .stepper-fill .stepper-button-plus:before,
+.md .color-theme-white .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .color-theme-black .stepper-button,
+.md .color-theme-black .stepper-button-minus,
+.md .color-theme-black .stepper-button-plus {
+  border-color: #000000;
+  color: #000000;
+}
+.md .color-theme-black .stepper-button-plus:after,
+.md .color-theme-black .stepper-button-minus:after,
+.md .color-theme-black .stepper-button-plus:before,
+.md .color-theme-black .stepper-button-minus:before {
+  background: #000000;
+}
+.md .color-theme-black .stepper-value,
+.md .color-theme-black .stepper-input-wrap {
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+}
+.md .color-theme-black .stepper-value {
+  color: #000000;
+}
+.md .color-theme-black .stepper .stepper-input-wrap input {
+  color: #000000;
+}
+.md .color-theme-black .stepper-fill .stepper-button,
+.md .color-theme-black .stepper-fill-md .stepper-button,
+.md .color-theme-black .stepper-fill .stepper-button-minus,
+.md .color-theme-black .stepper-fill-md .stepper-button-minus,
+.md .color-theme-black .stepper-fill .stepper-button-plus,
+.md .color-theme-black .stepper-fill-md .stepper-button-plus {
+  background-color: #000000;
+  color: #fff;
+}
+.md .color-theme-black .stepper-fill .stepper-button.active-state,
+.md .color-theme-black .stepper-fill-md .stepper-button.active-state,
+.md .color-theme-black .stepper-fill .stepper-button-minus.active-state,
+.md .color-theme-black .stepper-fill-md .stepper-button-minus.active-state,
+.md .color-theme-black .stepper-fill .stepper-button-plus.active-state,
+.md .color-theme-black .stepper-fill-md .stepper-button-plus.active-state {
+  background: #000000;
+}
+.md .color-theme-black .stepper-fill .stepper-button:after,
+.md .color-theme-black .stepper-fill-md .stepper-button:after,
+.md .color-theme-black .stepper-fill .stepper-button-minus:after,
+.md .color-theme-black .stepper-fill-md .stepper-button-minus:after,
+.md .color-theme-black .stepper-fill .stepper-button-plus:after,
+.md .color-theme-black .stepper-fill-md .stepper-button-plus:after,
+.md .color-theme-black .stepper-fill .stepper-button:before,
+.md .color-theme-black .stepper-fill-md .stepper-button:before,
+.md .color-theme-black .stepper-fill .stepper-button-minus:before,
+.md .color-theme-black .stepper-fill-md .stepper-button-minus:before,
+.md .color-theme-black .stepper-fill .stepper-button-plus:before,
+.md .color-theme-black .stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-red .stepper-button,
+.md .stepper.color-red .stepper-button-minus,
+.md .stepper.color-red .stepper-button-plus {
+  border-color: #f44336;
+  color: #f44336;
+}
+.md .stepper.color-red .stepper-button-plus:after,
+.md .stepper.color-red .stepper-button-minus:after,
+.md .stepper.color-red .stepper-button-plus:before,
+.md .stepper.color-red .stepper-button-minus:before {
+  background: #f44336;
+}
+.md .stepper.color-red .stepper-value,
+.md .stepper.color-red .stepper-input-wrap {
+  border-top-color: #f44336;
+  border-bottom-color: #f44336;
+}
+.md .stepper.color-red .stepper-value {
+  color: #f44336;
+}
+.md .stepper.color-red .stepper-input-wrap input {
+  color: #f44336;
+}
+.md .stepper.color-red.stepper-fill .stepper-button,
+.md .stepper.color-red.stepper-fill-md .stepper-button,
+.md .stepper.color-red.stepper-fill .stepper-button-minus,
+.md .stepper.color-red.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-red.stepper-fill .stepper-button-plus,
+.md .stepper.color-red.stepper-fill-md .stepper-button-plus {
+  background-color: #f44336;
+  color: #fff;
+}
+.md .stepper.color-red.stepper-fill .stepper-button.active-state,
+.md .stepper.color-red.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-red.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-red.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-red.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-red.stepper-fill-md .stepper-button-plus.active-state {
+  background: #f21f0f;
+}
+.md .stepper.color-red.stepper-fill .stepper-button:after,
+.md .stepper.color-red.stepper-fill-md .stepper-button:after,
+.md .stepper.color-red.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-red.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-red.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-red.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-red.stepper-fill .stepper-button:before,
+.md .stepper.color-red.stepper-fill-md .stepper-button:before,
+.md .stepper.color-red.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-red.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-red.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-red.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-green .stepper-button,
+.md .stepper.color-green .stepper-button-minus,
+.md .stepper.color-green .stepper-button-plus {
+  border-color: #4caf50;
+  color: #4caf50;
+}
+.md .stepper.color-green .stepper-button-plus:after,
+.md .stepper.color-green .stepper-button-minus:after,
+.md .stepper.color-green .stepper-button-plus:before,
+.md .stepper.color-green .stepper-button-minus:before {
+  background: #4caf50;
+}
+.md .stepper.color-green .stepper-value,
+.md .stepper.color-green .stepper-input-wrap {
+  border-top-color: #4caf50;
+  border-bottom-color: #4caf50;
+}
+.md .stepper.color-green .stepper-value {
+  color: #4caf50;
+}
+.md .stepper.color-green .stepper-input-wrap input {
+  color: #4caf50;
+}
+.md .stepper.color-green.stepper-fill .stepper-button,
+.md .stepper.color-green.stepper-fill-md .stepper-button,
+.md .stepper.color-green.stepper-fill .stepper-button-minus,
+.md .stepper.color-green.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-green.stepper-fill .stepper-button-plus,
+.md .stepper.color-green.stepper-fill-md .stepper-button-plus {
+  background-color: #4caf50;
+  color: #fff;
+}
+.md .stepper.color-green.stepper-fill .stepper-button.active-state,
+.md .stepper.color-green.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-green.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-green.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-green.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-green.stepper-fill-md .stepper-button-plus.active-state {
+  background: #409343;
+}
+.md .stepper.color-green.stepper-fill .stepper-button:after,
+.md .stepper.color-green.stepper-fill-md .stepper-button:after,
+.md .stepper.color-green.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-green.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-green.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-green.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-green.stepper-fill .stepper-button:before,
+.md .stepper.color-green.stepper-fill-md .stepper-button:before,
+.md .stepper.color-green.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-green.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-green.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-green.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-blue .stepper-button,
+.md .stepper.color-blue .stepper-button-minus,
+.md .stepper.color-blue .stepper-button-plus {
+  border-color: #2196f3;
+  color: #2196f3;
+}
+.md .stepper.color-blue .stepper-button-plus:after,
+.md .stepper.color-blue .stepper-button-minus:after,
+.md .stepper.color-blue .stepper-button-plus:before,
+.md .stepper.color-blue .stepper-button-minus:before {
+  background: #2196f3;
+}
+.md .stepper.color-blue .stepper-value,
+.md .stepper.color-blue .stepper-input-wrap {
+  border-top-color: #2196f3;
+  border-bottom-color: #2196f3;
+}
+.md .stepper.color-blue .stepper-value {
+  color: #2196f3;
+}
+.md .stepper.color-blue .stepper-input-wrap input {
+  color: #2196f3;
+}
+.md .stepper.color-blue.stepper-fill .stepper-button,
+.md .stepper.color-blue.stepper-fill-md .stepper-button,
+.md .stepper.color-blue.stepper-fill .stepper-button-minus,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-blue.stepper-fill .stepper-button-plus,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-plus {
+  background-color: #2196f3;
+  color: #fff;
+}
+.md .stepper.color-blue.stepper-fill .stepper-button.active-state,
+.md .stepper.color-blue.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-blue.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-blue.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-plus.active-state {
+  background: #0c82df;
+}
+.md .stepper.color-blue.stepper-fill .stepper-button:after,
+.md .stepper.color-blue.stepper-fill-md .stepper-button:after,
+.md .stepper.color-blue.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-blue.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-blue.stepper-fill .stepper-button:before,
+.md .stepper.color-blue.stepper-fill-md .stepper-button:before,
+.md .stepper.color-blue.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-blue.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-blue.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-pink .stepper-button,
+.md .stepper.color-pink .stepper-button-minus,
+.md .stepper.color-pink .stepper-button-plus {
+  border-color: #e91e63;
+  color: #e91e63;
+}
+.md .stepper.color-pink .stepper-button-plus:after,
+.md .stepper.color-pink .stepper-button-minus:after,
+.md .stepper.color-pink .stepper-button-plus:before,
+.md .stepper.color-pink .stepper-button-minus:before {
+  background: #e91e63;
+}
+.md .stepper.color-pink .stepper-value,
+.md .stepper.color-pink .stepper-input-wrap {
+  border-top-color: #e91e63;
+  border-bottom-color: #e91e63;
+}
+.md .stepper.color-pink .stepper-value {
+  color: #e91e63;
+}
+.md .stepper.color-pink .stepper-input-wrap input {
+  color: #e91e63;
+}
+.md .stepper.color-pink.stepper-fill .stepper-button,
+.md .stepper.color-pink.stepper-fill-md .stepper-button,
+.md .stepper.color-pink.stepper-fill .stepper-button-minus,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-pink.stepper-fill .stepper-button-plus,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-plus {
+  background-color: #e91e63;
+  color: #fff;
+}
+.md .stepper.color-pink.stepper-fill .stepper-button.active-state,
+.md .stepper.color-pink.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-pink.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-pink.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-plus.active-state {
+  background: #ca1452;
+}
+.md .stepper.color-pink.stepper-fill .stepper-button:after,
+.md .stepper.color-pink.stepper-fill-md .stepper-button:after,
+.md .stepper.color-pink.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-pink.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-pink.stepper-fill .stepper-button:before,
+.md .stepper.color-pink.stepper-fill-md .stepper-button:before,
+.md .stepper.color-pink.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-pink.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-pink.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-yellow .stepper-button,
+.md .stepper.color-yellow .stepper-button-minus,
+.md .stepper.color-yellow .stepper-button-plus {
+  border-color: #ffeb3b;
+  color: #ffeb3b;
+}
+.md .stepper.color-yellow .stepper-button-plus:after,
+.md .stepper.color-yellow .stepper-button-minus:after,
+.md .stepper.color-yellow .stepper-button-plus:before,
+.md .stepper.color-yellow .stepper-button-minus:before {
+  background: #ffeb3b;
+}
+.md .stepper.color-yellow .stepper-value,
+.md .stepper.color-yellow .stepper-input-wrap {
+  border-top-color: #ffeb3b;
+  border-bottom-color: #ffeb3b;
+}
+.md .stepper.color-yellow .stepper-value {
+  color: #ffeb3b;
+}
+.md .stepper.color-yellow .stepper-input-wrap input {
+  color: #ffeb3b;
+}
+.md .stepper.color-yellow.stepper-fill .stepper-button,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button,
+.md .stepper.color-yellow.stepper-fill .stepper-button-minus,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-yellow.stepper-fill .stepper-button-plus,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus {
+  background-color: #ffeb3b;
+  color: #fff;
+}
+.md .stepper.color-yellow.stepper-fill .stepper-button.active-state,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-yellow.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-yellow.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus.active-state {
+  background: #ffe712;
+}
+.md .stepper.color-yellow.stepper-fill .stepper-button:after,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button:after,
+.md .stepper.color-yellow.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-yellow.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-yellow.stepper-fill .stepper-button:before,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button:before,
+.md .stepper.color-yellow.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-yellow.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-orange .stepper-button,
+.md .stepper.color-orange .stepper-button-minus,
+.md .stepper.color-orange .stepper-button-plus {
+  border-color: #ff9800;
+  color: #ff9800;
+}
+.md .stepper.color-orange .stepper-button-plus:after,
+.md .stepper.color-orange .stepper-button-minus:after,
+.md .stepper.color-orange .stepper-button-plus:before,
+.md .stepper.color-orange .stepper-button-minus:before {
+  background: #ff9800;
+}
+.md .stepper.color-orange .stepper-value,
+.md .stepper.color-orange .stepper-input-wrap {
+  border-top-color: #ff9800;
+  border-bottom-color: #ff9800;
+}
+.md .stepper.color-orange .stepper-value {
+  color: #ff9800;
+}
+.md .stepper.color-orange .stepper-input-wrap input {
+  color: #ff9800;
+}
+.md .stepper.color-orange.stepper-fill .stepper-button,
+.md .stepper.color-orange.stepper-fill-md .stepper-button,
+.md .stepper.color-orange.stepper-fill .stepper-button-minus,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-orange.stepper-fill .stepper-button-plus,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-plus {
+  background-color: #ff9800;
+  color: #fff;
+}
+.md .stepper.color-orange.stepper-fill .stepper-button.active-state,
+.md .stepper.color-orange.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-orange.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-orange.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-plus.active-state {
+  background: #d68000;
+}
+.md .stepper.color-orange.stepper-fill .stepper-button:after,
+.md .stepper.color-orange.stepper-fill-md .stepper-button:after,
+.md .stepper.color-orange.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-orange.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-orange.stepper-fill .stepper-button:before,
+.md .stepper.color-orange.stepper-fill-md .stepper-button:before,
+.md .stepper.color-orange.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-orange.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-orange.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-gray .stepper-button,
+.md .stepper.color-gray .stepper-button-minus,
+.md .stepper.color-gray .stepper-button-plus {
+  border-color: #9e9e9e;
+  color: #9e9e9e;
+}
+.md .stepper.color-gray .stepper-button-plus:after,
+.md .stepper.color-gray .stepper-button-minus:after,
+.md .stepper.color-gray .stepper-button-plus:before,
+.md .stepper.color-gray .stepper-button-minus:before {
+  background: #9e9e9e;
+}
+.md .stepper.color-gray .stepper-value,
+.md .stepper.color-gray .stepper-input-wrap {
+  border-top-color: #9e9e9e;
+  border-bottom-color: #9e9e9e;
+}
+.md .stepper.color-gray .stepper-value {
+  color: #9e9e9e;
+}
+.md .stepper.color-gray .stepper-input-wrap input {
+  color: #9e9e9e;
+}
+.md .stepper.color-gray.stepper-fill .stepper-button,
+.md .stepper.color-gray.stepper-fill-md .stepper-button,
+.md .stepper.color-gray.stepper-fill .stepper-button-minus,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-gray.stepper-fill .stepper-button-plus,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-plus {
+  background-color: #9e9e9e;
+  color: #fff;
+}
+.md .stepper.color-gray.stepper-fill .stepper-button.active-state,
+.md .stepper.color-gray.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-gray.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-gray.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-plus.active-state {
+  background: #8a8a8a;
+}
+.md .stepper.color-gray.stepper-fill .stepper-button:after,
+.md .stepper.color-gray.stepper-fill-md .stepper-button:after,
+.md .stepper.color-gray.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-gray.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-gray.stepper-fill .stepper-button:before,
+.md .stepper.color-gray.stepper-fill-md .stepper-button:before,
+.md .stepper.color-gray.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-gray.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-gray.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-white .stepper-button,
+.md .stepper.color-white .stepper-button-minus,
+.md .stepper.color-white .stepper-button-plus {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.md .stepper.color-white .stepper-button-plus:after,
+.md .stepper.color-white .stepper-button-minus:after,
+.md .stepper.color-white .stepper-button-plus:before,
+.md .stepper.color-white .stepper-button-minus:before {
+  background: #ffffff;
+}
+.md .stepper.color-white .stepper-value,
+.md .stepper.color-white .stepper-input-wrap {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+.md .stepper.color-white .stepper-value {
+  color: #ffffff;
+}
+.md .stepper.color-white .stepper-input-wrap input {
+  color: #ffffff;
+}
+.md .stepper.color-white.stepper-fill .stepper-button,
+.md .stepper.color-white.stepper-fill-md .stepper-button,
+.md .stepper.color-white.stepper-fill .stepper-button-minus,
+.md .stepper.color-white.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-white.stepper-fill .stepper-button-plus,
+.md .stepper.color-white.stepper-fill-md .stepper-button-plus {
+  background-color: #ffffff;
+  color: #fff;
+}
+.md .stepper.color-white.stepper-fill .stepper-button.active-state,
+.md .stepper.color-white.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-white.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-white.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-white.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-white.stepper-fill-md .stepper-button-plus.active-state {
+  background: #ebebeb;
+}
+.md .stepper.color-white.stepper-fill .stepper-button:after,
+.md .stepper.color-white.stepper-fill-md .stepper-button:after,
+.md .stepper.color-white.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-white.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-white.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-white.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-white.stepper-fill .stepper-button:before,
+.md .stepper.color-white.stepper-fill-md .stepper-button:before,
+.md .stepper.color-white.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-white.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-white.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-white.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
+}
+.md .stepper.color-black .stepper-button,
+.md .stepper.color-black .stepper-button-minus,
+.md .stepper.color-black .stepper-button-plus {
+  border-color: #000000;
+  color: #000000;
+}
+.md .stepper.color-black .stepper-button-plus:after,
+.md .stepper.color-black .stepper-button-minus:after,
+.md .stepper.color-black .stepper-button-plus:before,
+.md .stepper.color-black .stepper-button-minus:before {
+  background: #000000;
+}
+.md .stepper.color-black .stepper-value,
+.md .stepper.color-black .stepper-input-wrap {
+  border-top-color: #000000;
+  border-bottom-color: #000000;
+}
+.md .stepper.color-black .stepper-value {
+  color: #000000;
+}
+.md .stepper.color-black .stepper-input-wrap input {
+  color: #000000;
+}
+.md .stepper.color-black.stepper-fill .stepper-button,
+.md .stepper.color-black.stepper-fill-md .stepper-button,
+.md .stepper.color-black.stepper-fill .stepper-button-minus,
+.md .stepper.color-black.stepper-fill-md .stepper-button-minus,
+.md .stepper.color-black.stepper-fill .stepper-button-plus,
+.md .stepper.color-black.stepper-fill-md .stepper-button-plus {
+  background-color: #000000;
+  color: #fff;
+}
+.md .stepper.color-black.stepper-fill .stepper-button.active-state,
+.md .stepper.color-black.stepper-fill-md .stepper-button.active-state,
+.md .stepper.color-black.stepper-fill .stepper-button-minus.active-state,
+.md .stepper.color-black.stepper-fill-md .stepper-button-minus.active-state,
+.md .stepper.color-black.stepper-fill .stepper-button-plus.active-state,
+.md .stepper.color-black.stepper-fill-md .stepper-button-plus.active-state {
+  background: #000000;
+}
+.md .stepper.color-black.stepper-fill .stepper-button:after,
+.md .stepper.color-black.stepper-fill-md .stepper-button:after,
+.md .stepper.color-black.stepper-fill .stepper-button-minus:after,
+.md .stepper.color-black.stepper-fill-md .stepper-button-minus:after,
+.md .stepper.color-black.stepper-fill .stepper-button-plus:after,
+.md .stepper.color-black.stepper-fill-md .stepper-button-plus:after,
+.md .stepper.color-black.stepper-fill .stepper-button:before,
+.md .stepper.color-black.stepper-fill-md .stepper-button:before,
+.md .stepper.color-black.stepper-fill .stepper-button-minus:before,
+.md .stepper.color-black.stepper-fill-md .stepper-button-minus:before,
+.md .stepper.color-black.stepper-fill .stepper-button-plus:before,
+.md .stepper.color-black.stepper-fill-md .stepper-button-plus:before {
+  background: #fff;
 }
 /* === Smart Select === */
 .smart-select select {
@@ -11516,12 +12937,18 @@ label.item-radio.disabled,
   font-size: 18px;
   vertical-align: middle;
 }
-.data-table .sortable-cell {
+.data-table .sortable-cell:not(.input-cell) {
   cursor: pointer;
   position: relative;
 }
-.data-table .sortable-cell:not(.numeric-cell):after,
-.data-table .sortable-cell.numeric-cell:before {
+.data-table .sortable-cell.input-cell .table-head-label {
+  cursor: pointer;
+  position: relative;
+}
+.data-table .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+.data-table .sortable-cell.numeric-cell:not(.input-cell):before,
+.data-table .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+.data-table .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
   content: '';
   display: inline-block;
   vertical-align: top;
@@ -11539,17 +12966,25 @@ label.item-radio.disabled,
   opacity: 0;
 }
 html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:after,
-html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:before {
+html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table-head-label:hover:after,
+html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:before,
+html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table-head-label:hover:before {
   opacity: 0.54;
 }
 .data-table .sortable-cell.sortable-cell-active:after,
-.data-table .sortable-cell.sortable-cell-active:before {
-  opacity: 0.87;
+.data-table .sortable-cell.sortable-cell-active .table-head-label:after,
+.data-table .sortable-cell.sortable-cell-active:before,
+.data-table .sortable-cell.sortable-cell-active .table-head-label:before {
+  opacity: 0.87 !important;
 }
 .data-table .sortable-cell.sortable-desc:after,
-.data-table .sortable-cell.sortable-desc:before {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+.data-table .sortable-cell.sortable-desc:after,
+.data-table .table-head-label:after,
+.data-table .sortable-cell.sortable-desc:before,
+.data-table .sortable-cell.sortable-desc:before,
+.data-table .table-head-label:before {
+  -webkit-transform: rotate(180deg) !important;
+  transform: rotate(180deg) !important;
 }
 .data-table.card .card-header,
 .card .data-table .card-header {
@@ -11614,6 +13049,36 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 }
 .data-table .data-table-title-selected {
   font-size: 14px;
+}
+.data-table .data-table-footer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  font-size: 12px;
+  overflow: hidden;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+.data-table .data-table-rows-select,
+.data-table .data-table-pagination {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 @media (max-width: 480px) and (orientation: portrait) {
   .data-table.data-table-collapsible thead {
@@ -11692,14 +13157,18 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
     display: table-cell;
   }
 }
-.theme-dark .data-table .sortable-cell:not(.numeric-cell):after,
-.theme-dark .data-table .sortable-cell.numeric-cell:before {
+.theme-dark .data-table .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+.theme-dark .data-table .sortable-cell.numeric-cell:not(.input-cell):before,
+.theme-dark .data-table .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+.theme-dark .data-table .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20fill%3D'%23fff'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%3E%3Cpath%20d%3D'M0%200h24v24H0V0z'%20fill%3D'none'%2F%3E%3Cpath%20d%3D'M20%2012l-1.41-1.41L13%2016.17V4h-2v12.17l-5.58-5.59L4%2012l8%208%208-8z'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E");
 }
 .md .data-table thead th,
 .md .data-table thead td {
   font-weight: 500;
   height: 56px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .md .data-table thead th:not(.sortable-cell-active),
 .md .data-table thead td:not(.sortable-cell-active) {
@@ -11841,13 +13310,98 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 .md.device-desktop .data-table tbody tr:hover {
   background: #f5f5f5;
 }
+.md .data-table-footer {
+  height: 56px;
+  color: rgba(0, 0, 0, 0.54);
+}
+.md .data-table-rows-select a.link,
+.md .data-table-pagination a.link {
+  width: 48px;
+  height: 48px;
+}
+.md .data-table-rows-select a.link:before,
+.md .data-table-pagination a.link:before {
+  content: '';
+  width: 152%;
+  height: 152%;
+  position: absolute;
+  left: -26%;
+  top: -26%;
+  background-image: -webkit-radial-gradient(center, circle, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
+  background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 66%, rgba(0, 0, 0, 0) 66%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition-duration: 600ms;
+  transition-duration: 600ms;
+}
+.md .data-table-rows-select a.link.active-state:before,
+.md .data-table-pagination a.link.active-state:before {
+  opacity: 1;
+  -webkit-transition-duration: 150ms;
+  transition-duration: 150ms;
+}
+.md .data-table-rows-select + .data-table-pagination {
+  margin-right: 32px;
+}
+.md .data-table-rows-select .input {
+  margin-right: 24px;
+}
+.md .data-table-pagination-label {
+  margin-left: 20px;
+}
+.md .data-table-footer:before {
+  content: '';
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.12);
+  display: block;
+  z-index: 15;
+  top: 0;
+  right: auto;
+  bottom: auto;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+}
+.md.device-pixel-ratio-2 .data-table-footer:before {
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+}
+.md.device-pixel-ratio-3 .data-table-footer:before {
+  -webkit-transform: scaleY(0.33);
+  transform: scaleY(0.33);
+}
+.md .input-cell {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  height: auto;
+  vertical-align: top;
+}
+.md .input-cell .table-head-label + .input {
+  margin-top: 4px;
+}
+.md .input-cell .input {
+  height: 24px;
+}
+.md .input-cell .input input,
+.md .input-cell .input textarea,
+.md .input-cell .input select {
+  height: 24px;
+  color: #212121;
+  font-size: 14px;
+}
+.md .input-cell .input .input-clear-button {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
 @media (max-width: 480px) and (orientation: portrait) {
   .md .data-table.data-table-collapsible td {
     padding-left: 16px;
     padding-right: 16px;
-  }
-  .md .data-table.data-table-collapsible td:not(.checkbox-cell) {
-    font-size: 16px;
   }
   .md .data-table.data-table-collapsible td:not(.checkbox-cell):before {
     color: rgba(0, 0, 0, 0.54);
@@ -12729,7 +14283,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active):hover:
 .list .hidden-by-searchbar,
 .list.li.hidden-by-searchbar,
 .list li.hidden-by-searchbar {
-  display: none;
+  display: none !important;
 }
 .md .searchbar {
   height: 48px;

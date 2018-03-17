@@ -3,8 +3,7 @@
 [![Build Status](https://travis-ci.org/framework7io/framework7.svg?branch=master)](https://travis-ci.org/framework7io/framework7)
 [![devDependency Status](https://david-dm.org/framework7io/framework7/dev-status.svg)](https://david-dm.org/framework7io/framework7#info=devDependencies)
 
-Framework7
-==========
+# Framework7
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/framework7io/Framework7.svg)](https://greenkeeper.io/)
 

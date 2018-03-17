@@ -74,14 +74,18 @@ class DataTable extends Framework7Class {
     function handleSortableClick() {
       const $cellEl = $(this);
       const isActive = $cellEl.hasClass('sortable-cell-active');
-      let currentSort;
+      const currentSort = $cellEl.hasClass('sortable-desc') ? 'desc' : 'asc';
+      let newSort;
       if (isActive) {
-        currentSort = $cellEl.hasClass('sortable-desc') ? 'desc' : 'asc';
-        $cellEl.removeClass('sortable-desc sortable-asc').addClass(`sortable-${currentSort === 'desc' ? 'asc' : 'desc'}`);
+        newSort = currentSort === 'desc' ? 'asc' : 'desc';
+        $cellEl.removeClass('sortable-desc sortable-asc').addClass(`sortable-${newSort}`);
       } else {
         $el.find('thead .sortable-cell-active').removeClass('sortable-cell-active');
         $cellEl.addClass('sortable-cell-active');
+        newSort = currentSort;
       }
+      $cellEl.trigger('datatable:sort', newSort);
+      table.emit('local::sort dataTableSort', table, newSort);
     }
     table.attachEvents = function attachEvents() {
       table.$el.on('change', '.checkbox-cell input[type="checkbox"]', handleChange);

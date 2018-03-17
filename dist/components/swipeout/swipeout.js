@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
 
 const Swipeout = {

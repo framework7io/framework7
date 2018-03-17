@@ -1,3 +1,5 @@
+import { window, document } from 'ssr-window';
+
 const Device = (function Device() {
   const ua = window.navigator.userAgent;
 

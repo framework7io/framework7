@@ -2,7 +2,6 @@
   @duration: 250ms;
   .page {
     background: #fff;
-    contain: strict;
   }
   .page-next {
     transform: translate3d(0, 56px, 0);
@@ -17,9 +16,6 @@
   .router-transition-forward, .router-transition-backward {
     .page {
       pointer-events: none;
-    }
-    .page-next, .page-current {
-      will-change: transform, opacity;
     }
   }
 

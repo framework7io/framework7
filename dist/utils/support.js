@@ -1,3 +1,5 @@
+import { window, document } from 'ssr-window';
+
 const Support = (function Support() {
   const positionSticky = (function supportPositionSticky() {
     let support = false;

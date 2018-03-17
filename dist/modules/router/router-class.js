@@ -1,3 +1,4 @@
+import { window, document } from 'ssr-window';
 import $ from 'dom7';
 import Template7 from 'template7';
 import PathToRegexp from 'path-to-regexp'; // eslint-disable-line

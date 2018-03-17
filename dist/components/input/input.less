@@ -23,6 +23,8 @@ textarea {
   font-family: inherit;
   background: none;
   resize: none;
+  font-size: inherit;
+  color: inherit;
 }
 .textarea-resizable-shadow {
   opacity: 0;
@@ -76,7 +78,12 @@ textarea {
     position: relative;
   }
 }
-
+.input {
+  position: relative;
+  input, select, textarea {
+    width: 100%;
+  }
+}
 .input-clear-button {
   opacity: 0;
   pointer-events: none;
@@ -116,10 +123,35 @@ textarea {
   }
 }
 .input-with-value ~ .input-clear-button,
-.item-input-with-value .input-clear-button {
+.item-input-with-value .input-clear-button,
+.input-with-value .input-clear-button {
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+}
+.input-dropdown-wrap, .input-dropdown {
+  position: relative;
+  &:before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #727272;
+    .ltr({
+      right: 2px;
+    });
+    .rtl({
+      left: 2px;
+    });
+  }
+  select, input, textarea {
+    padding-right: 14px;
+  }
 }
 
 & when (@includeIosTheme) {

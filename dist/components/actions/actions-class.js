@@ -72,10 +72,12 @@ class Actions extends Modal {
         buttonIndex = $(buttonEl).index();
         groupIndex = $(buttonEl).parents('.actions-group').index();
       }
-      const button = groups[groupIndex][buttonIndex];
-      if (button.onClick) button.onClick(actions, e);
-      if (actions.params.onClick) actions.params.onClick(actions, e);
-      if (button.close !== false) actions.close();
+      if (typeof groups !== 'undefined') {
+        const button = groups[groupIndex][buttonIndex];
+        if (button.onClick) button.onClick(actions, e);
+        if (actions.params.onClick) actions.params.onClick(actions, e);
+        if (button.close !== false) actions.close();
+      }
     }
     actions.open = function open(animate) {
       let convertToPopover = false;
@@ -118,14 +120,16 @@ class Actions extends Modal {
       } else {
         actions.$el = actions.actionsHtml ? $(actions.actionsHtml) : actions.$el;
         actions.$el[0].f7Modal = actions;
-        actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
-          $(buttonEl).on('click', buttonOnClick);
-        });
-        actions.once('actionsClosed', () => {
-          actions.$el.find('.list-button').each((groupIndex, buttonEl) => {
-            $(buttonEl).off('click', buttonOnClick);
+        if (actions.groups) {
+          actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
+            $(buttonEl).on('click', buttonOnClick);
           });
-        });
+          actions.once('actionsClosed', () => {
+            actions.$el.find('.actions-button').each((groupIndex, buttonEl) => {
+              $(buttonEl).off('click', buttonOnClick);
+            });
+          });
+        }
         originalOpen.call(actions, animate);
       }
       return actions;
@@ -160,17 +164,19 @@ class Actions extends Modal {
           actions.backdropEl === target
         ) {
           actions.close();
+        } else if (actions.params.closeByOutsideClick) {
+          actions.close();
         }
       }
     }
 
     actions.on('opened', () => {
-      if (actions.params.closeByBackdropClick) {
+      if (actions.params.closeByBackdropClick || actions.params.closeByOutsideClick) {
         app.on('click', handleClick);
       }
     });
     actions.on('close', () => {
-      if (actions.params.closeByBackdropClick) {
+      if (actions.params.closeByBackdropClick || actions.params.closeByOutsideClick) {
         app.off('click', handleClick);
       }
     });
@@ -193,7 +199,7 @@ class Actions extends Modal {
               const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
               const { color, bg, bold, disabled, label, text, icon } = button;
               if (color) buttonClasses.push(`color-${color}`);
-              if (bg) buttonClasses.push(`bg-${color}`);
+              if (bg) buttonClasses.push(`bg-color-${bg}`);
               if (bold) buttonClasses.push('actions-button-bold');
               if (disabled) buttonClasses.push('disabled');
               if (label) {
@@ -223,7 +229,7 @@ class Actions extends Modal {
                   const itemClasses = [];
                   const { color, bg, bold, disabled, label, text, icon } = button;
                   if (color) itemClasses.push(`color-${color}`);
-                  if (bg) itemClasses.push(`bg-${bg}`);
+                  if (bg) itemClasses.push(`bg-color-${bg}`);
                   if (bold) itemClasses.push('popover-from-actions-bold');
                   if (disabled) itemClasses.push('disabled');
                   if (label) {

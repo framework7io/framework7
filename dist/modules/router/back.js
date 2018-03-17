@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 import redirect from './redirect';
@@ -499,6 +500,11 @@ function back(...args) {
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
     router.allowPageChange = false;
+    if (resolveOptions && resolveOptions.context) {
+      if (!route.context) route.context = resolveOptions.context;
+      else route.context = Utils.extend({}, route.context, resolveOptions.context);
+      options.route.context = route.context;
+    }
     router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
   }
   function asyncReject() {

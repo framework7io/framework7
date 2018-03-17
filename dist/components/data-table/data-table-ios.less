@@ -133,12 +133,69 @@
     }
   }
 
+  // Footer
+  .data-table-footer {
+    height: 44px;
+    color: #8e8e93;
+  }
+  .data-table-rows-select,
+  .data-table-pagination {
+    a.link {
+      width: 44px;
+      height: 44px;
+    }
+  }
+  .data-table-rows-select {
+    + .data-table-pagination {
+      .ltr({
+        margin-left: 30px;
+      });
+      .rtl({
+        margin-right: 30px;
+      });
+    }
+    .input {
+      .ltr({
+        margin-left: 20px;
+      });
+      .rtl({
+        margin-right: 20px;
+      });
+    }
+  }
+  .data-table-pagination-label {
+    .ltr({
+      margin-right: 15px;
+    });
+    .rtl({
+      margin-left: 15px;
+    });
+  }
+  .hairline-root('.data-table-footer', top, #c8c7cc);
+
+  // Inputs
+  .input-cell {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: auto;
+    vertical-align: top;
+    .table-head-label + .input {
+      margin-top: 4px;
+    }
+    .input {
+      height: 24px;
+      input, textarea, select {
+        height: 24px;
+        color: #000;
+        font-size: 14px;
+      }
+    }
+  }
+
   // Collapsible
   @media (max-width:480px) and (orientation:portrait) {
     .data-table.data-table-collapsible {
       td:not(.checkbox-cell) {
-        font-size: 17px;
-        line-height: 17px;
         &:before {
           color: #8e8e93;
           font-weight: 600;
