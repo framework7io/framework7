@@ -27,6 +27,9 @@
     * Added `destroyOnClose` parameter to automatically destroy toast instance on close
     * New `app.toast.show` method to automatically create and open Toast
     * Improved iPhoneX support for bottom toast
+  * List
+    * New `no-chevron` class on list and list item link to disable chevron icon
+    * New `chevron-center` class on media list or media list item to set chevron icon position on center
   * Swiper updated to latest 4.2.0 version
     * Core
       * `swiper.updateAutoHeight(speed)` now supports `speed` parameter to resize swiper wrapper with duration
