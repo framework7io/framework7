@@ -2,6 +2,10 @@
 
 # Change Log
 
+# [v2.1.2](https://github.com/framework7io/framework7/compare/v2.1.1...v2.1.2) - March 18, 2018
+  * Stepper
+    * Fixed theme-specific modifier classes, e.g. `stepper-fill-ios`, `.stepper-round-md` etc.
+
 # [v2.1.1](https://github.com/framework7io/framework7/compare/v2.0.10...v2.1.1) - March 17, 2018
   * Stepper
     * Meet all new Stepper component 🎉

@@ -1,5 +1,5 @@
 /**
- * Framework7 2.1.1
+ * Framework7 2.1.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 17, 2018
+ * Released on: March 18, 2018
  */
 html,
 body,
@@ -9805,10 +9805,12 @@ label.item-radio.disabled,
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   border-radius: 2px;
 }
-.md .stepper-raised.stepper-big {
+.md .stepper-raised.stepper-big,
+.md .stepper-raised.stepper-big-md {
   border-radius: 3px;
 }
-.md .stepper-raised.stepper-round {
+.md .stepper-raised.stepper-round,
+.md .stepper-raised.stepper-round-md {
   border-radius: 36px;
 }
 .md .stepper-raised .stepper-value,

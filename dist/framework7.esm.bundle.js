@@ -1,5 +1,5 @@
 /**
- * Framework7 2.1.1
+ * Framework7 2.1.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 17, 2018
+ * Released on: March 18, 2018
  */
 
 import { window, document } from 'ssr-window';
@@ -123,6 +123,8 @@ function bezier (mX1, mY1, mX2, mY2) {
     return calcBezier(getTForX(x), mY1, mY2);
   };
 }
+
+/* eslint no-control-regex: "off" */
 
 // Remove Diacritics
 const defaultDiacriticsRemovalap = [

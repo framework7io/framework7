@@ -1,5 +1,5 @@
 /**
- * Framework7 2.1.1
+ * Framework7 2.1.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 17, 2018
+ * Released on: March 18, 2018
  */
 html {
   direction: rtl;
@@ -9276,10 +9276,16 @@ label.item-radio.disabled,
 }
 .ios .stepper-small.stepper-fill .stepper-button.active-state,
 .ios .stepper-small-ios.stepper-fill .stepper-button.active-state,
+.ios .stepper-small.stepper-fill-ios .stepper-button.active-state,
+.ios .stepper-small-ios.stepper-fill-ios .stepper-button.active-state,
 .ios .stepper-small.stepper-fill .stepper-button-minus.active-state,
 .ios .stepper-small-ios.stepper-fill .stepper-button-minus.active-state,
+.ios .stepper-small.stepper-fill-ios .stepper-button-minus.active-state,
+.ios .stepper-small-ios.stepper-fill-ios .stepper-button-minus.active-state,
 .ios .stepper-small.stepper-fill .stepper-button-plus.active-state,
-.ios .stepper-small-ios.stepper-fill .stepper-button-plus.active-state {
+.ios .stepper-small-ios.stepper-fill .stepper-button-plus.active-state,
+.ios .stepper-small.stepper-fill-ios .stepper-button-plus.active-state,
+.ios .stepper-small-ios.stepper-fill-ios .stepper-button-plus.active-state {
   color: #007aff;
   border-color: #007aff;
   background-color: transparent;
@@ -9287,12 +9293,20 @@ label.item-radio.disabled,
 }
 .ios .stepper-small.stepper-fill .stepper-button-plus.active-state:before,
 .ios .stepper-small-ios.stepper-fill .stepper-button-plus.active-state:before,
+.ios .stepper-small.stepper-fill-ios .stepper-button-plus.active-state:before,
+.ios .stepper-small-ios.stepper-fill-ios .stepper-button-plus.active-state:before,
 .ios .stepper-small.stepper-fill .stepper-button-minus.active-state:before,
 .ios .stepper-small-ios.stepper-fill .stepper-button-minus.active-state:before,
+.ios .stepper-small.stepper-fill-ios .stepper-button-minus.active-state:before,
+.ios .stepper-small-ios.stepper-fill-ios .stepper-button-minus.active-state:before,
 .ios .stepper-small.stepper-fill .stepper-button-plus.active-state:after,
 .ios .stepper-small-ios.stepper-fill .stepper-button-plus.active-state:after,
+.ios .stepper-small.stepper-fill-ios .stepper-button-plus.active-state:after,
+.ios .stepper-small-ios.stepper-fill-ios .stepper-button-plus.active-state:after,
 .ios .stepper-small.stepper-fill .stepper-button-minus.active-state:after,
-.ios .stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after {
+.ios .stepper-small-ios.stepper-fill .stepper-button-minus.active-state:after,
+.ios .stepper-small.stepper-fill-ios .stepper-button-minus.active-state:after,
+.ios .stepper-small-ios.stepper-fill-ios .stepper-button-minus.active-state:after {
   background-color: #007aff;
 }
 .ios .stepper-big,
