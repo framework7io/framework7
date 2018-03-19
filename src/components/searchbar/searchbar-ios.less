@@ -31,7 +31,12 @@
     }
     .input-clear-button {
       z-index: 40;
-      right: 7px;
+      .ltr({
+        right: 7px;
+      });
+      .rtl({
+        left: 7px;
+      });
     }
   }
   .searchbar-expandable {

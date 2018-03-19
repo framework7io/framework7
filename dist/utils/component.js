@@ -7,8 +7,8 @@ const tempDom = document.createElement('div');
 
 class Framework7Component {
   constructor(opts, extendContext = {}) {
-    let component = Utils.merge(this, extendContext, { $options: opts });
-    const options = component.$options;
+    const options = Utils.extend({}, opts);
+    let component = Utils.merge(this, extendContext, { $options: options });
 
     // Apply context
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {

@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v2.1.3](https://github.com/framework7io/framework7/compare/v2.1.2...v2.1.3) - March 19, 2018
+  * Searchbar
+    * Fixed issue with position of input clear button
+  * Router
+    * Fixed issue with wrong component context when `component` passed to route
+
 # [v2.1.2](https://github.com/framework7io/framework7/compare/v2.1.1...v2.1.2) - March 18, 2018
   * Stepper
     * Fixed theme-specific modifier classes, e.g. `stepper-fill-ios`, `.stepper-round-md` etc.

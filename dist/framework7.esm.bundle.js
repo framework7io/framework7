@@ -1,5 +1,5 @@
 /**
- * Framework7 2.1.2
+ * Framework7 2.1.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 18, 2018
+ * Released on: March 19, 2018
  */
 
 import { window, document } from 'ssr-window';
@@ -2051,8 +2051,8 @@ const tempDom = document.createElement('div');
 
 class Framework7Component {
   constructor(opts, extendContext = {}) {
-    let component = Utils.merge(this, extendContext, { $options: opts });
-    const options = component.$options;
+    const options = Utils.extend({}, opts);
+    let component = Utils.merge(this, extendContext, { $options: options });
 
     // Apply context
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
