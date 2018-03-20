@@ -472,3 +472,26 @@ label.label-checkbox, label.label-radio {
         display: none;
     }
 }
+
+.safe-areas-landscape({
+  &:not([dir="rtl"]) {
+    .safe-area-right({
+      .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+        label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+        label.label-radio {
+          input[type="checkbox"], input[type="radio"] {
+            display: none;
+            ~ .item-inner {
+              padding-right: ~"calc(35px + constant(safe-area-inset-right))";
+              padding-right: ~"calc(35px + env(safe-area-inset-right))";
+            }
+            &:checked ~ .item-inner{
+              background-position: ~"calc(100% - 15px - constant(safe-area-inset-right))" center;
+              background-position: ~"calc(100% - 15px - env(safe-area-inset-right))" center;
+            }
+          }
+        }
+      }
+    });
+  }
+});
