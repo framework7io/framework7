@@ -122,3 +122,17 @@
         }
     }
 }
+.safe-areas-landscape({
+  .safe-area-left({
+    .searchbar {
+      padding-left: ~"calc(8px + constant(safe-area-inset-left))";
+      padding-left: ~"calc(8px + env(safe-area-inset-left))";
+    }
+  });
+  .safe-area-right({
+    .searchbar {
+      padding-right: ~"calc(8px + constant(safe-area-inset-right))";
+      padding-right: ~"calc(8px + env(safe-area-inset-right))";
+    }
+  });
+});

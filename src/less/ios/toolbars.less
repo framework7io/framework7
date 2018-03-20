@@ -287,7 +287,7 @@
     .sliding {
         opacity: 1;
     }
-    
+
 }
 .navbar-from-center-to-right {
     .left, .right, .center, .subnavbar, .fading {
@@ -383,3 +383,19 @@
         .animation(none);
     }
 }
+
+.safe-areas-landscape({
+  .safe-area-left({
+    .navbar-inner, .toolbar-inner, .subnavbar {
+      padding-left: ~"calc(8px + constant(safe-area-inset-right))";
+      padding-left: ~"calc(8px + env(safe-area-inset-right))";
+    }
+
+  });
+  .safe-area-right({
+    .navbar-inner, .toolbar-inner, .subnavbar {
+      padding-right: ~"calc(8px + constant(safe-area-inset-right))";
+      padding-right: ~"calc(8px + env(safe-area-inset-right))";
+    }
+  });
+});

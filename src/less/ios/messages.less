@@ -172,7 +172,7 @@
         .message-label {
             margin-left: 34px;
         }
-    }    
+    }
     &.message-last, &.message-with-tail {
         .message-text {
             border-radius: 16px 16px 16px 0;
@@ -192,7 +192,7 @@
 }
 .message-appear-from-top {
     -webkit-animation: messageAppearFromTop 400ms;
-    animation: messageAppearFromTop 400ms;   
+    animation: messageAppearFromTop 400ms;
 }
 .messages-auto-layout {
     .message-name, .message-label {
@@ -221,6 +221,20 @@ html.retina.ios-6 {
         border-radius: 16px;
     }
 }
+.safe-areas-landscape({
+  .safe-area-left({
+    .message-received {
+      margin-left: ~"calc(10px + constant(safe-area-inset-left))";
+      margin-left: ~"calc(10px + env(safe-area-inset-left))";
+    }
+  });
+  .safe-area-right({
+    .message-sent {
+      margin-right: ~"calc(10px + constant(safe-area-inset-right))";
+      margin-right: ~"calc(10px + env(safe-area-inset-right))";
+    }
+  });
+});
 @-webkit-keyframes messageAppearFromBottom {
     from {
         -webkit-transform: translate3d(0,100%,0);

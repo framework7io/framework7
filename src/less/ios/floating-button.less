@@ -19,12 +19,12 @@
         background: darken(@themeColor, 8%);
     }
     .toolbar-fixed &, .toolbar-through &{
-        bottom: 15px + 44px;
+        margin-bottom: 44px;
     }
     .tabbar-labels-fixed &, .tabbar-labels-through &{
-        bottom: 15px + 50px;
+      margin-bottom: 50px;
         @media (min-width: 768px) {
-            bottom: 15px + 56px;
+          margin-bottom: 56px;
         }
     }
 }
@@ -34,17 +34,18 @@
     bottom: 15px;
     z-index: 1500;
     .toolbar-fixed &, .toolbar-through &{
-        bottom: 15px + 44px;
+      margin-bottom: 44px;
     }
     .tabbar-labels-fixed &, .tabbar-labels-through &{
-        bottom: 15px + 50px;
+        margin-bottom: 50px;
         @media (min-width: 768px) {
-            bottom: 15px + 56px;
+          margin-bottom: 56px;
         }
     }
     .floating-button {
-        right: 0;
-        bottom: 0;
+        right: 0 !important;
+        bottom: 0 !important;
+        margin-bottom: 0;
         position: relative;
     }
 }
@@ -170,3 +171,18 @@
         }
     }
 }
+
+.safe-areas({
+  .floating-button, .floating-button-toolbar, .speed-dial {
+    bottom: ~"calc(15px + constant(safe-area-inset-bottom))";
+    bottom: ~"calc(15px + env(safe-area-inset-bottom))";
+  }
+});
+.safe-areas-landscape({
+  .safe-area-right({
+    .floating-button, .floating-button-toolbar, .speed-dial {
+      right: ~"calc(15px + constant(safe-area-inset-right))";
+      right: ~"calc(15px + env(safe-area-inset-right))";
+    }
+  });
+});

@@ -11,8 +11,9 @@ Framework7.prototype.device = (function () {
     var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+    var iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812
 
-    device.ios = device.android = device.windows = device.iphone = device.ipod = device.ipad = device.androidChrome = false;
+    device.ios = device.android = device.windows = device.iphone = device.ipod = device.ipad = device.androidChrome = device.iphoneX = false;
 
     // Windows
     if (windows) {
@@ -35,6 +36,7 @@ Framework7.prototype.device = (function () {
     if (iphone && !ipod) {
         device.osVersion = iphone[2].replace(/_/g, '.');
         device.iphone = true;
+        device.iphoneX = iphoneX;
     }
     if (ipad) {
         device.osVersion = ipad[2].replace(/_/g, '.');
@@ -69,6 +71,9 @@ Framework7.prototype.device = (function () {
 
     device.needsStatusBar = function () {
         if (device.webView && (windowWidth * windowHeight === screen.width * screen.height)) {
+            if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
+                return false;
+            }
             return true;
         }
         return false;
@@ -92,6 +97,9 @@ Framework7.prototype.device = (function () {
             var major = parseInt(device.osVersion.split('.')[0], 10);
             for (var i = major - 1; i >= 6; i--) {
                 classNames.push('ios-gt-' + i);
+            }
+            if (device.iphoneX) {
+                classNames.push('device-iphone-x');
             }
         }
 

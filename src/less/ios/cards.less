@@ -100,3 +100,17 @@
     }
 
 }
+.safe-areas-landscape({
+  .safe-area-left({
+    .card:not(.no-ios-edges):not(.no-ios-left-edge) {
+      margin-left: ~"calc(10px + constant(safe-area-inset-left))";
+      margin-left: ~"calc(10px + env(safe-area-inset-left))";
+    }
+  });
+  .safe-area-right({
+    .card:not(.no-ios-edges):not(.no-ios-right-edge) {
+      margin-right: ~"calc(10px + constant(safe-area-inset-right))";
+      margin-right: ~"calc(10px + env(safe-area-inset-right))";
+    }
+  });
+});

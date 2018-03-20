@@ -20,3 +20,15 @@ html.with-statusbar-overlay .framework7-root {
     display: none;
     .transition(@panelsDuration);
 }
+html.with-statusbar-overlay.device-iphone-x .framework7-root {
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    .statusbar-overlay {
+        height: constant(safe-area-inset-top);
+        height: env(safe-area-inset-top);
+    }
+    .panel {
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+    }
+}

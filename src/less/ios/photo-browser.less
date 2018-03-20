@@ -23,6 +23,14 @@
             height: ~"calc(100% - 20px)";
             top: 20px;
         }
+        html.with-statusbar-overlay.device-iphone-x & {
+            height: ~"-webkit-calc(100% - constant(safe-area-inset-top))";
+            height: ~"-webkit-calc(100% - env(safe-area-inset-top))";
+            height: ~"calc(100% - constant(safe-area-inset-top))";
+            height: ~"calc(100% - env(safe-area-inset-top))";
+            top: constant(safe-area-inset-top);
+            top: env(safe-area-inset-top);
+        }
     }
     .popup > &, body > &, .framework7-root > & {
         .navbar, .toolbar {
@@ -98,7 +106,7 @@
     text-align:center;
     color:#fff;
     background: rgba(0,0,0,0.8);
-    
+
     &:empty {
         display: none;
     }
@@ -204,6 +212,17 @@
     }
 
 }
+
+.safe-areas({
+  .photo-browser-captions {
+    bottom: constant(safe-area-inset-bottom);
+    bottom: env(safe-area-inset-bottom);
+  }
+  .toolbar ~ .photo-browser-captions {
+    bottom: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+    bottom: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+  }
+});
 
 @-webkit-keyframes photoBrowserIn {
     0% {

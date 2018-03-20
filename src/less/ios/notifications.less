@@ -28,6 +28,12 @@
         padding-top: 20px;
         .translate3d(0, -20px, 0);
     }
+    .with-statusbar-overlay.device-iphone-x & {
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+        .translate3d(0, -constant(safe-area-inset-top), 0);
+        .translate3d(0, -env(safe-area-inset-top), 0);
+    }
     .item-content {
         padding-left: 8px;
         .align-items(flex-start);

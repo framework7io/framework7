@@ -50,10 +50,57 @@
         margin-right: 15px;
         border-radius: 7px
     }
-    
+
     .content-block.tablet-inset .content-block-inner {
     	.hairline-remove(top);
         .hairline-remove(bottom);
     	border-radius: 7px;
     }
 }
+.safe-areas-landscape({
+  .safe-area-left({
+    .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) {
+      padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+      padding-left: ~"calc(15px + env(safe-area-inset-left))";
+      .content-block-inner {
+        margin-left: ~"calc(-15px - constant(safe-area-inset-left))";
+        margin-left: ~"calc(-15px - env(safe-area-inset-left))";
+        padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+        padding-left: ~"calc(15px + env(safe-area-inset-left))";
+      }
+    }
+
+    .content-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+    .content-block-title:not(.no-ios-edges):not(.no-ios-left-edge) {
+      margin-left: ~"calc(15px + constant(safe-area-inset-left))";
+      margin-left: ~"calc(15px + env(safe-area-inset-left))";
+    }
+    @media all and (min-width:768px) {
+      .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+        margin-left: ~"calc(15px + constant(safe-area-inset-left))";
+        margin-left: ~"calc(15px + env(safe-area-inset-left))";
+      }
+    }
+  });
+  .safe-area-right({
+    .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+      padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+      padding-right: ~"calc(15px + env(safe-area-inset-right))";
+      .content-block-inner {
+        padding-right: ~"calc(15px + constant(safe-area-inset-left))";
+        padding-right: ~"calc(15px + env(safe-area-inset-left))";
+      }
+    }
+    .content-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+    .content-block-title:not(.no-ios-edges):not(.no-ios-right-edge) {
+      margin-right: ~"calc(15px + constant(safe-area-inset-right))";
+      margin-right: ~"calc(15px + env(safe-area-inset-right))";
+    }
+    @media all and (min-width:768px) {
+      .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+        margin-right: ~"calc(15px + constant(safe-area-inset-right))";
+        margin-right: ~"calc(15px + env(safe-area-inset-right))";
+      }
+    }
+  });
+});

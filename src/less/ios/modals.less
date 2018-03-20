@@ -60,7 +60,7 @@
     transition-property: transform, opacity;
     color:#000;
     display: none;
-    
+
     &.modal-in {
         opacity: 1;
         .transition(@modalDuration);
@@ -79,7 +79,7 @@
     position: relative;
     background: @modalBg;
     .hairline(bottom, @modalHairlineColor);
-        
+
 }
 .modal-title {
     font-weight: 500;
@@ -273,6 +273,12 @@
         line-height: 44px;
     }
 }
+.safe-areas({
+    .actions-modal.modal-in {
+        transform: translate3d(0, ~"calc(0px - constant(safe-area-inset-bottom))", 0);
+        transform: translate3d(0, ~"calc(0px - env(safe-area-inset-bottom))", 0);
+    }
+});
 // Prompt
 input.modal-text-input {
     box-sizing: border-box;
@@ -415,7 +421,7 @@ input.modal-text-input {
     }
 }
 .popover-inner {
-    .scrollable();    
+    .scrollable();
 }
 .actions-popover {
     .list-block + .list-block {
@@ -506,6 +512,29 @@ html.with-statusbar-overlay {
         height: ~"calc(100% - 20px)";
         top: 20px;
     }
+    &.device-iphone-x {
+        @media all and (max-width:629px), (max-height:629px) {
+            .popup {
+                height: ~"-webkit-calc(100% - constant(safe-area-inset-top))";
+                height: ~"-webkit-calc(100% - env(safe-area-inset-top))";
+                height: ~"calc(100% - constant(safe-area-inset-top))";
+                height: ~"calc(100% - env(safe-area-inset-top))";
+                top: constant(safe-area-inset-top);
+                top: env(safe-area-inset-top);
+            }
+            .popup-overlay {
+                z-index: 9500;
+            }
+        }
+        .login-screen, .popup.tablet-fullscreen {
+            height: ~"-webkit-calc(100% - constant(safe-area-inset-top))";
+            height: ~"-webkit-calc(100% - env(safe-area-inset-top))";
+            height: ~"calc(100% - constant(safe-area-inset-top))";
+            height: ~"calc(100% - env(safe-area-inset-top))";
+            top: constant(safe-area-inset-top);
+            top: env(safe-area-inset-top);
+        }
+    }
 }
 
 //Preloaders modals
@@ -566,6 +595,7 @@ html.with-statusbar-overlay {
     .picker-modal-inner {
         height: 100%;
         position: relative;
+        box-sizing: border-box;
     }
     .toolbar {
         .hairline(top, #929499);
@@ -575,7 +605,7 @@ html.with-statusbar-overlay {
         + .picker-modal-inner {
             height: ~"-webkit-calc(100% - @{toolbarSize})";
             height: ~"-moz-calc(100% - @{toolbarSize})";
-            height: ~"calc(100% - @{toolbarSize})";    
+            height: ~"calc(100% - @{toolbarSize})";
         }
     }
     &.picker-modal-inline, .popover & {

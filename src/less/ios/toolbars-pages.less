@@ -89,3 +89,44 @@
 .page.no-toolbar .page-content, .page.no-tabbar .page-content {
     padding-bottom: 0;
 }
+.safe-areas({
+  .views, .view, .page, .popup, .panel, .login-screen {
+    >.toolbar {
+      height: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+      height: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+      .toolbar-inner {
+        height: auto;
+        bottom: constant(safe-area-inset-bottom);
+        bottom: env(safe-area-inset-bottom);
+      }
+    }
+    >.tabbar-labels {
+      height: ~"calc(@{tabbarLabelsSize} + constant(safe-area-inset-bottom))";
+      height: ~"calc(@{tabbarLabelsSize} + env(safe-area-inset-bottom))";
+    }
+    @media (min-width: 768px) {
+      >.tabbar-labels {
+        height: ~"calc(@{tabbarLabelsSizeTablet} + constant(safe-area-inset-bottom))";
+        height: ~"calc(@{tabbarLabelsSizeTablet} + env(safe-area-inset-bottom))";
+      }
+    }
+  }
+
+  // Relation with page
+  .toolbar-through, .toolbar-fixed, .tabbar-through, .tabbar-fixed {
+    .page-content {
+      padding-bottom: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+      padding-bottom: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+    }
+  }
+  .tabbar-labels-fixed, .tabbar-labels-through {
+    .page-content {
+      padding-bottom: ~"calc(@{tabbarLabelsSize} + constant(safe-area-inset-bottom))";
+      padding-bottom: ~"calc(@{tabbarLabelsSize} + env(safe-area-inset-bottom))";
+        @media all and (min-width:768px) {
+          padding-bottom: ~"calc(@{tabbarLabelsSizeTablet} + constant(safe-area-inset-bottom))";
+          padding-bottom: ~"calc(@{tabbarLabelsSizeTablet} + env(safe-area-inset-bottom))";
+        }
+    }
+  }
+});

@@ -300,3 +300,43 @@
         }
     }
 }
+// iPhone X
+.safe-areas(@ruleset) {
+  .device-iphone-x {
+    @ruleset();
+  }
+}
+.safe-areas-portrait(@ruleset) {
+  @media(orientation: portrait) {
+    .device-iphone-x {
+      @ruleset();
+    }
+  }
+}
+.safe-areas-landscape(@ruleset) {
+  @media(orientation: landscape) {
+    .device-iphone-x {
+      @ruleset();
+    }
+  }
+}
+.safe-area-left(@ruleset) {
+  .ios-left-edge,
+  .ios-edges,
+  .popup,
+  .picker-modal,
+  .framework7-root > .photo-browser,
+  .panel-left {
+    @ruleset();
+  }
+}
+.safe-area-right(@ruleset) {
+  .ios-right-edge,
+  .ios-edges,
+  .popup,
+  .picker-modal,
+  .framework7-root > .photo-browser,
+  .panel-right {
+    @ruleset();
+  }
+}

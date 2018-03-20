@@ -40,7 +40,7 @@
     + .picker-calendar-months {
         height: ~"-webkit-calc(100% - 18px)";
         height: ~"-moz-calc(100% - 18px)";
-        height: ~"calc(100% - 18px)";    
+        height: ~"calc(100% - 18px)";
     }
 }
 .picker-calendar-months {
@@ -75,6 +75,7 @@
     height: ~"calc(100% / 6)";
     .flexbox();
     .flex-shrink(1);
+    box-sizing: border-box;
     width: 100%;
     position: relative;
     .hairline(bottom, #ccc);
@@ -186,3 +187,30 @@
         .hairline(top, #c4c4c4);
     }
 }
+
+.safe-areas({
+  .picker-modal.picker-calendar:not(.picker-modal-inline) .picker-modal-inner {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+});
+.safe-areas-landscape({
+  .safe-area-left({
+    &.picker-calendar,
+    .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) {
+      .picker-calendar-row, .picker-calendar-week-days {
+        padding-left: constant(safe-area-inset-left);
+        padding-left: env(safe-area-inset-left);
+      }
+    }
+  });
+  .safe-area-right({
+    &.picker-calendar,
+    .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) {
+      .picker-calendar-row, .picker-calendar-week-days {
+        padding-right: constant(safe-area-inset-right);
+        padding-right: env(safe-area-inset-right);
+      }
+    }
+  });
+});

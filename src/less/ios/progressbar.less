@@ -42,6 +42,10 @@
     html.with-statusbar-overlay body > &, html.with-statusbar-overlay .framework7-root > & {
         top: 20px;
     }
+    html.with-statusbar-overlay.device-iphone-x body > &, html.with-statusbar-overlay.device-iphone-x .framework7-root > & {
+        top: constant(safe-area-inset-top);
+        top: env(safe-area-inset-top);
+    }
 }
 // Multicolor
 .progressbar-infinite.color-multi {
@@ -62,6 +66,10 @@
     }
     html.with-statusbar-overlay body > & , html.with-statusbar-overlay .framework7-root > & {
         top: 20px;
+    }
+    html.with-statusbar-overlay.device-iphone-x body > & , html.with-statusbar-overlay.device-iphone-x .framework7-root > & {
+        top: constant(safe-area-inset-top);
+        top: env(safe-area-inset-top);
     }
 }
 body, .view, .views, .page, .panel, .popup, .framework7-root {
@@ -84,6 +92,11 @@ body, .view, .views, .page, .panel, .popup, .framework7-root {
 html.with-statusbar-overlay .framework7-root > .progressbar, html.with-statusbar-overlay body > .progressbar {
     top: 20px;
 }
+html.with-statusbar-overlay.device-iphone-x .framework7-root > .progressbar, html.with-statusbar-overlay.device-iphone-x body > .progressbar {
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
+}
+
 @-webkit-keyframes progressbar-in {
     from {
         opacity: 0;
