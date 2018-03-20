@@ -12,25 +12,25 @@
 
 Support Framework7 development by [pledging on Patreon](https://www.patreon.com/vladimirkharlampidi)!
 
-### $1000
+### $1000 Diamond Sponsor
 
 [Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=1000.0&exp=1&u=4109762&rid=830901)
 
 ---
 
-### $500
+### $500 Platinum Sponsor
 
 [Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=500.0&exp=1&u=4109762&rid=830876)
 
 ---
 
-### $250
+### $250 Gold Sponsor
 
 [Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
 ---
 
-### $100
+### $100 Silver Sponsor
 
 Mason Fok ([tommy](http://mytommy.com))<br>
 Juergen Schimmoeller
@@ -39,7 +39,7 @@ Juergen Schimmoeller
 
 ---
 
-### $50+
+### $50+ Top Supporter
 
 Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
@@ -50,7 +50,7 @@ Bart DJ
 
 ---
 
-### $10+
+### $10+ Thank You
 Dan Boschen<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
