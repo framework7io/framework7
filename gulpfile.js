@@ -13,8 +13,6 @@
         cleanCSS = require('gulp-clean-css'),
         tap = require('gulp-tap'),
         concat = require('gulp-concat'),
-        jshint = require('gulp-jshint'),
-        stylish = require('jshint-stylish'),
         rollup = require('rollup-stream'),
         buble = require('rollup-plugin-buble'),
         source = require('vinyl-source-stream'),
@@ -234,8 +232,6 @@
             .pipe(sourcemaps.init())
             .pipe(concat(f7.filename + '.js'))
             .pipe(header(f7.banner, { pkg : f7.pkg, date: f7.date } ))
-            .pipe(jshint())
-            .pipe(jshint.reporter(stylish))
             .pipe(sourcemaps.write('./'))
             .pipe(gulp.dest(paths.build.scripts))
             .pipe(connect.reload())
@@ -498,8 +494,6 @@
             }))
             .pipe(concat(f7.filename + '.custom.js'))
             .pipe(header(f7.customBanner, { pkg : f7.pkg, date: f7.date, modulesList: modules.join(',') } ))
-            .pipe(jshint())
-            .pipe(jshint.reporter(stylish))
             .pipe(gulp.dest(paths.custom.scripts))
 
             .pipe(uglify())
