@@ -248,6 +248,9 @@ class Range extends Framework7Class {
       app.on('touchend:passive', handleTouchEnd);
       app.on('tabShow', handleResize);
       app.on('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog')
+        .on('modal:open', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -256,6 +259,9 @@ class Range extends Framework7Class {
       app.off('touchend:passive', handleTouchEnd);
       app.off('tabShow', handleResize);
       app.off('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog')
+        .off('modal:open', handleResize);
     };
 
     // Install Modules
