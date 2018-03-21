@@ -249,8 +249,11 @@ class Range extends Framework7Class {
       app.on('tabShow', handleResize);
       app.on('resize', handleResize);
       range.$el
-        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog')
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
         .on('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .on('panel:open', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -260,8 +263,11 @@ class Range extends Framework7Class {
       app.off('tabShow', handleResize);
       app.off('resize', handleResize);
       range.$el
-        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog')
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
         .off('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .off('panel:open', handleResize);
     };
 
     // Install Modules
