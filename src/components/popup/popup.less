@@ -87,15 +87,6 @@ html.with-statusbar {
     }
   }
 }
-html.with-modal-popup {
-  .framework7-root {
-    > .views, > .view, > .panel {
-      .page-content {
-        .not-scrollable();
-      }
-    }
-  }
-}
 & when (@includeIosTheme) {
   @import url('./popup-ios.less');
 }
