@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.7.0](https://github.com/framework7io/framework7/compare/v1.6.5...v1.7.0) - March 21, 2018
+  * Full iPhoneX support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
+    * `ios-edges` - for full-width elements (like main View)
+    * `ios-edge-left` - for elements that stick to the left edge of the screen (like left Panel)
+    * `ios-edge-right` - for elements that stick to the right edge of the screen (like right Panel)
+  * Dom7
+    * Added `beforeCreate` callback for `.ajax` method
+  * Minor fixes
+
 ## Framework7 v1.6.5 - Updated on September 7, 2017
   * Searchbar will remove accents (removeDiacritics: true) by default now
   * Fix issue with wrong element selected when scrolling on iOS

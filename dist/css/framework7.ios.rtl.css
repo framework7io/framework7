@@ -1,18 +1,18 @@
 /**
- * Framework7 1.6.5
+ * Framework7 1.7.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * iOS Theme
  *
  * http://framework7.io/
  * 
- * Copyright 2017, Vladimir Kharlampidi
+ * Copyright 2018, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: September 7, 2017
+ * Released on: March 20, 2018
  */
 /*=============
   Framework 7 RTL Additions
@@ -715,4 +715,137 @@ html.pixel-ratio-2 .timeline-year:last-child:after {
 html.pixel-ratio-3 .timeline-year:last-child:after {
   -webkit-transform: scaleX(0.33);
   transform: scaleX(0.33);
+}
+@media (orientation: landscape) {
+  .device-iphone-x[dir="rtl"] .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner {
+    background-position: calc(15px + constant(safe-area-inset-left)) center;
+    background-position: calc(15px + env(safe-area-inset-left)) center;
+  }
+  .device-iphone-x[dir="rtl"] .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-inner {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x[dir="rtl"] .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-link .item-inner {
+    padding-left: calc(35px + constant(safe-area-inset-left));
+    padding-left: calc(35px + env(safe-area-inset-left));
+  }
+  .device-iphone-x[dir="rtl"] .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge).media-list .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) li.media-item .item-link .item-inner {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-content {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] {
+    display: none;
+  }
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner {
+    padding-left: calc(35px + constant(safe-area-inset-left));
+    padding-left: calc(35px + env(safe-area-inset-left));
+  }
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x[dir="rtl"] .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner {
+    background-position: calc(15px + constant(safe-area-inset-left)) center;
+    background-position: calc(15px + env(safe-area-inset-left)) center;
+  }
 }

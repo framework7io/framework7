@@ -1,18 +1,18 @@
 /**
- * Framework7 1.6.5
+ * Framework7 1.7.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * iOS Theme
  *
  * http://framework7.io/
  * 
- * Copyright 2017, Vladimir Kharlampidi
+ * Copyright 2018, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: September 7, 2017
+ * Released on: March 20, 2018
  */
 html,
 body,
@@ -658,7 +658,7 @@ p {
     width: 5%;
   }
   .row .tablet-auto:nth-last-child(1),
-  .row .tablet-auto:nth-last-child(1) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(1) ~ .tablet-auto {
     width: 100%;
     width: -webkit-calc((100% - 15px*0) / 1);
     width: calc((100% - 15px*0) / 1);
@@ -668,7 +668,7 @@ p {
     width: 100%;
   }
   .row .tablet-auto:nth-last-child(2),
-  .row .tablet-auto:nth-last-child(2) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(2) ~ .tablet-auto {
     width: 50%;
     width: -webkit-calc((100% - 15px*1) / 2);
     width: calc((100% - 15px*1) / 2);
@@ -678,7 +678,7 @@ p {
     width: 50%;
   }
   .row .tablet-auto:nth-last-child(3),
-  .row .tablet-auto:nth-last-child(3) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(3) ~ .tablet-auto {
     width: 33.33333333%;
     width: -webkit-calc((100% - 15px*2) / 3);
     width: calc((100% - 15px*2) / 3);
@@ -688,7 +688,7 @@ p {
     width: 33.33333333%;
   }
   .row .tablet-auto:nth-last-child(4),
-  .row .tablet-auto:nth-last-child(4) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(4) ~ .tablet-auto {
     width: 25%;
     width: -webkit-calc((100% - 15px*3) / 4);
     width: calc((100% - 15px*3) / 4);
@@ -698,7 +698,7 @@ p {
     width: 25%;
   }
   .row .tablet-auto:nth-last-child(5),
-  .row .tablet-auto:nth-last-child(5) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(5) ~ .tablet-auto {
     width: 20%;
     width: -webkit-calc((100% - 15px*4) / 5);
     width: calc((100% - 15px*4) / 5);
@@ -708,7 +708,7 @@ p {
     width: 20%;
   }
   .row .tablet-auto:nth-last-child(6),
-  .row .tablet-auto:nth-last-child(6) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(6) ~ .tablet-auto {
     width: 16.66666667%;
     width: -webkit-calc((100% - 15px*5) / 6);
     width: calc((100% - 15px*5) / 6);
@@ -718,7 +718,7 @@ p {
     width: 16.66666667%;
   }
   .row .tablet-auto:nth-last-child(7),
-  .row .tablet-auto:nth-last-child(7) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(7) ~ .tablet-auto {
     width: 14.28571429%;
     width: -webkit-calc((100% - 15px*6) / 7);
     width: calc((100% - 15px*6) / 7);
@@ -728,7 +728,7 @@ p {
     width: 14.28571429%;
   }
   .row .tablet-auto:nth-last-child(8),
-  .row .tablet-auto:nth-last-child(8) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(8) ~ .tablet-auto {
     width: 12.5%;
     width: -webkit-calc((100% - 15px*7) / 8);
     width: calc((100% - 15px*7) / 8);
@@ -738,7 +738,7 @@ p {
     width: 12.5%;
   }
   .row .tablet-auto:nth-last-child(9),
-  .row .tablet-auto:nth-last-child(9) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(9) ~ .tablet-auto {
     width: 11.11111111%;
     width: -webkit-calc((100% - 15px*8) / 9);
     width: calc((100% - 15px*8) / 9);
@@ -748,7 +748,7 @@ p {
     width: 11.11111111%;
   }
   .row .tablet-auto:nth-last-child(10),
-  .row .tablet-auto:nth-last-child(10) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(10) ~ .tablet-auto {
     width: 10%;
     width: -webkit-calc((100% - 15px*9) / 10);
     width: calc((100% - 15px*9) / 10);
@@ -758,7 +758,7 @@ p {
     width: 10%;
   }
   .row .tablet-auto:nth-last-child(11),
-  .row .tablet-auto:nth-last-child(11) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(11) ~ .tablet-auto {
     width: 9.09090909%;
     width: -webkit-calc((100% - 15px*10) / 11);
     width: calc((100% - 15px*10) / 11);
@@ -768,7 +768,7 @@ p {
     width: 9.09090909%;
   }
   .row .tablet-auto:nth-last-child(12),
-  .row .tablet-auto:nth-last-child(12) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(12) ~ .tablet-auto {
     width: 8.33333333%;
     width: -webkit-calc((100% - 15px*11) / 12);
     width: calc((100% - 15px*11) / 12);
@@ -778,7 +778,7 @@ p {
     width: 8.33333333%;
   }
   .row .tablet-auto:nth-last-child(13),
-  .row .tablet-auto:nth-last-child(13) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(13) ~ .tablet-auto {
     width: 7.69230769%;
     width: -webkit-calc((100% - 15px*12) / 13);
     width: calc((100% - 15px*12) / 13);
@@ -788,7 +788,7 @@ p {
     width: 7.69230769%;
   }
   .row .tablet-auto:nth-last-child(14),
-  .row .tablet-auto:nth-last-child(14) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(14) ~ .tablet-auto {
     width: 7.14285714%;
     width: -webkit-calc((100% - 15px*13) / 14);
     width: calc((100% - 15px*13) / 14);
@@ -798,7 +798,7 @@ p {
     width: 7.14285714%;
   }
   .row .tablet-auto:nth-last-child(15),
-  .row .tablet-auto:nth-last-child(15) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(15) ~ .tablet-auto {
     width: 6.66666667%;
     width: -webkit-calc((100% - 15px*14) / 15);
     width: calc((100% - 15px*14) / 15);
@@ -808,7 +808,7 @@ p {
     width: 6.66666667%;
   }
   .row .tablet-auto:nth-last-child(16),
-  .row .tablet-auto:nth-last-child(16) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(16) ~ .tablet-auto {
     width: 6.25%;
     width: -webkit-calc((100% - 15px*15) / 16);
     width: calc((100% - 15px*15) / 16);
@@ -818,7 +818,7 @@ p {
     width: 6.25%;
   }
   .row .tablet-auto:nth-last-child(17),
-  .row .tablet-auto:nth-last-child(17) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(17) ~ .tablet-auto {
     width: 5.88235294%;
     width: -webkit-calc((100% - 15px*16) / 17);
     width: calc((100% - 15px*16) / 17);
@@ -828,7 +828,7 @@ p {
     width: 5.88235294%;
   }
   .row .tablet-auto:nth-last-child(18),
-  .row .tablet-auto:nth-last-child(18) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(18) ~ .tablet-auto {
     width: 5.55555556%;
     width: -webkit-calc((100% - 15px*17) / 18);
     width: calc((100% - 15px*17) / 18);
@@ -838,7 +838,7 @@ p {
     width: 5.55555556%;
   }
   .row .tablet-auto:nth-last-child(19),
-  .row .tablet-auto:nth-last-child(19) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(19) ~ .tablet-auto {
     width: 5.26315789%;
     width: -webkit-calc((100% - 15px*18) / 19);
     width: calc((100% - 15px*18) / 19);
@@ -848,7 +848,7 @@ p {
     width: 5.26315789%;
   }
   .row .tablet-auto:nth-last-child(20),
-  .row .tablet-auto:nth-last-child(20) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(20) ~ .tablet-auto {
     width: 5%;
     width: -webkit-calc((100% - 15px*19) / 20);
     width: calc((100% - 15px*19) / 20);
@@ -858,7 +858,7 @@ p {
     width: 5%;
   }
   .row .tablet-auto:nth-last-child(21),
-  .row .tablet-auto:nth-last-child(21) ~ .col-auto {
+  .row .tablet-auto:nth-last-child(21) ~ .tablet-auto {
     width: 4.76190476%;
     width: -webkit-calc((100% - 15px*20) / 21);
     width: calc((100% - 15px*20) / 21);
@@ -1769,6 +1769,50 @@ html.pixel-ratio-3 .toolbar:before {
   -webkit-animation: none;
   animation: none;
 }
+@media (orientation: landscape) {
+  .device-iphone-x .ios-left-edge .navbar-inner,
+  .device-iphone-x .ios-edges .navbar-inner,
+  .device-iphone-x .popup .navbar-inner,
+  .device-iphone-x .picker-modal .navbar-inner,
+  .device-iphone-x .framework7-root > .photo-browser .navbar-inner,
+  .device-iphone-x .panel-left .navbar-inner,
+  .device-iphone-x .ios-left-edge .toolbar-inner,
+  .device-iphone-x .ios-edges .toolbar-inner,
+  .device-iphone-x .popup .toolbar-inner,
+  .device-iphone-x .picker-modal .toolbar-inner,
+  .device-iphone-x .framework7-root > .photo-browser .toolbar-inner,
+  .device-iphone-x .panel-left .toolbar-inner,
+  .device-iphone-x .ios-left-edge .subnavbar,
+  .device-iphone-x .ios-edges .subnavbar,
+  .device-iphone-x .popup .subnavbar,
+  .device-iphone-x .picker-modal .subnavbar,
+  .device-iphone-x .framework7-root > .photo-browser .subnavbar,
+  .device-iphone-x .panel-left .subnavbar {
+    padding-left: calc(8px + constant(safe-area-inset-right));
+    padding-left: calc(8px + env(safe-area-inset-right));
+  }
+  .device-iphone-x .ios-right-edge .navbar-inner,
+  .device-iphone-x .ios-edges .navbar-inner,
+  .device-iphone-x .popup .navbar-inner,
+  .device-iphone-x .picker-modal .navbar-inner,
+  .device-iphone-x .framework7-root > .photo-browser .navbar-inner,
+  .device-iphone-x .panel-right .navbar-inner,
+  .device-iphone-x .ios-right-edge .toolbar-inner,
+  .device-iphone-x .ios-edges .toolbar-inner,
+  .device-iphone-x .popup .toolbar-inner,
+  .device-iphone-x .picker-modal .toolbar-inner,
+  .device-iphone-x .framework7-root > .photo-browser .toolbar-inner,
+  .device-iphone-x .panel-right .toolbar-inner,
+  .device-iphone-x .ios-right-edge .subnavbar,
+  .device-iphone-x .ios-edges .subnavbar,
+  .device-iphone-x .popup .subnavbar,
+  .device-iphone-x .picker-modal .subnavbar,
+  .device-iphone-x .framework7-root > .photo-browser .subnavbar,
+  .device-iphone-x .panel-right .subnavbar {
+    padding-right: calc(8px + constant(safe-area-inset-right));
+    padding-right: calc(8px + env(safe-area-inset-right));
+  }
+}
 /* === Relation between toolbar/navbar types and pages === */
 .page > .navbar,
 .view > .navbar,
@@ -1892,6 +1936,64 @@ html.pixel-ratio-3 .toolbar:before {
 .page.no-toolbar .page-content,
 .page.no-tabbar .page-content {
   padding-bottom: 0;
+}
+.device-iphone-x .views > .toolbar,
+.device-iphone-x .view > .toolbar,
+.device-iphone-x .page > .toolbar,
+.device-iphone-x .popup > .toolbar,
+.device-iphone-x .panel > .toolbar,
+.device-iphone-x .login-screen > .toolbar {
+  height: calc(44px + constant(safe-area-inset-bottom));
+  height: calc(44px + env(safe-area-inset-bottom));
+}
+.device-iphone-x .views > .toolbar .toolbar-inner,
+.device-iphone-x .view > .toolbar .toolbar-inner,
+.device-iphone-x .page > .toolbar .toolbar-inner,
+.device-iphone-x .popup > .toolbar .toolbar-inner,
+.device-iphone-x .panel > .toolbar .toolbar-inner,
+.device-iphone-x .login-screen > .toolbar .toolbar-inner {
+  height: auto;
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
+}
+.device-iphone-x .views > .tabbar-labels,
+.device-iphone-x .view > .tabbar-labels,
+.device-iphone-x .page > .tabbar-labels,
+.device-iphone-x .popup > .tabbar-labels,
+.device-iphone-x .panel > .tabbar-labels,
+.device-iphone-x .login-screen > .tabbar-labels {
+  height: calc(50px + constant(safe-area-inset-bottom));
+  height: calc(50px + env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  .device-iphone-x .views > .tabbar-labels,
+  .device-iphone-x .view > .tabbar-labels,
+  .device-iphone-x .page > .tabbar-labels,
+  .device-iphone-x .popup > .tabbar-labels,
+  .device-iphone-x .panel > .tabbar-labels,
+  .device-iphone-x .login-screen > .tabbar-labels {
+    height: calc(56px + constant(safe-area-inset-bottom));
+    height: calc(56px + env(safe-area-inset-bottom));
+  }
+}
+.device-iphone-x .toolbar-through .page-content,
+.device-iphone-x .toolbar-fixed .page-content,
+.device-iphone-x .tabbar-through .page-content,
+.device-iphone-x .tabbar-fixed .page-content {
+  padding-bottom: calc(44px + constant(safe-area-inset-bottom));
+  padding-bottom: calc(44px + env(safe-area-inset-bottom));
+}
+.device-iphone-x .tabbar-labels-fixed .page-content,
+.device-iphone-x .tabbar-labels-through .page-content {
+  padding-bottom: calc(50px + constant(safe-area-inset-bottom));
+  padding-bottom: calc(50px + env(safe-area-inset-bottom));
+}
+@media all and (min-width: 768px) {
+  .device-iphone-x .tabbar-labels-fixed .page-content,
+  .device-iphone-x .tabbar-labels-through .page-content {
+    padding-bottom: calc(56px + constant(safe-area-inset-bottom));
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
+  }
 }
 /* === Search Bar === */
 .searchbar {
@@ -2070,6 +2172,26 @@ html:not(.watch-active-state) .searchbar.searchbar-active .searchbar-cancel:acti
 .navbar-through > .searchbar ~ .page-content {
   padding-top: 88px;
 }
+@media (orientation: landscape) {
+  .device-iphone-x .ios-left-edge .searchbar,
+  .device-iphone-x .ios-edges .searchbar,
+  .device-iphone-x .popup .searchbar,
+  .device-iphone-x .picker-modal .searchbar,
+  .device-iphone-x .framework7-root > .photo-browser .searchbar,
+  .device-iphone-x .panel-left .searchbar {
+    padding-left: calc(8px + constant(safe-area-inset-left));
+    padding-left: calc(8px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-right-edge .searchbar,
+  .device-iphone-x .ios-edges .searchbar,
+  .device-iphone-x .popup .searchbar,
+  .device-iphone-x .picker-modal .searchbar,
+  .device-iphone-x .framework7-root > .photo-browser .searchbar,
+  .device-iphone-x .panel-right .searchbar {
+    padding-right: calc(8px + constant(safe-area-inset-right));
+    padding-right: calc(8px + env(safe-area-inset-right));
+  }
+}
 /* === Message Bar === */
 .messagebar {
   -webkit-transform: translate3d(0, 0, 0);
@@ -2135,6 +2257,19 @@ html:not(.watch-active-state) .searchbar.searchbar-active .searchbar-cancel:acti
   transform: translate3d(0, 0, 0);
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
+}
+.messagebar .toolbar-inner {
+  position: relative;
+}
+.device-iphone-x .messagebar:not(.messagebar-top) {
+  height: auto;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.device-iphone-x .page.no-toolbar .messagebar ~ .page-content,
+.device-iphone-x .page.no-tabbar .messagebar ~ .page-content {
+  padding-bottom: calc(44px + constant(safe-area-inset-bottom));
+  padding-bottom: calc(44px + env(safe-area-inset-bottom));
 }
 /* === Icons === */
 i.icon {
@@ -2464,6 +2599,98 @@ html.pixel-ratio-3 .content-block-inner:after {
   }
   .content-block.tablet-inset .content-block-inner:after {
     display: none;
+  }
+}
+@media (orientation: landscape) {
+  .device-iphone-x .ios-left-edge .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .ios-edges .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .popup .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .picker-modal .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .panel-left .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-left-edge .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .content-block-inner,
+  .device-iphone-x .ios-edges .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .content-block-inner,
+  .device-iphone-x .popup .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .content-block-inner,
+  .device-iphone-x .picker-modal .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .content-block-inner,
+  .device-iphone-x .framework7-root > .photo-browser .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .content-block-inner,
+  .device-iphone-x .panel-left .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .content-block-inner {
+    margin-left: calc(-15px - constant(safe-area-inset-left));
+    margin-left: calc(-15px - env(safe-area-inset-left));
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-left-edge .content-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .ios-edges .content-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .popup .content-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .picker-modal .content-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .panel-left .content-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .ios-left-edge .content-block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .ios-edges .content-block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .popup .content-block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .picker-modal .content-block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block-title:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .panel-left .content-block-title:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-right-edge .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .ios-edges .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .popup .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .picker-modal .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .panel-right .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .device-iphone-x .ios-right-edge .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .content-block-inner,
+  .device-iphone-x .ios-edges .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .content-block-inner,
+  .device-iphone-x .popup .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .content-block-inner,
+  .device-iphone-x .picker-modal .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .content-block-inner,
+  .device-iphone-x .framework7-root > .photo-browser .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .content-block-inner,
+  .device-iphone-x .panel-right .content-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .content-block-inner {
+    padding-right: calc(15px + constant(safe-area-inset-left));
+    padding-right: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-right-edge .content-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .ios-edges .content-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .popup .content-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .picker-modal .content-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .panel-right .content-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .ios-right-edge .content-block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .ios-edges .content-block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .popup .content-block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .picker-modal .content-block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block-title:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .panel-right .content-block-title:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
+  }
+}
+@media (orientation: landscape) and all and (min-width: 768px) {
+  .device-iphone-x .ios-left-edge .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .ios-edges .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .popup .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .picker-modal .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .panel-left .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
+  }
+}
+@media (orientation: landscape) and all and (min-width: 768px) {
+  .device-iphone-x .ios-right-edge .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .ios-edges .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .popup .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .picker-modal .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .framework7-root > .photo-browser .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .panel-right .content-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
   }
 }
 /* === Lists === */
@@ -3181,6 +3408,155 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 .list-block.no-hairlines-between .list-group-title:after {
   display: none;
 }
+@media (orientation: landscape) {
+  .device-iphone-x:not([dir="rtl"]) .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .list-group-title {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-left-edge .list-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .panel-left .list-block.inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-left-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content,
+  .device-iphone-x:not([dir="rtl"]) .panel-left .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge) .item-content {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block.inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-divider,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .list-group-title {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner {
+    background-position: calc(100% - 15px - constant(safe-area-inset-right)) center;
+    background-position: calc(100% - 15px - env(safe-area-inset-right)) center;
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner {
+    padding-right: calc(35px + constant(safe-area-inset-right));
+    padding-right: calc(35px + env(safe-area-inset-right));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge).media-list .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) li.media-item .item-link .item-inner {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
+}
+@media (orientation: landscape) and (min-width: 768px) {
+  .device-iphone-x:not([dir="rtl"]) .ios-left-edge .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x:not([dir="rtl"]) .panel-left .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(15px + constant(safe-area-inset-left));
+    margin-left: calc(15px + env(safe-area-inset-left));
+  }
+}
+@media (orientation: landscape) and (min-width: 768px) {
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(15px + constant(safe-area-inset-right));
+    margin-right: calc(15px + env(safe-area-inset-right));
+  }
+}
+@media (orientation: landscape) {
+  .device-iphone-x .ios-right-edge .sortable-handler,
+  .device-iphone-x .ios-edges .sortable-handler,
+  .device-iphone-x .popup .sortable-handler,
+  .device-iphone-x .picker-modal .sortable-handler,
+  .device-iphone-x .framework7-root > .photo-browser .sortable-handler,
+  .device-iphone-x .panel-right .sortable-handler {
+    right: constant(safe-area-inset-right);
+    right: env(safe-area-inset-right);
+  }
+  .device-iphone-x .ios-right-edge .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x .ios-edges .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x .popup .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x .picker-modal .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x .framework7-root > .photo-browser .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x .panel-right .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-inner,
+  .device-iphone-x .ios-right-edge .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x .ios-edges .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x .popup .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x .picker-modal .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x .framework7-root > .photo-browser .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner,
+  .device-iphone-x .panel-right .sortable-opened:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) .item-link .item-inner {
+    padding-right: calc(35px + constant(safe-area-inset-right));
+    padding-right: calc(35px + env(safe-area-inset-right));
+  }
+}
 /* === Contacts === */
 .contacts-content {
   background: #fff;
@@ -3730,6 +4106,88 @@ label.label-radio.active-state .item-inner:after {
 .smart-select select {
   display: none;
 }
+@media (orientation: landscape) {
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"],
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"],
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] {
+    display: none;
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"] ~ .item-inner {
+    padding-right: calc(35px + constant(safe-area-inset-right));
+    padding-right: calc(35px + env(safe-area-inset-right));
+  }
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="checkbox"]:checked ~ .item-inner input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-right-edge .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .ios-edges .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .popup .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .picker-modal .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .framework7-root > .photo-browser .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner,
+  .device-iphone-x:not([dir="rtl"]) .panel-right .list-block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge) label.label-radio input[type="radio"]:checked ~ .item-inner {
+    background-position: calc(100% - 15px - constant(safe-area-inset-right)) center;
+    background-position: calc(100% - 15px - env(safe-area-inset-right)) center;
+  }
+}
 /* === Floating Action Button === */
 .floating-button {
   position: absolute;
@@ -3765,16 +4223,16 @@ html:not(.watch-active-state) .floating-button:active,
 }
 .toolbar-fixed .floating-button,
 .toolbar-through .floating-button {
-  bottom: 59px;
+  margin-bottom: 44px;
 }
 .tabbar-labels-fixed .floating-button,
 .tabbar-labels-through .floating-button {
-  bottom: 65px;
+  margin-bottom: 50px;
 }
 @media (min-width: 768px) {
   .tabbar-labels-fixed .floating-button,
   .tabbar-labels-through .floating-button {
-    bottom: 71px;
+    margin-bottom: 56px;
   }
 }
 .floating-button-toolbar,
@@ -3788,26 +4246,27 @@ html:not(.watch-active-state) .floating-button:active,
 .toolbar-fixed .speed-dial,
 .toolbar-through .floating-button-toolbar,
 .toolbar-through .speed-dial {
-  bottom: 59px;
+  margin-bottom: 44px;
 }
 .tabbar-labels-fixed .floating-button-toolbar,
 .tabbar-labels-fixed .speed-dial,
 .tabbar-labels-through .floating-button-toolbar,
 .tabbar-labels-through .speed-dial {
-  bottom: 65px;
+  margin-bottom: 50px;
 }
 @media (min-width: 768px) {
   .tabbar-labels-fixed .floating-button-toolbar,
   .tabbar-labels-fixed .speed-dial,
   .tabbar-labels-through .floating-button-toolbar,
   .tabbar-labels-through .speed-dial {
-    bottom: 71px;
+    margin-bottom: 56px;
   }
 }
 .floating-button-toolbar .floating-button,
 .speed-dial .floating-button {
-  right: 0;
-  bottom: 0;
+  right: 0 !important;
+  bottom: 0 !important;
+  margin-bottom: 0;
   position: relative;
 }
 .speed-dial .floating-button i {
@@ -3953,6 +4412,35 @@ html:not(.watch-active-state) .speed-dial-buttons a:active,
   transition-duration: 100ms;
   -webkit-transition-delay: 200ms;
   transition-delay: 200ms;
+}
+.device-iphone-x .floating-button,
+.device-iphone-x .floating-button-toolbar,
+.device-iphone-x .speed-dial {
+  bottom: calc(15px + constant(safe-area-inset-bottom));
+  bottom: calc(15px + env(safe-area-inset-bottom));
+}
+@media (orientation: landscape) {
+  .device-iphone-x .ios-right-edge .floating-button,
+  .device-iphone-x .ios-edges .floating-button,
+  .device-iphone-x .popup .floating-button,
+  .device-iphone-x .picker-modal .floating-button,
+  .device-iphone-x .framework7-root > .photo-browser .floating-button,
+  .device-iphone-x .panel-right .floating-button,
+  .device-iphone-x .ios-right-edge .floating-button-toolbar,
+  .device-iphone-x .ios-edges .floating-button-toolbar,
+  .device-iphone-x .popup .floating-button-toolbar,
+  .device-iphone-x .picker-modal .floating-button-toolbar,
+  .device-iphone-x .framework7-root > .photo-browser .floating-button-toolbar,
+  .device-iphone-x .panel-right .floating-button-toolbar,
+  .device-iphone-x .ios-right-edge .speed-dial,
+  .device-iphone-x .ios-edges .speed-dial,
+  .device-iphone-x .popup .speed-dial,
+  .device-iphone-x .picker-modal .speed-dial,
+  .device-iphone-x .framework7-root > .photo-browser .speed-dial,
+  .device-iphone-x .panel-right .speed-dial {
+    right: calc(15px + constant(safe-area-inset-right));
+    right: calc(15px + env(safe-area-inset-right));
+  }
 }
 /* === Accordion === */
 .list-block .accordion-item-toggle {
@@ -4227,6 +4715,26 @@ html.pixel-ratio-3 .card-footer:before {
 }
 .card-footer.no-border:before {
   display: none;
+}
+@media (orientation: landscape) {
+  .device-iphone-x .ios-left-edge .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .picker-modal .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .framework7-root > .photo-browser .card:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .panel-left .card:not(.no-ios-edges):not(.no-ios-left-edge) {
+    margin-left: calc(10px + constant(safe-area-inset-left));
+    margin-left: calc(10px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-right-edge .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .ios-edges .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .popup .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .picker-modal .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .framework7-root > .photo-browser .card:not(.no-ios-edges):not(.no-ios-right-edge),
+  .device-iphone-x .panel-right .card:not(.no-ios-edges):not(.no-ios-right-edge) {
+    margin-right: calc(10px + constant(safe-area-inset-right));
+    margin-right: calc(10px + env(safe-area-inset-right));
+  }
 }
 /* === Modals === */
 .modal-overlay,
@@ -4641,6 +5149,10 @@ html:not(.watch-active-state) .actions-modal-button:active,
     line-height: 44px;
   }
 }
+.device-iphone-x .actions-modal.modal-in {
+  transform: translate3d(0, calc(0px - constant(safe-area-inset-bottom)), 0);
+  transform: translate3d(0, calc(0px - env(safe-area-inset-bottom)), 0);
+}
 input.modal-text-input {
   box-sizing: border-box;
   height: 26px;
@@ -4906,6 +5418,28 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
   height: calc(100% - 20px);
   top: 20px;
 }
+@media all and (max-width: 629px), (max-height: 629px) {
+  html.with-statusbar-overlay.device-iphone-x .popup {
+    height: -webkit-calc(100% - constant(safe-area-inset-top));
+    height: -webkit-calc(100% - env(safe-area-inset-top));
+    height: calc(100% - constant(safe-area-inset-top));
+    height: calc(100% - env(safe-area-inset-top));
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
+  }
+  html.with-statusbar-overlay.device-iphone-x .popup-overlay {
+    z-index: 9500;
+  }
+}
+html.with-statusbar-overlay.device-iphone-x .login-screen,
+html.with-statusbar-overlay.device-iphone-x .popup.tablet-fullscreen {
+  height: -webkit-calc(100% - constant(safe-area-inset-top));
+  height: -webkit-calc(100% - env(safe-area-inset-top));
+  height: calc(100% - constant(safe-area-inset-top));
+  height: calc(100% - env(safe-area-inset-top));
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
+}
 .modal .preloader {
   width: 34px;
   height: 34px;
@@ -4969,6 +5503,7 @@ html.with-statusbar-overlay .popup.tablet-fullscreen {
 .picker-modal .picker-modal-inner {
   height: 100%;
   position: relative;
+  box-sizing: border-box;
 }
 .picker-modal .toolbar {
   position: relative;
@@ -5498,6 +6033,26 @@ html.retina.ios-6 .message.message-pic img {
   -webkit-mask-box-image: none;
   border-radius: 16px;
 }
+@media (orientation: landscape) {
+  .device-iphone-x .ios-left-edge .message-received,
+  .device-iphone-x .ios-edges .message-received,
+  .device-iphone-x .popup .message-received,
+  .device-iphone-x .picker-modal .message-received,
+  .device-iphone-x .framework7-root > .photo-browser .message-received,
+  .device-iphone-x .panel-left .message-received {
+    margin-left: calc(10px + constant(safe-area-inset-left));
+    margin-left: calc(10px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-right-edge .message-sent,
+  .device-iphone-x .ios-edges .message-sent,
+  .device-iphone-x .popup .message-sent,
+  .device-iphone-x .picker-modal .message-sent,
+  .device-iphone-x .framework7-root > .photo-browser .message-sent,
+  .device-iphone-x .panel-right .message-sent {
+    margin-right: calc(10px + constant(safe-area-inset-right));
+    margin-right: calc(10px + env(safe-area-inset-right));
+  }
+}
 @-webkit-keyframes messageAppearFromBottom {
   from {
     -webkit-transform: translate3d(0, 100%, 0);
@@ -5552,6 +6107,18 @@ html.with-statusbar-overlay .framework7-root .panel {
   display: none;
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
+}
+html.with-statusbar-overlay.device-iphone-x .framework7-root {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+html.with-statusbar-overlay.device-iphone-x .framework7-root .statusbar-overlay {
+  height: constant(safe-area-inset-top);
+  height: env(safe-area-inset-top);
+}
+html.with-statusbar-overlay.device-iphone-x .framework7-root .panel {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
 }
 /* === Preloader === */
 .preloader {
@@ -5624,6 +6191,11 @@ html.with-statusbar-overlay body > .progressbar-infinite,
 html.with-statusbar-overlay .framework7-root > .progressbar-infinite {
   top: 20px;
 }
+html.with-statusbar-overlay.device-iphone-x body > .progressbar-infinite,
+html.with-statusbar-overlay.device-iphone-x .framework7-root > .progressbar-infinite {
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
+}
 .progressbar-infinite.color-multi {
   background: none;
 }
@@ -5646,6 +6218,11 @@ html.with-statusbar-overlay .framework7-root > .progressbar-infinite {
 html.with-statusbar-overlay body > .progressbar-infinite.color-multi,
 html.with-statusbar-overlay .framework7-root > .progressbar-infinite.color-multi {
   top: 20px;
+}
+html.with-statusbar-overlay.device-iphone-x body > .progressbar-infinite.color-multi,
+html.with-statusbar-overlay.device-iphone-x .framework7-root > .progressbar-infinite.color-multi {
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
 }
 body > .progressbar,
 .view > .progressbar,
@@ -5678,6 +6255,11 @@ body > .progressbar-infinite,
 html.with-statusbar-overlay .framework7-root > .progressbar,
 html.with-statusbar-overlay body > .progressbar {
   top: 20px;
+}
+html.with-statusbar-overlay.device-iphone-x .framework7-root > .progressbar,
+html.with-statusbar-overlay.device-iphone-x body > .progressbar {
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
 }
 @-webkit-keyframes progressbar-in {
   from {
@@ -6219,7 +6801,8 @@ html.pixel-ratio-3 .timeline-horizontal .timeline-item:after {
   -webkit-transform: scaleX(0.33);
   transform: scaleX(0.33);
 }
-.timeline-horizontal .timeline-month:last-child .timeline-item:last-child:after {
+.timeline-horizontal .timeline-month:last-child .timeline-item:last-child:after,
+.timeline-horizontal > .timeline-item:last-child:after {
   display: none;
 }
 .timeline-horizontal .timeline-item-date {
@@ -6494,6 +7077,176 @@ html.pixel-ratio-3 .timeline-month .timeline-item:before {
 }
 .timeline-month-title span {
   margin-top: -2px;
+}
+@media (orientation: landscape) {
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge),
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) {
+    padding-left: constant(safe-area-inset-left);
+    padding-left: env(safe-area-inset-left);
+  }
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year-title span,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-month-title span {
+    left: calc(10px + constant(safe-area-inset-left));
+    left: calc(10px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-month-title,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title {
+    left: -44px;
+    right: 0;
+    width: auto;
+  }
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item {
+    overflow: visible;
+  }
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) > .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-month:first-child .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-item:first-child .timeline-item-date,
+  .device-iphone-x .ios-left-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date,
+  .device-iphone-x .panel-left .timeline-horizontal:not(.no-ios-edges):not(.no-ios-left-edge) .timeline-year:first-child .timeline-year-title + .timeline-month .timeline-month-title + .timeline-item .timeline-item-date {
+    width: auto;
+    padding-left: calc(10px + constant(safe-area-inset-left));
+    padding-left: calc(10px + env(safe-area-inset-left));
+    left: calc(0px - constant(safe-area-inset-left));
+    left: calc(0px - env(safe-area-inset-left));
+    right: 0;
+  }
+  .device-iphone-x .ios-left-edge .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .device-iphone-x .picker-modal .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .device-iphone-x .framework7-root > .photo-browser .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal),
+  .device-iphone-x .panel-left .timeline:not(.no-ios-edges):not(.no-ios-left-edge):not(.timeline-horizontal) {
+    padding-left: calc(15px + constant(safe-area-inset-left));
+    padding-left: calc(15px + env(safe-area-inset-left));
+  }
+  .device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-year-title,
+  .device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title,
+  .device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-month-title {
+    width: auto;
+    right: calc(0px - constant(safe-area-inset-right));
+    right: calc(0px - env(safe-area-inset-right));
+  }
+  .device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child,
+  .device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child,
+  .device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child {
+    overflow: visible;
+  }
+  .device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) > .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .ios-right-edge .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .ios-edges .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .popup .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .picker-modal .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .framework7-root > .photo-browser .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date,
+  .device-iphone-x .panel-right .timeline-horizontal:not(.no-ios-edges):not(.no-ios-right-edge) .timeline-year:last-child .timeline-month:last-child .timeline-item:last-child .timeline-item-date {
+    width: auto;
+    right: calc(0px - constant(safe-area-inset-right));
+    right: calc(0px - env(safe-area-inset-right));
+    left: 0;
+  }
+  .device-iphone-x .ios-right-edge .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .device-iphone-x .ios-edges .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .device-iphone-x .popup .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .device-iphone-x .picker-modal .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .device-iphone-x .framework7-root > .photo-browser .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal),
+  .device-iphone-x .panel-right .timeline:not(.no-ios-edges):not(.no-ios-right-edge):not(.timeline-horizontal) {
+    padding-right: calc(15px + constant(safe-area-inset-right));
+    padding-right: calc(15px + env(safe-area-inset-right));
+  }
 }
 /* === Swiper === */
 .swiper-container {
@@ -7027,6 +7780,15 @@ html.with-statusbar-overlay .framework7-root > .photo-browser {
   height: calc(100% - 20px);
   top: 20px;
 }
+html.with-statusbar-overlay.device-iphone-x body > .photo-browser,
+html.with-statusbar-overlay.device-iphone-x .framework7-root > .photo-browser {
+  height: -webkit-calc(100% - constant(safe-area-inset-top));
+  height: -webkit-calc(100% - env(safe-area-inset-top));
+  height: calc(100% - constant(safe-area-inset-top));
+  height: calc(100% - env(safe-area-inset-top));
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
+}
 .popup > .photo-browser .navbar,
 body > .photo-browser .navbar,
 .framework7-root > .photo-browser .navbar,
@@ -7235,6 +7997,14 @@ body > .photo-browser .toolbar,
 }
 .photo-browser-dark .photo-browser-swiper-container {
   background: #000;
+}
+.device-iphone-x .photo-browser-captions {
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
+}
+.device-iphone-x .toolbar ~ .photo-browser-captions {
+  bottom: calc(44px + constant(safe-area-inset-bottom));
+  bottom: calc(44px + env(safe-area-inset-bottom));
 }
 @-webkit-keyframes photoBrowserIn {
   0% {
@@ -7559,6 +8329,7 @@ html.pixel-ratio-3 .picker-calendar-week-days:after {
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
+  box-sizing: border-box;
   width: 100%;
   position: relative;
 }
@@ -7761,6 +8532,66 @@ html.pixel-ratio-3 .picker-calendar.picker-modal-inline .picker-calendar-week-da
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
 }
+.device-iphone-x .picker-modal.picker-calendar:not(.picker-modal-inline) .picker-modal-inner {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@media (orientation: landscape) {
+  .device-iphone-x .ios-left-edge.picker-calendar .picker-calendar-row,
+  .device-iphone-x .ios-edges.picker-calendar .picker-calendar-row,
+  .device-iphone-x .popup.picker-calendar .picker-calendar-row,
+  .device-iphone-x .picker-modal.picker-calendar .picker-calendar-row,
+  .device-iphone-x .framework7-root > .photo-browser.picker-calendar .picker-calendar-row,
+  .device-iphone-x .panel-left.picker-calendar .picker-calendar-row,
+  .device-iphone-x .ios-left-edge .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-row,
+  .device-iphone-x .ios-edges .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-row,
+  .device-iphone-x .popup .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-row,
+  .device-iphone-x .picker-modal .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-row,
+  .device-iphone-x .framework7-root > .photo-browser .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-row,
+  .device-iphone-x .panel-left .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-row,
+  .device-iphone-x .ios-left-edge.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .ios-edges.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .popup.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .picker-modal.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .framework7-root > .photo-browser.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .panel-left.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .ios-left-edge .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-week-days,
+  .device-iphone-x .ios-edges .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-week-days,
+  .device-iphone-x .popup .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-week-days,
+  .device-iphone-x .picker-modal .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-week-days,
+  .device-iphone-x .framework7-root > .photo-browser .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-week-days,
+  .device-iphone-x .panel-left .picker-calendar:not(.no-ios-edges):not(.no-ios-left-edge) .picker-calendar-week-days {
+    padding-left: constant(safe-area-inset-left);
+    padding-left: env(safe-area-inset-left);
+  }
+  .device-iphone-x .ios-right-edge.picker-calendar .picker-calendar-row,
+  .device-iphone-x .ios-edges.picker-calendar .picker-calendar-row,
+  .device-iphone-x .popup.picker-calendar .picker-calendar-row,
+  .device-iphone-x .picker-modal.picker-calendar .picker-calendar-row,
+  .device-iphone-x .framework7-root > .photo-browser.picker-calendar .picker-calendar-row,
+  .device-iphone-x .panel-right.picker-calendar .picker-calendar-row,
+  .device-iphone-x .ios-right-edge .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-row,
+  .device-iphone-x .ios-edges .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-row,
+  .device-iphone-x .popup .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-row,
+  .device-iphone-x .picker-modal .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-row,
+  .device-iphone-x .framework7-root > .photo-browser .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-row,
+  .device-iphone-x .panel-right .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-row,
+  .device-iphone-x .ios-right-edge.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .ios-edges.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .popup.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .picker-modal.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .framework7-root > .photo-browser.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .panel-right.picker-calendar .picker-calendar-week-days,
+  .device-iphone-x .ios-right-edge .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-week-days,
+  .device-iphone-x .ios-edges .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-week-days,
+  .device-iphone-x .popup .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-week-days,
+  .device-iphone-x .picker-modal .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-week-days,
+  .device-iphone-x .framework7-root > .photo-browser .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-week-days,
+  .device-iphone-x .panel-right .picker-calendar:not(.no-ios-edges):not(.no-ios-right-edge) .picker-calendar-week-days {
+    padding-right: constant(safe-area-inset-right);
+    padding-right: env(safe-area-inset-right);
+  }
+}
 /* === Notifications === */
 .notifications {
   position: absolute;
@@ -7796,6 +8627,14 @@ html.pixel-ratio-3 .picker-calendar.picker-modal-inline .picker-calendar-week-da
   padding-top: 20px;
   -webkit-transform: translate3d(0, -20px, 0);
   transform: translate3d(0, -20px, 0);
+}
+.with-statusbar-overlay.device-iphone-x .notifications {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+  -webkit-transform: translate3d(0, -constant(safe-area-inset-top), 0);
+  transform: translate3d(0, -constant(safe-area-inset-top), 0);
+  -webkit-transform: translate3d(0, -env(safe-area-inset-top), 0);
+  transform: translate3d(0, -env(safe-area-inset-top), 0);
 }
 .notifications .item-content {
   padding-left: 8px;

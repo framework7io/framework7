@@ -1,16 +1,16 @@
 /**
- * Framework7 1.6.5
+ * Framework7 1.7.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * http://framework7.io/
  * 
- * Copyright 2017, Vladimir Kharlampidi
+ * Copyright 2018, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  * 
  * Licensed under MIT
  * 
- * Released on: September 7, 2017
+ * Released on: March 20, 2018
  */
 window.Dom7 = (function () {
 'use strict';
@@ -1702,7 +1702,7 @@ function ajax(options) {
     contentType: 'application/x-www-form-urlencoded',
     timeout: 0,
   };
-  var callbacks = ['beforeSend', 'error', 'complete', 'success', 'statusCode'];
+  var callbacks = ['beforeCreate', 'beforeSend', 'error', 'complete', 'success', 'statusCode'];
 
   // For jQuery guys
   if (options.type) { options.method = options.type; }
@@ -1731,6 +1731,9 @@ function ajax(options) {
   each(defaults, function (prop, defaultValue) {
     if (!(prop in options)) { options[prop] = defaultValue; }
   });
+
+  fireAjaxCallback('ajaxBeforeCreate ajax:beforecreate', {options: options}, 'beforeCreate', options)
+
 
   // Default URL
   if (!options.url) {
@@ -12686,7 +12689,7 @@ return t7;
                     col.updateItems(undefined, currentTranslate, 0, p.params.updateValuesOnTouchmove);
         
                     // Calc velocity
-                    velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
+                    velocityTranslate = currentTranslate - (prevTranslate || currentTranslate);
                     velocityTime = (new Date()).getTime();
                     prevTranslate = currentTranslate;
                 }
@@ -14430,8 +14433,9 @@ return t7;
         var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
         var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
         var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+        var iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812
     
-        device.ios = device.android = device.windows = device.iphone = device.ipod = device.ipad = device.androidChrome = false;
+        device.ios = device.android = device.windows = device.iphone = device.ipod = device.ipad = device.androidChrome = device.iphoneX = false;
     
         // Windows
         if (windows) {
@@ -14454,6 +14458,7 @@ return t7;
         if (iphone && !ipod) {
             device.osVersion = iphone[2].replace(/_/g, '.');
             device.iphone = true;
+            device.iphoneX = iphoneX;
         }
         if (ipad) {
             device.osVersion = ipad[2].replace(/_/g, '.');
@@ -14488,6 +14493,9 @@ return t7;
     
         device.needsStatusBar = function () {
             if (device.webView && (windowWidth * windowHeight === screen.width * screen.height)) {
+                if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
+                    return false;
+                }
                 return true;
             }
             return false;
@@ -14511,6 +14519,9 @@ return t7;
                 var major = parseInt(device.osVersion.split('.')[0], 10);
                 for (var i = major - 1; i >= 6; i--) {
                     classNames.push('ios-gt-' + i);
+                }
+                if (device.iphoneX) {
+                    classNames.push('device-iphone-x');
                 }
             }
     
@@ -16943,7 +16954,7 @@ return t7;
             if (s.params.loop) {
                 s.destroyLoop();
             }
-            if (typeof slides === 'object' && slides.length) {
+            if (typeof slides === 'object' && 'length' in slides) {
                 for (var i = 0; i < slides.length; i++) {
                     if (slides[i]) s.wrapper.append(slides[i]);
                 }
@@ -16963,7 +16974,7 @@ return t7;
                 s.destroyLoop();
             }
             var newActiveIndex = s.activeIndex + 1;
-            if (typeof slides === 'object' && slides.length) {
+            if (typeof slides === 'object' && 'length' in slides) {
                 for (var i = 0; i < slides.length; i++) {
                     if (slides[i]) s.wrapper.prepend(slides[i]);
                 }
@@ -16987,7 +16998,7 @@ return t7;
             }
             var newActiveIndex = s.activeIndex,
                 indexToRemove;
-            if (typeof slidesIndexes === 'object' && slidesIndexes.length) {
+            if (typeof slidesIndexes === 'object' && 'length' in slidesIndexes) {
                 for (var i = 0; i < slidesIndexes.length; i++) {
                     indexToRemove = slidesIndexes[i];
                     if (s.slides[indexToRemove]) s.slides.eq(indexToRemove).remove();
