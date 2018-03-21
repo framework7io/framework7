@@ -1,7 +1,7 @@
 <a href="https://www.patreon.com/vladimirkharlampidi"><img src="https://cdn.framework7.io/i/support-badge.png" height="20"></a>
 [![Join the chat at https://gitter.im/nolimits4web/Framework7](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nolimits4web/Framework7)
 [![Build Status](https://travis-ci.org/framework7io/framework7.svg?branch=master)](https://travis-ci.org/framework7io/framework7)
-[![devDependency Status](https://david-dm.org/framework7io/framework7/dev-status.svg)](https://david-dm.org/framework7io/framework7#info=devDependencies)
+[![devDependency Status](https://david-dm.org/framework7io/framework7/dev-status.svg)](https://david-dm.org/framework7io/framework7#info=devDependencies) [![Backers on Open Collective](https://opencollective.com/framework7/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/framework7/sponsors/badge.svg)](#sponsors) 
 
 # Framework7
 
@@ -92,3 +92,33 @@ Appstore apps made with Framework7: http://framework7.io/showcase/
 ## v1
 
 Old v1 version of Framework7 is still available at [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="graphs/contributors"><img src="https://opencollective.com/framework7/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/framework7#backer)]
+
+<a href="https://opencollective.com/framework7#backers" target="_blank"><img src="https://opencollective.com/framework7/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/framework7#sponsor)]
+
+<a href="https://opencollective.com/framework7/sponsor/0/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/1/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/2/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/3/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/4/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/5/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/6/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/7/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/8/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/framework7/sponsor/9/website" target="_blank"><img src="https://opencollective.com/framework7/sponsor/9/avatar.svg"></a>
+
+
