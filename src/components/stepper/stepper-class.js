@@ -17,6 +17,9 @@ class Stepper extends Framework7Class {
       min: 0,
       max: 100,
       watchInput: true,
+      autorepeat: false,
+      autorepeatDynamic: false,
+      wraps: false,
     };
 
     // Extend defaults with modules params
@@ -89,10 +92,88 @@ class Stepper extends Framework7Class {
     $el[0].f7Stepper = stepper;
 
     // Handle Events
+    const touchesStart = {};
+    let isTouched;
+    let isScrolling;
+    let preventButtonClick;
+    let intervalId;
+    let timeoutId;
+    let autorepeatAction = null;
+    let autorepeatInAction = false;
+
+    function dynamicRepeat(current, progressions, startsIn, progressionStep, repeatEvery, action) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        if (current === 1) {
+          preventButtonClick = true;
+          autorepeatInAction = true;
+        }
+        clearInterval(intervalId);
+        action();
+        intervalId = setInterval(() => {
+          action();
+        }, repeatEvery);
+        if (current < progressions) {
+          dynamicRepeat(current + 1, progressions, startsIn, progressionStep, repeatEvery / 2, action);
+        }
+      }, current === 1 ? startsIn : progressionStep);
+    }
+
+    function onTouchStart(e) {
+      if (isTouched) return;
+      if ($(e.target).closest($buttonPlusEl).length) {
+        autorepeatAction = 'increment';
+      } else if ($(e.target).closest($buttonMinusEl).length) {
+        autorepeatAction = 'decrement';
+      }
+      if (!autorepeatAction) return;
+
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      isTouched = true;
+      isScrolling = undefined;
+
+      const progressions = stepper.params.autorepeatDynamic ? 4 : 1;
+      dynamicRepeat(1, progressions, 500, 1000, 300, () => {
+        stepper[autorepeatAction]();
+      });
+    }
+    function onTouchMove(e) {
+      if (!isTouched) return;
+      const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+      const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+
+      if (typeof isScrolling === 'undefined' && !autorepeatInAction) {
+        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+      }
+      const distance = (((pageX - touchesStart.x) ** 2) + ((pageY - touchesStart.y) ** 2)) ** 0.5;
+
+      if (isScrolling || distance > 20) {
+        isTouched = false;
+        clearTimeout(timeoutId);
+        clearInterval(intervalId);
+      }
+    }
+    function onTouchEnd() {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+      autorepeatAction = null;
+      autorepeatInAction = false;
+      isTouched = false;
+    }
+
     function onMinusClick() {
+      if (preventButtonClick) {
+        preventButtonClick = false;
+        return;
+      }
       stepper.decrement();
     }
     function onPlusClick() {
+      if (preventButtonClick) {
+        preventButtonClick = false;
+        return;
+      }
       stepper.increment();
     }
     function onInput(e) {
@@ -104,6 +185,11 @@ class Stepper extends Framework7Class {
       $buttonPlusEl.on('click', onPlusClick);
       if (stepper.params.watchInput && $inputEl && $inputEl.length) {
         $inputEl.on('input', onInput);
+      }
+      if (stepper.params.autorepeat) {
+        app.on('touchstart:passive', onTouchStart);
+        app.on('touchmove:active', onTouchMove);
+        app.on('touchend:passive', onTouchEnd);
       }
     };
     stepper.detachEvents = function detachEvents() {
@@ -141,7 +227,14 @@ class Stepper extends Framework7Class {
     const { step, min, max } = stepper;
 
     const oldValue = stepper.value;
-    let value = Math.max(Math.min(Math.round(newValue / step) * step, max), min);
+
+    let value = Math.round(newValue / step) * step;
+    if (!stepper.params.wraps) {
+      value = Math.max(Math.min(value, max), min);
+    } else {
+      if (value > max) value = min;
+      if (value < min) value = max;
+    }
     if (Number.isNaN(value)) {
       value = oldValue;
     }
