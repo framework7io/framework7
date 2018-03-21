@@ -8,9 +8,15 @@ class Range extends Framework7Class {
     super(params, [app]);
     const range = this;
     const defaults = {
+      el: null,
+      inputEl: null,
       dual: false,
       step: 1,
       label: false,
+      min: 0,
+      max: 100,
+      value: 0,
+      draggableBar: true,
     };
 
     // Extend defaults with modules params
@@ -144,6 +150,11 @@ class Range extends Framework7Class {
     }
     function handleTouchStart(e) {
       if (isTouched) return;
+      if (!range.params.draggableBar) {
+        if ($(e.target).closest('.range-knob').length === 0) {
+          return;
+        }
+      }
       valueChangedByTouch = false;
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
