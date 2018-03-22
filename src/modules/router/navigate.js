@@ -183,7 +183,7 @@ function forward(el, forwardOptions = {}) {
   const url = options.route.url;
 
   if (options.history) {
-    if (options.reloadCurrent && router.history.length > 0 || options.replaceState) {
+    if ((options.reloadCurrent && router.history.length) > 0 || options.replaceState) {
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
     } else if (options.reloadPrevious) {
       router.history[router.history.length - 2] = url;
