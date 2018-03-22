@@ -1115,6 +1115,7 @@ class Router extends Framework7Class {
     if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl) {
       // No pages presented in DOM, reload new page
       router.navigate(initUrl, {
+        initial: true,
         reloadCurrent: true,
         pushState: false,
       });
@@ -1158,6 +1159,7 @@ class Router extends Framework7Class {
       });
       if (historyRestored) {
         router.navigate(initUrl, {
+          initial: true,
           pushState: false,
           history: false,
           animate: router.params.pushStateAnimateOnLoad,
