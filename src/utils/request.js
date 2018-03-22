@@ -27,6 +27,7 @@ function Request(requestOptions) {
   }, globalsNoCallbacks);
 
   const options = Utils.extend({}, defaults, requestOptions);
+  let proceedRequest;
 
   // Function to run XHR callbacks and events
   function fireCallback(callbackName, ...data) {
@@ -40,12 +41,22 @@ function Request(requestOptions) {
       success (response, status, xhr),
       statusCode ()
     */
-    if (globals[callbackName]) globals[callbackName](...data);
-    if (options[callbackName]) options[callbackName](...data);
+    let globalCallbackValue;
+    let optionCallbackValue;
+    if (globals[callbackName]) {
+      globalCallbackValue = globals[callbackName](...data);
+    }
+    if (options[callbackName]) {
+      optionCallbackValue = options[callbackName](...data);
+    }
+    if (typeof globalCallbackValue !== 'boolean') globalCallbackValue = true;
+    if (typeof optionCallbackValue !== 'boolean') optionCallbackValue = true;
+    return (globalCallbackValue && optionCallbackValue);
   }
 
   // Before create callback
-  fireCallback('beforeCreate', options);
+  proceedRequest = fireCallback('beforeCreate', options);
+  if (proceedRequest === false) return undefined;
 
   // For jQuery guys
   if (options.type) options.method = options.type;
@@ -130,7 +141,8 @@ function Request(requestOptions) {
   xhr.requestParameters = options;
 
   // Before open callback
-  fireCallback('beforeOpen', xhr, options);
+  proceedRequest = fireCallback('beforeOpen', xhr, options);
+  if (proceedRequest === false) return xhr;
 
   // Open XHR
   xhr.open(method, options.url, options.async, options.user, options.password);
@@ -240,7 +252,8 @@ function Request(requestOptions) {
   }
 
   // Ajax start callback
-  fireCallback('beforeSend', xhr, options);
+  proceedRequest = fireCallback('beforeSend', xhr, options);
+  if (proceedRequest === false) return xhr;
 
   // Send XHR
   xhr.send(postData);
