@@ -51,6 +51,7 @@ Bart DJ
 ---
 
 ### $10+ Thank You
+Zakery Kates<br>
 Dan Boschen<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
