@@ -31,7 +31,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
-
+Pavol Cvengros<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 Juergen Schimmoeller
 
@@ -51,16 +51,14 @@ Bart DJ
 ---
 
 ### $10+ Thank You
+plpl<br>
 Zakery Kates<br>
 Dan Boschen<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
 Firestream<br>
 Matthew Becker<br>
-Greg Hatt<br>
 Timo Ernst<br>
-Dmitry Akinin<br>
-Rick Chang<br>
 Dave Billington
 
 [Join here!](https://www.patreon.com/bePatron?exp=1&rid=830839&u=4109762&patAmt=10.0)
@@ -68,13 +66,12 @@ Dave Billington
 ---
 
 ### $5+
-Adrian Maleska<br>
+César Teixeira<br>
+Firas Sleibi<br>
 Travel With Lucas<br>
 Garry Lowther<br>
-Uri Bram<br>
 VOUSYS<br>
 Tirso Martínez Reyes<br>
-Zafer Ayan<br>
 Amir br<br>
 Toby Allen - Ballymaloe Cookery School<br>
 Henry Blackman<br>
