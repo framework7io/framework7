@@ -249,7 +249,7 @@ class Autocomplete extends Framework7Class {
       }
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.off('focus', onInputFocus);
-        ac.$inputEl.off('change keyup compositionend', onInputChange);
+        ac.$inputEl.off('input', onInputChange);
         if (app.device.android) {
           $('html').off('click', onHtmlClick);
         } else {
