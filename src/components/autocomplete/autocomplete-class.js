@@ -232,7 +232,7 @@ class Autocomplete extends Framework7Class {
       }
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.on('focus', onInputFocus);
-        ac.$inputEl.on('input', function() { setTimeout( onInputChange, 0)});
+        ac.$inputEl.on('input', function() { setTimeout(onInputChange, 0); });
         if (app.device.android) {
           $('html').on('click', onHtmlClick);
         } else {
