@@ -17,6 +17,7 @@ export default {
       highlightMatches: true,
       expandInput: false,
       updateInputValueOnSelect: true,
+      inputEvents: 'input',
 
       value: undefined,
       multiple: false,
