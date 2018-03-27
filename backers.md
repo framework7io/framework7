@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://www.securcom.me/" target="_blank">
+        <img width="200" src="https://framework7.io/i/sponsors/securcom.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="200" src="https://framework7.io/i/sponsors/tommy.png">
       </a>
@@ -31,7 +36,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
-Pavol Cvengros<br>
+Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 Juergen Schimmoeller
 
