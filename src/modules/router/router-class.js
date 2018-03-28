@@ -981,8 +981,15 @@ class Router extends Framework7Class {
       attachEvents();
     }
     if (callback === 'init') {
-      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url]) {
-        $pageEl.find('.page-content').scrollTop(router.scrollHistory[page.route.url]);
+      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url] && !$pageEl.hasClass('no-restore-scroll')) {
+        let $pageContent = $pageEl.find('.page-content');
+        if ($pageContent.length > 0) {
+          // eslint-disable-next-line
+          $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+            return $(pageContentEl).parents('.tab:not(.tab-active)').length === 0;
+          });
+        }
+        $pageContent.scrollTop(router.scrollHistory[page.route.url]);
       }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
@@ -994,7 +1001,14 @@ class Router extends Framework7Class {
     }
     if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'previous') {
       // Save scroll position
-      router.scrollHistory[page.route.url] = $pageEl.find('.page-content').scrollTop();
+      let $pageContent = $pageEl.find('.page-content');
+      if ($pageContent.length > 0) {
+        // eslint-disable-next-line
+        $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+          return $(pageContentEl).parents('.tab:not(.tab-active)').length === 0;
+        });
+      }
+      router.scrollHistory[page.route.url] = $pageContent.scrollTop();
     }
     if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'next') {
       // Delete scroll position
