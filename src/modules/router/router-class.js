@@ -986,7 +986,10 @@ class Router extends Framework7Class {
         if ($pageContent.length > 0) {
           // eslint-disable-next-line
           $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
-            return $(pageContentEl).parents('.tab:not(.tab-active)').length === 0;
+            return (
+              $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+              !$(pageContentEl).is('.tab:not(.tab-active)').length === 0
+            );
           });
         }
         $pageContent.scrollTop(router.scrollHistory[page.route.url]);
@@ -1005,7 +1008,10 @@ class Router extends Framework7Class {
       if ($pageContent.length > 0) {
         // eslint-disable-next-line
         $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
-          return $(pageContentEl).parents('.tab:not(.tab-active)').length === 0;
+          return (
+            $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+            !$(pageContentEl).is('.tab:not(.tab-active)').length === 0
+          );
         });
       }
       router.scrollHistory[page.route.url] = $pageContent.scrollTop();
