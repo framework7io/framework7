@@ -988,7 +988,7 @@ class Router extends Framework7Class {
           $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
             return (
               $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
-              !$(pageContentEl).is('.tab:not(.tab-active)').length === 0
+              !$(pageContentEl).is('.tab:not(.tab-active)')
             );
           });
         }
@@ -1010,7 +1010,7 @@ class Router extends Framework7Class {
         $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
           return (
             $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
-            !$(pageContentEl).is('.tab:not(.tab-active)').length === 0
+            !$(pageContentEl).is('.tab:not(.tab-active)')
           );
         });
       }
