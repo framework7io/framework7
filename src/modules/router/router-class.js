@@ -1055,7 +1055,10 @@ class Router extends Framework7Class {
 
     // Init Swipeback
     if (process.env.TARGET !== 'desktop') {
-      if (view && router.params.iosSwipeBack && app.theme === 'ios') {
+      if (
+        (view && router.params.iosSwipeBack && app.theme === 'ios') ||
+        (view && router.params.mdSwipeBack && app.theme === 'md')
+      ) {
         SwipeBack(router);
       }
     }
