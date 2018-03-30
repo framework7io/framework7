@@ -151,6 +151,21 @@
       }
     }
   }
+
+  .safe-areas-landscape({
+    .safe-area-left({
+      .message-received {
+        margin-left: ~"calc(8px + constant(safe-area-inset-left))";
+        margin-left: ~"calc(8px + env(safe-area-inset-left))";
+      }
+    });
+    .safe-area-right({
+      .message-sent {
+        margin-right: ~"calc(8px + constant(safe-area-inset-right))";
+        margin-right: ~"calc(8px + env(safe-area-inset-right))";
+      }
+    });
+  });
 }
 
 @keyframes md-message-typing-indicator {

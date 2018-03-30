@@ -251,4 +251,31 @@
       padding-top: @navbarSizeTablet + @tabbarLabelsSize + @searchbarSize;
     }
   }
+
+  .safe-areas-landscape({
+    .safe-area-left({
+      .searchbar-inner {
+        padding-left: constant(safe-area-inset-left);
+        padding-left: env(safe-area-inset-left);
+      }
+      .ltr({
+        .searchbar-disable-button {
+          left: ~"calc(4px + constant(safe-area-inset-left))";
+          left: ~"calc(4px + env(safe-area-inset-left))";
+        }
+      });
+    });
+    .safe-area-right({
+      .searchbar-inner {
+        padding-right: constant(safe-area-inset-right);
+        padding-right: env(safe-area-inset-right);
+      }
+      .rtl({
+        .searchbar-disable-button {
+          right: ~"calc(4px + constant(safe-area-inset-right))";
+          right: ~"calc(4px + env(safe-area-inset-right))";
+        }
+      });
+    });
+  });
 }
