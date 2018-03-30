@@ -403,10 +403,8 @@ class SmartSelect extends Framework7Class {
     if (ss.params.searchbar) {
       let $searchbarEl = $containerEl.find('.searchbar');
       if (type === 'page' && app.theme === 'ios') {
-        $searchbarEl = $(app.navbar.getElByPage($containerEl)).find('.searchbar')
+        $searchbarEl = $(app.navbar.getElByPage($containerEl)).find('.searchbar');
       }
-      console.log($searchbarEl);
-
       ss.searchbar = app.searchbar.create({
         el: $searchbarEl,
         backdropEl: $containerEl.find('.searchbar-backdrop'),
