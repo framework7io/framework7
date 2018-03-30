@@ -330,7 +330,7 @@ const Swipeout = {
           $(Swipeout.el).is($targetEl[0]) ||
           $targetEl.parents('.swipeout').is(Swipeout.el) ||
           $targetEl.hasClass('modal-in') ||
-          $targetEl[0].className.indexOf('-backdrop') > 0 ||
+          ($targetEl.attr('class') || '').indexOf('-backdrop') > 0 ||
           $targetEl.hasClass('actions-modal') ||
           $targetEl.parents('.actions-modal.modal-in, .dialog.modal-in').length > 0
         )) {
