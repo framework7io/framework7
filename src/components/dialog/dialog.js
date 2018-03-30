@@ -15,6 +15,7 @@ export default {
       progressTitle: 'Loading... ',
       closeByBackdropClick: false,
       destroyPredefinedDialogs: true,
+      keyboardActions: true,
     },
   },
   static: {
@@ -44,6 +45,7 @@ export default {
               text: app.params.dialog.buttonOk,
               bold: true,
               onClick: callbackOk,
+              keyCodes: [13, 27],
             }],
             destroyOnClose,
           }).open();
@@ -60,10 +62,12 @@ export default {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: [27],
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: [13],
               },
             ],
             onClick(dialog, index) {
@@ -86,11 +90,13 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 onClick: callbackCancel,
+                keyCodes: [27],
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
                 onClick: callbackOk,
+                keyCodes: [13],
               },
             ],
             destroyOnClose,
@@ -118,10 +124,12 @@ export default {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: [27],
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: [13],
               },
             ],
             onClick(dialog, index) {
@@ -150,10 +158,12 @@ export default {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: [27],
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: [13],
               },
             ],
             onClick(dialog, index) {
