@@ -31,18 +31,10 @@ html.with-statusbar {
     .framework7-root {
       padding-top: 20px;
     }
-    .panel {
-      top: 20px;
-      height: ~"calc(100% - 20px)";
-    }
   }
   &.device-android, &.md:not(.device-ios):not(.device-android) {
     .framework7-root {
       padding-top: 24px;
-    }
-    .panel {
-      top: 24px;
-      height: ~"calc(100% - 24px)";
     }
   }
   .safe-areas({
@@ -50,13 +42,7 @@ html.with-statusbar {
       padding-top: constant(safe-area-inset-top);
       padding-top: env(safe-area-inset-top);
     }
-    .panel {
-      top: constant(safe-area-inset-top);
-      top: env(safe-area-inset-top);
-      height: ~"calc(100% - constant(safe-area-inset-top))";
-      height: ~"calc(100% - env(safe-area-inset-top))";
-    }
-  })
+  });
 }
 
 & when (@includeIosTheme) {

@@ -96,6 +96,28 @@ html.with-panel-right-cover {
     transform: translate3d(0px,0,0);
   }
 }
+html.with-statusbar {
+  &.device-ios, &.ios:not(.device-ios):not(.device-android) {
+    .panel {
+      top: 20px;
+      height: ~"calc(100% - 20px)";
+    }
+  }
+  &.device-android, &.md:not(.device-ios):not(.device-android) {
+    .panel {
+      top: 24px;
+      height: ~"calc(100% - 24px)";
+    }
+  }
+  .safe-areas({
+    .panel {
+      top: constant(safe-area-inset-top);
+      top: env(safe-area-inset-top);
+      height: ~"calc(100% - constant(safe-area-inset-top))";
+      height: ~"calc(100% - env(safe-area-inset-top))";
+    }
+  })
+}
 & when (@includeIosTheme) {
   @import url('./panel-ios.less');
 }
