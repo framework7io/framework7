@@ -57,6 +57,7 @@ Bart DJ
 ---
 
 ### $10+ Thank You
+Almaz Kazakov<br>
 plpl<br>
 Zakery Kates<br>
 Dan Boschen<br>
