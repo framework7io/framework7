@@ -155,6 +155,10 @@ var routes = [
     url: './pages/list.html',
   },
   {
+    path: '/list-index/',
+    componentUrl: './pages/list-index.html',
+  },
+  {
     path: '/login-screen/',
     componentUrl: './pages/login-screen.html',
   },
