@@ -100,10 +100,12 @@ class Messagebar extends Framework7Class {
     }
     function onTextareaFocus() {
       messagebar.sheetHide();
+      messagebar.$el.addClass('messagebar-focused');
       messagebar.$el.trigger('messagebar:focus');
       messagebar.emit('local::focus messagebarFocus', messagebar);
     }
     function onTextareaBlur() {
+      messagebar.$el.removeClass('messagebar-focused');
       messagebar.$el.trigger('messagebar:blur');
       messagebar.emit('local::blur messagebarBlur', messagebar);
     }
