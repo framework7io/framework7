@@ -28,6 +28,7 @@ const config = {
     'accordion',
     'contacts-list',
     'virtual-list',
+    'list-index',
 
     // Timeline
     'timeline',
