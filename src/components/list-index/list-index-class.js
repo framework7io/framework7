@@ -144,7 +144,7 @@ class ListIndex extends Framework7Class {
     function handleTouchMove(e) {
       if (!isTouched) return;
       if (!isMoved) {
-        $labelEl = $('<span class="list-index-label"></span>')
+        $labelEl = $('<span class="list-index-label"></span>');
         $el.append($labelEl);
       }
       isMoved = true;
@@ -160,7 +160,7 @@ class ListIndex extends Framework7Class {
       const ulHeight = bottomPoint - topPoint;
       const bubbleBottom = ((index.height - ulHeight) / 2) + ((1 - percentage) * ulHeight);
 
-      $labelEl.html(itemContent).transform(`translateY(-${bubbleBottom}px)`)
+      $labelEl.html(itemContent).transform(`translateY(-${bubbleBottom}px)`);
 
       index.$el.trigger('listindex:select', index);
       index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
@@ -223,7 +223,7 @@ class ListIndex extends Framework7Class {
         $scrollToEl = $el;
       }
     });
-    if (!$scrollToEl || $scrollToEl.length === 0) return;
+    if (!$scrollToEl || $scrollToEl.length === 0) return index;
 
     $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
     return index;
