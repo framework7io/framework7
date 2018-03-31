@@ -103,12 +103,14 @@
       margin-bottom: 7px;
     }
   }
-	.page-with-subnavbar, .toolbar:not(.toolbar-bottom-md) ~ .ptr-content {
-	    .ptr-preloader {
-	    	top: @ptrTop + 48px;
-        @media (min-width:768px) {
-          top: @ptrTopTablet + 48px;
-        }
-	    }
+  .page-with-subnavbar,
+  .toolbar:not(.toolbar-bottom-md) ~ .ptr-content,
+  .searchbar ~ .ptr-content {
+    .ptr-preloader {
+      top: @ptrTop + 48px;
+      @media (min-width:768px) {
+        top: @ptrTopTablet + 48px;
+      }
+    }
 	}
 }
