@@ -15,6 +15,7 @@ export default {
       progressTitle: 'Loading... ',
       closeByBackdropClick: false,
       destroyPredefinedDialogs: true,
+      keyboardActions: true,
     },
   },
   static: {
@@ -24,6 +25,7 @@ export default {
     const app = this;
     const defaultDialogTitle = app.params.dialog.title || app.name;
     const destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
+    const keyboardActions = app.params.dialog.keyboardActions;
     app.dialog = Utils.extend(
       ModalMethods({
         app,
@@ -44,6 +46,7 @@ export default {
               text: app.params.dialog.buttonOk,
               bold: true,
               onClick: callbackOk,
+              keyCodes: keyboardActions ? [13, 27] : null,
             }],
             destroyOnClose,
           }).open();
@@ -60,10 +63,12 @@ export default {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             onClick(dialog, index) {
@@ -86,11 +91,13 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 onClick: callbackCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
                 onClick: callbackOk,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             destroyOnClose,
@@ -118,10 +125,12 @@ export default {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             onClick(dialog, index) {
@@ -150,10 +159,12 @@ export default {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             onClick(dialog, index) {

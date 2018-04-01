@@ -433,6 +433,14 @@ class Router extends Framework7Class {
     if ($el[0].f7Component && $el[0].f7Component.$destroy) {
       $el[0].f7Component.$destroy();
     }
+    $el.find('.tab').each((tabIndex, tabEl) => {
+      $(tabEl).children().each((index, tabChild) => {
+        if (tabChild.f7Component) {
+          $(tabChild).trigger('tab:beforeremove');
+          tabChild.f7Component.$destroy();
+        }
+      });
+    });
     if (!router.params.removeElements) {
       return;
     }
@@ -973,8 +981,18 @@ class Router extends Framework7Class {
       attachEvents();
     }
     if (callback === 'init') {
-      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url]) {
-        $pageEl.find('.page-content').scrollTop(router.scrollHistory[page.route.url]);
+      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url] && !$pageEl.hasClass('no-restore-scroll')) {
+        let $pageContent = $pageEl.find('.page-content');
+        if ($pageContent.length > 0) {
+          // eslint-disable-next-line
+          $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+            return (
+              $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+              !$(pageContentEl).is('.tab:not(.tab-active)')
+            );
+          });
+        }
+        $pageContent.scrollTop(router.scrollHistory[page.route.url]);
       }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
@@ -986,7 +1004,17 @@ class Router extends Framework7Class {
     }
     if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'previous') {
       // Save scroll position
-      router.scrollHistory[page.route.url] = $pageEl.find('.page-content').scrollTop();
+      let $pageContent = $pageEl.find('.page-content');
+      if ($pageContent.length > 0) {
+        // eslint-disable-next-line
+        $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+          return (
+            $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+            !$(pageContentEl).is('.tab:not(.tab-active)')
+          );
+        });
+      }
+      router.scrollHistory[page.route.url] = $pageContent.scrollTop();
     }
     if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'next') {
       // Delete scroll position
@@ -1027,7 +1055,10 @@ class Router extends Framework7Class {
 
     // Init Swipeback
     if ("universal" !== 'desktop') {
-      if (view && router.params.iosSwipeBack && app.theme === 'ios') {
+      if (
+        (view && router.params.iosSwipeBack && app.theme === 'ios') ||
+        (view && router.params.mdSwipeBack && app.theme === 'md')
+      ) {
         SwipeBack(router);
       }
     }
@@ -1115,6 +1146,7 @@ class Router extends Framework7Class {
     if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl) {
       // No pages presented in DOM, reload new page
       router.navigate(initUrl, {
+        initial: true,
         reloadCurrent: true,
         pushState: false,
       });
@@ -1158,6 +1190,7 @@ class Router extends Framework7Class {
       });
       if (historyRestored) {
         router.navigate(initUrl, {
+          initial: true,
           pushState: false,
           history: false,
           animate: router.params.pushStateAnimateOnLoad,

@@ -19,7 +19,7 @@ const Toolbar = {
     let highlightWidth;
     let highlightTranslate;
 
-    if ($tabbarEl.hasClass('tabbar-scrollable')) {
+    if ($tabbarEl.hasClass('tabbar-scrollable') && $activeLink && $activeLink[0]) {
       highlightWidth = `${$activeLink[0].offsetWidth}px`;
       highlightTranslate = `${$activeLink[0].offsetLeft}px`;
     } else {

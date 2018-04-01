@@ -109,4 +109,25 @@
       background: @colorValue;
     }
   });
+
+  .safe-areas({
+    .fab[class*="-bottom"] {
+      bottom: ~"calc(16px + constant(safe-area-inset-bottom))";
+      bottom: ~"calc(16px + env(safe-area-inset-bottom))";
+    }
+  });
+  .safe-areas-landscape({
+    .safe-area-left({
+      .fab[class*="fab-left"] {
+        left: ~"calc(16px + constant(safe-area-inset-left))";
+        left: ~"calc(16px + env(safe-area-inset-left))";
+      }
+    });
+    .safe-area-right({
+      .fab[class*="fab-right"] {
+        right: ~"calc(16px + constant(safe-area-inset-right))";
+        right: ~"calc(16px + env(safe-area-inset-right))";
+      }
+    });
+  });
 }

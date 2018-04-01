@@ -2,6 +2,48 @@
 
 # Change Log
 
+# [v2.2.0](https://github.com/framework7io/framework7/compare/v2.1.3...v2.2.0) - April 1, 2018
+  * List Index
+    * Meet all new List Index component 🎉
+  * Full iPhone X safe areas support and required tweaks for MD theme 🙌. Same as for iOS theme: automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
+    * `ios-edges` - for full-width elements (like main View)
+    * `ios-edge-left` - for elements that stick to the left edge of the screen (like left Panel)
+    * `ios-edge-right` - for elements that stick to the right edge of the screen (like right Panel)
+  * Stepper
+    * New `autorepeat` parameter that will repeatedly increase/decrease values while you tap and hold plus/minus buttons
+    * New `autorepeatDynamic` parameter that will increase autorepeat ratio based on how long you hold the button
+    * New `wraps` parameter. When enabled, incrementing beyond maximum value sets value to minimum value; likewise, decrementing below minimum value sets value to maximum value
+  * Sortable
+    * Fixed styling when sortable list is using with `no-chevron` class
+  * Range Slider
+    * New `draggableBar` parameter (defaults to `true`) that allows to disable value change on range bar click and drag
+    * Added auto sizes recalculation on parent modals/panel/tabs open
+  * Router
+    * Will now replace state (if `pushState` enabled) on initial load when initial route has `redirect`
+    * Fixed issue with `tab:beforeremove` event was not fired for routeable tabs
+    * Improved `restoreScrollTopOnBack` logic to save and restore scrolling on active `page-content` element
+    * Swipe Back support for MD theme with new Router parameters:
+      * `mdSwipeBack: false` - enables swipe back for MD theme
+      * `mdSwipeBackAnimateShadow: true` - enable/disable box-shadow animation during swipe back action
+      * `mdSwipeBackAnimateOpacity: false` - enable/disable opacity animation during swipe back action. You can disable it to improve performance
+      * `mdSwipeBackActiveArea: 30` - width of invisible left edge of the screen that triggers swipe back action
+      * `mdSwipeBackThreshold: 0` - swipe back will start if "touch distance" will be more than this value
+  * Request
+    * Now if you `return false` in `beforeOpen` or `beforeSend` callbacks it will cancel the XHR request
+  * Autocomplete
+    * New `inputEvents` parameter (by default is `input`) allows to configure input events used to handle Autcomplete actions and source request
+  * Smart Select
+    * Fixed issue when Searchbar didn't work when Smart Select opened in `page` with Searchbar in iOS theme
+  * Dialog
+    * New `app.dialog.keyboardActions` parameter (enabled by default) that enables keyboard shortcuts (Enter and Esc) keys for predefined dialogs (Alert, Confirm, Prompt, Login, Password)
+  * Fixed iOS 11.3 bug that can break Fast clicks and make Cordova/PhoneGap app unresponsive on app resume from background 🔥
+  * Swiper updated to latest 4.2.2 version
+    * Core
+      * Respect and update breakpoints when calling Swiper's `.update()` method
+    * Pagination
+      * New `progressbarOpposite` parameter to make pagination progressbar opposite to `direction` parameter, means vertical progressbar for horizontal swiper direction and horizontal progressbar for vertical swiper direction
+  * Lots of minor fixes
+
 # [v2.1.3](https://github.com/framework7io/framework7/compare/v2.1.2...v2.1.3) - March 19, 2018
   * Searchbar
     * Fixed issue with position of input clear button

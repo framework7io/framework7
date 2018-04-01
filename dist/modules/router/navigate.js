@@ -20,6 +20,7 @@ function forward(el, forwardOptions = {}) {
   const options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
+    replaceState: false,
     history: true,
     reloadCurrent: router.params.reloadPages,
     reloadPrevious: false,
@@ -154,9 +155,9 @@ function forward(el, forwardOptions = {}) {
   }
 
   // Push State
-  if (router.params.pushState && options.pushState && !options.reloadPrevious) {
+  if (router.params.pushState && (options.pushState || options.replaceState) && !options.reloadPrevious) {
     const pushStateRoot = router.params.pushStateRoot || '';
-    History[options.reloadCurrent || options.reloadAll ? 'replace' : 'push'](
+    History[options.reloadCurrent || options.reloadAll || options.replaceState ? 'replace' : 'push'](
       view.id,
       {
         url: options.route.url,
@@ -180,8 +181,9 @@ function forward(el, forwardOptions = {}) {
 
   // Update router history
   const url = options.route.url;
+
   if (options.history) {
-    if (options.reloadCurrent && router.history.length > 0) {
+    if ((options.reloadCurrent && router.history.length) > 0 || options.replaceState) {
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
     } else if (options.reloadPrevious) {
       router.history[router.history.length - 2] = url;

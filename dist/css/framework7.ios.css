@@ -1,5 +1,5 @@
 /**
- * Framework7 2.1.3
+ * Framework7 2.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 19, 2018
+ * Released on: April 1, 2018
  */
 html,
 body,
@@ -192,29 +192,13 @@ html.with-statusbar.device-ios .framework7-root,
 html.with-statusbar.ios:not(.device-ios):not(.device-android) .framework7-root {
   padding-top: 20px;
 }
-html.with-statusbar.device-ios .panel,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .panel {
-  top: 20px;
-  height: calc(100% - 20px);
-}
 html.with-statusbar.device-android .framework7-root,
 html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root {
   padding-top: 24px;
 }
-html.with-statusbar.device-android .panel,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
-  top: 24px;
-  height: calc(100% - 24px);
-}
 html.with-statusbar.device-iphone-x .framework7-root {
   padding-top: constant(safe-area-inset-top);
   padding-top: env(safe-area-inset-top);
-}
-html.with-statusbar.device-iphone-x .panel {
-  top: constant(safe-area-inset-top);
-  top: env(safe-area-inset-top);
-  height: calc(100% - constant(safe-area-inset-top));
-  height: calc(100% - env(safe-area-inset-top));
 }
 .ios .statusbar {
   background: #f7f7f8;
@@ -314,7 +298,7 @@ html.with-statusbar.device-iphone-x .panel {
   opacity: 1;
 }
 .ios .page-transitioning,
-.ios .page-transitioning page-shadow-effect,
+.ios .page-transitioning .page-shadow-effect,
 .ios .page-transitioning .page-opacity-effect {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
@@ -2679,6 +2663,10 @@ li.list-group-title:before {
   padding: 4px 15px;
   background: #f7f7f7;
   color: #8e8e93;
+}
+.ios .item-divider:after,
+.ios .list-group-title:after {
+  display: none !important;
 }
 .ios .list-group-title {
   margin-top: 0;
@@ -5552,7 +5540,8 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .login-screen {
   -webkit-transform: scaleY(0.33);
   transform: scaleY(0.33);
 }
-.ios.device-iphone-x .sheet-modal .toolbar ~ .sheet-modal-inner .page-content {
+.ios.device-iphone-x .sheet-modal .toolbar ~ .sheet-modal-inner .page-content,
+.ios.device-iphone-x .sheet-modal .sheet-modal-inner > .page-content {
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -6267,7 +6256,7 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
 }
 .sortable-enabled .item-link .item-inner,
 .sortable-enabled .item-link .item-title-row {
-  background-image: none;
+  background-image: none !important;
 }
 .theme-dark .sortable li.sorting,
 .sortable.theme-dark li.sorting {
@@ -6282,6 +6271,12 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > 
 }
 .ios .sortable-enabled .item-inner,
 .ios .sortable-enabled .item-link .item-inner {
+  padding-right: 35px;
+}
+.ios .list.sortable-enabled .item-link.no-chevron .item-inner,
+.ios .list.sortable-enabled.no-chevron .item-link .item-inner,
+.ios .list.sortable-enabled .no-chevron .item-link .item-inner,
+.ios .no-chevron .list.sortable-enabled .item-link .item-inner {
   padding-right: 35px;
 }
 @media (orientation: landscape) {
@@ -6647,6 +6642,316 @@ html.device-android-4 .accordion-item-content {
   color: #fff;
 }
 /* === Virtual List === */
+/* === Indexed List === */
+.list-index {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+  width: 16px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.list-index:before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  top: 0;
+  right: 100%;
+  height: 100%;
+}
+.list-index ul {
+  font-size: 11px;
+  font-weight: 600;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.list-index li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  height: 14px;
+  line-height: 14px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  display: block;
+  width: 100%;
+}
+.list-index .list-index-skip-placeholder:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+}
+.list-index .list-index-label {
+  position: absolute;
+  bottom: 0;
+  right: 100%;
+  text-align: center;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 500;
+}
+.ios .list-index ul {
+  color: #007aff;
+}
+.ios .list-index .list-index-skip-placeholder:after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  margin-top: -3px;
+  background: #007aff;
+}
+.ios .list-index .list-index-label {
+  margin-bottom: -22px;
+  margin-right: 15px;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  border-radius: 50%;
+  background: #007aff;
+  font-size: 17px;
+}
+.ios .list-index .list-index-label:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50% 0% 50% 50%;
+  content: '';
+  background-color: inherit;
+  left: 0;
+  top: 0;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  z-index: -1;
+}
+.ios .navbar ~ .page > .list-index,
+.ios .navbar ~ .list-index {
+  top: 44px;
+}
+.ios .toolbar ~ .page > .list-index,
+.ios .toolbar ~ * .page > .list-index,
+.ios .toolbar ~ .list-index {
+  bottom: 44px;
+}
+.ios .tabbar-labels ~ .page > .list-index,
+.ios .tabbar-labels ~ * .page > .list-index,
+.ios .tabbar-labels ~ .list-index {
+  bottom: 50px;
+}
+@media (min-width: 768px) {
+  .ios .tabbar-labels ~ .page > .list-index,
+  .ios .tabbar-labels ~ * .page > .list-index,
+  .ios .tabbar-labels ~ .list-index {
+    bottom: 56px;
+  }
+}
+.ios.device-iphone-x .toolbar ~ .page > .list-index,
+.ios.device-iphone-x .toolbar ~ * .page > .list-index,
+.ios.device-iphone-x .toolbar ~ .list-index {
+  bottom: calc(44px + constant(safe-area-inset-bottom));
+  bottom: calc(44px + env(safe-area-inset-bottom));
+}
+.ios.device-iphone-x .tabbar-labels ~ .page > .list-index,
+.ios.device-iphone-x .tabbar-labels ~ * .page > .list-index,
+.ios.device-iphone-x .tabbar-labels ~ .list-index {
+  bottom: calc(50px + constant(safe-area-inset-bottom));
+  bottom: calc(50px + env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  .ios.device-iphone-x .tabbar-labels ~ .page > .list-index,
+  .ios.device-iphone-x .tabbar-labels ~ * .page > .list-index,
+  .ios.device-iphone-x .tabbar-labels ~ .list-index {
+    bottom: calc(56px + constant(safe-area-inset-bottom));
+    bottom: calc(56px + env(safe-area-inset-bottom));
+  }
+}
+.ios .color-theme-red .list-index ul,
+.ios .list-index.color-theme-red ul {
+  color: #ff3b30;
+}
+.ios .color-theme-red .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-red .list-index-skip-placeholder:after,
+.ios .color-theme-red .list-index .list-index-label,
+.ios .list-index.color-theme-red .list-index-label {
+  background-color: #ff3b30;
+}
+.ios .color-theme-green .list-index ul,
+.ios .list-index.color-theme-green ul {
+  color: #4cd964;
+}
+.ios .color-theme-green .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-green .list-index-skip-placeholder:after,
+.ios .color-theme-green .list-index .list-index-label,
+.ios .list-index.color-theme-green .list-index-label {
+  background-color: #4cd964;
+}
+.ios .color-theme-blue .list-index ul,
+.ios .list-index.color-theme-blue ul {
+  color: #007aff;
+}
+.ios .color-theme-blue .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-blue .list-index-skip-placeholder:after,
+.ios .color-theme-blue .list-index .list-index-label,
+.ios .list-index.color-theme-blue .list-index-label {
+  background-color: #007aff;
+}
+.ios .color-theme-pink .list-index ul,
+.ios .list-index.color-theme-pink ul {
+  color: #ff2d55;
+}
+.ios .color-theme-pink .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-pink .list-index-skip-placeholder:after,
+.ios .color-theme-pink .list-index .list-index-label,
+.ios .list-index.color-theme-pink .list-index-label {
+  background-color: #ff2d55;
+}
+.ios .color-theme-yellow .list-index ul,
+.ios .list-index.color-theme-yellow ul {
+  color: #ffcc00;
+}
+.ios .color-theme-yellow .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-yellow .list-index-skip-placeholder:after,
+.ios .color-theme-yellow .list-index .list-index-label,
+.ios .list-index.color-theme-yellow .list-index-label {
+  background-color: #ffcc00;
+}
+.ios .color-theme-orange .list-index ul,
+.ios .list-index.color-theme-orange ul {
+  color: #ff9500;
+}
+.ios .color-theme-orange .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-orange .list-index-skip-placeholder:after,
+.ios .color-theme-orange .list-index .list-index-label,
+.ios .list-index.color-theme-orange .list-index-label {
+  background-color: #ff9500;
+}
+.ios .color-theme-gray .list-index ul,
+.ios .list-index.color-theme-gray ul {
+  color: #8e8e93;
+}
+.ios .color-theme-gray .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-gray .list-index-skip-placeholder:after,
+.ios .color-theme-gray .list-index .list-index-label,
+.ios .list-index.color-theme-gray .list-index-label {
+  background-color: #8e8e93;
+}
+.ios .color-theme-white .list-index ul,
+.ios .list-index.color-theme-white ul {
+  color: #ffffff;
+}
+.ios .color-theme-white .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-white .list-index-skip-placeholder:after,
+.ios .color-theme-white .list-index .list-index-label,
+.ios .list-index.color-theme-white .list-index-label {
+  background-color: #ffffff;
+}
+.ios .color-theme-black .list-index ul,
+.ios .list-index.color-theme-black ul {
+  color: #000000;
+}
+.ios .color-theme-black .list-index .list-index-skip-placeholder:after,
+.ios .list-index.color-theme-black .list-index-skip-placeholder:after,
+.ios .color-theme-black .list-index .list-index-label,
+.ios .list-index.color-theme-black .list-index-label {
+  background-color: #000000;
+}
+.ios .list-index.color-red ul {
+  color: #ff3b30;
+}
+.ios .list-index.color-red .list-index-skip-placeholder:after,
+.ios .list-index.color-red .list-index-label {
+  background-color: #ff3b30;
+}
+.ios .list-index.color-green ul {
+  color: #4cd964;
+}
+.ios .list-index.color-green .list-index-skip-placeholder:after,
+.ios .list-index.color-green .list-index-label {
+  background-color: #4cd964;
+}
+.ios .list-index.color-blue ul {
+  color: #007aff;
+}
+.ios .list-index.color-blue .list-index-skip-placeholder:after,
+.ios .list-index.color-blue .list-index-label {
+  background-color: #007aff;
+}
+.ios .list-index.color-pink ul {
+  color: #ff2d55;
+}
+.ios .list-index.color-pink .list-index-skip-placeholder:after,
+.ios .list-index.color-pink .list-index-label {
+  background-color: #ff2d55;
+}
+.ios .list-index.color-yellow ul {
+  color: #ffcc00;
+}
+.ios .list-index.color-yellow .list-index-skip-placeholder:after,
+.ios .list-index.color-yellow .list-index-label {
+  background-color: #ffcc00;
+}
+.ios .list-index.color-orange ul {
+  color: #ff9500;
+}
+.ios .list-index.color-orange .list-index-skip-placeholder:after,
+.ios .list-index.color-orange .list-index-label {
+  background-color: #ff9500;
+}
+.ios .list-index.color-gray ul {
+  color: #8e8e93;
+}
+.ios .list-index.color-gray .list-index-skip-placeholder:after,
+.ios .list-index.color-gray .list-index-label {
+  background-color: #8e8e93;
+}
+.ios .list-index.color-white ul {
+  color: #ffffff;
+}
+.ios .list-index.color-white .list-index-skip-placeholder:after,
+.ios .list-index.color-white .list-index-label {
+  background-color: #ffffff;
+}
+.ios .list-index.color-black ul {
+  color: #000000;
+}
+.ios .list-index.color-black .list-index-skip-placeholder:after,
+.ios .list-index.color-black .list-index-label {
+  background-color: #000000;
+}
 /* === Timeline === */
 .timeline {
   -webkit-box-sizing: border-box;
@@ -7582,6 +7887,22 @@ html.with-panel-left-cover .panel-left {
 html.with-panel-right-cover .panel-right {
   -webkit-transform: translate3d(0px, 0, 0);
   transform: translate3d(0px, 0, 0);
+}
+html.with-statusbar.device-ios .panel,
+html.with-statusbar.ios:not(.device-ios):not(.device-android) .panel {
+  top: 20px;
+  height: calc(100% - 20px);
+}
+html.with-statusbar.device-android .panel,
+html.with-statusbar.md:not(.device-ios):not(.device-android) .panel {
+  top: 24px;
+  height: calc(100% - 24px);
+}
+html.with-statusbar.device-iphone-x .panel {
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
+  height: calc(100% - constant(safe-area-inset-top));
+  height: calc(100% - env(safe-area-inset-top));
 }
 .ios .panel-backdrop {
   -webkit-transition-duration: 400ms;
@@ -9081,6 +9402,13 @@ label.item-radio.disabled,
   -ms-flex-negative: 1;
   flex-shrink: 1;
   text-align: center;
+}
+.stepper-button-plus,
+.stepper-button-minus {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .stepper-button-plus:after,
 .stepper-button-minus:after,
@@ -14608,6 +14936,24 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table
 .messagebar:not(.messagebar-sheet-visible) .messagebar-sheet {
   display: none;
 }
+.ios.device-iphone-x .messagebar:not(.messagebar-top),
+.md.device-iphone-x .messagebar:not(.messagebar-top) {
+  height: auto !important;
+}
+.ios.device-iphone-x .messagebar:not(.messagebar-top):not(.messagebar-sheet-visible),
+.md.device-iphone-x .messagebar:not(.messagebar-top):not(.messagebar-sheet-visible) {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.ios.device-iphone-x .messagebar-sheet,
+.md.device-iphone-x .messagebar-sheet {
+  padding-left: constant(safe-area-inset-left);
+  padding-left: env(safe-area-inset-left);
+  padding-right: constant(safe-area-inset-right);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
 .ios .messagebar {
   background: #fff;
   min-height: 44px;
@@ -14685,21 +15031,6 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table
 .ios .theme-dark .messagebar-attachments {
   border-color: #282829;
   background-color: #000;
-}
-.ios.device-iphone-x .messagebar:not(.messagebar-top) {
-  height: auto;
-}
-.ios.device-iphone-x .messagebar:not(.messagebar-top):not(.messagebar-sheet-visible) {
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-.ios.device-iphone-x .messagebar-sheet {
-  padding-left: constant(safe-area-inset-left);
-  padding-left: env(safe-area-inset-left);
-  padding-right: constant(safe-area-inset-right);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
 }
 /* === Swiper === */
 .swiper-container {
@@ -15169,13 +15500,15 @@ button.swiper-pagination-bullet {
   -webkit-transform-origin: right top;
   transform-origin: right top;
 }
-.swiper-container-horizontal > .swiper-pagination-progressbar {
+.swiper-container-horizontal > .swiper-pagination-progressbar,
+.swiper-container-vertical > .swiper-pagination-progressbar.swiper-pagination-progressbar-opposite {
   width: 100%;
   height: 4px;
   left: 0;
   top: 0;
 }
-.swiper-container-vertical > .swiper-pagination-progressbar {
+.swiper-container-vertical > .swiper-pagination-progressbar,
+.swiper-container-horizontal > .swiper-pagination-progressbar.swiper-pagination-progressbar-opposite {
   width: 4px;
   height: 100%;
   left: 0;

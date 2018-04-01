@@ -232,7 +232,7 @@ class Autocomplete extends Framework7Class {
       }
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.on('focus', onInputFocus);
-        ac.$inputEl.on('input', onInputChange);
+        ac.$inputEl.on(ac.params.inputEvents, onInputChange);
         if (app.device.android) {
           $('html').on('click', onHtmlClick);
         } else {
@@ -249,7 +249,7 @@ class Autocomplete extends Framework7Class {
       }
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.off('focus', onInputFocus);
-        ac.$inputEl.off('input', onInputChange);
+        ac.$inputEl.off(ac.params.inputEvents, onInputChange);
         if (app.device.android) {
           $('html').off('click', onHtmlClick);
         } else {

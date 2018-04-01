@@ -170,13 +170,18 @@ function tabLoad(tabRoute, loadOptions = {}) {
 }
 function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   const router = this;
-  $oldTabEl.trigger('tab:beforeremove', tabRoute);
-  router.emit('tabBeforeRemove', $oldTabEl[0], $newTabEl[0], tabRoute);
+  let hasTabComponentChild;
   $oldTabEl.children().each((index, tabChild) => {
     if (tabChild.f7Component) {
+      hasTabComponentChild = true;
+      $(tabChild).trigger('tab:beforeremove', tabRoute);
       tabChild.f7Component.$destroy();
     }
   });
+  if (!hasTabComponentChild) {
+    $oldTabEl.trigger('tab:beforeremove', tabRoute);
+  }
+  router.emit('tabBeforeRemove', $oldTabEl[0], $newTabEl[0], tabRoute);
   router.removeTabContent($oldTabEl[0], tabRoute);
 }
 

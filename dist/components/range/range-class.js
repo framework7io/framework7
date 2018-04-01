@@ -8,9 +8,15 @@ class Range extends Framework7Class {
     super(params, [app]);
     const range = this;
     const defaults = {
+      el: null,
+      inputEl: null,
       dual: false,
       step: 1,
       label: false,
+      min: 0,
+      max: 100,
+      value: 0,
+      draggableBar: true,
     };
 
     // Extend defaults with modules params
@@ -144,6 +150,11 @@ class Range extends Framework7Class {
     }
     function handleTouchStart(e) {
       if (isTouched) return;
+      if (!range.params.draggableBar) {
+        if ($(e.target).closest('.range-knob').length === 0) {
+          return;
+        }
+      }
       valueChangedByTouch = false;
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
@@ -248,6 +259,12 @@ class Range extends Framework7Class {
       app.on('touchend:passive', handleTouchEnd);
       app.on('tabShow', handleResize);
       app.on('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .on('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .on('panel:open', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -256,6 +273,12 @@ class Range extends Framework7Class {
       app.off('touchend:passive', handleTouchEnd);
       app.off('tabShow', handleResize);
       app.off('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .off('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .off('panel:open', handleResize);
     };
 
     // Install Modules

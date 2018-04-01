@@ -79,6 +79,33 @@
   }
   .hairline-root('.calendar-sheet', top, #ccc);
 
+  .safe-areas({
+    .calendar-sheet .sheet-modal-inner {
+      margin-bottom: constant(safe-area-inset-bottom);
+      margin-bottom: env(safe-area-inset-bottom);
+    }
+  });
+  .safe-areas-landscape({
+    .safe-area-left({
+      &.calendar,
+      .calendar:not(.no-ios-edges):not(.no-ios-left-edge) {
+        .calendar-row, .calendar-week-header {
+          padding-left: constant(safe-area-inset-left);
+          padding-left: env(safe-area-inset-left);
+        }
+      }
+    });
+    .safe-area-right({
+      &.calendar,
+      .calendar:not(.no-ios-edges):not(.no-ios-right-edge) {
+        .calendar-row, .calendar-week-header {
+          padding-right: constant(safe-area-inset-right);
+          padding-right: env(safe-area-inset-right);
+        }
+      }
+    });
+  });
+
   // Dark Theme
   & when (@includeDarkTheme) {
     .theme-dark {

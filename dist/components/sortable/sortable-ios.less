@@ -18,6 +18,18 @@
       });
     }
   }
+  .list.sortable-enabled .item-link.no-chevron .item-inner,
+  .list.sortable-enabled.no-chevron .item-link .item-inner,
+  .list.sortable-enabled .no-chevron .item-link .item-inner,
+  .no-chevron .list.sortable-enabled .item-link .item-inner {
+    .ltr({
+      padding-right: 35px;
+    });
+    .rtl({
+      padding-left: 35px;
+    });
+  }
+
   .safe-areas-landscape({
     .safe-area-right({
       .ltr({

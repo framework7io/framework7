@@ -1,5 +1,5 @@
 /**
- * Framework7 2.1.3
+ * Framework7 2.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 19, 2018
+ * Released on: April 1, 2018
  */
 
 import { window, document } from 'ssr-window';
@@ -935,6 +935,7 @@ function Request(requestOptions) {
   }, globalsNoCallbacks);
 
   const options = Utils.extend({}, defaults, requestOptions);
+  let proceedRequest;
 
   // Function to run XHR callbacks and events
   function fireCallback(callbackName, ...data) {
@@ -948,12 +949,22 @@ function Request(requestOptions) {
       success (response, status, xhr),
       statusCode ()
     */
-    if (globals[callbackName]) globals[callbackName](...data);
-    if (options[callbackName]) options[callbackName](...data);
+    let globalCallbackValue;
+    let optionCallbackValue;
+    if (globals[callbackName]) {
+      globalCallbackValue = globals[callbackName](...data);
+    }
+    if (options[callbackName]) {
+      optionCallbackValue = options[callbackName](...data);
+    }
+    if (typeof globalCallbackValue !== 'boolean') globalCallbackValue = true;
+    if (typeof optionCallbackValue !== 'boolean') optionCallbackValue = true;
+    return (globalCallbackValue && optionCallbackValue);
   }
 
   // Before create callback
-  fireCallback('beforeCreate', options);
+  proceedRequest = fireCallback('beforeCreate', options);
+  if (proceedRequest === false) return undefined;
 
   // For jQuery guys
   if (options.type) options.method = options.type;
@@ -1038,7 +1049,8 @@ function Request(requestOptions) {
   xhr.requestParameters = options;
 
   // Before open callback
-  fireCallback('beforeOpen', xhr, options);
+  proceedRequest = fireCallback('beforeOpen', xhr, options);
+  if (proceedRequest === false) return xhr;
 
   // Open XHR
   xhr.open(method, options.url, options.async, options.user, options.password);
@@ -1148,7 +1160,8 @@ function Request(requestOptions) {
   }
 
   // Ajax start callback
-  fireCallback('beforeSend', xhr, options);
+  proceedRequest = fireCallback('beforeSend', xhr, options);
+  if (proceedRequest === false) return xhr;
 
   // Send XHR
   xhr.send(postData);
@@ -1738,7 +1751,7 @@ function initTouch() {
         }
       });
     }
-    if ((e.timeStamp - lastClickTime) < params.fastClicksDelayBetweenClicks) {
+    if ((touchStartTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
       e.preventDefault();
     }
 
@@ -1790,6 +1803,8 @@ function initTouch() {
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
 
+    const touchEndTime = (new Date()).getTime();
+
     if (!trackClick) {
       if (!activeSelection && needsFastClick) {
         if (!(Device.android && !e.cancelable) && e.cancelable) {
@@ -1811,12 +1826,12 @@ function initTouch() {
       e.preventDefault();
     }
 
-    if ((e.timeStamp - lastClickTime) < params.fastClicksDelayBetweenClicks) {
+    if ((touchEndTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
       setTimeout(removeActive, 0);
       return true;
     }
 
-    lastClickTime = e.timeStamp;
+    lastClickTime = touchEndTime;
 
     trackClick = false;
 
@@ -1841,10 +1856,6 @@ function initTouch() {
     // Trigger focus when required
     if (targetNeedsFocus(targetElement)) {
       if (Device.ios && Device.webView) {
-        if ((e.timeStamp - touchStartTime) > 159) {
-          targetElement = null;
-          return false;
-        }
         targetElement.focus();
         return false;
       }
@@ -2518,7 +2529,7 @@ const History = {
 
 function SwipeBack(r) {
   const router = r;
-  const { $el, $navbarEl, app } = router;
+  const { $el, $navbarEl, app, params } = router;
   let isTouched = false;
   let isMoved = false;
   const touchesStart = {};
@@ -2543,8 +2554,14 @@ function SwipeBack(r) {
   let pageOpacity;
   let navbarWidth;
 
+  const paramsSwipeBackAnimateShadow = params[`${app.theme}SwipeBackAnimateShadow`];
+  const paramsSwipeBackAnimateOpacity = params[`${app.theme}SwipeBackAnimateOpacity`];
+  const paramsSwipeBackActiveArea = params[`${app.theme}SwipeBackActiveArea`];
+  const paramsSwipeBackThreshold = params[`${app.theme}SwipeBackThreshold`];
+
   function handleTouchStart(e) {
-    if (!allowViewTouchMove || !router.params.iosSwipeBack || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) return;
+    const swipeBackEnabled = params[`${app.theme}SwipeBack`];
+    if (!allowViewTouchMove || !swipeBackEnabled || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) return;
     if ($(e.target).closest('.range-slider, .calendar-months').length > 0) return;
     isMoved = false;
     isTouched = true;
@@ -2581,12 +2598,12 @@ function SwipeBack(r) {
       if (currentPage.hasClass('no-swipeback') || target.closest('.no-swipeback').length > 0) cancel = true;
       previousPage = $el.find('.page-previous:not(.stacked)');
 
-      let notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
+      let notFromBorder = touchesStart.x - $el.offset().left > paramsSwipeBackActiveArea;
       viewContainerWidth = $el.width();
       if (app.rtl) {
-        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - router.params.iosSwipeBackActiveArea);
+        notFromBorder = touchesStart.x < ($el.offset().left - $el[0].scrollLeft) + (viewContainerWidth - paramsSwipeBackActiveArea);
       } else {
-        notFromBorder = touchesStart.x - $el.offset().left > router.params.iosSwipeBackActiveArea;
+        notFromBorder = touchesStart.x - $el.offset().left > paramsSwipeBackActiveArea;
       }
       if (notFromBorder) cancel = true;
       if (previousPage.length === 0 || currentPage.length === 0) cancel = true;
@@ -2595,14 +2612,14 @@ function SwipeBack(r) {
         return;
       }
 
-      if (router.params.iosSwipeBackAnimateShadow) {
+      if (paramsSwipeBackAnimateShadow) {
         pageShadow = currentPage.find('.page-shadow-effect');
         if (pageShadow.length === 0) {
           pageShadow = $('<div class="page-shadow-effect"></div>');
           currentPage.append(pageShadow);
         }
       }
-      if (router.params.iosSwipeBackAnimateOpacity) {
+      if (paramsSwipeBackAnimateOpacity) {
         pageOpacity = previousPage.find('.page-opacity-effect');
         if (pageOpacity.length === 0) {
           pageOpacity = $('<div class="page-opacity-effect"></div>');
@@ -2621,7 +2638,7 @@ function SwipeBack(r) {
         navbarWidth = $navbarEl[0].offsetWidth;
         currentNavElements = currentNavbar.children('.left, .title, .right, .subnavbar, .fading');
         previousNavElements = previousNavbar.children('.left, .title, .right, .subnavbar, .fading');
-        if (router.params.iosAnimateNavbarBackIcon) {
+        if (params.iosAnimateNavbarBackIcon) {
           if (currentNavbar.hasClass('sliding')) {
             activeNavBackIcon = currentNavbar.children('.left').find('.back .icon');
             activeNavBackIconText = currentNavbar.children('.left').find('.back span').eq(0);
@@ -2653,7 +2670,7 @@ function SwipeBack(r) {
     const inverter = app.rtl ? -1 : 1;
 
     // Touches diff
-    touchesDiff = (pageX - touchesStart.x - router.params.iosSwipeBackThreshold) * inverter;
+    touchesDiff = (pageX - touchesStart.x - paramsSwipeBackThreshold) * inverter;
     if (touchesDiff < 0) touchesDiff = 0;
     const percentage = touchesDiff / viewContainerWidth;
 
@@ -2677,10 +2694,12 @@ function SwipeBack(r) {
     }
 
     currentPage.transform(`translate3d(${currentPageTranslate}px,0,0)`);
-    if (router.params.iosSwipeBackAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
+    if (paramsSwipeBackAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
 
-    previousPage.transform(`translate3d(${previousPageTranslate}px,0,0)`);
-    if (router.params.iosSwipeBackAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
+    if (app.theme !== 'md') {
+      previousPage.transform(`translate3d(${previousPageTranslate}px,0,0)`);
+    }
+    if (paramsSwipeBackAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
 
     // Dynamic Navbars Animation
     if (dynamicNavbar) {
@@ -2691,7 +2710,7 @@ function SwipeBack(r) {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
           if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
           $navEl.transform(`translate3d(${activeNavTranslate}px,0,0)`);
-          if (router.params.iosAnimateNavbarBackIcon) {
+          if (params.iosAnimateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && activeNavBackIcon.length > 0) {
               let iconTranslate = -activeNavTranslate;
               if (!separateNavbar) {
@@ -2714,7 +2733,7 @@ function SwipeBack(r) {
           }
           if (Device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
           $navEl.transform(`translate3d(${previousNavTranslate}px,0,0)`);
-          if (router.params.iosAnimateNavbarBackIcon) {
+          if (params.iosAnimateNavbarBackIcon) {
             if ($navEl[0].className.indexOf('left') >= 0 && previousNavBackIcon.length > 0) {
               let iconTranslate = -previousNavTranslate;
               if (!separateNavbar) {
@@ -2728,6 +2747,7 @@ function SwipeBack(r) {
     }
   }
   function handleTouchEnd() {
+    if (!router.view.main) return;
     app.preventSwipePanelBySwipeBack = false;
     if (!isTouched || !isMoved) {
       isTouched = false;
@@ -2738,6 +2758,8 @@ function SwipeBack(r) {
     isMoved = false;
     if (touchesDiff === 0) {
       $([currentPage[0], previousPage[0]]).transform('');
+      if (pageShadow && pageShadow.length > 0) pageShadow.remove();
+      if (pageOpacity && pageOpacity.length > 0) pageOpacity.remove();
       if (dynamicNavbar) {
         currentNavElements.transform('').css({ opacity: '' });
         previousNavElements.transform('').css({ opacity: '' });
@@ -2753,19 +2775,20 @@ function SwipeBack(r) {
       (timeDiff < 300 && touchesDiff > 10) ||
       (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
     ) {
-      currentPage.removeClass('page-current').addClass('page-next');
-      previousPage.removeClass('page-previous').addClass('page-current');
+      currentPage.removeClass('page-current').addClass(`page-next${app.theme === 'md' ? ' page-next-on-right' : ''}`);
+      previousPage.removeClass('page-previous').addClass('page-current').removeAttr('aria-hidden');
       if (pageShadow) pageShadow[0].style.opacity = '';
       if (pageOpacity) pageOpacity[0].style.opacity = '';
       if (dynamicNavbar) {
         currentNavbar.removeClass('navbar-current').addClass('navbar-next');
-        previousNavbar.removeClass('navbar-previous').addClass('navbar-current');
+        previousNavbar.removeClass('navbar-previous').addClass('navbar-current').removeAttr('aria-hidden');
       }
       pageChanged = true;
     }
     // Reset custom styles
     // Add transitioning class for transition-duration
-    $([currentPage[0], previousPage[0]]).addClass('page-transitioning').transform('');
+    $([currentPage[0], previousPage[0]]).addClass('page-transitioning page-transitioning-swipeback').transform('');
+
     if (dynamicNavbar) {
       currentNavElements.css({ opacity: '' })
         .each((navElIndex, navEl) => {
@@ -2774,7 +2797,7 @@ function SwipeBack(r) {
           let iconTranslate = pageChanged ? -translate : 0;
           if (!separateNavbar && pageChanged) iconTranslate -= navbarWidth;
           sliding.transform(`translate3d(${translate}px,0,0)`);
-          if (router.params.iosAnimateNavbarBackIcon) {
+          if (params.iosAnimateNavbarBackIcon) {
             if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
               activeNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
             }
@@ -2787,7 +2810,7 @@ function SwipeBack(r) {
         let iconTranslate = pageChanged ? 0 : -translate;
         if (!separateNavbar && !pageChanged) iconTranslate += navbarWidth / 5;
         sliding.transform(`translate3d(${translate}px,0,0)`);
-        if (router.params.iosAnimateNavbarBackIcon) {
+        if (params.iosAnimateNavbarBackIcon) {
           if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
             previousNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
           }
@@ -2822,7 +2845,8 @@ function SwipeBack(r) {
     }
 
     currentPage.transitionEnd(() => {
-      $([currentPage[0], previousPage[0]]).removeClass('page-transitioning');
+      $([currentPage[0], previousPage[0]]).removeClass('page-transitioning page-transitioning-swipeback');
+
       if (dynamicNavbar) {
         currentNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
         previousNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
@@ -2840,7 +2864,7 @@ function SwipeBack(r) {
         router.saveHistory();
 
         // Update push state
-        if (router.params.pushState) {
+        if (params.pushState) {
           History.back();
         }
 
@@ -2849,7 +2873,7 @@ function SwipeBack(r) {
         router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
 
         // Remove Old Page
-        if (router.params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
+        if (params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
           currentPage.addClass('stacked');
           if (separateNavbar) {
             currentNavbar.addClass('stacked');
@@ -2867,7 +2891,7 @@ function SwipeBack(r) {
 
         router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
-        if (router.params.preloadPreviousPage) {
+        if (params.preloadPreviousPage) {
           router.back(router.history[router.history.length - 2], { preload: true });
         }
       } else {
@@ -2900,6 +2924,10 @@ function SwipeBack(r) {
 function redirect (direction, route, options) {
   const router = this;
   const redirect = route.route.redirect;
+  if (options.initial && router.params.pushState) {
+    options.replaceState = true; // eslint-disable-line
+    options.history = true; // eslint-disable-line
+  }
   function redirectResolve(redirectUrl, redirectOptions = {}) {
     router.allowPageChange = true;
     router[direction](redirectUrl, Utils.extend({}, options, redirectOptions));
@@ -2935,6 +2963,7 @@ function forward(el, forwardOptions = {}) {
   const options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
+    replaceState: false,
     history: true,
     reloadCurrent: router.params.reloadPages,
     reloadPrevious: false,
@@ -3069,9 +3098,9 @@ function forward(el, forwardOptions = {}) {
   }
 
   // Push State
-  if (router.params.pushState && options.pushState && !options.reloadPrevious) {
+  if (router.params.pushState && (options.pushState || options.replaceState) && !options.reloadPrevious) {
     const pushStateRoot = router.params.pushStateRoot || '';
-    History[options.reloadCurrent || options.reloadAll ? 'replace' : 'push'](
+    History[options.reloadCurrent || options.reloadAll || options.replaceState ? 'replace' : 'push'](
       view.id,
       {
         url: options.route.url,
@@ -3095,8 +3124,9 @@ function forward(el, forwardOptions = {}) {
 
   // Update router history
   const url = options.route.url;
+
   if (options.history) {
-    if (options.reloadCurrent && router.history.length > 0) {
+    if ((options.reloadCurrent && router.history.length) > 0 || options.replaceState) {
       router.history[router.history.length - (options.reloadPrevious ? 2 : 1)] = url;
     } else if (options.reloadPrevious) {
       router.history[router.history.length - 2] = url;
@@ -3672,13 +3702,18 @@ function tabLoad(tabRoute, loadOptions = {}) {
 }
 function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   const router = this;
-  $oldTabEl.trigger('tab:beforeremove', tabRoute);
-  router.emit('tabBeforeRemove', $oldTabEl[0], $newTabEl[0], tabRoute);
+  let hasTabComponentChild;
   $oldTabEl.children().each((index, tabChild) => {
     if (tabChild.f7Component) {
+      hasTabComponentChild = true;
+      $(tabChild).trigger('tab:beforeremove', tabRoute);
       tabChild.f7Component.$destroy();
     }
   });
+  if (!hasTabComponentChild) {
+    $oldTabEl.trigger('tab:beforeremove', tabRoute);
+  }
+  router.emit('tabBeforeRemove', $oldTabEl[0], $newTabEl[0], tabRoute);
   router.removeTabContent($oldTabEl[0], tabRoute);
 }
 
@@ -4819,6 +4854,14 @@ class Router extends Framework7Class {
     if ($el[0].f7Component && $el[0].f7Component.$destroy) {
       $el[0].f7Component.$destroy();
     }
+    $el.find('.tab').each((tabIndex, tabEl) => {
+      $(tabEl).children().each((index, tabChild) => {
+        if (tabChild.f7Component) {
+          $(tabChild).trigger('tab:beforeremove');
+          tabChild.f7Component.$destroy();
+        }
+      });
+    });
     if (!router.params.removeElements) {
       return;
     }
@@ -5359,8 +5402,18 @@ class Router extends Framework7Class {
       attachEvents();
     }
     if (callback === 'init') {
-      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url]) {
-        $pageEl.find('.page-content').scrollTop(router.scrollHistory[page.route.url]);
+      if (restoreScrollTopOnBack && (from === 'previous' || !from) && to === 'current' && router.scrollHistory[page.route.url] && !$pageEl.hasClass('no-restore-scroll')) {
+        let $pageContent = $pageEl.find('.page-content');
+        if ($pageContent.length > 0) {
+          // eslint-disable-next-line
+          $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+            return (
+              $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+              !$(pageContentEl).is('.tab:not(.tab-active)')
+            );
+          });
+        }
+        $pageContent.scrollTop(router.scrollHistory[page.route.url]);
       }
       attachEvents();
       if ($pageEl[0].f7PageInitialized) {
@@ -5372,7 +5425,17 @@ class Router extends Framework7Class {
     }
     if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'previous') {
       // Save scroll position
-      router.scrollHistory[page.route.url] = $pageEl.find('.page-content').scrollTop();
+      let $pageContent = $pageEl.find('.page-content');
+      if ($pageContent.length > 0) {
+        // eslint-disable-next-line
+        $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
+          return (
+            $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
+            !$(pageContentEl).is('.tab:not(.tab-active)')
+          );
+        });
+      }
+      router.scrollHistory[page.route.url] = $pageContent.scrollTop();
     }
     if (restoreScrollTopOnBack && callback === 'beforeOut' && from === 'current' && to === 'next') {
       // Delete scroll position
@@ -5413,7 +5476,10 @@ class Router extends Framework7Class {
 
     // Init Swipeback
     {
-      if (view && router.params.iosSwipeBack && app.theme === 'ios') {
+      if (
+        (view && router.params.iosSwipeBack && app.theme === 'ios') ||
+        (view && router.params.mdSwipeBack && app.theme === 'md')
+      ) {
         SwipeBack(router);
       }
     }
@@ -5501,6 +5567,7 @@ class Router extends Framework7Class {
     if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl) {
       // No pages presented in DOM, reload new page
       router.navigate(initUrl, {
+        initial: true,
         reloadCurrent: true,
         pushState: false,
       });
@@ -5544,6 +5611,7 @@ class Router extends Framework7Class {
       });
       if (historyRestored) {
         router.navigate(initUrl, {
+          initial: true,
           pushState: false,
           history: false,
           animate: router.params.pushStateAnimateOnLoad,
@@ -5793,7 +5861,7 @@ function initClicks(app) {
         view = $(clickedLinkData.view)[0].f7View;
       } else {
         view = clicked.parents('.view')[0] && clicked.parents('.view')[0].f7View;
-        if (view && view.params.linksView) {
+        if (!clickedLink.hasClass('back') && view && view.params.linksView) {
           if (typeof view.params.linksView === 'string') view = $(view.params.linksView)[0].f7View;
           else if (view.params.linksView instanceof View) view = view.params.linksView;
         }
@@ -6174,6 +6242,11 @@ var View$1 = {
       iosSwipeBackAnimateOpacity: true,
       iosSwipeBackActiveArea: 30,
       iosSwipeBackThreshold: 0,
+      mdSwipeBack: false,
+      mdSwipeBackAnimateShadow: true,
+      mdSwipeBackAnimateOpacity: false,
+      mdSwipeBackActiveArea: 30,
+      mdSwipeBackThreshold: 0,
       // Push State
       pushState: false,
       pushStateRoot: undefined,
@@ -6649,7 +6722,7 @@ const Toolbar = {
     let highlightWidth;
     let highlightTranslate;
 
-    if ($tabbarEl.hasClass('tabbar-scrollable')) {
+    if ($tabbarEl.hasClass('tabbar-scrollable') && $activeLink && $activeLink[0]) {
       highlightWidth = `${$activeLink[0].offsetWidth}px`;
       highlightTranslate = `${$activeLink[0].offsetLeft}px`;
     } else {
@@ -7244,6 +7317,7 @@ class Dialog extends Modal {
       verticalButtons: false,
       onClick: undefined,
       cssClass: undefined,
+      destroyOnClose: false,
       on: {},
     }, params);
     if (typeof extendedParams.closeByBackdropClick === 'undefined') {
@@ -7317,16 +7391,47 @@ class Dialog extends Modal {
       if (dialog.params.onClick) dialog.params.onClick(dialog, index);
       if (button.close !== false) dialog.close();
     }
+    let addKeyboardHander;
+    function onKeyPress(e) {
+      const keyCode = e.keyCode;
+      buttons.forEach((button, index) => {
+        if (button.keyCodes && button.keyCodes.indexOf(keyCode) >= 0) {
+          if (document.activeElement) document.activeElement.blur();
+          if (button.onClick) button.onClick(dialog, e);
+          if (dialog.params.onClick) dialog.params.onClick(dialog, index);
+          if (button.close !== false) dialog.close();
+        }
+      });
+    }
     if (buttons && buttons.length > 0) {
       dialog.on('open', () => {
         $el.find('.dialog-button').each((index, buttonEl) => {
+          const button = buttons[index];
+          if (button.keyCodes) addKeyboardHander = true;
           $(buttonEl).on('click', buttonOnClick);
         });
+        if (
+          addKeyboardHander &&
+          !app.device.ios &&
+          !app.device.android &&
+          !app.device.cordova
+        ) {
+          $(document).on('keydown', onKeyPress);
+        }
       });
       dialog.on('close', () => {
         $el.find('.dialog-button').each((index, buttonEl) => {
           $(buttonEl).off('click', buttonOnClick);
         });
+        if (
+          addKeyboardHander &&
+          !app.device.ios &&
+          !app.device.android &&
+          !app.device.cordova
+        ) {
+          $(document).off('keydown', onKeyPress);
+        }
+        addKeyboardHander = false;
       });
     }
     Utils.extend(dialog, {
@@ -7483,6 +7588,7 @@ var Dialog$1 = {
       progressTitle: 'Loading... ',
       closeByBackdropClick: false,
       destroyPredefinedDialogs: true,
+      keyboardActions: true,
     },
   },
   static: {
@@ -7492,6 +7598,7 @@ var Dialog$1 = {
     const app = this;
     const defaultDialogTitle = app.params.dialog.title || app.name;
     const destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
+    const keyboardActions = app.params.dialog.keyboardActions;
     app.dialog = Utils.extend(
       ModalMethods({
         app,
@@ -7512,6 +7619,7 @@ var Dialog$1 = {
               text: app.params.dialog.buttonOk,
               bold: true,
               onClick: callbackOk,
+              keyCodes: keyboardActions ? [13, 27] : null,
             }],
             destroyOnClose,
           }).open();
@@ -7528,10 +7636,12 @@ var Dialog$1 = {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             onClick(dialog, index) {
@@ -7554,11 +7664,13 @@ var Dialog$1 = {
               {
                 text: app.params.dialog.buttonCancel,
                 onClick: callbackCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
                 onClick: callbackOk,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             destroyOnClose,
@@ -7586,10 +7698,12 @@ var Dialog$1 = {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             onClick(dialog, index) {
@@ -7618,10 +7732,12 @@ var Dialog$1 = {
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
+                keyCodes: keyboardActions ? [27] : null,
               },
               {
                 text: app.params.dialog.buttonOk,
                 bold: true,
+                keyCodes: keyboardActions ? [13] : null,
               },
             ],
             onClick(dialog, index) {
@@ -9518,7 +9634,7 @@ const Swipeout = {
           $(Swipeout.el).is($targetEl[0]) ||
           $targetEl.parents('.swipeout').is(Swipeout.el) ||
           $targetEl.hasClass('modal-in') ||
-          $targetEl[0].className.indexOf('-backdrop') > 0 ||
+          ($targetEl.attr('class') || '').indexOf('-backdrop') > 0 ||
           $targetEl.hasClass('actions-modal') ||
           $targetEl.parents('.actions-modal.modal-in, .dialog.modal-in').length > 0
         )) {
@@ -10377,6 +10493,368 @@ var VirtualList$1 = {
       app,
       domProp: 'f7VirtualList',
     });
+  },
+};
+
+class ListIndex extends Framework7Class {
+  constructor(app, params = {}) {
+    super(params, [app]);
+    const index = this;
+
+    const defaults = {
+      el: null, // where to render indexes
+      listEl: null, // list el to generate indexes
+      indexes: 'auto', // or array of indexes
+      iosItemHeight: 14,
+      mdItemHeight: 14,
+      scrollList: true,
+      label: false,
+      // eslint-disable-next-line
+      renderItem(itemContent, itemIndex) {
+        return `
+          <li>${itemContent}</li>
+        `.trim();
+      },
+      renderSkipPlaceholder() {
+        return '<li class="list-index-skip-placeholder"></li>';
+      },
+      on: {},
+    };
+
+    // Extend defaults with modules params
+    index.useModulesParams(defaults);
+
+    index.params = Utils.extend(defaults, params);
+
+    let $el;
+    let $listEl;
+    let $pageContentEl;
+    let $ul;
+
+    if (index.params.el) {
+      $el = $(index.params.el);
+    } else {
+      return index;
+    }
+
+    $ul = $el.find('ul');
+    if ($ul.length === 0) {
+      $ul = $('<ul></ul>');
+      $el.append($ul);
+    }
+
+    if (index.params.listEl) {
+      $listEl = $(index.params.listEl);
+    }
+
+    if (index.params.indexes === 'auto' && !$listEl) {
+      return index;
+    }
+
+    if ($listEl) {
+      $pageContentEl = $listEl.parents('.page-content').eq(0);
+    } else {
+      $pageContentEl = $el.siblings('.page-content').eq(0);
+      if ($pageContentEl.length === 0) {
+        $pageContentEl = $el.parents('.page').eq(0).find('.page-content').eq(0);
+      }
+    }
+
+    $el[0].f7ListIndex = index;
+
+    Utils.extend(index, {
+      app,
+      $el,
+      el: $el && $el[0],
+      $ul,
+      ul: $ul && $ul[0],
+      $listEl,
+      listEl: $listEl && $listEl[0],
+      $pageContentEl,
+      pageContentEl: $pageContentEl && $pageContentEl[0],
+      indexes: params.indexes,
+      height: 0,
+      skipRate: 0,
+    });
+
+    // Install Modules
+    index.useModules();
+
+    // Attach events
+    function handleResize() {
+      const height = { index };
+      index.calcSize();
+      if (height !== index.height) {
+        index.render();
+      }
+    }
+
+    function handleClick(e) {
+      const $clickedLi = $(e.target).closest('li');
+      if (!$clickedLi.length) return;
+
+      let itemIndex = $clickedLi.index();
+      if (index.skipRate > 0) {
+        const percentage = itemIndex / ($clickedLi.siblings('li').length - 1);
+        itemIndex = Math.round((index.indexes.length - 1) * percentage);
+      }
+      const itemContent = index.indexes[itemIndex];
+
+      index.$el.trigger('listindex:click', itemContent, itemIndex);
+      index.emit('local::click listIndexClick', index, itemContent, itemIndex);
+      index.$el.trigger('listindex:click', itemContent, itemIndex);
+      index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
+
+      if (index.$listEl && index.params.scrollList) {
+        index.scrollListToIndex(itemContent, itemIndex);
+      }
+    }
+
+    const touchesStart = {};
+    let isTouched;
+    let isMoved;
+    let topPoint;
+    let bottomPoint;
+    let $labelEl;
+    let previousIndex = null;
+    function handleTouchStart(e) {
+      const $children = $ul.children();
+      if (!$children.length) return;
+      topPoint = $children[0].getBoundingClientRect().top;
+      bottomPoint = $children[$children.length - 1].getBoundingClientRect().top + $children[0].offsetHeight;
+
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      isTouched = true;
+      isMoved = false;
+      previousIndex = null;
+    }
+    function handleTouchMove(e) {
+      if (!isTouched) return;
+      if (!isMoved && index.params.label) {
+        $labelEl = $('<span class="list-index-label"></span>');
+        $el.append($labelEl);
+      }
+      isMoved = true;
+      const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      e.preventDefault();
+
+      let percentage = (pageY - topPoint) / (bottomPoint - topPoint);
+      percentage = Math.min(Math.max(percentage, 0), 1);
+
+      const itemIndex = Math.round((index.indexes.length - 1) * percentage);
+      const itemContent = index.indexes[itemIndex];
+
+
+      const ulHeight = bottomPoint - topPoint;
+      const bubbleBottom = ((index.height - ulHeight) / 2) + ((1 - percentage) * ulHeight);
+
+      if (itemIndex !== previousIndex) {
+        if (index.params.label) {
+          $labelEl.html(itemContent).transform(`translateY(-${bubbleBottom}px)`);
+        }
+
+        if (index.$listEl && index.params.scrollList) {
+          index.scrollListToIndex(itemContent, itemIndex);
+        }
+      }
+
+      previousIndex = itemIndex;
+
+      index.$el.trigger('listindex:select', index);
+      index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
+    }
+    function handleTouchEnd() {
+      if (!isTouched) return;
+      isTouched = false;
+      isMoved = false;
+      if (index.params.label) {
+        if ($labelEl) $labelEl.remove();
+        $labelEl = undefined;
+      }
+    }
+    const passiveListener = app.support.passiveListener ? { passive: true } : false;
+    index.attachEvents = function attachEvents() {
+      $el.parents('.tab').on('tab:show', handleResize);
+      $el.parents('.page').on('page:reinit', handleResize);
+      $el.parents('.panel').on('panel:open', handleResize);
+      $el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .on('modal:open', handleResize);
+      app.on('resize', handleResize);
+
+      $el.on('click', handleClick);
+      $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
+      app.on('touchmove:active', handleTouchMove);
+      app.on('touchend:passive', handleTouchEnd);
+    };
+    index.detachEvents = function attachEvents() {
+      $el.parents('.tab').off('tab:show', handleResize);
+      $el.parents('.page').off('page:reinit', handleResize);
+      $el.parents('.panel').off('panel:open', handleResize);
+      $el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .off('modal:open', handleResize);
+      app.off('resize', handleResize);
+
+      $el.off('click', handleClick);
+      $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
+      app.off('touchmove:active', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
+    };
+    // Init
+    index.init();
+
+    return index;
+  }
+  // eslint-disable-next-line
+  scrollListToIndex(itemContent, itemIndex) {
+    const index = this;
+    const { $listEl, $pageContentEl } = index;
+    if (!$listEl || !$pageContentEl || $pageContentEl.length === 0) return index;
+
+    let $scrollToEl;
+    $listEl.find('.list-group-title, .item-divider').each((elIndex, el) => {
+      if ($scrollToEl) return;
+      const $el = $(el);
+      if ($el.text() === itemContent) {
+        $scrollToEl = $el;
+      }
+    });
+    if (!$scrollToEl || $scrollToEl.length === 0) return index;
+
+    $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+    return index;
+  }
+  renderSkipPlaceholder() {
+    const index = this;
+    return index.params.renderSkipPlaceholder.call(index);
+  }
+  renderItem(itemContent, itemIndex) {
+    const index = this;
+    return index.params.renderItem.call(index, itemContent, itemIndex);
+  }
+  render() {
+    const index = this;
+    const { $ul, indexes, skipRate } = index;
+    let wasSkipped;
+
+    const html = indexes.map((itemContent, itemIndex) => {
+      if (itemIndex % skipRate !== 0 && skipRate > 0) {
+        wasSkipped = true;
+        return '';
+      }
+      let itemHtml = index.renderItem(itemContent, itemIndex);
+      if (wasSkipped) {
+        itemHtml = index.renderSkipPlaceholder() + itemHtml;
+      }
+      wasSkipped = false;
+      return itemHtml;
+    }).join('');
+
+    $ul.html(html);
+
+    return index;
+  }
+  calcSize() {
+    const index = this;
+    const { app, params, el, indexes } = index;
+    const height = el.offsetHeight;
+    const itemHeight = app.theme === 'ios' ? params.iosItemHeight : params.mdItemHeight;
+    const maxItems = Math.floor(height / itemHeight);
+    const items = indexes.length;
+    let skipRate = 0;
+    if (items > maxItems) {
+      skipRate = Math.ceil(((items * 2) - 1) / maxItems);
+    }
+
+    index.height = height;
+    index.skipRate = skipRate;
+
+    return index;
+  }
+  calcIndexes() {
+    const index = this;
+    if (index.params.indexes === 'auto') {
+      index.indexes = [];
+
+      index.$listEl.find('.list-group-title, .item-divider').each((elIndex, el) => {
+        const elContent = $(el).text();
+        if (index.indexes.indexOf(elContent) < 0) {
+          index.indexes.push(elContent);
+        }
+      });
+    } else {
+      index.indexes = index.params.indexes;
+    }
+    return index;
+  }
+  update() {
+    const index = this;
+    index.calcIndexes();
+    index.calcSize();
+    index.render();
+
+    return index;
+  }
+  init() {
+    const index = this;
+    index.calcIndexes();
+    index.calcSize();
+    index.render();
+    index.attachEvents();
+  }
+  destroy() {
+    let index = this;
+    index.$el.trigger('listindex:beforedestroy', index);
+    index.emit('local::beforeDestroy listIndexBeforeDestroy', index);
+    index.detachEvents();
+    index.$el[0].f7ListIndex = null;
+    delete index.$el[0].f7ListIndex;
+    Utils.deleteProps(index);
+    index = null;
+  }
+}
+
+var ListIndex$1 = {
+  name: 'listIndex',
+  static: {
+    ListIndex,
+  },
+  create() {
+    const app = this;
+    app.listIndex = ConstructorMethods({
+      defaultSelector: '.list-index',
+      constructor: ListIndex,
+      app,
+      domProp: 'f7ListIndex',
+    });
+  },
+  on: {
+    tabMounted(tabEl) {
+      const app = this;
+      $(tabEl).find('.list-index-init').each((index, listIndexEl) => {
+        const params = Utils.extend($(listIndexEl).dataset(), { el: listIndexEl });
+        app.listIndex.create(params);
+      });
+    },
+    tabBeforeRemove(tabEl) {
+      $(tabEl).find('.list-index-init').each((index, listIndexEl) => {
+        if (listIndexEl.f7ListIndex) listIndexEl.f7ListIndex.destroy();
+      });
+    },
+    pageInit(page) {
+      const app = this;
+      page.$el.find('.list-index-init').each((index, listIndexEl) => {
+        const params = Utils.extend($(listIndexEl).dataset(), { el: listIndexEl });
+        app.listIndex.create(params);
+      });
+    },
+    pageBeforeRemove(page) {
+      page.$el.find('.list-index-init').each((index, listIndexEl) => {
+        if (listIndexEl.f7ListIndex) listIndexEl.f7ListIndex.destroy();
+      });
+    },
   },
 };
 
@@ -12169,9 +12647,15 @@ class Range extends Framework7Class {
     super(params, [app]);
     const range = this;
     const defaults = {
+      el: null,
+      inputEl: null,
       dual: false,
       step: 1,
       label: false,
+      min: 0,
+      max: 100,
+      value: 0,
+      draggableBar: true,
     };
 
     // Extend defaults with modules params
@@ -12305,6 +12789,11 @@ class Range extends Framework7Class {
     }
     function handleTouchStart(e) {
       if (isTouched) return;
+      if (!range.params.draggableBar) {
+        if ($(e.target).closest('.range-knob').length === 0) {
+          return;
+        }
+      }
       valueChangedByTouch = false;
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
@@ -12409,6 +12898,12 @@ class Range extends Framework7Class {
       app.on('touchend:passive', handleTouchEnd);
       app.on('tabShow', handleResize);
       app.on('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .on('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .on('panel:open', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -12417,6 +12912,12 @@ class Range extends Framework7Class {
       app.off('touchend:passive', handleTouchEnd);
       app.off('tabShow', handleResize);
       app.off('resize', handleResize);
+      range.$el
+        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
+        .off('modal:open', handleResize);
+      range.$el
+        .parents('.panel')
+        .off('panel:open', handleResize);
     };
 
     // Install Modules
@@ -12616,6 +13117,9 @@ class Stepper extends Framework7Class {
       min: 0,
       max: 100,
       watchInput: true,
+      autorepeat: false,
+      autorepeatDynamic: false,
+      wraps: false,
     };
 
     // Extend defaults with modules params
@@ -12688,10 +13192,88 @@ class Stepper extends Framework7Class {
     $el[0].f7Stepper = stepper;
 
     // Handle Events
+    const touchesStart = {};
+    let isTouched;
+    let isScrolling;
+    let preventButtonClick;
+    let intervalId;
+    let timeoutId;
+    let autorepeatAction = null;
+    let autorepeatInAction = false;
+
+    function dynamicRepeat(current, progressions, startsIn, progressionStep, repeatEvery, action) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        if (current === 1) {
+          preventButtonClick = true;
+          autorepeatInAction = true;
+        }
+        clearInterval(intervalId);
+        action();
+        intervalId = setInterval(() => {
+          action();
+        }, repeatEvery);
+        if (current < progressions) {
+          dynamicRepeat(current + 1, progressions, startsIn, progressionStep, repeatEvery / 2, action);
+        }
+      }, current === 1 ? startsIn : progressionStep);
+    }
+
+    function onTouchStart(e) {
+      if (isTouched) return;
+      if ($(e.target).closest($buttonPlusEl).length) {
+        autorepeatAction = 'increment';
+      } else if ($(e.target).closest($buttonMinusEl).length) {
+        autorepeatAction = 'decrement';
+      }
+      if (!autorepeatAction) return;
+
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      isTouched = true;
+      isScrolling = undefined;
+
+      const progressions = stepper.params.autorepeatDynamic ? 4 : 1;
+      dynamicRepeat(1, progressions, 500, 1000, 300, () => {
+        stepper[autorepeatAction]();
+      });
+    }
+    function onTouchMove(e) {
+      if (!isTouched) return;
+      const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+      const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+
+      if (typeof isScrolling === 'undefined' && !autorepeatInAction) {
+        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+      }
+      const distance = (((pageX - touchesStart.x) ** 2) + ((pageY - touchesStart.y) ** 2)) ** 0.5;
+
+      if (isScrolling || distance > 20) {
+        isTouched = false;
+        clearTimeout(timeoutId);
+        clearInterval(intervalId);
+      }
+    }
+    function onTouchEnd() {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+      autorepeatAction = null;
+      autorepeatInAction = false;
+      isTouched = false;
+    }
+
     function onMinusClick() {
+      if (preventButtonClick) {
+        preventButtonClick = false;
+        return;
+      }
       stepper.decrement();
     }
     function onPlusClick() {
+      if (preventButtonClick) {
+        preventButtonClick = false;
+        return;
+      }
       stepper.increment();
     }
     function onInput(e) {
@@ -12703,6 +13285,11 @@ class Stepper extends Framework7Class {
       $buttonPlusEl.on('click', onPlusClick);
       if (stepper.params.watchInput && $inputEl && $inputEl.length) {
         $inputEl.on('input', onInput);
+      }
+      if (stepper.params.autorepeat) {
+        app.on('touchstart:passive', onTouchStart);
+        app.on('touchmove:active', onTouchMove);
+        app.on('touchend:passive', onTouchEnd);
       }
     };
     stepper.detachEvents = function detachEvents() {
@@ -12740,7 +13327,14 @@ class Stepper extends Framework7Class {
     const { step, min, max } = stepper;
 
     const oldValue = stepper.value;
-    let value = Math.max(Math.min(Math.round(newValue / step) * step, max), min);
+
+    let value = Math.round(newValue / step) * step;
+    if (!stepper.params.wraps) {
+      value = Math.max(Math.min(value, max), min);
+    } else {
+      if (value > max) value = min;
+      if (value < min) value = max;
+    }
     if (Number.isNaN(value)) {
       value = oldValue;
     }
@@ -13247,8 +13841,12 @@ class SmartSelect extends Framework7Class {
 
     // Init SB
     if (ss.params.searchbar) {
+      let $searchbarEl = $containerEl.find('.searchbar');
+      if (type === 'page' && app.theme === 'ios') {
+        $searchbarEl = $(app.navbar.getElByPage($containerEl)).find('.searchbar');
+      }
       ss.searchbar = app.searchbar.create({
-        el: $containerEl.find('.searchbar'),
+        el: $searchbarEl,
         backdropEl: $containerEl.find('.searchbar-backdrop'),
         searchContainer: `.smart-select-list-${ss.id}`,
         searchIn: '.item-title',
@@ -13870,6 +14468,19 @@ class Calendar extends Framework7Class {
     calendar.init();
 
     return calendar;
+  }
+  // eslint-disable-next-line
+  normalizeDate(date) {
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+  normalizeValues(values) {
+    const calendar = this;
+    let newValues = [];
+    if (values && Array.isArray(values)) {
+      newValues = values.map(val => calendar.normalizeDate(val));
+    }
+    return newValues;
   }
   initInput() {
     const calendar = this;
@@ -14719,7 +15330,7 @@ class Calendar extends Framework7Class {
     if (!initialized) {
       if (value) calendar.setValue(value, 0);
       else if (params.value) {
-        calendar.setValue(params.value, 0);
+        calendar.setValue(calendar.normalizeValues(params.value), 0);
       }
     } else if (value) {
       calendar.setValue(value, 0);
@@ -14893,7 +15504,7 @@ class Calendar extends Framework7Class {
     }
 
     if (!calendar.initialized && calendar.params.value) {
-      calendar.setValue(calendar.params.value);
+      calendar.setValue(calendar.normalizeValues(calendar.params.value));
     }
 
     // Attach input Events
@@ -18044,10 +18655,12 @@ class Messagebar extends Framework7Class {
     }
     function onTextareaFocus() {
       messagebar.sheetHide();
+      messagebar.$el.addClass('messagebar-focused');
       messagebar.$el.trigger('messagebar:focus');
       messagebar.emit('local::focus messagebarFocus', messagebar);
     }
     function onTextareaBlur() {
+      messagebar.$el.removeClass('messagebar-focused');
       messagebar.$el.trigger('messagebar:blur');
       messagebar.emit('local::blur messagebarBlur', messagebar);
     }
@@ -19137,16 +19750,26 @@ function slideNext (speed = this.params.speed, runCallbacks = true, internal) {
 /* eslint no-unused-vars: "off" */
 function slidePrev (speed = this.params.speed, runCallbacks = true, internal) {
   const swiper = this;
-  const { params, animating } = swiper;
+  const {
+    params, animating, snapGrid, slidesGrid, rtlTranslate,
+  } = swiper;
 
   if (params.loop) {
     if (animating) return false;
     swiper.loopFix();
     // eslint-disable-next-line
     swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
-    return swiper.slideTo(swiper.activeIndex - 1, speed, runCallbacks, internal);
   }
-  return swiper.slideTo(swiper.activeIndex - 1, speed, runCallbacks, internal);
+  const translate = rtlTranslate ? swiper.translate : -swiper.translate;
+  const currentSnap = snapGrid[snapGrid.indexOf(translate)];
+  const prevSnap = snapGrid[snapGrid.indexOf(translate) - 1];
+  let prevIndex;
+
+  if (prevSnap) {
+    prevIndex = slidesGrid.indexOf(prevSnap);
+    if (prevIndex < 0) prevIndex = swiper.activeIndex - 1;
+  }
+  return swiper.slideTo(prevIndex, speed, runCallbacks, internal);
 }
 
 /* eslint no-unused-vars: "off" */
@@ -19826,6 +20449,7 @@ function onTouchEnd (event) {
       let doBounce = false;
       let afterBouncePosition;
       const bounceAmount = Math.abs(swiper.velocity) * 20 * params.freeModeMomentumBounceRatio;
+      let needsLoopFix;
       if (newPosition < swiper.maxTranslate()) {
         if (params.freeModeMomentumBounce) {
           if (newPosition + swiper.maxTranslate() < -bounceAmount) {
@@ -19837,6 +20461,7 @@ function onTouchEnd (event) {
         } else {
           newPosition = swiper.maxTranslate();
         }
+        if (params.loop && params.centeredSlides) needsLoopFix = true;
       } else if (newPosition > swiper.minTranslate()) {
         if (params.freeModeMomentumBounce) {
           if (newPosition - swiper.minTranslate() > bounceAmount) {
@@ -19848,6 +20473,7 @@ function onTouchEnd (event) {
         } else {
           newPosition = swiper.minTranslate();
         }
+        if (params.loop && params.centeredSlides) needsLoopFix = true;
       } else if (params.freeModeSticky) {
         let nextSlide;
         for (let j = 0; j < snapGrid.length; j += 1) {
@@ -19863,6 +20489,11 @@ function onTouchEnd (event) {
           newPosition = snapGrid[nextSlide - 1];
         }
         newPosition = -newPosition;
+      }
+      if (needsLoopFix) {
+        swiper.once('transitionEnd', () => {
+          swiper.loopFix();
+        });
       }
       // Fix duration
       if (swiper.velocity !== 0) {
@@ -19984,7 +20615,7 @@ function onResize () {
   }
 
   // Save locks
-  const { allowSlideNext, allowSlidePrev } = swiper;
+  const { allowSlideNext, allowSlidePrev, snapGrid } = swiper;
 
   // Disable locks on resize
   swiper.allowSlideNext = true;
@@ -20013,6 +20644,10 @@ function onResize () {
   // Return locks after resize
   swiper.allowSlidePrev = allowSlidePrev;
   swiper.allowSlideNext = allowSlideNext;
+
+  if (swiper.params.watchOverflow && snapGrid !== swiper.snapGrid) {
+    swiper.checkOverflow();
+  }
 }
 
 function onClick (e) {
@@ -20292,7 +20927,11 @@ function checkOverflow() {
   const wasLocked = swiper.isLocked;
 
   swiper.isLocked = swiper.snapGrid.length === 1;
-  swiper.allowTouchMove = !swiper.isLocked;
+  swiper.allowSlideNext = !swiper.isLocked;
+  swiper.allowSlidePrev = !swiper.isLocked;
+
+  // events
+  if (wasLocked !== swiper.isLocked) swiper.emit(swiper.isLocked ? 'lock' : 'unlock');
 
   if (wasLocked && wasLocked !== swiper.isLocked) {
     swiper.isEnd = false;
@@ -20684,6 +21323,11 @@ class Swiper extends Framework7Class {
   update() {
     const swiper = this;
     if (!swiper || swiper.destroyed) return;
+    const { snapGrid, params } = swiper;
+    // Breakpoints
+    if (params.breakpoints) {
+      swiper.setBreakpoint();
+    }
     swiper.updateSize();
     swiper.updateSlides();
     swiper.updateProgress();
@@ -20711,6 +21355,9 @@ class Swiper extends Framework7Class {
       if (!translated) {
         setTranslate();
       }
+    }
+    if (params.watchOverflow && snapGrid !== swiper.snapGrid) {
+      swiper.checkOverflow();
     }
     swiper.emit('update');
   }
@@ -21409,12 +22056,19 @@ const Pagination = {
       $el.find(`.${params.totalClass}`).text(total);
     }
     if (params.type === 'progressbar') {
+      let progressbarDirection;
+      if (params.progressbarOpposite) {
+        progressbarDirection = swiper.isHorizontal() ? 'vertical' : 'horizontal';
+      } else {
+        progressbarDirection = swiper.isHorizontal() ? 'horizontal' : 'vertical';
+      }
       const scale = (current + 1) / total;
-      let scaleX = scale;
+      let scaleX = 1;
       let scaleY = 1;
-      if (!swiper.isHorizontal()) {
+      if (progressbarDirection === 'horizontal') {
+        scaleX = scale;
+      } else {
         scaleY = scale;
-        scaleX = 1;
       }
       $el.find(`.${params.progressbarFillClass}`).transform(`translate3d(0,0,0) scaleX(${scaleX}) scaleY(${scaleY})`).transition(swiper.params.speed);
     }
@@ -21500,6 +22154,9 @@ const Pagination = {
         params.dynamicMainBullets = 1;
       }
     }
+    if (params.type === 'progressbar' && params.progressbarOpposite) {
+      $el.addClass(params.progressbarOppositeClass);
+    }
 
     if (params.clickable) {
       $el.on('click', `.${params.bulletClass}`, function onClick(e) {
@@ -21542,6 +22199,7 @@ var Pagination$1 = {
       renderProgressbar: null,
       renderFraction: null,
       renderCustom: null,
+      progressbarOpposite: false,
       type: 'bullets', // 'bullets' or 'progressbar' or 'fraction' or 'custom'
       dynamicBullets: false,
       dynamicMainBullets: 1,
@@ -21552,6 +22210,7 @@ var Pagination$1 = {
       totalClass: 'swiper-pagination-total',
       hiddenClass: 'swiper-pagination-hidden',
       progressbarFillClass: 'swiper-pagination-progressbar-fill',
+      progressbarOppositeClass: 'swiper-pagination-progressbar-opposite',
       clickableClass: 'swiper-pagination-clickable', // NEW
       lockClass: 'swiper-pagination-lock',
     },
@@ -25113,7 +25772,7 @@ class Autocomplete extends Framework7Class {
       }
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.on('focus', onInputFocus);
-        ac.$inputEl.on('input', onInputChange);
+        ac.$inputEl.on(ac.params.inputEvents, onInputChange);
         if (app.device.android) {
           $('html').on('click', onHtmlClick);
         } else {
@@ -25130,7 +25789,7 @@ class Autocomplete extends Framework7Class {
       }
       if (ac.params.openIn === 'dropdown' && ac.$inputEl) {
         ac.$inputEl.off('focus', onInputFocus);
-        ac.$inputEl.off('input', onInputChange);
+        ac.$inputEl.off(ac.params.inputEvents, onInputChange);
         if (app.device.android) {
           $('html').off('click', onHtmlClick);
         } else {
@@ -25666,6 +26325,7 @@ var Autocomplete$1 = {
       highlightMatches: true,
       expandInput: false,
       updateInputValueOnSelect: true,
+      inputEvents: 'input',
 
       value: undefined,
       multiple: false,
@@ -26016,6 +26676,7 @@ Framework7.use([
   Swipeout$1,
   Accordion$1,
   VirtualList$1,
+  ListIndex$1,
   Timeline,
   Tabs,
   Panel$1,

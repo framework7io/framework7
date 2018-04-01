@@ -1,4 +1,5 @@
 import $ from 'dom7';
+import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Modal from '../modal/modal-class';
 
@@ -12,6 +13,7 @@ class Dialog extends Modal {
       verticalButtons: false,
       onClick: undefined,
       cssClass: undefined,
+      destroyOnClose: false,
       on: {},
     }, params);
     if (typeof extendedParams.closeByBackdropClick === 'undefined') {
@@ -85,16 +87,47 @@ class Dialog extends Modal {
       if (dialog.params.onClick) dialog.params.onClick(dialog, index);
       if (button.close !== false) dialog.close();
     }
+    let addKeyboardHander;
+    function onKeyPress(e) {
+      const keyCode = e.keyCode;
+      buttons.forEach((button, index) => {
+        if (button.keyCodes && button.keyCodes.indexOf(keyCode) >= 0) {
+          if (document.activeElement) document.activeElement.blur();
+          if (button.onClick) button.onClick(dialog, e);
+          if (dialog.params.onClick) dialog.params.onClick(dialog, index);
+          if (button.close !== false) dialog.close();
+        }
+      });
+    }
     if (buttons && buttons.length > 0) {
       dialog.on('open', () => {
         $el.find('.dialog-button').each((index, buttonEl) => {
+          const button = buttons[index];
+          if (button.keyCodes) addKeyboardHander = true;
           $(buttonEl).on('click', buttonOnClick);
         });
+        if (
+          addKeyboardHander &&
+          !app.device.ios &&
+          !app.device.android &&
+          !app.device.cordova
+        ) {
+          $(document).on('keydown', onKeyPress);
+        }
       });
       dialog.on('close', () => {
         $el.find('.dialog-button').each((index, buttonEl) => {
           $(buttonEl).off('click', buttonOnClick);
         });
+        if (
+          addKeyboardHander &&
+          !app.device.ios &&
+          !app.device.android &&
+          !app.device.cordova
+        ) {
+          $(document).off('keydown', onKeyPress);
+        }
+        addKeyboardHander = false;
       });
     }
     Utils.extend(dialog, {

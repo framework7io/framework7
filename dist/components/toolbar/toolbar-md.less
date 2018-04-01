@@ -217,4 +217,67 @@
       background: @colorValue;
     }
   });
+
+  .safe-areas({
+    .views, .view, .page, .popup, .panel, .login-screen {
+      >.toolbar:first-child:not(.toolbar-bottom-md) {
+        height: ~"calc(@{toolbarSize} + constant(safe-area-inset-top))";
+        height: ~"calc(@{toolbarSize} + env(safe-area-inset-top))";
+        .toolbar-inner {
+          height: auto;
+        }
+        .toolbar-inner {
+          bottom: 0;
+          top: constant(safe-area-inset-top);
+          top: env(safe-area-inset-top);
+        }
+        &.tabbar-labels {
+          height: ~"calc(@{tabbarLabelsSize} + constant(safe-area-inset-top))";
+          height: ~"calc(@{tabbarLabelsSize} + env(safe-area-inset-top))";
+        }
+      }
+      >.toolbar-bottom-md {
+        height: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+        height: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+        .toolbar-inner {
+          height: auto;
+          top: 0;
+          bottom: constant(safe-area-inset-bottom);
+          bottom: env(safe-area-inset-bottom);
+        }
+        &.tabbar-labels {
+          height: ~"calc(@{tabbarLabelsBottomSize} + constant(safe-area-inset-bottom))";
+          height: ~"calc(@{tabbarLabelsBottomSize} + env(safe-area-inset-bottom))";
+        }
+      }
+    }
+
+    // Relation with page
+    .toolbar-bottom-md ~ * .page-content,
+    .toolbar-bottom-md ~ .page-content,
+    .messagebar ~ * .page-content,
+    .messagebar ~ .page-content {
+      padding-bottom: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+      padding-bottom: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+    }
+    .toolbar-bottom-md.tabbar-labels ~ * .page-content,
+    .toolbar-bottom-md.tabbar-labels ~ .page-content {
+      padding-bottom: ~"calc(@{tabbarLabelsBottomSize} + constant(safe-area-inset-bottom))";
+      padding-bottom: ~"calc(@{tabbarLabelsBottomSize} + env(safe-area-inset-bottom))";
+    }
+  });
+  .safe-areas-landscape({
+    .safe-area-left({
+      .toolbar-inner {
+        padding-left: constant(safe-area-inset-left);
+        padding-left: env(safe-area-inset-left);
+      }
+    });
+    .safe-area-right({
+      .toolbar-inner {
+        padding-right: constant(safe-area-inset-right);
+        padding-right: env(safe-area-inset-right);
+      }
+    });
+  });
 }
