@@ -9,7 +9,6 @@ class ListIndex extends Framework7Class {
 
     const defaults = {
       el: null, // where to render indexes
-      containerEl: null, // where to put created el
       listEl: null, // list el to generate indexes
       indexes: 'auto', // or array of indexes
       iosItemHeight: 14,
@@ -34,16 +33,11 @@ class ListIndex extends Framework7Class {
     index.params = Utils.extend(defaults, params);
 
     let $el;
-    let $containerEl;
     let $listEl;
     let $pageContentEl;
     let $ul;
 
-    if (index.params.containerEl) {
-      $containerEl = $(index.params.containerEl);
-      $el = $('<div class="list-index"><ul></ul></div>');
-      $containerEl.append($el);
-    } else if (index.params.el) {
+    if (index.params.el) {
       $el = $(index.params.el);
     } else {
       return index;
@@ -80,8 +74,6 @@ class ListIndex extends Framework7Class {
       el: $el && $el[0],
       $ul,
       ul: $ul && $ul[0],
-      $containerEl,
-      containerEl: $containerEl && $containerEl[0],
       $listEl,
       listEl: $listEl && $listEl[0],
       $pageContentEl,
@@ -130,6 +122,7 @@ class ListIndex extends Framework7Class {
     let topPoint;
     let bottomPoint;
     let $labelEl;
+    let previousIndex = null;
     function handleTouchStart(e) {
       const $children = $ul.children();
       if (!$children.length) return;
@@ -140,10 +133,11 @@ class ListIndex extends Framework7Class {
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
       isTouched = true;
       isMoved = false;
+      previousIndex = null;
     }
     function handleTouchMove(e) {
       if (!isTouched) return;
-      if (!isMoved) {
+      if (!isMoved && index.params.label) {
         $labelEl = $('<span class="list-index-label"></span>');
         $el.append($labelEl);
       }
@@ -157,23 +151,33 @@ class ListIndex extends Framework7Class {
       const itemIndex = Math.round((index.indexes.length - 1) * percentage);
       const itemContent = index.indexes[itemIndex];
 
+
       const ulHeight = bottomPoint - topPoint;
       const bubbleBottom = ((index.height - ulHeight) / 2) + ((1 - percentage) * ulHeight);
 
-      $labelEl.html(itemContent).transform(`translateY(-${bubbleBottom}px)`);
+      if (itemIndex !== previousIndex) {
+        if (index.params.label) {
+          $labelEl.html(itemContent).transform(`translateY(-${bubbleBottom}px)`);
+        }
+
+        if (index.$listEl && index.params.scrollList) {
+          index.scrollListToIndex(itemContent, itemIndex);
+        }
+      }
+
+      previousIndex = itemIndex;
 
       index.$el.trigger('listindex:select', index);
       index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
-
-      if (index.$listEl && index.params.scrollList) {
-        index.scrollListToIndex(itemContent, itemIndex);
-      }
     }
     function handleTouchEnd() {
+      if (!isTouched) return;
       isTouched = false;
       isMoved = false;
-      if ($labelEl) $labelEl.remove();
-      $labelEl = undefined;
+      if (index.params.label) {
+        if ($labelEl) $labelEl.remove();
+        $labelEl = undefined;
+      }
     }
     const passiveListener = app.support.passiveListener ? { passive: true } : false;
     index.attachEvents = function attachEvents() {
@@ -200,9 +204,9 @@ class ListIndex extends Framework7Class {
       app.off('resize', handleResize);
 
       $el.off('click', handleClick);
-      $el.on(app.touchEvents.start, handleTouchStart, passiveListener);
-      app.on('touchmove:active', handleTouchMove);
-      app.on('touchend:passive', handleTouchEnd);
+      $el.off(app.touchEvents.start, handleTouchStart, passiveListener);
+      app.off('touchmove:active', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
     };
     // Init
     index.init();
