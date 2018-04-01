@@ -108,7 +108,7 @@ class ListIndex extends Framework7Class {
 
       index.$el.trigger('listindex:click', itemContent, itemIndex);
       index.emit('local::click listIndexClick', index, itemContent, itemIndex);
-      index.$el.trigger('listindex:click', itemContent, itemIndex);
+      index.$el.trigger('listindex:select', itemContent, itemIndex);
       index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
 
       if (index.$listEl && index.params.scrollList) {
