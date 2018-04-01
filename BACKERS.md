@@ -73,6 +73,7 @@ Dave Billington
 ---
 
 ### $5+
+Simon MacDonald<br>
 César Teixeira<br>
 Firas Sleibi<br>
 Travel With Lucas<br>
