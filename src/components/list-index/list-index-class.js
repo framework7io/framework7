@@ -229,7 +229,11 @@ class ListIndex extends Framework7Class {
     });
     if (!$scrollToEl || $scrollToEl.length === 0) return index;
 
-    $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+	  if ($scrollToEl.parent().offset().top <= parseInt($pageContentEl.css('padding-top'), 10)) {
+		  $pageContentEl.scrollTop(($scrollToEl.parent().offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+	  } else {
+      $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+    }
     return index;
   }
   renderSkipPlaceholder() {
