@@ -231,11 +231,13 @@ class ListIndex extends Framework7Class {
     
     const parentTop = $scrollToEl.parent().offset().top;
     const paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+    const scrollTop = $pageContentEl[0].scrollTop;
+    const scrollToElTop = $scrollToEl.offset().top;
     
     if (parentTop <= paddingTop) {
-      $pageContentEl.scrollTop(($scrollToEl.parent().offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+      $pageContentEl.scrollTop((parentTop + scrollTop) - paddingTop);
     } else {
-      $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+      $pageContentEl.scrollTop((scrollToElTop + scrollTop) - paddingTop);
     }
     return index;
   }
