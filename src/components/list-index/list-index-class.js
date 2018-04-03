@@ -228,10 +228,13 @@ class ListIndex extends Framework7Class {
       }
     });
     if (!$scrollToEl || $scrollToEl.length === 0) return index;
-
-	  if ($scrollToEl.parent().offset().top <= parseInt($pageContentEl.css('padding-top'), 10)) {
-		  $pageContentEl.scrollTop(($scrollToEl.parent().offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
-	  } else {
+    
+    const parentTop = $scrollToEl.parent().offset().top;
+    const paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+    
+    if (parentTop <= paddingTop) {
+      $pageContentEl.scrollTop(($scrollToEl.parent().offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+    } else {
       $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
     }
     return index;
