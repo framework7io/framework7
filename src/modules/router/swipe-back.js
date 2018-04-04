@@ -224,7 +224,6 @@ function SwipeBack(r) {
     }
   }
   function handleTouchEnd() {
-    if (!router.view.main) return;
     app.preventSwipePanelBySwipeBack = false;
     if (!isTouched || !isMoved) {
       isTouched = false;
