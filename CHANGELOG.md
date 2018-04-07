@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [v2.2.1](https://github.com/framework7io/framework7/compare/v2.2.0...v2.2.1) -
+# [v2.2.1](https://github.com/framework7io/framework7/compare/v2.2.0...v2.2.1) - April 7, 2018
   * List Index
     * Improved page scroll logic when scrolling upward
   * Router
