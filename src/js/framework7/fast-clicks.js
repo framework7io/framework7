@@ -324,7 +324,7 @@ app.initFastClicks = function () {
                 }
             });
         }
-        if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
+        if ((touchStartTime - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
             e.preventDefault();
         }
 
@@ -377,6 +377,8 @@ app.initFastClicks = function () {
         clearTimeout(activeTimeout);
         clearTimeout(tapHoldTimeout);
 
+        var touchEndTime = (new Date()).getTime();
+
         if (!trackClick) {
             if (!activeSelection && needsFastClick) {
                 if (!(app.device.android && !e.cancelable)) {
@@ -398,12 +400,12 @@ app.initFastClicks = function () {
             e.preventDefault();
         }
 
-        if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
+        if ((touchEndTime - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
             setTimeout(removeActive, 0);
             return true;
         }
 
-        lastClickTime = e.timeStamp;
+        lastClickTime = touchEndTime;
 
         trackClick = false;
 
@@ -428,7 +430,7 @@ app.initFastClicks = function () {
         // Trigger focus when required
         if (targetNeedsFocus(targetElement)) {
             if (app.device.ios && app.device.webView) {
-                if ((event.timeStamp - touchStartTime) > 159) {
+                if ((touchEndTime - touchStartTime) > 159) {
                     targetElement = null;
                     return false;
                 }
