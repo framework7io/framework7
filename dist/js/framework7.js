@@ -1,5 +1,5 @@
 /**
- * Framework7 1.7.0
+ * Framework7 1.7.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * 
  * http://framework7.io/
@@ -10,7 +10,7 @@
  * 
  * Licensed under MIT
  * 
- * Released on: March 20, 2018
+ * Released on: April 7, 2018
  */
 window.Dom7 = (function () {
 'use strict';
@@ -10157,7 +10157,7 @@ return t7;
                         }
                     });
                 }
-                if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
+                if ((touchStartTime - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
                     e.preventDefault();
                 }
         
@@ -10210,6 +10210,8 @@ return t7;
                 clearTimeout(activeTimeout);
                 clearTimeout(tapHoldTimeout);
         
+                var touchEndTime = (new Date()).getTime();
+        
                 if (!trackClick) {
                     if (!activeSelection && needsFastClick) {
                         if (!(app.device.android && !e.cancelable)) {
@@ -10231,12 +10233,12 @@ return t7;
                     e.preventDefault();
                 }
         
-                if ((e.timeStamp - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
+                if ((touchEndTime - lastClickTime) < app.params.fastClicksDelayBetweenClicks) {
                     setTimeout(removeActive, 0);
                     return true;
                 }
         
-                lastClickTime = e.timeStamp;
+                lastClickTime = touchEndTime;
         
                 trackClick = false;
         
@@ -10261,7 +10263,7 @@ return t7;
                 // Trigger focus when required
                 if (targetNeedsFocus(targetElement)) {
                     if (app.device.ios && app.device.webView) {
-                        if ((event.timeStamp - touchStartTime) > 159) {
+                        if ((touchEndTime - touchStartTime) > 159) {
                             targetElement = null;
                             return false;
                         }

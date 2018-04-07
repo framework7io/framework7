@@ -1,5 +1,8 @@
 # Change Log
 
+## [v1.7.1](https://github.com/framework7io/framework7/compare/v1.7.0...v1.7.1) - March 21, 2018
+  * Fix for touch events when app can be unresponsive iOS 11.3
+
 ## [v1.7.0](https://github.com/framework7io/framework7/compare/v1.6.5...v1.7.0) - March 21, 2018
   * Full iPhoneX support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
     * `ios-edges` - for full-width elements (like main View)
