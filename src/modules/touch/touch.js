@@ -430,6 +430,9 @@ function initTouch() {
 
     // Send click
     e.preventDefault();
+    if (params.tapHoldPreventClicks && tapHoldFired) {
+      return false;
+    }
     sendClick(e);
     return false;
   }
@@ -452,7 +455,6 @@ function initTouch() {
 
   function handleClick(e) {
     let allowClick = false;
-
     if (trackClick) {
       targetElement = null;
       trackClick = false;
