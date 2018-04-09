@@ -104,5 +104,24 @@ export default {
         if (swiper && swiper.update) swiper.update();
       });
     },
+    tabMounted(tabEl) {
+      const app = this;
+      $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+        initSwipers.call(app, swiperEl);
+      });
+    },
+    tabShow(tabEl) {
+      const app = this;
+      $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+        const swiper = app.swiper.get(swiperEl);
+        if (swiper && swiper.update) swiper.update();
+      });
+    },
+    tabBeforeRemove(tabEl) {
+      const app = this;
+      $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+        app.swiper.destroy(swiperEl);
+      });
+    },
   },
 };
