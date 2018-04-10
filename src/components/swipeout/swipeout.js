@@ -435,33 +435,35 @@ const Swipeout = {
     Swipeout.el = undefined;
     $el.trigger('swipeout:delete');
     app.emit('swipeoutDelete', $el[0]);
-    $el.css({ height: `${$el.outerHeight()}px` });
-    $el.transitionEnd(() => {
-      $el.trigger('swipeout:deleted');
-      app.emit('swipeoutDeleted', $el[0]);
-      if (callback) callback.call($el[0]);
-      if ($el.parents('.virtual-list').length > 0) {
-        const virtualList = $el.parents('.virtual-list')[0].f7VirtualList;
-        const virtualIndex = $el[0].f7VirtualListIndex;
-        if (virtualList && typeof virtualIndex !== 'undefined') virtualList.deleteItem(virtualIndex);
-      } else if (app.params.swipeout.removeElements) {
-        if (app.params.swipeout.removeElementsWithTimeout) {
-          setTimeout(() => {
-            $el.remove();
-          }, app.params.swipeout.removeElementsTimeout);
-        } else {
-          $el.remove();
-        }
-      } else {
-        $el.removeClass('swipeout-deleting swipeout-transitioning');
-      }
-    });
     Utils.nextFrame(() => {
-      $el
-        .addClass('swipeout-deleting swipeout-transitioning')
-        .css({ height: '0px' })
-        .find('.swipeout-content')
-        .transform('translate3d(-100%,0,0)');
+        $el.css({ height: `${$el.outerHeight()}px` });
+        $el.transitionEnd(() => {
+          $el.trigger('swipeout:deleted');
+          app.emit('swipeoutDeleted', $el[0]);
+          if (callback) callback.call($el[0]);
+          if ($el.parents('.virtual-list').length > 0) {
+            const virtualList = $el.parents('.virtual-list')[0].f7VirtualList;
+            const virtualIndex = $el[0].f7VirtualListIndex;
+            if (virtualList && typeof virtualIndex !== 'undefined') virtualList.deleteItem(virtualIndex);
+          } else if (app.params.swipeout.removeElements) {
+            if (app.params.swipeout.removeElementsWithTimeout) {
+              setTimeout(() => {
+                $el.remove();
+              }, app.params.swipeout.removeElementsTimeout);
+            } else {
+              $el.remove();
+            }
+          } else {
+            $el.removeClass('swipeout-deleting swipeout-transitioning');
+          }
+        });
+        Utils.nextFrame(() => {
+          $el
+            .addClass('swipeout-deleting swipeout-transitioning')
+            .css({ height: '0px' })
+            .find('.swipeout-content')
+            .transform('translate3d(-100%,0,0)');
+        });
     });
   },
 };
