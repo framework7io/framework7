@@ -929,6 +929,7 @@ class Router extends Framework7Class {
     } else {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
+    page.swipeBack = !!options.swipeBack;
 
     const { on = {}, once = {} } = options.route ? options.route.route : {};
     if (options.on) {
