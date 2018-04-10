@@ -8,13 +8,25 @@ function tabLoad(tabRoute, loadOptions = {}) {
     animate: router.params.animate,
     pushState: true,
     history: true,
+    parentPageEl: null,
+    preload: false,
     on: {},
   }, loadOptions);
 
+  let currentRoute;
+  let previousRoute;
   if (options.route) {
     // Set Route
-    if (options.route !== router.currentRoute) {
+    if (!options.preload && options.route !== router.currentRoute) {
+      previousRoute = router.previousRoute;
       router.currentRoute = options.route;
+    }
+    if (options.preload) {
+      currentRoute = options.route;
+      previousRoute = router.currentRoute;
+    } else {
+      currentRoute = router.currentRoute;
+      if (!previousRoute) previousRoute = router.previousRoute;
     }
 
     // Update Browser History
@@ -36,10 +48,10 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  const $currentPageEl = $(router.currentPageEl);
+  const $parentPageEl = $(options.parentPageEl || router.currentPageEl);
   let tabEl;
-  if ($currentPageEl.length && $currentPageEl.find(`#${tabRoute.id}`).length) {
-    tabEl = $currentPageEl.find(`#${tabRoute.id}`).eq(0);
+  if ($parentPageEl.length && $parentPageEl.find(`#${tabRoute.id}`).length) {
+    tabEl = $parentPageEl.find(`#${tabRoute.id}`).eq(0);
   } else if (router.view.selector) {
     tabEl = `${router.view.selector} #${tabRoute.id}`;
   } else {
@@ -164,7 +176,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     router.allowPageChange = true;
   }
   if (tabRoute.async) {
-    tabRoute.async.call(router, router.currentRoute, router.previousRoute, asyncResolve, asyncReject);
+    tabRoute.async.call(router, currentRoute, previousRoute, asyncResolve, asyncReject);
   }
   return router;
 }

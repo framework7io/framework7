@@ -25,6 +25,9 @@ const Tab = {
     if (typeof animate === 'undefined') animate = true;
 
     const $newTabEl = $(tabEl);
+    if (tabRoute && $newTabEl[0]) {
+      $newTabEl[0].f7TabRoute = tabRoute;
+    }
 
     if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
       return {
