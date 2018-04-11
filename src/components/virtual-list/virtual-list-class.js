@@ -522,8 +522,11 @@ class VirtualList extends Framework7Class {
     vl.domCache = {};
   }
   // Update Virtual List
-  update() {
+  update(deleteCache) {
     const vl = this;
+    if (deleteCache && vl.params.cache) {
+      vl.domCache = {};
+    }
     vl.setListSize();
     vl.render(true);
   }
