@@ -108,7 +108,7 @@ class ListIndex extends Framework7Class {
 
       index.$el.trigger('listindex:click', itemContent, itemIndex);
       index.emit('local::click listIndexClick', index, itemContent, itemIndex);
-      index.$el.trigger('listindex:click', itemContent, itemIndex);
+      index.$el.trigger('listindex:select', itemContent, itemIndex);
       index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
 
       if (index.$listEl && index.params.scrollList) {
@@ -229,7 +229,16 @@ class ListIndex extends Framework7Class {
     });
     if (!$scrollToEl || $scrollToEl.length === 0) return index;
 
-    $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+    const parentTop = $scrollToEl.parent().offset().top;
+    const paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+    const scrollTop = $pageContentEl[0].scrollTop;
+    const scrollToElTop = $scrollToEl.offset().top;
+
+    if (parentTop <= paddingTop) {
+      $pageContentEl.scrollTop((parentTop + scrollTop) - paddingTop);
+    } else {
+      $pageContentEl.scrollTop((scrollToElTop + scrollTop) - paddingTop);
+    }
     return index;
   }
   renderSkipPlaceholder() {

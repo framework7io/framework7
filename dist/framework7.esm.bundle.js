@@ -1,5 +1,5 @@
 /**
- * Framework7 2.2.0
+ * Framework7 2.2.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 1, 2018
+ * Released on: April 7, 2018
  */
 
 import { window, document } from 'ssr-window';
@@ -2472,6 +2472,13 @@ const History = {
       }
     });
   },
+  initViewState(viewId, viewState) {
+    const newState = Utils.extend({}, (History.state || {}), {
+      [viewId]: viewState,
+    });
+    History.state = newState;
+    window.history.replaceState(newState, '');
+  },
   push(viewId, viewState, url) {
     if (!History.allowChange) {
       History.queue.push(() => {
@@ -2747,7 +2754,6 @@ function SwipeBack(r) {
     }
   }
   function handleTouchEnd() {
-    if (!router.view.main) return;
     app.preventSwipePanelBySwipeBack = false;
     if (!isTouched || !isMoved) {
       isTouched = false;
@@ -5627,6 +5633,11 @@ class Router extends Framework7Class {
         router.history.push(initUrl);
         router.saveHistory();
       }
+    }
+    if (initUrl && router.params.pushState && (!History.state || !History.state[view.id])) {
+      History.initViewState(view.id, {
+        url: initUrl,
+      });
     }
     router.emit('local::init routerInit', router);
   }
@@ -10602,7 +10613,7 @@ class ListIndex extends Framework7Class {
 
       index.$el.trigger('listindex:click', itemContent, itemIndex);
       index.emit('local::click listIndexClick', index, itemContent, itemIndex);
-      index.$el.trigger('listindex:click', itemContent, itemIndex);
+      index.$el.trigger('listindex:select', itemContent, itemIndex);
       index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
 
       if (index.$listEl && index.params.scrollList) {
@@ -10723,7 +10734,16 @@ class ListIndex extends Framework7Class {
     });
     if (!$scrollToEl || $scrollToEl.length === 0) return index;
 
-    $pageContentEl.scrollTop(($scrollToEl.offset().top + $pageContentEl[0].scrollTop) - parseInt($pageContentEl.css('padding-top'), 10));
+    const parentTop = $scrollToEl.parent().offset().top;
+    const paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+    const scrollTop = $pageContentEl[0].scrollTop;
+    const scrollToElTop = $scrollToEl.offset().top;
+
+    if (parentTop <= paddingTop) {
+      $pageContentEl.scrollTop((parentTop + scrollTop) - paddingTop);
+    } else {
+      $pageContentEl.scrollTop((scrollToElTop + scrollTop) - paddingTop);
+    }
     return index;
   }
   renderSkipPlaceholder() {

@@ -1207,6 +1207,11 @@ class Router extends Framework7Class {
         router.saveHistory();
       }
     }
+    if (initUrl && router.params.pushState && (!History.state || !History.state[view.id])) {
+      History.initViewState(view.id, {
+        url: initUrl,
+      });
+    }
     router.emit('local::init routerInit', router);
   }
   destroy() {

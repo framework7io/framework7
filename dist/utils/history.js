@@ -77,6 +77,13 @@ const History = {
       }
     });
   },
+  initViewState(viewId, viewState) {
+    const newState = Utils.extend({}, (History.state || {}), {
+      [viewId]: viewState,
+    });
+    History.state = newState;
+    window.history.replaceState(newState, '');
+  },
   push(viewId, viewState, url) {
     if (!History.allowChange) {
       History.queue.push(() => {

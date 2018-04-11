@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [v2.2.1](https://github.com/framework7io/framework7/compare/v2.2.0...v2.2.1) - April 7, 2018
+  * List Index
+    * Improved page scroll logic when scrolling upward
+  * Router
+    * Fixed issue when Swipe Back may not work for views other than main
+    * Fixed issue with undefined initial browser history state when `pushState` enabled
+  * Minor fixes
+
+## [v1.7.1](https://github.com/framework7io/framework7/compare/v1.7.0...v1.7.1) - March 21, 2018
+  * Fix for touch events when app can be unresponsive iOS 11.3
+
 # [v2.2.0](https://github.com/framework7io/framework7/compare/v2.1.3...v2.2.0) - April 1, 2018
   * List Index
     * Meet all new List Index component 🎉
@@ -43,6 +54,15 @@
     * Pagination
       * New `progressbarOpposite` parameter to make pagination progressbar opposite to `direction` parameter, means vertical progressbar for horizontal swiper direction and horizontal progressbar for vertical swiper direction
   * Lots of minor fixes
+
+## [v1.7.0](https://github.com/framework7io/framework7/compare/v1.6.5...v1.7.0) - March 21, 2018
+  * Full iPhoneX support and required tweaks. Automatic support for top and bottom safe areas (for portrait orientation). For landscape orientation the following classes must be added to elements:
+    * `ios-edges` - for full-width elements (like main View)
+    * `ios-edge-left` - for elements that stick to the left edge of the screen (like left Panel)
+    * `ios-edge-right` - for elements that stick to the right edge of the screen (like right Panel)
+  * Dom7
+    * Added `beforeCreate` callback for `.ajax` method
+  * Minor fixes
 
 # [v2.1.3](https://github.com/framework7io/framework7/compare/v2.1.2...v2.1.3) - March 19, 2018
   * Searchbar
