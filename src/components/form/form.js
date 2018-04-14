@@ -110,6 +110,9 @@ function formToData(formEl) {
   const skipNames = [];
   $formEl.find('input, select, textarea').each((inputIndex, inputEl) => {
     const $inputEl = $(inputEl);
+    if ($inputEl.hasClass('ignore-store-data') || $inputEl.hasClass('no-store-data')) {
+      return;
+    }
     const name = $inputEl.attr('name');
     const type = $inputEl.attr('type');
     const tag = inputEl.nodeName.toLowerCase();
@@ -167,6 +170,9 @@ function formFromData(formEl, formData) {
 
   $formEl.find('input, select, textarea').each((inputIndex, inputEl) => {
     const $inputEl = $(inputEl);
+    if ($inputEl.hasClass('ignore-store-data') || $inputEl.hasClass('no-store-data')) {
+      return;
+    }
     const name = $inputEl.attr('name');
     const type = $inputEl.attr('type');
     const tag = inputEl.nodeName.toLowerCase();
