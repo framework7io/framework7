@@ -73,10 +73,11 @@ Dave Billington
 ---
 
 ### $5+
+jinsom<br>
+Alessandro De Siro<br>
 Simon MacDonald<br>
 César Teixeira<br>
 Firas Sleibi<br>
-Travel With Lucas<br>
 Garry Lowther<br>
 VOUSYS<br>
 Tirso Martínez Reyes<br>
