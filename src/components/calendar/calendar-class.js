@@ -405,8 +405,10 @@ class Calendar extends Framework7Class {
         }
       }
     }
+    if (!onlyHeader) {
+      calendar.emit('local::change calendarChange', calendar, value);
+    }
 
-    calendar.emit('local::change calendarChange', calendar, value);
 
     if (($inputEl && $inputEl.length) || params.header) {
       const inputValue = calendar.formatValue(value);
@@ -1150,7 +1152,9 @@ class Calendar extends Framework7Class {
 
     // Update input value
     if (updateValue) calendar.updateValue();
-    else if (app.theme === 'md' && value) calendar.updateValue(true);
+    else if (params.header && value) {
+      calendar.updateValue(true);
+    }
 
     // Extra focus
     if (!inline && $inputEl.length && app.theme === 'md') {
