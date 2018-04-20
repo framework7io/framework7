@@ -302,10 +302,11 @@ class Autocomplete extends Framework7Class {
     const inputOffsetHeight = $inputEl[0].offsetHeight;
     const $listEl = $inputEl.parents('.list');
     const listOffset = $listEl.offset();
-    const paddingBottom = parseInt($pageContentEl.css('padding-top'), 10);
+    const paddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
     const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
     const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
     const inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
+
     const maxHeight = $pageContentEl[0].scrollHeight - paddingBottom - (inputOffsetTop + $pageContentEl[0].scrollTop) - $inputEl[0].offsetHeight;
 
     const paddingProp = app.rtl ? 'padding-right' : 'padding-left';
