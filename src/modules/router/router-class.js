@@ -902,7 +902,7 @@ class Router extends Framework7Class {
       to,
       direction,
       route: currentPage.route ? currentPage.route : route,
-      pageFrom: currentPage.pageFrom || pageFrom,
+      // pageFrom: currentPage.pageFrom || pageFrom,
     };
 
     if ($navbarEl && $navbarEl[0]) {
