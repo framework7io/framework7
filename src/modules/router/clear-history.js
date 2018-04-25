@@ -9,7 +9,7 @@ function clearHistory() {
   const $currentPageEl = $(router.currentPageEl);
 
   const $pagesToRemove = router.$el
-    .children('.page:not(.stacked)')
+    .children('.page:not(.stacked), .page-current:not(.stacked), .page-previous:not(.stacked), .page-next:not(.stacked)')
     .filter((index, pageInView) => pageInView !== $currentPageEl[0]);
 
   $pagesToRemove.each((index, pageEl) => {
