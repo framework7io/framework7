@@ -2,6 +2,28 @@
 
 # Change Log
 
+# [v2.2.5](https://github.com/framework7io/framework7/compare/v2.2.1...v2.2.5) - April 29, 2018
+  * Router
+    * Fixed issue with not loaded routable tabs content after swipe-back to page with these routable tabs
+    * Page data will have additional `swipeback: true` prop when the page event was triggered by swipe back
+  * Range
+    * New `range:changed` (`rangeChanged`, `changed`) event that will be triggered on slide knob release after value change
+  * Messagebar
+    * Fixed textarea text color for MD-Dark theme
+  * Form Storage
+    * Added support for skip inputs from storing by adding `no-store-data` or `ignore-store-data` class to input element
+  * Dom7 updated to latest v2.0.5
+    * Support for setting array value on multiple select
+    * Imporved internal events proxies logic for better memory management
+  * Swiper update to latest v4.2.5
+    * Core
+      * Prevent apply grab cursor when swiper is locked
+      * Fixed breakpoint with loop getting wrong realIndex when on init
+      * Fixed "transformed" slides sizes calculation that could cause issues in with Coverflow effect
+    * Autoplay
+      * Fixed issue that can cause memory leak
+  * Minor fixes
+
 # [v2.2.1](https://github.com/framework7io/framework7/compare/v2.2.0...v2.2.1) - April 7, 2018
   * List Index
     * Improved page scroll logic when scrolling upward

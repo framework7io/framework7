@@ -72,6 +72,7 @@ class Range extends Framework7Class {
       min,
       max,
       value,
+      previousValue: value,
     });
 
     if ($inputEl) {
@@ -246,6 +247,24 @@ class Range extends Framework7Class {
         range.$inputEl.trigger('change');
       }
       valueChangedByTouch = false;
+      if (typeof range.previousValue !== 'undefined') {
+        if (
+          (
+            range.dual &&
+            (
+              range.previousValue[0] !== range.value[0] ||
+              range.previousValue[1] !== range.value[1]
+            )
+          ) ||
+          (
+            !range.dual &&
+            range.previousValue !== range.value
+          )
+        ) {
+          range.$el.trigger('range:changed', range, range.value);
+          range.emit('local::changed rangeChanged', range, range.value);
+        }
+      }
     }
 
     function handleResize() {
@@ -351,8 +370,9 @@ class Range extends Framework7Class {
     const range = this;
     const { step, min, max } = range;
     let valueChanged;
+    let oldValue;
     if (range.dual) {
-      const oldValue = [range.value[0], range.value[1]];
+      oldValue = [range.value[0], range.value[1]];
       let newValues = newValue;
       if (!Array.isArray(newValues)) newValues = [newValue, newValue];
       if (newValue[0] > newValue[1]) {
@@ -368,11 +388,15 @@ class Range extends Framework7Class {
       valueChanged = oldValue[0] !== newValues[0] || oldValue[1] !== newValues[1];
       range.layout();
     } else {
-      const oldValue = range.value;
+      oldValue = range.value;
       const value = Math.max(Math.min(Math.round(newValue / step) * step, max), min);
       range.value = value;
       range.layout();
       valueChanged = oldValue !== value;
+    }
+
+    if (valueChanged) {
+      range.previousValue = oldValue;
     }
     // Events
     if (!valueChanged) return range;
@@ -384,6 +408,10 @@ class Range extends Framework7Class {
       } else {
         range.$inputEl.trigger('input');
       }
+    }
+    if (!byTouchMove) {
+      range.$el.trigger('range:changed', range, range.value);
+      range.emit('local::changed rangeChanged', range, range.value);
     }
     range.emit('local::change rangeChange', range, range.value);
     return range;

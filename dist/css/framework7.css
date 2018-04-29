@@ -1,5 +1,5 @@
 /**
- * Framework7 2.2.1
+ * Framework7 2.2.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 7, 2018
+ * Released on: April 29, 2018
  */
 html,
 body,
@@ -26399,6 +26399,10 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table
   opacity: 1;
   -webkit-transition-duration: 150ms;
   transition-duration: 150ms;
+}
+.md .theme-dark .messagebar textarea,
+.messagebar.md .theme-dark textarea {
+  color: rgba(255, 255, 255, 0.87);
 }
 .md .theme-dark .messagebar-attachments {
   border-bottom-color: rgba(255, 255, 255, 0.2);

@@ -310,8 +310,8 @@ function SwipeBack(r) {
       router.currentPage = previousPage[0];
 
       // Page before animation callback
-      router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route });
-      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
+      router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route, swipeBack: true });
+      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true });
 
       $el.trigger('swipeback:beforechange', callbackData);
       router.emit('swipebackBeforeChange', callbackData);
@@ -345,8 +345,8 @@ function SwipeBack(r) {
         }
 
         // Page after animation callback
-        router.pageCallback('afterOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route });
-        router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
+        router.pageCallback('afterOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route, swipeBack: true });
+        router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true });
 
         // Remove Old Page
         if (params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
@@ -355,7 +355,7 @@ function SwipeBack(r) {
             currentNavbar.addClass('stacked');
           }
         } else {
-          router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next');
+          router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next', { swipeBack: true });
           router.removePage(currentPage);
           if (separateNavbar) {
             router.removeNavbar(currentNavbar);

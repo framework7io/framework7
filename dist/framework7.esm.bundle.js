@@ -1,5 +1,5 @@
 /**
- * Framework7 2.2.1
+ * Framework7 2.2.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,10 +7,10 @@
  *
  * Released under the MIT License
  *
- * Released on: April 7, 2018
+ * Released on: April 29, 2018
  */
 
-import { window, document } from 'ssr-window';
+import { window as window$1, document } from 'ssr-window';
 import $ from 'dom7';
 export { default as Dom7 } from 'dom7';
 import Template7 from 'template7';
@@ -317,24 +317,24 @@ const Utils = {
     return Date.now();
   },
   promise(handler) {
-    return window.Promise ? new Promise(handler) : createPromise(handler);
+    return window$1.Promise ? new Promise(handler) : createPromise(handler);
   },
   requestAnimationFrame(callback) {
-    if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
-    else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
-    return window.setTimeout(callback, 1000 / 60);
+    if (window$1.requestAnimationFrame) return window$1.requestAnimationFrame(callback);
+    else if (window$1.webkitRequestAnimationFrame) return window$1.webkitRequestAnimationFrame(callback);
+    return window$1.setTimeout(callback, 1000 / 60);
   },
   cancelAnimationFrame(id) {
-    if (window.cancelAnimationFrame) return window.cancelAnimationFrame(id);
-    else if (window.webkitCancelAnimationFrame) return window.webkitCancelAnimationFrame(id);
-    return window.clearTimeout(id);
+    if (window$1.cancelAnimationFrame) return window$1.cancelAnimationFrame(id);
+    else if (window$1.webkitCancelAnimationFrame) return window$1.webkitCancelAnimationFrame(id);
+    return window$1.clearTimeout(id);
   },
   removeDiacritics(str) {
     return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
   },
   parseUrlQuery(url) {
     const query = {};
-    let urlToParse = url || window.location.href;
+    let urlToParse = url || window$1.location.href;
     let i;
     let params;
     let param;
@@ -356,16 +356,16 @@ const Utils = {
     let curTransform;
     let transformMatrix;
 
-    const curStyle = window.getComputedStyle(el, null);
+    const curStyle = window$1.getComputedStyle(el, null);
 
-    if (window.WebKitCSSMatrix) {
+    if (window$1.WebKitCSSMatrix) {
       curTransform = curStyle.transform || curStyle.webkitTransform;
       if (curTransform.split(',').length > 6) {
         curTransform = curTransform.split(', ').map(a => a.replace(',', '.')).join(', ');
       }
       // Some old versions of Webkit choke when 'none' is passed; pass
       // empty string instead in this case
-      transformMatrix = new window.WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
+      transformMatrix = new window$1.WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
     } else {
       transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
       matrix = transformMatrix.toString().split(',');
@@ -373,7 +373,7 @@ const Utils = {
 
     if (axis === 'x') {
       // Latest Chrome and webkits Fix
-      if (window.WebKitCSSMatrix) curTransform = transformMatrix.m41;
+      if (window$1.WebKitCSSMatrix) curTransform = transformMatrix.m41;
       // Crazy IE10 Matrix
       else if (matrix.length === 16) curTransform = parseFloat(matrix[12]);
       // Normal Browsers
@@ -381,7 +381,7 @@ const Utils = {
     }
     if (axis === 'y') {
       // Latest Chrome and webkits Fix
-      if (window.WebKitCSSMatrix) curTransform = transformMatrix.m42;
+      if (window$1.WebKitCSSMatrix) curTransform = transformMatrix.m42;
       // Crazy IE10 Matrix
       else if (matrix.length === 16) curTransform = parseFloat(matrix[13]);
       // Normal Browsers
@@ -502,7 +502,7 @@ const Utils = {
 };
 
 const Device = (function Device() {
-  const ua = window.navigator.userAgent;
+  const ua = window$1.navigator.userAgent;
 
   const device = {
     ios: false,
@@ -514,8 +514,8 @@ const Device = (function Device() {
     iphoneX: false,
     ipod: false,
     ipad: false,
-    cordova: window.cordova || window.phonegap,
-    phonegap: window.cordova || window.phonegap,
+    cordova: window$1.cordova || window$1.phonegap,
+    phonegap: window$1.cordova || window$1.phonegap,
   };
 
   const windows = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
@@ -523,7 +523,7 @@ const Device = (function Device() {
   const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
-  const iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
+  const iphoneX = iphone && window$1.screen.width === 375 && window$1.screen.height === 812;
 
 
   // Windows
@@ -565,7 +565,7 @@ const Device = (function Device() {
   }
 
   // Webview
-  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone);
+  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window$1.navigator.standalone);
   device.webview = device.webView;
 
 
@@ -585,8 +585,8 @@ const Device = (function Device() {
 
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-    if (device.webView && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
-      if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
+    if (device.webView && (window$1.innerWidth * window$1.innerHeight === window$1.screen.width * window$1.screen.height)) {
+      if (device.iphoneX && (window$1.orientation === 90 || window$1.orientation === -90)) {
         return false;
       }
       return true;
@@ -596,7 +596,7 @@ const Device = (function Device() {
   device.statusbar = device.needsStatusbarOverlay();
 
   // Pixel Ratio
-  device.pixelRatio = window.devicePixelRatio || 1;
+  device.pixelRatio = window$1.devicePixelRatio || 1;
 
   // Export object
   return device;
@@ -786,7 +786,7 @@ class Framework7 extends Framework7Class {
       id: 'io.framework7.testapp',
       root: 'body',
       theme: 'auto',
-      language: window.navigator.language,
+      language: window$1.navigator.language,
       routes: [],
       name: 'Framework7',
       initOnDeviceReady: true,
@@ -918,7 +918,7 @@ function Request(requestOptions) {
     delete globalsNoCallbacks[callbackName];
   });
   const defaults = Utils.extend({
-    url: window.location.toString(),
+    url: window$1.location.toString(),
     method: 'GET',
     data: false,
     async: true,
@@ -1014,12 +1014,12 @@ function Request(requestOptions) {
     script.src = requestUrl;
 
     // Handler
-    window[callbackName] = function jsonpCallback(data) {
+    window$1[callbackName] = function jsonpCallback(data) {
       clearTimeout(abortTimeout);
       fireCallback('success', data);
       script.parentNode.removeChild(script);
       script = null;
-      delete window[callbackName];
+      delete window$1[callbackName];
     };
     document.querySelector('head').appendChild(script);
 
@@ -1102,7 +1102,7 @@ function Request(requestOptions) {
   // Check for crossDomain
   if (typeof options.crossDomain === 'undefined') {
     // eslint-disable-next-line
-    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window$1.location.host;
   }
 
   if (!options.crossDomain) {
@@ -1121,10 +1121,15 @@ function Request(requestOptions) {
     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
       let responseData;
       if (options.dataType === 'json') {
+        let parseError;
         try {
           responseData = JSON.parse(xhr.responseText);
-          fireCallback('success', responseData, xhr.status, xhr);
         } catch (err) {
+          parseError = true;
+        }
+        if (!parseError) {
+          fireCallback('success', responseData, xhr.status, xhr);
+        } else {
           fireCallback('error', xhr, 'parseerror');
         }
       } else {
@@ -1241,17 +1246,17 @@ const Support = (function Support() {
   return {
     positionSticky,
     touch: (function checkTouch() {
-      return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
+      return !!(('ontouchstart' in window$1) || (window$1.DocumentTouch && document instanceof window$1.DocumentTouch));
     }()),
 
-    pointerEvents: !!(window.navigator.pointerEnabled || window.PointerEvent),
-    prefixedPointerEvents: !!window.navigator.msPointerEnabled,
+    pointerEvents: !!(window$1.navigator.pointerEnabled || window$1.PointerEvent),
+    prefixedPointerEvents: !!window$1.navigator.msPointerEnabled,
 
     transition: (function checkTransition() {
       const style = testDiv.style;
       return ('transition' in style || 'webkitTransition' in style || 'MozTransition' in style);
     }()),
-    transforms3d: (window.Modernizr && window.Modernizr.csstransforms3d === true) || (function checkTransforms3d() {
+    transforms3d: (window$1.Modernizr && window$1.Modernizr.csstransforms3d === true) || (function checkTransforms3d() {
       const style = testDiv.style;
       return ('webkitPerspective' in style || 'MozPerspective' in style || 'OPerspective' in style || 'MsPerspective' in style || 'perspective' in style);
     }()),
@@ -1266,7 +1271,7 @@ const Support = (function Support() {
     }()),
 
     observer: (function checkObserver() {
-      return ('MutationObserver' in window || 'WebkitMutationObserver' in window);
+      return ('MutationObserver' in window$1 || 'WebkitMutationObserver' in window$1);
     }()),
 
     passiveListener: (function checkPassiveListener() {
@@ -1278,7 +1283,7 @@ const Support = (function Support() {
             supportsPassive = true;
           },
         });
-        window.addEventListener('testPassiveListener', null, opts);
+        window$1.addEventListener('testPassiveListener', null, opts);
       } catch (e) {
         // No support
       }
@@ -1286,7 +1291,7 @@ const Support = (function Support() {
     }()),
 
     gestures: (function checkGestures() {
-      return 'ongesturestart' in window;
+      return 'ongesturestart' in window$1;
     }()),
   };
 }());
@@ -1400,19 +1405,19 @@ var ResizeModule = {
       app.getSize();
 
       // Emit resize
-      window.addEventListener('resize', () => {
+      window$1.addEventListener('resize', () => {
         app.emit('resize');
       }, false);
 
       // Emit orientationchange
-      window.addEventListener('orientationchange', () => {
+      window$1.addEventListener('orientationchange', () => {
         app.emit('orientationchange');
       });
     },
     orientationchange() {
       const app = this;
       if (app.device && app.device.minimalUi) {
-        if (window.orientation === 90 || window.orientation === -90) {
+        if (window$1.orientation === 90 || window$1.orientation === -90) {
           document.body.scrollTop = 0;
         }
       }
@@ -1450,7 +1455,7 @@ function initTouch() {
 
   if (Device.ios && Device.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
-    window.addEventListener('touchstart', () => {});
+    window$1.addEventListener('touchstart', () => {});
   }
 
   let touchStartX;
@@ -1673,10 +1678,10 @@ function initTouch() {
     if (Device.android && targetElement.nodeName.toLowerCase() === 'select') {
       eventType = 'mousedown';
     }
-    evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+    evt.initMouseEvent(eventType, true, true, window$1, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
     evt.forwardedTouchEvent = true;
 
-    if (app.device.ios && window.navigator.standalone) {
+    if (app.device.ios && window$1.navigator.standalone) {
       // Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
       // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
       setTimeout(() => {
@@ -1715,8 +1720,8 @@ function initTouch() {
       trackClick = false;
       return true;
     }
-    if (Device.ios || (Device.android && 'getSelection' in window)) {
-      const selection = window.getSelection();
+    if (Device.ios || (Device.android && 'getSelection' in window$1)) {
+      const selection = window$1.getSelection();
       if (
         selection.rangeCount &&
         selection.focusNode !== document.body &&
@@ -1870,6 +1875,9 @@ function initTouch() {
 
     // Send click
     e.preventDefault();
+    if (params.tapHoldPreventClicks && tapHoldFired) {
+      return false;
+    }
     sendClick(e);
     return false;
   }
@@ -1892,7 +1900,6 @@ function initTouch() {
 
   function handleClick(e) {
     let allowClick = false;
-
     if (trackClick) {
       targetElement = null;
       trackClick = false;
@@ -2378,7 +2385,7 @@ const Component = {
     scriptEl.innerHTML = scriptContent;
     $('head').append(scriptEl);
 
-    const component = window[callbackName]();
+    const component = window$1[callbackName]();
 
     // Remove Script El
     $(scriptEl).remove();
@@ -2477,7 +2484,7 @@ const History = {
       [viewId]: viewState,
     });
     History.state = newState;
-    window.history.replaceState(newState, '');
+    window$1.history.replaceState(newState, '');
   },
   push(viewId, viewState, url) {
     if (!History.allowChange) {
@@ -2491,7 +2498,7 @@ const History = {
       [viewId]: viewState,
     });
     History.state = newState;
-    window.history.pushState(newState, '', url);
+    window$1.history.pushState(newState, '', url);
   },
   replace(viewId, viewState, url) {
     if (!History.allowChange) {
@@ -2505,22 +2512,22 @@ const History = {
       [viewId]: viewState,
     });
     History.state = newState;
-    window.history.replaceState(newState, '', url);
+    window$1.history.replaceState(newState, '', url);
   },
   go(index) {
     History.allowChange = false;
-    window.history.go(index);
+    window$1.history.go(index);
   },
   back() {
     History.allowChange = false;
-    window.history.back();
+    window$1.history.back();
   },
   allowChange: true,
   previousState: {},
-  state: window.history.state,
+  state: window$1.history.state,
   blockPopstate: true,
   init(app) {
-    $(window).on('load', () => {
+    $(window$1).on('load', () => {
       setTimeout(() => {
         History.blockPopstate = false;
       }, 0);
@@ -2530,7 +2537,7 @@ const History = {
       History.blockPopstate = false;
     }
 
-    $(window).on('popstate', History.handle.bind(app));
+    $(window$1).on('popstate', History.handle.bind(app));
   },
 };
 
@@ -2840,8 +2847,8 @@ function SwipeBack(r) {
       router.currentPage = previousPage[0];
 
       // Page before animation callback
-      router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route });
-      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
+      router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route, swipeBack: true });
+      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true });
 
       $el.trigger('swipeback:beforechange', callbackData);
       router.emit('swipebackBeforeChange', callbackData);
@@ -2875,8 +2882,8 @@ function SwipeBack(r) {
         }
 
         // Page after animation callback
-        router.pageCallback('afterOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route });
-        router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route });
+        router.pageCallback('afterOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route, swipeBack: true });
+        router.pageCallback('afterIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true });
 
         // Remove Old Page
         if (params.stackPages && router.initialPages.indexOf(currentPage[0]) >= 0) {
@@ -2885,7 +2892,7 @@ function SwipeBack(r) {
             currentNavbar.addClass('stacked');
           }
         } else {
-          router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next');
+          router.pageCallback('beforeRemove', currentPage, currentNavbar, 'next', { swipeBack: true });
           router.removePage(currentPage);
           if (separateNavbar) {
             router.removeNavbar(currentNavbar);
@@ -3546,13 +3553,25 @@ function tabLoad(tabRoute, loadOptions = {}) {
     animate: router.params.animate,
     pushState: true,
     history: true,
+    parentPageEl: null,
+    preload: false,
     on: {},
   }, loadOptions);
 
+  let currentRoute;
+  let previousRoute;
   if (options.route) {
     // Set Route
-    if (options.route !== router.currentRoute) {
+    if (!options.preload && options.route !== router.currentRoute) {
+      previousRoute = router.previousRoute;
       router.currentRoute = options.route;
+    }
+    if (options.preload) {
+      currentRoute = options.route;
+      previousRoute = router.currentRoute;
+    } else {
+      currentRoute = router.currentRoute;
+      if (!previousRoute) previousRoute = router.previousRoute;
     }
 
     // Update Browser History
@@ -3568,16 +3587,16 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     // Update Router History
     if (options.history) {
-      router.history[router.history.length - 1] = options.route.url;
+      router.history[Math.max(router.history.length - 1, 0)] = options.route.url;
       router.saveHistory();
     }
   }
 
   // Show Tab
-  const $currentPageEl = $(router.currentPageEl);
+  const $parentPageEl = $(options.parentPageEl || router.currentPageEl);
   let tabEl;
-  if ($currentPageEl.length && $currentPageEl.find(`#${tabRoute.id}`).length) {
-    tabEl = $currentPageEl.find(`#${tabRoute.id}`).eq(0);
+  if ($parentPageEl.length && $parentPageEl.find(`#${tabRoute.id}`).length) {
+    tabEl = $parentPageEl.find(`#${tabRoute.id}`).eq(0);
   } else if (router.view.selector) {
     tabEl = `${router.view.selector} #${tabRoute.id}`;
   } else {
@@ -3702,7 +3721,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     router.allowPageChange = true;
   }
   if (tabRoute.async) {
-    tabRoute.async.call(router, router.currentRoute, router.previousRoute, asyncResolve, asyncReject);
+    tabRoute.async.call(router, currentRoute, previousRoute, asyncResolve, asyncReject);
   }
   return router;
 }
@@ -4047,6 +4066,14 @@ function backward(el, backwardOptions) {
   if (options.preload) {
     // Insert Page
     insertPage();
+    // Tab route
+    if (options.route.route.tab) {
+      router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
+        history: false,
+        pushState: false,
+        preload: true,
+      }));
+    }
     // Page init and before init events
     router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
     if ($newPage.prevAll('.page-previous:not(.stacked)').length > 0) {
@@ -5356,6 +5383,7 @@ class Router extends Framework7Class {
     } else {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
+    page.swipeBack = !!options.swipeBack;
 
     const { on = {}, once = {} } = options.route ? options.route.route : {};
     if (options.on) {
@@ -5460,13 +5488,13 @@ class Router extends Framework7Class {
     const router = this;
     router.view.history = router.history;
     if (router.params.pushState) {
-      window.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
+      window$1.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
     }
   }
   restoreHistory() {
     const router = this;
-    if (router.params.pushState && window.localStorage[`f7router-${router.view.id}-history`]) {
-      router.history = JSON.parse(window.localStorage[`f7router-${router.view.id}-history`]);
+    if (router.params.pushState && window$1.localStorage[`f7router-${router.view.id}-history`]) {
+      router.history = JSON.parse(window$1.localStorage[`f7router-${router.view.id}-history`]);
       router.view.history = router.history;
     }
   }
@@ -5579,6 +5607,7 @@ class Router extends Framework7Class {
       });
     } else {
       // Init current DOM page
+      let hasTabRoute;
       router.currentRoute = currentRoute;
       router.$el.children('.page:not(.stacked)').each((index, pageEl) => {
         const $pageEl = $(pageEl);
@@ -5611,6 +5640,7 @@ class Router extends Framework7Class {
           router.removeThemeElements($navbarInnerEl);
         }
         if (initOptions.route.route.tab) {
+          hasTabRoute = true;
           router.tabLoad(initOptions.route.route.tab, Utils.extend({}, initOptions));
         }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
@@ -5629,7 +5659,8 @@ class Router extends Framework7Class {
             },
           },
         });
-      } else {
+      }
+      if (!historyRestored && !hasTabRoute) {
         router.history.push(initUrl);
         router.saveHistory();
       }
@@ -5836,10 +5867,10 @@ function initClicks(app) {
         const target = clickedLink.attr('target');
         if (url && (target === '_system' || target === '_blank' || target === '_browser')) {
           e.preventDefault();
-          if (target !== '_browser' && window.cordova && window.cordova.InAppBrowser) {
-            window.cordova.InAppBrowser.open(url, target);
+          if (target !== '_browser' && window$1.cordova && window$1.cordova.InAppBrowser) {
+            window$1.cordova.InAppBrowser.open(url, target);
           } else {
-            window.open(url, target);
+            window$1.open(url, target);
           }
         }
         return;
@@ -5937,7 +5968,7 @@ const Storage = {
   get(key) {
     return Utils.promise((resolve, reject) => {
       try {
-        const value = JSON.parse(window.localStorage.getItem(`${keyPrefix}${key}`));
+        const value = JSON.parse(window$1.localStorage.getItem(`${keyPrefix}${key}`));
         resolve(value);
       } catch (e) {
         reject(e);
@@ -5947,7 +5978,7 @@ const Storage = {
   set(key, value) {
     return Utils.promise((resolve, reject) => {
       try {
-        window.localStorage.setItem(`${keyPrefix}${key}`, JSON.stringify(value));
+        window$1.localStorage.setItem(`${keyPrefix}${key}`, JSON.stringify(value));
         resolve();
       } catch (e) {
         reject(e);
@@ -5957,7 +5988,7 @@ const Storage = {
   remove(key) {
     return Utils.promise((resolve, reject) => {
       try {
-        window.localStorage.removeItem(`${keyPrefix}${key}`);
+        window$1.localStorage.removeItem(`${keyPrefix}${key}`);
         resolve();
       } catch (e) {
         reject(e);
@@ -5973,7 +6004,7 @@ const Storage = {
   keys() {
     return Utils.promise((resolve, reject) => {
       try {
-        const keys = Object.keys(window.localStorage)
+        const keys = Object.keys(window$1.localStorage)
           .filter(keyName => keyName.indexOf(keyPrefix) === 0)
           .map(keyName => keyName.replace(keyPrefix, ''));
         resolve(keys);
@@ -5985,7 +6016,7 @@ const Storage = {
   forEach(callback) {
     return Utils.promise((resolve, reject) => {
       try {
-        Object.keys(window.localStorage)
+        Object.keys(window$1.localStorage)
           .filter(keyName => keyName.indexOf(keyPrefix) === 0)
           .forEach((keyName, index) => {
             const key = keyName.replace(keyPrefix, '');
@@ -6012,13 +6043,13 @@ var StorageModule = {
 const Statusbar = {
   hide() {
     $('html').removeClass('with-statusbar');
-    if (Device.cordova && window.StatusBar) {
-      window.StatusBar.hide();
+    if (Device.cordova && window$1.StatusBar) {
+      window$1.StatusBar.hide();
     }
   },
   show() {
-    if (Device.cordova && window.StatusBar) {
-      window.StatusBar.show();
+    if (Device.cordova && window$1.StatusBar) {
+      window$1.StatusBar.show();
       Utils.nextTick(() => {
         if (Device.needsStatusbarOverlay()) {
           $('html').addClass('with-statusbar');
@@ -6055,30 +6086,30 @@ const Statusbar = {
     }
   },
   setIosTextColor(color) {
-    if (Device.cordova && window.StatusBar) {
+    if (Device.cordova && window$1.StatusBar) {
       if (color === 'white') {
-        window.StatusBar.styleLightContent();
+        window$1.StatusBar.styleLightContent();
       } else {
-        window.StatusBar.styleDefault();
+        window$1.StatusBar.styleDefault();
       }
     }
   },
   setBackgroundColor(color) {
     $('.statusbar').css('background-color', color);
-    if (Device.cordova && window.StatusBar) {
-      window.StatusBar.backgroundColorByHexString(color);
+    if (Device.cordova && window$1.StatusBar) {
+      window$1.StatusBar.backgroundColorByHexString(color);
     }
   },
   isVisible() {
-    if (Device.cordova && window.StatusBar) {
-      return window.StatusBar.isVisible;
+    if (Device.cordova && window$1.StatusBar) {
+      return window$1.StatusBar.isVisible;
     }
     return false;
   },
   iosOverlaysWebView(overlays = true) {
     if (!Device.ios) return;
-    if (Device.cordova && window.StatusBar) {
-      window.StatusBar.overlaysWebView(overlays);
+    if (Device.cordova && window$1.StatusBar) {
+      window$1.StatusBar.overlaysWebView(overlays);
       if (overlays) {
         $('html').addClass('with-statusbar');
       } else {
@@ -6104,7 +6135,7 @@ const Statusbar = {
       }
 
       if (Device.ios && (Device.cordova || Device.webView)) {
-        if (window.orientation === 0) {
+        if (window$1.orientation === 0) {
           app.once('resize', () => {
             Statusbar.checkOverlay();
           });
@@ -6124,20 +6155,20 @@ const Statusbar = {
       $('html').removeClass('with-statusbar');
     }
 
-    if (Device.cordova && window.StatusBar) {
+    if (Device.cordova && window$1.StatusBar) {
       if (params.scrollTopOnClick) {
-        $(window).on('statusTap', Statusbar.onClick.bind(app));
+        $(window$1).on('statusTap', Statusbar.onClick.bind(app));
       }
       if (params.iosOverlaysWebView) {
-        window.StatusBar.overlaysWebView(true);
+        window$1.StatusBar.overlaysWebView(true);
       } else {
-        window.StatusBar.overlaysWebView(false);
+        window$1.StatusBar.overlaysWebView(false);
       }
 
       if (params.iosTextColor === 'white') {
-        window.StatusBar.styleLightContent();
+        window$1.StatusBar.styleLightContent();
       } else {
-        window.StatusBar.styleDefault();
+        window$1.StatusBar.styleDefault();
       }
     }
     if (params.iosBackgroundColor && app.theme === 'ios') {
@@ -6206,8 +6237,6 @@ function getCurrentView(app) {
     if (appView.hasClass('tab')) {
       // Tabs
       appView = appViews.children('.view.tab-active');
-    } else {
-      // Split View, leave appView intact
     }
   }
   if (popoverView.length > 0 && popoverView[0].f7View) return popoverView[0].f7View;
@@ -8818,7 +8847,7 @@ class Toast extends Modal {
       }
     });
     toast.on('close', () => {
-      window.clearTimeout(timeoutId);
+      window$1.clearTimeout(timeoutId);
     });
 
     if (toast.params.destroyOnClose) {
@@ -9771,13 +9800,13 @@ const Swipeout = {
         $el.removeClass('swipeout-deleting swipeout-transitioning');
       }
     });
-    Utils.nextFrame(() => {
-      $el
-        .addClass('swipeout-deleting swipeout-transitioning')
-        .css({ height: '0px' })
-        .find('.swipeout-content')
-        .transform('translate3d(-100%,0,0)');
-    });
+    // eslint-disable-next-line
+    $el[0]._clientLeft = $el[0].clientLeft;
+    $el
+      .addClass('swipeout-deleting swipeout-transitioning')
+      .css({ height: '0px' })
+      .find('.swipeout-content')
+      .transform('translate3d(-100%,0,0)');
   },
 };
 var Swipeout$1 = {
@@ -10470,8 +10499,11 @@ class VirtualList extends Framework7Class {
     vl.domCache = {};
   }
   // Update Virtual List
-  update() {
+  update(deleteCache) {
     const vl = this;
+    if (deleteCache && vl.params.cache) {
+      vl.domCache = {};
+    }
     vl.setListSize();
     vl.render(true);
   }
@@ -10906,6 +10938,9 @@ const Tab = {
     if (typeof animate === 'undefined') animate = true;
 
     const $newTabEl = $(tabEl);
+    if (tabRoute && $newTabEl[0]) {
+      $newTabEl[0].f7TabRoute = tabRoute;
+    }
 
     if ($newTabEl.length === 0 || $newTabEl.hasClass('tab-active')) {
       return {
@@ -11861,7 +11896,7 @@ const FormData$1 = {
 
     // Store form data in local storage also
     try {
-      window.localStorage[`f7form-${formId}`] = JSON.stringify(data);
+      window$1.localStorage[`f7form-${formId}`] = JSON.stringify(data);
     } catch (e) {
       throw e;
     }
@@ -11876,8 +11911,8 @@ const FormData$1 = {
     }
 
     try {
-      if (window.localStorage[`f7form-${formId}`]) {
-        return JSON.parse(window.localStorage[`f7form-${formId}`]);
+      if (window$1.localStorage[`f7form-${formId}`]) {
+        return JSON.parse(window$1.localStorage[`f7form-${formId}`]);
       }
     } catch (e) {
       throw e;
@@ -11904,9 +11939,9 @@ const FormData$1 = {
 
     // Delete form data from local storage also
     try {
-      if (window.localStorage[`f7form-${formId}`]) {
-        window.localStorage[`f7form-${formId}`] = '';
-        window.localStorage.removeItem(`f7form-${formId}`);
+      if (window$1.localStorage[`f7form-${formId}`]) {
+        window$1.localStorage[`f7form-${formId}`] = '';
+        window$1.localStorage.removeItem(`f7form-${formId}`);
       }
     } catch (e) {
       throw e;
@@ -11954,6 +11989,9 @@ function formToData(formEl) {
   const skipNames = [];
   $formEl.find('input, select, textarea').each((inputIndex, inputEl) => {
     const $inputEl = $(inputEl);
+    if ($inputEl.hasClass('ignore-store-data') || $inputEl.hasClass('no-store-data')) {
+      return;
+    }
     const name = $inputEl.attr('name');
     const type = $inputEl.attr('type');
     const tag = inputEl.nodeName.toLowerCase();
@@ -12011,6 +12049,9 @@ function formFromData(formEl, formData) {
 
   $formEl.find('input, select, textarea').each((inputIndex, inputEl) => {
     const $inputEl = $(inputEl);
+    if ($inputEl.hasClass('ignore-store-data') || $inputEl.hasClass('no-store-data')) {
+      return;
+    }
     const name = $inputEl.attr('name');
     const type = $inputEl.attr('type');
     const tag = inputEl.nodeName.toLowerCase();
@@ -12076,7 +12117,7 @@ function initAjaxForm() {
       if (contentType === 'application/x-www-form-urlencoded') {
         data = app.form.convertToData($formEl[0]);
       } else {
-        data = new window.FormData($formEl[0]);
+        data = new window$1.FormData($formEl[0]);
       }
     } else {
       data = Utils.serializeObject(app.form.convertToData($formEl[0]));
@@ -12184,7 +12225,7 @@ const Input = {
       app.root.append($shadowEl);
     }
 
-    const styles = window.getComputedStyle($textareaEl[0]);
+    const styles = window$1.getComputedStyle($textareaEl[0]);
     ('padding margin width font-size font-family font-style font-weight line-height font-variant text-transform letter-spacing border box-sizing display').split(' ').forEach((style) => {
       let styleValue = styles[style];
       if (('font-size line-height letter-spacing width').split(' ').indexOf(style) >= 0) {
@@ -12313,7 +12354,7 @@ const Input = {
       const inputEl = this;
       if (app.params.input.scrollIntoViewOnFocus) {
         if (Device.android) {
-          $(window).once('resize', () => {
+          $(window$1).once('resize', () => {
             if (document && document.activeElement === inputEl) {
               app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
             }
@@ -12731,6 +12772,7 @@ class Range extends Framework7Class {
       min,
       max,
       value,
+      previousValue: value,
     });
 
     if ($inputEl) {
@@ -12905,6 +12947,24 @@ class Range extends Framework7Class {
         range.$inputEl.trigger('change');
       }
       valueChangedByTouch = false;
+      if (typeof range.previousValue !== 'undefined') {
+        if (
+          (
+            range.dual &&
+            (
+              range.previousValue[0] !== range.value[0] ||
+              range.previousValue[1] !== range.value[1]
+            )
+          ) ||
+          (
+            !range.dual &&
+            range.previousValue !== range.value
+          )
+        ) {
+          range.$el.trigger('range:changed', range, range.value);
+          range.emit('local::changed rangeChanged', range, range.value);
+        }
+      }
     }
 
     function handleResize() {
@@ -13010,8 +13070,9 @@ class Range extends Framework7Class {
     const range = this;
     const { step, min, max } = range;
     let valueChanged;
+    let oldValue;
     if (range.dual) {
-      const oldValue = [range.value[0], range.value[1]];
+      oldValue = [range.value[0], range.value[1]];
       let newValues = newValue;
       if (!Array.isArray(newValues)) newValues = [newValue, newValue];
       if (newValue[0] > newValue[1]) {
@@ -13027,11 +13088,15 @@ class Range extends Framework7Class {
       valueChanged = oldValue[0] !== newValues[0] || oldValue[1] !== newValues[1];
       range.layout();
     } else {
-      const oldValue = range.value;
+      oldValue = range.value;
       const value = Math.max(Math.min(Math.round(newValue / step) * step, max), min);
       range.value = value;
       range.layout();
       valueChanged = oldValue !== value;
+    }
+
+    if (valueChanged) {
+      range.previousValue = oldValue;
     }
     // Events
     if (!valueChanged) return range;
@@ -13043,6 +13108,10 @@ class Range extends Framework7Class {
       } else {
         range.$inputEl.trigger('input');
       }
+    }
+    if (!byTouchMove) {
+      range.$el.trigger('range:changed', range, range.value);
+      range.emit('local::changed rangeChanged', range, range.value);
     }
     range.emit('local::change rangeChange', range, range.value);
     return range;
@@ -14620,8 +14689,10 @@ class Calendar extends Framework7Class {
         }
       }
     }
+    if (!onlyHeader) {
+      calendar.emit('local::change calendarChange', calendar, value);
+    }
 
-    calendar.emit('local::change calendarChange', calendar, value);
 
     if (($inputEl && $inputEl.length) || params.header) {
       const inputValue = calendar.formatValue(value);
@@ -15365,7 +15436,9 @@ class Calendar extends Framework7Class {
 
     // Update input value
     if (updateValue) calendar.updateValue();
-    else if (app.theme === 'md' && value) calendar.updateValue(true);
+    else if (params.header && value) {
+      calendar.updateValue(true);
+    }
 
     // Extra focus
     if (!inline && $inputEl.length && app.theme === 'md') {
@@ -15959,7 +16032,7 @@ class Picker extends Framework7Class {
       $containerEl,
       containerEl: $containerEl && $containerEl[0],
       inline: $containerEl && $containerEl.length > 0,
-      needsOriginFix: app.device.ios || ((window.navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && window.navigator.userAgent.toLowerCase().indexOf('chrome') < 0) && !app.device.android),
+      needsOriginFix: app.device.ios || ((window$1.navigator.userAgent.toLowerCase().indexOf('safari') >= 0 && window$1.navigator.userAgent.toLowerCase().indexOf('chrome') < 0) && !app.device.android),
       cols: [],
       $inputEl,
       inputEl: $inputEl && $inputEl[0],
@@ -17028,7 +17101,7 @@ const Lazy = {
       $imageEl.trigger('lazy:error');
       app.emit('lazyError', $imageEl[0]);
     }
-    const image = new window.Image();
+    const image = new window$1.Image();
     image.onload = onLoad;
     image.onerror = onError;
     image.src = src;
@@ -18757,22 +18830,7 @@ class Messagebar extends Framework7Class {
     } = messagebar;
     const elHeight = $el[0].offsetHeight;
     let maxHeight = params.maxHeight;
-    if (top) {
-      /*
-      Disable at the moment
-      const requiredPaddingTop = elHeight + params.topOffset;
-      const currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
-      if (requiredPaddingTop !== currentPaddingTop) {
-        if (!maxHeight) {
-          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
-        }
-        $textareaEl.css('max-height', `${maxHeight}px`);
-        $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
-        $el.trigger('messagebar:resizePage');
-        messagebar.emit('local::resizepage messagebarResizePage');
-      }
-      */
-    } else {
+    if (top) ; else {
       const currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
       const requiredPaddingBottom = elHeight + params.bottomOffset;
       if (requiredPaddingBottom !== currentPaddingBottom && $pageContentEl.length) {
@@ -19106,7 +19164,11 @@ function updateSlides () {
     if (slide.css('display') === 'none') continue; // eslint-disable-line
 
     if (params.slidesPerView === 'auto') {
-      const slideStyles = window.getComputedStyle(slide[0], null);
+      const slideStyles = window$1.getComputedStyle(slide[0], null);
+      const currentTransform = slide[0].style.transform;
+      if (currentTransform) {
+        slide[0].style.transform = 'none';
+      }
       if (swiper.isHorizontal()) {
         slideSize = slide[0].getBoundingClientRect().width +
           parseFloat(slideStyles.getPropertyValue('margin-left')) +
@@ -19115,6 +19177,9 @@ function updateSlides () {
         slideSize = slide[0].getBoundingClientRect().height +
           parseFloat(slideStyles.getPropertyValue('margin-top')) +
           parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+      }
+      if (currentTransform) {
+        slide[0].style.transform = currentTransform;
       }
       if (params.roundLengths) slideSize = Math.floor(slideSize);
     } else {
@@ -19266,7 +19331,7 @@ function updateSlidesOffset () {
   }
 }
 
-function updateSlidesProgress (translate = this.translate || 0) {
+function updateSlidesProgress (translate = (this && this.translate) || 0) {
   const swiper = this;
   const params = swiper.params;
 
@@ -19302,7 +19367,7 @@ function updateSlidesProgress (translate = this.translate || 0) {
   }
 }
 
-function updateProgress (translate = this.translate || 0) {
+function updateProgress (translate = (this && this.translate) || 0) {
   const swiper = this;
   const params = swiper.params;
 
@@ -19656,7 +19721,7 @@ function slideTo (index = 0, speed = this.params.speed, runCallbacks = true, int
   if (slideIndex < 0) slideIndex = 0;
 
   const {
-    params, snapGrid, slidesGrid, previousIndex, activeIndex, rtlTranslate: rtl, $wrapperEl,
+    params, snapGrid, slidesGrid, previousIndex, activeIndex, rtlTranslate: rtl,
   } = swiper;
   if (swiper.animating && params.preventIntercationOnTransition) {
     return false;
@@ -19733,10 +19798,17 @@ function slideTo (index = 0, speed = this.params.speed, runCallbacks = true, int
     swiper.transitionStart(runCallbacks, direction);
     if (!swiper.animating) {
       swiper.animating = true;
-      $wrapperEl.transitionEnd(() => {
-        if (!swiper || swiper.destroyed) return;
-        swiper.transitionEnd(runCallbacks, direction);
-      });
+      if (!swiper.onSlideToWrapperTransitionEnd) {
+        swiper.onSlideToWrapperTransitionEnd = function transitionEnd(e) {
+          if (!swiper || swiper.destroyed) return;
+          if (e.target !== this) return;
+          swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.onSlideToWrapperTransitionEnd);
+          swiper.$wrapperEl[0].removeEventListener('webkitTransitionEnd', swiper.onSlideToWrapperTransitionEnd);
+          swiper.transitionEnd(runCallbacks, direction);
+        };
+      }
+      swiper.$wrapperEl[0].addEventListener('transitionend', swiper.onSlideToWrapperTransitionEnd);
+      swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.onSlideToWrapperTransitionEnd);
     }
   }
 
@@ -19965,7 +20037,7 @@ var loop = {
 
 function setGrabCursor (moving) {
   const swiper = this;
-  if (Support.touch || !swiper.params.simulateTouch) return;
+  if (Support.touch || !swiper.params.simulateTouch || (swiper.params.watchOverflow && swiper.isLocked)) return;
   const el = swiper.el;
   el.style.cursor = 'move';
   el.style.cursor = moving ? '-webkit-grabbing' : '-webkit-grab';
@@ -19975,7 +20047,7 @@ function setGrabCursor (moving) {
 
 function unsetGrabCursor () {
   const swiper = this;
-  if (Support.touch) return;
+  if (Support.touch || (swiper.params.watchOverflow && swiper.isLocked)) return;
   swiper.el.style.cursor = '';
 }
 
@@ -20118,7 +20190,7 @@ function onTouchStart (event) {
     !Device.cordova &&
     params.iOSEdgeSwipeDetection &&
     (startX <= params.iOSEdgeSwipeThreshold) &&
-    (startX >= window.screen.width - params.iOSEdgeSwipeThreshold)
+    (startX >= window$1.screen.width - params.iOSEdgeSwipeThreshold)
   ) {
     return;
   }
@@ -20773,7 +20845,9 @@ var events = {
 
 function setBreakpoint () {
   const swiper = this;
-  const { activeIndex, loopedSlides = 0, params } = swiper;
+  const {
+    activeIndex, initialized, loopedSlides = 0, params,
+  } = swiper;
   const breakpoints = params.breakpoints;
   if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) return;
   // Set breakpoint for window width and update parameters
@@ -20792,7 +20866,7 @@ function setBreakpoint () {
 
     swiper.currentBreakpoint = breakpoint;
 
-    if (needsReLoop) {
+    if (needsReLoop && initialized) {
       swiper.loopDestroy();
       swiper.loopCreate();
       swiper.updateSlides();
@@ -20813,7 +20887,7 @@ function getBreakpoint (breakpoints) {
   points.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
   for (let i = 0; i < points.length; i += 1) {
     const point = points[i];
-    if (point >= window.innerWidth && !breakpoint) {
+    if (point >= window$1.innerWidth && !breakpoint) {
       breakpoint = point;
     }
   }
@@ -20824,13 +20898,13 @@ var breakpoints = { setBreakpoint, getBreakpoint };
 
 const Browser = (function Browser() {
   function isSafari() {
-    const ua = window.navigator.userAgent.toLowerCase();
+    const ua = window$1.navigator.userAgent.toLowerCase();
     return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
   }
   return {
-    isIE: !!window.navigator.userAgent.match(/Trident/g) || !!window.navigator.userAgent.match(/MSIE/g),
+    isIE: !!window$1.navigator.userAgent.match(/Trident/g) || !!window$1.navigator.userAgent.match(/MSIE/g),
     isSafari: isSafari(),
-    isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(window.navigator.userAgent),
+    isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(window$1.navigator.userAgent),
   };
 }());
 
@@ -20892,7 +20966,7 @@ function loadImage (imageEl, src, srcset, sizes, checkForComplete, callback) {
   }
   if (!imageEl.complete || !checkForComplete) {
     if (src) {
-      image = new window.Image();
+      image = new window$1.Image();
       image.onload = onReady;
       image.onerror = onReady;
       if (sizes) {
@@ -21440,6 +21514,11 @@ class Swiper extends Framework7Class {
     const {
       params, $el, $wrapperEl, slides,
     } = swiper;
+
+    if (typeof swiper.params === 'undefined' || swiper.destroyed) {
+      return null;
+    }
+
     swiper.emit('beforeDestroy');
 
     // Init Flag
@@ -21486,6 +21565,8 @@ class Swiper extends Framework7Class {
       Utils.deleteProps(swiper);
     }
     swiper.destroyed = true;
+
+    return null;
   }
   static extendDefaults(newDefaults) {
     Utils.extend(extendedDefaults, newDefaults);
@@ -21556,21 +21637,21 @@ var Resize = {
     init() {
       const swiper = this;
       // Emit resize
-      window.addEventListener('resize', swiper.resize.resizeHandler);
+      window$1.addEventListener('resize', swiper.resize.resizeHandler);
 
       // Emit orientationchange
-      window.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+      window$1.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
     },
     destroy() {
       const swiper = this;
-      window.removeEventListener('resize', swiper.resize.resizeHandler);
-      window.removeEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+      window$1.removeEventListener('resize', swiper.resize.resizeHandler);
+      window$1.removeEventListener('orientationchange', swiper.resize.orientationChangeHandler);
     },
   },
 };
 
 const Observer = {
-  func: window.MutationObserver || window.WebkitMutationObserver,
+  func: window$1.MutationObserver || window$1.WebkitMutationObserver,
   attach(target, options = {}) {
     const swiper = this;
 
@@ -23848,6 +23929,8 @@ var A11y = {
   },
 };
 
+/* eslint no-underscore-dangle: "off" */
+
 const Autoplay = {
   run() {
     const swiper = this;
@@ -23918,15 +24001,8 @@ const Autoplay = {
       swiper.autoplay.paused = false;
       swiper.autoplay.run();
     } else {
-      swiper.$wrapperEl.transitionEnd(() => {
-        if (!swiper || swiper.destroyed) return;
-        swiper.autoplay.paused = false;
-        if (!swiper.autoplay.running) {
-          swiper.autoplay.stop();
-        } else {
-          swiper.autoplay.run();
-        }
-      });
+      swiper.$wrapperEl[0].addEventListener('transitionend', swiper.autoplay.onTransitionEnd);
+      swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.autoplay.onTransitionEnd);
     }
   },
 };
@@ -23953,6 +24029,18 @@ var Autoplay$1 = {
         start: Autoplay.start.bind(swiper),
         stop: Autoplay.stop.bind(swiper),
         pause: Autoplay.pause.bind(swiper),
+        onTransitionEnd(e) {
+          if (!swiper || swiper.destroyed || !swiper.$wrapperEl) return;
+          if (e.target !== this) return;
+          swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.autoplay.onTransitionEnd);
+          swiper.$wrapperEl[0].removeEventListener('webkitTransitionEnd', swiper.autoplay.onTransitionEnd);
+          swiper.autoplay.paused = false;
+          if (!swiper.autoplay.running) {
+            swiper.autoplay.stop();
+          } else {
+            swiper.autoplay.run();
+          }
+        },
       },
     });
   },
@@ -24608,6 +24696,25 @@ var Swiper$1 = {
       page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
         const swiper = app.swiper.get(swiperEl);
         if (swiper && swiper.update) swiper.update();
+      });
+    },
+    tabMounted(tabEl) {
+      const app = this;
+      $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+        initSwipers.call(app, swiperEl);
+      });
+    },
+    tabShow(tabEl) {
+      const app = this;
+      $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+        const swiper = app.swiper.get(swiperEl);
+        if (swiper && swiper.update) swiper.update();
+      });
+    },
+    tabBeforeRemove(tabEl) {
+      const app = this;
+      $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
+        app.swiper.destroy(swiperEl);
       });
     },
   },
@@ -25502,7 +25609,7 @@ class Notification extends Modal {
       if (notification.params.swipeToClose) {
         detachTouchEvents();
       }
-      window.clearTimeout(timeoutId);
+      window$1.clearTimeout(timeoutId);
     });
 
     return notification;
@@ -25862,10 +25969,11 @@ class Autocomplete extends Framework7Class {
     const inputOffsetHeight = $inputEl[0].offsetHeight;
     const $listEl = $inputEl.parents('.list');
     const listOffset = $listEl.offset();
-    const paddingBottom = parseInt($pageContentEl.css('padding-top'), 10);
+    const paddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
     const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
     const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
     const inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
+
     const maxHeight = $pageContentEl[0].scrollHeight - paddingBottom - (inputOffsetTop + $pageContentEl[0].scrollTop) - $inputEl[0].offsetHeight;
 
     const paddingProp = app.rtl ? 'padding-right' : 'padding-left';
@@ -26423,13 +26531,13 @@ class ViAd extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const vi = this;
-    if (!window.vi) {
+    if (!window$1.vi) {
       throw new Error('f7:vi SDK not found.');
     }
 
     let orientation;
-    if (typeof window.orientation !== 'undefined') {
-      orientation = window.orientation === -90 || window.orientation === 90 ? 'horizontal' : 'vertical';
+    if (typeof window$1.orientation !== 'undefined') {
+      orientation = window$1.orientation === -90 || window$1.orientation === 90 ? 'horizontal' : 'vertical';
     }
     const defaults = Utils.extend(
       {},
@@ -26510,7 +26618,7 @@ class ViAd extends Framework7Class {
     }
 
     // Create ad
-    vi.ad = new window.vi.Ad(adParams);
+    vi.ad = new window$1.vi.Ad(adParams);
 
     Utils.extend(vi.ad, {
       onAdReady() {

@@ -213,10 +213,15 @@ function Request(requestOptions) {
     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
       let responseData;
       if (options.dataType === 'json') {
+        let parseError;
         try {
           responseData = JSON.parse(xhr.responseText);
-          fireCallback('success', responseData, xhr.status, xhr);
         } catch (err) {
+          parseError = true;
+        }
+        if (!parseError) {
+          fireCallback('success', responseData, xhr.status, xhr);
+        } else {
           fireCallback('error', xhr, 'parseerror');
         }
       } else {

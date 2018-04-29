@@ -160,6 +160,14 @@ function backward(el, backwardOptions) {
   if (options.preload) {
     // Insert Page
     insertPage();
+    // Tab route
+    if (options.route.route.tab) {
+      router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
+        history: false,
+        pushState: false,
+        preload: true,
+      }));
+    }
     // Page init and before init events
     router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
     if ($newPage.prevAll('.page-previous:not(.stacked)').length > 0) {

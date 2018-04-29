@@ -929,6 +929,7 @@ class Router extends Framework7Class {
     } else {
       page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
     }
+    page.swipeBack = !!options.swipeBack;
 
     const { on = {}, once = {} } = options.route ? options.route.route : {};
     if (options.on) {
@@ -1152,6 +1153,7 @@ class Router extends Framework7Class {
       });
     } else {
       // Init current DOM page
+      let hasTabRoute;
       router.currentRoute = currentRoute;
       router.$el.children('.page:not(.stacked)').each((index, pageEl) => {
         const $pageEl = $(pageEl);
@@ -1184,6 +1186,7 @@ class Router extends Framework7Class {
           router.removeThemeElements($navbarInnerEl);
         }
         if (initOptions.route.route.tab) {
+          hasTabRoute = true;
           router.tabLoad(initOptions.route.route.tab, Utils.extend({}, initOptions));
         }
         router.pageCallback('init', $pageEl, $navbarInnerEl, 'current', undefined, initOptions);
@@ -1202,7 +1205,8 @@ class Router extends Framework7Class {
             },
           },
         });
-      } else {
+      }
+      if (!historyRestored && !hasTabRoute) {
         router.history.push(initUrl);
         router.saveHistory();
       }
