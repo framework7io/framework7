@@ -42,7 +42,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     // Update Router History
     if (options.history) {
-      router.history[router.history.length - 1] = options.route.url;
+      router.history[Math.max(router.history.length - 1, 0)] = options.route.url;
       router.saveHistory();
     }
   }
