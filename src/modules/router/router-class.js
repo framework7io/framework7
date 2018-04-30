@@ -1110,7 +1110,7 @@ class Router extends Framework7Class {
       router.saveHistory();
     }
     let currentRoute;
-    if (router.history.length > 1) {
+    if (router.history.length > 1 && router.params.pushStateOnLoad) {
       // Will load page
       currentRoute = router.findMatchingRoute(router.history[0]);
       if (!currentRoute) {
