@@ -1072,7 +1072,7 @@ class Router extends Framework7Class {
     let initUrl = router.params.url;
     let documentUrl = document.location.href.split(document.location.origin)[1];
     let historyRestored;
-    if (!router.params.pushState) {
+    if (!router.params.pushState || !router.params.pushStateOnLoad) {
       if (!initUrl) {
         initUrl = documentUrl;
       }
@@ -1211,7 +1211,7 @@ class Router extends Framework7Class {
         router.saveHistory();
       }
     }
-    if (initUrl && router.params.pushState && (!History.state || !History.state[view.id])) {
+    if (initUrl && router.params.pushState && router.params.pushStateOnLoad && (!History.state || !History.state[view.id])) {
       History.initViewState(view.id, {
         url: initUrl,
       });
