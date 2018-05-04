@@ -34,6 +34,9 @@ module.exports = {
       exports: 'always-multiline',
       functions: 'ignore',
     }],
+    'no-param-reassign': ['error', {
+      props: false,
+    }],
     'prefer-destructuring': ['off'],
     'react/react-in-jsx-scope': ['off'],
     'react/no-string-refs': ['off'],
